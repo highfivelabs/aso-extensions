@@ -1,0 +1,302 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: users.dbforpostgresql.azure.hfl.dev
+spec:
+  group: dbforpostgresql.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - dbforpostgresql
+    - hfl
+    kind: User
+    listKind: UserList
+    plural: users
+    shortNames:
+    - gappguser
+    singular: user
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v1
+    schema:
+      openAPIV3Schema:
+        description: User is a postgresql user.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              aadUser:
+                description: |-
+                  AADUser contains details for creating a Microsoft Entra (AAD) user: a
+                  role bound to an Entra principal (a managed identity, a service
+                  principal, a user or a group), which then signs in with an Entra token
+                  instead of a password. The operator signs in as the server's Entra
+                  administrator with its own credential (the one ASO would use for this
+                  object: per-resource, the namespace's aso-credential, or global).
+                properties:
+                  objectId:
+                    description: |-
+                      ObjectID is the Entra object ID of the principal. When set, the role
+                      is created with pgaadauth_create_principal_with_oid, so azureName may
+                      differ from the principal's display name; when not set,
+                      pgaadauth_create_principal binds the role to the principal whose
+                      display name is azureName. Immutable.
+                    type: string
+                    x-kubernetes-validations:
+                    - message: objectId is immutable
+                      rule: self == oldSelf
+                  principalType:
+                    description: |-
+                      PrincipalType is the kind of principal ObjectID names: user, group or
+                      service (a managed identity or service principal). Immutable.
+                    enum:
+                    - user
+                    - group
+                    - service
+                    type: string
+                    x-kubernetes-validations:
+                    - message: principalType is immutable
+                      rule: self == oldSelf
+                  serverAdminUsername:
+                    description: |-
+                      ServerAdminUsername is the name of the server's Microsoft Entra
+                      administrator that the operator's credential belongs to (the
+                      principal set as an administrator on the FlexibleServer).
+                    minLength: 1
+                    type: string
+                required:
+                - serverAdminUsername
+                type: object
+                x-kubernetes-validations:
+                - message: objectId and principalType are set together
+                  rule: has(self.objectId) == has(self.principalType)
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              databasePrivileges:
+                additionalProperties:
+                  items:
+                    description: DatabasePrivilege is a privilege PostgreSQL grants
+                      on a database.
+                    enum:
+                    - CONNECT
+                    - CREATE
+                    - TEMPORARY
+                    - ALL
+                    type: string
+                  type: array
+                description: |-
+                  DatabasePrivileges are the user's privileges on databases of the
+                  server, keyed by database name: CONNECT, CREATE, TEMPORARY, or ALL
+                  (ALL PRIVILEGES). The user ends with exactly these on every database:
+                  a privilege on a database not listed here is revoked, as ASO's MySQL
+                  User does with its databasePrivileges.
+                type: object
+              localUser:
+                description: LocalUser contains details for creating a standard (non-aad)
+                  postgresql User.
+                properties:
+                  password:
+                    description: Password is the password to use for the user
+                    properties:
+                      key:
+                        description: Key is the key in the Kubernetes secret being
+                          referenced
+                        type: string
+                      name:
+                        description: |-
+                          Name is the name of the Kubernetes secret being referenced.
+                          The secret must be in the same namespace as the resource
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
+                  serverAdminPassword:
+                    description: ServerAdminPassword is a reference to a secret containing
+                      the servers administrator password
+                    properties:
+                      key:
+                        description: Key is the key in the Kubernetes secret being
+                          referenced
+                        type: string
+                      name:
+                        description: |-
+                          Name is the name of the Kubernetes secret being referenced.
+                          The secret must be in the same namespace as the resource
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
+                  serverAdminUsername:
+                    description: ServerAdminUsername is the user name of the Server
+                      administrator
+                    type: string
+                required:
+                - password
+                - serverAdminPassword
+                - serverAdminUsername
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a dbforpostgresql.azure.com/FlexibleServer resource
+                properties:
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                required:
+                - name
+                type: object
+              roleOptions:
+                default:
+                  login: true
+                description: |-
+                  RoleOptions defines additional attributes of the user role. You can read more about these attributes
+                  at https://www.postgresql.org/docs/current/role-attributes.html.
+                properties:
+                  createDb:
+                    default: false
+                    description: WITH CREATEDB or NOCREATEDB
+                    type: boolean
+                  createRole:
+                    default: false
+                    description: WITH CREATEROLE or NOCREATEROLE
+                    type: boolean
+                  login:
+                    default: true
+                    description: WITH LOGIN or NOLOGIN
+                    type: boolean
+                  replication:
+                    default: false
+                    description: WITH REPLICATION or NOREPLICATION
+                    type: boolean
+                type: object
+              roles:
+                description: |-
+                  Roles is the set of roles granted to the user upon creation.
+                  The Azure Database for PostgreSQL server is created with 3 default roles defined: azure_pg_admin, azure_superuser,
+                  and your server admin user (this last is a role w/ login permission, commonly called a User).
+                items:
+                  type: string
+                type: array
+            required:
+            - owner
+            type: object
+            x-kubernetes-validations:
+            - message: exactly one of localUser and aadUser must be set
+              rule: has(self.localUser) != has(self.aadUser)
+            - message: a user cannot change from aadUser to localUser
+              rule: '!has(oldSelf.aadUser) || has(self.aadUser)'
+            - message: a user cannot change from localUser to aadUser
+              rule: '!has(oldSelf.localUser) || has(self.localUser)'
+            - message: azureName is immutable
+              rule: '!has(oldSelf.azureName) || self.azureName == oldSelf.azureName'
+          status:
+            properties:
+              appliedDatabasePrivileges:
+                additionalProperties:
+                  items:
+                    description: DatabasePrivilege is a privilege PostgreSQL grants
+                      on a database.
+                    enum:
+                    - CONNECT
+                    - CREATE
+                    - TEMPORARY
+                    - ALL
+                    type: string
+                  type: array
+                description: |-
+                  AppliedDatabasePrivileges are the database privileges the user had
+                  when it was last reconciled.
+                type: object
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
