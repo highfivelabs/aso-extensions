@@ -1,0 +1,122 @@
+// Copyright 2026 High Five Labs
+// SPDX-License-Identifier: MIT
+
+package e2e
+
+import (
+	"context"
+	"fmt"
+	"testing"
+
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"sigs.k8s.io/controller-runtime/pkg/client"
+
+	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
+	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
+	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
+	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
+)
+
+type conditioned interface {
+	client.Object
+	GetConditions() conditions.Conditions
+}
+
+// ready is nil when obj's Ready condition is True for its current generation.
+func ready(obj conditioned) func() error {
+	return func() error {
+		if err := k8s.Get(context.Background(), client.ObjectKeyFromObject(obj), obj); err != nil {
+			return err
+		}
+		for _, c := range obj.GetConditions() {
+			if c.Type == conditions.ConditionTypeReady {
+				if c.Status == metav1.ConditionTrue && c.ObservedGeneration == obj.GetGeneration() {
+					return nil
+				}
+				return fmt.Errorf("Ready=%s reason=%s: %s", c.Status, c.Reason, c.Message)
+			}
+		}
+		return fmt.Errorf("no Ready condition yet")
+	}
+}
+
+// notReadyWith is nil when obj's Ready condition is False and its message
+// contains text.
+func notReadyWith(obj conditioned, text string) func() error {
+	return func() error {
+		if err := k8s.Get(context.Background(), client.ObjectKeyFromObject(obj), obj); err != nil {
+			return err
+		}
+		for _, c := range obj.GetConditions() {
+			if c.Type == conditions.ConditionTypeReady {
+				if c.Status != metav1.ConditionTrue && contains(c.Message, text) {
+					return nil
+				}
+				return fmt.Errorf("Ready=%s reason=%s: %s", c.Status, c.Reason, c.Message)
+			}
+		}
+		return fmt.Errorf("no Ready condition yet")
+	}
+}
+
+func contains(s, sub string) bool {
+	return len(sub) == 0 || (len(s) >= len(sub) && (func() bool {
+		for i := 0; i+len(sub) <= len(s); i++ {
+			if s[i:i+len(sub)] == sub {
+				return true
+			}
+		}
+		return false
+	})())
+}
+
+// flexibleServer stands in for an ASO FlexibleServer ASO has provisioned:
+// its status names the fake PostgreSQL's host.
+func flexibleServer(t *testing.T, ns, name string) {
+	t.Helper()
+	ctx := context.Background()
+	fs := &asopostgresql.FlexibleServer{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: name}}
+	fs.Spec.AzureName = name
+	fs.Spec.Owner = &genruntime.KnownResourceReference{Name: "rg"}
+	if err := k8s.Create(ctx, fs); err != nil {
+		t.Fatal(err)
+	}
+	host := "localhost"
+	fs.Status.FullyQualifiedDomainName = &host
+	fs.Status.Conditions = []conditions.Condition{asoReady(fs.Generation)}
+	if err := k8s.Status().Update(ctx, fs); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// keyVault stands in for an ASO Vault ASO has provisioned: its status names
+// the fake vault.
+func keyVault(t *testing.T, ns, name string) {
+	t.Helper()
+	ctx := context.Background()
+	v := &asokeyvault.Vault{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: name}}
+	v.Spec.AzureName = name
+	v.Spec.Owner = &genruntime.KnownResourceReference{Name: "rg"}
+	if err := k8s.Create(ctx, v); err != nil {
+		t.Fatal(err)
+	}
+	uri := vaultURL + "/"
+	v.Status.Properties = &asokeyvault.VaultProperties_STATUS{VaultUri: &uri}
+	v.Status.Conditions = []conditions.Condition{asoReady(v.Generation)}
+	if err := k8s.Status().Update(ctx, v); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// asoReady is the Ready condition ASO writes on a resource it provisioned;
+// ASO's framework claims a resource only under a Ready owner.
+func asoReady(generation int64) conditions.Condition {
+	return conditions.Condition{
+		Type:               conditions.ConditionTypeReady,
+		Status:             metav1.ConditionTrue,
+		Severity:           conditions.ConditionSeverityNone,
+		Reason:             conditions.ReasonSucceeded,
+		LastTransitionTime: metav1.Now(),
+		ObservedGeneration: generation,
+	}
+}
