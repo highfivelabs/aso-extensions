@@ -1,0 +1,102 @@
+# Tests only: the fake cloud on kind. PostgreSQL set up like a flexible
+# server (TLS, azure_pg_admin, Entra administrators, pgaadauth), and the
+# fake Key Vault. Their certificates, the CA and the init script come from
+# tests/operator/fixtures, as Secrets and ConfigMaps made by
+# tests/operator/run.sh.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake-cloud
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: fake-cloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: postgres}
+  template:
+    metadata:
+      labels: {app: postgres}
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:17
+        imagePullPolicy: IfNotPresent
+        env:
+        - {name: POSTGRES_PASSWORD, value: super-password}
+        command: ["sh", "-c"]
+        args:
+        - >-
+          install -o postgres -m 600 /tls/tls.key /tmp/server.key &&
+          install -o postgres -m 644 /tls/tls.crt /tmp/server.crt &&
+          cp /init/init.sql /docker-entrypoint-initdb.d/init.sql &&
+          exec docker-entrypoint.sh postgres -c ssl=on -c ssl_cert_file=/tmp/server.crt -c ssl_key_file=/tmp/server.key
+        ports:
+        - containerPort: 5432
+        readinessProbe:
+          exec:
+            command: ["sh", "-c", "psql -U postgres -tAc \"SELECT 1 FROM pg_roles WHERE rolname = 'azure_pg_admin'\" | grep -q 1"]
+          periodSeconds: 2
+        volumeMounts:
+        - {name: tls, mountPath: /tls, readOnly: true}
+        - {name: init, mountPath: /init, readOnly: true}
+      volumes:
+      - name: tls
+        secret: {secretName: postgres-tls}
+      - name: init
+        configMap: {name: postgres-init}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: fake-cloud
+spec:
+  selector: {app: postgres}
+  ports:
+  - {port: 5432, targetPort: 5432}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fakevault
+  namespace: fake-cloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: fakevault}
+  template:
+    metadata:
+      labels: {app: fakevault}
+    spec:
+      containers:
+      - name: fakevault
+        image: ko://github.com/highfivelabs/aso-extensions/cmd/fakevault
+        args:
+        - --listen=:8443
+        - --base-url=https://fakevault.fake-cloud.svc
+        - --trust=$(TRUST)
+        env:
+        - name: TRUST
+          valueFrom:
+            configMapKeyRef: {name: fakevault-trust, key: trust}
+        ports:
+        - containerPort: 8443
+        volumeMounts:
+        - {name: tls, mountPath: /tls, readOnly: true}
+      volumes:
+      - name: tls
+        secret: {secretName: fakevault-tls}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fakevault
+  namespace: fake-cloud
+spec:
+  selector: {app: fakevault}
+  ports:
+  - {port: 443, targetPort: 8443}

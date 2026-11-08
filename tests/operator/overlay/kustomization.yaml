@@ -1,0 +1,24 @@
+# Tests only: the install (config/default) with the manager built with
+# -tags fakecloud, told to use the in-process fake Entra, and trusting the
+# fake cloud's CA (SSL_CERT_FILE, as for any private CA).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../../config/default
+patches:
+- target:
+    kind: Deployment
+    name: aso-extensions-manager
+  patch: |-
+    - op: add
+      path: /spec/template/spec/containers/0/args/-
+      value: --fake-cloud
+    - op: add
+      path: /spec/template/spec/containers/0/env/-
+      value: {name: SSL_CERT_FILE, value: /fake-cloud-ca/ca.crt}
+    - op: add
+      path: /spec/template/spec/volumes
+      value: [{name: fake-cloud-ca, configMap: {name: fake-cloud-ca}}]
+    - op: add
+      path: /spec/template/spec/containers/0/volumeMounts
+      value: [{name: fake-cloud-ca, mountPath: /fake-cloud-ca, readOnly: true}]
