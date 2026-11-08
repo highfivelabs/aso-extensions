@@ -1,0 +1,11 @@
+# Our manager in ASO's namespace under its own service account. The name
+# prefix is the project's name (Makefile NAME); CRDs are not prefixed.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namePrefix: aso-extensions-
+resources:
+- ../rbac
+- ../manager
+images:
+- name: manager
+  newName: ko://github.com/highfivelabs/aso-extensions/cmd/manager

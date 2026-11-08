@@ -15,8 +15,6 @@ spec:
     kind: User
     listKind: UserList
     plural: users
-    shortNames:
-    - gappguser
     singular: user
   scope: Namespaced
   versions:

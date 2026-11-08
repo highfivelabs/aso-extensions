@@ -20,7 +20,7 @@ import (
 )
 
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:categories={azure,dbforpostgresql,hfl},shortName=gappguser
+// +kubebuilder:resource:categories={azure,dbforpostgresql,hfl}
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="Severity",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].severity"

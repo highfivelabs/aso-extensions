@@ -1,0 +1,40 @@
+# Opt-in, for quick trials: run our manager as ASO's own service account,
+# azureserviceoperator-default, so even ASO's default (relaxed) workload
+# identity needs no extra federated credential. The cost: our manager then
+# holds every right ASO's account has (all of ASO's kinds, Secrets and
+# ConfigMaps it may write, CRDs), and ASO's account also gets ours. The
+# default install (config/default) uses a narrow account of its own;
+# docs/plan.md, "Identity".
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../default
+patches:
+- target:
+    kind: Deployment
+    name: aso-extensions-manager
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/serviceAccountName
+      value: azureserviceoperator-default
+- target:
+    kind: ClusterRoleBinding
+  patch: |-
+    - op: replace
+      path: /subjects/0/name
+      value: azureserviceoperator-default
+- target:
+    kind: RoleBinding
+  patch: |-
+    - op: replace
+      path: /subjects/0/name
+      value: azureserviceoperator-default
+- target:
+    kind: ServiceAccount
+    name: aso-extensions-manager
+  patch: |-
+    $patch: delete
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: aso-extensions-manager

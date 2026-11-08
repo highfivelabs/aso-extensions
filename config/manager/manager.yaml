@@ -1,0 +1,72 @@
+# Our own narrow service account, in ASO's namespace. With a client secret,
+# a certificate or ASO's strict workload identity, it acts as exactly the
+# identity ASO acts as, with no extra Azure configuration. With ASO's
+# default (relaxed) workload identity, the managed identity needs one more
+# federated credential, for system:serviceaccount:azureserviceoperator-system:<prefix>manager
+# (docs/plan.md, "Identity").
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: manager
+  namespace: azureserviceoperator-system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: manager
+  namespace: azureserviceoperator-system
+  labels:
+    app.kubernetes.io/component: manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: manager
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: manager
+        # ASO's global workload identity: the Azure Workload Identity webhook
+        # projects a token for this pod's service account.
+        azure.workload.identity/use: "true"
+    spec:
+      serviceAccountName: manager
+      securityContext:
+        runAsNonRoot: true
+      containers:
+      - name: manager
+        image: manager
+        args:
+        - --enable-leader-election
+        env:
+        # The same settings ASO's manager reads, from ASO's own secret.
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        envFrom:
+        - secretRef:
+            name: aso-controller-settings
+            optional: true
+        ports:
+        - name: health
+          containerPort: 8081
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: health
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: health
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi

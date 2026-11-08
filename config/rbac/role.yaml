@@ -1,0 +1,91 @@
+# The manager's rights: our kinds; reading the ASO owners it resolves
+# (FlexibleServer, Vault); reading Secrets and ConfigMaps (aso-credential,
+# credential-from secrets, the values our kinds name; ASO's framework keeps
+# informers on both); reading Namespaces (ASO's reconcile-policy annotation
+# on a namespace); events. Nothing else of ASO's.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager
+rules:
+- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev"]
+  resources: ["*/status", "*/finalizers"]
+  verbs: ["get", "update", "patch"]
+- apiGroups: ["dbforpostgresql.azure.com"]
+  resources: ["flexibleservers"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["keyvault.azure.com"]
+  resources: ["vaults"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["secrets", "configmaps", "namespaces"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["", "events.k8s.io"]
+  resources: ["events"]
+  verbs: ["create", "patch"]
+---
+# ASO's strict workload identity: a token for each namespace's aso-workload
+# service account, exactly as ASO's
+# workload-identity-token-creator-role grants ASO's own manager.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: workload-identity-token-creator
+rules:
+- apiGroups: [""]
+  resources: ["serviceaccounts/token"]
+  resourceNames: ["aso-workload"]
+  verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: manager
+subjects:
+- kind: ServiceAccount
+  name: manager
+  namespace: azureserviceoperator-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: workload-identity-token-creator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: workload-identity-token-creator
+subjects:
+- kind: ServiceAccount
+  name: manager
+  namespace: azureserviceoperator-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: leader-election
+  namespace: azureserviceoperator-system
+rules:
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: leader-election
+  namespace: azureserviceoperator-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: leader-election
+subjects:
+- kind: ServiceAccount
+  name: manager
+  namespace: azureserviceoperator-system
