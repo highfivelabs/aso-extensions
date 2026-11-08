@@ -1,0 +1,283 @@
+diff --git a/v2/pkg/outoftree/outoftree.go b/v2/pkg/outoftree/outoftree.go
+new file mode 100644
+index 0000000..0b66174
+--- /dev/null
++++ b/v2/pkg/outoftree/outoftree.go
+@@ -0,0 +1,277 @@
++/*
++Copyright (c) Microsoft Corporation.
++Licensed under the MIT license.
++*/
++
++// Modified by High Five Labs: this file is new. It exports,
++// unchanged, the parts of ASO's internal framework that an out-of-tree
++// manager needs to run a hand-written reconciler exactly as ASO runs its
++// own (the generic reconciler, the credential provider, the resolver), so
++// they can be used from another module without copying them. Go forbids
++// importing v2/internal/... from outside this module; a package here may.
++// DefaultAzureCredential is cmd/controller/app/setup.go's
++// getDefaultAzureCredential and newChainedCredential, copied because that
++// package links every generated API. ControllerOptions is setup.go's
++// makeControllerOptions.
++
++package outoftree
++
++import (
++	"context"
++	"math/rand"
++	"os"
++	"time"
++
++	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
++	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
++	"github.com/Azure/msi-dataplane/pkg/dataplane"
++	"github.com/go-logr/logr"
++	"github.com/rotisserie/eris"
++	"golang.org/x/time/rate"
++	"k8s.io/client-go/util/workqueue"
++	"sigs.k8s.io/controller-runtime/pkg/client"
++	"sigs.k8s.io/controller-runtime/pkg/controller"
++	"sigs.k8s.io/controller-runtime/pkg/reconcile"
++
++	"github.com/Azure/azure-service-operator/v2/internal/config"
++	"github.com/Azure/azure-service-operator/v2/internal/identity"
++	"github.com/Azure/azure-service-operator/v2/internal/reconcilers"
++	"github.com/Azure/azure-service-operator/v2/internal/reconcilers/generic"
++	"github.com/Azure/azure-service-operator/v2/internal/resolver"
++	"github.com/Azure/azure-service-operator/v2/internal/util/interval"
++	"github.com/Azure/azure-service-operator/v2/internal/util/kubeclient"
++	"github.com/Azure/azure-service-operator/v2/internal/util/lockedrand"
++	common "github.com/Azure/azure-service-operator/v2/pkg/common/config"
++)
++
++// Configuration (internal/config).
++type (
++	ConfigValues             = config.Values
++	WorkloadIdentityAuthMode = config.WorkloadIdentityAuthMode
++)
++
++const (
++	WorkloadIdentityAuthModeStrict  = config.WorkloadIdentityAuthModeStrict
++	WorkloadIdentityAuthModeRelaxed = config.WorkloadIdentityAuthModeRelaxed
++)
++
++// ReadConfig reads ASO's AZURE_* environment variables, as ASO's manager
++// does at start, and validates them.
++func ReadConfig() (config.Values, error) { return config.ReadAndValidate() }
++
++// ReadConfigUnvalidated reads them without validation (tests).
++func ReadConfigUnvalidated() (config.Values, error) { return config.ReadFromEnvironment() }
++
++// Kubernetes client (internal/util/kubeclient).
++type KubeClient = kubeclient.Client
++
++func NewKubeClient(c client.Client) kubeclient.Client { return kubeclient.NewClient(c) }
++
++// Credentials (internal/identity).
++type (
++	Credential                  = identity.Credential
++	CredentialProvider          = identity.CredentialProvider
++	CredentialProviderOptions   = identity.CredentialProviderOptions
++	TokenCredentialProvider     = identity.TokenCredentialProvider
++	ServiceAccountTokenProvider = identity.ServiceAccountTokenProvider
++)
++
++const (
++	// NamespacedSecretName is the per-namespace credential secret, aso-credential.
++	NamespacedSecretName = identity.NamespacedSecretName
++	// DefaultWorkloadIdentityServiceAccount is aso-workload, the service
++	// account ASO's strict mode requests tokens for in a resource's namespace.
++	DefaultWorkloadIdentityServiceAccount = identity.DefaultWorkloadIdentityServiceAccount
++)
++
++var (
++	NewCredentialProvider          = identity.NewCredentialProvider
++	NewServiceAccountTokenProvider = identity.NewServiceAccountTokenProvider
++	NewDefaultCredential           = identity.NewDefaultCredential
++	DefaultTokenCredentialProvider = identity.DefaultTokenCredentialProvider
++	ResolveFederatedTokenFilePath  = identity.ResolveFederatedTokenFilePath
++)
++
++// Resolving owners, secrets and references (internal/resolver).
++type (
++	Resolver     = resolver.Resolver
++	OwnerDetails = resolver.OwnerDetails
++)
++
++var NewResolver = resolver.NewResolver
++
++// Reconciler building blocks (internal/reconcilers).
++type (
++	ARMOwnedResourceReconcilerCommon = reconcilers.ARMOwnedResourceReconcilerCommon
++	ReconcilerCommon                 = reconcilers.ReconcilerCommon
++)
++
++var (
++	ClassifyResolverError = reconcilers.ClassifyResolverError
++	// The predicates ASO's standard predicate combines with
++	// GenerationChangedPredicate (internal/controllers' makeStandardPredicate).
++	ARMReconcilerAnnotationChangedPredicate        = reconcilers.ARMReconcilerAnnotationChangedPredicate
++	ARMPerResourceSecretAnnotationChangedPredicate = reconcilers.ARMPerResourceSecretAnnotationChangedPredicate
++)
++
++// The generic reconciler (internal/reconcilers/generic): finalizers,
++// conditions, the reconcile-policy annotations, claiming, requeue.
++type Options = generic.Options
++
++var (
++	RegisterAll    = generic.RegisterAll
++	NewRateLimiter = generic.NewRateLimiter
++)
++
++// ControllerOptions is cmd/controller/app/setup.go's makeControllerOptions.
++func ControllerOptions(cfg config.Values) generic.Options {
++	var additionalRateLimiters []workqueue.TypedRateLimiter[reconcile.Request]
++	if cfg.RateLimit.Mode == config.RateLimitModeBucket {
++		additionalRateLimiters = append(
++			additionalRateLimiters,
++			&workqueue.TypedBucketRateLimiter[reconcile.Request]{
++				Limiter: rate.NewLimiter(rate.Limit(cfg.RateLimit.QPS), cfg.RateLimit.BucketSize),
++			},
++		)
++	}
++
++	verySlowDelay := config.DefaultSyncInterval
++	if cfg.SyncPeriod != nil {
++		verySlowDelay = *cfg.SyncPeriod
++	}
++
++	return generic.Options{
++		Config: cfg,
++		Options: controller.Options{
++			MaxConcurrentReconciles: cfg.MaxConcurrentReconciles,
++			RateLimiter:             generic.NewRateLimiter(1*time.Second, 1*time.Minute, additionalRateLimiters...),
++		},
++		PanicHandler: func() {},
++		RequeueIntervalCalculator: interval.NewCalculator(
++			interval.CalculatorParameters{
++				//nolint:gosec // do not want cryptographic randomness here
++				Rand:               rand.New(lockedrand.NewSource(time.Now().UnixNano())),
++				ErrorBaseDelay:     1 * time.Second,
++				ErrorMaxFastDelay:  30 * time.Second,
++				ErrorMaxSlowDelay:  3 * time.Minute,
++				ErrorVerySlowDelay: verySlowDelay,
++				SyncPeriod:         cfg.SyncPeriod,
++			},
++		),
++	}
++}
++
++// DefaultAzureCredential is cmd/controller/app/setup.go's
++// getDefaultAzureCredential: the operator's global credential from the
++// AZURE_* settings (aso-controller-settings), or nil when none is set.
++func DefaultAzureCredential(ctx context.Context, cfg config.Values, log logr.Logger, enableAzureCLI bool) (*identity.Credential, error) {
++	tokenCred, err := defaultAzureTokenCredential(ctx, cfg, log, enableAzureCLI)
++	if err != nil {
++		return nil, err
++	}
++	if tokenCred == nil {
++		return nil, nil
++	}
++
++	return identity.NewDefaultCredential(
++		tokenCred,
++		cfg.PodNamespace,
++		cfg.SubscriptionID,
++		cfg.AdditionalTenants,
++	), nil
++}
++
++func defaultAzureTokenCredential(ctx context.Context, cfg config.Values, log logr.Logger, enableAzureCLI bool) (azcore.TokenCredential, error) {
++	if cfg.SubscriptionID == "" {
++		log.Info("No global credential configured, continuing without default global credential.")
++		return nil, nil
++	}
++
++	if cfg.UseWorkloadIdentityAuth {
++		credential, err := azidentity.NewWorkloadIdentityCredential(
++			&azidentity.WorkloadIdentityCredentialOptions{
++				ClientOptions:              azcore.ClientOptions{Cloud: cfg.Cloud()},
++				ClientID:                   cfg.ClientID,
++				TenantID:                   cfg.TenantID,
++				TokenFilePath:              identity.ResolveFederatedTokenFilePath(cfg.FederatedTokenFilePath),
++				AdditionallyAllowedTenants: cfg.AdditionalTenants,
++			},
++		)
++		if err != nil {
++			return nil, eris.Wrapf(err, "unable to get workload identity credential")
++		}
++		return credential, nil
++	}
++
++	if cert := os.Getenv(common.AzureClientCertificate); cert != "" {
++		certPassword := os.Getenv(common.AzureClientCertificatePassword)
++		credential, err := identity.NewClientCertificateCredential(
++			cfg.TenantID,
++			cfg.ClientID,
++			[]byte(cert),
++			[]byte(certPassword),
++			&azidentity.ClientCertificateCredentialOptions{
++				ClientOptions:              azcore.ClientOptions{Cloud: cfg.Cloud()},
++				AdditionallyAllowedTenants: cfg.AdditionalTenants,
++			},
++		)
++		if err != nil {
++			return nil, eris.Wrapf(err, "unable to get client certificate credential")
++		}
++		return credential, nil
++	}
++
++	if userAssignedCredentialsPath := os.Getenv(common.AzureUserAssignedIdentityCredentials); userAssignedCredentialsPath != "" {
++		credential, err := dataplane.NewUserAssignedIdentityCredential(ctx, userAssignedCredentialsPath,
++			dataplane.WithClientOpts(azcore.ClientOptions{Cloud: cfg.Cloud()}))
++		if err != nil {
++			return nil, eris.Wrapf(err, "unable to get user assigned identity credential")
++		}
++		return credential, nil
++	}
++
++	creds := make([]azcore.TokenCredential, 0, 3)
++	envCred, err := azidentity.NewEnvironmentCredential(&azidentity.EnvironmentCredentialOptions{
++		ClientOptions: azcore.ClientOptions{Cloud: cfg.Cloud()},
++	})
++	creds = appendCredential(creds, envCred, err, log, "EnvironmentCredential")
++
++	if identity.IsIMDSAvailable(ctx) {
++		miOpts := &azidentity.ManagedIdentityCredentialOptions{ClientOptions: azcore.ClientOptions{Cloud: cfg.Cloud()}}
++		if cfg.ClientID != "" {
++			miOpts.ID = azidentity.ClientID(cfg.ClientID)
++		}
++		miCred, err := azidentity.NewManagedIdentityCredential(miOpts)
++		creds = appendCredential(creds, miCred, err, log, "ManagedIdentityCredential")
++	} else {
++		log.Info("IMDS not reachable, skipping ManagedIdentityCredential")
++	}
++
++	if enableAzureCLI {
++		cliCred, err := azidentity.NewAzureCLICredential(&azidentity.AzureCLICredentialOptions{
++			AdditionallyAllowedTenants: cfg.AdditionalTenants,
++			Subscription:               cfg.SubscriptionID,
++		})
++		creds = appendCredential(creds, cliCred, err, log, "AzureCLICredential")
++	}
++
++	if len(creds) == 0 {
++		return nil, eris.New("unable to create any credential: EnvironmentCredential, ManagedIdentityCredential, and AzureCLICredential could not be initialized")
++	}
++	chained, err := azidentity.NewChainedTokenCredential(creds, nil)
++	if err != nil {
++		return nil, eris.Wrapf(err, "unable to create chained credential")
++	}
++	return chained, nil
++}
++
++func appendCredential(creds []azcore.TokenCredential, cred azcore.TokenCredential, err error, log logr.Logger, name string) []azcore.TokenCredential {
++	if err != nil {
++		log.Error(err, name+" not available")
++		return creds
++	}
++	if cred != nil {
++		return append(creds, cred)
++	}
++	return creds
++}

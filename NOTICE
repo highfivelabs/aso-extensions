@@ -1,0 +1,20 @@
+aso-extensions
+Copyright (c) 2026 High Five Labs. Licensed under the MIT License (LICENSE).
+
+This product includes software from Azure Service Operator v2
+(https://github.com/Azure/azure-service-operator), Copyright (c) Microsoft
+Corporation, licensed under the MIT License.
+
+Files copied from Azure Service Operator keep Microsoft's copyright and
+licence header and carry a "Modified by High Five Labs" note naming the
+source file and what was changed. The commit they were copied from is
+recorded in UPSTREAM.md, with the list of files. The patch in
+patches/azure-service-operator/ adds one file to Azure Service Operator's
+tree, also under its MIT licence.
+
+At build time this product depends on, but does not include, Azure Service
+Operator (fetched by hack/upstream.sh) and the Go modules in go.mod, each
+under its own licence; a binary built from it includes them.
+
+This project is not affiliated with or endorsed by Microsoft. "Azure" and
+"Azure Service Operator" are used only to describe what it extends.
