@@ -175,16 +175,16 @@ Microsoft.App,Microsoft.App/connectedEnvironments,11,,0,,0,11,false,spec_api=202
 Microsoft.App,Microsoft.App/connectedEnvironments/certificates,6,,0,,0,6,false,spec_api=2026-07-01
 Microsoft.App,Microsoft.App/connectedEnvironments/daprComponents,13,,0,,0,13,false,spec_api=2026-07-01
 Microsoft.App,Microsoft.App/connectedEnvironments/storages,6,,0,,0,6,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/containerApps,141,app.azure.com/ContainerApp,125,,0,16,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
+Microsoft.App,Microsoft.App/containerApps,141,app.azure.com/ContainerApp,132,,0,9,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
 Microsoft.App,Microsoft.App/containerApps/authConfigs,75,app.azure.com/AuthConfig,72,,0,3,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
 Microsoft.App,Microsoft.App/containerApps/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-07-01
 Microsoft.App,Microsoft.App/containerApps/resiliencyPolicies,19,,0,,0,19,false,spec_api=2025-02-02-preview; spec-preview-only
 Microsoft.App,Microsoft.App/containerApps/sourcecontrols,17,,0,,0,17,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/jobs,80,app.azure.com/Job,76,,0,4,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
+Microsoft.App,Microsoft.App/jobs,80,app.azure.com/Job,80,,0,0,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
 Microsoft.App,Microsoft.App/logicApps,0,,0,,0,0,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/managedEnvironments,49,app.azure.com/ManagedEnvironment,27,,0,22,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
-Microsoft.App,Microsoft.App/managedEnvironments/certificates,6,,0,app.azure.hfl.dev/ManagedEnvironmentsCertificate,5,1,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
-Microsoft.App,Microsoft.App/managedEnvironments/daprComponents,13,,0,app.azure.hfl.dev/ManagedEnvironmentsDaprComponent,12,1,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
+Microsoft.App,Microsoft.App/managedEnvironments,49,app.azure.com/ManagedEnvironment,28,,0,21,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
+Microsoft.App,Microsoft.App/managedEnvironments/certificates,6,,0,app.azure.hfl.dev/ManagedEnvironmentsCertificate,6,0,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
+Microsoft.App,Microsoft.App/managedEnvironments/daprComponents,13,,0,app.azure.hfl.dev/ManagedEnvironmentsDaprComponent,13,0,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/daprComponents/resiliencyPolicies,14,,0,,0,14,false,spec_api=2026-07-01
 Microsoft.App,Microsoft.App/managedEnvironments/daprSubscriptions,11,,0,,0,11,false,spec_api=2025-02-02-preview; spec-preview-only
 Microsoft.App,Microsoft.App/managedEnvironments/dotNetComponents,5,,0,,0,5,false,spec_api=2026-07-01
@@ -252,7 +252,7 @@ Microsoft.Authorization,Microsoft.Authorization/privateLinkAssociations,2,,0,,0,
 Microsoft.Authorization,Microsoft.Authorization/privilegedResourceFavorites,1,,0,,0,1,false,spec_api=2026-06-01-preview; spec-preview-only
 Microsoft.Authorization,Microsoft.Authorization/resourceManagementPrivateLinks,1,,0,,0,1,false,spec_api=2020-05-01
 Microsoft.Authorization,Microsoft.Authorization/roleAssignmentApprovals/stages,3,,0,,0,3,false,spec_api=2021-01-01-preview; spec-preview-only
-Microsoft.Authorization,Microsoft.Authorization/roleAssignments,7,authorization.azure.com/RoleAssignment,6,,0,1,false,spec_api=2022-04-01; official_api=2022-04-01
+Microsoft.Authorization,Microsoft.Authorization/roleAssignments,7,authorization.azure.com/RoleAssignment,7,,0,0,false,spec_api=2022-04-01; official_api=2022-04-01
 Microsoft.Authorization,Microsoft.Authorization/roleAssignmentScheduleRequests,15,,0,,0,15,false,spec_api=2020-10-01
 Microsoft.Authorization,Microsoft.Authorization/roleDefinitions,8,authorization.azure.com/RoleDefinition,8,,0,0,false,spec_api=2022-04-01; official_api=2022-04-01
 Microsoft.Authorization,Microsoft.Authorization/roleEligibilityScheduleRequests,14,,0,,0,14,false,spec_api=2020-10-01
@@ -647,11 +647,11 @@ Microsoft.Compute,Microsoft.Compute/restorePointCollections,4,,0,,0,4,false,spec
 Microsoft.Compute,Microsoft.Compute/restorePointCollections/restorePoints,43,,0,,0,43,false,spec_api=2026-04-01
 Microsoft.Compute,Microsoft.Compute/snapshots,55,compute.azure.com/Snapshot,52,,0,3,false,spec_api=2026-03-02; official_api=2024-03-02; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/sshPublicKeys,3,,0,,0,3,false,spec_api=2026-04-01
-Microsoft.Compute,Microsoft.Compute/virtualMachines,218,compute.azure.com/VirtualMachine,147,,0,71,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
+Microsoft.Compute,Microsoft.Compute/virtualMachines,218,compute.azure.com/VirtualMachine,169,,0,49,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachines/diagnosticRunCommands,24,,0,,0,24,false,spec_api=2026-04-01
 Microsoft.Compute,Microsoft.Compute/virtualMachines/extensions,27,compute.azure.com/VirtualMachinesExtension,26,,0,1,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachines/runCommands,24,,0,compute.azure.hfl.dev/VirtualMachinesRunCommand,15,9,false,spec_api=2026-04-01; ours_api=2022-03-01; ours-api-differs-from-spec
-Microsoft.Compute,Microsoft.Compute/virtualMachineScaleSets,268,compute.azure.com/VirtualMachineScaleSet,168,,0,100,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
+Microsoft.Compute,Microsoft.Compute/virtualMachineScaleSets,268,compute.azure.com/VirtualMachineScaleSet,176,,0,92,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachineScaleSets/extensions,12,compute.azure.com/VirtualMachineScaleSetsExtension,12,,0,0,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachineScaleSets/virtualMachines,225,,0,,0,225,false,spec_api=2026-04-01
 Microsoft.Compute,Microsoft.Compute/virtualMachineScaleSets/virtualMachines/diagnosticRunCommands,24,,0,,0,24,false,spec_api=2026-04-01
@@ -1531,7 +1531,7 @@ Microsoft.NetApp,Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolume
 Microsoft.NetApp,Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules,5,,0,,0,5,false,spec_api=2026-08-01
 Microsoft.NetApp,Microsoft.NetApp/netAppAccounts/snapshotPolicies,20,,0,,0,20,false,spec_api=2026-08-01
 Microsoft.NetApp,Microsoft.NetApp/netAppAccounts/volumeGroups,75,,0,,0,75,false,spec_api=2026-08-01
-Microsoft.Network,Microsoft.Network/applicationGateways,266,network.azure.com/ApplicationGateway,185,,0,81,false,spec_api=2026-03-01; official_api=2022-07-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/applicationGateways,266,network.azure.com/ApplicationGateway,188,,0,78,false,spec_api=2026-03-01; official_api=2022-07-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/applicationGateways/privateEndpointConnections,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies,57,network.azure.com/WebApplicationFirewallPolicy,45,,0,12,false,spec_api=2026-03-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/applicationSecurityGroups,3,network.azure.com/ApplicationSecurityGroup,2,,0,1,false,spec_api=2026-03-01; official_api=2024-01-01; official-api-differs-from-spec
@@ -1592,14 +1592,14 @@ Microsoft.Network,Microsoft.Network/interconnectGroups,6,,0,,0,6,false,spec_api=
 Microsoft.Network,Microsoft.Network/interfaceEndpoints,107,,0,,0,107,false,spec_api=2019-02-01
 Microsoft.Network,Microsoft.Network/IpAllocations,8,,0,,0,8,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/ipGroups,3,,0,,0,3,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/loadBalancers,199,network.azure.com/LoadBalancer,80,,0,119,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/loadBalancers,199,network.azure.com/LoadBalancer,189,,0,10,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/loadBalancers/backendAddressPools,14,,0,,0,14,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/loadBalancers/inboundNatRules,10,network.azure.com/LoadBalancersInboundNatRule,10,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/localNetworkGateways,12,,0,,0,12,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/natGateways,12,network.azure.com/NatGateway,10,,0,2,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/NetworkExperimentProfiles,4,,0,,0,4,false,spec_api=2026-04-01
 Microsoft.Network,Microsoft.Network/NetworkExperimentProfiles/Experiments,8,,0,,0,8,false,spec_api=2026-04-01
-Microsoft.Network,Microsoft.Network/networkInterfaces,531,network.azure.com/NetworkInterface,29,,0,502,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/networkInterfaces,531,network.azure.com/NetworkInterface,529,,0,2,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkInterfaces/tapConfigurations,281,,0,,0,281,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagerConnections,2,,0,,0,2,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers,6,,0,,0,6,false,spec_api=2026-03-01
@@ -1624,7 +1624,7 @@ Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces/reachabil
 Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisRuns,2,,0,,0,2,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkProfiles,78,,0,,0,78,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkSecurityGroups,26,network.azure.com/NetworkSecurityGroup,3,,0,23,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/networkSecurityGroups/securityRules,21,network.azure.com/NetworkSecurityGroupsSecurityRule,15,,0,6,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/networkSecurityGroups/securityRules,21,network.azure.com/NetworkSecurityGroupsSecurityRule,21,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkSecurityPerimeters,3,,0,network.azure.hfl.dev/NetworkSecurityPerimeter,2,1,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/links,4,,0,network.azure.hfl.dev/NetworkSecurityPerimetersLink,4,0,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/loggingConfigurations,2,,0,network.azure.hfl.dev/NetworkSecurityPerimetersLoggingConfiguration,2,0,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
@@ -1651,16 +1651,16 @@ Microsoft.Network,Microsoft.Network/privateDnsZones/SOA,21,,0,,0,21,false,spec_a
 Microsoft.Network,Microsoft.Network/privateDnsZones/SRV,21,network.azure.com/PrivateDnsZonesSRVRecord,21,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.Network,Microsoft.Network/privateDnsZones/TXT,21,network.azure.com/PrivateDnsZonesTXTRecord,21,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.Network,Microsoft.Network/privateDnsZones/virtualNetworkLinks,6,network.azure.com/PrivateDnsZonesVirtualNetworkLink,6,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
-Microsoft.Network,Microsoft.Network/privateEndpoints,106,network.azure.com/PrivateEndpoint,24,,0,82,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/privateEndpoints,106,network.azure.com/PrivateEndpoint,99,,0,7,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/privateEndpoints/privateDnsZoneGroups,2,network.azure.com/PrivateEndpointsPrivateDnsZoneGroup,2,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/privateLinkServices,208,network.azure.com/PrivateLinkService,17,,0,191,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/privateLinkServices,208,network.azure.com/PrivateLinkService,207,,0,1,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/privateLinkServices/privateEndpointConnections,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/privateTrafficManagerProfiles,18,,0,,0,18,false,spec_api=2026-10-01-preview; spec-preview-only
 Microsoft.Network,Microsoft.Network/privateTrafficManagerProfiles/endpoints,9,,0,,0,9,false,spec_api=2026-10-01-preview; spec-preview-only
 Microsoft.Network,Microsoft.Network/privateTrafficManagerProfiles/healthPolicies,11,,0,,0,11,false,spec_api=2026-10-01-preview; spec-preview-only
 Microsoft.Network,Microsoft.Network/privateTrafficManagerProfiles/probingGateways,1,,0,,0,1,false,spec_api=2026-10-01-preview; spec-preview-only
-Microsoft.Network,Microsoft.Network/publicIPAddresses,39,network.azure.com/PublicIPAddress,24,,0,15,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/publicIPPrefixes,26,network.azure.com/PublicIPPrefix,13,,0,13,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/publicIPAddresses,39,network.azure.com/PublicIPAddress,36,,0,3,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/publicIPPrefixes,26,network.azure.com/PublicIPPrefix,25,,0,1,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/routeFilters,8,,0,,0,8,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/routeFilters/routeFilterRules,4,,0,,0,4,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/routeTables,10,network.azure.com/RouteTable,3,,0,7,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
@@ -1687,11 +1687,11 @@ Microsoft.Network,Microsoft.Network/virtualHubs/routeTables,5,,0,,0,5,false,spec
 Microsoft.Network,Microsoft.Network/virtualHubs/routingIntent,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualNetworkAppliances,76,,0,,0,76,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualNetworkAppliances/capabilities,2,,0,,0,2,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualNetworkGateways,91,network.azure.com/VirtualNetworkGateway,79,,0,12,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/virtualNetworkGateways,91,network.azure.com/VirtualNetworkGateway,86,,0,5,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/virtualNetworkGateways/natRules,7,,0,,0,7,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualNetworks,118,network.azure.com/VirtualNetwork,16,,0,102,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/virtualNetworks/subnets,69,network.azure.com/VirtualNetworksSubnet,18,,0,51,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/virtualNetworks/virtualNetworkPeerings,25,network.azure.com/VirtualNetworksVirtualNetworkPeering,21,,0,4,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/virtualNetworks,118,network.azure.com/VirtualNetwork,17,,0,101,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/virtualNetworks/subnets,69,network.azure.com/VirtualNetworksSubnet,66,,0,3,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/virtualNetworks/virtualNetworkPeerings,25,network.azure.com/VirtualNetworksVirtualNetworkPeering,25,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/virtualNetworkTaps,280,,0,,0,280,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualRouters,6,,0,,0,6,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualRouters/peerings,2,,0,,0,2,false,spec_api=2026-03-01

@@ -1,0 +1,63 @@
+resource,modules,named
+Microsoft.Authorization/locks,31,31 of the 33 modules read take an optional lock
+Microsoft.Authorization/roleAssignments,33,all 33 modules take role_assignments; also avm-res-authorization-roleassignment and avm-ptn-alz-sub-vending
+Microsoft.Authorization/roleDefinitions,2,"avm-res-authorization-roleassignment, avm-utl-roledefinitions"
+Microsoft.Authorization/policyDefinitions,1,avm-ptn-alz
+Microsoft.Authorization/policySetDefinitions,1,avm-ptn-alz
+Microsoft.Authorization/policyAssignments,1,avm-ptn-alz
+Microsoft.Management/managementGroups,2,"avm-ptn-alz, avm-ptn-alz-sub-vending"
+Microsoft.Management/managementGroups/subscriptions,1,avm-ptn-alz-sub-vending (placement)
+Microsoft.Subscription/aliases,1,avm-ptn-alz-sub-vending
+Microsoft.Resources/tags,1,avm-ptn-alz-sub-vending (subscription tags)
+Microsoft.Resources/resourceGroups,2,"avm-res-resources-resourcegroup, avm-ptn-alz-sub-vending"
+Microsoft.Consumption/budgets,1,avm-ptn-alz-sub-vending
+Microsoft.Insights/diagnosticSettings,23,23 of the 33 modules take diagnostic_settings
+Microsoft.Insights/dataCollectionRules,1,avm-res-containerservice-managedcluster (monitoring)
+Microsoft.Insights/dataCollectionEndpoints,1,avm-res-containerservice-managedcluster (monitoring)
+Microsoft.Insights/dataCollectionRuleAssociations,1,avm-res-containerservice-managedcluster (monitoring)
+Microsoft.Insights/actionGroups,1,avm-res-containerservice-managedcluster (alerting)
+Microsoft.Insights/metricAlerts,1,avm-res-containerservice-managedcluster (alerting)
+Microsoft.Insights/privateLinkScopes,2,"avm-res-insights-component, avm-res-operationalinsights-workspace"
+Microsoft.Insights/privateLinkScopes/scopedResources,2,"avm-res-insights-component, avm-res-operationalinsights-workspace"
+Microsoft.OperationalInsights/workspaces,2,"avm-res-operationalinsights-workspace, avm-ptn-alz-management"
+Microsoft.OperationalInsights/workspaces/tables,2,"avm-res-operationalinsights-workspace, avm-ptn-alz-management"
+Microsoft.OperationalInsights/workspaces/dataExports,2,"avm-res-operationalinsights-workspace, avm-ptn-alz-management"
+Microsoft.OperationalInsights/workspaces/linkedServices,2,"avm-res-operationalinsights-workspace, avm-ptn-alz-management"
+Microsoft.OperationalInsights/workspaces/linkedStorageAccounts,2,"avm-res-operationalinsights-workspace, avm-ptn-alz-management"
+Microsoft.OperationalInsights/queryPacks,2,"avm-res-operationalinsights-workspace, avm-ptn-alz-management"
+Microsoft.OperationsManagement/solutions,1,avm-res-operationalinsights-workspace (log_analytics_solution)
+Microsoft.Network/virtualNetworks,2,"avm-res-network-virtualnetwork, avm-ptn-alz-sub-vending"
+Microsoft.Network/virtualNetworks/subnets,2,"avm-res-network-virtualnetwork, avm-ptn-alz-sub-vending"
+Microsoft.Network/virtualNetworks/virtualNetworkPeerings,1,avm-res-network-virtualnetwork
+Microsoft.Network/networkSecurityGroups,2,"avm-res-network-networksecuritygroup, avm-ptn-alz-sub-vending"
+Microsoft.Network/networkSecurityGroups/securityRules,1,avm-res-network-networksecuritygroup
+Microsoft.Network/routeTables,2,"avm-res-network-routetable, avm-ptn-alz-sub-vending"
+Microsoft.Network/routeTables/routes,1,avm-res-network-routetable
+Microsoft.Network/natGateways,1,avm-res-network-natgateway
+Microsoft.Network/publicIPAddresses,4,"avm-res-network-publicipaddress, natgateway, loadbalancer, virtualmachine"
+Microsoft.Network/privateDnsZones,2,"avm-res-network-privatednszone, avm-ptn-network-private-link-private-dns-zones"
+Microsoft.Network/privateDnsZones/virtualNetworkLinks,2,"avm-res-network-privatednszone, avm-ptn-network-private-link-private-dns-zones"
+Microsoft.Network/privateEndpoints,12,12 of the 33 modules take private_endpoints; avm-res-network-privateendpoint
+Microsoft.Network/privateEndpoints/privateDnsZoneGroups,12,12 of the 33 modules take private_endpoints
+Microsoft.Network/azureFirewalls,1,avm-res-network-azurefirewall
+Microsoft.Network/firewallPolicies,1,avm-res-network-firewallpolicy
+Microsoft.Network/firewallPolicies/ruleCollectionGroups,1,avm-res-network-firewallpolicy
+Microsoft.Network/ddosProtectionPlans,1,avm-res-network-ddosprotectionplan
+Microsoft.Network/bastionHosts,1,avm-res-network-bastionhost
+Microsoft.Network/dnsResolvers,1,avm-res-network-dnsresolver
+Microsoft.Network/virtualHubs/hubVirtualNetworkConnections,1,avm-ptn-alz-sub-vending (virtual WAN)
+Microsoft.Network/networkSecurityPerimeters/resourceAssociations,2,"avm-res-insights-component, avm-res-operationalinsights-workspace"
+Microsoft.KeyVault/vaults,4,"avm-res-keyvault-vault; virtualmachine, storageaccount and sql-server write secrets to one"
+Microsoft.KeyVault/vaults/keys,5,avm-res-keyvault-vault; 5 modules take customer_managed_key
+Microsoft.ManagedIdentity/userAssignedIdentities,3,"avm-res-managedidentity-userassignedidentity, avm-ptn-alz-sub-vending, avm-ptn-alz-management"
+Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials,1,avm-res-managedidentity-userassignedidentity
+Microsoft.ContainerService/managedClusters,1,avm-res-containerservice-managedcluster
+Microsoft.ContainerService/managedClusters/agentPools,1,avm-res-containerservice-managedcluster
+Microsoft.ContainerService/managedClusters/maintenanceConfigurations,1,avm-res-containerservice-managedcluster
+Microsoft.ContainerService/managedClusters/managedNamespaces,1,avm-res-containerservice-managedcluster
+Microsoft.ContainerRegistry/registries,1,avm-res-containerregistry-registry
+Microsoft.ContainerRegistry/registries/replications,1,avm-res-containerregistry-registry
+Microsoft.ContainerRegistry/registries/cacheRules,1,avm-res-containerregistry-registry
+Microsoft.ContainerRegistry/registries/credentialSets,1,avm-res-containerregistry-registry
+Microsoft.ContainerRegistry/registries/scopeMaps,1,avm-res-containerregistry-registry
+Microsoft.ContainerRegistry/registries/tokens,1,avm-res-containerregistry-registry

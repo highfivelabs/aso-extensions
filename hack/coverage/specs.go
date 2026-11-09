@@ -29,6 +29,7 @@ type Resource struct {
 	Attrs   map[string]*Attr
 	APIs    map[string]bool // spec API versions the attributes came from
 	Sets    map[string]bool // spec sets (service/folder) they came from
+	Scopes  map[string]bool // where it can be created: resourceGroup, subscription, managementGroup, tenant, extension
 	Ver     string          // the API version the attributes come from
 	Preview bool            // that version is a preview
 	Fallbck bool            // not in the latest version of its set; read from an older one
@@ -593,13 +594,13 @@ func (w *walker) readDoc(d *doc, api string, preview bool, set string, res map[s
 			key := strings.ToLower(typ)
 			r := res[key]
 			if r == nil {
-				r = &Resource{Type: typ, NS: ns, Attrs: map[string]*Attr{}, APIs: map[string]bool{}, Sets: map[string]bool{}, Ver: api, Preview: preview}
+				r = &Resource{Type: typ, NS: ns, Attrs: map[string]*Attr{}, APIs: map[string]bool{}, Sets: map[string]bool{}, Scopes: map[string]bool{}, Ver: api, Preview: preview}
 				res[key] = r
 			}
 			switch {
 			case api == r.Ver && preview == r.Preview:
 			case newer(api, preview, r.Ver, r.Preview):
-				r.Attrs, r.APIs, r.Sets, r.Ver, r.Preview = map[string]*Attr{}, map[string]bool{}, map[string]bool{}, api, preview
+				r.Attrs, r.APIs, r.Sets, r.Scopes, r.Ver, r.Preview = map[string]*Attr{}, map[string]bool{}, map[string]bool{}, map[string]bool{}, api, preview
 			default:
 				continue // an older version of a resource already read
 			}
@@ -613,6 +614,7 @@ func (w *walker) readDoc(d *doc, api string, preview bool, set string, res map[s
 			}
 			r.APIs[api] = true
 			r.Sets[set] = true
+			r.Scopes[scopeOf(pk)] = true
 		}
 	}
 }
@@ -718,4 +720,36 @@ func (w *walker) bodySchema(d *doc, item, put map[string]any) *schemaRef {
 		}
 	}
 	return nil
+}
+
+var (
+	subScopeRe = regexp.MustCompile(`(?i)^/subscriptions/\{[^/]+\}$`)
+	rgScopeRe  = regexp.MustCompile(`(?i)^/subscriptions/\{[^/]+\}/resourcegroups/\{[^/]+\}$`)
+	mgScopeRe  = regexp.MustCompile(`(?i)^/providers/microsoft\.management/managementgroups/\{[^/]+\}$`)
+)
+
+// scopeOf says where the resource of a PUT path lives: what comes before the
+// last /providers/<namespace>/ is a resource group, a subscription, a
+// management group, nothing (the tenant) or anything else (an extension
+// resource on whatever its path names).
+func scopeOf(p string) string {
+	if i := strings.Index(p, "?"); i >= 0 {
+		p = p[:i]
+	}
+	idxs := providerSeg.FindAllStringIndex(p, -1)
+	if len(idxs) == 0 {
+		return "subscription" // a resource group
+	}
+	prefix := p[:idxs[len(idxs)-1][0]]
+	switch {
+	case prefix == "":
+		return "tenant"
+	case rgScopeRe.MatchString(prefix):
+		return "resourceGroup"
+	case subScopeRe.MatchString(prefix):
+		return "subscription"
+	case mgScopeRe.MatchString(prefix):
+		return "managementGroup"
+	}
+	return "extension"
 }
