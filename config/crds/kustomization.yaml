@@ -8,6 +8,10 @@ resources:
 - app.azure.hfl.dev_managedenvironmentsmanagedcertificates.yaml
 - app.azure.hfl.dev_managedenvironmentsstorages.yaml
 - authorization.azure.hfl.dev_managementlocks.yaml
+- containerregistry.azure.hfl.dev_registriescredentialsets.yaml
+- containerregistry.azure.hfl.dev_registriesscopemaps.yaml
+- containerregistry.azure.hfl.dev_registriestokens.yaml
+- containerregistry.azure.hfl.dev_registrieswebhooks.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
 - insights.azure.hfl.dev_privatelinkscopes.yaml
 - insights.azure.hfl.dev_privatelinkscopesprivateendpointconnections.yaml

@@ -5,3 +5,4 @@ specification/web
 specification/operationalinsights
 specification/monitor
 specification/network
+specification/containerregistry

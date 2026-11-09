@@ -39,6 +39,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
+	asoregistry "github.com/Azure/azure-service-operator/v2/api/containerregistry/v20251101/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
@@ -73,6 +74,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asoresources.AddToScheme(scheme)
 	_ = asoweb.AddToScheme(scheme)
 	_ = asoworkspace.AddToScheme(scheme)
+	_ = asoregistry.AddToScheme(scheme)
 	return scheme
 }
 
@@ -86,6 +88,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asoresources.ResourceGroup{}, Name: "aso_resources_resourcegroup"},
 		{Obj: &asoweb.Site{}, Name: "aso_web_site"},
 		{Obj: &asoworkspace.Workspace{}, Name: "aso_operationalinsights_workspace"},
+		{Obj: &asoregistry.Registry{}, Name: "aso_containerregistry_registry"},
 	}
 }
 

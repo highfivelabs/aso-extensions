@@ -8,3 +8,4 @@ resources:
 - app.azure.com_managedenvironments.yaml
 - web.azure.com_sites.yaml
 - operationalinsights.azure.com_workspaces.yaml
+- containerregistry.azure.com_registries.yaml

@@ -6,3 +6,4 @@ app/ManagedEnvironment
 resources/ResourceGroup
 web/Site
 operationalinsights/Workspace
+containerregistry/Registry
