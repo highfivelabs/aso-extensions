@@ -20,6 +20,7 @@ Not affiliated with or endorsed by Microsoft.
 | `insights.azure.hfl.dev/v20210901` `PrivateLinkScope`, `PrivateLinkScopesScopedResource`, `PrivateLinkScopesPrivateEndpointConnection`; `network.azure.hfl.dev/v20250501` `NetworkSecurityPerimeter`, `NetworkSecurityPerimetersProfile`, `NetworkSecurityPerimetersProfilesAccessRule`, `NetworkSecurityPerimetersResourceAssociation`, `NetworkSecurityPerimetersLink`, `NetworkSecurityPerimetersLoggingConfiguration` | an Azure Monitor private link scope with its scoped workspaces and endpoint connections, and a network security perimeter with its profiles, access rules, associations of PaaS resources, links and logging; ASO has none of them; owned by the resource group or by our parent kind; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `containerregistry.azure.hfl.dev/v20251101` `RegistriesToken`, `RegistriesScopeMap`, `RegistriesCredentialSet`, `RegistriesWebhook` | the repository tokens, scope maps, credential sets (for cache rules) and webhooks of a container registry, which ASO's `Registry` has none of; owned by ASO's `Registry`; a webhook's URI and headers come from Secrets; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `compute.azure.hfl.dev/v20220301` `VirtualMachinesRunCommand`; `devtestlab.azure.hfl.dev/v20180915` `Schedule`; `maintenance.azure.hfl.dev/v20230401` `MaintenanceConfiguration` | what a virtual machine needs beside the VM: a run command (script, parameters, run-as password from a Secret), the auto-shutdown schedule, and Azure Maintenance configurations; ASO's `VirtualMachine` has none of them; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
+| `recoveryservices.azure.hfl.dev/v20260701` `Vault`, `VaultsBackupPolicy`, `VaultsBackupResourceGuardProxy`, `VaultsPrivateEndpointConnection` | an Azure Backup (Recovery Services) vault and its backup policies, resource guard proxies and private endpoint connections; ASO has no Recovery Services group; backup policies are owned by our vault; generated like the Container Apps kinds. Enabling backup for a VM (the protected item) is not a kind yet | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `authorization.azure.hfl.dev/v1` `ManagementLock` | a management lock (`Microsoft.Authorization/locks`, `CanNotDelete` or `ReadOnly`) on a subscription, resource group or resource, owned by any ASO resource or an ARM ID; the first plain ARM kind here (`docs/plan.md`, section 1) | ours; ASO issue [#3756](https://github.com/Azure/azure-service-operator/issues/3756), open, needs a design for the lock's four scopes |
 
 ## Coverage
@@ -27,14 +28,14 @@ Not affiliated with or endorsed by Microsoft.
 <!-- coverage:start -->
 ![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)
 
-Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 14.1% and our kinds cover a further 1.1%; 84.9% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. Not every service matters alike, so the services are in three tiers by how much the foundational modules people migrate first use them ([`priority.csv`](docs/coverage/priority.csv)):
+Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 14.1% and our kinds cover a further 1.5%; 84.4% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. Not every service matters alike, so the services are in three tiers by how much the foundational modules people migrate first use them ([`priority.csv`](docs/coverage/priority.csv)):
 
 ![Coverage by tier](docs/coverage/bars/_tiers.svg)
 
 | Tier | Services | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: |
 | 1 | 8 | 27.1% | 1.1% | 71.8% |
-| 2 | 19 | 33.2% | 5.4% | 61.3% |
+| 2 | 19 | 33.2% | 8.2% | 58.6% |
 | 3 | 253 | 6.0% | 0.0% | 94.0% |
 
 By service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage); method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), all services in [`services.csv`](docs/coverage/services.csv).
@@ -60,6 +61,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 2 | `Microsoft.App` | ![Microsoft.App](docs/coverage/bars/Microsoft.App.svg) | 48.7% | 5.7% | 45.6% |
 | 2 | `Microsoft.DocumentDB` | ![Microsoft.DocumentDB](docs/coverage/bars/Microsoft.DocumentDB.svg) | 45.1% | 0.0% | 54.9% |
 | 2 | `Microsoft.Sql` | ![Microsoft.Sql](docs/coverage/bars/Microsoft.Sql.svg) | 44.5% | 0.0% | 55.5% |
+| 2 | `Microsoft.RecoveryServices` | ![Microsoft.RecoveryServices](docs/coverage/bars/Microsoft.RecoveryServices.svg) | 0.0% | 23.0% | 77.0% |
 | 2 | `Microsoft.CognitiveServices` | ![Microsoft.CognitiveServices](docs/coverage/bars/Microsoft.CognitiveServices.svg) | 24.0% | 0.0% | 76.0% |
 | 2 | `Microsoft.Cache` | ![Microsoft.Cache](docs/coverage/bars/Microsoft.Cache.svg) | 80.4% | 0.0% | 19.6% |
 | 2 | `Microsoft.ContainerRegistry` | ![Microsoft.ContainerRegistry](docs/coverage/bars/Microsoft.ContainerRegistry.svg) | 25.8% | 18.0% | 56.2% |
@@ -72,7 +74,6 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 2 | `Microsoft.Consumption` | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 0.0% | 100.0% |
 | 2 | `Microsoft.Management` | ![Microsoft.Management](docs/coverage/bars/Microsoft.Management.svg) | 0.0% | 0.0% | 100.0% |
 | 2 | `Microsoft.OperationsManagement` | ![Microsoft.OperationsManagement](docs/coverage/bars/Microsoft.OperationsManagement.svg) | 0.0% | 0.0% | 100.0% |
-| 2 | `Microsoft.RecoveryServices` | ![Microsoft.RecoveryServices](docs/coverage/bars/Microsoft.RecoveryServices.svg) | 0.0% | 0.0% | 100.0% |
 
 </details>
 
