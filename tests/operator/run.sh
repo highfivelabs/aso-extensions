@@ -93,6 +93,7 @@ if ! kind get clusters | grep -qx "${CLUSTER}"; then
 else
   kind get kubeconfig --name "${CLUSTER}" > "${KUBECONFIG}"
 fi
+docker image inspect postgres:17 >/dev/null 2>&1 || docker pull -q postgres:17 >/dev/null
 kind load docker-image postgres:17 --name "${CLUSTER}" >/dev/null
 
 step "ASO's footprint, made by hand"
