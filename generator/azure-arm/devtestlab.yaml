@@ -1,0 +1,14 @@
+typeFilters:
+  - action: include
+    group: devtestlab
+    version: v20180915
+    because: the newest stable version of the DevTest Labs schedules, which hold a VM's auto-shutdown
+
+groupModelConfiguration:
+  2018-09-15:
+    Schedule:
+      $exportAs: Schedule
+      $supportedFrom: v0.1.0
+    ScheduleProperties:
+      TargetResourceId:
+        $referenceType: arm # the virtual machine a shutdown schedule applies to

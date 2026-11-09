@@ -1,0 +1,11 @@
+typeFilters:
+  - action: include
+    group: maintenance
+    version: v20230401
+    because: the newest stable version of the Azure Maintenance configurations
+
+groupModelConfiguration:
+  2023-04-01:
+    MaintenanceConfiguration:
+      $exportAs: MaintenanceConfiguration
+      $supportedFrom: v0.1.0

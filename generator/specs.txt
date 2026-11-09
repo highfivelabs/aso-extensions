@@ -6,3 +6,6 @@ specification/operationalinsights
 specification/monitor
 specification/network
 specification/containerregistry
+specification/compute
+specification/devtestlabs
+specification/maintenance
