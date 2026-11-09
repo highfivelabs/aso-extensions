@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after Azure Monitor private link scopes and network security perimeters (c6).
+State at the writing: 2026-11-09, after the container registry tokens, scope maps, credential sets and webhooks (c9).
 
 ## What this repository is
 
@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | --- | --- | --- |
 | Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
-| ARM, generated | `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+| ARM, generated | `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
 ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
@@ -32,10 +32,9 @@ One pull request per gap, cut from the latest `main`.
 
 | Rank | Gap | State |
 | --- | --- | --- |
-| c1, c3, c4, c5, c6 | locks, Container Apps environment children, App Service children, Log Analytics children, Monitor private link scopes and network security perimeters | built |
+| c1, c3, c4, c5, c6, c9 | locks, Container Apps environment children, App Service children, Log Analytics children, Monitor private link scopes and network security perimeters, container registry tokens and webhooks | built |
 | c7 | Key Vault keys | skip: ASO's `VaultKey` (#5564) ships in its next release; recheck |
-| c9 | ACR tokens, scope maps, credential sets | next; a token password is a secret returned once |
-| c10 | VM extras: run command, auto-shutdown schedule, maintenance assignment, Recovery Services backup | queued; no Recovery Services group at the pin |
+| c10 | VM extras: run command, auto-shutdown schedule, maintenance assignment, Recovery Services backup | next; no Recovery Services group at the pin |
 | c11 to c14 | storage local users; Cognitive Services RAI policies; Cosmos Gremlin and SQL dedicated gateway; AKS managed namespaces | queued |
 | c8 | management groups, policy, budgets, vWAN, subscription tags | queued, low priority (platform) |
 | c18 | stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones) | not a new kind |
