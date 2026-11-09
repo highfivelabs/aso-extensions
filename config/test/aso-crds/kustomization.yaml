@@ -9,3 +9,4 @@ resources:
 - web.azure.com_sites.yaml
 - operationalinsights.azure.com_workspaces.yaml
 - containerregistry.azure.com_registries.yaml
+- compute.azure.com_virtualmachines.yaml

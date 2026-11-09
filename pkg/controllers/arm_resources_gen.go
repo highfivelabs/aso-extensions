@@ -9,12 +9,21 @@ import (
 	app_customizations "github.com/highfivelabs/aso-extensions/apis/arm/app/customizations"
 	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
+	compute_customizations "github.com/highfivelabs/aso-extensions/apis/arm/compute/customizations"
+	compute_v20220301 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301"
+	compute_v20220301s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301/storage"
 	containerregistry_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/customizations"
 	containerregistry_v20251101 "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101"
 	containerregistry_v20251101s "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101/storage"
+	devtestlab_customizations "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/customizations"
+	devtestlab_v20180915 "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915"
+	devtestlab_v20180915s "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915/storage"
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
 	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
 	insights_v20210901s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901/storage"
+	maintenance_customizations "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/customizations"
+	maintenance_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401"
+	maintenance_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401/storage"
 	network_customizations "github.com/highfivelabs/aso-extensions/apis/arm/network/customizations"
 	network_v20250501 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501"
 	network_v20250501s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501/storage"
@@ -97,6 +106,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesCredentialSet)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesScopeMap)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesToken)})
@@ -124,9 +134,11 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Schedule)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
+	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimeter)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersLink)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersLoggingConfiguration)})
@@ -135,6 +147,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersResourceAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPack)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesDataExport)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedService)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedStorageAccount)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesSavedSearch)})
@@ -204,6 +217,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsJavaComponent)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsManagedCertificate)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsStorage)})
+	result = append(result, &registration.KnownType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
+	result = append(result, &registration.KnownType{Obj: new(compute_v20220301s.VirtualMachinesRunCommand)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesCredentialSet)},
@@ -216,6 +231,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesScopeMap)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesToken)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesWebhook)})
+	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
+	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScope)},
@@ -226,6 +243,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScope)},
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesScopedResource)})
+	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
+	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401s.MaintenanceConfiguration)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimeter)},
@@ -246,6 +265,7 @@ func getKnownTypes() []*registration.KnownType {
 		result,
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPack)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesDataExport)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedService)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedStorageAccount)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesSavedSearch)},
@@ -254,6 +274,7 @@ func getKnownTypes() []*registration.KnownType {
 		result,
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.QueryPack)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.QueryPacksQuery)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesDataExport)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesLinkedService)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesLinkedStorageAccount)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesSavedSearch)},
@@ -279,10 +300,16 @@ func createScheme() *runtime.Scheme {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = app_v20250101.AddToScheme(scheme)
 	_ = app_v20250101s.AddToScheme(scheme)
+	_ = compute_v20220301.AddToScheme(scheme)
+	_ = compute_v20220301s.AddToScheme(scheme)
 	_ = containerregistry_v20251101.AddToScheme(scheme)
 	_ = containerregistry_v20251101s.AddToScheme(scheme)
+	_ = devtestlab_v20180915.AddToScheme(scheme)
+	_ = devtestlab_v20180915s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
 	_ = insights_v20210901s.AddToScheme(scheme)
+	_ = maintenance_v20230401.AddToScheme(scheme)
+	_ = maintenance_v20230401s.AddToScheme(scheme)
 	_ = network_v20250501.AddToScheme(scheme)
 	_ = network_v20250501s.AddToScheme(scheme)
 	_ = operationalinsights_v20250701.AddToScheme(scheme)
@@ -300,13 +327,16 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ManagedEnvironmentsJavaComponentExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsManagedCertificateExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
+	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesCredentialSetExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesScopeMapExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesTokenExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesWebhookExtension{})
+	result = append(result, &devtestlab_customizations.ScheduleExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
+	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimeterExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersLinkExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersLoggingConfigurationExtension{})
@@ -315,6 +345,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.NetworkSecurityPerimetersResourceAssociationExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPackExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPacksQueryExtension{})
+	result = append(result, &operationalinsights_customizations.WorkspacesDataExportExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesLinkedServiceExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesLinkedStorageAccountExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesSavedSearchExtension{})

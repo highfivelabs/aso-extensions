@@ -92,6 +92,54 @@ QueryPacksQuery: Resource
     ├── TimeModified: *string
     └── Type: *string
 
+WorkspacesDataExport: Resource
+├── Owner: Workspace
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── CreatedDate: *string
+│   ├── DataExportId: *string
+│   ├── Destination: *Object (2 properties)
+│   │   ├── EventHubName: *string
+│   │   └── ResourceReference: *genruntime.ResourceReference
+│   ├── Enable: *bool
+│   ├── LastModifiedDate: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── TableNames: string[]
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DataExportId: *string
+    ├── Destination: *Object (3 properties)
+    │   ├── EventHubName: *string
+    │   ├── ResourceId: *string
+    │   └── Type: *Enum (2 values)
+    │       ├── "EventHub"
+    │       └── "StorageAccount"
+    ├── Enable: *bool
+    ├── Id: *string
+    ├── LastModifiedDate: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── TableNames: string[]
+    └── Type: *string
+
 WorkspacesLinkedService: Resource
 ├── Owner: Workspace
 ├── Spec: Object (7 properties)

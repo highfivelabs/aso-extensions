@@ -8,16 +8,19 @@ resources:
 - app.azure.hfl.dev_managedenvironmentsmanagedcertificates.yaml
 - app.azure.hfl.dev_managedenvironmentsstorages.yaml
 - authorization.azure.hfl.dev_managementlocks.yaml
+- compute.azure.hfl.dev_virtualmachinesruncommands.yaml
 - containerregistry.azure.hfl.dev_registriescredentialsets.yaml
 - containerregistry.azure.hfl.dev_registriesscopemaps.yaml
 - containerregistry.azure.hfl.dev_registriestokens.yaml
 - containerregistry.azure.hfl.dev_registrieswebhooks.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
+- devtestlab.azure.hfl.dev_schedules.yaml
 - insights.azure.hfl.dev_privatelinkscopes.yaml
 - insights.azure.hfl.dev_privatelinkscopesprivateendpointconnections.yaml
 - insights.azure.hfl.dev_privatelinkscopesscopedresources.yaml
 - keyvault.azure.hfl.dev_vaultcertificates.yaml
 - keyvault.azure.hfl.dev_vaultsecrets.yaml
+- maintenance.azure.hfl.dev_maintenanceconfigurations.yaml
 - network.azure.hfl.dev_networksecurityperimeters.yaml
 - network.azure.hfl.dev_networksecurityperimeterslinks.yaml
 - network.azure.hfl.dev_networksecurityperimetersloggingconfigurations.yaml
@@ -26,6 +29,7 @@ resources:
 - network.azure.hfl.dev_networksecurityperimetersresourceassociations.yaml
 - operationalinsights.azure.hfl.dev_querypacks.yaml
 - operationalinsights.azure.hfl.dev_querypacksqueries.yaml
+- operationalinsights.azure.hfl.dev_workspacesdataexports.yaml
 - operationalinsights.azure.hfl.dev_workspaceslinkedservices.yaml
 - operationalinsights.azure.hfl.dev_workspaceslinkedstorageaccounts.yaml
 - operationalinsights.azure.hfl.dev_workspacessavedsearches.yaml

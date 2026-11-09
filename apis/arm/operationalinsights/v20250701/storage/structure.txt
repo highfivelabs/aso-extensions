@@ -88,6 +88,51 @@ QueryPacksQuery: Resource
     ├── TimeModified: *string
     └── Type: *string
 
+WorkspacesDataExport: Resource
+├── Owner: operationalinsights/v20250701.Workspace
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── CreatedDate: *string
+│   ├── DataExportId: *string
+│   ├── Destination: *Object (3 properties)
+│   │   ├── EventHubName: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── ResourceReference: *genruntime.ResourceReference
+│   ├── Enable: *bool
+│   ├── LastModifiedDate: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── TableNames: string[]
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DataExportId: *string
+    ├── Destination: *Object (4 properties)
+    │   ├── EventHubName: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ResourceId: *string
+    │   └── Type: *string
+    ├── Enable: *bool
+    ├── Id: *string
+    ├── LastModifiedDate: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── TableNames: string[]
+    └── Type: *string
+
 WorkspacesLinkedService: Resource
 ├── Owner: operationalinsights/v20250701.Workspace
 ├── Spec: Object (9 properties)

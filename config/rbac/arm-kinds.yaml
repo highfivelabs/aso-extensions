@@ -7,8 +7,11 @@ metadata:
 rules:
 - apiGroups:
   - app.azure.hfl.dev
+  - compute.azure.hfl.dev
   - containerregistry.azure.hfl.dev
+  - devtestlab.azure.hfl.dev
   - insights.azure.hfl.dev
+  - maintenance.azure.hfl.dev
   - network.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
   - web.azure.hfl.dev
@@ -16,8 +19,11 @@ rules:
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups:
   - app.azure.hfl.dev
+  - compute.azure.hfl.dev
   - containerregistry.azure.hfl.dev
+  - devtestlab.azure.hfl.dev
   - insights.azure.hfl.dev
+  - maintenance.azure.hfl.dev
   - network.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
   - web.azure.hfl.dev
