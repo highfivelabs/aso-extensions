@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after the App Service kinds.
+State at the writing: 2026-11-09, after the Log Analytics children (c5).
 
 ## What this repository is
 
@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | --- | --- | --- |
 | Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
-| ARM, generated | `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+| ARM, generated | `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
 ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
@@ -32,9 +32,8 @@ One pull request per gap, cut from the latest `main`.
 
 | Rank | Gap | State |
 | --- | --- | --- |
-| c1, c3, c4 | locks, Container Apps environment children, App Service children | built |
-| c5 | Log Analytics children (tables, data exports, linked services, linked storage, query packs, solutions) | next |
-| c6 | Azure Monitor private link scope and scoped resources; network security perimeter associations | queued |
+| c1, c3, c4, c5 | locks, Container Apps environment children, App Service children, Log Analytics children | built |
+| c6 | Azure Monitor private link scope and scoped resources; network security perimeter associations | next |
 | c7 | Key Vault keys | skip: ASO's `VaultKey` (#5564) ships in its next release; recheck |
 | c9 | ACR tokens, scope maps, credential sets | queued; a token password is a secret returned once |
 | c10 | VM extras: run command, auto-shutdown schedule, maintenance assignment, Recovery Services backup | queued; no Recovery Services group at the pin |
@@ -105,6 +104,34 @@ Facts learned the hard way:
   assumption to revisit before the repository goes public.
 - `hack/generate.sh` sets `LC_ALL=C`: the order of the CRD kustomization's list
   must not depend on the machine (the laptop and the Ubuntu machine differ).
+- ASO's generator cannot do everything the specs describe; find out with a
+  run before designing around it (a run is 30 seconds, `--verbose` shows why).
+  Limits met so far: **one level of `x-ms-client-flatten` only** (a resource
+  whose `properties.destination.metaData` nest flattened fails with "need to
+  implement multiple levels of flattening": Log Analytics data exports);
+  **an object schema without `type: object` is dropped as empty** (the
+  solutions' `SolutionProperties`); **a resource whose kind ends in `Source`
+  fails to compile** (the receiver `source` collides with the conversion
+  parameter; Log Analytics data sources); **an enum-valued name** (a
+  multi-valued `Name` parameter) puts the enum in the storage version, which
+  then imports the API version, an import cycle: add a `typeTransformers`
+  entry turning the enum (`<Resource>_Name_Spec`) into `string`, as
+  `generator/azure-arm/operationalinsights.yaml` does. A `typeTransformers`
+  `remove: true` on a property is the usual way past a property the
+  generator cannot handle.
+- The generator's label errors come all at once (every unlabelled reference
+  in one run); a list of ARM IDs (`storageAccountIds`) is labelled the same
+  way as a single one and becomes a `[]ResourceReference`.
+- `task generate-arm` on the Ubuntu machine runs `hack/generate.sh` too;
+  tar `apis pkg/controllers/arm_resources_gen.go generator/reports config`
+  into `offload-artifacts/`, then **delete `apis/arm`, `config/crds`,
+  `config/test/aso-crds` and `generator/reports` locally before extracting**,
+  or a kind you dropped leaves stale files. For quick generator iterations,
+  `rsync` `generator/` to the machine's checkout
+  (`~/Development/git/github.com/highfivelabs/aso-extensions`; the path
+  there is under `/home/bbjelland`, not `/Users`) and run `bin/generator
+  gen-types --verbose generator/azure-arm.yaml` over `ssh` with the
+  environment `hack/generate-arm.sh` sets.
 - ASO's token scope is `<audience>/.default`: give the fake audience no
   trailing slash.
 - A generated kind's delete under a `CanNotDelete` lock fails with

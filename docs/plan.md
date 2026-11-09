@@ -429,7 +429,7 @@ rechecks upstream again when it is built.
 | c1 | Management locks | built (b8) | done |
 | c3 | Container Apps environment children (Dapr components, storages, certificates, managed certificates, ...) | not at the pin, no pull request | **built**, generated: `ManagedEnvironmentsDaprComponent`, `Storage`, `Certificate`, `ManagedCertificate`, `JavaComponent` (`app.azure.hfl.dev`, API 2025-01-01). Not built: Dapr subscriptions, HTTP route configs, .NET components and maintenance configurations exist only in preview API versions, which the filters prune |
 | c4 | App Service site children (slots, hostname bindings, certificates, config sections, publishing policies) | not at the pin, no pull request | **built**, generated (`web.azure.hfl.dev`, API 2026-07-15, ASO's own `Site` version): `SitesSlot`, `SitesHostNameBinding`, `SitesSlotsHostNameBinding` (a custom domain on the app and on a slot), `Certificate` (a PFX and its password from Secrets, owned by the resource group). Not built: the generator does not produce the fixed-name config sections (`appsettings`, `connectionstrings`, `authsettingsV2`, `logs`, `backup`, `metadata`) or the `ftp`/`scm` publishing policies as resources (it produced only `config/web`, which duplicates the inline `siteConfig` of ASO's `Site`, so two controllers would fight over it); ASO's `Site` and our `SitesSlot` carry app settings and connection strings inline. Slot children other than host name bindings (config, certificates, containers) are left out |
-| c5 | Log Analytics children (tables, data exports, linked services, linked storage, query packs, solutions) | not at the pin, no pull request | queued |
+| c5 | Log Analytics children (tables, data exports, linked services, linked storage, query packs, solutions) | not at the pin, no pull request (rechecked 2026-11-09: v2.22.0 still the latest release, `main` three documentation commits past the pin, no open pull request or issue for any of them; ASO exports only `Workspace`, whose newest version is 2025-07-01) | **built**, generated (`operationalinsights.azure.hfl.dev`, API 2025-07-01, ASO's own `Workspace` version): `WorkspacesTable` (plan, retention, schema, restored logs and search results), `WorkspacesSavedSearch`, `WorkspacesLinkedService` (an Automation account or a cluster), `WorkspacesLinkedStorageAccount`, `QueryPack` (owned by the resource group) and `QueryPacksQuery` (owned by our pack). Not built: **data exports**, because ASO's generator flattens one level only and the spec nests `destination` and `metaData` inside `properties` (the build fails with "need to implement multiple levels of flattening"; the fix is in the generator, a design change for ASO); **solutions** (`Microsoft.OperationsManagement`, a 2015 preview API), because its `SolutionProperties` lacks `type: object` and the generator drops it as an empty type, leaving no `workspaceResourceId`; **data sources** (the generator names the receiver `source` and the storage conversions do not compile; they configure the retired Log Analytics agent), **storage insight configs** (legacy), **summary logs**, **clusters** (dedicated clusters, a capacity commitment, not an application need) and **network security perimeter configurations** (read-only). A linked storage account's name is one of five values; the generator keeps such an enum in the storage version, which then imports the API version (a cycle), so `azureName` is a plain string there and Azure refuses a wrong one |
 | c6 | Azure Monitor private link scope and scoped resources; network security perimeter associations | not at the pin, no pull request | queued |
 | c7 | Key Vault keys | `VaultKey` merged in ASO (#5564), next release | skip: wait for ASO's release |
 | c8 | Management groups, Azure Policy, budgets, vWAN hub connections, subscription tags | management groups #2249 open, no pull request | queued, low priority (platform, not app) |
@@ -641,6 +641,17 @@ serialization and conversion tests):
   deletes them and leaves the `Site`; a host name bound to the app and a
   certificate (the PFX and its password from Secrets) are created and
   deleted the same way; the CRD refuses an unknown SSL state;
+- Log Analytics children, generated (c5): a custom table of ASO's
+  `Workspace` (a stand-in with the annotation ASO writes), with its plan,
+  retention and schema, a saved search, a linked storage account (its
+  storage account an ARM reference) and a linked Automation service are PUT
+  by ASO's reconciler with the namespace's identity at the ARM ID computed
+  from the owner chain; a retention change is PUT again and status is read
+  back; deleting them deletes them and leaves the workspace; a query pack
+  owned by the resource group and a query owned by our pack (the owner
+  chain runs through our kind) are created and deleted the same way; the
+  CRD refuses a table plan that does not exist and a retention under four
+  days;
 - management locks: a lock on an ASO `ResourceGroup` is set in the fake
   Resource Manager on the ARM ID ASO recorded, with the namespace's
   `aso-workload` identity, and the `ResourceGroup` becomes its Kubernetes
