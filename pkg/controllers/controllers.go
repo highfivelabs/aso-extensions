@@ -42,6 +42,7 @@ import (
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
+	asoweb "github.com/Azure/azure-service-operator/v2/api/web/v20260715/storage"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/registration"
@@ -69,6 +70,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asokeyvault.AddToScheme(scheme)
 	_ = asoapp.AddToScheme(scheme)
 	_ = asoresources.AddToScheme(scheme)
+	_ = asoweb.AddToScheme(scheme)
 	return scheme
 }
 
@@ -80,6 +82,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asokeyvault.Vault{}, Name: "aso_keyvault_vault"},
 		{Obj: &asoapp.ManagedEnvironment{}, Name: "aso_app_managedenvironment"},
 		{Obj: &asoresources.ResourceGroup{}, Name: "aso_resources_resourcegroup"},
+		{Obj: &asoweb.Site{}, Name: "aso_web_site"},
 	}
 }
 

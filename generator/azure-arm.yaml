@@ -36,6 +36,7 @@ upgradableResourcesReport:
 
 imports:
   app: azure-arm/app.yaml
+  web: azure-arm/web.yaml
 
 # Filters are applied in document order; the earliest match wins (as in ASO's
 # azure-arm.yaml, from which these are taken).

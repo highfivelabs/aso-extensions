@@ -185,6 +185,29 @@ run over the pinned specs with configuration kept here.
   types). The price: a second API version of a kind would need a webhook,
   or a new kind name. Each kind is pinned to the API version it was
   generated from.
+
+  **An assumption to revisit before the repository goes public** (the
+  coordinator, 2026-11-09: go with it for now; the repository is private and
+  has no users, so this is cheap to change today and not later). What the
+  revisit would involve, if more than one API version of a generated kind
+  is wanted:
+  1. *A conversion webhook*, as ASO has: serve the API versions and the
+     storage version from each CRD with `conversion.strategy: Webhook`; run
+     controller-runtime's `/convert` handler in the manager (the generated
+     types already implement `ConvertTo`/`ConvertFrom` against a hub); give
+     it a certificate and put the CA bundle in every CRD (cert-manager, or a
+     small controller that writes both, which needs the right to patch
+     CRDs); register the storage (hub) type with the reconciler again, as
+     ASO does, and stop patching `registersAsStorageVersion` in the
+     generator. Cost: a webhook server, a certificate and a wider install,
+     which this repository avoided on purpose.
+  2. *Per-version kinds*: a new API version generates a new kind
+     (`SitesSlotV20270101`) beside the old, with no conversion, the old
+     deprecated. Cost: users migrate by hand (a new object per resource;
+     `reconcile-policy: detach-on-delete` on the old one makes that safe),
+     and every version is another CRD in the install.
+  Either is a decision for the builder; per-version kinds are the cheaper
+  one while there are no users.
 - **What the missing webhooks cost.** ASO's webhooks also validate resource
   references, secret destinations and that `owner` and `azureName` do not
   change. The generated kinds have the CRD's own schema validation (types,
@@ -405,7 +428,7 @@ rechecks upstream again when it is built.
 | --- | --- | --- | --- |
 | c1 | Management locks | built (b8) | done |
 | c3 | Container Apps environment children (Dapr components, storages, certificates, managed certificates, ...) | not at the pin, no pull request | **built**, generated: `ManagedEnvironmentsDaprComponent`, `Storage`, `Certificate`, `ManagedCertificate`, `JavaComponent` (`app.azure.hfl.dev`, API 2025-01-01). Not built: Dapr subscriptions, HTTP route configs, .NET components and maintenance configurations exist only in preview API versions, which the filters prune |
-| c4 | App Service site children (slots, hostname bindings, certificates, config sections, publishing policies) | not at the pin, no pull request | queued |
+| c4 | App Service site children (slots, hostname bindings, certificates, config sections, publishing policies) | not at the pin, no pull request | **built**, generated (`web.azure.hfl.dev`, API 2026-07-15, ASO's own `Site` version): `SitesSlot`, `SitesHostNameBinding`, `SitesSlotsHostNameBinding` (a custom domain on the app and on a slot), `Certificate` (a PFX and its password from Secrets, owned by the resource group). Not built: the generator does not produce the fixed-name config sections (`appsettings`, `connectionstrings`, `authsettingsV2`, `logs`, `backup`, `metadata`) or the `ftp`/`scm` publishing policies as resources (it produced only `config/web`, which duplicates the inline `siteConfig` of ASO's `Site`, so two controllers would fight over it); ASO's `Site` and our `SitesSlot` carry app settings and connection strings inline. Slot children other than host name bindings (config, certificates, containers) are left out |
 | c5 | Log Analytics children (tables, data exports, linked services, linked storage, query packs, solutions) | not at the pin, no pull request | queued |
 | c6 | Azure Monitor private link scope and scoped resources; network security perimeter associations | not at the pin, no pull request | queued |
 | c7 | Key Vault keys | `VaultKey` merged in ASO (#5564), next release | skip: wait for ASO's release |
@@ -543,7 +566,7 @@ one Deployment, nothing per namespace to create. A static install
 
 ## 7. Proven, and not
 
-Proven by `task test` (envtest, 21 tests, and the generated kinds' own
+Proven by `task test` (envtest, 24 tests, and the generated kinds' own
 serialization and conversion tests):
 
 - a password user gets exactly its database privileges, changes revoke
@@ -610,6 +633,14 @@ serialization and conversion tests):
   with `ScopeLocked`, and the delete goes through once the lock is removed.
   The generated packages' own tests (JSON and property-conversion round
   trips) pass;
+- App Service children, generated (c4): a deployment slot of ASO's `Site`
+  (a stand-in) is PUT by ASO's reconciler with the namespace's identity,
+  with its server farm as an ARM reference; a host name bound to the slot is
+  owned by our slot (the owner chain runs through ASO's `Site` and our
+  kind); a change is PUT again; deleting the binding and then the slot
+  deletes them and leaves the `Site`; a host name bound to the app and a
+  certificate (the PFX and its password from Secrets) are created and
+  deleted the same way; the CRD refuses an unknown SSL state;
 - management locks: a lock on an ASO `ResourceGroup` is set in the fake
   Resource Manager on the ARM ID ASO recorded, with the namespace's
   `aso-workload` identity, and the `ResourceGroup` becomes its Kubernetes
