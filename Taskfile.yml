@@ -66,6 +66,7 @@ tasks:
     desc: Unit tests and the end-to-end tests (envtest, the fake cloud in process, PostgreSQL in Docker)
     cmds:
       - task: upstream-check
+      - hack/check-tests-present.sh
       - task: common:setup-envtest
         vars: {BIN: '{{.BIN}}', PACKAGE: '{{.SETUP_ENVTEST}}'}
       - |
@@ -88,14 +89,15 @@ tasks:
       - go vet -tags fakecloud ./cmd/manager
       - hack/check-no-fake-cloud.sh
       - hack/check-spdx.sh
+      - hack/test-operator-e2e-guard.sh
       - task: build
       - task: test
 
   operator-e2e:
-    desc: The install on kind with the fake cloud (tests/operator/run.sh)
+    desc: The install on kind with the fake cloud (tests/operator/run.sh); fails unless it ends with "all checks passed"
     cmds:
       - task: upstream-check
-      - NAME={{.NAME}} tests/operator/run.sh
+      - NAME={{.NAME}} hack/operator-e2e.sh
 
   coverage:
     desc: Regenerate the coverage dashboard (docs/coverage and the README's Coverage section)

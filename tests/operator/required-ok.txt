@@ -1,0 +1,42 @@
+# Each line is the start of an "ok: ..." line that tests/operator/run.sh must
+# print (hack/operator-e2e.sh fails the task if one is missing). Add a kind's
+# lines here with the kind's checks; never delete one to make a run pass.
+CRDs installed and established
+manager pod runs as
+aso-workload tokens, read secrets
+team-a User Ready
+team-a VaultSecret Ready
+PostgreSQL holds the Entra role app-identity
+team-a VaultCertificate Ready
+team-a DaprComponent Ready
+team-a SitesSlot Ready
+team-a WorkspacesTable Ready
+team-a NetworkSecurityPerimeter Ready
+team-a RegistriesScopeMap Ready
+team-a VirtualMachinesRunCommand Ready
+team-a Vault (Recovery Services) Ready
+team-a ManagementLock Ready
+the fake resource manager holds a lock on team-a-rg
+team-b User refused
+team-b VaultSecret refused
+team-b VaultCertificate refused
+team-b DaprComponent refused
+team-b SitesSlot refused
+team-b WorkspacesTable refused
+team-b NetworkSecurityPerimeter refused
+team-b RegistriesScopeMap refused
+team-b VirtualMachinesRunCommand refused
+team-b Vault refused
+team-b ManagementLock refused
+the Entra role app-identity is dropped
+the vault soft-deleted app-url
+the vault soft-deleted the certificate app-tls
+the lock on team-a-rg blocks deleting the Dapr component
+the lock on team-a-rg is removed
+with the lock gone, the Dapr component is deleted in Resource Manager
+the slot is deleted in Resource Manager
+the table is deleted in Resource Manager
+the perimeter is deleted in Resource Manager
+the scope map is deleted in Resource Manager
+the run command is deleted in Resource Manager
+the vault is deleted in Resource Manager
