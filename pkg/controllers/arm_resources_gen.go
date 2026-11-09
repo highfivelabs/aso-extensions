@@ -9,6 +9,9 @@ import (
 	app_customizations "github.com/highfivelabs/aso-extensions/apis/arm/app/customizations"
 	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
+	operationalinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/customizations"
+	operationalinsights_v20250701 "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701"
+	operationalinsights_v20250701s "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701/storage"
 	web_customizations "github.com/highfivelabs/aso-extensions/apis/arm/web/customizations"
 	web_v20260715 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715"
 	web_v20260715s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715/storage"
@@ -85,6 +88,12 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPack)})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedService)})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedStorageAccount)})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesSavedSearch)})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesTable)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.Certificate),
 		Indexes: []registration.Index{
@@ -152,6 +161,22 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsStorage)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPack)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedService)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedStorageAccount)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesSavedSearch)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesTable)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.QueryPack)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.QueryPacksQuery)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesLinkedService)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesLinkedStorageAccount)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesSavedSearch)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesTable)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesHostNameBinding)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlot)},
@@ -171,6 +196,8 @@ func createScheme() *runtime.Scheme {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = app_v20250101.AddToScheme(scheme)
 	_ = app_v20250101s.AddToScheme(scheme)
+	_ = operationalinsights_v20250701.AddToScheme(scheme)
+	_ = operationalinsights_v20250701s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
 	_ = web_v20260715s.AddToScheme(scheme)
 	return scheme
@@ -184,6 +211,12 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ManagedEnvironmentsJavaComponentExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsManagedCertificateExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
+	result = append(result, &operationalinsights_customizations.QueryPackExtension{})
+	result = append(result, &operationalinsights_customizations.QueryPacksQueryExtension{})
+	result = append(result, &operationalinsights_customizations.WorkspacesLinkedServiceExtension{})
+	result = append(result, &operationalinsights_customizations.WorkspacesLinkedStorageAccountExtension{})
+	result = append(result, &operationalinsights_customizations.WorkspacesSavedSearchExtension{})
+	result = append(result, &operationalinsights_customizations.WorkspacesTableExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
 	result = append(result, &web_customizations.SitesHostNameBindingExtension{})
 	result = append(result, &web_customizations.SitesSlotExtension{})

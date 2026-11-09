@@ -11,6 +11,12 @@ resources:
 - dbforpostgresql.azure.hfl.dev_users.yaml
 - keyvault.azure.hfl.dev_vaultcertificates.yaml
 - keyvault.azure.hfl.dev_vaultsecrets.yaml
+- operationalinsights.azure.hfl.dev_querypacks.yaml
+- operationalinsights.azure.hfl.dev_querypacksqueries.yaml
+- operationalinsights.azure.hfl.dev_workspaceslinkedservices.yaml
+- operationalinsights.azure.hfl.dev_workspaceslinkedstorageaccounts.yaml
+- operationalinsights.azure.hfl.dev_workspacessavedsearches.yaml
+- operationalinsights.azure.hfl.dev_workspacestables.yaml
 - web.azure.hfl.dev_certificates.yaml
 - web.azure.hfl.dev_siteshostnamebindings.yaml
 - web.azure.hfl.dev_sitesslots.yaml
