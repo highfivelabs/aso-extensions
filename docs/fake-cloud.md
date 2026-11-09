@@ -86,6 +86,20 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   validation of `policyRule`, `mode` and parameter types and values, deletes
   Azure refuses (a definition a set still names), definition versions, an
   assignment's managed identity, and the error codes (the fake's own).
+- Policy remediations and attestations (`Microsoft.PolicyInsights/remediations`,
+  `attestations`; `pkg/fakecloud/arm/policyinsights.go`): a remediation is kept
+  at a management group, subscription, resource group or resource, an
+  attestation at a subscription, resource group or resource (400 at a group,
+  as the spec has no such path); either one's assignment must exist (404) and
+  be at or above it, following the management group hierarchy (400); a
+  remediation of a set assignment must name the set's definition
+  (`policyDefinitionReferenceId`), and its `filters.resourceIds` cannot be
+  used with `ReEvaluateCompliance` (400; both from the spec's descriptions).
+  Not modelled: running a remediation (the fake's is `Succeeded` at once with
+  no deployments; Azure's is `Evaluating`, then `Complete` or `Failed`),
+  cancelling one, whether the definition's effect can be remediated or
+  attested, an attestation changing compliance, and the error codes (the
+  fake's own).
 - Resource Manager checks no role: real Azure lets only Owner and User
   Access Administrator (or a custom role with
   `Microsoft.Authorization/locks/*`) write locks, so ASO's identity may

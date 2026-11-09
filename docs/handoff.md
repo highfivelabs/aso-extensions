@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after management groups, `TagSet` and Azure Policy (foundation rows 1 to 3; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 4 (policy remediation) of `docs/coverage/foundation.md`; `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
+State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, and policy remediations and attestations (foundation rows 1 to 4 and 21; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 5 (PIM, copied from ASO PR #5638; see "PIM, what copying #5638 takes" below) of `docs/coverage/foundation.md`; `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
 
 ## What this repository is
 
@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | --- | --- | --- |
 | Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
-| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions; `policyinsights.azure.hfl.dev` policy remediations and attestations; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
 ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
@@ -62,6 +62,32 @@ generator gives the child no owner.
 | h1 | **Hand-written candidates** (the generator cannot model them; write each as `ManagementLock` was, `pkg/reconcilers/authorization/`, on ASO's generic reconciler): ~~1. Maintenance `ConfigurationAssignment`~~ (four scopes: **generate it now**, patch 0006 makes it an extension resource; try it first, it is small); 2. Recovery Services **protection container, protected item (turns backup on for a VM) and protection intent** (a fixed `backupFabrics/Azure` segment is no resource, so the owner chain cannot name the ARM ID); 3. the Recovery Services singletons (`backupstorageconfig`, `backupconfig`, encryption config, vault extended info); 4. Log Analytics solutions (the spec's `SolutionProperties` is dropped as empty). `foundation.md` marks which of its rows are hand-written | as the foundation rows reach them |
 | c8 | management groups, policy, budgets, vWAN, subscription tags | now foundation rows 1 to 10 |
 | c18 | stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones, resource groups) | not a new kind |
+
+**PIM, what copying #5638 takes** (read 2026-11-09, head `5d0e686e`, open,
+review required). The PR is ASO's generator output for
+`authorization/v20201001` `RoleEligibilityScheduleRequest` plus three
+hand-written pieces: (1) configuration (`$referenceType: arm+wellknown` on
+`RoleDefinitionId`, so a built-in role is named `wellKnownName: Reader`;
+`$importConfigMapMode: optional` on `PrincipalId`; `$defaultAzureName: false`
+and a `NamingConvention` operator-spec property); (2) a webhook defaulter that
+makes `azureName` a stable or random UUID (a request's name must be a GUID);
+(3) an `ARMResourceModifier` extension in `customizations` that resolves the
+well-known role name to the built-in role definition ID through ARM (ASO's
+`resolveBuiltInRoleDefinition`, unexported, in
+`api/authorization/customizations/role_assignment_extensions.go`). Here: (1)
+copies into `generator/azure-arm/authorization.yaml` as is (a 2020-10-01
+include beside the policy versions); (2) has no webhook to live in: either
+require `azureName` (or `metadata.name`) to be a GUID and say so, or default
+it in a generator patch; (3) needs a place for hand-written files in a
+generated `customizations` package, which `hack/generate-arm.sh` deletes
+(`rm -rf apis/arm`) on every run: copy them in from outside `apis/arm` after
+generating, and the extension's internal ASO types (`genericarmclient`,
+`reflecthelpers`) may need exporting in patch 0003; the fake needs role
+definitions to list by name. A request cannot be deleted: the PR's own test
+uses `reconcile-policy: detach-on-delete` and a second `AdminRemove` request,
+and the fake should refuse a DELETE (Azure does) so that is what is tested.
+Then generate `roleAssignmentScheduleRequests` and
+`roleManagementPolicyAssignments` the same way.
 
 Not in the catalog's order but waiting: Azure SQL Entra users (a1, ASO PR
 #5104, open question 5) and Entra directory roles (c15, "if wanted").
@@ -242,6 +268,15 @@ Facts learned the hard way:
   `ScopeLocked` and ASO retries slowly; tests allow minutes.
 - `kubectl logs | grep -q` under `pipefail` fails when the log is long:
   capture first (`logged` in `tests/operator/run.sh`).
+- `upstream.yaml` must list every patch `UPSTREAM.md` lists
+  (`task upstream:yaml-check`, in `task check`): PR #18 added the check while
+  PRs #17 and #20 added patches 0005 and 0006, so `main` failed `task check`
+  until the remediation PR listed them. A new patch goes in both files.
+- `offload` does not copy `offload-artifacts/` to the machine: a command that
+  writes there must `mkdir -p offload-artifacts` first.
+- A property named `owner` in the spec (an attestation's responsible person)
+  collides with the Kubernetes `owner`; ASO's generator renames it to
+  `properties_owner` (Go `PropertiesOwner`), still sent as `owner`.
 
 ## Running things: offload and the Ubuntu machine
 
