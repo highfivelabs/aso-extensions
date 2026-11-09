@@ -1,10 +1,10 @@
 # Plan
 
-Status, 2026-11-09: the repository has three kinds,
+Status, 2026-11-09: the repository has four kinds,
 `dbforpostgresql.azure.hfl.dev/v1` `User` (ASO's PostgreSQL user with
 Microsoft Entra principals, per-database privileges, schema and default
 privileges, and database ownership),
-`keyvault.azure.hfl.dev/v1` `VaultSecret`, and
+`keyvault.azure.hfl.dev/v1` `VaultSecret` and `VaultCertificate`, and
 `authorization.azure.hfl.dev/v1` `ManagementLock`, the one ARM kind (the
 exception in section 1). All pass their end-to-end tests against a fake
 cloud, and the install runs on kind (section 7). It has no
@@ -215,6 +215,30 @@ release and users move to ASO's (section 4).
   only indirectly, and its challenge-based auth checks that the vault's host
   matches the token audience, which a test vault cannot.
 
+### VaultCertificate
+
+- b6: a Key Vault certificate imported from a certificate and private key
+  in Kubernetes Secrets, typically the `tls.crt` and `tls.key` of the
+  `kubernetes.io/tls` Secret cert-manager issues. Two
+  `genruntime.SecretReference`s (`certificate`, `privateKey`), so ASO's
+  resolver reads them and a change to either Secret reconciles the object.
+- Both are checked to make a pair before anything is sent; then imported
+  as PEM (`policy.secret_props.contentType: application/x-pem-file`), key
+  first, then the chain. Key Vault keeps a key and a secret of the same
+  name beside the certificate; the secret's value is that PEM, which App
+  Service, Application Gateway and Front Door read
+  (`status.secretId`).
+- A different leaf (a renewal) is imported as a new version, compared by
+  the SHA-1 thumbprint Key Vault reports (`x5t`); `enabled` and tags patch
+  the current version. Validity comes from the certificate itself
+  (`status.notBefore`, `status.expiresOn`).
+- `createMode` and `deleteMode` are `VaultSecret`'s (ASO's `VaultKey`'s),
+  applied to `deletedcertificates`; deleting soft-deletes the certificate
+  with its key and secret.
+- The same owner (an ASO `Vault`), credential and data-plane client as
+  `VaultSecret`, with the certificate operations added (REST 7.5). PFX
+  import is not built: cert-manager and most in-cluster issuers write PEM.
+
 ### ManagementLock
 
 - `owner` is ASO's `ArbitraryOwnerReference`, as ASO's own extension
@@ -276,7 +300,7 @@ rechecked 2026-11-08, see below):
 | b3 | Key Vault secrets from Kubernetes Secrets | apps on Azure read configuration from Key Vault; ASO declined to create secrets (#1894) | **built**; a lasting gap |
 | b4 | PostgreSQL schema privileges and default privileges | since PostgreSQL 15 only the database owner may create in `public`; an app needs `USAGE`/`CREATE` on a schema and default privileges on new tables | **built** (`schemaPrivileges`, `defaultPrivileges` on the same `User`); a1 was skipped because it waits on open question 5 |
 | b5 | PostgreSQL database ownership | migrations need the app to own its database | **built** (`ownedDatabases`, `reassignOwnedTo` on the same `User`), after open question 8 was answered |
-| b6 | Key Vault certificates from a Kubernetes Secret (import) | TLS certificates issued in-cluster, kept in Key Vault | after b4; the same shape as `VaultSecret` |
+| b6 | Key Vault certificates from a Kubernetes Secret (import) | TLS certificates issued in-cluster, kept in Key Vault | **built** as `VaultCertificate`, the same shape as `VaultSecret`; no ASO issue or pull request (rechecked 2026-11-09) |
 | b7 | ARM resources in the specs but not exported | varies | upstream, by configuration (section 1) |
 | b8 | Management locks (`Microsoft.Authorization/locks`) | 31 of 33 Azure Verified Modules take a `lock`; protects what an app cannot lose | **built** as `ManagementLock`, the one ARM exception (section 1); ASO issue #3756 is open |
 
@@ -325,8 +349,9 @@ and exact (`docs/fake-cloud.md`):
   subject or a digest of the secret, the audience), so a fake service can
   decide which identity to trust.
 - **Key Vault**: the secrets data plane over TLS (set, get, update, soft
-  delete, get deleted, recover, purge), accepting only the tokens a test
-  trusts.
+  delete, get deleted, recover, purge), and certificates (PEM import, get,
+  update, soft delete, get deleted, recover, purge, with the secret Key
+  Vault keeps beside each), accepting only the tokens a test trusts.
 - **PostgreSQL**: a real PostgreSQL 17 in Docker with TLS, set up like a
   flexible server: `azure_pg_admin`, a password administrator, Entra
   administrators whose password is the token of the identity that may sign
@@ -398,7 +423,7 @@ one Deployment, nothing per namespace to create. A static install
 
 ## 7. Proven, and not
 
-Proven by `make test` (envtest, 16 tests):
+Proven by `make test` (envtest, 18 tests):
 
 - a password user gets exactly its database privileges, changes revoke
   what is no longer listed (including grants made by hand), and deletion
@@ -441,6 +466,15 @@ Proven by `make test` (envtest, 16 tests):
   other user keeps its privileges and can still be deleted; a
   `reassignOwnedTo` role that can sign in is refused, and the CRD refuses
   the user itself as that role;
+- Key Vault certificates: the certificate and key of a `kubernetes.io/tls`
+  Secret are imported with the namespace's identity, the vault keeps the
+  PEM in the certificate's secret, and status carries the thumbprint,
+  expiry and secret ID; a renewal in the Secret is a new version; disabling
+  patches the current one; a key that does not match is refused before
+  the vault is called; `deleteMode: delete` soft-deletes the certificate
+  and its secret; recreating it is refused by default while soft-deleted,
+  and `createOrRecover` recovers it; another identity is refused; the CRD
+  needs both the certificate and the key;
 - management locks: a lock on an ASO `ResourceGroup` is set in the fake
   Resource Manager on the ARM ID ASO recorded, with the namespace's
   `aso-workload` identity, and the `ResourceGroup` becomes its Kubernetes
