@@ -406,6 +406,24 @@ spec:
   owner: {group: management.azure.hfl.dev, kind: ManagementGroup, name: platform}
   policyDefinitionReference: {armId: ${BUILTIN_POLICY}}
   parameters: {listOfAllowedLocations: {value: [westus]}}
+---
+apiVersion: policyinsights.azure.hfl.dev/v20241001
+kind: PolicyRemediation
+metadata: {name: require-team-tag, namespace: $1}
+spec:
+  owner: {group: resources.azure.com, kind: ResourceGroup, name: rg}
+  policyAssignmentReference: {group: authorization.azure.hfl.dev, kind: PolicyAssignment, name: require-team-tag}
+  resourceDiscoveryMode: ExistingNonCompliant
+  filters: {locations: [westus]}
+---
+apiVersion: policyinsights.azure.hfl.dev/v20241001
+kind: PolicyAttestation
+metadata: {name: require-team-tag, namespace: $1}
+spec:
+  owner: {group: resources.azure.com, kind: ResourceGroup, name: rg}
+  policyAssignmentReference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Authorization/policyAssignments/require-team-tag}
+  complianceState: Compliant
+  comments: tagged by the team's pipeline
 EOF
 }
 
@@ -486,6 +504,14 @@ wait_for 90 "team-a's PolicyAssignment at the management group Ready" ready poli
 logged fakearm "request PUT /providers/Microsoft.Management/managementGroups/team-a-platform/providers/Microsoft.Authorization/policyAssignments/allowed-locations 201" \
   || fail "the fake resource manager saw no policy assignment on team-a's management group"
 pass "team-a PolicyAssignment at the management group Ready: a built-in definition by ARM ID, assigned at our ManagementGroup"
+wait_for 90 "team-a's PolicyRemediation Ready" ready policyremediations.policyinsights.azure.hfl.dev team-a require-team-tag
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.PolicyInsights/remediations/require-team-tag 201" \
+  || fail "the fake resource manager saw no remediation on team-a's resource group"
+pass "team-a PolicyRemediation Ready: at an ASO ResourceGroup, naming our PolicyAssignment by object, generated (patch 0006)"
+wait_for 90 "team-a's PolicyAttestation Ready" ready policyattestations.policyinsights.azure.hfl.dev team-a require-team-tag
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.PolicyInsights/attestations/require-team-tag 201" \
+  || fail "the fake resource manager saw no attestation on team-a's resource group"
+pass "team-a PolicyAttestation Ready: at an ASO ResourceGroup, naming the assignment by ARM ID"
 wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
 pass "team-a ManagementLock Ready"
 logged fakearm "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
@@ -522,6 +548,8 @@ wait_for 90 "team-b's TagSet refused" bash -c "[[ \"\$(kubectl get tagsets.resou
 pass "team-b TagSet refused: $(message tagsets.resources.azure.hfl.dev team-b rg-tags | cut -c1-120)..."
 wait_for 90 "team-b's PolicyDefinition refused" bash -c "[[ \"\$(kubectl get policydefinitions.authorization.azure.hfl.dev -n team-b require-team-tag -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
 pass "team-b PolicyDefinition refused: $(message policydefinitions.authorization.azure.hfl.dev team-b require-team-tag | cut -c1-120)..."
+wait_for 90 "team-b's PolicyAttestation refused" bash -c "[[ \"\$(kubectl get policyattestations.policyinsights.azure.hfl.dev -n team-b require-team-tag -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
+pass "team-b PolicyAttestation refused: $(message policyattestations.policyinsights.azure.hfl.dev team-b require-team-tag | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
@@ -580,6 +608,13 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
   || fail "the fake resource manager saw no delete of the vault"
 pass "the vault is deleted in Resource Manager"
 
+kubectl -n team-a delete policyremediations.policyinsights.azure.hfl.dev require-team-tag --timeout=120s
+kubectl -n team-a delete policyattestations.policyinsights.azure.hfl.dev require-team-tag --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.PolicyInsights/remediations/require-team-tag 200" \
+  || fail "the fake resource manager saw no delete of the remediation"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.PolicyInsights/attestations/require-team-tag 200" \
+  || fail "the fake resource manager saw no delete of the attestation"
+pass "the policy remediation and attestation are deleted in Resource Manager"
 kubectl -n team-a delete policyassignments.authorization.azure.hfl.dev require-team-tag allowed-locations --timeout=120s
 kubectl -n team-a delete policydefinitions.authorization.azure.hfl.dev require-team-tag --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/policyAssignments/require-team-tag 200" \

@@ -52,3 +52,7 @@ team-a PolicyAssignment Ready
 team-a PolicyAssignment at the management group Ready
 team-b PolicyDefinition refused
 the policy assignments and definition are deleted
+team-a PolicyRemediation Ready
+team-a PolicyAttestation Ready
+team-b PolicyAttestation refused
+the policy remediation and attestation are deleted
