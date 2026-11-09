@@ -1,0 +1,29 @@
+typeFilters:
+  - action: include
+    group: network
+    version: v20250501
+    because: a stable version of the network security perimeter (2025-03-01, the version of ASO's network kinds, loses the spec side of these)
+
+groupModelConfiguration:
+  2025-05-01:
+    NetworkSecurityPerimeter:
+      $exportAs: NetworkSecurityPerimeter
+      $supportedFrom: v0.1.0
+    NetworkSecurityPerimeters_Profile:
+      $exportAs: NetworkSecurityPerimetersProfile
+      $supportedFrom: v0.1.0
+    NetworkSecurityPerimeters_Profiles_AccessRule:
+      $exportAs: NetworkSecurityPerimetersProfilesAccessRule
+      $supportedFrom: v0.1.0
+    NetworkSecurityPerimeters_ResourceAssociation:
+      $exportAs: NetworkSecurityPerimetersResourceAssociation
+      $supportedFrom: v0.1.0
+    NetworkSecurityPerimeters_Link:
+      $exportAs: NetworkSecurityPerimetersLink
+      $supportedFrom: v0.1.0
+    NetworkSecurityPerimeters_LoggingConfiguration:
+      $exportAs: NetworkSecurityPerimetersLoggingConfiguration
+      $supportedFrom: v0.1.0
+    SubResource:
+      Id:
+        $referenceType: arm # the profile and the associated PaaS resource of an association

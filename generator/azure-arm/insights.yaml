@@ -1,0 +1,27 @@
+typeFilters:
+  - action: include
+    group: insights
+    version: v20210901
+    because: the newest stable version of the Azure Monitor private link scopes
+  - action: include
+    group: insights
+    version: v*20240301preview
+    because: >-
+      Cross references from other preview versions. Previews are pruned by
+      default, which removes the types their neighbours refer to and breaks the
+      loading of the spec (as in ASO's own insights.yaml).
+
+groupModelConfiguration:
+  2021-09-01:
+    PrivateLinkScope:
+      $exportAs: PrivateLinkScope
+      $supportedFrom: v0.1.0
+    PrivateLinkScopes_ScopedResource:
+      $exportAs: PrivateLinkScopesScopedResource
+      $supportedFrom: v0.1.0
+    PrivateLinkScopes_PrivateEndpointConnection:
+      $exportAs: PrivateLinkScopesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    ScopedResourceProperties:
+      LinkedResourceId:
+        $referenceType: arm # a Log Analytics workspace, an Application Insights component or a data collection endpoint

@@ -9,6 +9,12 @@ import (
 	app_customizations "github.com/highfivelabs/aso-extensions/apis/arm/app/customizations"
 	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
+	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
+	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
+	insights_v20210901s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901/storage"
+	network_customizations "github.com/highfivelabs/aso-extensions/apis/arm/network/customizations"
+	network_v20250501 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501"
+	network_v20250501s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501/storage"
 	operationalinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/customizations"
 	operationalinsights_v20250701 "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701"
 	operationalinsights_v20250701s "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701/storage"
@@ -88,6 +94,15 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimeter)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersLink)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersLoggingConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersProfile)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersProfilesAccessRule)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersResourceAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPack)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedService)})
@@ -161,6 +176,32 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsStorage)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScope)},
+		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScope)},
+		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesScopedResource)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimeter)},
+		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersLink)},
+		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersLoggingConfiguration)},
+		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersProfile)},
+		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersProfilesAccessRule)},
+		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersResourceAssociation)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimeter)},
+		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersLink)},
+		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersLoggingConfiguration)},
+		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersProfile)},
+		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersProfilesAccessRule)},
+		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersResourceAssociation)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPack)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedService)},
@@ -196,6 +237,10 @@ func createScheme() *runtime.Scheme {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = app_v20250101.AddToScheme(scheme)
 	_ = app_v20250101s.AddToScheme(scheme)
+	_ = insights_v20210901.AddToScheme(scheme)
+	_ = insights_v20210901s.AddToScheme(scheme)
+	_ = network_v20250501.AddToScheme(scheme)
+	_ = network_v20250501s.AddToScheme(scheme)
 	_ = operationalinsights_v20250701.AddToScheme(scheme)
 	_ = operationalinsights_v20250701s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
@@ -211,6 +256,15 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ManagedEnvironmentsJavaComponentExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsManagedCertificateExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
+	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
+	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
+	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
+	result = append(result, &network_customizations.NetworkSecurityPerimeterExtension{})
+	result = append(result, &network_customizations.NetworkSecurityPerimetersLinkExtension{})
+	result = append(result, &network_customizations.NetworkSecurityPerimetersLoggingConfigurationExtension{})
+	result = append(result, &network_customizations.NetworkSecurityPerimetersProfileExtension{})
+	result = append(result, &network_customizations.NetworkSecurityPerimetersProfilesAccessRuleExtension{})
+	result = append(result, &network_customizations.NetworkSecurityPerimetersResourceAssociationExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPackExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPacksQueryExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesLinkedServiceExtension{})

@@ -9,8 +9,17 @@ resources:
 - app.azure.hfl.dev_managedenvironmentsstorages.yaml
 - authorization.azure.hfl.dev_managementlocks.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
+- insights.azure.hfl.dev_privatelinkscopes.yaml
+- insights.azure.hfl.dev_privatelinkscopesprivateendpointconnections.yaml
+- insights.azure.hfl.dev_privatelinkscopesscopedresources.yaml
 - keyvault.azure.hfl.dev_vaultcertificates.yaml
 - keyvault.azure.hfl.dev_vaultsecrets.yaml
+- network.azure.hfl.dev_networksecurityperimeters.yaml
+- network.azure.hfl.dev_networksecurityperimeterslinks.yaml
+- network.azure.hfl.dev_networksecurityperimetersloggingconfigurations.yaml
+- network.azure.hfl.dev_networksecurityperimetersprofiles.yaml
+- network.azure.hfl.dev_networksecurityperimetersprofilesaccessrules.yaml
+- network.azure.hfl.dev_networksecurityperimetersresourceassociations.yaml
 - operationalinsights.azure.hfl.dev_querypacks.yaml
 - operationalinsights.azure.hfl.dev_querypacksqueries.yaml
 - operationalinsights.azure.hfl.dev_workspaceslinkedservices.yaml

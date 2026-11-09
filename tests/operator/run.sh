@@ -140,7 +140,7 @@ kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -295,6 +295,13 @@ spec:
   plan: Analytics
   retentionInDays: 30
 ---
+apiVersion: network.azure.hfl.dev/v20250501
+kind: NetworkSecurityPerimeter
+metadata: {name: perimeter, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+---
 apiVersion: authorization.azure.hfl.dev/v1
 kind: ManagementLock
 metadata: {name: keep-rg, namespace: $1}
@@ -342,6 +349,10 @@ wait_for 90 "team-a's WorkspacesTable Ready" ready workspacestables.operationali
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law/tables/AppEvents_CL 201" \
   || fail "the fake resource manager saw no table created in team-a's workspace"
 pass "team-a WorkspacesTable Ready: a table of ASO's Log Analytics Workspace, generated, PUT by ASO's ARM reconciler"
+wait_for 90 "team-a's NetworkSecurityPerimeter Ready" ready networksecurityperimeters.network.azure.hfl.dev team-a perimeter
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkSecurityPerimeters/perimeter 201" \
+  || fail "the fake resource manager saw no network security perimeter created in team-a's resource group"
+pass "team-a NetworkSecurityPerimeter Ready: generated, owned by ASO's ResourceGroup, PUT by ASO's ARM reconciler"
 wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
 pass "team-a ManagementLock Ready"
 logged fakearm "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
@@ -364,6 +375,8 @@ wait_for 90 "team-b's SitesSlot refused" bash -c "[[ \"\$(kubectl get sitesslots
 pass "team-b SitesSlot refused: $(message sitesslots.web.azure.hfl.dev team-b staging | cut -c1-120)..."
 wait_for 90 "team-b's WorkspacesTable refused" bash -c "[[ \"\$(kubectl get workspacestables.operationalinsights.azure.hfl.dev -n team-b appevents -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
 pass "team-b WorkspacesTable refused: $(message workspacestables.operationalinsights.azure.hfl.dev team-b appevents | cut -c1-120)..."
+wait_for 90 "team-b's NetworkSecurityPerimeter refused" bash -c "[[ \"\$(kubectl get networksecurityperimeters.network.azure.hfl.dev -n team-b perimeter -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
+pass "team-b NetworkSecurityPerimeter refused: $(message networksecurityperimeters.network.azure.hfl.dev team-b perimeter | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
@@ -405,6 +418,10 @@ kubectl -n team-a delete workspacestables.operationalinsights.azure.hfl.dev appe
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law/tables/AppEvents_CL 200" \
   || fail "the fake resource manager saw no delete of the table"
 pass "the table is deleted in Resource Manager"
+kubectl -n team-a delete networksecurityperimeters.network.azure.hfl.dev perimeter --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkSecurityPerimeters/perimeter 200" \
+  || fail "the fake resource manager saw no delete of the perimeter"
+pass "the perimeter is deleted in Resource Manager"
 
 echo
 echo "all checks passed"

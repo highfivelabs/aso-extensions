@@ -149,7 +149,7 @@ Microsoft.HybridNetwork,17,0,0,173,0,0,173,0.0,0.0,100.0
 Microsoft.Impact,3,0,0,47,0,0,47,0.0,0.0,100.0
 Microsoft.ImportExport,1,0,0,57,0,0,57,0.0,0.0,100.0
 Microsoft.InfrastructureInsights.Admin,1,0,0,20,0,0,20,0.0,0.0,100.0
-Microsoft.Insights,28,13,0,552,400,0,152,72.5,0.0,27.5
+Microsoft.Insights,28,13,3,552,400,11,141,72.5,2.0,25.5
 Microsoft.IntegrationSpaces,5,0,0,27,0,0,27,0.0,0.0,100.0
 Microsoft.Intune,6,0,0,42,0,0,42,0.0,0.0,100.0
 Microsoft.IoTCentral,1,0,0,7,0,0,7,0.0,0.0,100.0
@@ -186,7 +186,7 @@ Microsoft.Mission,9,0,0,146,0,0,146,0.0,0.0,100.0
 Microsoft.Monitor,6,1,0,138,3,0,135,2.2,0.0,97.8
 Microsoft.MySQLDiscovery,2,0,0,28,0,0,28,0.0,0.0,100.0
 Microsoft.NetApp,13,0,0,295,0,0,295,0.0,0.0,100.0
-Microsoft.Network,172,57,0,5326,1283,0,4043,24.1,0.0,75.9
+Microsoft.Network,172,57,6,5326,1283,18,4025,24.1,0.3,75.6
 Microsoft.Network.Admin,1,0,0,8,0,0,8,0.0,0.0,100.0
 Microsoft.NetworkCloud,20,0,0,371,0,0,371,0.0,0.0,100.0
 Microsoft.NetworkFunction,2,0,0,10,0,0,10,0.0,0.0,100.0
@@ -195,7 +195,7 @@ Microsoft.OffAzure,13,0,0,84,0,0,84,0.0,0.0,100.0
 Microsoft.OffAzureSpringBoot,3,0,0,63,0,0,63,0.0,0.0,100.0
 Microsoft.OnlineExperimentation,2,0,0,17,0,0,17,0.0,0.0,100.0
 Microsoft.OpenEnergyPlatform,1,0,0,4,0,0,4,0.0,0.0,100.0
-Microsoft.OperationalInsights,13,1,0,122,20,0,102,16.4,0.0,83.6
+Microsoft.OperationalInsights,13,1,6,122,20,43,59,16.4,35.2,48.4
 Microsoft.OperationsManagement,3,0,0,17,0,0,17,0.0,0.0,100.0
 Microsoft.Orbital,7,0,0,68,0,0,68,0.0,0.0,100.0
 Microsoft.Peering,7,0,0,57,0,0,57,0.0,0.0,100.0
