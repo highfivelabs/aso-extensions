@@ -35767,7 +35767,7 @@ Microsoft.Resources,Microsoft.Resources/resourceGroups,location,string,true,offi
 Microsoft.Resources,Microsoft.Resources/resourceGroups,managedBy,string,false,official,managedBy,
 Microsoft.Resources,Microsoft.Resources/resourceGroups,properties,object,false,none,,
 Microsoft.Resources,Microsoft.Resources/resourceGroups,tags{},string,false,official,tags{},
-Microsoft.Resources,Microsoft.Resources/tags,properties.tags{},string,false,none,,
+Microsoft.Resources,Microsoft.Resources/tags,properties.tags{},string,false,ours,,properties.tags{}
 Microsoft.Resources,Microsoft.Resources/templateSpecs,location,string,true,none,,
 Microsoft.Resources,Microsoft.Resources/templateSpecs,properties.description,string,false,none,,
 Microsoft.Resources,Microsoft.Resources/templateSpecs,properties.displayName,string,false,none,,

@@ -1887,7 +1887,7 @@ Microsoft.Resources,Microsoft.Resources/deploymentScripts,22,,0,,0,22,false,spec
 Microsoft.Resources,Microsoft.Resources/deploymentStacks,36,,0,,0,36,false,spec_api=2025-07-01
 Microsoft.Resources,Microsoft.Resources/deploymentStacksWhatIfResults,37,,0,,0,37,false,spec_api=2025-07-01
 Microsoft.Resources,Microsoft.Resources/resourceGroups,4,resources.azure.com/ResourceGroup,3,,0,1,false,spec_api=2025-04-01; official_api=2020-06-01; official-api-differs-from-spec
-Microsoft.Resources,Microsoft.Resources/tags,1,,0,,0,1,false,spec_api=2025-04-01
+Microsoft.Resources,Microsoft.Resources/tags,1,,0,resources.azure.hfl.dev/TagSet,1,0,false,spec_api=2025-04-01; ours_api=2025-04-01
 Microsoft.Resources,Microsoft.Resources/templateSpecs,5,,0,,0,5,false,spec_api=2022-02-01
 Microsoft.Resources,Microsoft.Resources/templateSpecs/versions,8,,0,,0,8,false,spec_api=2022-02-01
 Microsoft.SaaS,Microsoft.SaaS/resources,14,,0,,0,14,false,spec_api=2018-03-01-beta; spec-preview-only

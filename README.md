@@ -22,6 +22,7 @@ Not affiliated with or endorsed by Microsoft.
 | `compute.azure.hfl.dev/v20220301` `VirtualMachinesRunCommand`; `devtestlab.azure.hfl.dev/v20180915` `Schedule`; `maintenance.azure.hfl.dev/v20230401` `MaintenanceConfiguration` | what a virtual machine needs beside the VM: a run command (script, parameters, run-as password from a Secret), the auto-shutdown schedule, and Azure Maintenance configurations; ASO's `VirtualMachine` has none of them; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `recoveryservices.azure.hfl.dev/v20260701` `Vault`, `VaultsBackupPolicy`, `VaultsBackupResourceGuardProxy`, `VaultsPrivateEndpointConnection` | an Azure Backup (Recovery Services) vault and its backup policies, resource guard proxies and private endpoint connections; ASO has no Recovery Services group; backup policies are owned by our vault; generated like the Container Apps kinds. Enabling backup for a VM (the protected item) is not a kind yet | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `management.azure.hfl.dev/v20230401` `ManagementGroup`, `ManagementGroupsSubscription`, `ManagementGroupsSetting` | Azure management groups: the group hierarchy (a group names its parent by object or ARM ID), a subscription's placement in a group, and the tenant's hierarchy settings. Tenant scope: no resource group and no subscription in the ARM ID (`/providers/Microsoft.Management/...`), so the namespace's identity needs rights at the tenant root or on the group. ASO has no management group kind ([#2249](https://github.com/Azure/azure-service-operator/issues/2249)); generated like the Container Apps kinds, with one generator patch for children of a tenant scope resource (`UPSTREAM.md`, 0005) | ours; none at ASO's pin or in an open pull request (2026-11-09) |
+| `resources.azure.hfl.dev/v20250401` `TagSet` | the tags of a subscription, resource group or any resource as one object (`Microsoft.Resources/tags/default`): an extension resource owned by an ASO resource or an ARM ID. A `TagSet` replaces all the tags of its scope, so use it on a subscription or on what ASO does not manage; on an ASO resource that carries its own `tags` the two would overwrite each other. ASO has no such kind | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `authorization.azure.hfl.dev/v1` `ManagementLock` | a management lock (`Microsoft.Authorization/locks`, `CanNotDelete` or `ReadOnly`) on a subscription, resource group or resource, owned by any ASO resource or an ARM ID; the first plain ARM kind here (`docs/plan.md`, section 1) | ours; ASO issue [#3756](https://github.com/Azure/azure-service-operator/issues/3756), open, needs a design for the lock's four scopes |
 
 ## Coverage
@@ -44,7 +45,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 
 | Tier | Services | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 1.4% | 55.7% |
+| 1 | 17 | 43.0% | 1.4% | 55.6% |
 | 2 | 18 | 26.5% | 6.8% | 66.7% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% |
 
@@ -56,7 +57,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.Subscription` | platform-foundation | ![Microsoft.Subscription](docs/coverage/bars/Microsoft.Subscription.svg) | 60.0% | 0.0% | 40.0% |
 | 1 | `Microsoft.Authorization` | platform-foundation | ![Microsoft.Authorization](docs/coverage/bars/Microsoft.Authorization.svg) | 5.9% | 0.8% | 93.3% |
 | 1 | `Microsoft.PolicyInsights` | platform-foundation | ![Microsoft.PolicyInsights](docs/coverage/bars/Microsoft.PolicyInsights.svg) | 0.0% | 0.0% | 100.0% |
-| 1 | `Microsoft.Resources` | platform-foundation | ![Microsoft.Resources](docs/coverage/bars/Microsoft.Resources.svg) | 2.1% | 0.0% | 97.9% |
+| 1 | `Microsoft.Resources` | platform-foundation | ![Microsoft.Resources](docs/coverage/bars/Microsoft.Resources.svg) | 2.1% | 0.7% | 97.2% |
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 0.0% | 100.0% |
 | 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 0.0% | 100.0% |
 | 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 2.0% | 25.5% |

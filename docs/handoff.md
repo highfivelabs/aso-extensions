@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after management groups (foundation row 1; the kind agent that built it also guarded `task operator-e2e`). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 2 of `docs/coverage/foundation.md`.
+State at the writing: 2026-11-09, after management groups and `TagSet` (foundation rows 1 and 2; the kind agent that built them also guarded `task operator-e2e`). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 3 (Azure Policy) of `docs/coverage/foundation.md`; `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
 
 ## What this repository is
 

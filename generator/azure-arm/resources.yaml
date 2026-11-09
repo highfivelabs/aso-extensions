@@ -1,0 +1,25 @@
+typeFilters:
+  # As ASO's resources.yaml: the deployment types are defined differently
+  # in different specs and fail the loading.
+  - action: prune
+    name: Deployment
+    because: defined differently by different specs of the Resources API
+  - action: prune
+    name: DeploymentStacks
+    because: defined differently by different specs of the Resources API
+  - action: prune
+    name: DeploymentStacksWhatIfPropertyChange
+    because: defined differently by different specs of the Resources API
+  - action: include
+    group: resources
+    version: v20250401
+    because: the newest stable version of the Resources API, which holds the tags resource
+  - action: prune
+    group: resources
+    because: every other version is left alone
+
+groupModelConfiguration:
+  2025-04-01:
+    Tag:
+      $exportAs: TagSet
+      $supportedFrom: v0.1.0
