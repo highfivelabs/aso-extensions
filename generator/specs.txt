@@ -13,3 +13,4 @@ specification/recoveryservices
 specification/recoveryservicesbackup
 specification/management
 specification/resources
+specification/policyinsights

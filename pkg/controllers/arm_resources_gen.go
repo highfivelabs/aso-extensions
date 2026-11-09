@@ -38,6 +38,9 @@ import (
 	operationalinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/customizations"
 	operationalinsights_v20250701 "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701"
 	operationalinsights_v20250701s "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701/storage"
+	policyinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/customizations"
+	policyinsights_v20241001 "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/v20241001"
+	policyinsights_v20241001s "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/v20241001/storage"
 	recoveryservices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/customizations"
 	recoveryservices_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/v20260701"
 	recoveryservices_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/v20260701/storage"
@@ -173,6 +176,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedStorageAccount)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesSavedSearch)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesTable)})
+	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyAttestation)})
+	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyRemediation)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.Vault)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)})
@@ -327,6 +332,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesLinkedStorageAccount)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesSavedSearch)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesTable)})
+	result = append(result, &registration.KnownType{Obj: new(policyinsights_v20241001.PolicyAttestation)}, &registration.KnownType{Obj: new(policyinsights_v20241001.PolicyRemediation)})
+	result = append(result, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyAttestation)}, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyRemediation)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.Vault)},
@@ -382,6 +389,8 @@ func createScheme() *runtime.Scheme {
 	_ = network_v20250501s.AddToScheme(scheme)
 	_ = operationalinsights_v20250701.AddToScheme(scheme)
 	_ = operationalinsights_v20250701s.AddToScheme(scheme)
+	_ = policyinsights_v20241001.AddToScheme(scheme)
+	_ = policyinsights_v20241001s.AddToScheme(scheme)
 	_ = recoveryservices_v20260701.AddToScheme(scheme)
 	_ = recoveryservices_v20260701s.AddToScheme(scheme)
 	_ = resources_v20250401.AddToScheme(scheme)
@@ -429,6 +438,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &operationalinsights_customizations.WorkspacesLinkedStorageAccountExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesSavedSearchExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesTableExtension{})
+	result = append(result, &policyinsights_customizations.PolicyAttestationExtension{})
+	result = append(result, &policyinsights_customizations.PolicyRemediationExtension{})
 	result = append(result, &recoveryservices_customizations.VaultExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsBackupPolicyExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsBackupResourceGuardProxyExtension{})

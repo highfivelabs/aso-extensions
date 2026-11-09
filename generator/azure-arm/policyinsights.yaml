@@ -1,0 +1,26 @@
+typeFilters:
+  - action: include
+    group: policyinsights
+    version: v20241001
+    because: the newest stable version of Policy Insights (remediations, attestations), one TypeSpec file
+  - action: prune
+    group: policyinsights
+    because: every other version is left alone (policy states, events and metadata are read-only)
+
+groupModelConfiguration:
+  2024-10-01:
+    Remediation:
+      $exportAs: PolicyRemediation
+      $supportedFrom: v0.1.0
+    RemediationProperties:
+      PolicyAssignmentId:
+        $referenceType: arm # the assignment remediated: our PolicyAssignment, or an ARM ID
+    RemediationFilters:
+      ResourceIds:
+        $referenceType: arm # the resources to remediate (at most 100)
+    Attestation:
+      $exportAs: PolicyAttestation
+      $supportedFrom: v0.1.0
+    AttestationProperties:
+      PolicyAssignmentId:
+        $referenceType: arm # the assignment whose compliance state is set

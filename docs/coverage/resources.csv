@@ -1783,8 +1783,8 @@ Microsoft.Peering,Microsoft.Peering/peeringServices/prefixes,2,,0,,0,2,false,spe
 Microsoft.PlatformValidation,Microsoft.PlatformValidation/cloudValidations,3,,0,,0,3,false,spec_api=2026-08-01-preview; spec-preview-only
 Microsoft.PlatformValidation,Microsoft.PlatformValidation/cloudValidations/validationExecutionPlans,5,,0,,0,5,false,spec_api=2026-08-01-preview; spec-preview-only
 Microsoft.PlatformValidation,Microsoft.PlatformValidation/cloudValidations/validationExecutionPlans/executionPlanRuns,1,,0,,0,1,false,spec_api=2026-08-01-preview; spec-preview-only
-Microsoft.PolicyInsights,Microsoft.PolicyInsights/attestations,10,,0,,0,10,false,spec_api=2024-10-01
-Microsoft.PolicyInsights,Microsoft.PolicyInsights/remediations,8,,0,,0,8,false,spec_api=2024-10-01
+Microsoft.PolicyInsights,Microsoft.PolicyInsights/attestations,10,,0,policyinsights.azure.hfl.dev/PolicyAttestation,9,1,false,spec_api=2024-10-01; ours_api=2024-10-01
+Microsoft.PolicyInsights,Microsoft.PolicyInsights/remediations,8,,0,policyinsights.azure.hfl.dev/PolicyRemediation,8,0,false,spec_api=2024-10-01; ours_api=2024-10-01
 Microsoft.Portal,Microsoft.Portal/consoles,3,,0,,0,3,false,spec_api=2018-10-01
 Microsoft.Portal,Microsoft.Portal/dashboards,17,portal.azure.com/Dashboard,17,,0,0,false,spec_api=2025-04-01-preview; spec-preview-only; official_api=2025-04-01-preview
 Microsoft.Portal,Microsoft.Portal/locations/consoles,0,,0,,0,0,false,spec_api=2018-10-01
