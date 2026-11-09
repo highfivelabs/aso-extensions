@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after the container registry tokens, scope maps, credential sets and webhooks (c9).
+State at the writing: 2026-11-09, after the VM extras (c10 part one: run command, auto-shutdown, maintenance).
 
 ## What this repository is
 
@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | --- | --- | --- |
 | Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
-| ARM, generated | `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+| ARM, generated | `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
 ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
@@ -32,9 +32,9 @@ One pull request per gap, cut from the latest `main`.
 
 | Rank | Gap | State |
 | --- | --- | --- |
-| c1, c3, c4, c5, c6, c9 | locks, Container Apps environment children, App Service children, Log Analytics children, Monitor private link scopes and network security perimeters, container registry tokens and webhooks | built |
+| c1, c3, c4, c5, c6, c9, c10 (part one) | locks, Container Apps environment children, App Service children, Log Analytics children, Monitor private link scopes and network security perimeters, container registry tokens and webhooks, VM extras | built |
 | c7 | Key Vault keys | skip: ASO's `VaultKey` (#5564) ships in its next release; recheck |
-| c10 | VM extras: run command, auto-shutdown schedule, maintenance assignment, Recovery Services backup | next; no Recovery Services group at the pin |
+| c10b | Recovery Services backup (vault, policies, protected items) | next; no Recovery Services group at the pin |
 | c11 to c14 | storage local users; Cognitive Services RAI policies; Cosmos Gremlin and SQL dedicated gateway; AKS managed namespaces | queued |
 | c8 | management groups, policy, budgets, vWAN, subscription tags | queued, low priority (platform) |
 | c18 | stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones) | not a new kind |
@@ -104,10 +104,10 @@ Facts learned the hard way:
   must not depend on the machine (the laptop and the Ubuntu machine differ).
 - ASO's generator cannot do everything the specs describe; find out with a
   run before designing around it (a run is 30 seconds, `--verbose` shows why).
-  Limits met so far: **one level of `x-ms-client-flatten` only** (a resource
-  whose `properties.destination.metaData` nest flattened fails with "need to
-  implement multiple levels of flattening": Log Analytics data exports);
-  **an object schema without `type: object` is dropped as empty** (the
+  Limits met so far: (**one level of `x-ms-client-flatten` only**, "need to
+  implement multiple levels of flattening", is handled by patch 0004: a
+  nested flattened property stays an object, as `MaintenanceWindow` of a
+  maintenance configuration does); **an object schema without `type: object` is dropped as empty** (the
   solutions' `SolutionProperties`); **a resource whose kind ends in `Source`
   fails to compile** (the receiver `source` collides with the conversion
   parameter; Log Analytics data sources); **an enum-valued name** (a
@@ -147,6 +147,12 @@ Facts learned the hard way:
   runs `task coverage` (heavy: first run fetches ~100 MB; run it on the Ubuntu
   machine, tar `docs/coverage` and `README.md` back) and commits the output;
   `task coverage-check` must pass.
+- **A resource the spec defines at several scopes is picked at random** by the
+  generator (Maintenance `configurationAssignments`: subscription, resource
+  group, resource, nested resource): the output changes from run to run and
+  `task check` fails. Look for it when `check` says "stale" on a kind you
+  generated fine; such a kind cannot be generated (hand-write it as
+  `ManagementLock` was).
 - ASO's token scope is `<audience>/.default`: give the fake audience no
   trailing slash.
 - A generated kind's delete under a `CanNotDelete` lock fails with
@@ -199,7 +205,7 @@ kind, no generator. From the repository root:
   conflicts.
 - Never edit `third_party/`. A change to ASO is a numbered patch in
   `patches/azure-service-operator/` (0001 exports the framework, 0002 changes
-  the generator, 0003 exports the ARM reconciler); make the change in the
+  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`); make the change in the
   checkout, `git diff` it into the patch, then `hack/upstream.sh` re-applies the
   series and `hack/upstream.sh --check` verifies it.
 
