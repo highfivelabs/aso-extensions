@@ -78,8 +78,8 @@ upstream-first habit. For each ARM kind, in this order:
    configuration, not from hand-written Go. The configuration is ours,
    written the way ASO writes `v2/azure-arm/<group>.yaml`, in this
    repository; the generated files are checked in and never hand-edited.
-   This is preferred over hand-writing; its mechanism is recorded with the
-   first kind built that way.
+   This is preferred over hand-writing; the mechanism is "Generated ARM
+   kinds" in section 2.
 4. **Hand-write it** only when neither applies, as `ManagementLock` was:
    a lock is one type at four scopes, which ASO's generator needs a design
    decision to model (issue #3756).
@@ -134,9 +134,72 @@ The exception that made it possible is superseded by the rule above.
   is CEL rules in the CRDs (exactly one of `localUser` and `aadUser`,
   immutable names and owners), and the one default (`azureName` is
   `metadata.name`) is computed in code. No webhook server or certificate
-  to install.
+  to install. The generated ARM kinds lose ASO's webhook validations (below).
 - **Dependencies at ASO's versions.** `hack/check-go-mod.sh` fails if any
   module both `go.mod` files require differs from ASO's.
+
+### Generated ARM kinds
+
+The preferred way to build an ARM kind (section 1): ASO's own generator,
+run over the pinned specs with configuration kept here.
+
+- **Inputs.** `generator/azure-arm.yaml` (the generator's top-level
+  configuration: the filters, the `Tags` transformer and the common-types
+  namespace override, taken from ASO's `v2/azure-arm.yaml`),
+  `generator/azure-arm/<group>.yaml` (per group, as ASO's: which versions
+  and resources are exported with `$exportAs` and `$supportedFrom`, which
+  properties are references or secrets), `generator/specs.txt` (the specs'
+  services) and `generator/external-owners.txt` (the ASO kinds our kinds are
+  owned by). The specs are the `azure-rest-api-specs` commit ASO pins
+  (`UPSTREAM.md`), fetched by `hack/specs.sh` into `.cache/` as a sparse,
+  blob-less checkout of only the services listed (about 170 MB with the
+  common types, not several GB).
+- **Run.** `hack/generate-arm.sh` builds ASO's generator from the checkout
+  and runs it; `hack/generate.sh` then makes deepcopy code and CRDs. It
+  takes about half a minute but loads every spec of the services, so it
+  runs on the Ubuntu machine (`make generate-arm`), and `make check`
+  regenerates and fails if the checked-in output is stale. The output is
+  `apis/arm/<group>/<version>` (types, `storage` and `arm` subpackages and
+  generated tests), `apis/arm/<group>/customizations`,
+  `pkg/controllers/arm_resources_gen.go` (registration, indexes and secret
+  watches) and `generator/reports/`. None of it is edited by hand.
+- **Patches to the generator** (`patches/azure-service-operator/0002`),
+  each switched by an environment variable the script sets, so the
+  generator is otherwise ASO's: our groups end in `.azure.hfl.dev`
+  (`ASO_GENERATOR_GROUP_SUFFIX`) while an owner listed in
+  `external-owners.txt` keeps ASO's group, so a child of ASO's
+  `ManagedEnvironment` names `app.azure.com` as its owner
+  (`ASO_GENERATOR_EXTERNAL_OWNERS`); ASO's legacy and hybrid version
+  migration tables are emptied (they describe ASO's releases); no webhooks
+  are generated, `AzureName()` falls back to the object's name, which ASO's
+  defaulting webhook would have set (`ASO_GENERATOR_NO_WEBHOOKS`); and the
+  API version is the one the controller reconciles
+  (`ASO_GENERATOR_API_STORAGE`).
+- **One version, no conversion webhook.** ASO's CRDs have two versions, an
+  API version and a storage (hub) version, converted by a webhook. Ours
+  serve only the API version (`v20250101`): `hack/generate.sh` makes CRDs
+  from the API packages only, the controller is registered on the API type,
+  and ASO's reconciler needs no conversion when the object already is its
+  original version. The storage and `arm` packages stay as in-memory code
+  (the generated `ConvertSpecTo`/`ConvertStatusTo` pass through the storage
+  types). The price: a second API version of a kind would need a webhook,
+  or a new kind name. Each kind is pinned to the API version it was
+  generated from.
+- **What the missing webhooks cost.** ASO's webhooks also validate resource
+  references, secret destinations and that `owner` and `azureName` do not
+  change. The generated kinds have the CRD's own schema validation (types,
+  enums, required fields) and none of that; an immutable change reaches ARM
+  and is refused or misapplied there.
+- **Reconciling.** ASO's generic ARM reconciler (`NewAzureDeploymentReconciler`)
+  and its ARM client, exported by `patches/azure-service-operator/0003`,
+  with the credential ASO picks for the object, so a generated kind has
+  ASO's behaviour: claiming under a Ready owner, the long-running
+  operation, `reconcile-policy`, `operatorSpec` secrets and config maps.
+- **Owners.** The ASO kinds a generated kind names as owners are read
+  through the cache, so each is in `controllers.OwnerTypes()` (and the
+  manager may list and watch it, `config/rbac/role.yaml`); the stand-ins in
+  the tests carry the `serviceoperator.azure.com/resource-id` annotation ASO
+  writes on what it provisions, which the owner chain needs.
 
 ### The PostgreSQL User
 
@@ -341,7 +404,7 @@ rechecks upstream again when it is built.
 | Rank | Gap | State | Move |
 | --- | --- | --- | --- |
 | c1 | Management locks | built (b8) | done |
-| c3 | Container Apps environment children (Dapr components, storages, certificates, managed certificates, ...) | not at the pin, no pull request | next |
+| c3 | Container Apps environment children (Dapr components, storages, certificates, managed certificates, ...) | not at the pin, no pull request | **built**, generated: `ManagedEnvironmentsDaprComponent`, `Storage`, `Certificate`, `ManagedCertificate`, `JavaComponent` (`app.azure.hfl.dev`, API 2025-01-01). Not built: Dapr subscriptions, HTTP route configs, .NET components and maintenance configurations exist only in preview API versions, which the filters prune |
 | c4 | App Service site children (slots, hostname bindings, certificates, config sections, publishing policies) | not at the pin, no pull request | queued |
 | c5 | Log Analytics children (tables, data exports, linked services, linked storage, query packs, solutions) | not at the pin, no pull request | queued |
 | c6 | Azure Monitor private link scope and scoped resources; network security perimeter associations | not at the pin, no pull request | queued |
@@ -407,8 +470,12 @@ and exact (`docs/fake-cloud.md`):
   flexible server: `azure_pg_admin`, a password administrator, Entra
   administrators whose password is the token of the identity that may sign
   in as them, and stand-ins for Azure's `pgaadauth` functions.
-- **Resource Manager**: a store of resources by ARM ID and management
-  locks at any scope, over TLS, accepting only the tokens a test trusts.
+- **Resource Manager**: a store of resources by ARM ID (a PUT stores the
+  body with `id`, `name`, `type` and a `provisioningState` of `Succeeded`
+  added, and needs the parent to exist; GET and DELETE as expected) and
+  management locks at any scope, over TLS, accepting only the tokens a
+  test trusts. ASO's own ARM client, in the generated kinds' tests, talks
+  to it.
   Locks act as Azure documents: `CanNotDelete` refuses deletes at and
   under its scope, and of a scope holding a locked resource; `ReadOnly`
   refuses writes too; each with 409 `ScopeLocked`.
@@ -446,9 +513,11 @@ It uses ASO's credential provider itself, so it picks the same credential
 for the same object. It runs in ASO's namespace (so it reads
 `aso-controller-settings` the same way) under its own service account,
 `aso-extensions-manager`, whose rights are our kinds, reading Secrets,
-ConfigMaps, Namespaces and the two ASO owner kinds, `get` on any ASO
-resource (a `ManagementLock`'s owner), events, and tokens for
-`aso-workload` only. It cannot list or change any ASO resource. Sharing ASO's
+ConfigMaps, Namespaces and the ASO owner kinds it resolves (list and
+watch: the FlexibleServer, Vault, ManagedEnvironment and ResourceGroup),
+`get` on any ASO resource (a `ManagementLock`'s owner), events, and tokens
+for `aso-workload` only. It cannot change any ASO resource, nor list the
+rest. Sharing ASO's
 service account would hand our manager all of ASO's Kubernetes rights.
 
 | ASO's credential | Same Azure identity? | Extra setup |
@@ -474,7 +543,8 @@ one Deployment, nothing per namespace to create. A static install
 
 ## 7. Proven, and not
 
-Proven by `make test` (envtest, 18 tests):
+Proven by `make test` (envtest, 21 tests, and the generated kinds' own
+serialization and conversion tests):
 
 - a password user gets exactly its database privileges, changes revoke
   what is no longer listed (including grants made by hand), and deletion
@@ -526,6 +596,20 @@ Proven by `make test` (envtest, 18 tests):
   and its secret; recreating it is refused by default while soft-deleted,
   and `createOrRecover` recovers it; another identity is refused; the CRD
   needs both the certificate and the key;
+- Container Apps environment children, generated (c3): a Dapr component
+  owned by ASO's `ManagedEnvironment` (a stand-in with the annotation ASO
+  writes) is PUT by ASO's own ARM reconciler with the namespace's identity at
+  the ARM ID computed from the owner chain (resource group, environment,
+  component), its secret value from a Kubernetes Secret; status is read
+  back; a spec change is PUT again; deleting the object deletes the
+  component and leaves the environment; a storage (key from a Secret), a
+  certificate (value and password from Secrets), a managed certificate and a
+  Java component are created and deleted the same way; the CRD refuses an
+  unknown domain validation method and a missing owner; a `CanNotDelete`
+  `ManagementLock` on the resource group makes deleting a component fail
+  with `ScopeLocked`, and the delete goes through once the lock is removed.
+  The generated packages' own tests (JSON and property-conversion round
+  trips) pass;
 - management locks: a lock on an ASO `ResourceGroup` is set in the fake
   Resource Manager on the ARM ID ASO recorded, with the namespace's
   `aso-workload` identity, and the `ResourceGroup` becomes its Kubernetes
@@ -558,7 +642,13 @@ same way): the manager may get an ASO `ResourceGroup` but not list or
 change it; team-a's lock on its `ResourceGroup` becomes Ready, and the
 fake Resource Manager (`cmd/fakearm`) logs the lock created on the
 resource group's ARM ID with team-a's `aso-workload` identity; team-b's
-is refused (401); deleting team-a's lock removes it. With
+is refused (401); deleting team-a's lock removes it. With the generated
+kinds (passed 2026-11-09, the same way): team-a's Dapr component is created in
+the fake Resource Manager under team-a's environment with team-a's
+`aso-workload` identity, team-b's is refused, the `CanNotDelete` lock on
+team-a's resource group makes deleting it fail with `ScopeLocked` (ASO's
+reconciler, ASO's error handling), and once the lock is removed ASO's
+retry deletes it. With
 `VaultCertificate` (passed 2026-11-09, the same way): team-a's certificate
 from a `kubernetes.io/tls` Secret is imported into the fake vault, team-b's
 is refused (401), and deleting team-a's soft-deletes it.

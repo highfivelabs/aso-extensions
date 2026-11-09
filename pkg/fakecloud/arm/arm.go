@@ -2,8 +2,10 @@
 // SPDX-License-Identifier: MIT
 
 // Package arm is a fake Azure Resource Manager, for tests and test builds
-// only: a store of resources by ARM ID (PUT, GET, DELETE of any resource,
-// with no properties checked), and management locks
+// only: a store of resources by ARM ID (PUT, GET, DELETE of any resource
+// whose parent exists, the body kept as sent with id, name, type and a
+// provisioningState of Succeeded added; no properties are checked), and
+// management locks
 // (Microsoft.Authorization/locks, API 2020-05-01) at any scope that
 // exists. Locks behave as Azure documents them
 // (https://learn.microsoft.com/azure/azure-resource-manager/management/lock-resources):
@@ -40,12 +42,9 @@ type lock struct {
 	scope      string
 }
 
-type resource struct {
-	ID         string          `json:"id"`
-	Name       string          `json:"name"`
-	Type       string          `json:"type,omitempty"`
-	Properties json.RawMessage `json:"properties,omitempty"`
-}
+// resource is a resource as sent (location, tags, properties, whatever else)
+// with id, name and type added.
+type resource map[string]any
 
 // ARM is the fake. Use New.
 type ARM struct {
@@ -69,7 +68,19 @@ func New(authorize func(token string) bool) *ARM {
 func (a *ARM) AddResource(id string) {
 	a.mu.Lock()
 	defer a.mu.Unlock()
-	a.resources[strings.ToLower(id)] = &resource{ID: id, Name: lastSegment(id)}
+	a.resources[strings.ToLower(id)] = &resource{"id": id, "name": lastSegment(id), "type": typeOf(id)}
+}
+
+// Resource returns the stored resource with the given ARM ID, as JSON, for
+// tests.
+func (a *ARM) Resource(id string) (map[string]any, bool) {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	r, ok := a.resources[strings.ToLower(id)]
+	if !ok {
+		return nil, false
+	}
+	return *r, true
 }
 
 // HasResource is whether the store holds the resource, for tests.
@@ -104,8 +115,9 @@ func (a *ARM) Locks() []string {
 }
 
 var (
-	subscriptionScope = regexp.MustCompile(`(?i)^/subscriptions/[^/]+$`)
-	lockPath          = regexp.MustCompile(`(?i)^(.*)/providers/microsoft\.authorization/locks/([^/]+)$`)
+	subscriptionScope  = regexp.MustCompile(`(?i)^/subscriptions/[^/]+$`)
+	resourceGroupScope = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+$`)
+	lockPath           = regexp.MustCompile(`(?i)^(.*)/providers/microsoft\.authorization/locks/([^/]+)$`)
 )
 
 type recorder struct {
@@ -203,16 +215,33 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeScopeLocked(w, r.Method, id, l)
 			return
 		}
-		var body struct {
-			Properties json.RawMessage `json:"properties"`
+		parent := parentOf(id)
+		if parent != "" && !subscriptionScope.MatchString(parent) && !a.exists(parent) {
+			code := "ParentResourceNotFound"
+			if resourceGroupScope.MatchString(parent) {
+				code = "ResourceGroupNotFound"
+			}
+			writeError(w, http.StatusNotFound, code, "The parent resource "+parent+" of "+id+" was not found.")
+			return
 		}
-		_ = json.NewDecoder(r.Body).Decode(&body)
+		body := map[string]any{}
+		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+			writeError(w, http.StatusBadRequest, "InvalidRequestContent", err.Error())
+			return
+		}
+		body["id"], body["name"], body["type"] = id, lastSegment(id), typeOf(id)
+		props, _ := body["properties"].(map[string]any)
+		if props == nil {
+			props = map[string]any{}
+		}
+		props["provisioningState"] = "Succeeded"
+		body["properties"] = props
 		status := http.StatusOK
 		if _, ok := a.resources[key]; !ok {
 			status = http.StatusCreated
 		}
-		res := &resource{ID: id, Name: lastSegment(id), Properties: body.Properties}
-		a.resources[key] = res
+		res := resource(body)
+		a.resources[key] = &res
 		writeJSON(w, status, res)
 	case http.MethodDelete:
 		if _, ok := a.resources[key]; !ok {
@@ -284,6 +313,48 @@ func within(id, scope string) bool {
 
 func lastSegment(id string) string {
 	return id[strings.LastIndex(id, "/")+1:]
+}
+
+// parentOf is the ID without its last two segments (a type and a name): the
+// resource group of a resource, the subscription of a resource group.
+func parentOf(id string) string {
+	parts := strings.Split(strings.Trim(id, "/"), "/")
+	if len(parts) < 3 {
+		return ""
+	}
+	// A resource under providers/: .../providers/NS/type/name has the
+	// resource group (everything before /providers/) as its parent.
+	for i, p := range parts {
+		if strings.EqualFold(p, "providers") && i+4 == len(parts) {
+			return "/" + strings.Join(parts[:i], "/")
+		}
+	}
+	return "/" + strings.Join(parts[:len(parts)-2], "/")
+}
+
+// typeOf is the ARM type of a resource ID: Microsoft.App/managedEnvironments
+// for .../providers/Microsoft.App/managedEnvironments/env, with every type
+// segment of a child (…/daprComponents/name) appended; resourceGroups for a
+// resource group.
+func typeOf(id string) string {
+	parts := strings.Split(strings.Trim(id, "/"), "/")
+	for i := len(parts) - 1; i >= 0; i-- {
+		if strings.EqualFold(parts[i], "providers") {
+			rest := parts[i+1:]
+			if len(rest) < 3 {
+				break
+			}
+			types := []string{rest[0]}
+			for j := 1; j < len(rest); j += 2 {
+				types = append(types, rest[j])
+			}
+			return strings.Join(types, "/")
+		}
+	}
+	if len(parts) >= 4 && strings.EqualFold(parts[2], "resourcegroups") {
+		return "Microsoft.Resources/resourceGroups"
+	}
+	return ""
 }
 
 func writeScopeLocked(w http.ResponseWriter, method, id string, l *lock) {

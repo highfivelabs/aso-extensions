@@ -1,0 +1,75 @@
+# The configuration of ASO's generator (third_party/azure-service-operator/
+# v2/tools/generator, as patched here) for the ARM kinds this repository
+# generates in its own groups, <service>.azure.hfl.dev. It is written the way
+# ASO writes v2/azure-arm.yaml, and read by hack/generate-arm.sh, which
+# writes apis/arm/, pkg/controllers/arm_resources_gen.go and the reports
+# under generator/reports/.
+
+# The ARM specs, fetched by hack/specs.sh at the commit ASO pins.
+schemaRoot: "../.cache/azure-rest-api-specs/specification/"
+
+destinationGoModuleFile: ../go.mod
+
+# Output folders and files, relative to the directory of go.mod.
+typesOutputPath: apis/arm
+typeRegistrationOutputFile: pkg/controllers/arm_resources_gen.go
+
+rootUrl: https://github.com/highfivelabs/aso-extensions/tree/main/
+
+samplesPath: samples
+emitDocFiles: true
+
+pipeline: azure
+
+supportedResourcesReport:
+  outputFolder: generator/reports/
+  fragmentPath: generator/reports/fragments
+  resourceUrlTemplate: 'https://github.com/highfivelabs/aso-extensions/tree/main/apis/arm/{group}/{version}#{kind}'
+  resourcePathTemplate: "{group}/{version}.md"
+  currentRelease: v0.1.0
+
+upgradableResourcesReport:
+  outputFolder: generator/reports/
+  stableVersionsExpiry: 12
+  previewVersionsExpiry: 6
+  latestVersionThreshold: 24
+
+imports:
+  app: azure-arm/app.yaml
+
+# Filters are applied in document order; the earliest match wins (as in ASO's
+# azure-arm.yaml, from which these are taken).
+typeFilters:
+  - action: include
+    group: common
+    because: we need these for common resource properties
+
+  - action: prune
+    version: '*preview'
+    because: preview SDK versions are excluded unless a group file includes one
+
+typeTransformers:
+  - name: "*"
+    property: Tags
+    ifType:
+      map:
+        key:
+          name: string
+        value:
+          name: any
+    target:
+      map:
+        key:
+          name: string
+        value:
+          name: string
+    because: Tags is defined as map[string]interface{} when it should be map[string]string
+
+status:
+  overrides: [
+    {
+      # give the common types their own namespace (as ASO does)
+      basePath: 'common-types/resource-management',
+      namespace: 'Microsoft.Common'
+    },
+  ]

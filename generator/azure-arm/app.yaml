@@ -1,0 +1,35 @@
+typeFilters:
+  - action: include
+    group: app
+    version: v20250101
+    because: the version of the owner, ASO's ManagedEnvironment, and the newest stable one with the children we generate
+  - action: prune
+    group: app
+    because: every other version is left alone
+
+groupModelConfiguration:
+  2025-01-01:
+    ManagedEnvironments_DaprComponent:
+      $exportAs: ManagedEnvironmentsDaprComponent
+      $supportedFrom: v0.1.0
+    ManagedEnvironments_Storage:
+      $exportAs: ManagedEnvironmentsStorage
+      $supportedFrom: v0.1.0
+    ManagedEnvironments_Certificate:
+      $exportAs: ManagedEnvironmentsCertificate
+      $supportedFrom: v0.1.0
+    ManagedEnvironments_ManagedCertificate:
+      $exportAs: ManagedEnvironmentsManagedCertificate
+      $supportedFrom: v0.1.0
+    ManagedEnvironments_JavaComponent:
+      $exportAs: ManagedEnvironmentsJavaComponent
+      $supportedFrom: v0.1.0
+    Secret:
+      Identity:
+        $referenceType: arm+wellknown # permits `system` to use a system-assigned identity
+    CertificateKeyVaultProperties:
+      Identity:
+        $referenceType: arm+wellknown # permits `system` to use a system-assigned identity
+    ManagedEnvironments_ManagedCertificate_Properties_STATUS:
+      ValidationToken:
+        $importSecretMode: never # a DNS TXT record's value, not a secret

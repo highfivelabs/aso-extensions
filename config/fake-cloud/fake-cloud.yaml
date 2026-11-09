@@ -119,7 +119,7 @@ spec:
         image: ko://github.com/highfivelabs/aso-extensions/cmd/fakearm
         args:
         - --listen=:8443
-        - --audience=https://fakearm.fake-cloud.svc/
+        - --audience=https://fakearm.fake-cloud.svc
         - --trust=$(TRUST)
         - --resource=$(RESOURCES)
         env:

@@ -28,9 +28,11 @@ gains it, the kind is deprecated here and users move to ASO's.
 
 ```sh
 make upstream   # once: ASO at the pin, with patches/ applied
-make check      # pin, go.mod versions, generated files, gofmt, vet,
-                # licence headers, no fake cloud in the production build,
-                # build, unit and end-to-end tests
+make check      # pin, go.mod versions, generated files (ASO's generator
+                # is rerun), gofmt, vet, licence headers, no fake cloud in
+                # the production build, build, unit and end-to-end tests
+make generate-arm  # after changing generator/: rerun ASO's generator
+                # (heavy; run it on a machine meant for that)
 make operator-e2e  # the install on kind with the fake cloud
 ```
 

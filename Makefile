@@ -14,7 +14,7 @@ ENVTEST_K8S_VERSION := 1.37.0
 # setup-envtest at controller-runtime's version in ASO's go.mod.
 SETUP_ENVTEST := sigs.k8s.io/controller-runtime/tools/setup-envtest@v0.25.2
 
-.PHONY: all upstream upstream-check generate build test check operator-e2e clean
+.PHONY: all upstream upstream-check generate generate-arm build test check operator-e2e clean
 
 all: check
 
@@ -26,6 +26,11 @@ upstream-check:
 	hack/check-go-mod.sh
 
 generate: upstream-check
+	hack/generate.sh
+
+# ASO's generator over the ARM specs (heavy: run it on the Ubuntu machine).
+generate-arm: upstream-check
+	hack/generate-arm.sh
 	hack/generate.sh
 
 build: upstream-check
@@ -43,8 +48,9 @@ test: upstream-check $(BIN)/setup-envtest
 # Everything that must hold before a commit.
 check: upstream-check
 	@test -z "$$(gofmt -l apis cmd pkg test)" || { gofmt -l apis cmd pkg test; echo "gofmt needed"; exit 1; }
+	hack/generate-arm.sh
 	hack/generate.sh
-	@git diff --exit-code -- apis config || { echo "generated files are stale; commit the output of hack/generate.sh"; exit 1; }
+	@git diff --exit-code -- apis config pkg/controllers generator || { echo "generated files are stale; commit the output of make generate-arm"; exit 1; }
 	go vet ./...
 	go vet -tags fakecloud ./cmd/manager
 	hack/check-no-fake-cloud.sh
