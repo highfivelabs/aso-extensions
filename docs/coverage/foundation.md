@@ -125,12 +125,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 3.7% | 53.1% |
-| security-adjacent | 7 | 93 | 1,049 | 8.6% | 1.7% | 89.7% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 3.9% | 52.9% |
+| security-adjacent | 7 | 93 | 1,049 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.7% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (143 with no kind, 52 partly covered, 51 covered)
+### platform-foundation: 246 resources (142 with no kind, 52 partly covered, 52 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -163,7 +163,7 @@ Generated: every resource of the two categories, by the order of the services in
 | 27 | `Microsoft.Authorization/roleDefinitions` | covered | `authorization/RoleDefinition` |  | 8 / 0 / 0 | extension | - | - | 2 |
 | 28 | `Microsoft.Authorization/policyassignments` | covered |  | `authorization/PolicyAssignment` | 0 / 27 / 0 | extension | - | - | 1 |
 | 29 | `Microsoft.Authorization/policyExemptions` | covered |  | `authorization/PolicyExemption` | 0 / 12 / 0 | extension | - | - | 0 |
-| 30 | `Microsoft.PolicyInsights/remediations` | no kind |  |  | 0 / 0 / 8 | extension,resourceGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (8) | 0 |
+| 30 | `Microsoft.PolicyInsights/remediations` | covered |  | `policyinsights/PolicyRemediation` | 0 / 8 / 0 | extension,resourceGroup,subscription | - | - | 0 |
 | 31 | `Microsoft.Resources/resourceGroups` | partial, 1 of 4 missing | `resources/ResourceGroup` |  | 3 / 0 / 1 | subscription | extend: ASO's API version is older than the spec's | S (1) | 2 |
 | 32 | `Microsoft.Resources/tags` | covered |  | `resources/TagSet` | 0 / 1 / 0 | extension | - | - | 1 |
 | 33 | `Microsoft.Consumption/budgets` | no kind |  |  | 0 / 0 / 26 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (26) | 1 |
@@ -381,11 +381,11 @@ Generated: every resource of the two categories, by the order of the services in
 | 245 | `Microsoft.ContainerRegistry/registries` | covered | `containerregistry/Registry` |  | 26 / 0 / 0 | resourceGroup | - | - | 1 |
 | 246 | `Microsoft.Billing/billingAccounts/billingSubscriptionAliases` | no kind |  |  | 0 / 0 / 17 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (17) | 0 |
 
-### security-adjacent: 93 resources (83 with no kind, 6 partly covered, 4 covered)
+### security-adjacent: 93 resources (82 with no kind, 7 partly covered, 4 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
-| 1 | `Microsoft.PolicyInsights/attestations` | no kind |  |  | 0 / 0 / 10 | extension,resourceGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (10) | 0 |
+| 1 | `Microsoft.PolicyInsights/attestations` | partial, 1 of 10 missing |  | `policyinsights/PolicyAttestation` | 0 / 9 / 1 | extension,resourceGroup,subscription | extend: newer API version or property config | S (1) | 0 |
 | 2 | `Microsoft.Network/securityPartnerProviders` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
 | 3 | `Microsoft.Network/ddosCustomPolicies` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
 | 4 | `Microsoft.Network/ddosProtectionPlans` | partial, 1 of 3 missing | `network/DdosProtectionPlan` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 1 |
