@@ -1,0 +1,29 @@
+typeFilters:
+  - action: include
+    group: containerregistry
+    version: v20251101
+    because: the version of ASO's Registry, the owner of what we generate
+
+groupModelConfiguration:
+  2025-11-01:
+    Registries_Token:
+      $exportAs: RegistriesToken
+      $supportedFrom: v0.1.0
+    Registries_ScopeMap:
+      $exportAs: RegistriesScopeMap
+      $supportedFrom: v0.1.0
+    Registries_CredentialSet:
+      $exportAs: RegistriesCredentialSet
+      $supportedFrom: v0.1.0
+    Registries_Webhook:
+      $exportAs: RegistriesWebhook
+      $supportedFrom: v0.1.0
+    TokenProperties:
+      ScopeMapId:
+        $referenceType: arm
+    AuthCredential:
+      PasswordSecretIdentifier:
+        $importSecretMode: never # the URI of a Key Vault secret, not the secret
+    AuthCredential_STATUS:
+      PasswordSecretIdentifier:
+        $importSecretMode: never

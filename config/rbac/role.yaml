@@ -1,5 +1,5 @@
 # The manager's rights: our kinds; reading the ASO owners it resolves
-# (FlexibleServer, Vault, ManagedEnvironment, ResourceGroup, Site, Workspace); reading Secrets and ConfigMaps (aso-credential,
+# (FlexibleServer, Vault, ManagedEnvironment, ResourceGroup, Site, Workspace, Registry); reading Secrets and ConfigMaps (aso-credential,
 # credential-from secrets, the values our kinds name; ASO's framework keeps
 # informers on both); reading Namespaces (ASO's reconcile-policy annotation
 # on a namespace); events. Of ASO's, only get on its resources, for a
@@ -34,6 +34,9 @@ rules:
   verbs: ["get", "list", "watch"]
 - apiGroups: ["operationalinsights.azure.com"]
   resources: ["workspaces"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["containerregistry.azure.com"]
+  resources: ["registries"]
   verbs: ["get", "list", "watch"]
 - apiGroups: [""]
   resources: ["secrets", "configmaps", "namespaces"]
