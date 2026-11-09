@@ -15,6 +15,7 @@ import (
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
+	asoweb "github.com/Azure/azure-service-operator/v2/api/web/v20260715/storage"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
 )
@@ -144,6 +145,25 @@ func managedEnvironment(t *testing.T, ns, name, rg, rgAzureName, azureName strin
 	}
 	env.Status.Conditions = []conditions.Condition{asoReady(env.Generation)}
 	if err := k8s.Status().Update(ctx, env); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// webSite stands in for an ASO web.azure.com Site ASO has provisioned, in
+// the resource group rg.
+func webSite(t *testing.T, ns, name, rg, rgAzureName, azureName string) {
+	t.Helper()
+	ctx := context.Background()
+	site := &asoweb.Site{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: name,
+		Annotations: map[string]string{genruntime.ResourceIDAnnotation: "/subscriptions/" + subID + "/resourceGroups/" + rgAzureName +
+			"/providers/Microsoft.Web/sites/" + azureName}}}
+	site.Spec.AzureName = azureName
+	site.Spec.Owner = &genruntime.KnownResourceReference{Name: rg}
+	if err := k8s.Create(ctx, site); err != nil {
+		t.Fatal(err)
+	}
+	site.Status.Conditions = []conditions.Condition{asoReady(site.Generation)}
+	if err := k8s.Status().Update(ctx, site); err != nil {
 		t.Fatal(err)
 	}
 }

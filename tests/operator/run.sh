@@ -108,7 +108,8 @@ kind load docker-image postgres:17 --name "${CLUSTER}" >/dev/null
 
 step "ASO's footprint, made by hand"
 kubectl create namespace "${ASO_NS}" --dry-run=client -o yaml | kubectl apply -f -
-kubectl apply -k config/test/aso-crds
+# Server-side: ASO's Site CRD is larger than the annotation client-side apply keeps.
+kubectl apply --server-side -k config/test/aso-crds
 # ASO's settings: no global credential; strict workload identity for the
 # namespaces' aso-credential secrets; Resource Manager is the fake one.
 kubectl -n "${ASO_NS}" create secret generic aso-controller-settings \
@@ -124,7 +125,7 @@ kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f 
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
@@ -139,7 +140,7 @@ kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -164,6 +165,7 @@ can get secrets -n team-a || fail "cannot read secrets"
 ! can create mutatingwebhookconfigurations.admissionregistration.k8s.io || fail "may change webhooks"
 can get resourcegroups.resources.azure.com -n team-a || fail "cannot read a ManagementLock's owner"
 can list managedenvironments.app.azure.com -n team-a || fail "cannot read the owner of the generated app kinds"
+can list sites.web.azure.com -n team-a || fail "cannot read the owner of the generated web kinds"
 ! can list storageaccounts.storage.azure.com -n team-a || fail "may list ASO resources it only needs to get"
 ! can update resourcegroups.resources.azure.com -n team-a || fail "may change ASO's ResourceGroups"
 pass "aso-workload tokens, read secrets and the ASO owners, get any ASO resource, our kinds; nothing of ASO's to change"
@@ -205,6 +207,14 @@ metadata:
   namespace: $1
   annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.App/managedEnvironments/$1-env}
 spec: {azureName: $1-env, owner: {name: rg}}
+---
+apiVersion: web.azure.com/v20260715storage
+kind: Site
+metadata:
+  name: site
+  namespace: $1
+  annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Web/sites/$1-site}
+spec: {azureName: $1-site, owner: {name: rg}}
 EOF
   local now; now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
   local cond="{\"type\":\"Ready\",\"status\":\"True\",\"severity\":\"\",\"reason\":\"Succeeded\",\"lastTransitionTime\":\"${now}\",\"observedGeneration\":1}"
@@ -215,6 +225,8 @@ EOF
   kubectl -n "$1" patch resourcegroup rg --subresource=status --type=merge \
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl -n "$1" patch managedenvironment env --subresource=status --type=merge \
+    -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
+  kubectl -n "$1" patch sites.web.azure.com site --subresource=status --type=merge \
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl apply -f - <<EOF
 apiVersion: dbforpostgresql.azure.hfl.dev/v1
@@ -255,6 +267,14 @@ spec:
   metadata:
   - {name: redisHost, value: "redis.example:6379"}
 ---
+apiVersion: web.azure.hfl.dev/v20260715
+kind: SitesSlot
+metadata: {name: staging, namespace: $1}
+spec:
+  owner: {name: site}
+  location: westus
+  httpsOnly: true
+---
 apiVersion: authorization.azure.hfl.dev/v1
 kind: ManagementLock
 metadata: {name: keep-rg, namespace: $1}
@@ -294,6 +314,10 @@ wait_for 90 "team-a's DaprComponent Ready" ready managedenvironmentsdaprcomponen
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env/daprComponents/statestore 201" \
   || fail "the fake resource manager saw no Dapr component created in team-a's environment"
 pass "team-a DaprComponent Ready: generated by ASO's generator, PUT by ASO's ARM reconciler as team-a's aso-workload identity"
+wait_for 90 "team-a's SitesSlot Ready" ready sitesslots.web.azure.hfl.dev team-a staging
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site/slots/staging 201" \
+  || fail "the fake resource manager saw no slot created on team-a's app"
+pass "team-a SitesSlot Ready: a deployment slot of ASO's Site, generated, PUT by ASO's ARM reconciler"
 wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
 pass "team-a ManagementLock Ready"
 logged fakearm "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
@@ -312,6 +336,8 @@ wait_for 90 "team-b's VaultCertificate refused" bash -c "[[ \"\$(kubectl get vau
 pass "team-b VaultCertificate refused: $(message vaultcertificates.keyvault.azure.hfl.dev team-b app-tls | cut -c1-120)..."
 wait_for 90 "team-b's DaprComponent refused" bash -c "[[ \"\$(kubectl get managedenvironmentsdaprcomponents.app.azure.hfl.dev -n team-b statestore -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
 pass "team-b DaprComponent refused: $(message managedenvironmentsdaprcomponents.app.azure.hfl.dev team-b statestore | cut -c1-120)..."
+wait_for 90 "team-b's SitesSlot refused" bash -c "[[ \"\$(kubectl get sitesslots.web.azure.hfl.dev -n team-b staging -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
+pass "team-b SitesSlot refused: $(message sitesslots.web.azure.hfl.dev team-b staging | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
@@ -345,6 +371,10 @@ kubectl -n team-a wait --for=delete managedenvironmentsdaprcomponents.app.azure.
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env/daprComponents/statestore 200" \
   || fail "the fake resource manager saw no delete of the Dapr component"
 pass "with the lock gone, the Dapr component is deleted in Resource Manager"
+kubectl -n team-a delete sitesslots.web.azure.hfl.dev staging --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site/slots/staging 200" \
+  || fail "the fake resource manager saw no delete of the slot"
+pass "the slot is deleted in Resource Manager"
 
 echo
 echo "all checks passed"
