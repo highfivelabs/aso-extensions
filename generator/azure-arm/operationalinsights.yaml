@@ -33,6 +33,12 @@ groupModelConfiguration:
     Workspaces_SavedSearch:
       $exportAs: WorkspacesSavedSearch
       $supportedFrom: v0.1.0
+    Workspaces_DataExport:
+      $exportAs: WorkspacesDataExport
+      $supportedFrom: v0.1.0
+    Destination:
+      ResourceId:
+        $referenceType: arm # a storage account, an Event Hubs namespace or an event hub
     QueryPack:
       $exportAs: QueryPack
       $supportedFrom: v0.1.0

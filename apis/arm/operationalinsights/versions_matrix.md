@@ -7,7 +7,13 @@
 | ColumnTypeEnum                                     | v20250701 |
 | ColumnTypeEnum_STATUS                              | v20250701 |
 | Column_STATUS                                      | v20250701 |
+| DataExportProperties                               | v20250701 |
+| DataExportProperties_STATUS                        | v20250701 |
 | DataSourceType_STATUS                              | v20250701 |
+| Destination                                        | v20250701 |
+| DestinationMetaData                                | v20250701 |
+| DestinationMetaData_STATUS                         | v20250701 |
+| Destination_STATUS                                 | v20250701 |
 | LinkedServiceEntityStatus                          | v20250701 |
 | LinkedServiceEntityStatus_STATUS                   | v20250701 |
 | LinkedServiceProperties                            | v20250701 |
@@ -47,6 +53,10 @@
 | TableTypeEnum_STATUS                               | v20250701 |
 | Tag                                                | v20250701 |
 | Tag_STATUS                                         | v20250701 |
+| Type_STATUS                                        | v20250701 |
+| WorkspacesDataExport                               | v20250701 |
+| WorkspacesDataExport_STATUS                        | v20250701 |
+| WorkspacesDataExport_Spec                          | v20250701 |
 | WorkspacesLinkedService                            | v20250701 |
 | WorkspacesLinkedService_STATUS                     | v20250701 |
 | WorkspacesLinkedService_Spec                       | v20250701 |

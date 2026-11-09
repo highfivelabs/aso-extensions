@@ -1,0 +1,17 @@
+typeFilters:
+  - action: include
+    group: compute
+    version: v20220301
+    because: the version of ASO's VirtualMachine (the newest it has), the owner of what we generate
+
+groupModelConfiguration:
+  2022-03-01:
+    VirtualMachines_RunCommand:
+      $exportAs: VirtualMachinesRunCommand
+      $supportedFrom: v0.1.0
+    VirtualMachineRunCommandProperties:
+      RunAsPassword:
+        $importSecretMode: optional # the password of the account the script runs as, from a Secret
+    VirtualMachineRunCommandProperties_STATUS:
+      RunAsPassword:
+        $importSecretMode: never

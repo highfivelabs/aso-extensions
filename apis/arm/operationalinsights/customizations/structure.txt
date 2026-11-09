@@ -5,6 +5,8 @@ QueryPackExtension: Object (0 properties)
 
 QueryPacksQueryExtension: Object (0 properties)
 
+WorkspacesDataExportExtension: Object (0 properties)
+
 WorkspacesLinkedServiceExtension: Object (0 properties)
 
 WorkspacesLinkedStorageAccountExtension: Object (0 properties)

@@ -2,6 +2,12 @@
 
 The following resources have newer versions available in the Azure REST API specifications. Resources with a 💡 have a recommended or overdue update.
 
+## compute
+
+|      | Resource                  | Available Stable | Supported Stable | Available Preview | Supported Preview |
+|------|---------------------------|------------------|------------------|-------------------|-------------------|
+| 💡    | VirtualMachinesRunCommand | **2026-04-01**   | 2022-03-01       | -                 | -                 |
+
 ## network
 
 |  | Resource                                      | Available Stable | Supported Stable | Available Preview | Supported Preview |
