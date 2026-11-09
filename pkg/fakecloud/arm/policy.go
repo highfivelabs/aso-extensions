@@ -67,6 +67,8 @@ func (a *ARM) checkPolicy(id string, body map[string]any) (status int, code, mes
 		if props["assignmentScopeValidation"] != "DoNotValidate" && !a.atOrUnder(scope, parentOf(assignment)) {
 			return http.StatusBadRequest, "InvalidExemptionScope", "The exemption at " + scope + " is not at or under the scope of the assignment " + assignment + "."
 		}
+	default:
+		return a.checkPolicyInsights(id, body)
 	}
 	return 0, "", ""
 }
