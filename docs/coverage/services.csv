@@ -68,7 +68,7 @@ Microsoft.ConnectedCache,4,0,0,152,0,0,152,0.0,0.0,100.0
 Microsoft.ConnectedVMwarevSphere,10,0,0,139,0,0,139,0.0,0.0,100.0
 Microsoft.Consumption,1,0,0,26,0,0,26,0.0,0.0,100.0
 Microsoft.ContainerInstance,4,1,0,297,92,0,205,31.0,0.0,69.0
-Microsoft.ContainerRegistry,10,3,0,128,33,0,95,25.8,0.0,74.2
+Microsoft.ContainerRegistry,10,3,4,128,33,23,72,25.8,18.0,56.2
 Microsoft.ContainerRegistry.Admin,2,0,0,3,0,0,3,0.0,0.0,100.0
 Microsoft.ContainerService,24,10,0,682,479,0,203,70.2,0.0,29.8
 Microsoft.ContainerStorage,3,0,0,24,0,0,24,0.0,0.0,100.0
