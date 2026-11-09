@@ -43,6 +43,12 @@ tasks:
       - hack/upstream.sh --check
       - hack/check-go-mod.sh
 
+  "upstream:yaml-check":
+    desc: Fail if upstream.yaml (UPSTREAM.md, machine-readable) and UPSTREAM.md disagree; needs no upstream checkout.
+    dir: hack/upstream-yaml
+    cmds:
+      - go run . ../..
+
   generate:
     desc: Deepcopy code and CRDs from apis/
     cmds:
@@ -77,6 +83,7 @@ tasks:
     desc: Everything that must hold before a commit
     cmds:
       - task: upstream-check
+      - task: upstream:yaml-check
       - task: common:gofmt
         vars: {DIRS: apis cmd pkg test}
       - hack/generate-arm.sh

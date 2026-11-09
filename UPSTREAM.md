@@ -6,6 +6,11 @@ This repository builds on Azure Service Operator v2 (ASO) at one commit of
 applies `patches/azure-service-operator/*.patch` in order;
 `hack/upstream.sh --check` fails if the checkout is anything else.
 
+`upstream.yaml` says the same as this file's tables in machine-readable
+form (pins, pull requests, patches, copied files), for tools such as the
+factory's daily watch. Change both together; `task upstream:yaml-check`
+(part of `task check`) fails when they disagree.
+
 | | |
 | --- | --- |
 | Repository | `github.com/Azure/azure-service-operator` |
