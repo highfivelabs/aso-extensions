@@ -24977,10 +24977,10 @@ Microsoft.ManagedServices,Microsoft.ManagedServices/registrationDefinitions,prop
 Microsoft.ManagedServices,Microsoft.ManagedServices/registrationDefinitions,properties.eligibleAuthorizations[].roleDefinitionId,string,false,none,,
 Microsoft.ManagedServices,Microsoft.ManagedServices/registrationDefinitions,properties.managedByTenantId,string,false,none,,
 Microsoft.ManagedServices,Microsoft.ManagedServices/registrationDefinitions,properties.registrationDefinitionName,string,false,none,,
-Microsoft.Management,Microsoft.Management/managementGroups,properties.details.parent.id,string,false,none,,
-Microsoft.Management,Microsoft.Management/managementGroups,properties.displayName,string,false,none,,
-Microsoft.Management,Microsoft.Management/managementGroups/settings,properties.defaultManagementGroup,string,false,none,,
-Microsoft.Management,Microsoft.Management/managementGroups/settings,properties.requireAuthorizationForGroupCreation,boolean,false,none,,
+Microsoft.Management,Microsoft.Management/managementGroups,properties.details.parent.id,string,false,ours,,details.parent.reference
+Microsoft.Management,Microsoft.Management/managementGroups,properties.displayName,string,false,ours,,displayName
+Microsoft.Management,Microsoft.Management/managementGroups/settings,properties.defaultManagementGroup,string,false,ours,,defaultManagementGroup
+Microsoft.Management,Microsoft.Management/managementGroups/settings,properties.requireAuthorizationForGroupCreation,boolean,false,ours,,requireAuthorizationForGroupCreation
 Microsoft.Management,Microsoft.Management/serviceGroups,kind,string,false,none,,
 Microsoft.Management,Microsoft.Management/serviceGroups,properties.attributes.criticality,integer,false,none,,
 Microsoft.Management,Microsoft.Management/serviceGroups,properties.displayName,string,false,none,,

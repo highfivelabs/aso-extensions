@@ -63,7 +63,7 @@ stable); our generated kinds are pinned to the version they are generated from.
 
 | # | Proposed kind(s) | Azure resources (attributes) | ASO today / ours today | What is missing | Upstream | AVMs | Route | Size |
 | ---: | --- | --- | --- | --- | --- | ---: | --- | --- |
-| 1 | `ManagementGroup`, `ManagementGroupSubscription`, `ManagementGroupSettings` (group `management`) | `Microsoft.Management/managementGroups` (2), `managementGroups/subscriptions` (0, a placement), `managementGroups/settings` (2); spec `management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01` | none / none | all; the top of every landing zone and the parent of policy and RBAC scopes | ASO issue [#2249](https://github.com/Azure/azure-service-operator/issues/2249) open, 12 comments, no PR; not on `main` | 2 | generator, tenant owner (a `ManagementGroup` has an optional parent group; precedent ASO's `Alias`, no owner); the placement kind owns itself under a group and names a subscription ARM ID or an `Alias` | S |
+| 1 | `ManagementGroup`, `ManagementGroupSubscription`, `ManagementGroupSettings` (group `management`) | `Microsoft.Management/managementGroups` (2), `managementGroups/subscriptions` (0, a placement), `managementGroups/settings` (2); spec `management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01` | none / none | all; the top of every landing zone and the parent of policy and RBAC scopes | ASO issue [#2249](https://github.com/Azure/azure-service-operator/issues/2249) open, 12 comments, no PR; not on `main` | 2 | **built 2026-11-09**: `management.azure.hfl.dev/v20230401` `ManagementGroup`, `ManagementGroupsSubscription`, `ManagementGroupsSetting`; generator, tenant owner (a `ManagementGroup` has an optional parent group; precedent ASO's `Alias`, no owner); the placement kind owns itself under a group and names a subscription ARM ID or an `Alias` | S |
 | 2 | `SubscriptionTag` (`Tags`), `BillingSubscriptionAlias` | `Microsoft.Resources/tags` (1: `properties.tags{}`, extension scope), `Microsoft.Billing/billingAccounts/billingSubscriptionAliases` (17, tenant); `Microsoft.Subscription/policies` (3) | `subscription/Alias` covers `Microsoft.Subscription/aliases` / none | tags on a subscription, resource group or resource as one object; subscription creation under a billing scope (EA and MCA) | none found; ASO issue #4728 (renaming a subscription) open | 1 | generator, arbitrary owner (`Tags`); generator (`BillingSubscriptionAlias`) | S |
 | 3 | `PolicyDefinition`, `PolicySetDefinition`, `PolicyAssignment`, `PolicyExemption` (group `authorization`, beside `ManagementLock`) | `Microsoft.Authorization/policyDefinitions` (22, at management group or subscription), `policySetDefinitions` (25, same), `policyAssignments` (27, extension scope), `policyExemptions` (12, extension scope); spec `resources/resource-manager/Microsoft.Authorization/policy/stable/2026-07-01` (exemptions: preview 2024-12-01-preview); later `policyDefinitions/versions` (21), `policySetDefinitions/versions` (24) | none / none | all of Azure Policy except remediation; `policyRule`, `parameters` and `policyDefinitions` are free-form JSON | ASO issues [#4975](https://github.com/Azure/azure-service-operator/issues/4975) and [#2767](https://github.com/Azure/azure-service-operator/issues/2767) open, no PR | 1 (avm-ptn-alz); every landing zone | hand-written, reusing `ManagementLock`'s owner (an ASO resource, a `ManagementGroup` kind from row 1, or an ARM ID) and its ARM client; the two definition kinds are one type at two scopes, the two others extension | M (86) |
 | 4 | `PolicyRemediation` | `Microsoft.PolicyInsights/remediations` (8, subscription, resource group and extension scope); spec `policyinsights/.../PolicyInsights/stable/2024-10-01` | none / none | all | covered by #2767 (no PR) | 0 | hand-written, same owner as row 3 | S |
@@ -122,19 +122,19 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 1.8% | 55.0% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 1.9% | 54.9% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 1.7% | 89.7% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.7% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (151 with no kind, 50 partly covered, 45 covered)
+### platform-foundation: 246 resources (148 with no kind, 50 partly covered, 48 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
-| 1 | `Microsoft.Management/managementGroups` | no kind |  |  | 0 / 0 / 2 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (2) | 2 |
-| 2 | `Microsoft.Management/managementGroups/subscriptions` | no kind |  |  | 0 / 0 / 0 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (0) | 1 |
-| 3 | `Microsoft.Management/managementGroups/settings` | no kind |  |  | 0 / 0 / 2 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (2) | 0 |
-| 4 | `Microsoft.Management/serviceGroups` | no kind |  |  | 0 / 0 / 5 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (5) | 0 |
+| 1 | `Microsoft.Management/serviceGroups` | no kind |  |  | 0 / 0 / 5 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (5) | 0 |
+| 2 | `Microsoft.Management/managementGroups` | covered |  | `management/ManagementGroup` | 0 / 2 / 0 | tenant | - | - | 2 |
+| 3 | `Microsoft.Management/managementGroups/subscriptions` | covered |  | `management/ManagementGroupsSubscription` | 0 / 0 / 0 | tenant | - | - | 1 |
+| 4 | `Microsoft.Management/managementGroups/settings` | covered |  | `management/ManagementGroupsSetting` | 0 / 2 / 0 | tenant | - | - | 0 |
 | 5 | `Microsoft.Subscription/policies` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
 | 6 | `Microsoft.Subscription/subscriptionDefinitions` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
 | 7 | `Microsoft.Subscription/aliases` | covered | `subscription/Alias` |  | 9 / 0 / 0 | tenant | - | - | 1 |

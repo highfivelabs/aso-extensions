@@ -1,0 +1,29 @@
+| Type Definitions in package "management"          | v20230401 |
+|---------------------------------------------------|-----------|
+| APIVersion                                        | v20230401 |
+| CreateManagementGroupDetails                      | v20230401 |
+| CreateManagementGroupProperties                   | v20230401 |
+| CreateOrUpdateSettingsProperties                  | v20230401 |
+| CreateParentGroupInfo                             | v20230401 |
+| DescendantParentGroupInfo_STATUS                  | v20230401 |
+| HierarchySettingsProperties_STATUS                | v20230401 |
+| ManagementGroup                                   | v20230401 |
+| ManagementGroupChildInfo_STATUS                   | v20230401 |
+| ManagementGroupChildType_STATUS                   | v20230401 |
+| ManagementGroupDetails_STATUS                     | v20230401 |
+| ManagementGroupPathElement_STATUS                 | v20230401 |
+| ManagementGroupProperties_STATUS                  | v20230401 |
+| ManagementGroup_STATUS                            | v20230401 |
+| ManagementGroup_Spec                              | v20230401 |
+| ManagementGroupsSetting                           | v20230401 |
+| ManagementGroupsSetting_STATUS                    | v20230401 |
+| ManagementGroupsSetting_Spec                      | v20230401 |
+| ManagementGroupsSubscription                      | v20230401 |
+| ManagementGroupsSubscription_STATUS               | v20230401 |
+| ManagementGroupsSubscription_Spec                 | v20230401 |
+| ManagementGroups_Setting_Name_Spec                | v20230401 |
+| ParentGroupInfo_STATUS                            | v20230401 |
+| SubscriptionUnderManagementGroupProperties_STATUS | v20230401 |
+| SystemData_CreatedByType_STATUS                   | v20230401 |
+| SystemData_LastModifiedByType_STATUS              | v20230401 |
+| SystemData_STATUS                                 | v20230401 |

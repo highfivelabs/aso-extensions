@@ -21,6 +21,9 @@ resources:
 - keyvault.azure.hfl.dev_vaultcertificates.yaml
 - keyvault.azure.hfl.dev_vaultsecrets.yaml
 - maintenance.azure.hfl.dev_maintenanceconfigurations.yaml
+- management.azure.hfl.dev_managementgroups.yaml
+- management.azure.hfl.dev_managementgroupssettings.yaml
+- management.azure.hfl.dev_managementgroupssubscriptions.yaml
 - network.azure.hfl.dev_networksecurityperimeters.yaml
 - network.azure.hfl.dev_networksecurityperimeterslinks.yaml
 - network.azure.hfl.dev_networksecurityperimetersloggingconfigurations.yaml

@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after Recovery Services (c10 part two). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 1 of `docs/coverage/foundation.md`.
+State at the writing: 2026-11-09, after management groups (foundation row 1; the kind agent that built it also guarded `task operator-e2e`). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 2 of `docs/coverage/foundation.md`.
 
 ## What this repository is
 
@@ -48,12 +48,14 @@ perimeters, container registry tokens and webhooks, VM extras, Recovery
 Services vault and policies). Skipped: c7 (Key Vault keys: ASO's `VaultKey`
 #5564 ships in its next release; recheck).
 
-**Tenant-scope resources first** (rows 1 and 2: management groups, subscription
-tags, billing aliases; policy at management group scope). `docs/plan.md` §2,
-"Tenant-scope resources", says what ASO's resolver and identity do and what our
-fake cannot do yet (its parent rule rejects `/providers/Microsoft.Management/...`
-until the fake accepts a tenant root): fix the fake and test it before
-designing the kinds.
+**Tenant-scope resources** (row 1 is built: management groups; row 2 subscription
+tags and billing aliases, and policy at management group scope, come next).
+`docs/plan.md` §2, "Tenant-scope resources", says what ASO's resolver and
+identity do. The fake accepts a tenant root and models the management group
+hierarchy now (`pkg/fakecloud/arm`). **A child of a tenant scope resource**
+(`.../managementGroups/{g}/subscriptions/{s}`) needs generator patch 0005
+(`ASO_GENERATOR_TENANT_CHILDREN`, set by `hack/generate-arm.sh`); without it the
+generator gives the child no owner.
 
 | Rank | Gap | State |
 | --- | --- | --- |
@@ -146,6 +148,18 @@ Facts learned the hard way:
 - The generator's label errors come all at once (every unlabelled reference
   in one run); a list of ARM IDs (`storageAccountIds`) is labelled the same
   way as a single one and becomes a `[]ResourceReference`.
+- **A directly recursive status type** (a management group's `children`, each
+  with `children`) stops the run at stage 12 ("cannot be unrolled"); remove the
+  inner property with a `typeTransformers` `remove: true` on
+  `<Type>_STATUS` (`generator/azure-arm/management.yaml`). A group with an
+  `include` for one version and no `prune` loads the other stable versions too:
+  add `- action: prune group: <group>` for a small group.
+- **A tenant scope resource's children** (`/providers/X/type/{a}/child/{b}`)
+  are made Tenant scope with no owner unless `ASO_GENERATOR_TENANT_CHILDREN` is
+  set (patch 0005, set by `hack/generate-arm.sh`; set it too in a quick
+  generator iteration). Read `structure.txt` for `Owner:` on the child, and the
+  generated `Owner()` function: "returns nil as Tenant scoped resources never
+  have an owner" means it did not work.
 - `task generate-arm` on the Ubuntu machine runs `hack/generate.sh` too;
   tar `apis pkg/controllers/arm_resources_gen.go generator/reports config`
   into `offload-artifacts/`, then **delete `apis/arm`, `config/crds`,

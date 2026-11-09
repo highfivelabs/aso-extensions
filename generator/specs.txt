@@ -11,3 +11,4 @@ specification/devtestlabs
 specification/maintenance
 specification/recoveryservices
 specification/recoveryservicesbackup
+specification/management

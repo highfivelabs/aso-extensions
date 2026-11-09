@@ -12,6 +12,7 @@ rules:
   - devtestlab.azure.hfl.dev
   - insights.azure.hfl.dev
   - maintenance.azure.hfl.dev
+  - management.azure.hfl.dev
   - network.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
   - recoveryservices.azure.hfl.dev
@@ -25,6 +26,7 @@ rules:
   - devtestlab.azure.hfl.dev
   - insights.azure.hfl.dev
   - maintenance.azure.hfl.dev
+  - management.azure.hfl.dev
   - network.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
   - recoveryservices.azure.hfl.dev

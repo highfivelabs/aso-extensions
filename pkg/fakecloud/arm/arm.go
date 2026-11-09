@@ -12,9 +12,20 @@
 // a lock applies to its scope and everything under it; CanNotDelete
 // refuses a DELETE, ReadOnly refuses a PUT and a DELETE, each with 409
 // ScopeLocked; deleting a scope that holds a locked resource is refused
-// too. Locks themselves can always be changed and removed. It accepts a
-// request only when Authorize accepts its bearer token, so a test decides
-// which identity may use it.
+// too. Locks themselves can always be changed and removed.
+//
+// Tenant scope: the tenant root ("/") always exists, so a resource whose ID
+// starts at /providers (a management group, a subscription alias) can be
+// created. Management groups (Microsoft.Management/managementGroups) form a
+// hierarchy: a group's properties.details.parent.id must name a group that
+// exists, a group cannot become its own descendant's child, and a group that
+// has child groups or subscriptions cannot be deleted. A subscription is in
+// one group at a time: putting it in a group (…/managementGroups/g/subscriptions/s)
+// takes it out of the group it was in. The error codes for those refusals are
+// this fake's, not Azure's.
+//
+// It accepts a request only when Authorize accepts its bearer token, so a
+// test decides which identity may use it.
 package arm
 
 import (
@@ -118,6 +129,8 @@ var (
 	subscriptionScope  = regexp.MustCompile(`(?i)^/subscriptions/[^/]+$`)
 	resourceGroupScope = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+$`)
 	lockPath           = regexp.MustCompile(`(?i)^(.*)/providers/microsoft\.authorization/locks/([^/]+)$`)
+	managementGroup    = regexp.MustCompile(`(?i)^/providers/microsoft\.management/managementgroups/[^/]+$`)
+	mgSubscription     = regexp.MustCompile(`(?i)^(/providers/microsoft\.management/managementgroups/[^/]+)/subscriptions/([^/]+)$`)
 )
 
 type recorder struct {
@@ -216,7 +229,7 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		parent := parentOf(id)
-		if parent != "" && !subscriptionScope.MatchString(parent) && !a.exists(parent) {
+		if parent != "" && !a.exists(parent) {
 			code := "ParentResourceNotFound"
 			if resourceGroupScope.MatchString(parent) {
 				code = "ResourceGroupNotFound"
@@ -230,6 +243,15 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		body["id"], body["name"], body["type"] = id, lastSegment(id), typeOf(id)
+		if managementGroup.MatchString(id) {
+			if code, msg := a.checkGroupParent(id, body); code != "" {
+				writeError(w, http.StatusBadRequest, code, msg)
+				return
+			}
+		}
+		if m := mgSubscription.FindStringSubmatch(id); m != nil {
+			a.moveSubscription(m[2], key)
+		}
 		props, _ := body["properties"].(map[string]any)
 		if props == nil {
 			props = map[string]any{}
@@ -247,6 +269,12 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		if _, ok := a.resources[key]; !ok {
 			w.WriteHeader(http.StatusNoContent)
 			return
+		}
+		if managementGroup.MatchString(id) {
+			if child := a.groupChild(key); child != "" {
+				writeError(w, http.StatusConflict, "ManagementGroupNotEmpty", "The management group "+id+" has a child, "+child+", and cannot be deleted.")
+				return
+			}
 		}
 		if l := a.lockOver(id, ""); l != nil {
 			writeScopeLocked(w, r.Method, id, l)
@@ -267,13 +295,78 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 	}
 }
 
-// exists is whether a lock's scope is there: a subscription always is.
+// exists is whether a scope is there: the tenant root and a subscription
+// always are.
 func (a *ARM) exists(scope string) bool {
-	if subscriptionScope.MatchString(scope) {
+	if scope == "/" || subscriptionScope.MatchString(scope) {
 		return true
 	}
 	_, ok := a.resources[strings.ToLower(scope)]
 	return ok
+}
+
+// groupParent is the ID of the parent group a management group's body names
+// (properties.details.parent.id), or "".
+func groupParent(r resource) string {
+	props, _ := r["properties"].(map[string]any)
+	details, _ := props["details"].(map[string]any)
+	parent, _ := details["parent"].(map[string]any)
+	id, _ := parent["id"].(string)
+	return id
+}
+
+// checkGroupParent refuses a management group whose named parent does not
+// exist or would make a cycle.
+func (a *ARM) checkGroupParent(id string, body map[string]any) (code, message string) {
+	parent := groupParent(resource(body))
+	if parent == "" {
+		return "", ""
+	}
+	if !managementGroup.MatchString(parent) {
+		return "InvalidParentGroup", "The parent " + parent + " is not a management group ID."
+	}
+	if _, ok := a.resources[strings.ToLower(parent)]; !ok {
+		return "ParentGroupNotFound", "The parent management group " + parent + " was not found."
+	}
+	// Walk up from the parent: meeting id is a cycle.
+	seen := map[string]bool{}
+	for cur := strings.ToLower(parent); cur != "" && !seen[cur]; {
+		if cur == strings.ToLower(id) {
+			return "CycleInHierarchy", "The management group " + id + " cannot be placed under " + parent + ", its own descendant."
+		}
+		seen[cur] = true
+		r, ok := a.resources[cur]
+		if !ok {
+			break
+		}
+		cur = strings.ToLower(groupParent(*r))
+	}
+	return "", ""
+}
+
+// groupChild is the ID of a child of the management group with the given
+// lower-case ID (a group naming it as its parent, or a subscription placed
+// in it), or "".
+func (a *ARM) groupChild(key string) string {
+	for k, r := range a.resources {
+		if managementGroup.MatchString(k) && strings.ToLower(groupParent(*r)) == key {
+			return (*r)["id"].(string)
+		}
+		if m := mgSubscription.FindStringSubmatch(k); m != nil && strings.ToLower(m[1]) == key {
+			return (*r)["id"].(string)
+		}
+	}
+	return ""
+}
+
+// moveSubscription takes a subscription out of every group but the one whose
+// placement key is given (a subscription is in one group at a time).
+func (a *ARM) moveSubscription(subscription, keep string) {
+	for k := range a.resources {
+		if m := mgSubscription.FindStringSubmatch(k); m != nil && strings.EqualFold(m[2], subscription) && k != keep {
+			delete(a.resources, k)
+		}
+	}
 }
 
 // lockOver is a lock on id or a scope above it, of the given level (any
