@@ -30,6 +30,9 @@ import (
 	operationalinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/customizations"
 	operationalinsights_v20250701 "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701"
 	operationalinsights_v20250701s "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701/storage"
+	recoveryservices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/customizations"
+	recoveryservices_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/v20260701"
+	recoveryservices_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/v20260701/storage"
 	web_customizations "github.com/highfivelabs/aso-extensions/apis/arm/web/customizations"
 	web_v20260715 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715"
 	web_v20260715s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715/storage"
@@ -152,6 +155,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedStorageAccount)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesSavedSearch)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesTable)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.Vault)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.Certificate),
 		Indexes: []registration.Index{
@@ -281,6 +288,18 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesTable)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.Vault)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupPolicy)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsPrivateEndpointConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.Vault)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupPolicy)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupResourceGuardProxy)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsPrivateEndpointConnection)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesHostNameBinding)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlot)},
@@ -314,6 +333,8 @@ func createScheme() *runtime.Scheme {
 	_ = network_v20250501s.AddToScheme(scheme)
 	_ = operationalinsights_v20250701.AddToScheme(scheme)
 	_ = operationalinsights_v20250701s.AddToScheme(scheme)
+	_ = recoveryservices_v20260701.AddToScheme(scheme)
+	_ = recoveryservices_v20260701s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
 	_ = web_v20260715s.AddToScheme(scheme)
 	return scheme
@@ -350,6 +371,10 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &operationalinsights_customizations.WorkspacesLinkedStorageAccountExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesSavedSearchExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesTableExtension{})
+	result = append(result, &recoveryservices_customizations.VaultExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsBackupPolicyExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsBackupResourceGuardProxyExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsPrivateEndpointConnectionExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
 	result = append(result, &web_customizations.SitesHostNameBindingExtension{})
 	result = append(result, &web_customizations.SitesSlotExtension{})
