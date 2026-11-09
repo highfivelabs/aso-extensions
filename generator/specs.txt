@@ -3,3 +3,5 @@
 specification/app
 specification/web
 specification/operationalinsights
+specification/monitor
+specification/network
