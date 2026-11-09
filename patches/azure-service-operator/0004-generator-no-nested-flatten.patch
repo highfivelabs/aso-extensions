@@ -1,0 +1,33 @@
+diff --git a/v2/tools/generator/internal/codegen/pipeline/flatten_properties.go b/v2/tools/generator/internal/codegen/pipeline/flatten_properties.go
+index d9317d1..a316666 100644
+--- a/v2/tools/generator/internal/codegen/pipeline/flatten_properties.go
++++ b/v2/tools/generator/internal/codegen/pipeline/flatten_properties.go
+@@ -7,6 +7,7 @@ package pipeline
+ 
+ import (
+ 	"context"
++	"os"
+ 	"strings"
+ 
+ 	"github.com/go-logr/logr"
+@@ -203,6 +204,20 @@ func flattenPropType(
+ 	switch propType := propType.(type) {
+ 	// "base case"
+ 	case *astmodel.ObjectType:
++		// Modified by High Five Labs: the conversions ASO generates between a
++		// flattened property and its ARM form handle one level only ("need to
++		// implement multiple levels of flattening"). With
++		// ASO_GENERATOR_NO_NESTED_FLATTEN set, a property flattened out of a
++		// flattened property stays an object.
++		if os.Getenv("ASO_GENERATOR_NO_NESTED_FLATTEN") != "" {
++			var props []*astmodel.PropertyDefinition
++			propType.Properties().ForEach(func(prop *astmodel.PropertyDefinition) {
++				props = append(props, prop.SetFlatten(false))
++			})
++
++			return props, nil
++		}
++
+ 		return collectAndFlattenProperties(container, propType, defs, log)
+ 
+ 	// typename must be resolved
