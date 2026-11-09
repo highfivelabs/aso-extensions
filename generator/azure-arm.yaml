@@ -47,6 +47,7 @@ imports:
   recoveryservices: azure-arm/recoveryservices.yaml
   management: azure-arm/management.yaml
   resources: azure-arm/resources.yaml
+  authorization: azure-arm/authorization.yaml
 
 # Filters are applied in document order; the earliest match wins (as in ASO's
 # azure-arm.yaml, from which these are taken).

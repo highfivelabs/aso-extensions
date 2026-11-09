@@ -8,6 +8,10 @@ resources:
 - app.azure.hfl.dev_managedenvironmentsmanagedcertificates.yaml
 - app.azure.hfl.dev_managedenvironmentsstorages.yaml
 - authorization.azure.hfl.dev_managementlocks.yaml
+- authorization.azure.hfl.dev_policyassignments.yaml
+- authorization.azure.hfl.dev_policydefinitions.yaml
+- authorization.azure.hfl.dev_policyexemptions.yaml
+- authorization.azure.hfl.dev_policysetdefinitions.yaml
 - compute.azure.hfl.dev_virtualmachinesruncommands.yaml
 - containerregistry.azure.hfl.dev_registriescredentialsets.yaml
 - containerregistry.azure.hfl.dev_registriesscopemaps.yaml

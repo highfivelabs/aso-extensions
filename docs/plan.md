@@ -174,7 +174,28 @@ run over the pinned specs with configuration kept here.
   are generated, `AzureName()` falls back to the object's name, which ASO's
   defaulting webhook would have set (`ASO_GENERATOR_NO_WEBHOOKS`); and the
   API version is the one the controller reconciles
-  (`ASO_GENERATOR_API_STORAGE`).
+  (`ASO_GENERATOR_API_STORAGE`). Later patches, each behind its own
+  variable: nested `x-ms-client-flatten` (0004), children of a tenant scope
+  resource (0005), and resources at several scopes (0006, below).
+- **Resources at several scopes** (patch 0006, `ASO_GENERATOR_MULTI_SCOPE`).
+  The specs define some resources once per scope: a policy definition at
+  `/subscriptions/{s}/providers/Microsoft.Authorization/policyDefinitions/{n}`
+  and at `/providers/Microsoft.Management/managementGroups/{g}/providers/...`,
+  a maintenance configuration assignment at four scopes. ASO's generator keeps
+  the first path it reads (map order, so the output can change from run to
+  run) and refused every path that runs through a management group
+  ("unexpected hard coded name"), so a definition was a subscription-only
+  resource with no owner. With the patch, the resource a path defines is the
+  one after its last `/providers/`, and a resource defined under two or more
+  scopes is an extension resource (`/{scope}/providers/...`): its `owner` is
+  an `ArbitraryOwnerReference` (our `ManagementGroup`, any ASO resource or an
+  ARM ID), as ASO's `RoleAssignment` and our `TagSet` take. The kind accepts
+  any owner; Azure refuses a scope the resource does not support (a policy
+  definition at a resource group), and the refusal reaches the Ready
+  condition. The kinds generated before are unchanged (`task check`
+  regenerates them and finds no difference). This is one answer to the
+  design question ASO issue #3756 waits on for locks, chosen here for our
+  kinds; `ManagementLock` stays hand-written.
 - **One version, no conversion webhook.** ASO's CRDs have two versions, an
   API version and a storage (hub) version, converted by a webhook. Ours
   serve only the API version (`v20250101`): `hack/generate.sh` makes CRDs
@@ -267,6 +288,14 @@ kinds (`docs/coverage/foundation.md` rows 1 to 4) are designed.
   nil`); `ManagementGroupsSubscription` and `ManagementGroupsSetting` name it as
   `owner`. Billing aliases may still need an ARM ID owner (billing accounts are
   not ASO kinds).
+- **Extension resources on a management group** (Azure Policy, foundation row
+  3). A policy definition, set definition, assignment or exemption is
+  generated as an extension resource (patch 0006) whose owner may be our
+  `ManagementGroup`: ASO's resolver builds
+  `/providers/Microsoft.Management/managementGroups/{g}/providers/Microsoft.Authorization/...`
+  from the group, and ASO's subscription check is skipped for an ID with no
+  subscription. At a subscription or below, the check applies as for every
+  kind: the scope must be in the credential's subscription.
 
 ### The PostgreSQL User
 
@@ -478,6 +507,7 @@ rechecks upstream again when it is built.
 | c7 | Key Vault keys | `VaultKey` merged in ASO (#5564), next release | skip: wait for ASO's release |
 | c8 | Management groups, Azure Policy, budgets, vWAN hub connections, subscription tags | management groups #2249 open, no pull request | now `docs/coverage/foundation.md` rows 1 to 10. **Management groups built** (row 1), generated: `management.azure.hfl.dev/v20230401` `ManagementGroup` (tenant scope, no owner; `displayName`, parent by object or ARM ID), `ManagementGroupsSubscription` (a subscription's placement; `azureName` is the subscription ID; owned by the group) and `ManagementGroupsSetting` (`settings/default`: default group for new subscriptions, authorization to create top-level groups; owned by the group). Version 2023-04-01, the newest stable. **Generator**: patch 0005 makes a child of a tenant scope resource an owned resource (the generator called it Tenant scope, with no owner, so the child's name was taken for the group's); `children` of a group's status is dropped at the second level (directly recursive, controller-gen cannot unroll it). Not built: service groups (preview only), the group's `descendants`, `entities` and `tenantBackfill` actions (read or POST) |
 | c8b | Subscription tags, billing aliases (foundation row 2) | tags: none at the pin, no pull request (rechecked 2026-11-09); billing aliases: none | **`resources.azure.hfl.dev/v20250401` `TagSet` built**, generated (`Microsoft.Resources/tags/default`, an extension resource: `owner` is an ASO resource or an ARM ID, `properties.tags`; the generator names the resource `Tag` and cannot rename it to `Tags` because that type exists, hence `TagSet`; the other Resources API types (deployments, templates, resource groups) are not exported). A TagSet PUTs the whole set: it replaces the tags of its scope. **Not built**: `BillingSubscriptionAlias` (`Microsoft.Billing/billingAccounts/.../billingSubscriptionAliases`): ASO's `subscription/Alias` already creates a subscription under a billing scope (EA, MCA), and the Billing alias is a second route to the same result under a billing account that is no kind; `Microsoft.Subscription/policies` (tenant-wide subscription policy, 3 attributes; ASO's `subscription` group has no kind for it) is left for a later session |
+| c8c | Azure Policy: definitions, set definitions, assignments, exemptions (foundation row 3) | rechecked 2026-11-09, read-only: v2.22.0 still the latest release; `main` four documentation commits past the pin (#5826, #5827, #5828, #5769); no open or draft pull request adds a policy kind (the open ones are #5829, #5821, #5820, #5814, #5804, #5783, #5780, #5773, #5768, #5693, #5659, #5638, #5104, #5028, #4210); issues #4975 and #2767 are open (a maintainer, 2026-07: "Definition I think is recursive which can cause us issues"; it was not, for the generator, once `policyRule` and `metadata` are free-form JSON) | **built**, generated: `authorization.azure.hfl.dev/v20260701` `PolicyDefinition`, `PolicySetDefinition`, `PolicyAssignment` (the newest stable API) and `v20260101preview` `PolicyExemption` (exemptions exist only in preview versions; the newest). Each is an extension resource (patch 0006): owner our `ManagementGroup`, an ASO resource or an ARM ID. References are `$referenceType: arm`, so a set names its definitions, an assignment its definition or set, and an exemption its assignment by Kubernetes object or ARM ID (`policyDefinitionReference`, `policyAssignmentReference`; a built-in by ARM ID), as is a group's `additionalMetadataId`. `MissingTokenAction` (audit or deny) is marked not a secret. Hand-written code: none (the generated share is 100% of the kind code; the fake's policy rules, tests and configuration are ours). Not built: definition and set definition **versions** (`.../versions/{v}`, read-mostly snapshots of a definition), policy **variables** and **values** (preview), **enrollments** (preview), and remediation (row 4, `Microsoft.PolicyInsights`) |
 | c9 | ACR tokens, scope maps, credential sets | not at the pin, no pull request (rechecked 2026-11-09: v2.22.0 still the latest release, `main` three documentation commits past the pin, nothing open on registries; ASO exports `Registry`, `RegistryReplication` and `RegistryCacheRule`, whose `credentialSetResourceId` had no kind to point at) | **built**, generated (`containerregistry.azure.hfl.dev`, API 2025-11-01, ASO's own `Registry` version): `RegistriesToken` (bound to a scope map, enabled or disabled; certificates in the spec), `RegistriesScopeMap`, `RegistriesCredentialSet` (the Key Vault secret URIs of an upstream registry, for a cache rule; identity as ARM references) and, beyond the ranking, `RegistriesWebhook` (service URI and custom headers are `SecretReference`s, so they come from Kubernetes Secrets). Not built: a token's **passwords**: they are generated by the `generateCredentials` action, returned once, and are not part of the token's PUT, so no CRD field could hold them (a password would be a Key Vault secret an operator writes after a POST; that is a hand-written kind, not queued); connected registries (IoT Edge), private endpoint connections |
 | c10 | VM extras: run command, auto-shutdown schedule, maintenance assignment, Recovery Services backup | not at the pin, no pull request (rechecked 2026-11-09: v2.22.0 still the latest release, `main` three documentation commits past the pin; open issues #1187 asks for database backup only; ASO has no `devtestlab`, `maintenance` or `recoveryservices` group) | **built in two parts**. Part one, generated: `compute.azure.hfl.dev/v20220301` `VirtualMachinesRunCommand` (script or script URI, parameters, the run-as password from a Secret, owned by ASO's `VirtualMachine`); `devtestlab.azure.hfl.dev/v20180915` `Schedule` (a VM's auto-shutdown: task type `ComputeVmShutdownTask`, daily time, time zone, notification; the VM an ARM reference; owned by the resource group); `maintenance.azure.hfl.dev/v20230401` `MaintenanceConfiguration` (owned by the resource group). **Not built: `ConfigurationAssignment`** (assigning a configuration to a VM): the spec has the same resource at four scopes (subscription, resource group, resource, nested resource), ASO's generator picks one of the four paths by map order, so each run differs (extension resource, then location scope, then another) and `task check` would fail at random; it is `ManagementLock`'s problem (a hand-written kind, not queued). Part two, Recovery Services, is generated too: `recoveryservices.azure.hfl.dev/v20260701` `Vault` (owned by the resource group: SKU, identity, redundancy, encryption, monitoring, public network access), `VaultsBackupPolicy` (the union of IaaS VM, SQL, file share, workload and other policies, with schedule and retention; owned by our `Vault`), `VaultsBackupResourceGuardProxy` and `VaultsPrivateEndpointConnection`. **Not built, and why it matters**: the protection container, the protected item (what turns backup on for a VM) and the protection intent. Their paths hold a fixed fabric segment (`backupFabrics/Azure`) that is no resource, so the generator makes the resource group the owner and the Kubernetes object cannot name the ARM ID ("had 1 azureNames and 3 resourceTypes", found by the test); a protected item is also owned by its container, which a VM never needs created. They, the singleton settings (`backupstorageconfig`, `backupconfig`, encryption config) and Site Recovery are hand-written candidates (see docs/handoff.md). Redundancy is set on the vault itself (`redundancySettings`), so the storage-config singleton is not needed to choose geo or local. **c18 (stale ARM versions)**: ASO's `VirtualMachine` is at 2022-03-01 while the Compute spec has 2026-04-01, so the run command is built at 2022-03-01, ASO's version, so owner and child share a vintage; it moves when ASO's `VirtualMachine` does. **Generator change**: patch 0004 (UPSTREAM.md) makes a property flattened out of a flattened property stay an object, which the Maintenance window (`properties.maintenanceWindow.*`) and the Log Analytics data export needed; it changes nothing for kinds that generated before |
 | c11 | Storage local users (SFTP) | not at the pin, no pull request | queued |
@@ -755,6 +785,29 @@ serialization and conversion tests):
   rules: a limit of 50 tags, name and value lengths, that PUT on a scope
   replaces every tag including the ones ASO sets on its own resources, and
   that tags on a resource group are inherited by nothing;
+- Azure Policy, generated (foundation row 3): a definition kept at a
+  management group (our `ManagementGroup` by object; mode, a parameter, the
+  rule and metadata as JSON, sent as written) and one at the subscription
+  (by ARM ID); a set definition at a child group naming the first by object
+  (its ARM ID resolved and sent); assignments at the child group (the set,
+  with a parameter value and a non-compliance message), at the
+  subscription (placed in the child group, so the root group's definition
+  serves it) and at an ASO `ResourceGroup` (the subscription's definition,
+  `DoNotEnforce`, a not-scope); an exemption at the resource group from the
+  subscription's assignment (`Waiver`, an expiry); an enforcement-mode change
+  PUT again; the deletes, users first. Refused, and the refusal reaches the
+  Ready condition: a definition at a resource group, and an assignment at a
+  group of a definition kept at the subscription. The fake checks Azure
+  Policy's scope rules (`docs/fake-cloud.md`). On kind, a definition at the
+  subscription, an assignment of it at team-a's `ResourceGroup` by object and
+  an assignment of a built-in at team-a's `ManagementGroup` by ARM ID are
+  Ready, team-b's definition is refused, and the deletes reach the fake. The
+  fake does not show: what Azure's policy engine does with a rule (no
+  evaluation, no compliance, no `deny`), the validation of `policyRule` and
+  parameter types, that an assignment's identity (for `deployIfNotExists`
+  and `modify`) needs a location and role assignments, that Azure refuses
+  deleting a definition a set still names, and the rights the identity
+  needs (Resource Policy Contributor or Owner at the scope);
 - Recovery Services, generated (c10 part two): a vault owned by the resource
   group (SKU `RS0`, system-assigned identity, local redundancy, public
   network access) and a backup policy owned by our vault (an IaaS VM

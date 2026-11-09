@@ -47,3 +47,8 @@ the management group and its subscription placement are deleted
 team-a TagSet Ready
 team-b TagSet refused
 the tags are deleted in Resource Manager
+team-a PolicyDefinition Ready
+team-a PolicyAssignment Ready
+team-a PolicyAssignment at the management group Ready
+team-b PolicyDefinition refused
+the policy assignments and definition are deleted

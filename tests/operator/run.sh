@@ -35,6 +35,8 @@ TENANT=00000000-0000-0000-0000-00000000000a
 CLIENT_A=00000000-0000-0000-0000-0000000000c1
 CLIENT_B=00000000-0000-0000-0000-0000000000c2
 SUB=00000000-0000-0000-0000-0000000000f1
+# A built-in policy definition (Allowed locations), at the tenant root.
+BUILTIN_POLICY=/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c
 OUT="${REPO_ROOT}/bin/operator-e2e"
 export KUBECONFIG="${OUT}/kubeconfig"
 mkdir -p "${OUT}"
@@ -125,7 +127,7 @@ kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f 
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
@@ -379,6 +381,31 @@ spec:
   owner: {group: resources.azure.com, kind: ResourceGroup, name: rg}
   level: CanNotDelete
   notes: kept by aso-extensions
+---
+apiVersion: authorization.azure.hfl.dev/v20260701
+kind: PolicyDefinition
+metadata: {name: require-team-tag, namespace: $1}
+spec:
+  azureName: $1-require-team-tag
+  owner: {armId: /subscriptions/${SUB}}
+  policyType: Custom
+  mode: Indexed
+  policyRule: {if: {field: "tags['team']", exists: "false"}, then: {effect: audit}}
+---
+apiVersion: authorization.azure.hfl.dev/v20260701
+kind: PolicyAssignment
+metadata: {name: require-team-tag, namespace: $1}
+spec:
+  owner: {group: resources.azure.com, kind: ResourceGroup, name: rg}
+  policyDefinitionReference: {group: authorization.azure.hfl.dev, kind: PolicyDefinition, name: require-team-tag}
+---
+apiVersion: authorization.azure.hfl.dev/v20260701
+kind: PolicyAssignment
+metadata: {name: allowed-locations, namespace: $1}
+spec:
+  owner: {group: management.azure.hfl.dev, kind: ManagementGroup, name: platform}
+  policyDefinitionReference: {armId: ${BUILTIN_POLICY}}
+  parameters: {listOfAllowedLocations: {value: [westus]}}
 EOF
 }
 
@@ -447,6 +474,18 @@ wait_for 90 "team-a's TagSet Ready" ready tagsets.resources.azure.hfl.dev team-a
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Resources/tags/default 201" \
   || fail "the fake resource manager saw no tags set on team-a's resource group"
 pass "team-a TagSet Ready: the tags of an ASO ResourceGroup as one object, an extension resource, PUT by ASO's ARM reconciler"
+wait_for 90 "team-a's PolicyDefinition Ready" ready policydefinitions.authorization.azure.hfl.dev team-a require-team-tag
+logged fakearm "request PUT /subscriptions/${SUB}/providers/Microsoft.Authorization/policyDefinitions/team-a-require-team-tag 201" \
+  || fail "the fake resource manager saw no policy definition kept at the subscription"
+pass "team-a PolicyDefinition Ready: kept at the subscription, generated (one type at several scopes, patch 0006), PUT by ASO's ARM reconciler"
+wait_for 90 "team-a's PolicyAssignment Ready" ready policyassignments.authorization.azure.hfl.dev team-a require-team-tag
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/policyAssignments/require-team-tag 201" \
+  || fail "the fake resource manager saw no policy assignment on team-a's resource group"
+pass "team-a PolicyAssignment Ready: at an ASO ResourceGroup, naming our PolicyDefinition by object (resolved to its ARM ID)"
+wait_for 90 "team-a's PolicyAssignment at the management group Ready" ready policyassignments.authorization.azure.hfl.dev team-a allowed-locations
+logged fakearm "request PUT /providers/Microsoft.Management/managementGroups/team-a-platform/providers/Microsoft.Authorization/policyAssignments/allowed-locations 201" \
+  || fail "the fake resource manager saw no policy assignment on team-a's management group"
+pass "team-a PolicyAssignment at the management group Ready: a built-in definition by ARM ID, assigned at our ManagementGroup"
 wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
 pass "team-a ManagementLock Ready"
 logged fakearm "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
@@ -481,6 +520,8 @@ wait_for 90 "team-b's ManagementGroup refused" bash -c "[[ \"\$(kubectl get mana
 pass "team-b ManagementGroup refused: $(message managementgroups.management.azure.hfl.dev team-b platform | cut -c1-120)..."
 wait_for 90 "team-b's TagSet refused" bash -c "[[ \"\$(kubectl get tagsets.resources.azure.hfl.dev -n team-b rg-tags -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
 pass "team-b TagSet refused: $(message tagsets.resources.azure.hfl.dev team-b rg-tags | cut -c1-120)..."
+wait_for 90 "team-b's PolicyDefinition refused" bash -c "[[ \"\$(kubectl get policydefinitions.authorization.azure.hfl.dev -n team-b require-team-tag -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
+pass "team-b PolicyDefinition refused: $(message policydefinitions.authorization.azure.hfl.dev team-b require-team-tag | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
@@ -538,6 +579,16 @@ kubectl -n team-a delete vaults.recoveryservices.azure.hfl.dev backups --timeout
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.RecoveryServices/vaults/team-a-backups 200" \
   || fail "the fake resource manager saw no delete of the vault"
 pass "the vault is deleted in Resource Manager"
+
+kubectl -n team-a delete policyassignments.authorization.azure.hfl.dev require-team-tag allowed-locations --timeout=120s
+kubectl -n team-a delete policydefinitions.authorization.azure.hfl.dev require-team-tag --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/policyAssignments/require-team-tag 200" \
+  || fail "the fake resource manager saw no delete of the policy assignment on the resource group"
+logged fakearm "request DELETE /providers/Microsoft.Management/managementGroups/team-a-platform/providers/Microsoft.Authorization/policyAssignments/allowed-locations 200" \
+  || fail "the fake resource manager saw no delete of the policy assignment on the management group"
+logged fakearm "request DELETE /subscriptions/${SUB}/providers/Microsoft.Authorization/policyDefinitions/team-a-require-team-tag 200" \
+  || fail "the fake resource manager saw no delete of the policy definition"
+pass "the policy assignments and definition are deleted in Resource Manager"
 
 kubectl -n team-a delete managementgroupssubscriptions.management.azure.hfl.dev workload --timeout=120s
 logged fakearm "request DELETE /providers/Microsoft.Management/managementGroups/team-a-platform/subscriptions/${SUB} 200" \
