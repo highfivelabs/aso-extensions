@@ -468,7 +468,12 @@ team-b, another identity, both are refused; deletion gives `orders` to
 `hfl_owner` (which cannot sign in, with a `DatabaseReassigned` event),
 drops the role and soft-deletes the secret. With the b5 checks, it passed
 again on 2026-11-09 on the builder's Ubuntu machine (a warm kind cluster),
-after `make check` there.
+after `make check` there. With `ManagementLock` (passed the same day, the
+same way): the manager may get an ASO `ResourceGroup` but not list or
+change it; team-a's lock on its `ResourceGroup` becomes Ready, and the
+fake Resource Manager (`cmd/fakearm`) logs the lock created on the
+resource group's ARM ID with team-a's `aso-workload` identity; team-b's
+is refused (401); deleting team-a's lock removes it.
 
 Not provable locally: real Entra exchanging the `aso-workload` token
 (the managed identity's federated credential, issuer and audience
