@@ -1,0 +1,36 @@
+| Type Definitions in package "insights"            | v20210901 |
+|---------------------------------------------------|-----------|
+| APIVersion                                        | v20210901 |
+| AccessMode                                        | v20210901 |
+| AccessModeSettings                                | v20210901 |
+| AccessModeSettingsExclusion                       | v20210901 |
+| AccessModeSettingsExclusion_STATUS                | v20210901 |
+| AccessModeSettings_STATUS                         | v20210901 |
+| AccessMode_STATUS                                 | v20210901 |
+| AzureMonitorPrivateLinkScopeProperties            | v20210901 |
+| AzureMonitorPrivateLinkScopeProperties_STATUS     | v20210901 |
+| PrivateEndpointConnectionProperties               | v20210901 |
+| PrivateEndpointConnectionProperties_STATUS        | v20210901 |
+| PrivateEndpointConnectionProvisioningState        | v20210901 |
+| PrivateEndpointConnectionProvisioningState_STATUS | v20210901 |
+| PrivateEndpointConnection_STATUS                  | v20210901 |
+| PrivateEndpointServiceConnectionStatus            | v20210901 |
+| PrivateEndpointServiceConnectionStatus_STATUS     | v20210901 |
+| PrivateEndpoint_STATUS                            | v20210901 |
+| PrivateLinkScope                                  | v20210901 |
+| PrivateLinkScope_STATUS                           | v20210901 |
+| PrivateLinkScope_Spec                             | v20210901 |
+| PrivateLinkScopesPrivateEndpointConnection        | v20210901 |
+| PrivateLinkScopesPrivateEndpointConnection_STATUS | v20210901 |
+| PrivateLinkScopesPrivateEndpointConnection_Spec   | v20210901 |
+| PrivateLinkScopesScopedResource                   | v20210901 |
+| PrivateLinkScopesScopedResource_STATUS            | v20210901 |
+| PrivateLinkScopesScopedResource_Spec              | v20210901 |
+| PrivateLinkServiceConnectionState                 | v20210901 |
+| PrivateLinkServiceConnectionState_STATUS          | v20210901 |
+| ScopedResourceProperties                          | v20210901 |
+| ScopedResourceProperties_ProvisioningState_STATUS | v20210901 |
+| ScopedResourceProperties_STATUS                   | v20210901 |
+| SystemData_CreatedByType_STATUS                   | v20210901 |
+| SystemData_LastModifiedByType_STATUS              | v20210901 |
+| SystemData_STATUS                                 | v20210901 |
