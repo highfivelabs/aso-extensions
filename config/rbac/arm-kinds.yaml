@@ -7,11 +7,13 @@ metadata:
 rules:
 - apiGroups:
   - app.azure.hfl.dev
+  - operationalinsights.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups:
   - app.azure.hfl.dev
+  - operationalinsights.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*/status", "*/finalizers"]
   verbs: ["get", "update", "patch"]
