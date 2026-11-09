@@ -66,8 +66,9 @@ func readAVM(root string, rows []*ResRow) (map[string]avmNeed, error) {
 // path names, has precedent in ASO's DiagnosticSetting and RoleAssignment
 // (owner: any resource or an ARM ID). A resource that can be created at
 // several scopes, or at a management group, is one type at several paths,
-// which ASO's generator needs a design decision on (issue #3756): hand-written,
-// as ManagementLock was.
+// which ASO's generator needs a design decision on (issue #3756); our
+// generator patch 0006 makes it an extension resource, so it is generated
+// with an arbitrary owner too (the Azure Policy kinds were).
 func buildRoute(r *Resource) string {
 	if r == nil {
 		return "?"
@@ -78,7 +79,7 @@ func buildRoute(r *Resource) string {
 	}
 	switch {
 	case len(sc) > 1 || r.Scopes["managementGroup"]:
-		return "hand-written (one type at several scopes, as ManagementLock)"
+		return "generator, arbitrary owner (several scopes, patch 0006)"
 	case r.Scopes["extension"]:
 		return "generator, arbitrary owner (as ASO's DiagnosticSetting)"
 	case r.Scopes["tenant"] || r.Scopes["subscription"]:
