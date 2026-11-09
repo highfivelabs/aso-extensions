@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after the Log Analytics children (c5).
+State at the writing: 2026-11-09, after Azure Monitor private link scopes and network security perimeters (c6).
 
 ## What this repository is
 
@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | --- | --- | --- |
 | Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
-| ARM, generated | `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+| ARM, generated | `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
 ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
@@ -32,10 +32,9 @@ One pull request per gap, cut from the latest `main`.
 
 | Rank | Gap | State |
 | --- | --- | --- |
-| c1, c3, c4, c5 | locks, Container Apps environment children, App Service children, Log Analytics children | built |
-| c6 | Azure Monitor private link scope and scoped resources; network security perimeter associations | next |
+| c1, c3, c4, c5, c6 | locks, Container Apps environment children, App Service children, Log Analytics children, Monitor private link scopes and network security perimeters | built |
 | c7 | Key Vault keys | skip: ASO's `VaultKey` (#5564) ships in its next release; recheck |
-| c9 | ACR tokens, scope maps, credential sets | queued; a token password is a secret returned once |
+| c9 | ACR tokens, scope maps, credential sets | next; a token password is a secret returned once |
 | c10 | VM extras: run command, auto-shutdown schedule, maintenance assignment, Recovery Services backup | queued; no Recovery Services group at the pin |
 | c11 to c14 | storage local users; Cognitive Services RAI policies; Cosmos Gremlin and SQL dedicated gateway; AKS managed namespaces | queued |
 | c8 | management groups, policy, budgets, vWAN, subscription tags | queued, low priority (platform) |
@@ -132,6 +131,23 @@ Facts learned the hard way:
   there is under `/home/bbjelland`, not `/Users`) and run `bin/generator
   gen-types --verbose generator/azure-arm.yaml` over `ssh` with the
   environment `hack/generate-arm.sh` sets.
+- **Do not `prune` the whole group when ASO's own group already is large
+  (`insights`, `network`).** Previews are pruned by default, which removes
+  types that stable files refer to and then fails the *loading* of the spec
+  ("expected object type for properties of MetricAlertCriteria, got MapType").
+  For such groups include the preview versions ASO includes (ASO's
+  `insights.yaml` says why) and rely on `$exportAs`: a resource without it is
+  not exported. A run over `specification/network` takes about five minutes.
+- A generated kind can lose its whole spec side in one API version and keep
+  it in the next (network security perimeter 2025-03-01 versus 2025-05-01):
+  read `apis/arm/<group>/<version>/structure.txt` (Spec lists) before trusting
+  a run that exits 0.
+- A generated test package may need a module `go mod tidy` adds (rapid, for
+  JSON properties); run `go mod tidy` locally after extracting and commit it.
+- **Coverage dashboard (since PR #9):** every PR that adds or changes a kind
+  runs `task coverage` (heavy: first run fetches ~100 MB; run it on the Ubuntu
+  machine, tar `docs/coverage` and `README.md` back) and commits the output;
+  `task coverage-check` must pass.
 - ASO's token scope is `<audience>/.default`: give the fake audience no
   trailing slash.
 - A generated kind's delete under a `CanNotDelete` lock fails with
