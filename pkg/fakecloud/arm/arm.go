@@ -24,6 +24,9 @@
 // takes it out of the group it was in. The error codes for those refusals are
 // this fake's, not Azure's.
 //
+// Azure Policy definitions, set definitions, assignments and exemptions are
+// checked for where they are kept and what they name (policy.go).
+//
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
 package arm
@@ -248,6 +251,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 				writeError(w, http.StatusBadRequest, code, msg)
 				return
 			}
+		}
+		if status, code, msg := a.checkPolicy(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
 		}
 		if m := mgSubscription.FindStringSubmatch(id); m != nil {
 			a.moveSubscription(m[2], key)
