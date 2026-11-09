@@ -11,3 +11,7 @@ resources:
 - dbforpostgresql.azure.hfl.dev_users.yaml
 - keyvault.azure.hfl.dev_vaultcertificates.yaml
 - keyvault.azure.hfl.dev_vaultsecrets.yaml
+- web.azure.hfl.dev_certificates.yaml
+- web.azure.hfl.dev_siteshostnamebindings.yaml
+- web.azure.hfl.dev_sitesslots.yaml
+- web.azure.hfl.dev_sitesslotshostnamebindings.yaml

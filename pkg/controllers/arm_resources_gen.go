@@ -6,9 +6,12 @@ package controllers
 import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/registration"
-	customizations "github.com/highfivelabs/aso-extensions/apis/arm/app/customizations"
-	v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
-	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
+	app_customizations "github.com/highfivelabs/aso-extensions/apis/arm/app/customizations"
+	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
+	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
+	web_customizations "github.com/highfivelabs/aso-extensions/apis/arm/web/customizations"
+	web_v20260715 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715"
+	web_v20260715s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715/storage"
 	"k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
@@ -19,7 +22,7 @@ import (
 func getKnownStorageTypes() []*registration.StorageType {
 	var result []*registration.StorageType
 	result = append(result, &registration.StorageType{
-		Obj: new(v20250101.ManagedEnvironmentsCertificate),
+		Obj: new(app_v20250101.ManagedEnvironmentsCertificate),
 		Indexes: []registration.Index{
 			{
 				Key:  ".spec.properties.password",
@@ -38,12 +41,12 @@ func getKnownStorageTypes() []*registration.StorageType {
 						".spec.properties.password",
 						".spec.properties.value",
 					},
-					&v20250101.ManagedEnvironmentsCertificateList{}),
+					&app_v20250101.ManagedEnvironmentsCertificateList{}),
 			},
 		},
 	})
 	result = append(result, &registration.StorageType{
-		Obj: new(v20250101.ManagedEnvironmentsDaprComponent),
+		Obj: new(app_v20250101.ManagedEnvironmentsDaprComponent),
 		Indexes: []registration.Index{
 			{
 				Key:  ".spec.secrets.value",
@@ -57,14 +60,14 @@ func getKnownStorageTypes() []*registration.StorageType {
 					[]string{
 						".spec.secrets.value",
 					},
-					&v20250101.ManagedEnvironmentsDaprComponentList{}),
+					&app_v20250101.ManagedEnvironmentsDaprComponentList{}),
 			},
 		},
 	})
-	result = append(result, &registration.StorageType{Obj: new(v20250101.ManagedEnvironmentsJavaComponent)})
-	result = append(result, &registration.StorageType{Obj: new(v20250101.ManagedEnvironmentsManagedCertificate)})
+	result = append(result, &registration.StorageType{Obj: new(app_v20250101.ManagedEnvironmentsJavaComponent)})
+	result = append(result, &registration.StorageType{Obj: new(app_v20250101.ManagedEnvironmentsManagedCertificate)})
 	result = append(result, &registration.StorageType{
-		Obj: new(v20250101.ManagedEnvironmentsStorage),
+		Obj: new(app_v20250101.ManagedEnvironmentsStorage),
 		Indexes: []registration.Index{
 			{
 				Key:  ".spec.properties.azureFile.accountKey",
@@ -78,10 +81,55 @@ func getKnownStorageTypes() []*registration.StorageType {
 					[]string{
 						".spec.properties.azureFile.accountKey",
 					},
-					&v20250101.ManagedEnvironmentsStorageList{}),
+					&app_v20250101.ManagedEnvironmentsStorageList{}),
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.Certificate),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.password",
+				Func: indexWebCertificatePassword,
+			},
+			{
+				Key:  ".spec.pfxBlob",
+				Func: indexWebCertificatePfxBlob,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.password",
+						".spec.pfxBlob",
+					},
+					&web_v20260715.CertificateList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesHostNameBinding)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.SitesSlot),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.siteConfig.azureStorageAccounts.accessKey",
+				Func: indexWebSitesSlotAccessKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.siteConfig.azureStorageAccounts.accessKey",
+					},
+					&web_v20260715.SitesSlotList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsHostNameBinding)})
 	return result
 }
 
@@ -90,18 +138,30 @@ func getKnownTypes() []*registration.KnownType {
 	var result []*registration.KnownType
 	result = append(
 		result,
-		&registration.KnownType{Obj: new(storage.ManagedEnvironmentsCertificate)},
-		&registration.KnownType{Obj: new(storage.ManagedEnvironmentsDaprComponent)},
-		&registration.KnownType{Obj: new(storage.ManagedEnvironmentsJavaComponent)},
-		&registration.KnownType{Obj: new(storage.ManagedEnvironmentsManagedCertificate)},
-		&registration.KnownType{Obj: new(storage.ManagedEnvironmentsStorage)})
+		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsCertificate)},
+		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsDaprComponent)},
+		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsJavaComponent)},
+		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsManagedCertificate)},
+		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsStorage)})
 	result = append(
 		result,
-		&registration.KnownType{Obj: new(v20250101.ManagedEnvironmentsCertificate)},
-		&registration.KnownType{Obj: new(v20250101.ManagedEnvironmentsDaprComponent)},
-		&registration.KnownType{Obj: new(v20250101.ManagedEnvironmentsJavaComponent)},
-		&registration.KnownType{Obj: new(v20250101.ManagedEnvironmentsManagedCertificate)},
-		&registration.KnownType{Obj: new(v20250101.ManagedEnvironmentsStorage)})
+		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsCertificate)},
+		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsDaprComponent)},
+		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsJavaComponent)},
+		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsManagedCertificate)},
+		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsStorage)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesHostNameBinding)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlot)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsHostNameBinding)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(web_v20260715s.Certificate)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesHostNameBinding)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlot)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsHostNameBinding)})
 	return result
 }
 
@@ -109,25 +169,31 @@ func getKnownTypes() []*registration.KnownType {
 func createScheme() *runtime.Scheme {
 	scheme := runtime.NewScheme()
 	_ = clientgoscheme.AddToScheme(scheme)
-	_ = storage.AddToScheme(scheme)
-	_ = v20250101.AddToScheme(scheme)
+	_ = app_v20250101.AddToScheme(scheme)
+	_ = app_v20250101s.AddToScheme(scheme)
+	_ = web_v20260715.AddToScheme(scheme)
+	_ = web_v20260715s.AddToScheme(scheme)
 	return scheme
 }
 
 // getResourceExtensions returns a list of resource extensions
 func getResourceExtensions() []genruntime.ResourceExtension {
 	var result []genruntime.ResourceExtension
-	result = append(result, &customizations.ManagedEnvironmentsCertificateExtension{})
-	result = append(result, &customizations.ManagedEnvironmentsDaprComponentExtension{})
-	result = append(result, &customizations.ManagedEnvironmentsJavaComponentExtension{})
-	result = append(result, &customizations.ManagedEnvironmentsManagedCertificateExtension{})
-	result = append(result, &customizations.ManagedEnvironmentsStorageExtension{})
+	result = append(result, &app_customizations.ManagedEnvironmentsCertificateExtension{})
+	result = append(result, &app_customizations.ManagedEnvironmentsDaprComponentExtension{})
+	result = append(result, &app_customizations.ManagedEnvironmentsJavaComponentExtension{})
+	result = append(result, &app_customizations.ManagedEnvironmentsManagedCertificateExtension{})
+	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
+	result = append(result, &web_customizations.CertificateExtension{})
+	result = append(result, &web_customizations.SitesHostNameBindingExtension{})
+	result = append(result, &web_customizations.SitesSlotExtension{})
+	result = append(result, &web_customizations.SitesSlotsHostNameBindingExtension{})
 	return result
 }
 
-// indexAppManagedEnvironmentsCertificatePassword an index function for v20250101.ManagedEnvironmentsCertificate .spec.properties.password
+// indexAppManagedEnvironmentsCertificatePassword an index function for app_v20250101.ManagedEnvironmentsCertificate .spec.properties.password
 func indexAppManagedEnvironmentsCertificatePassword(rawObj client.Object) []string {
-	obj, ok := rawObj.(*v20250101.ManagedEnvironmentsCertificate)
+	obj, ok := rawObj.(*app_v20250101.ManagedEnvironmentsCertificate)
 	if !ok {
 		return nil
 	}
@@ -140,9 +206,9 @@ func indexAppManagedEnvironmentsCertificatePassword(rawObj client.Object) []stri
 	return obj.Spec.Properties.Password.Index()
 }
 
-// indexAppManagedEnvironmentsCertificateValue an index function for v20250101.ManagedEnvironmentsCertificate .spec.properties.value
+// indexAppManagedEnvironmentsCertificateValue an index function for app_v20250101.ManagedEnvironmentsCertificate .spec.properties.value
 func indexAppManagedEnvironmentsCertificateValue(rawObj client.Object) []string {
-	obj, ok := rawObj.(*v20250101.ManagedEnvironmentsCertificate)
+	obj, ok := rawObj.(*app_v20250101.ManagedEnvironmentsCertificate)
 	if !ok {
 		return nil
 	}
@@ -155,9 +221,9 @@ func indexAppManagedEnvironmentsCertificateValue(rawObj client.Object) []string 
 	return obj.Spec.Properties.Value.Index()
 }
 
-// indexAppManagedEnvironmentsDaprComponentValue an index function for v20250101.ManagedEnvironmentsDaprComponent .spec.secrets.value
+// indexAppManagedEnvironmentsDaprComponentValue an index function for app_v20250101.ManagedEnvironmentsDaprComponent .spec.secrets.value
 func indexAppManagedEnvironmentsDaprComponentValue(rawObj client.Object) []string {
-	obj, ok := rawObj.(*v20250101.ManagedEnvironmentsDaprComponent)
+	obj, ok := rawObj.(*app_v20250101.ManagedEnvironmentsDaprComponent)
 	if !ok {
 		return nil
 	}
@@ -171,9 +237,9 @@ func indexAppManagedEnvironmentsDaprComponentValue(rawObj client.Object) []strin
 	return result
 }
 
-// indexAppManagedEnvironmentsStorageAccountKey an index function for v20250101.ManagedEnvironmentsStorage .spec.properties.azureFile.accountKey
+// indexAppManagedEnvironmentsStorageAccountKey an index function for app_v20250101.ManagedEnvironmentsStorage .spec.properties.azureFile.accountKey
 func indexAppManagedEnvironmentsStorageAccountKey(rawObj client.Object) []string {
-	obj, ok := rawObj.(*v20250101.ManagedEnvironmentsStorage)
+	obj, ok := rawObj.(*app_v20250101.ManagedEnvironmentsStorage)
 	if !ok {
 		return nil
 	}
@@ -187,4 +253,47 @@ func indexAppManagedEnvironmentsStorageAccountKey(rawObj client.Object) []string
 		return nil
 	}
 	return obj.Spec.Properties.AzureFile.AccountKey.Index()
+}
+
+// indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password
+func indexWebCertificatePassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.Certificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Password == nil {
+		return nil
+	}
+	return obj.Spec.Password.Index()
+}
+
+// indexWebCertificatePfxBlob an index function for web_v20260715.Certificate .spec.pfxBlob
+func indexWebCertificatePfxBlob(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.Certificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PfxBlob == nil {
+		return nil
+	}
+	return obj.Spec.PfxBlob.Index()
+}
+
+// indexWebSitesSlotAccessKey an index function for web_v20260715.SitesSlot .spec.siteConfig.azureStorageAccounts.accessKey
+func indexWebSitesSlotAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesSlot)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.SiteConfig == nil {
+		return nil
+	}
+	for _, value := range obj.Spec.SiteConfig.AzureStorageAccounts {
+		if value.AccessKey == nil {
+			continue
+		}
+		result = append(result, value.AccessKey.Index()...)
+	}
+	return result
 }
