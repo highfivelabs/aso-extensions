@@ -179,11 +179,17 @@ Facts learned the hard way:
   `task check` fails. Look for it when `check` says "stale" on a kind you
   generated fine; such a kind cannot be generated (hand-write it as
   `ManagementLock` was).
-- **`task operator-e2e` must print `all checks passed`.** `tests/operator/run.sh`
-  was once emptied by a careless script (`open(p,'w').write(open(p).read())`
-  truncates before reading) and the task still exited 0, so PR #13's kind test
-  was never run; it was restored in the Recovery Services PR. Read the tail of
-  the output and `wc -l tests/operator/run.sh` (about 500) before you trust it.
+- **`task operator-e2e` must print `all checks passed`, and now fails if it does
+  not.** `tests/operator/run.sh` was once emptied by a careless script
+  (`open(p,'w').write(open(p).read())` truncates before reading) and the task
+  still exited 0, so PR #13's kind test was never run. The task now runs
+  `hack/operator-e2e.sh`, which fails if the script is missing, empty or under
+  400 lines, exits non-zero, does not end with `all checks passed`, or lacks an
+  `ok:` line listed in `tests/operator/required-ok.txt`. **A PR that adds a kind
+  adds its `ok:` lines to that file.** `hack/test-operator-e2e-guard.sh` (in
+  `task check`) tests the wrapper; `hack/check-tests-present.sh` (in `task test`)
+  fails when `test/e2e` loses test functions. Write files through a temp file and
+  `wc -l` the result.
 - **A path with a fixed non-resource segment** (Recovery Services
   `backupFabrics/{fabricName}`) makes the generator pick the resource group as
   owner and the Kubernetes object cannot name the ARM ID ("had 1 azureNames and

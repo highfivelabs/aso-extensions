@@ -41,7 +41,9 @@ task check      # pin, go.mod versions, generated files (ASO's generator
                 # the production build, build, unit and end-to-end tests
 task generate-arm  # after changing generator/: rerun ASO's generator
                 # (heavy; run it on a machine meant for that)
-task operator-e2e  # the install on kind with the fake cloud
+task operator-e2e  # the install on kind with the fake cloud; fails unless the
+                # script ends with "all checks passed" and prints the `ok:`
+                # lines of tests/operator/required-ok.txt (add a kind's lines there)
 ```
 
 ```sh
