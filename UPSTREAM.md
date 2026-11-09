@@ -29,7 +29,7 @@ Microsoft. Each copied file keeps its header and says how it was changed.
 | `pkg/util/postgresql/postgresql.go`, `roles.go`, `role_option.go` and their tests | `internal/util/postgresql/` | `ServerPort` and `TLSRootCAs` variables for tests; `DropUser` revokes database privileges first; `ALTER ROLE` escapes the role name |
 | `pkg/util/set/` | `internal/set/` | no |
 | `pkg/controllers/controllers.go` | `internal/controllers/controller_resources.go`, `indexers.go` | our kinds only; lists with `apimeta.ExtractList` |
-| `pkg/manager/manager.go` | `cmd/controller/app/setup.go` (`initializeClients`, `initializeWatchers`) | our kinds only; no CRD management, webhooks or ARM client |
+| `pkg/manager/manager.go` | `cmd/controller/app/setup.go` (`initializeClients`, `initializeWatchers`) | our kinds only; no CRD management, webhooks or ASO's ARM client |
 
 New files of ours (no ASO source): `pkg/util/postgresql/aad.go`,
 `privileges.go`, `schema_privileges.go`, `default_privileges.go`,
@@ -37,7 +37,16 @@ New files of ours (no ASO source): `pkg/util/postgresql/aad.go`,
 no schema or default privileges; written the way `privileges.go` follows
 ASO's MySQL `ReconcileUserDatabasePrivileges`);
 `pkg/reconcilers/postgresql/database_privileges.go`, `ownership.go`; `apis/keyvault/v1/`; `pkg/keyvault/`;
-`pkg/reconcilers/keyvault/`; `pkg/fakecloud/`; `cmd/`; `test/`; `tests/`.
+`pkg/reconcilers/keyvault/`; `apis/authorization/v1/`; `pkg/armlocks/`;
+`pkg/reconcilers/authorization/` (ManagementLock: no ASO source, as ASO
+has no lock; its claiming follows ASO's `ARMOwnedResourceReconcilerCommon`
+and its subscription check is ASO's `checkSubscription`, both rewritten
+for an unstructured owner, and it uses ASO's exported
+`genruntime.ArbitraryOwnerReference` and `CheckARMIDMatchesSubscription`);
+`pkg/fakecloud/`; `cmd/`; `test/`; `tests/`. Generated from ASO at the pin
+by `hack/generate.sh`: `config/test/aso-crds/` (test owner CRDs, now with
+`ResourceGroup`) and `config/rbac/aso-owner-reader.yaml` (ASO's API
+groups).
 
 ## Patches to the checkout
 

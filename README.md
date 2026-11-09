@@ -13,6 +13,7 @@ Not affiliated with or endorsed by Microsoft.
 | --- | --- | --- |
 | `dbforpostgresql.azure.hfl.dev/v1` `User` | ASO's PostgreSQL `User` can neither be a Microsoft Entra principal (`aadUser`, which ASO's MySQL `User` has) nor hold privileges on a database (`databasePrivileges`, which ASO's MySQL `User` also has), on a schema (`schemaPrivileges`) or on objects another role creates later (`defaultPrivileges`), nor own a database (`ownedDatabases`; given to a `NOLOGIN` role, `hfl_owner`, rather than orphaned when the user goes) | ASO's PostgreSQL `User`, copied and extended; per-database privileges are ASO issue [#4694](https://github.com/Azure/azure-service-operator/issues/4694), still open; ASO has nothing for schema or default privileges or database ownership |
 | `keyvault.azure.hfl.dev/v1` `VaultSecret` | a Key Vault secret whose value comes from a Kubernetes Secret; ASO has `Vault` and `VaultKey` but declined to manage secrets ([#1894](https://github.com/Azure/azure-service-operator/issues/1894)) | ours, with ASO's `VaultKey` create and delete modes |
+| `authorization.azure.hfl.dev/v1` `ManagementLock` | a management lock (`Microsoft.Authorization/locks`, `CanNotDelete` or `ReadOnly`) on a subscription, resource group or resource, owned by any ASO resource or an ARM ID; the one ARM kind here, by the builder's exception (`docs/plan.md`, section 1) | ours; ASO issue [#3756](https://github.com/Azure/azure-service-operator/issues/3756), open, needs a design for the lock's four scopes |
 
 ## Where it sits
 
@@ -26,7 +27,8 @@ Not affiliated with or endorsed by Microsoft.
 The groups never clash with ASO's, so both install on one cluster. Our kinds
 name ASO kinds as owners: a `User`'s `spec.owner` is an ASO
 `dbforpostgresql.azure.com` `FlexibleServer` in the same namespace, a
-`VaultSecret`'s is an ASO `keyvault.azure.com` `Vault`. ASO's annotations
+`VaultSecret`'s is an ASO `keyvault.azure.com` `Vault`, a `ManagementLock`'s
+any ASO resource (or an ARM ID). ASO's annotations
 mean what they mean in ASO (`serviceoperator.azure.com/reconcile-policy`,
 `.../credential-from`), and the conditions are ASO's.
 
@@ -65,6 +67,18 @@ spec:
     name: orders-config       # a Kubernetes Secret in this namespace
     key: url
   deleteMode: delete          # detach (default), delete or disable
+---
+apiVersion: authorization.azure.hfl.dev/v1
+kind: ManagementLock
+metadata:
+  name: keep-orders           # the lock's name, or set spec.azureName
+spec:
+  owner:                      # any ASO resource here, or {armId: /subscriptions/...}
+    group: resources.azure.com
+    kind: ResourceGroup
+    name: orders-rg
+  level: CanNotDelete         # or ReadOnly
+  notes: production data
 ```
 
 ## Identity
@@ -106,8 +120,9 @@ make operator-e2e  # the install on kind with the fake cloud (tests/operator/run
 
 `make test` runs the kinds end to end without Azure: a real kube-apiserver
 (envtest), the manager wired as in production, azidentity's real
-credentials against an in-process fake Entra, a fake Key Vault over TLS, and
-PostgreSQL in Docker set up like a flexible server (`docs/fake-cloud.md`).
+credentials against an in-process fake Entra, a fake Key Vault and a fake
+Resource Manager over TLS, and PostgreSQL in Docker set up like a flexible
+server (`docs/fake-cloud.md`).
 
 ## Layout
 
@@ -120,11 +135,12 @@ PostgreSQL in Docker set up like a flexible server (`docs/fake-cloud.md`).
 | `config/fake-cloud/`, `config/test/` | tests only: the fake cloud on kind, ASO's owner CRDs |
 | `pkg/reconcilers/<service>/` | each kind's reconciler |
 | `pkg/keyvault/` | the Key Vault secrets data plane client |
+| `pkg/armlocks/` | the Resource Manager client for management locks |
 | `pkg/util/postgresql/` | PostgreSQL helpers (copied from ASO and extended) |
 | `pkg/controllers/`, `pkg/manager/` | registration on ASO's generic reconciler; wiring as ASO's manager |
 | `pkg/fakecloud/` | tests only: fake Entra, fake Key Vault, the flexible-server stand-in |
 | `cmd/manager/` | the controller manager (`-tags fakecloud` adds the test switch) |
-| `cmd/fakevault/` | tests only: the fake vault as a server |
+| `cmd/fakevault/`, `cmd/fakearm/` | tests only: the fake vault and the fake Resource Manager as servers |
 | `test/e2e/`, `tests/operator/` | end-to-end tests; the install on kind |
 | `patches/azure-service-operator/` | our one change to the ASO checkout |
 | `UPSTREAM.md` | the pin and what is copied from where |

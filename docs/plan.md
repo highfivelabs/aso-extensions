@@ -1,11 +1,13 @@
 # Plan
 
-Status, 2026-11-08: the repository exists locally with two kinds,
+Status, 2026-11-09: the repository has three kinds,
 `dbforpostgresql.azure.hfl.dev/v1` `User` (ASO's PostgreSQL user with
 Microsoft Entra principals, per-database privileges, schema and default
-privileges, and database ownership) and
-`keyvault.azure.hfl.dev/v1` `VaultSecret`. Both pass their end-to-end tests
-against a fake cloud, and the install runs on kind (section 7). It has no
+privileges, and database ownership),
+`keyvault.azure.hfl.dev/v1` `VaultSecret`, and
+`authorization.azure.hfl.dev/v1` `ManagementLock`, the one ARM kind (the
+exception in section 1). All pass their end-to-end tests against a fake
+cloud, and the install runs on kind (section 7). It has no
 remote, no published image and no release. This document says how Azure
 Service Operator is built, how a kind is built here, which gaps come next,
 how identity works, and what is left.
@@ -53,12 +55,37 @@ So a gap in ASO is one of two kinds:
    a sample, a recorded test). The right move is an upstream pull request,
    not a kind here. Building one here would mean running ASO's generator
    with our group domain, which it cannot do without a patch (the domain
-   is in its template) and the 1 GB+ specs submodule. Not done; open
-   question 6.
+   is in its template) and the 1 GB+ specs submodule. Not done (open
+   question 6, answered: the rule stands), with one exception below.
 2. **Something ARM does not expose, or that ASO declined.** Data-plane
    objects: users and grants inside a database, secrets in a vault. These
-   are hand-written in ASO too. This repository's kinds are all of this
-   kind.
+   are hand-written in ASO too. This repository's kinds are of this kind,
+   but one.
+
+**The exception: management locks.** The builder, 2026-11-09: "Yes, make
+the exception for Azure management locks." `Microsoft.Authorization/locks`
+is built here as `ManagementLock`, the one plain ARM resource in this
+repository. Why locks qualify where other ARM gaps do not:
+
+- they are the biggest Azure gap by count: 31 of the 33 Azure Verified
+  Modules read for the seed catalog accept a `lock`
+  (`catalog/docs/azure.md`, gap 1);
+- upstream cannot take them as configuration: a lock is one type at four
+  scopes (subscription, resource group, resource, any `{scope}`), and
+  ASO's generator needs a design decision on which to model before it can
+  emit it. Issue #3756 is open (rechecked 2026-11-09): a maintainer wrote
+  in 2026-05 that it needs design work first, and the latest comment
+  (2026-07) says the scope question is what blocks it. No pull request;
+  #4629, the earlier request, is closed; v2.22.0 is still the latest
+  release;
+- a lock is small (a level and notes), synchronous (no long-running
+  operation), and an extension resource on any owner, so a hand-written
+  reconciler on ASO's generic reconciler, like this repository's other
+  kinds, carries it without ASO's generator.
+
+The rule otherwise stands: every other ARM gap goes upstream as
+configuration. When ASO ships `ManagementLock`, ours is deprecated for a
+release and users move to ASO's (section 4).
 
 ## 2. How a kind is built here
 
@@ -188,6 +215,42 @@ So a gap in ASO is one of two kinds:
   only indirectly, and its challenge-based auth checks that the vault's host
   matches the token audience, which a test vault cannot.
 
+### ManagementLock
+
+- `owner` is ASO's `ArbitraryOwnerReference`, as ASO's own extension
+  resource `RoleAssignment` takes: an ASO resource in the same namespace
+  by group, kind and name, or an ARM ID (a subscription, a resource group
+  or a resource). A named owner must be Ready and carry the ARM ID ASO
+  writes on what it provisions (`serviceoperator.azure.com/resource-id`);
+  until then the lock waits with ASO's `WaitingForOwner`. The owner becomes
+  the lock's Kubernetes owner, as ASO's `ClaimResource` does.
+- The owner is read by name as an unstructured object from the API server,
+  so any ASO kind can own a lock without the manager carrying ASO's Go
+  types or an informer per kind. That needs `get` (only; no list or watch)
+  on every ASO API group: a generated ClusterRole,
+  `config/rbac/aso-owner-reader.yaml`, lists ASO's groups at the pin
+  (`entra.azure.com` aside).
+- `level` is `CanNotDelete` or `ReadOnly`, `notes` up to 512 characters;
+  the lock's name is `azureName` or the object's name. Changes are a PUT
+  when Azure's lock differs. Deleting the object deletes the lock, from
+  the ARM ID recorded when it was claimed, so it works with the owner
+  gone; a lock or scope Azure no longer has is deleted already.
+- The credential is the one ASO picks for the object; ASO's subscription
+  check refuses a scope in another subscription than the credential's.
+  Resource Manager's endpoint and audience are ASO's settings
+  (`AZURE_RESOURCE_MANAGER_ENDPOINT`, `..._AUDIENCE`), or the credential's
+  own cloud.
+- A small Resource Manager client (`pkg/armlocks`, API 2020-05-01) over
+  azcore's pipeline, as the Key Vault client. ASO's own ARM client is
+  internal and built for generated kinds.
+- What a lock means for ASO: a `CanNotDelete` lock on what ASO manages
+  makes ASO's delete of it fail with `ScopeLocked`, which ASO retries
+  slowly until the lock goes; `ReadOnly` also stops ASO's updates. Because
+  the owner is the lock's Kubernetes owner, deleting the owner with
+  foreground propagation removes the lock first; with background
+  propagation (kubectl's default) the owner waits until the lock is
+  deleted. That is the point of a lock.
+
 ## 3. Candidates
 
 Ranked by how much an application stack on Azure needs them and how cheap
@@ -215,6 +278,7 @@ rechecked 2026-11-08, see below):
 | b5 | PostgreSQL database ownership | migrations need the app to own its database | **built** (`ownedDatabases`, `reassignOwnedTo` on the same `User`), after open question 8 was answered |
 | b6 | Key Vault certificates from a Kubernetes Secret (import) | TLS certificates issued in-cluster, kept in Key Vault | after b4; the same shape as `VaultSecret` |
 | b7 | ARM resources in the specs but not exported | varies | upstream, by configuration (section 1) |
+| b8 | Management locks (`Microsoft.Authorization/locks`) | 31 of 33 Azure Verified Modules take a `lock`; protects what an app cannot lose | **built** as `ManagementLock`, the one ARM exception (section 1); ASO issue #3756 is open |
 
 App Configuration key-values are already in ASO (`appconfiguration`
 `KeyValue`), so they are not a gap.
@@ -267,6 +331,11 @@ and exact (`docs/fake-cloud.md`):
   flexible server: `azure_pg_admin`, a password administrator, Entra
   administrators whose password is the token of the identity that may sign
   in as them, and stand-ins for Azure's `pgaadauth` functions.
+- **Resource Manager**: a store of resources by ARM ID and management
+  locks at any scope, over TLS, accepting only the tokens a test trusts.
+  Locks act as Azure documents: `CanNotDelete` refuses deletes at and
+  under its scope, and of a scope holding a locked resource; `ReadOnly`
+  refuses writes too; each with 409 `ScopeLocked`.
 - **envtest** with our CRDs and ASO's owner CRDs (generated from ASO's
   types at the pin, storage versions only).
 
@@ -301,8 +370,9 @@ It uses ASO's credential provider itself, so it picks the same credential
 for the same object. It runs in ASO's namespace (so it reads
 `aso-controller-settings` the same way) under its own service account,
 `aso-extensions-manager`, whose rights are our kinds, reading Secrets,
-ConfigMaps, Namespaces and the two ASO owner kinds, events, and tokens
-for `aso-workload` only. It cannot change any ASO resource. Sharing ASO's
+ConfigMaps, Namespaces and the two ASO owner kinds, `get` on any ASO
+resource (a `ManagementLock`'s owner), events, and tokens for
+`aso-workload` only. It cannot list or change any ASO resource. Sharing ASO's
 service account would hand our manager all of ASO's Kubernetes rights.
 
 | ASO's credential | Same Azure identity? | Extra setup |
@@ -328,7 +398,7 @@ one Deployment, nothing per namespace to create. A static install
 
 ## 7. Proven, and not
 
-Proven by `make test` (envtest, 13 tests):
+Proven by `make test` (envtest, 16 tests):
 
 - a password user gets exactly its database privileges, changes revoke
   what is no longer listed (including grants made by hand), and deletion
@@ -370,7 +440,20 @@ Proven by `make test` (envtest, 13 tests):
   (`NOLOGIN`, held by `azure_pg_admin`), with an event, and drops it; the
   other user keeps its privileges and can still be deleted; a
   `reassignOwnedTo` role that can sign in is refused, and the CRD refuses
-  the user itself as that role.
+  the user itself as that role;
+- management locks: a lock on an ASO `ResourceGroup` is set in the fake
+  Resource Manager on the ARM ID ASO recorded, with the namespace's
+  `aso-workload` identity, and the `ResourceGroup` becomes its Kubernetes
+  owner; while it is `CanNotDelete`, deleting the resource group or a
+  resource in it is refused with `ScopeLocked` and changing the resource is
+  not; changed to `ReadOnly`, the change is refused too; deleting the lock
+  removes it and the deletes go through; locks by ARM ID on a resource
+  (with a name holding spaces) and on the subscription protect what is
+  under them; a scope in another subscription than the credential's is
+  refused (ASO's check); an owner not there yet holds the lock back
+  (`WaitingForOwner`); an identity the fake does not trust is refused; the
+  CRD refuses an owner that is neither or both of an ARM ID and a named
+  resource, a named owner without group and kind, and an unknown level.
 
 Proven on kind by `make operator-e2e` (`tests/operator/run.sh`; passed
 2026-11-08 on kind 0.33 on an Apple-silicon Mac, Docker 20.10, both on a
@@ -405,7 +488,13 @@ lets an administrator grant a role to `azure_pg_admin` (a role Azure
 manages; if it refuses, giving up a database fails with its error and
 the delete waits), whether an Entra administrator's membership in
 `azure_pg_admin` carries INHERIT and SET as the fake's does, and, as
-above, ADMIN OPTION on roles `pgaadauth` creates.
+above, ADMIN OPTION on roles `pgaadauth` creates. For management locks:
+real Resource Manager's authorization (who may write
+`Microsoft.Authorization/locks/*`: Owner or User Access Administrator, not
+Contributor, so ASO's identity may need a role it lacks), the exact
+errors for a missing scope, and ASO's own behaviour against a real lock
+(it is ASO's code, not exercised here; issue #3756 reports it retries
+`ScopeLocked` slowly).
 
 Not built for b4: privileges on objects that already exist (`GRANT … ON ALL
 TABLES IN SCHEMA`), and global default privileges (no schema). Not built
@@ -437,6 +526,11 @@ drop until the users they grant to are deleted).
 6. **ARM gaps here at all?** Building an ARM kind in our group needs a
    patch to ASO's generator (the group domain) and the specs submodule.
    Recommended: never; ARM gaps go upstream as configuration.
+
+   **Answered, 2026-11-09, with one exception.** The builder: "Yes, make
+   the exception for Azure management locks." Locks are built here as
+   `ManagementLock`, hand-written rather than generated (section 1, "The
+   exception"); every other ARM gap still goes upstream.
 7. **Name collisions**: our `User` shares its kind name with ASO's three
    `User` kinds in other groups; `kubectl get users` is ambiguous and needs
    the group. Rename to `PostgreSQLUser`, or keep ASO's name so moving to
