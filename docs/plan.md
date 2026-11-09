@@ -5,8 +5,8 @@ Status, 2026-11-09: the repository has four kinds,
 Microsoft Entra principals, per-database privileges, schema and default
 privileges, and database ownership),
 `keyvault.azure.hfl.dev/v1` `VaultSecret` and `VaultCertificate`, and
-`authorization.azure.hfl.dev/v1` `ManagementLock`, the one ARM kind (the
-exception in section 1). All pass their end-to-end tests against a fake
+`authorization.azure.hfl.dev/v1` `ManagementLock`, the first plain ARM
+kind (section 1: ARM resources are in scope). All pass their end-to-end tests against a fake
 cloud, and the install runs on kind (section 7). It has no
 remote, no published image and no release. This document says how Azure
 Service Operator is built, how a kind is built here, which gaps come next,
@@ -48,24 +48,49 @@ Read at the pin in `UPSTREAM.md` (main, 16 commits after v2.22.0).
 - **Tests** are envtest plus go-vcr recordings of real Azure (recorded
   once against a subscription, replayed in CI).
 
-So a gap in ASO is one of two kinds:
+So a gap in ASO is one of two kinds, and **both are in scope here**:
 
 1. **An ARM resource ASO does not export.** It is usually in the specs
-   already; exporting it upstream is configuration (an `$exportAs` entry,
-   a sample, a recorded test). The right move is an upstream pull request,
-   not a kind here. Building one here would mean running ASO's generator
-   with our group domain, which it cannot do without a patch (the domain
-   is in its template) and the 1 GB+ specs submodule. Not done (open
-   question 6, answered: the rule stands), with one exception below.
+   already; ASO would export it with configuration (an `$exportAs` entry,
+   a sample, a recorded test).
 2. **Something ARM does not expose, or that ASO declined.** Data-plane
    objects: users and grants inside a database, secrets in a vault. These
-   are hand-written in ASO too. This repository's kinds are of this kind,
-   but one.
+   are hand-written in ASO too.
 
-**The exception: management locks.** The builder, 2026-11-09: "Yes, make
-the exception for Azure management locks." `Microsoft.Authorization/locks`
-is built here as `ManagementLock`, the one plain ARM resource in this
-repository. Why locks qualify where other ARM gaps do not:
+**ARM resources are in scope.** The builder, 2026-11-09: "Let's not forbid
+Azure API resources. I think those are perfectly fine. Build them or pull
+them from upstream, whichever is easier." This replaces the earlier rule,
+which sent every ARM gap upstream as configuration and never built one
+here (open question 6, recommended then; the builder first made one
+exception, for management locks, then lifted the rule). What stays is the
+upstream-first habit. For each ARM kind, in this order:
+
+1. **Recheck upstream, read-only**, and record what was found: the latest
+   release, `main` since the pin, open and draft pull requests, issues. A
+   kind that is already in the pinned code or in a release is skipped, and
+   the skip recorded in section 3.
+2. **Copy upstream where it exists**: an open pull request or unreleased
+   `main` that adds the kind is copied here (header kept, a "Modified by
+   High Five Labs" note, a line in `UPSTREAM.md`), as for the PostgreSQL
+   `User`.
+3. **Generate it where ASO's own generator can.** The kind's CRD, types
+   and ARM wire types come from the pinned ARM specs and generator
+   configuration, not from hand-written Go. The configuration is ours,
+   written the way ASO writes `v2/azure-arm/<group>.yaml`, in this
+   repository; the generated files are checked in and never hand-edited.
+   This is preferred over hand-writing; its mechanism is recorded with the
+   first kind built that way.
+4. **Hand-write it** only when neither applies, as `ManagementLock` was:
+   a lock is one type at four scopes, which ASO's generator needs a design
+   decision to model (issue #3756).
+
+When ASO ships a kind that we carry, ours is deprecated for a release and
+users move to ASO's (section 4).
+
+**`ManagementLock`, the first ARM kind.** The builder, 2026-11-09: "Yes,
+make the exception for Azure management locks." `Microsoft.Authorization/locks`
+is built here as `ManagementLock`, hand-written. Why it was first, and why
+hand-written:
 
 - they are the biggest Azure gap by count: 31 of the 33 Azure Verified
   Modules read for the seed catalog accept a `lock`
@@ -83,9 +108,7 @@ repository. Why locks qualify where other ARM gaps do not:
   reconciler on ASO's generic reconciler, like this repository's other
   kinds, carries it without ASO's generator.
 
-The rule otherwise stands: every other ARM gap goes upstream as
-configuration. When ASO ships `ManagementLock`, ours is deprecated for a
-release and users move to ASO's (section 4).
+The exception that made it possible is superseded by the rule above.
 
 ## 2. How a kind is built here
 
@@ -301,8 +324,36 @@ rechecked 2026-11-08, see below):
 | b4 | PostgreSQL schema privileges and default privileges | since PostgreSQL 15 only the database owner may create in `public`; an app needs `USAGE`/`CREATE` on a schema and default privileges on new tables | **built** (`schemaPrivileges`, `defaultPrivileges` on the same `User`); a1 was skipped because it waits on open question 5 |
 | b5 | PostgreSQL database ownership | migrations need the app to own its database | **built** (`ownedDatabases`, `reassignOwnedTo` on the same `User`), after open question 8 was answered |
 | b6 | Key Vault certificates from a Kubernetes Secret (import) | TLS certificates issued in-cluster, kept in Key Vault | **built** as `VaultCertificate`, the same shape as `VaultSecret`; no ASO issue or pull request (rechecked 2026-11-09) |
-| b7 | ARM resources in the specs but not exported | varies | upstream, by configuration (section 1) |
-| b8 | Management locks (`Microsoft.Authorization/locks`) | 31 of 33 Azure Verified Modules take a `lock`; protects what an app cannot lose | **built** as `ManagementLock`, the one ARM exception (section 1); ASO issue #3756 is open |
+| b7 | ARM resources in the specs but not exported | varies | built here, from the catalog's ranking (table (c) below), by the rule in section 1 |
+| b8 | Management locks (`Microsoft.Authorization/locks`) | 31 of 33 Azure Verified Modules take a `lock`; protects what an app cannot lose | **built** as `ManagementLock`, hand-written (section 1); ASO issue #3756 is open |
+
+(c) ARM gaps from the seed catalog (`catalog/docs/azure.md`, section 5),
+in its rank order. State at the pin and upstream, read-only, 2026-11-09:
+none of these is exported at the pin (the `app` group exports
+`AuthConfig`, `ContainerApp`, `Job`, `ManagedEnvironment`; `web` exports
+`ServerFarm`, `Site`, `SitesSourcecontrol`; `operationalinsights` only
+`Workspace`; `containerregistry` `Registry`, `RegistryCacheRule`,
+`RegistryReplication`; there is no Recovery Services group), no open or
+draft pull request adds any, and no ASO issue asks for most (the one
+found, #4455, is a Recovery Services vault for storage). Each kind
+rechecks upstream again when it is built.
+
+| Rank | Gap | State | Move |
+| --- | --- | --- | --- |
+| c1 | Management locks | built (b8) | done |
+| c3 | Container Apps environment children (Dapr components, storages, certificates, managed certificates, ...) | not at the pin, no pull request | next |
+| c4 | App Service site children (slots, hostname bindings, certificates, config sections, publishing policies) | not at the pin, no pull request | queued |
+| c5 | Log Analytics children (tables, data exports, linked services, linked storage, query packs, solutions) | not at the pin, no pull request | queued |
+| c6 | Azure Monitor private link scope and scoped resources; network security perimeter associations | not at the pin, no pull request | queued |
+| c7 | Key Vault keys | `VaultKey` merged in ASO (#5564), next release | skip: wait for ASO's release |
+| c8 | Management groups, Azure Policy, budgets, vWAN hub connections, subscription tags | management groups #2249 open, no pull request | queued, low priority (platform, not app) |
+| c9 | ACR tokens, scope maps, credential sets | not at the pin, no pull request | queued; a token password is a secret returned once |
+| c10 | VM extras: run command, auto-shutdown schedule, maintenance assignment, Recovery Services backup | not at the pin; #4455 open, no pull request | queued |
+| c11 | Storage local users (SFTP) | not at the pin, no pull request | queued |
+| c12 | Cognitive Services RAI policies | not at the pin, no pull request | queued |
+| c13 | Cosmos DB Gremlin, SQL dedicated gateway | not at the pin, no pull request | queued |
+| c14 | AKS managed namespaces | not at the pin, no pull request | queued |
+| c18 | Stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones) | not a new kind | queued |
 
 App Configuration key-values are already in ASO (`appconfiguration`
 `KeyValue`), so they are not a gap.
@@ -567,12 +618,16 @@ drop until the users they grant to are deleted).
    upstream?
 6. **ARM gaps here at all?** Building an ARM kind in our group needs a
    patch to ASO's generator (the group domain) and the specs submodule.
-   Recommended: never; ARM gaps go upstream as configuration.
+   Recommended then: never; ARM gaps go upstream as configuration.
 
-   **Answered, 2026-11-09, with one exception.** The builder: "Yes, make
-   the exception for Azure management locks." Locks are built here as
-   `ManagementLock`, hand-written rather than generated (section 1, "The
-   exception"); every other ARM gap still goes upstream.
+   **Answered, 2026-11-09, twice.** First, with one exception: the
+   builder said "Yes, make the exception for Azure management locks."
+   (`ManagementLock`, built, hand-written.) Then, lifting the rule: "Let's
+   not forbid Azure API resources. I think those are perfectly fine. Build
+   them or pull them from upstream, whichever is easier." Plain ARM
+   resources are in scope; the order of preference (copy upstream, then
+   generate, then hand-write) and the upstream recheck before each kind are
+   in section 1. The recommendation above is superseded.
 7. **Name collisions**: our `User` shares its kind name with ASO's three
    `User` kinds in other groups; `kubectl get users` is ambiguous and needs
    the group. Rename to `PostgreSQLUser`, or keep ASO's name so moving to
