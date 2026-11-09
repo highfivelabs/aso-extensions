@@ -1,0 +1,49 @@
+typeFilters:
+  - action: include
+    group: operationalinsights
+    version: v20250701
+    because: the version of ASO's Workspace, the owner of what we generate
+  - action: prune
+    group: operationalinsights
+    because: every other version is left alone
+
+typeTransformers:
+  - name: Workspaces_LinkedStorageAccount_Name_Spec
+    group: operationalinsights
+    version: v20250701
+    target:
+      name: string
+    because: >-
+      The name of a linked storage account is one of five values (Alerts,
+      AzureWatson, CustomLogs, Ingestion, Query). ASO's generator keeps such an
+      enum in the storage version, which then imports the API version that
+      imports it, an import cycle. A string it is; Azure refuses any other name.
+
+groupModelConfiguration:
+  2025-07-01:
+    Workspaces_Table:
+      $exportAs: WorkspacesTable
+      $supportedFrom: v0.1.0
+    Workspaces_LinkedService:
+      $exportAs: WorkspacesLinkedService
+      $supportedFrom: v0.1.0
+    Workspaces_LinkedStorageAccount:
+      $exportAs: WorkspacesLinkedStorageAccount
+      $supportedFrom: v0.1.0
+    Workspaces_SavedSearch:
+      $exportAs: WorkspacesSavedSearch
+      $supportedFrom: v0.1.0
+    QueryPack:
+      $exportAs: QueryPack
+      $supportedFrom: v0.1.0
+    QueryPacks_Query:
+      $exportAs: QueryPacksQuery
+      $supportedFrom: v0.1.0
+    LinkedServiceProperties:
+      ResourceId:
+        $referenceType: arm # an Automation account or a Log Analytics cluster
+      WriteAccessResourceId:
+        $referenceType: arm
+    LinkedStorageAccountsProperties:
+      StorageAccountIds:
+        $referenceType: arm

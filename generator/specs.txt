@@ -2,3 +2,4 @@
 # hack/specs.sh checks out for the generator, one per line.
 specification/app
 specification/web
+specification/operationalinsights
