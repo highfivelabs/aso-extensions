@@ -81,6 +81,15 @@ message() { # message <kind> <ns> <name>
   kubectl get "$1" -n "$2" "$3" -o jsonpath='{.status.conditions[?(@.type=="Ready")].message}'
 }
 
+# logged <deployment> <text>: the fake cloud's log of <deployment> has <text>.
+# (Not kubectl logs piped into grep -q: grep stops at the first match, kubectl
+# is killed, and pipefail fails the check whenever the log is long.)
+logged() {
+  local out
+  out="$(kubectl -n fake-cloud logs "deploy/$1")"
+  grep -qF -- "$2" <<<"${out}"
+}
+
 cleanup() {
   if [[ "${KEEP}" == "0" ]]; then
     kind delete cluster --name "${CLUSTER}" >/dev/null 2>&1 || true
@@ -105,7 +114,7 @@ kubectl apply -k config/test/aso-crds
 kubectl -n "${ASO_NS}" create secret generic aso-controller-settings \
   --from-literal=AZURE_WORKLOAD_IDENTITY_AUTH_MODE=strict \
   --from-literal=AZURE_RESOURCE_MANAGER_ENDPOINT=https://fakearm.fake-cloud.svc \
-  --from-literal=AZURE_RESOURCE_MANAGER_AUDIENCE=https://fakearm.fake-cloud.svc/ \
+  --from-literal=AZURE_RESOURCE_MANAGER_AUDIENCE=https://fakearm.fake-cloud.svc \
   --dry-run=client -o yaml | kubectl apply -f -
 
 step "the fake cloud"
@@ -115,7 +124,7 @@ kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f 
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
@@ -130,7 +139,7 @@ kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -154,7 +163,8 @@ can get secrets -n team-a || fail "cannot read secrets"
 ! can create resourcegroups.resources.azure.com -n team-a || fail "may create ASO resources"
 ! can create mutatingwebhookconfigurations.admissionregistration.k8s.io || fail "may change webhooks"
 can get resourcegroups.resources.azure.com -n team-a || fail "cannot read a ManagementLock's owner"
-! can list resourcegroups.resources.azure.com -n team-a || fail "may list ASO resources it only needs to get"
+can list managedenvironments.app.azure.com -n team-a || fail "cannot read the owner of the generated app kinds"
+! can list storageaccounts.storage.azure.com -n team-a || fail "may list ASO resources it only needs to get"
 ! can update resourcegroups.resources.azure.com -n team-a || fail "may change ASO's ResourceGroups"
 pass "aso-workload tokens, read secrets and the ASO owners, get any ASO resource, our kinds; nothing of ASO's to change"
 
@@ -187,6 +197,14 @@ apiVersion: keyvault.azure.com/v1api20230701storage
 kind: Vault
 metadata: {name: vault, namespace: $1}
 spec: {azureName: vault, owner: {name: rg}}
+---
+apiVersion: app.azure.com/v20250101storage
+kind: ManagedEnvironment
+metadata:
+  name: env
+  namespace: $1
+  annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.App/managedEnvironments/$1-env}
+spec: {azureName: $1-env, owner: {name: rg}}
 EOF
   local now; now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
   local cond="{\"type\":\"Ready\",\"status\":\"True\",\"severity\":\"\",\"reason\":\"Succeeded\",\"lastTransitionTime\":\"${now}\",\"observedGeneration\":1}"
@@ -195,6 +213,8 @@ EOF
   kubectl -n "$1" patch vault vault --subresource=status --type=merge \
     -p "{\"status\":{\"properties\":{\"vaultUri\":\"https://fakevault.fake-cloud.svc/\"},\"conditions\":[${cond}]}}" >/dev/null
   kubectl -n "$1" patch resourcegroup rg --subresource=status --type=merge \
+    -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
+  kubectl -n "$1" patch managedenvironment env --subresource=status --type=merge \
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl apply -f - <<EOF
 apiVersion: dbforpostgresql.azure.hfl.dev/v1
@@ -225,6 +245,16 @@ spec:
   privateKey: {name: app-tls, key: tls.key}
   deleteMode: delete
 ---
+apiVersion: app.azure.hfl.dev/v20250101
+kind: ManagedEnvironmentsDaprComponent
+metadata: {name: statestore, namespace: $1}
+spec:
+  owner: {name: env}
+  componentType: state.redis
+  version: v1
+  metadata:
+  - {name: redisHost, value: "redis.example:6379"}
+---
 apiVersion: authorization.azure.hfl.dev/v1
 kind: ManagementLock
 metadata: {name: keep-rg, namespace: $1}
@@ -253,18 +283,22 @@ pass "app-identity holds CREATE, USAGE on schema public of app (granted on a con
 [[ "$(psql "SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname = 'orders'")" == "app-identity" ]] \
   || fail "app-identity does not own the database orders"
 pass "app-identity owns the database orders"
-kubectl -n fake-cloud logs deploy/fakevault | grep -q "sub=system:serviceaccount:team-a:aso-workload scope=https://fake-cloud.svc/.default accepted=true" \
+logged fakevault "sub=system:serviceaccount:team-a:aso-workload scope=https://fake-cloud.svc/.default accepted=true" \
   || fail "the fake vault saw no accepted request from team-a's aso-workload"
 pass "the fake vault accepted team-a's aso-workload identity"
 wait_for 90 "team-a's VaultCertificate Ready" ready vaultcertificates.keyvault.azure.hfl.dev team-a app-tls
-kubectl -n fake-cloud logs deploy/fakevault | grep -q "request POST /certificates/app-tls/import" \
+logged fakevault "request POST /certificates/app-tls/import" \
   || fail "the fake vault saw no import of app-tls"
 pass "team-a VaultCertificate Ready: app-tls imported into the vault"
+wait_for 90 "team-a's DaprComponent Ready" ready managedenvironmentsdaprcomponents.app.azure.hfl.dev team-a statestore
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env/daprComponents/statestore 201" \
+  || fail "the fake resource manager saw no Dapr component created in team-a's environment"
+pass "team-a DaprComponent Ready: generated by ASO's generator, PUT by ASO's ARM reconciler as team-a's aso-workload identity"
 wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
 pass "team-a ManagementLock Ready"
-kubectl -n fake-cloud logs deploy/fakearm | grep -q "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
+logged fakearm "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
   || fail "the fake resource manager saw no accepted request from team-a's aso-workload"
-kubectl -n fake-cloud logs deploy/fakearm | grep -q "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/locks/keep-rg 201" \
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/locks/keep-rg 201" \
   || fail "the fake resource manager saw no lock created on team-a-rg"
 pass "the fake resource manager holds a lock on team-a-rg, set as team-a's aso-workload identity"
 
@@ -276,6 +310,8 @@ wait_for 90 "team-b's VaultSecret refused" bash -c "[[ \"\$(kubectl get vaultsec
 pass "team-b VaultSecret refused: $(message vaultsecrets.keyvault.azure.hfl.dev team-b app-url | cut -c1-120)..."
 wait_for 90 "team-b's VaultCertificate refused" bash -c "[[ \"\$(kubectl get vaultcertificates.keyvault.azure.hfl.dev -n team-b app-tls -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b VaultCertificate refused: $(message vaultcertificates.keyvault.azure.hfl.dev team-b app-tls | cut -c1-120)..."
+wait_for 90 "team-b's DaprComponent refused" bash -c "[[ \"\$(kubectl get managedenvironmentsdaprcomponents.app.azure.hfl.dev -n team-b statestore -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
+pass "team-b DaprComponent refused: $(message managedenvironmentsdaprcomponents.app.azure.hfl.dev team-b statestore | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
@@ -291,15 +327,24 @@ pass "the database orders went to hfl_owner, which cannot sign in"
 kubectl -n team-a get events --field-selector reason=DatabaseReassigned -o jsonpath='{.items[*].message}' | grep -q "gave database orders" \
   || fail "no DatabaseReassigned event names orders"
 pass "a DatabaseReassigned event names orders"
-kubectl -n fake-cloud logs deploy/fakevault | grep -q "request DELETE /secrets/app-url" || fail "the vault saw no delete of app-url"
+logged fakevault "request DELETE /secrets/app-url" || fail "the vault saw no delete of app-url"
 pass "the vault soft-deleted app-url (deleteMode delete)"
 kubectl -n team-a delete vaultcertificates.keyvault.azure.hfl.dev app-tls --timeout=60s
-kubectl -n fake-cloud logs deploy/fakevault | grep -q "request DELETE /certificates/app-tls" || fail "the vault saw no delete of app-tls"
+logged fakevault "request DELETE /certificates/app-tls" || fail "the vault saw no delete of app-tls"
 pass "the vault soft-deleted the certificate app-tls (deleteMode delete)"
+# The lock on team-a-rg (CanNotDelete) blocks the delete of anything under it:
+# ASO's reconciler reports ScopeLocked and retries until the lock is gone.
+kubectl -n team-a delete managedenvironmentsdaprcomponents.app.azure.hfl.dev statestore --wait=false
+wait_for 90 "the Dapr component's delete blocked by the lock" bash -c "[[ \"\$(kubectl get managedenvironmentsdaprcomponents.app.azure.hfl.dev -n team-a statestore -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].reason}')\" == ScopeLocked ]]"
+pass "the lock on team-a-rg blocks deleting the Dapr component: $(message managedenvironmentsdaprcomponents.app.azure.hfl.dev team-a statestore | cut -c1-90)..."
 kubectl -n team-a delete managementlocks.authorization.azure.hfl.dev keep-rg --timeout=60s
-kubectl -n fake-cloud logs deploy/fakearm | grep -q "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/locks/keep-rg 200" \
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/locks/keep-rg 200" \
   || fail "the fake resource manager saw no delete of the lock"
 pass "the lock on team-a-rg is removed"
+kubectl -n team-a wait --for=delete managedenvironmentsdaprcomponents.app.azure.hfl.dev/statestore --timeout=300s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env/daprComponents/statestore 200" \
+  || fail "the fake resource manager saw no delete of the Dapr component"
+pass "with the lock gone, the Dapr component is deleted in Resource Manager"
 
 echo
 echo "all checks passed"
