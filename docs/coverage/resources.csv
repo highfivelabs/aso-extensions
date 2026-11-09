@@ -1249,9 +1249,9 @@ Microsoft.Insights,Microsoft.Insights/guestDiagnosticSettingsAssociation,3,,0,,0
 Microsoft.Insights,Microsoft.Insights/logprofiles,8,,0,,0,8,false,spec_api=2016-03-01
 Microsoft.Insights,Microsoft.Insights/metricAlerts,41,insights.azure.com/MetricAlert,32,,0,9,false,spec_api=2026-01-01; official_api=2018-03-01; official-api-differs-from-spec
 Microsoft.Insights,Microsoft.Insights/myWorkbooks,13,,0,,0,13,false,spec_api=2021-03-08
-Microsoft.Insights,Microsoft.Insights/privateLinkScopes,7,,0,,0,7,false,spec_api=2021-09-01
-Microsoft.Insights,Microsoft.Insights/privateLinkScopes/privateEndpointConnections,4,,0,,0,4,false,spec_api=2021-09-01
-Microsoft.Insights,Microsoft.Insights/privateLinkScopes/scopedResources,1,,0,,0,1,false,spec_api=2021-09-01
+Microsoft.Insights,Microsoft.Insights/privateLinkScopes,7,,0,insights.azure.hfl.dev/PrivateLinkScope,7,0,false,spec_api=2021-09-01; ours_api=2021-09-01
+Microsoft.Insights,Microsoft.Insights/privateLinkScopes/privateEndpointConnections,4,,0,insights.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection,3,1,false,spec_api=2021-09-01; ours_api=2021-09-01
+Microsoft.Insights,Microsoft.Insights/privateLinkScopes/scopedResources,1,,0,insights.azure.hfl.dev/PrivateLinkScopesScopedResource,1,0,false,spec_api=2021-09-01; ours_api=2021-09-01
 Microsoft.Insights,Microsoft.Insights/scheduledQueryRules,39,insights.azure.com/ScheduledQueryRule,30,,0,9,false,spec_api=2026-03-01; official_api=2022-06-15; official-api-differs-from-spec
 Microsoft.Insights,Microsoft.Insights/tenantActionGroups,22,,0,,0,22,false,spec_api=2023-05-01-preview; spec-preview-only
 Microsoft.Insights,Microsoft.Insights/webtests,27,insights.azure.com/Webtest,27,,0,0,false,spec_api=2022-06-15; official_api=2022-06-15
@@ -1625,12 +1625,12 @@ Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces/reachabil
 Microsoft.Network,Microsoft.Network/networkProfiles,78,,0,,0,78,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkSecurityGroups,26,network.azure.com/NetworkSecurityGroup,3,,0,23,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkSecurityGroups/securityRules,21,network.azure.com/NetworkSecurityGroupsSecurityRule,15,,0,6,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/networkSecurityPerimeters,3,,0,,0,3,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/links,4,,0,,0,4,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/loggingConfigurations,2,,0,,0,2,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/profiles,1,,0,,0,1,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/profiles/accessRules,7,,0,,0,7,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/resourceAssociations,3,,0,,0,3,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkSecurityPerimeters,3,,0,network.azure.hfl.dev/NetworkSecurityPerimeter,2,1,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/links,4,,0,network.azure.hfl.dev/NetworkSecurityPerimetersLink,4,0,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/loggingConfigurations,2,,0,network.azure.hfl.dev/NetworkSecurityPerimetersLoggingConfiguration,2,0,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/profiles,1,,0,network.azure.hfl.dev/NetworkSecurityPerimetersProfile,0,1,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/profiles/accessRules,7,,0,network.azure.hfl.dev/NetworkSecurityPerimetersProfilesAccessRule,7,0,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/resourceAssociations,3,,0,network.azure.hfl.dev/NetworkSecurityPerimetersResourceAssociation,3,0,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkVirtualAppliances,25,,0,,0,25,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkVirtualAppliances/inboundSecurityRules,7,,0,,0,7,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkVirtualAppliances/networkVirtualApplianceConnections,15,,0,,0,15,false,spec_api=2026-03-01
@@ -1751,18 +1751,18 @@ Microsoft.OnlineExperimentation,Microsoft.OnlineExperimentation/workspaces,13,,0
 Microsoft.OnlineExperimentation,Microsoft.OnlineExperimentation/workspaces/privateEndpointConnections,4,,0,,0,4,false,spec_api=2025-08-01-preview; spec-preview-only
 Microsoft.OpenEnergyPlatform,Microsoft.OpenEnergyPlatform/energyServices,4,,0,,0,4,false,spec_api=2022-04-04-preview; spec-preview-only
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/clusters,18,,0,,0,18,false,spec_api=2026-03-01
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/queryPacks,3,,0,,0,3,false,spec_api=2026-03-01
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/queryPacks/queries,8,,0,,0,8,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/queryPacks,3,,0,operationalinsights.azure.hfl.dev/QueryPack,2,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/queryPacks/queries,8,,0,operationalinsights.azure.hfl.dev/QueryPacksQuery,8,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces,23,operationalinsights.azure.com/Workspace,20,,0,3,false,spec_api=2026-03-01; official_api=2025-07-01; official-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/dataExports,7,,0,,0,7,false,spec_api=2026-03-01
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/dataSources,4,,0,,0,4,false,spec_api=2026-03-01
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/features/machineGroups,8,,0,,0,8,false,spec_api=2015-11-01-preview; spec-preview-only
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedServices,4,,0,,0,4,false,spec_api=2026-03-01
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedStorageAccounts,1,,0,,0,1,false,spec_api=2026-03-01
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/savedSearches,9,,0,,0,9,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedServices,4,,0,operationalinsights.azure.hfl.dev/WorkspacesLinkedService,4,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedStorageAccounts,1,,0,operationalinsights.azure.hfl.dev/WorkspacesLinkedStorageAccount,1,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/savedSearches,9,,0,operationalinsights.azure.hfl.dev/WorkspacesSavedSearch,9,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/storageInsightConfigs,6,,0,,0,6,false,spec_api=2026-03-01
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/summaryLogs,11,,0,,0,11,false,spec_api=2026-03-01
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/tables,20,,0,,0,20,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/tables,20,,0,operationalinsights.azure.hfl.dev/WorkspacesTable,19,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementAssociations,2,,0,,0,2,false,spec_api=2015-11-01-preview; spec-preview-only
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementConfigurations,6,,0,,0,6,false,spec_api=2015-11-01-preview; spec-preview-only
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/solutions,9,,0,,0,9,false,spec_api=2015-11-01-preview; spec-preview-only
