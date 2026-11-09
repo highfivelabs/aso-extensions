@@ -1,0 +1,62 @@
+diff --git a/v2/pkg/outoftree/arm.go b/v2/pkg/outoftree/arm.go
+new file mode 100644
+index 0000000..d250d9b
+--- /dev/null
++++ b/v2/pkg/outoftree/arm.go
+@@ -0,0 +1,56 @@
++/*
++Copyright (c) Microsoft Corporation.
++Licensed under the MIT license.
++*/
++
++// Modified by High Five Labs: this file is new. It exports, unchanged, what
++// an out-of-tree manager needs to reconcile the ARM resources it generates
++// with ASO's own generic ARM reconciler: the reconciler itself, the ARM
++// connection factory (cmd/controller/app/setup.go's initializeClients builds
++// it the same way) and the CEL expression evaluator the reconciler uses.
++
++package outoftree
++
++import (
++	"net/http"
++
++	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
++	"github.com/go-logr/logr"
++
++	asometrics "github.com/Azure/azure-service-operator/v2/internal/metrics"
++	"github.com/Azure/azure-service-operator/v2/internal/reconcilers/arm"
++	asocel "github.com/Azure/azure-service-operator/v2/internal/util/cel"
++)
++
++// ARMConnectionFactory finds the ARM connection to use for a resource.
++type ARMConnectionFactory = arm.ARMConnectionFactory
++
++// ExpressionEvaluator evaluates the CEL expressions of a resource's export
++// configuration; it is started with Start.
++type ExpressionEvaluator = asocel.ExpressionEvaluator
++
++// NewAzureDeploymentReconciler is ASO's generic ARM reconciler: it PUTs a
++// resource, follows the long-running operation, reads the status back and
++// DELETEs on deletion.
++var NewAzureDeploymentReconciler = arm.NewAzureDeploymentReconciler
++
++// NewARMConnectionFactory returns the factory ASO's manager builds: one ARM
++// client per credential from credentialProvider, for the cloud, over
++// httpClient (nil is the default transport).
++func NewARMConnectionFactory(
++	credentialProvider CredentialProvider,
++	cloudConfig cloud.Configuration,
++	httpClient *http.Client,
++) ARMConnectionFactory {
++	metrics := asometrics.NewARMClientMetrics()
++	asometrics.RegisterMetrics(metrics)
++	return arm.NewARMClientCache(credentialProvider, cloudConfig, httpClient, metrics).GetConnection
++}
++
++// NewExpressionEvaluator returns a CEL expression evaluator, as ASO's
++// manager builds it. Start it before use.
++func NewExpressionEvaluator(log logr.Logger) (ExpressionEvaluator, error) {
++	metrics := asometrics.NewCEL()
++	asometrics.RegisterMetrics(metrics)
++	return asocel.NewExpressionEvaluator(asocel.Metrics(metrics), asocel.Log(log))
++}
