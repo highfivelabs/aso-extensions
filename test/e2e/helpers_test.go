@@ -12,6 +12,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
+	asoregistry "github.com/Azure/azure-service-operator/v2/api/containerregistry/v20251101/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
@@ -184,6 +185,25 @@ func logAnalyticsWorkspace(t *testing.T, ns, name, rg, rgAzureName, azureName st
 	}
 	ws.Status.Conditions = []conditions.Condition{asoReady(ws.Generation)}
 	if err := k8s.Status().Update(ctx, ws); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// containerRegistry stands in for an ASO containerregistry.azure.com Registry
+// ASO has provisioned, in the resource group rg.
+func containerRegistry(t *testing.T, ns, name, rg, rgAzureName, azureName string) {
+	t.Helper()
+	ctx := context.Background()
+	reg := &asoregistry.Registry{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: name,
+		Annotations: map[string]string{genruntime.ResourceIDAnnotation: "/subscriptions/" + subID + "/resourceGroups/" + rgAzureName +
+			"/providers/Microsoft.ContainerRegistry/registries/" + azureName}}}
+	reg.Spec.AzureName = azureName
+	reg.Spec.Owner = &genruntime.KnownResourceReference{Name: rg}
+	if err := k8s.Create(ctx, reg); err != nil {
+		t.Fatal(err)
+	}
+	reg.Status.Conditions = []conditions.Condition{asoReady(reg.Generation)}
+	if err := k8s.Status().Update(ctx, reg); err != nil {
 		t.Fatal(err)
 	}
 }

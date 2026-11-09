@@ -125,7 +125,7 @@ kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f 
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
@@ -140,7 +140,7 @@ kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -167,6 +167,7 @@ can get resourcegroups.resources.azure.com -n team-a || fail "cannot read a Mana
 can list managedenvironments.app.azure.com -n team-a || fail "cannot read the owner of the generated app kinds"
 can list sites.web.azure.com -n team-a || fail "cannot read the owner of the generated web kinds"
 can list workspaces.operationalinsights.azure.com -n team-a || fail "cannot read the owner of the generated Log Analytics kinds"
+can list registries.containerregistry.azure.com -n team-a || fail "cannot read the owner of the generated container registry kinds"
 ! can list storageaccounts.storage.azure.com -n team-a || fail "may list ASO resources it only needs to get"
 ! can update resourcegroups.resources.azure.com -n team-a || fail "may change ASO's ResourceGroups"
 pass "aso-workload tokens, read secrets and the ASO owners, get any ASO resource, our kinds; nothing of ASO's to change"
@@ -224,6 +225,14 @@ metadata:
   namespace: $1
   annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.OperationalInsights/workspaces/$1-law}
 spec: {azureName: $1-law, owner: {name: rg}}
+---
+apiVersion: containerregistry.azure.com/v20251101storage
+kind: Registry
+metadata:
+  name: reg
+  namespace: $1
+  annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.ContainerRegistry/registries/${1//-/}reg}
+spec: {azureName: ${1//-/}reg, owner: {name: rg}}
 EOF
   local now; now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
   local cond="{\"type\":\"Ready\",\"status\":\"True\",\"severity\":\"\",\"reason\":\"Succeeded\",\"lastTransitionTime\":\"${now}\",\"observedGeneration\":1}"
@@ -238,6 +247,8 @@ EOF
   kubectl -n "$1" patch sites.web.azure.com site --subresource=status --type=merge \
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl -n "$1" patch workspaces.operationalinsights.azure.com law --subresource=status --type=merge \
+    -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
+  kubectl -n "$1" patch registries.containerregistry.azure.com reg --subresource=status --type=merge \
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl apply -f - <<EOF
 apiVersion: dbforpostgresql.azure.hfl.dev/v1
@@ -294,6 +305,14 @@ spec:
   owner: {name: law}
   plan: Analytics
   retentionInDays: 30
+---
+apiVersion: containerregistry.azure.hfl.dev/v20251101
+kind: RegistriesScopeMap
+metadata: {name: pull-apps, namespace: $1}
+spec:
+  azureName: pull-apps
+  owner: {name: reg}
+  actions: [repositories/apps/content/read]
 ---
 apiVersion: network.azure.hfl.dev/v20250501
 kind: NetworkSecurityPerimeter
@@ -353,6 +372,10 @@ wait_for 90 "team-a's NetworkSecurityPerimeter Ready" ready networksecurityperim
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkSecurityPerimeters/perimeter 201" \
   || fail "the fake resource manager saw no network security perimeter created in team-a's resource group"
 pass "team-a NetworkSecurityPerimeter Ready: generated, owned by ASO's ResourceGroup, PUT by ASO's ARM reconciler"
+wait_for 90 "team-a's RegistriesScopeMap Ready" ready registriesscopemaps.containerregistry.azure.hfl.dev team-a pull-apps
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg/scopeMaps/pull-apps 201" \
+  || fail "the fake resource manager saw no scope map created in team-a's registry"
+pass "team-a RegistriesScopeMap Ready: a scope map of ASO's Registry, generated, PUT by ASO's ARM reconciler"
 wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
 pass "team-a ManagementLock Ready"
 logged fakearm "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
@@ -377,6 +400,8 @@ wait_for 90 "team-b's WorkspacesTable refused" bash -c "[[ \"\$(kubectl get work
 pass "team-b WorkspacesTable refused: $(message workspacestables.operationalinsights.azure.hfl.dev team-b appevents | cut -c1-120)..."
 wait_for 90 "team-b's NetworkSecurityPerimeter refused" bash -c "[[ \"\$(kubectl get networksecurityperimeters.network.azure.hfl.dev -n team-b perimeter -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
 pass "team-b NetworkSecurityPerimeter refused: $(message networksecurityperimeters.network.azure.hfl.dev team-b perimeter | cut -c1-120)..."
+wait_for 90 "team-b's RegistriesScopeMap refused" bash -c "[[ \"\$(kubectl get registriesscopemaps.containerregistry.azure.hfl.dev -n team-b pull-apps -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
+pass "team-b RegistriesScopeMap refused: $(message registriesscopemaps.containerregistry.azure.hfl.dev team-b pull-apps | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
@@ -422,6 +447,10 @@ kubectl -n team-a delete networksecurityperimeters.network.azure.hfl.dev perimet
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkSecurityPerimeters/perimeter 200" \
   || fail "the fake resource manager saw no delete of the perimeter"
 pass "the perimeter is deleted in Resource Manager"
+kubectl -n team-a delete registriesscopemaps.containerregistry.azure.hfl.dev pull-apps --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg/scopeMaps/pull-apps 200" \
+  || fail "the fake resource manager saw no delete of the scope map"
+pass "the scope map is deleted in Resource Manager"
 
 echo
 echo "all checks passed"
