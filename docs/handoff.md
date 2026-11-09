@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after management groups and `TagSet` (foundation rows 1 and 2; the kind agent that built them also guarded `task operator-e2e`). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 3 (Azure Policy) of `docs/coverage/foundation.md`; `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
+State at the writing: 2026-11-09, after management groups, `TagSet` and Azure Policy (foundation rows 1 to 3; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 4 (policy remediation) of `docs/coverage/foundation.md`; `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
 
 ## What this repository is
 
@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | --- | --- | --- |
 | Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
-| ARM, generated | `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
 ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
@@ -59,7 +59,7 @@ generator gives the child no owner.
 
 | Rank | Gap | State |
 | --- | --- | --- |
-| h1 | **Hand-written candidates** (the generator cannot model them; write each as `ManagementLock` was, `pkg/reconcilers/authorization/`, on ASO's generic reconciler): **1. Maintenance `ConfigurationAssignment`** (assign a maintenance configuration to a VM or scale set; the spec has it at four scopes, so the generator's output changes from run to run; also what Azure Policy, locks and budgets at several scopes need); 2. Recovery Services **protection container, protected item (turns backup on for a VM) and protection intent** (a fixed `backupFabrics/Azure` segment is no resource, so the owner chain cannot name the ARM ID); 3. the Recovery Services singletons (`backupstorageconfig`, `backupconfig`, encryption config, vault extended info); 4. Log Analytics solutions (the spec's `SolutionProperties` is dropped as empty). `foundation.md` marks which of its rows are hand-written | as the foundation rows reach them |
+| h1 | **Hand-written candidates** (the generator cannot model them; write each as `ManagementLock` was, `pkg/reconcilers/authorization/`, on ASO's generic reconciler): ~~1. Maintenance `ConfigurationAssignment`~~ (four scopes: **generate it now**, patch 0006 makes it an extension resource; try it first, it is small); 2. Recovery Services **protection container, protected item (turns backup on for a VM) and protection intent** (a fixed `backupFabrics/Azure` segment is no resource, so the owner chain cannot name the ARM ID); 3. the Recovery Services singletons (`backupstorageconfig`, `backupconfig`, encryption config, vault extended info); 4. Log Analytics solutions (the spec's `SolutionProperties` is dropped as empty). `foundation.md` marks which of its rows are hand-written | as the foundation rows reach them |
 | c8 | management groups, policy, budgets, vWAN, subscription tags | now foundation rows 1 to 10 |
 | c18 | stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones, resource groups) | not a new kind |
 
@@ -187,12 +187,32 @@ Facts learned the hard way:
   runs `task coverage` (heavy: first run fetches ~100 MB; run it on the Ubuntu
   machine, tar `docs/coverage` and `README.md` back) and commits the output;
   `task coverage-check` must pass.
-- **A resource the spec defines at several scopes is picked at random** by the
-  generator (Maintenance `configurationAssignments`: subscription, resource
-  group, resource, nested resource): the output changes from run to run and
-  `task check` fails. Look for it when `check` says "stale" on a kind you
-  generated fine; such a kind cannot be generated (hand-write it as
-  `ManagementLock` was).
+- **A resource the spec defines at several scopes** (policy definitions at a
+  management group and a subscription; Maintenance `configurationAssignments`
+  at four scopes) was picked at random by ASO's generator (map order: the
+  output changed from run to run and `task check` failed), and a path through
+  a management group (`/providers/Microsoft.Management/managementGroups/{g}/providers/...`)
+  was refused outright ("unexpected hard coded name", visible with
+  `--verbose` as `Error extracting resource name`). **Patch 0006**
+  (`ASO_GENERATOR_MULTI_SCOPE`, set by `hack/generate-arm.sh`) takes the
+  resource after the last `/providers/` and makes a resource at several
+  scopes an extension resource (`ARM URI: /{scope}/providers/...` in the
+  generated type's comment; `Owner *genruntime.ArbitraryOwnerReference`). So
+  multi-scope and management-group resources are generated now, with an
+  arbitrary owner; `hack/coverage`'s route rule says so. Check the `ARM URI`
+  comment of what you generate: a subscription-only URI on a resource Azure
+  also takes at a group means the group path was lost.
+- Azure Policy needed three generator labels beyond `$exportAs`:
+  `$referenceType: arm` on the definition and assignment IDs (so they are
+  Kubernetes references, `policyDefinitionReference`), and
+  `$importSecretMode: never` on `MissingTokenAction` (a name with "Token" is
+  taken for a secret). `policyRule`, `metadata` and parameter values became
+  `apiextensionsv1.JSON` without help; the recursion a maintainer feared
+  (#2767) did not appear.
+- The fake models Azure Policy's scope rules (`pkg/fakecloud/arm/policy.go`).
+  ASO retries a 404 soon and an unknown 400 very slowly (minutes): a fake
+  refusal that a later reconcile should get past (a reference not there yet)
+  must be a 404, as Azure's `...NotFound` errors are.
 - **`task operator-e2e` must print `all checks passed`, and now fails if it does
   not.** `tests/operator/run.sh` was once emptied by a careless script
   (`open(p,'w').write(open(p).read())` truncates before reading) and the task
@@ -263,12 +283,12 @@ kind, no generator. From the repository root:
   proven against the fake cloud and what was not, and new open questions.
   It states the real results of `task check` and `task operator-e2e`, and any
   flake it found.
-- Do not touch `docs/coverage/`, `hack/coverage/` or the README's coverage
-  section: another agent owns them (branch `agent/coverage`); expect README
-  conflicts.
+- `docs/coverage/` and the README's coverage section are generated by `task
+  coverage` (every kind PR regenerates and commits them); the queue tables of
+  `docs/coverage/foundation.md` are written by hand (mark a row built there).
 - Never edit `third_party/`. A change to ASO is a numbered patch in
   `patches/azure-service-operator/` (0001 exports the framework, 0002 changes
-  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`); make the change in the
+  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`, 0005 gives children of a tenant scope resource an owner, 0006 makes a resource at several scopes an extension resource); make the change in the
   checkout, `git diff` it into the patch, then `hack/upstream.sh` re-applies the
   series and `hack/upstream.sh --check` verifies it.
 

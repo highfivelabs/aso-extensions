@@ -1,0 +1,43 @@
+typeFilters:
+  - action: include
+    group: authorization
+    version: v20260701
+    because: the newest stable version of Azure Policy (definitions, set definitions, assignments)
+  - action: include
+    group: authorization
+    version: v20260101preview
+    because: policy exemptions exist only in preview versions; this is the newest
+  - action: prune
+    group: authorization
+    because: every other version is left alone (locks are the hand-written ManagementLock)
+
+groupModelConfiguration:
+  2026-07-01:
+    PolicyDefinition:
+      $exportAs: PolicyDefinition
+      $supportedFrom: v0.1.0
+    PolicySetDefinition:
+      $exportAs: PolicySetDefinition
+      $supportedFrom: v0.1.0
+    PolicyAssignment:
+      $exportAs: PolicyAssignment
+      $supportedFrom: v0.1.0
+    PolicyAssignmentProperties:
+      PolicyDefinitionId:
+        $referenceType: arm # a policy definition or set definition: ours, or a built-in by ARM ID
+    PolicyDefinitionReference:
+      PolicyDefinitionId:
+        $referenceType: arm # a policy definition in a set
+    PolicyDefinitionGroup:
+      AdditionalMetadataId:
+        $referenceType: arm # a Microsoft.PolicyInsights/policyMetadata resource
+    ExternalEvaluationEnforcementSettings:
+      MissingTokenAction:
+        $importSecretMode: never # audit or deny, not a secret
+  2026-01-01-preview:
+    PolicyExemption:
+      $exportAs: PolicyExemption
+      $supportedFrom: v0.1.0
+    PolicyExemptionProperties:
+      PolicyAssignmentId:
+        $referenceType: arm # the assignment exempted from

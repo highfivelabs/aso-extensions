@@ -41,9 +41,12 @@ the plain case. An *extension resource* (created on any resource or scope)
 takes an arbitrary owner, as ASO's DiagnosticSetting and RoleAssignment do. A
 tenant- or subscription-scoped one has ASO's Alias and ResourceGroup as
 precedent. A type that can be created at several scopes or at a management group
-is one type at several paths, which the generator cannot model without a design
-decision (ASO issue #3756): hand-written, on the pattern of `ManagementLock`
-(`pkg/reconcilers/authorization`, its owner resolution and ARM client).
+is one type at several paths, which ASO's generator cannot model without a design
+decision (ASO issue #3756); our generator patch 0006 (2026-11-09, with Azure
+Policy) makes it an extension resource with an arbitrary owner, so it is
+generated too. Hand-written, on the pattern of `ManagementLock`
+(`pkg/reconcilers/authorization`), is left for what the generator still cannot
+do (a fixed non-resource segment, a polymorphic or empty schema).
 The route in the inventory is this rule applied to the paths in the specs; the
 queue's rows are my judgment where the rule is not enough.
 
@@ -65,15 +68,15 @@ stable); our generated kinds are pinned to the version they are generated from.
 | ---: | --- | --- | --- | --- | --- | ---: | --- | --- |
 | 1 | `ManagementGroup`, `ManagementGroupSubscription`, `ManagementGroupSettings` (group `management`) | `Microsoft.Management/managementGroups` (2), `managementGroups/subscriptions` (0, a placement), `managementGroups/settings` (2); spec `management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01` | none / none | all; the top of every landing zone and the parent of policy and RBAC scopes | ASO issue [#2249](https://github.com/Azure/azure-service-operator/issues/2249) open, 12 comments, no PR; not on `main` | 2 | **built 2026-11-09**: `management.azure.hfl.dev/v20230401` `ManagementGroup`, `ManagementGroupsSubscription`, `ManagementGroupsSetting`; generator, tenant owner (a `ManagementGroup` has an optional parent group; precedent ASO's `Alias`, no owner); the placement kind owns itself under a group and names a subscription ARM ID or an `Alias` | S |
 | 2 | `SubscriptionTag` (`Tags`), `BillingSubscriptionAlias` | `Microsoft.Resources/tags` (1: `properties.tags{}`, extension scope), `Microsoft.Billing/billingAccounts/billingSubscriptionAliases` (17, tenant); `Microsoft.Subscription/policies` (3) | `subscription/Alias` covers `Microsoft.Subscription/aliases` / none | tags on a subscription, resource group or resource as one object; subscription creation under a billing scope (EA and MCA) | none found; ASO issue #4728 (renaming a subscription) open | 1 | **`TagSet` built 2026-11-09** (`resources.azure.hfl.dev/v20250401`); `BillingSubscriptionAlias` not built (ASO's `Alias` creates subscriptions under a billing scope); generator, arbitrary owner (`Tags`); generator (`BillingSubscriptionAlias`) | S |
-| 3 | `PolicyDefinition`, `PolicySetDefinition`, `PolicyAssignment`, `PolicyExemption` (group `authorization`, beside `ManagementLock`) | `Microsoft.Authorization/policyDefinitions` (22, at management group or subscription), `policySetDefinitions` (25, same), `policyAssignments` (27, extension scope), `policyExemptions` (12, extension scope); spec `resources/resource-manager/Microsoft.Authorization/policy/stable/2026-07-01` (exemptions: preview 2024-12-01-preview); later `policyDefinitions/versions` (21), `policySetDefinitions/versions` (24) | none / none | all of Azure Policy except remediation; `policyRule`, `parameters` and `policyDefinitions` are free-form JSON | ASO issues [#4975](https://github.com/Azure/azure-service-operator/issues/4975) and [#2767](https://github.com/Azure/azure-service-operator/issues/2767) open, no PR | 1 (avm-ptn-alz); every landing zone | hand-written, reusing `ManagementLock`'s owner (an ASO resource, a `ManagementGroup` kind from row 1, or an ARM ID) and its ARM client; the two definition kinds are one type at two scopes, the two others extension | M (86) |
-| 4 | `PolicyRemediation` | `Microsoft.PolicyInsights/remediations` (8, subscription, resource group and extension scope); spec `policyinsights/.../PolicyInsights/stable/2024-10-01` | none / none | all | covered by #2767 (no PR) | 0 | hand-written, same owner as row 3 | S |
+| 3 | `PolicyDefinition`, `PolicySetDefinition`, `PolicyAssignment`, `PolicyExemption` (group `authorization`, beside `ManagementLock`) | `Microsoft.Authorization/policyDefinitions` (22, at management group or subscription), `policySetDefinitions` (25, same), `policyAssignments` (27, extension scope), `policyExemptions` (12, extension scope); spec `resources/resource-manager/Microsoft.Authorization/policy/stable/2026-07-01` (exemptions: preview 2024-12-01-preview); later `policyDefinitions/versions` (21), `policySetDefinitions/versions` (24) | none / none | all of Azure Policy except remediation; `policyRule`, `parameters` and `policyDefinitions` are free-form JSON | ASO issues [#4975](https://github.com/Azure/azure-service-operator/issues/4975) and [#2767](https://github.com/Azure/azure-service-operator/issues/2767) open, no PR | 1 (avm-ptn-alz); every landing zone | **built 2026-11-09**, generated, not hand-written: `authorization.azure.hfl.dev/v20260701` `PolicyDefinition`, `PolicySetDefinition`, `PolicyAssignment`, `v20260101preview` `PolicyExemption`; all four extension resources (owner our `ManagementGroup`, an ASO resource or an ARM ID), the two definitions by generator patch 0006 (a resource at several scopes); not built: definition versions, variables, enrollments | M (86) |
+| 4 | `PolicyRemediation` | `Microsoft.PolicyInsights/remediations` (8, subscription, resource group and extension scope); spec `policyinsights/.../PolicyInsights/stable/2024-10-01` | none / none | all | covered by #2767 (no PR) | 0 | generator, arbitrary owner (patch 0006), as row 3 | S |
 | 5 | `RoleEligibilityScheduleRequest`, `RoleAssignmentScheduleRequest`, `RoleManagementPolicyAssignment` (PIM, group `authorization`) | `Microsoft.Authorization/roleEligibilityScheduleRequests` (14), `roleAssignmentScheduleRequests` (15), `roleManagementPolicyAssignments` (3), all extension scope; spec `authorization/.../Authorization/stable` (the 2020-10-01 or preview 2024-09-01-preview) | `RoleAssignment`, `RoleDefinition` (7 of 7 and 8 of 8) / none | PIM eligibility and activation, role management policy; a request cannot be deleted, it is undone with another request (`AdminRemove`, `SelfDeactivate`) | **open PR [#5638](https://github.com/Azure/azure-service-operator/pull/5638)** adds `RoleEligibilityScheduleRequest` (issue #4335): copy it, then generate the other two | 0 | copy from PR, then generator, arbitrary owner | S (32) |
 | 6 | `Budget`, `CostExport` (group `consumption`, `costmanagement`) | `Microsoft.Consumption/budgets` (26) and `Microsoft.CostManagement/exports` (28), extension scope (subscription, resource group, billing account, management group); `CostManagement/budgets` (27) is the same budget under another API; later `views` (34), `scheduledActions` (20); spec `consumption/.../Consumption/stable/2026-06-01`, `cost-management/.../CostManagement/stable/2026-06-01` | none / none | all | none found | 1 (sub-vending) | generator, arbitrary owner | M each |
 | 7 | `ManagementLock` completion | `Microsoft.Authorization/locks` (3) | none / `ManagementLock` covers `properties.level`, `properties.notes` | `properties.owners[].applicationId` (a legacy lock owner list) | #3756 open, a design question, no PR | 31 | extend the hand-written kind in `ours.yaml` and its CRD | S (1) |
 | 8 | `VirtualNetworkGatewayConnection`, `LocalNetworkGateway` (site-to-site VPN) | `Microsoft.Network/connections` (242 as the spec has it, about 30 as references), `localNetworkGateways` (12); spec `network/.../Network/stable/2026-03-01/networkGateway.json` | `VirtualNetworkGateway` (86 of 91; ASO v20250301) / none | the gateway's connection and the on-premises side; the gateway itself is ASO's | issue [#4486](https://github.com/Azure/azure-service-operator/issues/4486) open, no PR | 0 | generator (`$referenceType: arm` for the two gateways and the peer), group `network` | M |
 | 9 | `ExpressRouteCircuit`, `ExpressRouteCircuitPeering`, `ExpressRouteCircuitAuthorization`, `ExpressRouteGateway`, `ExpressRouteConnection`, `ExpressRoutePort` | `expressRouteCircuits` (72), `expressRouteCircuits/peerings` (44), `.../authorizations` (2), `expressRouteGateways` (24), `expressRouteGateways/expressRouteConnections` (16), `ExpressRoutePorts` (15), `expressRouteCrossConnections` (35) and `/peerings` (28); spec `.../Network/stable/2026-03-01/expressRoute.json` | none / none | all | issue [#4371](https://github.com/Azure/azure-service-operator/issues/4371) open (`cx-request`), no PR | 0 | generator | L (about 200) |
 | 10 | `VirtualWan`, `VirtualHub`, `VirtualHubConnection` (`hubVirtualNetworkConnections`), `HubRouteTable`, `VirtualHubRouteTable`, `RoutingIntent`, `BgpConnection`, `VirtualHubIpConfiguration`; then `VpnGateway`, `VpnConnection`, `VpnSite`, `VpnServerConfiguration`, `P2sVpnGateway`, `VpnGatewayNatRule` | `virtualWans` (6), `virtualHubs` (28), `virtualHubs/hubVirtualNetworkConnections` (16), `hubRouteTables` (6), `routeTables` (5), `routingIntent` (3), `bgpConnections` (13), `ipConfigurations` (113, mostly embedded), `vpnGateways` (78), `vpnGateways/vpnConnections` (56), `vpnSites` (28), `vpnServerConfigurations` (36), `p2svpnGateways` (24); spec `.../virtualWan.json` | none / none | hubs and Virtual WAN, VPN gateways | none found | 1 (hubVirtualNetworkConnections, avm-ptn-alz-sub-vending) | generator | L (about 400, less as references); split into two sessions: virtual WAN and hub, then VPN |
-| 11 | `NetworkManager` and children (connectivity, security admin, routing configurations, network groups, IPAM pools) | `networkManagers` (6) and 19 child types (about 90); `networkManagerConnections` (2, subscription or management group scope) | none / none | all | none found | 0 | generator (connections: hand-written, two scopes) | L |
+| 11 | `NetworkManager` and children (connectivity, security admin, routing configurations, network groups, IPAM pools) | `networkManagers` (6) and 19 child types (about 90); `networkManagerConnections` (2, subscription or management group scope) | none / none | all | none found | 0 | generator (connections: two scopes, patch 0006) | L |
 | 12 | `DnsZonesSOARecord`, `PrivateDnsZonesSOARecord`, `IpGroup`, `RouteFilter`, `ServiceEndpointPolicy`, `DnsResolverPolicy` (+ links, security rules) | `dnsZones/SOA` (26), `privateDnsZones/SOA` (21), `ipGroups` (3), `routeFilters` (8), `serviceEndpointPolicies` (9), `dnsResolverPolicies` (3) | none / none | the leftovers of DNS, firewall and routing | none found | 0 | generator | M together |
 | 13 | `ManagedHsm` (+ keys), `VaultAccessPolicy`, `VaultSecret` (ARM) | `Microsoft.KeyVault/managedHSMs` (20), `managedHSMs/keys` (15), `vaults/accessPolicies` (7), `vaults/secrets` (6), `vaults/privateEndpointConnections` (5); spec `keyvault/.../KeyVault/stable/2026-05-15` | `Vault`, `VaultKey` (28 of 28, 15 of 15) / `VaultSecret` and `VaultCertificate` (data plane) | managed HSMs and the ARM-side secret | secrets declined (#1894); none for the rest | 4 (vaults), 5 (keys) | generator | M |
 | 14 | `OperationsManagementSolution`, `WorkspacesDataSource`, `WorkspacesStorageInsightConfig`, `LogAnalyticsCluster` | `OperationsManagement/solutions` (9, preview 2015-11-01-preview), `OperationalInsights/workspaces/dataSources` (4), `storageInsightConfigs` (6), `clusters` (18) | `Workspace` (20 of 23) / tables, data exports, linked services, linked storage, saved searches, query packs | solutions; the rest of a workspace | none found | 1 (solutions) | generator | M |
@@ -102,7 +105,7 @@ in the ARM specs (it is created by Azure Blueprints and managed applications).
 | ---: | --- | --- | --- | --- | --- | ---: | --- | --- |
 | 19 | `DefenderForStorageSetting` | `Microsoft.Security/defenderForStorageSettings` (10); spec `security/.../Security/stable/2025-06-01` | none / none | all | **open PR [#5783](https://github.com/Azure/azure-service-operator/pull/5783)** (issue #5759) adds `security.azure.com/v20250601` `DefenderForStorageSetting`: copy it | 0 | copy from PR | S |
 | 20 | `SecurityPricing`, `SecurityContact`, `SecurityAutoProvisioningSetting`, `SecuritySetting`, `SecurityWorkspaceSetting`, `AdvancedThreatProtectionSetting` (group `security`) | `pricings` (8, the Defender plans per subscription), `securityContacts` (8), `autoProvisioningSettings` (1), `settings` (2), `workspaceSettings` (2), `advancedThreatProtectionSettings` (1); spec `security/.../Security/stable/2026-07-01/pricings.json`, `preview/2023-12-01-preview` (contacts) | none / none | all; the builder's "Defender for Cloud settings and pricings, security contacts" | none found | 0 | generator, subscription or extension owner (as `Alias`, `DiagnosticSetting`) | S (22) |
-| 21 | `PolicyAttestation` | `Microsoft.PolicyInsights/attestations` (10, several scopes) | none / none | all | none found | 0 | hand-written, same owner as row 3 | S |
+| 21 | `PolicyAttestation` | `Microsoft.PolicyInsights/attestations` (10, several scopes) | none / none | all | none found | 0 | generator, arbitrary owner (patch 0006), as row 3 | S |
 | 22 | Sentinel: `SentinelOnboardingState`, `SentinelSetting`, `AlertRule`, `AutomationRule`, `DataConnector`, `Watchlist` (+ items) first | `Microsoft.SecurityInsights/*`: 32 resources, 393 attributes; spec `securityinsights/.../SecurityInsights/stable/2025-09-01` | none / none | all | none found | 0 | generator, extension owner (a Log Analytics workspace) | L (393), start with 6 kinds of about 50 |
 | 23 | `SecurityStandard`, `StandardAssignment`, `SecurityAutomation`, `SecurityConnector` (+ devops children) | `securityStandards` (6), `standardAssignments` (13), `automations` (20), `securityConnectors` (78) with 4 devops child types (33) | none / none | all | none found | 0 | generator | M |
 | 24 | `PurviewAccount`, `HsmCloudHsmCluster`, `HsmDedicatedHsm`, `NetworkDdosCustomPolicy`, `NetworkSecurityPartnerProvider`, `CdnWebApplicationFirewallPolicy` | `Purview/accounts` (9), `HardwareSecurityModules/cloudHsmClusters` (9) and `dedicatedHSMs`, `Network/ddosCustomPolicies` (16), `securityPartnerProviders` (4), `Cdn/cdnWebApplicationFirewallPolicies` | none / none | all | none found | 0 | generator | S each |
@@ -122,12 +125,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 1.9% | 54.9% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 3.7% | 53.1% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 1.7% | 89.7% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.7% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (147 with no kind, 50 partly covered, 49 covered)
+### platform-foundation: 246 resources (143 with no kind, 52 partly covered, 51 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -138,45 +141,45 @@ Generated: every resource of the two categories, by the order of the services in
 | 5 | `Microsoft.Subscription/policies` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
 | 6 | `Microsoft.Subscription/subscriptionDefinitions` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
 | 7 | `Microsoft.Subscription/aliases` | covered | `subscription/Alias` |  | 9 / 0 / 0 | tenant | - | - | 1 |
-| 8 | `Microsoft.Authorization/policydefinitions` | no kind |  |  | 0 / 0 / 22 | managementGroup,subscription | hand-written (one type at several scopes, as ManagementLock) | S (22) | 1 |
-| 9 | `Microsoft.Authorization/policySetDefinitions` | no kind |  |  | 0 / 0 / 25 | managementGroup,subscription | hand-written (one type at several scopes, as ManagementLock) | S (25) | 1 |
-| 10 | `Microsoft.Authorization/policyassignments` | no kind |  |  | 0 / 0 / 27 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (27) | 1 |
-| 11 | `Microsoft.Authorization/privilegedResourceFavorites` | no kind |  |  | 0 / 0 / 1 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (1) | 0 |
-| 12 | `Microsoft.Authorization/resourceManagementPrivateLinks` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
-| 13 | `Microsoft.Authorization/variables` | no kind |  |  | 0 / 0 / 1 | managementGroup,subscription | hand-written (one type at several scopes, as ManagementLock) | S (1) | 0 |
-| 14 | `Microsoft.Authorization/privateLinkAssociations` | no kind |  |  | 0 / 0 / 2 | managementGroup | hand-written (one type at several scopes, as ManagementLock) | S (2) | 0 |
-| 15 | `Microsoft.Authorization/variables/values` | no kind |  |  | 0 / 0 / 2 | managementGroup,subscription | hand-written (one type at several scopes, as ManagementLock) | S (2) | 0 |
-| 16 | `Microsoft.Authorization/roleAssignmentApprovals/stages` | no kind |  |  | 0 / 0 / 3 | extension,tenant | hand-written (one type at several scopes, as ManagementLock) | S (3) | 0 |
-| 17 | `Microsoft.Authorization/roleManagementPolicyAssignments` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 18 | `Microsoft.Authorization/accessReviewScheduleDefinitions/instances` | no kind |  |  | 0 / 0 / 4 | extension,subscription | hand-written (one type at several scopes, as ManagementLock) | S (4) | 0 |
-| 19 | `Microsoft.Authorization/policyExemptions` | no kind |  |  | 0 / 0 / 12 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (12) | 0 |
-| 20 | `Microsoft.Authorization/roleEligibilityScheduleRequests` | no kind |  |  | 0 / 0 / 14 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (14) | 0 |
-| 21 | `Microsoft.Authorization/accessReviewScheduleSettings` | no kind |  |  | 0 / 0 / 15 | extension,subscription | hand-written (one type at several scopes, as ManagementLock) | S (15) | 0 |
-| 22 | `Microsoft.Authorization/roleAssignmentScheduleRequests` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
-| 23 | `Microsoft.Authorization/accessReviewHistoryDefinitions` | no kind |  |  | 0 / 0 / 20 | extension,subscription | hand-written (one type at several scopes, as ManagementLock) | S (20) | 0 |
-| 24 | `Microsoft.Authorization/policyDefinitions/versions` | no kind |  |  | 0 / 0 / 21 | managementGroup,subscription | hand-written (one type at several scopes, as ManagementLock) | S (21) | 0 |
-| 25 | `Microsoft.Authorization/accessReviewScheduleDefinitions` | no kind |  |  | 0 / 0 / 24 | extension,subscription | hand-written (one type at several scopes, as ManagementLock) | S (24) | 0 |
-| 26 | `Microsoft.Authorization/policySetDefinitions/versions` | no kind |  |  | 0 / 0 / 24 | managementGroup,subscription | hand-written (one type at several scopes, as ManagementLock) | S (24) | 0 |
-| 27 | `Microsoft.Authorization/locks` | partial, 1 of 3 missing |  | `authorization/ManagementLock` | 0 / 2 / 1 | extension,resourceGroup,subscription | extend: newer API version or property config | S (1) | 31 |
-| 28 | `Microsoft.Authorization/roleAssignments` | covered | `authorization/RoleAssignment` |  | 7 / 0 / 0 | extension | - | - | 33 |
-| 29 | `Microsoft.Authorization/roleDefinitions` | covered | `authorization/RoleDefinition` |  | 8 / 0 / 0 | extension | - | - | 2 |
-| 30 | `Microsoft.PolicyInsights/remediations` | no kind |  |  | 0 / 0 / 8 | extension,resourceGroup,subscription | hand-written (one type at several scopes, as ManagementLock) | S (8) | 0 |
+| 8 | `Microsoft.Authorization/privilegedResourceFavorites` | no kind |  |  | 0 / 0 / 1 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (1) | 0 |
+| 9 | `Microsoft.Authorization/resourceManagementPrivateLinks` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
+| 10 | `Microsoft.Authorization/variables` | no kind |  |  | 0 / 0 / 1 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (1) | 0 |
+| 11 | `Microsoft.Authorization/privateLinkAssociations` | no kind |  |  | 0 / 0 / 2 | managementGroup | generator, arbitrary owner (several scopes, patch 0006) | S (2) | 0 |
+| 12 | `Microsoft.Authorization/variables/values` | no kind |  |  | 0 / 0 / 2 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (2) | 0 |
+| 13 | `Microsoft.Authorization/roleAssignmentApprovals/stages` | no kind |  |  | 0 / 0 / 3 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | S (3) | 0 |
+| 14 | `Microsoft.Authorization/roleManagementPolicyAssignments` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
+| 15 | `Microsoft.Authorization/accessReviewScheduleDefinitions/instances` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
+| 16 | `Microsoft.Authorization/roleEligibilityScheduleRequests` | no kind |  |  | 0 / 0 / 14 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (14) | 0 |
+| 17 | `Microsoft.Authorization/accessReviewScheduleSettings` | no kind |  |  | 0 / 0 / 15 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (15) | 0 |
+| 18 | `Microsoft.Authorization/roleAssignmentScheduleRequests` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
+| 19 | `Microsoft.Authorization/accessReviewHistoryDefinitions` | no kind |  |  | 0 / 0 / 20 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (20) | 0 |
+| 20 | `Microsoft.Authorization/policyDefinitions/versions` | no kind |  |  | 0 / 0 / 21 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (21) | 0 |
+| 21 | `Microsoft.Authorization/accessReviewScheduleDefinitions` | no kind |  |  | 0 / 0 / 24 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
+| 22 | `Microsoft.Authorization/policySetDefinitions/versions` | no kind |  |  | 0 / 0 / 24 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
+| 23 | `Microsoft.Authorization/locks` | partial, 1 of 3 missing |  | `authorization/ManagementLock` | 0 / 2 / 1 | extension,resourceGroup,subscription | extend: newer API version or property config | S (1) | 31 |
+| 24 | `Microsoft.Authorization/policydefinitions` | partial, 1 of 22 missing |  | `authorization/PolicyDefinition` | 0 / 21 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
+| 25 | `Microsoft.Authorization/policySetDefinitions` | partial, 1 of 25 missing |  | `authorization/PolicySetDefinition` | 0 / 24 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
+| 26 | `Microsoft.Authorization/roleAssignments` | covered | `authorization/RoleAssignment` |  | 7 / 0 / 0 | extension | - | - | 33 |
+| 27 | `Microsoft.Authorization/roleDefinitions` | covered | `authorization/RoleDefinition` |  | 8 / 0 / 0 | extension | - | - | 2 |
+| 28 | `Microsoft.Authorization/policyassignments` | covered |  | `authorization/PolicyAssignment` | 0 / 27 / 0 | extension | - | - | 1 |
+| 29 | `Microsoft.Authorization/policyExemptions` | covered |  | `authorization/PolicyExemption` | 0 / 12 / 0 | extension | - | - | 0 |
+| 30 | `Microsoft.PolicyInsights/remediations` | no kind |  |  | 0 / 0 / 8 | extension,resourceGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (8) | 0 |
 | 31 | `Microsoft.Resources/resourceGroups` | partial, 1 of 4 missing | `resources/ResourceGroup` |  | 3 / 0 / 1 | subscription | extend: ASO's API version is older than the spec's | S (1) | 2 |
 | 32 | `Microsoft.Resources/tags` | covered |  | `resources/TagSet` | 0 / 1 / 0 | extension | - | - | 1 |
 | 33 | `Microsoft.Consumption/budgets` | no kind |  |  | 0 / 0 / 26 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (26) | 1 |
 | 34 | `Microsoft.CostManagement/settings` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
 | 35 | `Microsoft.CostManagement/markupRules` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |
 | 36 | `Microsoft.CostManagement/costAllocationRules` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
-| 37 | `Microsoft.CostManagement/scheduledActions` | no kind |  |  | 0 / 0 / 20 | extension,tenant | hand-written (one type at several scopes, as ManagementLock) | S (20) | 0 |
+| 37 | `Microsoft.CostManagement/scheduledActions` | no kind |  |  | 0 / 0 / 20 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | S (20) | 0 |
 | 38 | `Microsoft.CostManagement/budgets` | no kind |  |  | 0 / 0 / 27 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (27) | 0 |
 | 39 | `Microsoft.CostManagement/exports` | no kind |  |  | 0 / 0 / 28 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (28) | 0 |
-| 40 | `Microsoft.CostManagement/views` | no kind |  |  | 0 / 0 / 34 | extension,tenant | hand-written (one type at several scopes, as ManagementLock) | M (34) | 0 |
+| 40 | `Microsoft.CostManagement/views` | no kind |  |  | 0 / 0 / 34 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | M (34) | 0 |
 | 41 | `Microsoft.Insights/guestDiagnosticSettingsAssociation` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
 | 42 | `Microsoft.Insights/logprofiles` | no kind |  |  | 0 / 0 / 8 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (8) | 0 |
 | 43 | `Microsoft.Insights/myWorkbooks` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
 | 44 | `Microsoft.Insights/guestDiagnosticSettings` | no kind |  |  | 0 / 0 / 15 | resourceGroup | generator | S (15) | 0 |
 | 45 | `Microsoft.Insights/workbooktemplates` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
-| 46 | `Microsoft.Insights/tenantActionGroups` | no kind |  |  | 0 / 0 / 22 | managementGroup | hand-written (one type at several scopes, as ManagementLock) | S (22) | 0 |
+| 46 | `Microsoft.Insights/tenantActionGroups` | no kind |  |  | 0 / 0 / 22 | managementGroup | generator, arbitrary owner (several scopes, patch 0006) | S (22) | 0 |
 | 47 | `Microsoft.Insights/diagnosticSettings` | partial, 2 of 14 missing | `insights/DiagnosticSetting` |  | 12 / 0 / 2 | extension | extend: ASO's API version is older than the spec's | S (2) | 23 |
 | 48 | `Microsoft.Insights/dataCollectionEndpoints` | partial, 4 of 16 missing | `insights/DataCollectionEndpoint` |  | 12 / 0 / 4 | resourceGroup | extend: newer API version or property config | S (4) | 1 |
 | 49 | `Microsoft.Insights/metricAlerts` | partial, 9 of 41 missing | `insights/MetricAlert` |  | 32 / 0 / 9 | resourceGroup | extend: ASO's API version is older than the spec's | S (9) | 1 |
@@ -198,7 +201,7 @@ Generated: every resource of the two categories, by the order of the services in
 | 65 | `Microsoft.Network/networkManagers/networkGroups/staticMembers` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
 | 66 | `Microsoft.Network/networkManagers/securityUserConfigurations` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
 | 67 | `Microsoft.Network/expressRouteCircuits/authorizations` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
-| 68 | `Microsoft.Network/networkManagerConnections` | no kind |  |  | 0 / 0 / 2 | managementGroup,subscription | hand-written (one type at several scopes, as ManagementLock) | S (2) | 0 |
+| 68 | `Microsoft.Network/networkManagerConnections` | no kind |  |  | 0 / 0 / 2 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (2) | 0 |
 | 69 | `Microsoft.Network/networkManagers/networkGroups` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
 | 70 | `Microsoft.Network/networkManagers/routingConfigurations` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
 | 71 | `Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
@@ -382,7 +385,7 @@ Generated: every resource of the two categories, by the order of the services in
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
-| 1 | `Microsoft.PolicyInsights/attestations` | no kind |  |  | 0 / 0 / 10 | extension,resourceGroup,subscription | hand-written (one type at several scopes, as ManagementLock) | S (10) | 0 |
+| 1 | `Microsoft.PolicyInsights/attestations` | no kind |  |  | 0 / 0 / 10 | extension,resourceGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (10) | 0 |
 | 2 | `Microsoft.Network/securityPartnerProviders` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
 | 3 | `Microsoft.Network/ddosCustomPolicies` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
 | 4 | `Microsoft.Network/ddosProtectionPlans` | partial, 1 of 3 missing | `network/DdosProtectionPlan` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 1 |
@@ -408,7 +411,7 @@ Generated: every resource of the two categories, by the order of the services in
 | 24 | `Microsoft.Security/privateLinks` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
 | 25 | `Microsoft.Security/sensitivitySettings` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
 | 26 | `Microsoft.Security/serviceEntitlementSettings` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 27 | `Microsoft.Security/applications` | no kind |  |  | 0 / 0 / 4 | extension,subscription | hand-written (one type at several scopes, as ManagementLock) | S (4) | 0 |
+| 27 | `Microsoft.Security/applications` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
 | 28 | `Microsoft.Security/privateLinks/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
 | 29 | `Microsoft.Security/serviceEntitlements` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
 | 30 | `Microsoft.Security/securityStandards` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |

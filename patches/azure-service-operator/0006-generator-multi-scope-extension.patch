@@ -1,0 +1,73 @@
+diff --git a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+--- a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
++++ b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+@@ -268,6 +268,21 @@
+ 			return eris.Errorf("resource already defined differently: %s\ndiff:\n%s",
+ 				resourceName,
+ 				astmodel.DiffTypes(existingResource.SpecType, resourceSpec))
++		}
++
++		// Modified by High Five Labs: with ASO_GENERATOR_MULTI_SCOPE set, a
++		// resource the spec defines at several scopes (the same
++		// /providers/{namespace}/{type}/{name} under a management group, a
++		// subscription, a resource group or a resource) is an extension
++		// resource: its owner is any of those scopes. Without it the first
++		// path seen wins, which is map order, so the output changes from run
++		// to run.
++		if os.Getenv("ASO_GENERATOR_MULTI_SCOPE") != "" {
++			if uri, ok := multiScopeURI(existingResource.ARMURI, operationPath); ok {
++				existingResource.ARMURI = uri
++				existingResource.Scope = astmodel.ResourceScopeExtension
++				result.ResourceDefinitions[resourceName] = existingResource
++			}
+ 		}
+ 	} else {
+ 		if resourceStatus == nil {
+@@ -768,6 +783,19 @@
+ // For example: “…/Microsoft.GroupName/resourceType/{parameterId}/differentType/{otherId}/something/{moreId}”
+ // would return "Microsoft.GroupName", "resourceType/{parameterId}/differentType/{otherId}/something/{moreId}"
+ func (extractor *SwaggerTypeExtractor) extractResourceSubpath(operationPath string) (string, string, error) {
++	// Modified by High Five Labs: with ASO_GENERATOR_MULTI_SCOPE set, the
++	// resource of a path with several /providers/ segments is the one after
++	// the last: /providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Authorization/policyDefinitions/{name}
++	// is a policy definition (an extension resource on the group). Without
++	// it the first Microsoft.X wins and the path is refused ("unexpected
++	// hard coded name"), so a resource defined at a management group is lost.
++	if os.Getenv("ASO_GENERATOR_MULTI_SCOPE") != "" {
++		const marker = "/providers/"
++		if i := strings.LastIndex(strings.ToLower(operationPath), marker); i > 0 {
++			operationPath = operationPath[i:]
++		}
++	}
++
+ 	urlParts := strings.Split(operationPath, "/")
+ 	for i, urlPart := range urlParts {
+ 		if len(urlPart) == 0 {
+@@ -1018,3 +1046,27 @@
+ 	// providers, namespace, type, name, type, name, ...
+ 	return len(parts) >= 6 && len(parts)%2 == 0
+ }
++
++// multiScopeURI is, when a and b are the same resource under two different
++// scopes (they differ before their last /providers/ and are the same from
++// there, parameter names aside), the extension resource URI
++// /{scope}/providers/... and true.
++func multiScopeURI(a, b string) (string, bool) {
++	const marker = "/providers/"
++	ia := strings.LastIndex(strings.ToLower(a), marker)
++	ib := strings.LastIndex(strings.ToLower(b), marker)
++	if ia < 0 || ib < 0 {
++		return "", false
++	}
++	canonical := func(s string) string {
++		return strings.ToLower(urlParameterRegex.ReplaceAllString(s, "{}"))
++	}
++	if canonical(a[ia:]) != canonical(b[ib:]) || canonical(a[:ia]) == canonical(b[:ib]) {
++		return "", false
++	}
++	// The same whichever path is seen first.
++	suffix := min(a[ia:], b[ib:])
++	return "/{scope}" + suffix, true
++}
++
++var urlParameterRegex = regexp.MustCompile(`\{.*?}`)

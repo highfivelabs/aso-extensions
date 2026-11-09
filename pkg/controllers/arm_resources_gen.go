@@ -9,6 +9,11 @@ import (
 	app_customizations "github.com/highfivelabs/aso-extensions/apis/arm/app/customizations"
 	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
+	authorization_customizations "github.com/highfivelabs/aso-extensions/apis/arm/authorization/customizations"
+	authorization_v20260101p "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260101preview"
+	authorization_v20260101ps "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260101preview/storage"
+	authorization_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701"
+	authorization_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701/storage"
 	compute_customizations "github.com/highfivelabs/aso-extensions/apis/arm/compute/customizations"
 	compute_v20220301 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301"
 	compute_v20220301s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301/storage"
@@ -115,6 +120,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(authorization_v20260101p.PolicyExemption)})
+	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicyAssignment)})
+	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicyDefinition)})
+	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicySetDefinition)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesCredentialSet)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesScopeMap)})
@@ -234,6 +243,18 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsJavaComponent)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsManagedCertificate)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsStorage)})
+	result = append(result, &registration.KnownType{Obj: new(authorization_v20260101p.PolicyExemption)})
+	result = append(result, &registration.KnownType{Obj: new(authorization_v20260101ps.PolicyExemption)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(authorization_v20260701.PolicyAssignment)},
+		&registration.KnownType{Obj: new(authorization_v20260701.PolicyDefinition)},
+		&registration.KnownType{Obj: new(authorization_v20260701.PolicySetDefinition)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(authorization_v20260701s.PolicyAssignment)},
+		&registration.KnownType{Obj: new(authorization_v20260701s.PolicyDefinition)},
+		&registration.KnownType{Obj: new(authorization_v20260701s.PolicySetDefinition)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301s.VirtualMachinesRunCommand)})
 	result = append(
@@ -341,6 +362,10 @@ func createScheme() *runtime.Scheme {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = app_v20250101.AddToScheme(scheme)
 	_ = app_v20250101s.AddToScheme(scheme)
+	_ = authorization_v20260101p.AddToScheme(scheme)
+	_ = authorization_v20260101ps.AddToScheme(scheme)
+	_ = authorization_v20260701.AddToScheme(scheme)
+	_ = authorization_v20260701s.AddToScheme(scheme)
 	_ = compute_v20220301.AddToScheme(scheme)
 	_ = compute_v20220301s.AddToScheme(scheme)
 	_ = containerregistry_v20251101.AddToScheme(scheme)
@@ -374,6 +399,10 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ManagedEnvironmentsJavaComponentExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsManagedCertificateExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
+	result = append(result, &authorization_customizations.PolicyAssignmentExtension{})
+	result = append(result, &authorization_customizations.PolicyDefinitionExtension{})
+	result = append(result, &authorization_customizations.PolicyExemptionExtension{})
+	result = append(result, &authorization_customizations.PolicySetDefinitionExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesCredentialSetExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesScopeMapExtension{})

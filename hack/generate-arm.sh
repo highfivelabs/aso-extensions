@@ -33,6 +33,7 @@ export ASO_GENERATOR_NO_WEBHOOKS=1
 export ASO_GENERATOR_API_STORAGE=1
 export ASO_GENERATOR_NO_NESTED_FLATTEN=1
 export ASO_GENERATOR_TENANT_CHILDREN=1
+export ASO_GENERATOR_MULTI_SCOPE=1
 
 rm -rf apis/arm pkg/controllers/arm_resources_gen.go generator/reports
 mkdir -p generator/reports/fragments

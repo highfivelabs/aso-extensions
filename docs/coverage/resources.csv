@@ -242,11 +242,11 @@ Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleDefinitions,
 Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleDefinitions/instances,4,,0,,0,4,false,spec_api=2021-12-01-preview; spec-preview-only
 Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleSettings,15,,0,,0,15,false,spec_api=2021-12-01-preview; spec-preview-only
 Microsoft.Authorization,Microsoft.Authorization/locks,3,,0,authorization.azure.hfl.dev/ManagementLock,2,1,false,spec_api=2020-05-01; ours_api=2020-05-01
-Microsoft.Authorization,Microsoft.Authorization/policyassignments,27,,0,,0,27,false,spec_api=2026-07-01
-Microsoft.Authorization,Microsoft.Authorization/policydefinitions,22,,0,,0,22,false,spec_api=2026-07-01
+Microsoft.Authorization,Microsoft.Authorization/policyassignments,27,,0,authorization.azure.hfl.dev/PolicyAssignment,27,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.Authorization,Microsoft.Authorization/policydefinitions,22,,0,authorization.azure.hfl.dev/PolicyDefinition,21,1,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.Authorization,Microsoft.Authorization/policyDefinitions/versions,21,,0,,0,21,false,spec_api=2026-07-01
-Microsoft.Authorization,Microsoft.Authorization/policyExemptions,12,,0,,0,12,false,spec_api=2024-12-01-preview; spec-preview-only
-Microsoft.Authorization,Microsoft.Authorization/policySetDefinitions,25,,0,,0,25,false,spec_api=2026-07-01
+Microsoft.Authorization,Microsoft.Authorization/policyExemptions,12,,0,authorization.azure.hfl.dev/PolicyExemption,12,0,false,spec_api=2024-12-01-preview; spec-preview-only; ours_api=2026-01-01-preview; ours-api-differs-from-spec
+Microsoft.Authorization,Microsoft.Authorization/policySetDefinitions,25,,0,authorization.azure.hfl.dev/PolicySetDefinition,24,1,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.Authorization,Microsoft.Authorization/policySetDefinitions/versions,24,,0,,0,24,false,spec_api=2026-07-01
 Microsoft.Authorization,Microsoft.Authorization/privateLinkAssociations,2,,0,,0,2,false,spec_api=2020-05-01
 Microsoft.Authorization,Microsoft.Authorization/privilegedResourceFavorites,1,,0,,0,1,false,spec_api=2026-06-01-preview; spec-preview-only
