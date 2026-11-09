@@ -64,7 +64,9 @@ const defaultSpot = "Microsoft.Network/virtualNetworks,Microsoft.Network/virtual
 	"Microsoft.Network/publicIPAddresses,Microsoft.Compute/virtualMachines,Microsoft.Compute/disks,Microsoft.ContainerService/managedClusters," +
 	"Microsoft.Storage/storageAccounts,Microsoft.KeyVault/vaults,Microsoft.DBforPostgreSQL/flexibleServers,Microsoft.Sql/servers," +
 	"Microsoft.DocumentDB/databaseAccounts,Microsoft.ServiceBus/namespaces/queues,Microsoft.EventHub/namespaces," +
-	"Microsoft.ManagedIdentity/userAssignedIdentities,Microsoft.Network/dnszones/A,Microsoft.Authorization/roleAssignments,Microsoft.Web/serverfarms"
+	"Microsoft.ManagedIdentity/userAssignedIdentities,Microsoft.Network/dnszones/A,Microsoft.Authorization/roleAssignments,Microsoft.Web/serverfarms," +
+	"Microsoft.Network/privateEndpoints,Microsoft.Network/virtualNetworkGateways,Microsoft.Network/azureFirewalls,Microsoft.Network/loadBalancers," +
+	"Microsoft.ContainerService/managedClusters/agentPools,Microsoft.KubernetesConfiguration/fluxConfigurations,Microsoft.ContainerRegistry/registries"
 
 func run(root string, check, verbose bool) error {
 	root, err := filepath.Abs(root)
@@ -114,15 +116,21 @@ func run(root string, check, verbose bool) error {
 	if spotFile != "" {
 		return spotCheck(spotFile, spotList, rows, official, os.Stdout)
 	}
-	prio, err := readPriority(root, svcs)
+	prio, err := readPriority(root, svcs, rows)
 	if err != nil {
 		return err
 	}
 	tiers := tierRollup(svcs, prio)
-	files := outputs(rows, svcs, tiers)
+	cats := categoryRollup(rows, prio)
+	files := outputs(rows, svcs, tiers, cats)
+	avm, err := readAVM(root, rows)
+	if err != nil {
+		return err
+	}
 	return finish(root, check, files, []block{
-		{"README.md", startMarker, endMarker, readmeSection(svcs, tiers, prio)},
-		{coverageDir + "/README.md", "<!-- numbers:start -->", "<!-- numbers:end -->", numbersBlock(&src, stats, docs, res, rows, svcs, tiers, official, ours)},
+		{"README.md", startMarker, endMarker, readmeSection(svcs, tiers, cats, prio)},
+		{coverageDir + "/foundation.md", "<!-- foundation:start -->", "<!-- foundation:end -->", foundationTable(rows, res, prio, avm, cats)},
+		{coverageDir + "/README.md", "<!-- numbers:start -->", "<!-- numbers:end -->", numbersBlock(&src, stats, docs, res, rows, svcs, tiers, cats, official, ours)},
 	})
 }
 
@@ -165,7 +173,7 @@ func finish(root string, check bool, files map[string][]byte, blocks []block) er
 			have[sub+"/"+e.Name()] = true
 		}
 	}
-	for _, f := range []string{"services.csv", "resources.csv", "attributes.csv", "tiers.csv"} {
+	for _, f := range []string{"services.csv", "resources.csv", "attributes.csv", "tiers.csv", "categories.csv"} {
 		if _, err := os.Stat(filepath.Join(dir, f)); err == nil {
 			have[f] = true
 		}
