@@ -245,13 +245,13 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 6,110 attributes (14.1%) in 299 resources; ours beyond official 460 (1.1%) in 33 further resources; uncovered 36,799 (84.9%).
+**Result.** Official 6,110 attributes (14.1%) in 299 resources; ours beyond official 649 (1.5%) in 37 further resources; uncovered 36,610 (84.4%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 8 services, 7,753 attributes, 27.1% covered by official and 1.1% more by ours; tier 2 has 19 services, 6,906 attributes, 33.2% covered by official and 5.4% more by ours; tier 3 has 253 services, 28,710 attributes, 6.0% covered by official and 0.0% more by ours.
+**Tiers.** tier 1 has 8 services, 7,753 attributes, 27.1% covered by official and 1.1% more by ours; tier 2 has 19 services, 6,906 attributes, 33.2% covered by official and 8.2% more by ours; tier 3 has 253 services, 28,710 attributes, 6.0% covered by official and 0.0% more by ours.
 
 **Ours.**
 
@@ -289,6 +289,10 @@ Generated; these cannot drift from the data.
 | `operationalinsights.azure.hfl.dev/WorkspacesLinkedStorageAccount` | `Microsoft.OperationalInsights/workspaces/linkedStorageAccounts` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/WorkspacesSavedSearch` | `Microsoft.OperationalInsights/workspaces/savedSearches` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/WorkspacesTable` | `Microsoft.OperationalInsights/workspaces/tables` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/Vault` | `Microsoft.RecoveryServices/vaults` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsBackupPolicy` | `Microsoft.RecoveryServices/vaults/backupPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsBackupResourceGuardProxy` | `Microsoft.RecoveryServices/vaults/backupResourceGuardProxies` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsPrivateEndpointConnection` | `Microsoft.RecoveryServices/vaults/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/Certificate` | `Microsoft.Web/certificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesHostNameBinding` | `Microsoft.Web/sites/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlot` | `Microsoft.Web/sites/slots` | ARM wire type of the generated kind (`apis/arm`) |

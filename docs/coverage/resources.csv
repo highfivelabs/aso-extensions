@@ -1833,18 +1833,18 @@ Microsoft.Quota,Microsoft.Quota/quotas,6,quota.azure.com/Quota,6,,0,0,false,spec
 Microsoft.RecommendationsService,Microsoft.RecommendationsService/accounts,12,,0,,0,12,false,spec_api=2022-02-01
 Microsoft.RecommendationsService,Microsoft.RecommendationsService/accounts/modeling,6,,0,,0,6,false,spec_api=2022-02-01
 Microsoft.RecommendationsService,Microsoft.RecommendationsService/accounts/serviceEndpoints,3,,0,,0,3,false,spec_api=2022-02-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults,37,,0,,0,37,false,spec_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults,37,,0,recoveryservices.azure.hfl.dev/Vault,35,2,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupconfig,11,,0,,0,11,false,spec_api=2026-10-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupEncryptionConfigs,8,,0,,0,8,false,spec_api=2026-10-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/backupProtectionIntent,11,,0,,0,11,false,spec_api=2026-10-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers,42,,0,,0,42,false,spec_api=2026-10-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,57,,0,,0,57,false,spec_api=2026-10-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupPolicies,140,,0,,0,140,false,spec_api=2026-10-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupResourceGuardProxies,8,,0,,0,8,false,spec_api=2026-10-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupPolicies,140,,0,recoveryservices.azure.hfl.dev/VaultsBackupPolicy,137,3,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupResourceGuardProxies,8,,0,recoveryservices.azure.hfl.dev/VaultsBackupResourceGuardProxy,8,0,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupstorageconfig,9,,0,,0,9,false,spec_api=2026-10-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/certificates,2,,0,,0,2,false,spec_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/extendedInformation,5,,0,,0,5,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/privateEndpointConnections,9,,0,,0,9,false,spec_api=2026-10-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/privateEndpointConnections,9,,0,recoveryservices.azure.hfl.dev/VaultsPrivateEndpointConnection,9,0,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationAlertSettings,3,,0,,0,3,false,spec_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics,10,,0,,0,10,false,spec_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings,4,,0,,0,4,false,spec_api=2026-07-01
