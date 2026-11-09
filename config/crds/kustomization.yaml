@@ -41,6 +41,7 @@ resources:
 - recoveryservices.azure.hfl.dev_vaultsbackuppolicies.yaml
 - recoveryservices.azure.hfl.dev_vaultsbackupresourceguardproxies.yaml
 - recoveryservices.azure.hfl.dev_vaultsprivateendpointconnections.yaml
+- resources.azure.hfl.dev_tagsets.yaml
 - web.azure.hfl.dev_certificates.yaml
 - web.azure.hfl.dev_siteshostnamebindings.yaml
 - web.azure.hfl.dev_sitesslots.yaml

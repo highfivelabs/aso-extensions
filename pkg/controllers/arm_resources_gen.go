@@ -36,6 +36,9 @@ import (
 	recoveryservices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/customizations"
 	recoveryservices_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/v20260701"
 	recoveryservices_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/v20260701/storage"
+	resources_customizations "github.com/highfivelabs/aso-extensions/apis/arm/resources/customizations"
+	resources_v20250401 "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20250401"
+	resources_v20250401s "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20250401/storage"
 	web_customizations "github.com/highfivelabs/aso-extensions/apis/arm/web/customizations"
 	web_v20260715 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715"
 	web_v20260715s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715/storage"
@@ -165,6 +168,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(resources_v20250401.TagSet)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.Certificate),
 		Indexes: []registration.Index{
@@ -314,6 +318,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupPolicy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupResourceGuardProxy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(resources_v20250401.TagSet)})
+	result = append(result, &registration.KnownType{Obj: new(resources_v20250401s.TagSet)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
@@ -353,6 +359,8 @@ func createScheme() *runtime.Scheme {
 	_ = operationalinsights_v20250701s.AddToScheme(scheme)
 	_ = recoveryservices_v20260701.AddToScheme(scheme)
 	_ = recoveryservices_v20260701s.AddToScheme(scheme)
+	_ = resources_v20250401.AddToScheme(scheme)
+	_ = resources_v20250401s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
 	_ = web_v20260715s.AddToScheme(scheme)
 	return scheme
@@ -396,6 +404,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &recoveryservices_customizations.VaultsBackupPolicyExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsBackupResourceGuardProxyExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsPrivateEndpointConnectionExtension{})
+	result = append(result, &resources_customizations.TagSetExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
 	result = append(result, &web_customizations.SitesHostNameBindingExtension{})
 	result = append(result, &web_customizations.SitesSlotExtension{})

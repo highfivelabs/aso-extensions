@@ -140,7 +140,7 @@ kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev managementgroups.management.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev managementgroups.management.azure.hfl.dev tagsets.resources.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -364,6 +364,14 @@ spec:
   azureName: ${SUB}
   owner: {name: platform}
 ---
+apiVersion: resources.azure.hfl.dev/v20250401
+kind: TagSet
+metadata: {name: rg-tags, namespace: $1}
+spec:
+  owner: {group: resources.azure.com, kind: ResourceGroup, name: rg}
+  properties:
+    tags: {team: $1, managed-by: aso-extensions}
+---
 apiVersion: authorization.azure.hfl.dev/v1
 kind: ManagementLock
 metadata: {name: keep-rg, namespace: $1}
@@ -435,6 +443,10 @@ wait_for 90 "team-a's ManagementGroupsSubscription Ready" ready managementgroups
 logged fakearm "request PUT /providers/Microsoft.Management/managementGroups/team-a-platform/subscriptions/${SUB} 201" \
   || fail "the fake resource manager saw no subscription placed in team-a's management group"
 pass "team-a ManagementGroupsSubscription Ready: a child of a tenant scope resource, ARM ID built from its group"
+wait_for 90 "team-a's TagSet Ready" ready tagsets.resources.azure.hfl.dev team-a rg-tags
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Resources/tags/default 201" \
+  || fail "the fake resource manager saw no tags set on team-a's resource group"
+pass "team-a TagSet Ready: the tags of an ASO ResourceGroup as one object, an extension resource, PUT by ASO's ARM reconciler"
 wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
 pass "team-a ManagementLock Ready"
 logged fakearm "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
@@ -467,6 +479,8 @@ wait_for 90 "team-b's Vault refused" bash -c "[[ \"\$(kubectl get vaults.recover
 pass "team-b Vault refused: $(message vaults.recoveryservices.azure.hfl.dev team-b backups | cut -c1-120)..."
 wait_for 90 "team-b's ManagementGroup refused" bash -c "[[ \"\$(kubectl get managementgroups.management.azure.hfl.dev -n team-b platform -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
 pass "team-b ManagementGroup refused: $(message managementgroups.management.azure.hfl.dev team-b platform | cut -c1-120)..."
+wait_for 90 "team-b's TagSet refused" bash -c "[[ \"\$(kubectl get tagsets.resources.azure.hfl.dev -n team-b rg-tags -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
+pass "team-b TagSet refused: $(message tagsets.resources.azure.hfl.dev team-b rg-tags | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
@@ -532,6 +546,10 @@ kubectl -n team-a delete managementgroups.management.azure.hfl.dev platform --ti
 logged fakearm "request DELETE /providers/Microsoft.Management/managementGroups/team-a-platform 200" \
   || fail "the fake resource manager saw no delete of the management group"
 pass "the management group and its subscription placement are deleted in Resource Manager"
+kubectl -n team-a delete tagsets.resources.azure.hfl.dev rg-tags --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Resources/tags/default 200" \
+  || fail "the fake resource manager saw no delete of the tags"
+pass "the tags are deleted in Resource Manager"
 
 echo
 echo "all checks passed"
