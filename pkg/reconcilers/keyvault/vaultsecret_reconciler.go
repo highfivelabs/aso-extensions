@@ -287,12 +287,24 @@ func (r *VaultSecretReconciler) writeStatus(ctx context.Context, client *keyvaul
 // client resolves the owning Vault's URI and the credential ASO would use
 // for this object.
 func (r *VaultSecretReconciler) client(ctx context.Context, s *kvv1.VaultSecret) (*keyvault.Client, error) {
-	ownerDetails, err := r.ResourceResolver.ResolveOwner(ctx, s)
+	return vaultClient(ctx, r.ResourceResolver, r.CredentialProvider, s, r.ClientOptions)
+}
+
+// vaultClient is a data plane client for the Vault that owns obj, with the
+// credential ASO would use for obj.
+func vaultClient(
+	ctx context.Context,
+	resolver *outoftree.Resolver,
+	credentialProvider outoftree.CredentialProvider,
+	obj genruntime.ARMOwnedMetaObject,
+	opts azcore.ClientOptions,
+) (*keyvault.Client, error) {
+	ownerDetails, err := resolver.ResolveOwner(ctx, obj)
 	if err != nil {
-		return nil, eris.Wrapf(err, "resolving owner for secret %s", s.Name)
+		return nil, eris.Wrapf(err, "resolving owner for %s", obj.GetName())
 	}
 	if !ownerDetails.FoundKubernetesOwner() {
-		return nil, eris.Errorf("secret owner must exist in Kubernetes for secret %s", s.Name)
+		return nil, eris.Errorf("the owner must exist in Kubernetes for %s", obj.GetName())
 	}
 	vault, ok := ownerDetails.Owner.(*asokeyvault.Vault)
 	if !ok {
@@ -306,11 +318,10 @@ func (r *VaultSecretReconciler) client(ctx context.Context, s *kvv1.VaultSecret)
 		return nil, conditions.NewReadyConditionImpactingError(err, conditions.ConditionSeverityWarning, conditions.ReasonWaitingForOwner)
 	}
 
-	credential, err := r.CredentialProvider.GetCredential(ctx, s)
+	credential, err := credentialProvider.GetCredential(ctx, obj)
 	if err != nil {
 		return nil, eris.Wrap(err, "failed to get credential")
 	}
-	opts := r.ClientOptions
 	return keyvault.New(*vault.Status.Properties.VaultUri, credential.TokenCredential(), &opts)
 }
 

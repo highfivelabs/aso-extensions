@@ -1,10 +1,12 @@
 // Copyright 2026 High Five Labs
 // SPDX-License-Identifier: MIT
 
-// Package keyvault is a fake Azure Key Vault secrets data plane (REST API
-// 7.5), for tests and test builds only: set, get (latest or a version),
-// update attributes, soft delete, get deleted, recover and purge, with
-// soft delete always on. It accepts a request only when Authorize accepts
+// Package keyvault is a fake Azure Key Vault data plane (REST API 7.5), for
+// tests and test builds only. Secrets: set, get (latest or a version),
+// update attributes, soft delete, get deleted, recover and purge.
+// Certificates (certificates.go): import (PEM), get, update attributes,
+// soft delete, get deleted, recover and purge, each with the secret Key
+// Vault keeps beside a certificate. Soft delete is always on. It accepts a request only when Authorize accepts
 // its bearer token, so a test decides which identity may use the vault.
 // The shapes follow https://learn.microsoft.com/rest/api/keyvault/secrets.
 package keyvault
@@ -53,13 +55,17 @@ type Vault struct {
 	base    string
 	live    map[string]*secret
 	deleted map[string]*secret
+	// Certificates, live and soft-deleted.
+	certs        map[string]*certificate
+	deletedCerts map[string]*certificate
 	// Log records every request: "METHOD path".
 	Log []string
 }
 
 // New returns a fake vault serving at baseURL (https://host[:port]).
 func New(baseURL string, authorize func(token string) bool) *Vault {
-	return &Vault{Authorize: authorize, base: strings.TrimSuffix(baseURL, "/"), live: map[string]*secret{}, deleted: map[string]*secret{}}
+	return &Vault{Authorize: authorize, base: strings.TrimSuffix(baseURL, "/"), live: map[string]*secret{}, deleted: map[string]*secret{},
+		certs: map[string]*certificate{}, deletedCerts: map[string]*certificate{}}
 }
 
 // SetBaseURL sets the URL IDs are written with (when the listener's address
@@ -129,6 +135,9 @@ func (v *Vault) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	parts := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
+	if v.serveCertificates(w, r, parts) {
+		return
+	}
 	switch {
 	case len(parts) == 2 && parts[0] == "secrets" && r.Method == http.MethodPut:
 		v.set(w, r, parts[1])

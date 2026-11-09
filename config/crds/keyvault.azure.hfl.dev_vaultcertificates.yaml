@@ -1,0 +1,259 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: vaultcertificates.keyvault.azure.hfl.dev
+spec:
+  group: keyvault.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - keyvault
+    - hfl
+    kind: VaultCertificate
+    listKind: VaultCertificateList
+    plural: vaultcertificates
+    singular: vaultcertificate
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.expiresOn
+      name: Expires
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v1
+    schema:
+      openAPIV3Schema:
+        description: |-
+          VaultCertificate is a certificate in an Azure Key Vault, imported from a
+          certificate and private key in Kubernetes Secrets, such as the
+          kubernetes.io/tls Secret cert-manager issues. A new certificate in the
+          Secret (a renewal) is imported as a new version. Key Vault keeps the
+          certificate with its key and a secret of the same name holding both
+          (PEM), which App Service, Application Gateway and Front Door read. The
+          vault is an ASO keyvault.azure.com Vault in the same namespace; the
+          credential is the one ASO uses for this object.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName is the certificate's name in the vault (1-127 letters,
+                  digits and dashes); its secret has the same name. Defaults to the
+                  object's name.
+                pattern: ^[0-9a-zA-Z-]{1,127}$
+                type: string
+              certificate:
+                description: |-
+                  Certificate is a reference to the key of a Kubernetes Secret, in this
+                  namespace, that holds the certificate as PEM: the leaf first, then any
+                  intermediates (tls.crt of a kubernetes.io/tls Secret). A different
+                  leaf is imported as a new version.
+                properties:
+                  key:
+                    description: Key is the key in the Kubernetes secret being referenced
+                    type: string
+                  name:
+                    description: |-
+                      Name is the name of the Kubernetes secret being referenced.
+                      The secret must be in the same namespace as the resource
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              createMode:
+                description: |-
+                  CreateMode is what to do when a soft-deleted certificate holds the
+                  name at creation: 'default' imports and reports Key Vault's conflict;
+                  'recover' recovers the deleted certificate and fails when none exists;
+                  'createOrRecover' recovers one when it exists and imports otherwise;
+                  'purgeThenCreate' purges it for good and imports. As VaultSecret's,
+                  which are ASO's VaultKey's. Defaults to 'default'.
+                enum:
+                - default
+                - recover
+                - createOrRecover
+                - purgeThenCreate
+                type: string
+              deleteMode:
+                description: |-
+                  DeleteMode is what happens to the certificate in the vault when this
+                  object is deleted: 'detach' leaves it; 'delete' soft-deletes it (with
+                  its key and secret); 'disable' sets enabled to false. As VaultSecret's,
+                  which are ASO's VaultKey's; the default is 'detach'.
+                enum:
+                - detach
+                - delete
+                - disable
+                type: string
+              enabled:
+                description: Enabled is whether the certificate can be used. Defaults
+                  to true.
+                type: boolean
+              owner:
+                description: Owner is the keyvault.azure.com Vault the certificate
+                  is in.
+                properties:
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                required:
+                - name
+                type: object
+              privateKey:
+                description: |-
+                  PrivateKey is a reference to the key of a Kubernetes Secret, in this
+                  namespace, that holds the leaf's private key as PEM (PKCS#1, PKCS#8 or
+                  SEC 1; tls.key of a kubernetes.io/tls Secret). It must match the
+                  certificate.
+                properties:
+                  key:
+                    description: Key is the key in the Kubernetes secret being referenced
+                    type: string
+                  name:
+                    description: |-
+                      Name is the name of the Kubernetes secret being referenced.
+                      The secret must be in the same namespace as the resource
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: Tags are the certificate's tags in the vault.
+                type: object
+            required:
+            - certificate
+            - owner
+            - privateKey
+            type: object
+            x-kubernetes-validations:
+            - message: azureName is immutable
+              rule: '!has(oldSelf.azureName) || self.azureName == oldSelf.azureName'
+            - message: owner is immutable
+              rule: self.owner == oldSelf.owner
+          status:
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              enabled:
+                description: Enabled and Tags as the vault holds them.
+                type: boolean
+              expiresOn:
+                format: date-time
+                type: string
+              id:
+                description: Id is the identifier of the certificate's current version.
+                type: string
+              notBefore:
+                description: |-
+                  NotBefore and ExpiresOn are the certificate's validity, as the vault
+                  reads them from it.
+                format: date-time
+                type: string
+              recoveryLevel:
+                description: |-
+                  RecoveryLevel is the vault's deletion recovery level for the
+                  certificate, such as Recoverable+Purgeable.
+                type: string
+              secretId:
+                description: |-
+                  SecretId is the identifier of the secret holding the certificate and
+                  its key (PEM), as App Service and Application Gateway reference it.
+                type: string
+              tags:
+                additionalProperties:
+                  type: string
+                type: object
+              thumbprint:
+                description: Thumbprint is the leaf certificate's SHA-1 thumbprint,
+                  in hex.
+                type: string
+              version:
+                description: Version is the certificate's current version.
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

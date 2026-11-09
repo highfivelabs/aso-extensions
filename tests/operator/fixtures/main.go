@@ -36,6 +36,12 @@ func main() {
 		write(*out, name+".crt", c)
 		write(*out, name+".key", k)
 	}
+	// An application's TLS certificate, as cert-manager would leave in a
+	// kubernetes.io/tls Secret, for VaultCertificate.
+	appCert, appKey, err := ca.Server("app.example")
+	must(err)
+	write(*out, "app-tls.crt", appCert)
+	write(*out, "app-tls.key", appKey)
 
 	token := entra.Token(entra.Claims{Tenant: *tenant, ClientID: *client,
 		Subject: entra.ServiceAccountSubject(*ns, "aso-workload"), Scope: postgresqlutil.EntraScope})

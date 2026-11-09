@@ -130,7 +130,7 @@ kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -166,6 +166,7 @@ team() {
     --from-literal=AZURE_SUBSCRIPTION_ID="${SUB}" --from-literal=AZURE_TENANT_ID="${TENANT}" \
     --from-literal=AZURE_CLIENT_ID="$2" --dry-run=client -o yaml | kubectl apply -f -
   kubectl -n "$1" create secret generic app-config --from-literal=url=postgres://app --dry-run=client -o yaml | kubectl apply -f -
+  kubectl -n "$1" create secret tls app-tls --cert "${OUT}/fixtures/app-tls.crt" --key "${OUT}/fixtures/app-tls.key" --dry-run=client -o yaml | kubectl apply -f -
   # The ASO objects, with the status ASO would write when it provisioned them
   # (and, on the ResourceGroup, the ARM ID annotation ASO writes).
   kubectl apply -f - <<EOF
@@ -215,6 +216,15 @@ spec:
   value: {name: app-config, key: url}
   deleteMode: delete
 ---
+apiVersion: keyvault.azure.hfl.dev/v1
+kind: VaultCertificate
+metadata: {name: app-tls, namespace: $1}
+spec:
+  owner: {name: vault}
+  certificate: {name: app-tls, key: tls.crt}
+  privateKey: {name: app-tls, key: tls.key}
+  deleteMode: delete
+---
 apiVersion: authorization.azure.hfl.dev/v1
 kind: ManagementLock
 metadata: {name: keep-rg, namespace: $1}
@@ -246,6 +256,10 @@ pass "app-identity owns the database orders"
 kubectl -n fake-cloud logs deploy/fakevault | grep -q "sub=system:serviceaccount:team-a:aso-workload scope=https://fake-cloud.svc/.default accepted=true" \
   || fail "the fake vault saw no accepted request from team-a's aso-workload"
 pass "the fake vault accepted team-a's aso-workload identity"
+wait_for 90 "team-a's VaultCertificate Ready" ready vaultcertificates.keyvault.azure.hfl.dev team-a app-tls
+kubectl -n fake-cloud logs deploy/fakevault | grep -q "request POST /certificates/app-tls/import" \
+  || fail "the fake vault saw no import of app-tls"
+pass "team-a VaultCertificate Ready: app-tls imported into the vault"
 wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
 pass "team-a ManagementLock Ready"
 kubectl -n fake-cloud logs deploy/fakearm | grep -q "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
@@ -260,6 +274,8 @@ wait_for 90 "team-b's User refused" bash -c "[[ \"\$(kubectl get users.dbforpost
 pass "team-b User refused: $(message users.dbforpostgresql.azure.hfl.dev team-b app-identity | cut -c1-120)..."
 wait_for 90 "team-b's VaultSecret refused" bash -c "[[ \"\$(kubectl get vaultsecrets.keyvault.azure.hfl.dev -n team-b app-url -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b VaultSecret refused: $(message vaultsecrets.keyvault.azure.hfl.dev team-b app-url | cut -c1-120)..."
+wait_for 90 "team-b's VaultCertificate refused" bash -c "[[ \"\$(kubectl get vaultcertificates.keyvault.azure.hfl.dev -n team-b app-tls -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
+pass "team-b VaultCertificate refused: $(message vaultcertificates.keyvault.azure.hfl.dev team-b app-tls | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
@@ -277,6 +293,9 @@ kubectl -n team-a get events --field-selector reason=DatabaseReassigned -o jsonp
 pass "a DatabaseReassigned event names orders"
 kubectl -n fake-cloud logs deploy/fakevault | grep -q "request DELETE /secrets/app-url" || fail "the vault saw no delete of app-url"
 pass "the vault soft-deleted app-url (deleteMode delete)"
+kubectl -n team-a delete vaultcertificates.keyvault.azure.hfl.dev app-tls --timeout=60s
+kubectl -n fake-cloud logs deploy/fakevault | grep -q "request DELETE /certificates/app-tls" || fail "the vault saw no delete of app-tls"
+pass "the vault soft-deleted the certificate app-tls (deleteMode delete)"
 kubectl -n team-a delete managementlocks.authorization.azure.hfl.dev keep-rg --timeout=60s
 kubectl -n fake-cloud logs deploy/fakearm | grep -q "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/locks/keep-rg 200" \
   || fail "the fake resource manager saw no delete of the lock"
