@@ -9,3 +9,5 @@ specification/containerregistry
 specification/compute
 specification/devtestlabs
 specification/maintenance
+specification/recoveryservices
+specification/recoveryservicesbackup

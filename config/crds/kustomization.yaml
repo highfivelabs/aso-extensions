@@ -34,6 +34,10 @@ resources:
 - operationalinsights.azure.hfl.dev_workspaceslinkedstorageaccounts.yaml
 - operationalinsights.azure.hfl.dev_workspacessavedsearches.yaml
 - operationalinsights.azure.hfl.dev_workspacestables.yaml
+- recoveryservices.azure.hfl.dev_vaults.yaml
+- recoveryservices.azure.hfl.dev_vaultsbackuppolicies.yaml
+- recoveryservices.azure.hfl.dev_vaultsbackupresourceguardproxies.yaml
+- recoveryservices.azure.hfl.dev_vaultsprivateendpointconnections.yaml
 - web.azure.hfl.dev_certificates.yaml
 - web.azure.hfl.dev_siteshostnamebindings.yaml
 - web.azure.hfl.dev_sitesslots.yaml

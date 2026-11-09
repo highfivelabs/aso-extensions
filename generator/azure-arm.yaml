@@ -44,6 +44,7 @@ imports:
   compute: azure-arm/compute.yaml
   devtestlab: azure-arm/devtestlab.yaml
   maintenance: azure-arm/maintenance.yaml
+  recoveryservices: azure-arm/recoveryservices.yaml
 
 # Filters are applied in document order; the earliest match wins (as in ASO's
 # azure-arm.yaml, from which these are taken).

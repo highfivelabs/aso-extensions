@@ -1,0 +1,36 @@
+typeFilters:
+  - action: include
+    group: recoveryservices
+    version: v20260701
+    because: the newest stable version that both the vault and the backup specs have
+
+groupModelConfiguration:
+  2026-07-01:
+    Vault:
+      $exportAs: Vault
+      $supportedFrom: v0.1.0
+    Vaults_BackupPolicy:
+      $exportAs: VaultsBackupPolicy
+      $supportedFrom: v0.1.0
+    Vaults_BackupResourceGuardProxy:
+      $exportAs: VaultsBackupResourceGuardProxy
+      $supportedFrom: v0.1.0
+    Vaults_PrivateEndpointConnection:
+      $exportAs: VaultsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    CmkKekIdentity:
+      UserAssignedIdentity:
+        $referenceType: arm # the identity that reads the customer-managed key
+    AssociatedIdentity:
+      UserAssignedIdentity:
+        $referenceType: arm
+    # --- reference labels (added by iteration) ---
+    BmsPrivateEndpoint:
+      Id:
+        $referenceType: arm
+    ResourceGuardProxyBase:
+      ResourceGuardResourceId:
+        $referenceType: arm
+    UserAssignedManagedIdentityDetails:
+      IdentityArmId:
+        $referenceType: arm

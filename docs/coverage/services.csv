@@ -214,7 +214,7 @@ Microsoft.Purview,3,0,0,21,0,0,21,0.0,0.0,100.0
 Microsoft.Quantum,1,0,0,18,0,0,18,0.0,0.0,100.0
 Microsoft.Quota,4,1,0,8,6,0,2,75.0,0.0,25.0
 Microsoft.RecommendationsService,3,0,0,21,0,0,21,0.0,0.0,100.0
-Microsoft.RecoveryServices,27,0,0,821,0,0,821,0.0,0.0,100.0
+Microsoft.RecoveryServices,27,0,4,821,0,189,632,0.0,23.0,77.0
 Microsoft.RedHatOpenShift,4,4,0,114,108,0,6,94.7,0.0,5.3
 Microsoft.Relationships,2,0,0,4,0,0,4,0.0,0.0,100.0
 Microsoft.Relay,8,0,0,28,0,0,28,0.0,0.0,100.0

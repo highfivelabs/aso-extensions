@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after the VM extras (c10 part one: run command, auto-shutdown, maintenance).
+State at the writing: 2026-11-09, after Recovery Services (c10 part two). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 1 of `docs/coverage/foundation.md`.
 
 ## What this repository is
 
@@ -24,20 +24,42 @@ ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
 order: skip what ASO has; copy upstream where it exists; generate; hand-write.
 
-## The queue, in order
+## The queue
 
-The ranking is `catalog/docs/azure.md` §5 (the `highfivelabs/catalog`
-repository, read-only for this one); `docs/plan.md` §3 (c) is the live table.
-One pull request per gap, cut from the latest `main`.
+**The builder's priority, 2026-11-09:** "everything up through a managed
+Kubernetes cluster is table stakes for a platform team; the adjacent
+foundational things are important for security teams; beyond that,
+application primitives. The OSS module space should guide where we put effort."
+The ranked list is **`docs/coverage/foundation.md`** (its "queue" tables, rows
+1 to 24; the generated inventory below them lists every resource so nothing is
+missing). Work its rows in order, one pull request per row or a few related
+rows. The order the coordinator named: management groups; subscription tags and
+billing aliases; Azure Policy (definition, set, assignment, exemption); policy
+remediation; PIM (copy open ASO PR #5638, never generate it); budgets and cost
+exports; lock owners (`ManagementLock` completion); VPN connections and local
+gateways; ExpressRoute; Virtual WAN and VPN gateways; then the rest of the
+foundation table, then the security-adjacent table. The old catalog queue
+(c11 to c14: storage local users, Cognitive Services RAI policies, Cosmos
+Gremlin and dedicated gateway, AKS managed namespaces) is application
+primitives now: after the foundation rows. Already built: c1, c3, c4, c5, c6,
+c9, c10 (locks, Container Apps environment children, App Service children, Log
+Analytics children, Monitor private link scopes and network security
+perimeters, container registry tokens and webhooks, VM extras, Recovery
+Services vault and policies). Skipped: c7 (Key Vault keys: ASO's `VaultKey`
+#5564 ships in its next release; recheck).
+
+**Tenant-scope resources first** (rows 1 and 2: management groups, subscription
+tags, billing aliases; policy at management group scope). `docs/plan.md` §2,
+"Tenant-scope resources", says what ASO's resolver and identity do and what our
+fake cannot do yet (its parent rule rejects `/providers/Microsoft.Management/...`
+until the fake accepts a tenant root): fix the fake and test it before
+designing the kinds.
 
 | Rank | Gap | State |
 | --- | --- | --- |
-| c1, c3, c4, c5, c6, c9, c10 (part one) | locks, Container Apps environment children, App Service children, Log Analytics children, Monitor private link scopes and network security perimeters, container registry tokens and webhooks, VM extras | built |
-| c7 | Key Vault keys | skip: ASO's `VaultKey` (#5564) ships in its next release; recheck |
-| c10b | Recovery Services backup (vault, policies, protected items) | next; no Recovery Services group at the pin |
-| c11 to c14 | storage local users; Cognitive Services RAI policies; Cosmos Gremlin and SQL dedicated gateway; AKS managed namespaces | queued |
-| c8 | management groups, policy, budgets, vWAN, subscription tags | queued, low priority (platform) |
-| c18 | stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones) | not a new kind |
+| h1 | **Hand-written candidates** (the generator cannot model them; write each as `ManagementLock` was, `pkg/reconcilers/authorization/`, on ASO's generic reconciler): **1. Maintenance `ConfigurationAssignment`** (assign a maintenance configuration to a VM or scale set; the spec has it at four scopes, so the generator's output changes from run to run; also what Azure Policy, locks and budgets at several scopes need); 2. Recovery Services **protection container, protected item (turns backup on for a VM) and protection intent** (a fixed `backupFabrics/Azure` segment is no resource, so the owner chain cannot name the ARM ID); 3. the Recovery Services singletons (`backupstorageconfig`, `backupconfig`, encryption config, vault extended info); 4. Log Analytics solutions (the spec's `SolutionProperties` is dropped as empty). `foundation.md` marks which of its rows are hand-written | as the foundation rows reach them |
+| c8 | management groups, policy, budgets, vWAN, subscription tags | now foundation rows 1 to 10 |
+| c18 | stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones, resource groups) | not a new kind |
 
 Not in the catalog's order but waiting: Azure SQL Entra users (a1, ASO PR
 #5104, open question 5) and Entra directory roles (c15, "if wanted").
@@ -57,7 +79,11 @@ Everything is in `docs/plan.md` §2, "Generated ARM kinds". The short form:
 2. **Configuration.** `generator/azure-arm/<group>.yaml`, one per group, and an
    `imports:` line in `generator/azure-arm.yaml`:
    - `typeFilters`: include the one API version (prefer ASO's own latest for
-     that group, so owners and children share a vintage), then prune the group;
+     that group, so owners and children share a vintage). Then prune the
+     group's other versions **only for a small group**: for a big one
+     (`insights`, `network`, `compute`, `recoveryservices`) pruning breaks the
+     loading of the specs (see "Facts learned the hard way"); rely on
+     `$exportAs` there;
    - `groupModelConfiguration.<version>`: `$exportAs` and `$supportedFrom: v0.1.0`
      per resource, plus labels the generator demands (`$referenceType: arm` for
      ARM IDs, `$importSecretMode: required|never` for secrets; copy them from
@@ -153,6 +179,23 @@ Facts learned the hard way:
   `task check` fails. Look for it when `check` says "stale" on a kind you
   generated fine; such a kind cannot be generated (hand-write it as
   `ManagementLock` was).
+- **`task operator-e2e` must print `all checks passed`.** `tests/operator/run.sh`
+  was once emptied by a careless script (`open(p,'w').write(open(p).read())`
+  truncates before reading) and the task still exited 0, so PR #13's kind test
+  was never run; it was restored in the Recovery Services PR. Read the tail of
+  the output and `wc -l tests/operator/run.sh` (about 500) before you trust it.
+- **A path with a fixed non-resource segment** (Recovery Services
+  `backupFabrics/{fabricName}`) makes the generator pick the resource group as
+  owner and the Kubernetes object cannot name the ARM ID ("had 1 azureNames and
+  3 resourceTypes"). A test that creates the object finds it; the generated
+  CRD looks fine. Do not ship such a kind.
+- Quick generator iteration helper (used throughout, kept out of the
+  repository): rsync `generator/` to the machine's checkout, run
+  `bin/generator gen-types --verbose generator/azure-arm.yaml` over `ssh` with
+  the environment `hack/generate-arm.sh` sets, grep `ERR` in the log. The
+  "looks like a resource reference but was not labelled" errors can be
+  turned into `$referenceType: arm` labels mechanically (a script that reads
+  them from the error and rewrites the group file saves a dozen rounds).
 - ASO's token scope is `<audience>/.default`: give the fake audience no
   trailing slash.
 - A generated kind's delete under a `CanNotDelete` lock fails with
