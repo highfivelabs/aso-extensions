@@ -157,7 +157,7 @@ run over the pinned specs with configuration kept here.
 - **Run.** `hack/generate-arm.sh` builds ASO's generator from the checkout
   and runs it; `hack/generate.sh` then makes deepcopy code and CRDs. It
   takes about half a minute but loads every spec of the services, so it
-  runs on the Ubuntu machine (`make generate-arm`), and `make check`
+  runs on the Ubuntu machine (`task generate-arm`), and `task check`
   regenerates and fails if the checked-in output is stale. The output is
   `apis/arm/<group>/<version>` (types, `storage` and `arm` subpackages and
   generated tests), `apis/arm/<group>/customizations`,
@@ -543,7 +543,7 @@ one Deployment, nothing per namespace to create. A static install
 
 ## 7. Proven, and not
 
-Proven by `make test` (envtest, 21 tests, and the generated kinds' own
+Proven by `task test` (envtest, 21 tests, and the generated kinds' own
 serialization and conversion tests):
 
 - a password user gets exactly its database privileges, changes revoke
@@ -624,7 +624,7 @@ serialization and conversion tests):
   CRD refuses an owner that is neither or both of an ARM ID and a named
   resource, a named owner without group and kind, and an unknown level.
 
-Proven on kind by `make operator-e2e` (`tests/operator/run.sh`; passed
+Proven on kind by `task operator-e2e` (`tests/operator/run.sh`; passed
 2026-11-08 on kind 0.33 on an Apple-silicon Mac, Docker 20.10, both on a
 new cluster and rerun on the same one): the CRDs install; the manager runs in ASO's namespace as
 `aso-extensions-manager`; that account may request tokens only for
@@ -637,7 +637,7 @@ team-b, another identity, both are refused; deletion gives `orders` to
 `hfl_owner` (which cannot sign in, with a `DatabaseReassigned` event),
 drops the role and soft-deletes the secret. With the b5 checks, it passed
 again on 2026-11-09 on the builder's Ubuntu machine (a warm kind cluster),
-after `make check` there. With `ManagementLock` (passed the same day, the
+after `task check` there. With `ManagementLock` (passed the same day, the
 same way): the manager may get an ASO `ResourceGroup` but not list or
 change it; team-a's lock on its `ResourceGroup` becomes Ready, and the
 fake Resource Manager (`cmd/fakearm`) logs the lock created on the

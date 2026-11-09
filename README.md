@@ -125,16 +125,19 @@ There is no webhook: validation is CEL rules in the CRDs.
 
 ## Developing it
 
+The commands are [Task](https://taskfile.dev) tasks (`brew install go-task`;
+`task --list`).
+
 ```sh
-make upstream      # fetch ASO at the pin (~675 MB) and apply patches/
-make check         # pin, go.mod versions, generated files (ASO's generator is
+task upstream      # fetch ASO at the pin (~675 MB) and apply patches/
+task check         # pin, go.mod versions, generated files (ASO's generator is
                    # rerun: it needs the specs, hack/specs.sh), gofmt, vet,
                    # licence headers, no fake cloud in the production build, tests
-make generate-arm  # rerun ASO's generator over the ARM specs (generator/)
-make operator-e2e  # the install on kind with the fake cloud (tests/operator/run.sh)
+task generate-arm  # rerun ASO's generator over the ARM specs (generator/)
+task operator-e2e  # the install on kind with the fake cloud (tests/operator/run.sh)
 ```
 
-`make test` runs the kinds end to end without Azure: a real kube-apiserver
+`task test` runs the kinds end to end without Azure: a real kube-apiserver
 (envtest), the manager wired as in production, azidentity's real
 credentials against an in-process fake Entra, a fake Key Vault and a fake
 Resource Manager over TLS, and PostgreSQL in Docker set up like a flexible

@@ -24,16 +24,24 @@ possible:
 A kind here exists because ASO does not have it, or lacks a field. When ASO
 gains it, the kind is deprecated here and users move to ASO's.
 
+## Tasks
+
+The commands below are [Task](https://taskfile.dev) tasks (`brew install
+go-task`; `task --list` lists them). `Taskfile.yml` is this repository's;
+the tasks more than one repository needs are in `taskfiles/common.yml`,
+which knows nothing of this repository and takes what it needs as variables.
+Change a shared task there, in the one shared copy, not in the Taskfile.
+
 ## Checks
 
 ```sh
-make upstream   # once: ASO at the pin, with patches/ applied
-make check      # pin, go.mod versions, generated files (ASO's generator
+task upstream   # once: ASO at the pin, with patches/ applied
+task check      # pin, go.mod versions, generated files (ASO's generator
                 # is rerun), gofmt, vet, licence headers, no fake cloud in
                 # the production build, build, unit and end-to-end tests
-make generate-arm  # after changing generator/: rerun ASO's generator
+task generate-arm  # after changing generator/: rerun ASO's generator
                 # (heavy; run it on a machine meant for that)
-make operator-e2e  # the install on kind with the fake cloud
+task operator-e2e  # the install on kind with the fake cloud
 ```
 
 The end-to-end tests need Docker (PostgreSQL runs in a container). No test

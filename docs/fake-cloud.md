@@ -29,12 +29,12 @@ run the real client code against them.
 ## Running it
 
 ```sh
-make test           # envtest + fake Entra, vault and Resource Manager in process, PostgreSQL in Docker
-make operator-e2e   # the same fakes on kind, with the install from config/default
+task test           # envtest + fake Entra, vault and Resource Manager in process, PostgreSQL in Docker
+task operator-e2e   # the same fakes on kind, with the install from config/default
 ```
 
-`make test` needs Docker and pulls `postgres:17` if it is missing.
-`make operator-e2e` also needs kind and ko; it leaves the cluster
+`task test` needs Docker and pulls `postgres:17` if it is missing.
+`task operator-e2e` also needs kind and ko; it leaves the cluster
 (`aso-extensions-operator`) up unless `KEEP=0`.
 
 ## Where the fakes differ from Azure

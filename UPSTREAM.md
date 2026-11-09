@@ -70,8 +70,8 @@ groups).
 
 Change the "Commit" row (and the "Specs commit" row, from the new pin's
 `v2/specs/azure-rest-api-specs` submodule), run `hack/upstream.sh`, then
-`make generate-arm` (on the Ubuntu machine: it regenerates `apis/arm/`) and
-`make check`. If the
+`task generate-arm` (on the Ubuntu machine: it regenerates `apis/arm/`) and
+`task check`. If the
 patch no longer applies, or ASO renamed what it exports, fix the patch.
 `hack/check-go-mod.sh` fails when a module both `go.mod` files require is at
 another version than ASO's; `go mod tidy` after moving the pin brings ours
