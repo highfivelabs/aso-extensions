@@ -40,3 +40,7 @@ the perimeter is deleted in Resource Manager
 the scope map is deleted in Resource Manager
 the run command is deleted in Resource Manager
 the vault is deleted in Resource Manager
+team-a ManagementGroup Ready
+team-a ManagementGroupsSubscription Ready
+team-b ManagementGroup refused
+the management group and its subscription placement are deleted

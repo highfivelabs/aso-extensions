@@ -1,0 +1,37 @@
+diff --git a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+index 8228f8f..b8eaf3d 100644
+--- a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
++++ b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+@@ -980,6 +980,17 @@ func categorizeResourceScope(armURI string) astmodel.ResourceScope {
+ 		}
+ 	}
+ 
++	// Modified by High Five Labs: with ASO_GENERATOR_TENANT_CHILDREN set, a
++	// resource nested under a tenant scope resource
++	// (/providers/Microsoft.Management/managementGroups/{groupId}/subscriptions/{subscriptionId})
++	// is categorized as a resource group scope resource, which is what a child
++	// of any resource is: it has an owner (the parent), and the hierarchy's root
++	// (the tenant scope resource) decides the ARM ID. As Tenant scope it would
++	// have no owner, and its name would be taken for the parent's.
++	if os.Getenv("ASO_GENERATOR_TENANT_CHILDREN") != "" && isTenantScopeChild(armURI) {
++		return astmodel.ResourceScopeResourceGroup
++	}
++
+ 	// Assume that a resource is an extension if armURI contains more than 1 provider:
+ 	if strings.Count(armURI, "providers") > 1 {
+ 		return astmodel.ResourceScopeExtension
+@@ -996,3 +1007,14 @@ func categorizeResourceScope(armURI string) astmodel.ResourceScope {
+ 	// TODO: Not currently possible to generate a resource with scope Location, we should fix that
+ 	return astmodel.ResourceScopeTenant
+ }
++
++// isTenantScopeChild is whether armURI is /providers/{namespace}/{type}/{name}
++// followed by at least one more {type}/{name} pair.
++func isTenantScopeChild(armURI string) bool {
++	if !strings.HasPrefix(strings.ToLower(armURI), "/providers/") || strings.Count(strings.ToLower(armURI), "providers") != 1 {
++		return false
++	}
++	parts := strings.Split(strings.Trim(armURI, "/"), "/")
++	// providers, namespace, type, name, type, name, ...
++	return len(parts) >= 6 && len(parts)%2 == 0
++}

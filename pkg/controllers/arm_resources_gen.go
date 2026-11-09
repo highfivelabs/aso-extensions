@@ -24,6 +24,9 @@ import (
 	maintenance_customizations "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/customizations"
 	maintenance_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401"
 	maintenance_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401/storage"
+	management_customizations "github.com/highfivelabs/aso-extensions/apis/arm/management/customizations"
+	management_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/management/v20230401"
+	management_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/management/v20230401/storage"
 	network_customizations "github.com/highfivelabs/aso-extensions/apis/arm/network/customizations"
 	network_v20250501 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501"
 	network_v20250501s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501/storage"
@@ -142,6 +145,9 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroup)})
+	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroupsSetting)})
+	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroupsSubscription)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimeter)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersLink)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersLoggingConfiguration)})
@@ -254,6 +260,16 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401s.MaintenanceConfiguration)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(management_v20230401.ManagementGroup)},
+		&registration.KnownType{Obj: new(management_v20230401.ManagementGroupsSetting)},
+		&registration.KnownType{Obj: new(management_v20230401.ManagementGroupsSubscription)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(management_v20230401s.ManagementGroup)},
+		&registration.KnownType{Obj: new(management_v20230401s.ManagementGroupsSetting)},
+		&registration.KnownType{Obj: new(management_v20230401s.ManagementGroupsSubscription)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimeter)},
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersLink)},
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersLoggingConfiguration)},
@@ -329,6 +345,8 @@ func createScheme() *runtime.Scheme {
 	_ = insights_v20210901s.AddToScheme(scheme)
 	_ = maintenance_v20230401.AddToScheme(scheme)
 	_ = maintenance_v20230401s.AddToScheme(scheme)
+	_ = management_v20230401.AddToScheme(scheme)
+	_ = management_v20230401s.AddToScheme(scheme)
 	_ = network_v20250501.AddToScheme(scheme)
 	_ = network_v20250501s.AddToScheme(scheme)
 	_ = operationalinsights_v20250701.AddToScheme(scheme)
@@ -358,6 +376,9 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
 	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})
+	result = append(result, &management_customizations.ManagementGroupExtension{})
+	result = append(result, &management_customizations.ManagementGroupsSettingExtension{})
+	result = append(result, &management_customizations.ManagementGroupsSubscriptionExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimeterExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersLinkExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersLoggingConfigurationExtension{})

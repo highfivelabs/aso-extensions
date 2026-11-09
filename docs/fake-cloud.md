@@ -62,6 +62,15 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   the properties of any resource type: a Dapr component the real service
   would reject for a bad `componentType` is accepted. The generated kinds
   are proven to send what the specs describe, not that Azure accepts it.
+- Management groups (`Microsoft.Management/managementGroups`, `.../subscriptions/<id>`,
+  `.../settings/default`) are stored like any resource, plus a hierarchy: the
+  tenant root (`/`) is always a valid parent; a group's `properties.details.parent.id`
+  must name an existing group and not a descendant; a group with a child group
+  or a subscription cannot be deleted (409); a subscription is in one group at
+  a time. Not modelled: the tenant root group (a group with no parent is just at
+  the root), the asynchronous create and delete Azure returns, the
+  subscriptions a group holds in its own `children`, and the error codes (the
+  fake's own).
 - Resource Manager checks no role: real Azure lets only Owner and User
   Access Administrator (or a custom role with
   `Microsoft.Authorization/locks/*`) write locks, so ASO's identity may

@@ -1,0 +1,29 @@
+typeFilters:
+  - action: include
+    group: management
+    version: v20230401
+    because: the newest stable version of the Azure management groups; they are tenant scope resources (no owner), as ASO's subscription Alias is
+  - action: prune
+    group: management
+    because: every other version is left alone
+
+groupModelConfiguration:
+  2023-04-01:
+    ManagementGroup:
+      $exportAs: ManagementGroup
+      $supportedFrom: v0.1.0
+    ManagementGroups_Setting:
+      $exportAs: ManagementGroupsSetting
+      $supportedFrom: v0.1.0
+    ManagementGroups_Subscription:
+      $exportAs: ManagementGroupsSubscription
+      $supportedFrom: v0.1.0
+    CreateParentGroupInfo:
+      Id:
+        $referenceType: arm # the parent management group
+
+typeTransformers:
+  - name: ManagementGroupChildInfo_STATUS
+    property: Children
+    remove: true
+    because: a group's children are listed in its status, each with its own children, which is directly recursive and which controller-gen cannot unroll; the first level stays

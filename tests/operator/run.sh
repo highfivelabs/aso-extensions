@@ -140,7 +140,7 @@ kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev managementgroups.management.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -350,6 +350,20 @@ spec:
   owner: {name: rg}
   location: westus
 ---
+apiVersion: management.azure.hfl.dev/v20230401
+kind: ManagementGroup
+metadata: {name: platform, namespace: $1}
+spec:
+  azureName: $1-platform
+  displayName: Platform
+---
+apiVersion: management.azure.hfl.dev/v20230401
+kind: ManagementGroupsSubscription
+metadata: {name: workload, namespace: $1}
+spec:
+  azureName: ${SUB}
+  owner: {name: platform}
+---
 apiVersion: authorization.azure.hfl.dev/v1
 kind: ManagementLock
 metadata: {name: keep-rg, namespace: $1}
@@ -413,6 +427,14 @@ wait_for 90 "team-a's Vault Ready" ready vaults.recoveryservices.azure.hfl.dev t
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.RecoveryServices/vaults/team-a-backups 201" \
   || fail "the fake resource manager saw no Recovery Services vault created in team-a's resource group"
 pass "team-a Vault (Recovery Services) Ready: generated, owned by ASO's ResourceGroup, PUT by ASO's ARM reconciler"
+wait_for 90 "team-a's ManagementGroup Ready" ready managementgroups.management.azure.hfl.dev team-a platform
+logged fakearm "request PUT /providers/Microsoft.Management/managementGroups/team-a-platform 201" \
+  || fail "the fake resource manager saw no management group created at the tenant root"
+pass "team-a ManagementGroup Ready: a tenant scope resource (no resource group, no owner), generated, PUT by ASO's ARM reconciler"
+wait_for 90 "team-a's ManagementGroupsSubscription Ready" ready managementgroupssubscriptions.management.azure.hfl.dev team-a workload
+logged fakearm "request PUT /providers/Microsoft.Management/managementGroups/team-a-platform/subscriptions/${SUB} 201" \
+  || fail "the fake resource manager saw no subscription placed in team-a's management group"
+pass "team-a ManagementGroupsSubscription Ready: a child of a tenant scope resource, ARM ID built from its group"
 wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
 pass "team-a ManagementLock Ready"
 logged fakearm "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
@@ -443,6 +465,8 @@ wait_for 90 "team-b's VirtualMachinesRunCommand refused" bash -c "[[ \"\$(kubect
 pass "team-b VirtualMachinesRunCommand refused: $(message virtualmachinesruncommands.compute.azure.hfl.dev team-b hello | cut -c1-120)..."
 wait_for 90 "team-b's Vault refused" bash -c "[[ \"\$(kubectl get vaults.recoveryservices.azure.hfl.dev -n team-b backups -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
 pass "team-b Vault refused: $(message vaults.recoveryservices.azure.hfl.dev team-b backups | cut -c1-120)..."
+wait_for 90 "team-b's ManagementGroup refused" bash -c "[[ \"\$(kubectl get managementgroups.management.azure.hfl.dev -n team-b platform -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
+pass "team-b ManagementGroup refused: $(message managementgroups.management.azure.hfl.dev team-b platform | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
@@ -500,6 +524,14 @@ kubectl -n team-a delete vaults.recoveryservices.azure.hfl.dev backups --timeout
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.RecoveryServices/vaults/team-a-backups 200" \
   || fail "the fake resource manager saw no delete of the vault"
 pass "the vault is deleted in Resource Manager"
+
+kubectl -n team-a delete managementgroupssubscriptions.management.azure.hfl.dev workload --timeout=120s
+logged fakearm "request DELETE /providers/Microsoft.Management/managementGroups/team-a-platform/subscriptions/${SUB} 200" \
+  || fail "the fake resource manager saw no removal of the subscription from the management group"
+kubectl -n team-a delete managementgroups.management.azure.hfl.dev platform --timeout=120s
+logged fakearm "request DELETE /providers/Microsoft.Management/managementGroups/team-a-platform 200" \
+  || fail "the fake resource manager saw no delete of the management group"
+pass "the management group and its subscription placement are deleted in Resource Manager"
 
 echo
 echo "all checks passed"
