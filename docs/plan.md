@@ -187,7 +187,7 @@ rechecked 2026-11-08, see below):
 | b2 | PostgreSQL privileges per database | an app's user needs `CONNECT`/`CREATE` on its own database | **built**; ASO issue #4694 is open and its maintainers say they still want it, so offer upstream |
 | b3 | Key Vault secrets from Kubernetes Secrets | apps on Azure read configuration from Key Vault; ASO declined to create secrets (#1894) | **built**; a lasting gap |
 | b4 | PostgreSQL schema privileges and default privileges | since PostgreSQL 15 only the database owner may create in `public`; an app needs `USAGE`/`CREATE` on a schema and default privileges on new tables | **built** (`schemaPrivileges`, `defaultPrivileges` on the same `User`); a1 was skipped because it waits on open question 5 |
-| b5 | PostgreSQL database ownership | migrations need the app to own its database | a field on the same `User`, with b4 |
+| b5 | PostgreSQL database ownership | migrations need the app to own its database | a field on the same `User`; waits on open question 8 (who owns the database after the user is deleted) |
 | b6 | Key Vault certificates from a Kubernetes Secret (import) | TLS certificates issued in-cluster, kept in Key Vault | after b4; the same shape as `VaultSecret` |
 | b7 | ARM resources in the specs but not exported | varies | upstream, by configuration (section 1) |
 
@@ -386,3 +386,14 @@ TABLES IN SCHEMA`), and global default privileges (no schema).
    `User` kinds in other groups; `kubectl get users` is ambiguous and needs
    the group. Rename to `PostgreSQLUser`, or keep ASO's name so moving to
    ASO's group later is a group change only? Recommended: keep it.
+8. **PostgreSQL database ownership (b5)**: `ALTER DATABASE … OWNER TO` the
+   user is the next candidate. PostgreSQL refuses to drop a role that owns
+   a database, so deleting such a user must first give the database to
+   someone: back to its previous owner (recorded in status when ownership
+   was taken), to the administrator that reconciles the user, or nobody
+   (the delete waits until a person moves it). Dropping the database is not
+   an option: it is ASO's `FlexibleServersDatabase`. Recommended: back to
+   the previous owner, falling back to the administrator when that role is
+   gone; objects the user created inside stay its own, so the delete still
+   fails until they are dropped or reassigned, as for any user that owns
+   tables.
