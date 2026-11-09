@@ -183,17 +183,17 @@ Microsoft.App,Microsoft.App/containerApps/sourcecontrols,17,,0,,0,17,false,spec_
 Microsoft.App,Microsoft.App/jobs,80,app.azure.com/Job,76,,0,4,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
 Microsoft.App,Microsoft.App/logicApps,0,,0,,0,0,false,spec_api=2026-07-01
 Microsoft.App,Microsoft.App/managedEnvironments,49,app.azure.com/ManagedEnvironment,27,,0,22,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
-Microsoft.App,Microsoft.App/managedEnvironments/certificates,6,,0,,0,6,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/managedEnvironments/daprComponents,13,,0,,0,13,false,spec_api=2026-07-01
+Microsoft.App,Microsoft.App/managedEnvironments/certificates,6,,0,app.azure.hfl.dev/ManagedEnvironmentsCertificate,5,1,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
+Microsoft.App,Microsoft.App/managedEnvironments/daprComponents,13,,0,app.azure.hfl.dev/ManagedEnvironmentsDaprComponent,12,1,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/daprComponents/resiliencyPolicies,14,,0,,0,14,false,spec_api=2026-07-01
 Microsoft.App,Microsoft.App/managedEnvironments/daprSubscriptions,11,,0,,0,11,false,spec_api=2025-02-02-preview; spec-preview-only
 Microsoft.App,Microsoft.App/managedEnvironments/dotNetComponents,5,,0,,0,5,false,spec_api=2026-07-01
 Microsoft.App,Microsoft.App/managedEnvironments/httpRouteConfigs,12,,0,,0,12,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/managedEnvironments/javaComponents,8,,0,,0,8,false,spec_api=2026-07-01
+Microsoft.App,Microsoft.App/managedEnvironments/javaComponents,8,,0,app.azure.hfl.dev/ManagedEnvironmentsJavaComponent,7,1,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/maintenanceConfigurations,3,,0,,0,3,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/managedEnvironments/managedCertificates,4,,0,,0,4,false,spec_api=2026-07-01
+Microsoft.App,Microsoft.App/managedEnvironments/managedCertificates,4,,0,app.azure.hfl.dev/ManagedEnvironmentsManagedCertificate,4,0,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/managedEnvironments/storages,9,,0,,0,9,false,spec_api=2026-07-01
+Microsoft.App,Microsoft.App/managedEnvironments/storages,9,,0,app.azure.hfl.dev/ManagedEnvironmentsStorage,7,2,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/sandboxGroups,3,,0,,0,3,false,spec_api=2026-07-01
 Microsoft.App,Microsoft.App/sandboxGroups/vnetConnections,1,,0,,0,1,false,spec_api=2026-07-01
 Microsoft.App,Microsoft.App/sessionPools,46,,0,,0,46,false,spec_api=2026-07-01
@@ -2285,7 +2285,7 @@ Microsoft.VMwareCloudSimple,Microsoft.VMwareCloudSimple/dedicatedCloudNodes,13,,
 Microsoft.VMwareCloudSimple,Microsoft.VMwareCloudSimple/dedicatedCloudServices,3,,0,,0,3,false,spec_api=2019-04-01
 Microsoft.VMwareCloudSimple,Microsoft.VMwareCloudSimple/virtualMachines,35,,0,,0,35,false,spec_api=2019-04-01
 Microsoft.Web,Microsoft.Web/aigateways,3,,0,,0,3,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/certificates,11,,0,,0,11,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/certificates,11,,0,web.azure.hfl.dev/Certificate,11,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/connectionGateways,13,,0,,0,13,false,spec_api=2016-06-01
 Microsoft.Web,Microsoft.Web/connections,26,,0,,0,26,false,spec_api=2016-06-01
 Microsoft.Web,Microsoft.Web/containerApps,50,,0,,0,50,false,spec_api=2023-12-01
@@ -2312,7 +2312,7 @@ Microsoft.Web,Microsoft.Web/sites/domainOwnershipIdentifiers,2,,0,,0,2,false,spe
 Microsoft.Web,Microsoft.Web/sites/extensions,15,,0,,0,15,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/functions,14,,0,,0,14,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/functions/keys,1,,0,,0,1,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/hostNameBindings,9,,0,,0,9,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/hostNameBindings,9,,0,web.azure.hfl.dev/SitesHostNameBinding,9,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/hybridconnection,8,,0,,0,8,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/hybridConnectionNamespaces/relays,9,,0,,0,9,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/instances/deployments,13,,0,,0,13,false,spec_api=2015-08-01
@@ -2324,7 +2324,7 @@ Microsoft.Web,Microsoft.Web/sites/privateEndpointConnections,6,,0,,0,6,false,spe
 Microsoft.Web,Microsoft.Web/sites/publicCertificates,3,,0,,0,3,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/sitecontainers,16,,0,,0,16,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/siteextensions,0,,0,,0,0,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots,244,,0,,0,244,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots,244,,0,web.azure.hfl.dev/SitesSlot,244,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/backups,15,,0,,0,15,false,spec_api=2015-08-01
 Microsoft.Web,Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies,2,,0,,0,2,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/certificates,11,,0,,0,11,false,spec_api=2026-07-15
@@ -2334,7 +2334,7 @@ Microsoft.Web,Microsoft.Web/sites/slots/domainOwnershipIdentifiers,2,,0,,0,2,fal
 Microsoft.Web,Microsoft.Web/sites/slots/extensions,15,,0,,0,15,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/functions,14,,0,,0,14,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/functions/keys,1,,0,,0,1,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/hostNameBindings,9,,0,,0,9,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/hostNameBindings,9,,0,web.azure.hfl.dev/SitesSlotsHostNameBinding,9,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/hybridconnection,8,,0,,0,8,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/hybridConnectionNamespaces/relays,9,,0,,0,9,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/instances/deployments,13,,0,,0,13,false,spec_api=2015-08-01

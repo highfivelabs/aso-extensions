@@ -1,0 +1,4 @@
+# The services of Azure/azure-rest-api-specs (under specification/) that
+# hack/specs.sh checks out for the generator, one per line.
+specification/app
+specification/web

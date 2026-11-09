@@ -1,0 +1,113 @@
+# Copyright 2026 High Five Labs
+# SPDX-License-Identifier: MIT
+#
+# Every task needs the pinned Azure Service Operator checkout;
+# `task upstream` fetches it (about 675 MB, not committed). The task names
+# are the Makefile's they replace. Tasks that more than one repository needs
+# are in taskfiles/common.yml.
+version: '3'
+
+includes:
+  common: ./taskfiles/common.yml
+
+vars:
+  # The project's name: the image, and the prefix of the install's objects.
+  NAME: aso-extensions
+  BIN: '{{.ROOT_DIR}}/bin'
+  ENVTEST_K8S_VERSION: '1.37.0'
+  # setup-envtest at controller-runtime's version in ASO's go.mod.
+  SETUP_ENVTEST: sigs.k8s.io/controller-runtime/tools/setup-envtest@v0.25.2
+
+env:
+  GOTOOLCHAIN: '{{if .GOTOOLCHAIN}}{{.GOTOOLCHAIN}}{{else}}local{{end}}'
+
+tasks:
+  default:
+    desc: Everything that must hold before a commit (check)
+    cmds:
+      - task: check
+
+  all:
+    desc: As default (the Makefile's all)
+    cmds:
+      - task: check
+
+  upstream:
+    desc: Fetch ASO at the pin (about 675 MB) and apply patches/
+    cmds:
+      - hack/upstream.sh
+
+  upstream-check:
+    desc: Fail if the checkout is not the pin plus patches/, or go.mod versions differ from ASO's
+    cmds:
+      - hack/upstream.sh --check
+      - hack/check-go-mod.sh
+
+  generate:
+    desc: Deepcopy code and CRDs from apis/
+    cmds:
+      - task: upstream-check
+      - hack/generate.sh
+
+  generate-arm:
+    desc: Rerun ASO's generator over the ARM specs (heavy; run it on a machine meant for that)
+    cmds:
+      - task: upstream-check
+      - hack/generate-arm.sh
+      - hack/generate.sh
+
+  build:
+    desc: Build the manager
+    cmds:
+      - task: upstream-check
+      - go build -o {{.BIN}}/manager ./cmd/manager
+
+  test:
+    desc: Unit tests and the end-to-end tests (envtest, the fake cloud in process, PostgreSQL in Docker)
+    cmds:
+      - task: upstream-check
+      - task: common:setup-envtest
+        vars: {BIN: '{{.BIN}}', PACKAGE: '{{.SETUP_ENVTEST}}'}
+      - |
+        KUBEBUILDER_ASSETS="$({{.BIN}}/setup-envtest use {{.ENVTEST_K8S_VERSION}} --bin-dir {{.BIN}}/envtest -p path)" \
+          go test ./... -count=1 {{.CLI_ARGS}}
+
+  check:
+    desc: Everything that must hold before a commit
+    cmds:
+      - task: upstream-check
+      - task: common:gofmt
+        vars: {DIRS: apis cmd pkg test}
+      - hack/generate-arm.sh
+      - hack/generate.sh
+      - task: common:diff-clean
+        vars:
+          PATHS: apis config pkg/controllers generator
+          HINT: generated files are stale; commit the output of task generate-arm
+      - go vet ./...
+      - go vet -tags fakecloud ./cmd/manager
+      - hack/check-no-fake-cloud.sh
+      - hack/check-spdx.sh
+      - task: build
+      - task: test
+
+  operator-e2e:
+    desc: The install on kind with the fake cloud (tests/operator/run.sh)
+    cmds:
+      - task: upstream-check
+      - NAME={{.NAME}} tests/operator/run.sh
+
+  coverage:
+    desc: Regenerate the coverage dashboard (docs/coverage and the README's Coverage section)
+    cmds:
+      - hack/coverage/run.sh
+
+  coverage-check:
+    desc: Fail if the committed coverage dashboard differs from a regeneration
+    cmds:
+      - hack/coverage/run.sh --check
+
+  clean:
+    desc: Remove bin/
+    cmds:
+      - rm -rf {{.BIN}}

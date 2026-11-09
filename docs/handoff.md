@@ -1,0 +1,190 @@
+# Handoff
+
+For an agent that takes this repository over with nothing but the
+repository. Read `CLAUDE.md` first (the standing rules; `AGENTS.md` is the
+same), then this file, then `docs/plan.md` for the reasons. Where this file
+and the plan disagree, the plan is newer or this file is wrong: fix this
+file.
+
+State at the writing: 2026-11-09, after the App Service kinds.
+
+## What this repository is
+
+Kubernetes kinds for Azure that Azure Service Operator v2 (ASO) does not
+have, run as one manager beside ASO. Three sorts, all in groups
+`<service>.azure.hfl.dev`:
+
+| Sort | Kinds | Built by |
+| --- | --- | --- |
+| Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
+| ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
+| ARM, generated | `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+
+ARM resources are in scope; the builder said so ("Build them or pull them
+from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
+order: skip what ASO has; copy upstream where it exists; generate; hand-write.
+
+## The queue, in order
+
+The ranking is `catalog/docs/azure.md` §5 (the `highfivelabs/catalog`
+repository, read-only for this one); `docs/plan.md` §3 (c) is the live table.
+One pull request per gap, cut from the latest `main`.
+
+| Rank | Gap | State |
+| --- | --- | --- |
+| c1, c3, c4 | locks, Container Apps environment children, App Service children | built |
+| c5 | Log Analytics children (tables, data exports, linked services, linked storage, query packs, solutions) | next |
+| c6 | Azure Monitor private link scope and scoped resources; network security perimeter associations | queued |
+| c7 | Key Vault keys | skip: ASO's `VaultKey` (#5564) ships in its next release; recheck |
+| c9 | ACR tokens, scope maps, credential sets | queued; a token password is a secret returned once |
+| c10 | VM extras: run command, auto-shutdown schedule, maintenance assignment, Recovery Services backup | queued; no Recovery Services group at the pin |
+| c11 to c14 | storage local users; Cognitive Services RAI policies; Cosmos Gremlin and SQL dedicated gateway; AKS managed namespaces | queued |
+| c8 | management groups, policy, budgets, vWAN, subscription tags | queued, low priority (platform) |
+| c18 | stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones) | not a new kind |
+
+Not in the catalog's order but waiting: Azure SQL Entra users (a1, ASO PR
+#5104, open question 5) and Entra directory roles (c15, "if wanted").
+
+For every kind, before building: recheck upstream read-only (`gh release
+list`, `gh api repos/Azure/azure-service-operator/compare/<pin>...main`,
+open and draft pull requests, issues) and record what you found in
+`docs/plan.md` §3. Skip what is released or in `main`, and record the skip.
+
+## The generator workflow (a new generated kind)
+
+Everything is in `docs/plan.md` §2, "Generated ARM kinds". The short form:
+
+1. **Specs.** Add the service to `generator/specs.txt`
+   (`specification/<service>`). `hack/specs.sh` fetches them at the commit
+   ASO pins (`UPSTREAM.md`, "Specs commit") into `.cache/`.
+2. **Configuration.** `generator/azure-arm/<group>.yaml`, one per group, and an
+   `imports:` line in `generator/azure-arm.yaml`:
+   - `typeFilters`: include the one API version (prefer ASO's own latest for
+     that group, so owners and children share a vintage), then prune the group;
+   - `groupModelConfiguration.<version>`: `$exportAs` and `$supportedFrom: v0.1.0`
+     per resource, plus labels the generator demands (`$referenceType: arm` for
+     ARM IDs, `$importSecretMode: required|never` for secrets; copy them from
+     ASO's `third_party/azure-service-operator/v2/azure-arm/<group>.yaml`).
+   - A group must have a `groupModelConfiguration` entry for its version, or
+     the generator does not load that version's specs at all.
+3. **Owners.** If a kind is owned by an ASO kind (an ASO `Site`, `Workspace`,
+   `ResourceGroup`), list it in `generator/external-owners.txt` (`group/Kind`),
+   add its storage (hub) type to `controllers.OwnerTypes()` and the scheme in
+   `pkg/controllers/controllers.go`, add `list`/`watch` for it in
+   `config/rbac/role.yaml`, and add its CRD to the test CRDs in
+   `hack/generate.sh` (ASO's hub package for a group is the one
+   `internal/controllers/controller_resources_gen.go` registers).
+4. **Generate.** `task generate-arm` (on the Ubuntu machine, see below). The
+   generator reports the next missing label one error at a time; fix the
+   configuration and repeat; a run is about 30 seconds. To find a resource's
+   generated name, run the generator with `--verbose` and read the
+   `Skipping resource` lines; names look like `Sites_Slot` and become kinds like
+   `SitesSlot`.
+5. **Bring the output back.** The run writes `apis/arm/`,
+   `pkg/controllers/arm_resources_gen.go` and `generator/reports/`; with
+   `offload`, tar them into `offload-artifacts/` (it is copied back), extract
+   in the repository, then run `hack/generate.sh` locally (deepcopy and CRDs;
+   light). Never edit generated files.
+6. **Tests.** `test/e2e/arm_*_test.go` are the pattern: stand-ins for the ASO
+   owners (`resourceGroup`, `managedEnvironment`, `webSite` in
+   `helpers_test.go`, which carry the `serviceoperator.azure.com/resource-id`
+   annotation ASO writes), the ARM IDs added to the fake Resource Manager
+   (`armFake.AddResource`), then create, wait for Ready, check what the fake
+   holds, change, delete. Extend `tests/operator/run.sh` with one kind per
+   group, and the fake's initial resources in its `fakearm-resources` list.
+7. **Docs.** `docs/plan.md` §3 (c) row, §7 (proven), `README.md` table.
+
+What the generator does not give you: the fixed-name singleton resources
+(for example `sites/config/appsettings`) and anything the specs model as
+polymorphic; say so in the plan rather than hand-writing around it.
+
+Facts learned the hard way:
+- CRDs have one version; the controller is registered on the API type; there
+  are no webhooks (so no admission validation beyond the CRD schema, and
+  `AzureName()` falls back to `metadata.name`). `docs/plan.md` §2 lists the
+  assumption to revisit before the repository goes public.
+- `hack/generate.sh` sets `LC_ALL=C`: the order of the CRD kustomization's list
+  must not depend on the machine (the laptop and the Ubuntu machine differ).
+- ASO's token scope is `<audience>/.default`: give the fake audience no
+  trailing slash.
+- A generated kind's delete under a `CanNotDelete` lock fails with
+  `ScopeLocked` and ASO retries slowly; tests allow minutes.
+- `kubectl logs | grep -q` under `pipefail` fails when the log is long:
+  capture first (`logged` in `tests/operator/run.sh`).
+
+## Running things: offload and the Ubuntu machine
+
+Nothing heavy runs on the laptop: no `task check`, no envtest, no Docker, no
+kind, no generator. From the repository root:
+
+```sh
+../offload/offload run --ubuntu -- bash -c 'task check && task operator-e2e'
+```
+
+- The Ubuntu machine is free and preferred; it keeps a kind cluster warm
+  (`aso-extensions-operator`) and has go, ko, kind, helm and task. It is shared
+  with other work (a Bundt mutation run, other agents): run at most one kind
+  cluster at a time and never touch other clusters (`bundt-checks` and the
+  other repositories' `*-operator`).
+- If it is unreachable: `../offload/offload run --hours 2 -- ...` (a Spot VM
+  that deletes itself); `offload ls` and `offload reap` if something is left.
+- `offload` copies the working tree (tracked or not, `third_party/` included;
+  `bin/`, `.cache/` and `offload-artifacts/` are excluded and persist on the
+  machine) to the same path there, runs the command, and copies
+  `offload-artifacts/` back. `task check` compares generated files to the git
+  index, so `git add -A` before a run.
+- Run long commands in the background and wait for the notification; redirect
+  their output to a file and read the end of it.
+- A test that times out: rerun once before treating it as a failure. State
+  the real result, failures included.
+- Light local work is fine: editing, `go build ./...`, `go vet`,
+  `hack/generate.sh` (controller-gen), `task --list`.
+
+## Git and pull requests
+
+- Branch `agent/<short-name>` from the latest `main`; one change per commit;
+  `git commit -s` (DCO) with the repository's configured noreply author; the
+  attribution lines the session names at the end of the message. Push the
+  branch, open a pull request against `main` of this repository with `gh pr
+  create`; never push to `main`, never force-push, never touch upstream
+  pull requests or issues (reading them is fine).
+- The description says what was built, what upstream it copies, what was
+  proven against the fake cloud and what was not, and new open questions.
+  It states the real results of `task check` and `task operator-e2e`, and any
+  flake it found.
+- Do not touch `docs/coverage/`, `hack/coverage/` or the README's coverage
+  section: another agent owns them (branch `agent/coverage`); expect README
+  conflicts.
+- Never edit `third_party/`. A change to ASO is a numbered patch in
+  `patches/azure-service-operator/` (0001 exports the framework, 0002 changes
+  the generator, 0003 exports the ARM reconciler); make the change in the
+  checkout, `git diff` it into the patch, then `hack/upstream.sh` re-applies the
+  series and `hack/upstream.sh --check` verifies it.
+
+## Open decisions (the builder's)
+
+From `docs/plan.md` §8 and the pull requests; none blocks the queue.
+1. **One CRD version, no conversion webhook** for generated kinds: assumed,
+   to revisit before the repository goes public (§2 says what the revisit
+   involves: a webhook, or per-version kinds).
+2. **Sharing `taskfiles/common.yml` across repositories**: a vendored copy
+   with a sync script is recommended (PR #7); the builder has not decided.
+3. Open questions 1 to 5 and 7 of §8: licence (MIT vs Apache-2.0), offering b1
+   and b2 upstream, relaxed workload identity as the default, reading Secrets
+   cluster-wide, Azure SQL Entra users (a1), the `User` kind name.
+4. **Webhook-less validation**: generated kinds lack ASO's checks (reference
+   format, immutable `owner` and `azureName`). If wanted, add CEL rules by a
+   generator patch; not done.
+
+## Where to look
+
+| What | Where |
+| --- | --- |
+| The rules | `CLAUDE.md`, `AGENTS.md` |
+| The design and every decision | `docs/plan.md` |
+| The pin, the patches, what is copied | `UPSTREAM.md` |
+| The fake cloud and what it cannot show | `docs/fake-cloud.md` |
+| Tasks | `Taskfile.yml`, `taskfiles/common.yml` (`task --list`) |
+| Generator configuration | `generator/` |
+| The manager | `pkg/manager/`, `pkg/controllers/`, `cmd/manager/` |
+| Tests | `test/e2e/` (envtest), `tests/operator/` (kind) |

@@ -1,0 +1,7 @@
+# ASO's own kinds that the ARM kinds we generate name as owners (group/Kind).
+# They stay in ASO's groups: the generated owner reference says
+# app.azure.com, not app.azure.hfl.dev, and the manager reads them as ASO's
+# types (pkg/controllers OwnerTypes).
+app/ManagedEnvironment
+resources/ResourceGroup
+web/Site

@@ -8,8 +8,10 @@ Licensed under the MIT license.
 // our kinds only: the same global credential, the same credential provider
 // (per-resource credential-from, the namespace's aso-credential, global;
 // strict or relaxed workload identity), the same generic reconciler and
-// controller options. There is no CRD management and no webhook; the one
-// ARM kind, ManagementLock, has its own small Resource Manager client.
+// controller options. There is no CRD management and no webhook. The ARM
+// kinds ASO's generator wrote are reconciled by ASO's own generic ARM
+// reconciler, over the same connection factory; ManagementLock, hand-written,
+// has its own small Resource Manager client.
 
 // Package manager wires our kinds into a controller-runtime manager the way
 // ASO's own manager wires its kinds.
@@ -17,6 +19,7 @@ package manager
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/benbjohnson/clock"
@@ -25,6 +28,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 
 	"sigs.k8s.io/controller-runtime/pkg/cache"
+	"sigs.k8s.io/controller-runtime/pkg/manager"
 
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
 	"github.com/Azure/azure-service-operator/v2/pkg/outoftree"
@@ -41,8 +45,9 @@ type Options struct {
 	GlobalCredential *outoftree.Credential
 	// KeyVaultClientOptions are passed to the Key Vault data plane client.
 	KeyVaultClientOptions azcore.ClientOptions
-	// ARMClientOptions are passed to the Resource Manager client (locks).
-	ARMClientOptions azcore.ClientOptions
+	// ARMHTTPClient is what every Resource Manager request goes through,
+	// for the generated kinds and for locks; nil is the default transport.
+	ARMHTTPClient *http.Client
 	// EnableAzureCLI allows the Azure CLI credential in the global chain,
 	// as ASO's --enable-azure-cli-authentication.
 	EnableAzureCLI bool
@@ -77,11 +82,33 @@ func Setup(ctx context.Context, mgr ctrl.Manager, cfg outoftree.ConfigValues, op
 	)
 	positiveConditions := conditions.NewPositiveConditionBuilder(clk)
 
+	expressionEvaluator, err := outoftree.NewExpressionEvaluator(log)
+	if err != nil {
+		return nil, eris.Wrap(err, "error creating expression evaluator")
+	}
+	if err := mgr.Add(manager.RunnableFunc(func(ctx context.Context) error {
+		expressionEvaluator.Start()
+		<-ctx.Done()
+		expressionEvaluator.Stop()
+		return nil
+	})); err != nil {
+		return nil, eris.Wrap(err, "error starting the expression evaluator")
+	}
+	arm := controllers.ARM{
+		ConnectionFactory:   outoftree.NewARMConnectionFactory(credentialProvider, cfg.Cloud(), opts.ARMHTTPClient),
+		ExpressionEvaluator: expressionEvaluator,
+	}
+
 	resolver := outoftree.NewResolver(kubeClient)
-	types, reconcilers := controllers.StorageTypes(kubeClient, resolver, positiveConditions, credentialProvider, cfg)
+	types, reconcilers, err := controllers.StorageTypes(mgr.GetScheme(), kubeClient, resolver, positiveConditions, credentialProvider, arm, cfg)
+	if err != nil {
+		return nil, eris.Wrap(err, "failed to make the storage types")
+	}
 	reconcilers.VaultSecret.ClientOptions = opts.KeyVaultClientOptions
 	reconcilers.VaultCertificate.ClientOptions = opts.KeyVaultClientOptions
-	reconcilers.ManagementLock.ClientOptions = opts.ARMClientOptions
+	if opts.ARMHTTPClient != nil {
+		reconcilers.ManagementLock.ClientOptions = azcore.ClientOptions{Transport: opts.ARMHTTPClient}
+	}
 	reconcilers.ManagementLock.OwnerReader = mgr.GetAPIReader()
 	reconcilers.ManagementLock.Mapper = mgr.GetRESTMapper()
 	if err := resolver.IndexStorageTypes(mgr.GetScheme(), append(controllers.OwnerTypes(), types...)); err != nil {

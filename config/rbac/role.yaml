@@ -1,5 +1,5 @@
 # The manager's rights: our kinds; reading the ASO owners it resolves
-# (FlexibleServer, Vault); reading Secrets and ConfigMaps (aso-credential,
+# (FlexibleServer, Vault, ManagedEnvironment, ResourceGroup, Site); reading Secrets and ConfigMaps (aso-credential,
 # credential-from secrets, the values our kinds name; ASO's framework keeps
 # informers on both); reading Namespaces (ASO's reconcile-policy annotation
 # on a namespace); events. Of ASO's, only get on its resources, for a
@@ -20,6 +20,17 @@ rules:
   verbs: ["get", "list", "watch"]
 - apiGroups: ["keyvault.azure.com"]
   resources: ["vaults"]
+  verbs: ["get", "list", "watch"]
+# The ASO kinds the generated ARM kinds name as owners (generator/external-owners.txt)
+# and the resource group above them: read through the cache, so list and watch.
+- apiGroups: ["app.azure.com"]
+  resources: ["managedenvironments"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["resources.azure.com"]
+  resources: ["resourcegroups"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["web.azure.com"]
+  resources: ["sites"]
   verbs: ["get", "list", "watch"]
 - apiGroups: [""]
   resources: ["secrets", "configmaps", "namespaces"]

@@ -1,0 +1,56 @@
+typeFilters:
+  - action: include
+    group: web
+    version: v20260715
+    because: the version of ASO's Site and ServerFarm, the owners of what we generate
+  - action: prune
+    group: web
+    because: every other version is left alone
+
+groupModelConfiguration:
+  2026-07-15:
+    Certificate:
+      $exportAs: Certificate
+      $supportedFrom: v0.1.0
+    Sites_Slot:
+      $exportAs: SitesSlot
+      $supportedFrom: v0.1.0
+    Sites_HostNameBinding:
+      $exportAs: SitesHostNameBinding
+      $supportedFrom: v0.1.0
+    Sites_Slots_HostNameBinding:
+      $exportAs: SitesSlotsHostNameBinding
+      $supportedFrom: v0.1.0
+    # Reference and resource labels, as ASO's web.yaml has them for 2026-07-15
+    ApiManagementConfig:
+      Id:
+        $referenceType: arm
+    CloningInfo:
+      TrafficManagerProfileId:
+        $referenceType: arm
+      SourceWebAppId:
+        $referenceType: arm
+    FunctionsDeploymentStorageAuthentication:
+      UserAssignedIdentityResourceId:
+        $referenceType: arm
+    HostingEnvironmentProfile:
+      Id:
+        $referenceType: arm
+    IpSecurityRestriction:
+      VnetSubnetResourceId:
+        $referenceType: arm
+    SiteProperties:
+      ServerFarmId:
+        $referenceType: arm
+      VirtualNetworkSubnetId:
+        $referenceType: arm
+      ManagedEnvironmentId:
+        $referenceType: arm
+    CertificateProperties:
+      Password:
+        $importSecretMode: required # the password of the PFX in pfxBlob
+      PfxBlob:
+        $importSecretMode: required # the PFX holds the private key: a Secret, not the spec
+    CertificateProperties_STATUS:
+      Password:
+        $importSecretMode: never # a status never holds the password

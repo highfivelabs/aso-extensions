@@ -18,13 +18,16 @@ itself lives in its own repository and is never changed from here.
 ## Where things are
 
 - **Upstream and the pin:** `UPSTREAM.md`; fetched into `third_party/` by
-  `make upstream` (or `make tools`), with `patches/` applied in order.
+  `task upstream`, with `patches/` applied in order.
 - **Unreleased upstream code** (master, pull requests): `docs/plan.md`
   §1 (how ASO v2 is built), §2 (how a kind is built here; `patches/` adds `v2/pkg/outoftree` to reach ASO's reconciler), §4 (upstream and sync).
-- **What to build next:** `docs/plan.md` §3 "Candidates". Upstream first: a gap
-  is built here only when upstream has neither released it nor has a
-  pull request close to merging; when it does, wait for the release
-  unless a field is critical.
+- **What to build next:** `docs/plan.md` §3 "Candidates". Plain Azure API
+  (ARM) resources are in scope, as are data-plane kinds (the builder's
+  decision, `docs/plan.md` §1 and §8 Q6). Upstream first, by habit: a kind
+  that ASO has released, or has in the pinned code, is skipped (record the
+  skip); one that an open ASO pull request or unreleased `main` adds is
+  copied from there; otherwise generate it with ASO's generator from the
+  pinned ARM specs where it can, and hand-write it only when it cannot.
 - **What is left and known gaps:** `docs/plan.md` §7 "Proven, and not".
 - **The fake cloud:** docs/fake-cloud.md (PostgreSQL, fake Entra and Key Vault).
 - **Identity:** the managers run as their own narrow service account by
@@ -32,19 +35,19 @@ itself lives in its own repository and is never changed from here.
 
 ## Adding or changing a kind
 
-1. Check upstream again (read-only): release notes, `master`, open pull
-   requests. Record what you found in `docs/plan.md`.
+1. Check upstream again (read-only): release notes, `main`, open pull
+   requests and issues. Record what you found in `docs/plan.md`.
 2. Copy the nearest upstream code and change as little as possible
    (`CONTRIBUTING.md`, "The copy-upstream rule"); record each copied file
    in `UPSTREAM.md`. Changes to upstream code go in `patches/`, never by
    editing `third_party/`.
-3. Generate CRDs and code with the repo's make targets; never hand-edit
+3. Generate CRDs and code with the repo's tasks; never hand-edit
    generated files.
 4. Test against the fake cloud, including what the fake cannot show,
    written down in the fake cloud's doc.
 5. Update `docs/plan.md` (what was built, what was proven, what is left)
    and `README.md`.
-6. Run `make check` (and `make operator-e2e` when the operator or
+6. Run `task check` (and `task operator-e2e` when the operator or
    install changes) and report the real result, failures included.
 
 ## Always

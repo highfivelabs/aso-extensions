@@ -11,8 +11,11 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
+	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
+	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
+	asoweb "github.com/Azure/azure-service-operator/v2/api/web/v20260715/storage"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
 )
@@ -104,6 +107,63 @@ func keyVault(t *testing.T, ns, name string) {
 	v.Status.Properties = &asokeyvault.VaultProperties_STATUS{VaultUri: &uri}
 	v.Status.Conditions = []conditions.Condition{asoReady(v.Generation)}
 	if err := k8s.Status().Update(ctx, v); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// resourceGroup stands in for an ASO ResourceGroup ASO has provisioned, with
+// the ARM ID annotation ASO writes on what it provisions.
+func resourceGroup(t *testing.T, ns, name, azureName string) {
+	t.Helper()
+	ctx := context.Background()
+	rg := &asoresources.ResourceGroup{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: name,
+		Annotations: map[string]string{genruntime.ResourceIDAnnotation: "/subscriptions/" + subID + "/resourceGroups/" + azureName}}}
+	rg.Spec.AzureName = azureName
+	rg.Spec.Location = new(string)
+	*rg.Spec.Location = "westus"
+	if err := k8s.Create(ctx, rg); err != nil {
+		t.Fatal(err)
+	}
+	rg.Status.Conditions = []conditions.Condition{asoReady(rg.Generation)}
+	if err := k8s.Status().Update(ctx, rg); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// managedEnvironment stands in for an ASO app.azure.com ManagedEnvironment
+// ASO has provisioned, in the resource group rg.
+func managedEnvironment(t *testing.T, ns, name, rg, rgAzureName, azureName string) {
+	t.Helper()
+	ctx := context.Background()
+	env := &asoapp.ManagedEnvironment{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: name,
+		Annotations: map[string]string{genruntime.ResourceIDAnnotation: "/subscriptions/" + subID + "/resourceGroups/" + rgAzureName +
+			"/providers/Microsoft.App/managedEnvironments/" + azureName}}}
+	env.Spec.AzureName = azureName
+	env.Spec.Owner = &genruntime.KnownResourceReference{Name: rg}
+	if err := k8s.Create(ctx, env); err != nil {
+		t.Fatal(err)
+	}
+	env.Status.Conditions = []conditions.Condition{asoReady(env.Generation)}
+	if err := k8s.Status().Update(ctx, env); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// webSite stands in for an ASO web.azure.com Site ASO has provisioned, in
+// the resource group rg.
+func webSite(t *testing.T, ns, name, rg, rgAzureName, azureName string) {
+	t.Helper()
+	ctx := context.Background()
+	site := &asoweb.Site{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: name,
+		Annotations: map[string]string{genruntime.ResourceIDAnnotation: "/subscriptions/" + subID + "/resourceGroups/" + rgAzureName +
+			"/providers/Microsoft.Web/sites/" + azureName}}}
+	site.Spec.AzureName = azureName
+	site.Spec.Owner = &genruntime.KnownResourceReference{Name: rg}
+	if err := k8s.Create(ctx, site); err != nil {
+		t.Fatal(err)
+	}
+	site.Status.Conditions = []conditions.Condition{asoReady(site.Generation)}
+	if err := k8s.Status().Update(ctx, site); err != nil {
 		t.Fatal(err)
 	}
 }

@@ -1,0 +1,348 @@
+diff --git a/v2/tools/generator/internal/astmodel/legacy.go b/v2/tools/generator/internal/astmodel/legacy.go
+index 1f6c88d..a06f98e 100644
+--- a/v2/tools/generator/internal/astmodel/legacy.go
++++ b/v2/tools/generator/internal/astmodel/legacy.go
+@@ -64,91 +64,14 @@ const LastLegacyASOVersion = "v2.16.0"
+ //
+ // Keys are group names in lower case; values are ASO version strings (e.g. "v2.21.0").
+ // When migrating a new group to Hybrid mode, add an entry here recording the upcoming ASO release.
+-var versionMigrationHybridReleases = map[string]string{
+-	"alertsmanagement":  "v2.19.0",
+-	"apimanagement":     "v2.19.0",
+-	"app":               "v2.20.0",
+-	"appconfiguration":  "v2.19.0",
+-	"authorization":     "v2.21.0",
+-	"batch":             "v2.18.0",
+-	"cache":             "v2.21.0",
+-	"cognitiveservices": "v2.21.0",
+-	"compute":           "v2.20.0",
+-	"containerinstance": "v2.21.0",
+-	"containerregistry": "v2.22.0",
+-	"datafactory":       "v2.20.0",
+-	"dataprotection":    "v2.21.0",
+-	"dbformysql":        "v2.19.0",
+-	"devices":           "v2.22.0",
+-	"dbforpostgresql":   "v2.22.0",
+-	"eventgrid":         "v2.20.0",
+-	"eventhub":          "v2.22.0",
+-	"servicebus":        "v2.22.0",
+-	"sql":               "v2.21.0",
+-	"storage":           "v2.18.0",
+-	"subscription":      "v2.21.0",
+-	"synapse":           "v2.19.0",
+-	"web":               "v2.19.0",
+-}
++var versionMigrationHybridReleases = map[string]string{}
+ 
+ // versionMigrationModes contains a mapping of group names to their version migration modes.
+ // Keys are group names in lower case.
+ // We'll start by configuring all existing groups to use the Legacy mode, with no migration required for new groups.
+ // As we move groups to the new versioning scheme, we'll move them to hybrid mode (giving users a migration path forward).
+ // Once all groups have been fully migrated, we will delete this file.
+-var versionMigrationModes = map[string]VersionMigrationMode{
+-	"alertsmanagement":  VersionMigrationModeHybrid,
+-	"apimanagement":     VersionMigrationModeHybrid,
+-	"app":               VersionMigrationModeHybrid,
+-	"appconfiguration":  VersionMigrationModeHybrid,
+-	"authorization":     VersionMigrationModeHybrid,
+-	"batch":             VersionMigrationModeHybrid,
+-	"cache":             VersionMigrationModeHybrid,
+-	"cdn":               VersionMigrationModeHybrid,
+-	"cognitiveservices": VersionMigrationModeHybrid,
+-	"compute":           VersionMigrationModeHybrid,
+-	"containerinstance": VersionMigrationModeHybrid,
+-	"containerregistry": VersionMigrationModeHybrid,
+-
+-	"containerservice": VersionMigrationModeLegacy,
+-
+-	"datafactory":     VersionMigrationModeHybrid,
+-	"dataprotection":  VersionMigrationModeHybrid,
+-	"dbformysql":      VersionMigrationModeHybrid,
+-	"dbforpostgresql": VersionMigrationModeHybrid,
+-	"devices":         VersionMigrationModeHybrid,
+-
+-	"documentdb": VersionMigrationModeLegacy,
+-
+-	"eventgrid": VersionMigrationModeHybrid,
+-
+-	"eventhub":                VersionMigrationModeHybrid,
+-	"insights":                VersionMigrationModeLegacy,
+-	"keyvault":                VersionMigrationModeLegacy,
+-	"kubernetesconfiguration": VersionMigrationModeLegacy,
+-	"kusto":                   VersionMigrationModeLegacy,
+-	"machinelearningservices": VersionMigrationModeLegacy,
+-	"managedidentity":         VersionMigrationModeLegacy,
+-	"monitor":                 VersionMigrationModeLegacy,
+-	"network":                 VersionMigrationModeLegacy,
+-	"network.frontdoor":       VersionMigrationModeLegacy,
+-	"notificationhubs":        VersionMigrationModeLegacy,
+-	"operationalinsights":     VersionMigrationModeLegacy,
+-	"quota":                   VersionMigrationModeLegacy,
+-	"redhatopenshift":         VersionMigrationModeLegacy,
+-	"resources":               VersionMigrationModeLegacy,
+-	"search":                  VersionMigrationModeLegacy,
+-
+-	"servicebus": VersionMigrationModeHybrid,
+-
+-	"signalrservice": VersionMigrationModeLegacy,
+-
+-	"sql":          VersionMigrationModeHybrid,
+-	"storage":      VersionMigrationModeHybrid,
+-	"subscription": VersionMigrationModeHybrid,
+-	"synapse":      VersionMigrationModeHybrid,
+-	"web":          VersionMigrationModeHybrid,
+-}
++var versionMigrationModes = map[string]VersionMigrationMode{}
+ 
+ // VersionPrefixForGroup returns the version prefix to use for the specified group.
+ func VersionPrefixForGroup(group string) string {
+diff --git a/v2/tools/generator/internal/astmodel/package_definition.go b/v2/tools/generator/internal/astmodel/package_definition.go
+index 748a8c6..b71c385 100644
+--- a/v2/tools/generator/internal/astmodel/package_definition.go
++++ b/v2/tools/generator/internal/astmodel/package_definition.go
+@@ -224,6 +224,12 @@ func (p *PackageDefinition) emitSubpackageStub(outputDir string) error {
+ 	return p.emitTemplateFile(subpackageStubTemplate, gvFile)
+ }
+ 
++// GroupSuffix is the domain suffix of the package's group, for the templates
++// (Modified by High Five Labs).
++func (p *PackageDefinition) GroupSuffix() string {
++	return GroupSuffix
++}
++
+ func (p *PackageDefinition) emitDocFile(outputDir string) error {
+ 	docFile := filepath.Join(outputDir, "doc.go")
+ 	return p.emitTemplateFile(docFileTemplate, docFile)
+@@ -300,7 +306,7 @@ Licensed under the MIT license.
+ // +kubebuilder:object:generate=true
+ // All object properties are optional by default, this will be overridden when needed:
+ // +kubebuilder:validation:Optional
+-// +groupName={{.GroupName}}.azure.com
++// +groupName={{.GroupName}}{{.GroupSuffix}}
+ // +versionName={{.Version}}
+ package {{.PackageName}}
+ 
+@@ -311,7 +317,7 @@ import (
+ 
+ var (
+ 	// GroupVersion is group version used to register these objects
+-	GroupVersion = schema.GroupVersion{Group: "{{.GroupName}}.azure.com", Version: "{{.Version}}"}
++	GroupVersion = schema.GroupVersion{Group: "{{.GroupName}}{{.GroupSuffix}}", Version: "{{.Version}}"}
+ 
+ 	// SchemeBuilder is used to add go types to the GroupVersionKind scheme
+ 	SchemeBuilder = &scheme.Builder{GroupVersion: GroupVersion}
+@@ -345,6 +351,6 @@ Licensed under the MIT license.
+ // Code generated by azure-service-operator-codegen. DO NOT EDIT.
+ 
+ // Package {{.PackageName}} contains API Schema definitions for the {{.GroupName}} {{.Version}} API group
+-// +groupName={{.GroupName}}.azure.com
++// +groupName={{.GroupName}}{{.GroupSuffix}}
+ package {{.PackageName}}
+ `))
+diff --git a/v2/tools/generator/internal/astmodel/package_reference.go b/v2/tools/generator/internal/astmodel/package_reference.go
+index a2d3a73..c5c370c 100644
+--- a/v2/tools/generator/internal/astmodel/package_reference.go
++++ b/v2/tools/generator/internal/astmodel/package_reference.go
+@@ -6,6 +6,7 @@
+ package astmodel
+ 
+ import (
++	"os"
+ 	"strings"
+ 	"unicode"
+ 
+@@ -14,9 +15,36 @@ import (
+ 
+ const (
+ 	genRuntimePathPrefix = "github.com/Azure/azure-service-operator/v2/pkg/genruntime"
+-	GroupSuffix          = ".azure.com"
++	asoGroupSuffix       = ".azure.com"
+ )
+ 
++// GroupSuffix is the domain every generated group ends with: ".azure.com", or
++// the value of ASO_GENERATOR_GROUP_SUFFIX (Modified by High Five Labs, so
++// that kinds generated outside ASO live in their own groups).
++var GroupSuffix = groupSuffixFromEnvironment()
++
++func groupSuffixFromEnvironment() string {
++	if s := os.Getenv("ASO_GENERATOR_GROUP_SUFFIX"); s != "" {
++		return s
++	}
++
++	return asoGroupSuffix
++}
++
++// OwnerGroupSuffix is the domain suffix of the group of an owner. It is
++// GroupSuffix, except for the owners named in ASO_GENERATOR_EXTERNAL_OWNERS
++// (comma separated "group/Kind"): ASO's own kinds, which stay in ASO's
++// groups (Modified by High Five Labs).
++func OwnerGroupSuffix(group string, kind string) string {
++	for _, owner := range strings.Split(os.Getenv("ASO_GENERATOR_EXTERNAL_OWNERS"), ",") {
++		if strings.EqualFold(strings.TrimSpace(owner), group+"/"+kind) {
++			return asoGroupSuffix
++		}
++	}
++
++	return GroupSuffix
++}
++
+ type PackageReference interface {
+ 	// PackageName returns the package name of this reference
+ 	PackageName() string
+diff --git a/v2/tools/generator/internal/codegen/pipeline/add_arm_conversion_interface.go b/v2/tools/generator/internal/codegen/pipeline/add_arm_conversion_interface.go
+index e0b4cd9..7f5ffdd 100644
+--- a/v2/tools/generator/internal/codegen/pipeline/add_arm_conversion_interface.go
++++ b/v2/tools/generator/internal/codegen/pipeline/add_arm_conversion_interface.go
+@@ -260,8 +260,8 @@ func (c *armConversionApplier) addARMConversionInterface(
+ 
+ func (c *armConversionApplier) createOwnerProperty(ownerTypeName astmodel.InternalTypeName) *astmodel.PropertyDefinition {
+ 	grp := ownerTypeName.InternalPackageReference().Group()
+-	group := grp + astmodel.GroupSuffix
+ 	kind := ownerTypeName.Name()
++	group := grp + astmodel.OwnerGroupSuffix(grp, kind)
+ 
+ 	prop := astmodel.NewPropertyDefinition(
+ 		c.idFactory.CreatePropertyName(astmodel.OwnerProperty, astmodel.Exported),
+diff --git a/v2/tools/generator/internal/codegen/pipeline/apply_defaulter_and_validator_interfaces.go b/v2/tools/generator/internal/codegen/pipeline/apply_defaulter_and_validator_interfaces.go
+index 1b99fc5..9fb2579 100644
+--- a/v2/tools/generator/internal/codegen/pipeline/apply_defaulter_and_validator_interfaces.go
++++ b/v2/tools/generator/internal/codegen/pipeline/apply_defaulter_and_validator_interfaces.go
+@@ -9,6 +9,7 @@ import (
+ 	"context"
+ 	"fmt"
+ 	"go/token"
++	"os"
+ 
+ 	"github.com/dave/dst"
+ 	"github.com/rotisserie/eris"
+@@ -33,6 +34,13 @@ func ApplyDefaulterAndValidatorInterfaces(configuration *config.Configuration, i
+ 		ApplyDefaulterAndValidatorInterfaceStageID,
+ 		"Add the webhook.CustomDefaulter and webhook.CustomValidator interfaces to a Resource webhook type for each resource that requires them",
+ 		func(ctx context.Context, state *State) (*State, error) {
++			// Modified by High Five Labs: no webhooks are generated when
++			// ASO_GENERATOR_NO_WEBHOOKS is set; they link ASO's internal
++			// packages and our manager runs none.
++			if os.Getenv("ASO_GENERATOR_NO_WEBHOOKS") != "" {
++				return state, nil
++			}
++
+ 			defs := state.Definitions()
+ 			updatedDefs := make(astmodel.TypeDefinitionSet)
+ 
+diff --git a/v2/tools/generator/internal/codegen/pipeline/export_controller_type_registrations.go b/v2/tools/generator/internal/codegen/pipeline/export_controller_type_registrations.go
+index 661852f..bbcc12d 100644
+--- a/v2/tools/generator/internal/codegen/pipeline/export_controller_type_registrations.go
++++ b/v2/tools/generator/internal/codegen/pipeline/export_controller_type_registrations.go
+@@ -8,6 +8,7 @@ package pipeline
+ import (
+ 	"context"
+ 	"fmt"
++	"os"
+ 	"strings"
+ 
+ 	"github.com/rotisserie/eris"
+@@ -43,7 +44,7 @@ func ExportControllerResourceRegistrations(idFactory astmodel.IdentifierFactory,
+ 			for _, def := range definitions {
+ 				if resource, ok := astmodel.AsResourceType(def.Type()); ok {
+ 
+-					if resource.IsStorageVersion() { // This means the resource is the one storage version in k8s
++					if registersAsStorageVersion(def, resource) { // This means the resource is the one storage version in k8s
+ 						storageVersionResources = append(storageVersionResources, def.Name())
+ 
+ 						secretChains, err := catalogSecretPropertyChains(def, definitions)
+@@ -64,7 +65,7 @@ func ExportControllerResourceRegistrations(idFactory astmodel.IdentifierFactory,
+ 						configMapPropertyKeys[def.Name()] = resourceConfigMapPropertyKeys
+ 					}
+ 
+-					if !astmodel.IsStoragePackageReference(def.Name().PackageReference()) {
++					if !astmodel.IsStoragePackageReference(def.Name().PackageReference()) && os.Getenv("ASO_GENERATOR_NO_WEBHOOKS") == "" {
+ 						// Currently storage versions don't have webhooks
+ 						validatingWebhooks[def.Name()] = astmodel.CreateWebhookTypeName(def.Name())
+ 						mutatingWebhooks[def.Name()] = astmodel.CreateWebhookTypeName(def.Name())
+@@ -379,3 +380,15 @@ func (chain *propertyChain) indexPropertyKey() string {
+ 
+ 	return strings.Join(values, ".")
+ }
++
++// registersAsStorageVersion is whether the controller reconciles this version:
++// the storage (hub) version, or, when ASO_GENERATOR_API_STORAGE is set, the
++// API version itself. Our CRDs serve only the API version, so no conversion
++// webhook is needed (Modified by High Five Labs).
++func registersAsStorageVersion(def astmodel.TypeDefinition, resource *astmodel.ResourceType) bool {
++	if os.Getenv("ASO_GENERATOR_API_STORAGE") != "" {
++		return !astmodel.IsStoragePackageReference(def.Name().PackageReference())
++	}
++
++	return resource.IsStorageVersion()
++}
+diff --git a/v2/tools/generator/internal/interfaces/kubernetes_resource_interface.go b/v2/tools/generator/internal/interfaces/kubernetes_resource_interface.go
+index f176336..48ba625 100644
+--- a/v2/tools/generator/internal/interfaces/kubernetes_resource_interface.go
++++ b/v2/tools/generator/internal/interfaces/kubernetes_resource_interface.go
+@@ -8,6 +8,7 @@ package interfaces
+ import (
+ 	"fmt"
+ 	"go/token"
++	"os"
+ 
+ 	"github.com/dave/dst"
+ 	"github.com/go-logr/logr"
+@@ -679,15 +680,30 @@ func getStringAzureNameFunction(
+ 		return nil, eris.Wrap(err, "creating receiver type expression")
+ 	}
+ 
++	body := astbuilder.Statements(
++		astbuilder.Returns(
++			astbuilder.Selector(astbuilder.Selector(dst.NewIdent(receiverIdent), "Spec"), astmodel.AzureNameProperty),
++		),
++	)
++	if os.Getenv("ASO_GENERATOR_NO_WEBHOOKS") != "" {
++		// Modified by High Five Labs: ASO's defaulting webhook sets an empty
++		// spec.azureName to the object's name; with no webhook, the method
++		// does that.
++		specAzureName := astbuilder.Selector(astbuilder.Selector(dst.NewIdent(receiverIdent), "Spec"), astmodel.AzureNameProperty)
++		body = astbuilder.Statements(
++			astbuilder.SimpleIf(
++				astbuilder.AreNotEqual(dst.Clone(specAzureName).(dst.Expr), astbuilder.StringLiteral("")),
++				astbuilder.Returns(dst.Clone(specAzureName).(dst.Expr)),
++			),
++			astbuilder.Returns(astbuilder.Selector(dst.NewIdent(receiverIdent), "Name")),
++		)
++	}
++
+ 	fn := &astbuilder.FuncDetails{
+ 		Name:          methodName,
+ 		ReceiverIdent: receiverIdent,
+ 		ReceiverType:  astbuilder.PointerTo(receiverTypeExpr),
+-		Body: astbuilder.Statements(
+-			astbuilder.Returns(
+-				astbuilder.Selector(astbuilder.Selector(dst.NewIdent(receiverIdent), "Spec"), astmodel.AzureNameProperty),
+-			),
+-		),
++		Body:          body,
+ 	}
+ 
+ 	fn.AddComments("returns the Azure name of the resource")
+@@ -737,6 +753,13 @@ func getStringAzureNameWithAnnotationFallbackFunction(
+ 	checkAnnotation := astbuilder.IfNotNil(dst.NewIdent("ann"), innerIf)
+ 	checkAnnotation.Init = astbuilder.ShortDeclaration("ann", astbuilder.CallExpr(dst.NewIdent(receiverIdent), "GetAnnotations"))
+ 
++	last := astbuilder.Returns(astbuilder.StringLiteral(""))
++	if os.Getenv("ASO_GENERATOR_NO_WEBHOOKS") != "" {
++		// Modified by High Five Labs: the object's name, as ASO's defaulting
++		// webhook would have set it.
++		last = astbuilder.Returns(astbuilder.Selector(dst.NewIdent(receiverIdent), "Name"))
++	}
++
+ 	fn := &astbuilder.FuncDetails{
+ 		Name:          methodName,
+ 		ReceiverIdent: receiverIdent,
+@@ -744,7 +767,7 @@ func getStringAzureNameWithAnnotationFallbackFunction(
+ 		Body: astbuilder.Statements(
+ 			checkSpec,
+ 			checkAnnotation,
+-			astbuilder.Returns(astbuilder.StringLiteral("")),
++			last,
+ 		),
+ 	}
+ 

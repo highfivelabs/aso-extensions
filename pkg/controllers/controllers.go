@@ -7,9 +7,12 @@ Licensed under the MIT license.
 // predicate, indexers and secret watches follow Azure Service Operator's
 // v2/internal/controllers/controller_resources.go and indexers.go
 // (GetKnownStorageTypes, makeStandardPredicate, watchSecretsFactory,
-// watchEntity, indexPostgreSQLUserPassword), for our kinds only.
-// watchEntity lists with apimeta.ExtractList instead of ASO's internal
-// reflecthelpers.
+// watchConfigMapsFactory, watchEntity, indexPostgreSQLUserPassword,
+// getGeneratedStorageTypes, augmentWithARMReconciler, GetResourceExtensions,
+// getControllerName), for our kinds only. watchEntity lists with
+// apimeta.ExtractList instead of ASO's internal reflecthelpers. The ARM
+// kinds are registered from arm_resources_gen.go, which ASO's generator
+// writes (hack/generate-arm.sh).
 
 // Package controllers registers our kinds on ASO's generic
 // reconciler.
@@ -19,21 +22,28 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"strings"
 	"time"
 
 	"github.com/go-logr/logr"
 	corev1 "k8s.io/api/core/v1"
 	apimeta "k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/client/apiutil"
 	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
+	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
+	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
+	asoweb "github.com/Azure/azure-service-operator/v2/api/web/v20260715/storage"
+	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/registration"
 	"github.com/Azure/azure-service-operator/v2/pkg/outoftree"
@@ -46,17 +56,21 @@ import (
 	pgreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/postgresql"
 )
 
-// CreateScheme holds our kinds, the ASO owner kinds they resolve
+// CreateScheme holds our kinds (the generated ARM kinds, from
+// arm_resources_gen.go, among them), the ASO owner kinds they resolve
 // (storage versions only), and Kubernetes' own. A ManagementLock's owner,
 // any ASO kind, is read as an unstructured object instead.
 func CreateScheme() *runtime.Scheme {
-	scheme := runtime.NewScheme()
+	scheme := createScheme()
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = postgresqlv1.AddToScheme(scheme)
 	_ = keyvaultv1.AddToScheme(scheme)
 	_ = authorizationv1.AddToScheme(scheme)
 	_ = asopostgresql.AddToScheme(scheme)
 	_ = asokeyvault.AddToScheme(scheme)
+	_ = asoapp.AddToScheme(scheme)
+	_ = asoresources.AddToScheme(scheme)
+	_ = asoweb.AddToScheme(scheme)
 	return scheme
 }
 
@@ -66,6 +80,9 @@ func OwnerTypes() []*registration.StorageType {
 	return []*registration.StorageType{
 		{Obj: &asopostgresql.FlexibleServer{}, Name: "aso_postgresql_flexibleserver"},
 		{Obj: &asokeyvault.Vault{}, Name: "aso_keyvault_vault"},
+		{Obj: &asoapp.ManagedEnvironment{}, Name: "aso_app_managedenvironment"},
+		{Obj: &asoresources.ResourceGroup{}, Name: "aso_resources_resourcegroup"},
+		{Obj: &asoweb.Site{}, Name: "aso_web_site"},
 	}
 }
 
@@ -77,22 +94,36 @@ type Reconcilers struct {
 	ManagementLock   *authreconciler.ManagementLockReconciler
 }
 
+// ARM is what the generated ARM kinds are reconciled with: ASO's generic ARM
+// reconciler needs a connection to Resource Manager per credential and a CEL
+// evaluator.
+type ARM struct {
+	ConnectionFactory   outoftree.ARMConnectionFactory
+	ExpressionEvaluator outoftree.ExpressionEvaluator
+}
+
 // StorageTypes are our kinds with their reconcilers, as ASO's
 // GetKnownStorageTypes builds its own.
 func StorageTypes(
+	scheme *runtime.Scheme,
 	kubeClient outoftree.KubeClient,
 	resolver *outoftree.Resolver,
 	positiveConditions *conditions.PositiveConditionBuilder,
 	credentialProvider outoftree.CredentialProvider,
+	arm ARM,
 	cfg outoftree.ConfigValues,
-) ([]*registration.StorageType, *Reconcilers) {
+) ([]*registration.StorageType, *Reconcilers, error) {
 	rs := &Reconcilers{
 		PostgreSQLUser:   pgreconciler.NewPostgreSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
 		VaultSecret:      kvreconciler.NewVaultSecretReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
 		VaultCertificate: kvreconciler.NewVaultCertificateReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
 		ManagementLock:   authreconciler.NewManagementLockReconciler(kubeClient, positiveConditions, credentialProvider, cfg),
 	}
-	return []*registration.StorageType{
+	generated, err := generatedStorageTypes(scheme, kubeClient, resolver, positiveConditions, arm, cfg)
+	if err != nil {
+		return nil, nil, err
+	}
+	return append(generated, []*registration.StorageType{
 		{
 			Obj:        &postgresqlv1.User{},
 			Name:       "hfl_postgresql_user",
@@ -136,7 +167,70 @@ func StorageTypes(
 			Reconciler: rs.ManagementLock,
 			Predicate:  standardPredicate(),
 		},
-	}, rs
+	}...), rs, nil
+}
+
+// generatedStorageTypes are the ARM kinds ASO's generator wrote, each
+// reconciled by ASO's generic ARM reconciler as ASO's own are
+// (getGeneratedStorageTypes, augmentWithARMReconciler).
+func generatedStorageTypes(
+	scheme *runtime.Scheme,
+	kubeClient outoftree.KubeClient,
+	resolver *outoftree.Resolver,
+	positiveConditions *conditions.PositiveConditionBuilder,
+	arm ARM,
+	cfg outoftree.ConfigValues,
+) ([]*registration.StorageType, error) {
+	types := getKnownStorageTypes()
+	extensions, err := resourceExtensions(scheme)
+	if err != nil {
+		return nil, err
+	}
+	for _, t := range types {
+		gvk, err := apiutil.GVKForObject(t.Obj, scheme)
+		if err != nil {
+			return nil, fmt.Errorf("creating GVK for %T: %w", t.Obj, err)
+		}
+		t.Name = "hfl_" + controllerName(gvk)
+		t.Predicate = standardPredicate()
+		t.Reconciler = outoftree.NewAzureDeploymentReconciler(
+			arm.ConnectionFactory,
+			kubeClient,
+			resolver,
+			positiveConditions,
+			arm.ExpressionEvaluator,
+			cfg,
+			extensions[gvk],
+		)
+	}
+	return types, nil
+}
+
+// controllerName is ASO's getControllerName: the group without dots, an
+// underscore and the lower-case kind.
+func controllerName(gvk schema.GroupVersionKind) string {
+	group := strings.TrimSuffix(gvk.Group, ".azure.hfl.dev")
+	return fmt.Sprintf("%s_%s", strings.ReplaceAll(group, ".", ""), strings.ToLower(gvk.Kind))
+}
+
+// resourceExtensions is ASO's GetResourceExtensions: the extension of each
+// generated resource version, by its GVK.
+func resourceExtensions(scheme *runtime.Scheme) (map[schema.GroupVersionKind]genruntime.ResourceExtension, error) {
+	result := make(map[schema.GroupVersionKind]genruntime.ResourceExtension)
+	for _, extension := range getResourceExtensions() {
+		for _, resource := range extension.GetExtendedResources() {
+			obj, ok := resource.(runtime.Object)
+			if !ok {
+				return nil, fmt.Errorf("unexpected resource type for resource %q, found %T", resource.AzureName(), resource)
+			}
+			gvk, err := apiutil.GVKForObject(obj, scheme)
+			if err != nil {
+				return nil, err
+			}
+			result[gvk] = extension
+		}
+	}
+	return result, nil
 }
 
 // standardPredicate is ASO's makeStandardPredicate.
@@ -186,6 +280,13 @@ func indexVaultCertificatePrivateKey(rawObj client.Object) []string {
 func watchSecretsFactory(keys []string, objList client.ObjectList) registration.EventHandlerFactory {
 	return func(c client.Client, log logr.Logger) handler.EventHandler {
 		return handler.EnqueueRequestsFromMapFunc(watchEntity(c, log, keys, objList, &corev1.Secret{}))
+	}
+}
+
+// watchConfigMapsFactory is ASO's: the same for ConfigMaps.
+func watchConfigMapsFactory(keys []string, objList client.ObjectList) registration.EventHandlerFactory {
+	return func(c client.Client, log logr.Logger) handler.EventHandler {
+		return handler.EnqueueRequestsFromMapFunc(watchEntity(c, log, keys, objList, &corev1.ConfigMap{}))
 	}
 }
 

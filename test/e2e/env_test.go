@@ -60,7 +60,7 @@ const (
 	vaultScope = "https://vault.test/.default"
 	// The fake Resource Manager's host and audience.
 	armHost     = "fakearm.test"
-	armAudience = "https://fakearm.test/"
+	armAudience = "https://fakearm.test"
 	armScope    = "https://fakearm.test/.default"
 	pgImage     = "postgres:17"
 )
@@ -146,7 +146,7 @@ func run(m *testing.M) int {
 	_, err = manager.Setup(ctx, mgr, cfg, manager.Options{
 		TokenProvider:         entra.TokenProvider(entraFake),
 		KeyVaultClientOptions: azcore.ClientOptions{Transport: kvClient},
-		ARMClientOptions:      azcore.ClientOptions{Transport: armHTTP},
+		ARMHTTPClient:         armHTTP,
 	})
 	must(err)
 	go func() {

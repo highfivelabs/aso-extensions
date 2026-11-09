@@ -234,9 +234,7 @@ hack/coverage/run.sh --spotcheck .cache/spotcheck/azureserviceoperator_customres
 The first run fetches the two pinned commits into `.cache/coverage/`
 (gitignored), a few minutes; later runs take seconds. To move a pin, change
 `sources.yaml` (and `UPSTREAM.md` for ASO) and rerun. To change a tier, edit
-`priority.csv` and rerun. The repository has a `Makefile` and no `Taskfile.yml`
-on `main` yet; when the Taskfile arrives, a `coverage` task is
-`hack/coverage/run.sh` and a check is `hack/coverage/run.sh --check`.
+`priority.csv` and rerun. `task coverage` runs the first and `task coverage-check` the second.
 
 ## The numbers
 
@@ -247,22 +245,31 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 6,110 attributes (14.1%) in 299 resources; ours beyond official 2 (0.0%) in 1 further resources; uncovered 37,257 (85.9%).
+**Result.** Official 6,110 attributes (14.1%) in 299 resources; ours beyond official 310 (0.7%) in 10 further resources; uncovered 36,949 (85.2%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 8 services, 7,753 attributes, 27.1% covered by official and 0.0% more by ours; tier 2 has 19 services, 6,906 attributes, 33.2% covered by official and 0.0% more by ours; tier 3 has 253 services, 28,710 attributes, 6.0% covered by official and 0.0% more by ours.
+**Tiers.** tier 1 has 8 services, 7,753 attributes, 27.1% covered by official and 0.0% more by ours; tier 2 has 19 services, 6,906 attributes, 33.2% covered by official and 4.5% more by ours; tier 3 has 253 services, 28,710 attributes, 6.0% covered by official and 0.0% more by ours.
 
 **Ours.**
 
 | Kind | Resource | How mapped |
 | --- | --- | --- |
+| `app.azure.hfl.dev/ManagedEnvironmentsCertificate` | `Microsoft.App/managedEnvironments/certificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/ManagedEnvironmentsDaprComponent` | `Microsoft.App/managedEnvironments/daprComponents` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/ManagedEnvironmentsJavaComponent` | `Microsoft.App/managedEnvironments/javaComponents` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/ManagedEnvironmentsManagedCertificate` | `Microsoft.App/managedEnvironments/managedCertificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/ManagedEnvironmentsStorage` | `Microsoft.App/managedEnvironments/storages` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/ManagementLock` | `Microsoft.Authorization/locks` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
 | `dbforpostgresql.azure.hfl.dev/User` | `Microsoft.DBforPostgreSQL/flexibleServers/users` | outside the denominator, not in any percentage |
 | `keyvault.azure.hfl.dev/VaultCertificate` | `Microsoft.KeyVault/vaults/certificates (data plane)` | outside the denominator, not in any percentage |
 | `keyvault.azure.hfl.dev/VaultSecret` | `Microsoft.KeyVault/vaults/secrets (data plane)` | outside the denominator, not in any percentage |
+| `web.azure.hfl.dev/Certificate` | `Microsoft.Web/certificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesHostNameBinding` | `Microsoft.Web/sites/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlot` | `Microsoft.Web/sites/slots` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsHostNameBinding` | `Microsoft.Web/sites/slots/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |
 
 **Outside the denominator.** 3 rows in `resources.csv` carry `notes=outside-denominator` and are in none of the percentages: our data-plane and database kinds above, and the 0 ASO kinds that are unmapped.
 

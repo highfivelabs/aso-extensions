@@ -5,3 +5,5 @@ resources:
 - dbforpostgresql.azure.com_flexibleservers.yaml
 - keyvault.azure.com_vaults.yaml
 - resources.azure.com_resourcegroups.yaml
+- app.azure.com_managedenvironments.yaml
+- web.azure.com_sites.yaml
