@@ -2,8 +2,8 @@
 
 Status, 2026-11-08: the repository exists locally with two kinds,
 `dbforpostgresql.azure.hfl.dev/v1` `User` (ASO's PostgreSQL user with
-Microsoft Entra principals, per-database privileges, and schema and
-default privileges) and
+Microsoft Entra principals, per-database privileges, schema and default
+privileges, and database ownership) and
 `keyvault.azure.hfl.dev/v1` `VaultSecret`. Both pass their end-to-end tests
 against a fake cloud, and the install runs on kind (section 7). It has no
 remote, no published image and no release. This document says how Azure
@@ -147,7 +147,32 @@ So a gap in ASO is one of two kinds:
   objects; each revoke borrows the object owner's privileges the same way.
   Objects the user owns are not dropped: deleting a user that owns tables
   fails with PostgreSQL's error, as in ASO, until they are dropped or
-  reassigned.
+  reassigned (except in the databases it owns: see `ownedDatabases`).
+- `ownedDatabases` (b5; open question 8, answered): the user owns each
+  database listed (`ALTER DATABASE … OWNER TO`), such as the one its
+  migrations run in. Nothing is orphaned: a database that leaves the list
+  goes to the `reassignOwnedTo` role (the database only), and deleting the
+  user first runs `REASSIGN OWNED BY <user> TO <role>` in each database it
+  owns, which moves those databases and everything the user owns inside
+  them, then drops the user. `status.ownedDatabases` lists what it owns;
+  `status.reassignedDatabases` and a `DatabaseReassigned` event name every
+  database moved (on delete the status lasts only while the delete is
+  retried; the events stay).
+- The `reassignOwnedTo` role is `hfl_owner` unless the field names another
+  (the field and its name are assumptions; see question 8). The operator
+  creates it `NOLOGIN` when missing, refuses a role of that name that can
+  sign in, and grants it to `azure_pg_admin`, so every administrator of
+  the server (the password one and each Entra one) holds its privileges:
+  any of them can later hand a database to a real owner, and a second
+  administrator can reassign to a role the first one created.
+- Ownership changes borrow privileges as above: `ALTER DATABASE … OWNER
+  TO` needs the current owner's privileges and, since PostgreSQL 16, SET
+  ROLE to the new owner; `REASSIGN OWNED` needs both roles'. Once a User
+  owns a database, granting another user privileges on that database or
+  on its `public` schema (owned by `pg_database_owner`, which stands for
+  the database's owner and cannot be granted) borrows that User's
+  privileges the same way. `databasePrivileges` on a database the user
+  owns are not managed: an owner holds them all.
 
 ### VaultSecret
 
@@ -187,7 +212,7 @@ rechecked 2026-11-08, see below):
 | b2 | PostgreSQL privileges per database | an app's user needs `CONNECT`/`CREATE` on its own database | **built**; ASO issue #4694 is open and its maintainers say they still want it, so offer upstream |
 | b3 | Key Vault secrets from Kubernetes Secrets | apps on Azure read configuration from Key Vault; ASO declined to create secrets (#1894) | **built**; a lasting gap |
 | b4 | PostgreSQL schema privileges and default privileges | since PostgreSQL 15 only the database owner may create in `public`; an app needs `USAGE`/`CREATE` on a schema and default privileges on new tables | **built** (`schemaPrivileges`, `defaultPrivileges` on the same `User`); a1 was skipped because it waits on open question 5 |
-| b5 | PostgreSQL database ownership | migrations need the app to own its database | a field on the same `User`; waits on open question 8 (who owns the database after the user is deleted) |
+| b5 | PostgreSQL database ownership | migrations need the app to own its database | **built** (`ownedDatabases`, `reassignOwnedTo` on the same `User`), after open question 8 was answered |
 | b6 | Key Vault certificates from a Kubernetes Secret (import) | TLS certificates issued in-cluster, kept in Key Vault | after b4; the same shape as `VaultSecret` |
 | b7 | ARM resources in the specs but not exported | varies | upstream, by configuration (section 1) |
 
@@ -206,6 +231,12 @@ at the pin (#5762, #5684, #5551). Issues: #4694 (per-database privileges)
 and #4333 (per-database users for `FlexibleServersDatabase`) are open with
 no pull request; nothing asks for schema or default privileges. ASO has no
 code for either to copy, so b4 is ours, written the way b2 is.
+
+Rechecked read-only on 2026-11-09 before building b5: unchanged. The
+release is still v2.22.0, `main` still two documentation commits past the
+pin, no open pull request touches PostgreSQL, and nothing upstream sets a
+database's owner from a user (#4333 asks for an owner on
+`FlexibleServersDatabase` and is open, without a pull request). b5 is ours.
 
 ## 4. Upstream and sync
 
@@ -297,7 +328,7 @@ one Deployment, nothing per namespace to create. A static install
 
 ## 7. Proven, and not
 
-Proven by `make test` (envtest, 11 tests):
+Proven by `make test` (envtest, 13 tests):
 
 - a password user gets exactly its database privileges, changes revoke
   what is no longer listed (including grants made by hand), and deletion
@@ -328,7 +359,18 @@ Proven by `make test` (envtest, 11 tests):
   the migrator afterwards; deleting the reader revokes its default
   privileges and what they granted it on the migrator's table and sequence,
   and drops it, so the migrator can be dropped too; the CRD refuses a
-  privilege that does not apply to the object type, and duplicates.
+  privilege that does not apply to the object type, and duplicates;
+- database ownership: a password user owns the two databases it lists
+  and can create a table in `public` of one; another user is granted
+  `CONNECT` on that database and `USAGE` on its `public` schema with the
+  owner's privileges, borrowed; the administrator keeps only its ADMIN
+  OPTION on the owner; a database that leaves the list goes to a named
+  `reassignOwnedTo` role, with status and an event; deleting the owner
+  gives its database and the table it created there to `hfl_owner`
+  (`NOLOGIN`, held by `azure_pg_admin`), with an event, and drops it; the
+  other user keeps its privileges and can still be deleted; a
+  `reassignOwnedTo` role that can sign in is refused, and the CRD refuses
+  the user itself as that role.
 
 Proven on kind by `make operator-e2e` (`tests/operator/run.sh`; passed
 2026-11-08 on kind 0.33 on an Apple-silicon Mac, Docker 20.10, both on a
@@ -337,10 +379,12 @@ new cluster and rerun on the same one): the CRDs install; the manager runs in AS
 `aso-workload`, may read Secrets and may not create them, may not change
 ASO's resources or webhooks; in team-a the `User` and `VaultSecret` become
 Ready with team-a's `aso-workload` identity, PostgreSQL holds the Entra role
-with its database privileges and its schema privileges in `app`, and the
-fake vault logs that identity; in team-b,
-another identity, both are refused; deletion drops the role and
-soft-deletes the secret.
+with its database privileges and its schema privileges in `app`, the role
+owns the database `orders`, and the fake vault logs that identity; in
+team-b, another identity, both are refused; deletion gives `orders` to
+`hfl_owner` (which cannot sign in, with a `DatabaseReassigned` event),
+drops the role and soft-deletes the secret. The ownership checks were
+added with b5 and are proven by the run recorded in its pull request.
 
 Not provable locally: real Entra exchanging the `aso-workload` token
 (the managed identity's federated credential, issuer and audience
@@ -355,10 +399,20 @@ without it, default privileges `forRole` an Entra role fail with
 PostgreSQL's error), who owns a database ARM creates (the fake: the
 `azure_pg_admin` role, so the administrator can grant on `public`), and
 PostgreSQL before 16, where role membership has no INHERIT option (the
-code handles it, no test runs it).
+code handles it, no test runs it). For database ownership: whether Azure
+lets an administrator grant a role to `azure_pg_admin` (a role Azure
+manages; if it refuses, giving up a database fails with its error and
+the delete waits), whether an Entra administrator's membership in
+`azure_pg_admin` carries INHERIT and SET as the fake's does, and, as
+above, ADMIN OPTION on roles `pgaadauth` creates.
 
 Not built for b4: privileges on objects that already exist (`GRANT … ON ALL
-TABLES IN SCHEMA`), and global default privileges (no schema).
+TABLES IN SCHEMA`), and global default privileges (no schema). Not built
+for b5: `REASSIGN OWNED` in databases the user does not own (a user that
+created tables in another database's schema still cannot be deleted
+until they are moved, as in ASO), and the default privileges a user holds
+as `forRole` (PostgreSQL's `REASSIGN OWNED` leaves them; they block the
+drop until the users they grant to are deleted).
 
 ## 8. Open questions
 
@@ -397,3 +451,18 @@ TABLES IN SCHEMA`), and global default privileges (no schema).
    gone; objects the user created inside stay its own, so the delete still
    fails until they are dropped or reassigned, as for any user that owns
    tables.
+
+   **Answered, 2026-11-09.** The builder: "we should try to not orphan the
+   thing and instead like have a root user, just some dummy root user that
+   becomes the owner." The coordinator's reading, which was built: the
+   operator ensures a `NOLOGIN` role on each server, named `hfl_owner`
+   unless a field overrides it; deleting a User that owns databases runs
+   `REASSIGN OWNED BY <user> TO hfl_owner` in each database it owned, then
+   drops the user; status and events name every database moved; nothing
+   signs in as `hfl_owner`, and an administrator can later hand a database
+   to a real owner. Assumed in building it (not the builder's words): the
+   override is a field on each `User`, `spec.reassignOwnedTo`; a database
+   removed from `ownedDatabases` while the user lives goes to the same role
+   (the database only, without `REASSIGN OWNED`); the role is granted to
+   `azure_pg_admin` so every administrator holds it; and a role of that
+   name that can sign in is refused rather than changed.
