@@ -124,6 +124,108 @@ spec:
                   a privilege on a database not listed here is revoked, as ASO's MySQL
                   User does with its databasePrivileges.
                 type: object
+              defaultPrivileges:
+                description: |-
+                  DefaultPrivileges are privileges the user gets on objects another
+                  role creates later in a schema (ALTER DEFAULT PRIVILEGES FOR ROLE …
+                  IN SCHEMA … GRANT … TO the user). In each database listed here, or
+                  listed when the user was last reconciled, the user ends with exactly
+                  these schema-level default privileges; others are revoked. Default
+                  privileges set without a schema are left alone. Deleting the user
+                  revokes these, and the privileges they gave it on objects created
+                  meanwhile, before the role is dropped.
+                items:
+                  description: |-
+                    DefaultPrivilegesSpec is what the user is granted on objects of one type
+                    that ForRole creates in Schema of Database.
+                  properties:
+                    database:
+                      description: Database is the database the schema is in.
+                      maxLength: 63
+                      minLength: 1
+                      type: string
+                    forRole:
+                      description: |-
+                        ForRole is the role whose new objects these apply to: the role that
+                        will create them, such as the user that runs an application's
+                        migrations. The operator's administrator changes default privileges
+                        for that role with its privileges: if it does not already hold them,
+                        it grants itself the role for the one transaction (it needs ADMIN
+                        OPTION on the role, which it has on the roles it created).
+                      maxLength: 63
+                      minLength: 1
+                      type: string
+                    objectType:
+                      description: |-
+                        ObjectType is the kind of object: tables (which includes views),
+                        sequences, functions (which includes procedures) or types.
+                      enum:
+                      - tables
+                      - sequences
+                      - functions
+                      - types
+                      type: string
+                    privileges:
+                      description: |-
+                        Privileges are the privileges granted: for tables SELECT, INSERT,
+                        UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER, MAINTAIN (PostgreSQL
+                        17 and later); for sequences USAGE, SELECT, UPDATE; for functions
+                        EXECUTE; for types USAGE; ALL for all of them.
+                      items:
+                        description: DefaultPrivilege is a privilege granted by default
+                          privileges.
+                        enum:
+                        - SELECT
+                        - INSERT
+                        - UPDATE
+                        - DELETE
+                        - TRUNCATE
+                        - REFERENCES
+                        - TRIGGER
+                        - MAINTAIN
+                        - USAGE
+                        - EXECUTE
+                        - ALL
+                        type: string
+                      maxItems: 11
+                      minItems: 1
+                      type: array
+                    schema:
+                      description: Schema is the schema the objects are created in.
+                      maxLength: 63
+                      minLength: 1
+                      type: string
+                  required:
+                  - database
+                  - forRole
+                  - objectType
+                  - privileges
+                  - schema
+                  type: object
+                  x-kubernetes-validations:
+                  - message: privileges on tables are SELECT, INSERT, UPDATE, DELETE,
+                      TRUNCATE, REFERENCES, TRIGGER, MAINTAIN or ALL
+                    rule: self.objectType != 'tables' || self.privileges.all(p, p
+                      in ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'TRUNCATE', 'REFERENCES',
+                      'TRIGGER', 'MAINTAIN', 'ALL'])
+                  - message: privileges on sequences are USAGE, SELECT, UPDATE or
+                      ALL
+                    rule: self.objectType != 'sequences' || self.privileges.all(p,
+                      p in ['USAGE', 'SELECT', 'UPDATE', 'ALL'])
+                  - message: privileges on functions are EXECUTE or ALL
+                    rule: self.objectType != 'functions' || self.privileges.all(p,
+                      p in ['EXECUTE', 'ALL'])
+                  - message: privileges on types are USAGE or ALL
+                    rule: self.objectType != 'types' || self.privileges.all(p, p in
+                      ['USAGE', 'ALL'])
+                maxItems: 100
+                type: array
+                x-kubernetes-list-map-keys:
+                - database
+                - schema
+                - forRole
+                - objectType
+                x-kubernetes-list-type: map
               localUser:
                 description: LocalUser contains details for creating a standard (non-aad)
                   postgresql User.
@@ -214,6 +316,29 @@ spec:
                 items:
                   type: string
                 type: array
+              schemaPrivileges:
+                additionalProperties:
+                  additionalProperties:
+                    items:
+                      description: SchemaPrivilege is a privilege PostgreSQL grants
+                        on a schema.
+                      enum:
+                      - USAGE
+                      - CREATE
+                      - ALL
+                      type: string
+                    type: array
+                  type: object
+                description: |-
+                  SchemaPrivileges are the user's privileges on schemas, keyed by
+                  database and then by schema: USAGE, CREATE, or ALL (ALL PRIVILEGES).
+                  Since PostgreSQL 15 only the database owner may create objects in the
+                  public schema, so a user that creates tables needs CREATE there, and
+                  on any other schema USAGE to reach its objects. In each database
+                  listed here, or listed when the user was last reconciled, the user
+                  ends with exactly these on every schema: a privilege on a schema not
+                  listed is revoked. Databases never listed are left alone.
+                type: object
             required:
             - owner
             type: object
@@ -243,6 +368,44 @@ spec:
                 description: |-
                   AppliedDatabasePrivileges are the database privileges the user had
                   when it was last reconciled.
+                type: object
+              appliedDefaultPrivileges:
+                description: |-
+                  AppliedDefaultPrivileges are the schema-level default privileges the
+                  user had, in the databases its defaultPrivileges named, when it was
+                  last reconciled. As with appliedSchemaPrivileges, their databases are
+                  visited again on the next reconcile.
+                items:
+                  description: |-
+                    AppliedDefaultPrivileges are default privileges read back from a
+                    database's pg_default_acl.
+                  properties:
+                    database:
+                      type: string
+                    forRole:
+                      type: string
+                    objectType:
+                      type: string
+                    privileges:
+                      items:
+                        type: string
+                      type: array
+                    schema:
+                      type: string
+                  type: object
+                type: array
+              appliedSchemaPrivileges:
+                additionalProperties:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  type: object
+                description: |-
+                  AppliedSchemaPrivileges are the schema privileges the user had, in
+                  the databases its schemaPrivileges named, when it was last
+                  reconciled. A database here is visited again on the next reconcile, so
+                  privileges on a database dropped from schemaPrivileges are revoked.
                 type: object
               conditions:
                 description: 'Conditions: The observed state of the resource'
