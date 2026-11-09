@@ -71,9 +71,10 @@ func OwnerTypes() []*registration.StorageType {
 
 // Reconcilers lets tests replace a reconciler's settings.
 type Reconcilers struct {
-	PostgreSQLUser *pgreconciler.PostgreSQLUserReconciler
-	VaultSecret    *kvreconciler.VaultSecretReconciler
-	ManagementLock *authreconciler.ManagementLockReconciler
+	PostgreSQLUser   *pgreconciler.PostgreSQLUserReconciler
+	VaultSecret      *kvreconciler.VaultSecretReconciler
+	VaultCertificate *kvreconciler.VaultCertificateReconciler
+	ManagementLock   *authreconciler.ManagementLockReconciler
 }
 
 // StorageTypes are our kinds with their reconcilers, as ASO's
@@ -86,9 +87,10 @@ func StorageTypes(
 	cfg outoftree.ConfigValues,
 ) ([]*registration.StorageType, *Reconcilers) {
 	rs := &Reconcilers{
-		PostgreSQLUser: pgreconciler.NewPostgreSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
-		VaultSecret:    kvreconciler.NewVaultSecretReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
-		ManagementLock: authreconciler.NewManagementLockReconciler(kubeClient, positiveConditions, credentialProvider, cfg),
+		PostgreSQLUser:   pgreconciler.NewPostgreSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
+		VaultSecret:      kvreconciler.NewVaultSecretReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
+		VaultCertificate: kvreconciler.NewVaultCertificateReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
+		ManagementLock:   authreconciler.NewManagementLockReconciler(kubeClient, positiveConditions, credentialProvider, cfg),
 	}
 	return []*registration.StorageType{
 		{
@@ -113,6 +115,19 @@ func StorageTypes(
 			},
 			Watches: []registration.Watch{
 				{Type: &corev1.Secret{}, MakeEventHandler: watchSecretsFactory([]string{".spec.value"}, &keyvaultv1.VaultSecretList{})},
+			},
+		},
+		{
+			Obj:        &keyvaultv1.VaultCertificate{},
+			Name:       "hfl_keyvault_vaultcertificate",
+			Reconciler: rs.VaultCertificate,
+			Predicate:  standardPredicate(),
+			Indexes: []registration.Index{
+				{Key: ".spec.certificate", Func: indexVaultCertificateCertificate},
+				{Key: ".spec.privateKey", Func: indexVaultCertificatePrivateKey},
+			},
+			Watches: []registration.Watch{
+				{Type: &corev1.Secret{}, MakeEventHandler: watchSecretsFactory([]string{".spec.certificate", ".spec.privateKey"}, &keyvaultv1.VaultCertificateList{})},
 			},
 		},
 		{
@@ -148,6 +163,22 @@ func indexVaultSecretValue(rawObj client.Object) []string {
 		return nil
 	}
 	return []string{obj.Spec.Value.Name}
+}
+
+func indexVaultCertificateCertificate(rawObj client.Object) []string {
+	obj, ok := rawObj.(*keyvaultv1.VaultCertificate)
+	if !ok || obj.Spec.Certificate == nil {
+		return nil
+	}
+	return []string{obj.Spec.Certificate.Name}
+}
+
+func indexVaultCertificatePrivateKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*keyvaultv1.VaultCertificate)
+	if !ok || obj.Spec.PrivateKey == nil {
+		return nil
+	}
+	return []string{obj.Spec.PrivateKey.Name}
 }
 
 // watchSecretsFactory is ASO's: enqueue the objects whose indexed fields

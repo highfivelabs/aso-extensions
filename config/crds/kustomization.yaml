@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
 - authorization.azure.hfl.dev_managementlocks.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
+- keyvault.azure.hfl.dev_vaultcertificates.yaml
 - keyvault.azure.hfl.dev_vaultsecrets.yaml

@@ -80,6 +80,7 @@ func Setup(ctx context.Context, mgr ctrl.Manager, cfg outoftree.ConfigValues, op
 	resolver := outoftree.NewResolver(kubeClient)
 	types, reconcilers := controllers.StorageTypes(kubeClient, resolver, positiveConditions, credentialProvider, cfg)
 	reconcilers.VaultSecret.ClientOptions = opts.KeyVaultClientOptions
+	reconcilers.VaultCertificate.ClientOptions = opts.KeyVaultClientOptions
 	reconcilers.ManagementLock.ClientOptions = opts.ARMClientOptions
 	reconcilers.ManagementLock.OwnerReader = mgr.GetAPIReader()
 	reconcilers.ManagementLock.Mapper = mgr.GetRESTMapper()
