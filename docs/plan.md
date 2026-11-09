@@ -507,7 +507,10 @@ same way): the manager may get an ASO `ResourceGroup` but not list or
 change it; team-a's lock on its `ResourceGroup` becomes Ready, and the
 fake Resource Manager (`cmd/fakearm`) logs the lock created on the
 resource group's ARM ID with team-a's `aso-workload` identity; team-b's
-is refused (401); deleting team-a's lock removes it.
+is refused (401); deleting team-a's lock removes it. With
+`VaultCertificate` (passed 2026-11-09, the same way): team-a's certificate
+from a `kubernetes.io/tls` Secret is imported into the fake vault, team-b's
+is refused (401), and deleting team-a's soft-deletes it.
 
 Not provable locally: real Entra exchanging the `aso-workload` token
 (the managed identity's federated credential, issuer and audience
