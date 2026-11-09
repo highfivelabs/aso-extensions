@@ -1,0 +1,20 @@
+# The inputs of the coverage dashboard, pinned (hack/coverage). Change a pin,
+# then run hack/coverage/run.sh and commit the result. `run.sh --check` fails
+# if the committed outputs are not what these inputs give.
+#
+# The third input, this repository's own CRDs and generated kinds, is the
+# checkout the outputs are committed with.
+specs:
+  repo: https://github.com/Azure/azure-rest-api-specs.git
+  # The commit Azure Service Operator's own submodule (v2/specs) pins at the
+  # ASO commit below, so ASO and the denominator read the same specs.
+  commit: a2de2d1a53d195c987a30184b2ddd378417ff44e
+  commitDate: "2026-10-22"
+  fetched: "2026-11-09"
+aso:
+  repo: https://github.com/Azure/azure-service-operator.git
+  # UPSTREAM.md's "Commit" row; run.sh refuses to run if they differ.
+  commit: b9dcbe48feaf1173f48ab28dd5edc48b514d3f4d
+  commitDate: "2026-11-06"
+  nearestRelease: v2.22.0
+  fetched: "2026-11-09"

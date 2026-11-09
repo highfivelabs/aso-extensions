@@ -421,6 +421,16 @@ runs one manager and picks a credential per object, so ours does the same:
 one Deployment, nothing per namespace to create. A static install
 (`config/default`) is enough.
 
+## Coverage dashboard
+
+`docs/coverage/` says how much of the Azure Resource Manager API ASO covers and
+how much more our kinds do, by service, resource and attribute, with bars in
+the root README and a tier ranking (`priority.csv`, from the catalog's
+download ranking). It is made by `hack/coverage/` from pinned inputs (the specs
+at ASO's own pin, ASO's API types, our CRDs) and checked with
+`hack/coverage/run.sh --check`. Method and caveats: `docs/coverage/README.md`.
+Rerun it when a kind or a pin changes.
+
 ## 7. Proven, and not
 
 Proven by `make test` (envtest, 18 tests):
