@@ -2,16 +2,17 @@
 # (FlexibleServer, Vault); reading Secrets and ConfigMaps (aso-credential,
 # credential-from secrets, the values our kinds name; ASO's framework keeps
 # informers on both); reading Namespaces (ASO's reconcile-policy annotation
-# on a namespace); events. Nothing else of ASO's.
+# on a namespace); events. Of ASO's, only get on its resources, for a
+# ManagementLock's owner (aso-owner-reader.yaml, generated).
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: manager
 rules:
-- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev"]
+- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev", "authorization.azure.hfl.dev"]
   resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev"]
+- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev", "authorization.azure.hfl.dev"]
   resources: ["*/status", "*/finalizers"]
   verbs: ["get", "update", "patch"]
 - apiGroups: ["dbforpostgresql.azure.com"]

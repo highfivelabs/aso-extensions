@@ -1,6 +1,6 @@
 # Tests only: the fake cloud on kind. PostgreSQL set up like a flexible
-# server (TLS, azure_pg_admin, Entra administrators, pgaadauth), and the
-# fake Key Vault. Their certificates, the CA and the init script come from
+# server (TLS, azure_pg_admin, Entra administrators, pgaadauth), the fake
+# Key Vault and the fake Resource Manager (locks). Their certificates, the CA and the init script come from
 # tests/operator/fixtures, as Secrets and ConfigMaps made by
 # tests/operator/run.sh.
 apiVersion: v1
@@ -98,5 +98,51 @@ metadata:
   namespace: fake-cloud
 spec:
   selector: {app: fakevault}
+  ports:
+  - {port: 443, targetPort: 8443}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fakearm
+  namespace: fake-cloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: fakearm}
+  template:
+    metadata:
+      labels: {app: fakearm}
+    spec:
+      containers:
+      - name: fakearm
+        image: ko://github.com/highfivelabs/aso-extensions/cmd/fakearm
+        args:
+        - --listen=:8443
+        - --audience=https://fakearm.fake-cloud.svc/
+        - --trust=$(TRUST)
+        - --resource=$(RESOURCES)
+        env:
+        - name: TRUST
+          valueFrom:
+            configMapKeyRef: {name: fakevault-trust, key: trust}
+        - name: RESOURCES
+          valueFrom:
+            configMapKeyRef: {name: fakearm-resources, key: resources}
+        ports:
+        - containerPort: 8443
+        volumeMounts:
+        - {name: tls, mountPath: /tls, readOnly: true}
+      volumes:
+      - name: tls
+        secret: {secretName: fakearm-tls}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fakearm
+  namespace: fake-cloud
+spec:
+  selector: {app: fakearm}
   ports:
   - {port: 443, targetPort: 8443}

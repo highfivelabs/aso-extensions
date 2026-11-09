@@ -30,7 +30,7 @@ func main() {
 	ca, err := tlsutil.NewCA()
 	must(err)
 	write(*out, "ca.crt", ca.CertPEM)
-	for name, host := range map[string]string{"postgres": "postgres.fake-cloud.svc", "fakevault": "fakevault.fake-cloud.svc"} {
+	for name, host := range map[string]string{"postgres": "postgres.fake-cloud.svc", "fakevault": "fakevault.fake-cloud.svc", "fakearm": "fakearm.fake-cloud.svc"} {
 		c, k, err := ca.Server(host)
 		must(err)
 		write(*out, name+".crt", c)

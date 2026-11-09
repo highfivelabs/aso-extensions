@@ -8,8 +8,8 @@ Licensed under the MIT license.
 // our kinds only: the same global credential, the same credential provider
 // (per-resource credential-from, the namespace's aso-credential, global;
 // strict or relaxed workload identity), the same generic reconciler and
-// controller options. There is no CRD management, no webhook and no ARM
-// client: our kinds are data plane only.
+// controller options. There is no CRD management and no webhook; the one
+// ARM kind, ManagementLock, has its own small Resource Manager client.
 
 // Package manager wires our kinds into a controller-runtime manager the way
 // ASO's own manager wires its kinds.
@@ -41,6 +41,8 @@ type Options struct {
 	GlobalCredential *outoftree.Credential
 	// KeyVaultClientOptions are passed to the Key Vault data plane client.
 	KeyVaultClientOptions azcore.ClientOptions
+	// ARMClientOptions are passed to the Resource Manager client (locks).
+	ARMClientOptions azcore.ClientOptions
 	// EnableAzureCLI allows the Azure CLI credential in the global chain,
 	// as ASO's --enable-azure-cli-authentication.
 	EnableAzureCLI bool
@@ -78,6 +80,9 @@ func Setup(ctx context.Context, mgr ctrl.Manager, cfg outoftree.ConfigValues, op
 	resolver := outoftree.NewResolver(kubeClient)
 	types, reconcilers := controllers.StorageTypes(kubeClient, resolver, positiveConditions, credentialProvider, cfg)
 	reconcilers.VaultSecret.ClientOptions = opts.KeyVaultClientOptions
+	reconcilers.ManagementLock.ClientOptions = opts.ARMClientOptions
+	reconcilers.ManagementLock.OwnerReader = mgr.GetAPIReader()
+	reconcilers.ManagementLock.Mapper = mgr.GetRESTMapper()
 	if err := resolver.IndexStorageTypes(mgr.GetScheme(), append(controllers.OwnerTypes(), types...)); err != nil {
 		return nil, eris.Wrap(err, "failed to index storage types")
 	}

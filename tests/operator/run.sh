@@ -7,8 +7,9 @@
 # account, reads ASO's settings and each namespace's aso-credential, and
 # acts there as the identity ASO would: with ASO's strict workload identity
 # it requests a token for <namespace>/aso-workload, which the fake Entra
-# (in the manager's process) exchanges, and the fake vault and the fake
-# PostgreSQL accept only the identity they were told to trust.
+# (in the manager's process) exchanges, and the fake vault, the fake
+# Resource Manager and the fake PostgreSQL accept only the identity they
+# were told to trust.
 #
 # ASO itself is not installed: the footprint ours reads is made by hand
 # (its namespace, aso-controller-settings, the owner CRDs, and FlexibleServer
@@ -100,9 +101,11 @@ step "ASO's footprint, made by hand"
 kubectl create namespace "${ASO_NS}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl apply -k config/test/aso-crds
 # ASO's settings: no global credential; strict workload identity for the
-# namespaces' aso-credential secrets.
+# namespaces' aso-credential secrets; Resource Manager is the fake one.
 kubectl -n "${ASO_NS}" create secret generic aso-controller-settings \
   --from-literal=AZURE_WORKLOAD_IDENTITY_AUTH_MODE=strict \
+  --from-literal=AZURE_RESOURCE_MANAGER_ENDPOINT=https://fakearm.fake-cloud.svc \
+  --from-literal=AZURE_RESOURCE_MANAGER_AUDIENCE=https://fakearm.fake-cloud.svc/ \
   --dry-run=client -o yaml | kubectl apply -f -
 
 step "the fake cloud"
@@ -111,20 +114,23 @@ go run ./tests/operator/fixtures --out "${OUT}/fixtures" --tenant "${TENANT}" --
 kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
 ko_apply config/fake-cloud/fake-cloud.yaml
 # On a reused cluster the fixtures (CA, certificates) are new: restart so
 # every pod reads them. PostgreSQL keeps no volume, so it starts empty.
-kubectl -n fake-cloud rollout restart deploy/postgres deploy/fakevault >/dev/null
+kubectl -n fake-cloud rollout restart deploy/postgres deploy/fakevault deploy/fakearm >/dev/null
 kubectl -n fake-cloud rollout status deploy/postgres --timeout=180s
 kubectl -n fake-cloud rollout status deploy/fakevault --timeout=120s
+kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
 
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -147,7 +153,10 @@ can get secrets -n team-a || fail "cannot read secrets"
 ! can update flexibleservers.dbforpostgresql.azure.com -n team-a || fail "may change ASO's FlexibleServers"
 ! can create resourcegroups.resources.azure.com -n team-a || fail "may create ASO resources"
 ! can create mutatingwebhookconfigurations.admissionregistration.k8s.io || fail "may change webhooks"
-pass "aso-workload tokens, read secrets and the ASO owners, our kinds; nothing of ASO's to change"
+can get resourcegroups.resources.azure.com -n team-a || fail "cannot read a ManagementLock's owner"
+! can list resourcegroups.resources.azure.com -n team-a || fail "may list ASO resources it only needs to get"
+! can update resourcegroups.resources.azure.com -n team-a || fail "may change ASO's ResourceGroups"
+pass "aso-workload tokens, read secrets and the ASO owners, get any ASO resource, our kinds; nothing of ASO's to change"
 
 # team <ns> <client>: a namespace with ASO's strict workload identity credential.
 team() {
@@ -157,8 +166,17 @@ team() {
     --from-literal=AZURE_SUBSCRIPTION_ID="${SUB}" --from-literal=AZURE_TENANT_ID="${TENANT}" \
     --from-literal=AZURE_CLIENT_ID="$2" --dry-run=client -o yaml | kubectl apply -f -
   kubectl -n "$1" create secret generic app-config --from-literal=url=postgres://app --dry-run=client -o yaml | kubectl apply -f -
-  # The ASO objects, with the status ASO would write when it provisioned them.
+  # The ASO objects, with the status ASO would write when it provisioned them
+  # (and, on the ResourceGroup, the ARM ID annotation ASO writes).
   kubectl apply -f - <<EOF
+apiVersion: resources.azure.com/v1api20200601storage
+kind: ResourceGroup
+metadata:
+  name: rg
+  namespace: $1
+  annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg}
+spec: {azureName: $1-rg, location: westus}
+---
 apiVersion: dbforpostgresql.azure.com/v20250801storage
 kind: FlexibleServer
 metadata: {name: pg, namespace: $1}
@@ -175,6 +193,8 @@ EOF
     -p "{\"status\":{\"fullyQualifiedDomainName\":\"postgres.fake-cloud.svc\",\"conditions\":[${cond}]}}" >/dev/null
   kubectl -n "$1" patch vault vault --subresource=status --type=merge \
     -p "{\"status\":{\"properties\":{\"vaultUri\":\"https://fakevault.fake-cloud.svc/\"},\"conditions\":[${cond}]}}" >/dev/null
+  kubectl -n "$1" patch resourcegroup rg --subresource=status --type=merge \
+    -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl apply -f - <<EOF
 apiVersion: dbforpostgresql.azure.hfl.dev/v1
 kind: User
@@ -194,6 +214,14 @@ spec:
   owner: {name: vault}
   value: {name: app-config, key: url}
   deleteMode: delete
+---
+apiVersion: authorization.azure.hfl.dev/v1
+kind: ManagementLock
+metadata: {name: keep-rg, namespace: $1}
+spec:
+  owner: {group: resources.azure.com, kind: ResourceGroup, name: rg}
+  level: CanNotDelete
+  notes: kept by aso-extensions
 EOF
 }
 
@@ -218,6 +246,13 @@ pass "app-identity owns the database orders"
 kubectl -n fake-cloud logs deploy/fakevault | grep -q "sub=system:serviceaccount:team-a:aso-workload scope=https://fake-cloud.svc/.default accepted=true" \
   || fail "the fake vault saw no accepted request from team-a's aso-workload"
 pass "the fake vault accepted team-a's aso-workload identity"
+wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
+pass "team-a ManagementLock Ready"
+kubectl -n fake-cloud logs deploy/fakearm | grep -q "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
+  || fail "the fake resource manager saw no accepted request from team-a's aso-workload"
+kubectl -n fake-cloud logs deploy/fakearm | grep -q "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/locks/keep-rg 201" \
+  || fail "the fake resource manager saw no lock created on team-a-rg"
+pass "the fake resource manager holds a lock on team-a-rg, set as team-a's aso-workload identity"
 
 step "team-b: another identity, refused by both"
 team team-b "${CLIENT_B}"
@@ -225,6 +260,8 @@ wait_for 90 "team-b's User refused" bash -c "[[ \"\$(kubectl get users.dbforpost
 pass "team-b User refused: $(message users.dbforpostgresql.azure.hfl.dev team-b app-identity | cut -c1-120)..."
 wait_for 90 "team-b's VaultSecret refused" bash -c "[[ \"\$(kubectl get vaultsecrets.keyvault.azure.hfl.dev -n team-b app-url -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b VaultSecret refused: $(message vaultsecrets.keyvault.azure.hfl.dev team-b app-url | cut -c1-120)..."
+wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
+pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
 step "deleting team-a's objects"
 kubectl -n team-a delete users.dbforpostgresql.azure.hfl.dev app-identity --timeout=60s
@@ -240,6 +277,10 @@ kubectl -n team-a get events --field-selector reason=DatabaseReassigned -o jsonp
 pass "a DatabaseReassigned event names orders"
 kubectl -n fake-cloud logs deploy/fakevault | grep -q "request DELETE /secrets/app-url" || fail "the vault saw no delete of app-url"
 pass "the vault soft-deleted app-url (deleteMode delete)"
+kubectl -n team-a delete managementlocks.authorization.azure.hfl.dev keep-rg --timeout=60s
+kubectl -n fake-cloud logs deploy/fakearm | grep -q "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/locks/keep-rg 200" \
+  || fail "the fake resource manager saw no delete of the lock"
+pass "the lock on team-a-rg is removed"
 
 echo
 echo "all checks passed"

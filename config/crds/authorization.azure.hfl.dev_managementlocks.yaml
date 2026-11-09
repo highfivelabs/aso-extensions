@@ -1,0 +1,192 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: managementlocks.authorization.azure.hfl.dev
+spec:
+  group: authorization.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - authorization
+    - hfl
+    kind: ManagementLock
+    listKind: ManagementLockList
+    plural: managementlocks
+    singular: managementlock
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.level
+      name: Level
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v1
+    schema:
+      openAPIV3Schema:
+        description: |-
+          ManagementLock is an Azure management lock (Microsoft.Authorization/locks)
+          on a subscription, a resource group or a resource: CanNotDelete stops the
+          owner and everything under it from being deleted, ReadOnly also stops
+          them being changed, whoever asks, until the lock is removed. The owner is
+          any ASO resource in the same namespace, or an ARM ID, as ASO's own
+          extension resources (RoleAssignment) take; the credential is the one ASO
+          uses for this object (per-resource, the namespace's aso-credential, or
+          global).
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName is the lock's name (up to 260 characters, none of
+                  < > % & : \ ? / # or control characters). Defaults to the object's
+                  name.
+                maxLength: 260
+                pattern: ^[^<>%&:\\?/#\x00-\x1f]+$
+                type: string
+              level:
+                description: |-
+                  Level is CanNotDelete (authorized users can read and change the
+                  resource but not delete it) or ReadOnly (they can only read it). A
+                  lock applies to everything under its scope. ReadOnly also stops ASO
+                  itself from updating the owner and its children until it is removed.
+                enum:
+                - CanNotDelete
+                - ReadOnly
+                type: string
+              notes:
+                description: Notes about the lock, up to 512 characters.
+                maxLength: 512
+                type: string
+              owner:
+                description: |-
+                  Owner is what the lock is on: an ASO resource in this namespace by
+                  group, kind and name (its ARM ID is read from the resource once ASO
+                  has provisioned it, and it must be Ready), or an ARM ID: a
+                  subscription (/subscriptions/<id>), a resource group or a resource.
+                properties:
+                  armId:
+                    description: Ownership across namespaces is not supported.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+            required:
+            - level
+            - owner
+            type: object
+            x-kubernetes-validations:
+            - message: azureName is immutable
+              rule: '!has(oldSelf.azureName) || self.azureName == oldSelf.azureName'
+            - message: owner is immutable
+              rule: self.owner == oldSelf.owner
+            - message: owner names either an ARM ID (armId) or an ASO resource (group,
+                kind and name)
+              rule: has(self.owner.armId) != has(self.owner.name)
+            - message: an owner by name needs its group and kind
+              rule: '!has(self.owner.name) || (has(self.owner.group) && has(self.owner.kind))'
+          status:
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              id:
+                description: Id is the lock's ARM ID.
+                type: string
+              level:
+                description: Level and Notes as Azure holds them.
+                type: string
+              notes:
+                type: string
+              scope:
+                description: Scope is the ARM ID of what the lock is on.
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
