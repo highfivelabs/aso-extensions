@@ -14,7 +14,9 @@ Licensed under the MIT license.
 // status; the user name falls back to metadata.name when azureName is empty
 // (ASO's defaulting webhook does that; we run none); a missing roleOptions
 // means ASO's default (LOGIN) instead of an error; connectToDB takes the
-// database to connect to.
+// database to connect to; ownedDatabases (ownership.go), and on delete the
+// user's databases and what it owns in them are reassigned to a NOLOGIN
+// role before the role is dropped.
 
 package postgresql
 
@@ -39,6 +41,7 @@ import (
 
 	asopostgresql "github.com/highfivelabs/aso-extensions/apis/dbforpostgresql/v1"
 	postgresqlutil "github.com/highfivelabs/aso-extensions/pkg/util/postgresql"
+	"github.com/highfivelabs/aso-extensions/pkg/util/set"
 )
 
 // Log levels, as ASO's internal/logging.
@@ -166,6 +169,12 @@ func (r *PostgreSQLUserReconciler) CreateOrUpdate(
 		return ctrl.Result{}, eris.Wrap(err, "ensuring server roles")
 	}
 
+	// Database ownership comes before privileges: a database the user owns
+	// has its privileges managed by ownership, not databasePrivileges.
+	if err := reconcileOwnership(ctx, log, eventRecorder, user, db); err != nil {
+		return ctrl.Result{}, eris.Wrap(err, "ensuring database ownership")
+	}
+
 	// Ensure that the database privileges are exactly the listed ones
 	err = postgresqlutil.ReconcileUserDatabasePrivileges(ctx, db, sqlUser.Name, databasePrivileges(user))
 	if err != nil {
@@ -210,9 +219,15 @@ func setAppliedDatabasePrivileges(ctx context.Context, db *sql.DB, user *asopost
 	return nil
 }
 
+// databasePrivileges are spec.databasePrivileges, less the databases the
+// user owns (an owner holds every privilege on its database).
 func databasePrivileges(user *asopostgresql.User) map[string][]string {
+	owned := set.Make(user.Spec.OwnedDatabases...)
 	result := make(map[string][]string, len(user.Spec.DatabasePrivileges))
 	for database, privs := range user.Spec.DatabasePrivileges {
+		if owned.Contains(database) {
+			continue
+		}
 		values := make([]string, 0, len(privs))
 		for _, p := range privs {
 			values = append(values, string(p))
@@ -258,6 +273,12 @@ func (r *PostgreSQLUserReconciler) Delete(ctx context.Context, log logr.Logger, 
 	// PostgreSQL refuses to drop a role that holds privileges in any
 	// database: revoke its schema and default privileges first, in the
 	// databases they name (DropUser revokes its database privileges).
+	// Nothing is orphaned: the databases the user owns, with what it owns
+	// in them, go to the reassignOwnedTo role first.
+	if err := r.reassignAllOwned(ctx, log, eventRecorder, user, secrets, db); err != nil {
+		return ctrl.Result{}, err
+	}
+
 	if err := r.inDatabases(ctx, log, user, secrets, db, modeRevokeAll); err != nil {
 		return ctrl.Result{}, err
 	}
@@ -323,6 +344,9 @@ func (r *PostgreSQLUserReconciler) UpdateStatus(
 	}
 
 	if err := setAppliedDatabasePrivileges(ctx, db, user); err != nil {
+		return err
+	}
+	if err := setOwnedDatabases(ctx, db, user); err != nil {
 		return err
 	}
 	return r.inDatabases(ctx, log, user, secrets, db, modeRead)

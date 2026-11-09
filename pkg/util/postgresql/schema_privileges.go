@@ -130,6 +130,14 @@ func ReconcileUserSchemaPrivileges(ctx context.Context, db *sql.DB, user string,
 		if err != nil {
 			return eris.Wrapf(err, "finding the owner of schema %s", schema)
 		}
+		// Since PostgreSQL 15 public is owned by pg_database_owner, which
+		// stands for the database's owner and cannot be granted: borrow the
+		// owner's privileges instead (a User may own the database).
+		if owner == "pg_database_owner" {
+			if err := db.QueryRowContext(ctx, "SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname = current_database()").Scan(&owner); err != nil {
+				return eris.Wrap(err, "finding the owner of the database")
+			}
+		}
 		err = withPrivilegesOf(ctx, db, owner, func(tx *sql.Tx) error {
 			// Privilege words are from the fixed list above; identifiers are escaped.
 			if len(add) > 0 {
@@ -193,79 +201,6 @@ type queryer interface {
 func currentDatabase(ctx context.Context, db *sql.DB) string {
 	var name string
 	if err := db.QueryRowContext(ctx, "SELECT current_database()").Scan(&name); err != nil {
-		return "(unknown)"
-	}
-	return name
-}
-
-// withPrivilegesOf runs f in a transaction in which the current user has
-// the privileges of role. Changing a schema's ACL needs the privileges of
-// its owner, and ALTER DEFAULT PRIVILEGES FOR ROLE needs those of that
-// role. An Azure administrator is not a superuser: since PostgreSQL 16 it
-// holds only ADMIN OPTION (without INHERIT) on the roles it creates, which
-// lets it grant them but not use their privileges. When it lacks them, it
-// grants itself the role inside the transaction and revokes that grant
-// before committing, so no membership outlives f.
-func withPrivilegesOf(ctx context.Context, db *sql.DB, role string, f func(tx *sql.Tx) error) (err error) {
-	tx, err := db.BeginTx(ctx, nil)
-	if err != nil {
-		return eris.Wrap(err, "starting a transaction")
-	}
-	defer func() {
-		if err != nil {
-			_ = tx.Rollback()
-		}
-	}()
-
-	var has bool
-	if err = tx.QueryRowContext(ctx, "SELECT pg_has_role(current_user, $1::name, 'USAGE')", role).Scan(&has); err != nil {
-		return eris.Wrapf(err, "checking the privileges of role %s", role)
-	}
-	if has {
-		if err = f(tx); err != nil {
-			return err
-		}
-		return eris.Wrap(tx.Commit(), "committing")
-	}
-
-	// A grant of the role to the current user by the current user would be
-	// the one revoked below; if one already exists (without INHERIT, or
-	// pg_has_role would be true), it is not ours to take away.
-	var self int
-	if err = tx.QueryRowContext(ctx, `SELECT count(*) FROM pg_auth_members m
-JOIN pg_roles r ON r.oid = m.roleid
-WHERE r.rolname = $1 AND m.member = (SELECT oid FROM pg_roles WHERE rolname = current_user) AND m.grantor = m.member`, role).Scan(&self); err != nil {
-		return eris.Wrapf(err, "reading memberships in role %s", role)
-	}
-	if self > 0 {
-		return eris.Errorf("the administrator %s has granted itself role %s without INHERIT; it needs the privileges of %s", currentUser(ctx, tx), role, role)
-	}
-
-	// From PostgreSQL 16 a membership carries its own INHERIT option; ask
-	// for it, so a NOINHERIT administrator gets the privileges too.
-	grant := fmt.Sprintf("GRANT %s TO CURRENT_USER", escapeIdentifier(role))
-	var version int
-	if err = tx.QueryRowContext(ctx, "SELECT current_setting('server_version_num')::int").Scan(&version); err != nil {
-		return eris.Wrap(err, "reading the server version")
-	}
-	if version >= 160000 {
-		grant += " WITH INHERIT TRUE"
-	}
-	if _, err = tx.ExecContext(ctx, grant); err != nil {
-		return eris.Wrapf(err, "the administrator needs the privileges of role %s (or ADMIN OPTION on it, to take them for this transaction)", role)
-	}
-	if err = f(tx); err != nil {
-		return err
-	}
-	if _, err = tx.ExecContext(ctx, fmt.Sprintf("REVOKE %s FROM CURRENT_USER GRANTED BY CURRENT_USER", escapeIdentifier(role))); err != nil {
-		return eris.Wrapf(err, "revoking role %s from the administrator", role)
-	}
-	return eris.Wrap(tx.Commit(), "committing")
-}
-
-func currentUser(ctx context.Context, tx *sql.Tx) string {
-	var name string
-	if err := tx.QueryRowContext(ctx, "SELECT current_user").Scan(&name); err != nil {
 		return "(unknown)"
 	}
 	return name

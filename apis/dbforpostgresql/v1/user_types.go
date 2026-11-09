@@ -9,7 +9,9 @@
 // localUser is no longer required, and exactly one of localUser and aadUser
 // is (a CEL rule here, where ASO uses a webhook); status.appliedDatabasePrivileges;
 // spec.schemaPrivileges and spec.defaultPrivileges (schema and default
-// privileges, which no ASO user has) and their status.
+// privileges, which no ASO user has) and their status; spec.ownedDatabases
+// and spec.reassignOwnedTo (database ownership, given to a NOLOGIN role
+// rather than orphaned when given up) and their status.
 
 package v1
 
@@ -83,6 +85,7 @@ type UserList struct {
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.aadUser) || has(self.aadUser)",message="a user cannot change from aadUser to localUser"
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.localUser) || has(self.localUser)",message="a user cannot change from localUser to aadUser"
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.azureName) || self.azureName == oldSelf.azureName",message="azureName is immutable"
+// +kubebuilder:validation:XValidation:rule="!has(self.reassignOwnedTo) || !has(self.ownedDatabases) || !has(self.azureName) || self.reassignOwnedTo != self.azureName",message="reassignOwnedTo cannot be the user itself"
 type UserSpec struct {
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
 	// doesn't have to be.
@@ -147,6 +150,28 @@ type UserSpec struct {
 	// +listMapKey=objectType
 	// +kubebuilder:validation:MaxItems=100
 	DefaultPrivileges []DefaultPrivilegesSpec `json:"defaultPrivileges,omitempty"`
+
+	// OwnedDatabases are databases of the server the user owns (ALTER
+	// DATABASE … OWNER TO the user), such as the one its migrations run in.
+	// A database is never left without an owner: one dropped from this
+	// list goes to the reassignOwnedTo role, and when the user is deleted,
+	// every database it owns goes there with everything the user owns in
+	// it (REASSIGN OWNED), before the role is dropped.
+	// +listType=set
+	// +kubebuilder:validation:MaxItems=100
+	// +kubebuilder:validation:items:MinLength=1
+	// +kubebuilder:validation:items:MaxLength=63
+	OwnedDatabases []string `json:"ownedDatabases,omitempty"`
+
+	// ReassignOwnedTo is the role that receives the databases this user
+	// gives up; empty means hfl_owner. The operator creates it as a role
+	// nobody signs in as (NOLOGIN) when it is missing, and grants it to
+	// azure_pg_admin so every administrator of the server can later hand a
+	// database on to a real owner. A role of that name that can sign in is
+	// refused.
+	// +kubebuilder:validation:MinLength=1
+	// +kubebuilder:validation:MaxLength=63
+	ReassignOwnedTo string `json:"reassignOwnedTo,omitempty"`
 }
 
 // SchemaPrivilege is a privilege PostgreSQL grants on a schema.
@@ -317,6 +342,16 @@ type UserStatus struct {
 	// last reconciled. As with appliedSchemaPrivileges, their databases are
 	// visited again on the next reconcile.
 	AppliedDefaultPrivileges []AppliedDefaultPrivileges `json:"appliedDefaultPrivileges,omitempty"`
+
+	// OwnedDatabases are the databases of spec.ownedDatabases the user
+	// owned when it was last reconciled. One that leaves spec.ownedDatabases
+	// is given to the reassignOwnedTo role on the next reconcile.
+	OwnedDatabases []string `json:"ownedDatabases,omitempty"`
+
+	// ReassignedDatabases are the databases the last reconcile, or the
+	// delete in progress, gave to the reassignOwnedTo role. Each move is
+	// also an event (DatabaseReassigned).
+	ReassignedDatabases []string `json:"reassignedDatabases,omitempty"`
 }
 
 // AppliedDefaultPrivileges are default privileges read back from a
