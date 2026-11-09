@@ -76,6 +76,14 @@ func (w *Wire) addRef(p, armName string) {
 	if name == "reference" && strings.HasSuffix(parent, "[]") {
 		w.addAs(strings.TrimSuffix(parent, "[]")+"{}", p)
 	}
+	// A reference to another resource stands for all of it: the spec has the
+	// referenced resource's own properties below (the subnet of a private
+	// endpoint has its address prefix) but they are set on that resource, not
+	// here, so they are covered by the reference.
+	if name == "reference" && parent != "" {
+		w.addAs(parent, p)
+		w.FreeForm[strings.ToLower(parent)] = true
+	}
 }
 
 // variants lists a path with any subset of its "properties" segments
@@ -323,11 +331,11 @@ func (ww *apiWalker) walk(e ast.Expr, p, armRef string) {
 		ww.w.add(p, true)
 	case *ast.SelectorExpr:
 		switch t.Sel.Name {
-		case "ResourceReference", "KnownResourceReference", "ArbitraryOwnerReference":
+		case "ResourceReference", "KnownResourceReference", "ArbitraryOwnerReference", "WellKnownResourceReference":
 			ww.w.addRef(p, armRef)
 		case "JSON":
 			ww.w.add(p, true)
-		case "SecretReference", "ConfigMapReference":
+		case "SecretReference", "ConfigMapReference", "SecretMapReference":
 			ww.w.add(p, false)
 			if i := strings.LastIndex(p, "FromConfig"); i > 0 && i == len(strings.TrimRight(p, "[]{}"))-len("FromConfig") {
 				ww.w.addAs(p[:i]+p[i+len("FromConfig"):], p)

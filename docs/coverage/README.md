@@ -17,12 +17,15 @@ checked by `hack/coverage/run.sh --check`.
 | `resources.csv` | resource | `service,resource,attributes_total,official_kinds,attributes_official,ours_kinds,attributes_ours_beyond,attributes_uncovered,ours_from_upstream_pr,notes` |
 | `attributes.csv` | attribute | `service,resource,attribute,type,required,covered_by,official_path,ours_path` |
 | `tiers.csv` | tier | `tier,services,attributes_total,attributes_official,attributes_ours_beyond,attributes_uncovered,pct_official,pct_ours_beyond,pct_uncovered,resources_total,resources_official,resources_ours_beyond` |
-| `priority.csv` | service the builder ranks | `service,tier,rationale,source` (hand-edited) |
-| `bars/<service>.svg`, `bars/_total.svg`, `bars/_tiers.svg` | service, the whole, the tiers | stacked bars: blue official, green ours beyond official, light grey uncovered |
+| `categories.csv` | category | `category,services,resources_total,resources_official,resources_ours_beyond,attributes_total,attributes_official,attributes_ours_beyond,attributes_uncovered,pct_official,pct_ours_beyond,pct_uncovered` |
+| `priority.csv` | service, or resource type, the builder ranks | `service,tier,rationale,source,category` (hand-edited; the order of the rows is the order of importance) |
+| `avm-need.csv` | resource type | `resource,modules,named`: how many Azure Verified Modules need it (hand-edited) |
+| `foundation.md` | | the ranked foundation gap report, the work queue for the kind agents |
+| `bars/<service>.svg`, `bars/_total.svg`, `bars/_tiers.svg`, `bars/_categories.svg` | service, the whole, the tiers, the categories | stacked bars: blue official, green ours beyond official, light grey uncovered |
 | `sources.yaml` | | the pinned inputs |
 
 The first three files have the same columns in the Google Cloud and AWS
-repositories. `tiers.csv` and `priority.csv` are additions. Percentages are of
+repositories. The others are additions. Percentages are of
 `attributes_total`, to one decimal. `covered_by` is `official`, `ours`, `both`
 or `none`. Kinds are `;`-separated `group/Kind`. `notes` is `;`-separated
 `key=value` tokens and flags: `spec_api` (the API version of the
@@ -121,6 +124,12 @@ spec's shape are undone:
   named for the discriminator value, so `backupPolicy.continuous.x` is
   `backupPolicy.x`); a struct is a union when its fields are documented
   "Mutually exclusive with all other properties";
+- a reference to another resource stands for all of it: the spec has the
+  referenced resource's own properties below the reference (a private endpoint's
+  `subnet` has an address prefix, a connection's `virtualNetworkGateway1` has
+  all of a gateway) but they are set on that resource, so everything below a
+  `{reference}` is covered by it (this is what keeps `Microsoft.Network` from
+  being counted 40% uncovered for a property that is set by naming a subnet);
 - a CRD leaf that takes any JSON covers every attribute below it, and a CRD
   property that is an object covers a spec leaf of the same path whose detail
   it models;
@@ -135,27 +144,56 @@ partly "ASO has not moved to the new API version", which is a real gap for
 someone who needs the new property, and not the same as ASO lacking the
 resource.
 
-**Tiers.** Not every service matters alike, so `priority.csv` ranks them, by
-hand. Tier 1 is the resource providers used by the foundational modules people
-migrate first, the top ten Azure Verified Modules by yearly registry downloads
-(virtual network, network security group, storage account, Key Vault, virtual
-machine, resource group, managed identity, Log Analytics workspace, route table,
-NAT gateway) and the providers of the shared interfaces nearly every module
-takes (role assignments and locks: `Microsoft.Authorization`). Tier 2 is every
-other provider that a tracked module uses or that the ranking names as a gap.
-Tier 3 is everything else, and the default for a service missing from the file.
-The ranking is `highfivelabs/catalog docs/azure.md` (sections 2, 4 and 5), read
-2026-11-09; each row names its rank in `rationale` and `source`. The builder
-may change any row; the generator reads the file and never recomputes it, and
-fails if a row names a service that is not in `services.csv`. The limits: usage
-by modules is a proxy for what teams need, taken from one registry, at one
-date, and counting a module once however many resources it creates; a team's
-real list differs; a provider is one unit though its resources matter very
-unequally (`Microsoft.Network` has virtual networks and also ExpressRoute and
-Virtual WAN); and tier 3 holds hundreds of providers, many third-party
-(`Anyscale.Platform`, `Dell.Storage`) or preview-only (`Microsoft.AwsConnector`),
-so its low figure says little. A tier's percentage moves with its biggest
-member.
+**Categories and tiers.** Not every service matters alike. The builder,
+2026-11-09: "the really baseline, the foundational APIs of all cloud providers
+really need to be covered fairly thoroughly. Everything up through a managed
+Kubernetes cluster is table stakes for a platform team establishing a target.
+The adjacent foundational things next to it are important for security teams.
+Beyond that, it's application primitives. The OSS module space should kind of
+guide where we put the effort." So `priority.csv` gives each service, and where
+it differs a resource type or a prefix of one, a **category**:
+
+- `platform-foundation`: management groups, subscriptions (aliases, tags,
+  placement), Azure Policy, RBAC (definitions, assignments, PIM), resource groups
+  and locks, budgets and cost exports, diagnostic settings and Azure Monitor,
+  networking (virtual networks, subnets, peerings, route tables, NSGs, hubs and
+  Virtual WAN, firewalls, VPN and ExpressRoute gateways, NAT, DNS and private
+  DNS, private endpoints), Key Vault, managed identities, Log Analytics, and
+  everything to a managed AKS cluster (the cluster, node pools, extensions and
+  GitOps configurations, the container registry);
+- `security-adjacent`: Defender for Cloud, Sentinel, security contacts, policy
+  attestations, WAF, DDoS plans, network security perimeters, Purview, HSMs;
+- `application`: App Service, Storage, Compute, SQL, Cosmos DB, Service Bus,
+  Event Hubs, Container Apps and the like, and in the networking services what
+  a workload uses (load balancers, application gateways, NICs);
+- `other`: everything not in the file, and what is deprecated, a preview
+  feature, third-party or not an Azure object (ARM deployments).
+
+The **tier** is the service's, for the per-service table: tier 1 is the
+`platform-foundation` services, tier 2 the `security-adjacent` ones and the
+services some tracked Azure Verified Module uses, tier 3 the rest and the
+default. The AVM usage ranking, which the first version of the tiers was made
+from (`highfivelabs/catalog docs/azure.md`, read 2026-11-09), is kept as the
+`rationale` and breaks ties in `foundation.md`: usage by modules is a proxy for
+what teams need, taken from one registry at one date and counting a module once
+however many resources it creates. The order of the rows in `priority.csv` is
+the order of importance (the builder's list), which the foundation report uses.
+The builder may change any row; the generator reads the file and never
+recomputes it, and fails on a row that names a service or resource type that is
+not in the data. Limits: a category is a judgment (virtual machines are
+`application` here; a team that starts from a bastion and jump boxes might
+disagree); a service holds resources that matter unequally, which is why
+resource rows exist; `category` rollups count resources and attributes, so a
+category with many wide resources weighs on them; and `other` holds hundreds of
+services, many third-party or preview-only (`Anyscale.Platform`,
+`Microsoft.AwsConnector`), so its figure says little.
+
+**The foundation report** (`foundation.md`): for each resource of the first two
+categories, its state (no kind, partly covered, covered), the ASO and our kinds,
+how it could be built (the scopes it can be created at, from the PUT paths in
+the specs, decide between ASO's generator and a hand-written kind), its size and
+how many AVMs need it; and a ranked queue of proposed kinds, written by hand,
+with what ASO has upstream (read-only: `main`, open pull requests, issues).
 
 ## Known error and caveats
 
@@ -200,22 +238,23 @@ supported-resources documentation at the pin, below.
 Run 2026-11-09 against the real CRDs of ASO v2.22.0 (the nearest release; the
 pin is 16 commits ahead, so only resources and versions both have were
 compared): `hack/coverage/run.sh --spotcheck <crds.yaml>` compares, for
-18 resources across 13 providers (`Microsoft.Network` virtual networks, subnets,
-network security groups, public IPs and DNS A record sets; compute virtual
-machines and disks; AKS managed clusters; storage accounts; Key Vault; PostgreSQL
-flexible servers; SQL servers; Cosmos DB accounts; Service Bus queues; Event Hubs
-namespaces; managed identities; role assignments; App Service plans), whether
-each attribute of the denominator is covered according to this tool and
-whether the CRD spec has a property for it. **1,239 of 1,257 attributes
-agree (98.6%).** The 18 that differ are all limits of the spot check's own,
-simpler reading of the CRD, not of the tool: `identity.userAssignedIdentities{}`
-(the CRD has it as an array of references), eight Cosmos DB `backupPolicy.*`
-properties (the CRD wraps each union variant), and
-`networkAclBypassResourceIds[]` and similar reference arrays, which are in the
-CRD under `...References`. The earlier version of the tool, which read the ARM
-wire types instead, disagreed on 41% of virtual network and 65% of network
-security group attributes (embedded children ASO leaves out of the CRD); that
-is why the API types are used.
+25 resources across 15 providers (`Microsoft.Network` virtual networks, subnets,
+network security groups, public IPs, private endpoints, virtual network
+gateways, Azure Firewalls, load balancers and DNS A record sets; compute virtual
+machines and disks; AKS managed clusters and node pools; Flux configurations;
+container registries; storage accounts; Key Vault; PostgreSQL flexible servers;
+SQL servers; Cosmos DB accounts; Service Bus queues; Event Hubs namespaces;
+managed identities; role assignments; App Service plans), whether each attribute
+of the denominator is covered according to this tool and whether the CRD spec
+has a property for it. **1,919 of 1,940 attributes agree (98.9%).** The 21 that
+differ are all limits of the spot check's own, simpler reading of the CRD, not of
+the tool: `identity.userAssignedIdentities{}` (the CRD has it as an array of
+references), eight Cosmos DB `backupPolicy.*` properties (the CRD wraps each
+union variant), and reference arrays such as `networkAclBypassResourceIds[]`,
+which are in the CRD under `...References`. The first version of the tool, which
+read the ARM wire types instead, disagreed on 41% of virtual network and 65% of
+network security group attributes (embedded children ASO leaves out of the CRD);
+that is why the API types are used.
 
 The denominator was re-derived for five resources with a separate, simple
 reader of the swagger (Key Vault `vaults`, and network `virtualNetworks`,
@@ -245,13 +284,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 6,110 attributes (14.1%) in 299 resources; ours beyond official 649 (1.5%) in 37 further resources; uncovered 36,610 (84.4%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 651 (1.5%) in 37 further resources; uncovered 35,598 (82.1%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 8 services, 7,753 attributes, 27.1% covered by official and 1.1% more by ours; tier 2 has 19 services, 6,906 attributes, 33.2% covered by official and 8.2% more by ours; tier 3 has 253 services, 28,710 attributes, 6.0% covered by official and 0.0% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 1.3% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 6.8% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.0% more by ours.
+
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 1.8% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 1.7% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 3.7% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 0.0% more by ours.
 
 **Ours.**
 

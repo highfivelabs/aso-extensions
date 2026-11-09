@@ -109,11 +109,12 @@ func sumSvcs(svcs []*SvcRow) *SvcRow {
 }
 
 // outputs makes every generated file: path (relative to docs/coverage) to content.
-func outputs(res []*ResRow, svcs []*SvcRow, tiers []*TierRow) map[string][]byte {
+func outputs(res []*ResRow, svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow) map[string][]byte {
 	out := map[string][]byte{}
 	out["services.csv"] = servicesCSV(svcs)
 	out["resources.csv"] = resourcesCSV(res)
 	out["tiers.csv"] = tiersCSV(tiers)
+	out["categories.csv"] = categoriesCSV(cats)
 	all := append([][]string{attrHeader}, attrRows(res)...)
 	whole := writeCSV(all)
 	if len(whole) <= maxAttributesCSV {
@@ -133,11 +134,12 @@ func outputs(res []*ResRow, svcs []*SvcRow, tiers []*TierRow) map[string][]byte 
 	t := sumSvcs(svcs)
 	out["bars/_total.svg"] = []byte(totalSVG("Azure Resource Manager API coverage", attrSegs(t), resSegs(t), dominance(svcs)))
 	out["bars/_tiers.svg"] = []byte(tiersSVG(tiers))
+	out["bars/_categories.svg"] = []byte(categoriesSVG(cats))
 	return out
 }
 
 // readmeSection is the Coverage section of the root README, between its markers.
-func readmeSection(svcs []*SvcRow, tiers []*TierRow, prio Priority) string {
+func readmeSection(svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow, prio Priority) string {
 	total := sumSvcs(svcs)
 	var b strings.Builder
 	b.WriteString("![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)\n\n")
@@ -146,24 +148,32 @@ func readmeSection(svcs []*SvcRow, tiers []*TierRow, prio Priority) string {
 		"Blue is ASO, green is what only we cover, grey is what neither does. ",
 		commas(total.AttrTotal), commas(total.ResTotal),
 		pct(total.AttrOfficial, total.AttrTotal), pct(total.AttrOursBeyond, total.AttrTotal), pct(total.AttrUncovered, total.AttrTotal))
-	b.WriteString("Not every service matters alike, so the services are in three tiers by how much the foundational modules people migrate first use them " +
-		"([`priority.csv`](docs/coverage/priority.csv)):\n\n")
-	b.WriteString("![Coverage by tier](docs/coverage/bars/_tiers.svg)\n\n")
+	b.WriteString("The total hides what matters, so the resources are in four categories, by how much a platform team needs them " +
+		"(foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; " +
+		"security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers " +
+		"([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).\n\n")
+	b.WriteString("![Coverage by category](docs/coverage/bars/_categories.svg)\n\n")
+	b.WriteString("| Category | Services | Resources | Official | Ours beyond | Uncovered |\n| --- | ---: | ---: | ---: | ---: | ---: |\n")
+	for _, c := range cats {
+		fmt.Fprintf(&b, "| %s | %d | %s | %s%% | %s%% | %s%% |\n", c.Category, len(c.Services), commas(c.ResTotal),
+			pct(c.AttrOfficial, c.AttrTotal), pct(c.AttrOursBeyond, c.AttrTotal), pct(c.AttrUncovered, c.AttrTotal))
+	}
+	b.WriteString("\n![Coverage by tier](docs/coverage/bars/_tiers.svg)\n\n")
 	b.WriteString("| Tier | Services | Official | Ours beyond | Uncovered |\n| --- | ---: | ---: | ---: | ---: |\n")
 	for _, t := range tiers {
 		fmt.Fprintf(&b, "| %d | %d | %s%% | %s%% | %s%% |\n", t.Tier, len(t.Services),
 			pct(t.AttrOfficial, t.AttrTotal), pct(t.AttrOursBeyond, t.AttrTotal), pct(t.AttrUncovered, t.AttrTotal))
 	}
-	b.WriteString("\nBy service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage); " +
+	b.WriteString("\nBy service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); " +
 		"method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), " +
 		"all services in [`services.csv`](docs/coverage/services.csv).\n\n")
 	sorted := sortedByTier(svcs, prio)
 	shown := 0
 	table := func(rows []*SvcRow) {
-		b.WriteString("| Tier | Service | Coverage | Official | Ours beyond | Uncovered |\n| ---: | --- | --- | ---: | ---: | ---: |\n")
+		b.WriteString("| Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered |\n| ---: | --- | --- | --- | ---: | ---: | ---: |\n")
 		for _, s := range rows {
-			fmt.Fprintf(&b, "| %d | `%s` | ![%s](docs/coverage/bars/%s.svg) | %s%% | %s%% | %s%% |\n",
-				prio.tier(s.Service), s.Service, s.Service, fileName(s.Service),
+			fmt.Fprintf(&b, "| %d | `%s` | %s | ![%s](docs/coverage/bars/%s.svg) | %s%% | %s%% | %s%% |\n",
+				prio.tier(s.Service), s.Service, prio.serviceCategory(s.Service), s.Service, fileName(s.Service),
 				pct(s.AttrOfficial, s.AttrTotal), pct(s.AttrOursBeyond, s.AttrTotal), pct(s.AttrUncovered, s.AttrTotal))
 		}
 	}
@@ -197,6 +207,9 @@ func sortedByTier(svcs []*SvcRow, prio Priority) []*SvcRow {
 		ti, tj := prio.tier(out[i].Service), prio.tier(out[j].Service)
 		if ti != tj {
 			return ti < tj
+		}
+		if oi, oj := prio.order(out[i].Service), prio.order(out[j].Service); oi != oj {
+			return oi < oj
 		}
 		ci, cj := out[i].AttrOfficial+out[i].AttrOursBeyond, out[j].AttrOfficial+out[j].AttrOursBeyond
 		if ci != cj {

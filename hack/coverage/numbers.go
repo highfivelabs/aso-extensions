@@ -12,7 +12,7 @@ import (
 // numbersBlock is the part of docs/coverage/README.md that the tool writes:
 // the figures that go with the method (what was read, what could not be
 // mapped, how far ASO lags), so they cannot drift from the data.
-func numbersBlock(src *sources, st *specStats, dc *DocsCheck, res map[string]*Resource, rows []*ResRow, svcs []*SvcRow, tiers []*TierRow, official, ours []*Kind) string {
+func numbersBlock(src *sources, st *specStats, dc *DocsCheck, res map[string]*Resource, rows []*ResRow, svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow, official, ours []*Kind) string {
 	var b strings.Builder
 	p := func(format string, a ...any) { fmt.Fprintf(&b, format, a...) }
 
@@ -83,6 +83,16 @@ func numbersBlock(src *sources, st *specStats, dc *DocsCheck, res map[string]*Re
 		}
 		p("tier %d has %d services, %s attributes, %s%% covered by official and %s%% more by ours", t.Tier, len(t.Services), commas(t.AttrTotal),
 			pct(t.AttrOfficial, t.AttrTotal), pct(t.AttrOursBeyond, t.AttrTotal))
+	}
+	p(".\n\n")
+
+	p("**Categories.** ")
+	for i, c := range cats {
+		if i > 0 {
+			p("; ")
+		}
+		p("%s has %d services, %d resources, %s attributes, %s%% covered by official and %s%% more by ours", c.Category, len(c.Services), c.ResTotal, commas(c.AttrTotal),
+			pct(c.AttrOfficial, c.AttrTotal), pct(c.AttrOursBeyond, c.AttrTotal))
 	}
 	p(".\n\n")
 

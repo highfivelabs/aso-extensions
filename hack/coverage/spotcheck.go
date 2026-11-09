@@ -183,6 +183,7 @@ func normalizedSet(leaves []string) map[string]bool {
 		add(l)
 		if strings.HasSuffix(l, ".reference") {
 			add(strings.TrimSuffix(l, ".reference") + ".id")
+			set["\x00ref:"+strings.ToLower(strings.TrimSuffix(l, ".reference"))] = true
 		}
 		last := l[strings.LastIndexAny(l, ".]}")+1:]
 		pre := l[:len(l)-len(last)]
@@ -207,6 +208,14 @@ func crdHas(set map[string]bool, attr string) bool {
 	if set[p] {
 		return true
 	}
+	// below a reference to another resource: covered by the reference
+	for _, v := range variantsForSpot(p) {
+		for i := 1; i < len(v); i++ {
+			if v[i] == '.' && set["\x00ref:"+v[:i]] {
+				return true
+			}
+		}
+	}
 	var segs []string
 	for _, s := range splitPath(p) {
 		if s != "properties" {
@@ -230,3 +239,5 @@ func splitPath(p string) []string {
 	}
 	return append(out, cur)
 }
+
+func variantsForSpot(p string) []string { return variants(p) }

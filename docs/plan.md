@@ -224,6 +224,43 @@ run over the pinned specs with configuration kept here.
   the tests carry the `serviceoperator.azure.com/resource-id` annotation ASO
   writes on what it provisions, which the owner chain needs.
 
+### Tenant-scope resources
+
+Checked 2026-11-09, before the management group, subscription and policy
+kinds (`docs/coverage/foundation.md` rows 1 to 4) are designed.
+
+- **ASO's framework supports them.** `genruntime.ResourceScopeTenant`,
+  `ResourceHierarchyRootTenant` and `genericarmclient.MakeTenantScopeARMID`
+  build `/providers/Microsoft.X/type/name` with no subscription; ASO's own
+  `subscription` `Alias` is the generated precedent (no owner). The ARM
+  reconciler's subscription check is skipped for an ID with no subscription
+  (`checkSubscription`: "Some resources like `/providers/Microsoft.Subscription/aliases`
+  do not have subscriptionID"). An extension resource on a tenant-scope owner
+  (a policy definition on a management group) is covered by the resolver's
+  tests (`ExtensionOnTenantScopeResource`). The generator emits
+  `GetResourceScope() == ResourceScopeTenant` for such types.
+- **The identity.** The credential is the namespace's, as for every kind, but
+  its rights must be at the tenant root or on the management group (management
+  group Owner or Contributor, or "elevate access"); a subscription-level role
+  is not enough to create a management group, move a subscription or assign
+  policy above a subscription. Real Azure needs this and the fake does not
+  check it, as it checks no role. Two namespaces with different tenants cannot
+  share a management group object: the object belongs to the credential's
+  tenant.
+- **Our fake cannot do it yet.** `pkg/fakecloud/arm` takes the parent of
+  `/providers/Microsoft.Management/managementGroups/mg` to be `/`, which does
+  not exist, so the PUT is refused with `ParentResourceNotFound` (a
+  subscription-scope or tenant-root parent must be accepted). Fix and test it
+  first: accept `/` and a management group chain as parents, and add the
+  management group hierarchy (a child group's parent is a group, not a
+  subscription) to `pkg/fakecloud/arm`, and the Alias-style
+  `/providers/Microsoft.Subscription/aliases/x`.
+- **`ManagementGroupSubscription`** (a placement) has no properties; the
+  generator makes it a kind with a fixed name and an owner (the group), which
+  is the shape to try first; billing accounts add a billing-scope owner that
+  ASO has no kind for, so billing aliases may need an ARM ID owner
+  (`ArbitraryOwnerReference`) rather than a kind.
+
 ### The PostgreSQL User
 
 - `aadUser`: the operator signs in as the server's Entra administrator

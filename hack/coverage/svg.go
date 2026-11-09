@@ -132,34 +132,55 @@ func totalSVG(title string, attrs, resources segs, note string) string {
 	return b.String()
 }
 
-// tiersSVG is one bar of attributes per tier.
-func tiersSVG(tiers []*TierRow) string {
+type groupBar struct {
+	label, sub string
+	s          segs
+}
+
+// groupSVG is one bar of attributes per group (a tier, a category), with a
+// legend over the whole.
+func groupSVG(title string, groups []groupBar) string {
 	var all []string
-	for _, t := range tiers {
-		s := segs{t.AttrOfficial, t.AttrOursBeyond, t.AttrUncovered}
-		all = append(all, fmt.Sprintf("tier %d, %d services: %s%% official, %s%% ours beyond official, %s%% uncovered, of %d attributes",
-			t.Tier, len(t.Services), pct(s.official, s.total()), pct(s.ours, s.total()), pct(s.none, s.total()), s.total()))
+	var whole segs
+	for _, g := range groups {
+		all = append(all, fmt.Sprintf("%s, %s: %s%% official, %s%% ours beyond official, %s%% uncovered, of %d attributes",
+			g.label, g.sub, pct(g.s.official, g.s.total()), pct(g.s.ours, g.s.total()), pct(g.s.none, g.s.total()), g.s.total()))
+		whole.official += g.s.official
+		whole.ours += g.s.ours
+		whole.none += g.s.none
 	}
-	label := "Coverage by tier. " + strings.Join(all, "; ")
+	label := title + ". " + strings.Join(all, "; ")
+	height := len(groups)*30 + 28
 	var b strings.Builder
-	b.WriteString(`<svg xmlns="http://www.w3.org/2000/svg" width="640" height="118" viewBox="0 0 640 118" role="img" aria-label="` + escape(label) + `">`)
-	b.WriteString(`<title>` + escape(label) + `</title>`)
+	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="%d" viewBox="0 0 640 %d" role="img" aria-label="%s">`, height, height, escape(label))
+	fmt.Fprintf(&b, `<title>%s</title>`, escape(label))
 	b.WriteString(svgStyle)
-	names := []string{"tier 1: foundational", "tier 2: other tracked", "tier 3: the rest"}
-	for i, t := range tiers {
+	for i, g := range groups {
 		y := float64(i * 30)
-		s := segs{t.AttrOfficial, t.AttrOursBeyond, t.AttrUncovered}
-		fmt.Fprintf(&b, `<text x="0" y="%s" class="t">%s</text>`, f1(y+16), names[i])
-		fmt.Fprintf(&b, `<text x="0" y="%s" class="t" opacity="0.7">%d services, %s attributes</text>`, f1(y+27), len(t.Services), commas(s.total()))
-		b.WriteString(bar(190, y+4, 450, 18, s, fmt.Sprintf("t%d", t.Tier)))
+		fmt.Fprintf(&b, `<text x="0" y="%s" class="t">%s</text>`, f1(y+16), escape(g.label))
+		fmt.Fprintf(&b, `<text x="0" y="%s" class="t" opacity="0.7">%s</text>`, f1(y+27), escape(g.sub))
+		b.WriteString(bar(190, y+4, 450, 18, g.s, fmt.Sprintf("g%d", i)))
 	}
-	var all3 segs
-	for _, t := range tiers {
-		all3.official += t.AttrOfficial
-		all3.ours += t.AttrOursBeyond
-		all3.none += t.AttrUncovered
-	}
-	legend(&b, 102, all3)
+	legend(&b, len(groups)*30+10, whole)
 	b.WriteString(`</svg>` + "\n")
 	return b.String()
+}
+
+// tiersSVG is one bar of attributes per tier.
+func tiersSVG(tiers []*TierRow) string {
+	names := []string{"tier 1: foundation", "tier 2: security, tracked apps", "tier 3: the rest"}
+	var gs []groupBar
+	for i, t := range tiers {
+		gs = append(gs, groupBar{names[i], fmt.Sprintf("%d services, %s attributes", len(t.Services), commas(t.AttrTotal)), attrSegs(&t.SvcRow)})
+	}
+	return groupSVG("Coverage by tier", gs)
+}
+
+// categoriesSVG is one bar of attributes per category.
+func categoriesSVG(cs []*CategoryRow) string {
+	var gs []groupBar
+	for _, c := range cs {
+		gs = append(gs, groupBar{c.Category, fmt.Sprintf("%d services, %s attributes", len(c.Services), commas(c.AttrTotal)), attrSegs(&c.SvcRow)})
+	}
+	return groupSVG("Coverage by category", gs)
 }
