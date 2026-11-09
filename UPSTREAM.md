@@ -23,16 +23,20 @@ Microsoft. Each copied file keeps its header and says how it was changed.
 
 | Here | From | Changed |
 | --- | --- | --- |
-| `apis/dbforpostgresql/v1/user_types.go` | `api/dbforpostgresql/v1/user_types.go` | group `dbforpostgresql.azure.hfl.dev`; new `aadUser`, `databasePrivileges`, `status.appliedDatabasePrivileges`; `localUser` optional, exactly one of `localUser`/`aadUser` (CEL, where ASO has a webhook); `AzureName()` falls back to `metadata.name` (ASO's defaulting webhook does that) |
+| `apis/dbforpostgresql/v1/user_types.go` | `api/dbforpostgresql/v1/user_types.go` | group `dbforpostgresql.azure.hfl.dev`; new `aadUser`, `databasePrivileges`, `status.appliedDatabasePrivileges`, `schemaPrivileges`, `defaultPrivileges` and their status; `localUser` optional, exactly one of `localUser`/`aadUser` (CEL, where ASO has a webhook); `AzureName()` falls back to `metadata.name` (ASO's defaulting webhook does that) |
 | `apis/dbforpostgresql/v1/groupversion_info.go` | `api/dbforpostgresql/v1/groupversion_info.go`, `doc.go` | group |
-| `pkg/reconcilers/postgresql/postgresql_user_reconciler.go` | `internal/reconcilers/postgresql/postgresql_user_reconciler.go` | our type; framework through `pkg/outoftree`; `aadUser` as `internal/reconcilers/mysql/aad_user.go` does it, roles created with `pgaadauth`; database privileges and their status; a missing `roleOptions` is ASO's default |
+| `pkg/reconcilers/postgresql/postgresql_user_reconciler.go` | `internal/reconcilers/postgresql/postgresql_user_reconciler.go` | our type; framework through `pkg/outoftree`; `aadUser` as `internal/reconcilers/mysql/aad_user.go` does it, roles created with `pgaadauth`; database privileges and their status; schema and default privileges in each database they name (`database_privileges.go`), so `connectToDB` takes the database; a missing `roleOptions` is ASO's default |
 | `pkg/util/postgresql/postgresql.go`, `roles.go`, `role_option.go` and their tests | `internal/util/postgresql/` | `ServerPort` and `TLSRootCAs` variables for tests; `DropUser` revokes database privileges first; `ALTER ROLE` escapes the role name |
 | `pkg/util/set/` | `internal/set/` | no |
 | `pkg/controllers/controllers.go` | `internal/controllers/controller_resources.go`, `indexers.go` | our kinds only; lists with `apimeta.ExtractList` |
 | `pkg/manager/manager.go` | `cmd/controller/app/setup.go` (`initializeClients`, `initializeWatchers`) | our kinds only; no CRD management, webhooks or ARM client |
 
 New files of ours (no ASO source): `pkg/util/postgresql/aad.go`,
-`privileges.go`; `apis/keyvault/v1/`; `pkg/keyvault/`;
+`privileges.go`, `schema_privileges.go`, `default_privileges.go`,
+`object_privileges.go` (ASO has
+no schema or default privileges; written the way `privileges.go` follows
+ASO's MySQL `ReconcileUserDatabasePrivileges`);
+`pkg/reconcilers/postgresql/database_privileges.go`; `apis/keyvault/v1/`; `pkg/keyvault/`;
 `pkg/reconcilers/keyvault/`; `pkg/fakecloud/`; `cmd/`; `test/`; `tests/`.
 
 ## Patches to the checkout

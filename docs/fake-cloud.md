@@ -44,6 +44,12 @@ make operator-e2e   # the same fakes on kind, with the install from config/defau
   (Azure: a security label), and give the caller ADMIN OPTION on the new
   role (needed on PostgreSQL 16 for a CREATEROLE administrator to alter or
   drop it; not documented for Azure).
+- Schema and default privileges run on the real PostgreSQL 17, so
+  PostgreSQL's own rules apply (since 16, a CREATEROLE administrator holds
+  only ADMIN OPTION on the roles it creates). What the fake does not show:
+  whether Azure's administrator holds ADMIN OPTION on roles Azure's own
+  `pgaadauth` creates (the stand-ins give it), who owns a database ARM
+  creates (here `azure_pg_admin`), and PostgreSQL before 16.
 - Key Vault's recover and purge finish at once (Azure: asynchronously, so
   the manager requeues after a recover); there is no Key Vault RBAC or
   access policy beyond the accepted tokens.

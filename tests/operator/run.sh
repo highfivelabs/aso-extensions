@@ -93,6 +93,7 @@ if ! kind get clusters | grep -qx "${CLUSTER}"; then
 else
   kind get kubeconfig --name "${CLUSTER}" > "${KUBECONFIG}"
 fi
+docker image inspect postgres:17 >/dev/null 2>&1 || docker pull -q postgres:17 >/dev/null
 kind load docker-image postgres:17 --name "${CLUSTER}" >/dev/null
 
 step "ASO's footprint, made by hand"
@@ -183,6 +184,7 @@ spec:
   aadUser: {serverAdminUsername: aso-team-a}
   roles: [app_readers]
   databasePrivileges: {app: [CONNECT, CREATE]}
+  schemaPrivileges: {app: {public: [USAGE, CREATE]}}
 ---
 apiVersion: keyvault.azure.hfl.dev/v1
 kind: VaultSecret
@@ -206,6 +208,9 @@ psql() { kubectl -n fake-cloud exec deploy/postgres -- psql -U postgres -tAc "$1
 [[ "$(psql "SELECT string_agg(a.privilege_type, ',' ORDER BY a.privilege_type) FROM pg_database d CROSS JOIN LATERAL aclexplode(d.datacl) a JOIN pg_roles r ON r.oid = a.grantee WHERE r.rolname = 'app-identity' AND d.datname = 'app'")" == "CONNECT,CREATE" ]] \
   || fail "app-identity's privileges on app are wrong"
 pass "PostgreSQL holds the Entra role app-identity with CONNECT, CREATE on app"
+[[ "$(kubectl -n fake-cloud exec deploy/postgres -- psql -U postgres -d app -tAc "SELECT string_agg(a.privilege_type, ',' ORDER BY a.privilege_type) FROM pg_namespace n CROSS JOIN LATERAL aclexplode(n.nspacl) a JOIN pg_roles r ON r.oid = a.grantee WHERE r.rolname = 'app-identity' AND n.nspname = 'public'")" == "CREATE,USAGE" ]] \
+  || fail "app-identity's privileges on schema public of app are wrong"
+pass "app-identity holds CREATE, USAGE on schema public of app (granted on a connection to app)"
 kubectl -n fake-cloud logs deploy/fakevault | grep -q "sub=system:serviceaccount:team-a:aso-workload scope=https://fake-cloud.svc/.default accepted=true" \
   || fail "the fake vault saw no accepted request from team-a's aso-workload"
 pass "the fake vault accepted team-a's aso-workload identity"

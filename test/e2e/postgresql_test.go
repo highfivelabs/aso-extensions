@@ -192,6 +192,8 @@ func TestPostgreSQLEntraUser(t *testing.T) {
 			Owner:              &genruntime.KubernetesOwnerReference{Name: "pg"},
 			AADUser:            &pgv1.AADUserSpec{ServerAdminUsername: "aso-team-a"},
 			DatabasePrivileges: map[string][]pgv1.DatabasePrivilege{"app": privs(pgv1.DatabasePrivilegeConnect)},
+			// Granted on a connection to app, signed in with the token.
+			SchemaPrivileges: map[string]map[string][]pgv1.SchemaPrivilege{"app": {"public": schemaPrivs(pgv1.SchemaPrivilegeUsage)}},
 		},
 	}
 	byOID := &pgv1.User{
@@ -219,6 +221,9 @@ func TestPostgreSQLEntraUser(t *testing.T) {
 		t.Fatalf("role reporting: exists=%v comment=%q err=%v", ok, comment, err)
 	}
 	expectPrivileges(t, "app-identity", map[string][]string{"app": {"CONNECT"}})
+	appDB := connectAs(t, "app", "postgres", "super-password")
+	expectIn(t, "schema privileges of app-identity", func() (map[string][]string, error) { return schemaPrivileges(appDB, "app-identity") },
+		map[string][]string{"public": {"USAGE"}})
 	if got, err := memberOf("reporting"); err != nil || !reflect.DeepEqual(got, []string{"app_readers"}) {
 		t.Fatalf("roles of reporting: %v %v", got, err)
 	}

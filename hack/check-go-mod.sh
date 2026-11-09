@@ -9,6 +9,8 @@
 set -o errexit
 set -o nounset
 set -o pipefail
+# sort and join must agree on order; the C locale makes both byte order on any OS.
+export LC_ALL=C
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${REPO_ROOT}"

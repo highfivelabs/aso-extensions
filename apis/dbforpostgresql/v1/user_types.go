@@ -7,7 +7,9 @@
 // the operator's credential, as ASO's MySQL User has) and
 // spec.databasePrivileges (privileges on databases, as ASO's MySQL User has);
 // localUser is no longer required, and exactly one of localUser and aadUser
-// is (a CEL rule here, where ASO uses a webhook); status.appliedDatabasePrivileges.
+// is (a CEL rule here, where ASO uses a webhook); status.appliedDatabasePrivileges;
+// spec.schemaPrivileges and spec.defaultPrivileges (schema and default
+// privileges, which no ASO user has) and their status.
 
 package v1
 
@@ -119,7 +121,103 @@ type UserSpec struct {
 	// a privilege on a database not listed here is revoked, as ASO's MySQL
 	// User does with its databasePrivileges.
 	DatabasePrivileges map[string][]DatabasePrivilege `json:"databasePrivileges,omitempty"`
+
+	// SchemaPrivileges are the user's privileges on schemas, keyed by
+	// database and then by schema: USAGE, CREATE, or ALL (ALL PRIVILEGES).
+	// Since PostgreSQL 15 only the database owner may create objects in the
+	// public schema, so a user that creates tables needs CREATE there, and
+	// on any other schema USAGE to reach its objects. In each database
+	// listed here, or listed when the user was last reconciled, the user
+	// ends with exactly these on every schema: a privilege on a schema not
+	// listed is revoked. Databases never listed are left alone.
+	SchemaPrivileges map[string]map[string][]SchemaPrivilege `json:"schemaPrivileges,omitempty"`
+
+	// DefaultPrivileges are privileges the user gets on objects another
+	// role creates later in a schema (ALTER DEFAULT PRIVILEGES FOR ROLE …
+	// IN SCHEMA … GRANT … TO the user). In each database listed here, or
+	// listed when the user was last reconciled, the user ends with exactly
+	// these schema-level default privileges; others are revoked. Default
+	// privileges set without a schema are left alone. Deleting the user
+	// revokes these, and the privileges they gave it on objects created
+	// meanwhile, before the role is dropped.
+	// +listType=map
+	// +listMapKey=database
+	// +listMapKey=schema
+	// +listMapKey=forRole
+	// +listMapKey=objectType
+	// +kubebuilder:validation:MaxItems=100
+	DefaultPrivileges []DefaultPrivilegesSpec `json:"defaultPrivileges,omitempty"`
 }
+
+// SchemaPrivilege is a privilege PostgreSQL grants on a schema.
+// +kubebuilder:validation:Enum=USAGE;CREATE;ALL
+type SchemaPrivilege string
+
+const (
+	SchemaPrivilegeUsage  = SchemaPrivilege("USAGE")
+	SchemaPrivilegeCreate = SchemaPrivilege("CREATE")
+	SchemaPrivilegeAll    = SchemaPrivilege("ALL")
+)
+
+// DefaultPrivilegesSpec is what the user is granted on objects of one type
+// that ForRole creates in Schema of Database.
+// +kubebuilder:validation:XValidation:rule="self.objectType != 'tables' || self.privileges.all(p, p in ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'TRUNCATE', 'REFERENCES', 'TRIGGER', 'MAINTAIN', 'ALL'])",message="privileges on tables are SELECT, INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER, MAINTAIN or ALL"
+// +kubebuilder:validation:XValidation:rule="self.objectType != 'sequences' || self.privileges.all(p, p in ['USAGE', 'SELECT', 'UPDATE', 'ALL'])",message="privileges on sequences are USAGE, SELECT, UPDATE or ALL"
+// +kubebuilder:validation:XValidation:rule="self.objectType != 'functions' || self.privileges.all(p, p in ['EXECUTE', 'ALL'])",message="privileges on functions are EXECUTE or ALL"
+// +kubebuilder:validation:XValidation:rule="self.objectType != 'types' || self.privileges.all(p, p in ['USAGE', 'ALL'])",message="privileges on types are USAGE or ALL"
+type DefaultPrivilegesSpec struct {
+	// Database is the database the schema is in.
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:MinLength=1
+	// +kubebuilder:validation:MaxLength=63
+	Database string `json:"database"`
+
+	// Schema is the schema the objects are created in.
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:MinLength=1
+	// +kubebuilder:validation:MaxLength=63
+	Schema string `json:"schema"`
+
+	// ForRole is the role whose new objects these apply to: the role that
+	// will create them, such as the user that runs an application's
+	// migrations. The operator's administrator changes default privileges
+	// for that role with its privileges: if it does not already hold them,
+	// it grants itself the role for the one transaction (it needs ADMIN
+	// OPTION on the role, which it has on the roles it created).
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:MinLength=1
+	// +kubebuilder:validation:MaxLength=63
+	ForRole string `json:"forRole"`
+
+	// ObjectType is the kind of object: tables (which includes views),
+	// sequences, functions (which includes procedures) or types.
+	// +kubebuilder:validation:Required
+	ObjectType DefaultPrivilegesObjectType `json:"objectType"`
+
+	// Privileges are the privileges granted: for tables SELECT, INSERT,
+	// UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER, MAINTAIN (PostgreSQL
+	// 17 and later); for sequences USAGE, SELECT, UPDATE; for functions
+	// EXECUTE; for types USAGE; ALL for all of them.
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:MinItems=1
+	// +kubebuilder:validation:MaxItems=11
+	Privileges []DefaultPrivilege `json:"privileges"`
+}
+
+// DefaultPrivilegesObjectType is a kind of object default privileges apply to.
+// +kubebuilder:validation:Enum=tables;sequences;functions;types
+type DefaultPrivilegesObjectType string
+
+const (
+	DefaultPrivilegesObjectTypeTables    = DefaultPrivilegesObjectType("tables")
+	DefaultPrivilegesObjectTypeSequences = DefaultPrivilegesObjectType("sequences")
+	DefaultPrivilegesObjectTypeFunctions = DefaultPrivilegesObjectType("functions")
+	DefaultPrivilegesObjectTypeTypes     = DefaultPrivilegesObjectType("types")
+)
+
+// DefaultPrivilege is a privilege granted by default privileges.
+// +kubebuilder:validation:Enum=SELECT;INSERT;UPDATE;DELETE;TRUNCATE;REFERENCES;TRIGGER;MAINTAIN;USAGE;EXECUTE;ALL
+type DefaultPrivilege string
 
 // DatabasePrivilege is a privilege PostgreSQL grants on a database.
 // +kubebuilder:validation:Enum=CONNECT;CREATE;TEMPORARY;ALL
@@ -207,6 +305,28 @@ type UserStatus struct {
 	// AppliedDatabasePrivileges are the database privileges the user had
 	// when it was last reconciled.
 	AppliedDatabasePrivileges map[string][]DatabasePrivilege `json:"appliedDatabasePrivileges,omitempty"`
+
+	// AppliedSchemaPrivileges are the schema privileges the user had, in
+	// the databases its schemaPrivileges named, when it was last
+	// reconciled. A database here is visited again on the next reconcile, so
+	// privileges on a database dropped from schemaPrivileges are revoked.
+	AppliedSchemaPrivileges map[string]map[string][]string `json:"appliedSchemaPrivileges,omitempty"`
+
+	// AppliedDefaultPrivileges are the schema-level default privileges the
+	// user had, in the databases its defaultPrivileges named, when it was
+	// last reconciled. As with appliedSchemaPrivileges, their databases are
+	// visited again on the next reconcile.
+	AppliedDefaultPrivileges []AppliedDefaultPrivileges `json:"appliedDefaultPrivileges,omitempty"`
+}
+
+// AppliedDefaultPrivileges are default privileges read back from a
+// database's pg_default_acl.
+type AppliedDefaultPrivileges struct {
+	Database   string   `json:"database,omitempty"`
+	Schema     string   `json:"schema,omitempty"`
+	ForRole    string   `json:"forRole,omitempty"`
+	ObjectType string   `json:"objectType,omitempty"`
+	Privileges []string `json:"privileges,omitempty"`
 }
 
 func init() {

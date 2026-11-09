@@ -9,10 +9,12 @@ Licensed under the MIT license.
 // pkg/outoftree (the patch in patches/azure-service-operator/); new: aadUser
 // (connect as the server's Entra administrator with the credential ASO
 // would use for this object, as ASO's MySQL aad_user.go does, and create
-// the role with pgaadauth), databasePrivileges and their status; the user
-// name falls back to metadata.name when azureName is empty (ASO's defaulting
-// webhook does that; we run none); a missing roleOptions means ASO's
-// default (LOGIN) instead of an error.
+// the role with pgaadauth), databasePrivileges, schemaPrivileges and
+// defaultPrivileges (on a connection to each database they name) and their
+// status; the user name falls back to metadata.name when azureName is empty
+// (ASO's defaulting webhook does that; we run none); a missing roleOptions
+// means ASO's default (LOGIN) instead of an error; connectToDB takes the
+// database to connect to.
 
 package postgresql
 
@@ -105,7 +107,7 @@ func (r *PostgreSQLUserReconciler) CreateOrUpdate(
 		return ctrl.Result{}, outoftree.ClassifyResolverError(err)
 	}
 
-	db, err := r.connectToDB(ctx, log, user, secrets)
+	db, err := r.connectToDB(ctx, log, user, secrets, postgresqlutil.DefaultMaintanenceDatabase)
 	if err != nil {
 		return ctrl.Result{}, err
 	}
@@ -177,6 +179,12 @@ func (r *PostgreSQLUserReconciler) CreateOrUpdate(
 		return ctrl.Result{}, err
 	}
 
+	// Schema and default privileges, in each database they name (now or at
+	// the last reconcile); this also sets their status.
+	if err := r.inDatabases(ctx, log, user, secrets, db, modeReconcile); err != nil {
+		return ctrl.Result{}, err
+	}
+
 	log.V(logStatus).Info("Successfully reconciled PostgreSqlUser")
 
 	return ctrl.Result{}, nil
@@ -241,11 +249,18 @@ func (r *PostgreSQLUserReconciler) Delete(ctx context.Context, log logr.Logger, 
 		return ctrl.Result{}, err
 	}
 
-	db, err := r.connectToDB(ctx, log, user, secrets)
+	db, err := r.connectToDB(ctx, log, user, secrets, postgresqlutil.DefaultMaintanenceDatabase)
 	if err != nil {
 		return ctrl.Result{}, err
 	}
 	defer db.Close()
+
+	// PostgreSQL refuses to drop a role that holds privileges in any
+	// database: revoke its schema and default privileges first, in the
+	// databases they name (DropUser revokes its database privileges).
+	if err := r.inDatabases(ctx, log, user, secrets, db, modeRevokeAll); err != nil {
+		return ctrl.Result{}, err
+	}
 
 	// TODO: There's still probably some ways that this user can be deleted but that we don't detect (and
 	// TODO: so might cause an error triggering the resource to get stuck).
@@ -290,7 +305,7 @@ func (r *PostgreSQLUserReconciler) UpdateStatus(
 		return err
 	}
 
-	db, err := r.connectToDB(ctx, log, user, secrets)
+	db, err := r.connectToDB(ctx, log, user, secrets, postgresqlutil.DefaultMaintanenceDatabase)
 	if err != nil {
 		return err
 	}
@@ -307,10 +322,13 @@ func (r *PostgreSQLUserReconciler) UpdateStatus(
 		return err
 	}
 
-	return setAppliedDatabasePrivileges(ctx, db, user)
+	if err := setAppliedDatabasePrivileges(ctx, db, user); err != nil {
+		return err
+	}
+	return r.inDatabases(ctx, log, user, secrets, db, modeRead)
 }
 
-func (r *PostgreSQLUserReconciler) connectToDB(ctx context.Context, log logr.Logger, user *asopostgresql.User, secrets genruntime.Resolved[genruntime.SecretReference, string]) (*sql.DB, error) {
+func (r *PostgreSQLUserReconciler) connectToDB(ctx context.Context, log logr.Logger, user *asopostgresql.User, secrets genruntime.Resolved[genruntime.SecretReference, string], database string) (*sql.DB, error) {
 	// Get the owner - at this point it must exist
 	ownerDetails, err := r.ResourceResolver.ResolveOwner(ctx, user)
 	if err != nil {
@@ -339,7 +357,7 @@ func (r *PostgreSQLUserReconciler) connectToDB(ctx context.Context, log logr.Log
 	serverFQDN := *flexibleServer.Status.FullyQualifiedDomainName
 
 	if user.Spec.AADUser != nil {
-		return r.connectToDBAAD(ctx, log, user, serverFQDN)
+		return r.connectToDBAAD(ctx, log, user, serverFQDN, database)
 	}
 
 	adminPassword, err := secrets.LookupFromPtr(user.Spec.LocalUser.ServerAdminPassword)
@@ -353,13 +371,13 @@ func (r *PostgreSQLUserReconciler) connectToDB(ctx context.Context, log logr.Log
 	adminUser := user.Spec.LocalUser.ServerAdminUsername
 
 	// Connect to the DB
-	db, err := postgresqlutil.ConnectToDB(ctx, serverFQDN, postgresqlutil.DefaultMaintanenceDatabase, postgresqlutil.ServerPort, adminUser, adminPassword)
+	db, err := postgresqlutil.ConnectToDB(ctx, serverFQDN, database, postgresqlutil.ServerPort, adminUser, adminPassword)
 	if err != nil {
 		return nil, eris.Wrapf(
 			err,
 			"failed to connect database. Server: %s, Database: %s, Port: %d, AdminUser: %s",
 			serverFQDN,
-			postgresqlutil.DefaultMaintanenceDatabase,
+			database,
 			postgresqlutil.ServerPort,
 			adminUser,
 		)
@@ -371,7 +389,7 @@ func (r *PostgreSQLUserReconciler) connectToDB(ctx context.Context, log logr.Log
 // connectToDBAAD signs in as the server's Entra administrator with the
 // credential ASO's credential provider picks for this object, as ASO's
 // MySQL connectToDBAAD does.
-func (r *PostgreSQLUserReconciler) connectToDBAAD(ctx context.Context, log logr.Logger, user *asopostgresql.User, fqdn string) (*sql.DB, error) {
+func (r *PostgreSQLUserReconciler) connectToDBAAD(ctx context.Context, log logr.Logger, user *asopostgresql.User, fqdn string, database string) (*sql.DB, error) {
 	adminUser := user.Spec.AADUser.ServerAdminUsername
 	if len(adminUser) == 0 {
 		return nil, eris.Errorf("AAD User must specify $.spec.aadUser.serverAdminUsername")
@@ -387,13 +405,13 @@ func (r *PostgreSQLUserReconciler) connectToDBAAD(ctx context.Context, log logr.
 	}
 	log.V(logVerbose).Info("Retrieved token for PostgreSQL", "scope", postgresqlutil.EntraScope, "expires", token.ExpiresOn, "credentialFrom", credential.CredentialFrom())
 
-	db, err := postgresqlutil.ConnectToDBAAD(ctx, fqdn, postgresqlutil.DefaultMaintanenceDatabase, postgresqlutil.ServerPort, adminUser, token.Token)
+	db, err := postgresqlutil.ConnectToDBAAD(ctx, fqdn, database, postgresqlutil.ServerPort, adminUser, token.Token)
 	if err != nil {
 		return nil, eris.Wrapf(
 			err,
 			"failed to connect database. Server: %s, Database: %s, Port: %d, AdminUser: %s",
 			fqdn,
-			postgresqlutil.DefaultMaintanenceDatabase,
+			database,
 			postgresqlutil.ServerPort,
 			adminUser,
 		)
