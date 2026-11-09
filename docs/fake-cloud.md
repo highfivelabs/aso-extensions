@@ -50,6 +50,11 @@ make operator-e2e   # the same fakes on kind, with the install from config/defau
   whether Azure's administrator holds ADMIN OPTION on roles Azure's own
   `pgaadauth` creates (the stand-ins give it), who owns a database ARM
   creates (here `azure_pg_admin`), and PostgreSQL before 16.
+- Database ownership (`ownedDatabases`, `hfl_owner`) also runs on the real
+  PostgreSQL. What the fake does not show: whether Azure lets an
+  administrator grant a role to `azure_pg_admin` (a role Azure manages),
+  and whether an Entra administrator's membership in it carries INHERIT and
+  SET as the fake's does (created `IN ROLE azure_pg_admin`).
 - Key Vault's recover and purge finish at once (Azure: asynchronously, so
   the manager requeues after a recover); there is no Key Vault RBAC or
   access policy beyond the accepted tokens.

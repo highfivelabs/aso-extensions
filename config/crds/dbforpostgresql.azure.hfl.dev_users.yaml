@@ -272,6 +272,21 @@ spec:
                 - serverAdminPassword
                 - serverAdminUsername
                 type: object
+              ownedDatabases:
+                description: |-
+                  OwnedDatabases are databases of the server the user owns (ALTER
+                  DATABASE … OWNER TO the user), such as the one its migrations run in.
+                  A database is never left without an owner: one dropped from this
+                  list goes to the reassignOwnedTo role, and when the user is deleted,
+                  every database it owns goes there with everything the user owns in
+                  it (REASSIGN OWNED), before the role is dropped.
+                items:
+                  maxLength: 63
+                  minLength: 1
+                  type: string
+                maxItems: 100
+                type: array
+                x-kubernetes-list-type: set
               owner:
                 description: |-
                   Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
@@ -284,6 +299,17 @@ spec:
                 required:
                 - name
                 type: object
+              reassignOwnedTo:
+                description: |-
+                  ReassignOwnedTo is the role that receives the databases this user
+                  gives up; empty means hfl_owner. The operator creates it as a role
+                  nobody signs in as (NOLOGIN) when it is missing, and grants it to
+                  azure_pg_admin so every administrator of the server can later hand a
+                  database on to a real owner. A role of that name that can sign in is
+                  refused.
+                maxLength: 63
+                minLength: 1
+                type: string
               roleOptions:
                 default:
                   login: true
@@ -351,6 +377,9 @@ spec:
               rule: '!has(oldSelf.localUser) || has(self.localUser)'
             - message: azureName is immutable
               rule: '!has(oldSelf.azureName) || self.azureName == oldSelf.azureName'
+            - message: reassignOwnedTo cannot be the user itself
+              rule: '!has(self.reassignOwnedTo) || !has(self.ownedDatabases) || !has(self.azureName)
+                || self.reassignOwnedTo != self.azureName'
           status:
             properties:
               appliedDatabasePrivileges:
@@ -454,6 +483,22 @@ spec:
                   - status
                   - type
                   type: object
+                type: array
+              ownedDatabases:
+                description: |-
+                  OwnedDatabases are the databases of spec.ownedDatabases the user
+                  owned when it was last reconciled. One that leaves spec.ownedDatabases
+                  is given to the reassignOwnedTo role on the next reconcile.
+                items:
+                  type: string
+                type: array
+              reassignedDatabases:
+                description: |-
+                  ReassignedDatabases are the databases the last reconcile, or the
+                  delete in progress, gave to the reassignOwnedTo role. Each move is
+                  also an event (DatabaseReassigned).
+                items:
+                  type: string
                 type: array
             type: object
         type: object

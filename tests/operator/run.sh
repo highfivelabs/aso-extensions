@@ -185,6 +185,7 @@ spec:
   roles: [app_readers]
   databasePrivileges: {app: [CONNECT, CREATE]}
   schemaPrivileges: {app: {public: [USAGE, CREATE]}}
+  ownedDatabases: [orders]
 ---
 apiVersion: keyvault.azure.hfl.dev/v1
 kind: VaultSecret
@@ -211,6 +212,9 @@ pass "PostgreSQL holds the Entra role app-identity with CONNECT, CREATE on app"
 [[ "$(kubectl -n fake-cloud exec deploy/postgres -- psql -U postgres -d app -tAc "SELECT string_agg(a.privilege_type, ',' ORDER BY a.privilege_type) FROM pg_namespace n CROSS JOIN LATERAL aclexplode(n.nspacl) a JOIN pg_roles r ON r.oid = a.grantee WHERE r.rolname = 'app-identity' AND n.nspname = 'public'")" == "CREATE,USAGE" ]] \
   || fail "app-identity's privileges on schema public of app are wrong"
 pass "app-identity holds CREATE, USAGE on schema public of app (granted on a connection to app)"
+[[ "$(psql "SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname = 'orders'")" == "app-identity" ]] \
+  || fail "app-identity does not own the database orders"
+pass "app-identity owns the database orders"
 kubectl -n fake-cloud logs deploy/fakevault | grep -q "sub=system:serviceaccount:team-a:aso-workload scope=https://fake-cloud.svc/.default accepted=true" \
   || fail "the fake vault saw no accepted request from team-a's aso-workload"
 pass "the fake vault accepted team-a's aso-workload identity"
@@ -227,6 +231,13 @@ kubectl -n team-a delete users.dbforpostgresql.azure.hfl.dev app-identity --time
 kubectl -n team-a delete vaultsecrets.keyvault.azure.hfl.dev app-url --timeout=60s
 [[ -z "$(psql "SELECT 1 FROM pg_roles WHERE rolname = 'app-identity'")" ]] || fail "the role app-identity was not dropped"
 pass "the Entra role app-identity is dropped"
+[[ "$(psql "SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname = 'orders'")" == "hfl_owner" ]] \
+  || fail "the database orders was not given to hfl_owner"
+[[ "$(psql "SELECT rolcanlogin FROM pg_roles WHERE rolname = 'hfl_owner'")" == "f" ]] || fail "hfl_owner can sign in"
+pass "the database orders went to hfl_owner, which cannot sign in"
+kubectl -n team-a get events --field-selector reason=DatabaseReassigned -o jsonpath='{.items[*].message}' | grep -q "gave database orders" \
+  || fail "no DatabaseReassigned event names orders"
+pass "a DatabaseReassigned event names orders"
 kubectl -n fake-cloud logs deploy/fakevault | grep -q "request DELETE /secrets/app-url" || fail "the vault saw no delete of app-url"
 pass "the vault soft-deleted app-url (deleteMode delete)"
 

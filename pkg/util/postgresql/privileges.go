@@ -42,14 +42,16 @@ func NormalizeDatabasePrivileges(privs []string) (set.Set[string], error) {
 }
 
 // GetUserDatabasePrivileges reads, from each database's ACL, the
-// privileges granted directly to the user, keyed by database name.
+// privileges granted directly to the user, keyed by database name. A
+// database the user owns is left out: an owner holds every privilege on
+// it, and its ACL entry is the owner's own.
 func GetUserDatabasePrivileges(ctx context.Context, db *sql.DB, user string) (map[string]set.Set[string], error) {
 	rows, err := db.QueryContext(ctx, `
 SELECT d.datname, a.privilege_type
 FROM pg_database d
 CROSS JOIN LATERAL aclexplode(d.datacl) a
 JOIN pg_roles r ON r.oid = a.grantee
-WHERE r.rolname = $1`, user)
+WHERE r.rolname = $1 AND d.datdba <> r.oid`, user)
 	if err != nil {
 		return nil, eris.Wrapf(err, "listing database privileges for user %s", user)
 	}
@@ -123,20 +125,41 @@ func ReconcileUserDatabasePrivileges(ctx context.Context, db *sql.DB, user strin
 		sort.Strings(add)
 		sort.Strings(remove)
 
-		if len(add) > 0 {
-			// Privilege words are from the fixed list above; identifiers are escaped.
-			_, err := db.ExecContext(ctx, fmt.Sprintf("GRANT %s ON DATABASE %s TO %s",
-				strings.Join(add, ", "), escapeIdentifier(database), escapeIdentifier(user)))
-			if err != nil {
-				errs = append(errs, eris.Wrapf(err, "granting %s on database %s", strings.Join(add, ", "), database))
-			}
+		if len(add) == 0 && len(remove) == 0 {
+			continue
 		}
-		if len(remove) > 0 {
-			_, err := db.ExecContext(ctx, fmt.Sprintf("REVOKE %s ON DATABASE %s FROM %s",
-				strings.Join(remove, ", "), escapeIdentifier(database), escapeIdentifier(user)))
-			if err != nil {
-				errs = append(errs, eris.Wrapf(err, "revoking %s on database %s", strings.Join(remove, ", "), database))
+
+		// Changing a database's ACL needs the privileges of its owner, which
+		// may be a User (ownedDatabases): borrow them when missing.
+		owner, ok, err := DatabaseOwner(ctx, db, database)
+		if err != nil {
+			errs = append(errs, err)
+			continue
+		}
+		if !ok {
+			errs = append(errs, eris.Errorf("database %s does not exist", database))
+			continue
+		}
+		err = withPrivilegesOf(ctx, db, owner, func(tx *sql.Tx) error {
+			if len(add) > 0 {
+				// Privilege words are from the fixed list above; identifiers are escaped.
+				_, err := tx.ExecContext(ctx, fmt.Sprintf("GRANT %s ON DATABASE %s TO %s",
+					strings.Join(add, ", "), escapeIdentifier(database), escapeIdentifier(user)))
+				if err != nil {
+					return eris.Wrapf(err, "granting %s on database %s", strings.Join(add, ", "), database)
+				}
 			}
+			if len(remove) > 0 {
+				_, err := tx.ExecContext(ctx, fmt.Sprintf("REVOKE %s ON DATABASE %s FROM %s",
+					strings.Join(remove, ", "), escapeIdentifier(database), escapeIdentifier(user)))
+				if err != nil {
+					return eris.Wrapf(err, "revoking %s on database %s", strings.Join(remove, ", "), database)
+				}
+			}
+			return nil
+		})
+		if err != nil {
+			errs = append(errs, err)
 		}
 	}
 	return kerrors.NewAggregate(errs)

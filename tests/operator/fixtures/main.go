@@ -42,7 +42,7 @@ func main() {
 	setup := postgres.Setup{
 		LocalAdmin: "pgadmin", LocalAdminPassword: "admin-password-1",
 		EntraAdmins: map[string]string{"aso-team-a": token},
-		Databases:   []string{"app"},
+		Databases:   []string{"app", "orders"},
 		Roles:       []string{"app_readers"},
 	}
 	write(*out, "init.sql", []byte(setup.InitSQL()))
