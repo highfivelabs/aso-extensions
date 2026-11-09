@@ -12,6 +12,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
+	asocompute "github.com/Azure/azure-service-operator/v2/api/compute/v20220301/storage"
 	asoregistry "github.com/Azure/azure-service-operator/v2/api/containerregistry/v20251101/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
@@ -204,6 +205,25 @@ func containerRegistry(t *testing.T, ns, name, rg, rgAzureName, azureName string
 	}
 	reg.Status.Conditions = []conditions.Condition{asoReady(reg.Generation)}
 	if err := k8s.Status().Update(ctx, reg); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// virtualMachine stands in for an ASO compute.azure.com VirtualMachine ASO
+// has provisioned, in the resource group rg.
+func virtualMachine(t *testing.T, ns, name, rg, rgAzureName, azureName string) {
+	t.Helper()
+	ctx := context.Background()
+	vm := &asocompute.VirtualMachine{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: name,
+		Annotations: map[string]string{genruntime.ResourceIDAnnotation: "/subscriptions/" + subID + "/resourceGroups/" + rgAzureName +
+			"/providers/Microsoft.Compute/virtualMachines/" + azureName}}}
+	vm.Spec.AzureName = azureName
+	vm.Spec.Owner = &genruntime.KnownResourceReference{Name: rg}
+	if err := k8s.Create(ctx, vm); err != nil {
+		t.Fatal(err)
+	}
+	vm.Status.Conditions = []conditions.Condition{asoReady(vm.Generation)}
+	if err := k8s.Status().Update(ctx, vm); err != nil {
 		t.Fatal(err)
 	}
 }
