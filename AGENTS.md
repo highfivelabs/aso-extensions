@@ -18,7 +18,7 @@ itself lives in its own repository and is never changed from here.
 ## Where things are
 
 - **Upstream and the pin:** `UPSTREAM.md`; fetched into `third_party/` by
-  `make upstream` (or `make tools`), with `patches/` applied in order.
+  `task upstream`, with `patches/` applied in order.
 - **Unreleased upstream code** (master, pull requests): `docs/plan.md`
   §1 (how ASO v2 is built), §2 (how a kind is built here; `patches/` adds `v2/pkg/outoftree` to reach ASO's reconciler), §4 (upstream and sync).
 - **What to build next:** `docs/plan.md` §3 "Candidates". Plain Azure API
@@ -41,13 +41,13 @@ itself lives in its own repository and is never changed from here.
    (`CONTRIBUTING.md`, "The copy-upstream rule"); record each copied file
    in `UPSTREAM.md`. Changes to upstream code go in `patches/`, never by
    editing `third_party/`.
-3. Generate CRDs and code with the repo's make targets; never hand-edit
+3. Generate CRDs and code with the repo's tasks; never hand-edit
    generated files.
 4. Test against the fake cloud, including what the fake cannot show,
    written down in the fake cloud's doc.
 5. Update `docs/plan.md` (what was built, what was proven, what is left)
    and `README.md`.
-6. Run `make check` (and `make operator-e2e` when the operator or
+6. Run `task check` (and `task operator-e2e` when the operator or
    install changes) and report the real result, failures included.
 
 ## Always
