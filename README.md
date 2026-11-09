@@ -11,7 +11,7 @@ Not affiliated with or endorsed by Microsoft.
 
 | Kind | Gap it fills | Upstream |
 | --- | --- | --- |
-| `dbforpostgresql.azure.hfl.dev/v1` `User` | ASO's PostgreSQL `User` can neither be a Microsoft Entra principal (`aadUser`, which ASO's MySQL `User` has) nor hold privileges on a database (`databasePrivileges`, which ASO's MySQL `User` also has) | ASO's PostgreSQL `User`, copied and extended; per-database privileges are ASO issue [#4694](https://github.com/Azure/azure-service-operator/issues/4694), still open |
+| `dbforpostgresql.azure.hfl.dev/v1` `User` | ASO's PostgreSQL `User` can neither be a Microsoft Entra principal (`aadUser`, which ASO's MySQL `User` has) nor hold privileges on a database (`databasePrivileges`, which ASO's MySQL `User` also has), on a schema (`schemaPrivileges`) or on objects another role creates later (`defaultPrivileges`) | ASO's PostgreSQL `User`, copied and extended; per-database privileges are ASO issue [#4694](https://github.com/Azure/azure-service-operator/issues/4694), still open; ASO has nothing for schema or default privileges |
 | `keyvault.azure.hfl.dev/v1` `VaultSecret` | a Key Vault secret whose value comes from a Kubernetes Secret; ASO has `Vault` and `VaultKey` but declined to manage secrets ([#1894](https://github.com/Azure/azure-service-operator/issues/1894)) | ours, with ASO's `VaultKey` create and delete modes |
 
 ## Where it sits
@@ -43,6 +43,15 @@ spec:
   roles: [app_readers]
   databasePrivileges:
     orders: [CONNECT, CREATE]
+  schemaPrivileges:           # per database, per schema
+    orders:
+      public: [USAGE]
+  defaultPrivileges:          # on tables orders-migrator creates later
+  - database: orders
+    schema: public
+    forRole: orders-migrator
+    objectType: tables
+    privileges: [SELECT, INSERT, UPDATE, DELETE]
 ---
 apiVersion: keyvault.azure.hfl.dev/v1
 kind: VaultSecret

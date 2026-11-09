@@ -2,7 +2,8 @@
 
 Status, 2026-11-08: the repository exists locally with two kinds,
 `dbforpostgresql.azure.hfl.dev/v1` `User` (ASO's PostgreSQL user with
-Microsoft Entra principals and per-database privileges) and
+Microsoft Entra principals, per-database privileges, and schema and
+default privileges) and
 `keyvault.azure.hfl.dev/v1` `VaultSecret`. Both pass their end-to-end tests
 against a fake cloud, and the install runs on kind (section 7). It has no
 remote, no published image and no release. This document says how Azure
@@ -102,6 +103,51 @@ So a gap in ASO is one of two kinds:
 - Dropping a user first revokes its database privileges; PostgreSQL refuses
   to drop a role that holds any. ASO's PostgreSQL user has no privileges to
   revoke, so it never needed this.
+- `schemaPrivileges`: per database and schema, `USAGE`, `CREATE` or `ALL`.
+  Since PostgreSQL 15 only the database owner may create in `public`, so an
+  app that runs its own migrations needs `CREATE` there. Schema ACLs live in
+  each database's own catalog, so the operator connects to each database
+  named (as the same administrator, with the same password or Entra token).
+  In each database named now, or named at the last reconcile (kept in
+  `status.appliedSchemaPrivileges`), the user ends with exactly the listed
+  privileges on every schema; databases never named are left alone, so
+  existing users without the field are unchanged.
+- `defaultPrivileges`: a list of database, schema, `forRole`, object type
+  (`tables`, `sequences`, `functions`, `types`) and privileges, as
+  `ALTER DEFAULT PRIVILEGES FOR ROLE <forRole> IN SCHEMA <schema> GRANT …`.
+  This is how a reader or an app gets rights on tables a migration role
+  creates later. The same exact-per-visited-database rule, with
+  `status.appliedDefaultPrivileges`. CEL rules refuse a privilege that does
+  not apply to the object type; `ALL` on tables includes `MAINTAIN` on
+  PostgreSQL 17. Default privileges set without a schema (global ones) are
+  not managed: revoking from them interacts with the built-in defaults.
+- **The administrator borrows a role's privileges for one transaction.**
+  Granting on a schema needs the privileges of its owner, and
+  `ALTER DEFAULT PRIVILEGES FOR ROLE r` needs those of `r`. An Azure
+  administrator is not a superuser, and since PostgreSQL 16 `CREATE ROLE`
+  gives its creator only ADMIN OPTION on the new role, without INHERIT
+  (checked on PostgreSQL 17: "permission denied to change default
+  privileges"). So when the administrator lacks a role's privileges, the
+  operator runs `GRANT r TO CURRENT_USER WITH INHERIT TRUE`, does the
+  change, and `REVOKE r FROM CURRENT_USER GRANTED BY CURRENT_USER`, all in
+  one transaction: it uses only the ADMIN OPTION the administrator already
+  holds, and no membership outlives the transaction (the tests check
+  `pg_auth_members`). Without ADMIN OPTION on `r` the change fails with
+  PostgreSQL's error. The alternative, requiring the builder to give the
+  administrator lasting membership in every such role by hand, was
+  rejected: it leaves the administrator with more than it needs.
+- Every grant and revoke is read back; a privilege PostgreSQL did not grant
+  or revoke (one made by another grantor) is an error rather than a silent
+  success.
+- Deleting a user revokes, in each database its schema or default
+  privileges name, those privileges and every privilege it holds on that
+  database's tables (and columns), views, sequences, functions and types,
+  then drops the role. PostgreSQL refuses to drop a role that holds any, and
+  default privileges grant exactly such privileges as other roles create
+  objects; each revoke borrows the object owner's privileges the same way.
+  Objects the user owns are not dropped: deleting a user that owns tables
+  fails with PostgreSQL's error, as in ASO, until they are dropped or
+  reassigned.
 
 ### VaultSecret
 
@@ -122,7 +168,8 @@ So a gap in ASO is one of two kinds:
 Ranked by how much an application stack on Azure needs them and how cheap
 they are to carry. "Built" means in this repository with tests.
 
-(a) Upstream has code or an open pull request (read-only `gh`, 2026-11-07):
+(a) Upstream has code or an open pull request (read-only `gh`, 2026-11-07;
+rechecked 2026-11-08, see below):
 
 | # | What | State | Move |
 | --- | --- | --- | --- |
@@ -139,13 +186,26 @@ they are to carry. "Built" means in this repository with tests.
 | b1 | PostgreSQL user bound to an Entra principal | an app's managed identity signs in to its database without a password; ASO's MySQL user can, its PostgreSQL user cannot | **built**; offer upstream |
 | b2 | PostgreSQL privileges per database | an app's user needs `CONNECT`/`CREATE` on its own database | **built**; ASO issue #4694 is open and its maintainers say they still want it, so offer upstream |
 | b3 | Key Vault secrets from Kubernetes Secrets | apps on Azure read configuration from Key Vault; ASO declined to create secrets (#1894) | **built**; a lasting gap |
-| b4 | PostgreSQL schema privileges and default privileges | since PostgreSQL 15, `public` grants nothing to new users; an app needs `USAGE`/`CREATE` on a schema and default privileges on new tables | next after a1; a field on the same `User` |
+| b4 | PostgreSQL schema privileges and default privileges | since PostgreSQL 15 only the database owner may create in `public`; an app needs `USAGE`/`CREATE` on a schema and default privileges on new tables | **built** (`schemaPrivileges`, `defaultPrivileges` on the same `User`); a1 was skipped because it waits on open question 5 |
 | b5 | PostgreSQL database ownership | migrations need the app to own its database | a field on the same `User`, with b4 |
 | b6 | Key Vault certificates from a Kubernetes Secret (import) | TLS certificates issued in-cluster, kept in Key Vault | after b4; the same shape as `VaultSecret` |
 | b7 | ARM resources in the specs but not exported | varies | upstream, by configuration (section 1) |
 
 App Configuration key-values are already in ASO (`appconfiguration`
 `KeyValue`), so they are not a gap.
+
+Upstream, rechecked read-only on 2026-11-08 before building b4: the latest
+release is still v2.22.0 (2026-10-30; the rolling `experimental`
+pre-release aside); `main` is two commits past the pin, both
+documentation (#5826, #5827). No open pull request touches PostgreSQL
+users (the open ones are #5828, #5821, #5820, #5814, #5804, #5783, #5780,
+#5773, #5769, #5768, #5693, #5659, #5638, #5104, #5028, #4210); the last
+changes to `internal/reconcilers/postgresql` and
+`internal/util/postgresql` are the escaping and connection fixes already
+at the pin (#5762, #5684, #5551). Issues: #4694 (per-database privileges)
+and #4333 (per-database users for `FlexibleServersDatabase`) are open with
+no pull request; nothing asks for schema or default privileges. ASO has no
+code for either to copy, so b4 is ours, written the way b2 is.
 
 ## 4. Upstream and sync
 
@@ -237,7 +297,7 @@ one Deployment, nothing per namespace to create. A static install
 
 ## 7. Proven, and not
 
-Proven by `make test` (envtest, 8 tests):
+Proven by `make test` (envtest, 11 tests):
 
 - a password user gets exactly its database privileges, changes revoke
   what is no longer listed (including grants made by hand), and deletion
@@ -253,7 +313,22 @@ Proven by `make test` (envtest, 8 tests):
   replaces with `purgeThenCreate`, reports `recover` with nothing to
   recover and the soft-delete conflict, and detaches by default;
 - `credential-from` picks a client-secret credential over the namespace's;
-- the CRDs' CEL rules refuse a user with both or neither credential kind.
+- the CRDs' CEL rules refuse a user with both or neither credential kind;
+- schema privileges: granted on a connection
+  to the named database, changed to exactly the new list (taking back a
+  grant made by hand), revoked when the database is no longer named,
+  refused for a schema that does not exist, revoked before the role is
+  dropped; an Entra user's, signed in to that database with its token; a
+  user that has `CREATE` on `public` can create a table there;
+- default privileges: a reader gets `SELECT` on tables and `USAGE, SELECT`
+  on sequences a migrator user creates later, and not `INSERT`; changes
+  are exact (a default privilege made by hand is revoked); `ALL` on tables
+  is PostgreSQL 17's eight; a schema the migrator owns is granted with the
+  migrator's privileges; the administrator keeps only its ADMIN OPTION on
+  the migrator afterwards; deleting the reader revokes its default
+  privileges and what they granted it on the migrator's table and sequence,
+  and drops it, so the migrator can be dropped too; the CRD refuses a
+  privilege that does not apply to the object type, and duplicates.
 
 Proven on kind by `make operator-e2e` (`tests/operator/run.sh`; passed
 2026-11-08 on kind 0.33 on an Apple-silicon Mac, Docker 20.10, both on a
@@ -262,7 +337,8 @@ new cluster and rerun on the same one): the CRDs install; the manager runs in AS
 `aso-workload`, may read Secrets and may not create them, may not change
 ASO's resources or webhooks; in team-a the `User` and `VaultSecret` become
 Ready with team-a's `aso-workload` identity, PostgreSQL holds the Entra role
-with its privileges, and the fake vault logs that identity; in team-b,
+with its database privileges and its schema privileges in `app`, and the
+fake vault logs that identity; in team-b,
 another identity, both are refused; deletion drops the role and
 soft-deletes the secret.
 
@@ -272,7 +348,17 @@ checks); the Azure Workload Identity webhook; Azure's own `pgaadauth`
 (the stand-ins record the binding in a role comment where Azure uses a
 security label, and give the caller ADMIN OPTION on the new role, which
 PostgreSQL 16 requires and Azure does not document); Key Vault's RBAC and
-its asynchronous recover and purge (instant in the fake).
+its asynchronous recover and purge (instant in the fake). For schema and
+default privileges: whether Azure's administrator holds ADMIN OPTION on a
+role created by Azure's own `pgaadauth` functions (the stand-ins give it;
+without it, default privileges `forRole` an Entra role fail with
+PostgreSQL's error), who owns a database ARM creates (the fake: the
+`azure_pg_admin` role, so the administrator can grant on `public`), and
+PostgreSQL before 16, where role membership has no INHERIT option (the
+code handles it, no test runs it).
+
+Not built for b4: privileges on objects that already exist (`GRANT … ON ALL
+TABLES IN SCHEMA`), and global default privileges (no schema).
 
 ## 8. Open questions
 
