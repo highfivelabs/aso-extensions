@@ -1,0 +1,54 @@
+# Copyright 2026 High Five Labs
+# SPDX-License-Identifier: MIT
+#
+# UPSTREAM.md's tables, machine-readable: the pins, the patch series and the
+# copied files. UPSTREAM.md stays the prose and the record people read; this
+# file says the same things for tools (highfivelabs/factory's daily watch
+# reads it). `task upstream:yaml-check` fails when the two disagree, so
+# change both together.
+#
+# Fields: docs in hack/upstream-yaml/pins/pins.go (a copy of
+# highfivelabs/factory internal/pins/pins.go).
+schema: 1
+
+pins:
+  - name: azure-service-operator
+    repo: Azure/azure-service-operator
+    branch: main
+    commit: b9dcbe48feaf1173f48ab28dd5edc48b514d3f4d
+    commit_date: "2026-11-06T03:46:05Z"
+    nearest_release: v2.22.0
+    pinned_on: "2026-11-07"
+    patches: patches/azure-service-operator
+    use: go.mod replace of third_party/azure-service-operator (hack/upstream.sh)
+  - name: azure-rest-api-specs
+    repo: Azure/azure-rest-api-specs
+    commit: a2de2d1a53d195c987a30184b2ddd378417ff44e
+    via: the v2/specs/azure-rest-api-specs submodule of azure-service-operator at its pin
+    use: the ARM specs the generator reads (hack/specs.sh)
+
+pull_requests: []
+
+patches:
+  - {file: patches/azure-service-operator/0001-export-framework-for-out-of-tree-managers.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
+  - {file: patches/azure-service-operator/0002-generator-own-group-domain-and-no-webhooks.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
+  - {file: patches/azure-service-operator/0003-export-arm-reconciler-for-out-of-tree-managers.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
+  - {file: patches/azure-service-operator/0004-generator-no-nested-flatten.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
+
+# "What is copied, from where": here (our paths) and from (ASO's paths at
+# the pin, from the repository root, so under v2/; a directory ends in /).
+copied:
+  - here: [apis/dbforpostgresql/v1/user_types.go]
+    from: {pin: azure-service-operator, paths: [v2/api/dbforpostgresql/v1/user_types.go]}
+  - here: [apis/dbforpostgresql/v1/groupversion_info.go]
+    from: {pin: azure-service-operator, paths: [v2/api/dbforpostgresql/v1/groupversion_info.go, v2/api/dbforpostgresql/v1/doc.go]}
+  - here: [pkg/reconcilers/postgresql/postgresql_user_reconciler.go]
+    from: {pin: azure-service-operator, paths: [v2/internal/reconcilers/postgresql/postgresql_user_reconciler.go]}
+  - here: [pkg/util/postgresql/postgresql.go, pkg/util/postgresql/roles.go, pkg/util/postgresql/role_option.go]
+    from: {pin: azure-service-operator, paths: [v2/internal/util/postgresql/]}
+  - here: [pkg/util/set/]
+    from: {pin: azure-service-operator, paths: [v2/internal/set/]}
+  - here: [pkg/controllers/controllers.go]
+    from: {pin: azure-service-operator, paths: [v2/internal/controllers/controller_resources.go, v2/internal/controllers/indexers.go]}
+  - here: [pkg/manager/manager.go]
+    from: {pin: azure-service-operator, paths: [v2/cmd/controller/app/setup.go]}
