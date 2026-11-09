@@ -383,8 +383,9 @@ with its database privileges and its schema privileges in `app`, the role
 owns the database `orders`, and the fake vault logs that identity; in
 team-b, another identity, both are refused; deletion gives `orders` to
 `hfl_owner` (which cannot sign in, with a `DatabaseReassigned` event),
-drops the role and soft-deletes the secret. The ownership checks were
-added with b5 and are proven by the run recorded in its pull request.
+drops the role and soft-deletes the secret. With the b5 checks, it passed
+again on 2026-11-09 on the builder's Ubuntu machine (a warm kind cluster),
+after `make check` there.
 
 Not provable locally: real Entra exchanging the `aso-workload` token
 (the managed identity's federated credential, issuer and audience
