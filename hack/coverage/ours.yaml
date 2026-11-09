@@ -1,0 +1,28 @@
+# The kinds written by hand in this repository, and what they cover.
+# Generated kinds (apis/arm) need no entry: their ARM wire types say it.
+#
+# Every spec property of a listed CRD must be mapped or ignored, so adding a
+# field to a kind makes hack/coverage/run.sh fail until the field is placed.
+kinds:
+  - crd: config/crds/authorization.azure.hfl.dev_managementlocks.yaml
+    armType: Microsoft.Authorization/locks
+    api: "2020-05-01"
+    ignore: [owner, azureName]
+    # CRD spec path -> the lock's ARM attribute
+    map:
+      level: properties.level
+      notes: properties.notes
+  - crd: config/crds/dbforpostgresql.azure.hfl.dev_users.yaml
+    outside: Microsoft.DBforPostgreSQL/flexibleServers/users
+    note: "a database role, not an ARM resource; extends ASO's PostgreSQL User"
+    ignore: [owner, azureName]
+  - crd: config/crds/keyvault.azure.hfl.dev_vaultsecrets.yaml
+    outside: Microsoft.KeyVault/vaults/secrets (data plane)
+    api: "7.5"
+    note: "the vault's data plane (secrets), not the ARM vaults/secrets resource"
+    ignore: [owner, azureName]
+  - crd: config/crds/keyvault.azure.hfl.dev_vaultcertificates.yaml
+    outside: Microsoft.KeyVault/vaults/certificates (data plane)
+    api: "7.5"
+    note: "the vault's data plane (certificates); ARM has no such resource"
+    ignore: [owner, azureName]
