@@ -4,8 +4,9 @@
 // End-to-end tests: a real kube-apiserver (envtest) with our CRDs and the
 // ASO owner CRDs, the manager wired exactly as cmd/manager wires it (ASO's
 // generic reconciler and credential provider), azidentity's real
-// credentials against a fake Entra, a fake Key Vault over TLS, and a real
-// PostgreSQL in Docker set up like a flexible server.
+// credentials against a fake Entra, a fake Key Vault and a fake Resource
+// Manager over TLS, and a real PostgreSQL in Docker set up like a flexible
+// server.
 package e2e
 
 import (
@@ -40,6 +41,7 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/outoftree"
 
 	"github.com/highfivelabs/aso-extensions/pkg/controllers"
+	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/arm"
 	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/entra"
 	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/keyvault"
 	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/postgres"
@@ -56,13 +58,20 @@ const (
 	// The fake vault's host: its token audience is https://vault.test/.default.
 	vaultHost  = "fakevault.vault.test"
 	vaultScope = "https://vault.test/.default"
-	pgImage    = "postgres:17"
+	// The fake Resource Manager's host and audience.
+	armHost     = "fakearm.test"
+	armAudience = "https://fakearm.test/"
+	armScope    = "https://fakearm.test/.default"
+	pgImage     = "postgres:17"
 )
 
 var (
 	k8s         client.Client
 	entraFake   = &entra.Transport{}
 	vault       *keyvault.Vault
+	armFake     *arm.ARM
+	armURL      = "https://" + armHost
+	armHTTP     *http.Client
 	vaultURL    = "https://" + vaultHost
 	pgPort      int
 	pgSuper     *sql.DB
@@ -101,6 +110,8 @@ func run(m *testing.M) int {
 
 	kvClient, stopVault := startVault(ca)
 	defer stopVault()
+	stopARM := startARM(ca)
+	defer stopARM()
 
 	root, _ := filepath.Abs("../..")
 	env := &envtest.Environment{
@@ -130,9 +141,12 @@ func run(m *testing.M) int {
 	cfg.PodNamespace = "azureserviceoperator-system"
 	cfg.WorkloadIdentityAuthMode = outoftree.WorkloadIdentityAuthModeStrict
 	cfg.MaxConcurrentReconciles = 2
+	cfg.ResourceManagerEndpoint = armURL
+	cfg.ResourceManagerAudience = armAudience
 	_, err = manager.Setup(ctx, mgr, cfg, manager.Options{
 		TokenProvider:         entra.TokenProvider(entraFake),
 		KeyVaultClientOptions: azcore.ClientOptions{Transport: kvClient},
+		ARMClientOptions:      azcore.ClientOptions{Transport: armHTTP},
 	})
 	must(err)
 	go func() {
@@ -271,6 +285,34 @@ func startVault(ca *tlsutil.CA) (*http.Client, func()) {
 		},
 	}
 	return &http.Client{Transport: tr}, srv.Close
+}
+
+// startARM serves the fake Resource Manager over TLS for armHost, trusting
+// the same identities as the fake vault (client A), for the Resource
+// Manager audience; armHTTP reaches it and trusts its certificate.
+func startARM(ca *tlsutil.CA) func() {
+	armFake = arm.New(func(token string) bool {
+		c, err := entra.Parse(token)
+		if err != nil || c.Scope != armScope || c.Tenant != tenantID || c.ClientID != clientA {
+			return false
+		}
+		trustedMu.Lock()
+		defer trustedMu.Unlock()
+		return trusted[c.Subject]
+	})
+	srv := httptest.NewUnstartedServer(armFake)
+	cert, err := ca.ServerTLS(armHost)
+	must(err)
+	srv.TLS = &tls.Config{Certificates: []tls.Certificate{cert}}
+	srv.StartTLS()
+	addr := srv.Listener.Addr().String()
+	armHTTP = &http.Client{Transport: &http.Transport{
+		TLSClientConfig: &tls.Config{RootCAs: ca.Pool()},
+		DialContext: func(ctx context.Context, network, _ string) (net.Conn, error) {
+			return (&net.Dialer{}).DialContext(ctx, network, addr)
+		},
+	}}
+	return srv.Close
 }
 
 // The subjects the fake vault trusts (with client A): a client secret, and

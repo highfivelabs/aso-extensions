@@ -38,19 +38,23 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/registration"
 	"github.com/Azure/azure-service-operator/v2/pkg/outoftree"
 
+	authorizationv1 "github.com/highfivelabs/aso-extensions/apis/authorization/v1"
 	postgresqlv1 "github.com/highfivelabs/aso-extensions/apis/dbforpostgresql/v1"
 	keyvaultv1 "github.com/highfivelabs/aso-extensions/apis/keyvault/v1"
+	authreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/authorization"
 	kvreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/keyvault"
 	pgreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/postgresql"
 )
 
 // CreateScheme holds our kinds, the ASO owner kinds they resolve
-// (storage versions only), and Kubernetes' own.
+// (storage versions only), and Kubernetes' own. A ManagementLock's owner,
+// any ASO kind, is read as an unstructured object instead.
 func CreateScheme() *runtime.Scheme {
 	scheme := runtime.NewScheme()
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = postgresqlv1.AddToScheme(scheme)
 	_ = keyvaultv1.AddToScheme(scheme)
+	_ = authorizationv1.AddToScheme(scheme)
 	_ = asopostgresql.AddToScheme(scheme)
 	_ = asokeyvault.AddToScheme(scheme)
 	return scheme
@@ -69,6 +73,7 @@ func OwnerTypes() []*registration.StorageType {
 type Reconcilers struct {
 	PostgreSQLUser *pgreconciler.PostgreSQLUserReconciler
 	VaultSecret    *kvreconciler.VaultSecretReconciler
+	ManagementLock *authreconciler.ManagementLockReconciler
 }
 
 // StorageTypes are our kinds with their reconcilers, as ASO's
@@ -83,6 +88,7 @@ func StorageTypes(
 	rs := &Reconcilers{
 		PostgreSQLUser: pgreconciler.NewPostgreSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
 		VaultSecret:    kvreconciler.NewVaultSecretReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
+		ManagementLock: authreconciler.NewManagementLockReconciler(kubeClient, positiveConditions, credentialProvider, cfg),
 	}
 	return []*registration.StorageType{
 		{
@@ -108,6 +114,12 @@ func StorageTypes(
 			Watches: []registration.Watch{
 				{Type: &corev1.Secret{}, MakeEventHandler: watchSecretsFactory([]string{".spec.value"}, &keyvaultv1.VaultSecretList{})},
 			},
+		},
+		{
+			Obj:        &authorizationv1.ManagementLock{},
+			Name:       "hfl_authorization_managementlock",
+			Reconciler: rs.ManagementLock,
+			Predicate:  standardPredicate(),
 		},
 	}, rs
 }
