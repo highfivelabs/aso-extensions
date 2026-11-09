@@ -9,6 +9,9 @@ import (
 	app_customizations "github.com/highfivelabs/aso-extensions/apis/arm/app/customizations"
 	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
+	containerregistry_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/customizations"
+	containerregistry_v20251101 "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101"
+	containerregistry_v20251101s "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101/storage"
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
 	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
 	insights_v20210901s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901/storage"
@@ -94,6 +97,33 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesCredentialSet)})
+	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesScopeMap)})
+	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesToken)})
+	result = append(result, &registration.StorageType{
+		Obj: new(containerregistry_v20251101.RegistriesWebhook),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.customHeaders",
+				Func: indexContainerregistryRegistriesWebhookCustomHeaders,
+			},
+			{
+				Key:  ".spec.serviceUri",
+				Func: indexContainerregistryRegistriesWebhookServiceUri,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.customHeaders",
+						".spec.serviceUri",
+					},
+					&containerregistry_v20251101.RegistriesWebhookList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
@@ -176,6 +206,18 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsStorage)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesCredentialSet)},
+		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesScopeMap)},
+		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesToken)},
+		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesWebhook)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesCredentialSet)},
+		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesScopeMap)},
+		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesToken)},
+		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesWebhook)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScope)},
 		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
@@ -237,6 +279,8 @@ func createScheme() *runtime.Scheme {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = app_v20250101.AddToScheme(scheme)
 	_ = app_v20250101s.AddToScheme(scheme)
+	_ = containerregistry_v20251101.AddToScheme(scheme)
+	_ = containerregistry_v20251101s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
 	_ = insights_v20210901s.AddToScheme(scheme)
 	_ = network_v20250501.AddToScheme(scheme)
@@ -256,6 +300,10 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ManagedEnvironmentsJavaComponentExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsManagedCertificateExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
+	result = append(result, &containerregistry_customizations.RegistriesCredentialSetExtension{})
+	result = append(result, &containerregistry_customizations.RegistriesScopeMapExtension{})
+	result = append(result, &containerregistry_customizations.RegistriesTokenExtension{})
+	result = append(result, &containerregistry_customizations.RegistriesWebhookExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
@@ -340,6 +388,30 @@ func indexAppManagedEnvironmentsStorageAccountKey(rawObj client.Object) []string
 		return nil
 	}
 	return obj.Spec.Properties.AzureFile.AccountKey.Index()
+}
+
+// indexContainerregistryRegistriesWebhookCustomHeaders an index function for containerregistry_v20251101.RegistriesWebhook .spec.customHeaders
+func indexContainerregistryRegistriesWebhookCustomHeaders(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20251101.RegistriesWebhook)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.CustomHeaders == nil {
+		return nil
+	}
+	return obj.Spec.CustomHeaders.Index()
+}
+
+// indexContainerregistryRegistriesWebhookServiceUri an index function for containerregistry_v20251101.RegistriesWebhook .spec.serviceUri
+func indexContainerregistryRegistriesWebhookServiceUri(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20251101.RegistriesWebhook)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ServiceUri == nil {
+		return nil
+	}
+	return obj.Spec.ServiceUri.Index()
 }
 
 // indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password
