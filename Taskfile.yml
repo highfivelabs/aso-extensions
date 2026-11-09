@@ -97,6 +97,16 @@ tasks:
       - task: upstream-check
       - NAME={{.NAME}} tests/operator/run.sh
 
+  coverage:
+    desc: Regenerate the coverage dashboard (docs/coverage and the README's Coverage section)
+    cmds:
+      - hack/coverage/run.sh
+
+  coverage-check:
+    desc: Fail if the committed coverage dashboard differs from a regeneration
+    cmds:
+      - hack/coverage/run.sh --check
+
   clean:
     desc: Remove bin/
     cmds:

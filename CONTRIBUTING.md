@@ -44,6 +44,15 @@ task generate-arm  # after changing generator/: rerun ASO's generator
 task operator-e2e  # the install on kind with the fake cloud
 ```
 
+```sh
+task coverage        # the coverage dashboard (docs/coverage/); rerun after a kind
+                     # or a pin changes, and commit the result
+task coverage-check  # fail if the committed dashboard is stale
+```
+
+Adding or changing a CRD changes the dashboard: rerun it. A new hand-written
+kind needs an entry in `hack/coverage/ours.yaml`; the tool fails until it has one.
+
 The end-to-end tests need Docker (PostgreSQL runs in a container). No test
 uses real Azure credentials; a change that needs them is not testable here
 and says so in its description.
