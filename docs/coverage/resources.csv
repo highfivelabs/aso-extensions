@@ -650,7 +650,7 @@ Microsoft.Compute,Microsoft.Compute/sshPublicKeys,3,,0,,0,3,false,spec_api=2026-
 Microsoft.Compute,Microsoft.Compute/virtualMachines,218,compute.azure.com/VirtualMachine,147,,0,71,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachines/diagnosticRunCommands,24,,0,,0,24,false,spec_api=2026-04-01
 Microsoft.Compute,Microsoft.Compute/virtualMachines/extensions,27,compute.azure.com/VirtualMachinesExtension,26,,0,1,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
-Microsoft.Compute,Microsoft.Compute/virtualMachines/runCommands,24,,0,,0,24,false,spec_api=2026-04-01
+Microsoft.Compute,Microsoft.Compute/virtualMachines/runCommands,24,,0,compute.azure.hfl.dev/VirtualMachinesRunCommand,15,9,false,spec_api=2026-04-01; ours_api=2022-03-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachineScaleSets,268,compute.azure.com/VirtualMachineScaleSet,168,,0,100,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachineScaleSets/extensions,12,compute.azure.com/VirtualMachineScaleSetsExtension,12,,0,0,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachineScaleSets/virtualMachines,225,,0,,0,225,false,spec_api=2026-04-01
@@ -975,7 +975,7 @@ Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/servicefabrics/schedules,15
 Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualmachines,64,,0,,0,64,false,spec_api=2018-09-15
 Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualmachines/schedules,15,,0,,0,15,false,spec_api=2018-09-15
 Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualnetworks,14,,0,,0,14,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/schedules,15,,0,,0,15,false,spec_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/schedules,15,,0,devtestlab.azure.hfl.dev/Schedule,15,0,false,spec_api=2018-09-15; ours_api=2018-09-15
 Microsoft.DigitalTwins,Microsoft.DigitalTwins/digitalTwinsInstances,10,,0,,0,10,false,spec_api=2023-01-31
 Microsoft.DigitalTwins,Microsoft.DigitalTwins/digitalTwinsInstances/endpoints,15,,0,,0,15,false,spec_api=2023-01-31
 Microsoft.DigitalTwins,Microsoft.DigitalTwins/digitalTwinsInstances/privateEndpointConnections,5,,0,,0,5,false,spec_api=2023-01-31
@@ -1416,7 +1416,7 @@ Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/s
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/serverlessEndpoints,13,,0,,0,13,false,spec_api=2026-09-01
 Microsoft.Maintenance,Microsoft.Maintenance/applyUpdates,0,,0,,0,0,false,spec_api=2023-04-01
 Microsoft.Maintenance,Microsoft.Maintenance/configurationAssignments,9,,0,,0,9,false,spec_api=2023-04-01
-Microsoft.Maintenance,Microsoft.Maintenance/maintenanceConfigurations,19,,0,,0,19,false,spec_api=2023-04-01
+Microsoft.Maintenance,Microsoft.Maintenance/maintenanceConfigurations,19,,0,maintenance.azure.hfl.dev/MaintenanceConfiguration,19,0,false,spec_api=2023-04-01; ours_api=2023-04-01
 Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities,3,managedidentity.azure.com/UserAssignedIdentity,2,,0,1,false,spec_api=2024-11-30; official_api=2023-01-31; official-api-differs-from-spec
 Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials,3,managedidentity.azure.com/FederatedIdentityCredential,3,,0,0,false,spec_api=2024-11-30; official_api=2023-01-31; official-api-differs-from-spec
 Microsoft.ManagedNetwork,Microsoft.ManagedNetwork/managedNetworks,6,,0,,0,6,false,spec_api=2019-06-01-preview; spec-preview-only
@@ -1754,7 +1754,7 @@ Microsoft.OperationalInsights,Microsoft.OperationalInsights/clusters,18,,0,,0,18
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/queryPacks,3,,0,operationalinsights.azure.hfl.dev/QueryPack,2,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/queryPacks/queries,8,,0,operationalinsights.azure.hfl.dev/QueryPacksQuery,8,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces,23,operationalinsights.azure.com/Workspace,20,,0,3,false,spec_api=2026-03-01; official_api=2025-07-01; official-api-differs-from-spec
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/dataExports,7,,0,,0,7,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/dataExports,7,,0,operationalinsights.azure.hfl.dev/WorkspacesDataExport,6,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/dataSources,4,,0,,0,4,false,spec_api=2026-03-01
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/features/machineGroups,8,,0,,0,8,false,spec_api=2015-11-01-preview; spec-preview-only
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedServices,4,,0,operationalinsights.azure.hfl.dev/WorkspacesLinkedService,4,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec

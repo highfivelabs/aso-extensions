@@ -245,13 +245,13 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 6,110 attributes (14.1%) in 299 resources; ours beyond official 405 (0.9%) in 29 further resources; uncovered 36,854 (85.0%).
+**Result.** Official 6,110 attributes (14.1%) in 299 resources; ours beyond official 460 (1.1%) in 33 further resources; uncovered 36,799 (84.9%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 8 services, 7,753 attributes, 27.1% covered by official and 0.8% more by ours; tier 2 has 19 services, 6,906 attributes, 33.2% covered by official and 5.0% more by ours; tier 3 has 253 services, 28,710 attributes, 6.0% covered by official and 0.0% more by ours.
+**Tiers.** tier 1 has 8 services, 7,753 attributes, 27.1% covered by official and 1.1% more by ours; tier 2 has 19 services, 6,906 attributes, 33.2% covered by official and 5.4% more by ours; tier 3 has 253 services, 28,710 attributes, 6.0% covered by official and 0.0% more by ours.
 
 **Ours.**
 
@@ -263,16 +263,19 @@ Generated; these cannot drift from the data.
 | `app.azure.hfl.dev/ManagedEnvironmentsManagedCertificate` | `Microsoft.App/managedEnvironments/managedCertificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ManagedEnvironmentsStorage` | `Microsoft.App/managedEnvironments/storages` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/ManagementLock` | `Microsoft.Authorization/locks` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
+| `compute.azure.hfl.dev/VirtualMachinesRunCommand` | `Microsoft.Compute/virtualMachines/runCommands` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesCredentialSet` | `Microsoft.ContainerRegistry/registries/credentialSets` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesScopeMap` | `Microsoft.ContainerRegistry/registries/scopeMaps` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesToken` | `Microsoft.ContainerRegistry/registries/tokens` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesWebhook` | `Microsoft.ContainerRegistry/registries/webhooks` | ARM wire type of the generated kind (`apis/arm`) |
 | `dbforpostgresql.azure.hfl.dev/User` | `Microsoft.DBforPostgreSQL/flexibleServers/users` | outside the denominator, not in any percentage |
+| `devtestlab.azure.hfl.dev/Schedule` | `Microsoft.DevTestLab/schedules` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScope` | `Microsoft.Insights/privateLinkScopes` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection` | `Microsoft.Insights/privateLinkScopes/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScopesScopedResource` | `Microsoft.Insights/privateLinkScopes/scopedResources` | ARM wire type of the generated kind (`apis/arm`) |
 | `keyvault.azure.hfl.dev/VaultCertificate` | `Microsoft.KeyVault/vaults/certificates (data plane)` | outside the denominator, not in any percentage |
 | `keyvault.azure.hfl.dev/VaultSecret` | `Microsoft.KeyVault/vaults/secrets (data plane)` | outside the denominator, not in any percentage |
+| `maintenance.azure.hfl.dev/MaintenanceConfiguration` | `Microsoft.Maintenance/maintenanceConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkSecurityPerimeter` | `Microsoft.Network/networkSecurityPerimeters` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkSecurityPerimetersLink` | `Microsoft.Network/networkSecurityPerimeters/links` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkSecurityPerimetersLoggingConfiguration` | `Microsoft.Network/networkSecurityPerimeters/loggingConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
@@ -281,6 +284,7 @@ Generated; these cannot drift from the data.
 | `network.azure.hfl.dev/NetworkSecurityPerimetersResourceAssociation` | `Microsoft.Network/networkSecurityPerimeters/resourceAssociations` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/QueryPack` | `Microsoft.OperationalInsights/queryPacks` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/QueryPacksQuery` | `Microsoft.OperationalInsights/queryPacks/queries` | ARM wire type of the generated kind (`apis/arm`) |
+| `operationalinsights.azure.hfl.dev/WorkspacesDataExport` | `Microsoft.OperationalInsights/workspaces/dataExports` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/WorkspacesLinkedService` | `Microsoft.OperationalInsights/workspaces/linkedServices` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/WorkspacesLinkedStorageAccount` | `Microsoft.OperationalInsights/workspaces/linkedStorageAccounts` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/WorkspacesSavedSearch` | `Microsoft.OperationalInsights/workspaces/savedSearches` | ARM wire type of the generated kind (`apis/arm`) |
