@@ -127,7 +127,7 @@ kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f 
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
@@ -183,6 +183,7 @@ team() {
     --from-literal=AZURE_SUBSCRIPTION_ID="${SUB}" --from-literal=AZURE_TENANT_ID="${TENANT}" \
     --from-literal=AZURE_CLIENT_ID="$2" --dry-run=client -o yaml | kubectl apply -f -
   kubectl -n "$1" create secret generic app-config --from-literal=url=postgres://app --dry-run=client -o yaml | kubectl apply -f -
+  kubectl -n "$1" create secret generic vpn-psk --from-literal=key="$1-shared-key" --dry-run=client -o yaml | kubectl apply -f -
   kubectl -n "$1" create secret tls app-tls --cert "${OUT}/fixtures/app-tls.crt" --key "${OUT}/fixtures/app-tls.key" --dry-run=client -o yaml | kubectl apply -f -
   # The ASO objects, with the status ASO would write when it provisioned them
   # (and, on the ResourceGroup, the ARM ID annotation ASO writes).
@@ -351,6 +352,26 @@ metadata: {name: perimeter, namespace: $1}
 spec:
   owner: {name: rg}
   location: westus
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: LocalNetworkGateway
+metadata: {name: onprem, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  gatewayIpAddress: 203.0.113.10
+  localNetworkAddressSpace: {addressPrefixes: [10.20.0.0/16]}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VirtualNetworkGatewayConnection
+metadata: {name: to-onprem, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  connectionType: IPsec
+  virtualNetworkGateway1: {reference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/virtualNetworkGateways/$1-vng}}
+  localNetworkGateway2: {reference: {group: network.azure.hfl.dev, kind: LocalNetworkGateway, name: onprem}}
+  sharedKey: {name: vpn-psk, key: key}
 ---
 apiVersion: management.azure.hfl.dev/v20230401
 kind: ManagementGroup
@@ -561,6 +582,12 @@ wait_for 90 "team-a's Export Ready" ready exports.costmanagement.azure.hfl.dev t
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.CostManagement/exports/daily-costs 201" \
   || fail "the fake resource manager saw no cost export on team-a's resource group"
 pass "team-a Export Ready: at an ASO ResourceGroup, to a storage account by ARM ID, generated"
+wait_for 90 "team-a's LocalNetworkGateway Ready" ready localnetworkgateways.network.azure.hfl.dev team-a onprem
+pass "team-a LocalNetworkGateway Ready: owned by ASO's ResourceGroup, generated"
+wait_for 90 "team-a's VirtualNetworkGatewayConnection Ready" ready virtualnetworkgatewayconnections.network.azure.hfl.dev team-a to-onprem
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/connections/to-onprem 201" \
+  || fail "the fake resource manager saw no connection on team-a's resource group"
+pass "team-a VirtualNetworkGatewayConnection Ready: IPsec from a gateway by ARM ID to our LocalNetworkGateway by object, the shared key from a Secret"
 wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
 pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
 [[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
@@ -660,6 +687,13 @@ kubectl -n team-a delete networksecurityperimeters.network.azure.hfl.dev perimet
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkSecurityPerimeters/perimeter 200" \
   || fail "the fake resource manager saw no delete of the perimeter"
 pass "the perimeter is deleted in Resource Manager"
+kubectl -n team-a delete virtualnetworkgatewayconnections.network.azure.hfl.dev to-onprem --timeout=120s
+kubectl -n team-a delete localnetworkgateways.network.azure.hfl.dev onprem --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/connections/to-onprem 200" \
+  || fail "the fake resource manager saw no delete of the connection"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/localNetworkGateways/onprem 200" \
+  || fail "the fake resource manager saw no delete of the local network gateway"
+pass "the VPN connection and the local network gateway are deleted in Resource Manager"
 kubectl -n team-a delete registriesscopemaps.containerregistry.azure.hfl.dev pull-apps --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg/scopeMaps/pull-apps 200" \
   || fail "the fake resource manager saw no delete of the scope map"

@@ -43,6 +43,8 @@ import (
 	network_customizations "github.com/highfivelabs/aso-extensions/apis/arm/network/customizations"
 	network_v20250501 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501"
 	network_v20250501s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501/storage"
+	network_v20260301 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20260301"
+	network_v20260301s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20260301/storage"
 	operationalinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/customizations"
 	operationalinsights_v20250701 "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701"
 	operationalinsights_v20250701s "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701/storage"
@@ -236,6 +238,31 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersProfile)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersProfilesAccessRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersResourceAssociation)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
+	result = append(result, &registration.StorageType{
+		Obj: new(network_v20260301.VirtualNetworkGatewayConnection),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.authorizationKey",
+				Func: indexNetworkVirtualNetworkGatewayConnectionAuthorizationKey,
+			},
+			{
+				Key:  ".spec.sharedKey",
+				Func: indexNetworkVirtualNetworkGatewayConnectionSharedKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.authorizationKey",
+						".spec.sharedKey",
+					},
+					&network_v20260301.VirtualNetworkGatewayConnectionList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPack)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesDataExport)})
@@ -395,6 +422,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersProfile)},
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersProfilesAccessRule)},
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersResourceAssociation)})
+	result = append(result, &registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)}, &registration.KnownType{Obj: new(network_v20260301.VirtualNetworkGatewayConnection)})
+	result = append(result, &registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)}, &registration.KnownType{Obj: new(network_v20260301s.VirtualNetworkGatewayConnection)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPack)},
@@ -474,6 +503,8 @@ func createScheme() *runtime.Scheme {
 	_ = management_v20230401s.AddToScheme(scheme)
 	_ = network_v20250501.AddToScheme(scheme)
 	_ = network_v20250501s.AddToScheme(scheme)
+	_ = network_v20260301.AddToScheme(scheme)
+	_ = network_v20260301s.AddToScheme(scheme)
 	_ = operationalinsights_v20250701.AddToScheme(scheme)
 	_ = operationalinsights_v20250701s.AddToScheme(scheme)
 	_ = policyinsights_v20241001.AddToScheme(scheme)
@@ -517,12 +548,14 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &management_customizations.ManagementGroupExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSettingExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSubscriptionExtension{})
+	result = append(result, &network_customizations.LocalNetworkGatewayExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimeterExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersLinkExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersLoggingConfigurationExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfileExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfilesAccessRuleExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersResourceAssociationExtension{})
+	result = append(result, &network_customizations.VirtualNetworkGatewayConnectionExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPackExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPacksQueryExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesDataExportExtension{})
@@ -672,6 +705,30 @@ func indexCostmanagementExportSasToken(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.DeliveryInfo.Destination.SasToken.Index()
+}
+
+// indexNetworkVirtualNetworkGatewayConnectionAuthorizationKey an index function for network_v20260301.VirtualNetworkGatewayConnection .spec.authorizationKey
+func indexNetworkVirtualNetworkGatewayConnectionAuthorizationKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.VirtualNetworkGatewayConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.AuthorizationKey == nil {
+		return nil
+	}
+	return obj.Spec.AuthorizationKey.Index()
+}
+
+// indexNetworkVirtualNetworkGatewayConnectionSharedKey an index function for network_v20260301.VirtualNetworkGatewayConnection .spec.sharedKey
+func indexNetworkVirtualNetworkGatewayConnectionSharedKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.VirtualNetworkGatewayConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SharedKey == nil {
+		return nil
+	}
+	return obj.Spec.SharedKey.Index()
 }
 
 // indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password

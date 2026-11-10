@@ -3,6 +3,10 @@ typeFilters:
     group: network
     version: v20250501
     because: a stable version of the network security perimeter (2025-03-01, the version of ASO's network kinds, loses the spec side of these)
+  - action: include
+    group: network
+    version: v20260301
+    because: the newest stable version, for site-to-site VPN connections and local network gateways (foundation row 8); ASO has neither kind
 
 groupModelConfiguration:
   2025-05-01:
@@ -27,3 +31,16 @@ groupModelConfiguration:
     SubResource:
       Id:
         $referenceType: arm # the profile and the associated PaaS resource of an association
+  2026-03-01:
+    Connection:
+      $exportAs: VirtualNetworkGatewayConnection
+      $supportedFrom: v0.1.0
+    LocalNetworkGateway:
+      $exportAs: LocalNetworkGateway
+      $supportedFrom: v0.1.0
+    SubResource:
+      Id:
+        $referenceType: arm # the peer, NAT rules and other references of a connection
+    VirtualNetworkGatewayConnectionPropertiesFormat:
+      AuthorizationKey:
+        $importSecretMode: required # the key of an ExpressRoute circuit authorization, a credential (sharedKey is x-ms-secret in the spec already)

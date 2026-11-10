@@ -1540,7 +1540,7 @@ Microsoft.Network,Microsoft.Network/authenticationPolicies,14,,0,,0,14,false,spe
 Microsoft.Network,Microsoft.Network/azureFirewalls,64,network.azure.com/AzureFirewall,58,,0,6,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/bastionHosts,26,network.azure.com/BastionHost,20,,0,6,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/cloudServiceSlots,1,,0,,0,1,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/connections,242,,0,,0,242,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/connections,242,,0,network.azure.hfl.dev/VirtualNetworkGatewayConnection,242,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/customIpPrefixes,15,,0,,0,15,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/ddosCustomPolicies,16,,0,,0,16,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/ddosProtectionPlans,3,network.azure.com/DdosProtectionPlan,2,,0,1,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
@@ -1595,7 +1595,7 @@ Microsoft.Network,Microsoft.Network/ipGroups,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/loadBalancers,199,network.azure.com/LoadBalancer,189,,0,10,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/loadBalancers/backendAddressPools,14,,0,,0,14,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/loadBalancers/inboundNatRules,10,network.azure.com/LoadBalancersInboundNatRule,10,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/localNetworkGateways,12,,0,,0,12,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/localNetworkGateways,12,,0,network.azure.hfl.dev/LocalNetworkGateway,12,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/natGateways,12,network.azure.com/NatGateway,10,,0,2,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/NetworkExperimentProfiles,4,,0,,0,4,false,spec_api=2026-04-01
 Microsoft.Network,Microsoft.Network/NetworkExperimentProfiles/Experiments,8,,0,,0,8,false,spec_api=2026-04-01

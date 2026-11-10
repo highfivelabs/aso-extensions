@@ -1,46 +1,115 @@
-| Type Definitions in package "network"                | v20250501 |
-|------------------------------------------------------|-----------|
-| APIVersion                                           | v20250501 |
-| AccessRuleDirection                                  | v20250501 |
-| AccessRuleDirection_STATUS                           | v20250501 |
-| AssociationAccessMode                                | v20250501 |
-| AssociationAccessMode_STATUS                         | v20250501 |
-| NetworkSecurityPerimeter                             | v20250501 |
-| NetworkSecurityPerimeterProperties_STATUS            | v20250501 |
-| NetworkSecurityPerimeter_STATUS                      | v20250501 |
-| NetworkSecurityPerimeter_Spec                        | v20250501 |
-| NetworkSecurityPerimetersLink                        | v20250501 |
-| NetworkSecurityPerimetersLink_STATUS                 | v20250501 |
-| NetworkSecurityPerimetersLink_Spec                   | v20250501 |
-| NetworkSecurityPerimetersLoggingConfiguration        | v20250501 |
-| NetworkSecurityPerimetersLoggingConfiguration_STATUS | v20250501 |
-| NetworkSecurityPerimetersLoggingConfiguration_Spec   | v20250501 |
-| NetworkSecurityPerimetersProfile                     | v20250501 |
-| NetworkSecurityPerimetersProfile_STATUS              | v20250501 |
-| NetworkSecurityPerimetersProfile_Spec                | v20250501 |
-| NetworkSecurityPerimetersProfilesAccessRule          | v20250501 |
-| NetworkSecurityPerimetersProfilesAccessRule_STATUS   | v20250501 |
-| NetworkSecurityPerimetersProfilesAccessRule_Spec     | v20250501 |
-| NetworkSecurityPerimetersResourceAssociation         | v20250501 |
-| NetworkSecurityPerimetersResourceAssociation_STATUS  | v20250501 |
-| NetworkSecurityPerimetersResourceAssociation_Spec    | v20250501 |
-| NspAccessRuleProperties                              | v20250501 |
-| NspAccessRuleProperties_STATUS                       | v20250501 |
-| NspAssociationProperties                             | v20250501 |
-| NspAssociationProperties_STATUS                      | v20250501 |
-| NspLinkProperties                                    | v20250501 |
-| NspLinkProperties_STATUS                             | v20250501 |
-| NspLinkProvisioningState_STATUS                      | v20250501 |
-| NspLinkStatus_STATUS                                 | v20250501 |
-| NspLoggingConfigurationProperties                    | v20250501 |
-| NspLoggingConfigurationProperties_STATUS             | v20250501 |
-| NspProfileProperties_STATUS                          | v20250501 |
-| NspProvisioningState_STATUS                          | v20250501 |
-| PerimeterBasedAccessRule_STATUS                      | v20250501 |
-| SubResource                                          | v20250501 |
-| SubResource_STATUS                                   | v20250501 |
-| SubscriptionId                                       | v20250501 |
-| SubscriptionId_STATUS                                | v20250501 |
-| SystemData_CreatedByType_STATUS                      | v20250501 |
-| SystemData_LastModifiedByType_STATUS                 | v20250501 |
-| SystemData_STATUS                                    | v20250501 |
+| Type Definitions in package "network"                       | v20250501 | v20260301 |
+|-------------------------------------------------------------|-----------|-----------|
+| APIVersion                                                  | v20250501 | v20260301 |
+| AccessRuleDirection                                         | v20250501 |           |
+| AccessRuleDirection_STATUS                                  | v20250501 |           |
+| AddressSpace                                                |           | v20260301 |
+| AddressSpace_STATUS                                         |           | v20260301 |
+| AssociationAccessMode                                       | v20250501 |           |
+| AssociationAccessMode_STATUS                                | v20250501 |           |
+| BgpSettings                                                 |           | v20260301 |
+| BgpSettings_STATUS                                          |           | v20260301 |
+| CertificateAuthentication                                   |           | v20260301 |
+| CertificateAuthentication_STATUS                            |           | v20260301 |
+| ConnectionAuthenticationType                                |           | v20260301 |
+| ConnectionAuthenticationType_STATUS                         |           | v20260301 |
+| DhGroup                                                     |           | v20260301 |
+| DhGroup_STATUS                                              |           | v20260301 |
+| GatewayCustomBgpIpAddressIpConfiguration                    |           | v20260301 |
+| GatewayCustomBgpIpAddressIpConfiguration_STATUS             |           | v20260301 |
+| IPConfigurationBgpPeeringAddress                            |           | v20260301 |
+| IPConfigurationBgpPeeringAddress_STATUS                     |           | v20260301 |
+| IkeEncryption                                               |           | v20260301 |
+| IkeEncryption_STATUS                                        |           | v20260301 |
+| IkeIntegrity                                                |           | v20260301 |
+| IkeIntegrity_STATUS                                         |           | v20260301 |
+| IpamPoolPrefixAllocation                                    |           | v20260301 |
+| IpamPoolPrefixAllocationPool                                |           | v20260301 |
+| IpamPoolPrefixAllocationPool_STATUS                         |           | v20260301 |
+| IpamPoolPrefixAllocation_STATUS                             |           | v20260301 |
+| IpsecEncryption                                             |           | v20260301 |
+| IpsecEncryption_STATUS                                      |           | v20260301 |
+| IpsecIntegrity                                              |           | v20260301 |
+| IpsecIntegrity_STATUS                                       |           | v20260301 |
+| IpsecPolicy                                                 |           | v20260301 |
+| IpsecPolicy_STATUS                                          |           | v20260301 |
+| LocalNetworkGateway                                         |           | v20260301 |
+| LocalNetworkGatewayPropertiesFormat                         |           | v20260301 |
+| LocalNetworkGatewayPropertiesFormat_STATUS                  |           | v20260301 |
+| LocalNetworkGatewaySpec                                     |           | v20260301 |
+| LocalNetworkGateway_STATUS                                  |           | v20260301 |
+| LocalNetworkGateway_STATUS_SubResourceEmbedded              |           | v20260301 |
+| LocalNetworkGateway_Spec                                    |           | v20260301 |
+| NetworkSecurityPerimeter                                    | v20250501 |           |
+| NetworkSecurityPerimeterProperties_STATUS                   | v20250501 |           |
+| NetworkSecurityPerimeter_STATUS                             | v20250501 |           |
+| NetworkSecurityPerimeter_Spec                               | v20250501 |           |
+| NetworkSecurityPerimetersLink                               | v20250501 |           |
+| NetworkSecurityPerimetersLink_STATUS                        | v20250501 |           |
+| NetworkSecurityPerimetersLink_Spec                          | v20250501 |           |
+| NetworkSecurityPerimetersLoggingConfiguration               | v20250501 |           |
+| NetworkSecurityPerimetersLoggingConfiguration_STATUS        | v20250501 |           |
+| NetworkSecurityPerimetersLoggingConfiguration_Spec          | v20250501 |           |
+| NetworkSecurityPerimetersProfile                            | v20250501 |           |
+| NetworkSecurityPerimetersProfile_STATUS                     | v20250501 |           |
+| NetworkSecurityPerimetersProfile_Spec                       | v20250501 |           |
+| NetworkSecurityPerimetersProfilesAccessRule                 | v20250501 |           |
+| NetworkSecurityPerimetersProfilesAccessRule_STATUS          | v20250501 |           |
+| NetworkSecurityPerimetersProfilesAccessRule_Spec            | v20250501 |           |
+| NetworkSecurityPerimetersResourceAssociation                | v20250501 |           |
+| NetworkSecurityPerimetersResourceAssociation_STATUS         | v20250501 |           |
+| NetworkSecurityPerimetersResourceAssociation_Spec           | v20250501 |           |
+| NspAccessRuleProperties                                     | v20250501 |           |
+| NspAccessRuleProperties_STATUS                              | v20250501 |           |
+| NspAssociationProperties                                    | v20250501 |           |
+| NspAssociationProperties_STATUS                             | v20250501 |           |
+| NspLinkProperties                                           | v20250501 |           |
+| NspLinkProperties_STATUS                                    | v20250501 |           |
+| NspLinkProvisioningState_STATUS                             | v20250501 |           |
+| NspLinkStatus_STATUS                                        | v20250501 |           |
+| NspLoggingConfigurationProperties                           | v20250501 |           |
+| NspLoggingConfigurationProperties_STATUS                    | v20250501 |           |
+| NspProfileProperties_STATUS                                 | v20250501 |           |
+| NspProvisioningState_STATUS                                 | v20250501 |           |
+| PerimeterBasedAccessRule_STATUS                             | v20250501 |           |
+| PfsGroup                                                    |           | v20260301 |
+| PfsGroup_STATUS                                             |           | v20260301 |
+| PropagatedRouteTable                                        |           | v20260301 |
+| PropagatedRouteTable_STATUS                                 |           | v20260301 |
+| ProvisioningState_STATUS                                    |           | v20260301 |
+| RoutingConfiguration                                        |           | v20260301 |
+| RoutingConfiguration_STATUS                                 |           | v20260301 |
+| StaticRoute                                                 |           | v20260301 |
+| StaticRoute_STATUS                                          |           | v20260301 |
+| StaticRoutesConfig                                          |           | v20260301 |
+| StaticRoutesConfig_STATUS                                   |           | v20260301 |
+| SubResource                                                 | v20250501 | v20260301 |
+| SubResource_STATUS                                          | v20250501 | v20260301 |
+| SubscriptionId                                              | v20250501 |           |
+| SubscriptionId_STATUS                                       | v20250501 |           |
+| SystemData_CreatedByType_STATUS                             | v20250501 |           |
+| SystemData_LastModifiedByType_STATUS                        | v20250501 |           |
+| SystemData_STATUS                                           | v20250501 |           |
+| TrafficSelectorPolicy                                       |           | v20260301 |
+| TrafficSelectorPolicy_STATUS                                |           | v20260301 |
+| TunnelConnectionHealth_STATUS                               |           | v20260301 |
+| VirtualNetworkGatewayConnection                             |           | v20260301 |
+| VirtualNetworkGatewayConnectionMode                         |           | v20260301 |
+| VirtualNetworkGatewayConnectionMode_STATUS                  |           | v20260301 |
+| VirtualNetworkGatewayConnectionPropertiesFormat             |           | v20260301 |
+| VirtualNetworkGatewayConnectionPropertiesFormat_STATUS      |           | v20260301 |
+| VirtualNetworkGatewayConnectionProtocol                     |           | v20260301 |
+| VirtualNetworkGatewayConnectionProtocol_STATUS              |           | v20260301 |
+| VirtualNetworkGatewayConnectionStatus_STATUS                |           | v20260301 |
+| VirtualNetworkGatewayConnectionTunnelProperties             |           | v20260301 |
+| VirtualNetworkGatewayConnectionTunnelProperties_STATUS      |           | v20260301 |
+| VirtualNetworkGatewayConnectionType                         |           | v20260301 |
+| VirtualNetworkGatewayConnectionType_STATUS                  |           | v20260301 |
+| VirtualNetworkGatewayConnection_STATUS                      |           | v20260301 |
+| VirtualNetworkGatewayConnection_Spec                        |           | v20260301 |
+| VirtualNetworkGatewaySpec                                   |           | v20260301 |
+| VirtualNetworkGateway_STATUS_Connection_SubResourceEmbedded |           | v20260301 |
+| VnetLocalRouteOverrideCriteria                              |           | v20260301 |
+| VnetLocalRouteOverrideCriteria_STATUS                       |           | v20260301 |
+| VnetRoute                                                   |           | v20260301 |
+| VnetRoute_STATUS                                            |           | v20260301 |

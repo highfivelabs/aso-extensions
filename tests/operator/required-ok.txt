@@ -64,3 +64,6 @@ team-a Export Ready
 team-b Budget refused
 the budget and the cost export are deleted
 team-a ManagementLock owners
+team-a LocalNetworkGateway Ready
+team-a VirtualNetworkGatewayConnection Ready
+the VPN connection and the local network gateway are deleted
