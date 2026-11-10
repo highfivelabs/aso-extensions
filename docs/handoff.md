@@ -333,6 +333,20 @@ kind, no generator. From the repository root:
   other repositories' `*-operator`).
 - If it is unreachable: `../offload/offload run --hours 2 -- ...` (a Spot VM
   that deletes itself); `offload ls` and `offload reap` if something is left.
+- **On a Spot VM** (learned 2026-11-09): the source is a tarball of tracked
+  and untracked-but-not-ignored files, so `third_party/` is not there: pass
+  `--prep 'hack/upstream.sh'` and each task as its own `--step` (a wrapper
+  that ends in `echo` hides the failure: one run "passed" in 0 s having run
+  nothing). Artifacts are not copied back: `gsutil cp
+  gs://hfl-dev-514205-offload/runs/<id>/offload-artifacts/...`. `task check`
+  and `task coverage` run there (16 CPUs, 62 GB); **`task operator-e2e` does
+  not**: the image's Docker 29 cannot `kind load` `postgres:17` (`ctr ...
+  content digest ... not found`), so run it on the Ubuntu machine.
+- The Ubuntu machine has 15 GB and is shared: a Bundt mutation run (gremlins)
+  took its load near 400 and `systemd-oomd` killed a generated test package
+  (`signal: killed`), and kind's etcd timed out (`etcdserver: request timed
+  out`). Check `uptime` and `pgrep -fc gremlins`; move `task check` to a
+  Spot VM when it is busy, and rerun a kind timeout once.
 - `offload` copies the working tree (tracked or not, `third_party/` included;
   `bin/`, `.cache/` and `offload-artifacts/` are excluded and persist on the
   machine) to the same path there, runs the command, and copies
