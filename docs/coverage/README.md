@@ -386,12 +386,13 @@ Generated; these cannot drift from the data.
 | `recoveryservices.azure.hfl.dev/VaultsBackupResourceGuardProxy` | `Microsoft.RecoveryServices/vaults/backupResourceGuardProxies` | ARM wire type of the generated kind (`apis/arm`) |
 | `recoveryservices.azure.hfl.dev/VaultsPrivateEndpointConnection` | `Microsoft.RecoveryServices/vaults/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `resources.azure.hfl.dev/TagSet` | `Microsoft.Resources/tags` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/User` | `Microsoft.Sql/servers/databases/users` | outside the denominator, not in any percentage |
 | `web.azure.hfl.dev/Certificate` | `Microsoft.Web/certificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesHostNameBinding` | `Microsoft.Web/sites/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlot` | `Microsoft.Web/sites/slots` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsHostNameBinding` | `Microsoft.Web/sites/slots/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |
 
-**Outside the denominator.** 3 rows in `resources.csv` carry `notes=outside-denominator` and are in none of the percentages: our data-plane and database kinds above, and the 0 ASO kinds that are unmapped.
+**Outside the denominator.** 4 rows in `resources.csv` carry `notes=outside-denominator` and are in none of the percentages: our data-plane and database kinds above, and the 0 ASO kinds that are unmapped.
 
 **ASO's own supported-resources documentation** (`docs/hugo/content/reference/*/_index.md` at the pin) lists 305 kinds; 299 are among the kinds read here, of which 296 have the same newest API version in both. Listed there and not read here: 6: dbformysql/user, dbforpostgresql/user, entra/application, entra/securitygroup, entra/serviceprincipal, sql/user. Read here and not listed there: 0.
 

@@ -17,6 +17,10 @@ kinds:
     outside: Microsoft.DBforPostgreSQL/flexibleServers/users
     note: "a database role, not an ARM resource; extends ASO's PostgreSQL User"
     ignore: [owner, azureName]
+  - crd: config/crds/sql.azure.hfl.dev_users.yaml
+    outside: Microsoft.Sql/servers/databases/users
+    note: "a database user, not an ARM resource; ASO's Azure SQL User with Entra users (ASO pull request #5104)"
+    ignore: [owner, azureName]
   - crd: config/crds/keyvault.azure.hfl.dev_vaultsecrets.yaml
     outside: Microsoft.KeyVault/vaults/secrets (data plane)
     api: "7.5"
