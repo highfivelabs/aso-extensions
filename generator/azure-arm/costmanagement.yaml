@@ -30,3 +30,10 @@ groupModelConfiguration:
         $referenceType: simple # a storage account's name (with sasToken, for partners), not an ARM ID
       SasToken:
         $referenceType: simple # x-ms-secret: a SAS token, read from a Secret
+
+typeTransformers:
+  - group: costmanagement
+    name: ExportRunProperties_STATUS
+    property: RunSettings
+    remove: true
+    because: a run's settings are the export's own properties, which hold the run history again (recursive through runHistory); the run's status, times and error stay

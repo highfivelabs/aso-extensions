@@ -109,7 +109,7 @@ Export: Resource
     ├── PropertyBag: genruntime.PropertyBag
     ├── RunHistory: *Object (2 properties)
     │   ├── PropertyBag: genruntime.PropertyBag
-    │   └── Value: Object (17 properties)[]
+    │   └── Value: Object (16 properties)[]
     │       ├── ETag: *string
     │       ├── EndDate: *string
     │       ├── Error: *Object (3 properties)
@@ -124,48 +124,6 @@ Export: Resource
     │       ├── ProcessingEndTime: *string
     │       ├── ProcessingStartTime: *string
     │       ├── PropertyBag: genruntime.PropertyBag
-    │       ├── RunSettings: *Object (11 properties)
-    │       │   ├── CompressionMode: *string
-    │       │   ├── DataOverwriteBehavior: *string
-    │       │   ├── Definition: *Object (5 properties)
-    │       │   │   ├── DataSet: *Object (3 properties)
-    │       │   │   │   ├── Configuration: *Object (4 properties)
-    │       │   │   │   │   ├── Columns: string[]
-    │       │   │   │   │   ├── DataVersion: *string
-    │       │   │   │   │   ├── Filters: Object (3 properties)[]
-    │       │   │   │   │   │   ├── Name: *string
-    │       │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
-    │       │   │   │   │   │   └── Value: *string
-    │       │   │   │   │   └── PropertyBag: genruntime.PropertyBag
-    │       │   │   │   ├── Granularity: *string
-    │       │   │   │   └── PropertyBag: genruntime.PropertyBag
-    │       │   │   ├── PropertyBag: genruntime.PropertyBag
-    │       │   │   ├── TimePeriod: *Object (3 properties)
-    │       │   │   │   ├── From: *string
-    │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
-    │       │   │   │   └── To: *string
-    │       │   │   ├── Timeframe: *string
-    │       │   │   └── Type: *string
-    │       │   ├── DeliveryInfo: *Object (2 properties)
-    │       │   │   ├── Destination: *Object (6 properties)
-    │       │   │   │   ├── Container: *string
-    │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
-    │       │   │   │   ├── ResourceId: *string
-    │       │   │   │   ├── RootFolderPath: *string
-    │       │   │   │   ├── StorageAccount: *string
-    │       │   │   │   └── Type: *string
-    │       │   │   └── PropertyBag: genruntime.PropertyBag
-    │       │   ├── ExportDescription: *string
-    │       │   ├── Format: *string
-    │       │   ├── NextRunTimeEstimate: *string
-    │       │   ├── PartitionData: *bool
-    │       │   ├── PropertyBag: genruntime.PropertyBag
-    │       │   ├── RunHistory: *ExportExecutionListResult_STATUS
-    │       │   └── SystemSuspensionContext: *Object (4 properties)
-    │       │       ├── PropertyBag: genruntime.PropertyBag
-    │       │       ├── SuspensionCode: *string
-    │       │       ├── SuspensionReason: *string
-    │       │       └── SuspensionTime: *string
     │       ├── StartDate: *string
     │       ├── Status: *string
     │       ├── SubmittedBy: *string

@@ -13,77 +13,6 @@ import (
 	"testing"
 )
 
-func Test_CommonExportProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForCommonExportProperties_STATUS)
-}
-
-// RunJSONSerializationTestForCommonExportProperties_STATUS runs a test to see if a specific instance of CommonExportProperties_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForCommonExportProperties_STATUS(t *rapid.T) {
-	subject := CommonExportProperties_STATUSGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual CommonExportProperties_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of CommonExportProperties_STATUS instances for property testing - lazily instantiated by
-// CommonExportProperties_STATUSGenerator()
-var commonExportProperties_STATUSGenerator *rapid.Generator[CommonExportProperties_STATUS]
-
-// CommonExportProperties_STATUSGenerator returns a generator of CommonExportProperties_STATUS instances for property testing.
-func CommonExportProperties_STATUSGenerator() *rapid.Generator[CommonExportProperties_STATUS] {
-	if commonExportProperties_STATUSGenerator != nil {
-		return commonExportProperties_STATUSGenerator
-	}
-
-	ptrString := rapid.Ptr(rapid.String(), true)
-	definition := rapid.Ptr(ExportDefinition_STATUSGenerator(), true)
-	deliveryInfo := rapid.Ptr(ExportDeliveryInfo_STATUSGenerator(), true)
-	partitionData := rapid.Ptr(rapid.Bool(), true)
-	runHistory := rapid.Ptr(ExportExecutionListResult_STATUSGenerator(), true)
-	systemSuspensionContext := rapid.Ptr(ExportSuspensionContext_STATUSGenerator(), true)
-
-	commonExportProperties_STATUSGenerator = rapid.Custom(func(t *rapid.T) CommonExportProperties_STATUS {
-		var result CommonExportProperties_STATUS
-		result.CompressionMode = ptrString.Draw(t, "CompressionMode")
-		result.DataOverwriteBehavior = ptrString.Draw(t, "DataOverwriteBehavior")
-		result.Definition = definition.Draw(t, "Definition")
-		result.DeliveryInfo = deliveryInfo.Draw(t, "DeliveryInfo")
-		result.ExportDescription = ptrString.Draw(t, "ExportDescription")
-		result.Format = ptrString.Draw(t, "Format")
-		result.NextRunTimeEstimate = ptrString.Draw(t, "NextRunTimeEstimate")
-		result.PartitionData = partitionData.Draw(t, "PartitionData")
-		result.RunHistory = runHistory.Draw(t, "RunHistory")
-		result.SystemSuspensionContext = systemSuspensionContext.Draw(t, "SystemSuspensionContext")
-		return result
-	})
-
-	return commonExportProperties_STATUSGenerator
-}
-
 func Test_ErrorDetails_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -1066,7 +995,6 @@ func ExportRun_STATUSGenerator() *rapid.Generator[ExportRun_STATUS] {
 
 	ptrString := rapid.Ptr(rapid.String(), true)
 	error := rapid.Ptr(ErrorDetails_STATUSGenerator(), true)
-	runSettings := rapid.Ptr(CommonExportProperties_STATUSGenerator(), true)
 
 	exportRun_STATUSGenerator = rapid.Custom(func(t *rapid.T) ExportRun_STATUS {
 		var result ExportRun_STATUS
@@ -1080,7 +1008,6 @@ func ExportRun_STATUSGenerator() *rapid.Generator[ExportRun_STATUS] {
 		result.Name = ptrString.Draw(t, "Name")
 		result.ProcessingEndTime = ptrString.Draw(t, "ProcessingEndTime")
 		result.ProcessingStartTime = ptrString.Draw(t, "ProcessingStartTime")
-		result.RunSettings = runSettings.Draw(t, "RunSettings")
 		result.StartDate = ptrString.Draw(t, "StartDate")
 		result.Status = ptrString.Draw(t, "Status")
 		result.SubmittedBy = ptrString.Draw(t, "SubmittedBy")

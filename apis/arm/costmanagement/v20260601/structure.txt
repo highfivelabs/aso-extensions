@@ -152,7 +152,7 @@ Export: Resource
     ├── NextRunTimeEstimate: *string
     ├── PartitionData: *bool
     ├── RunHistory: *Object (1 property)
-    │   └── Value: Object (16 properties)[]
+    │   └── Value: Object (15 properties)[]
     │       ├── ETag: *string
     │       ├── EndDate: *string
     │       ├── Error: *Object (2 properties)
@@ -167,67 +167,6 @@ Export: Resource
     │       ├── Name: *string
     │       ├── ProcessingEndTime: *string
     │       ├── ProcessingStartTime: *string
-    │       ├── RunSettings: *Object (10 properties)
-    │       │   ├── CompressionMode: *Enum (3 values)
-    │       │   │   ├── "gzip"
-    │       │   │   ├── "none"
-    │       │   │   └── "snappy"
-    │       │   ├── DataOverwriteBehavior: *Enum (2 values)
-    │       │   │   ├── "CreateNewReport"
-    │       │   │   └── "OverwritePreviousReport"
-    │       │   ├── Definition: *Object (4 properties)
-    │       │   │   ├── DataSet: *Object (2 properties)
-    │       │   │   │   ├── Configuration: *Object (3 properties)
-    │       │   │   │   │   ├── Columns: string[]
-    │       │   │   │   │   ├── DataVersion: *string
-    │       │   │   │   │   └── Filters: Object (2 properties)[]
-    │       │   │   │   │       ├── Name: *Enum (3 values)
-    │       │   │   │   │       │   ├── "LookBackPeriod"
-    │       │   │   │   │       │   ├── "ReservationScope"
-    │       │   │   │   │       │   └── "ResourceType"
-    │       │   │   │   │       └── Value: *string
-    │       │   │   │   └── Granularity: *Enum (2 values)
-    │       │   │   │       ├── "Daily"
-    │       │   │   │       └── "Monthly"
-    │       │   │   ├── TimePeriod: *Object (2 properties)
-    │       │   │   │   ├── From: *string
-    │       │   │   │   └── To: *string
-    │       │   │   ├── Timeframe: *Enum (7 values)
-    │       │   │   │   ├── "BillingMonthToDate"
-    │       │   │   │   ├── "Custom"
-    │       │   │   │   ├── "MonthToDate"
-    │       │   │   │   ├── "TheCurrentMonth"
-    │       │   │   │   ├── "TheLastBillingMonth"
-    │       │   │   │   ├── "TheLastMonth"
-    │       │   │   │   └── "WeekToDate"
-    │       │   │   └── Type: *Enum (8 values)
-    │       │   │       ├── "ActualCost"
-    │       │   │       ├── "AmortizedCost"
-    │       │   │       ├── "FocusCost"
-    │       │   │       ├── "PriceSheet"
-    │       │   │       ├── "ReservationDetails"
-    │       │   │       ├── "ReservationRecommendations"
-    │       │   │       ├── "ReservationTransactions"
-    │       │   │       └── "Usage"
-    │       │   ├── DeliveryInfo: *Object (1 property)
-    │       │   │   └── Destination: *Object (5 properties)
-    │       │   │       ├── Container: *string
-    │       │   │       ├── ResourceId: *string
-    │       │   │       ├── RootFolderPath: *string
-    │       │   │       ├── StorageAccount: *string
-    │       │   │       └── Type: *Enum (1 value)
-    │       │   │           └── "AzureBlob"
-    │       │   ├── ExportDescription: *string
-    │       │   ├── Format: *Enum (2 values)
-    │       │   │   ├── "Csv"
-    │       │   │   └── "Parquet"
-    │       │   ├── NextRunTimeEstimate: *string
-    │       │   ├── PartitionData: *bool
-    │       │   ├── RunHistory: *ExportExecutionListResult_STATUS
-    │       │   └── SystemSuspensionContext: *Object (3 properties)
-    │       │       ├── SuspensionCode: *string
-    │       │       ├── SuspensionReason: *string
-    │       │       └── SuspensionTime: *string
     │       ├── StartDate: *string
     │       ├── Status: *Enum (7 values)
     │       │   ├── "Completed"

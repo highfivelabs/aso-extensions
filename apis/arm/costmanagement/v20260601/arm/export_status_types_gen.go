@@ -464,9 +464,6 @@ type ExportRunProperties_STATUS struct {
 	// ProcessingStartTime: The time when export was picked up to be run.
 	ProcessingStartTime *string `json:"processingStartTime,omitempty"`
 
-	// RunSettings: The export settings that were in effect for this run.
-	RunSettings *CommonExportProperties_STATUS `json:"runSettings,omitempty"`
-
 	// StartDate: The start datetime for the export.
 	StartDate *string `json:"startDate,omitempty"`
 
@@ -493,43 +490,6 @@ const (
 var granularityType_STATUS_Values = map[string]GranularityType_STATUS{
 	"daily":   GranularityType_STATUS_Daily,
 	"monthly": GranularityType_STATUS_Monthly,
-}
-
-// The common properties of the export.
-type CommonExportProperties_STATUS struct {
-	// CompressionMode: Allow customers to select compress data for exports. This setting will enable destination file
-	// compression scheme at runtime. By default set to None. Gzip is for csv and snappy for parquet.
-	CompressionMode *CompressionModeType_STATUS `json:"compressionMode,omitempty"`
-
-	// DataOverwriteBehavior: Allow customers to select overwrite data(OverwritePreviousReport) for exports. This setting will
-	// enable overwrite data for the same month in customer storage account. By default set to CreateNewReport.
-	DataOverwriteBehavior *DataOverwriteBehaviorType_STATUS `json:"dataOverwriteBehavior,omitempty"`
-
-	// Definition: Has the definition for the export.
-	Definition *ExportDefinition_STATUS `json:"definition,omitempty"`
-
-	// DeliveryInfo: Has delivery information for the export.
-	DeliveryInfo *ExportDeliveryInfo_STATUS `json:"deliveryInfo,omitempty"`
-
-	// ExportDescription: The export description set by customer at time of export creation/update.
-	ExportDescription *string `json:"exportDescription,omitempty"`
-
-	// Format: The format of the export being delivered.
-	Format *FormatType_STATUS `json:"format,omitempty"`
-
-	// NextRunTimeEstimate: If the export has an active schedule, provides an estimate of the next run time.
-	NextRunTimeEstimate *string `json:"nextRunTimeEstimate,omitempty"`
-
-	// PartitionData: If set to true, exported data will be partitioned by size and placed in a blob directory together with a
-	// manifest file.
-	PartitionData *bool `json:"partitionData,omitempty"`
-
-	// RunHistory: If requested, has the most recent run history for the export.
-	RunHistory *ExportExecutionListResult_STATUS `json:"runHistory,omitempty"`
-
-	// SystemSuspensionContext: The export suspension reason if export is in SystemSuspended state. This is not populated
-	// currently.
-	SystemSuspensionContext *ExportSuspensionContext_STATUS `json:"systemSuspensionContext,omitempty"`
 }
 
 // The details of the error.

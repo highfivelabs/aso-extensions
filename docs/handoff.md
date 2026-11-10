@@ -300,6 +300,13 @@ Facts learned the hard way:
   `costmanagement` group for it. Prune the types by name before the group's
   `include` instead (`generator/azure-arm/costmanagement.yaml`), and the
   resources that do not use them generate.
+- **An indirectly recursive status type passes the generator and fails
+  later**: an export run's `runSettings` holds the export's properties, which
+  hold the run history. The generator exits 0; the generated property tests
+  overflow the stack and envtest refuses the CRD (an object field with no
+  type). Run `task check`'s tests before trusting a run; remove the property
+  with a `typeTransformers` entry on the `*Properties_STATUS` type (before
+  flattening the property is not on the resource's own type).
 - A resource whose spec path already is `/{scope}/providers/...` (budgets,
   exports) is an extension resource without patch 0006.
 - A reference to an ASO kind the manager does not read (Monitor

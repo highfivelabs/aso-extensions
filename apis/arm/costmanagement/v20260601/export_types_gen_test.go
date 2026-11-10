@@ -14,118 +14,6 @@ import (
 	"testing"
 )
 
-// Test_CommonExportProperties_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss tests if a specific instance of CommonExportProperties_STATUS can be assigned to storage and back losslessly
-func Test_CommonExportProperties_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, func(t *rapid.T) {
-		subject := CommonExportProperties_STATUSGenerator().Draw(t, "subject")
-		// Copy subject to make sure assignment doesn't modify it
-		copied := subject.DeepCopy()
-
-		// Use AssignPropertiesTo() for the first stage of conversion
-		var other storage.CommonExportProperties_STATUS
-		err := copied.AssignProperties_To_CommonExportProperties_STATUS(&other)
-		if err != nil {
-			t.Fatal("AssignPropertiesTo: " + err.Error())
-		}
-
-		// Use AssignPropertiesFrom() to convert back to our original type
-		var actual CommonExportProperties_STATUS
-		err = actual.AssignProperties_From_CommonExportProperties_STATUS(&other)
-		if err != nil {
-			t.Fatal("AssignPropertiesFrom: " + err.Error())
-		}
-
-		// Check for a match
-		match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-		if !match {
-			actualFmt := pretty.Sprint(actual)
-			subjectFmt := pretty.Sprint(subject)
-			result := diff.Diff(subjectFmt, actualFmt)
-			t.Error(result)
-		}
-	})
-}
-
-func Test_CommonExportProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForCommonExportProperties_STATUS)
-}
-
-// RunJSONSerializationTestForCommonExportProperties_STATUS runs a test to see if a specific instance of CommonExportProperties_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForCommonExportProperties_STATUS(t *rapid.T) {
-	subject := CommonExportProperties_STATUSGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual CommonExportProperties_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of CommonExportProperties_STATUS instances for property testing - lazily instantiated by
-// CommonExportProperties_STATUSGenerator()
-var commonExportProperties_STATUSGenerator *rapid.Generator[CommonExportProperties_STATUS]
-
-// CommonExportProperties_STATUSGenerator returns a generator of CommonExportProperties_STATUS instances for property testing.
-func CommonExportProperties_STATUSGenerator() *rapid.Generator[CommonExportProperties_STATUS] {
-	if commonExportProperties_STATUSGenerator != nil {
-		return commonExportProperties_STATUSGenerator
-	}
-
-	ptrString := rapid.Ptr(rapid.String(), true)
-	compressionMode := rapid.Ptr(rapid.SampledFrom([]CompressionModeType_STATUS{CompressionModeType_STATUS_Gzip, CompressionModeType_STATUS_None, CompressionModeType_STATUS_Snappy}), true)
-	dataOverwriteBehavior := rapid.Ptr(rapid.SampledFrom([]DataOverwriteBehaviorType_STATUS{DataOverwriteBehaviorType_STATUS_CreateNewReport, DataOverwriteBehaviorType_STATUS_OverwritePreviousReport}), true)
-	definition := rapid.Ptr(ExportDefinition_STATUSGenerator(), true)
-	deliveryInfo := rapid.Ptr(ExportDeliveryInfo_STATUSGenerator(), true)
-	format := rapid.Ptr(rapid.SampledFrom([]FormatType_STATUS{FormatType_STATUS_Csv, FormatType_STATUS_Parquet}), true)
-	partitionData := rapid.Ptr(rapid.Bool(), true)
-	runHistory := rapid.Ptr(ExportExecutionListResult_STATUSGenerator(), true)
-	systemSuspensionContext := rapid.Ptr(ExportSuspensionContext_STATUSGenerator(), true)
-
-	commonExportProperties_STATUSGenerator = rapid.Custom(func(t *rapid.T) CommonExportProperties_STATUS {
-		var result CommonExportProperties_STATUS
-		result.CompressionMode = compressionMode.Draw(t, "CompressionMode")
-		result.DataOverwriteBehavior = dataOverwriteBehavior.Draw(t, "DataOverwriteBehavior")
-		result.Definition = definition.Draw(t, "Definition")
-		result.DeliveryInfo = deliveryInfo.Draw(t, "DeliveryInfo")
-		result.ExportDescription = ptrString.Draw(t, "ExportDescription")
-		result.Format = format.Draw(t, "Format")
-		result.NextRunTimeEstimate = ptrString.Draw(t, "NextRunTimeEstimate")
-		result.PartitionData = partitionData.Draw(t, "PartitionData")
-		result.RunHistory = runHistory.Draw(t, "RunHistory")
-		result.SystemSuspensionContext = systemSuspensionContext.Draw(t, "SystemSuspensionContext")
-		return result
-	})
-
-	return commonExportProperties_STATUSGenerator
-}
-
 // Test_ErrorDetails_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss tests if a specific instance of ErrorDetails_STATUS can be assigned to storage and back losslessly
 func Test_ErrorDetails_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
 	t.Parallel()
@@ -1797,7 +1685,6 @@ func ExportRun_STATUSGenerator() *rapid.Generator[ExportRun_STATUS] {
 	ptrString := rapid.Ptr(rapid.String(), true)
 	error := rapid.Ptr(ErrorDetails_STATUSGenerator(), true)
 	executionType := rapid.Ptr(rapid.SampledFrom([]ExecutionType_STATUS{ExecutionType_STATUS_OnDemand, ExecutionType_STATUS_Scheduled}), true)
-	runSettings := rapid.Ptr(CommonExportProperties_STATUSGenerator(), true)
 	status := rapid.Ptr(rapid.SampledFrom([]ExecutionStatus_STATUS{ExecutionStatus_STATUS_Completed, ExecutionStatus_STATUS_DataNotAvailable, ExecutionStatus_STATUS_Failed, ExecutionStatus_STATUS_InProgress, ExecutionStatus_STATUS_NewDataNotAvailable, ExecutionStatus_STATUS_Queued, ExecutionStatus_STATUS_Timeout}), true)
 
 	exportRun_STATUSGenerator = rapid.Custom(func(t *rapid.T) ExportRun_STATUS {
@@ -1812,7 +1699,6 @@ func ExportRun_STATUSGenerator() *rapid.Generator[ExportRun_STATUS] {
 		result.Name = ptrString.Draw(t, "Name")
 		result.ProcessingEndTime = ptrString.Draw(t, "ProcessingEndTime")
 		result.ProcessingStartTime = ptrString.Draw(t, "ProcessingStartTime")
-		result.RunSettings = runSettings.Draw(t, "RunSettings")
 		result.StartDate = ptrString.Draw(t, "StartDate")
 		result.Status = status.Draw(t, "Status")
 		result.SubmittedBy = ptrString.Draw(t, "SubmittedBy")

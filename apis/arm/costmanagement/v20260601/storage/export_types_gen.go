@@ -453,23 +453,22 @@ type ExportRecurrencePeriod_STATUS struct {
 // Storage version of v20260601.ExportRun_STATUS
 // An export run.
 type ExportRun_STATUS struct {
-	ETag                *string                        `json:"eTag,omitempty"`
-	EndDate             *string                        `json:"endDate,omitempty"`
-	Error               *ErrorDetails_STATUS           `json:"error,omitempty"`
-	ExecutionType       *string                        `json:"executionType,omitempty"`
-	FileName            *string                        `json:"fileName,omitempty"`
-	Id                  *string                        `json:"id,omitempty"`
-	ManifestFile        *string                        `json:"manifestFile,omitempty"`
-	Name                *string                        `json:"name,omitempty"`
-	ProcessingEndTime   *string                        `json:"processingEndTime,omitempty"`
-	ProcessingStartTime *string                        `json:"processingStartTime,omitempty"`
-	PropertyBag         genruntime.PropertyBag         `json:"$propertyBag,omitempty"`
-	RunSettings         *CommonExportProperties_STATUS `json:"runSettings,omitempty"`
-	StartDate           *string                        `json:"startDate,omitempty"`
-	Status              *string                        `json:"status,omitempty"`
-	SubmittedBy         *string                        `json:"submittedBy,omitempty"`
-	SubmittedTime       *string                        `json:"submittedTime,omitempty"`
-	Type                *string                        `json:"type,omitempty"`
+	ETag                *string                `json:"eTag,omitempty"`
+	EndDate             *string                `json:"endDate,omitempty"`
+	Error               *ErrorDetails_STATUS   `json:"error,omitempty"`
+	ExecutionType       *string                `json:"executionType,omitempty"`
+	FileName            *string                `json:"fileName,omitempty"`
+	Id                  *string                `json:"id,omitempty"`
+	ManifestFile        *string                `json:"manifestFile,omitempty"`
+	Name                *string                `json:"name,omitempty"`
+	ProcessingEndTime   *string                `json:"processingEndTime,omitempty"`
+	ProcessingStartTime *string                `json:"processingStartTime,omitempty"`
+	PropertyBag         genruntime.PropertyBag `json:"$propertyBag,omitempty"`
+	StartDate           *string                `json:"startDate,omitempty"`
+	Status              *string                `json:"status,omitempty"`
+	SubmittedBy         *string                `json:"submittedBy,omitempty"`
+	SubmittedTime       *string                `json:"submittedTime,omitempty"`
+	Type                *string                `json:"type,omitempty"`
 }
 
 // Storage version of v20260601.ExportTimePeriod
@@ -488,22 +487,6 @@ type ExportTimePeriod_STATUS struct {
 	From        *string                `json:"from,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	To          *string                `json:"to,omitempty"`
-}
-
-// Storage version of v20260601.CommonExportProperties_STATUS
-// The common properties of the export.
-type CommonExportProperties_STATUS struct {
-	CompressionMode         *string                           `json:"compressionMode,omitempty"`
-	DataOverwriteBehavior   *string                           `json:"dataOverwriteBehavior,omitempty"`
-	Definition              *ExportDefinition_STATUS          `json:"definition,omitempty"`
-	DeliveryInfo            *ExportDeliveryInfo_STATUS        `json:"deliveryInfo,omitempty"`
-	ExportDescription       *string                           `json:"exportDescription,omitempty"`
-	Format                  *string                           `json:"format,omitempty"`
-	NextRunTimeEstimate     *string                           `json:"nextRunTimeEstimate,omitempty"`
-	PartitionData           *bool                             `json:"partitionData,omitempty"`
-	PropertyBag             genruntime.PropertyBag            `json:"$propertyBag,omitempty"`
-	RunHistory              *ExportExecutionListResult_STATUS `json:"runHistory,omitempty"`
-	SystemSuspensionContext *ExportSuspensionContext_STATUS   `json:"systemSuspensionContext,omitempty"`
 }
 
 // Storage version of v20260601.ErrorDetails_STATUS

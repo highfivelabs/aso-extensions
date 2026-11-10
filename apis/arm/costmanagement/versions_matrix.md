@@ -1,7 +1,6 @@
 | Type Definitions in package "costmanagement" | v20260601 |
 |----------------------------------------------|-----------|
 | APIVersion                                   | v20260601 |
-| CommonExportProperties_STATUS                | v20260601 |
 | CompressionModeType                          | v20260601 |
 | CompressionModeType_STATUS                   | v20260601 |
 | DataOverwriteBehaviorType                    | v20260601 |
