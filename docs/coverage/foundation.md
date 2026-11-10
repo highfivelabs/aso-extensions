@@ -130,7 +130,7 @@ Generated: every resource of the two categories, by the order of the services in
 | application | 35 | 823 | 14,821 | 33.1% | 3.7% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (139 with no kind, 51 partly covered, 56 covered)
+### platform-foundation: 246 resources (137 with no kind, 52 partly covered, 57 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
