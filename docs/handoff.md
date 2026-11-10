@@ -414,6 +414,16 @@ Facts learned the hard way:
 - A property with `format: arm-id` is a reference already: labelling it
   `$referenceType: arm` fails ("value is not needed because Swagger already
   says it is an ARM reference").
+- **The Microsoft Graph SDK gzips request bodies** (its default middleware,
+  used when the client is nil). A test that hands the SDK a plain
+  `http.Client` skips the middleware and hides it: the first kind run of
+  `DirectoryRoleAssignment` failed with the fake reading `\x1f`. The
+  Graph client (`pkg/reconcilers/entra/client.go`) puts a given client's
+  transport under the SDK's middleware, and the fake Graph takes gzip.
+- A quick envtest loop on the Ubuntu machine, one test only:
+  `bin/setup-envtest use 1.37.0 --bin-dir $PWD/bin/envtest -p path` (an
+  absolute `--bin-dir`; a relative one fails to start etcd) as
+  `KUBEBUILDER_ASSETS`, then `go test ./test/e2e/ -run <Test>`.
 - A property named `owner` in the spec (an attestation's responsible person)
   collides with the Kubernetes `owner`; ASO's generator renames it to
   `properties_owner` (Go `PropertiesOwner`), still sent as `owner`.

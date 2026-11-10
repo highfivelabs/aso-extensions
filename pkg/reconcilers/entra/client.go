@@ -19,7 +19,9 @@ import (
 	"strings"
 	"sync"
 
+	khttp "github.com/microsoft/kiota-http-go"
 	msgraphsdk "github.com/microsoftgraph/msgraph-beta-sdk-go"
+	msgraphcore "github.com/microsoftgraph/msgraph-sdk-go-core"
 	msgraphauth "github.com/microsoftgraph/msgraph-sdk-go-core/authentication"
 	"github.com/rotisserie/eris"
 
@@ -39,8 +41,9 @@ type GraphClientCache struct {
 	// Endpoint is Microsoft Graph's address (empty: DefaultGraphEndpoint);
 	// the beta API is under it, at /beta, as ASO's Entra kinds use it.
 	Endpoint string
-	// HTTPClient is what every Graph request goes through; nil is the
-	// default transport.
+	// HTTPClient's transport is what every Graph request goes through,
+	// under the SDK's own middleware (compression, retries, redirects);
+	// nil is the SDK's default client.
 	HTTPClient *http.Client
 }
 
@@ -98,7 +101,7 @@ func (c *GraphClientCache) GetClient(ctx context.Context, obj genruntime.MetaObj
 		authProvider,
 		nil, // ParseNodeFactory
 		nil, // SerializationWriterFactory
-		c.HTTPClient,
+		c.httpClient(),
 	)
 	if err != nil {
 		return nil, err
@@ -111,4 +114,22 @@ func (c *GraphClientCache) GetClient(ctx context.Context, obj genruntime.MetaObj
 	c.lock.Unlock()
 
 	return client.client, nil
+}
+
+// httpClient is nil (the SDK's default client, with its middleware) or
+// HTTPClient's transport under the same middleware, so that requests are
+// the same either way (the middleware gzips request bodies, for one).
+func (c *GraphClientCache) httpClient() *http.Client {
+	if c.HTTPClient == nil {
+		return nil
+	}
+	parent := c.HTTPClient.Transport
+	if parent == nil {
+		parent = http.DefaultTransport
+	}
+	middleware := msgraphcore.GetDefaultMiddlewaresWithOptions(&msgraphcore.GraphClientOptions{})
+	return &http.Client{
+		Transport: khttp.NewCustomTransportWithParentTransport(parent, middleware...),
+		Timeout:   c.HTTPClient.Timeout,
+	}
 }

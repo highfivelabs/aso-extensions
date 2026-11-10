@@ -12,10 +12,12 @@ import (
 	"testing"
 
 	absauth "github.com/microsoft/kiota-abstractions-go/authentication"
+	khttp "github.com/microsoft/kiota-http-go"
 	msgraphsdk "github.com/microsoftgraph/msgraph-beta-sdk-go"
 	"github.com/microsoftgraph/msgraph-beta-sdk-go/models"
 	"github.com/microsoftgraph/msgraph-beta-sdk-go/models/odataerrors"
 	"github.com/microsoftgraph/msgraph-beta-sdk-go/rolemanagement"
+	msgraphcore "github.com/microsoftgraph/msgraph-sdk-go-core"
 )
 
 type staticToken string
@@ -29,13 +31,16 @@ func (t staticToken) GetAllowedHostsValidator() *absauth.AllowedHostsValidator {
 	return v
 }
 
-// client is the Graph SDK, as the reconciler uses it, against the fake.
+// client is the Graph SDK, as the reconciler uses it (with the SDK's
+// default middleware, which gzips request bodies), against the fake.
 func client(t *testing.T, g *Graph, token string) *msgraphsdk.GraphServiceClient {
 	t.Helper()
 	srv := httptest.NewServer(g)
 	t.Cleanup(srv.Close)
 	auth := absauth.NewBaseBearerTokenAuthenticationProvider(staticToken(token))
-	adapter, err := msgraphsdk.NewGraphRequestAdapterWithParseNodeFactoryAndSerializationWriterFactoryAndHttpClient(auth, nil, nil, srv.Client())
+	httpClient := &http.Client{Transport: khttp.NewCustomTransportWithParentTransport(srv.Client().Transport,
+		msgraphcore.GetDefaultMiddlewaresWithOptions(&msgraphcore.GraphClientOptions{})...)}
+	adapter, err := msgraphsdk.NewGraphRequestAdapterWithParseNodeFactoryAndSerializationWriterFactoryAndHttpClient(auth, nil, nil, httpClient)
 	if err != nil {
 		t.Fatal(err)
 	}

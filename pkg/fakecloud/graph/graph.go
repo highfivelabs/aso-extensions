@@ -9,14 +9,17 @@
 // ID), role definitions (the built-in ones below, and any a test adds) and
 // administrative units decides what may be assigned. It accepts a request
 // only when Authorize accepts its bearer token, so a test decides which
-// identity may use Graph. The shapes follow
+// identity may use Graph. Request bodies may be gzipped (Content-Encoding:
+// gzip), as the Graph SDK's default middleware sends them. The shapes follow
 // https://learn.microsoft.com/graph/api/rbacapplication-post-roleassignments.
 package graph
 
 import (
+	"compress/gzip"
 	"crypto/rand"
 	"encoding/base64"
 	"encoding/json"
+	"io"
 	"net/http"
 	"regexp"
 	"sort"
@@ -165,7 +168,17 @@ func (g *Graph) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (g *Graph) create(w http.ResponseWriter, r *http.Request) {
 	var a assignment
-	if err := json.NewDecoder(r.Body).Decode(&a); err != nil {
+	var body io.Reader = r.Body
+	if strings.EqualFold(r.Header.Get("Content-Encoding"), "gzip") {
+		zr, err := gzip.NewReader(r.Body)
+		if err != nil {
+			writeError(w, http.StatusBadRequest, "Request_BadRequest", "fake graph: the gzipped body is not gzip: "+err.Error())
+			return
+		}
+		defer zr.Close()
+		body = zr
+	}
+	if err := json.NewDecoder(body).Decode(&a); err != nil {
 		writeError(w, http.StatusBadRequest, "Request_BadRequest", "fake graph: the body is not a role assignment: "+err.Error())
 		return
 	}
