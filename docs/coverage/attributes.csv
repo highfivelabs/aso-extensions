@@ -2903,7 +2903,7 @@ Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleSettings,rec
 Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleSettings,reminderNotificationsEnabled,boolean,false,none,,
 Microsoft.Authorization,Microsoft.Authorization/locks,properties.level,string,true,ours,,spec.level
 Microsoft.Authorization,Microsoft.Authorization/locks,properties.notes,string,false,ours,,spec.notes
-Microsoft.Authorization,Microsoft.Authorization/locks,properties.owners[].applicationId,string,false,none,,
+Microsoft.Authorization,Microsoft.Authorization/locks,properties.owners[].applicationId,string,false,ours,,spec.owners[].applicationId
 Microsoft.Authorization,Microsoft.Authorization/policyassignments,identity.type,string,false,ours,,identity.type
 Microsoft.Authorization,Microsoft.Authorization/policyassignments,identity.userAssignedIdentities{},object,false,ours,,identity.userAssignedIdentities[].reference
 Microsoft.Authorization,Microsoft.Authorization/policyassignments,location,string,false,ours,,location

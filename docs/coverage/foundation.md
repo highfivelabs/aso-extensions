@@ -130,7 +130,7 @@ Generated: every resource of the two categories, by the order of the services in
 | application | 35 | 823 | 14,821 | 33.1% | 3.7% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (139 with no kind, 52 partly covered, 55 covered)
+### platform-foundation: 246 resources (139 with no kind, 51 partly covered, 56 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -153,10 +153,10 @@ Generated: every resource of the two categories, by the order of the services in
 | 17 | `Microsoft.Authorization/policyDefinitions/versions` | no kind |  |  | 0 / 0 / 21 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (21) | 0 |
 | 18 | `Microsoft.Authorization/accessReviewScheduleDefinitions` | no kind |  |  | 0 / 0 / 24 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
 | 19 | `Microsoft.Authorization/policySetDefinitions/versions` | no kind |  |  | 0 / 0 / 24 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
-| 20 | `Microsoft.Authorization/locks` | partial, 1 of 3 missing |  | `authorization/ManagementLock` | 0 / 2 / 1 | extension,resourceGroup,subscription | extend: newer API version or property config | S (1) | 31 |
-| 21 | `Microsoft.Authorization/policydefinitions` | partial, 1 of 22 missing |  | `authorization/PolicyDefinition` | 0 / 21 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
-| 22 | `Microsoft.Authorization/policySetDefinitions` | partial, 1 of 25 missing |  | `authorization/PolicySetDefinition` | 0 / 24 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
-| 23 | `Microsoft.Authorization/roleAssignments` | covered | `authorization/RoleAssignment` |  | 7 / 0 / 0 | extension | - | - | 33 |
+| 20 | `Microsoft.Authorization/policydefinitions` | partial, 1 of 22 missing |  | `authorization/PolicyDefinition` | 0 / 21 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
+| 21 | `Microsoft.Authorization/policySetDefinitions` | partial, 1 of 25 missing |  | `authorization/PolicySetDefinition` | 0 / 24 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
+| 22 | `Microsoft.Authorization/roleAssignments` | covered | `authorization/RoleAssignment` |  | 7 / 0 / 0 | extension | - | - | 33 |
+| 23 | `Microsoft.Authorization/locks` | covered |  | `authorization/ManagementLock` | 0 / 3 / 0 | extension,resourceGroup,subscription | - | - | 31 |
 | 24 | `Microsoft.Authorization/roleDefinitions` | covered | `authorization/RoleDefinition` |  | 8 / 0 / 0 | extension | - | - | 2 |
 | 25 | `Microsoft.Authorization/policyassignments` | covered |  | `authorization/PolicyAssignment` | 0 / 27 / 0 | extension | - | - | 1 |
 | 26 | `Microsoft.Authorization/roleManagementPolicyAssignments` | covered |  | `authorization/RoleManagementPolicyAssignment` | 0 / 3 / 0 | extension | - | - | 0 |

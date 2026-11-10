@@ -58,7 +58,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | ---: | --- | --- | --- | ---: | ---: | ---: |
 | 1 | `Microsoft.Management` | platform-foundation | ![Microsoft.Management](docs/coverage/bars/Microsoft.Management.svg) | 0.0% | 44.4% | 55.6% |
 | 1 | `Microsoft.Subscription` | platform-foundation | ![Microsoft.Subscription](docs/coverage/bars/Microsoft.Subscription.svg) | 60.0% | 0.0% | 40.0% |
-| 1 | `Microsoft.Authorization` | platform-foundation | ![Microsoft.Authorization](docs/coverage/bars/Microsoft.Authorization.svg) | 5.9% | 46.5% | 47.6% |
+| 1 | `Microsoft.Authorization` | platform-foundation | ![Microsoft.Authorization](docs/coverage/bars/Microsoft.Authorization.svg) | 5.9% | 46.9% | 47.2% |
 | 1 | `Microsoft.PolicyInsights` | platform-foundation | ![Microsoft.PolicyInsights](docs/coverage/bars/Microsoft.PolicyInsights.svg) | 0.0% | 94.4% | 5.6% |
 | 1 | `Microsoft.Resources` | platform-foundation | ![Microsoft.Resources](docs/coverage/bars/Microsoft.Resources.svg) | 2.1% | 0.7% | 97.2% |
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 0.0% | 100.0% |
