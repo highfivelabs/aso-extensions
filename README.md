@@ -44,7 +44,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 | --- | ---: | ---: | ---: | ---: | ---: |
 | platform-foundation | 18 | 246 | 43.2% | 13.3% | 43.5% |
 | security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% |
-| application | 35 | 823 | 33.1% | 3.7% | 63.2% |
+| application | 35 | 823 | 33.1% | 3.8% | 63.2% |
 | other | 230 | 1,262 | 0.5% | 0.0% | 99.5% |
 
 ![Coverage by tier](docs/coverage/bars/_tiers.svg)
@@ -52,7 +52,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 | Tier | Services | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: |
 | 1 | 17 | 43.0% | 8.3% | 48.7% |
-| 2 | 18 | 26.5% | 6.8% | 66.7% |
+| 2 | 18 | 26.5% | 6.9% | 66.6% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% |
 
 By service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), all services in [`services.csv`](docs/coverage/services.csv).
@@ -96,7 +96,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 2 | `Microsoft.Cache` | application | ![Microsoft.Cache](docs/coverage/bars/Microsoft.Cache.svg) | 80.4% | 0.0% | 19.6% |
 | 2 | `Microsoft.AppConfiguration` | application | ![Microsoft.AppConfiguration](docs/coverage/bars/Microsoft.AppConfiguration.svg) | 88.9% | 0.0% | 11.1% |
 | 2 | `Microsoft.RecoveryServices` | application | ![Microsoft.RecoveryServices](docs/coverage/bars/Microsoft.RecoveryServices.svg) | 0.0% | 23.0% | 77.0% |
-| 2 | `Microsoft.Maintenance` | application | ![Microsoft.Maintenance](docs/coverage/bars/Microsoft.Maintenance.svg) | 0.0% | 67.9% | 32.1% |
+| 2 | `Microsoft.Maintenance` | application | ![Microsoft.Maintenance](docs/coverage/bars/Microsoft.Maintenance.svg) | 0.0% | 100.0% | 0.0% |
 | 2 | `Microsoft.DevTestLab` | application | ![Microsoft.DevTestLab](docs/coverage/bars/Microsoft.DevTestLab.svg) | 0.0% | 4.7% | 95.3% |
 | 2 | `Microsoft.AlertsManagement` | other | ![Microsoft.AlertsManagement](docs/coverage/bars/Microsoft.AlertsManagement.svg) | 46.4% | 0.0% | 53.6% |
 

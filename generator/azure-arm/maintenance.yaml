@@ -9,3 +9,11 @@ groupModelConfiguration:
     MaintenanceConfiguration:
       $exportAs: MaintenanceConfiguration
       $supportedFrom: v0.1.0
+    ConfigurationAssignment:
+      $exportAs: ConfigurationAssignment
+      $supportedFrom: v0.1.0
+    ConfigurationAssignmentProperties:
+      MaintenanceConfigurationId:
+        $referenceType: arm # the MaintenanceConfiguration assigned (ours, by object, or an ARM ID)
+      ResourceId:
+        $referenceType: arm # the resource the assignment is on; Azure sets it from the scope when left out

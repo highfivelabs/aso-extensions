@@ -1,6 +1,13 @@
 | Type Definitions in package "maintenance"                  | v20230401 |
 |------------------------------------------------------------|-----------|
 | APIVersion                                                 | v20230401 |
+| ConfigurationAssignment                                    | v20230401 |
+| ConfigurationAssignmentFilterProperties                    | v20230401 |
+| ConfigurationAssignmentFilterProperties_STATUS             | v20230401 |
+| ConfigurationAssignmentProperties                          | v20230401 |
+| ConfigurationAssignmentProperties_STATUS                   | v20230401 |
+| ConfigurationAssignment_STATUS                             | v20230401 |
+| ConfigurationAssignment_Spec                               | v20230401 |
 | InputLinuxParameters                                       | v20230401 |
 | InputLinuxParameters_STATUS                                | v20230401 |
 | InputPatchConfiguration                                    | v20230401 |
@@ -23,3 +30,7 @@
 | SystemData_CreatedByType_STATUS                            | v20230401 |
 | SystemData_LastModifiedByType_STATUS                       | v20230401 |
 | SystemData_STATUS                                          | v20230401 |
+| TagSettingsProperties                                      | v20230401 |
+| TagSettingsProperties_FilterOperator                       | v20230401 |
+| TagSettingsProperties_FilterOperator_STATUS                | v20230401 |
+| TagSettingsProperties_STATUS                               | v20230401 |
