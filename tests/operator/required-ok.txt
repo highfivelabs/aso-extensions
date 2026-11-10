@@ -62,6 +62,9 @@ team-a PolicyRemediation Ready
 team-a PolicyAttestation Ready
 team-b PolicyAttestation refused
 the policy remediation and attestation are deleted
+team-a LogProfile Ready
+team-a WorkbookTemplate Ready
+the log profile and the workbook template are deleted
 team-a RoleEligibilityScheduleRequest Ready
 team-b RoleEligibilityScheduleRequest refused
 the eligibility request is detached, not deleted
