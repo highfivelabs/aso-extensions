@@ -689,6 +689,24 @@ func indexContainerregistryRegistriesWebhookServiceUri(rawObj client.Object) []s
 	return obj.Spec.ServiceUri.Index()
 }
 
+// indexCostmanagementExportSasToken an index function for costmanagement_v20260601.Export .spec.deliveryInfo.destination.sasToken
+func indexCostmanagementExportSasToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*costmanagement_v20260601.Export)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryInfo == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryInfo.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryInfo.Destination.SasToken == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryInfo.Destination.SasToken.Index()
+}
+
 // indexNetworkVirtualNetworkGatewayConnectionAuthorizationKey an index function for network_v20260301.VirtualNetworkGatewayConnection .spec.authorizationKey
 func indexNetworkVirtualNetworkGatewayConnectionAuthorizationKey(rawObj client.Object) []string {
 	obj, ok := rawObj.(*network_v20260301.VirtualNetworkGatewayConnection)
