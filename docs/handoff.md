@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, Privileged Identity Management, budgets and cost exports (PR #25), lock owners, and site-to-site VPN connections and local network gateways (foundation rows 1 to 8 and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 9 (ExpressRoute) of `docs/coverage/foundation.md`, then 10 (Virtual WAN), 11 (network manager connections), Maintenance `ConfigurationAssignment` (h1 below: generate it with patch 0006); `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
+State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, Privileged Identity Management, budgets and cost exports (PR #25), lock owners, site-to-site VPN connections and local network gateways (PR #27), and ExpressRoute circuits, peerings, authorizations, Global Reach and ports (foundation rows 1 to 8, the first part of 9, and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent finishes row 9 of `docs/coverage/foundation.md` with ExpressRoute gateways and their connections (`virtualWan.json`: `expressRouteGateways`, `expressRouteGateways/expressRouteConnections`; the gateway needs a virtual hub, by ARM ID until row 10 builds `VirtualHub`; the connection's `authorizationKey` a Secret reference), then 10 (Virtual WAN), 11 (network manager connections), Maintenance `ConfigurationAssignment` (h1 below: generate it with patch 0006); `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
 
 ## What this repository is
 
@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | --- | --- | --- |
 | Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
-| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions, and PIM eligibility and assignment schedule requests and role management policy assignments (two hand-written extension files, `generator/_extensions/`); `policyinsights.azure.hfl.dev` policy remediations and attestations; `consumption.azure.hfl.dev` `Budget`; `costmanagement.azure.hfl.dev` cost `Export`; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters, site-to-site VPN connections and local network gateways; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions, and PIM eligibility and assignment schedule requests and role management policy assignments (two hand-written extension files, `generator/_extensions/`); `policyinsights.azure.hfl.dev` policy remediations and attestations; `consumption.azure.hfl.dev` `Budget`; `costmanagement.azure.hfl.dev` cost `Export`; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters, site-to-site VPN connections and local network gateways, ExpressRoute circuits, peerings, authorizations, Global Reach connections, ports and port authorizations (hand-written extensions in `generator/_extensions/network/`); `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
 ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
@@ -325,6 +325,33 @@ Facts learned the hard way:
   entry; the run over `specification/network` took about a minute on the
   Ubuntu machine, and the shared `SubResource` gains conversions in the other
   version's storage package (generated, expected).
+- **A parent whose PUT carries its children** (an ExpressRoute circuit's
+  `peerings` and `authorizations`, a peering's `connections`; ASO's route
+  tables, NSGs and virtual networks): label the list
+  `$resourceLifecycleOwnedByParent: <the generator's resource name>` (for a
+  child resource that is `ExpressRouteCircuits_Peering`, not the exported
+  name; "not consumed" otherwise) so it leaves the Kubernetes spec and stays
+  in the ARM payload, and give the parent an `ARMResourceModifier` that copies
+  the list from a GET (`generator/_extensions/network/customizations/express_route_children.go`,
+  ASO's code). The embedded child types then need their own `Id` labelled
+  (`$referenceType: simple`), under the names the generator reports
+  (`ExpressRouteCircuitConnection_SubResourceEmbedded`). A child resource
+  whose spec inherits `SubResource` gets an `Id` in its own spec: remove it
+  with a `typeTransformers` entry on `<Resource>_Spec` (pre-export name).
+- **Keys Azure makes** (a service key, an authorization key):
+  `$azureGeneratedSecrets` on the resource gives `operatorSpec.secrets`; a
+  `typeTransformers` `remove` keeps the key out of spec and `_STATUS`; a
+  hand-written `KubernetesSecretExporter` reads it with a GET
+  (`express_route_keys.go`) and writes the Secret. The default install's
+  manager may not create Secrets, so on kind the export would fail: open
+  question 9 in `docs/plan.md`. Keys the user gives are Secret references
+  (`$importSecretMode: required`).
+- An extension that imports ASO's `api/<group>/customizations` builds in that
+  group's API packages and their Azure SDK modules (`armnetwork` for
+  network): copy the few helpers instead and record them in `UPSTREAM.md`.
+- A resource with PUT and no DELETE under a parent the generator does not take
+  as a resource (ExpressRoute cross-connections and their peerings) fails
+  `$exportAs` with "type not seen"; record it as not built.
 - A property named `owner` in the spec (an attestation's responsible person)
   collides with the Kubernetes `owner`; ASO's generator renames it to
   `properties_owner` (Go `PropertiesOwner`), still sent as `owner`.
@@ -335,10 +362,14 @@ Nothing heavy runs on the laptop: no `task check`, no envtest, no Docker, no
 kind, no generator. From the repository root:
 
 ```sh
-../offload/offload run --ubuntu -- bash -c 'task check && task operator-e2e'
+../offload/offload run --prep 'task tools' --step-skippable 'task check' --step 'task operator-e2e'
 ```
 
-- The Ubuntu machine is free and preferred; it keeps a kind cluster warm
+That is a Spot VM, where both checks run (the operator e2e too, since
+2026-11-09). The Ubuntu machine is the other place, when its load is under 25:
+`../offload/offload run --ubuntu -- bash -c 'task check && task operator-e2e'`.
+
+- The Ubuntu machine is free; it keeps a kind cluster warm
   (`aso-extensions-operator`) and has go, ko, kind, helm and task. It is shared
   with other work (a Bundt mutation run, other agents): run at most one kind
   cluster at a time and never touch other clusters (`bundt-checks` and the

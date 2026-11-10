@@ -4,6 +4,498 @@ github.com/highfivelabs/aso-extensions/apis/arm/network/v20260301
 APIVersion: Enum (1 value)
 └── "2026-03-01"
 
+ExpressRouteCircuit: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (20 properties)
+│   ├── ActivationKey: *genruntime.SecretReference
+│   ├── AllowClassicOperations: *bool
+│   ├── AuthorizationKey: *genruntime.SecretReference
+│   ├── AzureName: string
+│   ├── BandwidthInGbps: *float64
+│   ├── CircuitProvisioningState: *string
+│   ├── EnableDirectPortRateLimit: *bool
+│   ├── ExpressRouteLag: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── ExpressRoutePort: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── GatewayManagerEtag: *string
+│   ├── GlobalReachEnabled: *bool
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── SecretExpressions: *core.DestinationExpression[]
+│   │   └── Secrets: *Object (1 property)
+│   │       └── ServiceKey: *genruntime.SecretDestination
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PartnerAccountId: *string
+│   ├── ServiceProviderNotes: *string
+│   ├── ServiceProviderProperties: *Object (3 properties)
+│   │   ├── BandwidthInMbps: *int
+│   │   ├── PeeringLocation: *string
+│   │   └── ServiceProviderName: *string
+│   ├── ServiceProviderProvisioningState: *Enum (5 values)
+│   │   ├── "DeProvisioned"
+│   │   ├── "Deprovisioning"
+│   │   ├── "NotProvisioned"
+│   │   ├── "Provisioned"
+│   │   └── "Provisioning"
+│   ├── Sku: *Object (3 properties)
+│   │   ├── Family: *Enum (2 values)
+│   │   │   ├── "MeteredData"
+│   │   │   └── "UnlimitedData"
+│   │   ├── Name: *string
+│   │   └── Tier: *Enum (5 values)
+│   │       ├── "Basic"
+│   │       ├── "Local"
+│   │       ├── "MultiCloud"
+│   │       ├── "Premium"
+│   │       └── "Standard"
+│   └── Tags: map[string]string
+└── Status: Object (26 properties)
+    ├── AllowClassicOperations: *bool
+    ├── AuthorizationStatus: *string
+    ├── Authorizations: Object (1 property)[]
+    │   └── Id: *string
+    ├── BandwidthInGbps: *float64
+    ├── CircuitProvisioningState: *string
+    ├── Conditions: conditions.Condition[]
+    ├── EnableDirectPortRateLimit: *bool
+    ├── Etag: *string
+    ├── ExpressRouteLag: *Object (1 property)
+    │   └── Id: *string
+    ├── ExpressRoutePort: *Object (1 property)
+    │   └── Id: *string
+    ├── GatewayManagerEtag: *string
+    ├── GlobalReachEnabled: *bool
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PartnerAccountId: *string
+    ├── Peerings: Object (1 property)[]
+    │   └── Id: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── ResiliencyLevel: *Enum (3 values)
+    │   ├── "High"
+    │   ├── "Maximum"
+    │   └── "Standard"
+    ├── ServiceProviderNotes: *string
+    ├── ServiceProviderProperties: *Object (3 properties)
+    │   ├── BandwidthInMbps: *int
+    │   ├── PeeringLocation: *string
+    │   └── ServiceProviderName: *string
+    ├── ServiceProviderProvisioningState: *Enum (5 values)
+    │   ├── "DeProvisioned"
+    │   ├── "Deprovisioning"
+    │   ├── "NotProvisioned"
+    │   ├── "Provisioned"
+    │   └── "Provisioning"
+    ├── Sku: *Object (3 properties)
+    │   ├── Family: *Enum (2 values)
+    │   │   ├── "MeteredData"
+    │   │   └── "UnlimitedData"
+    │   ├── Name: *string
+    │   └── Tier: *Enum (5 values)
+    │       ├── "Basic"
+    │       ├── "Local"
+    │       ├── "MultiCloud"
+    │       ├── "Premium"
+    │       └── "Standard"
+    ├── Stag: *int
+    ├── Tags: map[string]string
+    └── Type: *string
+
+ExpressRouteCircuitsAuthorization: Resource
+├── Owner: ExpressRouteCircuit
+├── Spec: Object (4 properties)
+│   ├── AuthorizationUseStatus: *Enum (2 values)
+│   │   ├── "Available"
+│   │   └── "InUse"
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── SecretExpressions: *core.DestinationExpression[]
+│   │   └── Secrets: *Object (1 property)
+│   │       └── AuthorizationKey: *genruntime.SecretDestination
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (8 properties)
+    ├── AuthorizationUseStatus: *Enum (2 values)
+    │   ├── "Available"
+    │   └── "InUse"
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionResourceUri: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    └── Type: *string
+
+ExpressRouteCircuitsPeering: Resource
+├── Owner: ExpressRouteCircuit
+├── Spec: Object (18 properties)
+│   ├── AzureASN: *int
+│   ├── AzureName: string
+│   ├── GatewayManagerEtag: *string
+│   ├── Ipv6PeeringConfig: *Object (5 properties)
+│   │   ├── MicrosoftPeeringConfig: *Object (6 properties)
+│   │   │   ├── AdvertisedCommunities: string[]
+│   │   │   ├── AdvertisedPublicPrefixInfo: Object (3 properties)[]
+│   │   │   │   ├── Prefix: *string
+│   │   │   │   ├── Signature: *string
+│   │   │   │   └── ValidationId: *string
+│   │   │   ├── AdvertisedPublicPrefixes: string[]
+│   │   │   ├── CustomerASN: *int
+│   │   │   ├── LegacyMode: *int
+│   │   │   └── RoutingRegistryName: *string
+│   │   ├── PrimaryPeerAddressPrefix: *string
+│   │   ├── RouteFilter: *Object (1 property)
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── SecondaryPeerAddressPrefix: *string
+│   │   └── State: *Enum (2 values)
+│   │       ├── "Disabled"
+│   │       └── "Enabled"
+│   ├── MicrosoftPeeringConfig: *Object (6 properties)
+│   │   ├── AdvertisedCommunities: string[]
+│   │   ├── AdvertisedPublicPrefixInfo: Object (3 properties)[]
+│   │   │   ├── Prefix: *string
+│   │   │   ├── Signature: *string
+│   │   │   └── ValidationId: *string
+│   │   ├── AdvertisedPublicPrefixes: string[]
+│   │   ├── CustomerASN: *int
+│   │   ├── LegacyMode: *int
+│   │   └── RoutingRegistryName: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PeerASN: Validated<*int> (2 rules)
+│   │   ├── Rule 0: Maximum: 4294967295
+│   │   └── Rule 1: Minimum: 1
+│   ├── PeeringType: *Enum (3 values)
+│   │   ├── "AzurePrivatePeering"
+│   │   ├── "AzurePublicPeering"
+│   │   └── "MicrosoftPeering"
+│   ├── PrimaryAzurePort: *string
+│   ├── PrimaryPeerAddressPrefix: *string
+│   ├── RouteFilter: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── SecondaryAzurePort: *string
+│   ├── SecondaryPeerAddressPrefix: *string
+│   ├── SharedKey: *genruntime.SecretReference
+│   ├── State: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── Stats: *Object (4 properties)
+│   │   ├── PrimarybytesIn: *int
+│   │   ├── PrimarybytesOut: *int
+│   │   ├── SecondarybytesIn: *int
+│   │   └── SecondarybytesOut: *int
+│   └── VlanId: *int
+└── Status: Object (24 properties)
+    ├── AzureASN: *int
+    ├── Conditions: conditions.Condition[]
+    ├── Connections: Object (1 property)[]
+    │   └── Id: *string
+    ├── Etag: *string
+    ├── ExpressRouteConnection: *Object (1 property)
+    │   └── Id: *string
+    ├── GatewayManagerEtag: *string
+    ├── Id: *string
+    ├── Ipv6PeeringConfig: *Object (5 properties)
+    │   ├── MicrosoftPeeringConfig: *Object (7 properties)
+    │   │   ├── AdvertisedCommunities: string[]
+    │   │   ├── AdvertisedPublicPrefixInfo: Object (4 properties)[]
+    │   │   │   ├── Prefix: *string
+    │   │   │   ├── Signature: *string
+    │   │   │   ├── ValidationId: *string
+    │   │   │   └── ValidationState: *Enum (10 values)
+    │   │   │       ├── "AsnValidationFailed"
+    │   │   │       ├── "CertificateMissingInRoutingRegistry"
+    │   │   │       ├── "Configured"
+    │   │   │       ├── "Configuring"
+    │   │   │       ├── "InvalidSignatureEncoding"
+    │   │   │       ├── "ManualValidationNeeded"
+    │   │   │       ├── "NotConfigured"
+    │   │   │       ├── "SignatureVerificationFailed"
+    │   │   │       ├── "ValidationFailed"
+    │   │   │       └── "ValidationNeeded"
+    │   │   ├── AdvertisedPublicPrefixes: string[]
+    │   │   ├── AdvertisedPublicPrefixesState: *Enum (4 values)
+    │   │   │   ├── "Configured"
+    │   │   │   ├── "Configuring"
+    │   │   │   ├── "NotConfigured"
+    │   │   │   └── "ValidationNeeded"
+    │   │   ├── CustomerASN: *int
+    │   │   ├── LegacyMode: *int
+    │   │   └── RoutingRegistryName: *string
+    │   ├── PrimaryPeerAddressPrefix: *string
+    │   ├── RouteFilter: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── SecondaryPeerAddressPrefix: *string
+    │   └── State: *Enum (2 values)
+    │       ├── "Disabled"
+    │       └── "Enabled"
+    ├── LastModifiedBy: *string
+    ├── MicrosoftPeeringConfig: *Object (7 properties)
+    │   ├── AdvertisedCommunities: string[]
+    │   ├── AdvertisedPublicPrefixInfo: Object (4 properties)[]
+    │   │   ├── Prefix: *string
+    │   │   ├── Signature: *string
+    │   │   ├── ValidationId: *string
+    │   │   └── ValidationState: *Enum (10 values)
+    │   │       ├── "AsnValidationFailed"
+    │   │       ├── "CertificateMissingInRoutingRegistry"
+    │   │       ├── "Configured"
+    │   │       ├── "Configuring"
+    │   │       ├── "InvalidSignatureEncoding"
+    │   │       ├── "ManualValidationNeeded"
+    │   │       ├── "NotConfigured"
+    │   │       ├── "SignatureVerificationFailed"
+    │   │       ├── "ValidationFailed"
+    │   │       └── "ValidationNeeded"
+    │   ├── AdvertisedPublicPrefixes: string[]
+    │   ├── AdvertisedPublicPrefixesState: *Enum (4 values)
+    │   │   ├── "Configured"
+    │   │   ├── "Configuring"
+    │   │   ├── "NotConfigured"
+    │   │   └── "ValidationNeeded"
+    │   ├── CustomerASN: *int
+    │   ├── LegacyMode: *int
+    │   └── RoutingRegistryName: *string
+    ├── Name: *string
+    ├── PeerASN: *int
+    ├── PeeredConnections: Object (1 property)[]
+    │   └── Id: *string
+    ├── PeeringType: *Enum (3 values)
+    │   ├── "AzurePrivatePeering"
+    │   ├── "AzurePublicPeering"
+    │   └── "MicrosoftPeering"
+    ├── PrimaryAzurePort: *string
+    ├── PrimaryPeerAddressPrefix: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── RouteFilter: *Object (1 property)
+    │   └── Id: *string
+    ├── SecondaryAzurePort: *string
+    ├── SecondaryPeerAddressPrefix: *string
+    ├── State: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── Stats: *Object (4 properties)
+    │   ├── PrimarybytesIn: *int
+    │   ├── PrimarybytesOut: *int
+    │   ├── SecondarybytesIn: *int
+    │   └── SecondarybytesOut: *int
+    ├── Type: *string
+    └── VlanId: *int
+
+ExpressRouteCircuitsPeeringsConnection: Resource
+├── Owner: ExpressRouteCircuitsPeering
+├── Spec: Object (8 properties)
+│   ├── AddressPrefix: *string
+│   ├── AuthorizationKey: *genruntime.SecretReference
+│   ├── AzureName: string
+│   ├── ExpressRouteCircuitPeering: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── Ipv6CircuitConnectionConfig: *Object (1 property)
+│   │   └── AddressPrefix: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PeerExpressRouteCircuitPeering: *Object (1 property)
+│       └── Reference: *genruntime.ResourceReference
+└── Status: Object (11 properties)
+    ├── AddressPrefix: *string
+    ├── CircuitConnectionStatus: *Enum (3 values)
+    │   ├── "Connected"
+    │   ├── "Connecting"
+    │   └── "Disconnected"
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── ExpressRouteCircuitPeering: *Object (1 property)
+    │   └── Id: *string
+    ├── Id: *string
+    ├── Ipv6CircuitConnectionConfig: *Object (2 properties)
+    │   ├── AddressPrefix: *string
+    │   └── CircuitConnectionStatus: *Enum (3 values)
+    │       ├── "Connected"
+    │       ├── "Connecting"
+    │       └── "Disconnected"
+    ├── Name: *string
+    ├── PeerExpressRouteCircuitPeering: *Object (1 property)
+    │   └── Id: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    └── Type: *string
+
+ExpressRoutePort: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── BandwidthInGbps: *int
+│   ├── BillingType: *Enum (2 values)
+│   │   ├── "MeteredData"
+│   │   └── "UnlimitedData"
+│   ├── Encapsulation: *Enum (2 values)
+│   │   ├── "Dot1Q"
+│   │   └── "QinQ"
+│   ├── Identity: *Object (2 properties)
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssigned, UserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Links: Object (4 properties)[]
+│   │   ├── AdminState: *Enum (2 values)
+│   │   │   ├── "Disabled"
+│   │   │   └── "Enabled"
+│   │   ├── Id: *string
+│   │   ├── MacSecConfig: *Object (4 properties)
+│   │   │   ├── CakSecretIdentifier: *string
+│   │   │   ├── Cipher: *Enum (4 values)
+│   │   │   │   ├── "GcmAes128"
+│   │   │   │   ├── "GcmAes256"
+│   │   │   │   ├── "GcmAesXpn128"
+│   │   │   │   └── "GcmAesXpn256"
+│   │   │   ├── CknSecretIdentifier: *string
+│   │   │   └── SciState: *Enum (2 values)
+│   │   │       ├── "Disabled"
+│   │   │       └── "Enabled"
+│   │   └── Name: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PeeringLocation: *string
+│   └── Tags: map[string]string
+└── Status: Object (20 properties)
+    ├── AllocationDate: *string
+    ├── BandwidthInGbps: *int
+    ├── BillingType: *Enum (2 values)
+    │   ├── "MeteredData"
+    │   └── "UnlimitedData"
+    ├── Circuits: Object (1 property)[]
+    │   └── Id: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Encapsulation: *Enum (2 values)
+    │   ├── "Dot1Q"
+    │   └── "QinQ"
+    ├── Etag: *string
+    ├── EtherType: *string
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssigned, UserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── Links: Object (12 properties)[]
+    │   ├── AdminState: *Enum (2 values)
+    │   │   ├── "Disabled"
+    │   │   └── "Enabled"
+    │   ├── ColoLocation: *string
+    │   ├── ConnectorType: *Enum (2 values)
+    │   │   ├── "LC"
+    │   │   └── "SC"
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── InterfaceName: *string
+    │   ├── MacSecConfig: *Object (4 properties)
+    │   │   ├── CakSecretIdentifier: *string
+    │   │   ├── Cipher: *Enum (4 values)
+    │   │   │   ├── "GcmAes128"
+    │   │   │   ├── "GcmAes256"
+    │   │   │   ├── "GcmAesXpn128"
+    │   │   │   └── "GcmAesXpn256"
+    │   │   ├── CknSecretIdentifier: *string
+    │   │   └── SciState: *Enum (2 values)
+    │   │       ├── "Disabled"
+    │   │       └── "Enabled"
+    │   ├── Name: *string
+    │   ├── PatchPanelId: *string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   ├── RackId: *string
+    │   └── RouterName: *string
+    ├── Location: *string
+    ├── Mtu: *string
+    ├── Name: *string
+    ├── PeeringLocation: *string
+    ├── ProvisionedBandwidthInGbps: *float64
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── ResourceGuid: *string
+    ├── Tags: map[string]string
+    └── Type: *string
+
+ExpressRoutePortsAuthorization: Resource
+├── Owner: ExpressRoutePort
+├── Spec: Object (3 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── SecretExpressions: *core.DestinationExpression[]
+│   │   └── Secrets: *Object (1 property)
+│   │       └── AuthorizationKey: *genruntime.SecretDestination
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (8 properties)
+    ├── AuthorizationUseStatus: *Enum (2 values)
+    │   ├── "Available"
+    │   └── "InUse"
+    ├── CircuitResourceUri: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    └── Type: *string
+
 LocalNetworkGateway: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (9 properties)

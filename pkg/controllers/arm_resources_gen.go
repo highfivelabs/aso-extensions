@@ -238,6 +238,71 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersProfile)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersProfilesAccessRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersResourceAssociation)})
+	result = append(result, &registration.StorageType{
+		Obj: new(network_v20260301.ExpressRouteCircuit),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.activationKey",
+				Func: indexNetworkExpressRouteCircuitActivationKey,
+			},
+			{
+				Key:  ".spec.authorizationKey",
+				Func: indexNetworkExpressRouteCircuitAuthorizationKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.activationKey",
+						".spec.authorizationKey",
+					},
+					&network_v20260301.ExpressRouteCircuitList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRouteCircuitsAuthorization)})
+	result = append(result, &registration.StorageType{
+		Obj: new(network_v20260301.ExpressRouteCircuitsPeering),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.sharedKey",
+				Func: indexNetworkExpressRouteCircuitsPeeringSharedKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.sharedKey",
+					},
+					&network_v20260301.ExpressRouteCircuitsPeeringList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(network_v20260301.ExpressRouteCircuitsPeeringsConnection),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.authorizationKey",
+				Func: indexNetworkExpressRouteCircuitsPeeringsConnectionAuthorizationKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.authorizationKey",
+					},
+					&network_v20260301.ExpressRouteCircuitsPeeringsConnectionList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePort)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
 	result = append(result, &registration.StorageType{
 		Obj: new(network_v20260301.VirtualNetworkGatewayConnection),
@@ -422,8 +487,26 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersProfile)},
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersProfilesAccessRule)},
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersResourceAssociation)})
-	result = append(result, &registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)}, &registration.KnownType{Obj: new(network_v20260301.VirtualNetworkGatewayConnection)})
-	result = append(result, &registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)}, &registration.KnownType{Obj: new(network_v20260301s.VirtualNetworkGatewayConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuit)},
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsPeering)},
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsPeeringsConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePort)},
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualNetworkGatewayConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuit)},
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsPeering)},
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsPeeringsConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePort)},
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePortsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualNetworkGatewayConnection)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPack)},
@@ -548,6 +631,12 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &management_customizations.ManagementGroupExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSettingExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSubscriptionExtension{})
+	result = append(result, &network_customizations.ExpressRouteCircuitExtension{})
+	result = append(result, &network_customizations.ExpressRouteCircuitsAuthorizationExtension{})
+	result = append(result, &network_customizations.ExpressRouteCircuitsPeeringExtension{})
+	result = append(result, &network_customizations.ExpressRouteCircuitsPeeringsConnectionExtension{})
+	result = append(result, &network_customizations.ExpressRoutePortExtension{})
+	result = append(result, &network_customizations.ExpressRoutePortsAuthorizationExtension{})
 	result = append(result, &network_customizations.LocalNetworkGatewayExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimeterExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersLinkExtension{})
@@ -705,6 +794,54 @@ func indexCostmanagementExportSasToken(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.DeliveryInfo.Destination.SasToken.Index()
+}
+
+// indexNetworkExpressRouteCircuitActivationKey an index function for network_v20260301.ExpressRouteCircuit .spec.activationKey
+func indexNetworkExpressRouteCircuitActivationKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.ExpressRouteCircuit)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ActivationKey == nil {
+		return nil
+	}
+	return obj.Spec.ActivationKey.Index()
+}
+
+// indexNetworkExpressRouteCircuitAuthorizationKey an index function for network_v20260301.ExpressRouteCircuit .spec.authorizationKey
+func indexNetworkExpressRouteCircuitAuthorizationKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.ExpressRouteCircuit)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.AuthorizationKey == nil {
+		return nil
+	}
+	return obj.Spec.AuthorizationKey.Index()
+}
+
+// indexNetworkExpressRouteCircuitsPeeringSharedKey an index function for network_v20260301.ExpressRouteCircuitsPeering .spec.sharedKey
+func indexNetworkExpressRouteCircuitsPeeringSharedKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.ExpressRouteCircuitsPeering)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SharedKey == nil {
+		return nil
+	}
+	return obj.Spec.SharedKey.Index()
+}
+
+// indexNetworkExpressRouteCircuitsPeeringsConnectionAuthorizationKey an index function for network_v20260301.ExpressRouteCircuitsPeeringsConnection .spec.authorizationKey
+func indexNetworkExpressRouteCircuitsPeeringsConnectionAuthorizationKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.ExpressRouteCircuitsPeeringsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.AuthorizationKey == nil {
+		return nil
+	}
+	return obj.Spec.AuthorizationKey.Index()
 }
 
 // indexNetworkVirtualNetworkGatewayConnectionAuthorizationKey an index function for network_v20260301.VirtualNetworkGatewayConnection .spec.authorizationKey

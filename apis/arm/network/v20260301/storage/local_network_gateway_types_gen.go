@@ -169,12 +169,6 @@ type LocalNetworkGatewayList struct {
 	Items           []LocalNetworkGateway `json:"items"`
 }
 
-// Storage version of v20260301.APIVersion
-// +kubebuilder:validation:Enum={"2026-03-01"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2026-03-01")
-
 // Storage version of v20260301.LocalNetworkGateway_Spec
 type LocalNetworkGateway_Spec struct {
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it

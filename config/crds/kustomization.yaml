@@ -33,6 +33,12 @@ resources:
 - management.azure.hfl.dev_managementgroups.yaml
 - management.azure.hfl.dev_managementgroupssettings.yaml
 - management.azure.hfl.dev_managementgroupssubscriptions.yaml
+- network.azure.hfl.dev_expressroutecircuits.yaml
+- network.azure.hfl.dev_expressroutecircuitsauthorizations.yaml
+- network.azure.hfl.dev_expressroutecircuitspeerings.yaml
+- network.azure.hfl.dev_expressroutecircuitspeeringsconnections.yaml
+- network.azure.hfl.dev_expressrouteports.yaml
+- network.azure.hfl.dev_expressrouteportsauthorizations.yaml
 - network.azure.hfl.dev_localnetworkgateways.yaml
 - network.azure.hfl.dev_networksecurityperimeters.yaml
 - network.azure.hfl.dev_networksecurityperimeterslinks.yaml

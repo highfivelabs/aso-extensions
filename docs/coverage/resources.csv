@@ -1566,18 +1566,18 @@ Microsoft.Network,Microsoft.Network/dnsZones/SOA,26,,0,,0,26,false,spec_api=2018
 Microsoft.Network,Microsoft.Network/dnsZones/SRV,26,network.azure.com/DnsZonesSRVRecord,25,,0,1,false,spec_api=2018-05-01; official_api=2018-05-01
 Microsoft.Network,Microsoft.Network/dnsZones/TXT,26,network.azure.com/DnsZonesTXTRecord,25,,0,1,false,spec_api=2018-05-01; official_api=2018-05-01
 Microsoft.Network,Microsoft.Network/dscpConfigurations,22,,0,,0,22,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/expressRouteCircuits,72,,0,,0,72,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/expressRouteCircuits/authorizations,2,,0,,0,2,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/expressRouteCircuits/peerings,44,,0,,0,44,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/expressRouteCircuits/peerings/connections,5,,0,,0,5,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/expressRouteCircuits,72,,0,network.azure.hfl.dev/ExpressRouteCircuit,21,51,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/expressRouteCircuits/authorizations,2,,0,network.azure.hfl.dev/ExpressRouteCircuitsAuthorization,1,1,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/expressRouteCircuits/peerings,44,,0,network.azure.hfl.dev/ExpressRouteCircuitsPeering,36,8,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/expressRouteCircuits/peerings/connections,5,,0,network.azure.hfl.dev/ExpressRouteCircuitsPeeringsConnection,5,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/expressRouteCrossConnections,35,,0,,0,35,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/expressRouteCrossConnections/peerings,28,,0,,0,28,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/expressRouteGateways,24,,0,,0,24,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/expressRouteGateways/expressRouteConnections,16,,0,,0,16,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/expressRouteLags,18,,0,,0,18,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/expressRouteLags/authorizations,1,,0,,0,1,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/ExpressRoutePorts,15,,0,,0,15,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/expressRoutePorts/authorizations,1,,0,,0,1,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/ExpressRoutePorts,15,,0,network.azure.hfl.dev/ExpressRoutePort,15,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/expressRoutePorts/authorizations,1,,0,network.azure.hfl.dev/ExpressRoutePortsAuthorization,0,1,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies,41,network.azure.com/FirewallPolicy,41,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/firewallPolicies/firewallPolicyDrafts,36,,0,,0,36,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies/kubeSelectorGroups,8,,0,,0,8,false,spec_api=2026-03-01

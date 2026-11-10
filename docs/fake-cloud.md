@@ -22,7 +22,7 @@ run the real client code against them.
 | Entra | an `http.RoundTripper` answering instance discovery, OpenID metadata and `/oauth2/v2.0/token`; azidentity's own credentials run against it, through ASO's `TokenCredentialProvider` hook. A token it issues reads as the tenant, client ID, subject (the client assertion's `sub`, or a digest of the client secret) and audience | `pkg/fakecloud/entra` |
 | Key Vault | the data plane, REST 7.5. Secrets: set, get (latest or a version), update attributes, soft delete, get deleted, recover, purge. Certificates: PEM import (refused unless it holds a certificate and the key that matches it), get, update attributes, soft delete, get deleted, recover, purge, each with the secret of the same name and version Key Vault keeps (the PEM as its value). Soft delete is always on; requests carry a bearer token the test decides to accept | `pkg/fakecloud/keyvault`, `cmd/fakevault` |
 | Azure Database for PostgreSQL | PostgreSQL 17 in Docker (tests) or a pod (kind), TLS on, with `azure_pg_admin`, a password administrator, Entra administrators whose password is the fake token of the identity that may sign in as them, and stand-ins for `pgaadauth_create_principal` and `pgaadauth_create_principal_with_oid` | `pkg/fakecloud/postgres` |
-| Resource Manager | a store of resources by ARM ID (PUT with the parent existing, GET, DELETE; the body is kept as sent with `id`, `name`, `type` and `provisioningState: Succeeded` added, no properties checked but the management group hierarchy's, Azure Policy's, Privileged Identity Management's, budgets', cost exports' and site-to-site VPN's references and scopes; built-in role definitions listed by name; ASO's own ARM client, for the generated kinds, talks to it) and management locks (`Microsoft.Authorization/locks`, 2020-05-01, level, notes and owners kept as sent) at any scope that exists; a lock covers its scope and everything under it: `CanNotDelete` refuses deletes (and deleting a scope that holds a locked resource), `ReadOnly` also refuses writes, each with 409 `ScopeLocked`; locks themselves can always be changed; requests carry a bearer token the test decides to accept | `pkg/fakecloud/arm`, `cmd/fakearm` |
+| Resource Manager | a store of resources by ARM ID (PUT with the parent existing, GET, DELETE; the body is kept as sent with `id`, `name`, `type` and `provisioningState: Succeeded` added, no properties checked but the management group hierarchy's, Azure Policy's, Privileged Identity Management's, budgets', cost exports', site-to-site VPN's and ExpressRoute's references and scopes; built-in role definitions listed by name; ASO's own ARM client, for the generated kinds, talks to it) and management locks (`Microsoft.Authorization/locks`, 2020-05-01, level, notes and owners kept as sent) at any scope that exists; a lock covers its scope and everything under it: `CanNotDelete` refuses deletes (and deleting a scope that holds a locked resource), `ReadOnly` also refuses writes, each with 409 `ScopeLocked`; locks themselves can always be changed; requests carry a bearer token the test decides to accept | `pkg/fakecloud/arm`, `cmd/fakearm` |
 | ASO | not run: its owner CRDs (generated from ASO's types at the pin) and `FlexibleServer`/`Vault`/`ResourceGroup` objects carrying the status, Ready condition and ARM ID annotation ASO would write | `config/test/aso-crds`, the tests |
 | TLS | a throwaway CA and server certificates; the manager trusts the CA through `SSL_CERT_FILE` on kind, through its client options in tests | `pkg/fakecloud/tlsutil` |
 
@@ -153,9 +153,32 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   (`SharedKey` reads it for tests, as `GetSharedKey` does); a local network
   gateway gives its `gatewayIpAddress` or `fqdn` (400). Not modelled: a
   tunnel coming up (`connectionStatus`, bytes transferred), the gateway SKU
-  and VPN type rules, overlapping address spaces, regions, ExpressRoute
-  authorization keys, provisioning time, and the error codes (the fake's
-  own).
+  and VPN type rules, overlapping address spaces, regions, provisioning
+  time, and the error codes (the fake's own). An ExpressRoute connection to
+  a circuit in another subscription redeems one of the circuit's
+  authorization keys (below).
+- ExpressRoute (`Microsoft.Network/expressRouteCircuits` with `peerings`,
+  `authorizations` and `peerings/{p}/connections`, `expressRoutePorts` with
+  `authorizations`; `pkg/fakecloud/arm/expressroute.go`): a circuit names
+  its `sku` and a provider (`serviceProviderProperties`) or a port
+  (`expressRoutePort`, which must exist, with `bandwidthInGbps`); Azure's
+  keys (a circuit's `serviceKey`, an authorization's `authorizationKey`)
+  are made on the first PUT and kept, whatever a PUT sends
+  (`AuthorizationKey` reads them for tests); a circuit lists its peerings
+  and authorizations, and a peering its Global Reach connections, from the
+  children on every GET, and a PUT of the parent deletes a child its list
+  leaves out (assumed of Azure, as ASO assumes for route tables); a peering
+  is named for its `peeringType` and gives its VLAN, peer ASN and both
+  prefixes; a Global Reach connection names its own peering, a peer peering
+  that exists and a `/29`; a circuit on another subscription's port, a
+  Global Reach connection to another subscription's circuit and an
+  ExpressRoute gateway connection to one redeem an authorization key of
+  that port or circuit (400 when missing, not its own or in use by
+  another), which is then `InUse`. Not modelled: a provider provisioning a
+  circuit, BGP sessions, ARP and route tables, the SKU and bandwidth rules,
+  Microsoft peering's prefix validation and route filters, MACsec,
+  deleting an authorization in use, the hours a real circuit takes, and the
+  error codes (the fake's own).
 - Resource Manager checks no role: real Azure lets only Owner and User
   Access Administrator (or a custom role with
   `Microsoft.Authorization/locks/*`) write locks, so ASO's identity may

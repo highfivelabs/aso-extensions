@@ -67,3 +67,7 @@ team-a ManagementLock owners
 team-a LocalNetworkGateway Ready
 team-a VirtualNetworkGatewayConnection Ready
 the VPN connection and the local network gateway are deleted
+team-a ExpressRouteCircuit Ready
+team-a ExpressRouteCircuitsPeering Ready
+team-a ExpressRouteCircuitsAuthorization Ready
+the ExpressRoute circuit, its peering and its authorization are deleted

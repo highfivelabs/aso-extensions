@@ -394,22 +394,6 @@ type RoutingConfiguration_STATUS struct {
 	VnetRoutes            *VnetRoute_STATUS            `json:"vnetRoutes,omitempty"`
 }
 
-// Storage version of v20260301.SubResource
-// Reference to another subresource.
-type SubResource struct {
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-
-	// Reference: Resource ID.
-	Reference *genruntime.ResourceReference `armReference:"Id" json:"reference,omitempty"`
-}
-
-// Storage version of v20260301.SubResource_STATUS
-// Reference to another subresource.
-type SubResource_STATUS struct {
-	Id          *string                `json:"id,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
 // Storage version of v20260301.TrafficSelectorPolicy
 // An traffic selector policy for a virtual network gateway connection.
 type TrafficSelectorPolicy struct {

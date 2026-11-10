@@ -32,7 +32,10 @@
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
-// kept but not returned).
+// kept but not returned), and ExpressRoute circuits, peerings,
+// authorizations, Global Reach connections and ports (expressroute.go: keys
+// Azure makes, children a parent's PUT keeps or deletes, authorization keys
+// redeemed across subscriptions).
 //
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
@@ -244,7 +247,7 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, http.StatusNotFound, "ResourceNotFound", "The resource "+id+" was not found.")
 			return
 		}
-		writeJSON(w, http.StatusOK, res)
+		writeJSON(w, http.StatusOK, a.render(id, *res))
 	case http.MethodPut:
 		if l := a.lockOver(id, "ReadOnly"); l != nil {
 			writeScopeLocked(w, r.Method, id, l)
@@ -288,6 +291,11 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		status, code, msg, erAfter := a.checkExpressRoute(id, body)
+		if code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		if m := mgSubscription.FindStringSubmatch(id); m != nil {
 			a.moveSubscription(m[2], key)
 		}
@@ -306,7 +314,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		if after != nil {
 			after()
 		}
-		writeJSON(w, status, res)
+		if erAfter != nil {
+			erAfter()
+		}
+		writeJSON(w, status, a.render(id, res))
 	case http.MethodDelete:
 		if isScheduleRequest(id) {
 			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A schedule request cannot be deleted; undo it with another request (AdminRemove, SelfDeactivate).")

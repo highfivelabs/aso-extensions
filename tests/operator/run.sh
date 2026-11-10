@@ -184,6 +184,7 @@ team() {
     --from-literal=AZURE_CLIENT_ID="$2" --dry-run=client -o yaml | kubectl apply -f -
   kubectl -n "$1" create secret generic app-config --from-literal=url=postgres://app --dry-run=client -o yaml | kubectl apply -f -
   kubectl -n "$1" create secret generic vpn-psk --from-literal=key="$1-shared-key" --dry-run=client -o yaml | kubectl apply -f -
+  kubectl -n "$1" create secret generic er-bgp --from-literal=md5="$1-bgp-key" --dry-run=client -o yaml | kubectl apply -f -
   kubectl -n "$1" create secret tls app-tls --cert "${OUT}/fixtures/app-tls.crt" --key "${OUT}/fixtures/app-tls.key" --dry-run=client -o yaml | kubectl apply -f -
   # The ASO objects, with the status ASO would write when it provisioned them
   # (and, on the ResourceGroup, the ARM ID annotation ASO writes).
@@ -372,6 +373,34 @@ spec:
   virtualNetworkGateway1: {reference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/virtualNetworkGateways/$1-vng}}
   localNetworkGateway2: {reference: {group: network.azure.hfl.dev, kind: LocalNetworkGateway, name: onprem}}
   sharedKey: {name: vpn-psk, key: key}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: ExpressRouteCircuit
+metadata: {name: er, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  sku: {name: Standard_MeteredData, tier: Standard, family: MeteredData}
+  serviceProviderProperties: {serviceProviderName: Equinix, peeringLocation: Silicon Valley, bandwidthInMbps: 50}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: ExpressRouteCircuitsPeering
+metadata: {name: private, namespace: $1}
+spec:
+  owner: {name: er}
+  azureName: AzurePrivatePeering
+  peeringType: AzurePrivatePeering
+  vlanId: 100
+  peerASN: 65010
+  primaryPeerAddressPrefix: 192.168.10.0/30
+  secondaryPeerAddressPrefix: 192.168.10.4/30
+  sharedKey: {name: er-bgp, key: md5}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: ExpressRouteCircuitsAuthorization
+metadata: {name: to-partner, namespace: $1}
+spec:
+  owner: {name: er}
 ---
 apiVersion: management.azure.hfl.dev/v20230401
 kind: ManagementGroup
@@ -588,6 +617,14 @@ wait_for 90 "team-a's VirtualNetworkGatewayConnection Ready" ready virtualnetwor
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/connections/to-onprem 201" \
   || fail "the fake resource manager saw no connection on team-a's resource group"
 pass "team-a VirtualNetworkGatewayConnection Ready: IPsec from a gateway by ARM ID to our LocalNetworkGateway by object, the shared key from a Secret"
+wait_for 90 "team-a's ExpressRouteCircuit Ready" ready expressroutecircuits.network.azure.hfl.dev team-a er
+pass "team-a ExpressRouteCircuit Ready: owned by ASO's ResourceGroup, through a connectivity provider, generated"
+wait_for 90 "team-a's ExpressRouteCircuitsPeering Ready" ready expressroutecircuitspeerings.network.azure.hfl.dev team-a private
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteCircuits/er/peerings/AzurePrivatePeering 201" \
+  || fail "the fake resource manager saw no peering on team-a's circuit"
+pass "team-a ExpressRouteCircuitsPeering Ready: private peering owned by our circuit, the BGP key from a Secret"
+wait_for 90 "team-a's ExpressRouteCircuitsAuthorization Ready" ready expressroutecircuitsauthorizations.network.azure.hfl.dev team-a to-partner
+pass "team-a ExpressRouteCircuitsAuthorization Ready: owned by our circuit"
 wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
 pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
 [[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
@@ -694,6 +731,14 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/localNetworkGateways/onprem 200" \
   || fail "the fake resource manager saw no delete of the local network gateway"
 pass "the VPN connection and the local network gateway are deleted in Resource Manager"
+kubectl -n team-a delete expressroutecircuitsauthorizations.network.azure.hfl.dev to-partner --timeout=120s
+kubectl -n team-a delete expressroutecircuitspeerings.network.azure.hfl.dev private --timeout=120s
+kubectl -n team-a delete expressroutecircuits.network.azure.hfl.dev er --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteCircuits/er/peerings/AzurePrivatePeering 200" \
+  || fail "the fake resource manager saw no delete of the peering"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteCircuits/er 200" \
+  || fail "the fake resource manager saw no delete of the circuit"
+pass "the ExpressRoute circuit, its peering and its authorization are deleted in Resource Manager"
 kubectl -n team-a delete registriesscopemaps.containerregistry.azure.hfl.dev pull-apps --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg/scopeMaps/pull-apps 200" \
   || fail "the fake resource manager saw no delete of the scope map"
