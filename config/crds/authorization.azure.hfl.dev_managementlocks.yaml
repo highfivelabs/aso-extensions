@@ -109,6 +109,20 @@ spec:
                     description: This is the name of the Kubernetes resource to reference.
                     type: string
                 type: object
+              owners:
+                description: |-
+                  Owners of the lock, by application ID (Azure's properties.owners).
+                  Azure keeps the list with the lock; it grants nothing and does not
+                  change who may remove the lock.
+                items:
+                  description: LockOwner is an owner of a lock.
+                  properties:
+                    applicationId:
+                      description: ApplicationId is the application ID of the lock
+                        owner.
+                      type: string
+                  type: object
+                type: array
             required:
             - level
             - owner
@@ -177,10 +191,20 @@ spec:
                 description: Id is the lock's ARM ID.
                 type: string
               level:
-                description: Level and Notes as Azure holds them.
+                description: Level, Notes and Owners as Azure holds them.
                 type: string
               notes:
                 type: string
+              owners:
+                items:
+                  description: LockOwner is an owner of a lock.
+                  properties:
+                    applicationId:
+                      description: ApplicationId is the application ID of the lock
+                        owner.
+                      type: string
+                  type: object
+                type: array
               scope:
                 description: Scope is the ARM ID of what the lock is on.
                 type: string

@@ -381,6 +381,7 @@ spec:
   owner: {group: resources.azure.com, kind: ResourceGroup, name: rg}
   level: CanNotDelete
   notes: kept by aso-extensions
+  owners: [{applicationId: 00000000-0000-0000-0000-00000000a110}]
 ---
 apiVersion: authorization.azure.hfl.dev/v20260701
 kind: PolicyDefinition
@@ -536,6 +537,9 @@ logged fakearm "/providers/Microsoft.Authorization/roleDefinitions 200" \
 pass "team-a RoleEligibilityScheduleRequest Ready: its name defaulted to the GUID ${pim_name} and recorded, the built-in role Reader resolved by name"
 wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
 pass "team-a ManagementLock Ready"
+[[ "$(kubectl -n team-a get managementlocks.authorization.azure.hfl.dev keep-rg -o jsonpath='{.status.owners[0].applicationId}')" == 00000000-0000-0000-0000-00000000a110 ]] \
+  || fail "team-a's lock does not report its owner as Resource Manager holds it"
+pass "team-a ManagementLock owners: the application ID sent and read back from Resource Manager"
 logged fakearm "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
   || fail "the fake resource manager saw no accepted request from team-a's aso-workload"
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/locks/keep-rg 201" \
