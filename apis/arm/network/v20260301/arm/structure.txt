@@ -870,6 +870,108 @@ NetworkManager_Spec: Object (4 properties)
 │       └── Subscriptions: string[]
 └── Tags: map[string]string
 
+NetworkManagersConnectivityConfiguration_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (9 properties)
+│   ├── AppliesToGroups: Object (4 properties)[]
+│   │   ├── GroupConnectivity: *Enum (2 values)
+│   │   │   ├── "DirectlyConnected"
+│   │   │   └── "None"
+│   │   ├── IsGlobal: *Enum (2 values)
+│   │   │   ├── "False"
+│   │   │   └── "True"
+│   │   ├── NetworkGroupId: *string
+│   │   └── UseHubGateway: *Enum (2 values)
+│   │       ├── "False"
+│   │       └── "True"
+│   ├── ConnectivityCapabilities: *Object (3 properties)
+│   │   ├── ConnectedGroupAddressOverlap: *Enum (2 values)
+│   │   │   ├── "Allowed"
+│   │   │   └── "Disallowed"
+│   │   ├── ConnectedGroupPrivateEndpointsScale: *Enum (2 values)
+│   │   │   ├── "HighScale"
+│   │   │   └── "Standard"
+│   │   └── PeeringEnforcement: *Enum (2 values)
+│   │       ├── "Enforced"
+│   │       └── "Unenforced"
+│   ├── ConnectivityTopology: *Enum (2 values)
+│   │   ├── "HubAndSpoke"
+│   │   └── "Mesh"
+│   ├── DeleteExistingPeering: *Enum (2 values)
+│   │   ├── "False"
+│   │   └── "True"
+│   ├── Description: *string
+│   ├── Hubs: Object (2 properties)[]
+│   │   ├── ResourceId: *string
+│   │   └── ResourceType: *string
+│   ├── IsGlobal: *Enum (2 values)
+│   │   ├── "False"
+│   │   └── "True"
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   └── ResourceGuid: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+NetworkManagersConnectivityConfiguration_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (7 properties)
+    ├── AppliesToGroups: Object (4 properties)[]
+    │   ├── GroupConnectivity: *Enum (2 values)
+    │   │   ├── "DirectlyConnected"
+    │   │   └── "None"
+    │   ├── IsGlobal: *Enum (2 values)
+    │   │   ├── "False"
+    │   │   └── "True"
+    │   ├── NetworkGroupId: *string
+    │   └── UseHubGateway: *Enum (2 values)
+    │       ├── "False"
+    │       └── "True"
+    ├── ConnectivityCapabilities: *Object (3 properties)
+    │   ├── ConnectedGroupAddressOverlap: *Enum (2 values)
+    │   │   ├── "Allowed"
+    │   │   └── "Disallowed"
+    │   ├── ConnectedGroupPrivateEndpointsScale: *Enum (2 values)
+    │   │   ├── "HighScale"
+    │   │   └── "Standard"
+    │   └── PeeringEnforcement: *Enum (2 values)
+    │       ├── "Enforced"
+    │       └── "Unenforced"
+    ├── ConnectivityTopology: *Enum (2 values)
+    │   ├── "HubAndSpoke"
+    │   └── "Mesh"
+    ├── DeleteExistingPeering: *Enum (2 values)
+    │   ├── "False"
+    │   └── "True"
+    ├── Description: *string
+    ├── Hubs: Object (2 properties)[]
+    │   ├── ResourceId: *string
+    │   └── ResourceType: *string
+    └── IsGlobal: *Enum (2 values)
+        ├── "False"
+        └── "True"
+
 NetworkManagersNetworkGroup_STATUS: Object (6 properties)
 ├── Etag: *string
 ├── Id: *string
@@ -985,6 +1087,426 @@ NetworkManagersScopeConnection_Spec: Object (2 properties)
     ├── Description: *string
     ├── ResourceId: *string
     └── TenantId: *string
+
+NetworkManagersSecurityAdminConfiguration_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (5 properties)
+│   ├── ApplyOnNetworkIntentPolicyBasedServices: Enum (3 values)[]
+│   │   ├── "All"
+│   │   ├── "AllowRulesOnly"
+│   │   └── "None"
+│   ├── Description: *string
+│   ├── NetworkGroupAddressSpaceAggregationOption: *Enum (2 values)
+│   │   ├── "Manual"
+│   │   └── "None"
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   └── ResourceGuid: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+NetworkManagersSecurityAdminConfiguration_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (3 properties)
+    ├── ApplyOnNetworkIntentPolicyBasedServices: Enum (3 values)[]
+    │   ├── "All"
+    │   ├── "AllowRulesOnly"
+    │   └── "None"
+    ├── Description: *string
+    └── NetworkGroupAddressSpaceAggregationOption: *Enum (2 values)
+        ├── "Manual"
+        └── "None"
+
+NetworkManagersSecurityAdminConfigurationsRuleCollection_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── AppliesToGroups: Object (1 property)[]
+│   │   └── NetworkGroupId: *string
+│   ├── Description: *string
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   └── ResourceGuid: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+NetworkManagersSecurityAdminConfigurationsRuleCollection_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── AppliesToGroups: Object (1 property)[]
+    │   └── NetworkGroupId: *string
+    └── Description: *string
+
+NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule_STATUS: Object (3 properties)
+├── Custom: *Object (7 properties)
+│   ├── Etag: *string
+│   ├── Id: *string
+│   ├── Kind: Enum (1 value)
+│   │   └── "Custom"
+│   ├── Name: *string
+│   ├── Properties: *Object (11 properties)
+│   │   ├── Access: *Enum (3 values)
+│   │   │   ├── "Allow"
+│   │   │   ├── "AlwaysAllow"
+│   │   │   └── "Deny"
+│   │   ├── Description: *string
+│   │   ├── DestinationPortRanges: string[]
+│   │   ├── Destinations: Object (2 properties)[]
+│   │   │   ├── AddressPrefix: *string
+│   │   │   └── AddressPrefixType: *Enum (3 values)
+│   │   │       ├── "IPPrefix"
+│   │   │       ├── "NetworkGroup"
+│   │   │       └── "ServiceTag"
+│   │   ├── Direction: *Enum (2 values)
+│   │   │   ├── "Inbound"
+│   │   │   └── "Outbound"
+│   │   ├── Priority: *int
+│   │   ├── Protocol: *Enum (6 values)
+│   │   │   ├── "Ah"
+│   │   │   ├── "Any"
+│   │   │   ├── "Esp"
+│   │   │   ├── "Icmp"
+│   │   │   ├── "Tcp"
+│   │   │   └── "Udp"
+│   │   ├── ProvisioningState: *Enum (6 values)
+│   │   │   ├── "Canceled"
+│   │   │   ├── "Creating"
+│   │   │   ├── "Deleting"
+│   │   │   ├── "Failed"
+│   │   │   ├── "Succeeded"
+│   │   │   └── "Updating"
+│   │   ├── ResourceGuid: *string
+│   │   ├── SourcePortRanges: string[]
+│   │   └── Sources: Object (2 properties)[]
+│   │       ├── AddressPrefix: *string
+│   │       └── AddressPrefixType: *Enum (3 values)
+│   │           ├── "IPPrefix"
+│   │           ├── "NetworkGroup"
+│   │           └── "ServiceTag"
+│   ├── SystemData: *Object (6 properties)
+│   │   ├── CreatedAt: *string
+│   │   ├── CreatedBy: *string
+│   │   ├── CreatedByType: *Enum (4 values)
+│   │   │   ├── "Application"
+│   │   │   ├── "Key"
+│   │   │   ├── "ManagedIdentity"
+│   │   │   └── "User"
+│   │   ├── LastModifiedAt: *string
+│   │   ├── LastModifiedBy: *string
+│   │   └── LastModifiedByType: *Enum (4 values)
+│   │       ├── "Application"
+│   │       ├── "Key"
+│   │       ├── "ManagedIdentity"
+│   │       └── "User"
+│   └── Type: *string
+├── Default: *Object (7 properties)
+│   ├── Etag: *string
+│   ├── Id: *string
+│   ├── Kind: Enum (1 value)
+│   │   └── "Default"
+│   ├── Name: *string
+│   ├── Properties: *Object (12 properties)
+│   │   ├── Access: *Enum (3 values)
+│   │   │   ├── "Allow"
+│   │   │   ├── "AlwaysAllow"
+│   │   │   └── "Deny"
+│   │   ├── Description: *string
+│   │   ├── DestinationPortRanges: string[]
+│   │   ├── Destinations: Object (2 properties)[]
+│   │   │   ├── AddressPrefix: *string
+│   │   │   └── AddressPrefixType: *Enum (3 values)
+│   │   │       ├── "IPPrefix"
+│   │   │       ├── "NetworkGroup"
+│   │   │       └── "ServiceTag"
+│   │   ├── Direction: *Enum (2 values)
+│   │   │   ├── "Inbound"
+│   │   │   └── "Outbound"
+│   │   ├── Flag: *string
+│   │   ├── Priority: *int
+│   │   ├── Protocol: *Enum (6 values)
+│   │   │   ├── "Ah"
+│   │   │   ├── "Any"
+│   │   │   ├── "Esp"
+│   │   │   ├── "Icmp"
+│   │   │   ├── "Tcp"
+│   │   │   └── "Udp"
+│   │   ├── ProvisioningState: *Enum (6 values)
+│   │   │   ├── "Canceled"
+│   │   │   ├── "Creating"
+│   │   │   ├── "Deleting"
+│   │   │   ├── "Failed"
+│   │   │   ├── "Succeeded"
+│   │   │   └── "Updating"
+│   │   ├── ResourceGuid: *string
+│   │   ├── SourcePortRanges: string[]
+│   │   └── Sources: Object (2 properties)[]
+│   │       ├── AddressPrefix: *string
+│   │       └── AddressPrefixType: *Enum (3 values)
+│   │           ├── "IPPrefix"
+│   │           ├── "NetworkGroup"
+│   │           └── "ServiceTag"
+│   ├── SystemData: *Object (6 properties)
+│   │   ├── CreatedAt: *string
+│   │   ├── CreatedBy: *string
+│   │   ├── CreatedByType: *Enum (4 values)
+│   │   │   ├── "Application"
+│   │   │   ├── "Key"
+│   │   │   ├── "ManagedIdentity"
+│   │   │   └── "User"
+│   │   ├── LastModifiedAt: *string
+│   │   ├── LastModifiedBy: *string
+│   │   └── LastModifiedByType: *Enum (4 values)
+│   │       ├── "Application"
+│   │       ├── "Key"
+│   │       ├── "ManagedIdentity"
+│   │       └── "User"
+│   └── Type: *string
+└── Name: *string
+
+NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule_Spec: Object (3 properties)
+├── AdminRule: *Object (3 properties)
+│   ├── Kind: Enum (1 value)
+│   │   └── "Custom"
+│   ├── Name: string
+│   └── Properties: *Object (9 properties)
+│       ├── Access: *Enum (3 values)
+│       │   ├── "Allow"
+│       │   ├── "AlwaysAllow"
+│       │   └── "Deny"
+│       ├── Description: *string
+│       ├── DestinationPortRanges: string[]
+│       ├── Destinations: Object (2 properties)[]
+│       │   ├── AddressPrefix: *string
+│       │   └── AddressPrefixType: *Enum (3 values)
+│       │       ├── "IPPrefix"
+│       │       ├── "NetworkGroup"
+│       │       └── "ServiceTag"
+│       ├── Direction: *Enum (2 values)
+│       │   ├── "Inbound"
+│       │   └── "Outbound"
+│       ├── Priority: *int
+│       ├── Protocol: *Enum (6 values)
+│       │   ├── "Ah"
+│       │   ├── "Any"
+│       │   ├── "Esp"
+│       │   ├── "Icmp"
+│       │   ├── "Tcp"
+│       │   └── "Udp"
+│       ├── SourcePortRanges: string[]
+│       └── Sources: Object (2 properties)[]
+│           ├── AddressPrefix: *string
+│           └── AddressPrefixType: *Enum (3 values)
+│               ├── "IPPrefix"
+│               ├── "NetworkGroup"
+│               └── "ServiceTag"
+├── DefaultAdminRule: *Object (3 properties)
+│   ├── Kind: Enum (1 value)
+│   │   └── "Default"
+│   ├── Name: string
+│   └── Properties: *Object (1 property)
+│       └── Flag: *string
+└── Name: string
+
+NetworkManagersSecurityUserConfiguration_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (3 properties)
+│   ├── Description: *string
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   └── ResourceGuid: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+NetworkManagersSecurityUserConfiguration_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── Description: *string
+
+NetworkManagersSecurityUserConfigurationsRuleCollection_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── AppliesToGroups: Object (1 property)[]
+│   │   └── NetworkGroupId: *string
+│   ├── Description: *string
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   └── ResourceGuid: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+NetworkManagersSecurityUserConfigurationsRuleCollection_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── AppliesToGroups: Object (1 property)[]
+    │   └── NetworkGroupId: *string
+    └── Description: *string
+
+NetworkManagersSecurityUserConfigurationsRuleCollectionsRule_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (9 properties)
+│   ├── Description: *string
+│   ├── DestinationPortRanges: string[]
+│   ├── Destinations: Object (2 properties)[]
+│   │   ├── AddressPrefix: *string
+│   │   └── AddressPrefixType: *Enum (3 values)
+│   │       ├── "IPPrefix"
+│   │       ├── "NetworkGroup"
+│   │       └── "ServiceTag"
+│   ├── Direction: *Enum (2 values)
+│   │   ├── "Inbound"
+│   │   └── "Outbound"
+│   ├── Protocol: *Enum (6 values)
+│   │   ├── "Ah"
+│   │   ├── "Any"
+│   │   ├── "Esp"
+│   │   ├── "Icmp"
+│   │   ├── "Tcp"
+│   │   └── "Udp"
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   ├── ResourceGuid: *string
+│   ├── SourcePortRanges: string[]
+│   └── Sources: Object (2 properties)[]
+│       ├── AddressPrefix: *string
+│       └── AddressPrefixType: *Enum (3 values)
+│           ├── "IPPrefix"
+│           ├── "NetworkGroup"
+│           └── "ServiceTag"
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+NetworkManagersSecurityUserConfigurationsRuleCollectionsRule_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (7 properties)
+    ├── Description: *string
+    ├── DestinationPortRanges: string[]
+    ├── Destinations: Object (2 properties)[]
+    │   ├── AddressPrefix: *string
+    │   └── AddressPrefixType: *Enum (3 values)
+    │       ├── "IPPrefix"
+    │       ├── "NetworkGroup"
+    │       └── "ServiceTag"
+    ├── Direction: *Enum (2 values)
+    │   ├── "Inbound"
+    │   └── "Outbound"
+    ├── Protocol: *Enum (6 values)
+    │   ├── "Ah"
+    │   ├── "Any"
+    │   ├── "Esp"
+    │   ├── "Icmp"
+    │   ├── "Tcp"
+    │   └── "Udp"
+    ├── SourcePortRanges: string[]
+    └── Sources: Object (2 properties)[]
+        ├── AddressPrefix: *string
+        └── AddressPrefixType: *Enum (3 values)
+            ├── "IPPrefix"
+            ├── "NetworkGroup"
+            └── "ServiceTag"
 
 P2sVpnGateway_STATUS: Object (7 properties)
 ├── Etag: *string

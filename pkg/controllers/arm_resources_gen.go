@@ -327,9 +327,16 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManager)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagerConnection)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersConnectivityConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersNetworkGroup)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersNetworkGroupsStaticMember)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersScopeConnection)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityAdminConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityAdminConfigurationsRuleCollection)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserConfigurationsRuleCollection)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserConfigurationsRuleCollectionsRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.P2sVpnGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHub)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsBgpConnection)})
@@ -599,9 +606,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagerConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersConnectivityConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersNetworkGroup)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersNetworkGroupsStaticMember)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersScopeConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityAdminConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityAdminConfigurationsRuleCollection)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserConfigurationsRuleCollection)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserConfigurationsRuleCollectionsRule)},
 		&registration.KnownType{Obj: new(network_v20260301.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHub)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsBgpConnection)},
@@ -630,9 +644,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagerConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersConnectivityConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersNetworkGroup)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersNetworkGroupsStaticMember)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersScopeConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityAdminConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityAdminConfigurationsRuleCollection)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserConfigurationsRuleCollection)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserConfigurationsRuleCollectionsRule)},
 		&registration.KnownType{Obj: new(network_v20260301s.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHub)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsBgpConnection)},
@@ -784,9 +805,16 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.LocalNetworkGatewayExtension{})
 	result = append(result, &network_customizations.NetworkManagerConnectionExtension{})
 	result = append(result, &network_customizations.NetworkManagerExtension{})
+	result = append(result, &network_customizations.NetworkManagersConnectivityConfigurationExtension{})
 	result = append(result, &network_customizations.NetworkManagersNetworkGroupExtension{})
 	result = append(result, &network_customizations.NetworkManagersNetworkGroupsStaticMemberExtension{})
 	result = append(result, &network_customizations.NetworkManagersScopeConnectionExtension{})
+	result = append(result, &network_customizations.NetworkManagersSecurityAdminConfigurationExtension{})
+	result = append(result, &network_customizations.NetworkManagersSecurityAdminConfigurationsRuleCollectionExtension{})
+	result = append(result, &network_customizations.NetworkManagersSecurityAdminConfigurationsRuleCollectionsRuleExtension{})
+	result = append(result, &network_customizations.NetworkManagersSecurityUserConfigurationExtension{})
+	result = append(result, &network_customizations.NetworkManagersSecurityUserConfigurationsRuleCollectionExtension{})
+	result = append(result, &network_customizations.NetworkManagersSecurityUserConfigurationsRuleCollectionsRuleExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimeterExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersLinkExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersLoggingConfigurationExtension{})
