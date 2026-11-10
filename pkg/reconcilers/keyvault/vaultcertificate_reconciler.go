@@ -314,3 +314,5 @@ func (r *VaultCertificateReconciler) writeStatus(ctx context.Context, client *ke
 	}
 	return nil
 }
+
+// ci-selective-demo: a throwaway change to show the selective path (not to merge).
