@@ -201,6 +201,15 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   above. Not modelled: scale units, the routes a hub learns, a connection's
   routing configuration checked against the hub's route tables, internet
   security and FastPath, and the time a real gateway takes.
+- Log Analytics clusters, data sources and storage insight configs
+  (`Microsoft.OperationalInsights/clusters`, `workspaces/dataSources`,
+  `workspaces/storageInsightConfigs`; `pkg/fakecloud/arm/loganalytics.go`):
+  a cluster's sku is `CapacityReservation` at one of Azure's commitment
+  tiers (100 to 50,000 GB a day); a data source gives its `kind`; a storage
+  insight config names a storage account that exists and gives its key,
+  which is kept aside (`SharedKey`) and never returned, as Azure does not
+  return it. Not modelled: linking workspaces to a cluster, data flowing,
+  what each data source kind takes, and the error codes (the fake's own).
 - Maintenance configuration assignments
   (`Microsoft.Maintenance/configurationAssignments` at any scope;
   `pkg/fakecloud/arm/maintenance.go`): an assignment names a maintenance
@@ -210,6 +219,22 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   configuration (assumed from Azure's documentation of dynamic scoping). Not
   modelled: which resource types a configuration's scope can maintain, the
   machines a filter selects, and the error codes (the fake's own).
+- Managed HSMs, their keys and Key Vault private endpoint connections
+  (`Microsoft.KeyVault/managedHSMs`, `managedHSMs/keys`, and
+  `privateEndpointConnections` of a managed HSM or a vault;
+  `pkg/fakecloud/arm/keyvault.go`): an HSM is made with a `sku`, a
+  `tenantId` and at least one `initialAdminObjectIds`; soft delete cannot be
+  turned off, `softDeleteRetentionInDays` is 7 to 90 and cannot change, and
+  purge protection once on stays on (Azure's documentation of Managed HSM
+  soft delete). A key needs its `kty`; a PUT on a key that exists returns it
+  unchanged (the API's own description) and a key cannot be deleted through
+  Resource Manager (no DELETE in the spec: 405). A private endpoint
+  connection is made by a private endpoint, so a PUT updates one that exists
+  and is refused 404 otherwise (assumed from the API's "Updates the specified
+  private endpoint connection"; tests add the connection as the endpoint
+  would). Not modelled: the security domain download that activates an HSM,
+  regions and network rules taking effect, key versions, rotation and
+  release, the private endpoint itself, and the error codes (the fake's own).
 - Virtual WAN (`Microsoft.Network/virtualWans`, `virtualHubs` and a hub's
   `hubVirtualNetworkConnections`, `hubRouteTables`, `routeTables`,
   `routingIntent`, `bgpConnections`, `ipConfigurations`;
