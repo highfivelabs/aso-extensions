@@ -127,7 +127,7 @@ kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f 
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/team-a-hub,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualHubs/team-b-hub,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/team-a-hub,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualHubs/team-b-hub,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/azureFirewalls/team-a-fw,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/azureFirewalls/team-b-fw,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
@@ -419,6 +419,76 @@ spec:
   expressRouteCircuitPeering: {reference: {group: network.azure.hfl.dev, kind: ExpressRouteCircuitsPeering, name: private}}
   routingWeight: 10
 ---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VirtualWan
+metadata: {name: wan, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  type: Standard
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VirtualHub
+metadata: {name: vhub, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  addressPrefix: 10.100.0.0/23
+  virtualWan: {reference: {group: network.azure.hfl.dev, kind: VirtualWan, name: wan}}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VirtualHubsHubVirtualNetworkConnection
+metadata: {name: spoke, namespace: $1}
+spec:
+  owner: {name: vhub}
+  remoteVirtualNetwork: {reference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/virtualNetworks/$1-spoke}}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VirtualHubsHubRouteTable
+metadata: {name: spokes, namespace: $1}
+spec:
+  owner: {name: vhub}
+  labels: [spokes]
+  routes:
+  - name: to-spoke
+    destinationType: CIDR
+    destinations: [10.1.0.0/16]
+    nextHopType: ResourceId
+    nextHopReference: {group: network.azure.hfl.dev, kind: VirtualHubsHubVirtualNetworkConnection, name: spoke}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VirtualHubsRouteTable
+metadata: {name: v2, namespace: $1}
+spec:
+  owner: {name: vhub}
+  attachedConnections: [All_Vnets]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VirtualHubsRoutingIntent
+metadata: {name: intent, namespace: $1}
+spec:
+  owner: {name: vhub}
+  routingPolicies:
+  - name: private
+    destinations: [PrivateTraffic]
+    nextHopReference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/azureFirewalls/$1-fw}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VirtualHubsBgpConnection
+metadata: {name: nva, namespace: $1}
+spec:
+  owner: {name: vhub}
+  peerAsn: 65010
+  peerIp: 10.1.0.4
+  hubVirtualNetworkConnection: {reference: {group: network.azure.hfl.dev, kind: VirtualHubsHubVirtualNetworkConnection, name: spoke}}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VirtualHubsIpConfiguration
+metadata: {name: ipconfig1, namespace: $1}
+spec:
+  owner: {name: vhub}
+  subnet: {reference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/virtualNetworks/$1-spoke/subnets/RouteServerSubnet}}
+---
 apiVersion: management.azure.hfl.dev/v20230401
 kind: ManagementGroup
 metadata: {name: platform, namespace: $1}
@@ -648,6 +718,26 @@ wait_for 90 "team-a's ExpressRouteGatewaysExpressRouteConnection Ready" ready ex
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er/expressRouteConnections/to-er 201" \
   || fail "the fake resource manager saw no connection on team-a's ExpressRoute gateway"
 pass "team-a ExpressRouteGatewaysExpressRouteConnection Ready: owned by our gateway, to our circuit's private peering by object"
+wait_for 90 "team-a's VirtualWan Ready" ready virtualwans.network.azure.hfl.dev team-a wan
+pass "team-a VirtualWan Ready: owned by ASO's ResourceGroup, generated"
+wait_for 90 "team-a's VirtualHub Ready" ready virtualhubs.network.azure.hfl.dev team-a vhub
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/vhub 201" \
+  || fail "the fake resource manager saw no virtual hub created in team-a's resource group"
+pass "team-a VirtualHub Ready: in our VirtualWan by object"
+wait_for 90 "team-a's VirtualHubsHubVirtualNetworkConnection Ready" ready virtualhubshubvirtualnetworkconnections.network.azure.hfl.dev team-a spoke
+pass "team-a VirtualHubsHubVirtualNetworkConnection Ready: owned by our hub, to a virtual network by ARM ID"
+wait_for 90 "team-a's VirtualHubsHubRouteTable Ready" ready virtualhubshubroutetables.network.azure.hfl.dev team-a spokes
+pass "team-a VirtualHubsHubRouteTable Ready: a route whose next hop is our hub connection by object"
+wait_for 90 "team-a's VirtualHubsRouteTable Ready" ready virtualhubsroutetables.network.azure.hfl.dev team-a v2
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/vhub/routeTables/v2 201" \
+  || fail "the fake resource manager saw no route table on team-a's hub"
+pass "team-a VirtualHubsRouteTable Ready: owned by our hub"
+wait_for 90 "team-a's VirtualHubsRoutingIntent Ready" ready virtualhubsroutingintents.network.azure.hfl.dev team-a intent
+pass "team-a VirtualHubsRoutingIntent Ready: private traffic to a firewall by ARM ID"
+wait_for 90 "team-a's VirtualHubsBgpConnection Ready" ready virtualhubsbgpconnections.network.azure.hfl.dev team-a nva
+pass "team-a VirtualHubsBgpConnection Ready: over our hub connection by object"
+wait_for 90 "team-a's VirtualHubsIpConfiguration Ready" ready virtualhubsipconfigurations.network.azure.hfl.dev team-a ipconfig1
+pass "team-a VirtualHubsIpConfiguration Ready: in a subnet by ARM ID"
 wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
 pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
 [[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
@@ -761,6 +851,16 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er 200" \
   || fail "the fake resource manager saw no delete of the ExpressRoute gateway"
 pass "the ExpressRoute gateway and its connection are deleted in Resource Manager"
+for kind_name in virtualhubsipconfigurations/ipconfig1 virtualhubsbgpconnections/nva virtualhubsroutingintents/intent virtualhubsroutetables/v2 virtualhubshubvirtualnetworkconnections/spoke virtualhubshubroutetables/spokes virtualhubs/vhub virtualwans/wan; do
+  kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
+done
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/vhub/hubVirtualNetworkConnections/spoke 200" \
+  || fail "the fake resource manager saw no delete of the hub connection"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/vhub 200" \
+  || fail "the fake resource manager saw no delete of the virtual hub"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualWans/wan 200" \
+  || fail "the fake resource manager saw no delete of the virtual WAN"
+pass "the virtual WAN, its hub and the hub's children are deleted in Resource Manager"
 kubectl -n team-a delete expressroutecircuitsauthorizations.network.azure.hfl.dev to-partner --timeout=120s
 kubectl -n team-a delete expressroutecircuitspeerings.network.azure.hfl.dev private --timeout=120s
 kubectl -n team-a delete expressroutecircuits.network.azure.hfl.dev er --timeout=120s
