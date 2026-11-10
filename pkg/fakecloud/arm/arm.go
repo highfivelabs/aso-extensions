@@ -300,6 +300,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := a.checkVPNGateway(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		status, code, msg, erAfter := a.checkExpressRoute(id, body)
 		if code != "" {
 			writeError(w, status, code, msg)
@@ -353,6 +357,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		for k := range a.resources {
 			if within(k, key) {
 				delete(a.resources, k)
+			}
+		}
+		for k := range a.sharedKeys {
+			if within(k, key) {
 				delete(a.sharedKeys, k)
 			}
 		}
