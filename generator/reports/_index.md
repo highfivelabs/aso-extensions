@@ -142,7 +142,15 @@ title: Supported Resources
 | NetworkSecurityPerimetersProfile              | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersProfilesAccessRule   | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersResourceAssociation  | 2025-05-01  | v20250501   | v0.1.0         | -      |
+| VirtualHub                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsBgpConnection                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsHubRouteTable                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsHubVirtualNetworkConnection        | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsIpConfiguration                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsRouteTable                         | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsRoutingIntent                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualNetworkGatewayConnection               | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualWan                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
 
 ## OperationalInsights
 

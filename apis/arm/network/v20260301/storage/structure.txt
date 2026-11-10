@@ -651,6 +651,453 @@ LocalNetworkGateway: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+VirtualHub: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (25 properties)
+│   ├── AddressPrefix: *string
+│   ├── AddressPrefixV6: *string
+│   ├── AllowBranchToBranchTraffic: *bool
+│   ├── AzureFirewall: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── AzureName: string
+│   ├── ExpressRouteGateway: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── HubRoutingPreference: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── P2SVpnGateway: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── PreferredRoutingGateway: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RouteTable: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Routes: Object (3 properties)[]
+│   │       ├── AddressPrefixes: string[]
+│   │       ├── NextHopIpAddress: *string
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── SecurityPartnerProvider: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── SecurityProviderName: *string
+│   ├── Sku: *string
+│   ├── Tags: map[string]string
+│   ├── VirtualRouterAsn: *uint32
+│   ├── VirtualRouterAutoScaleConfiguration: *Object (2 properties)
+│   │   ├── MinCapacity: *int
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── VirtualRouterIps: string[]
+│   ├── VirtualRouterIpsV6: string[]
+│   ├── VirtualWan: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── VpnGateway: *Object (2 properties)
+│       ├── PropertyBag: genruntime.PropertyBag
+│       └── Reference: *genruntime.ResourceReference
+└── Status: Object (33 properties)
+    ├── AddressPrefix: *string
+    ├── AddressPrefixV6: *string
+    ├── AllowBranchToBranchTraffic: *bool
+    ├── AzureFirewall: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── BgpConnections: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── ExpressRouteGateway: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── HubRoutingPreference: *string
+    ├── Id: *string
+    ├── IpConfigurations: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── P2SVpnGateway: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PreferredRoutingGateway: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RouteMaps: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── RouteTable: *Object (2 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Routes: Object (3 properties)[]
+    │       ├── AddressPrefixes: string[]
+    │       ├── NextHopIpAddress: *string
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── RoutingState: *string
+    ├── SecurityPartnerProvider: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── SecurityProviderName: *string
+    ├── Sku: *string
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualHubRouteTableV2S: Object (7 properties)[]
+    │   ├── AttachedConnections: string[]
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisioningState: *string
+    │   └── Routes: Object (5 properties)[]
+    │       ├── DestinationType: *string
+    │       ├── Destinations: string[]
+    │       ├── NextHopType: *string
+    │       ├── NextHops: string[]
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── VirtualRouterAsn: *uint32
+    ├── VirtualRouterAutoScaleConfiguration: *Object (2 properties)
+    │   ├── MinCapacity: *int
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── VirtualRouterIps: string[]
+    ├── VirtualRouterIpsV6: string[]
+    ├── VirtualWan: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── VpnGateway: *Object (2 properties)
+        ├── Id: *string
+        └── PropertyBag: genruntime.PropertyBag
+
+VirtualHubsBgpConnection: Resource
+├── Owner: network/v20260301.VirtualHub
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── HubVirtualNetworkConnection: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PeerAsn: *uint32
+│   ├── PeerIp: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── RoutingConfiguration: *Object (6 properties)
+│       ├── AssociatedRouteTable: *Object (2 properties)
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   └── Reference: *genruntime.ResourceReference
+│       ├── InboundRouteMap: *Object (2 properties)
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   └── Reference: *genruntime.ResourceReference
+│       ├── OutboundRouteMap: *Object (2 properties)
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   └── Reference: *genruntime.ResourceReference
+│       ├── PropagatedRouteTables: *Object (3 properties)
+│       │   ├── Ids: Object (2 properties)[]
+│       │   │   ├── PropertyBag: genruntime.PropertyBag
+│       │   │   └── Reference: *genruntime.ResourceReference
+│       │   ├── Labels: string[]
+│       │   └── PropertyBag: genruntime.PropertyBag
+│       ├── PropertyBag: genruntime.PropertyBag
+│       └── VnetRoutes: *Object (3 properties)
+│           ├── PropertyBag: genruntime.PropertyBag
+│           ├── StaticRoutes: Object (4 properties)[]
+│           │   ├── AddressPrefixes: string[]
+│           │   ├── Name: *string
+│           │   ├── NextHopIpAddress: *string
+│           │   └── PropertyBag: genruntime.PropertyBag
+│           └── StaticRoutesConfig: *Object (3 properties)
+│               ├── PropagateStaticRoutes: *bool
+│               ├── PropertyBag: genruntime.PropertyBag
+│               └── VnetLocalRouteOverrideCriteria: *string
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionState: *string
+    ├── Etag: *string
+    ├── HubVirtualNetworkConnection: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Name: *string
+    ├── PeerAsn: *uint32
+    ├── PeerIp: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RoutingConfiguration: *Object (6 properties)
+    │   ├── AssociatedRouteTable: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── InboundRouteMap: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── OutboundRouteMap: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropagatedRouteTables: *Object (3 properties)
+    │   │   ├── Ids: Object (2 properties)[]
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Labels: string[]
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── VnetRoutes: *Object (4 properties)
+    │       ├── BgpConnections: Object (2 properties)[]
+    │       │   ├── Id: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── StaticRoutes: Object (4 properties)[]
+    │       │   ├── AddressPrefixes: string[]
+    │       │   ├── Name: *string
+    │       │   ├── NextHopIpAddress: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       └── StaticRoutesConfig: *Object (3 properties)
+    │           ├── PropagateStaticRoutes: *bool
+    │           ├── PropertyBag: genruntime.PropertyBag
+    │           └── VnetLocalRouteOverrideCriteria: *string
+    └── Type: *string
+
+VirtualHubsHubRouteTable: Resource
+├── Owner: network/v20260301.VirtualHub
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Labels: string[]
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Routes: Object (6 properties)[]
+│       ├── DestinationType: *string
+│       ├── Destinations: string[]
+│       ├── Name: *string
+│       ├── NextHopReference: *genruntime.ResourceReference
+│       ├── NextHopType: *string
+│       └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (11 properties)
+    ├── AssociatedConnections: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Labels: string[]
+    ├── Name: *string
+    ├── PropagatingConnections: string[]
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Routes: Object (6 properties)[]
+    │   ├── DestinationType: *string
+    │   ├── Destinations: string[]
+    │   ├── Name: *string
+    │   ├── NextHop: *string
+    │   ├── NextHopType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+VirtualHubsHubVirtualNetworkConnection: Resource
+├── Owner: network/v20260301.VirtualHub
+├── Spec: Object (12 properties)
+│   ├── AllowHubToRemoteVnetTransit: *bool
+│   ├── AllowRemoteVnetToUseHubVnetGateways: *bool
+│   ├── AzureName: string
+│   ├── ConnectionPolicy: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── EnableInternetSecurity: *bool
+│   ├── EnableOnlyIPv6Peering: *bool
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RemoteVirtualNetwork: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── RoutingConfiguration: *Object (6 properties)
+│       ├── AssociatedRouteTable: *Object (2 properties)
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   └── Reference: *genruntime.ResourceReference
+│       ├── InboundRouteMap: *Object (2 properties)
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   └── Reference: *genruntime.ResourceReference
+│       ├── OutboundRouteMap: *Object (2 properties)
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   └── Reference: *genruntime.ResourceReference
+│       ├── PropagatedRouteTables: *Object (3 properties)
+│       │   ├── Ids: Object (2 properties)[]
+│       │   │   ├── PropertyBag: genruntime.PropertyBag
+│       │   │   └── Reference: *genruntime.ResourceReference
+│       │   ├── Labels: string[]
+│       │   └── PropertyBag: genruntime.PropertyBag
+│       ├── PropertyBag: genruntime.PropertyBag
+│       └── VnetRoutes: *Object (3 properties)
+│           ├── PropertyBag: genruntime.PropertyBag
+│           ├── StaticRoutes: Object (4 properties)[]
+│           │   ├── AddressPrefixes: string[]
+│           │   ├── Name: *string
+│           │   ├── NextHopIpAddress: *string
+│           │   └── PropertyBag: genruntime.PropertyBag
+│           └── StaticRoutesConfig: *Object (3 properties)
+│               ├── PropagateStaticRoutes: *bool
+│               ├── PropertyBag: genruntime.PropertyBag
+│               └── VnetLocalRouteOverrideCriteria: *string
+└── Status: Object (13 properties)
+    ├── AllowHubToRemoteVnetTransit: *bool
+    ├── AllowRemoteVnetToUseHubVnetGateways: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionPolicy: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── EnableInternetSecurity: *bool
+    ├── EnableOnlyIPv6Peering: *bool
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RemoteVirtualNetwork: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── RoutingConfiguration: *Object (6 properties)
+        ├── AssociatedRouteTable: *Object (2 properties)
+        │   ├── Id: *string
+        │   └── PropertyBag: genruntime.PropertyBag
+        ├── InboundRouteMap: *Object (2 properties)
+        │   ├── Id: *string
+        │   └── PropertyBag: genruntime.PropertyBag
+        ├── OutboundRouteMap: *Object (2 properties)
+        │   ├── Id: *string
+        │   └── PropertyBag: genruntime.PropertyBag
+        ├── PropagatedRouteTables: *Object (3 properties)
+        │   ├── Ids: Object (2 properties)[]
+        │   │   ├── Id: *string
+        │   │   └── PropertyBag: genruntime.PropertyBag
+        │   ├── Labels: string[]
+        │   └── PropertyBag: genruntime.PropertyBag
+        ├── PropertyBag: genruntime.PropertyBag
+        └── VnetRoutes: *Object (4 properties)
+            ├── BgpConnections: Object (2 properties)[]
+            │   ├── Id: *string
+            │   └── PropertyBag: genruntime.PropertyBag
+            ├── PropertyBag: genruntime.PropertyBag
+            ├── StaticRoutes: Object (4 properties)[]
+            │   ├── AddressPrefixes: string[]
+            │   ├── Name: *string
+            │   ├── NextHopIpAddress: *string
+            │   └── PropertyBag: genruntime.PropertyBag
+            └── StaticRoutesConfig: *Object (3 properties)
+                ├── PropagateStaticRoutes: *bool
+                ├── PropertyBag: genruntime.PropertyBag
+                └── VnetLocalRouteOverrideCriteria: *string
+
+VirtualHubsIpConfiguration: Resource
+├── Owner: network/v20260301.VirtualHub
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PrivateIPAddress: *string
+│   ├── PrivateIPAllocationMethod: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── PublicIPAddress: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── Subnet: *Object (2 properties)
+│       ├── PropertyBag: genruntime.PropertyBag
+│       └── Reference: *genruntime.ResourceReference
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PrivateIPAddress: *string
+    ├── PrivateIPAllocationMethod: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── PublicIPAddress: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Subnet: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+VirtualHubsRouteTable: Resource
+├── Owner: network/v20260301.VirtualHub
+├── Spec: Object (7 properties)
+│   ├── AttachedConnections: string[]
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Routes: Object (5 properties)[]
+│       ├── DestinationType: *string
+│       ├── Destinations: string[]
+│       ├── NextHopType: *string
+│       ├── NextHops: string[]
+│       └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── AttachedConnections: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    └── Routes: Object (5 properties)[]
+        ├── DestinationType: *string
+        ├── Destinations: string[]
+        ├── NextHopType: *string
+        ├── NextHops: string[]
+        └── PropertyBag: genruntime.PropertyBag
+
+VirtualHubsRoutingIntent: Resource
+├── Owner: network/v20260301.VirtualHub
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── RoutingPolicies: Object (4 properties)[]
+│       ├── Destinations: string[]
+│       ├── Name: *string
+│       ├── NextHopReference: *genruntime.ResourceReference
+│       └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RoutingPolicies: Object (4 properties)[]
+    │   ├── Destinations: string[]
+    │   ├── Name: *string
+    │   ├── NextHop: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 VirtualNetworkGatewayConnection: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (32 properties)
@@ -856,6 +1303,45 @@ VirtualNetworkGatewayConnection: Resource
     │   ├── Id: *string
     │   └── PropertyBag: genruntime.PropertyBag
     └── VirtualNetworkGateway2: *Object (2 properties)
+        ├── Id: *string
+        └── PropertyBag: genruntime.PropertyBag
+
+VirtualWan: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (11 properties)
+│   ├── AllowBranchToBranchTraffic: *bool
+│   ├── AllowVnetToVnetTraffic: *bool
+│   ├── AzureName: string
+│   ├── DisableVpnEncryption: *bool
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Tags: map[string]string
+│   └── Type: *string
+└── Status: Object (16 properties)
+    ├── AllowBranchToBranchTraffic: *bool
+    ├── AllowVnetToVnetTraffic: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── DisableVpnEncryption: *bool
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Office365LocalBreakoutCategory: *string
+    ├── PropertiesType: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualHubs: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── VpnSites: Object (2 properties)[]
         ├── Id: *string
         └── PropertyBag: genruntime.PropertyBag
 

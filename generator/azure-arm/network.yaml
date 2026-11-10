@@ -6,7 +6,7 @@ typeFilters:
   - action: include
     group: network
     version: v20260301
-    because: the newest stable version, for site-to-site VPN connections and local network gateways (foundation row 8) and ExpressRoute (row 9); ASO has none of these kinds
+    because: the newest stable version, for site-to-site VPN connections and local network gateways (foundation row 8), ExpressRoute (row 9) and Virtual WAN (row 10); ASO has none of these kinds
 
 groupModelConfiguration:
   2025-05-01:
@@ -68,6 +68,49 @@ groupModelConfiguration:
     ExpressRouteGateways_ExpressRouteConnection:
       $exportAs: ExpressRouteGatewaysExpressRouteConnection
       $supportedFrom: v0.1.0
+    VirtualWan:
+      $exportAs: VirtualWan
+      $supportedFrom: v0.1.0
+    VirtualHub:
+      $exportAs: VirtualHub
+      $supportedFrom: v0.1.0
+    VirtualHubs_HubVirtualNetworkConnection:
+      $exportAs: VirtualHubsHubVirtualNetworkConnection
+      $supportedFrom: v0.1.0
+    VirtualHubs_HubRouteTable:
+      $exportAs: VirtualHubsHubRouteTable
+      $supportedFrom: v0.1.0
+    VirtualHubs_RouteTable:
+      $exportAs: VirtualHubsRouteTable
+      $supportedFrom: v0.1.0
+    VirtualHubs_RoutingIntent:
+      $exportAs: VirtualHubsRoutingIntent
+      $supportedFrom: v0.1.0
+    VirtualHubs_BgpConnection:
+      $exportAs: VirtualHubsBgpConnection
+      $supportedFrom: v0.1.0
+    VirtualHubs_IpConfiguration:
+      $exportAs: VirtualHubsIpConfiguration
+      $supportedFrom: v0.1.0
+    VirtualHubProperties:
+      VirtualHubRouteTableV2s:
+        $resourceLifecycleOwnedByParent: VirtualHub # route tables (routeTables), kept on a hub's PUT by its extension, as a circuit keeps its peerings
+    VirtualHubRouteTableV2:
+      Id:
+        $referenceType: simple # a route table's own ID, in the hub's ARM payload only (copied from Azure by the hub's extension)
+    Subnet_VirtualHubs_IpConfiguration_SubResourceEmbedded:
+      Id:
+        $referenceType: arm # the subnet of a hub IP configuration (ASO's VirtualNetworksSubnet, or an ARM ID)
+    HubRoute:
+      DestinationType:
+        $referenceType: simple # CIDR, ResourceId or Service
+      NextHopType:
+        $referenceType: simple # ResourceId
+      NextHop:
+        $referenceType: arm # a hub route's next hop: a hub virtual network connection, a firewall (our kind or an ARM ID)
+    RoutingPolicy:
+      NextHop:
+        $referenceType: arm # where a routing intent sends Internet or private traffic: a firewall or network virtual appliance in the hub
     ExpressRouteGatewayProperties:
       ExpressRouteConnections:
         $resourceLifecycleOwnedByParent: ExpressRouteGateway # kept on a gateway's PUT by its extension, as a circuit keeps its peerings
@@ -82,7 +125,7 @@ groupModelConfiguration:
         $referenceType: arm # the circuit's private peering a gateway connection joins (our ExpressRouteCircuitsPeering, or an ARM ID)
     VirtualHubId:
       Id:
-        $referenceType: arm # the Virtual WAN hub that holds the gateway (an ARM ID until VirtualHub is built, foundation row 10)
+        $referenceType: arm # the Virtual WAN hub that holds the gateway (our VirtualHub, or an ARM ID)
     ExpressRouteCircuitPropertiesFormat:
       Peerings:
         $resourceLifecycleOwnedByParent: ExpressRouteCircuit # kept on a circuit's PUT by its extension, as ASO's RouteTable keeps its routes
@@ -159,7 +202,7 @@ typeTransformers:
     because: a key; exported to a Secret, not shown in the status
   - group: network
     version: v20260301
-    name: ExpressRouteCircuits_Authorization_Spec;ExpressRouteCircuits_Peering_Spec;ExpressRouteCircuits_Peerings_Connection_Spec;ExpressRoutePorts_Authorization_Spec;ExpressRouteGateways_ExpressRouteConnection_Spec
+    name: ExpressRouteCircuits_Authorization_Spec;ExpressRouteCircuits_Peering_Spec;ExpressRouteCircuits_Peerings_Connection_Spec;ExpressRoutePorts_Authorization_Spec;ExpressRouteGateways_ExpressRouteConnection_Spec;VirtualHubs_HubVirtualNetworkConnection_Spec;VirtualHubs_RouteTable_Spec;VirtualHubs_BgpConnection_Spec;VirtualHubs_RoutingIntent_Spec;VirtualHubs_HubRouteTable_Spec;VirtualHubs_IpConfiguration_Spec
     property: Id
     remove: true
     because: a child resource's own ARM ID (the spec's SubResource), which Azure sets; ASO's subnets and routes have none in their spec either

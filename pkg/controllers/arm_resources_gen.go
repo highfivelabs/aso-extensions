@@ -324,6 +324,13 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePort)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHub)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsBgpConnection)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsHubRouteTable)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsHubVirtualNetworkConnection)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsIpConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsRouteTable)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsRoutingIntent)})
 	result = append(result, &registration.StorageType{
 		Obj: new(network_v20260301.VirtualNetworkGatewayConnection),
 		Indexes: []registration.Index{
@@ -348,6 +355,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualWan)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPack)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesDataExport)})
@@ -518,7 +526,15 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
-		&registration.KnownType{Obj: new(network_v20260301.VirtualNetworkGatewayConnection)})
+		&registration.KnownType{Obj: new(network_v20260301.VirtualHub)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsBgpConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsHubRouteTable)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsHubVirtualNetworkConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsIpConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsRouteTable)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsRoutingIntent)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualNetworkGatewayConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualWan)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuit)},
@@ -530,7 +546,15 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
-		&registration.KnownType{Obj: new(network_v20260301s.VirtualNetworkGatewayConnection)})
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualHub)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsBgpConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsHubRouteTable)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsHubVirtualNetworkConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsIpConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsRouteTable)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsRoutingIntent)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualNetworkGatewayConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualWan)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPack)},
@@ -670,7 +694,15 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfileExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfilesAccessRuleExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersResourceAssociationExtension{})
+	result = append(result, &network_customizations.VirtualHubExtension{})
+	result = append(result, &network_customizations.VirtualHubsBgpConnectionExtension{})
+	result = append(result, &network_customizations.VirtualHubsHubRouteTableExtension{})
+	result = append(result, &network_customizations.VirtualHubsHubVirtualNetworkConnectionExtension{})
+	result = append(result, &network_customizations.VirtualHubsIpConfigurationExtension{})
+	result = append(result, &network_customizations.VirtualHubsRouteTableExtension{})
+	result = append(result, &network_customizations.VirtualHubsRoutingIntentExtension{})
 	result = append(result, &network_customizations.VirtualNetworkGatewayConnectionExtension{})
+	result = append(result, &network_customizations.VirtualWanExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPackExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPacksQueryExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesDataExportExtension{})

@@ -48,7 +48,15 @@ resources:
 - network.azure.hfl.dev_networksecurityperimetersprofiles.yaml
 - network.azure.hfl.dev_networksecurityperimetersprofilesaccessrules.yaml
 - network.azure.hfl.dev_networksecurityperimetersresourceassociations.yaml
+- network.azure.hfl.dev_virtualhubs.yaml
+- network.azure.hfl.dev_virtualhubsbgpconnections.yaml
+- network.azure.hfl.dev_virtualhubshubroutetables.yaml
+- network.azure.hfl.dev_virtualhubshubvirtualnetworkconnections.yaml
+- network.azure.hfl.dev_virtualhubsipconfigurations.yaml
+- network.azure.hfl.dev_virtualhubsroutetables.yaml
+- network.azure.hfl.dev_virtualhubsroutingintents.yaml
 - network.azure.hfl.dev_virtualnetworkgatewayconnections.yaml
+- network.azure.hfl.dev_virtualwans.yaml
 - operationalinsights.azure.hfl.dev_querypacks.yaml
 - operationalinsights.azure.hfl.dev_querypacksqueries.yaml
 - operationalinsights.azure.hfl.dev_workspacesdataexports.yaml

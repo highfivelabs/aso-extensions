@@ -1,0 +1,606 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: virtualhubshubvirtualnetworkconnections.network.azure.hfl.dev
+spec:
+  group: network.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - network
+    kind: VirtualHubsHubVirtualNetworkConnection
+    listKind: VirtualHubsHubVirtualNetworkConnectionList
+    plural: virtualhubshubvirtualnetworkconnections
+    singular: virtualhubshubvirtualnetworkconnection
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260301
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/virtualWan.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubVirtualNetworkConnections/{connectionName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              allowHubToRemoteVnetTransit:
+                description: 'AllowHubToRemoteVnetTransit: Deprecated: VirtualHub
+                  to RemoteVnet transit to enabled or not.'
+                type: boolean
+              allowRemoteVnetToUseHubVnetGateways:
+                description: 'AllowRemoteVnetToUseHubVnetGateways: Deprecated: Allow
+                  RemoteVnet to use Virtual Hub''s gateways.'
+                type: boolean
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              connectionPolicy:
+                description: 'ConnectionPolicy: The resource id of the ConnectionPolicy
+                  associated with this HubVirtualNetworkConnection.'
+                properties:
+                  reference:
+                    description: 'Reference: Resource ID.'
+                    properties:
+                      armId:
+                        description: |-
+                          ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                          The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                          ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                        pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                        type: string
+                      group:
+                        description: Group is the Kubernetes group of the resource.
+                        type: string
+                      kind:
+                        description: Kind is the Kubernetes kind of the resource.
+                        type: string
+                      name:
+                        description: Name is the Kubernetes name of the resource.
+                        type: string
+                    type: object
+                type: object
+              enableInternetSecurity:
+                description: 'EnableInternetSecurity: Enable internet security.'
+                type: boolean
+              enableOnlyIPv6Peering:
+                description: 'EnableOnlyIPv6Peering: Enable Only IPv6 Peering for
+                  this connection.'
+                type: boolean
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a network.azure.hfl.dev/VirtualHub resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+              remoteVirtualNetwork:
+                description: 'RemoteVirtualNetwork: Reference to the remote virtual
+                  network.'
+                properties:
+                  reference:
+                    description: 'Reference: Resource ID.'
+                    properties:
+                      armId:
+                        description: |-
+                          ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                          The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                          ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                        pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                        type: string
+                      group:
+                        description: Group is the Kubernetes group of the resource.
+                        type: string
+                      kind:
+                        description: Kind is the Kubernetes kind of the resource.
+                        type: string
+                      name:
+                        description: Name is the Kubernetes name of the resource.
+                        type: string
+                    type: object
+                type: object
+              routingConfiguration:
+                description: 'RoutingConfiguration: The Routing Configuration indicating
+                  the associated and propagated route tables on this connection.'
+                properties:
+                  associatedRouteTable:
+                    description: 'AssociatedRouteTable: The resource id RouteTable
+                      associated with this RoutingConfiguration.'
+                    properties:
+                      reference:
+                        description: 'Reference: Resource ID.'
+                        properties:
+                          armId:
+                            description: |-
+                              ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                              The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                              ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                            pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                            type: string
+                          group:
+                            description: Group is the Kubernetes group of the resource.
+                            type: string
+                          kind:
+                            description: Kind is the Kubernetes kind of the resource.
+                            type: string
+                          name:
+                            description: Name is the Kubernetes name of the resource.
+                            type: string
+                        type: object
+                    type: object
+                  inboundRouteMap:
+                    description: 'InboundRouteMap: The resource id of the RouteMap
+                      associated with this RoutingConfiguration for inbound learned
+                      routes.'
+                    properties:
+                      reference:
+                        description: 'Reference: Resource ID.'
+                        properties:
+                          armId:
+                            description: |-
+                              ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                              The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                              ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                            pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                            type: string
+                          group:
+                            description: Group is the Kubernetes group of the resource.
+                            type: string
+                          kind:
+                            description: Kind is the Kubernetes kind of the resource.
+                            type: string
+                          name:
+                            description: Name is the Kubernetes name of the resource.
+                            type: string
+                        type: object
+                    type: object
+                  outboundRouteMap:
+                    description: |-
+                      OutboundRouteMap: The resource id of theRouteMap associated with this RoutingConfiguration for outbound advertised
+                      routes.
+                    properties:
+                      reference:
+                        description: 'Reference: Resource ID.'
+                        properties:
+                          armId:
+                            description: |-
+                              ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                              The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                              ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                            pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                            type: string
+                          group:
+                            description: Group is the Kubernetes group of the resource.
+                            type: string
+                          kind:
+                            description: Kind is the Kubernetes kind of the resource.
+                            type: string
+                          name:
+                            description: Name is the Kubernetes name of the resource.
+                            type: string
+                        type: object
+                    type: object
+                  propagatedRouteTables:
+                    description: 'PropagatedRouteTables: The list of RouteTables to
+                      advertise the routes to.'
+                    properties:
+                      ids:
+                        description: 'Ids: The list of resource ids of all the RouteTables.'
+                        items:
+                          description: Reference to another subresource.
+                          properties:
+                            reference:
+                              description: 'Reference: Resource ID.'
+                              properties:
+                                armId:
+                                  description: |-
+                                    ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                    The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                    ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                                  pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                                  type: string
+                                group:
+                                  description: Group is the Kubernetes group of the
+                                    resource.
+                                  type: string
+                                kind:
+                                  description: Kind is the Kubernetes kind of the
+                                    resource.
+                                  type: string
+                                name:
+                                  description: Name is the Kubernetes name of the
+                                    resource.
+                                  type: string
+                              type: object
+                          type: object
+                        type: array
+                      labels:
+                        description: 'Labels: The list of labels.'
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  vnetRoutes:
+                    description: 'VnetRoutes: List of routes that control routing
+                      from VirtualHub into a virtual network connection.'
+                    properties:
+                      staticRoutes:
+                        description: 'StaticRoutes: List of all Static Routes.'
+                        items:
+                          description: List of all Static Routes.
+                          properties:
+                            addressPrefixes:
+                              description: 'AddressPrefixes: List of all address prefixes.'
+                              items:
+                                type: string
+                              type: array
+                            name:
+                              description: 'Name: The name of the StaticRoute that
+                                is unique within a VnetRoute.'
+                              type: string
+                            nextHopIpAddress:
+                              description: 'NextHopIpAddress: The ip address of the
+                                next hop.'
+                              type: string
+                          type: object
+                        type: array
+                      staticRoutesConfig:
+                        description: 'StaticRoutesConfig: Configuration for static
+                          routes on this HubVnetConnection.'
+                        properties:
+                          propagateStaticRoutes:
+                            description: |-
+                              PropagateStaticRoutes: Boolean indicating whether static routes on this connection are automatically propagate to route
+                              tables which this connection propagates to.
+                            type: boolean
+                          vnetLocalRouteOverrideCriteria:
+                            description: |-
+                              VnetLocalRouteOverrideCriteria: Parameter determining whether NVA in spoke vnet is bypassed for traffic with destination
+                              in spoke.
+                            enum:
+                            - Contains
+                            - Equal
+                            type: string
+                        type: object
+                    type: object
+                type: object
+            required:
+            - owner
+            type: object
+          status:
+            properties:
+              allowHubToRemoteVnetTransit:
+                description: 'AllowHubToRemoteVnetTransit: Deprecated: VirtualHub
+                  to RemoteVnet transit to enabled or not.'
+                type: boolean
+              allowRemoteVnetToUseHubVnetGateways:
+                description: 'AllowRemoteVnetToUseHubVnetGateways: Deprecated: Allow
+                  RemoteVnet to use Virtual Hub''s gateways.'
+                type: boolean
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              connectionPolicy:
+                description: 'ConnectionPolicy: The resource id of the ConnectionPolicy
+                  associated with this HubVirtualNetworkConnection.'
+                properties:
+                  id:
+                    description: 'Id: Resource ID.'
+                    type: string
+                type: object
+              enableInternetSecurity:
+                description: 'EnableInternetSecurity: Enable internet security.'
+                type: boolean
+              enableOnlyIPv6Peering:
+                description: 'EnableOnlyIPv6Peering: Enable Only IPv6 Peering for
+                  this connection.'
+                type: boolean
+              etag:
+                description: 'Etag: A unique read-only string that changes whenever
+                  the resource is updated.'
+                type: string
+              id:
+                description: 'Id: Resource ID.'
+                type: string
+              name:
+                description: 'Name: The name of the resource that is unique within
+                  a resource group. This name can be used to access the resource.'
+                type: string
+              provisioningState:
+                description: 'ProvisioningState: The provisioning state of the hub
+                  virtual network connection resource.'
+                type: string
+              remoteVirtualNetwork:
+                description: 'RemoteVirtualNetwork: Reference to the remote virtual
+                  network.'
+                properties:
+                  id:
+                    description: 'Id: Resource ID.'
+                    type: string
+                type: object
+              routingConfiguration:
+                description: 'RoutingConfiguration: The Routing Configuration indicating
+                  the associated and propagated route tables on this connection.'
+                properties:
+                  associatedRouteTable:
+                    description: 'AssociatedRouteTable: The resource id RouteTable
+                      associated with this RoutingConfiguration.'
+                    properties:
+                      id:
+                        description: 'Id: Resource ID.'
+                        type: string
+                    type: object
+                  inboundRouteMap:
+                    description: 'InboundRouteMap: The resource id of the RouteMap
+                      associated with this RoutingConfiguration for inbound learned
+                      routes.'
+                    properties:
+                      id:
+                        description: 'Id: Resource ID.'
+                        type: string
+                    type: object
+                  outboundRouteMap:
+                    description: |-
+                      OutboundRouteMap: The resource id of theRouteMap associated with this RoutingConfiguration for outbound advertised
+                      routes.
+                    properties:
+                      id:
+                        description: 'Id: Resource ID.'
+                        type: string
+                    type: object
+                  propagatedRouteTables:
+                    description: 'PropagatedRouteTables: The list of RouteTables to
+                      advertise the routes to.'
+                    properties:
+                      ids:
+                        description: 'Ids: The list of resource ids of all the RouteTables.'
+                        items:
+                          description: Reference to another subresource.
+                          properties:
+                            id:
+                              description: 'Id: Resource ID.'
+                              type: string
+                          type: object
+                        type: array
+                      labels:
+                        description: 'Labels: The list of labels.'
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  vnetRoutes:
+                    description: 'VnetRoutes: List of routes that control routing
+                      from VirtualHub into a virtual network connection.'
+                    properties:
+                      bgpConnections:
+                        description: 'BgpConnections: The list of references to HubBgpConnection
+                          objects.'
+                        items:
+                          description: Reference to another subresource.
+                          properties:
+                            id:
+                              description: 'Id: Resource ID.'
+                              type: string
+                          type: object
+                        type: array
+                      staticRoutes:
+                        description: 'StaticRoutes: List of all Static Routes.'
+                        items:
+                          description: List of all Static Routes.
+                          properties:
+                            addressPrefixes:
+                              description: 'AddressPrefixes: List of all address prefixes.'
+                              items:
+                                type: string
+                              type: array
+                            name:
+                              description: 'Name: The name of the StaticRoute that
+                                is unique within a VnetRoute.'
+                              type: string
+                            nextHopIpAddress:
+                              description: 'NextHopIpAddress: The ip address of the
+                                next hop.'
+                              type: string
+                          type: object
+                        type: array
+                      staticRoutesConfig:
+                        description: 'StaticRoutesConfig: Configuration for static
+                          routes on this HubVnetConnection.'
+                        properties:
+                          propagateStaticRoutes:
+                            description: |-
+                              PropagateStaticRoutes: Boolean indicating whether static routes on this connection are automatically propagate to route
+                              tables which this connection propagates to.
+                            type: boolean
+                          vnetLocalRouteOverrideCriteria:
+                            description: |-
+                              VnetLocalRouteOverrideCriteria: Parameter determining whether NVA in spoke vnet is bypassed for traffic with destination
+                              in spoke.
+                            type: string
+                        type: object
+                    type: object
+                type: object
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
