@@ -207,7 +207,7 @@ func TestAzureSQLEntraUser(t *testing.T) {
 	}
 	changed = byAlias.DeepCopy()
 	changed.Spec.AADUser = nil
-	changed.Spec.LocalUser = &sqlv1.LocalUserSpec{ServerAdminUsername: sqlAdmin}
+	changed.Spec.LocalUser = &sqlv1.LocalUserSpec{ServerAdminUsername: sqlAdmin, ServerAdminPassword: &genruntime.SecretReference{Name: "admin", Key: "password"}, Password: &genruntime.SecretReference{Name: "app-user", Key: "password"}}
 	if err := k8s.Update(ctx, changed); err == nil || !strings.Contains(err.Error(), "cannot change from aadUser to localUser") {
 		t.Fatalf("changing to a local user: %v", err)
 	}
@@ -319,7 +319,7 @@ func TestAzureSQLUserValidation(t *testing.T) {
 	both := &sqlv1.User{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "both"},
 		Spec: sqlv1.UserSpec{Owner: &genruntime.KnownResourceReference{Name: "appdb"},
-			AADUser: &sqlv1.AADUserSpec{}, LocalUser: &sqlv1.LocalUserSpec{ServerAdminUsername: sqlAdmin}},
+			AADUser: &sqlv1.AADUserSpec{}, LocalUser: &sqlv1.LocalUserSpec{ServerAdminUsername: sqlAdmin, ServerAdminPassword: &genruntime.SecretReference{Name: "admin", Key: "password"}, Password: &genruntime.SecretReference{Name: "app-user", Key: "password"}}},
 	}
 	if err := k8s.Create(ctx, both); err == nil || !strings.Contains(err.Error(), "exactly one of localUser and aadUser") {
 		t.Fatalf("both: want a refusal, got %v", err)
