@@ -201,6 +201,14 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   above. Not modelled: scale units, the routes a hub learns, a connection's
   routing configuration checked against the hub's route tables, internet
   security and FastPath, and the time a real gateway takes.
+- AKS and fleet managed namespaces and node pool snapshots
+  (`Microsoft.ContainerService/managedClusters/managedNamespaces`,
+  `fleets/managedNamespaces`, `snapshots`;
+  `pkg/fakecloud/arm/containerservice.go`): a managed namespace's name is a
+  DNS-1123 label and not `kube-system`, `kube-public` or `kube-node-lease`;
+  a snapshot names an agent pool that exists. Not modelled: the namespace
+  in the cluster, quotas and network policies in effect, propagation to a
+  fleet's members, adoption, and the error codes (the fake's own).
 - Maintenance configuration assignments
   (`Microsoft.Maintenance/configurationAssignments` at any scope;
   `pkg/fakecloud/arm/maintenance.go`): an assignment names a maintenance
