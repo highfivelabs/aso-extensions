@@ -627,6 +627,75 @@ spec:
   owner: {name: spokes}
   resourceReference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/virtualNetworks/$1-spoke}
 ---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersConnectivityConfiguration
+metadata: {name: hub-spoke, namespace: $1}
+spec:
+  owner: {name: avnm}
+  connectivityTopology: HubAndSpoke
+  hubs:
+  - resourceReference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/virtualNetworks/$1-spoke}
+    resourceType: Microsoft.Network/virtualNetworks
+  appliesToGroups:
+  - networkGroupReference: {group: network.azure.hfl.dev, kind: NetworkManagersNetworkGroup, name: spokes}
+    groupConnectivity: None
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersSecurityAdminConfiguration
+metadata: {name: baseline, namespace: $1}
+spec:
+  owner: {name: avnm}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersSecurityAdminConfigurationsRuleCollection
+metadata: {name: deny-mgmt, namespace: $1}
+spec:
+  owner: {name: baseline}
+  appliesToGroups: [{networkGroupReference: {group: network.azure.hfl.dev, kind: NetworkManagersNetworkGroup, name: spokes}}]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule
+metadata: {name: deny-rdp, namespace: $1}
+spec:
+  owner: {name: deny-mgmt}
+  adminRule:
+    kind: Custom
+    protocol: Tcp
+    direction: Inbound
+    access: Deny
+    priority: 10
+    sources: [{addressPrefix: Internet, addressPrefixType: ServiceTag}]
+    destinationPortRanges: ["3389"]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule
+metadata: {name: default, namespace: $1}
+spec:
+  owner: {name: deny-mgmt}
+  defaultAdminRule: {kind: Default, flag: AllowVnetInbound}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersSecurityUserConfiguration
+metadata: {name: team, namespace: $1}
+spec:
+  owner: {name: avnm}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersSecurityUserConfigurationsRuleCollection
+metadata: {name: app, namespace: $1}
+spec:
+  owner: {name: team}
+  appliesToGroups: [{networkGroupReference: {group: network.azure.hfl.dev, kind: NetworkManagersNetworkGroup, name: spokes}}]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersSecurityUserConfigurationsRuleCollectionsRule
+metadata: {name: https, namespace: $1}
+spec:
+  owner: {name: app}
+  protocol: Tcp
+  direction: Inbound
+  destinationPortRanges: ["443"]
+---
 apiVersion: management.azure.hfl.dev/v20230401
 kind: ManagementGroup
 metadata: {name: platform, namespace: $1}
@@ -916,6 +985,26 @@ wait_for 90 "team-a's NetworkManagersNetworkGroupsStaticMember Ready" ready netw
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/networkGroups/spokes/staticMembers/spoke 201" \
   || fail "the fake resource manager saw no static member in team-a's network group"
 pass "team-a NetworkManagersNetworkGroupsStaticMember Ready: a virtual network by ARM ID"
+wait_for 90 "team-a's NetworkManagersConnectivityConfiguration Ready" ready networkmanagersconnectivityconfigurations.network.azure.hfl.dev team-a hub-spoke
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/connectivityConfigurations/hub-spoke 201" \
+  || fail "the fake resource manager saw no connectivity configuration on team-a's network manager"
+pass "team-a NetworkManagersConnectivityConfiguration Ready: hub and spoke, the hub by ARM ID, our network group by object"
+wait_for 90 "team-a's NetworkManagersSecurityAdminConfiguration Ready" ready networkmanagerssecurityadminconfigurations.network.azure.hfl.dev team-a baseline
+pass "team-a NetworkManagersSecurityAdminConfiguration Ready: owned by our NetworkManager"
+wait_for 90 "team-a's NetworkManagersSecurityAdminConfigurationsRuleCollection Ready" ready networkmanagerssecurityadminconfigurationsrulecollections.network.azure.hfl.dev team-a deny-mgmt
+pass "team-a NetworkManagersSecurityAdminConfigurationsRuleCollection Ready: for our network group by object"
+wait_for 90 "team-a's custom admin rule Ready" ready networkmanagerssecurityadminconfigurationsrulecollectionsrules.network.azure.hfl.dev team-a deny-rdp
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/securityAdminConfigurations/baseline/ruleCollections/deny-mgmt/rules/deny-rdp 201" \
+  || fail "the fake resource manager saw no custom admin rule"
+pass "team-a NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule Ready: a Custom rule"
+wait_for 90 "team-a's default admin rule Ready" ready networkmanagerssecurityadminconfigurationsrulecollectionsrules.network.azure.hfl.dev team-a default
+pass "team-a NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule Ready: a Default rule"
+wait_for 90 "team-a's NetworkManagersSecurityUserConfiguration Ready" ready networkmanagerssecurityuserconfigurations.network.azure.hfl.dev team-a team
+pass "team-a NetworkManagersSecurityUserConfiguration Ready: owned by our NetworkManager"
+wait_for 90 "team-a's NetworkManagersSecurityUserConfigurationsRuleCollection Ready" ready networkmanagerssecurityuserconfigurationsrulecollections.network.azure.hfl.dev team-a app
+pass "team-a NetworkManagersSecurityUserConfigurationsRuleCollection Ready: for our network group by object"
+wait_for 90 "team-a's NetworkManagersSecurityUserConfigurationsRuleCollectionsRule Ready" ready networkmanagerssecurityuserconfigurationsrulecollectionsrules.network.azure.hfl.dev team-a https
+pass "team-a NetworkManagersSecurityUserConfigurationsRuleCollectionsRule Ready: owned by our rule collection"
 wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
 pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
 [[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
@@ -1029,6 +1118,16 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er 200" \
   || fail "the fake resource manager saw no delete of the ExpressRoute gateway"
 pass "the ExpressRoute gateway and its connection are deleted in Resource Manager"
+for kind_name in networkmanagerssecurityuserconfigurationsrulecollectionsrules/https networkmanagerssecurityuserconfigurationsrulecollections/app networkmanagerssecurityuserconfigurations/team networkmanagerssecurityadminconfigurationsrulecollectionsrules/default networkmanagerssecurityadminconfigurationsrulecollectionsrules/deny-rdp networkmanagerssecurityadminconfigurationsrulecollections/deny-mgmt networkmanagerssecurityadminconfigurations/baseline networkmanagersconnectivityconfigurations/hub-spoke; do
+  kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
+done
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/securityAdminConfigurations/baseline/ruleCollections/deny-mgmt/rules/deny-rdp 200" \
+  || fail "the fake resource manager saw no delete of the custom admin rule"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/securityUserConfigurations/team 200" \
+  || fail "the fake resource manager saw no delete of the security user configuration"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/connectivityConfigurations/hub-spoke 200" \
+  || fail "the fake resource manager saw no delete of the connectivity configuration"
+pass "the network manager's connectivity, security admin and security user configurations, rule collections and rules are deleted in Resource Manager"
 for kind_name in networkmanagersnetworkgroupsstaticmembers/spoke networkmanagersnetworkgroups/spokes networkmanagersscopeconnections/partner networkmanagerconnections/avnm-mg networkmanagerconnections/avnm-sub networkmanagers/avnm; do
   kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
 done
