@@ -38,6 +38,9 @@
 // children a parent's PUT keeps or deletes, authorization keys redeemed
 // across subscriptions, one gateway per hub).
 //
+// AKS and fleet managed namespaces and node pool snapshots are checked too
+// (containerservice.go: namespace names, the agent pool a snapshot is of).
+//
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
 package arm
@@ -289,6 +292,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkMaintenance(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkContainerService(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

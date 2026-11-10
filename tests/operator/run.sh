@@ -130,7 +130,7 @@ kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fake
 kubectl -n fake-cloud create secret tls fakesql-tls --cert "${OUT}/fixtures/fakesql.crt" --key "${OUT}/fixtures/fakesql.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakesql-principals --from-literal=team-a="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" \
   --from-literal=team-b="${CLIENT_B}=system:serviceaccount:team-b:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/team-a-hub,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualHubs/team-b-hub,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/azureFirewalls/team-a-fw,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/azureFirewalls/team-b-fw,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/managedClusters/team-a-aks,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/managedClusters/team-a-aks/agentPools/system,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/fleets/team-a-fleet,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/team-a-hub,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualHubs/team-b-hub,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/azureFirewalls/team-a-fw,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/azureFirewalls/team-b-fw,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
@@ -263,6 +263,22 @@ apiVersion: sql.azure.com/v20250101storage
 kind: ServersDatabase
 metadata: {name: appdb, namespace: $1}
 spec: {azureName: appdb, owner: {name: sql}}
+---
+apiVersion: containerservice.azure.com/v20260501storage
+kind: ManagedCluster
+metadata:
+  name: aks
+  namespace: $1
+  annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.ContainerService/managedClusters/$1-aks}
+spec: {azureName: $1-aks, owner: {name: rg}}
+---
+apiVersion: containerservice.azure.com/v1api20250301storage
+kind: Fleet
+metadata:
+  name: fleet
+  namespace: $1
+  annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.ContainerService/fleets/$1-fleet}
+spec: {azureName: $1-fleet, owner: {name: rg}}
 EOF
   local now; now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
   local cond="{\"type\":\"Ready\",\"status\":\"True\",\"severity\":\"\",\"reason\":\"Succeeded\",\"lastTransitionTime\":\"${now}\",\"observedGeneration\":1}"
@@ -285,6 +301,10 @@ EOF
   kubectl -n "$1" patch servers.sql.azure.com sql --subresource=status --type=merge \
     -p "{\"status\":{\"fullyQualifiedDomainName\":\"fakesql.fake-cloud.svc\",\"conditions\":[${cond}]}}" >/dev/null
   kubectl -n "$1" patch serversdatabases.sql.azure.com appdb --subresource=status --type=merge \
+    -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
+  kubectl -n "$1" patch managedclusters.containerservice.azure.com aks --subresource=status --type=merge \
+    -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
+  kubectl -n "$1" patch fleets.containerservice.azure.com fleet --subresource=status --type=merge \
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl apply -f - <<EOF
 apiVersion: dbforpostgresql.azure.hfl.dev/v1
@@ -1259,6 +1279,41 @@ kubectl -n team-a delete managementgroups.management.azure.hfl.dev platform --ti
 logged fakearm "request DELETE /providers/Microsoft.Management/managementGroups/team-a-platform 200" \
   || fail "the fake resource manager saw no delete of the management group"
 pass "the management group and its subscription placement are deleted in Resource Manager"
+
+step "team-a: a managed namespace of the AKS cluster and a node pool snapshot (containerservice.azure.hfl.dev)"
+aks_rg="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService"
+kubectl apply -f - <<EOF
+apiVersion: containerservice.azure.hfl.dev/v20260501
+kind: ManagedClustersManagedNamespace
+metadata: {name: payments, namespace: team-a}
+spec:
+  owner: {name: aks}
+  location: westus
+  properties:
+    labels: {team: a}
+    defaultResourceQuota: {cpuRequest: "1", memoryLimit: 2Gi}
+    defaultNetworkPolicy: {ingress: AllowSameNamespace, egress: AllowAll}
+---
+apiVersion: containerservice.azure.hfl.dev/v20260501
+kind: Snapshot
+metadata: {name: system-pool, namespace: team-a}
+spec:
+  owner: {name: rg}
+  location: westus
+  creationData:
+    sourceResourceReference: {armId: ${aks_rg}/managedClusters/team-a-aks/agentPools/system}
+EOF
+wait_for 120 "team-a's ManagedClustersManagedNamespace Ready" ready managedclustersmanagednamespaces.containerservice.azure.hfl.dev team-a payments
+logged fakearm "request PUT ${aks_rg}/managedClusters/team-a-aks/managedNamespaces/payments 201" || fail "the fake resource manager saw no managed namespace made on ASO's ManagedCluster"
+pass "team-a ManagedClustersManagedNamespace Ready"
+wait_for 120 "team-a's Snapshot Ready" ready snapshots.containerservice.azure.hfl.dev team-a system-pool
+logged fakearm "request PUT ${aks_rg}/snapshots/system-pool 201" || fail "the fake resource manager saw no snapshot made"
+pass "team-a Snapshot Ready"
+kubectl -n team-a delete managedclustersmanagednamespaces.containerservice.azure.hfl.dev payments --timeout=120s
+kubectl -n team-a delete snapshots.containerservice.azure.hfl.dev system-pool --timeout=120s
+logged fakearm "request DELETE ${aks_rg}/managedClusters/team-a-aks/managedNamespaces/payments 200" || fail "the fake resource manager saw no delete of the managed namespace"
+logged fakearm "request DELETE ${aks_rg}/snapshots/system-pool 200" || fail "the fake resource manager saw no delete of the snapshot"
+pass "the managed namespace and the snapshot are deleted in Resource Manager"
 kubectl -n team-a delete tagsets.resources.azure.hfl.dev rg-tags --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Resources/tags/default 200" \
   || fail "the fake resource manager saw no delete of the tags"
