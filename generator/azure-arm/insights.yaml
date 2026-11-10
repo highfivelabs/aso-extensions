@@ -11,7 +11,29 @@ typeFilters:
       default, which removes the types their neighbours refer to and breaks the
       loading of the spec (as in ASO's own insights.yaml).
 
+  - action: include
+    group: insights
+    version: v20160301
+    because: the only stable version of activity log profiles (logprofiles, 2016-03-01)
+  - action: include
+    group: insights
+    version: v20201120
+    because: the newest stable version of workbook templates
+
 groupModelConfiguration:
+  2016-03-01:
+    LogProfile:
+      $exportAs: LogProfile
+      $supportedFrom: v0.1.0
+    LogProfileProperties:
+      StorageAccountId:
+        $referenceType: arm # the storage account the activity log is archived to
+      ServiceBusRuleId:
+        $referenceType: arm # an Event Hubs namespace's authorization rule the activity log streams to
+  2020-11-20:
+    WorkbookTemplate:
+      $exportAs: WorkbookTemplate
+      $supportedFrom: v0.1.0
   2021-09-01:
     PrivateLinkScope:
       $exportAs: PrivateLinkScope

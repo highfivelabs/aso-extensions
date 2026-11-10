@@ -32,6 +32,10 @@ import (
 	devtestlab_v20180915 "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915"
 	devtestlab_v20180915s "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915/storage"
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
+	insights_v20160301 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301"
+	insights_v20160301s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301/storage"
+	insights_v20201120 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20201120"
+	insights_v20201120s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20201120/storage"
 	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
 	insights_v20210901s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901/storage"
 	maintenance_customizations "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/customizations"
@@ -225,6 +229,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Schedule)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20160301.LogProfile)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20201120.WorkbookTemplate)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
@@ -555,6 +561,10 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601s.Export)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20160301.LogProfile)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20160301s.LogProfile)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20201120.WorkbookTemplate)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20201120s.WorkbookTemplate)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScope)},
@@ -740,6 +750,10 @@ func createScheme() *runtime.Scheme {
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
+	_ = insights_v20160301.AddToScheme(scheme)
+	_ = insights_v20160301s.AddToScheme(scheme)
+	_ = insights_v20201120.AddToScheme(scheme)
+	_ = insights_v20201120s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
 	_ = insights_v20210901s.AddToScheme(scheme)
 	_ = maintenance_v20230401.AddToScheme(scheme)
@@ -786,9 +800,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &containerregistry_customizations.RegistriesWebhookExtension{})
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
+	result = append(result, &insights_customizations.LogProfileExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
+	result = append(result, &insights_customizations.WorkbookTemplateExtension{})
 	result = append(result, &maintenance_customizations.ConfigurationAssignmentExtension{})
 	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})
 	result = append(result, &management_customizations.ManagementGroupExtension{})
