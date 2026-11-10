@@ -26,6 +26,7 @@ Not affiliated with or endorsed by Microsoft.
 | `authorization.azure.hfl.dev/v20260701` `PolicyDefinition`, `PolicySetDefinition`, `PolicyAssignment`; `authorization.azure.hfl.dev/v20260101preview` `PolicyExemption` | Azure Policy: custom definitions and initiatives (set definitions) kept at a management group or a subscription, assignments and exemptions at a management group, subscription, resource group or resource. Each is an extension resource: its `owner` is our `ManagementGroup`, any ASO resource or an ARM ID, and Azure decides which scopes it accepts. A definition, an assignment's definition and an exemption's assignment are named by object or ARM ID (a built-in definition by its ARM ID); `policyRule`, `metadata` and parameter values are free-form JSON. Generated like the Container Apps kinds, with a generator patch for a resource the spec defines at several scopes (`UPSTREAM.md`, 0006). Exemptions exist only in preview API versions | ours; ASO issues [#4975](https://github.com/Azure/azure-service-operator/issues/4975) and [#2767](https://github.com/Azure/azure-service-operator/issues/2767), open, no pull request (2026-11-09) |
 | `policyinsights.azure.hfl.dev/v20241001` `PolicyRemediation`, `PolicyAttestation` | Azure Policy remediation tasks (deploy or modify what an assignment finds non-compliant) at a management group, subscription, resource group or resource, and attestations (the compliance state of a resource under a `manual` policy) at a subscription, resource group or resource. Extension resources like the policy kinds; each names its assignment by object or ARM ID. The attestation's responsible person is `properties_owner`, since `owner` is the Kubernetes owner. Generated with the same generator patch (0006) | ours; ASO issue [#2767](https://github.com/Azure/azure-service-operator/issues/2767) (remediation), open, no pull request (2026-11-09) |
 | `authorization.azure.hfl.dev/v20201001` `RoleEligibilityScheduleRequest`, `RoleAssignmentScheduleRequest`, `RoleManagementPolicyAssignment` | Privileged Identity Management: make a principal eligible for a role at a scope (an Entra ID P2 feature), activate or remove an eligibility or an assignment, and link a role management policy to a scope and role. Extension resources (owner any ASO resource, our `ManagementGroup` or an ARM ID). A built-in role is named by `roleDefinitionReference.wellKnownName` (`Reader`) or any role by ARM ID; the principal by `principalId` or from a ConfigMap. A request's name must be a GUID: an empty `azureName` gets a stable UUID (or a random one, `operatorSpec.namingConvention: random`), recorded in the object when it is first reconciled. A request cannot be deleted in Azure: give it `serviceoperator.azure.com/reconcile-policy: detach-on-delete`, and undo it with another request (`AdminRemove`, `SelfDeactivate`). Generated; the eligibility request's configuration and extension copied from ASO pull request #5638 | ours, copied from open ASO PR [#5638](https://github.com/Azure/azure-service-operator/pull/5638) (head `5d0e686e`, 2026-11-09); the other two generated the same way |
+| `network.azure.hfl.dev/v20260301` `VirtualNetworkGatewayConnection`, `LocalNetworkGateway` | site-to-site VPN: the on-premises side (its public IP or FQDN, address space and BGP settings) and a gateway connection (IPsec to a local gateway, `Vnet2Vnet` between two gateways, or ExpressRoute to a circuit peering), with its IPsec policies, traffic selectors, NAT rules and BGP; ASO has the `VirtualNetworkGateway` and neither of these. Owned by a resource group; the gateways are references (ASO's gateway by ARM ID, our local gateway by object); the shared key and an ExpressRoute authorization key come from Secrets; generated | ours; ASO issue [#4486](https://github.com/Azure/azure-service-operator/issues/4486) open, no pull request |
 | `authorization.azure.hfl.dev/v1` `ManagementLock` | a management lock (`Microsoft.Authorization/locks`, `CanNotDelete` or `ReadOnly`, with notes and its owners' application IDs) on a subscription, resource group or resource, owned by any ASO resource or an ARM ID; the first plain ARM kind here (`docs/plan.md`, section 1) | ours; ASO issue [#3756](https://github.com/Azure/azure-service-operator/issues/3756), open, needs a design for the lock's four scopes |
 
 ## Coverage
@@ -33,13 +34,13 @@ Not affiliated with or endorsed by Microsoft.
 <!-- coverage:start -->
 ![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)
 
-Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 1.8%; 81.8% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
+Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 2.4%; 81.2% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
 ![Coverage by category](docs/coverage/bars/_categories.svg)
 
 | Category | Services | Resources | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 4.6% | 52.2% |
+| platform-foundation | 18 | 246 | 43.2% | 10.0% | 46.8% |
 | security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 33.1% | 3.7% | 63.2% |
 | other | 230 | 1,262 | 0.5% | 0.0% | 99.5% |
@@ -48,7 +49,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 
 | Tier | Services | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 3.1% | 53.9% |
+| 1 | 17 | 43.0% | 6.4% | 50.7% |
 | 2 | 18 | 26.5% | 6.8% | 66.7% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% |
 
@@ -64,7 +65,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 0.0% | 100.0% |
 | 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 0.0% | 100.0% |
 | 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 2.0% | 25.5% |
-| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 0.3% | 57.4% |
+| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 5.1% | 52.6% |
 | 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 0.0% | 59.8% |
 | 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 0.0% | 16.7% |
 | 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 40.2% | 43.4% |
