@@ -81,7 +81,9 @@ jobs:
         run: |
           mkdir -p ~/tools/bin
           echo "${HOME}/tools/bin" >> "${GITHUB_PATH}"
-          [ -x ~/tools/bin/task ] || GOBIN="${HOME}/tools/bin" go install "github.com/go-task/task/v3/cmd/task@${TASK_VERSION}"
+          # The tools need a newer Go than go.mod's; GOTOOLCHAIN=auto fetches
+          # it for these installs only (the repository builds with go.mod's).
+          [ -x ~/tools/bin/task ] || GOTOOLCHAIN=auto GOBIN="${HOME}/tools/bin" go install "github.com/go-task/task/v3/cmd/task@${TASK_VERSION}"
 
       - name: task tools
         run: task tools
@@ -140,6 +142,9 @@ jobs:
           mkdir -p ~/tools/bin
           echo "${HOME}/tools/bin" >> "${GITHUB_PATH}"
           export GOBIN="${HOME}/tools/bin"
+          # The tools need a newer Go than go.mod's; GOTOOLCHAIN=auto fetches
+          # it for these installs only (the repository builds with go.mod's).
+          export GOTOOLCHAIN=auto
           [ -x ~/tools/bin/task ] || go install "github.com/go-task/task/v3/cmd/task@${TASK_VERSION}"
           [ -x ~/tools/bin/kind ] || go install "sigs.k8s.io/kind@${KIND_VERSION}"
           [ -x ~/tools/bin/ko ] || go install "github.com/google/ko@${KO_VERSION}"

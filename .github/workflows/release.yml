@@ -54,7 +54,7 @@ jobs:
 
       - name: Install ko
         run: |
-          GOBIN="${HOME}/tools/bin" go install "github.com/google/ko@${KO_VERSION}"
+          GOTOOLCHAIN=auto GOBIN="${HOME}/tools/bin" go install "github.com/google/ko@${KO_VERSION}"
           echo "${HOME}/tools/bin" >> "${GITHUB_PATH}"
 
       - id: auth
