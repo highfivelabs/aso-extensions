@@ -48,7 +48,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 
 | Category | Services | Resources | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 21.6% | 35.2% |
+| platform-foundation | 18 | 246 | 43.2% | 21.9% | 34.9% |
 | security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 33.1% | 3.8% | 63.2% |
 | other | 230 | 1,262 | 0.5% | 0.0% | 99.5% |
@@ -57,7 +57,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 
 | Tier | Services | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 13.3% | 43.7% |
+| 1 | 17 | 43.0% | 13.5% | 43.5% |
 | 2 | 18 | 26.5% | 6.9% | 66.6% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% |
 
@@ -73,7 +73,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 100.0% | 0.0% |
 | 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 21.3% | 78.7% |
 | 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 2.0% | 25.5% |
-| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 14.3% | 43.5% |
+| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 14.6% | 43.2% |
 | 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 0.0% | 59.8% |
 | 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 0.0% | 16.7% |
 | 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 40.2% | 43.4% |
