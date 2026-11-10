@@ -89,8 +89,9 @@ and the fake should refuse a DELETE (Azure does) so that is what is tested.
 Then generate `roleAssignmentScheduleRequests` and
 `roleManagementPolicyAssignments` the same way.
 
-Not in the catalog's order but waiting: Azure SQL Entra users (a1, ASO PR
-#5104, open question 5) and Entra directory roles (c15, "if wanted").
+Not in the catalog's order, both answered 2026-11-10: Azure SQL Entra users
+(a1, copy ASO PR #5104 and ship it) and Entra directory roles (c15, build
+unless ASO's `entra` group has them).
 
 For every kind, before building: recheck upstream read-only (`gh release
 list`, `gh api repos/Azure/azure-service-operator/compare/<pin>...main`,
@@ -469,18 +470,18 @@ That is a Spot VM, where both checks run (the operator e2e too, since
 ## Open decisions (the builder's)
 
 From `docs/plan.md` §8 and the pull requests; none blocks the queue.
-1. **One CRD version, no conversion webhook** for generated kinds: assumed,
-   to revisit before the repository goes public (§2 says what the revisit
-   involves: a webhook, or per-version kinds).
-2. **Sharing `taskfiles/common.yml` across repositories**: a vendored copy
+Answered 2026-11-10 (`docs/plan.md` §8, the summary at its top): per-version
+kinds over a conversion webhook, avoiding a second API version; Azure SQL
+Entra users (copy #5104 and ship it); Entra directory roles (build unless ASO
+has them); keep `User` and `Export`; the opt-in Secret writer confirmed; the
+shortened network manager names approved; do not wait for upstream releases.
+Still open:
+1. **Sharing `taskfiles/common.yml` across repositories**: a vendored copy
    with a sync script is recommended (PR #7); the builder has not decided.
-3. Open questions 1 to 5 and 7 of §8: licence (MIT vs Apache-2.0), offering b1
+2. Open questions 1 to 4 of §8: licence (MIT vs Apache-2.0), offering b1
    and b2 upstream, relaxed workload identity as the default, reading Secrets
-   cluster-wide, Azure SQL Entra users (a1), the `User` kind name.
-4. **May the manager write Secrets** (§8 question 9): the opt-in
-   `config/secret-writer` is built (option b, recommended); whether the
-   default install should grant it (option a) is the builder's.
-5. **Webhook-less validation**: generated kinds lack ASO's checks (reference
+   cluster-wide.
+3. **Webhook-less validation**: generated kinds lack ASO's checks (reference
    format, immutable `owner` and `azureName`). If wanted, add CEL rules by a
    generator patch; not done.
 
