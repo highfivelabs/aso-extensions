@@ -6,7 +6,7 @@ typeFilters:
   - action: include
     group: network
     version: v20260301
-    because: the newest stable version, for site-to-site VPN connections and local network gateways (foundation row 8), ExpressRoute (row 9) and Virtual WAN (row 10); ASO has none of these kinds
+    because: the newest stable version, for site-to-site VPN connections and local network gateways (foundation row 8), ExpressRoute (row 9) and Virtual WAN with its VPN gateways (row 10); ASO has none of these kinds
 
 groupModelConfiguration:
   2025-05-01:
@@ -92,6 +92,63 @@ groupModelConfiguration:
     VirtualHubs_IpConfiguration:
       $exportAs: VirtualHubsIpConfiguration
       $supportedFrom: v0.1.0
+    VpnGateway:
+      $exportAs: VpnGateway
+      $supportedFrom: v0.1.0
+    VpnGateways_VpnConnection:
+      $exportAs: VpnGatewaysVpnConnection
+      $supportedFrom: v0.1.0
+    VpnGateways_NatRule:
+      $exportAs: VpnGatewaysNatRule
+      $supportedFrom: v0.1.0
+    VpnSite:
+      $exportAs: VpnSite
+      $supportedFrom: v0.1.0
+    VpnServerConfiguration:
+      $exportAs: VpnServerConfiguration
+      $supportedFrom: v0.1.0
+    P2sVpnGateway:
+      $exportAs: P2sVpnGateway
+      $supportedFrom: v0.1.0
+    VpnGatewayProperties:
+      Connections:
+        $resourceLifecycleOwnedByParent: VpnGateway # VPN connections, kept on a gateway's PUT by its extension, as a circuit keeps its peerings
+      NatRules:
+        $resourceLifecycleOwnedByParent: VpnGateway # NAT rules, kept the same way
+    VpnConnection:
+      Id:
+        $referenceType: simple # a connection's own ID, in the gateway's ARM payload only (copied from Azure by the gateway's extension)
+    VpnGatewayNatRule:
+      Id:
+        $referenceType: simple # the same, for a NAT rule
+    # Site links, link connections and policy groups are embedded in their
+    # parents (a site, a connection, a server configuration) and stay there:
+    # the spec marks them resources (SubResourceModel), so without
+    # $isResource: false the generator reduces each to its ID.
+    VpnSiteLink:
+      $isResource: false
+      Id:
+        $referenceType: simple # a site link's own ID (Azure has no PUT for site links)
+    VpnSiteLink_STATUS:
+      $isResource: false
+    VpnSiteLinkConnection:
+      $isResource: false
+      Id:
+        $referenceType: simple # a link connection's own ID (Azure has no PUT for link connections)
+    VpnSiteLinkConnection_STATUS:
+      $isResource: false
+    VpnServerConfigurationPolicyGroup:
+      $isResource: false
+      Id:
+        $referenceType: simple # a policy group's own ID (embedded in the server configuration)
+    VpnServerConfigurationPolicyGroup_STATUS:
+      $isResource: false
+    P2SConnectionConfiguration:
+      Id:
+        $referenceType: simple # a point-to-site connection configuration's own ID (embedded in the gateway)
+    VpnSiteProperties:
+      SiteKey:
+        $importSecretMode: required # the site's key, a credential
     VirtualHubProperties:
       VirtualHubRouteTableV2s:
         $resourceLifecycleOwnedByParent: VirtualHub # route tables (routeTables), kept on a hub's PUT by its extension, as a circuit keeps its peerings
@@ -166,6 +223,22 @@ groupModelConfiguration:
         $importSecretMode: required # the key of an ExpressRoute circuit authorization, a credential (sharedKey is x-ms-secret in the spec already)
 
 typeTransformers:
+  # A VPN connection's own sharedKey is deprecated in the spec ("no more
+  # used"); each link connection carries its key (x-ms-secret, a Secret
+  # reference). $importSecretMode on it is never consumed by the generator,
+  # and a plain string would put a key in the spec, so it is removed.
+  - group: network
+    version: v20260301
+    name: VpnConnectionProperties
+    property: SharedKey
+    remove: true
+    because: deprecated ("no more used"); the link connections' keys are Secret references
+  - group: network
+    version: v20260301
+    name: VpnConnectionProperties_STATUS
+    property: SharedKey
+    remove: true
+    because: a key, deprecated; not shown in the status
   # Keys Azure makes are exported to a Secret ($azureGeneratedSecrets above,
   # generator/_extensions/network/customizations), not kept in the spec,
   # which could only send a key Azure ignores, or the status, which anyone
@@ -202,7 +275,7 @@ typeTransformers:
     because: a key; exported to a Secret, not shown in the status
   - group: network
     version: v20260301
-    name: ExpressRouteCircuits_Authorization_Spec;ExpressRouteCircuits_Peering_Spec;ExpressRouteCircuits_Peerings_Connection_Spec;ExpressRoutePorts_Authorization_Spec;ExpressRouteGateways_ExpressRouteConnection_Spec;VirtualHubs_HubVirtualNetworkConnection_Spec;VirtualHubs_RouteTable_Spec;VirtualHubs_BgpConnection_Spec;VirtualHubs_RoutingIntent_Spec;VirtualHubs_HubRouteTable_Spec;VirtualHubs_IpConfiguration_Spec
+    name: ExpressRouteCircuits_Authorization_Spec;ExpressRouteCircuits_Peering_Spec;ExpressRouteCircuits_Peerings_Connection_Spec;ExpressRoutePorts_Authorization_Spec;ExpressRouteGateways_ExpressRouteConnection_Spec;VirtualHubs_HubVirtualNetworkConnection_Spec;VirtualHubs_RouteTable_Spec;VirtualHubs_BgpConnection_Spec;VirtualHubs_RoutingIntent_Spec;VirtualHubs_HubRouteTable_Spec;VirtualHubs_IpConfiguration_Spec;VpnGateways_VpnConnection_Spec;VpnGateways_NatRule_Spec
     property: Id
     remove: true
     because: a child resource's own ARM ID (the spec's SubResource), which Azure sets; ASO's subnets and routes have none in their spec either

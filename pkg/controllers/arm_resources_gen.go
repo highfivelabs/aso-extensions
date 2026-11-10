@@ -325,6 +325,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePort)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.P2sVpnGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHub)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsBgpConnection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsHubRouteTable)})
@@ -357,6 +358,70 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualWan)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VpnGateway)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VpnGatewaysNatRule)})
+	result = append(result, &registration.StorageType{
+		Obj: new(network_v20260301.VpnGatewaysVpnConnection),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.vpnLinkConnections.sharedKey",
+				Func: indexNetworkVpnGatewaysVpnConnectionSharedKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.vpnLinkConnections.sharedKey",
+					},
+					&network_v20260301.VpnGatewaysVpnConnectionList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(network_v20260301.VpnServerConfiguration),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.radiusServerSecret",
+				Func: indexNetworkVpnServerConfigurationRadiusServerSecret,
+			},
+			{
+				Key:  ".spec.radiusServers.radiusServerSecret",
+				Func: indexNetworkVpnServerConfigurationRadiusServersRadiusServerSecret,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.radiusServerSecret",
+						".spec.radiusServers.radiusServerSecret",
+					},
+					&network_v20260301.VpnServerConfigurationList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(network_v20260301.VpnSite),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.siteKey",
+				Func: indexNetworkVpnSiteSiteKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.siteKey",
+					},
+					&network_v20260301.VpnSiteList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPack)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesDataExport)})
@@ -527,6 +592,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
+		&registration.KnownType{Obj: new(network_v20260301.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHub)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsBgpConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsHubRouteTable)},
@@ -535,7 +601,12 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsRouteTable)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsRoutingIntent)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualNetworkGatewayConnection)},
-		&registration.KnownType{Obj: new(network_v20260301.VirtualWan)})
+		&registration.KnownType{Obj: new(network_v20260301.VirtualWan)},
+		&registration.KnownType{Obj: new(network_v20260301.VpnGateway)},
+		&registration.KnownType{Obj: new(network_v20260301.VpnGatewaysNatRule)},
+		&registration.KnownType{Obj: new(network_v20260301.VpnGatewaysVpnConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.VpnServerConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301.VpnSite)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuit)},
@@ -547,6 +618,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
+		&registration.KnownType{Obj: new(network_v20260301s.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHub)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsBgpConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsHubRouteTable)},
@@ -555,7 +627,12 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsRouteTable)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsRoutingIntent)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualNetworkGatewayConnection)},
-		&registration.KnownType{Obj: new(network_v20260301s.VirtualWan)})
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualWan)},
+		&registration.KnownType{Obj: new(network_v20260301s.VpnGateway)},
+		&registration.KnownType{Obj: new(network_v20260301s.VpnGatewaysNatRule)},
+		&registration.KnownType{Obj: new(network_v20260301s.VpnGatewaysVpnConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.VpnServerConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301s.VpnSite)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPack)},
@@ -696,6 +773,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfileExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfilesAccessRuleExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersResourceAssociationExtension{})
+	result = append(result, &network_customizations.P2sVpnGatewayExtension{})
 	result = append(result, &network_customizations.VirtualHubExtension{})
 	result = append(result, &network_customizations.VirtualHubsBgpConnectionExtension{})
 	result = append(result, &network_customizations.VirtualHubsHubRouteTableExtension{})
@@ -705,6 +783,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.VirtualHubsRoutingIntentExtension{})
 	result = append(result, &network_customizations.VirtualNetworkGatewayConnectionExtension{})
 	result = append(result, &network_customizations.VirtualWanExtension{})
+	result = append(result, &network_customizations.VpnGatewayExtension{})
+	result = append(result, &network_customizations.VpnGatewaysNatRuleExtension{})
+	result = append(result, &network_customizations.VpnGatewaysVpnConnectionExtension{})
+	result = append(result, &network_customizations.VpnServerConfigurationExtension{})
+	result = append(result, &network_customizations.VpnSiteExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPackExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPacksQueryExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesDataExportExtension{})
@@ -938,6 +1021,62 @@ func indexNetworkVirtualNetworkGatewayConnectionSharedKey(rawObj client.Object) 
 		return nil
 	}
 	return obj.Spec.SharedKey.Index()
+}
+
+// indexNetworkVpnGatewaysVpnConnectionSharedKey an index function for network_v20260301.VpnGatewaysVpnConnection .spec.vpnLinkConnections.sharedKey
+func indexNetworkVpnGatewaysVpnConnectionSharedKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.VpnGatewaysVpnConnection)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, vpnLinkConnectionItem := range obj.Spec.VpnLinkConnections {
+		if vpnLinkConnectionItem.SharedKey == nil {
+			continue
+		}
+		result = append(result, vpnLinkConnectionItem.SharedKey.Index()...)
+	}
+	return result
+}
+
+// indexNetworkVpnServerConfigurationRadiusServerSecret an index function for network_v20260301.VpnServerConfiguration .spec.radiusServerSecret
+func indexNetworkVpnServerConfigurationRadiusServerSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.VpnServerConfiguration)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.RadiusServerSecret == nil {
+		return nil
+	}
+	return obj.Spec.RadiusServerSecret.Index()
+}
+
+// indexNetworkVpnServerConfigurationRadiusServersRadiusServerSecret an index function for network_v20260301.VpnServerConfiguration .spec.radiusServers.radiusServerSecret
+func indexNetworkVpnServerConfigurationRadiusServersRadiusServerSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.VpnServerConfiguration)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, radiusServerItem := range obj.Spec.RadiusServers {
+		if radiusServerItem.RadiusServerSecret == nil {
+			continue
+		}
+		result = append(result, radiusServerItem.RadiusServerSecret.Index()...)
+	}
+	return result
+}
+
+// indexNetworkVpnSiteSiteKey an index function for network_v20260301.VpnSite .spec.siteKey
+func indexNetworkVpnSiteSiteKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.VpnSite)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SiteKey == nil {
+		return nil
+	}
+	return obj.Spec.SiteKey.Index()
 }
 
 // indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password

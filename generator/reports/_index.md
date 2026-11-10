@@ -143,6 +143,7 @@ title: Supported Resources
 | NetworkSecurityPerimetersProfile              | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersProfilesAccessRule   | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersResourceAssociation  | 2025-05-01  | v20250501   | v0.1.0         | -      |
+| P2sVpnGateway                                 | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualHub                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualHubsBgpConnection                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualHubsHubRouteTable                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
@@ -152,6 +153,11 @@ title: Supported Resources
 | VirtualHubsRoutingIntent                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualNetworkGatewayConnection               | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualWan                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VpnGateway                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VpnGatewaysNatRule                            | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VpnGatewaysVpnConnection                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VpnServerConfiguration                        | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VpnSite                                       | 2026-03-01  | v20260301   | v0.1.0         | -      |
 
 ## OperationalInsights
 

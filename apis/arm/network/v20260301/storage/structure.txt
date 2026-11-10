@@ -651,6 +651,163 @@ LocalNetworkGateway: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+P2sVpnGateway: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── CustomDnsServers: string[]
+│   ├── IsRoutingPreferenceInternet: *bool
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── P2SConnectionConfigurations: Object (7 properties)[]
+│   │   ├── ConfigurationPolicyGroupAssociations: Object (2 properties)[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── EnableInternetSecurity: *bool
+│   │   ├── Id: *string
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RoutingConfiguration: *Object (6 properties)
+│   │   │   ├── AssociatedRouteTable: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   ├── InboundRouteMap: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   ├── OutboundRouteMap: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   ├── PropagatedRouteTables: *Object (3 properties)
+│   │   │   │   ├── Ids: Object (2 properties)[]
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   │   ├── Labels: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── VnetRoutes: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── StaticRoutes: Object (4 properties)[]
+│   │   │       │   ├── AddressPrefixes: string[]
+│   │   │       │   ├── Name: *string
+│   │   │       │   ├── NextHopIpAddress: *string
+│   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │       └── StaticRoutesConfig: *Object (3 properties)
+│   │   │           ├── PropagateStaticRoutes: *bool
+│   │   │           ├── PropertyBag: genruntime.PropertyBag
+│   │   │           └── VnetLocalRouteOverrideCriteria: *string
+│   │   └── VpnClientAddressPool: *Object (3 properties)
+│   │       ├── AddressPrefixes: string[]
+│   │       ├── IpamPoolPrefixAllocations: Object (3 properties)[]
+│   │       │   ├── NumberOfIpAddresses: *string
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   └── Reference: *genruntime.ResourceReference
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Tags: map[string]string
+│   ├── VirtualHub: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── VpnGatewayScaleUnit: *int
+│   └── VpnServerConfiguration: *Object (2 properties)
+│       ├── PropertyBag: genruntime.PropertyBag
+│       └── Reference: *genruntime.ResourceReference
+└── Status: Object (16 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CustomDnsServers: string[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── IsRoutingPreferenceInternet: *bool
+    ├── Location: *string
+    ├── Name: *string
+    ├── P2SConnectionConfigurations: Object (10 properties)[]
+    │   ├── ConfigurationPolicyGroupAssociations: Object (2 properties)[]
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── EnableInternetSecurity: *bool
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── PreviousConfigurationPolicyGroupAssociations: Object (10 properties)[]
+    │   │   ├── Etag: *string
+    │   │   ├── Id: *string
+    │   │   ├── IsDefault: *bool
+    │   │   ├── Name: *string
+    │   │   ├── P2SConnectionConfigurations: Object (2 properties)[]
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PolicyMembers: Object (4 properties)[]
+    │   │   │   ├── AttributeType: *string
+    │   │   │   ├── AttributeValue: *string
+    │   │   │   ├── Name: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Priority: *int
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ProvisioningState: *string
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisioningState: *string
+    │   ├── RoutingConfiguration: *Object (6 properties)
+    │   │   ├── AssociatedRouteTable: *Object (2 properties)
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── InboundRouteMap: *Object (2 properties)
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── OutboundRouteMap: *Object (2 properties)
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropagatedRouteTables: *Object (3 properties)
+    │   │   │   ├── Ids: Object (2 properties)[]
+    │   │   │   │   ├── Id: *string
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Labels: string[]
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── VnetRoutes: *Object (4 properties)
+    │   │       ├── BgpConnections: Object (2 properties)[]
+    │   │       │   ├── Id: *string
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       ├── StaticRoutes: Object (4 properties)[]
+    │   │       │   ├── AddressPrefixes: string[]
+    │   │       │   ├── Name: *string
+    │   │       │   ├── NextHopIpAddress: *string
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       └── StaticRoutesConfig: *Object (3 properties)
+    │   │           ├── PropagateStaticRoutes: *bool
+    │   │           ├── PropertyBag: genruntime.PropertyBag
+    │   │           └── VnetLocalRouteOverrideCriteria: *string
+    │   └── VpnClientAddressPool: *Object (3 properties)
+    │       ├── AddressPrefixes: string[]
+    │       ├── IpamPoolPrefixAllocations: Object (4 properties)[]
+    │       │   ├── AllocatedAddressPrefixes: string[]
+    │       │   ├── Id: *string
+    │       │   ├── NumberOfIpAddresses: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualHub: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── VpnClientConnectionHealth: *Object (5 properties)
+    │   ├── AllocatedIpAddresses: string[]
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── TotalEgressBytesTransferred: *int
+    │   ├── TotalIngressBytesTransferred: *int
+    │   └── VpnClientConnectionsCount: *int
+    ├── VpnGatewayScaleUnit: *int
+    └── VpnServerConfiguration: *Object (2 properties)
+        ├── Id: *string
+        └── PropertyBag: genruntime.PropertyBag
+
 VirtualHub: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (25 properties)
@@ -1344,4 +1501,697 @@ VirtualWan: Resource
     └── VpnSites: Object (2 properties)[]
         ├── Id: *string
         └── PropertyBag: genruntime.PropertyBag
+
+VpnGateway: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (12 properties)
+│   ├── AzureName: string
+│   ├── BgpSettings: *Object (5 properties)
+│   │   ├── Asn: *uint32
+│   │   ├── BgpPeeringAddress: *string
+│   │   ├── BgpPeeringAddresses: Object (3 properties)[]
+│   │   │   ├── CustomBgpIpAddresses: string[]
+│   │   │   ├── IpconfigurationId: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── PeerWeight: *int
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── EnableBgpRouteTranslationForNat: *bool
+│   ├── IsRoutingPreferenceInternet: *bool
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Tags: map[string]string
+│   ├── VirtualHub: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── VpnGatewayScaleUnit: *int
+└── Status: Object (17 properties)
+    ├── BgpSettings: *Object (5 properties)
+    │   ├── Asn: *uint32
+    │   ├── BgpPeeringAddress: *string
+    │   ├── BgpPeeringAddresses: Object (5 properties)[]
+    │   │   ├── CustomBgpIpAddresses: string[]
+    │   │   ├── DefaultBgpIpAddresses: string[]
+    │   │   ├── IpconfigurationId: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── TunnelIpAddresses: string[]
+    │   ├── PeerWeight: *int
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── Connections: Object (22 properties)[]
+    │   ├── ConnectionBandwidth: *int
+    │   ├── ConnectionStatus: *string
+    │   ├── DpdTimeoutSeconds: *int
+    │   ├── EgressBytesTransferred: *int
+    │   ├── EnableBgp: *bool
+    │   ├── EnableInternetSecurity: *bool
+    │   ├── EnableRateLimiting: *bool
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── IngressBytesTransferred: *int
+    │   ├── IpsecPolicies: Object (9 properties)[]
+    │   │   ├── DhGroup: *string
+    │   │   ├── IkeEncryption: *string
+    │   │   ├── IkeIntegrity: *string
+    │   │   ├── IpsecEncryption: *string
+    │   │   ├── IpsecIntegrity: *string
+    │   │   ├── PfsGroup: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── SaDataSizeKilobytes: *int
+    │   │   └── SaLifeTimeSeconds: *int
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisioningState: *string
+    │   ├── RemoteVpnSite: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── RoutingConfiguration: *Object (6 properties)
+    │   │   ├── AssociatedRouteTable: *Object (2 properties)
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── InboundRouteMap: *Object (2 properties)
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── OutboundRouteMap: *Object (2 properties)
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropagatedRouteTables: *Object (3 properties)
+    │   │   │   ├── Ids: Object (2 properties)[]
+    │   │   │   │   ├── Id: *string
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Labels: string[]
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── VnetRoutes: *Object (4 properties)
+    │   │       ├── BgpConnections: Object (2 properties)[]
+    │   │       │   ├── Id: *string
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       ├── StaticRoutes: Object (4 properties)[]
+    │   │       │   ├── AddressPrefixes: string[]
+    │   │       │   ├── Name: *string
+    │   │       │   ├── NextHopIpAddress: *string
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       └── StaticRoutesConfig: *Object (3 properties)
+    │   │           ├── PropagateStaticRoutes: *bool
+    │   │           ├── PropertyBag: genruntime.PropertyBag
+    │   │           └── VnetLocalRouteOverrideCriteria: *string
+    │   ├── RoutingWeight: *int
+    │   ├── TrafficSelectorPolicies: Object (3 properties)[]
+    │   │   ├── LocalAddressRanges: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── RemoteAddressRanges: string[]
+    │   ├── UseLocalAzureIpAddress: *bool
+    │   ├── UsePolicyBasedTrafficSelectors: *bool
+    │   ├── VpnConnectionProtocolType: *string
+    │   └── VpnLinkConnections: Object (23 properties)[]
+    │       ├── ConnectionBandwidth: *int
+    │       ├── ConnectionStatus: *string
+    │       ├── DpdTimeoutSeconds: *int
+    │       ├── EgressBytesTransferred: *int
+    │       ├── EgressNatRules: Object (2 properties)[]
+    │       │   ├── Id: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── EnableBgp: *bool
+    │       ├── EnableRateLimiting: *bool
+    │       ├── Etag: *string
+    │       ├── Id: *string
+    │       ├── IngressBytesTransferred: *int
+    │       ├── IngressNatRules: Object (2 properties)[]
+    │       │   ├── Id: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── IpsecPolicies: Object (9 properties)[]
+    │       │   ├── DhGroup: *string
+    │       │   ├── IkeEncryption: *string
+    │       │   ├── IkeIntegrity: *string
+    │       │   ├── IpsecEncryption: *string
+    │       │   ├── IpsecIntegrity: *string
+    │       │   ├── PfsGroup: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   ├── SaDataSizeKilobytes: *int
+    │       │   └── SaLifeTimeSeconds: *int
+    │       ├── Name: *string
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── ProvisioningState: *string
+    │       ├── RoutingWeight: *int
+    │       ├── Type: *string
+    │       ├── UseLocalAzureIpAddress: *bool
+    │       ├── UsePolicyBasedTrafficSelectors: *bool
+    │       ├── VpnConnectionProtocolType: *string
+    │       ├── VpnGatewayCustomBgpAddresses: Object (3 properties)[]
+    │       │   ├── CustomBgpIpAddress: *string
+    │       │   ├── IpConfigurationId: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── VpnLinkConnectionMode: *string
+    │       └── VpnSiteLink: *Object (2 properties)
+    │           ├── Id: *string
+    │           └── PropertyBag: genruntime.PropertyBag
+    ├── EnableBgpRouteTranslationForNat: *bool
+    ├── Etag: *string
+    ├── Id: *string
+    ├── IpConfigurations: Object (4 properties)[]
+    │   ├── Id: *string
+    │   ├── PrivateIpAddress: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── PublicIpAddress: *string
+    ├── IsRoutingPreferenceInternet: *bool
+    ├── Location: *string
+    ├── Name: *string
+    ├── NatRules: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualHub: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── VpnGatewayScaleUnit: *int
+
+VpnGatewaysNatRule: Resource
+├── Owner: network/v20260301.VpnGateway
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── ExternalMappings: Object (3 properties)[]
+│   │   ├── AddressSpace: *string
+│   │   ├── PortRange: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── InternalMappings: Object (3 properties)[]
+│   │   ├── AddressSpace: *string
+│   │   ├── PortRange: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── IpConfigurationId: *string
+│   ├── Mode: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Type: *string
+└── Status: Object (14 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── EgressVpnSiteLinkConnections: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Etag: *string
+    ├── ExternalMappings: Object (3 properties)[]
+    │   ├── AddressSpace: *string
+    │   ├── PortRange: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── IngressVpnSiteLinkConnections: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── InternalMappings: Object (3 properties)[]
+    │   ├── AddressSpace: *string
+    │   ├── PortRange: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── IpConfigurationId: *string
+    ├── Mode: *string
+    ├── Name: *string
+    ├── PropertiesType: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    └── Type: *string
+
+VpnGatewaysVpnConnection: Resource
+├── Owner: network/v20260301.VpnGateway
+├── Spec: Object (19 properties)
+│   ├── AzureName: string
+│   ├── ConnectionBandwidth: *int
+│   ├── DpdTimeoutSeconds: *int
+│   ├── EnableBgp: *bool
+│   ├── EnableInternetSecurity: *bool
+│   ├── EnableRateLimiting: *bool
+│   ├── IpsecPolicies: Object (9 properties)[]
+│   │   ├── DhGroup: *string
+│   │   ├── IkeEncryption: *string
+│   │   ├── IkeIntegrity: *string
+│   │   ├── IpsecEncryption: *string
+│   │   ├── IpsecIntegrity: *string
+│   │   ├── PfsGroup: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── SaDataSizeKilobytes: *int
+│   │   └── SaLifeTimeSeconds: *int
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RemoteVpnSite: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── RoutingConfiguration: *Object (6 properties)
+│   │   ├── AssociatedRouteTable: *Object (2 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── InboundRouteMap: *Object (2 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── OutboundRouteMap: *Object (2 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── PropagatedRouteTables: *Object (3 properties)
+│   │   │   ├── Ids: Object (2 properties)[]
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   ├── Labels: string[]
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── VnetRoutes: *Object (3 properties)
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── StaticRoutes: Object (4 properties)[]
+│   │       │   ├── AddressPrefixes: string[]
+│   │       │   ├── Name: *string
+│   │       │   ├── NextHopIpAddress: *string
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       └── StaticRoutesConfig: *Object (3 properties)
+│   │           ├── PropagateStaticRoutes: *bool
+│   │           ├── PropertyBag: genruntime.PropertyBag
+│   │           └── VnetLocalRouteOverrideCriteria: *string
+│   ├── RoutingWeight: *int
+│   ├── TrafficSelectorPolicies: Object (3 properties)[]
+│   │   ├── LocalAddressRanges: string[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── RemoteAddressRanges: string[]
+│   ├── UseLocalAzureIpAddress: *bool
+│   ├── UsePolicyBasedTrafficSelectors: *bool
+│   ├── VpnConnectionProtocolType: *string
+│   └── VpnLinkConnections: Object (18 properties)[]
+│       ├── ConnectionBandwidth: *int
+│       ├── DpdTimeoutSeconds: *int
+│       ├── EgressNatRules: Object (2 properties)[]
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   └── Reference: *genruntime.ResourceReference
+│       ├── EnableBgp: *bool
+│       ├── EnableRateLimiting: *bool
+│       ├── Id: *string
+│       ├── IngressNatRules: Object (2 properties)[]
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   └── Reference: *genruntime.ResourceReference
+│       ├── IpsecPolicies: Object (9 properties)[]
+│       │   ├── DhGroup: *string
+│       │   ├── IkeEncryption: *string
+│       │   ├── IkeIntegrity: *string
+│       │   ├── IpsecEncryption: *string
+│       │   ├── IpsecIntegrity: *string
+│       │   ├── PfsGroup: *string
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   ├── SaDataSizeKilobytes: *int
+│       │   └── SaLifeTimeSeconds: *int
+│       ├── Name: *string
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── RoutingWeight: *int
+│       ├── SharedKey: *genruntime.SecretReference
+│       ├── UseLocalAzureIpAddress: *bool
+│       ├── UsePolicyBasedTrafficSelectors: *bool
+│       ├── VpnConnectionProtocolType: *string
+│       ├── VpnGatewayCustomBgpAddresses: Object (3 properties)[]
+│       │   ├── CustomBgpIpAddress: *string
+│       │   ├── IpConfigurationId: *string
+│       │   └── PropertyBag: genruntime.PropertyBag
+│       ├── VpnLinkConnectionMode: *string
+│       └── VpnSiteLink: *Object (2 properties)
+│           ├── PropertyBag: genruntime.PropertyBag
+│           └── Reference: *genruntime.ResourceReference
+└── Status: Object (23 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionBandwidth: *int
+    ├── ConnectionStatus: *string
+    ├── DpdTimeoutSeconds: *int
+    ├── EgressBytesTransferred: *int
+    ├── EnableBgp: *bool
+    ├── EnableInternetSecurity: *bool
+    ├── EnableRateLimiting: *bool
+    ├── Etag: *string
+    ├── Id: *string
+    ├── IngressBytesTransferred: *int
+    ├── IpsecPolicies: Object (9 properties)[]
+    │   ├── DhGroup: *string
+    │   ├── IkeEncryption: *string
+    │   ├── IkeIntegrity: *string
+    │   ├── IpsecEncryption: *string
+    │   ├── IpsecIntegrity: *string
+    │   ├── PfsGroup: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── SaDataSizeKilobytes: *int
+    │   └── SaLifeTimeSeconds: *int
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RemoteVpnSite: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── RoutingConfiguration: *Object (6 properties)
+    │   ├── AssociatedRouteTable: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── InboundRouteMap: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── OutboundRouteMap: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropagatedRouteTables: *Object (3 properties)
+    │   │   ├── Ids: Object (2 properties)[]
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Labels: string[]
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── VnetRoutes: *Object (4 properties)
+    │       ├── BgpConnections: Object (2 properties)[]
+    │       │   ├── Id: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── StaticRoutes: Object (4 properties)[]
+    │       │   ├── AddressPrefixes: string[]
+    │       │   ├── Name: *string
+    │       │   ├── NextHopIpAddress: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       └── StaticRoutesConfig: *Object (3 properties)
+    │           ├── PropagateStaticRoutes: *bool
+    │           ├── PropertyBag: genruntime.PropertyBag
+    │           └── VnetLocalRouteOverrideCriteria: *string
+    ├── RoutingWeight: *int
+    ├── TrafficSelectorPolicies: Object (3 properties)[]
+    │   ├── LocalAddressRanges: string[]
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── RemoteAddressRanges: string[]
+    ├── UseLocalAzureIpAddress: *bool
+    ├── UsePolicyBasedTrafficSelectors: *bool
+    ├── VpnConnectionProtocolType: *string
+    └── VpnLinkConnections: Object (23 properties)[]
+        ├── ConnectionBandwidth: *int
+        ├── ConnectionStatus: *string
+        ├── DpdTimeoutSeconds: *int
+        ├── EgressBytesTransferred: *int
+        ├── EgressNatRules: Object (2 properties)[]
+        │   ├── Id: *string
+        │   └── PropertyBag: genruntime.PropertyBag
+        ├── EnableBgp: *bool
+        ├── EnableRateLimiting: *bool
+        ├── Etag: *string
+        ├── Id: *string
+        ├── IngressBytesTransferred: *int
+        ├── IngressNatRules: Object (2 properties)[]
+        │   ├── Id: *string
+        │   └── PropertyBag: genruntime.PropertyBag
+        ├── IpsecPolicies: Object (9 properties)[]
+        │   ├── DhGroup: *string
+        │   ├── IkeEncryption: *string
+        │   ├── IkeIntegrity: *string
+        │   ├── IpsecEncryption: *string
+        │   ├── IpsecIntegrity: *string
+        │   ├── PfsGroup: *string
+        │   ├── PropertyBag: genruntime.PropertyBag
+        │   ├── SaDataSizeKilobytes: *int
+        │   └── SaLifeTimeSeconds: *int
+        ├── Name: *string
+        ├── PropertyBag: genruntime.PropertyBag
+        ├── ProvisioningState: *string
+        ├── RoutingWeight: *int
+        ├── Type: *string
+        ├── UseLocalAzureIpAddress: *bool
+        ├── UsePolicyBasedTrafficSelectors: *bool
+        ├── VpnConnectionProtocolType: *string
+        ├── VpnGatewayCustomBgpAddresses: Object (3 properties)[]
+        │   ├── CustomBgpIpAddress: *string
+        │   ├── IpConfigurationId: *string
+        │   └── PropertyBag: genruntime.PropertyBag
+        ├── VpnLinkConnectionMode: *string
+        └── VpnSiteLink: *Object (2 properties)
+            ├── Id: *string
+            └── PropertyBag: genruntime.PropertyBag
+
+VpnServerConfiguration: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (20 properties)
+│   ├── AadAuthenticationParameters: *Object (4 properties)
+│   │   ├── AadAudience: *string
+│   │   ├── AadIssuer: *string
+│   │   ├── AadTenant: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── AzureName: string
+│   ├── ConfigurationPolicyGroups: Object (6 properties)[]
+│   │   ├── Id: *string
+│   │   ├── IsDefault: *bool
+│   │   ├── Name: *string
+│   │   ├── PolicyMembers: Object (4 properties)[]
+│   │   │   ├── AttributeType: *string
+│   │   │   ├── AttributeValue: *string
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── Priority: *int
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Location: *string
+│   ├── Name: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RadiusClientRootCertificates: Object (3 properties)[]
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Thumbprint: *string
+│   ├── RadiusServerAddress: *string
+│   ├── RadiusServerRootCertificates: Object (3 properties)[]
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── PublicCertData: *string
+│   ├── RadiusServerSecret: *genruntime.SecretReference
+│   ├── RadiusServers: Object (4 properties)[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RadiusServerAddress: *string
+│   │   ├── RadiusServerScore: *int
+│   │   └── RadiusServerSecret: *genruntime.SecretReference
+│   ├── Tags: map[string]string
+│   ├── VpnAuthenticationTypes: string[]
+│   ├── VpnClientIpsecPolicies: Object (9 properties)[]
+│   │   ├── DhGroup: *string
+│   │   ├── IkeEncryption: *string
+│   │   ├── IkeIntegrity: *string
+│   │   ├── IpsecEncryption: *string
+│   │   ├── IpsecIntegrity: *string
+│   │   ├── PfsGroup: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── SaDataSizeKilobytes: *int
+│   │   └── SaLifeTimeSeconds: *int
+│   ├── VpnClientRevokedCertificates: Object (3 properties)[]
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Thumbprint: *string
+│   ├── VpnClientRootCertificates: Object (3 properties)[]
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── PublicCertData: *string
+│   └── VpnProtocols: string[]
+└── Status: Object (23 properties)
+    ├── AadAuthenticationParameters: *Object (4 properties)
+    │   ├── AadAudience: *string
+    │   ├── AadIssuer: *string
+    │   ├── AadTenant: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── ConfigurationPolicyGroups: Object (10 properties)[]
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── IsDefault: *bool
+    │   ├── Name: *string
+    │   ├── P2SConnectionConfigurations: Object (2 properties)[]
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── PolicyMembers: Object (4 properties)[]
+    │   │   ├── AttributeType: *string
+    │   │   ├── AttributeValue: *string
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── Priority: *int
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisioningState: *string
+    │   └── Type: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── P2SVpnGateways: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertiesEtag: *string
+    ├── PropertiesName: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RadiusClientRootCertificates: Object (3 properties)[]
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Thumbprint: *string
+    ├── RadiusServerAddress: *string
+    ├── RadiusServerRootCertificates: Object (3 properties)[]
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── PublicCertData: *string
+    ├── RadiusServers: Object (3 properties)[]
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RadiusServerAddress: *string
+    │   └── RadiusServerScore: *int
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VpnAuthenticationTypes: string[]
+    ├── VpnClientIpsecPolicies: Object (9 properties)[]
+    │   ├── DhGroup: *string
+    │   ├── IkeEncryption: *string
+    │   ├── IkeIntegrity: *string
+    │   ├── IpsecEncryption: *string
+    │   ├── IpsecIntegrity: *string
+    │   ├── PfsGroup: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── SaDataSizeKilobytes: *int
+    │   └── SaLifeTimeSeconds: *int
+    ├── VpnClientRevokedCertificates: Object (3 properties)[]
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Thumbprint: *string
+    ├── VpnClientRootCertificates: Object (3 properties)[]
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── PublicCertData: *string
+    └── VpnProtocols: string[]
+
+VpnSite: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (16 properties)
+│   ├── AddressSpace: *Object (3 properties)
+│   │   ├── AddressPrefixes: string[]
+│   │   ├── IpamPoolPrefixAllocations: Object (3 properties)[]
+│   │   │   ├── NumberOfIpAddresses: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── AzureName: string
+│   ├── BgpProperties: *Object (5 properties)
+│   │   ├── Asn: *uint32
+│   │   ├── BgpPeeringAddress: *string
+│   │   ├── BgpPeeringAddresses: Object (3 properties)[]
+│   │   │   ├── CustomBgpIpAddresses: string[]
+│   │   │   ├── IpconfigurationId: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── PeerWeight: *int
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── DeviceProperties: *Object (4 properties)
+│   │   ├── DeviceModel: *string
+│   │   ├── DeviceVendor: *string
+│   │   ├── LinkSpeedInMbps: *int
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── IpAddress: *string
+│   ├── IsSecuritySite: *bool
+│   ├── Location: *string
+│   ├── O365Policy: *Object (2 properties)
+│   │   ├── BreakOutCategories: *Object (4 properties)
+│   │   │   ├── Allow: *bool
+│   │   │   ├── Default: *bool
+│   │   │   ├── Optimize: *bool
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── SiteKey: *genruntime.SecretReference
+│   ├── Tags: map[string]string
+│   ├── VirtualWan: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── VpnSiteLinks: Object (7 properties)[]
+│       ├── BgpProperties: *Object (3 properties)
+│       │   ├── Asn: *int
+│       │   ├── BgpPeeringAddress: *string
+│       │   └── PropertyBag: genruntime.PropertyBag
+│       ├── Fqdn: *string
+│       ├── Id: *string
+│       ├── IpAddress: *string
+│       ├── LinkProperties: *Object (3 properties)
+│       │   ├── LinkProviderName: *string
+│       │   ├── LinkSpeedInMbps: *int
+│       │   └── PropertyBag: genruntime.PropertyBag
+│       ├── Name: *string
+│       └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (17 properties)
+    ├── AddressSpace: *Object (3 properties)
+    │   ├── AddressPrefixes: string[]
+    │   ├── IpamPoolPrefixAllocations: Object (4 properties)[]
+    │   │   ├── AllocatedAddressPrefixes: string[]
+    │   │   ├── Id: *string
+    │   │   ├── NumberOfIpAddresses: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── BgpProperties: *Object (5 properties)
+    │   ├── Asn: *uint32
+    │   ├── BgpPeeringAddress: *string
+    │   ├── BgpPeeringAddresses: Object (5 properties)[]
+    │   │   ├── CustomBgpIpAddresses: string[]
+    │   │   ├── DefaultBgpIpAddresses: string[]
+    │   │   ├── IpconfigurationId: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── TunnelIpAddresses: string[]
+    │   ├── PeerWeight: *int
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── DeviceProperties: *Object (4 properties)
+    │   ├── DeviceModel: *string
+    │   ├── DeviceVendor: *string
+    │   ├── LinkSpeedInMbps: *int
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Etag: *string
+    ├── Id: *string
+    ├── IpAddress: *string
+    ├── IsSecuritySite: *bool
+    ├── Location: *string
+    ├── Name: *string
+    ├── O365Policy: *Object (2 properties)
+    │   ├── BreakOutCategories: *Object (4 properties)
+    │   │   ├── Allow: *bool
+    │   │   ├── Default: *bool
+    │   │   ├── Optimize: *bool
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualWan: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── VpnSiteLinks: Object (10 properties)[]
+        ├── BgpProperties: *Object (3 properties)
+        │   ├── Asn: *int
+        │   ├── BgpPeeringAddress: *string
+        │   └── PropertyBag: genruntime.PropertyBag
+        ├── Etag: *string
+        ├── Fqdn: *string
+        ├── Id: *string
+        ├── IpAddress: *string
+        ├── LinkProperties: *Object (3 properties)
+        │   ├── LinkProviderName: *string
+        │   ├── LinkSpeedInMbps: *int
+        │   └── PropertyBag: genruntime.PropertyBag
+        ├── Name: *string
+        ├── PropertyBag: genruntime.PropertyBag
+        ├── ProvisioningState: *string
+        └── Type: *string
 
