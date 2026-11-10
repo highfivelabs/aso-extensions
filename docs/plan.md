@@ -605,6 +605,7 @@ rechecks upstream again when it is built.
 | c13 | Cosmos DB Gremlin, SQL dedicated gateway | not at the pin, no pull request | queued |
 | c14 | AKS managed namespaces | not at the pin, no pull request | queued |
 | c18 | Stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones) | not a new kind | queued |
+| f13 | Key Vault: managed HSMs, their keys, private endpoint connections (foundation row 13; row 12 is network leftovers, for the agent that owns `network.yaml`) | rechecked 2026-11-10, read-only: v2.22.0 still the latest release (an `experimental` pre-release beside it); `main` four documentation commits past the pin (#5826, #5827, #5828, #5769); no open or draft pull request adds a Key Vault kind (the open ones are #5821, #5820, #5814, #5804, #5783, #5780, #5773, #5768, #5693, #5659, #5638, #5104, #5028, #4210); no issue asks for managed HSMs; access policies as their own resource were declined upstream (#2940, closed: the `accessPolicies/{operationKind}` path, `add`, `replace` or `remove`, does not fit ASO's model; #3697 closed as its duplicate) and ARM-side secrets too (#1894); ASO's `keyvault.yaml` exports `Vault` and `VaultKey` at 2023-07-01 | **built**, generated: `keyvault.azure.hfl.dev/v20260515` `ManagedHSM` (owned by a resource group; its subnets in `networkAcls.virtualNetworkRules` are references; `tenantId` or `tenantIdFromConfig`, ASO's `Vault` label), `ManagedHSMsKey` (owned by our HSM), `ManagedHSMsPrivateEndpointConnection` (owned by our HSM) and `VaultsPrivateEndpointConnection` (owned by ASO's `Vault`, a 2023-07-01 kind, named by object: the versions need not match), from the 2026-05-15 TypeSpec file, the newest stable. Kind names are the generator's (the ARM types `managedHSMs` and `privateEndpointConnections`), as this repository's other child kinds. **A key** has no DELETE in the spec (ASO's reconciler sends none and reports `DeletionNotSupportedInAzure`; the object goes with `reconcile-policy: detach-on-delete`), and its PUT does not change a key that exists (the API: "returns the existing key without any write operations"), so a change of the spec is sent and the key stays as it was, which `status` shows; ASO's own `VaultKey` works around both through the data plane (a create mode and a delete mode, hand-written), which is not done here. **A private endpoint connection** is made by the private endpoint (ASO's `PrivateEndpoint` with manual approval, or one in another tenant); the kind approves, rejects or removes it, and waits (404 on its Ready condition) until the endpoint has asked. The HSM's connection kind carries `location`, `sku` and `identity` because the spec's model does. Hand-written code: none (the generated share is 100% of the kind code: 18,721 lines, tests aside, 58 of them in the registration; the configuration, the fake's rules and the tests are ours). Not built: the `accessPolicies` resource (declined upstream; use RBAC, ASO's `RoleAssignment`, or the access policies in ASO's `Vault`), ARM-side vault secrets (`vaults/secrets`, which Azure documents as for ARM deployments only and which has no DELETE; our data-plane `VaultSecret` covers secrets), vault keys at 2026-05-15 (ASO's `VaultKey`), the HSM's security domain activation (data plane), and purging a deleted HSM (a POST) |
 
 App Configuration key-values are already in ASO (`appconfiguration`
 `KeyValue`), so they are not a gap.
@@ -1017,6 +1018,20 @@ serialization and conversion tests):
   assigned to its VM is Ready and deleted. The fake does not show: which
   resource types a configuration's scope can maintain, machines the filter
   selects, and patching itself;
+- Key Vault managed HSMs, generated (f13): an HSM with its SKU, tenant,
+  administrators, retention and purge protection, public access turned off
+  and PUT again, deleted; a key in it made, a change of its size sent and
+  the key kept as it was (the status shows Azure's key), its delete refused
+  on the Ready condition (no DELETE in the spec) until `detach-on-delete`
+  lets the object go with the key staying; a connection a private endpoint
+  made, approved through the kind and removed; an HSM with soft delete off
+  refused on its Ready condition; a connection on ASO's `Vault` waiting until
+  the endpoint has asked, then approved, rejected and removed. On kind,
+  team-a's HSM and key are Ready, the key is detached (no DELETE sent) and
+  the HSM deleted. The fake does not show: the security domain that
+  activates an HSM, key versions and rotation, the private endpoint itself,
+  and the roles the identity needs (Managed HSM Contributor; the local RBAC
+  of the HSM for keys);
 - ExpressRoute, generated (foundation row 9, first part): a provider
   circuit on an ASO `ResourceGroup` whose service key, made by Azure, is
   written to the Secret `operatorSpec.secrets` names; its private peering
