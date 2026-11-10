@@ -17,3 +17,4 @@ specification/policyinsights
 specification/authorization
 specification/consumption
 specification/cost-management
+specification/containerservice

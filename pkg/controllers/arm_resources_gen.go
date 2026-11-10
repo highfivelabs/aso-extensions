@@ -25,6 +25,11 @@ import (
 	containerregistry_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/customizations"
 	containerregistry_v20251101 "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101"
 	containerregistry_v20251101s "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101/storage"
+	containerservice_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/customizations"
+	containerservice_v20260501 "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260501"
+	containerservice_v20260501s "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260501/storage"
+	containerservice_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260601"
+	containerservice_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260601/storage"
 	costmanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/customizations"
 	costmanagement_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601"
 	costmanagement_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601/storage"
@@ -205,6 +210,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.ManagedClustersManagedNamespace)})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.ManagedClustersPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.Snapshot)})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260601.FleetsManagedNamespace)})
 	result = append(result, &registration.StorageType{
 		Obj: new(costmanagement_v20260601.Export),
 		Indexes: []registration.Index{
@@ -551,6 +560,18 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesScopeMap)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesToken)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesWebhook)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(containerservice_v20260501.ManagedClustersManagedNamespace)},
+		&registration.KnownType{Obj: new(containerservice_v20260501.ManagedClustersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(containerservice_v20260501.Snapshot)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(containerservice_v20260501s.ManagedClustersManagedNamespace)},
+		&registration.KnownType{Obj: new(containerservice_v20260501s.ManagedClustersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(containerservice_v20260501s.Snapshot)})
+	result = append(result, &registration.KnownType{Obj: new(containerservice_v20260601.FleetsManagedNamespace)})
+	result = append(result, &registration.KnownType{Obj: new(containerservice_v20260601s.FleetsManagedNamespace)})
 	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601.Export)})
 	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601s.Export)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
@@ -736,6 +757,10 @@ func createScheme() *runtime.Scheme {
 	_ = consumption_v20260601s.AddToScheme(scheme)
 	_ = containerregistry_v20251101.AddToScheme(scheme)
 	_ = containerregistry_v20251101s.AddToScheme(scheme)
+	_ = containerservice_v20260501.AddToScheme(scheme)
+	_ = containerservice_v20260501s.AddToScheme(scheme)
+	_ = containerservice_v20260601.AddToScheme(scheme)
+	_ = containerservice_v20260601s.AddToScheme(scheme)
 	_ = costmanagement_v20260601.AddToScheme(scheme)
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
@@ -784,6 +809,10 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &containerregistry_customizations.RegistriesScopeMapExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesTokenExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesWebhookExtension{})
+	result = append(result, &containerservice_customizations.FleetsManagedNamespaceExtension{})
+	result = append(result, &containerservice_customizations.ManagedClustersManagedNamespaceExtension{})
+	result = append(result, &containerservice_customizations.ManagedClustersPrivateEndpointConnectionExtension{})
+	result = append(result, &containerservice_customizations.SnapshotExtension{})
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})

@@ -1,0 +1,944 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: fleetsmanagednamespaces.containerservice.azure.hfl.dev
+spec:
+  group: containerservice.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - containerservice
+    kind: FleetsManagedNamespace
+    listKind: FleetsManagedNamespaceList
+    plural: fleetsmanagednamespaces
+    singular: fleetsmanagednamespace
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260601
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2026-06-01/fleets.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/managedNamespaces/{managedNamespaceName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                maxLength: 63
+                minLength: 1
+                pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                type: string
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a containerservice.azure.com/Fleet resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+              properties:
+                description: 'Properties: The resource-specific properties for this
+                  resource.'
+                properties:
+                  adoptionPolicy:
+                    description: 'AdoptionPolicy: Action if the managed namespace
+                      with the same name already exists. Default is Never.'
+                    enum:
+                    - Always
+                    - IfIdentical
+                    - Never
+                    type: string
+                  deletePolicy:
+                    description: 'DeletePolicy: Delete options of a fleet managed
+                      namespace. Default is Keep.'
+                    enum:
+                    - Delete
+                    - Keep
+                    type: string
+                  managedNamespaceProperties:
+                    description: 'ManagedNamespaceProperties: The namespace properties
+                      for the fleet managed namespace.'
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: 'Annotations: The annotations for the fleet managed
+                          namespace.'
+                        type: object
+                      defaultNetworkPolicy:
+                        description: 'DefaultNetworkPolicy: The default network policy
+                          for the fleet managed namespace.'
+                        properties:
+                          egress:
+                            description: 'Egress: The egress policy for the managed
+                              namespace.'
+                            enum:
+                            - AllowAll
+                            - AllowSameNamespace
+                            - DenyAll
+                            type: string
+                          ingress:
+                            description: 'Ingress: The ingress policy for the managed
+                              namespace.'
+                            enum:
+                            - AllowAll
+                            - AllowSameNamespace
+                            - DenyAll
+                            type: string
+                        type: object
+                      defaultResourceQuota:
+                        description: 'DefaultResourceQuota: The default resource quota
+                          for the fleet managed namespace.'
+                        properties:
+                          cpuLimit:
+                            description: |-
+                              CpuLimit: The CPU limit for the managed namespace. See more at
+                              https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu
+                            type: string
+                          cpuRequest:
+                            description: |-
+                              CpuRequest: The CPU request for the managed namespace. See more at
+                              https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu
+                            type: string
+                          memoryLimit:
+                            description: |-
+                              MemoryLimit: The memory limit for the managed namespace. See more at
+                              https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory
+                            type: string
+                          memoryRequest:
+                            description: |-
+                              MemoryRequest: The memory request for the managed namespace. See more at
+                              https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory
+                            type: string
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: 'Labels: The labels for the fleet managed namespace.'
+                        type: object
+                    type: object
+                  propagationPolicy:
+                    description: 'PropagationPolicy: The profile of the propagation
+                      to create the namespace.'
+                    properties:
+                      placementProfile:
+                        description: 'PlacementProfile: The profile to be used for
+                          propagation via placement.'
+                        properties:
+                          defaultClusterResourcePlacement:
+                            description: 'DefaultClusterResourcePlacement: The default
+                              ClusterResourcePlacement policy configuration.'
+                            properties:
+                              policy:
+                                description: |-
+                                  Policy: Policy defines how to select member clusters to place the selected resources. If unspecified, all the joined
+                                  member clusters are selected.
+                                properties:
+                                  affinity:
+                                    description: |-
+                                      Affinity: Affinity contains cluster affinity scheduling rules. Defines which member clusters to place the selected
+                                      resources. Only valid if the placement type is "PickAll" or "PickN".
+                                    properties:
+                                      clusterAffinity:
+                                        description: 'ClusterAffinity: ClusterAffinity
+                                          contains cluster affinity scheduling rules
+                                          for the selected resources.'
+                                        properties:
+                                          requiredDuringSchedulingIgnoredDuringExecution:
+                                            description: |-
+                                              RequiredDuringSchedulingIgnoredDuringExecution: If the affinity requirements specified by this field are not met at
+                                              scheduling time, the resource will not be scheduled onto the cluster. If the affinity requirements specified by this
+                                              field cease to be met at some point after the placement (e.g. due to an update), the system may or may not try to
+                                              eventually remove the resource from the cluster.
+                                            properties:
+                                              clusterSelectorTerms:
+                                                description: 'ClusterSelectorTerms:
+                                                  ClusterSelectorTerms is a list of
+                                                  cluster selector terms. The terms
+                                                  are `ORed`.'
+                                                items:
+                                                  description: ClusterSelectorTerm
+                                                  properties:
+                                                    labelSelector:
+                                                      description: |-
+                                                        LabelSelector: LabelSelector is a label query over all the joined member clusters. Clusters matching the query are
+                                                        selected. If you specify both label and property selectors in the same term, the results are AND'd.
+                                                      properties:
+                                                        matchExpressions:
+                                                          description: 'MatchExpressions:
+                                                            matchExpressions is a
+                                                            list of label selector
+                                                            requirements. The requirements
+                                                            are ANDed.'
+                                                          items:
+                                                            description: A label selector
+                                                              requirement is a selector
+                                                              that contains values,
+                                                              a key, and an operator
+                                                              that relates the key
+                                                              and values.
+                                                            properties:
+                                                              key:
+                                                                description: 'Key:
+                                                                  key is the label
+                                                                  key that the selector
+                                                                  applies to.'
+                                                                type: string
+                                                              operator:
+                                                                description: |-
+                                                                  Operator: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and
+                                                                  DoesNotExist.
+                                                                enum:
+                                                                - DoesNotExist
+                                                                - Exists
+                                                                - In
+                                                                - NotIn
+                                                                type: string
+                                                              values:
+                                                                description: |-
+                                                                  Values: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the
+                                                                  operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge
+                                                                  patch.
+                                                                items:
+                                                                  type: string
+                                                                type: array
+                                                            required:
+                                                            - key
+                                                            - operator
+                                                            type: object
+                                                          type: array
+                                                        matchLabels:
+                                                          additionalProperties:
+                                                            type: string
+                                                          description: |-
+                                                            MatchLabels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an
+                                                            element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value".
+                                                            The requirements are ANDed.
+                                                          type: object
+                                                      type: object
+                                                    propertySelector:
+                                                      description: |-
+                                                        PropertySelector: PropertySelector is a property query over all joined member clusters. Clusters matching the query are
+                                                        selected. If you specify both label and property selectors in the same term, the results are AND'd. At this moment,
+                                                        PropertySelector can only be used with `RequiredDuringSchedulingIgnoredDuringExecution` affinity terms. This field is
+                                                        beta-level; it is for the property-based scheduling feature and is only functional when a property provider is enabled
+                                                        in the deployment.
+                                                      properties:
+                                                        matchExpressions:
+                                                          description: 'MatchExpressions:
+                                                            MatchExpressions is an
+                                                            array of PropertySelectorRequirements.
+                                                            The requirements are AND''d.'
+                                                          items:
+                                                            description: PropertySelectorRequirement
+                                                              is a specific property
+                                                              requirement when picking
+                                                              clusters for resource
+                                                              placement.
+                                                            properties:
+                                                              name:
+                                                                description: 'Name:
+                                                                  Name is the name
+                                                                  of the property;
+                                                                  it should be a Kubernetes
+                                                                  label name.'
+                                                                type: string
+                                                              operator:
+                                                                description: |-
+                                                                  Operator: Operator specifies the relationship between a cluster's observed value of the specified property and the
+                                                                  values given in the requirement.
+                                                                enum:
+                                                                - Eq
+                                                                - Ge
+                                                                - Gt
+                                                                - Le
+                                                                - Lt
+                                                                - Ne
+                                                                type: string
+                                                              values:
+                                                                description: |-
+                                                                  Values: Values are a list of values of the specified property which Fleet will compare against the observed values of
+                                                                  individual member clusters in accordance with the given operator. At this moment, each value should be a Kubernetes
+                                                                  quantity. For more information, see https://pkg.go.dev/k8s.io/apimachinery/pkg/api/resource#Quantity. If the operator is
+                                                                  Gt (greater than), Ge (greater than or equal to), Lt (less than), or `Le` (less than or equal to), Eq (equal to), or Ne
+                                                                  (ne), exactly one value must be specified in the list.
+                                                                items:
+                                                                  type: string
+                                                                type: array
+                                                            required:
+                                                            - name
+                                                            - operator
+                                                            - values
+                                                            type: object
+                                                          type: array
+                                                      required:
+                                                      - matchExpressions
+                                                      type: object
+                                                  type: object
+                                                type: array
+                                            required:
+                                            - clusterSelectorTerms
+                                            type: object
+                                        type: object
+                                    type: object
+                                  clusterNames:
+                                    description: |-
+                                      ClusterNames: ClusterNames contains a list of names of MemberCluster to place the selected resources. Only valid if the
+                                      placement type is "PickFixed"
+                                    items:
+                                      type: string
+                                    type: array
+                                  placementType:
+                                    description: 'PlacementType: Type of placement.
+                                      Can be "PickAll", "PickN" or "PickFixed". Default
+                                      is PickAll.'
+                                    enum:
+                                    - PickAll
+                                    - PickFixed
+                                    type: string
+                                  tolerations:
+                                    description: |-
+                                      Tolerations: If specified, the ClusterResourcePlacement's Tolerations. Tolerations cannot be updated or deleted. This
+                                      field is beta-level and is for the taints and tolerations feature.
+                                    items:
+                                      description: |-
+                                        Toleration allows ClusterResourcePlacement to tolerate any taint that matches the triple <key,value,effect> using the
+                                        matching operator <operator>.
+                                      properties:
+                                        effect:
+                                          description: |-
+                                            Effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, only allowed
+                                            value is NoSchedule.
+                                          enum:
+                                          - NoSchedule
+                                          type: string
+                                        key:
+                                          description: |-
+                                            Key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty,
+                                            operator must be Exists; this combination means to match all values and all keys.
+                                          type: string
+                                        operator:
+                                          description: |-
+                                            Operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to
+                                            Equal. Exists is equivalent to wildcard for value, so that a ClusterResourcePlacement can tolerate all taints of a
+                                            particular category.
+                                          enum:
+                                          - Equal
+                                          - Exists
+                                          type: string
+                                        value:
+                                          description: |-
+                                            Value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty,
+                                            otherwise just a regular string.
+                                          type: string
+                                      type: object
+                                    type: array
+                                type: object
+                            type: object
+                        type: object
+                      type:
+                        description: 'Type: The type of the policy to be used. Default
+                          is Placement.'
+                        enum:
+                        - Placement
+                        type: string
+                    required:
+                    - type
+                    type: object
+                required:
+                - adoptionPolicy
+                - deletePolicy
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+            required:
+            - location
+            - owner
+            type: object
+          status:
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              eTag:
+                description: |-
+                  ETag: If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.
+                  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in
+                  the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header
+                  fields.
+                type: string
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. E.g.
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                type: string
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              properties:
+                description: 'Properties: The resource-specific properties for this
+                  resource.'
+                properties:
+                  adoptionPolicy:
+                    description: 'AdoptionPolicy: Action if the managed namespace
+                      with the same name already exists. Default is Never.'
+                    type: string
+                  deletePolicy:
+                    description: 'DeletePolicy: Delete options of a fleet managed
+                      namespace. Default is Keep.'
+                    type: string
+                  managedNamespaceProperties:
+                    description: 'ManagedNamespaceProperties: The namespace properties
+                      for the fleet managed namespace.'
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: 'Annotations: The annotations for the fleet managed
+                          namespace.'
+                        type: object
+                      defaultNetworkPolicy:
+                        description: 'DefaultNetworkPolicy: The default network policy
+                          for the fleet managed namespace.'
+                        properties:
+                          egress:
+                            description: 'Egress: The egress policy for the managed
+                              namespace.'
+                            type: string
+                          ingress:
+                            description: 'Ingress: The ingress policy for the managed
+                              namespace.'
+                            type: string
+                        type: object
+                      defaultResourceQuota:
+                        description: 'DefaultResourceQuota: The default resource quota
+                          for the fleet managed namespace.'
+                        properties:
+                          cpuLimit:
+                            description: |-
+                              CpuLimit: The CPU limit for the managed namespace. See more at
+                              https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu
+                            type: string
+                          cpuRequest:
+                            description: |-
+                              CpuRequest: The CPU request for the managed namespace. See more at
+                              https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu
+                            type: string
+                          memoryLimit:
+                            description: |-
+                              MemoryLimit: The memory limit for the managed namespace. See more at
+                              https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory
+                            type: string
+                          memoryRequest:
+                            description: |-
+                              MemoryRequest: The memory request for the managed namespace. See more at
+                              https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory
+                            type: string
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: 'Labels: The labels for the fleet managed namespace.'
+                        type: object
+                    type: object
+                  portalFqdn:
+                    description: 'PortalFqdn: The Azure Portal FQDN of the Fleet hub.'
+                    type: string
+                  propagationPolicy:
+                    description: 'PropagationPolicy: The profile of the propagation
+                      to create the namespace.'
+                    properties:
+                      placementProfile:
+                        description: 'PlacementProfile: The profile to be used for
+                          propagation via placement.'
+                        properties:
+                          defaultClusterResourcePlacement:
+                            description: 'DefaultClusterResourcePlacement: The default
+                              ClusterResourcePlacement policy configuration.'
+                            properties:
+                              policy:
+                                description: |-
+                                  Policy: Policy defines how to select member clusters to place the selected resources. If unspecified, all the joined
+                                  member clusters are selected.
+                                properties:
+                                  affinity:
+                                    description: |-
+                                      Affinity: Affinity contains cluster affinity scheduling rules. Defines which member clusters to place the selected
+                                      resources. Only valid if the placement type is "PickAll" or "PickN".
+                                    properties:
+                                      clusterAffinity:
+                                        description: 'ClusterAffinity: ClusterAffinity
+                                          contains cluster affinity scheduling rules
+                                          for the selected resources.'
+                                        properties:
+                                          requiredDuringSchedulingIgnoredDuringExecution:
+                                            description: |-
+                                              RequiredDuringSchedulingIgnoredDuringExecution: If the affinity requirements specified by this field are not met at
+                                              scheduling time, the resource will not be scheduled onto the cluster. If the affinity requirements specified by this
+                                              field cease to be met at some point after the placement (e.g. due to an update), the system may or may not try to
+                                              eventually remove the resource from the cluster.
+                                            properties:
+                                              clusterSelectorTerms:
+                                                description: 'ClusterSelectorTerms:
+                                                  ClusterSelectorTerms is a list of
+                                                  cluster selector terms. The terms
+                                                  are `ORed`.'
+                                                items:
+                                                  description: ClusterSelectorTerm
+                                                  properties:
+                                                    labelSelector:
+                                                      description: |-
+                                                        LabelSelector: LabelSelector is a label query over all the joined member clusters. Clusters matching the query are
+                                                        selected. If you specify both label and property selectors in the same term, the results are AND'd.
+                                                      properties:
+                                                        matchExpressions:
+                                                          description: 'MatchExpressions:
+                                                            matchExpressions is a
+                                                            list of label selector
+                                                            requirements. The requirements
+                                                            are ANDed.'
+                                                          items:
+                                                            description: A label selector
+                                                              requirement is a selector
+                                                              that contains values,
+                                                              a key, and an operator
+                                                              that relates the key
+                                                              and values.
+                                                            properties:
+                                                              key:
+                                                                description: 'Key:
+                                                                  key is the label
+                                                                  key that the selector
+                                                                  applies to.'
+                                                                type: string
+                                                              operator:
+                                                                description: |-
+                                                                  Operator: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and
+                                                                  DoesNotExist.
+                                                                type: string
+                                                              values:
+                                                                description: |-
+                                                                  Values: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the
+                                                                  operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge
+                                                                  patch.
+                                                                items:
+                                                                  type: string
+                                                                type: array
+                                                            type: object
+                                                          type: array
+                                                        matchLabels:
+                                                          additionalProperties:
+                                                            type: string
+                                                          description: |-
+                                                            MatchLabels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an
+                                                            element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value".
+                                                            The requirements are ANDed.
+                                                          type: object
+                                                      type: object
+                                                    propertySelector:
+                                                      description: |-
+                                                        PropertySelector: PropertySelector is a property query over all joined member clusters. Clusters matching the query are
+                                                        selected. If you specify both label and property selectors in the same term, the results are AND'd. At this moment,
+                                                        PropertySelector can only be used with `RequiredDuringSchedulingIgnoredDuringExecution` affinity terms. This field is
+                                                        beta-level; it is for the property-based scheduling feature and is only functional when a property provider is enabled
+                                                        in the deployment.
+                                                      properties:
+                                                        matchExpressions:
+                                                          description: 'MatchExpressions:
+                                                            MatchExpressions is an
+                                                            array of PropertySelectorRequirements.
+                                                            The requirements are AND''d.'
+                                                          items:
+                                                            description: PropertySelectorRequirement
+                                                              is a specific property
+                                                              requirement when picking
+                                                              clusters for resource
+                                                              placement.
+                                                            properties:
+                                                              name:
+                                                                description: 'Name:
+                                                                  Name is the name
+                                                                  of the property;
+                                                                  it should be a Kubernetes
+                                                                  label name.'
+                                                                type: string
+                                                              operator:
+                                                                description: |-
+                                                                  Operator: Operator specifies the relationship between a cluster's observed value of the specified property and the
+                                                                  values given in the requirement.
+                                                                type: string
+                                                              values:
+                                                                description: |-
+                                                                  Values: Values are a list of values of the specified property which Fleet will compare against the observed values of
+                                                                  individual member clusters in accordance with the given operator. At this moment, each value should be a Kubernetes
+                                                                  quantity. For more information, see https://pkg.go.dev/k8s.io/apimachinery/pkg/api/resource#Quantity. If the operator is
+                                                                  Gt (greater than), Ge (greater than or equal to), Lt (less than), or `Le` (less than or equal to), Eq (equal to), or Ne
+                                                                  (ne), exactly one value must be specified in the list.
+                                                                items:
+                                                                  type: string
+                                                                type: array
+                                                            type: object
+                                                          type: array
+                                                      type: object
+                                                  type: object
+                                                type: array
+                                            type: object
+                                        type: object
+                                    type: object
+                                  clusterNames:
+                                    description: |-
+                                      ClusterNames: ClusterNames contains a list of names of MemberCluster to place the selected resources. Only valid if the
+                                      placement type is "PickFixed"
+                                    items:
+                                      type: string
+                                    type: array
+                                  placementType:
+                                    description: 'PlacementType: Type of placement.
+                                      Can be "PickAll", "PickN" or "PickFixed". Default
+                                      is PickAll.'
+                                    type: string
+                                  tolerations:
+                                    description: |-
+                                      Tolerations: If specified, the ClusterResourcePlacement's Tolerations. Tolerations cannot be updated or deleted. This
+                                      field is beta-level and is for the taints and tolerations feature.
+                                    items:
+                                      description: |-
+                                        Toleration allows ClusterResourcePlacement to tolerate any taint that matches the triple <key,value,effect> using the
+                                        matching operator <operator>.
+                                      properties:
+                                        effect:
+                                          description: |-
+                                            Effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, only allowed
+                                            value is NoSchedule.
+                                          type: string
+                                        key:
+                                          description: |-
+                                            Key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty,
+                                            operator must be Exists; this combination means to match all values and all keys.
+                                          type: string
+                                        operator:
+                                          description: |-
+                                            Operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to
+                                            Equal. Exists is equivalent to wildcard for value, so that a ClusterResourcePlacement can tolerate all taints of a
+                                            particular category.
+                                          type: string
+                                        value:
+                                          description: |-
+                                            Value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty,
+                                            otherwise just a regular string.
+                                          type: string
+                                      type: object
+                                    type: array
+                                type: object
+                            type: object
+                        type: object
+                      type:
+                        description: 'Type: The type of the policy to be used. Default
+                          is Placement.'
+                        type: string
+                    type: object
+                  provisioningState:
+                    description: 'ProvisioningState: The status of the last operation.'
+                    type: string
+                  status:
+                    description: 'Status: Status information of the last operation
+                      for fleet managed namespace.'
+                    properties:
+                      lastOperationError:
+                        description: 'LastOperationError: The last operation error
+                          of the fleet managed namespace'
+                        properties:
+                          additionalInfo:
+                            description: 'AdditionalInfo: The error additional info.'
+                            items:
+                              description: The resource management error additional
+                                info.
+                              properties:
+                                info:
+                                  additionalProperties:
+                                    x-kubernetes-preserve-unknown-fields: true
+                                  description: 'Info: The additional info.'
+                                  type: object
+                                type:
+                                  description: 'Type: The additional info type.'
+                                  type: string
+                              type: object
+                            type: array
+                          code:
+                            description: 'Code: The error code.'
+                            type: string
+                          details:
+                            description: 'Details: The error details.'
+                            items:
+                              properties:
+                                additionalInfo:
+                                  description: 'AdditionalInfo: The error additional
+                                    info.'
+                                  items:
+                                    description: The resource management error additional
+                                      info.
+                                    properties:
+                                      info:
+                                        additionalProperties:
+                                          x-kubernetes-preserve-unknown-fields: true
+                                        description: 'Info: The additional info.'
+                                        type: object
+                                      type:
+                                        description: 'Type: The additional info type.'
+                                        type: string
+                                    type: object
+                                  type: array
+                                code:
+                                  description: 'Code: The error code.'
+                                  type: string
+                                message:
+                                  description: 'Message: The error message.'
+                                  type: string
+                                target:
+                                  description: 'Target: The error target.'
+                                  type: string
+                              type: object
+                            type: array
+                          message:
+                            description: 'Message: The error message.'
+                            type: string
+                          target:
+                            description: 'Target: The error target.'
+                            type: string
+                        type: object
+                      lastOperationId:
+                        description: 'LastOperationId: The last operation ID for the
+                          fleet managed namespace'
+                        type: string
+                    type: object
+                type: object
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
