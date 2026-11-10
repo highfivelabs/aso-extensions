@@ -605,6 +605,7 @@ rechecks upstream again when it is built.
 | c13 | Cosmos DB Gremlin, SQL dedicated gateway | not at the pin, no pull request | queued |
 | c14 | AKS managed namespaces | not at the pin, no pull request | queued |
 | c18 | Stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones) | not a new kind | queued |
+| f14 | Log Analytics clusters, data sources and storage insight configs (foundation row 14, first part; c5 had left them out) | rechecked 2026-11-10, read-only: v2.22.0 still the latest release; `main` four documentation commits past the pin (#5826, #5827, #5828, #5769); no open or draft pull request or issue adds a Log Analytics cluster, data source, storage insight config or an Operations Management solution; ASO exports only `Workspace` (2025-07-01) | **built**, generated in `operationalinsights.azure.hfl.dev/v20250701` (ASO's `Workspace` version): `Cluster` (dedicated cluster, owned by a resource group: commitment tier, billing type, customer-managed key, availability zones, replication), `WorkspacesDataSource` (owned by ASO's `Workspace`: `kind`, one of 33, and its `properties` as free-form JSON, since each kind takes its own) and `WorkspacesStorageInsightConfig` (owned by ASO's `Workspace`: the storage account a reference, its key a Secret reference, `$importSecretMode: required`, so it reaches neither spec nor status). Data sources needed **generator patch 0008** (`ASO_GENERATOR_RECEIVER_NOT_PARAMETER`): the kind's receiver was named `source`, which the generated conversion functions' parameter shadowed, and the storage conversions did not compile (§2's "a resource whose kind ends in `Source`"); upstream already keeps receivers from being `arm` or `storage`, and the patch adds `source` and `destination`, renaming two receivers of kinds built before (cost `Export`'s delivery destination, a run command's script source) with no other change. Hand-written code: none (the kind code is 100% generated). Not built yet: **Operations Management solutions** (row 14's second part: the 2015 preview spec's `SolutionProperties` lacks `type: object` and the generator drops it); summary logs and network security perimeter configurations (not in the queue) |
 
 App Configuration key-values are already in ASO (`appconfiguration`
 `KeyValue`), so they are not a gap.
@@ -846,6 +847,17 @@ serialization and conversion tests):
   chain runs through our kind) are created and deleted the same way; the
   CRD refuses a table plan that does not exist and a retention under four
   days;
+- Log Analytics clusters, data sources and storage insight configs,
+  generated (f14): a cluster in a resource group at a commitment tier of
+  500, changed to 1,000 and PUT again; a syslog data source of ASO's
+  `Workspace` (its kind and free-form properties as sent); a storage insight
+  config whose storage account is an ARM reference and whose key comes from
+  a Secret, the key reaching Resource Manager and neither the status nor a
+  GET; all deleted; a cluster at a capacity that is no commitment tier
+  refused on its Ready condition. On kind, team-a's cluster and a data
+  source of its workspace are Ready and deleted. The fake does not show:
+  workspaces linked to a cluster, data collected, and what each data source
+  kind accepts;
 - Azure Monitor private link and network security perimeters, generated
   (c6): a private link scope owned by the resource group (a global
   resource) with its access modes, a workspace scoped into it (owned by our
