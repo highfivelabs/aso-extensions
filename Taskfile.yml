@@ -4,11 +4,20 @@
 # Every task needs the pinned Azure Service Operator checkout;
 # `task upstream` fetches it (about 675 MB, not committed). The task names
 # are the Makefile's they replace. Tasks that more than one repository needs
-# are in taskfiles/common.yml.
+# are factory's taskfiles/go.yml, included below.
 version: '3'
 
 includes:
-  common: ./taskfiles/common.yml
+  # The tasks the extension repositories share (go:install-tool,
+  # go:fmt-check, go:committed, go:test-envtest), from factory at a tag,
+  # pinned by checksum (factory taskfiles/README.md). Task fetches it with
+  # your git credentials and caches it in .task/remote/ (.taskrc.yml);
+  # offload packs that cache for its VMs.
+  go:
+    taskfile: https://github.com/highfivelabs/factory.git//taskfiles/go.yml?ref=taskfiles/v1.0.0
+    checksum: 4e300f59230b59ea875e8409e786064dd76cc3c28d5de37ec46bb856d7366f32
+    vars:
+      BIN: '{{.ROOT_DIR}}/bin'
 
 vars:
   # The project's name: the image, and the prefix of the install's objects.
@@ -36,8 +45,13 @@ tasks:
     desc: ASO at the pin plus patches/ (task upstream) and setup-envtest; what a fresh checkout needs first (an offload Spot VM, --prep 'task tools')
     cmds:
       - task: upstream
-      - task: common:setup-envtest
-        vars: {BIN: '{{.BIN}}', PACKAGE: '{{.SETUP_ENVTEST}}'}
+      - task: setup-envtest
+
+  setup-envtest:
+    internal: true
+    cmds:
+      - task: go:install-tool
+        vars: {NAME: setup-envtest, PKG: '{{.SETUP_ENVTEST}}'}
 
   upstream:
     desc: Fetch ASO at the pin (about 675 MB) and apply patches/
@@ -80,25 +94,25 @@ tasks:
     cmds:
       - task: upstream-check
       - hack/check-tests-present.sh
-      - task: common:setup-envtest
-        vars: {BIN: '{{.BIN}}', PACKAGE: '{{.SETUP_ENVTEST}}'}
-      - |
-        KUBEBUILDER_ASSETS="$({{.BIN}}/setup-envtest use {{.ENVTEST_K8S_VERSION}} --bin-dir {{.BIN}}/envtest -p path)" \
-          go test ./... -count=1 {{.CLI_ARGS}}
+      - task: setup-envtest
+      - task: go:test-envtest
+        vars:
+          ENVTEST_K8S_VERSION: '{{.ENVTEST_K8S_VERSION}}'
+          CMD: go test ./... -count=1 {{.CLI_ARGS}}
 
   check:
     desc: Everything that must hold before a commit
     cmds:
       - task: upstream-check
       - task: upstream:yaml-check
-      - task: common:gofmt
+      - task: go:fmt-check
         vars: {DIRS: apis cmd pkg test}
       - hack/generate-arm.sh
       - hack/generate.sh
-      - task: common:diff-clean
+      - task: go:committed
         vars:
           PATHS: apis config pkg/controllers generator
-          HINT: generated files are stale; commit the output of task generate-arm
+          HINT: task generate-arm
       - go vet ./...
       - go vet -tags fakecloud ./cmd/manager
       - hack/check-no-fake-cloud.sh

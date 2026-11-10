@@ -490,12 +490,10 @@ Entra users (copy #5104 and ship it); Entra directory roles (build unless ASO
 has them); keep `User` and `Export`; the opt-in Secret writer confirmed; the
 shortened network manager names approved; do not wait for upstream releases.
 Still open:
-1. **Sharing `taskfiles/common.yml` across repositories**: a vendored copy
-   with a sync script is recommended (PR #7); the builder has not decided.
-2. Open questions 1 to 4 of §8: licence (MIT vs Apache-2.0), offering b1
+1. Open questions 1 to 4 of §8: licence (MIT vs Apache-2.0), offering b1
    and b2 upstream, relaxed workload identity as the default, reading Secrets
    cluster-wide.
-3. **Webhook-less validation**: generated kinds lack ASO's checks (reference
+2. **Webhook-less validation**: generated kinds lack ASO's checks (reference
    format, immutable `owner` and `azureName`). If wanted, add CEL rules by a
    generator patch; not done.
 
@@ -507,7 +505,7 @@ Still open:
 | The design and every decision | `docs/plan.md` |
 | The pin, the patches, what is copied | `UPSTREAM.md` |
 | The fake cloud and what it cannot show | `docs/fake-cloud.md` |
-| Tasks | `Taskfile.yml`, `taskfiles/common.yml` (`task --list`) |
+| Tasks | `Taskfile.yml`, factory's `taskfiles/go.yml` (`task --list`) |
 | Generator configuration | `generator/` |
 | The manager | `pkg/manager/`, `pkg/controllers/`, `cmd/manager/` |
 | Tests | `test/e2e/` (envtest), `tests/operator/` (kind) |

@@ -27,10 +27,12 @@ gains it, the kind is deprecated here and users move to ASO's.
 ## Tasks
 
 The commands below are [Task](https://taskfile.dev) tasks (`brew install
-go-task`; `task --list` lists them). `Taskfile.yml` is this repository's;
-the tasks more than one repository needs are in `taskfiles/common.yml`,
-which knows nothing of this repository and takes what it needs as variables.
-Change a shared task there, in the one shared copy, not in the Taskfile.
+go-task`, 3.54 or later; `task --list` lists them). `Taskfile.yml` is this
+repository's; the tasks more than one repository needs (`go:*`) are
+factory's `taskfiles/go.yml`, included remotely at a tag and checksum and
+fetched with your git credentials on the first run. It knows nothing of
+this repository and takes what it needs as variables. Change a shared task
+in factory and move the tag here (factory `taskfiles/README.md`).
 
 ## Checks
 
