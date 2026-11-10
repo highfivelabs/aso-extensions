@@ -37,7 +37,8 @@ func TestLiveTagSet(t *testing.T) {
 	want := func(w map[string]any) func(map[string]any) error {
 		return func(r map[string]any) error {
 			got, _ := properties(r)["tags"].(map[string]any)
-			if !reflect.DeepEqual(got, w) {
+			// No tags is {} from Azure.
+			if !reflect.DeepEqual(got, w) && (len(got) != 0 || len(w) != 0) {
 				return fmt.Errorf("tags %v, want %v", got, w)
 			}
 			return nil
