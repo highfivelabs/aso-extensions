@@ -66,14 +66,14 @@ Microsoft.ConfidentialLedger,2,0,0,28,0,0,28,0.0,0.0,100.0
 Microsoft.Confluent,6,0,0,104,0,0,104,0.0,0.0,100.0
 Microsoft.ConnectedCache,4,0,0,152,0,0,152,0.0,0.0,100.0
 Microsoft.ConnectedVMwarevSphere,10,0,0,139,0,0,139,0.0,0.0,100.0
-Microsoft.Consumption,1,0,0,26,0,0,26,0.0,0.0,100.0
+Microsoft.Consumption,1,0,1,26,0,26,0,0.0,100.0,0.0
 Microsoft.ContainerInstance,4,1,0,297,92,0,205,31.0,0.0,69.0
 Microsoft.ContainerRegistry,10,3,4,128,33,23,72,25.8,18.0,56.2
 Microsoft.ContainerRegistry.Admin,2,0,0,3,0,0,3,0.0,0.0,100.0
 Microsoft.ContainerService,24,10,0,682,479,0,203,70.2,0.0,29.8
 Microsoft.ContainerStorage,3,0,0,24,0,0,24,0.0,0.0,100.0
 Microsoft.Contoso,1,0,0,5,0,0,5,0.0,0.0,100.0
-Microsoft.CostManagement,7,0,0,127,0,0,127,0.0,0.0,100.0
+Microsoft.CostManagement,7,0,1,127,0,27,100,0.0,21.3,78.7
 Microsoft.CustomerInsights,13,0,0,231,0,0,231,0.0,0.0,100.0
 Microsoft.CustomProviders,2,0,0,11,0,0,11,0.0,0.0,100.0
 Microsoft.Dashboard,5,0,0,50,0,0,50,0.0,0.0,100.0

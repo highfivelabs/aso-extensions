@@ -59,6 +59,10 @@ the policy remediation and attestation are deleted
 team-a RoleEligibilityScheduleRequest Ready
 team-b RoleEligibilityScheduleRequest refused
 the eligibility request is detached, not deleted
+team-a Budget Ready
+team-a Export Ready
+team-b Budget refused
+the budget and the cost export are deleted
 team-a ManagementLock owners
 team-a LocalNetworkGateway Ready
 team-a VirtualNetworkGatewayConnection Ready

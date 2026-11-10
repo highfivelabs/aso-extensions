@@ -28,9 +28,11 @@
 // checked for where they are kept and what they name (policy.go); so are
 // policy remediations and attestations (policyinsights.go), and role
 // definitions and Privileged Identity Management requests (pim.go: built-in
-// roles listed by name, schedule requests that cannot be deleted), and
-// site-to-site VPN connections and local network gateways (vpn.go: the
-// gateways a connection names, a shared key kept but not returned).
+// roles listed by name, schedule requests that cannot be deleted), budgets
+// and cost exports (cost.go: Cost Management scopes, notifications, delivery,
+// an obfuscated SAS token), and site-to-site VPN connections and local
+// network gateways (vpn.go: the gateways a connection names, a shared key
+// kept but not returned).
 //
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
@@ -270,6 +272,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			}
 		}
 		if status, code, msg := a.checkPolicy(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkCost(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

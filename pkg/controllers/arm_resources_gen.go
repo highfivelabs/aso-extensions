@@ -19,9 +19,15 @@ import (
 	compute_customizations "github.com/highfivelabs/aso-extensions/apis/arm/compute/customizations"
 	compute_v20220301 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301"
 	compute_v20220301s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301/storage"
+	consumption_customizations "github.com/highfivelabs/aso-extensions/apis/arm/consumption/customizations"
+	consumption_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601"
+	consumption_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601/storage"
 	containerregistry_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/customizations"
 	containerregistry_v20251101 "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101"
 	containerregistry_v20251101s "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101/storage"
+	costmanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/customizations"
+	costmanagement_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601"
+	costmanagement_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601/storage"
 	devtestlab_customizations "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/customizations"
 	devtestlab_v20180915 "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915"
 	devtestlab_v20180915s "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915/storage"
@@ -171,6 +177,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicyDefinition)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicySetDefinition)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
+	result = append(result, &registration.StorageType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesCredentialSet)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesScopeMap)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesToken)})
@@ -195,6 +202,25 @@ func getKnownStorageTypes() []*registration.StorageType {
 						".spec.serviceUri",
 					},
 					&containerregistry_v20251101.RegistriesWebhookList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(costmanagement_v20260601.Export),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.deliveryInfo.destination.sasToken",
+				Func: indexCostmanagementExportSasToken,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.deliveryInfo.destination.sasToken",
+					},
+					&costmanagement_v20260601.ExportList{}),
 			},
 		},
 	})
@@ -340,6 +366,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(authorization_v20260701s.PolicySetDefinition)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301s.VirtualMachinesRunCommand)})
+	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601.Budget)})
+	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601s.Budget)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesCredentialSet)},
@@ -352,6 +380,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesScopeMap)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesToken)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesWebhook)})
+	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601.Export)})
+	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601s.Export)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
 	result = append(
@@ -457,8 +487,12 @@ func createScheme() *runtime.Scheme {
 	_ = authorization_v20260701s.AddToScheme(scheme)
 	_ = compute_v20220301.AddToScheme(scheme)
 	_ = compute_v20220301s.AddToScheme(scheme)
+	_ = consumption_v20260601.AddToScheme(scheme)
+	_ = consumption_v20260601s.AddToScheme(scheme)
 	_ = containerregistry_v20251101.AddToScheme(scheme)
 	_ = containerregistry_v20251101s.AddToScheme(scheme)
+	_ = costmanagement_v20260601.AddToScheme(scheme)
+	_ = costmanagement_v20260601s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
@@ -500,10 +534,12 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &authorization_customizations.RoleEligibilityScheduleRequestExtension{})
 	result = append(result, &authorization_customizations.RoleManagementPolicyAssignmentExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
+	result = append(result, &consumption_customizations.BudgetExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesCredentialSetExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesScopeMapExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesTokenExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesWebhookExtension{})
+	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})

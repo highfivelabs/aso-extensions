@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | --- | --- | --- |
 | Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
-| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions, and PIM eligibility and assignment schedule requests and role management policy assignments (two hand-written extension files, `generator/_extensions/`); `policyinsights.azure.hfl.dev` policy remediations and attestations; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters, site-to-site VPN connections and local network gateways; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions, and PIM eligibility and assignment schedule requests and role management policy assignments (two hand-written extension files, `generator/_extensions/`); `policyinsights.azure.hfl.dev` policy remediations and attestations; `consumption.azure.hfl.dev` `Budget`; `costmanagement.azure.hfl.dev` cost `Export`; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters, site-to-site VPN connections and local network gateways; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
 ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
@@ -297,6 +297,25 @@ Facts learned the hard way:
   stale copy fails `task check`. In a new clone run `hack/upstream.sh` (it
   resets and re-applies the series); copying another clone's `third_party/`
   first only saves the fetch.
+- **A directly recursive type stops the generator at stage 12 even when no
+  exported resource uses it** (Cost Management's `QueryFilter` and
+  `ReportConfigFilter`, used only by queries and views): ASO prunes the whole
+  `costmanagement` group for it. Prune the types by name before the group's
+  `include` instead (`generator/azure-arm/costmanagement.yaml`), and the
+  resources that do not use them generate.
+- **An indirectly recursive status type passes the generator and fails
+  later**: an export run's `runSettings` holds the export's properties, which
+  hold the run history. The generator exits 0; the generated property tests
+  overflow the stack and envtest refuses the CRD (an object field with no
+  type). Run `task check`'s tests before trusting a run; remove the property
+  with a `typeTransformers` entry on the `*Properties_STATUS` type (before
+  flattening the property is not on the resource's own type).
+- A resource whose spec path already is `/{scope}/providers/...` (budgets,
+  exports) is an extension resource without patch 0006.
+- A reference to an ASO kind the manager does not read (Monitor
+  `ActionGroup`, `StorageAccount`) works by `armId`; by group and kind it
+  would need the kind in the scheme and `controllers.OwnerTypes()`, as an
+  owner does. The tests use `armId`.
 - **A resource embedded whole in another** (a VPN connection's
   `virtualNetworkGateway1`, `localNetworkGateway2`: the spec puts the full
   gateway objects there) is reduced by the generator to a `reference` (an
@@ -326,6 +345,20 @@ kind, no generator. From the repository root:
   other repositories' `*-operator`).
 - If it is unreachable: `../offload/offload run --hours 2 -- ...` (a Spot VM
   that deletes itself); `offload ls` and `offload reap` if something is left.
+- **On a Spot VM** (learned 2026-11-09): the source is a tarball of tracked
+  and untracked-but-not-ignored files, so `third_party/` is not there: pass
+  `--prep 'hack/upstream.sh'` and each task as its own `--step` (a wrapper
+  that ends in `echo` hides the failure: one run "passed" in 0 s having run
+  nothing). Artifacts are not copied back: `gsutil cp
+  gs://hfl-dev-514205-offload/runs/<id>/offload-artifacts/...`. `task check`
+  and `task coverage` run there (16 CPUs, 62 GB); **`task operator-e2e` does
+  not**: the image's Docker 29 cannot `kind load` `postgres:17` (`ctr ...
+  content digest ... not found`), so run it on the Ubuntu machine.
+- The Ubuntu machine has 15 GB and is shared: a Bundt mutation run (gremlins)
+  took its load near 400 and `systemd-oomd` killed a generated test package
+  (`signal: killed`), and kind's etcd timed out (`etcdserver: request timed
+  out`). Check `uptime` and `pgrep -fc gremlins`; move `task check` to a
+  Spot VM when it is busy, and rerun a kind timeout once.
 - `offload` copies the working tree (tracked or not, `third_party/` included;
   `bin/`, `.cache/` and `offload-artifacts/` are excluded and persist on the
   machine) to the same path there, runs the command, and copies

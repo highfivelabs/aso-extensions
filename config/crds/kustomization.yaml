@@ -16,10 +16,12 @@ resources:
 - authorization.azure.hfl.dev_roleeligibilityschedulerequests.yaml
 - authorization.azure.hfl.dev_rolemanagementpolicyassignments.yaml
 - compute.azure.hfl.dev_virtualmachinesruncommands.yaml
+- consumption.azure.hfl.dev_budgets.yaml
 - containerregistry.azure.hfl.dev_registriescredentialsets.yaml
 - containerregistry.azure.hfl.dev_registriesscopemaps.yaml
 - containerregistry.azure.hfl.dev_registriestokens.yaml
 - containerregistry.azure.hfl.dev_registrieswebhooks.yaml
+- costmanagement.azure.hfl.dev_exports.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
 - devtestlab.azure.hfl.dev_schedules.yaml
 - insights.azure.hfl.dev_privatelinkscopes.yaml
