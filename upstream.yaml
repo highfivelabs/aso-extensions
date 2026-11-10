@@ -28,6 +28,7 @@ pins:
     use: the ARM specs the generator reads (hack/specs.sh)
 
 pull_requests:
+  - {ref: Azure/azure-service-operator#5104, head: 1219643c9e2f53328681876769a79fba92379e99, read_on: "2026-11-10", role: copied, for: "Azure SQL User with aadUser (Microsoft Entra users): the type's field, the aadUser connector, the webhook's checks as CEL rules"}
   - {ref: Azure/azure-service-operator#5638, head: 5d0e686e8b0a36b1a59b5ad4e34d68ccc27b949a, read_on: "2026-11-09", role: copied, for: "RoleEligibilityScheduleRequest (Privileged Identity Management): generator configuration, ARM resource modifier, name defaulting"}
 
 patches:
@@ -62,3 +63,13 @@ copied:
     from: {pr: Azure/azure-service-operator#5638, paths: [v2/api/authorization/customizations/role_eligibility_schedule_request_extensions.go, v2/api/authorization/v20201001/webhook/role_eligibility_schedule_request_defaults.go]}
   - here: [generator/_extensions/network/customizations/express_route_children.go]
     from: {pin: azure-service-operator, paths: [v2/api/network/customizations/route_table_extensions.go, v2/api/network/customizations/virtual_network_extensions.go]}
+  - here: [apis/sql/v1/user_types.go]
+    from: {pin: azure-service-operator, paths: [v2/api/sql/v1/user_types.go]}
+  - here: [apis/sql/v1/groupversion_info.go]
+    from: {pin: azure-service-operator, paths: [v2/api/sql/v1/groupversion_info.go, v2/api/sql/v1/doc.go]}
+  - here: [pkg/reconcilers/azuresql/azuresql_user_reconciler.go, pkg/reconcilers/azuresql/connector.go, pkg/reconcilers/azuresql/local_user.go]
+    from: {pin: azure-service-operator, paths: [v2/internal/reconcilers/azuresql/]}
+  - here: [pkg/reconcilers/azuresql/aad_user.go]
+    from: {pr: Azure/azure-service-operator#5104, paths: [v2/internal/reconcilers/azuresql/aad_user.go]}
+  - here: [pkg/util/azuresql/azuresql.go, pkg/util/azuresql/role.go]
+    from: {pin: azure-service-operator, paths: [v2/internal/util/azuresql/]}

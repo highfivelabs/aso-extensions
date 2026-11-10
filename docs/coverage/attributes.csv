@@ -38553,6 +38553,14 @@ Microsoft.Sql,Microsoft.Sql/servers/databases/syncGroups/syncMembers,properties.
 Microsoft.Sql,Microsoft.Sql/servers/databases/syncGroups/syncMembers,properties.userName,string,false,none,,
 Microsoft.Sql,Microsoft.Sql/servers/databases/transparentDataEncryption,properties.scanState,string,false,official,scanState,
 Microsoft.Sql,Microsoft.Sql/servers/databases/transparentDataEncryption,properties.state,string,false,official,state,
+Microsoft.Sql,Microsoft.Sql/servers/databases/users,spec.aadUser.alias,,false,ours,,spec.aadUser.alias
+Microsoft.Sql,Microsoft.Sql/servers/databases/users,spec.aadUser.serverAdminUsername,,false,ours,,spec.aadUser.serverAdminUsername
+Microsoft.Sql,Microsoft.Sql/servers/databases/users,spec.localUser.password.key,,false,ours,,spec.localUser.password.key
+Microsoft.Sql,Microsoft.Sql/servers/databases/users,spec.localUser.password.name,,false,ours,,spec.localUser.password.name
+Microsoft.Sql,Microsoft.Sql/servers/databases/users,spec.localUser.serverAdminPassword.key,,false,ours,,spec.localUser.serverAdminPassword.key
+Microsoft.Sql,Microsoft.Sql/servers/databases/users,spec.localUser.serverAdminPassword.name,,false,ours,,spec.localUser.serverAdminPassword.name
+Microsoft.Sql,Microsoft.Sql/servers/databases/users,spec.localUser.serverAdminUsername,,false,ours,,spec.localUser.serverAdminUsername
+Microsoft.Sql,Microsoft.Sql/servers/databases/users,spec.roles[],,false,ours,,spec.roles[]
 Microsoft.Sql,Microsoft.Sql/servers/databases/vulnerabilityAssessments,properties.recurringScans.emails[],string,false,official,recurringScans.emails[],
 Microsoft.Sql,Microsoft.Sql/servers/databases/vulnerabilityAssessments,properties.recurringScans.emailSubscriptionAdmins,boolean,false,official,recurringScans.emailSubscriptionAdmins,
 Microsoft.Sql,Microsoft.Sql/servers/databases/vulnerabilityAssessments,properties.recurringScans.isEnabled,boolean,false,official,recurringScans.isEnabled,

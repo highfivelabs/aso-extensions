@@ -1,6 +1,7 @@
 # Tests only: the fake cloud on kind. PostgreSQL set up like a flexible
 # server (TLS, azure_pg_admin, Entra administrators, pgaadauth), the fake
-# Key Vault and the fake Resource Manager (locks). Their certificates, the CA and the init script come from
+# Key Vault, the fake Resource Manager (locks) and the fake Azure SQL server
+# (cmd/fakesql: team-a's aso-workload signs in as its Entra administrator). Their certificates, the CA and the init script come from
 # tests/operator/fixtures, as Secrets and ConfigMaps made by
 # tests/operator/run.sh.
 apiVersion: v1
@@ -146,3 +147,53 @@ spec:
   selector: {app: fakearm}
   ports:
   - {port: 443, targetPort: 8443}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fakesql
+  namespace: fake-cloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: fakesql}
+  template:
+    metadata:
+      labels: {app: fakesql}
+    spec:
+      containers:
+      - name: fakesql
+        image: ko://github.com/highfivelabs/aso-extensions/cmd/fakesql
+        args:
+        - --listen=:1433
+        - --admin=sqladmin
+        - --admin-password=sql-admin-password-1
+        - --entra-admin=aso-sql-admins
+        - --principal=aso-sql-admins=$(TEAM_A)
+        - --principal=team-b-identity=$(TEAM_B)
+        - --directory=app-identity,data-readers,team-b-identity,aso-sql-admins
+        - --database=appdb
+        env:
+        - name: TEAM_A
+          valueFrom:
+            configMapKeyRef: {name: fakesql-principals, key: team-a}
+        - name: TEAM_B
+          valueFrom:
+            configMapKeyRef: {name: fakesql-principals, key: team-b}
+        ports:
+        - containerPort: 1433
+        volumeMounts:
+        - {name: tls, mountPath: /tls, readOnly: true}
+      volumes:
+      - name: tls
+        secret: {secretName: fakesql-tls}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fakesql
+  namespace: fake-cloud
+spec:
+  selector: {app: fakesql}
+  ports:
+  - {port: 1433, targetPort: 1433}

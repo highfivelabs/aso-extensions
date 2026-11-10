@@ -112,6 +112,8 @@ func run(m *testing.M) int {
 	defer stopVault()
 	stopARM := startARM(ca)
 	defer stopARM()
+	stopSQL := startSQL(ca)
+	defer stopSQL()
 
 	root, _ := filepath.Abs("../..")
 	env := &envtest.Environment{

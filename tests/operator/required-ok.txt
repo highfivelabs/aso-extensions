@@ -115,3 +115,6 @@ the network manager's connectivity, security admin and security user configurati
 team-a ManagedHSM Ready
 team-a ManagedHSMsKey Ready
 the managed HSM key is detached, not deleted, and the managed HSM is deleted in Resource Manager
+team-a Azure SQL User Ready
+team-b Azure SQL User refused
+the Azure SQL Entra user app-identity is dropped

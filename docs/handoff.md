@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 
 | Sort | Kinds | Built by |
 | --- | --- | --- |
-| Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
+| Data plane, hand-written | PostgreSQL `User`, Azure SQL `User` (`sql.azure.hfl.dev`, with ASO PR #5104's Entra users), `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
 | ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions, and PIM eligibility and assignment schedule requests and role management policy assignments (two hand-written extension files, `generator/_extensions/`); `policyinsights.azure.hfl.dev` policy remediations and attestations; `consumption.azure.hfl.dev` `Budget`; `costmanagement.azure.hfl.dev` cost `Export`; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters, site-to-site VPN connections and local network gateways, ExpressRoute circuits, peerings, authorizations, Global Reach connections, ports, port authorizations, gateways and gateway connections, Virtual WANs, hubs and the hub's connections, route tables, routing intent, BGP connections and IP configurations, VPN gateways with their connections and NAT rules, VPN sites, VPN server configurations and point-to-site gateways (hand-written extensions in `generator/_extensions/network/`); `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
@@ -92,8 +92,10 @@ Then generate `roleAssignmentScheduleRequests` and
 `roleManagementPolicyAssignments` the same way.
 
 Not in the catalog's order, both answered 2026-11-10: Azure SQL Entra users
-(a1, copy ASO PR #5104 and ship it) and Entra directory roles (c15, build
-unless ASO's `entra` group has them).
+(a1, **built** from ASO PR #5104, `docs/plan.md` "The Azure SQL User"; the
+fake is a TDS server, `pkg/fakecloud/azuresql`) and Entra directory roles
+(c15, build unless ASO's `entra` group has them; it has applications,
+security groups and service principals at the pin, no directory roles).
 
 For every kind, before building: recheck upstream read-only (`gh release
 list`, `gh api repos/Azure/azure-service-operator/compare/<pin>...main`,
