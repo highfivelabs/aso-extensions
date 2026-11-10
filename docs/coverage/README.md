@@ -320,6 +320,7 @@ Generated; these cannot drift from the data.
 | `costmanagement.azure.hfl.dev/Export` | `Microsoft.CostManagement/exports` | ARM wire type of the generated kind (`apis/arm`) |
 | `dbforpostgresql.azure.hfl.dev/User` | `Microsoft.DBforPostgreSQL/flexibleServers/users` | outside the denominator, not in any percentage |
 | `devtestlab.azure.hfl.dev/Schedule` | `Microsoft.DevTestLab/schedules` | ARM wire type of the generated kind (`apis/arm`) |
+| `entra.azure.hfl.dev/DirectoryRoleAssignment` | `Microsoft Graph roleManagement/directory/roleAssignments` | outside the denominator, not in any percentage |
 | `insights.azure.hfl.dev/PrivateLinkScope` | `Microsoft.Insights/privateLinkScopes` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection` | `Microsoft.Insights/privateLinkScopes/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScopesScopedResource` | `Microsoft.Insights/privateLinkScopes/scopedResources` | ARM wire type of the generated kind (`apis/arm`) |
@@ -392,7 +393,7 @@ Generated; these cannot drift from the data.
 | `web.azure.hfl.dev/SitesSlot` | `Microsoft.Web/sites/slots` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsHostNameBinding` | `Microsoft.Web/sites/slots/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |
 
-**Outside the denominator.** 4 rows in `resources.csv` carry `notes=outside-denominator` and are in none of the percentages: our data-plane and database kinds above, and the 0 ASO kinds that are unmapped.
+**Outside the denominator.** 5 rows in `resources.csv` carry `notes=outside-denominator` and are in none of the percentages: our data-plane and database kinds above, and the 0 ASO kinds that are unmapped.
 
 **ASO's own supported-resources documentation** (`docs/hugo/content/reference/*/_index.md` at the pin) lists 305 kinds; 299 are among the kinds read here, of which 296 have the same newest API version in both. Listed there and not read here: 6: dbformysql/user, dbforpostgresql/user, entra/application, entra/securitygroup, entra/serviceprincipal, sql/user. Read here and not listed there: 0.
 
