@@ -59,3 +59,5 @@ copied:
     from: {pr: Azure/azure-service-operator#5638, paths: [v2/azure-arm/authorization.yaml]}
   - here: [generator/_extensions/authorization/customizations/role_eligibility_schedule_request_extensions.go, generator/_extensions/authorization/customizations/role_assignment_schedule_request_extensions.go]
     from: {pr: Azure/azure-service-operator#5638, paths: [v2/api/authorization/customizations/role_eligibility_schedule_request_extensions.go, v2/api/authorization/v20201001/webhook/role_eligibility_schedule_request_defaults.go]}
+  - here: [generator/_extensions/network/customizations/express_route_children.go]
+    from: {pin: azure-service-operator, paths: [v2/api/network/customizations/route_table_extensions.go, v2/api/network/customizations/virtual_network_extensions.go]}
