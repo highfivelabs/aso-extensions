@@ -80,3 +80,12 @@ the ExpressRoute circuit, its peering and its authorization are deleted
 team-a ExpressRouteGateway Ready
 team-a ExpressRouteGatewaysExpressRouteConnection Ready
 the ExpressRoute gateway and its connection are deleted
+team-a VirtualWan Ready
+team-a VirtualHub Ready
+team-a VirtualHubsHubVirtualNetworkConnection Ready
+team-a VirtualHubsHubRouteTable Ready
+team-a VirtualHubsRouteTable Ready
+team-a VirtualHubsRoutingIntent Ready
+team-a VirtualHubsBgpConnection Ready
+team-a VirtualHubsIpConfiguration Ready
+the virtual WAN, its hub and the hub's children are deleted

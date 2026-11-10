@@ -31,5 +31,21 @@ NetworkSecurityPerimetersProfilesAccessRuleExtension: Object (0 properties)
 
 NetworkSecurityPerimetersResourceAssociationExtension: Object (0 properties)
 
+VirtualHubExtension: Object (0 properties)
+
+VirtualHubsBgpConnectionExtension: Object (0 properties)
+
+VirtualHubsHubRouteTableExtension: Object (0 properties)
+
+VirtualHubsHubVirtualNetworkConnectionExtension: Object (0 properties)
+
+VirtualHubsIpConfigurationExtension: Object (0 properties)
+
+VirtualHubsRouteTableExtension: Object (0 properties)
+
+VirtualHubsRoutingIntentExtension: Object (0 properties)
+
 VirtualNetworkGatewayConnectionExtension: Object (0 properties)
+
+VirtualWanExtension: Object (0 properties)
 

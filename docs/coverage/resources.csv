@@ -1676,15 +1676,15 @@ Microsoft.Network,Microsoft.Network/trafficmanagerprofiles/AzureEndpoints,17,net
 Microsoft.Network,Microsoft.Network/trafficmanagerprofiles/ExternalEndpoints,17,network.azure.com/TrafficManagerProfilesExternalEndpoint,17,,0,0,false,spec_api=2026-09-01; official_api=2022-04-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/trafficmanagerprofiles/NestedEndpoints,17,network.azure.com/TrafficManagerProfilesNestedEndpoint,17,,0,0,false,spec_api=2026-09-01; official_api=2022-04-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/trafficManagerUserMetricsKeys,0,,0,,0,0,false,spec_api=2026-09-01
-Microsoft.Network,Microsoft.Network/virtualHubs,28,,0,,0,28,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualHubs/bgpConnections,13,,0,,0,13,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualHubs,28,,0,network.azure.hfl.dev/VirtualHub,21,7,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualHubs/bgpConnections,13,,0,network.azure.hfl.dev/VirtualHubsBgpConnection,13,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualHubs/connectionPolicies,11,,0,,0,11,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualHubs/hubRouteTables,6,,0,,0,6,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualHubs/hubVirtualNetworkConnections,16,,0,,0,16,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualHubs/ipConfigurations,113,,0,,0,113,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualHubs/hubRouteTables,6,,0,network.azure.hfl.dev/VirtualHubsHubRouteTable,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualHubs/hubVirtualNetworkConnections,16,,0,network.azure.hfl.dev/VirtualHubsHubVirtualNetworkConnection,16,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualHubs/ipConfigurations,113,,0,network.azure.hfl.dev/VirtualHubsIpConfiguration,113,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualHubs/routeMaps,12,,0,,0,12,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualHubs/routeTables,5,,0,,0,5,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualHubs/routingIntent,3,,0,,0,3,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualHubs/routeTables,5,,0,network.azure.hfl.dev/VirtualHubsRouteTable,5,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualHubs/routingIntent,3,,0,network.azure.hfl.dev/VirtualHubsRoutingIntent,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualNetworkAppliances,76,,0,,0,76,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualNetworkAppliances/capabilities,2,,0,,0,2,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualNetworkGateways,91,network.azure.com/VirtualNetworkGateway,86,,0,5,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
@@ -1695,7 +1695,7 @@ Microsoft.Network,Microsoft.Network/virtualNetworks/virtualNetworkPeerings,25,ne
 Microsoft.Network,Microsoft.Network/virtualNetworkTaps,280,,0,,0,280,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualRouters,6,,0,,0,6,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualRouters/peerings,2,,0,,0,2,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualWans,6,,0,,0,6,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualWans,6,,0,network.azure.hfl.dev/VirtualWan,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/vpnGateways,78,,0,,0,78,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/vpnGateways/natRules,7,,0,,0,7,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/vpnGateways/vpnConnections,56,,0,,0,56,false,spec_api=2026-03-01

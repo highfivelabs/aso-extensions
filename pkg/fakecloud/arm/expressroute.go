@@ -80,12 +80,24 @@ var (
 	erSubscriptionPart = regexp.MustCompile(`(?i)^/subscriptions/([^/]+)/`)
 )
 
-// erChildLists are the child collections a parent's properties list:
-// the JSON name of the list and the type segment of the children.
+// erChildLists are the child collections a parent's properties list, by
+// the JSON name of the list; the children's type segment is the same name
+// unless childSegment says otherwise.
 var erChildLists = map[*regexp.Regexp][]string{
 	erCircuit: {"peerings", "authorizations"},
 	erPeering: {"connections"},
 	erGateway: {"expressRouteConnections"},
+	vwanHub:   {"virtualHubRouteTableV2s"},
+}
+
+// childSegment is the type segment of the children a list names.
+var childSegment = map[string]string{"virtualHubRouteTableV2s": "routeTables"}
+
+func segmentOf(list string) string {
+	if s, ok := childSegment[list]; ok {
+		return s
+	}
+	return list
 }
 
 // checkExpressRoute refuses an ExpressRoute resource the rules above do not
@@ -212,8 +224,6 @@ func (a *ARM) checkExpressRoute(id string, body map[string]any) (status int, cod
 				return http.StatusBadRequest, "ExpressRouteAuthorizationKeyInvalid", "An ExpressRoute gateway connection to a circuit in another subscription needs one of the circuit's authorization keys.", nil
 			}
 		}
-	default:
-		return 0, "", "", nil
 	}
 	for re, lists := range erChildLists {
 		if !re.MatchString(id) {
@@ -226,7 +236,7 @@ func (a *ARM) checkExpressRoute(id string, body map[string]any) (status int, cod
 				child, _ := item.(map[string]any)
 				name, _ := child["name"].(string)
 				if name != "" {
-					wanted[strings.ToLower(id+"/"+list+"/"+name)] = child
+					wanted[strings.ToLower(id+"/"+segmentOf(list)+"/"+name)] = child
 				}
 			}
 			delete(props, list)
@@ -242,7 +252,7 @@ func (a *ARM) setChildren(parent string, lists []string, wanted map[string]map[s
 	pkey := strings.ToLower(parent)
 	for k := range a.resources {
 		for _, list := range lists {
-			prefix := pkey + "/" + strings.ToLower(list) + "/"
+			prefix := pkey + "/" + strings.ToLower(segmentOf(list)) + "/"
 			if !strings.HasPrefix(k, prefix) || strings.Contains(k[len(prefix):], "/") {
 				continue
 			}
@@ -269,8 +279,9 @@ func (a *ARM) setChildren(parent string, lists []string, wanted map[string]map[s
 	}
 }
 
-// render is a stored resource as Azure returns it: a circuit or a peering
-// with its children's lists rendered from the children.
+// render is a stored resource as Azure returns it: a circuit, a peering, an
+// ExpressRoute gateway or a virtual hub with its children's lists rendered
+// from the children.
 func (a *ARM) render(id string, r resource) resource {
 	for re, lists := range erChildLists {
 		if !re.MatchString(id) {
@@ -284,7 +295,7 @@ func (a *ARM) render(id string, r resource) resource {
 		}
 		pkey := strings.ToLower(id)
 		for _, list := range lists {
-			prefix := pkey + "/" + strings.ToLower(list) + "/"
+			prefix := pkey + "/" + strings.ToLower(segmentOf(list)) + "/"
 			var keys []string
 			for k := range a.resources {
 				if strings.HasPrefix(k, prefix) && !strings.Contains(k[len(prefix):], "/") {
