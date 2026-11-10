@@ -1,0 +1,26 @@
+diff --git a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+index 4efa5bb..30f55f8 100644
+--- a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
++++ b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+@@ -586,6 +586,21 @@ func isMarkedAsARMResource(schema Schema) bool {
+ 		}
+ 
+ 		if schema.isRef() {
++			// Modified by High Five Labs: with ASO_GENERATOR_SUBRESOURCE_RESOURCES
++			// set, a named schema built on a SubResource (a string id) is an ARM
++			// resource, as it was while the network specs marked SubResource
++			// x-ms-azure-resource. Their TypeSpec conversion (network 2025-05-01 on)
++			// dropped the marking, so child resources with no type property
++			// (ExpressRoute gateway connections, hub virtual network connections,
++			// VPN connections) stopped being resources.
++			if os.Getenv("ASO_GENERATOR_SUBRESOURCE_RESOURCES") != "" && hasName {
++				if name, err := schema.refTypeName(); err == nil && name.Name() == "SubResource" {
++					if id, ok := schema.refSchema().properties()["id"]; ok && id.hasType("string") {
++						return true
++					}
++				}
++			}
++
+ 			return recurse(schema.refSchema())
+ 		}
+ 

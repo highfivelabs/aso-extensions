@@ -131,6 +131,8 @@ title: Supported Resources
 | ExpressRouteCircuitsAuthorization             | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ExpressRouteCircuitsPeering                   | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ExpressRouteCircuitsPeeringsConnection        | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteGateway                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteGatewaysExpressRouteConnection    | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ExpressRoutePort                              | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ExpressRoutePortsAuthorization                | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | LocalNetworkGateway                           | 2026-03-01  | v20260301   | v0.1.0         | -      |

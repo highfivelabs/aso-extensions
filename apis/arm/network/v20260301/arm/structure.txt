@@ -401,6 +401,187 @@ ExpressRouteCircuitsPeeringsConnection_Spec: Object (2 properties)
     └── PeerExpressRouteCircuitPeering: *Object (1 property)
         └── Id: *string
 
+ExpressRouteGateway_STATUS: Object (7 properties)
+├── Etag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (5 properties)
+│   ├── AllowNonVirtualWanTraffic: *bool
+│   ├── AutoScaleConfiguration: *Object (1 property)
+│   │   └── Bounds: *Object (2 properties)
+│   │       ├── Max: *int
+│   │       └── Min: *int
+│   ├── ExpressRouteConnections: Object (3 properties)[]
+│   │   ├── Id: *string
+│   │   ├── Name: *string
+│   │   └── Properties: *Object (7 properties)
+│   │       ├── EnableInternetSecurity: *bool
+│   │       ├── EnablePrivateLinkFastPath: *bool
+│   │       ├── ExpressRouteCircuitPeering: *Object (1 property)
+│   │       │   └── Id: *string
+│   │       ├── ExpressRouteGatewayBypass: *bool
+│   │       ├── ProvisioningState: *Enum (6 values)
+│   │       │   ├── "Canceled"
+│   │       │   ├── "Creating"
+│   │       │   ├── "Deleting"
+│   │       │   ├── "Failed"
+│   │       │   ├── "Succeeded"
+│   │       │   └── "Updating"
+│   │       ├── RoutingConfiguration: *Object (5 properties)
+│   │       │   ├── AssociatedRouteTable: *Object (1 property)
+│   │       │   │   └── Id: *string
+│   │       │   ├── InboundRouteMap: *Object (1 property)
+│   │       │   │   └── Id: *string
+│   │       │   ├── OutboundRouteMap: *Object (1 property)
+│   │       │   │   └── Id: *string
+│   │       │   ├── PropagatedRouteTables: *Object (2 properties)
+│   │       │   │   ├── Ids: Object (1 property)[]
+│   │       │   │   │   └── Id: *string
+│   │       │   │   └── Labels: string[]
+│   │       │   └── VnetRoutes: *Object (3 properties)
+│   │       │       ├── BgpConnections: Object (1 property)[]
+│   │       │       │   └── Id: *string
+│   │       │       ├── StaticRoutes: Object (3 properties)[]
+│   │       │       │   ├── AddressPrefixes: string[]
+│   │       │       │   ├── Name: *string
+│   │       │       │   └── NextHopIpAddress: *string
+│   │       │       └── StaticRoutesConfig: *Object (2 properties)
+│   │       │           ├── PropagateStaticRoutes: *bool
+│   │       │           └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+│   │       │               ├── "Contains"
+│   │       │               └── "Equal"
+│   │       └── RoutingWeight: *int
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   └── VirtualHub: *Object (1 property)
+│       └── Id: *string
+├── Tags: map[string]string
+└── Type: *string
+
+ExpressRouteGateway_Spec: Object (4 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (4 properties)
+│   ├── AllowNonVirtualWanTraffic: *bool
+│   ├── AutoScaleConfiguration: *Object (1 property)
+│   │   └── Bounds: *Object (2 properties)
+│   │       ├── Max: *int
+│   │       └── Min: *int
+│   ├── ExpressRouteConnections: Object (3 properties)[]
+│   │   ├── Id: *string
+│   │   ├── Name: *string
+│   │   └── Properties: *Object (7 properties)
+│   │       ├── AuthorizationKey: *string
+│   │       ├── EnableInternetSecurity: *bool
+│   │       ├── EnablePrivateLinkFastPath: *bool
+│   │       ├── ExpressRouteCircuitPeering: *Object (1 property)
+│   │       │   └── Id: *string
+│   │       ├── ExpressRouteGatewayBypass: *bool
+│   │       ├── RoutingConfiguration: *Object (5 properties)
+│   │       │   ├── AssociatedRouteTable: *Object (1 property)
+│   │       │   │   └── Id: *string
+│   │       │   ├── InboundRouteMap: *Object (1 property)
+│   │       │   │   └── Id: *string
+│   │       │   ├── OutboundRouteMap: *Object (1 property)
+│   │       │   │   └── Id: *string
+│   │       │   ├── PropagatedRouteTables: *Object (2 properties)
+│   │       │   │   ├── Ids: Object (1 property)[]
+│   │       │   │   │   └── Id: *string
+│   │       │   │   └── Labels: string[]
+│   │       │   └── VnetRoutes: *Object (2 properties)
+│   │       │       ├── StaticRoutes: Object (3 properties)[]
+│   │       │       │   ├── AddressPrefixes: string[]
+│   │       │       │   ├── Name: *string
+│   │       │       │   └── NextHopIpAddress: *string
+│   │       │       └── StaticRoutesConfig: *Object (2 properties)
+│   │       │           ├── PropagateStaticRoutes: *bool
+│   │       │           └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+│   │       │               ├── "Contains"
+│   │       │               └── "Equal"
+│   │       └── RoutingWeight: *int
+│   └── VirtualHub: *Object (1 property)
+│       └── Id: *string
+└── Tags: map[string]string
+
+ExpressRouteGatewaysExpressRouteConnection_STATUS: Object (3 properties)
+├── Id: *string
+├── Name: *string
+└── Properties: *Object (7 properties)
+    ├── EnableInternetSecurity: *bool
+    ├── EnablePrivateLinkFastPath: *bool
+    ├── ExpressRouteCircuitPeering: *Object (1 property)
+    │   └── Id: *string
+    ├── ExpressRouteGatewayBypass: *bool
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── RoutingConfiguration: *Object (5 properties)
+    │   ├── AssociatedRouteTable: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── InboundRouteMap: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── OutboundRouteMap: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── PropagatedRouteTables: *Object (2 properties)
+    │   │   ├── Ids: Object (1 property)[]
+    │   │   │   └── Id: *string
+    │   │   └── Labels: string[]
+    │   └── VnetRoutes: *Object (3 properties)
+    │       ├── BgpConnections: Object (1 property)[]
+    │       │   └── Id: *string
+    │       ├── StaticRoutes: Object (3 properties)[]
+    │       │   ├── AddressPrefixes: string[]
+    │       │   ├── Name: *string
+    │       │   └── NextHopIpAddress: *string
+    │       └── StaticRoutesConfig: *Object (2 properties)
+    │           ├── PropagateStaticRoutes: *bool
+    │           └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+    │               ├── "Contains"
+    │               └── "Equal"
+    └── RoutingWeight: *int
+
+ExpressRouteGatewaysExpressRouteConnection_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (7 properties)
+    ├── AuthorizationKey: *string
+    ├── EnableInternetSecurity: *bool
+    ├── EnablePrivateLinkFastPath: *bool
+    ├── ExpressRouteCircuitPeering: *Object (1 property)
+    │   └── Id: *string
+    ├── ExpressRouteGatewayBypass: *bool
+    ├── RoutingConfiguration: *Object (5 properties)
+    │   ├── AssociatedRouteTable: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── InboundRouteMap: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── OutboundRouteMap: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── PropagatedRouteTables: *Object (2 properties)
+    │   │   ├── Ids: Object (1 property)[]
+    │   │   │   └── Id: *string
+    │   │   └── Labels: string[]
+    │   └── VnetRoutes: *Object (2 properties)
+    │       ├── StaticRoutes: Object (3 properties)[]
+    │       │   ├── AddressPrefixes: string[]
+    │       │   ├── Name: *string
+    │       │   └── NextHopIpAddress: *string
+    │       └── StaticRoutesConfig: *Object (2 properties)
+    │           ├── PropagateStaticRoutes: *bool
+    │           └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+    │               ├── "Contains"
+    │               └── "Equal"
+    └── RoutingWeight: *int
+
 ExpressRoutePort_STATUS: Object (8 properties)
 ├── Etag: *string
 ├── Id: *string

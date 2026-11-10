@@ -1572,8 +1572,8 @@ Microsoft.Network,Microsoft.Network/expressRouteCircuits/peerings,44,,0,network.
 Microsoft.Network,Microsoft.Network/expressRouteCircuits/peerings/connections,5,,0,network.azure.hfl.dev/ExpressRouteCircuitsPeeringsConnection,5,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/expressRouteCrossConnections,35,,0,,0,35,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/expressRouteCrossConnections/peerings,28,,0,,0,28,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/expressRouteGateways,24,,0,,0,24,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/expressRouteGateways/expressRouteConnections,16,,0,,0,16,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/expressRouteGateways,24,,0,network.azure.hfl.dev/ExpressRouteGateway,6,18,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/expressRouteGateways/expressRouteConnections,16,,0,network.azure.hfl.dev/ExpressRouteGatewaysExpressRouteConnection,16,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/expressRouteLags,18,,0,,0,18,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/expressRouteLags/authorizations,1,,0,,0,1,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/ExpressRoutePorts,15,,0,network.azure.hfl.dev/ExpressRoutePort,15,0,false,spec_api=2026-03-01; ours_api=2026-03-01

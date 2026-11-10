@@ -10,7 +10,8 @@ import (
 	"testing"
 )
 
-// What a circuit, a peering, a Global Reach connection and a port must give;
+// What a circuit, a peering, a Global Reach connection, a port, a gateway and
+// a gateway connection must give;
 // the keys Azure makes; children a parent's PUT keeps or deletes; and
 // authorization keys redeemed across subscriptions.
 func TestExpressRoute(t *testing.T) {
@@ -154,6 +155,56 @@ func TestExpressRoute(t *testing.T) {
 	conn := rg2 + "/providers/Microsoft.Network/connections/to-er"
 	put("ExpressRoute connection across subscriptions without a key", conn, connection("ExpressRoute", vng, "peer", c, ""), http.StatusBadRequest)
 	put("ExpressRoute connection across subscriptions", conn, connection("ExpressRoute", vng, "peer", c, `,"authorizationKey":"`+a.AuthorizationKey(c+"/authorizations/gw")+`"`), http.StatusCreated)
+
+	// An ExpressRoute gateway in a Virtual WAN hub, and its connection to a
+	// circuit's private peering.
+	hub := rg2 + "/providers/Microsoft.Network/virtualHubs/hub"
+	gw := rg2 + "/providers/Microsoft.Network/expressRouteGateways/gw"
+	gateway := func(hubID, extra string) string {
+		return `{"location":"westus","properties":{"virtualHub":{"id":"` + hubID + `"}` + extra + `}}`
+	}
+	put("gateway without a hub", gw, `{"location":"westus","properties":{}}`, http.StatusBadRequest)
+	put("gateway in a missing hub", gw, gateway(hub, ""), http.StatusNotFound)
+	a.AddResource(hub)
+	put("gateway with min above max", gw, gateway(hub, `,"autoScaleConfiguration":{"bounds":{"min":3,"max":2}}`), http.StatusBadRequest)
+	put("gateway", gw, gateway(hub, `,"autoScaleConfiguration":{"bounds":{"min":1,"max":2}}`), http.StatusCreated)
+	put("second gateway in the hub", rg2+"/providers/Microsoft.Network/expressRouteGateways/gw2", gateway(hub, ""), http.StatusBadRequest)
+	if names(get(gw), "expressRouteConnections") != "" {
+		t.Fatal("a new gateway has connections")
+	}
+	p2c := c2 + "/peerings/AzurePrivatePeering"
+	put("peering 2 again", p2c, peering, http.StatusOK)
+	ercn := gw + "/expressRouteConnections/to-er2"
+	erConn := func(peer, extra string) string {
+		return `{"name":"` + lastSegment(ercn) + `","properties":{"expressRouteCircuitPeering":{"id":"` + peer + `"},"routingWeight":10` + extra + `}}`
+	}
+	put("gateway connection to a Microsoft peering", ercn, erConn(c2+"/peerings/MicrosoftPeering", ""), http.StatusBadRequest)
+	put("gateway connection to a missing peering", ercn, erConn(nw+"expressRouteCircuits/none/peerings/AzurePrivatePeering", ""), http.StatusNotFound)
+	put("gateway connection", ercn, erConn(p2c, ""), http.StatusCreated)
+	if names(get(gw), "expressRouteConnections") != "to-er2" {
+		t.Fatalf("the gateway lists %q", names(get(gw), "expressRouteConnections"))
+	}
+	// To a circuit in another subscription: with one of its authorization
+	// keys, which is then in use.
+	put("circuit 3 private peering", c+"/peerings/AzurePrivatePeering", peering, http.StatusCreated)
+	put("authorization for the gateway connection", c+"/authorizations/hub", `{"properties":{}}`, http.StatusCreated)
+	hubKey := a.AuthorizationKey(c + "/authorizations/hub")
+	cross := gw + "/expressRouteConnections/to-er"
+	put("gateway connection across subscriptions without a key", cross, erConn(c+"/peerings/AzurePrivatePeering", ""), http.StatusBadRequest)
+	put("gateway connection across subscriptions", cross, erConn(c+"/peerings/AzurePrivatePeering", `,"authorizationKey":"`+hubKey+`"`), http.StatusCreated)
+	if got := get(c + "/authorizations/hub")["properties"].(map[string]any); got["authorizationUseStatus"] != "InUse" || !strings.EqualFold(got["connectionResourceUri"].(string), cross) {
+		t.Fatalf("the authorization is not in use by the gateway connection: %v", got)
+	}
+	// A gateway PUT with its list keeps the connections; without it, they go.
+	body, _ = json.Marshal(get(gw))
+	put("gateway with its connections", gw, string(body), http.StatusOK)
+	if !a.HasResource(ercn) || !a.HasResource(cross) {
+		t.Fatal("a gateway PUT with its connections lost one")
+	}
+	put("gateway without its connections", gw, gateway(hub, ""), http.StatusOK)
+	if a.HasResource(ercn) || a.HasResource(cross) {
+		t.Fatal("a gateway PUT without its connections kept them")
+	}
 
 	if code, _ := do(t, a, http.MethodDelete, c, ""); code != http.StatusOK || a.HasResource(c+"/authorizations/gw") {
 		t.Fatalf("delete the circuit and its children: %d", code)

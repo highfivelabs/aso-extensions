@@ -37,6 +37,8 @@ resources:
 - network.azure.hfl.dev_expressroutecircuitsauthorizations.yaml
 - network.azure.hfl.dev_expressroutecircuitspeerings.yaml
 - network.azure.hfl.dev_expressroutecircuitspeeringsconnections.yaml
+- network.azure.hfl.dev_expressroutegateways.yaml
+- network.azure.hfl.dev_expressroutegatewaysexpressrouteconnections.yaml
 - network.azure.hfl.dev_expressrouteports.yaml
 - network.azure.hfl.dev_expressrouteportsauthorizations.yaml
 - network.azure.hfl.dev_localnetworkgateways.yaml

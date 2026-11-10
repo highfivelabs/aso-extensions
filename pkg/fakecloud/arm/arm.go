@@ -33,9 +33,10 @@
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
 // kept but not returned), and ExpressRoute circuits, peerings,
-// authorizations, Global Reach connections and ports (expressroute.go: keys
-// Azure makes, children a parent's PUT keeps or deletes, authorization keys
-// redeemed across subscriptions).
+// authorizations, Global Reach connections, ports, and gateways in a
+// Virtual WAN hub with their connections (expressroute.go: keys Azure makes,
+// children a parent's PUT keeps or deletes, authorization keys redeemed
+// across subscriptions, one gateway per hub).
 //
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
