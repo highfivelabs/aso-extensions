@@ -12,7 +12,7 @@
 #   sweep.sh --before ISO-TIME    delete resources created before it
 #
 # Top-level resources only (deleting one deletes its children). A delete
-# that fails (a dependency not yet gone) is tried again, up to five rounds.
+# that fails (a dependency not yet gone) is tried again, up to 30 rounds a minute apart (gateways take a quarter of an hour to go).
 set -o errexit -o nounset -o pipefail
 : "${AZURE_SUBSCRIPTION_ID:?}" "${LIVE_RESOURCE_GROUP:?}"
 # shellcheck source=hack/live/credentials.sh
@@ -43,7 +43,7 @@ case "${1:-}" in
     ;;
   --since|--before)
     mode="$1" at="${2:?time}"
-    for round in 1 2 3 4 5; do
+    for round in $(seq 30); do
       mapfile -t doomed < <(resources | awk -v m="${mode}" -v at="${at}" '(m == "--since" && $4 >= at) || (m == "--before" && $4 < at)')
       [[ ${#doomed[@]} -eq 0 ]] && exit 0
       echo "sweep round ${round}: ${#doomed[@]} resources"
@@ -55,7 +55,7 @@ case "${1:-}" in
       done
       sleep 60
     done
-    echo "sweep: resources left after five rounds" >&2
+    echo "sweep: resources left after 30 rounds" >&2
     resources >&2
     exit 1
     ;;

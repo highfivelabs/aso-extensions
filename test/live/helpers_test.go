@@ -36,6 +36,8 @@ const (
 	// hubs and gateways take longer; their tests pass their own.
 	timeout = 15 * time.Minute
 	poll    = 5 * time.Second
+	// How often a long wait says what it is waiting for.
+	heartbeat = 4 * time.Minute
 )
 
 // armClient is the tests' own view of Resource Manager, with the same
@@ -227,10 +229,17 @@ func gone(obj client.Object) func() error {
 func eventually(t *testing.T, timeout time.Duration, what string, f func() error) {
 	t.Helper()
 	deadline := time.Now().Add(timeout)
+	// A line every few minutes: offload deletes a VM whose log is silent
+	// for 45 minutes, and the condition so far is worth seeing.
+	beat := time.Now().Add(heartbeat)
 	var err error
 	for time.Now().Before(deadline) {
 		if err = f(); err == nil {
 			return
+		}
+		if time.Now().After(beat) {
+			t.Logf("%s: still waiting: %v", what, err)
+			beat = time.Now().Add(heartbeat)
 		}
 		var p permanent
 		if errors.As(err, &p) {
@@ -279,9 +288,14 @@ func remove(t *testing.T, wait time.Duration, obj client.Object) {
 		return
 	}
 	deadline := time.Now().Add(wait)
+	beat := time.Now().Add(heartbeat)
 	for time.Now().Before(deadline) {
 		if gone(obj)() == nil {
 			return
+		}
+		if time.Now().After(beat) {
+			t.Logf("%T %s: still deleting", obj, obj.GetName())
+			beat = time.Now().Add(heartbeat)
 		}
 		time.Sleep(poll)
 	}
