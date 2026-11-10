@@ -14,6 +14,7 @@ rules:
   - costmanagement.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - insights.azure.hfl.dev
+  - kubernetesconfiguration.azure.hfl.dev
   - maintenance.azure.hfl.dev
   - management.azure.hfl.dev
   - network.azure.hfl.dev
@@ -33,6 +34,7 @@ rules:
   - costmanagement.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - insights.azure.hfl.dev
+  - kubernetesconfiguration.azure.hfl.dev
   - maintenance.azure.hfl.dev
   - management.azure.hfl.dev
   - network.azure.hfl.dev

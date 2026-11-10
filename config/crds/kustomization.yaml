@@ -29,6 +29,9 @@ resources:
 - insights.azure.hfl.dev_privatelinkscopesscopedresources.yaml
 - keyvault.azure.hfl.dev_vaultcertificates.yaml
 - keyvault.azure.hfl.dev_vaultsecrets.yaml
+- kubernetesconfiguration.azure.hfl.dev_privatelinkscopes.yaml
+- kubernetesconfiguration.azure.hfl.dev_privatelinkscopesprivateendpointconnections.yaml
+- kubernetesconfiguration.azure.hfl.dev_sourcecontrolconfigurations.yaml
 - maintenance.azure.hfl.dev_configurationassignments.yaml
 - maintenance.azure.hfl.dev_maintenanceconfigurations.yaml
 - management.azure.hfl.dev_managementgroups.yaml

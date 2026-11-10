@@ -34,6 +34,11 @@ import (
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
 	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
 	insights_v20210901s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901/storage"
+	kubernetesconfiguration_customizations "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/customizations"
+	kubernetesconfiguration_v20230501 "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/v20230501"
+	kubernetesconfiguration_v20230501s "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/v20230501/storage"
+	kubernetesconfiguration_v20241101p "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/v20241101preview"
+	kubernetesconfiguration_v20241101ps "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/v20241101preview/storage"
 	maintenance_customizations "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/customizations"
 	maintenance_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401"
 	maintenance_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401/storage"
@@ -228,6 +233,27 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
+	result = append(result, &registration.StorageType{
+		Obj: new(kubernetesconfiguration_v20230501.SourceControlConfiguration),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.configurationProtectedSettings",
+				Func: indexKubernetesconfigurationSourceControlConfigurationConfigurationProtectedSettings,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.configurationProtectedSettings",
+					},
+					&kubernetesconfiguration_v20230501.SourceControlConfigurationList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScope)})
+	result = append(result, &registration.StorageType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.ConfigurationAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroup)})
@@ -565,6 +591,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScope)},
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesScopedResource)})
+	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20230501.SourceControlConfiguration)})
+	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20230501s.SourceControlConfiguration)})
+	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScope)}, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScopesPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101ps.PrivateLinkScope)}, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101ps.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401s.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401s.MaintenanceConfiguration)})
 	result = append(
@@ -742,6 +772,10 @@ func createScheme() *runtime.Scheme {
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
 	_ = insights_v20210901s.AddToScheme(scheme)
+	_ = kubernetesconfiguration_v20230501.AddToScheme(scheme)
+	_ = kubernetesconfiguration_v20230501s.AddToScheme(scheme)
+	_ = kubernetesconfiguration_v20241101p.AddToScheme(scheme)
+	_ = kubernetesconfiguration_v20241101ps.AddToScheme(scheme)
 	_ = maintenance_v20230401.AddToScheme(scheme)
 	_ = maintenance_v20230401s.AddToScheme(scheme)
 	_ = management_v20230401.AddToScheme(scheme)
@@ -789,6 +823,9 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
+	result = append(result, &kubernetesconfiguration_customizations.PrivateLinkScopeExtension{})
+	result = append(result, &kubernetesconfiguration_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
+	result = append(result, &kubernetesconfiguration_customizations.SourceControlConfigurationExtension{})
 	result = append(result, &maintenance_customizations.ConfigurationAssignmentExtension{})
 	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})
 	result = append(result, &management_customizations.ManagementGroupExtension{})
@@ -985,6 +1022,18 @@ func indexCostmanagementExportSasToken(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.DeliveryInfo.Destination.SasToken.Index()
+}
+
+// indexKubernetesconfigurationSourceControlConfigurationConfigurationProtectedSettings an index function for kubernetesconfiguration_v20230501.SourceControlConfiguration .spec.configurationProtectedSettings
+func indexKubernetesconfigurationSourceControlConfigurationConfigurationProtectedSettings(rawObj client.Object) []string {
+	obj, ok := rawObj.(*kubernetesconfiguration_v20230501.SourceControlConfiguration)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ConfigurationProtectedSettings == nil {
+		return nil
+	}
+	return obj.Spec.ConfigurationProtectedSettings.Index()
 }
 
 // indexNetworkExpressRouteCircuitActivationKey an index function for network_v20260301.ExpressRouteCircuit .spec.activationKey

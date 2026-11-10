@@ -1,0 +1,43 @@
+typeFilters:
+  - action: include
+    group: kubernetesconfiguration
+    version: v20230501
+    because: >-
+      the newest stable API with source control configurations (the legacy
+      Flux v1 GitOps kind), the version of ASO's own FluxConfiguration
+  - action: include
+    group: kubernetesconfiguration
+    version: v20241101preview
+    because: Kubernetes configuration private link scopes have only preview APIs; this is the newest
+  - action: prune
+    group: kubernetesconfiguration
+    because: every other version is left alone
+
+typeTransformers:
+  - group: kubernetesconfiguration
+    name: SourceControlConfiguration_Spec
+    property: SystemData
+    remove: true
+    because: Azure sets it; the spec does not mark it read-only (as ASO's FluxConfiguration_Spec)
+  # A connection's provisioningState stays in its spec: it comes from
+  # common-types v3's PrivateEndpointConnectionProperties, shared with other
+  # groups, and is removable only there. Azure ignores it on a PUT.
+
+groupModelConfiguration:
+  2023-05-01:
+    SourceControlConfiguration:
+      $exportAs: SourceControlConfiguration
+      $supportedFrom: v0.1.0
+    SourceControlConfiguration_Properties_Spec:
+      ConfigurationProtectedSettings:
+        $importSecretMode: required # as ASO's ExtensionProperties: settings Azure keeps secret
+  2024-11-01-preview:
+    PrivateLinkScope:
+      $exportAs: PrivateLinkScope
+      $supportedFrom: v0.1.0
+    PrivateLinkScopes_PrivateEndpointConnection:
+      $exportAs: PrivateLinkScopesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    KubernetesConfigurationPrivateLinkScopeProperties:
+      ClusterResourceId:
+        $referenceType: arm # the Azure Arc-enabled Kubernetes cluster the scope serves
