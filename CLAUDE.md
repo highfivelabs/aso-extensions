@@ -63,9 +63,12 @@ itself lives in its own repository and is never changed from here.
 
 ## Never
 
-- Never use real cloud credentials, projects, accounts or subscriptions.
-  Only the fake cloud. A change that needs the real cloud is written up,
-  not tested.
+- Never use real cloud credentials, projects, accounts or subscriptions,
+  with one exception: the live runs of `docs/live-runs.md` (the builder's
+  decision, 2026-11-10), through `task test-live` from an offload VM, with
+  the federated identity and the one resource group named there. Never
+  change that identity or ask it for wider roles; never use the builder's
+  own `az` session for tests. Everything else uses the fake cloud.
 - Never open, comment on, review or react to upstream pull requests or
   issues. Reading them (`gh` read-only, `git fetch`) is fine.
 - Never force-push, rewrite pushed history, or change the repository's
