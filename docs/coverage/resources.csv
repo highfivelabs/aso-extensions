@@ -253,10 +253,10 @@ Microsoft.Authorization,Microsoft.Authorization/privilegedResourceFavorites,1,,0
 Microsoft.Authorization,Microsoft.Authorization/resourceManagementPrivateLinks,1,,0,,0,1,false,spec_api=2020-05-01
 Microsoft.Authorization,Microsoft.Authorization/roleAssignmentApprovals/stages,3,,0,,0,3,false,spec_api=2021-01-01-preview; spec-preview-only
 Microsoft.Authorization,Microsoft.Authorization/roleAssignments,7,authorization.azure.com/RoleAssignment,7,,0,0,false,spec_api=2022-04-01; official_api=2022-04-01
-Microsoft.Authorization,Microsoft.Authorization/roleAssignmentScheduleRequests,15,,0,,0,15,false,spec_api=2020-10-01
+Microsoft.Authorization,Microsoft.Authorization/roleAssignmentScheduleRequests,15,,0,authorization.azure.hfl.dev/RoleAssignmentScheduleRequest,15,0,false,spec_api=2020-10-01; ours_api=2020-10-01
 Microsoft.Authorization,Microsoft.Authorization/roleDefinitions,8,authorization.azure.com/RoleDefinition,8,,0,0,false,spec_api=2022-04-01; official_api=2022-04-01
-Microsoft.Authorization,Microsoft.Authorization/roleEligibilityScheduleRequests,14,,0,,0,14,false,spec_api=2020-10-01
-Microsoft.Authorization,Microsoft.Authorization/roleManagementPolicyAssignments,3,,0,,0,3,false,spec_api=2020-10-01
+Microsoft.Authorization,Microsoft.Authorization/roleEligibilityScheduleRequests,14,,0,authorization.azure.hfl.dev/RoleEligibilityScheduleRequest,14,0,false,spec_api=2020-10-01; ours_api=2020-10-01
+Microsoft.Authorization,Microsoft.Authorization/roleManagementPolicyAssignments,3,,0,authorization.azure.hfl.dev/RoleManagementPolicyAssignment,3,0,false,spec_api=2020-10-01; ours_api=2020-10-01
 Microsoft.Authorization,Microsoft.Authorization/variables,1,,0,,0,1,false,spec_api=2024-12-01-preview; spec-preview-only
 Microsoft.Authorization,Microsoft.Authorization/variables/values,2,,0,,0,2,false,spec_api=2024-12-01-preview; spec-preview-only
 Microsoft.Automanage,Microsoft.Automanage/configurationProfileAssignments,1,,0,,0,1,false,spec_api=2022-05-04

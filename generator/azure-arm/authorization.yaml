@@ -7,11 +7,65 @@ typeFilters:
     group: authorization
     version: v20260101preview
     because: policy exemptions exist only in preview versions; this is the newest
+  - action: include
+    group: authorization
+    version: v20201001
+    because: Privileged Identity Management (role eligibility and assignment schedule requests, role management policy assignments); the version ASO PR #5638 generates its RoleEligibilityScheduleRequest from
   - action: prune
     group: authorization
     because: every other version is left alone (locks are the hand-written ManagementLock)
 
 groupModelConfiguration:
+  # Privileged Identity Management. RoleEligibilityScheduleRequest is copied
+  # from ASO PR #5638 (head 5d0e686e) as it is, but for $supportedFrom (our
+  # release); RoleAssignmentScheduleRequest is configured the same way.
+  # A request's name must be a GUID: the hand-written Claimer in
+  # generator/_extensions/authorization/customizations defaults it, where ASO
+  # has a webhook (docs/plan.md, "Names that must be GUIDs").
+  2020-10-01:
+    RoleEligibilityScheduleRequest:
+      $exportAs: RoleEligibilityScheduleRequest
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+      $operatorSpecProperties:
+        - name: NamingConvention
+          type: string
+          description: The uuid generation technique to use for any request without an explicit AzureName. One of 'stable' or 'random'. <br> +kubebuilder:validation:Enum={"random","stable"}
+    RoleEligibilityScheduleRequestProperties:
+      PrincipalId:
+        $importConfigMapMode: optional
+      RoleDefinitionId:
+        $description: The role definition ID. This can be the ARM ID of a custom role definition, or the well-known name of a built-in role definition. See https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles for well-known role definition names.
+        $referenceType: arm+wellknown
+        # Note that while there are fields TargetRoleEligibilityScheduleId and TargetRoleEligibilityScheduleInstanceId which
+        # are definitely at least sometimes ARM IDs (see the test recordings for this resource), but according to this sample:
+        # https://github.com/Azure/azure-rest-api-specs/blob/main/specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2020-10-01/examples/PutRoleEligibilityScheduleRequest.json
+        # they are also sometimes UUIDs. Not forcing them to ARM ID at this point due to the above.
+    RoleAssignmentScheduleRequest:
+      $exportAs: RoleAssignmentScheduleRequest
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+      $operatorSpecProperties:
+        - name: NamingConvention
+          type: string
+          description: The uuid generation technique to use for any request without an explicit AzureName. One of 'stable' or 'random'. <br> +kubebuilder:validation:Enum={"random","stable"}
+    RoleAssignmentScheduleRequestProperties:
+      PrincipalId:
+        $importConfigMapMode: optional
+      RoleDefinitionId:
+        $description: The role definition ID. This can be the ARM ID of a custom role definition, or the well-known name of a built-in role definition. See https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles for well-known role definition names.
+        $referenceType: arm+wellknown
+        # As for the eligibility request: TargetRoleAssignmentScheduleId,
+        # TargetRoleAssignmentScheduleInstanceId and
+        # LinkedRoleEligibilityScheduleId are left as strings.
+    RoleManagementPolicyAssignment:
+      $exportAs: RoleManagementPolicyAssignment
+      $supportedFrom: v0.1.0
+    RoleManagementPolicyAssignmentProperties:
+      PolicyId:
+        $referenceType: arm # a Microsoft.Authorization/roleManagementPolicies resource (Azure makes them; by ARM ID)
+      RoleDefinitionId:
+        $referenceType: arm # a role definition, by ARM ID
   2026-07-01:
     PolicyDefinition:
       $exportAs: PolicyDefinition

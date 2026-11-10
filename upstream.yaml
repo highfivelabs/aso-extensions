@@ -27,7 +27,8 @@ pins:
     via: the v2/specs/azure-rest-api-specs submodule of azure-service-operator at its pin
     use: the ARM specs the generator reads (hack/specs.sh)
 
-pull_requests: []
+pull_requests:
+  - {ref: Azure/azure-service-operator#5638, head: 5d0e686e8b0a36b1a59b5ad4e34d68ccc27b949a, read_on: "2026-11-09", role: copied, for: "RoleEligibilityScheduleRequest (Privileged Identity Management): generator configuration, ARM resource modifier, name defaulting"}
 
 patches:
   - {file: patches/azure-service-operator/0001-export-framework-for-out-of-tree-managers.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
@@ -54,3 +55,7 @@ copied:
     from: {pin: azure-service-operator, paths: [v2/internal/controllers/controller_resources.go, v2/internal/controllers/indexers.go]}
   - here: [pkg/manager/manager.go]
     from: {pin: azure-service-operator, paths: [v2/cmd/controller/app/setup.go]}
+  - here: [generator/azure-arm/authorization.yaml]
+    from: {pr: Azure/azure-service-operator#5638, paths: [v2/azure-arm/authorization.yaml]}
+  - here: [generator/_extensions/authorization/customizations/role_eligibility_schedule_request_extensions.go, generator/_extensions/authorization/customizations/role_assignment_schedule_request_extensions.go]
+    from: {pr: Azure/azure-service-operator#5638, paths: [v2/api/authorization/customizations/role_eligibility_schedule_request_extensions.go, v2/api/authorization/v20201001/webhook/role_eligibility_schedule_request_defaults.go]}

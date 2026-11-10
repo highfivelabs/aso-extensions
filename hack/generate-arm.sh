@@ -38,3 +38,17 @@ export ASO_GENERATOR_MULTI_SCOPE=1
 rm -rf apis/arm pkg/controllers/arm_resources_gen.go generator/reports
 mkdir -p generator/reports/fragments
 bin/generator gen-types generator/azure-arm.yaml
+
+# Hand-written extensions of generated kinds (an ASO customizations file, as
+# ASO keeps beside its generated ones: a Claimer, an ARMResourceModifier).
+# They live outside apis/arm, which is deleted above on every run, in
+# generator/_extensions/ (a directory the go tool ignores, for its leading
+# underscore), mirroring apis/arm/; copied in after the generator has written
+# the package each one extends.
+if [[ -d generator/_extensions ]]; then
+  (cd generator/_extensions && find . -name '*.go' -type f) | while IFS= read -r f; do
+    dest="apis/arm/${f#./}"
+    [[ -d "$(dirname "${dest}")" ]] || { echo "generator/_extensions/${f#./}: the generator wrote no $(dirname "${dest}")" >&2; exit 1; }
+    cp "generator/_extensions/${f#./}" "${dest}"
+  done
+fi

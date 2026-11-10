@@ -22,12 +22,15 @@ title: Supported Resources
 
 ### Released
 
-| Resource            | ARM Version        | CRD Version      | Supported From | Sample |
-|---------------------|--------------------|------------------|----------------|--------|
-| PolicyAssignment    | 2026-07-01         | v20260701        | v0.1.0         | -      |
-| PolicyDefinition    | 2026-07-01         | v20260701        | v0.1.0         | -      |
-| PolicyExemption     | 2026-01-01-preview | v20260101preview | v0.1.0         | -      |
-| PolicySetDefinition | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| Resource                       | ARM Version        | CRD Version      | Supported From | Sample |
+|--------------------------------|--------------------|------------------|----------------|--------|
+| PolicyAssignment               | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| PolicyDefinition               | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| PolicyExemption                | 2026-01-01-preview | v20260101preview | v0.1.0         | -      |
+| PolicySetDefinition            | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| RoleAssignmentScheduleRequest  | 2020-10-01         | v20201001        | v0.1.0         | -      |
+| RoleEligibilityScheduleRequest | 2020-10-01         | v20201001        | v0.1.0         | -      |
+| RoleManagementPolicyAssignment | 2020-10-01         | v20201001        | v0.1.0         | -      |
 
 ## Compute
 

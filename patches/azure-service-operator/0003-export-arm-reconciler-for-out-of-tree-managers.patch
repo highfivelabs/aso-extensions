@@ -1,3 +1,41 @@
+diff --git a/v2/api/authorization/customizations/outoftree.go b/v2/api/authorization/customizations/outoftree.go
+new file mode 100644
+index 0000000..ab1f949
+--- /dev/null
++++ b/v2/api/authorization/customizations/outoftree.go
+@@ -0,0 +1,32 @@
++/*
++Copyright (c) Microsoft Corporation.
++Licensed under the MIT license.
++*/
++
++// Modified by High Five Labs: this file is new. It exports, unchanged,
++// resolveBuiltInRoleDefinition (role_assignment_extensions.go), so a
++// generated kind outside ASO that names a built-in role by its well-known
++// name (wellKnownName: Reader) resolves it as ASO's RoleAssignment does,
++// through the same cache.
++
++package customizations
++
++import (
++	"context"
++
++	"github.com/Azure/azure-service-operator/v2/internal/genericarmclient"
++	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
++)
++
++// ResolveBuiltInRoleDefinition is the ARM ID of the built-in role
++// definition with the well-known name roleDefinitionName, in the
++// subscription of armObj, listed through armClient
++// (resolveBuiltInRoleDefinition).
++func ResolveBuiltInRoleDefinition(
++	ctx context.Context,
++	roleDefinitionName string,
++	armObj genruntime.ARMResource,
++	armClient *genericarmclient.GenericClient,
++) (string, error) {
++	return resolveBuiltInRoleDefinition(ctx, roleDefinitionName, armObj, armClient)
++}
 diff --git a/v2/pkg/outoftree/arm.go b/v2/pkg/outoftree/arm.go
 new file mode 100644
 index 0000000..d250d9b
@@ -60,3 +98,47 @@ index 0000000..d250d9b
 +	asometrics.RegisterMetrics(metrics)
 +	return asocel.NewExpressionEvaluator(asocel.Metrics(metrics), asocel.Log(log))
 +}
+diff --git a/v2/pkg/outoftree/extensions.go b/v2/pkg/outoftree/extensions.go
+new file mode 100644
+index 0000000..88e8c94
+--- /dev/null
++++ b/v2/pkg/outoftree/extensions.go
+@@ -0,0 +1,38 @@
++/*
++Copyright (c) Microsoft Corporation.
++Licensed under the MIT license.
++*/
++
++// Modified by High Five Labs: this file is new. It exports, unchanged, what
++// a hand-written extension of an out-of-tree generated kind needs and ASO
++// keeps in v2/internal/: the ARM client an ARMResourceModifier receives, the
++// reflection helper ASO's role extensions set a property with, and the UUID
++// naming ASO's role webhooks default a name with.
++
++package outoftree
++
++import (
++	"github.com/Azure/azure-service-operator/v2/internal/genericarmclient"
++	"github.com/Azure/azure-service-operator/v2/internal/reflecthelpers"
++	"github.com/Azure/azure-service-operator/v2/internal/util/randextensions"
++)
++
++// GenericClient is ASO's ARM client, as extensions.ARMResourceModifier
++// receives it.
++type GenericClient = genericarmclient.GenericClient
++
++// SetProperty sets a property of an object by its dotted path, by
++// reflection (reflecthelpers.SetProperty).
++var SetProperty = reflecthelpers.SetProperty
++
++var (
++	// MakeUUIDName is a UUID (v5) from a unique string, or name when it is
++	// a UUID already (randextensions.MakeUUIDName).
++	MakeUUIDName = randextensions.MakeUUIDName
++	// MakeUniqueOwnerScopedString is the string ASO makes a stable UUID
++	// from: owner, group, kind, namespace and name
++	// (randextensions.MakeUniqueOwnerScopedString).
++	MakeUniqueOwnerScopedString = randextensions.MakeUniqueOwnerScopedString
++	// MakeRandomUUID is a new random UUID (randextensions.MakeRandomUUID).
++	MakeRandomUUID = randextensions.MakeRandomUUID
++)

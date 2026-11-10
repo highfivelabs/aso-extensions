@@ -12,6 +12,9 @@ resources:
 - authorization.azure.hfl.dev_policydefinitions.yaml
 - authorization.azure.hfl.dev_policyexemptions.yaml
 - authorization.azure.hfl.dev_policysetdefinitions.yaml
+- authorization.azure.hfl.dev_roleassignmentschedulerequests.yaml
+- authorization.azure.hfl.dev_roleeligibilityschedulerequests.yaml
+- authorization.azure.hfl.dev_rolemanagementpolicyassignments.yaml
 - compute.azure.hfl.dev_virtualmachinesruncommands.yaml
 - containerregistry.azure.hfl.dev_registriescredentialsets.yaml
 - containerregistry.azure.hfl.dev_registriesscopemaps.yaml

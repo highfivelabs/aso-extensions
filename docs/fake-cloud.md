@@ -22,7 +22,7 @@ run the real client code against them.
 | Entra | an `http.RoundTripper` answering instance discovery, OpenID metadata and `/oauth2/v2.0/token`; azidentity's own credentials run against it, through ASO's `TokenCredentialProvider` hook. A token it issues reads as the tenant, client ID, subject (the client assertion's `sub`, or a digest of the client secret) and audience | `pkg/fakecloud/entra` |
 | Key Vault | the data plane, REST 7.5. Secrets: set, get (latest or a version), update attributes, soft delete, get deleted, recover, purge. Certificates: PEM import (refused unless it holds a certificate and the key that matches it), get, update attributes, soft delete, get deleted, recover, purge, each with the secret of the same name and version Key Vault keeps (the PEM as its value). Soft delete is always on; requests carry a bearer token the test decides to accept | `pkg/fakecloud/keyvault`, `cmd/fakevault` |
 | Azure Database for PostgreSQL | PostgreSQL 17 in Docker (tests) or a pod (kind), TLS on, with `azure_pg_admin`, a password administrator, Entra administrators whose password is the fake token of the identity that may sign in as them, and stand-ins for `pgaadauth_create_principal` and `pgaadauth_create_principal_with_oid` | `pkg/fakecloud/postgres` |
-| Resource Manager | a store of resources by ARM ID (PUT with the parent existing, GET, DELETE; the body is kept as sent with `id`, `name`, `type` and `provisioningState: Succeeded` added, no properties checked but the management group hierarchy's and Azure Policy's references and scopes; ASO's own ARM client, for the generated kinds, talks to it) and management locks (`Microsoft.Authorization/locks`, 2020-05-01) at any scope that exists; a lock covers its scope and everything under it: `CanNotDelete` refuses deletes (and deleting a scope that holds a locked resource), `ReadOnly` also refuses writes, each with 409 `ScopeLocked`; locks themselves can always be changed; requests carry a bearer token the test decides to accept | `pkg/fakecloud/arm`, `cmd/fakearm` |
+| Resource Manager | a store of resources by ARM ID (PUT with the parent existing, GET, DELETE; the body is kept as sent with `id`, `name`, `type` and `provisioningState: Succeeded` added, no properties checked but the management group hierarchy's, Azure Policy's and Privileged Identity Management's references and scopes; built-in role definitions listed by name; ASO's own ARM client, for the generated kinds, talks to it) and management locks (`Microsoft.Authorization/locks`, 2020-05-01) at any scope that exists; a lock covers its scope and everything under it: `CanNotDelete` refuses deletes (and deleting a scope that holds a locked resource), `ReadOnly` also refuses writes, each with 409 `ScopeLocked`; locks themselves can always be changed; requests carry a bearer token the test decides to accept | `pkg/fakecloud/arm`, `cmd/fakearm` |
 | ASO | not run: its owner CRDs (generated from ASO's types at the pin) and `FlexibleServer`/`Vault`/`ResourceGroup` objects carrying the status, Ready condition and ARM ID annotation ASO would write | `config/test/aso-crds`, the tests |
 | TLS | a throwaway CA and server certificates; the manager trusts the CA through `SSL_CERT_FILE` on kind, through its client options in tests | `pkg/fakecloud/tlsutil` |
 
@@ -100,6 +100,30 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   cancelling one, whether the definition's effect can be remediated or
   attested, an attestation changing compliance, and the error codes (the
   fake's own).
+- Role definitions and Privileged Identity Management (`pkg/fakecloud/arm/pim.go`):
+  four built-in roles (`Owner`, `Contributor`, `Reader`, `User Access
+  Administrator`, by their real IDs) exist at every scope and are listed, with
+  any role definition a test stores, by `GET {scope}/providers/Microsoft.Authorization/roleDefinitions`
+  (optionally `$filter=roleName eq '...'`), which is how ASO resolves
+  `wellKnownName: Reader`; a role eligibility or assignment schedule request's
+  name must be a GUID, its `principalId` is required, its `requestType` is one
+  of Azure's (400 each), and its role must exist (404); a request is never
+  deleted (405, as Azure has no DELETE for one; ASO's reconciler, knowing that from the spec, sends none); an eligibility request
+  (`AdminAssign` and the like) makes the eligibility schedule of its principal,
+  role and scope and names it in `targetRoleEligibilityScheduleId`, and
+  `AdminRemove` needs and removes it (404); an assignment request does the same
+  with assignment schedules, `SelfActivate` needing an eligibility at or above
+  its scope and `SelfDeactivate` the assignment (404); every request is
+  `Provisioned` (`Revoked` for a removal), and a PUT of a request that exists
+  (ASO PUTs on every reconcile) keeps that outcome and applies nothing again
+  (what Azure does with a second PUT of a request name is not known here); a role management policy assignment
+  is named `{policy GUID}_{role GUID}` (400) and its policy and role must exist
+  (404). Not modelled: approvals, justification, ticket and MFA rules (no
+  request is ever `PendingApproval`), schedule start and expiry, whether the
+  principal exists, the cancel and validate actions, the role management
+  policies themselves (a test stores the ones it names), and the error codes
+  (the fake's own; what Azure answers to a DELETE of a request is not known
+  here).
 - Resource Manager checks no role: real Azure lets only Owner and User
   Access Administrator (or a custom role with
   `Microsoft.Authorization/locks/*`) write locks, so ASO's identity may

@@ -297,6 +297,51 @@ kinds (`docs/coverage/foundation.md` rows 1 to 4) are designed.
   subscription. At a subscription or below, the check applies as for every
   kind: the scope must be in the credential's subscription.
 
+### Hand-written extensions of generated kinds
+
+ASO keeps a kind's hand-written behaviour (the nine extension interfaces:
+`ARMResourceModifier`, `Claimer`, `Deleter`, ...) in
+`api/<group>/customizations/*_extensions.go`, beside the generated
+`*_extension_types_gen.go`. Here `hack/generate-arm.sh` deletes `apis/arm` on
+every run, so such a file lives in `generator/_extensions/<group>/customizations/`
+(mirroring `apis/arm`; the leading underscore keeps it out of `go build ./...`,
+where it would not compile alone) and the script copies it into `apis/arm`
+after the generator has written the package; `task check` regenerates and
+finds the copy unchanged. What such a file needs from ASO's `v2/internal`
+(the ARM client an `ARMResourceModifier` receives, `reflecthelpers.SetProperty`,
+`randextensions`) is exported by patch 0003 (`v2/pkg/outoftree/extensions.go`),
+as is ASO's `resolveBuiltInRoleDefinition`. The first ones are the PIM
+requests' (foundation row 5).
+
+### Names that must be GUIDs
+
+Some ARM resources take only a GUID as their name (a PIM schedule request,
+as a role assignment). ASO gives an empty `azureName` a UUID in a defaulting
+webhook (`stable`: a UUID v5 of the owner, group, kind, namespace and name,
+unless the name already is a UUID; or `random`, by
+`operatorSpec.namingConvention`); there is no webhook here, and without one
+`AzureName()` falls back to `metadata.name`, which Azure refuses.
+
+**Chosen (2026-11-09, with PIM): the reconciler fills an empty `azureName`
+once, the first time it claims the object, and records it.** The kind's
+`Claimer` extension (ASO's own extension point, run before the ARM ID is
+first computed) runs the webhook's code unchanged and then ASO's claim; the
+claim's commit (it adds the finalizer) writes `spec.azureName` to the object,
+so every later reconcile, a restart of the manager or a change of the owner
+sees the same name, and `random` is random once. Why not the alternatives:
+- *Require users to supply a GUID* (as `metadata.name` or `azureName`): Kubernetes
+  names are for people (`eligible-reader`); a GUID name is unreadable and easy
+  to copy between objects by mistake, which would make two objects one Azure
+  request. It stays possible: a name that already is a UUID is kept.
+- *Compute it in `AzureName()` every time* (a generator patch): no record, so
+  `random` cannot work and the name moves if the owner reference is edited.
+- *A webhook*: the install has none on purpose (section 2).
+The cost: until the first reconcile the object has no `azureName` (a client
+that reads it before then sees empty), and an object created while the manager
+is down is named when it starts. The UUID is ASO's algorithm over our group
+(`authorization.azure.hfl.dev`), so it differs from what ASO would compute for
+the same object; once recorded it moves with the object.
+
 ### The PostgreSQL User
 
 - `aadUser`: the operator signs in as the server's Entra administrator
@@ -509,6 +554,7 @@ rechecks upstream again when it is built.
 | c8b | Subscription tags, billing aliases (foundation row 2) | tags: none at the pin, no pull request (rechecked 2026-11-09); billing aliases: none | **`resources.azure.hfl.dev/v20250401` `TagSet` built**, generated (`Microsoft.Resources/tags/default`, an extension resource: `owner` is an ASO resource or an ARM ID, `properties.tags`; the generator names the resource `Tag` and cannot rename it to `Tags` because that type exists, hence `TagSet`; the other Resources API types (deployments, templates, resource groups) are not exported). A TagSet PUTs the whole set: it replaces the tags of its scope. **Not built**: `BillingSubscriptionAlias` (`Microsoft.Billing/billingAccounts/.../billingSubscriptionAliases`): ASO's `subscription/Alias` already creates a subscription under a billing scope (EA, MCA), and the Billing alias is a second route to the same result under a billing account that is no kind; `Microsoft.Subscription/policies` (tenant-wide subscription policy, 3 attributes; ASO's `subscription` group has no kind for it) is left for a later session |
 | c8c | Azure Policy: definitions, set definitions, assignments, exemptions (foundation row 3) | rechecked 2026-11-09, read-only: v2.22.0 still the latest release; `main` four documentation commits past the pin (#5826, #5827, #5828, #5769); no open or draft pull request adds a policy kind (the open ones are #5829, #5821, #5820, #5814, #5804, #5783, #5780, #5773, #5768, #5693, #5659, #5638, #5104, #5028, #4210); issues #4975 and #2767 are open (a maintainer, 2026-07: "Definition I think is recursive which can cause us issues"; it was not, for the generator, once `policyRule` and `metadata` are free-form JSON) | **built**, generated: `authorization.azure.hfl.dev/v20260701` `PolicyDefinition`, `PolicySetDefinition`, `PolicyAssignment` (the newest stable API) and `v20260101preview` `PolicyExemption` (exemptions exist only in preview versions; the newest). Each is an extension resource (patch 0006): owner our `ManagementGroup`, an ASO resource or an ARM ID. References are `$referenceType: arm`, so a set names its definitions, an assignment its definition or set, and an exemption its assignment by Kubernetes object or ARM ID (`policyDefinitionReference`, `policyAssignmentReference`; a built-in by ARM ID), as is a group's `additionalMetadataId`. `MissingTokenAction` (audit or deny) is marked not a secret. Hand-written code: none (the generated share is 100% of the kind code; the fake's policy rules, tests and configuration are ours). Not built: definition and set definition **versions** (`.../versions/{v}`, read-mostly snapshots of a definition), policy **variables** and **values** (preview), **enrollments** (preview), and remediation (row 4, `Microsoft.PolicyInsights`) |
 | c8d | Policy remediations and attestations (foundation rows 4 and 21) | rechecked 2026-11-09, read-only: v2.22.0 still the latest release; `main` four documentation commits past the pin (#5826, #5827, #5828, #5769); no open or draft pull request adds a Policy Insights kind; issue #2767 ("definition, assignment, and remediation") is open with no pull request; nothing asks for attestations | **built**, generated: `policyinsights.azure.hfl.dev/v20241001` `PolicyRemediation` and `PolicyAttestation` (2024-10-01, the newest stable Policy Insights API, one TypeSpec file holding both). Both are extension resources (patch 0006; the spec has a remediation at a management group, a subscription, a resource group and a resource, an attestation at the last three): owner our `ManagementGroup`, an ASO resource or an ARM ID. The assignment is a reference (`policyAssignmentReference`, our `PolicyAssignment` by object or any by ARM ID), as are a remediation's `filters.resourceIds` (`resourceReferences`). The attestation's own `owner` property (the person responsible, an Entra object ID) collides with the Kubernetes `owner`, so ASO's generator names it `properties_owner` in the CRD (`PropertiesOwner` in Go, `owner` on the wire); left as ASO names it. Built together because they share the API version, the group and the fake's rules; attestations were row 21. Hand-written code: none (the generated share is 100% of the kind code). Not built: the remediation's `cancel` action (a POST; deleting the object deletes the remediation) and its deployments (read-only); policy states, events, metadata and restriction checks (read or POST only) |
+| c8e | Privileged Identity Management (foundation row 5) | rechecked 2026-11-09, read-only: v2.22.0 still the latest release; `main` four documentation commits past the pin (#5826, #5827, #5828, #5769); open pull request **#5638** ("Add support for Privileged Identity Management in ASO workflow", head `5d0e686e`, unchanged since 2026-10-16, review required) adds `RoleEligibilityScheduleRequest` at 2020-10-01; issue #4335 (PIM) is open; nothing upstream for the assignment request or the policy assignment | **built**: `authorization.azure.hfl.dev/v20201001` `RoleEligibilityScheduleRequest` (**copied from #5638**: its generator configuration as is, its `ARMResourceModifier` that resolves `wellKnownName: Reader` to the built-in role's ID by listing role definitions, and its webhook's name defaulting, run as a `Claimer` here, section 2 "Names that must be GUIDs"), `RoleAssignmentScheduleRequest` (configured and extended the same way: activation, deactivation, admin assignment) and `RoleManagementPolicyAssignment` (generated; `policyReference` and `roleDefinitionReference` by ARM ID; its name is `{policy GUID}_{role GUID}`, which the user gives as `azureName`, as Azure says). All three are extension resources (owner any ASO resource, our `ManagementGroup` or an ARM ID). A request cannot be deleted in Azure (the spec has no DELETE, so ASO's reconciler sends none and reports `DeletionNotSupportedInAzure`): the object needs `reconcile-policy: detach-on-delete` to go, and an eligibility or assignment is undone with another request, as #5638's own test does. Generated share: the kind code is generated but for two hand-written extension files (235 lines, 115 of them a copy of the other with the type changed) against 11,724 generated lines, tests aside, of `apis/arm/authorization/v20201001` and the extension types (98% generated). Not built: the role management **policies** themselves (Azure makes one per scope and role and takes only PATCH, which ASO's generator does not model), the requests' `cancel` and `validate` actions, the 2024-09-01-preview API (approval and conditions on the newer fields), and Entra directory roles (`Microsoft.Graph`, not ARM). A built-in role by name needs a subscription in the request's scope (ASO builds `/subscriptions/{s}/providers/.../roleDefinitions/{id}`), so at a management group name the role by ARM ID |
 | c9 | ACR tokens, scope maps, credential sets | not at the pin, no pull request (rechecked 2026-11-09: v2.22.0 still the latest release, `main` three documentation commits past the pin, nothing open on registries; ASO exports `Registry`, `RegistryReplication` and `RegistryCacheRule`, whose `credentialSetResourceId` had no kind to point at) | **built**, generated (`containerregistry.azure.hfl.dev`, API 2025-11-01, ASO's own `Registry` version): `RegistriesToken` (bound to a scope map, enabled or disabled; certificates in the spec), `RegistriesScopeMap`, `RegistriesCredentialSet` (the Key Vault secret URIs of an upstream registry, for a cache rule; identity as ARM references) and, beyond the ranking, `RegistriesWebhook` (service URI and custom headers are `SecretReference`s, so they come from Kubernetes Secrets). Not built: a token's **passwords**: they are generated by the `generateCredentials` action, returned once, and are not part of the token's PUT, so no CRD field could hold them (a password would be a Key Vault secret an operator writes after a POST; that is a hand-written kind, not queued); connected registries (IoT Edge), private endpoint connections |
 | c10 | VM extras: run command, auto-shutdown schedule, maintenance assignment, Recovery Services backup | not at the pin, no pull request (rechecked 2026-11-09: v2.22.0 still the latest release, `main` three documentation commits past the pin; open issues #1187 asks for database backup only; ASO has no `devtestlab`, `maintenance` or `recoveryservices` group) | **built in two parts**. Part one, generated: `compute.azure.hfl.dev/v20220301` `VirtualMachinesRunCommand` (script or script URI, parameters, the run-as password from a Secret, owned by ASO's `VirtualMachine`); `devtestlab.azure.hfl.dev/v20180915` `Schedule` (a VM's auto-shutdown: task type `ComputeVmShutdownTask`, daily time, time zone, notification; the VM an ARM reference; owned by the resource group); `maintenance.azure.hfl.dev/v20230401` `MaintenanceConfiguration` (owned by the resource group). **Not built: `ConfigurationAssignment`** (assigning a configuration to a VM): the spec has the same resource at four scopes (subscription, resource group, resource, nested resource), ASO's generator picks one of the four paths by map order, so each run differs (extension resource, then location scope, then another) and `task check` would fail at random; it is `ManagementLock`'s problem (a hand-written kind, not queued). Part two, Recovery Services, is generated too: `recoveryservices.azure.hfl.dev/v20260701` `Vault` (owned by the resource group: SKU, identity, redundancy, encryption, monitoring, public network access), `VaultsBackupPolicy` (the union of IaaS VM, SQL, file share, workload and other policies, with schedule and retention; owned by our `Vault`), `VaultsBackupResourceGuardProxy` and `VaultsPrivateEndpointConnection`. **Not built, and why it matters**: the protection container, the protected item (what turns backup on for a VM) and the protection intent. Their paths hold a fixed fabric segment (`backupFabrics/Azure`) that is no resource, so the generator makes the resource group the owner and the Kubernetes object cannot name the ARM ID ("had 1 azureNames and 3 resourceTypes", found by the test); a protected item is also owned by its container, which a VM never needs created. They, the singleton settings (`backupstorageconfig`, `backupconfig`, encryption config) and Site Recovery are hand-written candidates (see docs/handoff.md). Redundancy is set on the vault itself (`redundancySettings`), so the storage-config singleton is not needed to choose geo or local. **c18 (stale ARM versions)**: ASO's `VirtualMachine` is at 2022-03-01 while the Compute spec has 2026-04-01, so the run command is built at 2022-03-01, ASO's version, so owner and child share a vintage; it moves when ASO's `VirtualMachine` does. **Generator change**: patch 0004 (UPSTREAM.md) makes a property flattened out of a flattened property stay an object, which the Maintenance window (`properties.maintenanceWindow.*`) and the Log Analytics data export needed; it changes nothing for kinds that generated before |
 | c11 | Storage local users (SFTP) | not at the pin, no pull request | queued |
@@ -833,6 +879,30 @@ serialization and conversion tests):
   with an attestation, cancelling, and the rights the identity needs
   (Resource Policy Contributor at the scope, and the assignment's identity
   for the deployments);
+- Privileged Identity Management, generated (foundation row 5): an
+  eligibility request for `Reader` named by `wellKnownName` (resolved by
+  listing the role definitions, sent as the role's ARM ID), its principal
+  from a ConfigMap, on an ASO `ResourceGroup`, with no `azureName`: the
+  reconciler gives it ASO's stable UUID and records it in `spec.azureName`;
+  the eligibility schedule it makes is in its status. An activation
+  (`SelfActivate`, the role by ARM ID, `namingConvention: random`) gets a
+  random UUID that stays the same when the object is changed and PUT again.
+  Deleting a request is refused by ASO's reconciler itself: the spec has no
+  DELETE for it, so the generated kind says so, no DELETE is sent and the
+  object waits with `DeletionNotSupportedInAzure` on its Ready condition (the
+  fake would answer a DELETE with 405);
+  `reconcile-policy: detach-on-delete` lets it go, the request staying in
+  Resource Manager; an `AdminRemove` request whose name is already a GUID
+  keeps it and removes the eligibility. A role management policy assignment
+  is created and deleted. On kind, team-a's eligibility request is Ready with
+  a GUID name, team-b's is refused, and deleting the detached object sends no
+  DELETE. The fake does not show: approvals and the policy rules (Azure may
+  leave a request `PendingApproval`), schedule times and expiry, whether the
+  principal exists, what Azure answers to a DELETE of a request, an
+  activation by the principal itself (Azure takes `SelfActivate` only from
+  the eligible principal's own token; the operator's identity is someone
+  else's), and the rights the identity needs (Owner, User Access
+  Administrator or Privileged Role Administrator at the scope);
 - Recovery Services, generated (c10 part two): a vault owned by the resource
   group (SKU `RS0`, system-assigned identity, local redundancy, public
   network access) and a backup policy owned by our vault (an IaaS VM
