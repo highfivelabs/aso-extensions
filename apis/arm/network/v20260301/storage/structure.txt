@@ -298,6 +298,185 @@ ExpressRouteCircuitsPeeringsConnection: Resource
     ├── ProvisioningState: *string
     └── Type: *string
 
+ExpressRouteGateway: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (10 properties)
+│   ├── AllowNonVirtualWanTraffic: *bool
+│   ├── AutoScaleConfiguration: *Object (2 properties)
+│   │   ├── Bounds: *Object (3 properties)
+│   │   │   ├── Max: *int
+│   │   │   ├── Min: *int
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Tags: map[string]string
+│   └── VirtualHub: *Object (2 properties)
+│       ├── PropertyBag: genruntime.PropertyBag
+│       └── Reference: *genruntime.ResourceReference
+└── Status: Object (13 properties)
+    ├── AllowNonVirtualWanTraffic: *bool
+    ├── AutoScaleConfiguration: *Object (2 properties)
+    │   ├── Bounds: *Object (3 properties)
+    │   │   ├── Max: *int
+    │   │   ├── Min: *int
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── ExpressRouteConnections: Object (10 properties)[]
+    │   ├── EnableInternetSecurity: *bool
+    │   ├── EnablePrivateLinkFastPath: *bool
+    │   ├── ExpressRouteCircuitPeering: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── ExpressRouteGatewayBypass: *bool
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisioningState: *string
+    │   ├── RoutingConfiguration: *Object (6 properties)
+    │   │   ├── AssociatedRouteTable: *Object (2 properties)
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── InboundRouteMap: *Object (2 properties)
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── OutboundRouteMap: *Object (2 properties)
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropagatedRouteTables: *Object (3 properties)
+    │   │   │   ├── Ids: Object (2 properties)[]
+    │   │   │   │   ├── Id: *string
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Labels: string[]
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── VnetRoutes: *Object (4 properties)
+    │   │       ├── BgpConnections: Object (2 properties)[]
+    │   │       │   ├── Id: *string
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       ├── StaticRoutes: Object (4 properties)[]
+    │   │       │   ├── AddressPrefixes: string[]
+    │   │       │   ├── Name: *string
+    │   │       │   ├── NextHopIpAddress: *string
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       └── StaticRoutesConfig: *Object (3 properties)
+    │   │           ├── PropagateStaticRoutes: *bool
+    │   │           ├── PropertyBag: genruntime.PropertyBag
+    │   │           └── VnetLocalRouteOverrideCriteria: *string
+    │   └── RoutingWeight: *int
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── VirtualHub: *Object (2 properties)
+        ├── Id: *string
+        └── PropertyBag: genruntime.PropertyBag
+
+ExpressRouteGatewaysExpressRouteConnection: Resource
+├── Owner: network/v20260301.ExpressRouteGateway
+├── Spec: Object (12 properties)
+│   ├── AuthorizationKey: *genruntime.SecretReference
+│   ├── AzureName: string
+│   ├── EnableInternetSecurity: *bool
+│   ├── EnablePrivateLinkFastPath: *bool
+│   ├── ExpressRouteCircuitPeering: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── ExpressRouteGatewayBypass: *bool
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RoutingConfiguration: *Object (6 properties)
+│   │   ├── AssociatedRouteTable: *Object (2 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── InboundRouteMap: *Object (2 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── OutboundRouteMap: *Object (2 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── PropagatedRouteTables: *Object (3 properties)
+│   │   │   ├── Ids: Object (2 properties)[]
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   ├── Labels: string[]
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── VnetRoutes: *Object (3 properties)
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── StaticRoutes: Object (4 properties)[]
+│   │       │   ├── AddressPrefixes: string[]
+│   │       │   ├── Name: *string
+│   │       │   ├── NextHopIpAddress: *string
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       └── StaticRoutesConfig: *Object (3 properties)
+│   │           ├── PropagateStaticRoutes: *bool
+│   │           ├── PropertyBag: genruntime.PropertyBag
+│   │           └── VnetLocalRouteOverrideCriteria: *string
+│   └── RoutingWeight: *int
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── EnableInternetSecurity: *bool
+    ├── EnablePrivateLinkFastPath: *bool
+    ├── ExpressRouteCircuitPeering: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── ExpressRouteGatewayBypass: *bool
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RoutingConfiguration: *Object (6 properties)
+    │   ├── AssociatedRouteTable: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── InboundRouteMap: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── OutboundRouteMap: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropagatedRouteTables: *Object (3 properties)
+    │   │   ├── Ids: Object (2 properties)[]
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Labels: string[]
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── VnetRoutes: *Object (4 properties)
+    │       ├── BgpConnections: Object (2 properties)[]
+    │       │   ├── Id: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── StaticRoutes: Object (4 properties)[]
+    │       │   ├── AddressPrefixes: string[]
+    │       │   ├── Name: *string
+    │       │   ├── NextHopIpAddress: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       └── StaticRoutesConfig: *Object (3 properties)
+    │           ├── PropagateStaticRoutes: *bool
+    │           ├── PropertyBag: genruntime.PropertyBag
+    │           └── VnetLocalRouteOverrideCriteria: *string
+    └── RoutingWeight: *int
+
 ExpressRoutePort: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (13 properties)

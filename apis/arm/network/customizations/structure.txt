@@ -9,6 +9,10 @@ ExpressRouteCircuitsPeeringExtension: Object (0 properties)
 
 ExpressRouteCircuitsPeeringsConnectionExtension: Object (0 properties)
 
+ExpressRouteGatewayExtension: Object (0 properties)
+
+ExpressRouteGatewaysExpressRouteConnectionExtension: Object (0 properties)
+
 ExpressRoutePortExtension: Object (0 properties)
 
 ExpressRoutePortsAuthorizationExtension: Object (0 properties)
