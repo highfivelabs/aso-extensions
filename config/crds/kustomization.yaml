@@ -45,9 +45,13 @@ resources:
 - network.azure.hfl.dev_localnetworkgateways.yaml
 - network.azure.hfl.dev_networkmanagerconnections.yaml
 - network.azure.hfl.dev_networkmanagers.yaml
+- network.azure.hfl.dev_networkmanagerscommits.yaml
 - network.azure.hfl.dev_networkmanagersconnectivityconfigurations.yaml
 - network.azure.hfl.dev_networkmanagersnetworkgroups.yaml
 - network.azure.hfl.dev_networkmanagersnetworkgroupsstaticmembers.yaml
+- network.azure.hfl.dev_networkmanagersroutingconfigurations.yaml
+- network.azure.hfl.dev_networkmanagersroutingrulecollections.yaml
+- network.azure.hfl.dev_networkmanagersroutingrules.yaml
 - network.azure.hfl.dev_networkmanagersscopeconnections.yaml
 - network.azure.hfl.dev_networkmanagerssecurityadminconfigurations.yaml
 - network.azure.hfl.dev_networkmanagerssecurityadminrulecollections.yaml
