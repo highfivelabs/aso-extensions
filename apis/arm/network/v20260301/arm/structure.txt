@@ -1138,7 +1138,7 @@ NetworkManagersSecurityAdminConfiguration_Spec: Object (2 properties)
         ├── "Manual"
         └── "None"
 
-NetworkManagersSecurityAdminConfigurationsRuleCollection_STATUS: Object (6 properties)
+NetworkManagersSecurityAdminRuleCollection_STATUS: Object (6 properties)
 ├── Etag: *string
 ├── Id: *string
 ├── Name: *string
@@ -1171,14 +1171,14 @@ NetworkManagersSecurityAdminConfigurationsRuleCollection_STATUS: Object (6 prope
 │       └── "User"
 └── Type: *string
 
-NetworkManagersSecurityAdminConfigurationsRuleCollection_Spec: Object (2 properties)
+NetworkManagersSecurityAdminRuleCollection_Spec: Object (2 properties)
 ├── Name: string
 └── Properties: *Object (2 properties)
     ├── AppliesToGroups: Object (1 property)[]
     │   └── NetworkGroupId: *string
     └── Description: *string
 
-NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule_STATUS: Object (3 properties)
+NetworkManagersSecurityAdminRule_STATUS: Object (3 properties)
 ├── Custom: *Object (7 properties)
 │   ├── Etag: *string
 │   ├── Id: *string
@@ -1304,7 +1304,7 @@ NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule_STATUS: Object (3 
 │   └── Type: *string
 └── Name: *string
 
-NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule_Spec: Object (3 properties)
+NetworkManagersSecurityAdminRule_Spec: Object (3 properties)
 ├── AdminRule: *Object (3 properties)
 │   ├── Kind: Enum (1 value)
 │   │   └── "Custom"
@@ -1384,7 +1384,7 @@ NetworkManagersSecurityUserConfiguration_Spec: Object (2 properties)
 └── Properties: *Object (1 property)
     └── Description: *string
 
-NetworkManagersSecurityUserConfigurationsRuleCollection_STATUS: Object (6 properties)
+NetworkManagersSecurityUserRuleCollection_STATUS: Object (6 properties)
 ├── Etag: *string
 ├── Id: *string
 ├── Name: *string
@@ -1417,14 +1417,14 @@ NetworkManagersSecurityUserConfigurationsRuleCollection_STATUS: Object (6 proper
 │       └── "User"
 └── Type: *string
 
-NetworkManagersSecurityUserConfigurationsRuleCollection_Spec: Object (2 properties)
+NetworkManagersSecurityUserRuleCollection_Spec: Object (2 properties)
 ├── Name: string
 └── Properties: *Object (2 properties)
     ├── AppliesToGroups: Object (1 property)[]
     │   └── NetworkGroupId: *string
     └── Description: *string
 
-NetworkManagersSecurityUserConfigurationsRuleCollectionsRule_STATUS: Object (6 properties)
+NetworkManagersSecurityUserRule_STATUS: Object (6 properties)
 ├── Etag: *string
 ├── Id: *string
 ├── Name: *string
@@ -1479,7 +1479,7 @@ NetworkManagersSecurityUserConfigurationsRuleCollectionsRule_STATUS: Object (6 p
 │       └── "User"
 └── Type: *string
 
-NetworkManagersSecurityUserConfigurationsRuleCollectionsRule_Spec: Object (2 properties)
+NetworkManagersSecurityUserRule_Spec: Object (2 properties)
 ├── Name: string
 └── Properties: *Object (7 properties)
     ├── Description: *string

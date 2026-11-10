@@ -132,10 +132,10 @@ groupModelConfiguration:
       $exportAs: NetworkManagersSecurityAdminConfiguration
       $supportedFrom: v0.1.0
     NetworkManagers_SecurityAdminConfigurations_RuleCollection:
-      $exportAs: NetworkManagersSecurityAdminConfigurationsRuleCollection
+      $exportAs: NetworkManagersSecurityAdminRuleCollection
       $supportedFrom: v0.1.0
     NetworkManagers_SecurityAdminConfigurations_RuleCollections_Rule:
-      $exportAs: NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule
+      $exportAs: NetworkManagersSecurityAdminRule
       $supportedFrom: v0.1.0
     # An admin rule is polymorphic (kind Custom or Default): the resource's
     # spec is a OneOf of the two, and each leaf is labelled as embedded in the
@@ -152,10 +152,10 @@ groupModelConfiguration:
       $exportAs: NetworkManagersSecurityUserConfiguration
       $supportedFrom: v0.1.0
     NetworkManagers_SecurityUserConfigurations_RuleCollection:
-      $exportAs: NetworkManagersSecurityUserConfigurationsRuleCollection
+      $exportAs: NetworkManagersSecurityUserRuleCollection
       $supportedFrom: v0.1.0
     NetworkManagers_SecurityUserConfigurations_RuleCollections_Rule:
-      $exportAs: NetworkManagersSecurityUserConfigurationsRuleCollectionsRule
+      $exportAs: NetworkManagersSecurityUserRule
       $supportedFrom: v0.1.0
     ConnectivityGroupItem:
       NetworkGroupId:

@@ -8,48 +8,48 @@ no_list: true
 
 ### Released
 
-| Resource                                                      | ARM Version | CRD Version | Supported From | Sample |
-|---------------------------------------------------------------|-------------|-------------|----------------|--------|
-| ExpressRouteCircuit                                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| ExpressRouteCircuitsAuthorization                             | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| ExpressRouteCircuitsPeering                                   | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| ExpressRouteCircuitsPeeringsConnection                        | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| ExpressRouteGateway                                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| ExpressRouteGatewaysExpressRouteConnection                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| ExpressRoutePort                                              | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| ExpressRoutePortsAuthorization                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| LocalNetworkGateway                                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManager                                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManagerConnection                                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManagersConnectivityConfiguration                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManagersNetworkGroup                                   | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManagersNetworkGroupsStaticMember                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManagersScopeConnection                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManagersSecurityAdminConfiguration                     | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManagersSecurityAdminConfigurationsRuleCollection      | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManagersSecurityUserConfiguration                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManagersSecurityUserConfigurationsRuleCollection       | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkManagersSecurityUserConfigurationsRuleCollectionsRule  | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| NetworkSecurityPerimeter                                      | 2025-05-01  | v20250501   | v0.1.0         | -      |
-| NetworkSecurityPerimetersLink                                 | 2025-05-01  | v20250501   | v0.1.0         | -      |
-| NetworkSecurityPerimetersLoggingConfiguration                 | 2025-05-01  | v20250501   | v0.1.0         | -      |
-| NetworkSecurityPerimetersProfile                              | 2025-05-01  | v20250501   | v0.1.0         | -      |
-| NetworkSecurityPerimetersProfilesAccessRule                   | 2025-05-01  | v20250501   | v0.1.0         | -      |
-| NetworkSecurityPerimetersResourceAssociation                  | 2025-05-01  | v20250501   | v0.1.0         | -      |
-| P2sVpnGateway                                                 | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VirtualHub                                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VirtualHubsBgpConnection                                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VirtualHubsHubRouteTable                                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VirtualHubsHubVirtualNetworkConnection                        | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VirtualHubsIpConfiguration                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VirtualHubsRouteTable                                         | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VirtualHubsRoutingIntent                                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VirtualNetworkGatewayConnection                               | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VirtualWan                                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VpnGateway                                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VpnGatewaysNatRule                                            | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VpnGatewaysVpnConnection                                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VpnServerConfiguration                                        | 2026-03-01  | v20260301   | v0.1.0         | -      |
-| VpnSite                                                       | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| Resource                                      | ARM Version | CRD Version | Supported From | Sample |
+|-----------------------------------------------|-------------|-------------|----------------|--------|
+| ExpressRouteCircuit                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteCircuitsAuthorization             | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteCircuitsPeering                   | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteCircuitsPeeringsConnection        | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteGateway                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteGatewaysExpressRouteConnection    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRoutePort                              | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRoutePortsAuthorization                | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| LocalNetworkGateway                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManager                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagerConnection                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersConnectivityConfiguration      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersNetworkGroup                   | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersNetworkGroupsStaticMember      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersScopeConnection                | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityAdminConfiguration     | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityAdminRule              | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityAdminRuleCollection    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityUserConfiguration      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityUserRule               | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityUserRuleCollection     | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkSecurityPerimeter                      | 2025-05-01  | v20250501   | v0.1.0         | -      |
+| NetworkSecurityPerimetersLink                 | 2025-05-01  | v20250501   | v0.1.0         | -      |
+| NetworkSecurityPerimetersLoggingConfiguration | 2025-05-01  | v20250501   | v0.1.0         | -      |
+| NetworkSecurityPerimetersProfile              | 2025-05-01  | v20250501   | v0.1.0         | -      |
+| NetworkSecurityPerimetersProfilesAccessRule   | 2025-05-01  | v20250501   | v0.1.0         | -      |
+| NetworkSecurityPerimetersResourceAssociation  | 2025-05-01  | v20250501   | v0.1.0         | -      |
+| P2sVpnGateway                                 | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHub                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsBgpConnection                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsHubRouteTable                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsHubVirtualNetworkConnection        | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsIpConfiguration                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsRouteTable                         | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualHubsRoutingIntent                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualNetworkGatewayConnection               | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualWan                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VpnGateway                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VpnGatewaysNatRule                            | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VpnGatewaysVpnConnection                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VpnServerConfiguration                        | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VpnSite                                       | 2026-03-01  | v20260301   | v0.1.0         | -      |
 

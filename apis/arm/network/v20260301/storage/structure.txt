@@ -932,45 +932,8 @@ NetworkManagersSecurityAdminConfiguration: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
-NetworkManagersSecurityAdminConfigurationsRuleCollection: Resource
-├── Owner: network/v20260301.NetworkManagersSecurityAdminConfiguration
-├── Spec: Object (7 properties)
-│   ├── AppliesToGroups: Object (2 properties)[]
-│   │   ├── NetworkGroupReference: *genruntime.ResourceReference
-│   │   └── PropertyBag: genruntime.PropertyBag
-│   ├── AzureName: string
-│   ├── Description: *string
-│   ├── OperatorSpec: *Object (3 properties)
-│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
-│   │   ├── PropertyBag: genruntime.PropertyBag
-│   │   └── SecretExpressions: *core.DestinationExpression[]
-│   ├── OriginalVersion: string
-│   ├── Owner: *genruntime.KnownResourceReference
-│   └── PropertyBag: genruntime.PropertyBag
-└── Status: Object (11 properties)
-    ├── AppliesToGroups: Object (2 properties)[]
-    │   ├── NetworkGroupId: *string
-    │   └── PropertyBag: genruntime.PropertyBag
-    ├── Conditions: conditions.Condition[]
-    ├── Description: *string
-    ├── Etag: *string
-    ├── Id: *string
-    ├── Name: *string
-    ├── PropertyBag: genruntime.PropertyBag
-    ├── ProvisioningState: *string
-    ├── ResourceGuid: *string
-    ├── SystemData: *Object (7 properties)
-    │   ├── CreatedAt: *string
-    │   ├── CreatedBy: *string
-    │   ├── CreatedByType: *string
-    │   ├── LastModifiedAt: *string
-    │   ├── LastModifiedBy: *string
-    │   ├── LastModifiedByType: *string
-    │   └── PropertyBag: genruntime.PropertyBag
-    └── Type: *string
-
-NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule: Resource
-├── Owner: network/v20260301.NetworkManagersSecurityAdminConfigurationsRuleCollection
+NetworkManagersSecurityAdminRule: Resource
+├── Owner: network/v20260301.NetworkManagersSecurityAdminRuleCollection
 ├── Spec: Object (7 properties)
 │   ├── AdminRule: *Object (11 properties)
 │   │   ├── Access: *string
@@ -1070,39 +1033,8 @@ NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule: Resource
     ├── Name: *string
     └── PropertyBag: genruntime.PropertyBag
 
-NetworkManagersSecurityUserConfiguration: Resource
-├── Owner: network/v20260301.NetworkManager
-├── Spec: Object (6 properties)
-│   ├── AzureName: string
-│   ├── Description: *string
-│   ├── OperatorSpec: *Object (3 properties)
-│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
-│   │   ├── PropertyBag: genruntime.PropertyBag
-│   │   └── SecretExpressions: *core.DestinationExpression[]
-│   ├── OriginalVersion: string
-│   ├── Owner: *genruntime.KnownResourceReference
-│   └── PropertyBag: genruntime.PropertyBag
-└── Status: Object (10 properties)
-    ├── Conditions: conditions.Condition[]
-    ├── Description: *string
-    ├── Etag: *string
-    ├── Id: *string
-    ├── Name: *string
-    ├── PropertyBag: genruntime.PropertyBag
-    ├── ProvisioningState: *string
-    ├── ResourceGuid: *string
-    ├── SystemData: *Object (7 properties)
-    │   ├── CreatedAt: *string
-    │   ├── CreatedBy: *string
-    │   ├── CreatedByType: *string
-    │   ├── LastModifiedAt: *string
-    │   ├── LastModifiedBy: *string
-    │   ├── LastModifiedByType: *string
-    │   └── PropertyBag: genruntime.PropertyBag
-    └── Type: *string
-
-NetworkManagersSecurityUserConfigurationsRuleCollection: Resource
-├── Owner: network/v20260301.NetworkManagersSecurityUserConfiguration
+NetworkManagersSecurityAdminRuleCollection: Resource
+├── Owner: network/v20260301.NetworkManagersSecurityAdminConfiguration
 ├── Spec: Object (7 properties)
 │   ├── AppliesToGroups: Object (2 properties)[]
 │   │   ├── NetworkGroupReference: *genruntime.ResourceReference
@@ -1138,8 +1070,39 @@ NetworkManagersSecurityUserConfigurationsRuleCollection: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
-NetworkManagersSecurityUserConfigurationsRuleCollectionsRule: Resource
-├── Owner: network/v20260301.NetworkManagersSecurityUserConfigurationsRuleCollection
+NetworkManagersSecurityUserConfiguration: Resource
+├── Owner: network/v20260301.NetworkManager
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ResourceGuid: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+NetworkManagersSecurityUserRule: Resource
+├── Owner: network/v20260301.NetworkManagersSecurityUserRuleCollection
 ├── Spec: Object (12 properties)
 │   ├── AzureName: string
 │   ├── Description: *string
@@ -1183,6 +1146,43 @@ NetworkManagersSecurityUserConfigurationsRuleCollectionsRule: Resource
     │   ├── AddressPrefix: *string
     │   ├── AddressPrefixType: *string
     │   └── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+NetworkManagersSecurityUserRuleCollection: Resource
+├── Owner: network/v20260301.NetworkManagersSecurityUserConfiguration
+├── Spec: Object (7 properties)
+│   ├── AppliesToGroups: Object (2 properties)[]
+│   │   ├── NetworkGroupReference: *genruntime.ResourceReference
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (11 properties)
+    ├── AppliesToGroups: Object (2 properties)[]
+    │   ├── NetworkGroupId: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ResourceGuid: *string
     ├── SystemData: *Object (7 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string

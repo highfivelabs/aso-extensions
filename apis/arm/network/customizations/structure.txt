@@ -33,15 +33,15 @@ NetworkManagersScopeConnectionExtension: Object (0 properties)
 
 NetworkManagersSecurityAdminConfigurationExtension: Object (0 properties)
 
-NetworkManagersSecurityAdminConfigurationsRuleCollectionExtension: Object (0 properties)
+NetworkManagersSecurityAdminRuleCollectionExtension: Object (0 properties)
 
-NetworkManagersSecurityAdminConfigurationsRuleCollectionsRuleExtension: Object (0 properties)
+NetworkManagersSecurityAdminRuleExtension: Object (0 properties)
 
 NetworkManagersSecurityUserConfigurationExtension: Object (0 properties)
 
-NetworkManagersSecurityUserConfigurationsRuleCollectionExtension: Object (0 properties)
+NetworkManagersSecurityUserRuleCollectionExtension: Object (0 properties)
 
-NetworkManagersSecurityUserConfigurationsRuleCollectionsRuleExtension: Object (0 properties)
+NetworkManagersSecurityUserRuleExtension: Object (0 properties)
 
 NetworkSecurityPerimeterExtension: Object (0 properties)
 
