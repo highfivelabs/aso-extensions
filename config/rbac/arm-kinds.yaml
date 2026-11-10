@@ -9,7 +9,9 @@ rules:
   - app.azure.hfl.dev
   - authorization.azure.hfl.dev
   - compute.azure.hfl.dev
+  - consumption.azure.hfl.dev
   - containerregistry.azure.hfl.dev
+  - costmanagement.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - insights.azure.hfl.dev
   - maintenance.azure.hfl.dev
@@ -26,7 +28,9 @@ rules:
   - app.azure.hfl.dev
   - authorization.azure.hfl.dev
   - compute.azure.hfl.dev
+  - consumption.azure.hfl.dev
   - containerregistry.azure.hfl.dev
+  - costmanagement.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - insights.azure.hfl.dev
   - maintenance.azure.hfl.dev

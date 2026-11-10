@@ -1,0 +1,975 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: exports.costmanagement.azure.hfl.dev
+spec:
+  group: costmanagement.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - costmanagement
+    kind: Export
+    listKind: ExportList
+    plural: exports
+    singular: export
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260601
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2026-06-01/openapi.json
+          - ARM URI: /{scope}/providers/Microsoft.CostManagement/exports/{exportName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              compressionMode:
+                description: |-
+                  CompressionMode: Allow customers to select compress data for exports. This setting will enable destination file
+                  compression scheme at runtime. By default set to None. Gzip is for csv and snappy for parquet.
+                enum:
+                - gzip
+                - none
+                - snappy
+                type: string
+              dataOverwriteBehavior:
+                description: |-
+                  DataOverwriteBehavior: Allow customers to select overwrite data(OverwritePreviousReport) for exports. This setting will
+                  enable overwrite data for the same month in customer storage account. By default set to CreateNewReport.
+                enum:
+                - CreateNewReport
+                - OverwritePreviousReport
+                type: string
+              definition:
+                description: 'Definition: Has the definition for the export.'
+                properties:
+                  dataSet:
+                    description: 'DataSet: The definition for data in the export.'
+                    properties:
+                      configuration:
+                        description: 'Configuration: The export dataset configuration.'
+                        properties:
+                          columns:
+                            description: |-
+                              Columns: Array of column names to be included in the export. If not provided then the export will include all available
+                              columns. The available columns can vary by customer channel (see examples).
+                            items:
+                              type: string
+                            type: array
+                          dataVersion:
+                            description: |-
+                              DataVersion: The data version for the selected for the export. If not provided then the export will default to latest
+                              data version.
+                            type: string
+                          filters:
+                            description: 'Filters: Filters associated with the data
+                              sets.'
+                            items:
+                              description: |-
+                                Will contain the filter name and value to operate on. This is currently only supported for Export Definition type of
+                                ReservationRecommendations.
+                              properties:
+                                name:
+                                  description: |-
+                                    Name: The name of the filter. This is currently only supported for Export Definition type of ReservationRecommendations.
+                                    Supported names are ['ReservationScope', 'LookBackPeriod', 'ResourceType']
+                                  enum:
+                                  - LookBackPeriod
+                                  - ReservationScope
+                                  - ResourceType
+                                  type: string
+                                value:
+                                  description: |-
+                                    Value: Value to filter by. Currently values supported per name are, for 'ReservationScope' supported values are
+                                    ['Single', 'Shared'], for 'LookBackPeriod' supported values are ['Last7Days', 'Last30Days', 'Last60Days'] and for
+                                    'ResourceType' supported values are ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat',
+                                    'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer',
+                                    'VMwareCloudSimple'].
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      granularity:
+                        description: 'Granularity: The granularity of rows in the
+                          export. Currently ''Daily'' is supported for most cases.'
+                        enum:
+                        - Daily
+                        - Monthly
+                        type: string
+                    type: object
+                  timePeriod:
+                    description: 'TimePeriod: Has time period for pulling data for
+                      the export.'
+                    properties:
+                      from:
+                        description: 'From: The start date for export data.'
+                        type: string
+                      to:
+                        description: 'To: The end date for export data.'
+                        type: string
+                    required:
+                    - from
+                    - to
+                    type: object
+                  timeframe:
+                    description: 'Timeframe: The time frame for pulling data for the
+                      export. If custom, then a specific time period must be provided.'
+                    enum:
+                    - BillingMonthToDate
+                    - Custom
+                    - MonthToDate
+                    - TheCurrentMonth
+                    - TheLastBillingMonth
+                    - TheLastMonth
+                    - WeekToDate
+                    type: string
+                  type:
+                    description: |-
+                      Type: The type of the export. Note that 'Usage' is equivalent to 'ActualCost' and is applicable to exports that do not
+                      yet provide data for charges or amortization for service reservations.
+                    enum:
+                    - ActualCost
+                    - AmortizedCost
+                    - FocusCost
+                    - PriceSheet
+                    - ReservationDetails
+                    - ReservationRecommendations
+                    - ReservationTransactions
+                    - Usage
+                    type: string
+                required:
+                - timeframe
+                - type
+                type: object
+              deliveryInfo:
+                description: 'DeliveryInfo: Has delivery information for the export.'
+                properties:
+                  destination:
+                    description: 'Destination: Has destination for the export being
+                      delivered.'
+                    properties:
+                      container:
+                        description: 'Container: The name of the container where exports
+                          will be uploaded. If the container does not exist it will
+                          be created.'
+                        type: string
+                      resourceReference:
+                        description: |-
+                          ResourceReference: The resource id of the storage account where exports will be delivered. This is not required if a
+                          sasToken and storageAccount are specified.
+                        properties:
+                          armId:
+                            description: |-
+                              ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                              The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                              ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                            pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                            type: string
+                          group:
+                            description: Group is the Kubernetes group of the resource.
+                            type: string
+                          kind:
+                            description: Kind is the Kubernetes kind of the resource.
+                            type: string
+                          name:
+                            description: Name is the Kubernetes name of the resource.
+                            type: string
+                        type: object
+                      rootFolderPath:
+                        description: 'RootFolderPath: The name of the directory where
+                          exports will be uploaded.'
+                        type: string
+                      sasToken:
+                        description: |-
+                          SasToken: A SAS token for the storage account. For a restricted set of Azure customers this together with storageAccount
+                          can be specified instead of resourceId. Note: the value returned by the API for this property will always be obfuscated.
+                          Returning this same obfuscated value will not result in the SAS token being updated. To update this value a new SAS
+                          token must be specified.
+                        properties:
+                          key:
+                            description: Key is the key in the Kubernetes secret being
+                              referenced
+                            type: string
+                          name:
+                            description: |-
+                              Name is the name of the Kubernetes secret being referenced.
+                              The secret must be in the same namespace as the resource
+                            type: string
+                        required:
+                        - key
+                        - name
+                        type: object
+                      storageAccount:
+                        description: |-
+                          StorageAccount: The storage account where exports will be uploaded. For a restricted set of Azure customers this
+                          together with sasToken can be specified instead of resourceId.
+                        type: string
+                      type:
+                        description: 'Type: The export delivery destination type.
+                          Currently only ''AzureBlob'' is supported.'
+                        enum:
+                        - AzureBlob
+                        type: string
+                    required:
+                    - container
+                    type: object
+                required:
+                - destination
+                type: object
+              eTag:
+                description: |-
+                  ETag: eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user
+                  is updating the latest version or not.
+                type: string
+              exportDescription:
+                description: 'ExportDescription: The export description set by customer
+                  at time of export creation/update.'
+                type: string
+              format:
+                description: 'Format: The format of the export being delivered.'
+                enum:
+                - Csv
+                - Parquet
+                type: string
+              identity:
+                description: 'Identity: The managed identity associated with Export'
+                properties:
+                  type:
+                    description: 'Type: Type of managed service identity (either system
+                      assigned, or none).'
+                    enum:
+                    - None
+                    - SystemAssigned
+                    type: string
+                required:
+                - type
+                type: object
+              location:
+                description: 'Location: The location of the Export''s managed identity.
+                  Only required when utilizing managed identity.'
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
+                  extension resource, which means that any other Azure resource can be its owner.
+                properties:
+                  armId:
+                    description: Ownership across namespaces is not supported.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+              partitionData:
+                description: |-
+                  PartitionData: If set to true, exported data will be partitioned by size and placed in a blob directory together with a
+                  manifest file.
+                type: boolean
+              schedule:
+                description: 'Schedule: Has schedule information for the export.'
+                properties:
+                  recurrence:
+                    description: 'Recurrence: The schedule recurrence.'
+                    enum:
+                    - Annually
+                    - Daily
+                    - Monthly
+                    - Weekly
+                    type: string
+                  recurrencePeriod:
+                    description: |-
+                      RecurrencePeriod: Has start and end date of the recurrence. The start date must be in future. If present, the end date
+                      must be greater than start date.
+                    properties:
+                      from:
+                        description: 'From: The start date of recurrence.'
+                        type: string
+                      to:
+                        description: 'To: The end date of recurrence.'
+                        type: string
+                    required:
+                    - from
+                    type: object
+                  status:
+                    description: |-
+                      Status: The status of the export's schedule. If 'Inactive', the export's schedule is paused. To enable export set the
+                      status to be Active and then make a PUT request.
+                    enum:
+                    - Active
+                    - Inactive
+                    type: string
+                type: object
+            required:
+            - definition
+            - deliveryInfo
+            - owner
+            type: object
+          status:
+            description: An export resource.
+            properties:
+              compressionMode:
+                description: |-
+                  CompressionMode: Allow customers to select compress data for exports. This setting will enable destination file
+                  compression scheme at runtime. By default set to None. Gzip is for csv and snappy for parquet.
+                type: string
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              dataOverwriteBehavior:
+                description: |-
+                  DataOverwriteBehavior: Allow customers to select overwrite data(OverwritePreviousReport) for exports. This setting will
+                  enable overwrite data for the same month in customer storage account. By default set to CreateNewReport.
+                type: string
+              definition:
+                description: 'Definition: Has the definition for the export.'
+                properties:
+                  dataSet:
+                    description: 'DataSet: The definition for data in the export.'
+                    properties:
+                      configuration:
+                        description: 'Configuration: The export dataset configuration.'
+                        properties:
+                          columns:
+                            description: |-
+                              Columns: Array of column names to be included in the export. If not provided then the export will include all available
+                              columns. The available columns can vary by customer channel (see examples).
+                            items:
+                              type: string
+                            type: array
+                          dataVersion:
+                            description: |-
+                              DataVersion: The data version for the selected for the export. If not provided then the export will default to latest
+                              data version.
+                            type: string
+                          filters:
+                            description: 'Filters: Filters associated with the data
+                              sets.'
+                            items:
+                              description: |-
+                                Will contain the filter name and value to operate on. This is currently only supported for Export Definition type of
+                                ReservationRecommendations.
+                              properties:
+                                name:
+                                  description: |-
+                                    Name: The name of the filter. This is currently only supported for Export Definition type of ReservationRecommendations.
+                                    Supported names are ['ReservationScope', 'LookBackPeriod', 'ResourceType']
+                                  type: string
+                                value:
+                                  description: |-
+                                    Value: Value to filter by. Currently values supported per name are, for 'ReservationScope' supported values are
+                                    ['Single', 'Shared'], for 'LookBackPeriod' supported values are ['Last7Days', 'Last30Days', 'Last60Days'] and for
+                                    'ResourceType' supported values are ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat',
+                                    'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer',
+                                    'VMwareCloudSimple'].
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      granularity:
+                        description: 'Granularity: The granularity of rows in the
+                          export. Currently ''Daily'' is supported for most cases.'
+                        type: string
+                    type: object
+                  timePeriod:
+                    description: 'TimePeriod: Has time period for pulling data for
+                      the export.'
+                    properties:
+                      from:
+                        description: 'From: The start date for export data.'
+                        type: string
+                      to:
+                        description: 'To: The end date for export data.'
+                        type: string
+                    type: object
+                  timeframe:
+                    description: 'Timeframe: The time frame for pulling data for the
+                      export. If custom, then a specific time period must be provided.'
+                    type: string
+                  type:
+                    description: |-
+                      Type: The type of the export. Note that 'Usage' is equivalent to 'ActualCost' and is applicable to exports that do not
+                      yet provide data for charges or amortization for service reservations.
+                    type: string
+                type: object
+              deliveryInfo:
+                description: 'DeliveryInfo: Has delivery information for the export.'
+                properties:
+                  destination:
+                    description: 'Destination: Has destination for the export being
+                      delivered.'
+                    properties:
+                      container:
+                        description: 'Container: The name of the container where exports
+                          will be uploaded. If the container does not exist it will
+                          be created.'
+                        type: string
+                      resourceId:
+                        description: |-
+                          ResourceId: The resource id of the storage account where exports will be delivered. This is not required if a sasToken
+                          and storageAccount are specified.
+                        type: string
+                      rootFolderPath:
+                        description: 'RootFolderPath: The name of the directory where
+                          exports will be uploaded.'
+                        type: string
+                      storageAccount:
+                        description: |-
+                          StorageAccount: The storage account where exports will be uploaded. For a restricted set of Azure customers this
+                          together with sasToken can be specified instead of resourceId.
+                        type: string
+                      type:
+                        description: 'Type: The export delivery destination type.
+                          Currently only ''AzureBlob'' is supported.'
+                        type: string
+                    type: object
+                type: object
+              eTag:
+                description: |-
+                  ETag: eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user
+                  is updating the latest version or not.
+                type: string
+              exportDescription:
+                description: 'ExportDescription: The export description set by customer
+                  at time of export creation/update.'
+                type: string
+              format:
+                description: 'Format: The format of the export being delivered.'
+                type: string
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. E.g.
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                type: string
+              identity:
+                description: 'Identity: The managed identity associated with Export'
+                properties:
+                  principalId:
+                    description: |-
+                      PrincipalId: The service principal ID of the system assigned identity. This property will only be provided for a system
+                      assigned identity.
+                    type: string
+                  tenantId:
+                    description: |-
+                      TenantId: The tenant ID of the system assigned identity. This property will only be provided for a system assigned
+                      identity.
+                    type: string
+                  type:
+                    description: 'Type: Type of managed service identity (either system
+                      assigned, or none).'
+                    type: string
+                type: object
+              location:
+                description: 'Location: The location of the Export''s managed identity.
+                  Only required when utilizing managed identity.'
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              nextRunTimeEstimate:
+                description: 'NextRunTimeEstimate: If the export has an active schedule,
+                  provides an estimate of the next run time.'
+                type: string
+              partitionData:
+                description: |-
+                  PartitionData: If set to true, exported data will be partitioned by size and placed in a blob directory together with a
+                  manifest file.
+                type: boolean
+              runHistory:
+                description: 'RunHistory: If requested, has the most recent run history
+                  for the export.'
+                properties:
+                  value:
+                    description: 'Value: A list of export runs.'
+                    items:
+                      description: An export run.
+                      properties:
+                        eTag:
+                          description: |-
+                            ETag: eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user
+                            is updating the latest version or not.
+                          type: string
+                        endDate:
+                          description: 'EndDate: The end datetime for the export.'
+                          type: string
+                        error:
+                          description: 'Error: The details of any error.'
+                          properties:
+                            code:
+                              description: 'Code: Error code.'
+                              type: string
+                            message:
+                              description: 'Message: Error message indicating why
+                                the operation failed.'
+                              type: string
+                          type: object
+                        executionType:
+                          description: 'ExecutionType: The type of the export run.'
+                          type: string
+                        fileName:
+                          description: 'FileName: The name of the exported file.'
+                          type: string
+                        id:
+                          description: 'Id: Resource Id.'
+                          type: string
+                        manifestFile:
+                          description: 'ManifestFile: The manifest file location(URI
+                            location) for the exported files.'
+                          type: string
+                        name:
+                          description: 'Name: Resource name.'
+                          type: string
+                        processingEndTime:
+                          description: 'ProcessingEndTime: The time when the export
+                            run finished.'
+                          type: string
+                        processingStartTime:
+                          description: 'ProcessingStartTime: The time when export
+                            was picked up to be run.'
+                          type: string
+                        runSettings:
+                          description: 'RunSettings: The export settings that were
+                            in effect for this run.'
+                          properties:
+                            compressionMode:
+                              description: |-
+                                CompressionMode: Allow customers to select compress data for exports. This setting will enable destination file
+                                compression scheme at runtime. By default set to None. Gzip is for csv and snappy for parquet.
+                              type: string
+                            dataOverwriteBehavior:
+                              description: |-
+                                DataOverwriteBehavior: Allow customers to select overwrite data(OverwritePreviousReport) for exports. This setting will
+                                enable overwrite data for the same month in customer storage account. By default set to CreateNewReport.
+                              type: string
+                            definition:
+                              description: 'Definition: Has the definition for the
+                                export.'
+                              properties:
+                                dataSet:
+                                  description: 'DataSet: The definition for data in
+                                    the export.'
+                                  properties:
+                                    configuration:
+                                      description: 'Configuration: The export dataset
+                                        configuration.'
+                                      properties:
+                                        columns:
+                                          description: |-
+                                            Columns: Array of column names to be included in the export. If not provided then the export will include all available
+                                            columns. The available columns can vary by customer channel (see examples).
+                                          items:
+                                            type: string
+                                          type: array
+                                        dataVersion:
+                                          description: |-
+                                            DataVersion: The data version for the selected for the export. If not provided then the export will default to latest
+                                            data version.
+                                          type: string
+                                        filters:
+                                          description: 'Filters: Filters associated
+                                            with the data sets.'
+                                          items:
+                                            description: |-
+                                              Will contain the filter name and value to operate on. This is currently only supported for Export Definition type of
+                                              ReservationRecommendations.
+                                            properties:
+                                              name:
+                                                description: |-
+                                                  Name: The name of the filter. This is currently only supported for Export Definition type of ReservationRecommendations.
+                                                  Supported names are ['ReservationScope', 'LookBackPeriod', 'ResourceType']
+                                                type: string
+                                              value:
+                                                description: |-
+                                                  Value: Value to filter by. Currently values supported per name are, for 'ReservationScope' supported values are
+                                                  ['Single', 'Shared'], for 'LookBackPeriod' supported values are ['Last7Days', 'Last30Days', 'Last60Days'] and for
+                                                  'ResourceType' supported values are ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat',
+                                                  'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer',
+                                                  'VMwareCloudSimple'].
+                                                type: string
+                                            type: object
+                                          type: array
+                                      type: object
+                                    granularity:
+                                      description: 'Granularity: The granularity of
+                                        rows in the export. Currently ''Daily'' is
+                                        supported for most cases.'
+                                      type: string
+                                  type: object
+                                timePeriod:
+                                  description: 'TimePeriod: Has time period for pulling
+                                    data for the export.'
+                                  properties:
+                                    from:
+                                      description: 'From: The start date for export
+                                        data.'
+                                      type: string
+                                    to:
+                                      description: 'To: The end date for export data.'
+                                      type: string
+                                  type: object
+                                timeframe:
+                                  description: 'Timeframe: The time frame for pulling
+                                    data for the export. If custom, then a specific
+                                    time period must be provided.'
+                                  type: string
+                                type:
+                                  description: |-
+                                    Type: The type of the export. Note that 'Usage' is equivalent to 'ActualCost' and is applicable to exports that do not
+                                    yet provide data for charges or amortization for service reservations.
+                                  type: string
+                              type: object
+                            deliveryInfo:
+                              description: 'DeliveryInfo: Has delivery information
+                                for the export.'
+                              properties:
+                                destination:
+                                  description: 'Destination: Has destination for the
+                                    export being delivered.'
+                                  properties:
+                                    container:
+                                      description: 'Container: The name of the container
+                                        where exports will be uploaded. If the container
+                                        does not exist it will be created.'
+                                      type: string
+                                    resourceId:
+                                      description: |-
+                                        ResourceId: The resource id of the storage account where exports will be delivered. This is not required if a sasToken
+                                        and storageAccount are specified.
+                                      type: string
+                                    rootFolderPath:
+                                      description: 'RootFolderPath: The name of the
+                                        directory where exports will be uploaded.'
+                                      type: string
+                                    storageAccount:
+                                      description: |-
+                                        StorageAccount: The storage account where exports will be uploaded. For a restricted set of Azure customers this
+                                        together with sasToken can be specified instead of resourceId.
+                                      type: string
+                                    type:
+                                      description: 'Type: The export delivery destination
+                                        type. Currently only ''AzureBlob'' is supported.'
+                                      type: string
+                                  type: object
+                              type: object
+                            exportDescription:
+                              description: 'ExportDescription: The export description
+                                set by customer at time of export creation/update.'
+                              type: string
+                            format:
+                              description: 'Format: The format of the export being
+                                delivered.'
+                              type: string
+                            nextRunTimeEstimate:
+                              description: 'NextRunTimeEstimate: If the export has
+                                an active schedule, provides an estimate of the next
+                                run time.'
+                              type: string
+                            partitionData:
+                              description: |-
+                                PartitionData: If set to true, exported data will be partitioned by size and placed in a blob directory together with a
+                                manifest file.
+                              type: boolean
+                            runHistory:
+                              description: 'RunHistory: If requested, has the most
+                                recent run history for the export.'
+                            systemSuspensionContext:
+                              description: |-
+                                SystemSuspensionContext: The export suspension reason if export is in SystemSuspended state. This is not populated
+                                currently.
+                              properties:
+                                suspensionCode:
+                                  description: 'SuspensionCode: The code for export
+                                    suspension.'
+                                  type: string
+                                suspensionReason:
+                                  description: 'SuspensionReason: The detailed reason
+                                    for export suspension.'
+                                  type: string
+                                suspensionTime:
+                                  description: 'SuspensionTime: The time when the
+                                    export was suspended.'
+                                  type: string
+                              type: object
+                          type: object
+                        startDate:
+                          description: 'StartDate: The start datetime for the export.'
+                          type: string
+                        status:
+                          description: 'Status: The last known status of the export
+                            run.'
+                          type: string
+                        submittedBy:
+                          description: |-
+                            SubmittedBy: The identifier for the entity that triggered the export. For on-demand runs it is the user email. For
+                            scheduled runs it is 'System'.
+                          type: string
+                        submittedTime:
+                          description: 'SubmittedTime: The time when export was queued
+                            to be run.'
+                          type: string
+                        type:
+                          description: 'Type: Resource type.'
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              schedule:
+                description: 'Schedule: Has schedule information for the export.'
+                properties:
+                  recurrence:
+                    description: 'Recurrence: The schedule recurrence.'
+                    type: string
+                  recurrencePeriod:
+                    description: |-
+                      RecurrencePeriod: Has start and end date of the recurrence. The start date must be in future. If present, the end date
+                      must be greater than start date.
+                    properties:
+                      from:
+                        description: 'From: The start date of recurrence.'
+                        type: string
+                      to:
+                        description: 'To: The end date of recurrence.'
+                        type: string
+                    type: object
+                  status:
+                    description: |-
+                      Status: The status of the export's schedule. If 'Inactive', the export's schedule is paused. To enable export set the
+                      status to be Active and then make a PUT request.
+                    type: string
+                type: object
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              systemSuspensionContext:
+                description: |-
+                  SystemSuspensionContext: The export suspension reason if export is in SystemSuspended state. This is not populated
+                  currently.
+                properties:
+                  suspensionCode:
+                    description: 'SuspensionCode: The code for export suspension.'
+                    type: string
+                  suspensionReason:
+                    description: 'SuspensionReason: The detailed reason for export
+                      suspension.'
+                    type: string
+                  suspensionTime:
+                    description: 'SuspensionTime: The time when the export was suspended.'
+                    type: string
+                type: object
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
