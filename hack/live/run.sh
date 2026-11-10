@@ -68,7 +68,7 @@ echo "== live ${run_id}: ${AZURE_SUBSCRIPTION_ID}/${LIVE_RESOURCE_GROUP} in ${LI
 live=PASS
 t0=$(date +%s)
 ASO_EXT_LIVE=create-real-azure-resources \
-  go test -tags live -count=1 -v -timeout 170m -run "${pattern}" ./test/live/ 2>&1 | tee "${out}/live.log" \
+  go test -tags live -count=1 -v -timeout 230m -run "${pattern}" ./test/live/ 2>&1 | tee "${out}/live.log" \
   | grep -E --line-buffered '^\s*--- (PASS|FAIL|SKIP)|^(ok|FAIL)\s|_test.go:[0-9]+:|^=== RUN|^live:' || true
 grep -q '^ok' "${out}/live.log" || live=FAIL
 {

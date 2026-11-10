@@ -175,18 +175,12 @@ func TestLiveVirtualHub(t *testing.T) {
 			VpnClientAddressPool: &network.AddressSpace{AddressPrefixes: []string{"172.16.0.0/24"}},
 		}},
 	}
-	createAll(t, gatewayTimeout, site, s2s, cfg, p2s)
+	create(t, gatewayTimeout, site, s2s)
 	s2sID := rgID() + "/providers/Microsoft.Network/vpnGateways/" + s2s.Spec.AzureName
 	siteID := rgID() + "/providers/Microsoft.Network/vpnSites/" + site.Spec.AzureName
 	expectResource(t, s2sID, networkAPI, func(r map[string]any) error {
 		h, _ := properties(r)["virtualHub"].(map[string]any)
 		if !strings.EqualFold(fmt.Sprint(h["id"]), hubID) {
-			return fmt.Errorf("resource: %v", r)
-		}
-		return nil
-	})
-	expectResource(t, rgID()+"/providers/Microsoft.Network/p2sVpnGateways/"+p2s.Spec.AzureName, networkAPI, func(r map[string]any) error {
-		if c, _ := properties(r)["p2SConnectionConfigurations"].([]any); len(c) != 1 {
 			return fmt.Errorf("resource: %v", r)
 		}
 		return nil
@@ -226,8 +220,24 @@ func TestLiveVirtualHub(t *testing.T) {
 		}
 		return nil
 	})
-	// Cleanup (the reverse of creation) deletes the connection, the rule,
-	// the gateways, the site, the hub's connection, the hub and the WAN.
+
+	// Last, so a refusal does not stop the kinds above. Made at once with
+	// its server configuration on 2026-11-10, the gateway was refused for
+	// over an hour (ReferencedResourceNotProvisioned: the configuration "is
+	// in Updating state") although the configuration read Succeeded; here
+	// the configuration is Ready first.
+	t.Run("P2sVpnGateway", func(t *testing.T) {
+		create(t, gatewayTimeout, cfg, p2s)
+		expectResource(t, rgID()+"/providers/Microsoft.Network/p2sVpnGateways/"+p2s.Spec.AzureName, networkAPI, func(r map[string]any) error {
+			if c, _ := properties(r)["p2SConnectionConfigurations"].([]any); len(c) != 1 {
+				return fmt.Errorf("resource: %v", r)
+			}
+			return nil
+		})
+	})
+	// Cleanup (the reverse of creation) deletes the point-to-site gateway
+	// and its configuration, the connection, the rule, the site-to-site
+	// gateway, the site, the hub's connection, the hub and the WAN.
 }
 
 // A site-to-site connection from a virtual network gateway (a fixture,

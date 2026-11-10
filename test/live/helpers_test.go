@@ -264,21 +264,6 @@ func create(t *testing.T, wait time.Duration, objs ...conditioned) {
 	}
 }
 
-// createAll creates objs at once (the manager orders them by their
-// references), then waits for each to be Ready; cleanup as create.
-func createAll(t *testing.T, wait time.Duration, objs ...conditioned) {
-	t.Helper()
-	for _, o := range objs {
-		if err := k8s.Create(context.Background(), o); err != nil {
-			t.Fatal(err)
-		}
-		t.Cleanup(func() { remove(t, wait, o) })
-	}
-	for _, o := range objs {
-		eventually(t, wait, fmt.Sprintf("%T %s Ready", o, o.GetName()), ready(o))
-	}
-}
-
 // remove deletes obj in Kubernetes and waits until the manager has deleted
 // it in Azure and released it.
 func remove(t *testing.T, wait time.Duration, obj client.Object) {
