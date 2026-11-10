@@ -434,12 +434,33 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.Cluster)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPack)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesDataExport)})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesDataSource)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedService)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedStorageAccount)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesSavedSearch)})
+	result = append(result, &registration.StorageType{
+		Obj: new(operationalinsights_v20250701.WorkspacesStorageInsightConfig),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.storageAccount.key",
+				Func: indexOperationalinsightsWorkspacesStorageInsightConfigKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.storageAccount.key",
+					},
+					&operationalinsights_v20250701.WorkspacesStorageInsightConfigList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesTable)})
 	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyAttestation)})
 	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyRemediation)})
@@ -671,21 +692,27 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.VpnSite)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.Cluster)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPack)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesDataExport)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesDataSource)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedService)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedStorageAccount)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesSavedSearch)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesStorageInsightConfig)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesTable)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.Cluster)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.QueryPack)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.QueryPacksQuery)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesDataExport)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesDataSource)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesLinkedService)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesLinkedStorageAccount)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesSavedSearch)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesStorageInsightConfig)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesTable)})
 	result = append(result, &registration.KnownType{Obj: new(policyinsights_v20241001.PolicyAttestation)}, &registration.KnownType{Obj: new(policyinsights_v20241001.PolicyRemediation)})
 	result = append(result, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyAttestation)}, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyRemediation)})
@@ -836,12 +863,15 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.VpnGatewaysVpnConnectionExtension{})
 	result = append(result, &network_customizations.VpnServerConfigurationExtension{})
 	result = append(result, &network_customizations.VpnSiteExtension{})
+	result = append(result, &operationalinsights_customizations.ClusterExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPackExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPacksQueryExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesDataExportExtension{})
+	result = append(result, &operationalinsights_customizations.WorkspacesDataSourceExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesLinkedServiceExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesLinkedStorageAccountExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesSavedSearchExtension{})
+	result = append(result, &operationalinsights_customizations.WorkspacesStorageInsightConfigExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesTableExtension{})
 	result = append(result, &policyinsights_customizations.PolicyAttestationExtension{})
 	result = append(result, &policyinsights_customizations.PolicyRemediationExtension{})
@@ -1125,6 +1155,21 @@ func indexNetworkVpnSiteSiteKey(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.SiteKey.Index()
+}
+
+// indexOperationalinsightsWorkspacesStorageInsightConfigKey an index function for operationalinsights_v20250701.WorkspacesStorageInsightConfig .spec.storageAccount.key
+func indexOperationalinsightsWorkspacesStorageInsightConfigKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*operationalinsights_v20250701.WorkspacesStorageInsightConfig)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageAccount == nil {
+		return nil
+	}
+	if obj.Spec.StorageAccount.Key == nil {
+		return nil
+	}
+	return obj.Spec.StorageAccount.Key.Index()
 }
 
 // indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password
