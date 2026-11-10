@@ -71,3 +71,6 @@ team-a ExpressRouteCircuit Ready
 team-a ExpressRouteCircuitsPeering Ready
 team-a ExpressRouteCircuitsAuthorization Ready
 the ExpressRoute circuit, its peering and its authorization are deleted
+team-a ExpressRouteGateway Ready
+team-a ExpressRouteGatewaysExpressRouteConnection Ready
+the ExpressRoute gateway and its connection are deleted
