@@ -81,7 +81,7 @@ stable); our generated kinds are pinned to the version they are generated from.
 | 13 | `ManagedHsm` (+ keys), `VaultAccessPolicy`, `VaultSecret` (ARM) | `Microsoft.KeyVault/managedHSMs` (20), `managedHSMs/keys` (15), `vaults/accessPolicies` (7), `vaults/secrets` (6), `vaults/privateEndpointConnections` (5); spec `keyvault/.../KeyVault/stable/2026-05-15` | `Vault`, `VaultKey` (28 of 28, 15 of 15) / `VaultSecret` and `VaultCertificate` (data plane) | managed HSMs and the ARM-side secret | secrets declined (#1894); none for the rest | 4 (vaults), 5 (keys) | generator | M |
 | 14 | `OperationsManagementSolution`, `WorkspacesDataSource`, `WorkspacesStorageInsightConfig`, `LogAnalyticsCluster` | `OperationsManagement/solutions` (9, preview 2015-11-01-preview), `OperationalInsights/workspaces/dataSources` (4), `storageInsightConfigs` (6), `clusters` (18) | `Workspace` (20 of 23) / tables, data exports, linked services, linked storage, saved searches, query packs | solutions; the rest of a workspace | none found | 1 (solutions) | generator | M |
 | 15 | `ManagedClustersManagedNamespace`, `FleetsManagedNamespace`, `ManagedClustersPrivateEndpointConnection`, `ManagedClustersSnapshot` | `managedClusters/managedNamespaces` (12), `fleets/managedNamespaces` (26), `managedClusters/privateEndpointConnections` (3), `snapshots` (4); spec `containerservice/.../aks/stable/2026-08-01/managedClusters.json` | `ManagedCluster` (309 of 330, ASO 2026-05-01), `ManagedClustersAgentPool` (123 of 126), fleets (partly), maintenance, trusted access, identity bindings / none | managed namespaces; the missing cluster attributes are API-version lag (spec 2026-08-01) | none found | 1 (managed namespaces) | generator | M |
-| 16 | `SourceControlConfiguration`, `KubernetesConfigurationPrivateLinkScope` (+ endpoint connection) | `KubernetesConfiguration/sourceControlConfigurations` (11, legacy Flux v1, extension scope), `privateLinkScopes` (4) + `privateEndpointConnections` (4) | `Extension` (19 of 32), `FluxConfiguration` (70 of 71) / none | the legacy GitOps kind; `Extension` is behind the spec | none found | 0 | generator, arbitrary owner | S |
+| 16 | `SourceControlConfiguration`, `KubernetesConfigurationPrivateLinkScope` (+ endpoint connection) | `KubernetesConfiguration/sourceControlConfigurations` (11, legacy Flux v1, extension scope), `privateLinkScopes` (4) + `privateEndpointConnections` (4) | `Extension` (19 of 32), `FluxConfiguration` (70 of 71) / none | the legacy GitOps kind; `Extension` is behind the spec | none found | 0 | **built 2026-11-10**, generated: `kubernetesconfiguration.azure.hfl.dev/v20230501` `SourceControlConfiguration` (arbitrary owner, protected settings a Secret map), `v20241101preview` `PrivateLinkScope`, `PrivateLinkScopesPrivateEndpointConnection` (preview only) | S |
 | 17 | `RegistriesTask`, `RegistriesConnectedRegistry`, `RegistriesPrivateEndpointConnection` | `registries/tasks` (54), `connectedRegistries` (13), `privateEndpointConnections` (4); spec `containerregistry/.../RegistryTasks/stable/2019-04-01` | `Registry`, replications, cache rules (ASO); credential sets, scope maps, tokens, webhooks (ours) | tasks and connected registries | none found | 0 | generator | M |
 | 18 | Insights API lag: `MetricAlert`, `ScheduledQueryRule`, `DataCollectionEndpoint`, `ActivityLogAlert`, `Workbook`; `LogProfile`, `WorkbookTemplate` | `metricAlerts` (9 missing of 41), `scheduledQueryRules` (9 of 39), `dataCollectionEndpoints` (4 of 16) and others, `logprofiles` (8, subscription), `workbooktemplates` (16) | ASO has the kinds, at older API versions / none | newer properties; two more kinds | none found; belongs upstream (`$supportedFrom` a newer version) | 1 (metric alerts) | upstream; here only `LogProfile`, `WorkbookTemplate` by generator | S |
 
@@ -125,12 +125,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 21.6% | 35.2% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 22.0% | 34.8% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.8% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (101 with no kind, 61 partly covered, 84 covered)
+### platform-foundation: 246 resources (98 with no kind, 63 partly covered, 85 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -364,11 +364,11 @@ Generated: every resource of the two categories, by the order of the services in
 | 228 | `Microsoft.ContainerService/managedClusters/identityBindings` | covered | `containerservice/IdentityBinding` |  | 1 / 0 / 0 | resourceGroup | - | - | 0 |
 | 229 | `Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings` | covered | `containerservice/TrustedAccessRoleBinding` |  | 2 / 0 / 0 | resourceGroup | - | - | 0 |
 | 230 | `Microsoft.ContainerService/fleets` | covered | `containerservice/Fleet` |  | 10 / 0 / 0 | resourceGroup | - | - | 0 |
-| 231 | `Microsoft.KubernetesConfiguration/privateLinkScopes` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 232 | `Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 233 | `Microsoft.KubernetesConfiguration/sourceControlConfigurations` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
-| 234 | `Microsoft.KubernetesConfiguration/extensions` | partial, 13 of 32 missing | `kubernetesconfiguration/Extension` |  | 19 / 0 / 13 | extension | extend: ASO's API version is older than the spec's | S (13) | 0 |
-| 235 | `Microsoft.KubernetesConfiguration/fluxConfigurations` | partial, 1 of 71 missing | `kubernetesconfiguration/FluxConfiguration` |  | 70 / 0 / 1 | extension | extend: ASO's API version is older than the spec's | S (1) | 0 |
+| 231 | `Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections` | partial, 1 of 4 missing |  | `kubernetesconfiguration/PrivateLinkScopesPrivateEndpointConnection` | 0 / 3 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 232 | `Microsoft.KubernetesConfiguration/sourceControlConfigurations` | partial, 1 of 11 missing |  | `kubernetesconfiguration/SourceControlConfiguration` | 0 / 10 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 233 | `Microsoft.KubernetesConfiguration/extensions` | partial, 13 of 32 missing | `kubernetesconfiguration/Extension` |  | 19 / 0 / 13 | extension | extend: ASO's API version is older than the spec's | S (13) | 0 |
+| 234 | `Microsoft.KubernetesConfiguration/fluxConfigurations` | partial, 1 of 71 missing | `kubernetesconfiguration/FluxConfiguration` |  | 70 / 0 / 1 | extension | extend: ASO's API version is older than the spec's | S (1) | 0 |
+| 235 | `Microsoft.KubernetesConfiguration/privateLinkScopes` | covered |  | `kubernetesconfiguration/PrivateLinkScope` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 236 | `Microsoft.ContainerRegistry/registries/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
 | 237 | `Microsoft.ContainerRegistry/registries/connectedRegistries` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
 | 238 | `Microsoft.ContainerRegistry/registries/tasks` | no kind |  |  | 0 / 0 / 54 | resourceGroup | generator | M (54) | 0 |
