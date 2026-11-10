@@ -247,7 +247,8 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   gateway, client VPN profiles, the hour a real gateway takes, and the
   error codes (the fake's own).
 - Virtual Network Manager (`Microsoft.Network/networkManagers` with their
-  `scopeConnections`, `networkGroups` and a group's `staticMembers`, and
+  `scopeConnections`, `networkGroups` and a group's `staticMembers`, their
+  configurations, rule collections and rules, `commits`, and
   `networkManagerConnections` at a subscription or a management group;
   `pkg/fakecloud/arm/networkmanager.go`): a network manager gives
   `networkManagerScopes` with at least one subscription or management group,
@@ -260,8 +261,16 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   collection apply to network groups of the same manager that exist; an
   admin rule is `Custom` (protocol, direction, access `Allow`, `Deny` or
   `AlwaysAllow`, priority 1 to 4096) or `Default` (a flag); a security user
-  rule gives protocol and direction. Not modelled: configurations reaching
-  the networks (nothing is deployed until committed), the rules a `Default`
+  rule gives protocol and direction. A routing rule collection applies to
+  network groups as above; a routing rule gives a destination (type
+  `AddressPrefix` or `ServiceTag` and its address) and a next hop type,
+  with an address for `VirtualAppliance`. A commit's `commitType` must be
+  in the manager's `networkManagerScopeAccesses`, it needs target
+  locations, and each configuration it names is one of that type in the
+  same manager (400) that exists (404); its target locations become its
+  active locations at once. Not modelled: configurations reaching the
+  networks (a commit is only recorded), a commit's time and per-region
+  failures, configurations a commit leaves out being removed, the rules a `Default`
   rule's flag names, address prefixes checked, two rules with one priority,
   a scope managed by two network managers for the same feature, the other tenant accepting a scope connection, a
   network manager connection's state, dynamic membership through Azure
