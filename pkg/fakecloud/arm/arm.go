@@ -304,6 +304,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := a.checkNetworkManager(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		status, code, msg, erAfter := a.checkExpressRoute(id, body)
 		if code != "" {
 			writeError(w, status, code, msg)
