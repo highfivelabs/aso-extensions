@@ -3,6 +3,9 @@ Copyright (c) Microsoft Corporation.
 Licensed under the MIT license.
 */
 
+// Modified by High Five Labs: from Azure Service Operator's
+// v2/internal/util/azuresql/role.go; internal/set is our pkg/util/set.
+
 package azuresql
 
 import (
