@@ -87,16 +87,16 @@ func TestNetworkManagerConfigurations(t *testing.T) {
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team"},
 		Spec:       network.NetworkManagersSecurityUserConfiguration_Spec{Owner: owner("avnm")},
 	}
-	adminColl := &network.NetworkManagersSecurityAdminConfigurationsRuleCollection{
+	adminColl := &network.NetworkManagersSecurityAdminRuleCollection{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "deny-mgmt"},
-		Spec: network.NetworkManagersSecurityAdminConfigurationsRuleCollection_Spec{
+		Spec: network.NetworkManagersSecurityAdminRuleCollection_Spec{
 			Owner:           owner("baseline"),
 			AppliesToGroups: []network.NetworkManagerSecurityGroupItem{{NetworkGroupReference: spokes}},
 		},
 	}
-	custom := &network.NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule{
+	custom := &network.NetworkManagersSecurityAdminRule{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "deny-rdp"},
-		Spec: network.NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule_Spec{
+		Spec: network.NetworkManagersSecurityAdminRule_Spec{
 			Owner: owner("deny-mgmt"),
 			AdminRule: &network.AdminRule{
 				Kind:                  ptr(network.AdminRule_Kind_Custom),
@@ -109,23 +109,23 @@ func TestNetworkManagerConfigurations(t *testing.T) {
 			},
 		},
 	}
-	def := &network.NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule{
+	def := &network.NetworkManagersSecurityAdminRule{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "default"},
-		Spec: network.NetworkManagersSecurityAdminConfigurationsRuleCollectionsRule_Spec{
+		Spec: network.NetworkManagersSecurityAdminRule_Spec{
 			Owner:            owner("deny-mgmt"),
 			DefaultAdminRule: &network.DefaultAdminRule{Kind: ptr(network.DefaultAdminRule_Kind_Default), Flag: ptr("AllowVnetInbound")},
 		},
 	}
-	userColl := &network.NetworkManagersSecurityUserConfigurationsRuleCollection{
+	userColl := &network.NetworkManagersSecurityUserRuleCollection{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "app"},
-		Spec: network.NetworkManagersSecurityUserConfigurationsRuleCollection_Spec{
+		Spec: network.NetworkManagersSecurityUserRuleCollection_Spec{
 			Owner:           owner("team"),
 			AppliesToGroups: []network.SecurityUserGroupItem{{NetworkGroupReference: spokes}},
 		},
 	}
-	userRule := &network.NetworkManagersSecurityUserConfigurationsRuleCollectionsRule{
+	userRule := &network.NetworkManagersSecurityUserRule{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "https"},
-		Spec: network.NetworkManagersSecurityUserConfigurationsRuleCollectionsRule_Spec{
+		Spec: network.NetworkManagersSecurityUserRule_Spec{
 			Owner:                 owner("app"),
 			Protocol:              ptr(network.SecurityConfigurationRuleProtocol_Tcp),
 			Direction:             ptr(network.SecurityConfigurationRuleDirection_Inbound),
