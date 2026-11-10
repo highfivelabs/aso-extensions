@@ -1,21 +1,28 @@
 # Copyright 2026 High Five Labs
 # SPDX-License-Identifier: MIT
 #
-# The two checks CONTRIBUTING.md asks for, on every pull request and on
-# main: `task check` and `task operator-e2e`, each after `task tools` (ASO
-# at the pin plus patches/, and setup-envtest), as on an offload Spot VM
-# (docs/handoff.md, "Running things"). Both run against the fake cloud
-# only: no credentials, no real Azure, never a live test.
+# Pull requests (the builder's decisions of 2026-11-10, O22 and "selective"):
 #
-# Tool versions: Go from go.mod; kind v0.33.0 (docs/plan.md, the version
-# the operator e2e passed on, and the offload image's); ko and Task at the
-# versions the builder's machines run (none is pinned in the repository).
+#   plan    hack/ci/select.sh maps the changed paths to what must run:
+#           none (docs only), groups (check:static, build and the changed
+#           kind groups' own tests) or full (task check). When the Spot runners
+#           are on (repository variable SPOT_RUNNERS_ENABLED), it also
+#           starts the offload Spot VMs the heavy jobs run on
+#           (.github/actions/spot-runner).
+#   check   on GitHub's runner (Actions minutes), or on a Spot VM when
+#           CHECK_ON_SPOT is 'true' too.
+#   e2e     task operator-e2e on a Spot VM: no Actions minutes. Skipped
+#           while the Spot runners are off (the plan's summary says so).
+#   ci      the one status to require: fails if any job above failed or
+#           was cancelled; a skipped job is fine.
+#
+# Everything runs against the fake cloud (in process, and PostgreSQL in Docker): no
+# credentials reach a test.
+# The whole suite runs nightly on main (nightly.yml).
 name: ci
 
 on:
   pull_request:
-  push:
-    branches: [main]
 
 permissions:
   contents: read
@@ -25,144 +32,139 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TASK_VERSION: v3.54.0
-  KIND_VERSION: v0.33.0
-  KO_VERSION: v0.19.1
+  # offload, vendored in the factory repository (offload/), at this commit.
+  FACTORY_REF: ba59cca20632966e07bd5b9f36ed0a1b525ea023
 
 jobs:
-  check:
+  plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 150
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      mode: ${{ steps.plan.outputs.mode }}
+      groups: ${{ steps.plan.outputs.groups }}
+      e2e: ${{ steps.plan.outputs.e2e }}
+      check-runner: ${{ steps.runners.outputs.check }}
+      e2e-runner: ${{ steps.runners.outputs.e2e }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: What this pull request runs
+        id: plan
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          hack/ci/select.sh plan "${BASE}" "${HEAD}" > plan.out 2>> "${GITHUB_STEP_SUMMARY}"
+          cat plan.out
+          cat plan.out >> "${GITHUB_OUTPUT}"
+
+      - name: Where the heavy jobs run
+        id: runners
+        env:
+          MODE: ${{ steps.plan.outputs.mode }}
+          E2E: ${{ steps.plan.outputs.e2e }}
+          SPOT: ${{ vars.SPOT_RUNNERS_ENABLED == 'true' }}
+          CHECK_ON_SPOT: ${{ vars.CHECK_ON_SPOT == 'true' }}
+          PREFIX: ci-${{ github.event.repository.name }}-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          check=ubuntu-latest e2e=""
+          if [[ "${SPOT}" == "true" ]]; then
+            [[ "${E2E}" == "true" ]] && e2e="${PREFIX}-e2e"
+            [[ "${MODE}" != "none" && "${CHECK_ON_SPOT}" == "true" ]] && check="${PREFIX}-check"
+          elif [[ "${E2E}" == "true" ]]; then
+            echo "**operator-e2e not run:** the Spot runners are off (repository variable \`SPOT_RUNNERS_ENABLED\`). With them on, the VM \`gh-${PREFIX}-e2e\` would run \`task tools\` and \`task operator-e2e\`." >> "${GITHUB_STEP_SUMMARY}"
+          fi
+          echo "check=${check}" >> "${GITHUB_OUTPUT}"
+          echo "e2e=${e2e}" >> "${GITHUB_OUTPUT}"
+
+      - name: Spot runner for check
+        if: steps.runners.outputs.check != 'ubuntu-latest'
+        uses: ./.github/actions/spot-runner
+        with:
+          label: ${{ steps.runners.outputs.check }}
+
+      - name: Spot runner for operator-e2e
+        if: steps.runners.outputs.e2e != ''
+        uses: ./.github/actions/spot-runner
+        with:
+          label: ${{ steps.runners.outputs.e2e }}
+
+  check:
+    needs: plan
+    if: needs.plan.outputs.mode != 'none'
+    runs-on: ${{ needs.plan.outputs.check-runner }}
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-
+      # A Spot VM has the tools and the Go cache already (the offload image).
+      - if: runner.environment == 'github-hosted'
+        uses: ./.github/actions/tools
       # ASO's checkout, its Go build cache and the generator's output do
-      # not fit in the runner's free disk otherwise.
+      # not fit in GitHub's runner's free disk otherwise.
       - name: Free disk space
-        run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
-          df -h /
-
-      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
-        with:
-          go-version-file: go.mod
-          cache: false
-
-      - name: Go module and build cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: go-${{ runner.os }}-${{ hashFiles('go.sum', 'UPSTREAM.md') }}
-          restore-keys: go-${{ runner.os }}-
-
-      - name: Upstream checkout and specs (by pin)
+        if: runner.environment == 'github-hosted'
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+      - name: ASO at the pin, the ARM specs, setup-envtest and envtest
+        if: runner.environment == 'github-hosted'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             third_party/azure-service-operator
             .cache/azure-rest-api-specs
-          key: upstream-${{ hashFiles('UPSTREAM.md', 'patches/**', 'generator/specs.txt') }}
-          restore-keys: upstream-
-
-      - name: Tools (bin/ and Task)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: |
             bin/setup-envtest
             bin/envtest
-            ~/tools/bin
-          key: tools-${{ runner.os }}-${{ env.TASK_VERSION }}-${{ hashFiles('Taskfile.yml') }}
-
-      - name: Install Task
+          key: repo-tools-${{ runner.os }}-${{ hashFiles('UPSTREAM.md', 'patches/**', 'generator/specs.txt', 'Taskfile.yml', 'taskfiles/**') }}
+      - run: task tools
+      - name: task check (full) or the changed kind groups' checks (groups)
+        env:
+          MODE: ${{ needs.plan.outputs.mode }}
+          SELECTED: ${{ needs.plan.outputs.groups }}
         run: |
-          mkdir -p ~/tools/bin
-          echo "${HOME}/tools/bin" >> "${GITHUB_PATH}"
-          # The tools need a newer Go than go.mod's; GOTOOLCHAIN=auto fetches
-          # it for these installs only (the repository builds with go.mod's).
-          [ -x ~/tools/bin/task ] || GOTOOLCHAIN=auto GOBIN="${HOME}/tools/bin" go install "github.com/go-task/task/v3/cmd/task@${TASK_VERSION}"
+          if [[ "${MODE}" == "full" ]]; then
+            task check
+          else
+            # shellcheck disable=SC2086
+            hack/ci/select.sh run ${SELECTED}
+          fi
 
-      - name: task tools
-        run: task tools
-
-      - name: task check
-        run: task check
-
-  operator-e2e:
-    runs-on: ubuntu-latest
+  e2e:
+    needs: plan
+    if: needs.plan.outputs.e2e-runner != ''
+    runs-on: ${{ needs.plan.outputs.e2e-runner }}
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-
-      - name: Free disk space
+      - run: task tools
+      - run: task operator-e2e
+      - name: Cluster state on failure
+        if: failure()
         run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
-          df -h /
+          kubectl get pods -A -o wide || true
+          kubectl get events -A --sort-by=.lastTimestamp | tail -n 100 || true
 
-      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
-        with:
-          go-version-file: go.mod
-          cache: false
-
-      # Restored from the check job's cache, never saved from here: the two
-      # would otherwise race to write the same key.
-      - name: Go module and build cache
-        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: go-${{ runner.os }}-${{ hashFiles('go.sum', 'UPSTREAM.md') }}
-          restore-keys: go-${{ runner.os }}-
-
-      - name: Upstream checkout and specs (by pin)
-        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: |
-            third_party/azure-service-operator
-            .cache/azure-rest-api-specs
-          key: upstream-${{ hashFiles('UPSTREAM.md', 'patches/**', 'generator/specs.txt') }}
-          restore-keys: upstream-
-
-      - name: Tools (Task, kind, ko)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: |
-            bin/setup-envtest
-            ~/tools/bin
-          key: e2e-tools-${{ runner.os }}-${{ env.TASK_VERSION }}-${{ env.KIND_VERSION }}-${{ env.KO_VERSION }}-${{ hashFiles('Taskfile.yml') }}
-
-      - name: Install Task, kind and ko
+  # The one status branch protection requires.
+  ci:
+    needs: [plan, check, e2e]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
         run: |
-          mkdir -p ~/tools/bin
-          echo "${HOME}/tools/bin" >> "${GITHUB_PATH}"
-          export GOBIN="${HOME}/tools/bin"
-          # The tools need a newer Go than go.mod's; GOTOOLCHAIN=auto fetches
-          # it for these installs only (the repository builds with go.mod's).
-          export GOTOOLCHAIN=auto
-          [ -x ~/tools/bin/task ] || go install "github.com/go-task/task/v3/cmd/task@${TASK_VERSION}"
-          [ -x ~/tools/bin/kind ] || go install "sigs.k8s.io/kind@${KIND_VERSION}"
-          [ -x ~/tools/bin/ko ] || go install "github.com/google/ko@${KO_VERSION}"
-          ~/tools/bin/kind version
-          ~/tools/bin/ko version
-          kubectl version --client
-          docker version --format '{{.Server.Version}}'
-
-      - name: task tools
-        run: task tools
-
-      - name: task operator-e2e
-        run: task operator-e2e
-
-      - name: Keep the e2e log
-        if: always()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: operator-e2e-log
-          path: bin/operator-e2e/last-run.log
-          if-no-files-found: ignore
+          echo "plan, check, e2e: ${RESULTS}"
+          for r in ${RESULTS}; do
+            case "${r}" in success|skipped) ;; *) exit 1 ;; esac
+          done
