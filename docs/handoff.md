@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, and policy remediations and attestations (foundation rows 1 to 4 and 21; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 5 (PIM, copied from ASO PR #5638; see "PIM, what copying #5638 takes" below) of `docs/coverage/foundation.md`; `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
+State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, and Privileged Identity Management (foundation rows 1 to 5 and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 6 (budgets and cost exports) of `docs/coverage/foundation.md`, then row 7 (lock owners), 8 (VPN connections and local gateways), 9 (ExpressRoute), 10 (Virtual WAN), 11 (network manager connections), Maintenance `ConfigurationAssignment` (h1 below: generate it with patch 0006); `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
 
 ## What this repository is
 
@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | --- | --- | --- |
 | Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
-| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions; `policyinsights.azure.hfl.dev` policy remediations and attestations; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions, and PIM eligibility and assignment schedule requests and role management policy assignments (two hand-written extension files, `generator/_extensions/`); `policyinsights.azure.hfl.dev` policy remediations and attestations; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
 ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
@@ -63,8 +63,8 @@ generator gives the child no owner.
 | c8 | management groups, policy, budgets, vWAN, subscription tags | now foundation rows 1 to 10 |
 | c18 | stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones, resource groups) | not a new kind |
 
-**PIM, what copying #5638 takes** (read 2026-11-09, head `5d0e686e`, open,
-review required). The PR is ASO's generator output for
+**PIM (built, row 5; what follows is what copying #5638 took)** (read 2026-11-09, head `5d0e686e`, open,
+review required). Done as: (1) copied as is; (2) a `Claimer` extension defaults the GUID name and the claim records it (`docs/plan.md` "Names that must be GUIDs"); (3) the extensions live in `generator/_extensions/` and `hack/generate-arm.sh` copies them in; patch 0003 exports what they need; the fake lists role definitions and refuses a request's DELETE (405). The PR is ASO's generator output for
 `authorization/v20201001` `RoleEligibilityScheduleRequest` plus three
 hand-written pieces: (1) configuration (`$referenceType: arm+wellknown` on
 `RoleDefinitionId`, so a built-in role is named `wellKnownName: Reader`;
@@ -274,6 +274,26 @@ Facts learned the hard way:
   until the remediation PR listed them. A new patch goes in both files.
 - `offload` does not copy `offload-artifacts/` to the machine: a command that
   writes there must `mkdir -p offload-artifacts` first.
+- **Hand-written extensions of a generated kind** (an `ARMResourceModifier`, a
+  `Claimer`) go in `generator/_extensions/<group>/customizations/`, mirroring
+  `apis/arm`, and `hack/generate-arm.sh` copies them in after generating
+  (`docs/plan.md` "Hand-written extensions of generated kinds"). Cast the
+  object to the API version (the controller is registered on it), not ASO's
+  storage hub. ASO's internals they need come through `pkg/outoftree`
+  (patch 0003); add an export there rather than copying ASO code.
+- **A name that must be a GUID**: give the kind a `Claimer` that sets an empty
+  `spec.azureName` (ASO's webhook code, `outoftree.MakeUUIDName`) before
+  calling `next`; the claim commits it. See the PIM extensions.
+- **A role definition listed by the Azure SDK has its kind at
+  `properties.type`** (`BuiltInRole`), not `roleType`; ASO dereferences it
+  without a nil check, so a fake that omits it panics the reconciler (no Ready
+  condition at all; run envtest with `E2E_VERBOSE=1` to see the manager's log).
+- **A copied `third_party/` can be stale and still pass `hack/upstream.sh
+  --check`**, which compares the list of changed files, not their contents: a
+  copy of an older checkout lacked patch 0006's code (the same file is changed
+  by 0005) and the generator failed at random on policy attestations. In a new
+  clone run `hack/upstream.sh` (it resets and re-applies the series) rather
+  than copying another clone's `third_party/`.
 - A property named `owner` in the spec (an attestation's responsible person)
   collides with the Kubernetes `owner`; ASO's generator renames it to
   `properties_owner` (Go `PropertiesOwner`), still sent as `owner`.
@@ -323,7 +343,7 @@ kind, no generator. From the repository root:
   `docs/coverage/foundation.md` are written by hand (mark a row built there).
 - Never edit `third_party/`. A change to ASO is a numbered patch in
   `patches/azure-service-operator/` (0001 exports the framework, 0002 changes
-  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`, 0005 gives children of a tenant scope resource an owner, 0006 makes a resource at several scopes an extension resource); make the change in the
+  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`, 0005 gives children of a tenant scope resource an owner, 0006 makes a resource at several scopes an extension resource; 0003 also exports what hand-written extensions need); make the change in the
   checkout, `git diff` it into the patch, then `hack/upstream.sh` re-applies the
   series and `hack/upstream.sh --check` verifies it.
 
