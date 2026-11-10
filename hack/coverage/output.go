@@ -109,7 +109,7 @@ func sumSvcs(svcs []*SvcRow) *SvcRow {
 }
 
 // outputs makes every generated file: path (relative to docs/coverage) to content.
-func outputs(res []*ResRow, svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow) map[string][]byte {
+func outputs(res []*ResRow, svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow, tf *Terraform) map[string][]byte {
 	out := map[string][]byte{}
 	out["services.csv"] = servicesCSV(svcs)
 	out["resources.csv"] = resourcesCSV(res)
@@ -129,17 +129,21 @@ func outputs(res []*ResRow, svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRo
 		}
 	}
 	for _, s := range svcs {
-		out["bars/"+fileName(s.Service)+".svg"] = []byte(serviceSVG(s.Service, attrSegs(s)))
+		var a *tfAgg
+		if v, ok := tf.service(s.Service); ok {
+			a = &v
+		}
+		out["bars/"+fileName(s.Service)+".svg"] = []byte(serviceSVG(s.Service, attrSegs(s), a, tf.provider()))
 	}
 	t := sumSvcs(svcs)
-	out["bars/_total.svg"] = []byte(totalSVG("Azure Resource Manager API coverage", attrSegs(t), resSegs(t), dominance(svcs)))
-	out["bars/_tiers.svg"] = []byte(tiersSVG(tiers))
-	out["bars/_categories.svg"] = []byte(categoriesSVG(cats))
+	out["bars/_total.svg"] = []byte(totalSVG("Azure Resource Manager API coverage", attrSegs(t), resSegs(t), dominance(svcs), tf.all(), tf.provider()))
+	out["bars/_tiers.svg"] = []byte(tiersSVG(tiers, tf))
+	out["bars/_categories.svg"] = []byte(categoriesSVG(cats, tf))
 	return out
 }
 
 // readmeSection is the Coverage section of the root README, between its markers.
-func readmeSection(svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow, prio Priority) string {
+func readmeSection(svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow, prio Priority, tf *Terraform) string {
 	total := sumSvcs(svcs)
 	var b strings.Builder
 	b.WriteString("![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)\n\n")
@@ -152,17 +156,26 @@ func readmeSection(svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow, prio P
 		"(foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; " +
 		"security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers " +
 		"([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).\n\n")
+	if tf != nil {
+		fmt.Fprintf(&b, "The purple bar is Terraform's `%s` provider beside them, an estimate: the share of the same attributes that a writable attribute of a mapped Terraform resource matches "+
+			"by the lenient rule (L2, %s%% overall), with the strict rule (L1, %s%%) as its tick; the method and its error are in the catalog's "+
+			"[\"Method and error\"](%s), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at catalog `%s`. "+
+			"`azapi` is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema.\n\n",
+			tf.Provider, pct(tf.All.l2, tf.All.total), pct(tf.All.l1, tf.All.total), tf.doc(), short(tf.Commit))
+	}
 	b.WriteString("![Coverage by category](docs/coverage/bars/_categories.svg)\n\n")
-	b.WriteString("| Category | Services | Resources | Official | Ours beyond | Uncovered |\n| --- | ---: | ---: | ---: | ---: | ---: |\n")
+	b.WriteString("| Category | Services | Resources | Official | Ours beyond | Uncovered | Terraform (estimate) |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: |\n")
 	for _, c := range cats {
-		fmt.Fprintf(&b, "| %s | %d | %s | %s%% | %s%% | %s%% |\n", c.Category, len(c.Services), commas(c.ResTotal),
-			pct(c.AttrOfficial, c.AttrTotal), pct(c.AttrOursBeyond, c.AttrTotal), pct(c.AttrUncovered, c.AttrTotal))
+		a, ok := tf.category(c.Category)
+		fmt.Fprintf(&b, "| %s | %d | %s | %s%% | %s%% | %s%% | %s |\n", c.Category, len(c.Services), commas(c.ResTotal),
+			pct(c.AttrOfficial, c.AttrTotal), pct(c.AttrOursBeyond, c.AttrTotal), pct(c.AttrUncovered, c.AttrTotal), a.cell(ok))
 	}
 	b.WriteString("\n![Coverage by tier](docs/coverage/bars/_tiers.svg)\n\n")
-	b.WriteString("| Tier | Services | Official | Ours beyond | Uncovered |\n| --- | ---: | ---: | ---: | ---: |\n")
+	b.WriteString("| Tier | Services | Official | Ours beyond | Uncovered | Terraform (estimate) |\n| --- | ---: | ---: | ---: | ---: | ---: |\n")
 	for _, t := range tiers {
-		fmt.Fprintf(&b, "| %d | %d | %s%% | %s%% | %s%% |\n", t.Tier, len(t.Services),
-			pct(t.AttrOfficial, t.AttrTotal), pct(t.AttrOursBeyond, t.AttrTotal), pct(t.AttrUncovered, t.AttrTotal))
+		a, ok := tf.services(t.Services)
+		fmt.Fprintf(&b, "| %d | %d | %s%% | %s%% | %s%% | %s |\n", t.Tier, len(t.Services),
+			pct(t.AttrOfficial, t.AttrTotal), pct(t.AttrOursBeyond, t.AttrTotal), pct(t.AttrUncovered, t.AttrTotal), a.cell(ok))
 	}
 	b.WriteString("\nBy service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); " +
 		"method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), " +
@@ -170,11 +183,12 @@ func readmeSection(svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow, prio P
 	sorted := sortedByTier(svcs, prio)
 	shown := 0
 	table := func(rows []*SvcRow) {
-		b.WriteString("| Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered |\n| ---: | --- | --- | --- | ---: | ---: | ---: |\n")
+		b.WriteString("| Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered | Terraform (estimate) |\n| ---: | --- | --- | --- | ---: | ---: | ---: | ---: |\n")
 		for _, s := range rows {
-			fmt.Fprintf(&b, "| %d | `%s` | %s | ![%s](docs/coverage/bars/%s.svg) | %s%% | %s%% | %s%% |\n",
+			a, ok := tf.service(s.Service)
+			fmt.Fprintf(&b, "| %d | `%s` | %s | ![%s](docs/coverage/bars/%s.svg) | %s%% | %s%% | %s%% | %s |\n",
 				prio.tier(s.Service), s.Service, prio.serviceCategory(s.Service), s.Service, fileName(s.Service),
-				pct(s.AttrOfficial, s.AttrTotal), pct(s.AttrOursBeyond, s.AttrTotal), pct(s.AttrUncovered, s.AttrTotal))
+				pct(s.AttrOfficial, s.AttrTotal), pct(s.AttrOursBeyond, s.AttrTotal), pct(s.AttrUncovered, s.AttrTotal), a.cell(ok))
 		}
 	}
 	for tier := 1; tier <= 3; tier++ {

@@ -44,97 +44,99 @@ Not affiliated with or endorsed by Microsoft.
 
 Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 3.7%; 79.9% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
+The purple bar is Terraform's `azurerm` provider beside them, an estimate: the share of the same attributes that a writable attribute of a mapped Terraform resource matches by the lenient rule (L2, 8.2% overall), with the strict rule (L1, 7.2%) as its tick; the method and its error are in the catalog's ["Method and error"](https://github.com/highfivelabs/catalog/blob/13064af34996c47f1a5498bb17aca16194c4574e/docs/terraform-leverage.md#method-and-error), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at catalog `13064af34996`. `azapi` is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema.
+
 ![Coverage by category](docs/coverage/bars/_categories.svg)
 
-| Category | Services | Resources | Official | Ours beyond | Uncovered |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 21.6% | 35.2% |
-| security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% |
-| application | 35 | 823 | 33.1% | 3.8% | 63.2% |
-| other | 230 | 1,262 | 0.5% | 0.0% | 99.5% |
+| Category | Services | Resources | Official | Ours beyond | Uncovered | Terraform (estimate) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| platform-foundation | 18 | 246 | 43.2% | 21.6% | 35.2% | ~18.7% |
+| security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% | ~11.1% |
+| application | 35 | 823 | 33.1% | 3.8% | 63.2% | ~11.3% |
+| other | 230 | 1,262 | 0.5% | 0.0% | 99.5% | ~3.9% |
 
 ![Coverage by tier](docs/coverage/bars/_tiers.svg)
 
-| Tier | Services | Official | Ours beyond | Uncovered |
-| --- | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 13.3% | 43.7% |
-| 2 | 18 | 26.5% | 6.9% | 66.6% |
-| 3 | 245 | 5.9% | 0.0% | 94.1% |
+| Tier | Services | Official | Ours beyond | Uncovered | Terraform (estimate) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1 | 17 | 43.0% | 13.3% | 43.7% | ~13.8% |
+| 2 | 18 | 26.5% | 6.9% | 66.6% | ~8.2% |
+| 3 | 245 | 5.9% | 0.0% | 94.1% | ~6.6% |
 
 By service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), all services in [`services.csv`](docs/coverage/services.csv).
 
-| Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered |
-| ---: | --- | --- | --- | ---: | ---: | ---: |
-| 1 | `Microsoft.Management` | platform-foundation | ![Microsoft.Management](docs/coverage/bars/Microsoft.Management.svg) | 0.0% | 44.4% | 55.6% |
-| 1 | `Microsoft.Subscription` | platform-foundation | ![Microsoft.Subscription](docs/coverage/bars/Microsoft.Subscription.svg) | 60.0% | 0.0% | 40.0% |
-| 1 | `Microsoft.Authorization` | platform-foundation | ![Microsoft.Authorization](docs/coverage/bars/Microsoft.Authorization.svg) | 5.9% | 46.9% | 47.2% |
-| 1 | `Microsoft.PolicyInsights` | platform-foundation | ![Microsoft.PolicyInsights](docs/coverage/bars/Microsoft.PolicyInsights.svg) | 0.0% | 94.4% | 5.6% |
-| 1 | `Microsoft.Resources` | platform-foundation | ![Microsoft.Resources](docs/coverage/bars/Microsoft.Resources.svg) | 2.1% | 0.7% | 97.2% |
-| 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 100.0% | 0.0% |
-| 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 21.3% | 78.7% |
-| 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 2.0% | 25.5% |
-| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 14.3% | 43.5% |
-| 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 0.0% | 59.8% |
-| 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 0.0% | 16.7% |
-| 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 40.2% | 43.4% |
-| 1 | `Microsoft.OperationsManagement` | platform-foundation | ![Microsoft.OperationsManagement](docs/coverage/bars/Microsoft.OperationsManagement.svg) | 0.0% | 0.0% | 100.0% |
-| 1 | `Microsoft.Monitor` | platform-foundation | ![Microsoft.Monitor](docs/coverage/bars/Microsoft.Monitor.svg) | 2.2% | 0.0% | 97.8% |
-| 1 | `Microsoft.ContainerService` | platform-foundation | ![Microsoft.ContainerService](docs/coverage/bars/Microsoft.ContainerService.svg) | 70.2% | 0.0% | 29.8% |
-| 1 | `Microsoft.KubernetesConfiguration` | platform-foundation | ![Microsoft.KubernetesConfiguration](docs/coverage/bars/Microsoft.KubernetesConfiguration.svg) | 73.0% | 0.0% | 27.0% |
-| 1 | `Microsoft.ContainerRegistry` | platform-foundation | ![Microsoft.ContainerRegistry](docs/coverage/bars/Microsoft.ContainerRegistry.svg) | 25.8% | 18.0% | 56.2% |
+| Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered | Terraform (estimate) |
+| ---: | --- | --- | --- | ---: | ---: | ---: | ---: |
+| 1 | `Microsoft.Management` | platform-foundation | ![Microsoft.Management](docs/coverage/bars/Microsoft.Management.svg) | 0.0% | 44.4% | 55.6% | ~11.1% |
+| 1 | `Microsoft.Subscription` | platform-foundation | ![Microsoft.Subscription](docs/coverage/bars/Microsoft.Subscription.svg) | 60.0% | 0.0% | 40.0% | ~13.3% |
+| 1 | `Microsoft.Authorization` | platform-foundation | ![Microsoft.Authorization](docs/coverage/bars/Microsoft.Authorization.svg) | 5.9% | 46.9% | 47.2% | ~25.2% |
+| 1 | `Microsoft.PolicyInsights` | platform-foundation | ![Microsoft.PolicyInsights](docs/coverage/bars/Microsoft.PolicyInsights.svg) | 0.0% | 94.4% | 5.6% | ~27.8% |
+| 1 | `Microsoft.Resources` | platform-foundation | ![Microsoft.Resources](docs/coverage/bars/Microsoft.Resources.svg) | 2.1% | 0.7% | 97.2% | ~12.5% |
+| 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 100.0% | 0.0% | ~92.3% |
+| 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 21.3% | 78.7% | ~27.6% |
+| 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 2.0% | 25.5% | ~33.3% |
+| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 14.3% | 43.5% | ~9.0% |
+| 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 0.0% | 59.8% | ~20.2% |
+| 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 0.0% | 16.7% | ~100.0% |
+| 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 40.2% | 43.4% | ~18.0% |
+| 1 | `Microsoft.OperationsManagement` | platform-foundation | ![Microsoft.OperationsManagement](docs/coverage/bars/Microsoft.OperationsManagement.svg) | 0.0% | 0.0% | 100.0% | ~35.3% |
+| 1 | `Microsoft.Monitor` | platform-foundation | ![Microsoft.Monitor](docs/coverage/bars/Microsoft.Monitor.svg) | 2.2% | 0.0% | 97.8% | ~1.4% |
+| 1 | `Microsoft.ContainerService` | platform-foundation | ![Microsoft.ContainerService](docs/coverage/bars/Microsoft.ContainerService.svg) | 70.2% | 0.0% | 29.8% | ~19.4% |
+| 1 | `Microsoft.KubernetesConfiguration` | platform-foundation | ![Microsoft.KubernetesConfiguration](docs/coverage/bars/Microsoft.KubernetesConfiguration.svg) | 73.0% | 0.0% | 27.0% | ~31.1% |
+| 1 | `Microsoft.ContainerRegistry` | platform-foundation | ![Microsoft.ContainerRegistry](docs/coverage/bars/Microsoft.ContainerRegistry.svg) | 25.8% | 18.0% | 56.2% | ~25.0% |
 
 <details><summary>Tier 2: 18 services</summary>
 
-| Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered |
-| ---: | --- | --- | --- | ---: | ---: | ---: |
-| 2 | `Microsoft.Security` | security-adjacent | ![Microsoft.Security](docs/coverage/bars/Microsoft.Security.svg) | 0.0% | 0.0% | 100.0% |
-| 2 | `Microsoft.SecurityInsights` | security-adjacent | ![Microsoft.SecurityInsights](docs/coverage/bars/Microsoft.SecurityInsights.svg) | 0.0% | 0.0% | 100.0% |
-| 2 | `Microsoft.Purview` | security-adjacent | ![Microsoft.Purview](docs/coverage/bars/Microsoft.Purview.svg) | 0.0% | 0.0% | 100.0% |
-| 2 | `Microsoft.HardwareSecurityModules` | security-adjacent | ![Microsoft.HardwareSecurityModules](docs/coverage/bars/Microsoft.HardwareSecurityModules.svg) | 0.0% | 0.0% | 100.0% |
-| 2 | `Microsoft.Storage` | application | ![Microsoft.Storage](docs/coverage/bars/Microsoft.Storage.svg) | 63.1% | 0.0% | 36.9% |
-| 2 | `Microsoft.Compute` | application | ![Microsoft.Compute](docs/coverage/bars/Microsoft.Compute.svg) | 38.0% | 1.0% | 61.0% |
-| 2 | `Microsoft.Web` | application | ![Microsoft.Web](docs/coverage/bars/Microsoft.Web.svg) | 16.2% | 14.1% | 69.7% |
-| 2 | `Microsoft.App` | application | ![Microsoft.App](docs/coverage/bars/Microsoft.App.svg) | 50.6% | 6.0% | 43.3% |
-| 2 | `Microsoft.Sql` | application | ![Microsoft.Sql](docs/coverage/bars/Microsoft.Sql.svg) | 44.5% | 0.0% | 55.5% |
-| 2 | `Microsoft.DocumentDB` | application | ![Microsoft.DocumentDB](docs/coverage/bars/Microsoft.DocumentDB.svg) | 45.1% | 0.0% | 54.9% |
-| 2 | `Microsoft.DBforPostgreSQL` | application | ![Microsoft.DBforPostgreSQL](docs/coverage/bars/Microsoft.DBforPostgreSQL.svg) | 41.5% | 0.0% | 58.5% |
-| 2 | `Microsoft.CognitiveServices` | application | ![Microsoft.CognitiveServices](docs/coverage/bars/Microsoft.CognitiveServices.svg) | 24.0% | 0.0% | 76.0% |
-| 2 | `Microsoft.Cache` | application | ![Microsoft.Cache](docs/coverage/bars/Microsoft.Cache.svg) | 80.4% | 0.0% | 19.6% |
-| 2 | `Microsoft.AppConfiguration` | application | ![Microsoft.AppConfiguration](docs/coverage/bars/Microsoft.AppConfiguration.svg) | 88.9% | 0.0% | 11.1% |
-| 2 | `Microsoft.RecoveryServices` | application | ![Microsoft.RecoveryServices](docs/coverage/bars/Microsoft.RecoveryServices.svg) | 0.0% | 23.0% | 77.0% |
-| 2 | `Microsoft.Maintenance` | application | ![Microsoft.Maintenance](docs/coverage/bars/Microsoft.Maintenance.svg) | 0.0% | 100.0% | 0.0% |
-| 2 | `Microsoft.DevTestLab` | application | ![Microsoft.DevTestLab](docs/coverage/bars/Microsoft.DevTestLab.svg) | 0.0% | 4.7% | 95.3% |
-| 2 | `Microsoft.AlertsManagement` | other | ![Microsoft.AlertsManagement](docs/coverage/bars/Microsoft.AlertsManagement.svg) | 46.4% | 0.0% | 53.6% |
+| Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered | Terraform (estimate) |
+| ---: | --- | --- | --- | ---: | ---: | ---: | ---: |
+| 2 | `Microsoft.Security` | security-adjacent | ![Microsoft.Security](docs/coverage/bars/Microsoft.Security.svg) | 0.0% | 0.0% | 100.0% | ~3.5% |
+| 2 | `Microsoft.SecurityInsights` | security-adjacent | ![Microsoft.SecurityInsights](docs/coverage/bars/Microsoft.SecurityInsights.svg) | 0.0% | 0.0% | 100.0% | ~8.9% |
+| 2 | `Microsoft.Purview` | security-adjacent | ![Microsoft.Purview](docs/coverage/bars/Microsoft.Purview.svg) | 0.0% | 0.0% | 100.0% | ~19.0% |
+| 2 | `Microsoft.HardwareSecurityModules` | security-adjacent | ![Microsoft.HardwareSecurityModules](docs/coverage/bars/Microsoft.HardwareSecurityModules.svg) | 0.0% | 0.0% | 100.0% | ~30.4% |
+| 2 | `Microsoft.Storage` | application | ![Microsoft.Storage](docs/coverage/bars/Microsoft.Storage.svg) | 63.1% | 0.0% | 36.9% | ~7.1% |
+| 2 | `Microsoft.Compute` | application | ![Microsoft.Compute](docs/coverage/bars/Microsoft.Compute.svg) | 38.0% | 1.0% | 61.0% | ~12.8% |
+| 2 | `Microsoft.Web` | application | ![Microsoft.Web](docs/coverage/bars/Microsoft.Web.svg) | 16.2% | 14.1% | 69.7% | ~1.1% |
+| 2 | `Microsoft.App` | application | ![Microsoft.App](docs/coverage/bars/Microsoft.App.svg) | 50.6% | 6.0% | 43.3% | ~10.6% |
+| 2 | `Microsoft.Sql` | application | ![Microsoft.Sql](docs/coverage/bars/Microsoft.Sql.svg) | 44.5% | 0.0% | 55.5% | ~17.6% |
+| 2 | `Microsoft.DocumentDB` | application | ![Microsoft.DocumentDB](docs/coverage/bars/Microsoft.DocumentDB.svg) | 45.1% | 0.0% | 54.9% | ~4.2% |
+| 2 | `Microsoft.DBforPostgreSQL` | application | ![Microsoft.DBforPostgreSQL](docs/coverage/bars/Microsoft.DBforPostgreSQL.svg) | 41.5% | 0.0% | 58.5% | ~8.3% |
+| 2 | `Microsoft.CognitiveServices` | application | ![Microsoft.CognitiveServices](docs/coverage/bars/Microsoft.CognitiveServices.svg) | 24.0% | 0.0% | 76.0% | ~14.8% |
+| 2 | `Microsoft.Cache` | application | ![Microsoft.Cache](docs/coverage/bars/Microsoft.Cache.svg) | 80.4% | 0.0% | 19.6% | ~34.0% |
+| 2 | `Microsoft.AppConfiguration` | application | ![Microsoft.AppConfiguration](docs/coverage/bars/Microsoft.AppConfiguration.svg) | 88.9% | 0.0% | 11.1% | ~14.8% |
+| 2 | `Microsoft.RecoveryServices` | application | ![Microsoft.RecoveryServices](docs/coverage/bars/Microsoft.RecoveryServices.svg) | 0.0% | 23.0% | 77.0% | ~0.6% |
+| 2 | `Microsoft.Maintenance` | application | ![Microsoft.Maintenance](docs/coverage/bars/Microsoft.Maintenance.svg) | 0.0% | 100.0% | 0.0% | ~32.1% |
+| 2 | `Microsoft.DevTestLab` | application | ![Microsoft.DevTestLab](docs/coverage/bars/Microsoft.DevTestLab.svg) | 0.0% | 4.7% | 95.3% | ~17.1% |
+| 2 | `Microsoft.AlertsManagement` | other | ![Microsoft.AlertsManagement](docs/coverage/bars/Microsoft.AlertsManagement.svg) | 46.4% | 0.0% | 53.6% | ~30.4% |
 
 </details>
 
 <details><summary>Tier 3: 23 services</summary>
 
-| Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered |
-| ---: | --- | --- | --- | ---: | ---: | ---: |
-| 3 | `Microsoft.ServiceBus` | application | ![Microsoft.ServiceBus](docs/coverage/bars/Microsoft.ServiceBus.svg) | 69.9% | 0.0% | 30.1% |
-| 3 | `Microsoft.EventHub` | application | ![Microsoft.EventHub](docs/coverage/bars/Microsoft.EventHub.svg) | 49.5% | 0.0% | 50.5% |
-| 3 | `Microsoft.EventGrid` | application | ![Microsoft.EventGrid](docs/coverage/bars/Microsoft.EventGrid.svg) | 26.7% | 0.0% | 73.3% |
-| 3 | `Microsoft.ApiManagement` | application | ![Microsoft.ApiManagement](docs/coverage/bars/Microsoft.ApiManagement.svg) | 25.0% | 0.0% | 75.0% |
-| 3 | `Microsoft.Cdn` | application | ![Microsoft.Cdn](docs/coverage/bars/Microsoft.Cdn.svg) | 52.4% | 0.0% | 47.6% |
-| 3 | `Microsoft.DBforMySQL` | application | ![Microsoft.DBforMySQL](docs/coverage/bars/Microsoft.DBforMySQL.svg) | 50.5% | 0.0% | 49.5% |
-| 3 | `Microsoft.ContainerInstance` | application | ![Microsoft.ContainerInstance](docs/coverage/bars/Microsoft.ContainerInstance.svg) | 31.0% | 0.0% | 69.0% |
-| 3 | `Microsoft.SignalRService` | application | ![Microsoft.SignalRService](docs/coverage/bars/Microsoft.SignalRService.svg) | 40.7% | 0.0% | 59.3% |
-| 3 | `Microsoft.Kusto` | application | ![Microsoft.Kusto](docs/coverage/bars/Microsoft.Kusto.svg) | 51.1% | 0.0% | 48.9% |
-| 3 | `Microsoft.DataFactory` | application | ![Microsoft.DataFactory](docs/coverage/bars/Microsoft.DataFactory.svg) | 8.1% | 0.0% | 91.9% |
-| 3 | `Microsoft.Synapse` | application | ![Microsoft.Synapse](docs/coverage/bars/Microsoft.Synapse.svg) | 21.5% | 0.0% | 78.5% |
-| 3 | `Microsoft.MachineLearningServices` | application | ![Microsoft.MachineLearningServices](docs/coverage/bars/Microsoft.MachineLearningServices.svg) | 11.0% | 0.0% | 89.0% |
-| 3 | `Microsoft.DataProtection` | application | ![Microsoft.DataProtection](docs/coverage/bars/Microsoft.DataProtection.svg) | 72.1% | 0.0% | 27.9% |
-| 3 | `Microsoft.Batch` | application | ![Microsoft.Batch](docs/coverage/bars/Microsoft.Batch.svg) | 10.8% | 0.0% | 89.2% |
-| 3 | `Microsoft.Devices` | application | ![Microsoft.Devices](docs/coverage/bars/Microsoft.Devices.svg) | 58.6% | 0.0% | 41.4% |
-| 3 | `Microsoft.NotificationHubs` | application | ![Microsoft.NotificationHubs](docs/coverage/bars/Microsoft.NotificationHubs.svg) | 90.8% | 0.0% | 9.2% |
-| 3 | `Microsoft.ServiceLinker` | application | ![Microsoft.ServiceLinker](docs/coverage/bars/Microsoft.ServiceLinker.svg) | 24.7% | 0.0% | 75.3% |
-| 3 | `Microsoft.RedHatOpenShift` | application | ![Microsoft.RedHatOpenShift](docs/coverage/bars/Microsoft.RedHatOpenShift.svg) | 94.7% | 0.0% | 5.3% |
-| 3 | `Microsoft.DatabaseWatcher` | other | ![Microsoft.DatabaseWatcher](docs/coverage/bars/Microsoft.DatabaseWatcher.svg) | 84.8% | 0.0% | 15.2% |
-| 3 | `Microsoft.Portal` | other | ![Microsoft.Portal](docs/coverage/bars/Microsoft.Portal.svg) | 45.9% | 0.0% | 54.1% |
-| 3 | `Microsoft.Communication` | other | ![Microsoft.Communication](docs/coverage/bars/Microsoft.Communication.svg) | 60.0% | 0.0% | 40.0% |
-| 3 | `Microsoft.Search` | other | ![Microsoft.Search](docs/coverage/bars/Microsoft.Search.svg) | 39.4% | 0.0% | 60.6% |
-| 3 | `Microsoft.Quota` | other | ![Microsoft.Quota](docs/coverage/bars/Microsoft.Quota.svg) | 75.0% | 0.0% | 25.0% |
+| Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered | Terraform (estimate) |
+| ---: | --- | --- | --- | ---: | ---: | ---: | ---: |
+| 3 | `Microsoft.ServiceBus` | application | ![Microsoft.ServiceBus](docs/coverage/bars/Microsoft.ServiceBus.svg) | 69.9% | 0.0% | 30.1% | ~37.2% |
+| 3 | `Microsoft.EventHub` | application | ![Microsoft.EventHub](docs/coverage/bars/Microsoft.EventHub.svg) | 49.5% | 0.0% | 50.5% | ~17.6% |
+| 3 | `Microsoft.EventGrid` | application | ![Microsoft.EventGrid](docs/coverage/bars/Microsoft.EventGrid.svg) | 26.7% | 0.0% | 73.3% | ~13.3% |
+| 3 | `Microsoft.ApiManagement` | application | ![Microsoft.ApiManagement](docs/coverage/bars/Microsoft.ApiManagement.svg) | 25.0% | 0.0% | 75.0% | ~43.7% |
+| 3 | `Microsoft.Cdn` | application | ![Microsoft.Cdn](docs/coverage/bars/Microsoft.Cdn.svg) | 52.4% | 0.0% | 47.6% | ~15.2% |
+| 3 | `Microsoft.DBforMySQL` | application | ![Microsoft.DBforMySQL](docs/coverage/bars/Microsoft.DBforMySQL.svg) | 50.5% | 0.0% | 49.5% | ~22.5% |
+| 3 | `Microsoft.ContainerInstance` | application | ![Microsoft.ContainerInstance](docs/coverage/bars/Microsoft.ContainerInstance.svg) | 31.0% | 0.0% | 69.0% | ~16.8% |
+| 3 | `Microsoft.SignalRService` | application | ![Microsoft.SignalRService](docs/coverage/bars/Microsoft.SignalRService.svg) | 40.7% | 0.0% | 59.3% | ~9.8% |
+| 3 | `Microsoft.Kusto` | application | ![Microsoft.Kusto](docs/coverage/bars/Microsoft.Kusto.svg) | 51.1% | 0.0% | 48.9% | ~34.0% |
+| 3 | `Microsoft.DataFactory` | application | ![Microsoft.DataFactory](docs/coverage/bars/Microsoft.DataFactory.svg) | 8.1% | 0.0% | 91.9% | ~5.9% |
+| 3 | `Microsoft.Synapse` | application | ![Microsoft.Synapse](docs/coverage/bars/Microsoft.Synapse.svg) | 21.5% | 0.0% | 78.5% | ~18.2% |
+| 3 | `Microsoft.MachineLearningServices` | application | ![Microsoft.MachineLearningServices](docs/coverage/bars/Microsoft.MachineLearningServices.svg) | 11.0% | 0.0% | 89.0% | ~0.0% |
+| 3 | `Microsoft.DataProtection` | application | ![Microsoft.DataProtection](docs/coverage/bars/Microsoft.DataProtection.svg) | 72.1% | 0.0% | 27.9% | ~5.8% |
+| 3 | `Microsoft.Batch` | application | ![Microsoft.Batch](docs/coverage/bars/Microsoft.Batch.svg) | 10.8% | 0.0% | 89.2% | ~36.2% |
+| 3 | `Microsoft.Devices` | application | ![Microsoft.Devices](docs/coverage/bars/Microsoft.Devices.svg) | 58.6% | 0.0% | 41.4% | ~0.0% |
+| 3 | `Microsoft.NotificationHubs` | application | ![Microsoft.NotificationHubs](docs/coverage/bars/Microsoft.NotificationHubs.svg) | 90.8% | 0.0% | 9.2% | ~13.3% |
+| 3 | `Microsoft.ServiceLinker` | application | ![Microsoft.ServiceLinker](docs/coverage/bars/Microsoft.ServiceLinker.svg) | 24.7% | 0.0% | 75.3% | ~0.0% |
+| 3 | `Microsoft.RedHatOpenShift` | application | ![Microsoft.RedHatOpenShift](docs/coverage/bars/Microsoft.RedHatOpenShift.svg) | 94.7% | 0.0% | 5.3% | ~14.9% |
+| 3 | `Microsoft.DatabaseWatcher` | other | ![Microsoft.DatabaseWatcher](docs/coverage/bars/Microsoft.DatabaseWatcher.svg) | 84.8% | 0.0% | 15.2% | ~0.0% |
+| 3 | `Microsoft.Portal` | other | ![Microsoft.Portal](docs/coverage/bars/Microsoft.Portal.svg) | 45.9% | 0.0% | 54.1% | ~5.4% |
+| 3 | `Microsoft.Communication` | other | ![Microsoft.Communication](docs/coverage/bars/Microsoft.Communication.svg) | 60.0% | 0.0% | 40.0% | ~28.0% |
+| 3 | `Microsoft.Search` | other | ![Microsoft.Search](docs/coverage/bars/Microsoft.Search.svg) | 39.4% | 0.0% | 60.6% | ~21.2% |
+| 3 | `Microsoft.Quota` | other | ![Microsoft.Quota](docs/coverage/bars/Microsoft.Quota.svg) | 75.0% | 0.0% | 25.0% | ~0.0% |
 
 </details>
 
