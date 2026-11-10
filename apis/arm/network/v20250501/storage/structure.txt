@@ -226,3 +226,7 @@ NetworkSecurityPerimetersResourceAssociation: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+augmentConversionForSubResource: Interface
+
+augmentConversionForSubResource_STATUS: Interface
+

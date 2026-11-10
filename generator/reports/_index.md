@@ -107,12 +107,14 @@ title: Supported Resources
 
 | Resource                                      | ARM Version | CRD Version | Supported From | Sample |
 |-----------------------------------------------|-------------|-------------|----------------|--------|
+| LocalNetworkGateway                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkSecurityPerimeter                      | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersLink                 | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersLoggingConfiguration | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersProfile              | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersProfilesAccessRule   | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersResourceAssociation  | 2025-05-01  | v20250501   | v0.1.0         | -      |
+| VirtualNetworkGatewayConnection               | 2026-03-01  | v20260301   | v0.1.0         | -      |
 
 ## OperationalInsights
 
