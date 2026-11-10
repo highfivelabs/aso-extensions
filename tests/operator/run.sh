@@ -424,6 +424,19 @@ spec:
   policyAssignmentReference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Authorization/policyAssignments/require-team-tag}
   complianceState: Compliant
   comments: tagged by the team's pipeline
+---
+apiVersion: authorization.azure.hfl.dev/v20201001
+kind: RoleEligibilityScheduleRequest
+metadata:
+  name: eligible-reader
+  namespace: $1
+  annotations: {serviceoperator.azure.com/reconcile-policy: detach-on-delete}
+spec:
+  owner: {group: resources.azure.com, kind: ResourceGroup, name: rg}
+  principalId: 11111111-2222-3333-4444-555555555555
+  roleDefinitionReference: {wellKnownName: Reader}
+  requestType: AdminAssign
+  scheduleInfo: {expiration: {type: AfterDuration, duration: P30D}}
 EOF
 }
 
@@ -512,6 +525,15 @@ wait_for 90 "team-a's PolicyAttestation Ready" ready policyattestations.policyin
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.PolicyInsights/attestations/require-team-tag 201" \
   || fail "the fake resource manager saw no attestation on team-a's resource group"
 pass "team-a PolicyAttestation Ready: at an ASO ResourceGroup, naming the assignment by ARM ID"
+wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
+pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
+[[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
+  || fail "the eligibility request's recorded azureName '${pim_name}' is not a GUID"
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/${pim_name} 201" \
+  || fail "the fake resource manager saw no eligibility request on team-a's resource group"
+logged fakearm "/providers/Microsoft.Authorization/roleDefinitions 200" \
+  || fail "the fake resource manager saw no listing of role definitions (the built-in role Reader by name)"
+pass "team-a RoleEligibilityScheduleRequest Ready: its name defaulted to the GUID ${pim_name} and recorded, the built-in role Reader resolved by name"
 wait_for 90 "team-a's ManagementLock Ready" ready managementlocks.authorization.azure.hfl.dev team-a keep-rg
 pass "team-a ManagementLock Ready"
 logged fakearm "sub=system:serviceaccount:team-a:aso-workload scope=https://fakearm.fake-cloud.svc/.default accepted=true" \
@@ -550,6 +572,8 @@ wait_for 90 "team-b's PolicyDefinition refused" bash -c "[[ \"\$(kubectl get pol
 pass "team-b PolicyDefinition refused: $(message policydefinitions.authorization.azure.hfl.dev team-b require-team-tag | cut -c1-120)..."
 wait_for 90 "team-b's PolicyAttestation refused" bash -c "[[ \"\$(kubectl get policyattestations.policyinsights.azure.hfl.dev -n team-b require-team-tag -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
 pass "team-b PolicyAttestation refused: $(message policyattestations.policyinsights.azure.hfl.dev team-b require-team-tag | cut -c1-120)..."
+wait_for 90 "team-b's RoleEligibilityScheduleRequest refused" bash -c "[[ \"\$(kubectl get roleeligibilityschedulerequests.authorization.azure.hfl.dev -n team-b eligible-reader -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
+pass "team-b RoleEligibilityScheduleRequest refused: $(message roleeligibilityschedulerequests.authorization.azure.hfl.dev team-b eligible-reader | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
@@ -615,6 +639,11 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.PolicyInsights/attestations/require-team-tag 200" \
   || fail "the fake resource manager saw no delete of the attestation"
 pass "the policy remediation and attestation are deleted in Resource Manager"
+kubectl -n team-a delete roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader --timeout=120s
+if logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/${pim_name}"; then
+  fail "the eligibility request was sent a DELETE, though it is detached (Azure refuses one)"
+fi
+pass "the eligibility request is detached, not deleted: Azure keeps a request, and undoes it with another"
 kubectl -n team-a delete policyassignments.authorization.azure.hfl.dev require-team-tag allowed-locations --timeout=120s
 kubectl -n team-a delete policydefinitions.authorization.azure.hfl.dev require-team-tag --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/policyAssignments/require-team-tag 200" \

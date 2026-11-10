@@ -9,3 +9,9 @@ PolicyExemptionExtension: Object (0 properties)
 
 PolicySetDefinitionExtension: Object (0 properties)
 
+RoleAssignmentScheduleRequestExtension: Object (0 properties)
+
+RoleEligibilityScheduleRequestExtension: Object (0 properties)
+
+RoleManagementPolicyAssignmentExtension: Object (0 properties)
+

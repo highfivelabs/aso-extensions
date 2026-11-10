@@ -10,6 +10,8 @@ import (
 	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
 	authorization_customizations "github.com/highfivelabs/aso-extensions/apis/arm/authorization/customizations"
+	authorization_v20201001 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20201001"
+	authorization_v20201001s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20201001/storage"
 	authorization_v20260101p "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260101preview"
 	authorization_v20260101ps "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260101preview/storage"
 	authorization_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701"
@@ -123,6 +125,45 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{
+		Obj: new(authorization_v20201001.RoleAssignmentScheduleRequest),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.principalIdFromConfig",
+				Func: indexAuthorizationRoleAssignmentScheduleRequestPrincipalIdFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.principalIdFromConfig",
+					},
+					&authorization_v20201001.RoleAssignmentScheduleRequestList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(authorization_v20201001.RoleEligibilityScheduleRequest),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.principalIdFromConfig",
+				Func: indexAuthorizationRoleEligibilityScheduleRequestPrincipalIdFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.principalIdFromConfig",
+					},
+					&authorization_v20201001.RoleEligibilityScheduleRequestList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(authorization_v20201001.RoleManagementPolicyAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260101p.PolicyExemption)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicyAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicyDefinition)})
@@ -248,6 +289,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsJavaComponent)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsManagedCertificate)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsStorage)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(authorization_v20201001.RoleAssignmentScheduleRequest)},
+		&registration.KnownType{Obj: new(authorization_v20201001.RoleEligibilityScheduleRequest)},
+		&registration.KnownType{Obj: new(authorization_v20201001.RoleManagementPolicyAssignment)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(authorization_v20201001s.RoleAssignmentScheduleRequest)},
+		&registration.KnownType{Obj: new(authorization_v20201001s.RoleEligibilityScheduleRequest)},
+		&registration.KnownType{Obj: new(authorization_v20201001s.RoleManagementPolicyAssignment)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20260101p.PolicyExemption)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20260101ps.PolicyExemption)})
 	result = append(
@@ -369,6 +420,8 @@ func createScheme() *runtime.Scheme {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = app_v20250101.AddToScheme(scheme)
 	_ = app_v20250101s.AddToScheme(scheme)
+	_ = authorization_v20201001.AddToScheme(scheme)
+	_ = authorization_v20201001s.AddToScheme(scheme)
 	_ = authorization_v20260101p.AddToScheme(scheme)
 	_ = authorization_v20260101ps.AddToScheme(scheme)
 	_ = authorization_v20260701.AddToScheme(scheme)
@@ -412,6 +465,9 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &authorization_customizations.PolicyDefinitionExtension{})
 	result = append(result, &authorization_customizations.PolicyExemptionExtension{})
 	result = append(result, &authorization_customizations.PolicySetDefinitionExtension{})
+	result = append(result, &authorization_customizations.RoleAssignmentScheduleRequestExtension{})
+	result = append(result, &authorization_customizations.RoleEligibilityScheduleRequestExtension{})
+	result = append(result, &authorization_customizations.RoleManagementPolicyAssignmentExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesCredentialSetExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesScopeMapExtension{})
@@ -514,6 +570,30 @@ func indexAppManagedEnvironmentsStorageAccountKey(rawObj client.Object) []string
 		return nil
 	}
 	return obj.Spec.Properties.AzureFile.AccountKey.Index()
+}
+
+// indexAuthorizationRoleAssignmentScheduleRequestPrincipalIdFromConfig an index function for authorization_v20201001.RoleAssignmentScheduleRequest .spec.principalIdFromConfig
+func indexAuthorizationRoleAssignmentScheduleRequestPrincipalIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*authorization_v20201001.RoleAssignmentScheduleRequest)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PrincipalIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.PrincipalIdFromConfig.Index()
+}
+
+// indexAuthorizationRoleEligibilityScheduleRequestPrincipalIdFromConfig an index function for authorization_v20201001.RoleEligibilityScheduleRequest .spec.principalIdFromConfig
+func indexAuthorizationRoleEligibilityScheduleRequestPrincipalIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*authorization_v20201001.RoleEligibilityScheduleRequest)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PrincipalIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.PrincipalIdFromConfig.Index()
 }
 
 // indexContainerregistryRegistriesWebhookCustomHeaders an index function for containerregistry_v20251101.RegistriesWebhook .spec.customHeaders
