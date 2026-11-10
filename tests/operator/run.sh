@@ -615,7 +615,7 @@ spec:
   networkManagerScopes:
     subscriptions: [/subscriptions/${SUB}]
     managementGroups: [/providers/Microsoft.Management/managementGroups/$1-platform]
-  networkManagerScopeAccesses: [Connectivity, SecurityAdmin]
+  networkManagerScopeAccesses: [Connectivity, SecurityAdmin, Routing]
 ---
 apiVersion: network.azure.hfl.dev/v20260301
 kind: NetworkManagerConnection
@@ -723,6 +723,38 @@ spec:
   protocol: Tcp
   direction: Inbound
   destinationPortRanges: ["443"]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersRoutingConfiguration
+metadata: {name: egress, namespace: $1}
+spec:
+  owner: {name: avnm}
+  routeTableUsageMode: ManagedOnly
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersRoutingRuleCollection
+metadata: {name: spokes, namespace: $1}
+spec:
+  owner: {name: egress}
+  appliesTo: [{networkGroupReference: {group: network.azure.hfl.dev, kind: NetworkManagersNetworkGroup, name: spokes}}]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersRoutingRule
+metadata: {name: default, namespace: $1}
+spec:
+  owner: {name: spokes}
+  destination: {type: AddressPrefix, destinationAddress: 0.0.0.0/0}
+  nextHop: {nextHopType: VirtualAppliance, nextHopAddress: 10.0.1.4}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersCommit
+metadata: {name: routing, namespace: $1}
+spec:
+  owner: {name: avnm}
+  properties:
+    commitType: Routing
+    targetLocations: [westus]
+    configurationReferences: [{group: network.azure.hfl.dev, kind: NetworkManagersRoutingConfiguration, name: egress}]
 ---
 apiVersion: management.azure.hfl.dev/v20230401
 kind: ManagementGroup
@@ -1039,6 +1071,18 @@ wait_for 90 "team-a's NetworkManagersSecurityUserRuleCollection Ready" ready net
 pass "team-a NetworkManagersSecurityUserRuleCollection Ready: for our network group by object"
 wait_for 90 "team-a's NetworkManagersSecurityUserRule Ready" ready networkmanagerssecurityuserrules.network.azure.hfl.dev team-a https
 pass "team-a NetworkManagersSecurityUserRule Ready: owned by our rule collection"
+wait_for 90 "team-a's NetworkManagersRoutingConfiguration Ready" ready networkmanagersroutingconfigurations.network.azure.hfl.dev team-a egress
+pass "team-a NetworkManagersRoutingConfiguration Ready: owned by our NetworkManager"
+wait_for 90 "team-a's NetworkManagersRoutingRuleCollection Ready" ready networkmanagersroutingrulecollections.network.azure.hfl.dev team-a spokes
+pass "team-a NetworkManagersRoutingRuleCollection Ready: for our network group by object"
+wait_for 90 "team-a's NetworkManagersRoutingRule Ready" ready networkmanagersroutingrules.network.azure.hfl.dev team-a default
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/routingConfigurations/egress/ruleCollections/spokes/rules/default 201" \
+  || fail "the fake resource manager saw no PUT of the routing rule"
+pass "team-a NetworkManagersRoutingRule Ready: a default route to a virtual appliance"
+wait_for 90 "team-a's NetworkManagersCommit Ready" ready networkmanagerscommits.network.azure.hfl.dev team-a routing
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/commits/routing 201" \
+  || fail "the fake resource manager saw no PUT of the commit"
+pass "team-a NetworkManagersCommit Ready: our routing configuration by object"
 wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
 pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
 [[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
@@ -1157,7 +1201,7 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er 200" \
   || fail "the fake resource manager saw no delete of the ExpressRoute gateway"
 pass "the ExpressRoute gateway and its connection are deleted in Resource Manager"
-for kind_name in networkmanagerssecurityuserrules/https networkmanagerssecurityuserrulecollections/app networkmanagerssecurityuserconfigurations/team networkmanagerssecurityadminrules/default networkmanagerssecurityadminrules/deny-rdp networkmanagerssecurityadminrulecollections/deny-mgmt networkmanagerssecurityadminconfigurations/baseline networkmanagersconnectivityconfigurations/hub-spoke; do
+for kind_name in networkmanagerscommits/routing networkmanagersroutingrules/default networkmanagersroutingrulecollections/spokes networkmanagersroutingconfigurations/egress networkmanagerssecurityuserrules/https networkmanagerssecurityuserrulecollections/app networkmanagerssecurityuserconfigurations/team networkmanagerssecurityadminrules/default networkmanagerssecurityadminrules/deny-rdp networkmanagerssecurityadminrulecollections/deny-mgmt networkmanagerssecurityadminconfigurations/baseline networkmanagersconnectivityconfigurations/hub-spoke; do
   kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
 done
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/securityAdminConfigurations/baseline/ruleCollections/deny-mgmt/rules/deny-rdp 200" \
@@ -1166,7 +1210,11 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
   || fail "the fake resource manager saw no delete of the security user configuration"
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/connectivityConfigurations/hub-spoke 200" \
   || fail "the fake resource manager saw no delete of the connectivity configuration"
-pass "the network manager's connectivity, security admin and security user configurations, rule collections and rules are deleted in Resource Manager"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/routingConfigurations/egress/ruleCollections/spokes/rules/default 200" \
+  || fail "the fake resource manager saw no delete of the routing rule"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/commits/routing 200" \
+  || fail "the fake resource manager saw no delete of the commit"
+pass "the network manager's commit, connectivity, routing, security admin and security user configurations, rule collections and rules are deleted in Resource Manager"
 for kind_name in networkmanagersnetworkgroupsstaticmembers/spoke networkmanagersnetworkgroups/spokes networkmanagersscopeconnections/partner networkmanagerconnections/avnm-mg networkmanagerconnections/avnm-sub networkmanagers/avnm; do
   kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
 done
