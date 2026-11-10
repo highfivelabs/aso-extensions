@@ -39,6 +39,7 @@ patches:
   - {file: patches/azure-service-operator/0005-generator-tenant-scope-children.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
   - {file: patches/azure-service-operator/0006-generator-multi-scope-extension.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
   - {file: patches/azure-service-operator/0007-generator-subresource-resources.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
+  - {file: patches/azure-service-operator/0009-generator-subscription-scope-extension.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
 
 # "What is copied, from where": here (our paths) and from (ASO's paths at
 # the pin, from the repository root, so under v2/; a directory ends in /).
