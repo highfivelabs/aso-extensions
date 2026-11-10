@@ -1,0 +1,791 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: vpnserverconfigurations.network.azure.hfl.dev
+spec:
+  group: network.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - network
+    kind: VpnServerConfiguration
+    listKind: VpnServerConfigurationList
+    plural: vpnserverconfigurations
+    singular: vpnserverconfiguration
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260301
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/virtualWan.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              aadAuthenticationParameters:
+                description: 'AadAuthenticationParameters: The set of aad vpn authentication
+                  parameters.'
+                properties:
+                  aadAudience:
+                    description: 'AadAudience: AAD Vpn authentication parameter AAD
+                      audience.'
+                    type: string
+                  aadIssuer:
+                    description: 'AadIssuer: AAD Vpn authentication parameter AAD
+                      issuer.'
+                    type: string
+                  aadTenant:
+                    description: 'AadTenant: AAD Vpn authentication parameter AAD
+                      tenant.'
+                    type: string
+                type: object
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              configurationPolicyGroups:
+                description: 'ConfigurationPolicyGroups: List of all VpnServerConfigurationPolicyGroups.'
+                items:
+                  description: VpnServerConfigurationPolicyGroup Resource.
+                  properties:
+                    id:
+                      description: 'Id: Resource ID.'
+                      type: string
+                    isDefault:
+                      description: 'IsDefault: Shows if this is a Default VpnServerConfigurationPolicyGroup
+                        or not.'
+                      type: boolean
+                    name:
+                      description: 'Name: Name of the resource.'
+                      type: string
+                    policyMembers:
+                      description: 'PolicyMembers: Multiple PolicyMembers for VpnServerConfigurationPolicyGroup.'
+                      items:
+                        description: VpnServerConfiguration PolicyGroup member
+                        properties:
+                          attributeType:
+                            description: 'AttributeType: The Vpn Policy member attribute
+                              type.'
+                            enum:
+                            - AADGroupId
+                            - CertificateGroupId
+                            - RadiusAzureGroupId
+                            type: string
+                          attributeValue:
+                            description: 'AttributeValue: The value of Attribute used
+                              for this VpnServerConfigurationPolicyGroupMember.'
+                            type: string
+                          name:
+                            description: 'Name: Name of the VpnServerConfigurationPolicyGroupMember.'
+                            type: string
+                        type: object
+                      type: array
+                    priority:
+                      description: 'Priority: Priority for VpnServerConfigurationPolicyGroup.'
+                      type: integer
+                  type: object
+                type: array
+              location:
+                description: 'Location: Resource location.'
+                type: string
+              name:
+                description: 'Name: The name of the VpnServerConfiguration that is
+                  unique within a resource group.'
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a resources.azure.com/ResourceGroup resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+              radiusClientRootCertificates:
+                description: 'RadiusClientRootCertificates: Radius client root certificate
+                  of VpnServerConfiguration.'
+                items:
+                  description: Properties of the Radius client root certificate of
+                    VpnServerConfiguration.
+                  properties:
+                    name:
+                      description: 'Name: The certificate name.'
+                      type: string
+                    thumbprint:
+                      description: 'Thumbprint: The Radius client root certificate
+                        thumbprint.'
+                      type: string
+                  type: object
+                type: array
+              radiusServerAddress:
+                description: |-
+                  RadiusServerAddress: The radius server address property of the VpnServerConfiguration resource for point to site client
+                  connection.
+                type: string
+              radiusServerRootCertificates:
+                description: 'RadiusServerRootCertificates: Radius Server root certificate
+                  of VpnServerConfiguration.'
+                items:
+                  description: Properties of Radius Server root certificate of VpnServerConfiguration.
+                  properties:
+                    name:
+                      description: 'Name: The certificate name.'
+                      type: string
+                    publicCertData:
+                      description: 'PublicCertData: The certificate public data.'
+                      type: string
+                  type: object
+                type: array
+              radiusServerSecret:
+                description: |-
+                  RadiusServerSecret: The radius secret property of the VpnServerConfiguration resource for point to site client
+                  connection. We will no longer return radiusServerSecret in VpnServerConfiguration Create/Update/Get/List/UpdateTags APIs
+                  response. Please use VpnServerConfiguration ListRadiusSecrets API to fetch radius server secrets.
+                properties:
+                  key:
+                    description: Key is the key in the Kubernetes secret being referenced
+                    type: string
+                  name:
+                    description: |-
+                      Name is the name of the Kubernetes secret being referenced.
+                      The secret must be in the same namespace as the resource
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              radiusServers:
+                description: 'RadiusServers: Multiple Radius Server configuration
+                  for VpnServerConfiguration.'
+                items:
+                  description: Radius Server Settings.
+                  properties:
+                    radiusServerAddress:
+                      description: 'RadiusServerAddress: The address of this radius
+                        server.'
+                      type: string
+                    radiusServerScore:
+                      description: 'RadiusServerScore: The initial score assigned
+                        to this radius server.'
+                      type: integer
+                    radiusServerSecret:
+                      description: |-
+                        RadiusServerSecret: The secret used for this radius server. We will no longer return radiusServerSecret in
+                        VirtualNetworkGateway Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGateway
+                        ListRadiusSecrets API to fetch radius server secrets.
+                      properties:
+                        key:
+                          description: Key is the key in the Kubernetes secret being
+                            referenced
+                          type: string
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes secret being referenced.
+                            The secret must be in the same namespace as the resource
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
+                  required:
+                  - radiusServerAddress
+                  type: object
+                type: array
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              vpnAuthenticationTypes:
+                description: 'VpnAuthenticationTypes: VPN authentication types for
+                  the VpnServerConfiguration.'
+                items:
+                  description: VPN authentication types enabled for the virtual network
+                    gateway.
+                  enum:
+                  - AAD
+                  - Certificate
+                  - Radius
+                  type: string
+                type: array
+              vpnClientIpsecPolicies:
+                description: 'VpnClientIpsecPolicies: VpnClientIpsecPolicies for VpnServerConfiguration.'
+                items:
+                  description: An IPSec Policy configuration for a virtual network
+                    gateway connection.
+                  properties:
+                    dhGroup:
+                      description: 'DhGroup: The DH Group used in IKE Phase 1 for
+                        initial SA.'
+                      enum:
+                      - DHGroup1
+                      - DHGroup14
+                      - DHGroup2
+                      - DHGroup2048
+                      - DHGroup24
+                      - ECP256
+                      - ECP384
+                      - None
+                      type: string
+                    ikeEncryption:
+                      description: 'IkeEncryption: The IKE encryption algorithm (IKE
+                        phase 2).'
+                      enum:
+                      - AES128
+                      - AES192
+                      - AES256
+                      - DES
+                      - DES3
+                      - GCMAES128
+                      - GCMAES256
+                      type: string
+                    ikeIntegrity:
+                      description: 'IkeIntegrity: The IKE integrity algorithm (IKE
+                        phase 2).'
+                      enum:
+                      - GCMAES128
+                      - GCMAES256
+                      - MD5
+                      - SHA1
+                      - SHA256
+                      - SHA384
+                      type: string
+                    ipsecEncryption:
+                      description: 'IpsecEncryption: The IPSec encryption algorithm
+                        (IKE phase 1).'
+                      enum:
+                      - AES128
+                      - AES192
+                      - AES256
+                      - DES
+                      - DES3
+                      - GCMAES128
+                      - GCMAES192
+                      - GCMAES256
+                      - None
+                      type: string
+                    ipsecIntegrity:
+                      description: 'IpsecIntegrity: The IPSec integrity algorithm
+                        (IKE phase 1).'
+                      enum:
+                      - GCMAES128
+                      - GCMAES192
+                      - GCMAES256
+                      - MD5
+                      - SHA1
+                      - SHA256
+                      type: string
+                    pfsGroup:
+                      description: 'PfsGroup: The Pfs Group used in IKE Phase 2 for
+                        new child SA.'
+                      enum:
+                      - ECP256
+                      - ECP384
+                      - None
+                      - PFS1
+                      - PFS14
+                      - PFS2
+                      - PFS2048
+                      - PFS24
+                      - PFSMM
+                      type: string
+                    saDataSizeKilobytes:
+                      description: |-
+                        SaDataSizeKilobytes: The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site
+                        to site VPN tunnel.
+                      type: integer
+                    saLifeTimeSeconds:
+                      description: |-
+                        SaLifeTimeSeconds: The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site
+                        to site VPN tunnel.
+                      type: integer
+                  required:
+                  - dhGroup
+                  - ikeEncryption
+                  - ikeIntegrity
+                  - ipsecEncryption
+                  - ipsecIntegrity
+                  - pfsGroup
+                  - saDataSizeKilobytes
+                  - saLifeTimeSeconds
+                  type: object
+                type: array
+              vpnClientRevokedCertificates:
+                description: 'VpnClientRevokedCertificates: VPN client revoked certificate
+                  of VpnServerConfiguration.'
+                items:
+                  description: Properties of the revoked VPN client certificate of
+                    VpnServerConfiguration.
+                  properties:
+                    name:
+                      description: 'Name: The certificate name.'
+                      type: string
+                    thumbprint:
+                      description: 'Thumbprint: The revoked VPN client certificate
+                        thumbprint.'
+                      type: string
+                  type: object
+                type: array
+              vpnClientRootCertificates:
+                description: 'VpnClientRootCertificates: VPN client root certificate
+                  of VpnServerConfiguration.'
+                items:
+                  description: Properties of VPN client root certificate of VpnServerConfiguration.
+                  properties:
+                    name:
+                      description: 'Name: The certificate name.'
+                      type: string
+                    publicCertData:
+                      description: 'PublicCertData: The certificate public data.'
+                      type: string
+                  type: object
+                type: array
+              vpnProtocols:
+                description: 'VpnProtocols: VPN protocols for the VpnServerConfiguration.'
+                items:
+                  description: VPN protocol enabled for the VpnServerConfiguration.
+                  enum:
+                  - IkeV2
+                  - OpenVPN
+                  type: string
+                type: array
+            required:
+            - owner
+            type: object
+          status:
+            description: VpnServerConfiguration Resource.
+            properties:
+              aadAuthenticationParameters:
+                description: 'AadAuthenticationParameters: The set of aad vpn authentication
+                  parameters.'
+                properties:
+                  aadAudience:
+                    description: 'AadAudience: AAD Vpn authentication parameter AAD
+                      audience.'
+                    type: string
+                  aadIssuer:
+                    description: 'AadIssuer: AAD Vpn authentication parameter AAD
+                      issuer.'
+                    type: string
+                  aadTenant:
+                    description: 'AadTenant: AAD Vpn authentication parameter AAD
+                      tenant.'
+                    type: string
+                type: object
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              configurationPolicyGroups:
+                description: 'ConfigurationPolicyGroups: List of all VpnServerConfigurationPolicyGroups.'
+                items:
+                  description: VpnServerConfigurationPolicyGroup Resource.
+                  properties:
+                    etag:
+                      description: 'Etag: A unique read-only string that changes whenever
+                        the resource is updated.'
+                      type: string
+                    id:
+                      description: 'Id: Resource ID.'
+                      type: string
+                    isDefault:
+                      description: 'IsDefault: Shows if this is a Default VpnServerConfigurationPolicyGroup
+                        or not.'
+                      type: boolean
+                    name:
+                      description: 'Name: Name of the resource.'
+                      type: string
+                    p2SConnectionConfigurations:
+                      description: 'P2SConnectionConfigurations: List of references
+                        to P2SConnectionConfigurations.'
+                      items:
+                        description: Reference to another subresource.
+                        properties:
+                          id:
+                            description: 'Id: Resource ID.'
+                            type: string
+                        type: object
+                      type: array
+                    policyMembers:
+                      description: 'PolicyMembers: Multiple PolicyMembers for VpnServerConfigurationPolicyGroup.'
+                      items:
+                        description: VpnServerConfiguration PolicyGroup member
+                        properties:
+                          attributeType:
+                            description: 'AttributeType: The Vpn Policy member attribute
+                              type.'
+                            type: string
+                          attributeValue:
+                            description: 'AttributeValue: The value of Attribute used
+                              for this VpnServerConfigurationPolicyGroupMember.'
+                            type: string
+                          name:
+                            description: 'Name: Name of the VpnServerConfigurationPolicyGroupMember.'
+                            type: string
+                        type: object
+                      type: array
+                    priority:
+                      description: 'Priority: Priority for VpnServerConfigurationPolicyGroup.'
+                      type: integer
+                    provisioningState:
+                      description: 'ProvisioningState: The provisioning state of the
+                        VpnServerConfigurationPolicyGroup resource.'
+                      type: string
+                    type:
+                      description: 'Type: Resource type.'
+                      type: string
+                  type: object
+                type: array
+              etag:
+                description: 'Etag: A unique read-only string that changes whenever
+                  the resource is updated.'
+                type: string
+              id:
+                description: 'Id: Resource ID.'
+                type: string
+              location:
+                description: 'Location: Resource location.'
+                type: string
+              name:
+                description: 'Name: Resource name.'
+                type: string
+              properties_etag:
+                description: 'PropertiesEtag: A unique read-only string that changes
+                  whenever the resource is updated.'
+                type: string
+              properties_name:
+                description: 'PropertiesName: The name of the VpnServerConfiguration
+                  that is unique within a resource group.'
+                type: string
+              provisioningState:
+                description: |-
+                  ProvisioningState: The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating',
+                  'Deleting', and 'Failed'.
+                type: string
+              radiusClientRootCertificates:
+                description: 'RadiusClientRootCertificates: Radius client root certificate
+                  of VpnServerConfiguration.'
+                items:
+                  description: Properties of the Radius client root certificate of
+                    VpnServerConfiguration.
+                  properties:
+                    name:
+                      description: 'Name: The certificate name.'
+                      type: string
+                    thumbprint:
+                      description: 'Thumbprint: The Radius client root certificate
+                        thumbprint.'
+                      type: string
+                  type: object
+                type: array
+              radiusServerAddress:
+                description: |-
+                  RadiusServerAddress: The radius server address property of the VpnServerConfiguration resource for point to site client
+                  connection.
+                type: string
+              radiusServerRootCertificates:
+                description: 'RadiusServerRootCertificates: Radius Server root certificate
+                  of VpnServerConfiguration.'
+                items:
+                  description: Properties of Radius Server root certificate of VpnServerConfiguration.
+                  properties:
+                    name:
+                      description: 'Name: The certificate name.'
+                      type: string
+                    publicCertData:
+                      description: 'PublicCertData: The certificate public data.'
+                      type: string
+                  type: object
+                type: array
+              radiusServers:
+                description: 'RadiusServers: Multiple Radius Server configuration
+                  for VpnServerConfiguration.'
+                items:
+                  description: Radius Server Settings.
+                  properties:
+                    radiusServerAddress:
+                      description: 'RadiusServerAddress: The address of this radius
+                        server.'
+                      type: string
+                    radiusServerScore:
+                      description: 'RadiusServerScore: The initial score assigned
+                        to this radius server.'
+                      type: integer
+                  type: object
+                type: array
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              type:
+                description: 'Type: Resource type.'
+                type: string
+              vpnAuthenticationTypes:
+                description: 'VpnAuthenticationTypes: VPN authentication types for
+                  the VpnServerConfiguration.'
+                items:
+                  description: VPN authentication types enabled for the virtual network
+                    gateway.
+                  type: string
+                type: array
+              vpnClientIpsecPolicies:
+                description: 'VpnClientIpsecPolicies: VpnClientIpsecPolicies for VpnServerConfiguration.'
+                items:
+                  description: An IPSec Policy configuration for a virtual network
+                    gateway connection.
+                  properties:
+                    dhGroup:
+                      description: 'DhGroup: The DH Group used in IKE Phase 1 for
+                        initial SA.'
+                      type: string
+                    ikeEncryption:
+                      description: 'IkeEncryption: The IKE encryption algorithm (IKE
+                        phase 2).'
+                      type: string
+                    ikeIntegrity:
+                      description: 'IkeIntegrity: The IKE integrity algorithm (IKE
+                        phase 2).'
+                      type: string
+                    ipsecEncryption:
+                      description: 'IpsecEncryption: The IPSec encryption algorithm
+                        (IKE phase 1).'
+                      type: string
+                    ipsecIntegrity:
+                      description: 'IpsecIntegrity: The IPSec integrity algorithm
+                        (IKE phase 1).'
+                      type: string
+                    pfsGroup:
+                      description: 'PfsGroup: The Pfs Group used in IKE Phase 2 for
+                        new child SA.'
+                      type: string
+                    saDataSizeKilobytes:
+                      description: |-
+                        SaDataSizeKilobytes: The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site
+                        to site VPN tunnel.
+                      type: integer
+                    saLifeTimeSeconds:
+                      description: |-
+                        SaLifeTimeSeconds: The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site
+                        to site VPN tunnel.
+                      type: integer
+                  type: object
+                type: array
+              vpnClientRevokedCertificates:
+                description: 'VpnClientRevokedCertificates: VPN client revoked certificate
+                  of VpnServerConfiguration.'
+                items:
+                  description: Properties of the revoked VPN client certificate of
+                    VpnServerConfiguration.
+                  properties:
+                    name:
+                      description: 'Name: The certificate name.'
+                      type: string
+                    thumbprint:
+                      description: 'Thumbprint: The revoked VPN client certificate
+                        thumbprint.'
+                      type: string
+                  type: object
+                type: array
+              vpnClientRootCertificates:
+                description: 'VpnClientRootCertificates: VPN client root certificate
+                  of VpnServerConfiguration.'
+                items:
+                  description: Properties of VPN client root certificate of VpnServerConfiguration.
+                  properties:
+                    name:
+                      description: 'Name: The certificate name.'
+                      type: string
+                    publicCertData:
+                      description: 'PublicCertData: The certificate public data.'
+                      type: string
+                  type: object
+                type: array
+              vpnProtocols:
+                description: 'VpnProtocols: VPN protocols for the VpnServerConfiguration.'
+                items:
+                  description: VPN protocol enabled for the VpnServerConfiguration.
+                  type: string
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

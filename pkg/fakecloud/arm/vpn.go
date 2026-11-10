@@ -88,15 +88,14 @@ func (a *ARM) checkVPN(id string, body map[string]any) (status int, code, messag
 	return 0, "", ""
 }
 
-// SharedKey returns the shared key of a connection that is there, as
-// Azure's GetSharedKey does, for tests.
+// SharedKey returns a key kept aside (a connection's shared key, a VPN link
+// connection's, a VPN server configuration's RADIUS secret under its ID and
+// "/radiusServerSecret") while its resource is there, as Azure's
+// GetSharedKey does, for tests.
 func (a *ARM) SharedKey(id string) (string, bool) {
 	a.mu.Lock()
 	defer a.mu.Unlock()
 	key := strings.ToLower(id)
-	if _, ok := a.resources[key]; !ok {
-		return "", false
-	}
 	k, ok := a.sharedKeys[key]
 	return k, ok
 }

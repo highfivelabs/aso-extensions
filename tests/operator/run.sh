@@ -185,6 +185,7 @@ team() {
   kubectl -n "$1" create secret generic app-config --from-literal=url=postgres://app --dry-run=client -o yaml | kubectl apply -f -
   kubectl -n "$1" create secret generic vpn-psk --from-literal=key="$1-shared-key" --dry-run=client -o yaml | kubectl apply -f -
   kubectl -n "$1" create secret generic er-bgp --from-literal=md5="$1-bgp-key" --dry-run=client -o yaml | kubectl apply -f -
+  kubectl -n "$1" create secret generic vwan-vpn --from-literal=site="$1-site-key" --from-literal=link="$1-link-key" --from-literal=radius="$1-radius" --dry-run=client -o yaml | kubectl apply -f -
   kubectl -n "$1" create secret tls app-tls --cert "${OUT}/fixtures/app-tls.crt" --key "${OUT}/fixtures/app-tls.key" --dry-run=client -o yaml | kubectl apply -f -
   # The ASO objects, with the status ASO would write when it provisioned them
   # (and, on the ResourceGroup, the ARM ID annotation ASO writes).
@@ -509,6 +510,74 @@ spec:
   owner: {name: vhub}
   subnet: {reference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/virtualNetworks/$1-spoke/subnets/RouteServerSubnet}}
 ---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VpnSite
+metadata: {name: branch, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  virtualWan: {reference: {group: network.azure.hfl.dev, kind: VirtualWan, name: wan}}
+  siteKey: {name: vwan-vpn, key: site}
+  vpnSiteLinks:
+  - name: isp1
+    ipAddress: 203.0.113.10
+    linkProperties: {linkProviderName: ISP1, linkSpeedInMbps: 100}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VpnGateway
+metadata: {name: s2s, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  vpnGatewayScaleUnit: 1
+  virtualHub: {reference: {group: network.azure.hfl.dev, kind: VirtualHub, name: vhub}}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VpnGatewaysNatRule
+metadata: {name: egress, namespace: $1}
+spec:
+  owner: {name: s2s}
+  type: Static
+  mode: EgressSnat
+  internalMappings: [{addressSpace: 10.100.0.0/24}]
+  externalMappings: [{addressSpace: 100.64.0.0/24}]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VpnGatewaysVpnConnection
+metadata: {name: branch, namespace: $1}
+spec:
+  owner: {name: s2s}
+  remoteVpnSite: {reference: {group: network.azure.hfl.dev, kind: VpnSite, name: branch}}
+  vpnLinkConnections:
+  - name: isp1
+    vpnSiteLink: {reference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/vpnSites/branch/vpnSiteLinks/isp1}}
+    sharedKey: {name: vwan-vpn, key: link}
+    egressNatRules: [{reference: {group: network.azure.hfl.dev, kind: VpnGatewaysNatRule, name: egress}}]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: VpnServerConfiguration
+metadata: {name: users, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  vpnProtocols: [OpenVPN]
+  vpnAuthenticationTypes: [Radius]
+  radiusServerAddress: 10.100.0.10
+  radiusServerSecret: {name: vwan-vpn, key: radius}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: P2sVpnGateway
+metadata: {name: users, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  vpnGatewayScaleUnit: 1
+  virtualHub: {reference: {group: network.azure.hfl.dev, kind: VirtualHub, name: vhub}}
+  vpnServerConfiguration: {reference: {group: network.azure.hfl.dev, kind: VpnServerConfiguration, name: users}}
+  p2SConnectionConfigurations:
+  - name: clients
+    vpnClientAddressPool: {addressPrefixes: [172.16.0.0/24]}
+---
 apiVersion: management.azure.hfl.dev/v20230401
 kind: ManagementGroup
 metadata: {name: platform, namespace: $1}
@@ -762,6 +831,22 @@ wait_for 90 "team-a's VirtualHubsBgpConnection Ready" ready virtualhubsbgpconnec
 pass "team-a VirtualHubsBgpConnection Ready: over our hub connection by object"
 wait_for 90 "team-a's VirtualHubsIpConfiguration Ready" ready virtualhubsipconfigurations.network.azure.hfl.dev team-a ipconfig1
 pass "team-a VirtualHubsIpConfiguration Ready: in a subnet by ARM ID"
+wait_for 90 "team-a's VpnSite Ready" ready vpnsites.network.azure.hfl.dev team-a branch
+pass "team-a VpnSite Ready: in our VirtualWan by object, its key from a Secret"
+wait_for 90 "team-a's VpnGateway Ready" ready vpngateways.network.azure.hfl.dev team-a s2s
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/vpnGateways/s2s 201" \
+  || fail "the fake resource manager saw no VPN gateway created in team-a's resource group"
+pass "team-a VpnGateway Ready: in our VirtualHub by object"
+wait_for 90 "team-a's VpnGatewaysNatRule Ready" ready vpngatewaysnatrules.network.azure.hfl.dev team-a egress
+pass "team-a VpnGatewaysNatRule Ready: owned by our VPN gateway"
+wait_for 90 "team-a's VpnGatewaysVpnConnection Ready" ready vpngatewaysvpnconnections.network.azure.hfl.dev team-a branch
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/vpnGateways/s2s/vpnConnections/branch 201" \
+  || fail "the fake resource manager saw no connection on team-a's VPN gateway"
+pass "team-a VpnGatewaysVpnConnection Ready: to our VpnSite by object, the link's key from a Secret, our NAT rule by object"
+wait_for 90 "team-a's VpnServerConfiguration Ready" ready vpnserverconfigurations.network.azure.hfl.dev team-a users
+pass "team-a VpnServerConfiguration Ready: RADIUS, its secret from a Secret"
+wait_for 90 "team-a's P2sVpnGateway Ready" ready p2svpngateways.network.azure.hfl.dev team-a users
+pass "team-a P2sVpnGateway Ready: in our VirtualHub, with our VpnServerConfiguration, by object"
 wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
 pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
 [[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
@@ -875,6 +960,16 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er 200" \
   || fail "the fake resource manager saw no delete of the ExpressRoute gateway"
 pass "the ExpressRoute gateway and its connection are deleted in Resource Manager"
+for kind_name in p2svpngateways/users vpnserverconfigurations/users vpngatewaysvpnconnections/branch vpngatewaysnatrules/egress vpngateways/s2s vpnsites/branch; do
+  kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
+done
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/vpnGateways/s2s/vpnConnections/branch 200" \
+  || fail "the fake resource manager saw no delete of the VPN connection"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/vpnGateways/s2s 200" \
+  || fail "the fake resource manager saw no delete of the VPN gateway"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/p2svpnGateways/users 200" \
+  || fail "the fake resource manager saw no delete of the point-to-site gateway"
+pass "the VPN gateways, their connection and NAT rule, the VPN site and the server configuration are deleted in Resource Manager"
 for kind_name in virtualhubsipconfigurations/ipconfig1 virtualhubsbgpconnections/nva virtualhubsroutingintents/intent virtualhubsroutetables/v2 virtualhubshubvirtualnetworkconnections/spoke virtualhubshubroutetables/spokes virtualhubs/vhub virtualwans/wan; do
   kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
 done

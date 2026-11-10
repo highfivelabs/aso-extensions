@@ -711,6 +711,149 @@ LocalNetworkGateway: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+P2sVpnGateway: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── CustomDnsServers: string[]
+│   ├── IsRoutingPreferenceInternet: *bool
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── P2SConnectionConfigurations: Object (6 properties)[]
+│   │   ├── ConfigurationPolicyGroupAssociations: Object (1 property)[]
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── EnableInternetSecurity: *bool
+│   │   ├── Id: *string
+│   │   ├── Name: *string
+│   │   ├── RoutingConfiguration: *Object (5 properties)
+│   │   │   ├── AssociatedRouteTable: *Object (1 property)
+│   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   ├── InboundRouteMap: *Object (1 property)
+│   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   ├── OutboundRouteMap: *Object (1 property)
+│   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   ├── PropagatedRouteTables: *Object (2 properties)
+│   │   │   │   ├── Ids: Object (1 property)[]
+│   │   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   │   └── Labels: string[]
+│   │   │   └── VnetRoutes: *Object (2 properties)
+│   │   │       ├── StaticRoutes: Object (3 properties)[]
+│   │   │       │   ├── AddressPrefixes: string[]
+│   │   │       │   ├── Name: *string
+│   │   │       │   └── NextHopIpAddress: *string
+│   │   │       └── StaticRoutesConfig: *Object (2 properties)
+│   │   │           ├── PropagateStaticRoutes: *bool
+│   │   │           └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+│   │   │               ├── "Contains"
+│   │   │               └── "Equal"
+│   │   └── VpnClientAddressPool: *Object (2 properties)
+│   │       ├── AddressPrefixes: string[]
+│   │       └── IpamPoolPrefixAllocations: Object (2 properties)[]
+│   │           ├── NumberOfIpAddresses: *string
+│   │           └── Reference: *genruntime.ResourceReference
+│   ├── Tags: map[string]string
+│   ├── VirtualHub: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── VpnGatewayScaleUnit: *int
+│   └── VpnServerConfiguration: *Object (1 property)
+│       └── Reference: *genruntime.ResourceReference
+└── Status: Object (15 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CustomDnsServers: string[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── IsRoutingPreferenceInternet: *bool
+    ├── Location: *string
+    ├── Name: *string
+    ├── P2SConnectionConfigurations: Object (9 properties)[]
+    │   ├── ConfigurationPolicyGroupAssociations: Object (1 property)[]
+    │   │   └── Id: *string
+    │   ├── EnableInternetSecurity: *bool
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── PreviousConfigurationPolicyGroupAssociations: Object (9 properties)[]
+    │   │   ├── Etag: *string
+    │   │   ├── Id: *string
+    │   │   ├── IsDefault: *bool
+    │   │   ├── Name: *string
+    │   │   ├── P2SConnectionConfigurations: Object (1 property)[]
+    │   │   │   └── Id: *string
+    │   │   ├── PolicyMembers: Object (3 properties)[]
+    │   │   │   ├── AttributeType: *Enum (3 values)
+    │   │   │   │   ├── "AADGroupId"
+    │   │   │   │   ├── "CertificateGroupId"
+    │   │   │   │   └── "RadiusAzureGroupId"
+    │   │   │   ├── AttributeValue: *string
+    │   │   │   └── Name: *string
+    │   │   ├── Priority: *int
+    │   │   ├── ProvisioningState: *Enum (6 values)
+    │   │   │   ├── "Canceled"
+    │   │   │   ├── "Creating"
+    │   │   │   ├── "Deleting"
+    │   │   │   ├── "Failed"
+    │   │   │   ├── "Succeeded"
+    │   │   │   └── "Updating"
+    │   │   └── Type: *string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   ├── RoutingConfiguration: *Object (5 properties)
+    │   │   ├── AssociatedRouteTable: *Object (1 property)
+    │   │   │   └── Id: *string
+    │   │   ├── InboundRouteMap: *Object (1 property)
+    │   │   │   └── Id: *string
+    │   │   ├── OutboundRouteMap: *Object (1 property)
+    │   │   │   └── Id: *string
+    │   │   ├── PropagatedRouteTables: *Object (2 properties)
+    │   │   │   ├── Ids: Object (1 property)[]
+    │   │   │   │   └── Id: *string
+    │   │   │   └── Labels: string[]
+    │   │   └── VnetRoutes: *Object (3 properties)
+    │   │       ├── BgpConnections: Object (1 property)[]
+    │   │       │   └── Id: *string
+    │   │       ├── StaticRoutes: Object (3 properties)[]
+    │   │       │   ├── AddressPrefixes: string[]
+    │   │       │   ├── Name: *string
+    │   │       │   └── NextHopIpAddress: *string
+    │   │       └── StaticRoutesConfig: *Object (2 properties)
+    │   │           ├── PropagateStaticRoutes: *bool
+    │   │           └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+    │   │               ├── "Contains"
+    │   │               └── "Equal"
+    │   └── VpnClientAddressPool: *Object (2 properties)
+    │       ├── AddressPrefixes: string[]
+    │       └── IpamPoolPrefixAllocations: Object (3 properties)[]
+    │           ├── AllocatedAddressPrefixes: string[]
+    │           ├── Id: *string
+    │           └── NumberOfIpAddresses: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualHub: *Object (1 property)
+    │   └── Id: *string
+    ├── VpnClientConnectionHealth: *Object (4 properties)
+    │   ├── AllocatedIpAddresses: string[]
+    │   ├── TotalEgressBytesTransferred: *int
+    │   ├── TotalIngressBytesTransferred: *int
+    │   └── VpnClientConnectionsCount: *int
+    ├── VpnGatewayScaleUnit: *int
+    └── VpnServerConfiguration: *Object (1 property)
+        └── Id: *string
+
 VirtualHub: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (23 properties)
@@ -1469,4 +1612,1043 @@ VirtualWan: Resource
     │   └── Id: *string
     └── VpnSites: Object (1 property)[]
         └── Id: *string
+
+VpnGateway: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── BgpSettings: *Object (4 properties)
+│   │   ├── Asn: *uint32
+│   │   ├── BgpPeeringAddress: *string
+│   │   ├── BgpPeeringAddresses: Object (2 properties)[]
+│   │   │   ├── CustomBgpIpAddresses: string[]
+│   │   │   └── IpconfigurationId: *string
+│   │   └── PeerWeight: *int
+│   ├── EnableBgpRouteTranslationForNat: *bool
+│   ├── IsRoutingPreferenceInternet: *bool
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Tags: map[string]string
+│   ├── VirtualHub: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── VpnGatewayScaleUnit: *int
+└── Status: Object (16 properties)
+    ├── BgpSettings: *Object (4 properties)
+    │   ├── Asn: *uint32
+    │   ├── BgpPeeringAddress: *string
+    │   ├── BgpPeeringAddresses: Object (4 properties)[]
+    │   │   ├── CustomBgpIpAddresses: string[]
+    │   │   ├── DefaultBgpIpAddresses: string[]
+    │   │   ├── IpconfigurationId: *string
+    │   │   └── TunnelIpAddresses: string[]
+    │   └── PeerWeight: *int
+    ├── Conditions: conditions.Condition[]
+    ├── Connections: Object (21 properties)[]
+    │   ├── ConnectionBandwidth: *int
+    │   ├── ConnectionStatus: *Enum (4 values)
+    │   │   ├── "Connected"
+    │   │   ├── "Connecting"
+    │   │   ├── "NotConnected"
+    │   │   └── "Unknown"
+    │   ├── DpdTimeoutSeconds: *int
+    │   ├── EgressBytesTransferred: *int
+    │   ├── EnableBgp: *bool
+    │   ├── EnableInternetSecurity: *bool
+    │   ├── EnableRateLimiting: *bool
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── IngressBytesTransferred: *int
+    │   ├── IpsecPolicies: Object (8 properties)[]
+    │   │   ├── DhGroup: *Enum (8 values)
+    │   │   │   ├── "DHGroup1"
+    │   │   │   ├── "DHGroup14"
+    │   │   │   ├── "DHGroup2"
+    │   │   │   ├── "DHGroup2048"
+    │   │   │   ├── "DHGroup24"
+    │   │   │   ├── "ECP256"
+    │   │   │   ├── "ECP384"
+    │   │   │   └── "None"
+    │   │   ├── IkeEncryption: *Enum (7 values)
+    │   │   │   ├── "AES128"
+    │   │   │   ├── "AES192"
+    │   │   │   ├── "AES256"
+    │   │   │   ├── "DES"
+    │   │   │   ├── "DES3"
+    │   │   │   ├── "GCMAES128"
+    │   │   │   └── "GCMAES256"
+    │   │   ├── IkeIntegrity: *Enum (6 values)
+    │   │   │   ├── "GCMAES128"
+    │   │   │   ├── "GCMAES256"
+    │   │   │   ├── "MD5"
+    │   │   │   ├── "SHA1"
+    │   │   │   ├── "SHA256"
+    │   │   │   └── "SHA384"
+    │   │   ├── IpsecEncryption: *Enum (9 values)
+    │   │   │   ├── "AES128"
+    │   │   │   ├── "AES192"
+    │   │   │   ├── "AES256"
+    │   │   │   ├── "DES"
+    │   │   │   ├── "DES3"
+    │   │   │   ├── "GCMAES128"
+    │   │   │   ├── "GCMAES192"
+    │   │   │   ├── "GCMAES256"
+    │   │   │   └── "None"
+    │   │   ├── IpsecIntegrity: *Enum (6 values)
+    │   │   │   ├── "GCMAES128"
+    │   │   │   ├── "GCMAES192"
+    │   │   │   ├── "GCMAES256"
+    │   │   │   ├── "MD5"
+    │   │   │   ├── "SHA1"
+    │   │   │   └── "SHA256"
+    │   │   ├── PfsGroup: *Enum (9 values)
+    │   │   │   ├── "ECP256"
+    │   │   │   ├── "ECP384"
+    │   │   │   ├── "None"
+    │   │   │   ├── "PFS1"
+    │   │   │   ├── "PFS14"
+    │   │   │   ├── "PFS2"
+    │   │   │   ├── "PFS2048"
+    │   │   │   ├── "PFS24"
+    │   │   │   └── "PFSMM"
+    │   │   ├── SaDataSizeKilobytes: *int
+    │   │   └── SaLifeTimeSeconds: *int
+    │   ├── Name: *string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   ├── RemoteVpnSite: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── RoutingConfiguration: *Object (5 properties)
+    │   │   ├── AssociatedRouteTable: *Object (1 property)
+    │   │   │   └── Id: *string
+    │   │   ├── InboundRouteMap: *Object (1 property)
+    │   │   │   └── Id: *string
+    │   │   ├── OutboundRouteMap: *Object (1 property)
+    │   │   │   └── Id: *string
+    │   │   ├── PropagatedRouteTables: *Object (2 properties)
+    │   │   │   ├── Ids: Object (1 property)[]
+    │   │   │   │   └── Id: *string
+    │   │   │   └── Labels: string[]
+    │   │   └── VnetRoutes: *Object (3 properties)
+    │   │       ├── BgpConnections: Object (1 property)[]
+    │   │       │   └── Id: *string
+    │   │       ├── StaticRoutes: Object (3 properties)[]
+    │   │       │   ├── AddressPrefixes: string[]
+    │   │       │   ├── Name: *string
+    │   │       │   └── NextHopIpAddress: *string
+    │   │       └── StaticRoutesConfig: *Object (2 properties)
+    │   │           ├── PropagateStaticRoutes: *bool
+    │   │           └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+    │   │               ├── "Contains"
+    │   │               └── "Equal"
+    │   ├── RoutingWeight: *int
+    │   ├── TrafficSelectorPolicies: Object (2 properties)[]
+    │   │   ├── LocalAddressRanges: string[]
+    │   │   └── RemoteAddressRanges: string[]
+    │   ├── UseLocalAzureIpAddress: *bool
+    │   ├── UsePolicyBasedTrafficSelectors: *bool
+    │   ├── VpnConnectionProtocolType: *Enum (2 values)
+    │   │   ├── "IKEv1"
+    │   │   └── "IKEv2"
+    │   └── VpnLinkConnections: Object (22 properties)[]
+    │       ├── ConnectionBandwidth: *int
+    │       ├── ConnectionStatus: *Enum (4 values)
+    │       │   ├── "Connected"
+    │       │   ├── "Connecting"
+    │       │   ├── "NotConnected"
+    │       │   └── "Unknown"
+    │       ├── DpdTimeoutSeconds: *int
+    │       ├── EgressBytesTransferred: *int
+    │       ├── EgressNatRules: Object (1 property)[]
+    │       │   └── Id: *string
+    │       ├── EnableBgp: *bool
+    │       ├── EnableRateLimiting: *bool
+    │       ├── Etag: *string
+    │       ├── Id: *string
+    │       ├── IngressBytesTransferred: *int
+    │       ├── IngressNatRules: Object (1 property)[]
+    │       │   └── Id: *string
+    │       ├── IpsecPolicies: Object (8 properties)[]
+    │       │   ├── DhGroup: *Enum (8 values)
+    │       │   │   ├── "DHGroup1"
+    │       │   │   ├── "DHGroup14"
+    │       │   │   ├── "DHGroup2"
+    │       │   │   ├── "DHGroup2048"
+    │       │   │   ├── "DHGroup24"
+    │       │   │   ├── "ECP256"
+    │       │   │   ├── "ECP384"
+    │       │   │   └── "None"
+    │       │   ├── IkeEncryption: *Enum (7 values)
+    │       │   │   ├── "AES128"
+    │       │   │   ├── "AES192"
+    │       │   │   ├── "AES256"
+    │       │   │   ├── "DES"
+    │       │   │   ├── "DES3"
+    │       │   │   ├── "GCMAES128"
+    │       │   │   └── "GCMAES256"
+    │       │   ├── IkeIntegrity: *Enum (6 values)
+    │       │   │   ├── "GCMAES128"
+    │       │   │   ├── "GCMAES256"
+    │       │   │   ├── "MD5"
+    │       │   │   ├── "SHA1"
+    │       │   │   ├── "SHA256"
+    │       │   │   └── "SHA384"
+    │       │   ├── IpsecEncryption: *Enum (9 values)
+    │       │   │   ├── "AES128"
+    │       │   │   ├── "AES192"
+    │       │   │   ├── "AES256"
+    │       │   │   ├── "DES"
+    │       │   │   ├── "DES3"
+    │       │   │   ├── "GCMAES128"
+    │       │   │   ├── "GCMAES192"
+    │       │   │   ├── "GCMAES256"
+    │       │   │   └── "None"
+    │       │   ├── IpsecIntegrity: *Enum (6 values)
+    │       │   │   ├── "GCMAES128"
+    │       │   │   ├── "GCMAES192"
+    │       │   │   ├── "GCMAES256"
+    │       │   │   ├── "MD5"
+    │       │   │   ├── "SHA1"
+    │       │   │   └── "SHA256"
+    │       │   ├── PfsGroup: *Enum (9 values)
+    │       │   │   ├── "ECP256"
+    │       │   │   ├── "ECP384"
+    │       │   │   ├── "None"
+    │       │   │   ├── "PFS1"
+    │       │   │   ├── "PFS14"
+    │       │   │   ├── "PFS2"
+    │       │   │   ├── "PFS2048"
+    │       │   │   ├── "PFS24"
+    │       │   │   └── "PFSMM"
+    │       │   ├── SaDataSizeKilobytes: *int
+    │       │   └── SaLifeTimeSeconds: *int
+    │       ├── Name: *string
+    │       ├── ProvisioningState: *Enum (6 values)
+    │       │   ├── "Canceled"
+    │       │   ├── "Creating"
+    │       │   ├── "Deleting"
+    │       │   ├── "Failed"
+    │       │   ├── "Succeeded"
+    │       │   └── "Updating"
+    │       ├── RoutingWeight: *int
+    │       ├── Type: *string
+    │       ├── UseLocalAzureIpAddress: *bool
+    │       ├── UsePolicyBasedTrafficSelectors: *bool
+    │       ├── VpnConnectionProtocolType: *Enum (2 values)
+    │       │   ├── "IKEv1"
+    │       │   └── "IKEv2"
+    │       ├── VpnGatewayCustomBgpAddresses: Object (2 properties)[]
+    │       │   ├── CustomBgpIpAddress: *string
+    │       │   └── IpConfigurationId: *string
+    │       ├── VpnLinkConnectionMode: *Enum (3 values)
+    │       │   ├── "Default"
+    │       │   ├── "InitiatorOnly"
+    │       │   └── "ResponderOnly"
+    │       └── VpnSiteLink: *Object (1 property)
+    │           └── Id: *string
+    ├── EnableBgpRouteTranslationForNat: *bool
+    ├── Etag: *string
+    ├── Id: *string
+    ├── IpConfigurations: Object (3 properties)[]
+    │   ├── Id: *string
+    │   ├── PrivateIpAddress: *string
+    │   └── PublicIpAddress: *string
+    ├── IsRoutingPreferenceInternet: *bool
+    ├── Location: *string
+    ├── Name: *string
+    ├── NatRules: Object (1 property)[]
+    │   └── Id: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualHub: *Object (1 property)
+    │   └── Id: *string
+    └── VpnGatewayScaleUnit: *int
+
+VpnGatewaysNatRule: Resource
+├── Owner: VpnGateway
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── ExternalMappings: Object (2 properties)[]
+│   │   ├── AddressSpace: *string
+│   │   └── PortRange: *string
+│   ├── InternalMappings: Object (2 properties)[]
+│   │   ├── AddressSpace: *string
+│   │   └── PortRange: *string
+│   ├── IpConfigurationId: *string
+│   ├── Mode: *Enum (2 values)
+│   │   ├── "EgressSnat"
+│   │   └── "IngressSnat"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Type: *Enum (2 values)
+│       ├── "Dynamic"
+│       └── "Static"
+└── Status: Object (13 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── EgressVpnSiteLinkConnections: Object (1 property)[]
+    │   └── Id: *string
+    ├── Etag: *string
+    ├── ExternalMappings: Object (2 properties)[]
+    │   ├── AddressSpace: *string
+    │   └── PortRange: *string
+    ├── Id: *string
+    ├── IngressVpnSiteLinkConnections: Object (1 property)[]
+    │   └── Id: *string
+    ├── InternalMappings: Object (2 properties)[]
+    │   ├── AddressSpace: *string
+    │   └── PortRange: *string
+    ├── IpConfigurationId: *string
+    ├── Mode: *Enum (2 values)
+    │   ├── "EgressSnat"
+    │   └── "IngressSnat"
+    ├── Name: *string
+    ├── PropertiesType: *Enum (2 values)
+    │   ├── "Dynamic"
+    │   └── "Static"
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    └── Type: *string
+
+VpnGatewaysVpnConnection: Resource
+├── Owner: VpnGateway
+├── Spec: Object (17 properties)
+│   ├── AzureName: string
+│   ├── ConnectionBandwidth: *int
+│   ├── DpdTimeoutSeconds: *int
+│   ├── EnableBgp: *bool
+│   ├── EnableInternetSecurity: *bool
+│   ├── EnableRateLimiting: *bool
+│   ├── IpsecPolicies: Object (8 properties)[]
+│   │   ├── DhGroup: *Enum (8 values)
+│   │   │   ├── "DHGroup1"
+│   │   │   ├── "DHGroup14"
+│   │   │   ├── "DHGroup2"
+│   │   │   ├── "DHGroup2048"
+│   │   │   ├── "DHGroup24"
+│   │   │   ├── "ECP256"
+│   │   │   ├── "ECP384"
+│   │   │   └── "None"
+│   │   ├── IkeEncryption: *Enum (7 values)
+│   │   │   ├── "AES128"
+│   │   │   ├── "AES192"
+│   │   │   ├── "AES256"
+│   │   │   ├── "DES"
+│   │   │   ├── "DES3"
+│   │   │   ├── "GCMAES128"
+│   │   │   └── "GCMAES256"
+│   │   ├── IkeIntegrity: *Enum (6 values)
+│   │   │   ├── "GCMAES128"
+│   │   │   ├── "GCMAES256"
+│   │   │   ├── "MD5"
+│   │   │   ├── "SHA1"
+│   │   │   ├── "SHA256"
+│   │   │   └── "SHA384"
+│   │   ├── IpsecEncryption: *Enum (9 values)
+│   │   │   ├── "AES128"
+│   │   │   ├── "AES192"
+│   │   │   ├── "AES256"
+│   │   │   ├── "DES"
+│   │   │   ├── "DES3"
+│   │   │   ├── "GCMAES128"
+│   │   │   ├── "GCMAES192"
+│   │   │   ├── "GCMAES256"
+│   │   │   └── "None"
+│   │   ├── IpsecIntegrity: *Enum (6 values)
+│   │   │   ├── "GCMAES128"
+│   │   │   ├── "GCMAES192"
+│   │   │   ├── "GCMAES256"
+│   │   │   ├── "MD5"
+│   │   │   ├── "SHA1"
+│   │   │   └── "SHA256"
+│   │   ├── PfsGroup: *Enum (9 values)
+│   │   │   ├── "ECP256"
+│   │   │   ├── "ECP384"
+│   │   │   ├── "None"
+│   │   │   ├── "PFS1"
+│   │   │   ├── "PFS14"
+│   │   │   ├── "PFS2"
+│   │   │   ├── "PFS2048"
+│   │   │   ├── "PFS24"
+│   │   │   └── "PFSMM"
+│   │   ├── SaDataSizeKilobytes: *int
+│   │   └── SaLifeTimeSeconds: *int
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── RemoteVpnSite: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── RoutingConfiguration: *Object (5 properties)
+│   │   ├── AssociatedRouteTable: *Object (1 property)
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── InboundRouteMap: *Object (1 property)
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── OutboundRouteMap: *Object (1 property)
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── PropagatedRouteTables: *Object (2 properties)
+│   │   │   ├── Ids: Object (1 property)[]
+│   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   └── Labels: string[]
+│   │   └── VnetRoutes: *Object (2 properties)
+│   │       ├── StaticRoutes: Object (3 properties)[]
+│   │       │   ├── AddressPrefixes: string[]
+│   │       │   ├── Name: *string
+│   │       │   └── NextHopIpAddress: *string
+│   │       └── StaticRoutesConfig: *Object (2 properties)
+│   │           ├── PropagateStaticRoutes: *bool
+│   │           └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+│   │               ├── "Contains"
+│   │               └── "Equal"
+│   ├── RoutingWeight: *int
+│   ├── TrafficSelectorPolicies: Object (2 properties)[]
+│   │   ├── LocalAddressRanges: string[]
+│   │   └── RemoteAddressRanges: string[]
+│   ├── UseLocalAzureIpAddress: *bool
+│   ├── UsePolicyBasedTrafficSelectors: *bool
+│   ├── VpnConnectionProtocolType: *Enum (2 values)
+│   │   ├── "IKEv1"
+│   │   └── "IKEv2"
+│   └── VpnLinkConnections: Object (17 properties)[]
+│       ├── ConnectionBandwidth: *int
+│       ├── DpdTimeoutSeconds: *int
+│       ├── EgressNatRules: Object (1 property)[]
+│       │   └── Reference: *genruntime.ResourceReference
+│       ├── EnableBgp: *bool
+│       ├── EnableRateLimiting: *bool
+│       ├── Id: *string
+│       ├── IngressNatRules: Object (1 property)[]
+│       │   └── Reference: *genruntime.ResourceReference
+│       ├── IpsecPolicies: Object (8 properties)[]
+│       │   ├── DhGroup: *Enum (8 values)
+│       │   │   ├── "DHGroup1"
+│       │   │   ├── "DHGroup14"
+│       │   │   ├── "DHGroup2"
+│       │   │   ├── "DHGroup2048"
+│       │   │   ├── "DHGroup24"
+│       │   │   ├── "ECP256"
+│       │   │   ├── "ECP384"
+│       │   │   └── "None"
+│       │   ├── IkeEncryption: *Enum (7 values)
+│       │   │   ├── "AES128"
+│       │   │   ├── "AES192"
+│       │   │   ├── "AES256"
+│       │   │   ├── "DES"
+│       │   │   ├── "DES3"
+│       │   │   ├── "GCMAES128"
+│       │   │   └── "GCMAES256"
+│       │   ├── IkeIntegrity: *Enum (6 values)
+│       │   │   ├── "GCMAES128"
+│       │   │   ├── "GCMAES256"
+│       │   │   ├── "MD5"
+│       │   │   ├── "SHA1"
+│       │   │   ├── "SHA256"
+│       │   │   └── "SHA384"
+│       │   ├── IpsecEncryption: *Enum (9 values)
+│       │   │   ├── "AES128"
+│       │   │   ├── "AES192"
+│       │   │   ├── "AES256"
+│       │   │   ├── "DES"
+│       │   │   ├── "DES3"
+│       │   │   ├── "GCMAES128"
+│       │   │   ├── "GCMAES192"
+│       │   │   ├── "GCMAES256"
+│       │   │   └── "None"
+│       │   ├── IpsecIntegrity: *Enum (6 values)
+│       │   │   ├── "GCMAES128"
+│       │   │   ├── "GCMAES192"
+│       │   │   ├── "GCMAES256"
+│       │   │   ├── "MD5"
+│       │   │   ├── "SHA1"
+│       │   │   └── "SHA256"
+│       │   ├── PfsGroup: *Enum (9 values)
+│       │   │   ├── "ECP256"
+│       │   │   ├── "ECP384"
+│       │   │   ├── "None"
+│       │   │   ├── "PFS1"
+│       │   │   ├── "PFS14"
+│       │   │   ├── "PFS2"
+│       │   │   ├── "PFS2048"
+│       │   │   ├── "PFS24"
+│       │   │   └── "PFSMM"
+│       │   ├── SaDataSizeKilobytes: *int
+│       │   └── SaLifeTimeSeconds: *int
+│       ├── Name: *string
+│       ├── RoutingWeight: *int
+│       ├── SharedKey: *genruntime.SecretReference
+│       ├── UseLocalAzureIpAddress: *bool
+│       ├── UsePolicyBasedTrafficSelectors: *bool
+│       ├── VpnConnectionProtocolType: *Enum (2 values)
+│       │   ├── "IKEv1"
+│       │   └── "IKEv2"
+│       ├── VpnGatewayCustomBgpAddresses: Object (2 properties)[]
+│       │   ├── CustomBgpIpAddress: *string
+│       │   └── IpConfigurationId: *string
+│       ├── VpnLinkConnectionMode: *Enum (3 values)
+│       │   ├── "Default"
+│       │   ├── "InitiatorOnly"
+│       │   └── "ResponderOnly"
+│       └── VpnSiteLink: *Object (1 property)
+│           └── Reference: *genruntime.ResourceReference
+└── Status: Object (22 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionBandwidth: *int
+    ├── ConnectionStatus: *Enum (4 values)
+    │   ├── "Connected"
+    │   ├── "Connecting"
+    │   ├── "NotConnected"
+    │   └── "Unknown"
+    ├── DpdTimeoutSeconds: *int
+    ├── EgressBytesTransferred: *int
+    ├── EnableBgp: *bool
+    ├── EnableInternetSecurity: *bool
+    ├── EnableRateLimiting: *bool
+    ├── Etag: *string
+    ├── Id: *string
+    ├── IngressBytesTransferred: *int
+    ├── IpsecPolicies: Object (8 properties)[]
+    │   ├── DhGroup: *Enum (8 values)
+    │   │   ├── "DHGroup1"
+    │   │   ├── "DHGroup14"
+    │   │   ├── "DHGroup2"
+    │   │   ├── "DHGroup2048"
+    │   │   ├── "DHGroup24"
+    │   │   ├── "ECP256"
+    │   │   ├── "ECP384"
+    │   │   └── "None"
+    │   ├── IkeEncryption: *Enum (7 values)
+    │   │   ├── "AES128"
+    │   │   ├── "AES192"
+    │   │   ├── "AES256"
+    │   │   ├── "DES"
+    │   │   ├── "DES3"
+    │   │   ├── "GCMAES128"
+    │   │   └── "GCMAES256"
+    │   ├── IkeIntegrity: *Enum (6 values)
+    │   │   ├── "GCMAES128"
+    │   │   ├── "GCMAES256"
+    │   │   ├── "MD5"
+    │   │   ├── "SHA1"
+    │   │   ├── "SHA256"
+    │   │   └── "SHA384"
+    │   ├── IpsecEncryption: *Enum (9 values)
+    │   │   ├── "AES128"
+    │   │   ├── "AES192"
+    │   │   ├── "AES256"
+    │   │   ├── "DES"
+    │   │   ├── "DES3"
+    │   │   ├── "GCMAES128"
+    │   │   ├── "GCMAES192"
+    │   │   ├── "GCMAES256"
+    │   │   └── "None"
+    │   ├── IpsecIntegrity: *Enum (6 values)
+    │   │   ├── "GCMAES128"
+    │   │   ├── "GCMAES192"
+    │   │   ├── "GCMAES256"
+    │   │   ├── "MD5"
+    │   │   ├── "SHA1"
+    │   │   └── "SHA256"
+    │   ├── PfsGroup: *Enum (9 values)
+    │   │   ├── "ECP256"
+    │   │   ├── "ECP384"
+    │   │   ├── "None"
+    │   │   ├── "PFS1"
+    │   │   ├── "PFS14"
+    │   │   ├── "PFS2"
+    │   │   ├── "PFS2048"
+    │   │   ├── "PFS24"
+    │   │   └── "PFSMM"
+    │   ├── SaDataSizeKilobytes: *int
+    │   └── SaLifeTimeSeconds: *int
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── RemoteVpnSite: *Object (1 property)
+    │   └── Id: *string
+    ├── RoutingConfiguration: *Object (5 properties)
+    │   ├── AssociatedRouteTable: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── InboundRouteMap: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── OutboundRouteMap: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── PropagatedRouteTables: *Object (2 properties)
+    │   │   ├── Ids: Object (1 property)[]
+    │   │   │   └── Id: *string
+    │   │   └── Labels: string[]
+    │   └── VnetRoutes: *Object (3 properties)
+    │       ├── BgpConnections: Object (1 property)[]
+    │       │   └── Id: *string
+    │       ├── StaticRoutes: Object (3 properties)[]
+    │       │   ├── AddressPrefixes: string[]
+    │       │   ├── Name: *string
+    │       │   └── NextHopIpAddress: *string
+    │       └── StaticRoutesConfig: *Object (2 properties)
+    │           ├── PropagateStaticRoutes: *bool
+    │           └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+    │               ├── "Contains"
+    │               └── "Equal"
+    ├── RoutingWeight: *int
+    ├── TrafficSelectorPolicies: Object (2 properties)[]
+    │   ├── LocalAddressRanges: string[]
+    │   └── RemoteAddressRanges: string[]
+    ├── UseLocalAzureIpAddress: *bool
+    ├── UsePolicyBasedTrafficSelectors: *bool
+    ├── VpnConnectionProtocolType: *Enum (2 values)
+    │   ├── "IKEv1"
+    │   └── "IKEv2"
+    └── VpnLinkConnections: Object (22 properties)[]
+        ├── ConnectionBandwidth: *int
+        ├── ConnectionStatus: *Enum (4 values)
+        │   ├── "Connected"
+        │   ├── "Connecting"
+        │   ├── "NotConnected"
+        │   └── "Unknown"
+        ├── DpdTimeoutSeconds: *int
+        ├── EgressBytesTransferred: *int
+        ├── EgressNatRules: Object (1 property)[]
+        │   └── Id: *string
+        ├── EnableBgp: *bool
+        ├── EnableRateLimiting: *bool
+        ├── Etag: *string
+        ├── Id: *string
+        ├── IngressBytesTransferred: *int
+        ├── IngressNatRules: Object (1 property)[]
+        │   └── Id: *string
+        ├── IpsecPolicies: Object (8 properties)[]
+        │   ├── DhGroup: *Enum (8 values)
+        │   │   ├── "DHGroup1"
+        │   │   ├── "DHGroup14"
+        │   │   ├── "DHGroup2"
+        │   │   ├── "DHGroup2048"
+        │   │   ├── "DHGroup24"
+        │   │   ├── "ECP256"
+        │   │   ├── "ECP384"
+        │   │   └── "None"
+        │   ├── IkeEncryption: *Enum (7 values)
+        │   │   ├── "AES128"
+        │   │   ├── "AES192"
+        │   │   ├── "AES256"
+        │   │   ├── "DES"
+        │   │   ├── "DES3"
+        │   │   ├── "GCMAES128"
+        │   │   └── "GCMAES256"
+        │   ├── IkeIntegrity: *Enum (6 values)
+        │   │   ├── "GCMAES128"
+        │   │   ├── "GCMAES256"
+        │   │   ├── "MD5"
+        │   │   ├── "SHA1"
+        │   │   ├── "SHA256"
+        │   │   └── "SHA384"
+        │   ├── IpsecEncryption: *Enum (9 values)
+        │   │   ├── "AES128"
+        │   │   ├── "AES192"
+        │   │   ├── "AES256"
+        │   │   ├── "DES"
+        │   │   ├── "DES3"
+        │   │   ├── "GCMAES128"
+        │   │   ├── "GCMAES192"
+        │   │   ├── "GCMAES256"
+        │   │   └── "None"
+        │   ├── IpsecIntegrity: *Enum (6 values)
+        │   │   ├── "GCMAES128"
+        │   │   ├── "GCMAES192"
+        │   │   ├── "GCMAES256"
+        │   │   ├── "MD5"
+        │   │   ├── "SHA1"
+        │   │   └── "SHA256"
+        │   ├── PfsGroup: *Enum (9 values)
+        │   │   ├── "ECP256"
+        │   │   ├── "ECP384"
+        │   │   ├── "None"
+        │   │   ├── "PFS1"
+        │   │   ├── "PFS14"
+        │   │   ├── "PFS2"
+        │   │   ├── "PFS2048"
+        │   │   ├── "PFS24"
+        │   │   └── "PFSMM"
+        │   ├── SaDataSizeKilobytes: *int
+        │   └── SaLifeTimeSeconds: *int
+        ├── Name: *string
+        ├── ProvisioningState: *Enum (6 values)
+        │   ├── "Canceled"
+        │   ├── "Creating"
+        │   ├── "Deleting"
+        │   ├── "Failed"
+        │   ├── "Succeeded"
+        │   └── "Updating"
+        ├── RoutingWeight: *int
+        ├── Type: *string
+        ├── UseLocalAzureIpAddress: *bool
+        ├── UsePolicyBasedTrafficSelectors: *bool
+        ├── VpnConnectionProtocolType: *Enum (2 values)
+        │   ├── "IKEv1"
+        │   └── "IKEv2"
+        ├── VpnGatewayCustomBgpAddresses: Object (2 properties)[]
+        │   ├── CustomBgpIpAddress: *string
+        │   └── IpConfigurationId: *string
+        ├── VpnLinkConnectionMode: *Enum (3 values)
+        │   ├── "Default"
+        │   ├── "InitiatorOnly"
+        │   └── "ResponderOnly"
+        └── VpnSiteLink: *Object (1 property)
+            └── Id: *string
+
+VpnServerConfiguration: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (18 properties)
+│   ├── AadAuthenticationParameters: *Object (3 properties)
+│   │   ├── AadAudience: *string
+│   │   ├── AadIssuer: *string
+│   │   └── AadTenant: *string
+│   ├── AzureName: string
+│   ├── ConfigurationPolicyGroups: Object (5 properties)[]
+│   │   ├── Id: *string
+│   │   ├── IsDefault: *bool
+│   │   ├── Name: *string
+│   │   ├── PolicyMembers: Object (3 properties)[]
+│   │   │   ├── AttributeType: *Enum (3 values)
+│   │   │   │   ├── "AADGroupId"
+│   │   │   │   ├── "CertificateGroupId"
+│   │   │   │   └── "RadiusAzureGroupId"
+│   │   │   ├── AttributeValue: *string
+│   │   │   └── Name: *string
+│   │   └── Priority: *int
+│   ├── Location: *string
+│   ├── Name: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── RadiusClientRootCertificates: Object (2 properties)[]
+│   │   ├── Name: *string
+│   │   └── Thumbprint: *string
+│   ├── RadiusServerAddress: *string
+│   ├── RadiusServerRootCertificates: Object (2 properties)[]
+│   │   ├── Name: *string
+│   │   └── PublicCertData: *string
+│   ├── RadiusServerSecret: *genruntime.SecretReference
+│   ├── RadiusServers: Object (3 properties)[]
+│   │   ├── RadiusServerAddress: *string
+│   │   ├── RadiusServerScore: *int
+│   │   └── RadiusServerSecret: *genruntime.SecretReference
+│   ├── Tags: map[string]string
+│   ├── VpnAuthenticationTypes: Enum (3 values)[]
+│   │   ├── "AAD"
+│   │   ├── "Certificate"
+│   │   └── "Radius"
+│   ├── VpnClientIpsecPolicies: Object (8 properties)[]
+│   │   ├── DhGroup: *Enum (8 values)
+│   │   │   ├── "DHGroup1"
+│   │   │   ├── "DHGroup14"
+│   │   │   ├── "DHGroup2"
+│   │   │   ├── "DHGroup2048"
+│   │   │   ├── "DHGroup24"
+│   │   │   ├── "ECP256"
+│   │   │   ├── "ECP384"
+│   │   │   └── "None"
+│   │   ├── IkeEncryption: *Enum (7 values)
+│   │   │   ├── "AES128"
+│   │   │   ├── "AES192"
+│   │   │   ├── "AES256"
+│   │   │   ├── "DES"
+│   │   │   ├── "DES3"
+│   │   │   ├── "GCMAES128"
+│   │   │   └── "GCMAES256"
+│   │   ├── IkeIntegrity: *Enum (6 values)
+│   │   │   ├── "GCMAES128"
+│   │   │   ├── "GCMAES256"
+│   │   │   ├── "MD5"
+│   │   │   ├── "SHA1"
+│   │   │   ├── "SHA256"
+│   │   │   └── "SHA384"
+│   │   ├── IpsecEncryption: *Enum (9 values)
+│   │   │   ├── "AES128"
+│   │   │   ├── "AES192"
+│   │   │   ├── "AES256"
+│   │   │   ├── "DES"
+│   │   │   ├── "DES3"
+│   │   │   ├── "GCMAES128"
+│   │   │   ├── "GCMAES192"
+│   │   │   ├── "GCMAES256"
+│   │   │   └── "None"
+│   │   ├── IpsecIntegrity: *Enum (6 values)
+│   │   │   ├── "GCMAES128"
+│   │   │   ├── "GCMAES192"
+│   │   │   ├── "GCMAES256"
+│   │   │   ├── "MD5"
+│   │   │   ├── "SHA1"
+│   │   │   └── "SHA256"
+│   │   ├── PfsGroup: *Enum (9 values)
+│   │   │   ├── "ECP256"
+│   │   │   ├── "ECP384"
+│   │   │   ├── "None"
+│   │   │   ├── "PFS1"
+│   │   │   ├── "PFS14"
+│   │   │   ├── "PFS2"
+│   │   │   ├── "PFS2048"
+│   │   │   ├── "PFS24"
+│   │   │   └── "PFSMM"
+│   │   ├── SaDataSizeKilobytes: *int
+│   │   └── SaLifeTimeSeconds: *int
+│   ├── VpnClientRevokedCertificates: Object (2 properties)[]
+│   │   ├── Name: *string
+│   │   └── Thumbprint: *string
+│   ├── VpnClientRootCertificates: Object (2 properties)[]
+│   │   ├── Name: *string
+│   │   └── PublicCertData: *string
+│   └── VpnProtocols: Enum (2 values)[]
+│       ├── "IkeV2"
+│       └── "OpenVPN"
+└── Status: Object (21 properties)
+    ├── AadAuthenticationParameters: *Object (3 properties)
+    │   ├── AadAudience: *string
+    │   ├── AadIssuer: *string
+    │   └── AadTenant: *string
+    ├── Conditions: conditions.Condition[]
+    ├── ConfigurationPolicyGroups: Object (9 properties)[]
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── IsDefault: *bool
+    │   ├── Name: *string
+    │   ├── P2SConnectionConfigurations: Object (1 property)[]
+    │   │   └── Id: *string
+    │   ├── PolicyMembers: Object (3 properties)[]
+    │   │   ├── AttributeType: *Enum (3 values)
+    │   │   │   ├── "AADGroupId"
+    │   │   │   ├── "CertificateGroupId"
+    │   │   │   └── "RadiusAzureGroupId"
+    │   │   ├── AttributeValue: *string
+    │   │   └── Name: *string
+    │   ├── Priority: *int
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   └── Type: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertiesEtag: *string
+    ├── PropertiesName: *string
+    ├── ProvisioningState: *string
+    ├── RadiusClientRootCertificates: Object (2 properties)[]
+    │   ├── Name: *string
+    │   └── Thumbprint: *string
+    ├── RadiusServerAddress: *string
+    ├── RadiusServerRootCertificates: Object (2 properties)[]
+    │   ├── Name: *string
+    │   └── PublicCertData: *string
+    ├── RadiusServers: Object (2 properties)[]
+    │   ├── RadiusServerAddress: *string
+    │   └── RadiusServerScore: *int
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VpnAuthenticationTypes: Enum (3 values)[]
+    │   ├── "AAD"
+    │   ├── "Certificate"
+    │   └── "Radius"
+    ├── VpnClientIpsecPolicies: Object (8 properties)[]
+    │   ├── DhGroup: *Enum (8 values)
+    │   │   ├── "DHGroup1"
+    │   │   ├── "DHGroup14"
+    │   │   ├── "DHGroup2"
+    │   │   ├── "DHGroup2048"
+    │   │   ├── "DHGroup24"
+    │   │   ├── "ECP256"
+    │   │   ├── "ECP384"
+    │   │   └── "None"
+    │   ├── IkeEncryption: *Enum (7 values)
+    │   │   ├── "AES128"
+    │   │   ├── "AES192"
+    │   │   ├── "AES256"
+    │   │   ├── "DES"
+    │   │   ├── "DES3"
+    │   │   ├── "GCMAES128"
+    │   │   └── "GCMAES256"
+    │   ├── IkeIntegrity: *Enum (6 values)
+    │   │   ├── "GCMAES128"
+    │   │   ├── "GCMAES256"
+    │   │   ├── "MD5"
+    │   │   ├── "SHA1"
+    │   │   ├── "SHA256"
+    │   │   └── "SHA384"
+    │   ├── IpsecEncryption: *Enum (9 values)
+    │   │   ├── "AES128"
+    │   │   ├── "AES192"
+    │   │   ├── "AES256"
+    │   │   ├── "DES"
+    │   │   ├── "DES3"
+    │   │   ├── "GCMAES128"
+    │   │   ├── "GCMAES192"
+    │   │   ├── "GCMAES256"
+    │   │   └── "None"
+    │   ├── IpsecIntegrity: *Enum (6 values)
+    │   │   ├── "GCMAES128"
+    │   │   ├── "GCMAES192"
+    │   │   ├── "GCMAES256"
+    │   │   ├── "MD5"
+    │   │   ├── "SHA1"
+    │   │   └── "SHA256"
+    │   ├── PfsGroup: *Enum (9 values)
+    │   │   ├── "ECP256"
+    │   │   ├── "ECP384"
+    │   │   ├── "None"
+    │   │   ├── "PFS1"
+    │   │   ├── "PFS14"
+    │   │   ├── "PFS2"
+    │   │   ├── "PFS2048"
+    │   │   ├── "PFS24"
+    │   │   └── "PFSMM"
+    │   ├── SaDataSizeKilobytes: *int
+    │   └── SaLifeTimeSeconds: *int
+    ├── VpnClientRevokedCertificates: Object (2 properties)[]
+    │   ├── Name: *string
+    │   └── Thumbprint: *string
+    ├── VpnClientRootCertificates: Object (2 properties)[]
+    │   ├── Name: *string
+    │   └── PublicCertData: *string
+    └── VpnProtocols: Enum (2 values)[]
+        ├── "IkeV2"
+        └── "OpenVPN"
+
+VpnSite: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (14 properties)
+│   ├── AddressSpace: *Object (2 properties)
+│   │   ├── AddressPrefixes: string[]
+│   │   └── IpamPoolPrefixAllocations: Object (2 properties)[]
+│   │       ├── NumberOfIpAddresses: *string
+│   │       └── Reference: *genruntime.ResourceReference
+│   ├── AzureName: string
+│   ├── BgpProperties: *Object (4 properties)
+│   │   ├── Asn: *uint32
+│   │   ├── BgpPeeringAddress: *string
+│   │   ├── BgpPeeringAddresses: Object (2 properties)[]
+│   │   │   ├── CustomBgpIpAddresses: string[]
+│   │   │   └── IpconfigurationId: *string
+│   │   └── PeerWeight: *int
+│   ├── DeviceProperties: *Object (3 properties)
+│   │   ├── DeviceModel: *string
+│   │   ├── DeviceVendor: *string
+│   │   └── LinkSpeedInMbps: *int
+│   ├── IpAddress: *string
+│   ├── IsSecuritySite: *bool
+│   ├── Location: *string
+│   ├── O365Policy: *Object (1 property)
+│   │   └── BreakOutCategories: *Object (3 properties)
+│   │       ├── Allow: *bool
+│   │       ├── Default: *bool
+│   │       └── Optimize: *bool
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── SiteKey: *genruntime.SecretReference
+│   ├── Tags: map[string]string
+│   ├── VirtualWan: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── VpnSiteLinks: Object (6 properties)[]
+│       ├── BgpProperties: *Object (2 properties)
+│       │   ├── Asn: *int
+│       │   └── BgpPeeringAddress: *string
+│       ├── Fqdn: *string
+│       ├── Id: *string
+│       ├── IpAddress: *string
+│       ├── LinkProperties: *Object (2 properties)
+│       │   ├── LinkProviderName: *string
+│       │   └── LinkSpeedInMbps: *int
+│       └── Name: *string
+└── Status: Object (16 properties)
+    ├── AddressSpace: *Object (2 properties)
+    │   ├── AddressPrefixes: string[]
+    │   └── IpamPoolPrefixAllocations: Object (3 properties)[]
+    │       ├── AllocatedAddressPrefixes: string[]
+    │       ├── Id: *string
+    │       └── NumberOfIpAddresses: *string
+    ├── BgpProperties: *Object (4 properties)
+    │   ├── Asn: *uint32
+    │   ├── BgpPeeringAddress: *string
+    │   ├── BgpPeeringAddresses: Object (4 properties)[]
+    │   │   ├── CustomBgpIpAddresses: string[]
+    │   │   ├── DefaultBgpIpAddresses: string[]
+    │   │   ├── IpconfigurationId: *string
+    │   │   └── TunnelIpAddresses: string[]
+    │   └── PeerWeight: *int
+    ├── Conditions: conditions.Condition[]
+    ├── DeviceProperties: *Object (3 properties)
+    │   ├── DeviceModel: *string
+    │   ├── DeviceVendor: *string
+    │   └── LinkSpeedInMbps: *int
+    ├── Etag: *string
+    ├── Id: *string
+    ├── IpAddress: *string
+    ├── IsSecuritySite: *bool
+    ├── Location: *string
+    ├── Name: *string
+    ├── O365Policy: *Object (1 property)
+    │   └── BreakOutCategories: *Object (3 properties)
+    │       ├── Allow: *bool
+    │       ├── Default: *bool
+    │       └── Optimize: *bool
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualWan: *Object (1 property)
+    │   └── Id: *string
+    └── VpnSiteLinks: Object (9 properties)[]
+        ├── BgpProperties: *Object (2 properties)
+        │   ├── Asn: *int
+        │   └── BgpPeeringAddress: *string
+        ├── Etag: *string
+        ├── Fqdn: *string
+        ├── Id: *string
+        ├── IpAddress: *string
+        ├── LinkProperties: *Object (2 properties)
+        │   ├── LinkProviderName: *string
+        │   └── LinkSpeedInMbps: *int
+        ├── Name: *string
+        ├── ProvisioningState: *Enum (6 values)
+        │   ├── "Canceled"
+        │   ├── "Creating"
+        │   ├── "Deleting"
+        │   ├── "Failed"
+        │   ├── "Succeeded"
+        │   └── "Updating"
+        └── Type: *string
 

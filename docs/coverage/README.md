@@ -284,15 +284,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 1,389 (3.2%) in 71 further resources; uncovered 34,860 (80.4%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 1,550 (3.6%) in 77 further resources; uncovered 34,699 (80.0%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 10.7% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 6.9% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.0% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 12.7% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 6.9% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.0% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 17.2% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 2.6% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 3.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 0.0% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 20.7% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 2.6% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 3.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 0.0% more by ours.
 
 **Ours.**
 
@@ -345,6 +345,7 @@ Generated; these cannot drift from the data.
 | `network.azure.hfl.dev/NetworkSecurityPerimetersProfile` | `Microsoft.Network/networkSecurityPerimeters/profiles` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkSecurityPerimetersProfilesAccessRule` | `Microsoft.Network/networkSecurityPerimeters/profiles/accessRules` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkSecurityPerimetersResourceAssociation` | `Microsoft.Network/networkSecurityPerimeters/resourceAssociations` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/P2sVpnGateway` | `Microsoft.Network/p2svpnGateways` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualHub` | `Microsoft.Network/virtualHubs` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualHubsBgpConnection` | `Microsoft.Network/virtualHubs/bgpConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualHubsHubRouteTable` | `Microsoft.Network/virtualHubs/hubRouteTables` | ARM wire type of the generated kind (`apis/arm`) |
@@ -354,6 +355,11 @@ Generated; these cannot drift from the data.
 | `network.azure.hfl.dev/VirtualHubsRoutingIntent` | `Microsoft.Network/virtualHubs/routingIntent` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualNetworkGatewayConnection` | `Microsoft.Network/connections` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualWan` | `Microsoft.Network/virtualWans` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/VpnGateway` | `Microsoft.Network/vpnGateways` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/VpnGatewaysNatRule` | `Microsoft.Network/vpnGateways/natRules` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/VpnGatewaysVpnConnection` | `Microsoft.Network/vpnGateways/vpnConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/VpnServerConfiguration` | `Microsoft.Network/vpnServerConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/VpnSite` | `Microsoft.Network/vpnSites` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/QueryPack` | `Microsoft.OperationalInsights/queryPacks` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/QueryPacksQuery` | `Microsoft.OperationalInsights/queryPacks/queries` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/WorkspacesDataExport` | `Microsoft.OperationalInsights/workspaces/dataExports` | ARM wire type of the generated kind (`apis/arm`) |

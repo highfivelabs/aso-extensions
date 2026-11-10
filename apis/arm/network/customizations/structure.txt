@@ -31,6 +31,8 @@ NetworkSecurityPerimetersProfilesAccessRuleExtension: Object (0 properties)
 
 NetworkSecurityPerimetersResourceAssociationExtension: Object (0 properties)
 
+P2sVpnGatewayExtension: Object (0 properties)
+
 VirtualHubExtension: Object (0 properties)
 
 VirtualHubsBgpConnectionExtension: Object (0 properties)
@@ -48,4 +50,14 @@ VirtualHubsRoutingIntentExtension: Object (0 properties)
 VirtualNetworkGatewayConnectionExtension: Object (0 properties)
 
 VirtualWanExtension: Object (0 properties)
+
+VpnGatewayExtension: Object (0 properties)
+
+VpnGatewaysNatRuleExtension: Object (0 properties)
+
+VpnGatewaysVpnConnectionExtension: Object (0 properties)
+
+VpnServerConfigurationExtension: Object (0 properties)
+
+VpnSiteExtension: Object (0 properties)
 
