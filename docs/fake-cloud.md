@@ -201,6 +201,15 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   above. Not modelled: scale units, the routes a hub learns, a connection's
   routing configuration checked against the hub's route tables, internet
   security and FastPath, and the time a real gateway takes.
+- Source control configurations and Kubernetes configuration private link
+  scopes (`Microsoft.KubernetesConfiguration/sourceControlConfigurations`,
+  `privateLinkScopes`; `pkg/fakecloud/arm/kubernetesconfiguration.go`): a
+  configuration is on a managed or Arc-enabled cluster, gives a repository
+  URL and an operator type of Flux; its protected settings are kept aside
+  (`SharedKey`, under the configuration's ID and `/<name>`) and never
+  returned; a scope names a cluster that exists. Not modelled: Flux in the
+  cluster, the generated SSH key, compliance, connections arriving from a
+  consumer, and the error codes (the fake's own).
 - Maintenance configuration assignments
   (`Microsoft.Maintenance/configurationAssignments` at any scope;
   `pkg/fakecloud/arm/maintenance.go`): an assignment names a maintenance
