@@ -127,6 +127,9 @@ kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f 
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create secret tls fakesql-tls --cert "${OUT}/fixtures/fakesql.crt" --key "${OUT}/fixtures/fakesql.key" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakesql-principals --from-literal=team-a="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" \
+  --from-literal=team-b="${CLIENT_B}=system:serviceaccount:team-b:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/team-a-hub,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualHubs/team-b-hub,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/azureFirewalls/team-a-fw,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/azureFirewalls/team-b-fw,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
@@ -134,15 +137,16 @@ kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}
 ko_apply config/fake-cloud/fake-cloud.yaml
 # On a reused cluster the fixtures (CA, certificates) are new: restart so
 # every pod reads them. PostgreSQL keeps no volume, so it starts empty.
-kubectl -n fake-cloud rollout restart deploy/postgres deploy/fakevault deploy/fakearm >/dev/null
+kubectl -n fake-cloud rollout restart deploy/postgres deploy/fakevault deploy/fakearm deploy/fakesql >/dev/null
 kubectl -n fake-cloud rollout status deploy/postgres --timeout=180s
 kubectl -n fake-cloud rollout status deploy/fakevault --timeout=120s
 kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
+kubectl -n fake-cloud rollout status deploy/fakesql --timeout=120s
 
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev managementgroups.management.azure.hfl.dev tagsets.resources.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev users.sql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev managementgroups.management.azure.hfl.dev tagsets.resources.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -171,6 +175,8 @@ can list sites.web.azure.com -n team-a || fail "cannot read the owner of the gen
 can list workspaces.operationalinsights.azure.com -n team-a || fail "cannot read the owner of the generated Log Analytics kinds"
 can list registries.containerregistry.azure.com -n team-a || fail "cannot read the owner of the generated container registry kinds"
 can list virtualmachines.compute.azure.com -n team-a || fail "cannot read the owner of the generated compute kinds"
+can list serversdatabases.sql.azure.com -n team-a || fail "cannot read the owner of the Azure SQL User"
+! can update servers.sql.azure.com -n team-a || fail "may change ASO's SQL servers"
 ! can list storageaccounts.storage.azure.com -n team-a || fail "may list ASO resources it only needs to get"
 ! can update resourcegroups.resources.azure.com -n team-a || fail "may change ASO's ResourceGroups"
 pass "aso-workload tokens, read secrets and the ASO owners, get any ASO resource, our kinds; nothing of ASO's to change"
@@ -247,6 +253,16 @@ metadata:
   namespace: $1
   annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Compute/virtualMachines/${1//-/}vm}
 spec: {azureName: ${1//-/}vm, owner: {name: rg}}
+---
+apiVersion: sql.azure.com/v20250101storage
+kind: Server
+metadata: {name: sql, namespace: $1}
+spec: {azureName: $1-sql, owner: {name: rg}}
+---
+apiVersion: sql.azure.com/v20250101storage
+kind: ServersDatabase
+metadata: {name: appdb, namespace: $1}
+spec: {azureName: appdb, owner: {name: sql}}
 EOF
   local now; now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
   local cond="{\"type\":\"Ready\",\"status\":\"True\",\"severity\":\"\",\"reason\":\"Succeeded\",\"lastTransitionTime\":\"${now}\",\"observedGeneration\":1}"
@@ -266,6 +282,10 @@ EOF
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl -n "$1" patch virtualmachines.compute.azure.com vm --subresource=status --type=merge \
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
+  kubectl -n "$1" patch servers.sql.azure.com sql --subresource=status --type=merge \
+    -p "{\"status\":{\"fullyQualifiedDomainName\":\"fakesql.fake-cloud.svc\",\"conditions\":[${cond}]}}" >/dev/null
+  kubectl -n "$1" patch serversdatabases.sql.azure.com appdb --subresource=status --type=merge \
+    -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl apply -f - <<EOF
 apiVersion: dbforpostgresql.azure.hfl.dev/v1
 kind: User
@@ -277,6 +297,14 @@ spec:
   databasePrivileges: {app: [CONNECT, CREATE]}
   schemaPrivileges: {app: {public: [USAGE, CREATE]}}
   ownedDatabases: [orders]
+---
+apiVersion: sql.azure.hfl.dev/v1
+kind: User
+metadata: {name: app-identity, namespace: $1}
+spec:
+  owner: {name: appdb}
+  aadUser: {}
+  roles: [db_datareader, db_datawriter]
 ---
 apiVersion: keyvault.azure.hfl.dev/v1
 kind: VaultSecret
@@ -747,6 +775,12 @@ step "team-a: the identity both fakes trust"
 team team-a "${CLIENT_A}"
 wait_for 90 "team-a's User Ready" ready users.dbforpostgresql.azure.hfl.dev team-a app-identity
 pass "team-a User Ready"
+wait_for 90 "team-a's Azure SQL User Ready" ready users.sql.azure.hfl.dev team-a app-identity
+logged fakesql "aso-sql-admins signed in to appdb with a token, as the Entra administrator" \
+  || fail "the fake Azure SQL saw no token sign-in as its Entra administrator"
+logged fakesql "CREATE USER [app-identity] FROM EXTERNAL PROVIDER" || fail "the fake Azure SQL saw no CREATE USER ... FROM EXTERNAL PROVIDER"
+logged fakesql "ALTER ROLE [db_datareader] ADD MEMBER [app-identity]" || fail "the fake Azure SQL saw no role grant"
+pass "team-a Azure SQL User Ready: app-identity created FROM EXTERNAL PROVIDER, signed in with team-a's aso-workload token"
 wait_for 90 "team-a's VaultSecret Ready" ready vaultsecrets.keyvault.azure.hfl.dev team-a app-url
 pass "team-a VaultSecret Ready"
 psql() { kubectl -n fake-cloud exec deploy/postgres -- psql -U postgres -tAc "$1"; }
@@ -940,6 +974,8 @@ step "team-b: another identity, refused by both"
 team team-b "${CLIENT_B}"
 wait_for 90 "team-b's User refused" bash -c "[[ \"\$(kubectl get users.dbforpostgresql.azure.hfl.dev -n team-b app-identity -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'password authentication failed'* ]]"
 pass "team-b User refused: $(message users.dbforpostgresql.azure.hfl.dev team-b app-identity | cut -c1-120)..."
+wait_for 90 "team-b's Azure SQL User refused" bash -c "[[ \"\$(kubectl get users.sql.azure.hfl.dev -n team-b app-identity -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *\"Login failed for user 'team-b-identity'\"* ]]"
+pass "team-b Azure SQL User refused: $(message users.sql.azure.hfl.dev team-b app-identity | cut -c1-120)..."
 wait_for 90 "team-b's VaultSecret refused" bash -c "[[ \"\$(kubectl get vaultsecrets.keyvault.azure.hfl.dev -n team-b app-url -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b VaultSecret refused: $(message vaultsecrets.keyvault.azure.hfl.dev team-b app-url | cut -c1-120)..."
 wait_for 90 "team-b's VaultCertificate refused" bash -c "[[ \"\$(kubectl get vaultcertificates.keyvault.azure.hfl.dev -n team-b app-tls -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
@@ -976,6 +1012,9 @@ pass "team-b ManagementLock refused: $(message managementlocks.authorization.azu
 step "deleting team-a's objects"
 kubectl -n team-a delete users.dbforpostgresql.azure.hfl.dev app-identity --timeout=60s
 kubectl -n team-a delete vaultsecrets.keyvault.azure.hfl.dev app-url --timeout=60s
+kubectl -n team-a delete users.sql.azure.hfl.dev app-identity --timeout=60s
+logged fakesql "DROP USER IF EXISTS [app-identity]" || fail "the fake Azure SQL saw no DROP USER of app-identity"
+pass "the Azure SQL Entra user app-identity is dropped"
 [[ -z "$(psql "SELECT 1 FROM pg_roles WHERE rolname = 'app-identity'")" ]] || fail "the role app-identity was not dropped"
 pass "the Entra role app-identity is dropped"
 [[ "$(psql "SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname = 'orders'")" == "hfl_owner" ]] \
