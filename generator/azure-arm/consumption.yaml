@@ -1,0 +1,17 @@
+typeFilters:
+  - action: include
+    group: consumption
+    version: v20260601
+    because: the newest stable version of the Consumption API (budgets), one TypeSpec file
+  - action: prune
+    group: consumption
+    because: every other version is left alone (usage details, price sheets and the like are read-only)
+
+groupModelConfiguration:
+  2026-06-01:
+    Budget:
+      $exportAs: Budget
+      $supportedFrom: v0.1.0
+    Notification:
+      ContactGroups:
+        $referenceType: arm # Monitor action groups: ASO's ActionGroup, or an ARM ID

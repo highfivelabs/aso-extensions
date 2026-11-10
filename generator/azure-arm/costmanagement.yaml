@@ -1,0 +1,39 @@
+typeFilters:
+  # As ASO's azure-arm.yaml, which prunes the whole group for this: the query
+  # and view filters (QueryFilter, ReportConfigFilter) nest themselves (and, or,
+  # not) and cannot be unrolled. Neither budgets nor exports use them.
+  - action: prune
+    group: costmanagement
+    name: QueryFilter
+    because: directly recursive; used only by queries and forecasts, which are not exported
+  - action: prune
+    group: costmanagement
+    name: ReportConfigFilter
+    because: directly recursive; used only by views, which are not exported
+  - action: include
+    group: costmanagement
+    version: v20260601
+    because: the newest stable version of the Cost Management API (exports)
+  - action: prune
+    group: costmanagement
+    because: every other version is left alone
+
+groupModelConfiguration:
+  2026-06-01:
+    Export:
+      $exportAs: Export
+      $supportedFrom: v0.1.0
+    ExportDeliveryDestination:
+      ResourceId:
+        $referenceType: arm # the storage account the export writes to: ASO's StorageAccount, or an ARM ID
+      StorageAccount:
+        $referenceType: simple # a storage account's name (with sasToken, for partners), not an ARM ID
+      SasToken:
+        $referenceType: simple # x-ms-secret: a SAS token, read from a Secret
+
+typeTransformers:
+  - group: costmanagement
+    name: ExportRunProperties_STATUS
+    property: RunSettings
+    remove: true
+    because: a run's settings are the export's own properties, which hold the run history again (recursive through runHistory); the run's status, times and error stay
