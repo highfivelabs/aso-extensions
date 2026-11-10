@@ -125,12 +125,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 4.6% | 52.2% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 5.7% | 51.1% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.7% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (139 with no kind, 52 partly covered, 55 covered)
+### platform-foundation: 246 resources (137 with no kind, 53 partly covered, 56 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -166,14 +166,14 @@ Generated: every resource of the two categories, by the order of the services in
 | 30 | `Microsoft.PolicyInsights/remediations` | covered |  | `policyinsights/PolicyRemediation` | 0 / 8 / 0 | extension,resourceGroup,subscription | - | - | 0 |
 | 31 | `Microsoft.Resources/resourceGroups` | partial, 1 of 4 missing | `resources/ResourceGroup` |  | 3 / 0 / 1 | subscription | extend: ASO's API version is older than the spec's | S (1) | 2 |
 | 32 | `Microsoft.Resources/tags` | covered |  | `resources/TagSet` | 0 / 1 / 0 | extension | - | - | 1 |
-| 33 | `Microsoft.Consumption/budgets` | no kind |  |  | 0 / 0 / 26 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (26) | 1 |
+| 33 | `Microsoft.Consumption/budgets` | covered |  | `consumption/Budget` | 0 / 26 / 0 | extension | - | - | 1 |
 | 34 | `Microsoft.CostManagement/settings` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
 | 35 | `Microsoft.CostManagement/markupRules` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |
 | 36 | `Microsoft.CostManagement/costAllocationRules` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
 | 37 | `Microsoft.CostManagement/scheduledActions` | no kind |  |  | 0 / 0 / 20 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | S (20) | 0 |
 | 38 | `Microsoft.CostManagement/budgets` | no kind |  |  | 0 / 0 / 27 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (27) | 0 |
-| 39 | `Microsoft.CostManagement/exports` | no kind |  |  | 0 / 0 / 28 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (28) | 0 |
-| 40 | `Microsoft.CostManagement/views` | no kind |  |  | 0 / 0 / 34 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | M (34) | 0 |
+| 39 | `Microsoft.CostManagement/views` | no kind |  |  | 0 / 0 / 34 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | M (34) | 0 |
+| 40 | `Microsoft.CostManagement/exports` | partial, 1 of 28 missing |  | `costmanagement/Export` | 0 / 27 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
 | 41 | `Microsoft.Insights/guestDiagnosticSettingsAssociation` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
 | 42 | `Microsoft.Insights/logprofiles` | no kind |  |  | 0 / 0 / 8 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (8) | 0 |
 | 43 | `Microsoft.Insights/myWorkbooks` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |

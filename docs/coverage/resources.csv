@@ -693,7 +693,7 @@ Microsoft.ConnectedVMwarevSphere,Microsoft.ConnectedVMwarevSphere/virtualMachine
 Microsoft.ConnectedVMwarevSphere,Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/guestAgents,6,,0,,0,6,false,spec_api=2023-12-01
 Microsoft.ConnectedVMwarevSphere,Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates,8,,0,,0,8,false,spec_api=2023-12-01
 Microsoft.ConnectedVMwarevSphere,Microsoft.ConnectedVMwarevSphere/virtualNetworks,8,,0,,0,8,false,spec_api=2023-12-01
-Microsoft.Consumption,Microsoft.Consumption/budgets,26,,0,,0,26,false,spec_api=2026-06-01
+Microsoft.Consumption,Microsoft.Consumption/budgets,26,,0,consumption.azure.hfl.dev/Budget,26,0,false,spec_api=2026-06-01; ours_api=2026-06-01
 Microsoft.ContainerInstance,Microsoft.ContainerInstance/containerGroupProfiles,124,,0,,0,124,false,spec_api=2026-07-01
 Microsoft.ContainerInstance,Microsoft.ContainerInstance/containerGroups,131,containerinstance.azure.com/ContainerGroup,92,,0,39,false,spec_api=2026-07-01; official_api=2021-10-01; official-api-differs-from-spec
 Microsoft.ContainerInstance,Microsoft.ContainerInstance/ngroups,37,,0,,0,37,false,spec_api=2026-07-01
@@ -740,7 +740,7 @@ Microsoft.ContainerStorage,Microsoft.ContainerStorage/pools/volumes,2,,0,,0,2,fa
 Microsoft.Contoso,Microsoft.Contoso/employees,5,,0,,0,5,false,spec_api=2021-11-01
 Microsoft.CostManagement,Microsoft.CostManagement/budgets,27,,0,,0,27,false,spec_api=2026-06-01
 Microsoft.CostManagement,Microsoft.CostManagement/costAllocationRules,10,,0,,0,10,false,spec_api=2026-06-01
-Microsoft.CostManagement,Microsoft.CostManagement/exports,28,,0,,0,28,false,spec_api=2026-06-01
+Microsoft.CostManagement,Microsoft.CostManagement/exports,28,,0,costmanagement.azure.hfl.dev/Export,27,1,false,spec_api=2026-06-01; ours_api=2026-06-01
 Microsoft.CostManagement,Microsoft.CostManagement/markupRules,6,,0,,0,6,false,spec_api=2026-06-01
 Microsoft.CostManagement,Microsoft.CostManagement/scheduledActions,20,,0,,0,20,false,spec_api=2026-06-01
 Microsoft.CostManagement,Microsoft.CostManagement/settings,2,,0,,0,2,false,spec_api=2026-06-01
