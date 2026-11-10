@@ -648,6 +648,7 @@ rechecks upstream again when it is built.
 | c12 | Cognitive Services RAI policies | not at the pin, no pull request | queued |
 | c13 | Cosmos DB Gremlin, SQL dedicated gateway | not at the pin, no pull request | queued |
 | c14 | AKS managed namespaces | not at the pin, no pull request | queued |
+| c15 | Microsoft Entra directory roles (`DirectoryRoleAssignment`) | rechecked 2026-11-10, read-only: ASO's `entra.azure.com` group at the pin has `Application`, `SecurityGroup` and `ServicePrincipal`, no directory role; `main` (`6f170b07`, four documentation commits past the pin) the same; open pull request **#5821** ("chore: Extract base reconciler for Entra resources", head `6c93419b`) factors a base out of ASO's Entra reconcilers and adds no kind; no issue or pull request for directory roles | **built**, hand-written (Microsoft Graph, not ARM: nothing to generate): `entra.azure.hfl.dev/v1` `DirectoryRoleAssignment`, Graph's `unifiedRoleAssignment` (`POST /roleManagement/directory/roleAssignments`) with Graph's property names (`principalId`, `roleDefinitionId`, `directoryScopeId`, `appScopeId`, `condition`) and ASO's Entra conventions: `operatorSpec.creationMode` (`AdoptOrCreate` by default: an assignment of the same role to the same principal at the same scope is adopted, found by `$filter`; `AlwaysCreate`; `AdoptOnly`, which leaves the assignment in Graph on delete), the principal by object ID or `principalIdFromConfig` (a ConfigMap, as an ASO `SecurityGroup` or `ServicePrincipal` exports its ID), the Graph ID in the `serviceoperator.azure.com/resource-id` annotation. The reconciler is built on **#5821's base reconciler** (copied, section `UPSTREAM.md`) and shaped as its `SecurityGroupReconciler`; the Graph client is ASO's Entra client cache with an endpoint (`MICROSOFT_GRAPH_ENDPOINT`, default `https://graph.microsoft.com`; a national cloud or the fake sets its own); the beta Graph SDK, ASO's own dependency at the pin. Graph has no update for an assignment, so the CRD refuses changes (CEL), and exactly one principal source and one scope (CEL). Generated share: 423 lines generated (deepcopy and the CRD, by controller-gen) against 831 written (the type, the reconciler, its base and the client; 347 of them copied from ASO and #5821 and adapted): 34% generated; the fake (`pkg/fakecloud/graph`, `cmd/fakegraph`) and tests aside. The builder names the kind on the decisions page; `DirectoryRoleAssignment` until they say otherwise |
 | c18 | Stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones) | not a new kind | queued |
 
 App Configuration key-values are already in ASO (`appconfiguration`
@@ -816,6 +817,23 @@ serialization and conversion tests):
   azidentity's client-assertion credential;
 - another namespace's identity cannot sign in as that administrator, and
   the fake vault refuses it;
+- a Microsoft Entra directory role assignment (`entra.azure.hfl.dev`
+  `DirectoryRoleAssignment`, c15) is created in the fake Microsoft Graph
+  with the namespace's `aso-workload` token for Graph's audience: Global
+  Reader over the directory by object ID, User Administrator over an
+  administrative unit with the principal from a ConfigMap; an assignment
+  made outside Kubernetes is adopted (`AdoptOrCreate`) rather than made
+  twice; `AdoptOnly` waits until there is one to adopt and leaves it in
+  Graph on delete; an unknown principal and an unknown administrative unit
+  are refused on the Ready condition with Graph's message; a change to the
+  role is refused by the API server; another namespace's identity is
+  refused (401); deleting removes the assignments. The fake is tested with
+  the Graph SDK itself (`pkg/fakecloud/graph`). Not proven: Microsoft Graph
+  itself (its error codes and messages are the fake's; real Graph takes
+  some seconds to show a new assignment to a `$filter`, so an adoption
+  right after a creation elsewhere can miss it), the rights the identity
+  needs (Privileged Role Administrator, or `RoleManagement.ReadWrite.Directory`),
+  custom role definitions and app scopes beyond being sent, conditions;
 - an Azure SQL Entra user (`sql.azure.hfl.dev` `User`, `aadUser`) is
   created with `CREATE USER ... FROM EXTERNAL PROVIDER` on a connection
   signed in with the namespace's `aso-workload` token as the server's Entra
@@ -1265,7 +1283,8 @@ and summarised here:
 - Q5 (Azure SQL Entra users, a1): "copy the ASO PR #5104. fix it up and
   ship it."
 - c15 (Entra directory roles): "lets build this unless it already exists in
-  the aso package."
+  the aso package." ASO has none; built as `DirectoryRoleAssignment`
+  (section 3, c15).
 - One CRD version (section 2): prefer **per-version kinds** over a
   conversion webhook, and avoid a second API version of a generated kind in
   most cases.
