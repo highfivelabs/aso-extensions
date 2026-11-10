@@ -315,8 +315,10 @@ kind, no generator. From the repository root:
   with other work (a Bundt mutation run, other agents): run at most one kind
   cluster at a time and never touch other clusters (`bundt-checks` and the
   other repositories' `*-operator`).
-- If it is unreachable: `../offload/offload run --hours 2 -- ...` (a Spot VM
-  that deletes itself); `offload ls` and `offload reap` if something is left.
+- If it is unreachable or busy: `../offload/offload run --hours 2 --prep 'task
+  tools' --step 'task check' --step 'task operator-e2e'` (a Spot VM that
+  deletes itself; `third_party/` is not in the uploaded tarball, so `task
+  tools` fetches it); `offload ls` and `offload reap` if something is left.
 - `offload` copies the working tree (tracked or not, `third_party/` included;
   `bin/`, `.cache/` and `offload-artifacts/` are excluded and persist on the
   machine) to the same path there, runs the command, and copies

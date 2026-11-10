@@ -32,6 +32,13 @@ tasks:
     cmds:
       - task: check
 
+  tools:
+    desc: ASO at the pin plus patches/ (task upstream) and setup-envtest; what a fresh checkout needs first (an offload Spot VM, --prep 'task tools')
+    cmds:
+      - task: upstream
+      - task: common:setup-envtest
+        vars: {BIN: '{{.BIN}}', PACKAGE: '{{.SETUP_ENVTEST}}'}
+
   upstream:
     desc: Fetch ASO at the pin (about 675 MB) and apply patches/
     cmds:
