@@ -27,8 +27,12 @@ resources:
 - insights.azure.hfl.dev_privatelinkscopes.yaml
 - insights.azure.hfl.dev_privatelinkscopesprivateendpointconnections.yaml
 - insights.azure.hfl.dev_privatelinkscopesscopedresources.yaml
+- keyvault.azure.hfl.dev_managedhsms.yaml
+- keyvault.azure.hfl.dev_managedhsmskeys.yaml
+- keyvault.azure.hfl.dev_managedhsmsprivateendpointconnections.yaml
 - keyvault.azure.hfl.dev_vaultcertificates.yaml
 - keyvault.azure.hfl.dev_vaultsecrets.yaml
+- keyvault.azure.hfl.dev_vaultsprivateendpointconnections.yaml
 - maintenance.azure.hfl.dev_configurationassignments.yaml
 - maintenance.azure.hfl.dev_maintenanceconfigurations.yaml
 - management.azure.hfl.dev_managementgroups.yaml
