@@ -1765,7 +1765,7 @@ Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/summaryLo
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/tables,20,,0,operationalinsights.azure.hfl.dev/WorkspacesTable,19,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementAssociations,2,,0,,0,2,false,spec_api=2015-11-01-preview; spec-preview-only
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementConfigurations,6,,0,,0,6,false,spec_api=2015-11-01-preview; spec-preview-only
-Microsoft.OperationsManagement,Microsoft.OperationsManagement/solutions,9,,0,,0,9,false,spec_api=2015-11-01-preview; spec-preview-only
+Microsoft.OperationsManagement,Microsoft.OperationsManagement/solutions,9,,0,operationsmanagement.azure.hfl.dev/Solution,9,0,false,spec_api=2015-11-01-preview; spec-preview-only; ours_api=2015-11-01-preview
 Microsoft.Orbital,Microsoft.Orbital/contactProfiles,26,,0,,0,26,false,spec_api=2022-11-01
 Microsoft.Orbital,Microsoft.Orbital/edgeSites,3,,0,,0,3,false,spec_api=2024-03-01
 Microsoft.Orbital,Microsoft.Orbital/geoCatalogs,6,,0,,0,6,false,spec_api=2026-04-15
