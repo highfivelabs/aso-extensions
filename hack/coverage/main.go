@@ -39,6 +39,7 @@ type sources struct {
 		NearestRelease string `yaml:"nearestRelease"`
 		Fetched        string `yaml:"fetched"`
 	} `yaml:"aso"`
+	Terraform terraformSource `yaml:"terraform"`
 }
 
 func main() {
@@ -84,6 +85,10 @@ func run(root string, check, verbose bool) error {
 	if err := checkPins(root, &src); err != nil {
 		return err
 	}
+	tf, err := readTerraform(root, &src.Terraform)
+	if err != nil {
+		return err
+	}
 	cache := filepath.Join(root, ".cache", "coverage")
 
 	// The denominator: the specs.
@@ -122,15 +127,15 @@ func run(root string, check, verbose bool) error {
 	}
 	tiers := tierRollup(svcs, prio)
 	cats := categoryRollup(rows, prio)
-	files := outputs(rows, svcs, tiers, cats)
+	files := outputs(rows, svcs, tiers, cats, tf)
 	avm, err := readAVM(root, rows)
 	if err != nil {
 		return err
 	}
 	return finish(root, check, files, []block{
-		{"README.md", startMarker, endMarker, readmeSection(svcs, tiers, cats, prio)},
+		{"README.md", startMarker, endMarker, readmeSection(svcs, tiers, cats, prio, tf)},
 		{coverageDir + "/foundation.md", "<!-- foundation:start -->", "<!-- foundation:end -->", foundationTable(rows, res, prio, avm, cats)},
-		{coverageDir + "/README.md", "<!-- numbers:start -->", "<!-- numbers:end -->", numbersBlock(&src, stats, docs, res, rows, svcs, tiers, cats, official, ours)},
+		{coverageDir + "/README.md", "<!-- numbers:start -->", "<!-- numbers:end -->", numbersBlock(&src, stats, docs, res, rows, svcs, tiers, cats, official, ours, tf)},
 	})
 }
 

@@ -103,6 +103,15 @@ tasks:
   check:
     desc: Everything that must hold before a commit
     cmds:
+      - task: check:static
+      - task: build
+      - task: test
+
+  # check without build and the tests: what every pull request runs, whatever
+  # it changed (hack/ci/select.sh; a kind's own tests follow).
+  "check:static":
+    desc: check's pin, generated-files, gofmt, vet, SPDX and guard checks, without the build and the tests
+    cmds:
       - task: upstream-check
       - task: upstream:yaml-check
       - task: go:fmt-check
@@ -119,8 +128,21 @@ tasks:
       - hack/check-spdx.sh
       - hack/test-operator-e2e-guard.sh
       - hack/test-upstream-check.sh
-      - task: build
-      - task: test
+
+  # Some packages' tests, as test runs them: what CI runs for a pull request
+  # that changes only some kinds (hack/ci/select.sh).
+  "test:pkgs":
+    desc: 'The tests of some packages (envtest, the fake cloud, PostgreSQL in Docker): task test:pkgs PKGS="./apis/arm/network/..." [RUN=regexp]'
+    requires:
+      vars: [PKGS]
+    cmds:
+      - task: upstream-check
+      - hack/check-tests-present.sh
+      - task: common:setup-envtest
+        vars: {BIN: '{{.BIN}}', PACKAGE: '{{.SETUP_ENVTEST}}'}
+      - |
+        KUBEBUILDER_ASSETS="$({{.BIN}}/setup-envtest use {{.ENVTEST_K8S_VERSION}} --bin-dir {{.BIN}}/envtest -p path)" \
+          go test {{.PKGS}} -count=1{{if .RUN}} -run '{{.RUN}}'{{end}}
 
   operator-e2e:
     desc: The install on kind with the fake cloud (tests/operator/run.sh); fails unless it ends with "all checks passed"
