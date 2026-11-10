@@ -88,7 +88,7 @@ type UserList struct {
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.aadUser) || has(self.aadUser)",message="a user cannot change from aadUser to localUser"
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.localUser) || has(self.localUser)",message="a user cannot change from localUser to aadUser"
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.azureName) || self.azureName == oldSelf.azureName",message="azureName is immutable"
-// +kubebuilder:validation:XValidation:rule="!has(oldSelf.aadUser) || !has(self.aadUser) || (has(self.aadUser.alias) ? self.aadUser.alias : ”) == (has(oldSelf.aadUser.alias) ? oldSelf.aadUser.alias : ”)",message="aadUser.alias is immutable"
+// +kubebuilder:validation:XValidation:rule="!has(oldSelf.aadUser) || !has(self.aadUser) || (has(self.aadUser.alias) == has(oldSelf.aadUser.alias) && (!has(self.aadUser.alias) || self.aadUser.alias == oldSelf.aadUser.alias))",message="aadUser.alias is immutable"
 type UserSpec struct {
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
 	// doesn't have to be.
