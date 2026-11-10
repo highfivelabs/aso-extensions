@@ -123,7 +123,7 @@ func totalSVG(title string, attrs, resources segs, note string, tf *tfAgg, provi
 	extra := 0
 	if tf != nil {
 		label += "; " + tfLabel(provider, *tf) + ". " + azapiNote
-		extra = 54
+		extra = 72
 	}
 	height := 108 + extra
 	if note != "" {
@@ -147,7 +147,8 @@ func totalSVG(title string, attrs, resources segs, note string, tf *tfAgg, provi
 		b.WriteString(tfBar(0, 110, 640, 12, *tf, "tf"))
 		legend(&b, 134, attrs)
 		tfLegend(&b, 150, provider)
-		y = 152
+		fmt.Fprintf(&b, `<text x="0" y="175" class="t">%s</text>`, escape(azapiNote))
+		y = 170
 	} else {
 		legend(&b, y, attrs)
 	}

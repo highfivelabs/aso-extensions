@@ -449,4 +449,6 @@ Generated; these cannot drift from the data.
 **ASO's own supported-resources documentation** (`docs/hugo/content/reference/*/_index.md` at the pin) lists 305 kinds; 299 are among the kinds read here, of which 296 have the same newest API version in both. Listed there and not read here: 6: dbformysql/user, dbforpostgresql/user, entra/application, entra/securitygroup, entra/serviceprincipal, sql/user. Read here and not listed there: 0.
 
 Version differences: redhatopenshift/hcpopenshiftcluster docs v20260901preview wire v20261001; redhatopenshift/hcpopenshiftclustersexternalauth docs v20260901preview wire v20261001; redhatopenshift/hcpopenshiftclustersnodepool docs v20260901preview wire v20261001.
+
+**Terraform** (`azurerm`, catalog `13064af34996`, 2026-11-09, vendored 2026-11-10; an estimate): 3,566 of the catalog's 43,408 attributes (8.2%) by the lenient rule (L2), 3,136 (7.2%) by the strict rule (L1). The catalog counted the denominator at an earlier commit of this repository, so its totals can differ slightly from the ones above. Services here without a Terraform row: 0; Terraform rows for services not here: 0.
 <!-- numbers:end -->
