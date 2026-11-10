@@ -339,6 +339,26 @@ spec:
   location: westus
   source: {script: "echo hello"}
 ---
+apiVersion: maintenance.azure.hfl.dev/v20230401
+kind: MaintenanceConfiguration
+metadata: {name: patching, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  maintenanceScope: InGuestPatch
+  extensionProperties: {InGuestPatchMode: User}
+  installPatches: {rebootSetting: IfRequired}
+  maintenanceWindow: {startDateTime: "2026-12-01 02:00", duration: "03:00", timeZone: UTC, recurEvery: Week Saturday}
+---
+apiVersion: maintenance.azure.hfl.dev/v20230401
+kind: ConfigurationAssignment
+metadata: {name: vm-patching, namespace: $1}
+spec:
+  azureName: patching
+  owner: {group: compute.azure.com, kind: VirtualMachine, name: vm}
+  location: westus
+  maintenanceConfigurationReference: {group: maintenance.azure.hfl.dev, kind: MaintenanceConfiguration, name: patching}
+---
 apiVersion: containerregistry.azure.hfl.dev/v20251101
 kind: RegistriesScopeMap
 metadata: {name: pull-apps, namespace: $1}
@@ -567,6 +587,10 @@ wait_for 90 "team-a's VirtualMachinesRunCommand Ready" ready virtualmachinesrunc
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm/runCommands/hello 201" \
   || fail "the fake resource manager saw no run command created on team-a's VM"
 pass "team-a VirtualMachinesRunCommand Ready: a run command of ASO's VirtualMachine, generated, PUT by ASO's ARM reconciler"
+wait_for 90 "team-a's ConfigurationAssignment Ready" ready configurationassignments.maintenance.azure.hfl.dev team-a vm-patching
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm/providers/Microsoft.Maintenance/configurationAssignments/patching 201" \
+  || fail "the fake resource manager saw no maintenance assignment on team-a's VM"
+pass "team-a ConfigurationAssignment Ready: our maintenance configuration assigned to ASO's VirtualMachine, an extension resource"
 wait_for 90 "team-a's Vault Ready" ready vaults.recoveryservices.azure.hfl.dev team-a backups
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.RecoveryServices/vaults/team-a-backups 201" \
   || fail "the fake resource manager saw no Recovery Services vault created in team-a's resource group"
@@ -747,6 +771,11 @@ kubectl -n team-a delete virtualmachinesruncommands.compute.azure.hfl.dev hello 
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm/runCommands/hello 200" \
   || fail "the fake resource manager saw no delete of the run command"
 pass "the run command is deleted in Resource Manager"
+kubectl -n team-a delete configurationassignments.maintenance.azure.hfl.dev vm-patching --timeout=120s
+kubectl -n team-a delete maintenanceconfigurations.maintenance.azure.hfl.dev patching --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm/providers/Microsoft.Maintenance/configurationAssignments/patching 200" \
+  || fail "the fake resource manager saw no delete of the maintenance assignment"
+pass "the maintenance assignment and its configuration are deleted in Resource Manager"
 kubectl -n team-a delete vaults.recoveryservices.azure.hfl.dev backups --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.RecoveryServices/vaults/team-a-backups 200" \
   || fail "the fake resource manager saw no delete of the vault"

@@ -14,6 +14,8 @@ team-a WorkspacesTable Ready
 team-a NetworkSecurityPerimeter Ready
 team-a RegistriesScopeMap Ready
 team-a VirtualMachinesRunCommand Ready
+team-a ConfigurationAssignment Ready
+the maintenance assignment and its configuration are deleted
 team-a Vault (Recovery Services) Ready
 team-a ManagementLock Ready
 the fake resource manager holds a lock on team-a-rg
