@@ -77,3 +77,61 @@ func TestNetworkManager(t *testing.T) {
 		t.Fatal("a network manager's children outlive it")
 	}
 }
+
+// What a connectivity configuration, a security admin or security user rule
+// collection and their rules must give.
+func TestNetworkManagerConfigurations(t *testing.T) {
+	a := New(func(string) bool { return true })
+	put := func(what, path, body string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, path, body)
+		expect(t, what, code, resp, want)
+	}
+	sub := "/subscriptions/" + sub1
+	rg := sub + "/resourceGroups/net"
+	put("resource group", rg, `{"location":"westus"}`, http.StatusCreated)
+	nw := rg + "/providers/Microsoft.Network/"
+	nm := nw + "networkManagers/avnm"
+	put("manager", nm, `{"location":"westus","properties":{"networkManagerScopes":{"subscriptions":["`+sub+`"]}}}`, http.StatusCreated)
+	put("other manager", nw+"networkManagers/other", `{"location":"westus","properties":{"networkManagerScopes":{"subscriptions":["`+sub+`"]}}}`, http.StatusCreated)
+	group := nm + "/networkGroups/spokes"
+	put("network group", group, `{"properties":{"memberType":"VirtualNetwork"}}`, http.StatusCreated)
+	put("other manager's group", nw+"networkManagers/other/networkGroups/spokes", `{"properties":{}}`, http.StatusCreated)
+	hub := nw + "virtualNetworks/hub"
+	a.AddResource(hub)
+
+	applies := func(g string) string {
+		return `"appliesToGroups":[{"networkGroupId":"` + g + `","groupConnectivity":"None"}]`
+	}
+	cc := nm + "/connectivityConfigurations/hub-spoke"
+	put("connectivity of an unknown topology", cc, `{"properties":{"connectivityTopology":"Star",`+applies(group)+`}}`, http.StatusBadRequest)
+	put("hub and spoke without hubs", cc, `{"properties":{"connectivityTopology":"HubAndSpoke",`+applies(group)+`}}`, http.StatusBadRequest)
+	put("hub and spoke to a missing hub", cc, `{"properties":{"connectivityTopology":"HubAndSpoke","hubs":[{"resourceId":"`+hub+`-nope"}],`+applies(group)+`}}`, http.StatusNotFound)
+	put("connectivity without groups", cc, `{"properties":{"connectivityTopology":"Mesh"}}`, http.StatusBadRequest)
+	put("connectivity to another manager's group", cc, `{"properties":{"connectivityTopology":"Mesh",`+applies(nw+"networkManagers/other/networkGroups/spokes")+`}}`, http.StatusBadRequest)
+	put("connectivity to a missing group", cc, `{"properties":{"connectivityTopology":"Mesh",`+applies(group+"-nope")+`}}`, http.StatusNotFound)
+	put("hub and spoke", cc, `{"properties":{"connectivityTopology":"HubAndSpoke","hubs":[{"resourceId":"`+hub+`","resourceType":"Microsoft.Network/virtualNetworks"}],`+applies(group)+`}}`, http.StatusCreated)
+
+	admin := nm + "/securityAdminConfigurations/baseline"
+	put("security admin configuration", admin, `{"properties":{}}`, http.StatusCreated)
+	coll := admin + "/ruleCollections/deny"
+	put("collection without groups", coll, `{"properties":{}}`, http.StatusBadRequest)
+	put("collection", coll, `{"properties":{"appliesToGroups":[{"networkGroupId":"`+group+`"}]}}`, http.StatusCreated)
+	rule := coll + "/rules/rdp"
+	custom := func(extra string) string {
+		return `{"kind":"Custom","properties":{"protocol":"Tcp","direction":"Inbound"` + extra + `}}`
+	}
+	put("rule of an unknown kind", rule, `{"kind":"Other","properties":{}}`, http.StatusBadRequest)
+	put("custom rule without a direction", rule, `{"kind":"Custom","properties":{"protocol":"Tcp","access":"Deny","priority":10}}`, http.StatusBadRequest)
+	put("custom rule of an unknown access", rule, custom(`,"access":"Block","priority":10`), http.StatusBadRequest)
+	put("custom rule out of priority", rule, custom(`,"access":"Deny","priority":5000`), http.StatusBadRequest)
+	put("custom rule", rule, custom(`,"access":"Deny","priority":10,"destinationPortRanges":["3389"]`), http.StatusCreated)
+	put("default rule without a flag", coll+"/rules/default", `{"kind":"Default","properties":{}}`, http.StatusBadRequest)
+	put("default rule", coll+"/rules/default", `{"kind":"Default","properties":{"flag":"AllowVnetInbound"}}`, http.StatusCreated)
+
+	user := nm + "/securityUserConfigurations/team"
+	put("security user configuration", user, `{"properties":{}}`, http.StatusCreated)
+	put("user collection", user+"/ruleCollections/app", `{"properties":{"appliesToGroups":[{"networkGroupId":"`+group+`"}]}}`, http.StatusCreated)
+	put("user rule without a protocol", user+"/ruleCollections/app/rules/https", `{"properties":{"direction":"Inbound"}}`, http.StatusBadRequest)
+	put("user rule", user+"/ruleCollections/app/rules/https", `{"properties":{"protocol":"Tcp","direction":"Inbound","destinationPortRanges":["443"]}}`, http.StatusCreated)
+}

@@ -76,7 +76,7 @@ stable); our generated kinds are pinned to the version they are generated from.
 | 8 | `VirtualNetworkGatewayConnection`, `LocalNetworkGateway` (site-to-site VPN) | `Microsoft.Network/connections` (242 as the spec has it, about 30 as references), `localNetworkGateways` (12); spec `network/.../Network/stable/2026-03-01/networkGateway.json` | `VirtualNetworkGateway` (86 of 91; ASO v20250301) / none | the gateway's connection and the on-premises side; the gateway itself is ASO's | issue [#4486](https://github.com/Azure/azure-service-operator/issues/4486) open, no PR | 0 | **built 2026-11-09**, generated: `network.azure.hfl.dev/v20260301` `VirtualNetworkGatewayConnection`, `LocalNetworkGateway` (spec 2026-03-01); the gateways in a connection are references (ASO's `VirtualNetworkGateway` by ARM ID, our `LocalNetworkGateway` by object), `SubResource.Id` labelled `$referenceType: arm`, the shared key and authorization key Secret references; not built: the `sharedkey` singleton child and the connection actions | M |
 | 9 | `ExpressRouteCircuit`, `ExpressRouteCircuitPeering`, `ExpressRouteCircuitAuthorization`, `ExpressRouteGateway`, `ExpressRouteConnection`, `ExpressRoutePort` | `expressRouteCircuits` (72), `expressRouteCircuits/peerings` (44), `.../authorizations` (2), `expressRouteGateways` (24), `expressRouteGateways/expressRouteConnections` (16), `ExpressRoutePorts` (15), `expressRouteCrossConnections` (35) and `/peerings` (28); spec `.../Network/stable/2026-03-01/expressRoute.json` | none / none | all | issue [#4371](https://github.com/Azure/azure-service-operator/issues/4371) open (`cx-request`), no PR | 0 | **built 2026-11-09** (circuits and ports, PR #28; gateways, the PR after), generated: `network.azure.hfl.dev/v20260301` `ExpressRouteCircuit`, `ExpressRouteCircuitsPeering`, `ExpressRouteCircuitsAuthorization`, `ExpressRouteCircuitsPeeringsConnection` (Global Reach), `ExpressRoutePort`, `ExpressRoutePortsAuthorization`; hand-written extensions keep a circuit's peerings and authorizations and a peering's connections on the parent's PUT (ASO's `RouteTable` code, copied) and export the keys Azure makes (service key, authorization keys) to Secrets; input keys are Secret references; `ExpressRouteGateway` (in a Virtual WAN hub: our `VirtualHub` by object since row 10, or an ARM ID; its PUT keeps its connections) and `ExpressRouteGatewaysExpressRouteConnection` (to a circuit's private peering by object or ARM ID, a cross-subscription authorization key from a Secret), from `virtualWan.json`, the connection by generator patch 0007 (the 2026-03-01 network specs no longer mark `SubResource` as a resource). Not built: cross-connections (the connectivity provider's side; no DELETE, and the generator does not take them as resources) | L (about 200) |
 | 10 | `VirtualWan`, `VirtualHub`, `VirtualHubConnection` (`hubVirtualNetworkConnections`), `HubRouteTable`, `VirtualHubRouteTable`, `RoutingIntent`, `BgpConnection`, `VirtualHubIpConfiguration`; then `VpnGateway`, `VpnConnection`, `VpnSite`, `VpnServerConfiguration`, `P2sVpnGateway`, `VpnGatewayNatRule` | `virtualWans` (6), `virtualHubs` (28), `virtualHubs/hubVirtualNetworkConnections` (16), `hubRouteTables` (6), `routeTables` (5), `routingIntent` (3), `bgpConnections` (13), `ipConfigurations` (113, mostly embedded), `vpnGateways` (78), `vpnGateways/vpnConnections` (56), `vpnSites` (28), `vpnServerConfigurations` (36), `p2svpnGateways` (24); spec `.../virtualWan.json` | none / none | hubs and Virtual WAN, VPN gateways | none found | 1 (hubVirtualNetworkConnections, avm-ptn-alz-sub-vending) | **WAN and hub built 2026-11-09**, generated: `network.azure.hfl.dev/v20260301` `VirtualWan`, `VirtualHub` (in a WAN by object or ARM ID; its PUT keeps its route tables, the circuit's `ARMResourceModifier` pattern), `VirtualHubsHubVirtualNetworkConnection`, `VirtualHubsHubRouteTable`, `VirtualHubsRouteTable`, `VirtualHubsRoutingIntent`, `VirtualHubsBgpConnection`, `VirtualHubsIpConfiguration` (the connection and `routeTables` by patch 0007); route next hops, BGP peers' connections and IP configurations' subnets are references. **VPN half built 2026-11-09**, generated: `VpnGateway` (in our hub by object; its PUT keeps its connections and NAT rules), `VpnGatewaysVpnConnection` (to our `VpnSite` by object; its link connections embedded, each link connection's `sharedKey` a Secret reference, NAT rules by reference), `VpnGatewaysNatRule`, `VpnSite` (in our WAN; links embedded; `siteKey` a Secret reference), `VpnServerConfiguration` (policy groups embedded; the RADIUS secrets Secret references), `P2sVpnGateway` (in our hub, with our server configuration). Not built: hub `routeMaps` and `connectionPolicies` (not in the queue), the link connections' `sharedKeys/default` singleton, server configuration policy groups as their own kind (kept in the configuration's spec), the connection's deprecated `sharedKey` (removed), and the POST actions (reset, packet capture, VPN profiles) | L (about 400, less as references); split into two sessions: virtual WAN and hub, then VPN (both done) |
-| 11 | `NetworkManager` and children (connectivity, security admin, routing configurations, network groups, IPAM pools) | `networkManagers` (6) and 19 child types (about 90); `networkManagerConnections` (2, subscription or management group scope) | none / none | all | none found | 0 | **first part built 2026-11-10**, generated: `network.azure.hfl.dev/v20260301` `NetworkManager`, `NetworkManagerConnection` (at a subscription or management group: an extension resource with an arbitrary owner, patch 0006), `NetworkManagersScopeConnection`, `NetworkManagersNetworkGroup`, `NetworkManagersNetworkGroupsStaticMember` (spec 2026-03-01, which needs no generator patch). Next: connectivity, security admin and security user configurations with their rule collections and rules; then routing configurations with theirs, and `commits`. Not in this row's plan: IPAM pools, verifier workspaces | L; split into three pull requests |
+| 11 | `NetworkManager` and children (connectivity, security admin, routing configurations, network groups, IPAM pools) | `networkManagers` (6) and 19 child types (about 90); `networkManagerConnections` (2, subscription or management group scope) | none / none | all | none found | 0 | **first part built 2026-11-10**, generated: `network.azure.hfl.dev/v20260301` `NetworkManager`, `NetworkManagerConnection` (at a subscription or management group: an extension resource with an arbitrary owner, patch 0006), `NetworkManagersScopeConnection`, `NetworkManagersNetworkGroup`, `NetworkManagersNetworkGroupsStaticMember` (spec 2026-03-01, which needs no generator patch). **Second part built 2026-11-10**, generated: `NetworkManagersConnectivityConfiguration`, the security admin configuration, rule collection and rule (polymorphic: `adminRule` or `defaultAdminRule`, by `$resourceEmbeddedInParent` on the leaves), and the security user configuration, rule collection and rule. Next: routing configurations with their rule collections and rules, and `commits`. Not in this row's plan: IPAM pools, verifier workspaces | L; split into three pull requests |
 | 12 | `DnsZonesSOARecord`, `PrivateDnsZonesSOARecord`, `IpGroup`, `RouteFilter`, `ServiceEndpointPolicy`, `DnsResolverPolicy` (+ links, security rules) | `dnsZones/SOA` (26), `privateDnsZones/SOA` (21), `ipGroups` (3), `routeFilters` (8), `serviceEndpointPolicies` (9), `dnsResolverPolicies` (3) | none / none | the leftovers of DNS, firewall and routing | none found | 0 | generator | M together |
 | 13 | `ManagedHsm` (+ keys), `VaultAccessPolicy`, `VaultSecret` (ARM) | `Microsoft.KeyVault/managedHSMs` (20), `managedHSMs/keys` (15), `vaults/accessPolicies` (7), `vaults/secrets` (6), `vaults/privateEndpointConnections` (5); spec `keyvault/.../KeyVault/stable/2026-05-15` | `Vault`, `VaultKey` (28 of 28, 15 of 15) / `VaultSecret` and `VaultCertificate` (data plane) | managed HSMs and the ARM-side secret | secrets declined (#1894); none for the rest | 4 (vaults), 5 (keys) | generator | M |
 | 14 | `OperationsManagementSolution`, `WorkspacesDataSource`, `WorkspacesStorageInsightConfig`, `LogAnalyticsCluster` | `OperationsManagement/solutions` (9, preview 2015-11-01-preview), `OperationalInsights/workspaces/dataSources` (4), `storageInsightConfigs` (6), `clusters` (18) | `Workspace` (20 of 23) / tables, data exports, linked services, linked storage, saved searches, query packs | solutions; the rest of a workspace | none found | 1 (solutions) | generator | M |
@@ -125,12 +125,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 21.0% | 35.9% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 21.6% | 35.2% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.8% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (108 with no kind, 60 partly covered, 78 covered)
+### platform-foundation: 246 resources (101 with no kind, 61 partly covered, 84 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -196,111 +196,111 @@ Generated: every resource of the two categories, by the order of the services in
 | 60 | `Microsoft.Network/applicationSecurityGroups/addressPrefixSets` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
 | 61 | `Microsoft.Network/expressRouteLags/authorizations` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
 | 62 | `Microsoft.Network/firewallPolicies/signatureOverrides` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
-| 63 | `Microsoft.Network/networkManagers/securityUserConfigurations` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
-| 64 | `Microsoft.Network/networkManagers/routingConfigurations` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
-| 65 | `Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
-| 66 | `Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
-| 67 | `Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisRuns` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
-| 68 | `Microsoft.Network/virtualRouters/peerings` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
-| 69 | `Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections/sharedKeys` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
-| 70 | `Microsoft.Network/dnsResolverDomainLists` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 71 | `Microsoft.Network/dnsResolverPolicies` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 72 | `Microsoft.Network/dnsResolverPolicies/virtualNetworkLinks` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 73 | `Microsoft.Network/ipGroups` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 74 | `Microsoft.Network/networkManagers/ipamPools/staticCidrs` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 75 | `Microsoft.Network/networkManagers/routingConfigurations/ruleCollections` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 76 | `Microsoft.Network/networkManagers/securityAdminConfigurations` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 77 | `Microsoft.Network/networkManagers/verifierWorkspaces` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 78 | `Microsoft.Network/serviceEndpointPolicies/serviceEndpointPolicyDefinitions` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 79 | `Microsoft.Network/networkVirtualAppliances/virtualApplianceSites` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 80 | `Microsoft.Network/routeFilters/routeFilterRules` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 81 | `Microsoft.Network/networkManagers/commits` | no kind |  |  | 0 / 0 / 5 | resourceGroup | generator | S (5) | 0 |
-| 82 | `Microsoft.Network/networkManagers/routingConfigurations/ruleCollections/rules` | no kind |  |  | 0 / 0 / 5 | resourceGroup | generator | S (5) | 0 |
-| 83 | `Microsoft.Network/vpnServerConfigurations/configurationPolicyGroups` | no kind |  |  | 0 / 0 / 5 | resourceGroup | generator | S (5) | 0 |
-| 84 | `Microsoft.Network/dnsResolverPolicies/dnsSecurityRules` | no kind |  |  | 0 / 0 / 6 | resourceGroup | generator | S (6) | 0 |
-| 85 | `Microsoft.Network/virtualRouters` | no kind |  |  | 0 / 0 / 6 | resourceGroup | generator | S (6) | 0 |
-| 86 | `Microsoft.Network/networkVirtualAppliances/inboundSecurityRules` | no kind |  |  | 0 / 0 / 7 | resourceGroup | generator | S (7) | 0 |
-| 87 | `Microsoft.Network/virtualNetworkGateways/natRules` | no kind |  |  | 0 / 0 / 7 | resourceGroup | generator | S (7) | 0 |
-| 88 | `Microsoft.Network/firewallPolicies/kubeSelectorGroups` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
-| 89 | `Microsoft.Network/networkManagers/ipamPools` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
-| 90 | `Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisIntents` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
-| 91 | `Microsoft.Network/routeFilters` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
-| 92 | `Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections/rules` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 93 | `Microsoft.Network/serviceEndpointPolicies` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 94 | `Microsoft.Network/virtualHubs/connectionPolicies` | no kind |  |  | 0 / 0 / 11 | resourceGroup | generator | S (11) | 0 |
-| 95 | `Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections/rules` | no kind |  |  | 0 / 0 / 12 | resourceGroup | generator | S (12) | 0 |
-| 96 | `Microsoft.Network/virtualHubs/routeMaps` | no kind |  |  | 0 / 0 / 12 | resourceGroup | generator | S (12) | 0 |
-| 97 | `Microsoft.Network/networkManagers/connectivityConfigurations` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
-| 98 | `Microsoft.Network/networkVirtualAppliances/networkVirtualApplianceConnections` | no kind |  |  | 0 / 0 / 15 | resourceGroup | generator | S (15) | 0 |
-| 99 | `Microsoft.Network/expressRouteLags` | no kind |  |  | 0 / 0 / 18 | resourceGroup | generator | S (18) | 0 |
-| 100 | `Microsoft.Network/networkWatchers/packetCaptures` | no kind |  |  | 0 / 0 / 20 | resourceGroup | generator | S (20) | 0 |
-| 101 | `Microsoft.Network/privateDnsZones/SOA` | no kind |  |  | 0 / 0 / 21 | resourceGroup | generator | S (21) | 0 |
-| 102 | `Microsoft.Network/networkWatchers/connectionAnalyzers` | no kind |  |  | 0 / 0 / 23 | resourceGroup | generator | S (23) | 0 |
-| 103 | `Microsoft.Network/networkVirtualAppliances` | no kind |  |  | 0 / 0 / 25 | resourceGroup | generator | S (25) | 0 |
-| 104 | `Microsoft.Network/dnsZones/SOA` | no kind |  |  | 0 / 0 / 26 | resourceGroup | generator | M (26) | 0 |
-| 105 | `Microsoft.Network/expressRouteCrossConnections/peerings` | no kind |  |  | 0 / 0 / 28 | resourceGroup | generator | M (28) | 0 |
-| 106 | `Microsoft.Network/firewallPolicies/ruleCollectionGroups/ruleCollectionGroupDrafts` | no kind |  |  | 0 / 0 / 30 | resourceGroup | generator | M (30) | 0 |
-| 107 | `Microsoft.Network/expressRouteCrossConnections` | no kind |  |  | 0 / 0 / 35 | resourceGroup | generator | M (35) | 0 |
-| 108 | `Microsoft.Network/firewallPolicies/firewallPolicyDrafts` | no kind |  |  | 0 / 0 / 36 | resourceGroup | generator | M (36) | 0 |
-| 109 | `Microsoft.Network/networkWatchers/connectionMonitors` | no kind |  |  | 0 / 0 / 46 | resourceGroup | generator | M (46) | 0 |
-| 110 | `Microsoft.Network/privateEndpoints` | partial, 7 of 106 missing | `network/PrivateEndpoint` |  | 99 / 0 / 7 | resourceGroup | extend: ASO's API version is older than the spec's | S (7) | 12 |
-| 111 | `Microsoft.Network/publicIPAddresses` | partial, 3 of 39 missing | `network/PublicIPAddress` |  | 36 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 4 |
-| 112 | `Microsoft.Network/privateDnsZones` | partial, 1 of 4 missing | `network/PrivateDnsZone` |  | 3 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 2 |
-| 113 | `Microsoft.Network/routeTables` | partial, 7 of 10 missing | `network/RouteTable` |  | 3 / 0 / 7 | resourceGroup | extend: ASO's API version is older than the spec's | S (7) | 2 |
-| 114 | `Microsoft.Network/networkSecurityGroups` | partial, 23 of 26 missing | `network/NetworkSecurityGroup` |  | 3 / 0 / 23 | resourceGroup | extend: ASO's API version is older than the spec's | S (23) | 2 |
-| 115 | `Microsoft.Network/virtualNetworks/subnets` | partial, 3 of 69 missing | `network/VirtualNetworksSubnet` |  | 66 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 2 |
-| 116 | `Microsoft.Network/virtualNetworks` | partial, 101 of 118 missing | `network/VirtualNetwork` |  | 17 / 0 / 101 | resourceGroup | extend: ASO's API version is older than the spec's | L (101) | 2 |
-| 117 | `Microsoft.Network/routeTables/routes` | partial, 1 of 4 missing | `network/RouteTablesRoute` |  | 3 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 1 |
-| 118 | `Microsoft.Network/natGateways` | partial, 2 of 12 missing | `network/NatGateway` |  | 10 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 1 |
-| 119 | `Microsoft.Network/bastionHosts` | partial, 6 of 26 missing | `network/BastionHost` |  | 20 / 0 / 6 | resourceGroup | extend: ASO's API version is older than the spec's | S (6) | 1 |
-| 120 | `Microsoft.Network/firewallPolicies/ruleCollectionGroups` | partial, 3 of 30 missing | `network/FirewallPoliciesRuleCollectionGroup` |  | 27 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 1 |
-| 121 | `Microsoft.Network/azureFirewalls` | partial, 6 of 64 missing | `network/AzureFirewall` |  | 58 / 0 / 6 | resourceGroup | extend: ASO's API version is older than the spec's | S (6) | 1 |
-| 122 | `Microsoft.Network/expressRoutePorts/authorizations` | partial, 1 of 1 missing |  | `network/ExpressRoutePortsAuthorization` | 0 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 123 | `Microsoft.Network/expressRouteCircuits/authorizations` | partial, 1 of 2 missing |  | `network/ExpressRouteCircuitsAuthorization` | 0 / 1 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 124 | `Microsoft.Network/applicationSecurityGroups` | partial, 1 of 3 missing | `network/ApplicationSecurityGroup` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 0 |
-| 125 | `Microsoft.Network/networkWatchers` | partial, 1 of 3 missing | `network/NetworkWatcher` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 0 |
-| 126 | `Microsoft.Network/dnsZones` | partial, 1 of 6 missing | `network/DnsZone` |  | 5 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 127 | `Microsoft.Network/networkWatchers/flowLogs` | partial, 2 of 18 missing | `network/NetworkWatchersFlowLog` |  | 16 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 0 |
-| 128 | `Microsoft.Network/expressRouteGateways` | partial, 18 of 24 missing |  | `network/ExpressRouteGateway` | 0 / 6 / 18 | resourceGroup | extend: newer API version or property config | S (18) | 0 |
-| 129 | `Microsoft.Network/dnsZones/AAAA` | partial, 1 of 26 missing | `network/DnsZonesAAAARecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 130 | `Microsoft.Network/dnsZones/CAA` | partial, 1 of 26 missing | `network/DnsZonesCAARecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 131 | `Microsoft.Network/dnsZones/CNAME` | partial, 1 of 26 missing | `network/DnsZonesCNAMERecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 132 | `Microsoft.Network/dnsZones/MX` | partial, 1 of 26 missing | `network/DnsZonesMXRecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 133 | `Microsoft.Network/dnsZones/NS` | partial, 1 of 26 missing | `network/DnsZonesNSRecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 134 | `Microsoft.Network/dnsZones/PTR` | partial, 1 of 26 missing | `network/DnsZonesPTRRecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 135 | `Microsoft.Network/dnsZones/SRV` | partial, 1 of 26 missing | `network/DnsZonesSRVRecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 136 | `Microsoft.Network/dnsZones/TXT` | partial, 1 of 26 missing | `network/DnsZonesTXTRecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 137 | `Microsoft.Network/publicIPPrefixes` | partial, 1 of 26 missing | `network/PublicIPPrefix` |  | 25 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 0 |
-| 138 | `Microsoft.Network/virtualHubs` | partial, 7 of 28 missing |  | `network/VirtualHub` | 0 / 21 / 7 | resourceGroup | extend: newer API version or property config | S (7) | 0 |
-| 139 | `Microsoft.Network/expressRouteCircuits/peerings` | partial, 8 of 44 missing |  | `network/ExpressRouteCircuitsPeering` | 0 / 36 / 8 | resourceGroup | extend: newer API version or property config | S (8) | 0 |
-| 140 | `Microsoft.Network/vpnGateways/vpnConnections` | partial, 1 of 56 missing |  | `network/VpnGatewaysVpnConnection` | 0 / 55 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 141 | `Microsoft.Network/expressRouteCircuits` | partial, 51 of 72 missing |  | `network/ExpressRouteCircuit` | 0 / 21 / 51 | resourceGroup | extend: newer API version or property config | M (51) | 0 |
-| 142 | `Microsoft.Network/vpnGateways` | partial, 67 of 78 missing |  | `network/VpnGateway` | 0 / 11 / 67 | resourceGroup | extend: newer API version or property config | M (67) | 0 |
-| 143 | `Microsoft.Network/virtualNetworkGateways` | partial, 5 of 91 missing | `network/VirtualNetworkGateway` |  | 86 / 0 / 5 | resourceGroup | extend: ASO's API version is older than the spec's | S (5) | 0 |
-| 144 | `Microsoft.Network/privateEndpoints/privateDnsZoneGroups` | covered | `network/PrivateEndpointsPrivateDnsZoneGroup` |  | 2 / 0 / 0 | resourceGroup | - | - | 12 |
-| 145 | `Microsoft.Network/privateDnsZones/virtualNetworkLinks` | covered | `network/PrivateDnsZonesVirtualNetworkLink` |  | 6 / 0 / 0 | resourceGroup | - | - | 2 |
-| 146 | `Microsoft.Network/dnsResolvers` | covered | `network/DnsResolver` |  | 3 / 0 / 0 | resourceGroup | - | - | 1 |
-| 147 | `Microsoft.Network/virtualHubs/hubVirtualNetworkConnections` | covered |  | `network/VirtualHubsHubVirtualNetworkConnection` | 0 / 16 / 0 | resourceGroup | - | - | 1 |
-| 148 | `Microsoft.Network/networkSecurityGroups/securityRules` | covered | `network/NetworkSecurityGroupsSecurityRule` |  | 21 / 0 / 0 | resourceGroup | - | - | 1 |
-| 149 | `Microsoft.Network/virtualNetworks/virtualNetworkPeerings` | covered | `network/VirtualNetworksVirtualNetworkPeering` |  | 25 / 0 / 0 | resourceGroup | - | - | 1 |
-| 150 | `Microsoft.Network/firewallPolicies` | covered | `network/FirewallPolicy` |  | 41 / 0 / 0 | resourceGroup | - | - | 1 |
-| 151 | `Microsoft.Network/networkManagers/networkGroups/staticMembers` | covered |  | `network/NetworkManagersNetworkGroupsStaticMember` | 0 / 1 / 0 | resourceGroup | - | - | 0 |
-| 152 | `Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks` | covered | `network/DnsForwardingRuleSetsVirtualNetworkLink` |  | 2 / 0 / 0 | resourceGroup | - | - | 0 |
-| 153 | `Microsoft.Network/networkManagerConnections` | covered |  | `network/NetworkManagerConnection` | 0 / 2 / 0 | managementGroup,subscription | - | - | 0 |
-| 154 | `Microsoft.Network/networkManagers/networkGroups` | covered |  | `network/NetworkManagersNetworkGroup` | 0 / 2 / 0 | resourceGroup | - | - | 0 |
-| 155 | `Microsoft.Network/dnsForwardingRulesets` | covered | `network/DnsForwardingRuleset` |  | 3 / 0 / 0 | resourceGroup | - | - | 0 |
-| 156 | `Microsoft.Network/dnsResolvers/outboundEndpoints` | covered | `network/DnsResolversOutboundEndpoint` |  | 3 / 0 / 0 | resourceGroup | - | - | 0 |
-| 157 | `Microsoft.Network/networkManagers/scopeConnections` | covered |  | `network/NetworkManagersScopeConnection` | 0 / 3 / 0 | resourceGroup | - | - | 0 |
-| 158 | `Microsoft.Network/virtualHubs/routingIntent` | covered |  | `network/VirtualHubsRoutingIntent` | 0 / 3 / 0 | resourceGroup | - | - | 0 |
-| 159 | `Microsoft.Network/dnsForwardingRulesets/forwardingRules` | covered | `network/DnsForwardingRuleSetsForwardingRule` |  | 5 / 0 / 0 | resourceGroup | - | - | 0 |
-| 160 | `Microsoft.Network/dnsResolvers/inboundEndpoints` | covered | `network/DnsResolversInboundEndpoint` |  | 5 / 0 / 0 | resourceGroup | - | - | 0 |
-| 161 | `Microsoft.Network/expressRouteCircuits/peerings/connections` | covered |  | `network/ExpressRouteCircuitsPeeringsConnection` | 0 / 5 / 0 | resourceGroup | - | - | 0 |
-| 162 | `Microsoft.Network/virtualHubs/routeTables` | covered |  | `network/VirtualHubsRouteTable` | 0 / 5 / 0 | resourceGroup | - | - | 0 |
-| 163 | `Microsoft.Network/networkManagers` | covered |  | `network/NetworkManager` | 0 / 6 / 0 | resourceGroup | - | - | 0 |
-| 164 | `Microsoft.Network/virtualHubs/hubRouteTables` | covered |  | `network/VirtualHubsHubRouteTable` | 0 / 6 / 0 | resourceGroup | - | - | 0 |
-| 165 | `Microsoft.Network/virtualWans` | covered |  | `network/VirtualWan` | 0 / 6 / 0 | resourceGroup | - | - | 0 |
-| 166 | `Microsoft.Network/vpnGateways/natRules` | covered |  | `network/VpnGatewaysNatRule` | 0 / 7 / 0 | resourceGroup | - | - | 0 |
-| 167 | `Microsoft.Network/localNetworkGateways` | covered |  | `network/LocalNetworkGateway` | 0 / 12 / 0 | resourceGroup | - | - | 0 |
+| 63 | `Microsoft.Network/networkManagers/routingConfigurations` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
+| 64 | `Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisRuns` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
+| 65 | `Microsoft.Network/virtualRouters/peerings` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
+| 66 | `Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections/sharedKeys` | no kind |  |  | 0 / 0 / 2 | resourceGroup | generator | S (2) | 0 |
+| 67 | `Microsoft.Network/dnsResolverDomainLists` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
+| 68 | `Microsoft.Network/dnsResolverPolicies` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
+| 69 | `Microsoft.Network/dnsResolverPolicies/virtualNetworkLinks` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
+| 70 | `Microsoft.Network/ipGroups` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
+| 71 | `Microsoft.Network/networkManagers/ipamPools/staticCidrs` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
+| 72 | `Microsoft.Network/networkManagers/routingConfigurations/ruleCollections` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
+| 73 | `Microsoft.Network/networkManagers/verifierWorkspaces` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
+| 74 | `Microsoft.Network/serviceEndpointPolicies/serviceEndpointPolicyDefinitions` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
+| 75 | `Microsoft.Network/networkVirtualAppliances/virtualApplianceSites` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
+| 76 | `Microsoft.Network/routeFilters/routeFilterRules` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
+| 77 | `Microsoft.Network/networkManagers/commits` | no kind |  |  | 0 / 0 / 5 | resourceGroup | generator | S (5) | 0 |
+| 78 | `Microsoft.Network/networkManagers/routingConfigurations/ruleCollections/rules` | no kind |  |  | 0 / 0 / 5 | resourceGroup | generator | S (5) | 0 |
+| 79 | `Microsoft.Network/vpnServerConfigurations/configurationPolicyGroups` | no kind |  |  | 0 / 0 / 5 | resourceGroup | generator | S (5) | 0 |
+| 80 | `Microsoft.Network/dnsResolverPolicies/dnsSecurityRules` | no kind |  |  | 0 / 0 / 6 | resourceGroup | generator | S (6) | 0 |
+| 81 | `Microsoft.Network/virtualRouters` | no kind |  |  | 0 / 0 / 6 | resourceGroup | generator | S (6) | 0 |
+| 82 | `Microsoft.Network/networkVirtualAppliances/inboundSecurityRules` | no kind |  |  | 0 / 0 / 7 | resourceGroup | generator | S (7) | 0 |
+| 83 | `Microsoft.Network/virtualNetworkGateways/natRules` | no kind |  |  | 0 / 0 / 7 | resourceGroup | generator | S (7) | 0 |
+| 84 | `Microsoft.Network/firewallPolicies/kubeSelectorGroups` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
+| 85 | `Microsoft.Network/networkManagers/ipamPools` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
+| 86 | `Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisIntents` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
+| 87 | `Microsoft.Network/routeFilters` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
+| 88 | `Microsoft.Network/serviceEndpointPolicies` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
+| 89 | `Microsoft.Network/virtualHubs/connectionPolicies` | no kind |  |  | 0 / 0 / 11 | resourceGroup | generator | S (11) | 0 |
+| 90 | `Microsoft.Network/virtualHubs/routeMaps` | no kind |  |  | 0 / 0 / 12 | resourceGroup | generator | S (12) | 0 |
+| 91 | `Microsoft.Network/networkVirtualAppliances/networkVirtualApplianceConnections` | no kind |  |  | 0 / 0 / 15 | resourceGroup | generator | S (15) | 0 |
+| 92 | `Microsoft.Network/expressRouteLags` | no kind |  |  | 0 / 0 / 18 | resourceGroup | generator | S (18) | 0 |
+| 93 | `Microsoft.Network/networkWatchers/packetCaptures` | no kind |  |  | 0 / 0 / 20 | resourceGroup | generator | S (20) | 0 |
+| 94 | `Microsoft.Network/privateDnsZones/SOA` | no kind |  |  | 0 / 0 / 21 | resourceGroup | generator | S (21) | 0 |
+| 95 | `Microsoft.Network/networkWatchers/connectionAnalyzers` | no kind |  |  | 0 / 0 / 23 | resourceGroup | generator | S (23) | 0 |
+| 96 | `Microsoft.Network/networkVirtualAppliances` | no kind |  |  | 0 / 0 / 25 | resourceGroup | generator | S (25) | 0 |
+| 97 | `Microsoft.Network/dnsZones/SOA` | no kind |  |  | 0 / 0 / 26 | resourceGroup | generator | M (26) | 0 |
+| 98 | `Microsoft.Network/expressRouteCrossConnections/peerings` | no kind |  |  | 0 / 0 / 28 | resourceGroup | generator | M (28) | 0 |
+| 99 | `Microsoft.Network/firewallPolicies/ruleCollectionGroups/ruleCollectionGroupDrafts` | no kind |  |  | 0 / 0 / 30 | resourceGroup | generator | M (30) | 0 |
+| 100 | `Microsoft.Network/expressRouteCrossConnections` | no kind |  |  | 0 / 0 / 35 | resourceGroup | generator | M (35) | 0 |
+| 101 | `Microsoft.Network/firewallPolicies/firewallPolicyDrafts` | no kind |  |  | 0 / 0 / 36 | resourceGroup | generator | M (36) | 0 |
+| 102 | `Microsoft.Network/networkWatchers/connectionMonitors` | no kind |  |  | 0 / 0 / 46 | resourceGroup | generator | M (46) | 0 |
+| 103 | `Microsoft.Network/privateEndpoints` | partial, 7 of 106 missing | `network/PrivateEndpoint` |  | 99 / 0 / 7 | resourceGroup | extend: ASO's API version is older than the spec's | S (7) | 12 |
+| 104 | `Microsoft.Network/publicIPAddresses` | partial, 3 of 39 missing | `network/PublicIPAddress` |  | 36 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 4 |
+| 105 | `Microsoft.Network/privateDnsZones` | partial, 1 of 4 missing | `network/PrivateDnsZone` |  | 3 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 2 |
+| 106 | `Microsoft.Network/routeTables` | partial, 7 of 10 missing | `network/RouteTable` |  | 3 / 0 / 7 | resourceGroup | extend: ASO's API version is older than the spec's | S (7) | 2 |
+| 107 | `Microsoft.Network/networkSecurityGroups` | partial, 23 of 26 missing | `network/NetworkSecurityGroup` |  | 3 / 0 / 23 | resourceGroup | extend: ASO's API version is older than the spec's | S (23) | 2 |
+| 108 | `Microsoft.Network/virtualNetworks/subnets` | partial, 3 of 69 missing | `network/VirtualNetworksSubnet` |  | 66 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 2 |
+| 109 | `Microsoft.Network/virtualNetworks` | partial, 101 of 118 missing | `network/VirtualNetwork` |  | 17 / 0 / 101 | resourceGroup | extend: ASO's API version is older than the spec's | L (101) | 2 |
+| 110 | `Microsoft.Network/routeTables/routes` | partial, 1 of 4 missing | `network/RouteTablesRoute` |  | 3 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 1 |
+| 111 | `Microsoft.Network/natGateways` | partial, 2 of 12 missing | `network/NatGateway` |  | 10 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 1 |
+| 112 | `Microsoft.Network/bastionHosts` | partial, 6 of 26 missing | `network/BastionHost` |  | 20 / 0 / 6 | resourceGroup | extend: ASO's API version is older than the spec's | S (6) | 1 |
+| 113 | `Microsoft.Network/firewallPolicies/ruleCollectionGroups` | partial, 3 of 30 missing | `network/FirewallPoliciesRuleCollectionGroup` |  | 27 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 1 |
+| 114 | `Microsoft.Network/azureFirewalls` | partial, 6 of 64 missing | `network/AzureFirewall` |  | 58 / 0 / 6 | resourceGroup | extend: ASO's API version is older than the spec's | S (6) | 1 |
+| 115 | `Microsoft.Network/expressRoutePorts/authorizations` | partial, 1 of 1 missing |  | `network/ExpressRoutePortsAuthorization` | 0 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 116 | `Microsoft.Network/expressRouteCircuits/authorizations` | partial, 1 of 2 missing |  | `network/ExpressRouteCircuitsAuthorization` | 0 / 1 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 117 | `Microsoft.Network/applicationSecurityGroups` | partial, 1 of 3 missing | `network/ApplicationSecurityGroup` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 0 |
+| 118 | `Microsoft.Network/networkWatchers` | partial, 1 of 3 missing | `network/NetworkWatcher` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 0 |
+| 119 | `Microsoft.Network/dnsZones` | partial, 1 of 6 missing | `network/DnsZone` |  | 5 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 120 | `Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections/rules` | partial, 12 of 12 missing |  | `network/NetworkManagersSecurityAdminRule` | 0 / 0 / 12 | resourceGroup | extend: newer API version or property config | S (12) | 0 |
+| 121 | `Microsoft.Network/networkWatchers/flowLogs` | partial, 2 of 18 missing | `network/NetworkWatchersFlowLog` |  | 16 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 0 |
+| 122 | `Microsoft.Network/expressRouteGateways` | partial, 18 of 24 missing |  | `network/ExpressRouteGateway` | 0 / 6 / 18 | resourceGroup | extend: newer API version or property config | S (18) | 0 |
+| 123 | `Microsoft.Network/dnsZones/AAAA` | partial, 1 of 26 missing | `network/DnsZonesAAAARecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 124 | `Microsoft.Network/dnsZones/CAA` | partial, 1 of 26 missing | `network/DnsZonesCAARecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 125 | `Microsoft.Network/dnsZones/CNAME` | partial, 1 of 26 missing | `network/DnsZonesCNAMERecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 126 | `Microsoft.Network/dnsZones/MX` | partial, 1 of 26 missing | `network/DnsZonesMXRecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 127 | `Microsoft.Network/dnsZones/NS` | partial, 1 of 26 missing | `network/DnsZonesNSRecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 128 | `Microsoft.Network/dnsZones/PTR` | partial, 1 of 26 missing | `network/DnsZonesPTRRecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 129 | `Microsoft.Network/dnsZones/SRV` | partial, 1 of 26 missing | `network/DnsZonesSRVRecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 130 | `Microsoft.Network/dnsZones/TXT` | partial, 1 of 26 missing | `network/DnsZonesTXTRecord` |  | 25 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 131 | `Microsoft.Network/publicIPPrefixes` | partial, 1 of 26 missing | `network/PublicIPPrefix` |  | 25 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 0 |
+| 132 | `Microsoft.Network/virtualHubs` | partial, 7 of 28 missing |  | `network/VirtualHub` | 0 / 21 / 7 | resourceGroup | extend: newer API version or property config | S (7) | 0 |
+| 133 | `Microsoft.Network/expressRouteCircuits/peerings` | partial, 8 of 44 missing |  | `network/ExpressRouteCircuitsPeering` | 0 / 36 / 8 | resourceGroup | extend: newer API version or property config | S (8) | 0 |
+| 134 | `Microsoft.Network/vpnGateways/vpnConnections` | partial, 1 of 56 missing |  | `network/VpnGatewaysVpnConnection` | 0 / 55 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 135 | `Microsoft.Network/expressRouteCircuits` | partial, 51 of 72 missing |  | `network/ExpressRouteCircuit` | 0 / 21 / 51 | resourceGroup | extend: newer API version or property config | M (51) | 0 |
+| 136 | `Microsoft.Network/vpnGateways` | partial, 67 of 78 missing |  | `network/VpnGateway` | 0 / 11 / 67 | resourceGroup | extend: newer API version or property config | M (67) | 0 |
+| 137 | `Microsoft.Network/virtualNetworkGateways` | partial, 5 of 91 missing | `network/VirtualNetworkGateway` |  | 86 / 0 / 5 | resourceGroup | extend: ASO's API version is older than the spec's | S (5) | 0 |
+| 138 | `Microsoft.Network/privateEndpoints/privateDnsZoneGroups` | covered | `network/PrivateEndpointsPrivateDnsZoneGroup` |  | 2 / 0 / 0 | resourceGroup | - | - | 12 |
+| 139 | `Microsoft.Network/privateDnsZones/virtualNetworkLinks` | covered | `network/PrivateDnsZonesVirtualNetworkLink` |  | 6 / 0 / 0 | resourceGroup | - | - | 2 |
+| 140 | `Microsoft.Network/dnsResolvers` | covered | `network/DnsResolver` |  | 3 / 0 / 0 | resourceGroup | - | - | 1 |
+| 141 | `Microsoft.Network/virtualHubs/hubVirtualNetworkConnections` | covered |  | `network/VirtualHubsHubVirtualNetworkConnection` | 0 / 16 / 0 | resourceGroup | - | - | 1 |
+| 142 | `Microsoft.Network/networkSecurityGroups/securityRules` | covered | `network/NetworkSecurityGroupsSecurityRule` |  | 21 / 0 / 0 | resourceGroup | - | - | 1 |
+| 143 | `Microsoft.Network/virtualNetworks/virtualNetworkPeerings` | covered | `network/VirtualNetworksVirtualNetworkPeering` |  | 25 / 0 / 0 | resourceGroup | - | - | 1 |
+| 144 | `Microsoft.Network/firewallPolicies` | covered | `network/FirewallPolicy` |  | 41 / 0 / 0 | resourceGroup | - | - | 1 |
+| 145 | `Microsoft.Network/networkManagers/networkGroups/staticMembers` | covered |  | `network/NetworkManagersNetworkGroupsStaticMember` | 0 / 1 / 0 | resourceGroup | - | - | 0 |
+| 146 | `Microsoft.Network/networkManagers/securityUserConfigurations` | covered |  | `network/NetworkManagersSecurityUserConfiguration` | 0 / 1 / 0 | resourceGroup | - | - | 0 |
+| 147 | `Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks` | covered | `network/DnsForwardingRuleSetsVirtualNetworkLink` |  | 2 / 0 / 0 | resourceGroup | - | - | 0 |
+| 148 | `Microsoft.Network/networkManagerConnections` | covered |  | `network/NetworkManagerConnection` | 0 / 2 / 0 | managementGroup,subscription | - | - | 0 |
+| 149 | `Microsoft.Network/networkManagers/networkGroups` | covered |  | `network/NetworkManagersNetworkGroup` | 0 / 2 / 0 | resourceGroup | - | - | 0 |
+| 150 | `Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections` | covered |  | `network/NetworkManagersSecurityAdminRuleCollection` | 0 / 2 / 0 | resourceGroup | - | - | 0 |
+| 151 | `Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections` | covered |  | `network/NetworkManagersSecurityUserRuleCollection` | 0 / 2 / 0 | resourceGroup | - | - | 0 |
+| 152 | `Microsoft.Network/dnsForwardingRulesets` | covered | `network/DnsForwardingRuleset` |  | 3 / 0 / 0 | resourceGroup | - | - | 0 |
+| 153 | `Microsoft.Network/dnsResolvers/outboundEndpoints` | covered | `network/DnsResolversOutboundEndpoint` |  | 3 / 0 / 0 | resourceGroup | - | - | 0 |
+| 154 | `Microsoft.Network/networkManagers/scopeConnections` | covered |  | `network/NetworkManagersScopeConnection` | 0 / 3 / 0 | resourceGroup | - | - | 0 |
+| 155 | `Microsoft.Network/networkManagers/securityAdminConfigurations` | covered |  | `network/NetworkManagersSecurityAdminConfiguration` | 0 / 3 / 0 | resourceGroup | - | - | 0 |
+| 156 | `Microsoft.Network/virtualHubs/routingIntent` | covered |  | `network/VirtualHubsRoutingIntent` | 0 / 3 / 0 | resourceGroup | - | - | 0 |
+| 157 | `Microsoft.Network/dnsForwardingRulesets/forwardingRules` | covered | `network/DnsForwardingRuleSetsForwardingRule` |  | 5 / 0 / 0 | resourceGroup | - | - | 0 |
+| 158 | `Microsoft.Network/dnsResolvers/inboundEndpoints` | covered | `network/DnsResolversInboundEndpoint` |  | 5 / 0 / 0 | resourceGroup | - | - | 0 |
+| 159 | `Microsoft.Network/expressRouteCircuits/peerings/connections` | covered |  | `network/ExpressRouteCircuitsPeeringsConnection` | 0 / 5 / 0 | resourceGroup | - | - | 0 |
+| 160 | `Microsoft.Network/virtualHubs/routeTables` | covered |  | `network/VirtualHubsRouteTable` | 0 / 5 / 0 | resourceGroup | - | - | 0 |
+| 161 | `Microsoft.Network/networkManagers` | covered |  | `network/NetworkManager` | 0 / 6 / 0 | resourceGroup | - | - | 0 |
+| 162 | `Microsoft.Network/virtualHubs/hubRouteTables` | covered |  | `network/VirtualHubsHubRouteTable` | 0 / 6 / 0 | resourceGroup | - | - | 0 |
+| 163 | `Microsoft.Network/virtualWans` | covered |  | `network/VirtualWan` | 0 / 6 / 0 | resourceGroup | - | - | 0 |
+| 164 | `Microsoft.Network/vpnGateways/natRules` | covered |  | `network/VpnGatewaysNatRule` | 0 / 7 / 0 | resourceGroup | - | - | 0 |
+| 165 | `Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections/rules` | covered |  | `network/NetworkManagersSecurityUserRule` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
+| 166 | `Microsoft.Network/localNetworkGateways` | covered |  | `network/LocalNetworkGateway` | 0 / 12 / 0 | resourceGroup | - | - | 0 |
+| 167 | `Microsoft.Network/networkManagers/connectivityConfigurations` | covered |  | `network/NetworkManagersConnectivityConfiguration` | 0 / 13 / 0 | resourceGroup | - | - | 0 |
 | 168 | `Microsoft.Network/virtualHubs/bgpConnections` | covered |  | `network/VirtualHubsBgpConnection` | 0 / 13 / 0 | resourceGroup | - | - | 0 |
 | 169 | `Microsoft.Network/ExpressRoutePorts` | covered |  | `network/ExpressRoutePort` | 0 / 15 / 0 | resourceGroup | - | - | 0 |
 | 170 | `Microsoft.Network/expressRouteGateways/expressRouteConnections` | covered |  | `network/ExpressRouteGatewaysExpressRouteConnection` | 0 / 16 / 0 | resourceGroup | - | - | 0 |
