@@ -201,6 +201,15 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   above. Not modelled: scale units, the routes a hub learns, a connection's
   routing configuration checked against the hub's route tables, internet
   security and FastPath, and the time a real gateway takes.
+- Log Analytics clusters, data sources and storage insight configs
+  (`Microsoft.OperationalInsights/clusters`, `workspaces/dataSources`,
+  `workspaces/storageInsightConfigs`; `pkg/fakecloud/arm/loganalytics.go`):
+  a cluster's sku is `CapacityReservation` at one of Azure's commitment
+  tiers (100 to 50,000 GB a day); a data source gives its `kind`; a storage
+  insight config names a storage account that exists and gives its key,
+  which is kept aside (`SharedKey`) and never returned, as Azure does not
+  return it. Not modelled: linking workspaces to a cluster, data flowing,
+  what each data source kind takes, and the error codes (the fake's own).
 - Operations Management solutions
   (`Microsoft.OperationsManagement/solutions`;
   `pkg/fakecloud/arm/operationsmanagement.go`): a solution names a Log
@@ -219,6 +228,22 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   configuration (assumed from Azure's documentation of dynamic scoping). Not
   modelled: which resource types a configuration's scope can maintain, the
   machines a filter selects, and the error codes (the fake's own).
+- Managed HSMs, their keys and Key Vault private endpoint connections
+  (`Microsoft.KeyVault/managedHSMs`, `managedHSMs/keys`, and
+  `privateEndpointConnections` of a managed HSM or a vault;
+  `pkg/fakecloud/arm/keyvault.go`): an HSM is made with a `sku`, a
+  `tenantId` and at least one `initialAdminObjectIds`; soft delete cannot be
+  turned off, `softDeleteRetentionInDays` is 7 to 90 and cannot change, and
+  purge protection once on stays on (Azure's documentation of Managed HSM
+  soft delete). A key needs its `kty`; a PUT on a key that exists returns it
+  unchanged (the API's own description) and a key cannot be deleted through
+  Resource Manager (no DELETE in the spec: 405). A private endpoint
+  connection is made by a private endpoint, so a PUT updates one that exists
+  and is refused 404 otherwise (assumed from the API's "Updates the specified
+  private endpoint connection"; tests add the connection as the endpoint
+  would). Not modelled: the security domain download that activates an HSM,
+  regions and network rules taking effect, key versions, rotation and
+  release, the private endpoint itself, and the error codes (the fake's own).
 - Virtual WAN (`Microsoft.Network/virtualWans`, `virtualHubs` and a hub's
   `hubVirtualNetworkConnections`, `hubRouteTables`, `routeTables`,
   `routingIntent`, `bgpConnections`, `ipConfigurations`;
@@ -256,7 +281,8 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   gateway, client VPN profiles, the hour a real gateway takes, and the
   error codes (the fake's own).
 - Virtual Network Manager (`Microsoft.Network/networkManagers` with their
-  `scopeConnections`, `networkGroups` and a group's `staticMembers`, and
+  `scopeConnections`, `networkGroups` and a group's `staticMembers`, their
+  configurations, rule collections and rules, `commits`, and
   `networkManagerConnections` at a subscription or a management group;
   `pkg/fakecloud/arm/networkmanager.go`): a network manager gives
   `networkManagerScopes` with at least one subscription or management group,
@@ -269,8 +295,16 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   collection apply to network groups of the same manager that exist; an
   admin rule is `Custom` (protocol, direction, access `Allow`, `Deny` or
   `AlwaysAllow`, priority 1 to 4096) or `Default` (a flag); a security user
-  rule gives protocol and direction. Not modelled: configurations reaching
-  the networks (nothing is deployed until committed), the rules a `Default`
+  rule gives protocol and direction. A routing rule collection applies to
+  network groups as above; a routing rule gives a destination (type
+  `AddressPrefix` or `ServiceTag` and its address) and a next hop type,
+  with an address for `VirtualAppliance`. A commit's `commitType` must be
+  in the manager's `networkManagerScopeAccesses`, it needs target
+  locations, and each configuration it names is one of that type in the
+  same manager (400) that exists (404); its target locations become its
+  active locations at once. Not modelled: configurations reaching the
+  networks (a commit is only recorded), a commit's time and per-region
+  failures, configurations a commit leaves out being removed, the rules a `Default`
   rule's flag names, address prefixes checked, two rules with one priority,
   a scope managed by two network managers for the same feature, the other tenant accepting a scope connection, a
   network manager connection's state, dynamic membership through Azure

@@ -15,7 +15,8 @@ import (
 // members (staticMembers), connectivity configurations
 // (connectivityConfigurations), security admin and security user
 // configurations (securityAdminConfigurations, securityUserConfigurations)
-// with their rule collections (ruleCollections) and rules (rules), and
+// and routing configurations (routingConfigurations) with their rule
+// collections (ruleCollections) and rules (rules), commits (commits), and
 // network manager connections (networkManagerConnections) at a subscription
 // or a management group, API 2026-03-01, as far as the fake models them:
 //
@@ -43,13 +44,21 @@ import (
 //   - an admin rule's kind is Custom or Default (400); a Custom rule gives
 //     protocol, direction and access (Allow, Deny or AlwaysAllow) and a
 //     priority from 1 to 4096 (400); a Default rule gives its flag (400);
-//   - a security user rule gives protocol and direction (400).
+//   - a security user rule gives protocol and direction (400);
+//   - a routing rule collection gives appliesTo, network groups as above;
+//     a routing rule gives a destination (type AddressPrefix or ServiceTag
+//     and a destinationAddress) and a nextHop with its nextHopType, and a
+//     nextHopAddress when that is VirtualAppliance (400);
+//   - a commit gives a commitType the manager's networkManagerScopeAccesses
+//     allow (400) and targetLocations (400); each of its configurationIds is
+//     a configuration of that type in the same manager (400) that exists
+//     (404); its activeLocations become its targetLocations at once.
 //
 // Not modelled: a scope managed by two network managers for the same
 // feature, the other tenant's side of a scope connection and a network
 // manager connection's state, dynamic membership through Azure Policy, the
 // region of a static member, configurations reaching the networks (nothing
-// is deployed until committed), the rules a Default rule's flag names,
+// is deployed: a commit is only recorded), the rules a Default rule's flag names,
 // address prefixes checked as CIDRs or service tags, two rules of one
 // collection with one priority, and the error codes (this fake's own).
 var (
@@ -60,6 +69,10 @@ var (
 	nmConfig     = regexp.MustCompile(`(?i)^(/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/networkmanagers/[^/]+)/connectivityconfigurations/[^/]+$`)
 	nmCollection = regexp.MustCompile(`(?i)^(/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/networkmanagers/[^/]+)/(securityadminconfigurations|securityuserconfigurations)/[^/]+/rulecollections/[^/]+$`)
 	nmRule       = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/networkmanagers/[^/]+/(securityadminconfigurations|securityuserconfigurations)/[^/]+/rulecollections/[^/]+/rules/[^/]+$`)
+	nmRouteColl  = regexp.MustCompile(`(?i)^(/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/networkmanagers/[^/]+)/routingconfigurations/[^/]+/rulecollections/[^/]+$`)
+	nmRouteRule  = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/networkmanagers/[^/]+/routingconfigurations/[^/]+/rulecollections/[^/]+/rules/[^/]+$`)
+	nmCommit     = regexp.MustCompile(`(?i)^(/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/networkmanagers/[^/]+)/commits/[^/]+$`)
+	nmCommitOf   = map[string]string{"connectivity": "connectivityconfigurations", "securityadmin": "securityadminconfigurations", "securityuser": "securityuserconfigurations", "routing": "routingconfigurations"}
 	nmVNet       = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/virtualnetworks/[^/]+$`)
 	nmSubnet     = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/virtualnetworks/[^/]+/subnets/[^/]+$`)
 )
@@ -153,6 +166,24 @@ func (a *ARM) checkNetworkManager(id string, body map[string]any) (status int, c
 		return a.checkAppliesTo(nmConfig.FindStringSubmatch(id)[1], props, "appliesToGroups")
 	case nmCollection.MatchString(id):
 		return a.checkAppliesTo(nmCollection.FindStringSubmatch(id)[1], props, "appliesToGroups")
+	case nmRouteColl.MatchString(id):
+		return a.checkAppliesTo(nmRouteColl.FindStringSubmatch(id)[1], props, "appliesTo")
+	case nmRouteRule.MatchString(id):
+		dest, _ := props["destination"].(map[string]any)
+		destType, _ := dest["type"].(string)
+		if addr, _ := dest["destinationAddress"].(string); addr == "" || (destType != "AddressPrefix" && destType != "ServiceTag") {
+			return http.StatusBadRequest, "InvalidRoutingRule", "A routing rule needs a destination of type AddressPrefix or ServiceTag with its destinationAddress."
+		}
+		hop, _ := props["nextHop"].(map[string]any)
+		hopType, _ := hop["nextHopType"].(string)
+		if hopType == "" {
+			return http.StatusBadRequest, "InvalidRoutingRule", "A routing rule needs its nextHop's nextHopType."
+		}
+		if addr, _ := hop["nextHopAddress"].(string); hopType == "VirtualAppliance" && addr == "" {
+			return http.StatusBadRequest, "InvalidRoutingRule", "A VirtualAppliance next hop needs its nextHopAddress."
+		}
+	case nmCommit.MatchString(id):
+		return a.checkCommit(nmCommit.FindStringSubmatch(id)[1], props)
 	case nmRule.MatchString(id):
 		if strings.EqualFold(nmRule.FindStringSubmatch(id)[1], "securityUserConfigurations") {
 			return checkRuleBasics(props, "A security user rule")
@@ -200,6 +231,46 @@ func (a *ARM) checkAppliesTo(manager string, props map[string]any, list string) 
 			return http.StatusNotFound, "ResourceNotFound", "The network group " + group + " was not found."
 		}
 	}
+	return 0, "", ""
+}
+
+// checkCommit refuses a commit of manager the rules above do not allow, and
+// otherwise records its target locations as active.
+func (a *ARM) checkCommit(manager string, props map[string]any) (status int, code, message string) {
+	commitType, _ := props["commitType"].(string)
+	segment, ok := nmCommitOf[strings.ToLower(commitType)]
+	if !ok {
+		return http.StatusBadRequest, "InvalidCommit", "A commit's commitType is Connectivity, SecurityAdmin, SecurityUser or Routing, not " + commitType + "."
+	}
+	allowed := false
+	if r, found := a.resources[strings.ToLower(manager)]; found {
+		mp, _ := (*r)["properties"].(map[string]any)
+		accesses, _ := mp["networkManagerScopeAccesses"].([]any)
+		for _, x := range accesses {
+			if v, _ := x.(string); strings.EqualFold(v, commitType) {
+				allowed = true
+			}
+		}
+	}
+	if !allowed {
+		return http.StatusBadRequest, "InvalidCommit", "The network manager " + manager + " has no " + commitType + " in its networkManagerScopeAccesses."
+	}
+	locations, _ := props["targetLocations"].([]any)
+	if len(locations) == 0 {
+		return http.StatusBadRequest, "InvalidCommit", "A commit needs its targetLocations."
+	}
+	prefix := strings.ToLower(manager + "/" + segment + "/")
+	configs, _ := props["configurationIds"].([]any)
+	for _, item := range configs {
+		config, _ := item.(string)
+		if !strings.HasPrefix(strings.ToLower(config), prefix) || strings.Contains(config[len(prefix):], "/") {
+			return http.StatusBadRequest, "InvalidCommit", "The configuration " + config + " is no " + commitType + " configuration of " + manager + "."
+		}
+		if !a.exists(config) {
+			return http.StatusNotFound, "ResourceNotFound", "The configuration " + config + " was not found."
+		}
+	}
+	props["activeLocations"] = locations
 	return 0, "", ""
 }
 

@@ -815,6 +815,65 @@ NetworkManagerConnection: Resource
     │       └── "User"
     └── Type: *string
 
+NetworkManagersCommit: Resource
+├── Owner: NetworkManager
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (5 properties)
+│       ├── CommitType: *Enum (4 values)
+│       │   ├── "Connectivity"
+│       │   ├── "Routing"
+│       │   ├── "SecurityAdmin"
+│       │   └── "SecurityUser"
+│       ├── ConfigurationReferences: genruntime.ResourceReference[]
+│       ├── Description: *string
+│       ├── ForceUpdateTag: *string
+│       └── TargetLocations: string[]
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (8 properties)
+    │   ├── ActiveLocations: string[]
+    │   ├── CommitType: *Enum (4 values)
+    │   │   ├── "Connectivity"
+    │   │   ├── "Routing"
+    │   │   ├── "SecurityAdmin"
+    │   │   └── "SecurityUser"
+    │   ├── ConfigurationIds: string[]
+    │   ├── Description: *string
+    │   ├── ForceUpdateTag: *string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   ├── ResourceGuid: *string
+    │   └── TargetLocations: string[]
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 NetworkManagersConnectivityConfiguration: Resource
 ├── Owner: NetworkManager
 ├── Spec: Object (10 properties)
@@ -990,6 +1049,171 @@ NetworkManagersNetworkGroupsStaticMember: Resource
     │   └── "Updating"
     ├── Region: *string
     ├── ResourceId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+NetworkManagersRoutingConfiguration: Resource
+├── Owner: NetworkManager
+├── Spec: Object (5 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[a-zA-Z0-9_.-]*$"
+│   ├── Description: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── RouteTableUsageMode: *Enum (2 values)
+│       ├── "ManagedOnly"
+│       └── "UseExisting"
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── ResourceGuid: *string
+    ├── RouteTableUsageMode: *Enum (2 values)
+    │   ├── "ManagedOnly"
+    │   └── "UseExisting"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+NetworkManagersRoutingRule: Resource
+├── Owner: NetworkManagersRoutingRuleCollection
+├── Spec: Object (6 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[a-zA-Z0-9_.-]*$"
+│   ├── Description: *string
+│   ├── Destination: *Object (2 properties)
+│   │   ├── DestinationAddress: *string
+│   │   └── Type: *Enum (2 values)
+│   │       ├── "AddressPrefix"
+│   │       └── "ServiceTag"
+│   ├── NextHop: *Object (2 properties)
+│   │   ├── NextHopAddress: *string
+│   │   └── NextHopType: *Enum (5 values)
+│   │       ├── "Internet"
+│   │       ├── "NoNextHop"
+│   │       ├── "VirtualAppliance"
+│   │       ├── "VirtualNetworkGateway"
+│   │       └── "VnetLocal"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Destination: *Object (2 properties)
+    │   ├── DestinationAddress: *string
+    │   └── Type: *Enum (2 values)
+    │       ├── "AddressPrefix"
+    │       └── "ServiceTag"
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── NextHop: *Object (2 properties)
+    │   ├── NextHopAddress: *string
+    │   └── NextHopType: *Enum (5 values)
+    │       ├── "Internet"
+    │       ├── "NoNextHop"
+    │       ├── "VirtualAppliance"
+    │       ├── "VirtualNetworkGateway"
+    │       └── "VnetLocal"
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── ResourceGuid: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+NetworkManagersRoutingRuleCollection: Resource
+├── Owner: NetworkManagersRoutingConfiguration
+├── Spec: Object (6 properties)
+│   ├── AppliesTo: Object (1 property)[]
+│   │   └── NetworkGroupReference: *genruntime.ResourceReference
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[a-zA-Z0-9_.-]*$"
+│   ├── Description: *string
+│   ├── DisableBgpRoutePropagation: *Enum (2 values)
+│   │   ├── "False"
+│   │   └── "True"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (11 properties)
+    ├── AppliesTo: Object (1 property)[]
+    │   └── NetworkGroupId: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── DisableBgpRoutePropagation: *Enum (2 values)
+    │   ├── "False"
+    │   └── "True"
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── ResourceGuid: *string
     ├── SystemData: *Object (6 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string
