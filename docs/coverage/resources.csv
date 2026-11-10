@@ -719,7 +719,7 @@ Microsoft.ContainerService,Microsoft.ContainerService/containerServices,31,,0,,0
 Microsoft.ContainerService,Microsoft.ContainerService/deploymentSafeguards,3,,0,,0,3,false,spec_api=2025-07-01
 Microsoft.ContainerService,Microsoft.ContainerService/fleets,10,containerservice.azure.com/Fleet,10,,0,0,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/fleets/autoUpgradeProfiles,7,containerservice.azure.com/FleetsAutoUpgradeProfile,4,,0,3,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.ContainerService,Microsoft.ContainerService/fleets/managedNamespaces,26,,0,,0,26,false,spec_api=2026-06-01
+Microsoft.ContainerService,Microsoft.ContainerService/fleets/managedNamespaces,26,,0,containerservice.azure.hfl.dev/FleetsManagedNamespace,26,0,false,spec_api=2026-06-01; ours_api=2026-06-01
 Microsoft.ContainerService,Microsoft.ContainerService/fleets/members,3,containerservice.azure.com/FleetsMember,2,,0,1,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/fleets/updateRuns,18,containerservice.azure.com/FleetsUpdateRun,7,,0,11,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/fleets/updateStrategies,13,containerservice.azure.com/FleetsUpdateStrategy,3,,0,10,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
@@ -727,13 +727,13 @@ Microsoft.ContainerService,Microsoft.ContainerService/managedClusters,330,contai
 Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/agentPools,126,containerservice.azure.com/ManagedClustersAgentPool,123,,0,3,false,spec_api=2026-08-01; official_api=2026-05-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/identityBindings,1,containerservice.azure.com/IdentityBinding,1,,0,0,false,spec_api=2026-08-01; official_api=2026-05-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/maintenanceConfigurations,18,containerservice.azure.com/MaintenanceConfiguration,18,,0,0,false,spec_api=2026-08-01; official_api=2026-05-01; official-api-differs-from-spec
-Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/managedNamespaces,12,,0,,0,12,false,spec_api=2026-08-01
-Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/privateEndpointConnections,3,,0,,0,3,false,spec_api=2026-08-01
+Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/managedNamespaces,12,,0,containerservice.azure.hfl.dev/ManagedClustersManagedNamespace,12,0,false,spec_api=2026-08-01; ours_api=2026-05-01; ours-api-differs-from-spec
+Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/privateEndpointConnections,3,,0,containerservice.azure.hfl.dev/ManagedClustersPrivateEndpointConnection,3,0,false,spec_api=2026-08-01; ours_api=2026-05-01; ours-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings,2,containerservice.azure.com/TrustedAccessRoleBinding,2,,0,0,false,spec_api=2026-08-01; official_api=2026-05-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/nodeCustomizations,10,,0,,0,10,false,spec_api=2025-09-02-preview; spec-preview-only
 Microsoft.ContainerService,Microsoft.ContainerService/openShiftManagedClusters,28,,0,,0,28,false,spec_api=2019-04-30
 Microsoft.ContainerService,Microsoft.ContainerService/preparedImageSpecifications,10,,0,,0,10,false,spec_api=2026-05-02-preview; spec-preview-only
-Microsoft.ContainerService,Microsoft.ContainerService/snapshots,4,,0,,0,4,false,spec_api=2026-08-01
+Microsoft.ContainerService,Microsoft.ContainerService/snapshots,4,,0,containerservice.azure.hfl.dev/Snapshot,4,0,false,spec_api=2026-08-01; ours_api=2026-05-01; ours-api-differs-from-spec
 Microsoft.ContainerStorage,Microsoft.ContainerStorage/pools,21,,0,,0,21,false,spec_api=2023-07-01-preview; spec-preview-only
 Microsoft.ContainerStorage,Microsoft.ContainerStorage/pools/snapshots,1,,0,,0,1,false,spec_api=2023-07-01-preview; spec-preview-only
 Microsoft.ContainerStorage,Microsoft.ContainerStorage/pools/volumes,2,,0,,0,2,false,spec_api=2023-07-01-preview; spec-preview-only
