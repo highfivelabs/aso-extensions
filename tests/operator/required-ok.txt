@@ -112,3 +112,6 @@ team-a NetworkManagersSecurityUserConfiguration Ready
 team-a NetworkManagersSecurityUserRuleCollection Ready
 team-a NetworkManagersSecurityUserRule Ready
 the network manager's connectivity, security admin and security user configurations, rule collections and rules are deleted
+team-a ManagedHSM Ready
+team-a ManagedHSMsKey Ready
+the managed HSM key is detached, not deleted, and the managed HSM is deleted in Resource Manager

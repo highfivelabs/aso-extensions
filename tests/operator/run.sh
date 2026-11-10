@@ -1225,6 +1225,47 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
   || fail "the fake resource manager saw no delete of the tags"
 pass "the tags are deleted in Resource Manager"
 
+step "team-a: a managed HSM and a key in it (keyvault.azure.hfl.dev)"
+hsm_id="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.KeyVault/managedHSMs/team-a-hsm"
+kubectl apply -f - <<EOF
+apiVersion: keyvault.azure.hfl.dev/v20260515
+kind: ManagedHSM
+metadata: {name: hsm, namespace: team-a}
+spec:
+  azureName: team-a-hsm
+  owner: {name: rg}
+  location: westus
+  sku: {family: B, name: Standard_B1}
+  properties:
+    tenantId: "00000000-0000-0000-0000-0000000000aa"
+    initialAdminObjectIds: ["00000000-0000-0000-0000-0000000000bb"]
+    softDeleteRetentionInDays: 30
+---
+apiVersion: keyvault.azure.hfl.dev/v20260515
+kind: ManagedHSMsKey
+metadata:
+  name: cmk
+  namespace: team-a
+  annotations: {serviceoperator.azure.com/reconcile-policy: detach-on-delete}
+spec:
+  azureName: storage-cmk
+  owner: {name: hsm}
+  properties: {kty: RSA-HSM, keySize: 3072}
+EOF
+wait_for 120 "team-a's ManagedHSM Ready" ready managedhsms.keyvault.azure.hfl.dev team-a hsm
+logged fakearm "request PUT ${hsm_id} 201" || fail "the fake resource manager saw no managed HSM made"
+pass "team-a ManagedHSM Ready"
+wait_for 120 "team-a's ManagedHSMsKey Ready" ready managedhsmskeys.keyvault.azure.hfl.dev team-a cmk
+logged fakearm "request PUT ${hsm_id}/keys/storage-cmk 201" || fail "the fake resource manager saw no key made in the managed HSM"
+pass "team-a ManagedHSMsKey Ready"
+kubectl -n team-a delete managedhsmskeys.keyvault.azure.hfl.dev cmk --timeout=120s
+if logged fakearm "request DELETE ${hsm_id}/keys/storage-cmk"; then
+  fail "the key was sent a DELETE, though it is detached (Resource Manager has none for a key)"
+fi
+kubectl -n team-a delete managedhsms.keyvault.azure.hfl.dev hsm --timeout=120s
+logged fakearm "request DELETE ${hsm_id} 200" || fail "the fake resource manager saw no delete of the managed HSM"
+pass "the managed HSM key is detached, not deleted, and the managed HSM is deleted in Resource Manager"
+
 step "keys Azure makes: not written by default, written with config/secret-writer"
 # docs/plan.md §8, question 9. The default install may read Secrets and not
 # create them (checked above), so exporting a key Azure makes fails; the
