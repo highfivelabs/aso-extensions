@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, and Privileged Identity Management (foundation rows 1 to 5 and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 6 (budgets and cost exports) of `docs/coverage/foundation.md`, then row 7 (lock owners), 8 (VPN connections and local gateways), 9 (ExpressRoute), 10 (Virtual WAN), 11 (network manager connections), Maintenance `ConfigurationAssignment` (h1 below: generate it with patch 0006); `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
+State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, Privileged Identity Management, and budgets and cost exports (foundation rows 1 to 6 and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 7 (lock owners) of `docs/coverage/foundation.md`, then 8 (VPN connections and local gateways), 9 (ExpressRoute), 10 (Virtual WAN), 11 (network manager connections), Maintenance `ConfigurationAssignment` (h1 below: generate it with patch 0006); `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
 
 ## What this repository is
 
@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | --- | --- | --- |
 | Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
-| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions, and PIM eligibility and assignment schedule requests and role management policy assignments (two hand-written extension files, `generator/_extensions/`); `policyinsights.azure.hfl.dev` policy remediations and attestations; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions, and PIM eligibility and assignment schedule requests and role management policy assignments (two hand-written extension files, `generator/_extensions/`); `policyinsights.azure.hfl.dev` policy remediations and attestations; `consumption.azure.hfl.dev` `Budget`; `costmanagement.azure.hfl.dev` cost `Export`; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters; `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
 ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
@@ -294,6 +294,18 @@ Facts learned the hard way:
   by 0005) and the generator failed at random on policy attestations. In a new
   clone run `hack/upstream.sh` (it resets and re-applies the series) rather
   than copying another clone's `third_party/`.
+- **A directly recursive type stops the generator at stage 12 even when no
+  exported resource uses it** (Cost Management's `QueryFilter` and
+  `ReportConfigFilter`, used only by queries and views): ASO prunes the whole
+  `costmanagement` group for it. Prune the types by name before the group's
+  `include` instead (`generator/azure-arm/costmanagement.yaml`), and the
+  resources that do not use them generate.
+- A resource whose spec path already is `/{scope}/providers/...` (budgets,
+  exports) is an extension resource without patch 0006.
+- A reference to an ASO kind the manager does not read (Monitor
+  `ActionGroup`, `StorageAccount`) works by `armId`; by group and kind it
+  would need the kind in the scheme and `controllers.OwnerTypes()`, as an
+  owner does. The tests use `armId`.
 - A property named `owner` in the spec (an attestation's responsible person)
   collides with the Kubernetes `owner`; ASO's generator renames it to
   `properties_owner` (Go `PropertiesOwner`), still sent as `owner`.

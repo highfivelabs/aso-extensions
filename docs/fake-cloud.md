@@ -22,7 +22,7 @@ run the real client code against them.
 | Entra | an `http.RoundTripper` answering instance discovery, OpenID metadata and `/oauth2/v2.0/token`; azidentity's own credentials run against it, through ASO's `TokenCredentialProvider` hook. A token it issues reads as the tenant, client ID, subject (the client assertion's `sub`, or a digest of the client secret) and audience | `pkg/fakecloud/entra` |
 | Key Vault | the data plane, REST 7.5. Secrets: set, get (latest or a version), update attributes, soft delete, get deleted, recover, purge. Certificates: PEM import (refused unless it holds a certificate and the key that matches it), get, update attributes, soft delete, get deleted, recover, purge, each with the secret of the same name and version Key Vault keeps (the PEM as its value). Soft delete is always on; requests carry a bearer token the test decides to accept | `pkg/fakecloud/keyvault`, `cmd/fakevault` |
 | Azure Database for PostgreSQL | PostgreSQL 17 in Docker (tests) or a pod (kind), TLS on, with `azure_pg_admin`, a password administrator, Entra administrators whose password is the fake token of the identity that may sign in as them, and stand-ins for `pgaadauth_create_principal` and `pgaadauth_create_principal_with_oid` | `pkg/fakecloud/postgres` |
-| Resource Manager | a store of resources by ARM ID (PUT with the parent existing, GET, DELETE; the body is kept as sent with `id`, `name`, `type` and `provisioningState: Succeeded` added, no properties checked but the management group hierarchy's, Azure Policy's and Privileged Identity Management's references and scopes; built-in role definitions listed by name; ASO's own ARM client, for the generated kinds, talks to it) and management locks (`Microsoft.Authorization/locks`, 2020-05-01) at any scope that exists; a lock covers its scope and everything under it: `CanNotDelete` refuses deletes (and deleting a scope that holds a locked resource), `ReadOnly` also refuses writes, each with 409 `ScopeLocked`; locks themselves can always be changed; requests carry a bearer token the test decides to accept | `pkg/fakecloud/arm`, `cmd/fakearm` |
+| Resource Manager | a store of resources by ARM ID (PUT with the parent existing, GET, DELETE; the body is kept as sent with `id`, `name`, `type` and `provisioningState: Succeeded` added, no properties checked but the management group hierarchy's, Azure Policy's, Privileged Identity Management's, budgets' and cost exports' references and scopes; built-in role definitions listed by name; ASO's own ARM client, for the generated kinds, talks to it) and management locks (`Microsoft.Authorization/locks`, 2020-05-01) at any scope that exists; a lock covers its scope and everything under it: `CanNotDelete` refuses deletes (and deleting a scope that holds a locked resource), `ReadOnly` also refuses writes, each with 409 `ScopeLocked`; locks themselves can always be changed; requests carry a bearer token the test decides to accept | `pkg/fakecloud/arm`, `cmd/fakearm` |
 | ASO | not run: its owner CRDs (generated from ASO's types at the pin) and `FlexibleServer`/`Vault`/`ResourceGroup` objects carrying the status, Ready condition and ARM ID annotation ASO would write | `config/test/aso-crds`, the tests |
 | TLS | a throwaway CA and server certificates; the manager trusts the CA through `SSL_CERT_FILE` on kind, through its client options in tests | `pkg/fakecloud/tlsutil` |
 
@@ -124,6 +124,25 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   policies themselves (a test stores the ones it names), and the error codes
   (the fake's own; what Azure answers to a DELETE of a request is not known
   here).
+- Budgets and cost exports (`Microsoft.Consumption/budgets`,
+  `Microsoft.CostManagement/exports`; `pkg/fakecloud/arm/cost.go`), each rule
+  from the spec's descriptions: either is kept at a subscription, resource
+  group, management group or billing scope, not on a resource (400); a budget
+  has at most five notifications, thresholds from 0 to 1000, contact groups
+  only at a subscription or resource group and each one existing (404), a
+  contact email (or there, a group) per notification, a start on the first
+  of a month from 2017-06-01 and an end after it, and at least two items in
+  a filter's `and` (400 each); an export's storage account by `resourceId`
+  must exist (404), or it gives `storageAccount` with a `sasToken` (400 when
+  neither); a `Custom` timeframe needs a `timePeriod`, periods end after they
+  start, and a managed identity needs a location (400); the SAS token is kept
+  and returned obfuscated, and a system-assigned identity gets a principal
+  and tenant ID. Not modelled: spend and notifications, an export running
+  (no run history or next run time), the rules that depend on the day (a
+  budget's start at most a year ahead, a recurrence starting in the future),
+  the storage subscription's registration with
+  `Microsoft.CostManagementExports`, what an agreement type allows, and the
+  error codes (the fake's own).
 - Resource Manager checks no role: real Azure lets only Owner and User
   Access Administrator (or a custom role with
   `Microsoft.Authorization/locks/*`) write locks, so ASO's identity may
