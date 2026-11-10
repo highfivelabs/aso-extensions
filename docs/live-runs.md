@@ -106,8 +106,16 @@ a registration, by provider:
 | `Microsoft.DevTestLab` | `Schedule` |
 | `Microsoft.KeyVault` | `VaultSecret`, `VaultCertificate` (data plane, on a vault) |
 | `Microsoft.DBforPostgreSQL`, `Microsoft.Sql` | PostgreSQL `User`, Azure SQL `User` (data plane, on a server) |
-| `Microsoft.CostManagementExports` | cost `Export` (if Azure asks for it; see the ledger) |
+| `Microsoft.CostManagementExports` | cost `Export` (Azure, 2026-11-10: "RP Not Registered. Register destination storage account subscription with Microsoft.CostManagementExports"; the test skips until it is) |
 | `Microsoft.PolicyInsights` | `PolicyRemediation`, `PolicyAttestation` (they also need a policy assignment, below) |
+
+**Subscription features.** `NetworkSecurityPerimetersLoggingConfiguration`
+was refused: "tenant is not whitelisted and EnableServiceTagsInNsp AFEC flag
+is not registered for the subscription" (`az feature register --namespace
+Microsoft.Network --name EnableServiceTagsInNsp`, the builder's). Its subtest
+runs with `LIVE_NSP_LOGGING=1`. While Azure refused it, deleting the
+object hung too: ASO's delete got the same refusal and kept the finalizer
+(the test now creates it only when the feature is on).
 
 **Rights Contributor does not have.** Contributor excludes
 `Microsoft.Authorization/*/write`, and the identity has nothing outside the
@@ -132,7 +140,25 @@ authorizations, `ExpressRouteGateway` and its connections),
 `VirtualHubsIpConfiguration` (a Route Server-style hub, about $0.45 an hour,
 not yet written). Key Vault managed HSMs and AKS kinds are not on `main`.
 
+## What Azure checks that the fake did not
+
+Found by the first runs, 2026-11-10 (the tests were written against the
+fake; each is now in `test/live`, and the fake should learn them):
+
+- A `VpnSite` needs an address space or BGP settings on its links
+  (`VpnSiteAddressPrefixesAndVpnSiteLinkBgpSettingsCannotBeNull`); the fake
+  accepted a site with neither.
+- Tag names refuse `<`, `>`, `%`, `&`, `\`, `?`, `/` (`InvalidTagNameCharacters`);
+  ASO reports it as retryable, so the object waits, not fails.
+- A cost export to a storage account needs `Microsoft.CostManagementExports`
+  registered in the account's subscription.
+- `Standard_B1s`, `Standard_B2ats_v2` and `Standard_B2als_v2` were refused for
+  capacity in eastus2 (`SkuNotAvailable`); `Standard_D2als_v6` was taken.
+
 ## Ledger
 
 | Date | Run | Commit | Tests | Result | Found |
 | --- | --- | --- | --- | --- | --- |
+| 2026-11-10 | `ax101807e8c8` | `33e8146`+ | `TestLiveLocalNetworkGateway` | PASS (53s) | the first live kind; the group empty afterwards |
+| 2026-11-10 | `ax101813e66a` | `33e8146`+ | vWAN, NSP, TagSet, Budget, Export, VM run command | Budget PASS; 5 FAIL | VM sizes refused (`SkuNotAvailable`), VPN site without address space refused, tag name with `/` refused, NSP logging needs a feature, exports need a provider; group empty afterwards |
+| 2026-11-10 | `ax101935c071` | `04f021c` | VM run command, vWAN/site/server configuration, NSP, TagSet, Export, virtual hub, VNet gateway connection | PASS: `VirtualMachinesRunCommand` (on Standard_D2als_v6), `VirtualWan`, `VpnSite`, `VpnServerConfiguration`, NSP and its profile, access rule, association, link, `LocalNetworkGateway` and `VirtualNetworkGatewayConnection` (VpnGw1AZ, 41 min); Export SKIP (provider); TagSet FAIL (a test bug: no tags read back as `{}`, fixed) | the VM was deleted by offload after 45 minutes without a log line while the hub's gateways were being made, so the run's cleanup never ran: a sweep from another VM removed the hub, VPN gateway, site, server configuration, WAN and network (gateways take about 15 minutes to delete). The waits now log every 4 minutes. |
