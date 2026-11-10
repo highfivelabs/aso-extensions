@@ -38,6 +38,10 @@
 // children a parent's PUT keeps or deletes, authorization keys redeemed
 // across subscriptions, one gateway per hub).
 //
+// Source control configurations and Kubernetes configuration private link
+// scopes are checked too (kubernetesconfiguration.go: the cluster, protected
+// settings kept but not returned).
+//
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
 package arm
@@ -289,6 +293,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkMaintenance(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkKubernetesConfiguration(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

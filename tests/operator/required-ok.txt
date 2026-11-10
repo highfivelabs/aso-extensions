@@ -23,6 +23,9 @@ the maintenance assignment and its configuration are deleted
 team-a Vault (Recovery Services) Ready
 team-a ManagementLock Ready
 the fake resource manager holds a lock on team-a-rg
+team-a SourceControlConfiguration Ready
+team-a Kubernetes configuration PrivateLinkScope Ready
+the source control configuration and the private link scope are deleted
 team-b User refused
 team-b VaultSecret refused
 team-b VaultCertificate refused
