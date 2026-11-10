@@ -107,10 +107,11 @@ func TestDirectoryRoleAssignment(t *testing.T) {
 	if *unitAdmin.Status.PrincipalId != admin || *unitAdmin.Status.DirectoryScopeId != "/administrativeUnits/"+unit {
 		t.Fatalf("unit-admin status %+v", unitAdmin.Status)
 	}
+	// Sorted, as Assignments returns them (the principals' IDs sort reader, admin, existing).
 	want := []string{
+		reader + " " + graph.GlobalReader + " /",
 		admin + " " + graph.UserAdministrator + " /administrativeUnits/" + unit,
 		existing + " " + graph.SecurityReader + " /",
-		reader + " " + graph.GlobalReader + " /",
 	}
 	if got := graphFake.Assignments(); fmt.Sprint(got) != fmt.Sprint(want) {
 		t.Fatalf("Graph holds %v, want %v", got, want)
