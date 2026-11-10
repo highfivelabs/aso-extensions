@@ -1,0 +1,786 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: serversdatabases.sql.azure.com
+spec:
+  group: sql.azure.com
+  names:
+    categories:
+    - azure
+    - sql
+    kind: ServersDatabase
+    listKind: ServersDatabaseList
+    plural: serversdatabases
+    singular: serversdatabase
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20250101storage
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Storage version of v20250101.ServersDatabase
+          Generator information:
+          - Generated from: /sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/databases.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: Storage version of v20250101.ServersDatabase_Spec
+            properties:
+              $propertyBag:
+                additionalProperties:
+                  type: string
+                description: |-
+                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                  resources, allowing for full fidelity round trip conversions
+                type: object
+              autoPauseDelay:
+                type: integer
+              availabilityZone:
+                type: string
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              catalogCollation:
+                type: string
+              collation:
+                type: string
+              createMode:
+                type: string
+              elasticPoolReference:
+                description: 'ElasticPoolReference: The resource identifier of the
+                  elastic pool containing this database.'
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              encryptionProtector:
+                type: string
+              encryptionProtectorAutoRotation:
+                type: boolean
+              federatedClientId:
+                type: string
+              freeLimitExhaustionBehavior:
+                type: string
+              highAvailabilityReplicaCount:
+                type: integer
+              identity:
+                description: |-
+                  Storage version of v20250101.DatabaseIdentity
+                  Azure Active Directory identity configuration for a resource.
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  type:
+                    type: string
+                  userAssignedIdentities:
+                    items:
+                      description: |-
+                        Storage version of v20250101.UserAssignedIdentityDetails
+                        Information about the user assigned identity for the resource
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        reference:
+                          description: ResourceReference represents a resource reference,
+                            either to a Kubernetes resource or directly to an Azure
+                            resource via ARMID
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                type: object
+              isLedgerOn:
+                type: boolean
+              licenseType:
+                type: string
+              location:
+                type: string
+              longTermRetentionBackupResourceReference:
+                description: |-
+                  LongTermRetentionBackupResourceReference: The resource identifier of the long term retention backup associated with
+                  create operation of this database.
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              maintenanceConfigurationId:
+                type: string
+              manualCutover:
+                type: boolean
+              maxSizeBytes:
+                type: integer
+              minCapacity:
+                type: number
+              operatorSpec:
+                description: |-
+                  Storage version of v20250101.ServersDatabaseOperatorSpec
+                  Details for configuring operator behavior. Fields in this struct are interpreted by the operator directly rather than being passed to Azure
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  configMapExpressions:
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              originalVersion:
+                type: string
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a sql.azure.com/Server resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+              performCutover:
+                type: boolean
+              preferredEnclaveType:
+                type: string
+              readScale:
+                type: string
+              recoverableDatabaseReference:
+                description: |-
+                  RecoverableDatabaseReference: The resource identifier of the recoverable database associated with create operation of
+                  this database.
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              recoveryServicesRecoveryPointReference:
+                description: |-
+                  RecoveryServicesRecoveryPointReference: The resource identifier of the recovery point associated with create operation
+                  of this database.
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              requestedBackupStorageRedundancy:
+                type: string
+              restorableDroppedDatabaseReference:
+                description: |-
+                  RestorableDroppedDatabaseReference: The resource identifier of the restorable dropped database associated with create
+                  operation of this database.
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              restorePointInTime:
+                type: string
+              sampleName:
+                type: string
+              secondaryType:
+                type: string
+              sku:
+                description: |-
+                  Storage version of v20250101.Sku
+                  An ARM Resource SKU.
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  capacity:
+                    type: integer
+                  family:
+                    type: string
+                  name:
+                    type: string
+                  size:
+                    type: string
+                  tier:
+                    type: string
+                type: object
+              sourceDatabaseDeletionDate:
+                type: string
+              sourceDatabaseReference:
+                description: |-
+                  SourceDatabaseReference: The resource identifier of the source database associated with create operation of this
+                  database.
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              sourceResourceReference:
+                description: |-
+                  SourceResourceReference: The resource identifier of the source associated with the create operation of this database.
+                  This property is only supported for DataWarehouse edition and allows to restore across subscriptions.
+                  When sourceResourceId is specified, sourceDatabaseId, recoverableDatabaseId, restorableDroppedDatabaseId and
+                  sourceDatabaseDeletionDate must not be specified and CreateMode must be PointInTimeRestore, Restore or Recover.
+                  When createMode is PointInTimeRestore, sourceResourceId must be the resource ID of the existing database or existing sql
+                  pool, and restorePointInTime must be specified.
+                  When createMode is Restore, sourceResourceId must be the resource ID of restorable dropped database or restorable
+                  dropped sql pool.
+                  When createMode is Recover, sourceResourceId must be the resource ID of recoverable database or recoverable sql pool.
+                  When source subscription belongs to a different tenant than target subscription, “x-ms-authorization-auxiliary”
+                  header must contain authentication token for the source tenant. For more details about
+                  “x-ms-authorization-auxiliary” header see
+                  https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/authenticate-multi-tenant
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                type: object
+              useFreeLimit:
+                type: boolean
+              zoneRedundant:
+                type: boolean
+            required:
+            - owner
+            type: object
+          status:
+            description: Storage version of v20250101.ServersDatabase_STATUS
+            properties:
+              $propertyBag:
+                additionalProperties:
+                  type: string
+                description: |-
+                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                  resources, allowing for full fidelity round trip conversions
+                type: object
+              autoPauseDelay:
+                type: integer
+              availabilityZone:
+                type: string
+              catalogCollation:
+                type: string
+              collation:
+                type: string
+              conditions:
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              createMode:
+                type: string
+              creationDate:
+                type: string
+              currentBackupStorageRedundancy:
+                type: string
+              currentServiceObjectiveName:
+                type: string
+              currentSku:
+                description: |-
+                  Storage version of v20250101.Sku_STATUS
+                  An ARM Resource SKU.
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  capacity:
+                    type: integer
+                  family:
+                    type: string
+                  name:
+                    type: string
+                  size:
+                    type: string
+                  tier:
+                    type: string
+                type: object
+              databaseId:
+                type: string
+              defaultSecondaryLocation:
+                type: string
+              earliestRestoreDate:
+                type: string
+              elasticPoolId:
+                type: string
+              encryptionProtector:
+                type: string
+              encryptionProtectorAutoRotation:
+                type: boolean
+              failoverGroupId:
+                type: string
+              federatedClientId:
+                type: string
+              freeLimitExhaustionBehavior:
+                type: string
+              highAvailabilityReplicaCount:
+                type: integer
+              id:
+                type: string
+              identity:
+                description: |-
+                  Storage version of v20250101.DatabaseIdentity_STATUS
+                  Azure Active Directory identity configuration for a resource.
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  tenantId:
+                    type: string
+                  type:
+                    type: string
+                  userAssignedIdentities:
+                    additionalProperties:
+                      description: |-
+                        Storage version of v20250101.DatabaseUserIdentity_STATUS
+                        Azure Active Directory identity configuration for a resource.
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        clientId:
+                          type: string
+                        principalId:
+                          type: string
+                      type: object
+                    type: object
+                type: object
+              isInfraEncryptionEnabled:
+                type: boolean
+              isLedgerOn:
+                type: boolean
+              keys:
+                additionalProperties:
+                  description: |-
+                    Storage version of v20250101.DatabaseKey_STATUS
+                    Database level key used for encryption at rest.
+                  properties:
+                    $propertyBag:
+                      additionalProperties:
+                        type: string
+                      description: |-
+                        PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                        resources, allowing for full fidelity round trip conversions
+                      type: object
+                    creationDate:
+                      type: string
+                    keyVersion:
+                      type: string
+                    subregion:
+                      type: string
+                    thumbprint:
+                      type: string
+                    type:
+                      type: string
+                  type: object
+                type: object
+              kind:
+                type: string
+              licenseType:
+                type: string
+              location:
+                type: string
+              longTermRetentionBackupResourceId:
+                type: string
+              maintenanceConfigurationId:
+                type: string
+              managedBy:
+                type: string
+              manualCutover:
+                type: boolean
+              maxLogSizeBytes:
+                type: integer
+              maxSizeBytes:
+                type: integer
+              minCapacity:
+                type: number
+              name:
+                type: string
+              pausedDate:
+                type: string
+              performCutover:
+                type: boolean
+              preferredEnclaveType:
+                type: string
+              readScale:
+                type: string
+              recoverableDatabaseId:
+                type: string
+              recoveryServicesRecoveryPointId:
+                type: string
+              requestedBackupStorageRedundancy:
+                type: string
+              requestedServiceObjectiveName:
+                type: string
+              restorableDroppedDatabaseId:
+                type: string
+              restorePointInTime:
+                type: string
+              resumedDate:
+                type: string
+              sampleName:
+                type: string
+              secondaryType:
+                type: string
+              sku:
+                description: |-
+                  Storage version of v20250101.Sku_STATUS
+                  An ARM Resource SKU.
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  capacity:
+                    type: integer
+                  family:
+                    type: string
+                  name:
+                    type: string
+                  size:
+                    type: string
+                  tier:
+                    type: string
+                type: object
+              sourceDatabaseDeletionDate:
+                type: string
+              sourceDatabaseId:
+                type: string
+              sourceResourceId:
+                type: string
+              status:
+                type: string
+              systemData:
+                description: |-
+                  Storage version of v20250101.SystemData_STATUS
+                  Metadata pertaining to creation and last modification of the resource.
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  createdAt:
+                    type: string
+                  createdBy:
+                    type: string
+                  createdByType:
+                    type: string
+                  lastModifiedAt:
+                    type: string
+                  lastModifiedBy:
+                    type: string
+                  lastModifiedByType:
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                type: object
+              type:
+                type: string
+              useFreeLimit:
+                type: boolean
+              zoneRedundant:
+                type: boolean
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

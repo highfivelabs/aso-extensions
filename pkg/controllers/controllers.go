@@ -7,7 +7,7 @@ Licensed under the MIT license.
 // predicate, indexers and secret watches follow Azure Service Operator's
 // v2/internal/controllers/controller_resources.go and indexers.go
 // (GetKnownStorageTypes, makeStandardPredicate, watchSecretsFactory,
-// watchConfigMapsFactory, watchEntity, indexPostgreSQLUserPassword,
+// watchConfigMapsFactory, watchEntity, indexPostgreSQLUserPassword, indexAzureSQLUserPassword,
 // getGeneratedStorageTypes, augmentWithARMReconciler, GetResourceExtensions,
 // getControllerName), for our kinds only. watchEntity lists with
 // apimeta.ExtractList instead of ASO's internal reflecthelpers. The ARM
@@ -45,6 +45,7 @@ import (
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
+	asosql "github.com/Azure/azure-service-operator/v2/api/sql/v20250101/storage"
 	asoweb "github.com/Azure/azure-service-operator/v2/api/web/v20260715/storage"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
@@ -54,7 +55,9 @@ import (
 	authorizationv1 "github.com/highfivelabs/aso-extensions/apis/authorization/v1"
 	postgresqlv1 "github.com/highfivelabs/aso-extensions/apis/dbforpostgresql/v1"
 	keyvaultv1 "github.com/highfivelabs/aso-extensions/apis/keyvault/v1"
+	sqlv1 "github.com/highfivelabs/aso-extensions/apis/sql/v1"
 	authreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/authorization"
+	sqlreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/azuresql"
 	kvreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/keyvault"
 	pgreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/postgresql"
 )
@@ -69,6 +72,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = postgresqlv1.AddToScheme(scheme)
 	_ = keyvaultv1.AddToScheme(scheme)
 	_ = authorizationv1.AddToScheme(scheme)
+	_ = sqlv1.AddToScheme(scheme)
 	_ = asopostgresql.AddToScheme(scheme)
 	_ = asokeyvault.AddToScheme(scheme)
 	_ = asoapp.AddToScheme(scheme)
@@ -77,6 +81,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asoworkspace.AddToScheme(scheme)
 	_ = asoregistry.AddToScheme(scheme)
 	_ = asocompute.AddToScheme(scheme)
+	_ = asosql.AddToScheme(scheme)
 	return scheme
 }
 
@@ -92,6 +97,8 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asoworkspace.Workspace{}, Name: "aso_operationalinsights_workspace"},
 		{Obj: &asoregistry.Registry{}, Name: "aso_containerregistry_registry"},
 		{Obj: &asocompute.VirtualMachine{}, Name: "aso_compute_virtualmachine"},
+		{Obj: &asosql.Server{}, Name: "aso_sql_server"},
+		{Obj: &asosql.ServersDatabase{}, Name: "aso_sql_serversdatabase"},
 	}
 }
 
@@ -101,6 +108,7 @@ type Reconcilers struct {
 	VaultSecret      *kvreconciler.VaultSecretReconciler
 	VaultCertificate *kvreconciler.VaultCertificateReconciler
 	ManagementLock   *authreconciler.ManagementLockReconciler
+	AzureSQLUser     *sqlreconciler.AzureSQLUserReconciler
 }
 
 // ARM is what the generated ARM kinds are reconciled with: ASO's generic ARM
@@ -127,6 +135,7 @@ func StorageTypes(
 		VaultSecret:      kvreconciler.NewVaultSecretReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
 		VaultCertificate: kvreconciler.NewVaultCertificateReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
 		ManagementLock:   authreconciler.NewManagementLockReconciler(kubeClient, positiveConditions, credentialProvider, cfg),
+		AzureSQLUser:     sqlreconciler.NewAzureSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
 	}
 	generated, err := generatedStorageTypes(scheme, kubeClient, resolver, positiveConditions, arm, cfg)
 	if err != nil {
@@ -175,6 +184,18 @@ func StorageTypes(
 			Name:       "hfl_authorization_managementlock",
 			Reconciler: rs.ManagementLock,
 			Predicate:  standardPredicate(),
+		},
+		{
+			Obj:        &sqlv1.User{},
+			Name:       "hfl_sql_user",
+			Reconciler: rs.AzureSQLUser,
+			Predicate:  standardPredicate(),
+			Indexes: []registration.Index{
+				{Key: ".spec.localUser.password", Func: indexAzureSQLUserPassword},
+			},
+			Watches: []registration.Watch{
+				{Type: &corev1.Secret{}, MakeEventHandler: watchSecretsFactory([]string{".spec.localUser.password"}, &sqlv1.UserList{})},
+			},
 		},
 	}...), rs, nil
 }
@@ -254,6 +275,14 @@ func standardPredicate() predicate.Predicate {
 
 func indexPostgreSQLUserPassword(rawObj client.Object) []string {
 	obj, ok := rawObj.(*postgresqlv1.User)
+	if !ok || obj.Spec.LocalUser == nil || obj.Spec.LocalUser.Password == nil {
+		return nil
+	}
+	return []string{obj.Spec.LocalUser.Password.Name}
+}
+
+func indexAzureSQLUserPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*sqlv1.User)
 	if !ok || obj.Spec.LocalUser == nil || obj.Spec.LocalUser.Password == nil {
 		return nil
 	}

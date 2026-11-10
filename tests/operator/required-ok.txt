@@ -112,3 +112,6 @@ team-a NetworkManagersSecurityUserConfiguration Ready
 team-a NetworkManagersSecurityUserRuleCollection Ready
 team-a NetworkManagersSecurityUserRule Ready
 the network manager's connectivity, security admin and security user configurations, rule collections and rules are deleted
+team-a Azure SQL User Ready
+team-b Azure SQL User refused
+the Azure SQL Entra user app-identity is dropped
