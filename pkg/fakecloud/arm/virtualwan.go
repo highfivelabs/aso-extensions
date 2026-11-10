@@ -48,10 +48,10 @@ import (
 // site-to-site VPN, the hours a real hub takes, and the error codes (this
 // fake's own).
 var (
-	vwanWAN       = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/virtualwans/[^/]+$`)
-	vwanHub       = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/virtualhubs/[^/]+$`)
-	vwanHubChild  = regexp.MustCompile(`(?i)^(/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/virtualhubs/[^/]+)/([^/]+)/[^/]+$`)
-	vwanIntentTo  = map[string]bool{"internet": true, "privatetraffic": true}
+	vwanWAN      = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/virtualwans/[^/]+$`)
+	vwanHub      = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/virtualhubs/[^/]+$`)
+	vwanHubChild = regexp.MustCompile(`(?i)^(/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/virtualhubs/[^/]+)/([^/]+)/[^/]+$`)
+	vwanIntentTo = map[string]bool{"internet": true, "privatetraffic": true}
 )
 
 // checkVirtualWAN refuses a Virtual WAN resource the rules above do not
