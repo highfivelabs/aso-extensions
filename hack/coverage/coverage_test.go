@@ -10,6 +10,8 @@ import (
 	"sort"
 	"strings"
 	"testing"
+
+	"go.yaml.in/yaml/v3"
 )
 
 const swagger = `{
@@ -284,7 +286,7 @@ func TestBars(t *testing.T) {
 	if o+u+n != 100 {
 		t.Errorf("widths %v %v %v", o, u, n)
 	}
-	svg := serviceSVG("Microsoft.Foo", segs{50, 25, 25})
+	svg := serviceSVG("Microsoft.Foo", segs{50, 25, 25}, nil, "")
 	for _, w := range []string{"50.0%", "25.0%", "75.0% covered", colOfficial, colOurs, colNone} {
 		if !strings.Contains(svg, w) {
 			t.Errorf("service svg lacks %q", w)
@@ -306,5 +308,84 @@ func TestReplaceBetween(t *testing.T) {
 	out, err := replaceBetween([]byte(in), startMarker, endMarker, "new\n")
 	if err != nil || string(out) != "a\n"+startMarker+"\nnew\n"+endMarker+"\nb\n" {
 		t.Errorf("%q %v", out, err)
+	}
+}
+
+func TestTerraform(t *testing.T) {
+	in := "service,provider,category,resources_total,attributes_total,attributes_terraform_l1,attributes_terraform_l2\n" +
+		"Microsoft.Foo,azurerm,platform-foundation,2,100,10,20\n" +
+		"Microsoft.Foo,azurerm,other,1,50,5,5\n" +
+		"Microsoft.Bar,azurerm,platform-foundation,1,50,0,10\n" +
+		"Microsoft.Bar,azapi,platform-foundation,1,50,50,50\n"
+	tf, err := parseTerraform([]byte(in), "azurerm")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if tf.All != (tfAgg{200, 15, 35}) {
+		t.Errorf("all %+v", tf.All)
+	}
+	if a, ok := tf.service("Microsoft.Foo"); !ok || a != (tfAgg{150, 15, 25}) {
+		t.Errorf("Microsoft.Foo %+v %v", a, ok)
+	}
+	if a, ok := tf.category("platform-foundation"); !ok || a != (tfAgg{150, 10, 30}) {
+		t.Errorf("platform-foundation %+v %v", a, ok)
+	}
+	if a, ok := tf.services([]string{"Microsoft.Bar", "Microsoft.Absent"}); !ok || a.cell(ok) != "~20.0%" {
+		t.Errorf("services %+v %v", a, ok)
+	}
+	if a, ok := tf.service("Microsoft.Absent"); ok || a.cell(ok) != "—" {
+		t.Error("an absent service has a figure")
+	}
+	if _, err := parseTerraform([]byte(in), "aws"); err == nil {
+		t.Error("no rows for the provider, no error")
+	}
+	svg := serviceSVG("Microsoft.Foo", segs{50, 25, 25}, &tfAgg{100, 10, 20}, "azurerm")
+	for _, w := range []string{colTerraform, colTerraformL, "Terraform ~20.0%", "10.0% by the strict rule"} {
+		if !strings.Contains(svg, w) {
+			t.Errorf("service svg lacks %q", w)
+		}
+	}
+	total := totalSVG("T", segs{1, 1, 1}, segs{1, 1, 1}, "", &tfAgg{100, 10, 20}, "azurerm")
+	if !strings.Contains(total, "azapi is not a bar") || !strings.Contains(total, "20.0%, 10.0% by the strict rule") {
+		t.Error("total svg lacks the Terraform bar or the azapi note")
+	}
+}
+
+func TestTerraformDigest(t *testing.T) {
+	root := t.TempDir()
+	if err := os.WriteFile(filepath.Join(root, "terraform.csv"), []byte("x"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	src := &terraformSource{Commit: strings.Repeat("a", 40), Provider: "azurerm"}
+	src.Files = append(src.Files, struct {
+		From   string `yaml:"from"`
+		Path   string `yaml:"path"`
+		SHA256 string `yaml:"sha256"`
+	}{"x", "terraform.csv", strings.Repeat("0", 64)})
+	if _, err := readTerraform(root, src); err == nil || !strings.Contains(err.Error(), "sha256") {
+		t.Errorf("a changed copy was accepted: %v", err)
+	}
+}
+
+// TestTerraformPinned reads the vendored catalog files at the pin and checks
+// them against the catalog's own summary.csv (azurerm: 8.2% L2, 7.2% L1 of
+// everything; 18.7% L2 of platform foundation).
+func TestTerraformPinned(t *testing.T) {
+	root := filepath.Join("..", "..")
+	b, err := os.ReadFile(filepath.Join(root, coverageDir, "sources.yaml"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var src sources
+	if err := yaml.Unmarshal(b, &src); err != nil {
+		t.Fatal(err)
+	}
+	tf, err := readTerraform(root, &src.Terraform)
+	if err != nil {
+		t.Fatal(err)
+	}
+	pf, _ := tf.category("platform-foundation")
+	if got := []string{pct(tf.All.l2, tf.All.total), pct(tf.All.l1, tf.All.total), pct(pf.l2, pf.total)}; !reflect.DeepEqual(got, []string{"8.2", "7.2", "18.7"}) {
+		t.Errorf("all L2, all L1, foundation L2 = %v, want the catalog's summary 8.2, 7.2, 18.7", got)
 	}
 }

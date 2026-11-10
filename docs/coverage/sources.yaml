@@ -18,3 +18,21 @@ aso:
   commitDate: "2026-11-06"
   nearestRelease: v2.22.0
   fetched: "2026-11-09"
+terraform:
+  # The Terraform comparison bar (docs/coverage/README.md, "Terraform"): the
+  # catalog's estimate of how much of this denominator the azurerm provider
+  # reaches. The catalog repository is private, so the two files are vendored
+  # byte-identical under docs/coverage/inputs/terraform/; the generator fails
+  # if a copy differs from its sha256 here.
+  repo: https://github.com/highfivelabs/catalog
+  commit: 13064af34996c47f1a5498bb17aca16194c4574e
+  commitDate: "2026-11-09"
+  fetched: "2026-11-10"
+  provider: azurerm
+  files:
+    - from: docs/terraform/aso-extensions/terraform.csv
+      path: docs/coverage/inputs/terraform/terraform.csv
+      sha256: b8782a2eea6fd8ac8cd8529bb892f5f52be62d11f352d20ace45dd3da603955f
+    - from: docs/terraform/aso-extensions/terraform-resources.csv
+      path: docs/coverage/inputs/terraform/terraform-resources.csv
+      sha256: 190880a2c07f2f3e64442f3ea60378e28536ef6d86435b087b8d5d8d3bb1298e

@@ -51,6 +51,7 @@ imports:
   policyinsights: azure-arm/policyinsights.yaml
   consumption: azure-arm/consumption.yaml
   costmanagement: azure-arm/costmanagement.yaml
+  keyvault: azure-arm/keyvault.yaml
 
 # Filters are applied in document order; the earliest match wins (as in ASO's
 # azure-arm.yaml, from which these are taken).
