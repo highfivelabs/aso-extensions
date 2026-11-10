@@ -19,6 +19,16 @@ ExpressRoutePortsAuthorizationExtension: Object (0 properties)
 
 LocalNetworkGatewayExtension: Object (0 properties)
 
+NetworkManagerConnectionExtension: Object (0 properties)
+
+NetworkManagerExtension: Object (0 properties)
+
+NetworkManagersNetworkGroupExtension: Object (0 properties)
+
+NetworkManagersNetworkGroupsStaticMemberExtension: Object (0 properties)
+
+NetworkManagersScopeConnectionExtension: Object (0 properties)
+
 NetworkSecurityPerimeterExtension: Object (0 properties)
 
 NetworkSecurityPerimetersLinkExtension: Object (0 properties)

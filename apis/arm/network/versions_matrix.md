@@ -23,8 +23,11 @@
 | CertificateAuthentication                                                 |           | v20260301 |
 | CertificateAuthentication_STATUS                                          |           | v20260301 |
 | CircuitConnectionStatus_STATUS                                            |           | v20260301 |
+| ConfigurationType                                                         |           | v20260301 |
+| ConfigurationType_STATUS                                                  |           | v20260301 |
 | ConnectionAuthenticationType                                              |           | v20260301 |
 | ConnectionAuthenticationType_STATUS                                       |           | v20260301 |
+| CrossTenantScopes_STATUS                                                  |           | v20260301 |
 | DeviceProperties                                                          |           | v20260301 |
 | DeviceProperties_STATUS                                                   |           | v20260301 |
 | DhGroup                                                                   |           | v20260301 |
@@ -122,6 +125,8 @@
 | ExpressRoutePortsEncapsulation_STATUS                                     |           | v20260301 |
 | GatewayCustomBgpIpAddressIpConfiguration                                  |           | v20260301 |
 | GatewayCustomBgpIpAddressIpConfiguration_STATUS                           |           | v20260301 |
+| GroupMemberType                                                           |           | v20260301 |
+| GroupMemberType_STATUS                                                    |           | v20260301 |
 | HubBgpConnectionStatus_STATUS                                             |           | v20260301 |
 | HubIPConfigurationPropertiesFormat                                        |           | v20260301 |
 | HubIPConfigurationPropertiesFormat_STATUS                                 |           | v20260301 |
@@ -165,6 +170,29 @@
 | ManagedServiceIdentity                                                    |           | v20260301 |
 | ManagedServiceIdentityUserAssignedIdentities_STATUS                       |           | v20260301 |
 | ManagedServiceIdentity_STATUS                                             |           | v20260301 |
+| NetworkGroupProperties                                                    |           | v20260301 |
+| NetworkGroupProperties_STATUS                                             |           | v20260301 |
+| NetworkManager                                                            |           | v20260301 |
+| NetworkManagerConnection                                                  |           | v20260301 |
+| NetworkManagerConnectionProperties                                        |           | v20260301 |
+| NetworkManagerConnectionProperties_STATUS                                 |           | v20260301 |
+| NetworkManagerConnection_STATUS                                           |           | v20260301 |
+| NetworkManagerConnection_Spec                                             |           | v20260301 |
+| NetworkManagerProperties                                                  |           | v20260301 |
+| NetworkManagerPropertiesNetworkManagerScopes                              |           | v20260301 |
+| NetworkManagerPropertiesNetworkManagerScopes_STATUS                       |           | v20260301 |
+| NetworkManagerProperties_STATUS                                           |           | v20260301 |
+| NetworkManager_STATUS                                                     |           | v20260301 |
+| NetworkManager_Spec                                                       |           | v20260301 |
+| NetworkManagersNetworkGroup                                               |           | v20260301 |
+| NetworkManagersNetworkGroup_STATUS                                        |           | v20260301 |
+| NetworkManagersNetworkGroup_Spec                                          |           | v20260301 |
+| NetworkManagersNetworkGroupsStaticMember                                  |           | v20260301 |
+| NetworkManagersNetworkGroupsStaticMember_STATUS                           |           | v20260301 |
+| NetworkManagersNetworkGroupsStaticMember_Spec                             |           | v20260301 |
+| NetworkManagersScopeConnection                                            |           | v20260301 |
+| NetworkManagersScopeConnection_STATUS                                     |           | v20260301 |
+| NetworkManagersScopeConnection_Spec                                       |           | v20260301 |
 | NetworkSecurityPerimeter                                                  | v20250501 |           |
 | NetworkSecurityPerimeterProperties_STATUS                                 | v20250501 |           |
 | NetworkSecurityPerimeter_STATUS                                           | v20250501 |           |
@@ -233,8 +261,13 @@
 | RoutingPolicy                                                             |           | v20260301 |
 | RoutingPolicy_STATUS                                                      |           | v20260301 |
 | RoutingState_STATUS                                                       |           | v20260301 |
+| ScopeConnectionProperties                                                 |           | v20260301 |
+| ScopeConnectionProperties_STATUS                                          |           | v20260301 |
+| ScopeConnectionState_STATUS                                               |           | v20260301 |
 | ServiceProviderProvisioningState                                          |           | v20260301 |
 | ServiceProviderProvisioningState_STATUS                                   |           | v20260301 |
+| StaticMemberProperties                                                    |           | v20260301 |
+| StaticMemberProperties_STATUS                                             |           | v20260301 |
 | StaticRoute                                                               |           | v20260301 |
 | StaticRoute_STATUS                                                        |           | v20260301 |
 | StaticRoutesConfig                                                        |           | v20260301 |
@@ -245,9 +278,9 @@
 | Subnet_VirtualHubs_IpConfiguration_SubResourceEmbedded                    |           | v20260301 |
 | SubscriptionId                                                            | v20250501 |           |
 | SubscriptionId_STATUS                                                     | v20250501 |           |
-| SystemData_CreatedByType_STATUS                                           | v20250501 |           |
-| SystemData_LastModifiedByType_STATUS                                      | v20250501 |           |
-| SystemData_STATUS                                                         | v20250501 |           |
+| SystemData_CreatedByType_STATUS                                           | v20250501 | v20260301 |
+| SystemData_LastModifiedByType_STATUS                                      | v20250501 | v20260301 |
+| SystemData_STATUS                                                         | v20250501 | v20260301 |
 | TrafficSelectorPolicy                                                     |           | v20260301 |
 | TrafficSelectorPolicy_STATUS                                              |           | v20260301 |
 | TunnelConnectionHealth_STATUS                                             |           | v20260301 |
