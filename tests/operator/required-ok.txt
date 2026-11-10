@@ -96,3 +96,10 @@ team-a VpnGatewaysVpnConnection Ready
 team-a VpnServerConfiguration Ready
 team-a P2sVpnGateway Ready
 the VPN gateways, their connection and NAT rule, the VPN site and the server configuration are deleted
+team-a NetworkManager Ready
+team-a NetworkManagerConnection Ready: at a subscription
+team-a NetworkManagerConnection Ready: at our ManagementGroup
+team-a NetworkManagersScopeConnection Ready
+team-a NetworkManagersNetworkGroup Ready
+team-a NetworkManagersNetworkGroupsStaticMember Ready
+the network manager, its connections, scope connection, network group and static member are deleted
