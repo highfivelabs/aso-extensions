@@ -10,6 +10,7 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"fmt"
+	"strings"
 	"testing"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -21,7 +22,7 @@ import (
 	compute "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301"
 )
 
-// A run command on a small Linux VM (a fixture, Standard_B1s, about $0.01
+// A run command on a small Linux VM (a fixture, two vCPUs, about $0.03
 // an hour, no public IP), owned by a stand-in for ASO's VirtualMachine.
 func TestLiveVirtualMachineRunCommand(t *testing.T) {
 	ns := namespace(t, "vm")
@@ -37,21 +38,51 @@ func TestLiveVirtualMachineRunCommand(t *testing.T) {
 	_, _ = rand.Read(b)
 	vmName := azName("vm")
 	vmID := rgID() + "/providers/Microsoft.Compute/virtualMachines/" + vmName
-	fixture(t, vmID, "2024-07-01", map[string]any{
-		"location": location,
-		"properties": map[string]any{
-			"hardwareProfile": map[string]any{"vmSize": "Standard_B1s"},
-			"storageProfile": map[string]any{
-				"imageReference": map[string]any{"publisher": "Canonical", "offer": "ubuntu-24_04-lts", "sku": "server", "version": "latest"},
-				"osDisk":         map[string]any{"createOption": "FromImage", "deleteOption": "Delete", "managedDisk": map[string]any{"storageAccountType": "Standard_LRS"}},
+	// Small sizes in order; a new subscription is refused some sizes for
+	// capacity (Standard_B1s in eastus2, 2026-11-10: SkuNotAvailable).
+	var made bool
+	for _, size := range []string{"Standard_B2ats_v2", "Standard_B2als_v2", "Standard_D2als_v6", "Standard_D2as_v5", "Standard_B1s"} {
+		vmBody := map[string]any{
+			"location": location,
+			"properties": map[string]any{
+				"hardwareProfile": map[string]any{"vmSize": size},
+				"storageProfile": map[string]any{
+					"imageReference": map[string]any{"publisher": "Canonical", "offer": "ubuntu-24_04-lts", "sku": "server", "version": "latest"},
+					"osDisk":         map[string]any{"createOption": "FromImage", "deleteOption": "Delete", "managedDisk": map[string]any{"storageAccountType": "Standard_LRS"}},
+				},
+				"osProfile": map[string]any{
+					"computerName": "live", "adminUsername": "live",
+					"adminPassword":      "Aa1!" + hex.EncodeToString(b),
+					"linuxConfiguration": map[string]any{"disablePasswordAuthentication": false},
+				},
+				"networkProfile": map[string]any{"networkInterfaces": []any{map[string]any{"id": nicID, "properties": map[string]any{"deleteOption": "Detach"}}}},
 			},
-			"osProfile": map[string]any{
-				"computerName": "live", "adminUsername": "live",
-				"adminPassword":      "Aa1!" + hex.EncodeToString(b),
-				"linuxConfiguration": map[string]any{"disablePasswordAuthentication": false},
-			},
-			"networkProfile": map[string]any{"networkInterfaces": []any{map[string]any{"id": nicID, "properties": map[string]any{"deleteOption": "Detach"}}}},
-		},
+		}
+		_, _, err := azure.do(context.Background(), "PUT", vmID, "2024-07-01", vmBody)
+		if err != nil && strings.Contains(err.Error(), "SkuNotAvailable") {
+			t.Logf("%s not available: trying the next size", size)
+			continue
+		}
+		if err != nil {
+			t.Fatalf("fixture VM: %v", err)
+		}
+		t.Logf("VM size %s", size)
+		made = true
+		break
+	}
+	if !made {
+		t.Fatal("no VM size available in " + location)
+	}
+	t.Cleanup(func() { deleteARM(t, vmID, "2024-07-01") })
+	eventually(t, timeout, "fixture VM Succeeded", func() error {
+		_, r, err := azure.get(context.Background(), vmID, "2024-07-01")
+		if err != nil {
+			return err
+		}
+		if s := state(r); s != "Succeeded" {
+			return fmt.Errorf("provisioningState %s", s)
+		}
+		return nil
 	})
 
 	ctx := context.Background()

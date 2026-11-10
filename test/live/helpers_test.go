@@ -9,6 +9,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -87,7 +88,8 @@ func (a *armClient) do(ctx context.Context, method, id, apiVersion string, body 
 		_ = json.Unmarshal(raw, &out)
 	}
 	if resp.StatusCode >= 400 {
-		return resp.StatusCode, out, fmt.Errorf("%s %s: %d %s", method, id, resp.StatusCode, strings.TrimSpace(string(raw)))
+		// One line, so the run's filtered log shows Azure's message.
+		return resp.StatusCode, out, fmt.Errorf("%s %s: %d %s", method, id, resp.StatusCode, strings.Join(strings.Fields(string(raw)), " "))
 	}
 	return resp.StatusCode, out, nil
 }
@@ -193,12 +195,20 @@ func ready(obj conditioned) func() error {
 				if c.Status == metav1.ConditionTrue && c.ObservedGeneration == obj.GetGeneration() {
 					return nil
 				}
-				return fmt.Errorf("Ready=%s reason=%s: %s", c.Status, c.Reason, c.Message)
+				err := fmt.Errorf("Ready=%s reason=%s: %s", c.Status, c.Reason, c.Message)
+				if c.Severity == conditions.ConditionSeverityError {
+					// ASO does not retry this one: Azure refused the spec.
+					return permanent{err}
+				}
+				return err
 			}
 		}
 		return fmt.Errorf("no Ready condition yet")
 	}
 }
+
+// permanent is an error eventually does not wait out.
+type permanent struct{ error }
 
 func gone(obj client.Object) func() error {
 	return func() error {
@@ -221,6 +231,10 @@ func eventually(t *testing.T, timeout time.Duration, what string, f func() error
 	for time.Now().Before(deadline) {
 		if err = f(); err == nil {
 			return
+		}
+		var p permanent
+		if errors.As(err, &p) {
+			break
 		}
 		time.Sleep(poll)
 	}
@@ -316,5 +330,20 @@ func update[T client.Object](t *testing.T, obj T, change func(T)) {
 	change(obj)
 	if err := k8s.Update(context.Background(), obj); err != nil {
 		t.Fatal(err)
+	}
+}
+
+// requireProvider skips the test when the subscription has not registered
+// the resource provider ns: registering one is a subscription action the
+// identity (Contributor on one group) cannot take; the builder does it
+// (docs/live-runs.md, "What cannot run here").
+func requireProvider(t *testing.T, ns string) {
+	t.Helper()
+	_, r, err := azure.get(context.Background(), "/subscriptions/"+subID+"/providers/"+ns, "2021-04-01")
+	if err != nil {
+		t.Skipf("cannot read the registration of %s: %v", ns, err)
+	}
+	if s, _ := r["registrationState"].(string); s != "Registered" {
+		t.Skipf("the subscription has not registered %s (%s): the builder registers it", ns, s)
 	}
 }

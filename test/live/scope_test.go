@@ -31,7 +31,7 @@ func TestLiveTagSet(t *testing.T) {
 	ns := namespace(t, "tags")
 	tags := &resources.TagSet{}
 	tags.Namespace, tags.Name = ns, "rg"
-	tags.Spec = resources.TagSet_Spec{Owner: rgRef(), Properties: &resources.Tags{Tags: map[string]string{"hfl.dev/live-run": runID}}}
+	tags.Spec = resources.TagSet_Spec{Owner: rgRef(), Properties: &resources.Tags{Tags: map[string]string{"hfl-live-run": runID}}}
 	create(t, timeout, tags)
 	id := rgID() + "/providers/Microsoft.Resources/tags/default"
 	want := func(w map[string]any) func(map[string]any) error {
@@ -43,11 +43,11 @@ func TestLiveTagSet(t *testing.T) {
 			return nil
 		}
 	}
-	expectResource(t, id, api, want(map[string]any{"hfl.dev/live-run": runID}))
+	expectResource(t, id, api, want(map[string]any{"hfl-live-run": runID}))
 
 	update(t, tags, func(s *resources.TagSet) { s.Spec.Properties.Tags["team"] = "platform" })
 	eventually(t, timeout, "TagSet Ready after the change", ready(tags))
-	expectResource(t, id, api, want(map[string]any{"hfl.dev/live-run": runID, "team": "platform"}))
+	expectResource(t, id, api, want(map[string]any{"hfl-live-run": runID, "team": "platform"}))
 
 	remove(t, timeout, tags)
 	expectResource(t, id, api, want(nil))
@@ -99,6 +99,9 @@ func TestLiveBudget(t *testing.T) {
 // managed identity: granting one a role needs rights Contributor lacks).
 func TestLiveCostExport(t *testing.T) {
 	const api = "2025-03-01"
+	// Azure, 2026-11-10: "RP Not Registered. Register destination storage
+	// account subscription with Microsoft.CostManagementExports".
+	requireProvider(t, "Microsoft.CostManagementExports")
 	ns := namespace(t, "export")
 	account := strings.ReplaceAll(azName("costst"), "-", "")
 	accountID := rgID() + "/providers/Microsoft.Storage/storageAccounts/" + account

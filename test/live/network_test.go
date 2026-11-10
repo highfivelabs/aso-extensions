@@ -8,6 +8,7 @@ package live
 import (
 	"context"
 	"fmt"
+	"os"
 	"reflect"
 	"strings"
 	"testing"
@@ -87,6 +88,8 @@ func TestLiveVirtualWanSiteServerConfiguration(t *testing.T) {
 		AzureName: azName("branch"), Owner: owner("rg"), Location: ptr(location),
 		VirtualWan:       &network.SubResource{Reference: &genruntime.ResourceReference{Group: "network.azure.hfl.dev", Kind: "VirtualWan", Name: "wan"}},
 		DeviceProperties: &network.DeviceProperties{DeviceVendor: ptr("Contoso")},
+		// Azure needs the site's address space or BGP on its links.
+		AddressSpace: &network.AddressSpace{AddressPrefixes: []string{"10.30.0.0/16"}},
 		VpnSiteLinks: []network.VpnSiteLink{{
 			Name: ptr("isp1"), IpAddress: ptr("203.0.113.10"),
 			LinkProperties: &network.VpnLinkProviderProperties{LinkProviderName: ptr("ISP1"), LinkSpeedInMbps: ptr(100)},
@@ -194,10 +197,10 @@ func TestLiveNetworkSecurityPerimeter(t *testing.T) {
 	link.Spec = nspapi.NetworkSecurityPerimetersLink_Spec{
 		Owner: owner("perimeter"),
 		AutoApprovedRemotePerimeterResourceReference: &genruntime.ResourceReference{ARMID: remoteID},
-		LocalInboundProfiles:  []string{"*"},
-		RemoteInboundProfiles: []string{"*"},
+		LocalInboundProfiles:                         []string{"*"},
+		RemoteInboundProfiles:                        []string{"*"},
 	}
-	create(t, timeout, nsp, remote, profile, rule, assoc, logging, link)
+	create(t, timeout, nsp, remote, profile, rule, assoc, link)
 
 	ruleID := profileID + "/accessRules/office"
 	assocID := nspID + "/resourceAssociations/store"
@@ -216,11 +219,21 @@ func TestLiveNetworkSecurityPerimeter(t *testing.T) {
 		}
 		return nil
 	})
-	expectResource(t, nspID+"/loggingConfigurations/instance", nspAPI, func(r map[string]any) error {
-		if !reflect.DeepEqual(properties(r)["enabledLogCategories"], []any{"NspPublicInboundPerimeterRulesAllowed"}) {
-			return fmt.Errorf("resource: %v", r)
+	t.Run("LoggingConfiguration", func(t *testing.T) {
+		// Azure refused it on 2026-11-10: "tenant is not whitelisted and
+		// EnableServiceTagsInNsp AFEC flag is not registered for the
+		// subscription" (a subscription feature; docs/live-runs.md).
+		if os.Getenv("LIVE_NSP_LOGGING") == "" {
+			t.Skip("needs the subscription feature Microsoft.Network/EnableServiceTagsInNsp; set LIVE_NSP_LOGGING=1 once registered")
 		}
-		return nil
+		create(t, timeout, logging)
+		expectResource(t, nspID+"/loggingConfigurations/instance", nspAPI, func(r map[string]any) error {
+			if !reflect.DeepEqual(properties(r)["enabledLogCategories"], []any{"NspPublicInboundPerimeterRulesAllowed"}) {
+				return fmt.Errorf("resource: %v", r)
+			}
+			return nil
+		})
+		remove(t, timeout, logging)
 	})
 	expectResource(t, nspID+"/links/to-remote", nspAPI, func(r map[string]any) error {
 		if !strings.EqualFold(fmt.Sprint(properties(r)["autoApprovedRemotePerimeterResourceId"]), remoteID) {
@@ -240,7 +253,7 @@ func TestLiveNetworkSecurityPerimeter(t *testing.T) {
 		return nil
 	})
 
-	for _, o := range []client.Object{link, logging, assoc, rule, profile, remote, nsp} {
+	for _, o := range []client.Object{link, assoc, rule, profile, remote, nsp} {
 		remove(t, timeout, o)
 	}
 	expectGone(t, nspID, nspAPI)

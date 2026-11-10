@@ -142,6 +142,8 @@ func TestLiveVirtualHub(t *testing.T) {
 		AzureName: azName("hubsite"), Owner: owner("rg"), Location: ptr(location),
 		VirtualWan:       &network.SubResource{Reference: ours("VirtualWan", "wan")},
 		DeviceProperties: &network.DeviceProperties{DeviceVendor: ptr("Contoso")},
+		// Azure needs the site's address space or BGP on its links.
+		AddressSpace: &network.AddressSpace{AddressPrefixes: []string{"10.30.0.0/16"}},
 		VpnSiteLinks: []network.VpnSiteLink{{
 			Name: ptr("isp1"), IpAddress: ptr("203.0.113.10"),
 			LinkProperties: &network.VpnLinkProviderProperties{LinkProviderName: ptr("ISP1"), LinkSpeedInMbps: ptr(100)},
