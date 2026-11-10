@@ -718,6 +718,34 @@ ExpressRoutePortsAuthorization_STATUS: Object (5 properties)
 ExpressRoutePortsAuthorization_Spec: Object (1 property)
 └── Name: string
 
+IpGroup_STATUS: Object (7 properties)
+├── Etag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── FirewallPolicies: Object (1 property)[]
+│   │   └── Id: *string
+│   ├── Firewalls: Object (1 property)[]
+│   │   └── Id: *string
+│   ├── IpAddresses: string[]
+│   └── ProvisioningState: *Enum (6 values)
+│       ├── "Canceled"
+│       ├── "Creating"
+│       ├── "Deleting"
+│       ├── "Failed"
+│       ├── "Succeeded"
+│       └── "Updating"
+├── Tags: map[string]string
+└── Type: *string
+
+IpGroup_Spec: Object (4 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (1 property)
+│   └── IpAddresses: string[]
+└── Tags: map[string]string
+
 LocalNetworkGateway_STATUS: Object (7 properties)
 ├── Etag: *string
 ├── Id: *string
@@ -1650,6 +1678,156 @@ P2sVpnGateway_Spec: Object (4 properties)
 │   ├── VpnGatewayScaleUnit: *int
 │   └── VpnServerConfiguration: *Object (1 property)
 │       └── Id: *string
+└── Tags: map[string]string
+
+RouteFilter_STATUS: Object (7 properties)
+├── Etag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── Ipv6Peerings: Object (1 property)[]
+│   │   └── Id: *string
+│   ├── Peerings: Object (1 property)[]
+│   │   └── Id: *string
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   └── Rules: Object (5 properties)[]
+│       ├── Etag: *string
+│       ├── Id: *string
+│       ├── Location: *string
+│       ├── Name: *string
+│       └── Properties: *Object (4 properties)
+│           ├── Access: *Enum (2 values)
+│           │   ├── "Allow"
+│           │   └── "Deny"
+│           ├── Communities: string[]
+│           ├── ProvisioningState: *Enum (6 values)
+│           │   ├── "Canceled"
+│           │   ├── "Creating"
+│           │   ├── "Deleting"
+│           │   ├── "Failed"
+│           │   ├── "Succeeded"
+│           │   └── "Updating"
+│           └── RouteFilterRuleType: *Enum (1 value)
+│               └── "Community"
+├── Tags: map[string]string
+└── Type: *string
+
+RouteFilter_Spec: Object (4 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (1 property)
+│   └── Rules: Object (4 properties)[]
+│       ├── Id: *string
+│       ├── Location: *string
+│       ├── Name: *string
+│       └── Properties: *Object (3 properties)
+│           ├── Access: *Enum (2 values)
+│           │   ├── "Allow"
+│           │   └── "Deny"
+│           ├── Communities: string[]
+│           └── RouteFilterRuleType: *Enum (1 value)
+│               └── "Community"
+└── Tags: map[string]string
+
+RouteFiltersRouteFilterRule_STATUS: Object (5 properties)
+├── Etag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+└── Properties: *Object (4 properties)
+    ├── Access: *Enum (2 values)
+    │   ├── "Allow"
+    │   └── "Deny"
+    ├── Communities: string[]
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    └── RouteFilterRuleType: *Enum (1 value)
+        └── "Community"
+
+RouteFiltersRouteFilterRule_Spec: Object (3 properties)
+├── Location: *string
+├── Name: string
+└── Properties: *Object (3 properties)
+    ├── Access: *Enum (2 values)
+    │   ├── "Allow"
+    │   └── "Deny"
+    ├── Communities: string[]
+    └── RouteFilterRuleType: *Enum (1 value)
+        └── "Community"
+
+ServiceEndpointPoliciesServiceEndpointPolicyDefinition_STATUS: Object (5 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── Description: *string
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   ├── Service: *string
+│   └── ServiceResources: string[]
+└── Type: *string
+
+ServiceEndpointPoliciesServiceEndpointPolicyDefinition_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (3 properties)
+    ├── Description: *string
+    ├── Service: *string
+    └── ServiceResources: string[]
+
+ServiceEndpointPolicy_STATUS: Object (8 properties)
+├── Etag: *string
+├── Id: *string
+├── Kind: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (6 properties)
+│   ├── ContextualServiceEndpointPolicies: string[]
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   ├── ResourceGuid: *string
+│   ├── ServiceAlias: *string
+│   ├── ServiceEndpointPolicyDefinitions: Object (1 property)[]
+│   │   └── Id: *string
+│   └── Subnets: Object (1 property)[]
+│       └── Id: *string
+├── Tags: map[string]string
+└── Type: *string
+
+ServiceEndpointPolicy_Spec: Object (4 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (3 properties)
+│   ├── ContextualServiceEndpointPolicies: string[]
+│   ├── ServiceAlias: *string
+│   └── ServiceEndpointPolicyDefinitions: Object (3 properties)[]
+│       ├── Id: *string
+│       ├── Name: *string
+│       └── Properties: *Object (3 properties)
+│           ├── Description: *string
+│           ├── Service: *string
+│           └── ServiceResources: string[]
 └── Tags: map[string]string
 
 VirtualHub_STATUS: Object (8 properties)

@@ -5,6 +5,9 @@ specification/web
 specification/operationalinsights
 specification/monitor
 specification/network
+specification/dns
+specification/privatedns
+specification/dnsresolver
 specification/containerregistry
 specification/compute
 specification/devtestlabs

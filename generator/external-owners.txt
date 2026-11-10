@@ -8,3 +8,5 @@ web/Site
 operationalinsights/Workspace
 containerregistry/Registry
 compute/VirtualMachine
+network/DnsZone
+network/PrivateDnsZone
