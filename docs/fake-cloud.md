@@ -201,6 +201,14 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   above. Not modelled: scale units, the routes a hub learns, a connection's
   routing configuration checked against the hub's route tables, internet
   security and FastPath, and the time a real gateway takes.
+- Activity log profiles and workbook templates
+  (`Microsoft.Insights/logprofiles`, `workbooktemplates`;
+  `pkg/fakecloud/arm/insights.go`): a log profile is at a subscription, one
+  per subscription, with categories among Write, Delete and Action, at
+  least one location, a storage account or Event Hubs rule that exists, and
+  0 to 365 days; a workbook template gives its template and a gallery. Not
+  modelled: the activity log flowing, the template's content, and the error
+  codes (the fake's own).
 - Maintenance configuration assignments
   (`Microsoft.Maintenance/configurationAssignments` at any scope;
   `pkg/fakecloud/arm/maintenance.go`): an assignment names a maintenance

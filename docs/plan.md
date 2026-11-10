@@ -212,6 +212,15 @@ run over the pinned specs with configuration kept here.
   in their files is shared types (`RoutingConfiguration`) moving to the
   first file, alphabetically, of a kind that uses them; their CRDs and
   `structure.txt` entries are the same.
+- **Resources kept directly under a subscription** (patch 0009,
+  `ASO_GENERATOR_SUBSCRIPTION_EXTENSION`). ASO's generator gives a path
+  `/subscriptions/{subscriptionId}/providers/{namespace}/{type}/{name}`
+  Location scope, which it cannot model (its own TODO): the kind has no
+  owner and its ARM ID comes out as a resource group named after it (found
+  by the activity log profile's test: the PUT went to
+  `/subscriptions/…/resourceGroups/default`). With the patch it is an
+  extension resource owned by the subscription's ARM ID, as budgets and
+  tags are. No kind generated before had Location scope, so none changes.
 - **One version, no conversion webhook.** ASO's CRDs have two versions, an
   API version and a storage (hub) version, converted by a webhook. Ours
   serve only the API version (`v20250101`): `hack/generate.sh` makes CRDs
@@ -647,6 +656,7 @@ rechecks upstream again when it is built.
 | c11 | Storage local users (SFTP) | not at the pin, no pull request | queued |
 | c12 | Cognitive Services RAI policies | not at the pin, no pull request | queued |
 | c13 | Cosmos DB Gremlin, SQL dedicated gateway | not at the pin, no pull request | queued |
+| f18 | Activity log profiles and workbook templates (foundation row 18; the rest of the row, newer versions of ASO's alert and data collection kinds, is upstream's) | rechecked 2026-11-10, read-only: v2.22.0 still the latest release; `main` four documentation commits past the pin; no open pull request or issue adds a log profile or a workbook template; ASO's `insights` group has neither | **built**, generated in `insights.azure.hfl.dev`: `v20160301` `LogProfile` (the only stable version: categories, locations, a storage account and an Event Hubs authorization rule as ARM references, retention), owned by the subscription (an ARM ID) by **generator patch 0009** (a resource directly under a subscription is an extension resource; without it the generator gave it Location scope, which it cannot model, and its PUT went to a resource group named after it); `v20201120` `WorkbookTemplate` (galleries, localized galleries, priority, author, and the template as free-form JSON), owned by a resource group. Hand-written code: none (the kind code is 100% generated). Not built: the alert, scheduled query and data collection endpoint attributes ASO's kinds lack against newer spec versions (upstream's, a `$supportedFrom` there); log profiles are retired by Azure in favour of diagnostic settings, which ASO has, and are built for subscriptions that still use them |
 | c14 | AKS managed namespaces | not at the pin, no pull request | queued |
 | c18 | Stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones) | not a new kind | queued |
 
@@ -904,6 +914,14 @@ serialization and conversion tests):
   chain runs through our kind) are created and deleted the same way; the
   CRD refuses a table plan that does not exist and a retention under four
   days;
+- Activity log profiles and workbook templates, generated (f18, patch
+  0009): the subscription's log profile owned by the subscription's ARM ID,
+  archiving to a storage account by ARM ID, its retention changed and PUT
+  again; a workbook template in a resource group (its template as JSON,
+  one gallery); both deleted; a log profile with neither a storage account
+  nor an Event Hubs rule refused on its Ready condition. On kind, team-a's
+  log profile and workbook template are Ready and deleted. The fake does
+  not show: the activity log flowing, a template being a valid workbook;
 - Azure Monitor private link and network security perimeters, generated
   (c6): a private link scope owned by the resource group (a global
   resource) with its access modes, a workspace scoped into it (owned by our
