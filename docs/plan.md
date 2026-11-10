@@ -694,6 +694,20 @@ service account would hand our manager all of ASO's Kubernetes rights.
 credential to add, at the cost above. It renders; it is not exercised on
 kind.
 
+`config/secret-writer` is the opt-in that lets our manager write Secrets
+(`create`, `update`, `delete`; not `patch`, which ASO's
+`controllerutil.CreateOrUpdate` does not use), for the keys Azure makes that
+kinds export through `operatorSpec.secrets` (§8, question 9). It is a
+kustomize component (a ClusterRole and a ClusterRoleBinding, both
+`aso-extensions-secret-writer`, named in full because a component does not
+take the install's `namePrefix`), added to a user's overlay of
+`config/default`; README.md, "Writing Secrets", shows how, and how to bind
+it per namespace when `AZURE_TARGET_NAMESPACES` narrows the manager. Off by
+default. On kind (`tests/operator/run.sh`), a circuit's service key export
+is refused (`forbidden`) on the Ready condition with the default install,
+then written to its Secret, with an authorization's key, once the component
+is applied (`tests/operator/overlay-secret-writer`).
+
 ### Why not an operator
 
 The GCP sibling of this repository needs an operator because Config
@@ -1146,3 +1160,11 @@ drop until the users they grant to are deleted).
    and writes the Secret. Recommended: (b), then (a) if every user turns it
    on. Asked 2026-11-09 with ExpressRoute (row 9); nothing waits on it but
    the export itself.
+
+   **Recommended, awaiting the builder.** (b) is built so the export can be
+   used and tested: `config/secret-writer`, a kustomize component granting
+   `create`, `update` and `delete` on Secrets, off by default (§6, "This
+   manager"; README.md, "Writing Secrets"); the default install is
+   unchanged. Choosing (a) would move its rules into `config/rbac/role.yaml`
+   and drop the `! can create secrets` check of `tests/operator/run.sh`;
+   choosing (c) would remove the component and the exporters.
