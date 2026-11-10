@@ -1279,22 +1279,22 @@ type RoutingRuleRouteDestination struct {
 var _ genruntime.ARMTransformer = &RoutingRuleRouteDestination{}
 
 // ConvertToARM converts from a Kubernetes CRD object to an ARM object
-func (destination *RoutingRuleRouteDestination) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
-	if destination == nil {
+func (routeDestination *RoutingRuleRouteDestination) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
+	if routeDestination == nil {
 		return nil, nil
 	}
 	result := &arm.RoutingRuleRouteDestination{}
 
 	// Set property "DestinationAddress":
-	if destination.DestinationAddress != nil {
-		destinationAddress := *destination.DestinationAddress
+	if routeDestination.DestinationAddress != nil {
+		destinationAddress := *routeDestination.DestinationAddress
 		result.DestinationAddress = &destinationAddress
 	}
 
 	// Set property "Type":
-	if destination.Type != nil {
+	if routeDestination.Type != nil {
 		var temp string
-		temp = string(*destination.Type)
+		temp = string(*routeDestination.Type)
 		typeVar := arm.RoutingRuleDestinationType(temp)
 		result.Type = &typeVar
 	}
@@ -1302,12 +1302,12 @@ func (destination *RoutingRuleRouteDestination) ConvertToARM(resolved genruntime
 }
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (destination *RoutingRuleRouteDestination) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (routeDestination *RoutingRuleRouteDestination) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.RoutingRuleRouteDestination{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (destination *RoutingRuleRouteDestination) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (routeDestination *RoutingRuleRouteDestination) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.RoutingRuleRouteDestination)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.RoutingRuleRouteDestination, got %T", armInput)
@@ -1316,7 +1316,7 @@ func (destination *RoutingRuleRouteDestination) PopulateFromARM(owner genruntime
 	// Set property "DestinationAddress":
 	if typedInput.DestinationAddress != nil {
 		destinationAddress := *typedInput.DestinationAddress
-		destination.DestinationAddress = &destinationAddress
+		routeDestination.DestinationAddress = &destinationAddress
 	}
 
 	// Set property "Type":
@@ -1324,7 +1324,7 @@ func (destination *RoutingRuleRouteDestination) PopulateFromARM(owner genruntime
 		var temp string
 		temp = string(*typedInput.Type)
 		typeVar := RoutingRuleDestinationType(temp)
-		destination.Type = &typeVar
+		routeDestination.Type = &typeVar
 	}
 
 	// No error
@@ -1332,18 +1332,18 @@ func (destination *RoutingRuleRouteDestination) PopulateFromARM(owner genruntime
 }
 
 // AssignProperties_From_RoutingRuleRouteDestination populates our RoutingRuleRouteDestination from the provided source RoutingRuleRouteDestination
-func (destination *RoutingRuleRouteDestination) AssignProperties_From_RoutingRuleRouteDestination(source *storage.RoutingRuleRouteDestination) error {
+func (routeDestination *RoutingRuleRouteDestination) AssignProperties_From_RoutingRuleRouteDestination(source *storage.RoutingRuleRouteDestination) error {
 
 	// DestinationAddress
-	destination.DestinationAddress = genruntime.ClonePointerToString(source.DestinationAddress)
+	routeDestination.DestinationAddress = genruntime.ClonePointerToString(source.DestinationAddress)
 
 	// Type
 	if source.Type != nil {
 		typeVar := *source.Type
 		typeTemp := genruntime.ToEnum(typeVar, routingRuleDestinationType_Values)
-		destination.Type = &typeTemp
+		routeDestination.Type = &typeTemp
 	} else {
-		destination.Type = nil
+		routeDestination.Type = nil
 	}
 
 	// No error
@@ -1351,26 +1351,26 @@ func (destination *RoutingRuleRouteDestination) AssignProperties_From_RoutingRul
 }
 
 // AssignProperties_To_RoutingRuleRouteDestination populates the provided destination RoutingRuleRouteDestination from our RoutingRuleRouteDestination
-func (destination *RoutingRuleRouteDestination) AssignProperties_To_RoutingRuleRouteDestination(target *storage.RoutingRuleRouteDestination) error {
+func (routeDestination *RoutingRuleRouteDestination) AssignProperties_To_RoutingRuleRouteDestination(destination *storage.RoutingRuleRouteDestination) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// DestinationAddress
-	target.DestinationAddress = genruntime.ClonePointerToString(destination.DestinationAddress)
+	destination.DestinationAddress = genruntime.ClonePointerToString(routeDestination.DestinationAddress)
 
 	// Type
-	if destination.Type != nil {
-		typeVar := string(*destination.Type)
-		target.Type = &typeVar
+	if routeDestination.Type != nil {
+		typeVar := string(*routeDestination.Type)
+		destination.Type = &typeVar
 	} else {
-		target.Type = nil
+		destination.Type = nil
 	}
 
 	// Update the property bag
 	if len(propertyBag) > 0 {
-		target.PropertyBag = propertyBag
+		destination.PropertyBag = propertyBag
 	} else {
-		target.PropertyBag = nil
+		destination.PropertyBag = nil
 	}
 
 	// No error
@@ -1378,17 +1378,17 @@ func (destination *RoutingRuleRouteDestination) AssignProperties_To_RoutingRuleR
 }
 
 // Initialize_From_RoutingRuleRouteDestination_STATUS populates our RoutingRuleRouteDestination from the provided source RoutingRuleRouteDestination_STATUS
-func (destination *RoutingRuleRouteDestination) Initialize_From_RoutingRuleRouteDestination_STATUS(source *RoutingRuleRouteDestination_STATUS) error {
+func (routeDestination *RoutingRuleRouteDestination) Initialize_From_RoutingRuleRouteDestination_STATUS(source *RoutingRuleRouteDestination_STATUS) error {
 
 	// DestinationAddress
-	destination.DestinationAddress = genruntime.ClonePointerToString(source.DestinationAddress)
+	routeDestination.DestinationAddress = genruntime.ClonePointerToString(source.DestinationAddress)
 
 	// Type
 	if source.Type != nil {
 		typeVar := genruntime.ToEnum(string(*source.Type), routingRuleDestinationType_Values)
-		destination.Type = &typeVar
+		routeDestination.Type = &typeVar
 	} else {
-		destination.Type = nil
+		routeDestination.Type = nil
 	}
 
 	// No error
@@ -1407,12 +1407,12 @@ type RoutingRuleRouteDestination_STATUS struct {
 var _ genruntime.FromARMConverter = &RoutingRuleRouteDestination_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (destination *RoutingRuleRouteDestination_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (routeDestination *RoutingRuleRouteDestination_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.RoutingRuleRouteDestination_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (destination *RoutingRuleRouteDestination_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (routeDestination *RoutingRuleRouteDestination_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.RoutingRuleRouteDestination_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.RoutingRuleRouteDestination_STATUS, got %T", armInput)
@@ -1421,7 +1421,7 @@ func (destination *RoutingRuleRouteDestination_STATUS) PopulateFromARM(owner gen
 	// Set property "DestinationAddress":
 	if typedInput.DestinationAddress != nil {
 		destinationAddress := *typedInput.DestinationAddress
-		destination.DestinationAddress = &destinationAddress
+		routeDestination.DestinationAddress = &destinationAddress
 	}
 
 	// Set property "Type":
@@ -1429,7 +1429,7 @@ func (destination *RoutingRuleRouteDestination_STATUS) PopulateFromARM(owner gen
 		var temp string
 		temp = string(*typedInput.Type)
 		typeVar := RoutingRuleDestinationType_STATUS(temp)
-		destination.Type = &typeVar
+		routeDestination.Type = &typeVar
 	}
 
 	// No error
@@ -1437,18 +1437,18 @@ func (destination *RoutingRuleRouteDestination_STATUS) PopulateFromARM(owner gen
 }
 
 // AssignProperties_From_RoutingRuleRouteDestination_STATUS populates our RoutingRuleRouteDestination_STATUS from the provided source RoutingRuleRouteDestination_STATUS
-func (destination *RoutingRuleRouteDestination_STATUS) AssignProperties_From_RoutingRuleRouteDestination_STATUS(source *storage.RoutingRuleRouteDestination_STATUS) error {
+func (routeDestination *RoutingRuleRouteDestination_STATUS) AssignProperties_From_RoutingRuleRouteDestination_STATUS(source *storage.RoutingRuleRouteDestination_STATUS) error {
 
 	// DestinationAddress
-	destination.DestinationAddress = genruntime.ClonePointerToString(source.DestinationAddress)
+	routeDestination.DestinationAddress = genruntime.ClonePointerToString(source.DestinationAddress)
 
 	// Type
 	if source.Type != nil {
 		typeVar := *source.Type
 		typeTemp := genruntime.ToEnum(typeVar, routingRuleDestinationType_STATUS_Values)
-		destination.Type = &typeTemp
+		routeDestination.Type = &typeTemp
 	} else {
-		destination.Type = nil
+		routeDestination.Type = nil
 	}
 
 	// No error
@@ -1456,26 +1456,26 @@ func (destination *RoutingRuleRouteDestination_STATUS) AssignProperties_From_Rou
 }
 
 // AssignProperties_To_RoutingRuleRouteDestination_STATUS populates the provided destination RoutingRuleRouteDestination_STATUS from our RoutingRuleRouteDestination_STATUS
-func (destination *RoutingRuleRouteDestination_STATUS) AssignProperties_To_RoutingRuleRouteDestination_STATUS(target *storage.RoutingRuleRouteDestination_STATUS) error {
+func (routeDestination *RoutingRuleRouteDestination_STATUS) AssignProperties_To_RoutingRuleRouteDestination_STATUS(destination *storage.RoutingRuleRouteDestination_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// DestinationAddress
-	target.DestinationAddress = genruntime.ClonePointerToString(destination.DestinationAddress)
+	destination.DestinationAddress = genruntime.ClonePointerToString(routeDestination.DestinationAddress)
 
 	// Type
-	if destination.Type != nil {
-		typeVar := string(*destination.Type)
-		target.Type = &typeVar
+	if routeDestination.Type != nil {
+		typeVar := string(*routeDestination.Type)
+		destination.Type = &typeVar
 	} else {
-		target.Type = nil
+		destination.Type = nil
 	}
 
 	// Update the property bag
 	if len(propertyBag) > 0 {
-		target.PropertyBag = propertyBag
+		destination.PropertyBag = propertyBag
 	} else {
-		target.PropertyBag = nil
+		destination.PropertyBag = nil
 	}
 
 	// No error
