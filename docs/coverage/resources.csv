@@ -1415,7 +1415,7 @@ Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/p
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,307,,0,,0,307,false,spec_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/serverlessEndpoints,13,,0,,0,13,false,spec_api=2026-09-01
 Microsoft.Maintenance,Microsoft.Maintenance/applyUpdates,0,,0,,0,0,false,spec_api=2023-04-01
-Microsoft.Maintenance,Microsoft.Maintenance/configurationAssignments,9,,0,,0,9,false,spec_api=2023-04-01
+Microsoft.Maintenance,Microsoft.Maintenance/configurationAssignments,9,,0,maintenance.azure.hfl.dev/ConfigurationAssignment,9,0,false,spec_api=2023-04-01; ours_api=2023-04-01
 Microsoft.Maintenance,Microsoft.Maintenance/maintenanceConfigurations,19,,0,maintenance.azure.hfl.dev/MaintenanceConfiguration,19,0,false,spec_api=2023-04-01; ours_api=2023-04-01
 Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities,3,managedidentity.azure.com/UserAssignedIdentity,2,,0,1,false,spec_api=2024-11-30; official_api=2023-01-31; official-api-differs-from-spec
 Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials,3,managedidentity.azure.com/FederatedIdentityCredential,3,,0,0,false,spec_api=2024-11-30; official_api=2023-01-31; official-api-differs-from-spec

@@ -19,7 +19,7 @@ Not affiliated with or endorsed by Microsoft.
 | `operationalinsights.azure.hfl.dev/v20250701` `WorkspacesTable`, `WorkspacesSavedSearch`, `WorkspacesLinkedService`, `WorkspacesLinkedStorageAccount`, `WorkspacesDataExport`, `QueryPack`, `QueryPacksQuery` | the children of a Log Analytics workspace (custom tables and their retention and plan, saved searches, linked Automation accounts, linked storage accounts) and query packs with their queries, which ASO's `Workspace` has none of; owned by ASO's `Workspace` or `ResourceGroup` (a query by our pack); generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `insights.azure.hfl.dev/v20210901` `PrivateLinkScope`, `PrivateLinkScopesScopedResource`, `PrivateLinkScopesPrivateEndpointConnection`; `network.azure.hfl.dev/v20250501` `NetworkSecurityPerimeter`, `NetworkSecurityPerimetersProfile`, `NetworkSecurityPerimetersProfilesAccessRule`, `NetworkSecurityPerimetersResourceAssociation`, `NetworkSecurityPerimetersLink`, `NetworkSecurityPerimetersLoggingConfiguration` | an Azure Monitor private link scope with its scoped workspaces and endpoint connections, and a network security perimeter with its profiles, access rules, associations of PaaS resources, links and logging; ASO has none of them; owned by the resource group or by our parent kind; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `containerregistry.azure.hfl.dev/v20251101` `RegistriesToken`, `RegistriesScopeMap`, `RegistriesCredentialSet`, `RegistriesWebhook` | the repository tokens, scope maps, credential sets (for cache rules) and webhooks of a container registry, which ASO's `Registry` has none of; owned by ASO's `Registry`; a webhook's URI and headers come from Secrets; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
-| `compute.azure.hfl.dev/v20220301` `VirtualMachinesRunCommand`; `devtestlab.azure.hfl.dev/v20180915` `Schedule`; `maintenance.azure.hfl.dev/v20230401` `MaintenanceConfiguration` | what a virtual machine needs beside the VM: a run command (script, parameters, run-as password from a Secret), the auto-shutdown schedule, and Azure Maintenance configurations; ASO's `VirtualMachine` has none of them; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
+| `compute.azure.hfl.dev/v20220301` `VirtualMachinesRunCommand`; `devtestlab.azure.hfl.dev/v20180915` `Schedule`; `maintenance.azure.hfl.dev/v20230401` `MaintenanceConfiguration`, `ConfigurationAssignment` | what a virtual machine needs beside the VM: a run command (script, parameters, run-as password from a Secret), the auto-shutdown schedule, and Azure Maintenance configurations with their assignments (to a VM, or to a subscription or resource group with a filter); ASO's `VirtualMachine` has none of them; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `recoveryservices.azure.hfl.dev/v20260701` `Vault`, `VaultsBackupPolicy`, `VaultsBackupResourceGuardProxy`, `VaultsPrivateEndpointConnection` | an Azure Backup (Recovery Services) vault and its backup policies, resource guard proxies and private endpoint connections; ASO has no Recovery Services group; backup policies are owned by our vault; generated like the Container Apps kinds. Enabling backup for a VM (the protected item) is not a kind yet | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `management.azure.hfl.dev/v20230401` `ManagementGroup`, `ManagementGroupsSubscription`, `ManagementGroupsSetting` | Azure management groups: the group hierarchy (a group names its parent by object or ARM ID), a subscription's placement in a group, and the tenant's hierarchy settings. Tenant scope: no resource group and no subscription in the ARM ID (`/providers/Microsoft.Management/...`), so the namespace's identity needs rights at the tenant root or on the group. ASO has no management group kind ([#2249](https://github.com/Azure/azure-service-operator/issues/2249)); generated like the Container Apps kinds, with one generator patch for children of a tenant scope resource (`UPSTREAM.md`, 0005) | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `resources.azure.hfl.dev/v20250401` `TagSet` | the tags of a subscription, resource group or any resource as one object (`Microsoft.Resources/tags/default`): an extension resource owned by an ASO resource or an ARM ID. A `TagSet` replaces all the tags of its scope, so use it on a subscription or on what ASO does not manage; on an ASO resource that carries its own `tags` the two would overwrite each other. ASO has no such kind | ours; none at ASO's pin or in an open pull request (2026-11-09) |
@@ -44,7 +44,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 | --- | ---: | ---: | ---: | ---: | ---: |
 | platform-foundation | 18 | 246 | 43.2% | 12.8% | 44.0% |
 | security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% |
-| application | 35 | 823 | 33.1% | 3.7% | 63.2% |
+| application | 35 | 823 | 33.1% | 3.8% | 63.2% |
 | other | 230 | 1,262 | 0.5% | 0.0% | 99.5% |
 
 ![Coverage by tier](docs/coverage/bars/_tiers.svg)
@@ -52,7 +52,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 | Tier | Services | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: |
 | 1 | 17 | 43.0% | 8.0% | 49.0% |
-| 2 | 18 | 26.5% | 6.8% | 66.7% |
+| 2 | 18 | 26.5% | 6.9% | 66.6% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% |
 
 By service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), all services in [`services.csv`](docs/coverage/services.csv).
@@ -96,7 +96,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 2 | `Microsoft.Cache` | application | ![Microsoft.Cache](docs/coverage/bars/Microsoft.Cache.svg) | 80.4% | 0.0% | 19.6% |
 | 2 | `Microsoft.AppConfiguration` | application | ![Microsoft.AppConfiguration](docs/coverage/bars/Microsoft.AppConfiguration.svg) | 88.9% | 0.0% | 11.1% |
 | 2 | `Microsoft.RecoveryServices` | application | ![Microsoft.RecoveryServices](docs/coverage/bars/Microsoft.RecoveryServices.svg) | 0.0% | 23.0% | 77.0% |
-| 2 | `Microsoft.Maintenance` | application | ![Microsoft.Maintenance](docs/coverage/bars/Microsoft.Maintenance.svg) | 0.0% | 67.9% | 32.1% |
+| 2 | `Microsoft.Maintenance` | application | ![Microsoft.Maintenance](docs/coverage/bars/Microsoft.Maintenance.svg) | 0.0% | 100.0% | 0.0% |
 | 2 | `Microsoft.DevTestLab` | application | ![Microsoft.DevTestLab](docs/coverage/bars/Microsoft.DevTestLab.svg) | 0.0% | 4.7% | 95.3% |
 | 2 | `Microsoft.AlertsManagement` | other | ![Microsoft.AlertsManagement](docs/coverage/bars/Microsoft.AlertsManagement.svg) | 46.4% | 0.0% | 53.6% |
 
