@@ -4,6 +4,57 @@ github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401/storage
 APIVersion: Enum (1 value)
 └── "2023-04-01"
 
+ConfigurationAssignment: Resource
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Filter: *Object (6 properties)
+│   │   ├── Locations: string[]
+│   │   ├── OsTypes: string[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── ResourceGroups: string[]
+│   │   ├── ResourceTypes: string[]
+│   │   └── TagSettings: *Object (3 properties)
+│   │       ├── FilterOperator: *string
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── Tags: map[string]string[]
+│   ├── Location: *string
+│   ├── MaintenanceConfigurationReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── ResourceReference: *genruntime.ResourceReference
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Filter: *Object (6 properties)
+    │   ├── Locations: string[]
+    │   ├── OsTypes: string[]
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ResourceGroups: string[]
+    │   ├── ResourceTypes: string[]
+    │   └── TagSettings: *Object (3 properties)
+    │       ├── FilterOperator: *string
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── Tags: map[string]string[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── MaintenanceConfigurationId: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ResourceId: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 MaintenanceConfiguration: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (13 properties)

@@ -4,6 +4,60 @@ github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401
 APIVersion: Enum (1 value)
 └── "2023-04-01"
 
+ConfigurationAssignment: Resource
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Filter: *Object (5 properties)
+│   │   ├── Locations: string[]
+│   │   ├── OsTypes: string[]
+│   │   ├── ResourceGroups: string[]
+│   │   ├── ResourceTypes: string[]
+│   │   └── TagSettings: *Object (2 properties)
+│   │       ├── FilterOperator: *Enum (2 values)
+│   │       │   ├── "All"
+│   │       │   └── "Any"
+│   │       └── Tags: map[string]string[]
+│   ├── Location: *string
+│   ├── MaintenanceConfigurationReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   └── ResourceReference: *genruntime.ResourceReference
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Filter: *Object (5 properties)
+    │   ├── Locations: string[]
+    │   ├── OsTypes: string[]
+    │   ├── ResourceGroups: string[]
+    │   ├── ResourceTypes: string[]
+    │   └── TagSettings: *Object (2 properties)
+    │       ├── FilterOperator: *Enum (2 values)
+    │       │   ├── "All"
+    │       │   └── "Any"
+    │       └── Tags: map[string]string[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── MaintenanceConfigurationId: *string
+    ├── Name: *string
+    ├── ResourceId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 MaintenanceConfiguration: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (11 properties)

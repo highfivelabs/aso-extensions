@@ -10,5 +10,6 @@ no_list: true
 
 | Resource                 | ARM Version | CRD Version | Supported From | Sample |
 |--------------------------|-------------|-------------|----------------|--------|
+| ConfigurationAssignment  | 2023-04-01  | v20230401   | v0.1.0         | -      |
 | MaintenanceConfiguration | 2023-04-01  | v20230401   | v0.1.0         | -      |
 
