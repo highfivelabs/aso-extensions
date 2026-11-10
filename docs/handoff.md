@@ -410,6 +410,24 @@ Facts learned the hard way:
 - A property named `owner` in the spec (an attestation's responsible person)
   collides with the Kubernetes `owner`; ASO's generator renames it to
   `properties_owner` (Go `PropertiesOwner`), still sent as `owner`.
+- **Two spec files of one API version in one package** (dnsresolver's
+  `openapi.json` and the network security perimeter's file, both
+  2025-05-01): the generator renames a type both define after its file
+  (`OpenapiSubResource`, `NetworkSecurityPerimeterSubResource`), so a label
+  on the plain name stops applying and the built kinds' Go type changes
+  name (their CRDs do not). Label each renamed type, fix the Go tests.
+- **A resource Azure makes and deletes with its parent** (a zone's SOA
+  record set, row 12): generate it, own it by ASO's parent kind
+  (`generator/external-owners.txt`, the owner's storage type in
+  `controllers.OwnerTypes()` and the scheme, `list`/`watch` in
+  `config/rbac/role.yaml`, its CRD in `hack/generate.sh`'s test CRDs), and
+  give it a `Deleter` that returns `DeleteCompleted` without the DELETE
+  (`soa_record_extensions.go`). ASO's network packages are
+  `v1api<date>`, not `v<date>`.
+- The Ubuntu machine's disk filled (2026-11-10, 0 bytes free) and a sync
+  there failed; the Spot VMs generate as well (`--prep 'task tools'`, the
+  generator in a `--step`, then `gsutil cp` the tarball back), about two
+  minutes a run.
 
 ## Running things: offload and the Ubuntu machine
 
