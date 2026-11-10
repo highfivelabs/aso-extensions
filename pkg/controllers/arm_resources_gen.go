@@ -34,6 +34,9 @@ import (
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
 	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
 	insights_v20210901s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901/storage"
+	keyvault_customizations "github.com/highfivelabs/aso-extensions/apis/arm/keyvault/customizations"
+	keyvault_v20260515 "github.com/highfivelabs/aso-extensions/apis/arm/keyvault/v20260515"
+	keyvault_v20260515s "github.com/highfivelabs/aso-extensions/apis/arm/keyvault/v20260515/storage"
 	maintenance_customizations "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/customizations"
 	maintenance_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401"
 	maintenance_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401/storage"
@@ -228,6 +231,28 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
+	result = append(result, &registration.StorageType{
+		Obj: new(keyvault_v20260515.ManagedHSM),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.tenantIdFromConfig",
+				Func: indexKeyvaultManagedHSMTenantIdFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.properties.tenantIdFromConfig",
+					},
+					&keyvault_v20260515.ManagedHSMList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(keyvault_v20260515.ManagedHSMsKey)})
+	result = append(result, &registration.StorageType{Obj: new(keyvault_v20260515.ManagedHSMsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(keyvault_v20260515.VaultsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.ConfigurationAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroup)})
@@ -565,6 +590,18 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScope)},
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesScopedResource)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(keyvault_v20260515.ManagedHSM)},
+		&registration.KnownType{Obj: new(keyvault_v20260515.ManagedHSMsKey)},
+		&registration.KnownType{Obj: new(keyvault_v20260515.ManagedHSMsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(keyvault_v20260515.VaultsPrivateEndpointConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(keyvault_v20260515s.ManagedHSM)},
+		&registration.KnownType{Obj: new(keyvault_v20260515s.ManagedHSMsKey)},
+		&registration.KnownType{Obj: new(keyvault_v20260515s.ManagedHSMsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(keyvault_v20260515s.VaultsPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401s.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401s.MaintenanceConfiguration)})
 	result = append(
@@ -742,6 +779,8 @@ func createScheme() *runtime.Scheme {
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
 	_ = insights_v20210901s.AddToScheme(scheme)
+	_ = keyvault_v20260515.AddToScheme(scheme)
+	_ = keyvault_v20260515s.AddToScheme(scheme)
 	_ = maintenance_v20230401.AddToScheme(scheme)
 	_ = maintenance_v20230401s.AddToScheme(scheme)
 	_ = management_v20230401.AddToScheme(scheme)
@@ -789,6 +828,10 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
+	result = append(result, &keyvault_customizations.ManagedHSMExtension{})
+	result = append(result, &keyvault_customizations.ManagedHSMsKeyExtension{})
+	result = append(result, &keyvault_customizations.ManagedHSMsPrivateEndpointConnectionExtension{})
+	result = append(result, &keyvault_customizations.VaultsPrivateEndpointConnectionExtension{})
 	result = append(result, &maintenance_customizations.ConfigurationAssignmentExtension{})
 	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})
 	result = append(result, &management_customizations.ManagementGroupExtension{})
@@ -985,6 +1028,21 @@ func indexCostmanagementExportSasToken(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.DeliveryInfo.Destination.SasToken.Index()
+}
+
+// indexKeyvaultManagedHSMTenantIdFromConfig an index function for keyvault_v20260515.ManagedHSM .spec.properties.tenantIdFromConfig
+func indexKeyvaultManagedHSMTenantIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*keyvault_v20260515.ManagedHSM)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.TenantIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.Properties.TenantIdFromConfig.Index()
 }
 
 // indexNetworkExpressRouteCircuitActivationKey an index function for network_v20260301.ExpressRouteCircuit .spec.activationKey

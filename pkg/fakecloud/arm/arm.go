@@ -36,7 +36,10 @@
 // authorizations, Global Reach connections, ports, and gateways in a
 // Virtual WAN hub with their connections (expressroute.go: keys Azure makes,
 // children a parent's PUT keeps or deletes, authorization keys redeemed
-// across subscriptions, one gateway per hub).
+// across subscriptions, one gateway per hub), and managed HSMs, their keys
+// and Key Vault private endpoint connections (keyvault.go: what an HSM is
+// created with, keys a PUT does not change and Resource Manager does not
+// delete, connections a private endpoint makes).
 //
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
@@ -313,6 +316,15 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		status, code, msg, unchanged := a.checkKeyVault(id, body)
+		if code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if unchanged != nil {
+			writeJSON(w, http.StatusOK, a.render(id, *unchanged))
+			return
+		}
 		if m := mgSubscription.FindStringSubmatch(id); m != nil {
 			a.moveSubscription(m[2], key)
 		}
@@ -338,6 +350,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 	case http.MethodDelete:
 		if isScheduleRequest(id) {
 			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A schedule request cannot be deleted; undo it with another request (AdminRemove, SelfDeactivate).")
+			return
+		}
+		if isManagedHSMKey(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A managed HSM key cannot be deleted through Resource Manager; delete it in the HSM's data plane.")
 			return
 		}
 		if _, ok := a.resources[key]; !ok {
