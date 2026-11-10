@@ -648,6 +648,7 @@ rechecks upstream again when it is built.
 | c12 | Cognitive Services RAI policies | not at the pin, no pull request | queued |
 | c13 | Cosmos DB Gremlin, SQL dedicated gateway | not at the pin, no pull request | queued |
 | c14 | AKS managed namespaces | not at the pin, no pull request | queued |
+| f14b | Operations Management solutions (foundation row 14, second part; c5 had left them out) | rechecked 2026-11-10, read-only: v2.22.0 still the latest release; `main` four documentation commits past the pin (#5826, #5827, #5828, #5769); no open pull request or issue adds an Operations Management solution, and ASO has no `operationsmanagement` group | **built**, generated: `operationsmanagement.azure.hfl.dev/v20151101preview` `Solution` (the only API version, a 2015 preview), owned by a resource group: the plan (name, publisher, product, promotion code), the workspace it is enabled on (ASO's `Workspace` by group and kind, or an ARM ID) and its contained and referenced resources (ARM references). **c5's reason was wrong**: the generator handles a schema without `type: object` (`getSubSchemaType` treats any schema with properties as an object); what emptied `SolutionProperties` is its `x-ms-azure-resource: true`, which made the embedded resource remover take it for a resource embedded in the solution and keep only its (missing) `Id`. `$resourceEmbeddedInParent: Solution` on `SolutionProperties` and `SolutionProperties_STATUS` (as ASO's `kusto.yaml` labels a database's) keeps it whole: no generator patch. Hand-written code: none (the kind code is 100% generated). Not built: management associations and management configurations (the same spec; their properties are emptied the same way, and they are no platform need) |
 | c18 | Stale ARM versions (VirtualMachine, ApplicationGateway, DNS zones) | not a new kind | queued |
 
 App Configuration key-values are already in ASO (`appconfiguration`
@@ -904,6 +905,14 @@ serialization and conversion tests):
   chain runs through our kind) are created and deleted the same way; the
   CRD refuses a table plan that does not exist and a retention under four
   days;
+- Operations Management solutions, generated (f14b): the Updates gallery
+  solution in a resource group, enabled on ASO's `Workspace` named by group
+  and kind (the workspace's ARM ID reaching Resource Manager and the
+  status), with a referenced Automation account by ARM ID, its tags changed
+  and PUT again, deleted; a gallery solution named for another workspace
+  refused on its Ready condition. On kind, team-a's solution on its
+  workspace is Ready and deleted. The fake does not show: which solution
+  types exist, contained resources locked and deleted with the solution;
 - Azure Monitor private link and network security perimeters, generated
   (c6): a private link scope owned by the resource group (a global
   resource) with its access modes, a workspace scoped into it (owned by our
