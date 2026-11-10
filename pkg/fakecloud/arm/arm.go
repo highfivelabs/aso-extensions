@@ -333,6 +333,7 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		for k := range a.resources {
 			if within(k, key) {
 				delete(a.resources, k)
+				delete(a.sharedKeys, k)
 			}
 		}
 		w.WriteHeader(http.StatusOK)
