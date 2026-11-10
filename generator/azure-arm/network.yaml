@@ -62,6 +62,27 @@ groupModelConfiguration:
       $supportedFrom: v0.1.0
       $azureGeneratedSecrets:
         - AuthorizationKey # made by Azure; a circuit on the port in another subscription redeems it
+    ExpressRouteGateway:
+      $exportAs: ExpressRouteGateway
+      $supportedFrom: v0.1.0
+    ExpressRouteGateways_ExpressRouteConnection:
+      $exportAs: ExpressRouteGatewaysExpressRouteConnection
+      $supportedFrom: v0.1.0
+    ExpressRouteGatewayProperties:
+      ExpressRouteConnections:
+        $resourceLifecycleOwnedByParent: ExpressRouteGateway # kept on a gateway's PUT by its extension, as a circuit keeps its peerings
+    ExpressRouteConnection:
+      Id:
+        $referenceType: simple # a connection's own ID, in the gateway's ARM payload only (copied from Azure by the gateway's extension)
+    ExpressRouteConnectionProperties:
+      AuthorizationKey:
+        $importSecretMode: required # a circuit authorization's key, when the circuit is in another subscription
+    ExpressRouteCircuitPeeringId:
+      Id:
+        $referenceType: arm # the circuit's private peering a gateway connection joins (our ExpressRouteCircuitsPeering, or an ARM ID)
+    VirtualHubId:
+      Id:
+        $referenceType: arm # the Virtual WAN hub that holds the gateway (an ARM ID until VirtualHub is built, foundation row 10)
     ExpressRouteCircuitPropertiesFormat:
       Peerings:
         $resourceLifecycleOwnedByParent: ExpressRouteCircuit # kept on a circuit's PUT by its extension, as ASO's RouteTable keeps its routes
@@ -138,7 +159,7 @@ typeTransformers:
     because: a key; exported to a Secret, not shown in the status
   - group: network
     version: v20260301
-    name: ExpressRouteCircuits_Authorization_Spec;ExpressRouteCircuits_Peering_Spec;ExpressRouteCircuits_Peerings_Connection_Spec;ExpressRoutePorts_Authorization_Spec
+    name: ExpressRouteCircuits_Authorization_Spec;ExpressRouteCircuits_Peering_Spec;ExpressRouteCircuits_Peerings_Connection_Spec;ExpressRoutePorts_Authorization_Spec;ExpressRouteGateways_ExpressRouteConnection_Spec
     property: Id
     remove: true
     because: a child resource's own ARM ID (the spec's SubResource), which Azure sets; ASO's subnets and routes have none in their spec either

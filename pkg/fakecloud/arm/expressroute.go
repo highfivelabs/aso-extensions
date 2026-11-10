@@ -16,8 +16,10 @@ import (
 // ExpressRoute: circuits (Microsoft.Network/expressRouteCircuits), their
 // peerings, authorizations and Global Reach connections
 // (peerings/{p}/connections), ExpressRoute Direct ports
-// (expressRoutePorts) and their authorizations, API 2026-03-01, as far as
-// the fake models them:
+// (expressRoutePorts) and their authorizations, and ExpressRoute gateways in
+// a Virtual WAN hub (expressRouteGateways) and their connections
+// (expressRouteGateways/{g}/expressRouteConnections), API 2026-03-01, as far
+// as the fake models them:
 //
 //   - a circuit names its sku and either a connectivity provider
 //     (serviceProviderProperties) or an ExpressRoute Direct port
@@ -44,14 +46,28 @@ import (
 //     the peer circuit's authorization keys (400 when missing or not the
 //     peer's), which is then in use; a key in use by another circuit or
 //     connection is refused the same way (400);
-//   - a port gives its peeringLocation and bandwidthInGbps (400).
+//   - a port gives its peeringLocation and bandwidthInGbps (400);
+//   - a gateway names a virtual hub that exists (virtualHub, 400 when
+//     missing, 404 when not there), and a hub has one ExpressRoute gateway
+//     (400 for a second); its autoScaleConfiguration's bounds, when given,
+//     have 1 <= min <= max (400);
+//   - a gateway holds its connections as a circuit holds its peerings: a
+//     gateway PUT without them deletes them;
+//   - a gateway connection names a circuit's private peering that exists
+//     (expressRouteCircuitPeering, 400 when missing or not
+//     AzurePrivatePeering, 404 when not there); when the circuit is in
+//     another subscription it gives one of the circuit's authorization keys
+//     (400 when missing, not the circuit's or in use by another), which is
+//     then in use.
 //
 // Not modelled: a provider provisioning the circuit
 // (serviceProviderProvisioningState stays NotProvisioned), BGP sessions
 // coming up, ARP and route tables, the SKU and bandwidth rules (Local,
 // Standard, Premium; what a port's bandwidth allows), Microsoft peering's
 // prefix validation and route filters, MACsec on port links, deleting an
-// authorization that is in use, the hours a real circuit or port takes, and
+// authorization that is in use, a gateway's scale units and the routes a
+// hub learns, a connection's routing configuration being checked against the
+// hub's route tables, the hours a real circuit, port or gateway takes, and
 // the error codes (this fake's own).
 var (
 	erCircuit          = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressroutecircuits/[^/]+$`)
@@ -59,6 +75,8 @@ var (
 	erPeering          = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressroutecircuits/[^/]+/peerings/[^/]+$`)
 	erGlobalReach      = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressroutecircuits/[^/]+/peerings/[^/]+/connections/[^/]+$`)
 	erPort             = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressrouteports/[^/]+$`)
+	erGateway          = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressroutegateways/[^/]+$`)
+	erGatewayConn      = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressroutegateways/[^/]+/expressrouteconnections/[^/]+$`)
 	erSubscriptionPart = regexp.MustCompile(`(?i)^/subscriptions/([^/]+)/`)
 )
 
@@ -67,6 +85,7 @@ var (
 var erChildLists = map[*regexp.Regexp][]string{
 	erCircuit: {"peerings", "authorizations"},
 	erPeering: {"connections"},
+	erGateway: {"expressRouteConnections"},
 }
 
 // checkExpressRoute refuses an ExpressRoute resource the rules above do not
@@ -160,6 +179,39 @@ func (a *ARM) checkExpressRoute(id string, body map[string]any) (status int, cod
 		if _, ok := props["bandwidthInGbps"]; !ok {
 			return http.StatusBadRequest, "ExpressRoutePortIncomplete", "An ExpressRoute port needs its bandwidthInGbps.", nil
 		}
+	case erGateway.MatchString(id):
+		hub := refID(props, "virtualHub")
+		if hub == "" {
+			return http.StatusBadRequest, "ExpressRouteGatewayHubMissing", "An ExpressRoute gateway needs its virtualHub.", nil
+		}
+		if !a.exists(hub) {
+			return http.StatusNotFound, "ResourceNotFound", "The virtual hub " + hub + " was not found.", nil
+		}
+		if other := a.hubGateway(hub, id); other != "" {
+			return http.StatusBadRequest, "VirtualHubHasExpressRouteGateway", "The virtual hub " + hub + " already has the ExpressRoute gateway " + other + ".", nil
+		}
+		if scale, ok := props["autoScaleConfiguration"].(map[string]any); ok {
+			if bounds, ok := scale["bounds"].(map[string]any); ok {
+				lo, hasLo := bounds["min"].(float64)
+				hi, hasHi := bounds["max"].(float64)
+				if (hasLo && lo < 1) || (hasLo && hasHi && hi < lo) {
+					return http.StatusBadRequest, "ExpressRouteGatewayScaleInvalid", "An ExpressRoute gateway's scale bounds need 1 <= min <= max.", nil
+				}
+			}
+		}
+	case erGatewayConn.MatchString(id):
+		peering := refID(props, "expressRouteCircuitPeering")
+		if peering == "" || !strings.EqualFold(lastSegment(peering), "AzurePrivatePeering") {
+			return http.StatusBadRequest, "ExpressRouteConnectionPeeringInvalid", "An ExpressRoute gateway connection names a circuit's AzurePrivatePeering as expressRouteCircuitPeering.", nil
+		}
+		if !a.exists(peering) {
+			return http.StatusNotFound, "ResourceNotFound", "The peering " + peering + " was not found.", nil
+		}
+		if !sameSubscription(id, peering) || props["authorizationKey"] != nil {
+			if a.redeem(parentOf(peering), props["authorizationKey"], id, "connectionResourceUri") == "" {
+				return http.StatusBadRequest, "ExpressRouteAuthorizationKeyInvalid", "An ExpressRoute gateway connection to a circuit in another subscription needs one of the circuit's authorization keys.", nil
+			}
+		}
 	default:
 		return 0, "", "", nil
 	}
@@ -251,6 +303,20 @@ func (a *ARM) render(id string, r resource) resource {
 		return out
 	}
 	return r
+}
+
+// hubGateway is the ExpressRoute gateway other than id that is in hub, or "".
+func (a *ARM) hubGateway(hub, id string) string {
+	for k, r := range a.resources {
+		if !erGateway.MatchString(k) || strings.EqualFold(k, id) {
+			continue
+		}
+		props, _ := (*r)["properties"].(map[string]any)
+		if strings.EqualFold(refID(props, "virtualHub"), hub) {
+			return (*r)["id"].(string)
+		}
+	}
+	return ""
 }
 
 // redeem finds the authorization of parent (a circuit or a port) whose key

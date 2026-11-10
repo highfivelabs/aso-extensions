@@ -302,6 +302,26 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRouteGateway)})
+	result = append(result, &registration.StorageType{
+		Obj: new(network_v20260301.ExpressRouteGatewaysExpressRouteConnection),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.authorizationKey",
+				Func: indexNetworkExpressRouteGatewaysExpressRouteConnectionAuthorizationKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.authorizationKey",
+					},
+					&network_v20260301.ExpressRouteGatewaysExpressRouteConnectionList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePort)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
@@ -494,6 +514,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsPeering)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsPeeringsConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteGateway)},
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteGatewaysExpressRouteConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
@@ -504,6 +526,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsPeering)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsPeeringsConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteGateway)},
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteGatewaysExpressRouteConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
@@ -637,6 +661,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.ExpressRouteCircuitsAuthorizationExtension{})
 	result = append(result, &network_customizations.ExpressRouteCircuitsPeeringExtension{})
 	result = append(result, &network_customizations.ExpressRouteCircuitsPeeringsConnectionExtension{})
+	result = append(result, &network_customizations.ExpressRouteGatewayExtension{})
+	result = append(result, &network_customizations.ExpressRouteGatewaysExpressRouteConnectionExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortsAuthorizationExtension{})
 	result = append(result, &network_customizations.LocalNetworkGatewayExtension{})
@@ -837,6 +863,18 @@ func indexNetworkExpressRouteCircuitsPeeringSharedKey(rawObj client.Object) []st
 // indexNetworkExpressRouteCircuitsPeeringsConnectionAuthorizationKey an index function for network_v20260301.ExpressRouteCircuitsPeeringsConnection .spec.authorizationKey
 func indexNetworkExpressRouteCircuitsPeeringsConnectionAuthorizationKey(rawObj client.Object) []string {
 	obj, ok := rawObj.(*network_v20260301.ExpressRouteCircuitsPeeringsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.AuthorizationKey == nil {
+		return nil
+	}
+	return obj.Spec.AuthorizationKey.Index()
+}
+
+// indexNetworkExpressRouteGatewaysExpressRouteConnectionAuthorizationKey an index function for network_v20260301.ExpressRouteGatewaysExpressRouteConnection .spec.authorizationKey
+func indexNetworkExpressRouteGatewaysExpressRouteConnectionAuthorizationKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.ExpressRouteGatewaysExpressRouteConnection)
 	if !ok {
 		return nil
 	}

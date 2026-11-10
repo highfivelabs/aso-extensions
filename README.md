@@ -19,7 +19,7 @@ Not affiliated with or endorsed by Microsoft.
 | `operationalinsights.azure.hfl.dev/v20250701` `WorkspacesTable`, `WorkspacesSavedSearch`, `WorkspacesLinkedService`, `WorkspacesLinkedStorageAccount`, `WorkspacesDataExport`, `QueryPack`, `QueryPacksQuery` | the children of a Log Analytics workspace (custom tables and their retention and plan, saved searches, linked Automation accounts, linked storage accounts) and query packs with their queries, which ASO's `Workspace` has none of; owned by ASO's `Workspace` or `ResourceGroup` (a query by our pack); generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `insights.azure.hfl.dev/v20210901` `PrivateLinkScope`, `PrivateLinkScopesScopedResource`, `PrivateLinkScopesPrivateEndpointConnection`; `network.azure.hfl.dev/v20250501` `NetworkSecurityPerimeter`, `NetworkSecurityPerimetersProfile`, `NetworkSecurityPerimetersProfilesAccessRule`, `NetworkSecurityPerimetersResourceAssociation`, `NetworkSecurityPerimetersLink`, `NetworkSecurityPerimetersLoggingConfiguration` | an Azure Monitor private link scope with its scoped workspaces and endpoint connections, and a network security perimeter with its profiles, access rules, associations of PaaS resources, links and logging; ASO has none of them; owned by the resource group or by our parent kind; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `containerregistry.azure.hfl.dev/v20251101` `RegistriesToken`, `RegistriesScopeMap`, `RegistriesCredentialSet`, `RegistriesWebhook` | the repository tokens, scope maps, credential sets (for cache rules) and webhooks of a container registry, which ASO's `Registry` has none of; owned by ASO's `Registry`; a webhook's URI and headers come from Secrets; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
-| `compute.azure.hfl.dev/v20220301` `VirtualMachinesRunCommand`; `devtestlab.azure.hfl.dev/v20180915` `Schedule`; `maintenance.azure.hfl.dev/v20230401` `MaintenanceConfiguration`, `ConfigurationAssignment` | what a virtual machine needs beside the VM: a run command (script, parameters, run-as password from a Secret), the auto-shutdown schedule, and Azure Maintenance configurations with their assignments (to a VM, or to a subscription or resource group with a filter); ASO's `VirtualMachine` has none of them; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
+| `compute.azure.hfl.dev/v20220301` `VirtualMachinesRunCommand`; `devtestlab.azure.hfl.dev/v20180915` `Schedule`; `maintenance.azure.hfl.dev/v20230401` `MaintenanceConfiguration` | what a virtual machine needs beside the VM: a run command (script, parameters, run-as password from a Secret), the auto-shutdown schedule, and Azure Maintenance configurations; ASO's `VirtualMachine` has none of them; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `recoveryservices.azure.hfl.dev/v20260701` `Vault`, `VaultsBackupPolicy`, `VaultsBackupResourceGuardProxy`, `VaultsPrivateEndpointConnection` | an Azure Backup (Recovery Services) vault and its backup policies, resource guard proxies and private endpoint connections; ASO has no Recovery Services group; backup policies are owned by our vault; generated like the Container Apps kinds. Enabling backup for a VM (the protected item) is not a kind yet | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `management.azure.hfl.dev/v20230401` `ManagementGroup`, `ManagementGroupsSubscription`, `ManagementGroupsSetting` | Azure management groups: the group hierarchy (a group names its parent by object or ARM ID), a subscription's placement in a group, and the tenant's hierarchy settings. Tenant scope: no resource group and no subscription in the ARM ID (`/providers/Microsoft.Management/...`), so the namespace's identity needs rights at the tenant root or on the group. ASO has no management group kind ([#2249](https://github.com/Azure/azure-service-operator/issues/2249)); generated like the Container Apps kinds, with one generator patch for children of a tenant scope resource (`UPSTREAM.md`, 0005) | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `resources.azure.hfl.dev/v20250401` `TagSet` | the tags of a subscription, resource group or any resource as one object (`Microsoft.Resources/tags/default`): an extension resource owned by an ASO resource or an ARM ID. A `TagSet` replaces all the tags of its scope, so use it on a subscription or on what ASO does not manage; on an ASO resource that carries its own `tags` the two would overwrite each other. ASO has no such kind | ours; none at ASO's pin or in an open pull request (2026-11-09) |
@@ -28,7 +28,7 @@ Not affiliated with or endorsed by Microsoft.
 | `consumption.azure.hfl.dev/v20260601` `Budget`; `costmanagement.azure.hfl.dev/v20260601` `Export` | cost budgets (an amount per month, quarter or year, with up to five notifications to addresses, roles or Monitor action groups at actual or forecast thresholds, and a filter by tags or dimensions) and scheduled cost exports (actual, amortized or FOCUS cost, CSV or Parquet, to a storage account by reference, or by name with a SAS token from a Secret) at a subscription, resource group, management group or billing scope. Extension resources like the policy kinds (owner any ASO resource, our `ManagementGroup` or an ARM ID); generated | ours; no ASO issue or pull request (2026-11-09) |
 | `authorization.azure.hfl.dev/v20201001` `RoleEligibilityScheduleRequest`, `RoleAssignmentScheduleRequest`, `RoleManagementPolicyAssignment` | Privileged Identity Management: make a principal eligible for a role at a scope (an Entra ID P2 feature), activate or remove an eligibility or an assignment, and link a role management policy to a scope and role. Extension resources (owner any ASO resource, our `ManagementGroup` or an ARM ID). A built-in role is named by `roleDefinitionReference.wellKnownName` (`Reader`) or any role by ARM ID; the principal by `principalId` or from a ConfigMap. A request's name must be a GUID: an empty `azureName` gets a stable UUID (or a random one, `operatorSpec.namingConvention: random`), recorded in the object when it is first reconciled. A request cannot be deleted in Azure: give it `serviceoperator.azure.com/reconcile-policy: detach-on-delete`, and undo it with another request (`AdminRemove`, `SelfDeactivate`). Generated; the eligibility request's configuration and extension copied from ASO pull request #5638 | ours, copied from open ASO PR [#5638](https://github.com/Azure/azure-service-operator/pull/5638) (head `5d0e686e`, 2026-11-09); the other two generated the same way |
 | `network.azure.hfl.dev/v20260301` `VirtualNetworkGatewayConnection`, `LocalNetworkGateway` | site-to-site VPN: the on-premises side (its public IP or FQDN, address space and BGP settings) and a gateway connection (IPsec to a local gateway, `Vnet2Vnet` between two gateways, or ExpressRoute to a circuit peering), with its IPsec policies, traffic selectors, NAT rules and BGP; ASO has the `VirtualNetworkGateway` and neither of these. Owned by a resource group; the gateways are references (ASO's gateway by ARM ID, our local gateway by object); the shared key and an ExpressRoute authorization key come from Secrets; generated | ours; ASO issue [#4486](https://github.com/Azure/azure-service-operator/issues/4486) open, no pull request |
-| `network.azure.hfl.dev/v20260301` `ExpressRouteCircuit`, `ExpressRouteCircuitsPeering`, `ExpressRouteCircuitsAuthorization`, `ExpressRouteCircuitsPeeringsConnection`, `ExpressRoutePort`, `ExpressRoutePortsAuthorization` | ExpressRoute: a circuit through a connectivity provider or on an ExpressRoute Direct port, its private and Microsoft peerings, authorizations for other subscriptions, Global Reach between two circuits' peerings, and Direct ports with their authorizations. Owned by a resource group (circuit, port) or their parent kind; the keys you give (a peering's BGP key, an authorization key you redeem, a partner's activation key) come from Secrets, and the keys Azure makes (a circuit's service key, an authorization's key) are written to the Secret `operatorSpec.secrets` names, never to the status (the manager needs the right to write Secrets for that: `docs/plan.md` §8, question 9); a circuit's PUT keeps its peerings and authorizations, a peering's its Global Reach connections. Generated, with hand-written extensions | ours; ASO issue [#4371](https://github.com/Azure/azure-service-operator/issues/4371) open, no pull request |
+| `network.azure.hfl.dev/v20260301` `ExpressRouteCircuit`, `ExpressRouteCircuitsPeering`, `ExpressRouteCircuitsAuthorization`, `ExpressRouteCircuitsPeeringsConnection`, `ExpressRoutePort`, `ExpressRoutePortsAuthorization`, `ExpressRouteGateway`, `ExpressRouteGatewaysExpressRouteConnection` | ExpressRoute: a circuit through a connectivity provider or on an ExpressRoute Direct port, its private and Microsoft peerings, authorizations for other subscriptions, Global Reach between two circuits' peerings, Direct ports with their authorizations, and ExpressRoute gateways in a Virtual WAN hub (named by ARM ID) with their connections to a circuit's private peering. Owned by a resource group (circuit, port, gateway) or their parent kind; the keys you give (a peering's BGP key, an authorization key you redeem, a partner's activation key) come from Secrets, and the keys Azure makes (a circuit's service key, an authorization's key) are written to the Secret `operatorSpec.secrets` names, never to the status (the manager needs the right to write Secrets for that: `docs/plan.md` §8, question 9); a circuit's PUT keeps its peerings and authorizations, a peering's its Global Reach connections, a gateway's its connections. Generated, with hand-written extensions | ours; ASO issue [#4371](https://github.com/Azure/azure-service-operator/issues/4371) open, no pull request |
 | `authorization.azure.hfl.dev/v1` `ManagementLock` | a management lock (`Microsoft.Authorization/locks`, `CanNotDelete` or `ReadOnly`, with notes and its owners' application IDs) on a subscription, resource group or resource, owned by any ASO resource or an ARM ID; the first plain ARM kind here (`docs/plan.md`, section 1) | ours; ASO issue [#3756](https://github.com/Azure/azure-service-operator/issues/3756), open, needs a design for the lock's four scopes |
 
 ## Coverage
@@ -36,23 +36,23 @@ Not affiliated with or endorsed by Microsoft.
 <!-- coverage:start -->
 ![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)
 
-Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 2.7%; 80.9% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
+Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 2.8%; 80.8% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
 ![Coverage by category](docs/coverage/bars/_categories.svg)
 
 | Category | Services | Resources | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 12.8% | 44.0% |
+| platform-foundation | 18 | 246 | 43.2% | 13.3% | 43.5% |
 | security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% |
-| application | 35 | 823 | 33.1% | 3.8% | 63.2% |
+| application | 35 | 823 | 33.1% | 3.7% | 63.2% |
 | other | 230 | 1,262 | 0.5% | 0.0% | 99.5% |
 
 ![Coverage by tier](docs/coverage/bars/_tiers.svg)
 
 | Tier | Services | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 8.0% | 49.0% |
-| 2 | 18 | 26.5% | 6.9% | 66.6% |
+| 1 | 17 | 43.0% | 8.3% | 48.7% |
+| 2 | 18 | 26.5% | 6.8% | 66.7% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% |
 
 By service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), all services in [`services.csv`](docs/coverage/services.csv).
@@ -67,7 +67,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 100.0% | 0.0% |
 | 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 21.3% | 78.7% |
 | 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 2.0% | 25.5% |
-| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 6.6% | 51.2% |
+| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 7.0% | 50.8% |
 | 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 0.0% | 59.8% |
 | 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 0.0% | 16.7% |
 | 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 40.2% | 43.4% |
@@ -96,7 +96,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 2 | `Microsoft.Cache` | application | ![Microsoft.Cache](docs/coverage/bars/Microsoft.Cache.svg) | 80.4% | 0.0% | 19.6% |
 | 2 | `Microsoft.AppConfiguration` | application | ![Microsoft.AppConfiguration](docs/coverage/bars/Microsoft.AppConfiguration.svg) | 88.9% | 0.0% | 11.1% |
 | 2 | `Microsoft.RecoveryServices` | application | ![Microsoft.RecoveryServices](docs/coverage/bars/Microsoft.RecoveryServices.svg) | 0.0% | 23.0% | 77.0% |
-| 2 | `Microsoft.Maintenance` | application | ![Microsoft.Maintenance](docs/coverage/bars/Microsoft.Maintenance.svg) | 0.0% | 100.0% | 0.0% |
+| 2 | `Microsoft.Maintenance` | application | ![Microsoft.Maintenance](docs/coverage/bars/Microsoft.Maintenance.svg) | 0.0% | 67.9% | 32.1% |
 | 2 | `Microsoft.DevTestLab` | application | ![Microsoft.DevTestLab](docs/coverage/bars/Microsoft.DevTestLab.svg) | 0.0% | 4.7% | 95.3% |
 | 2 | `Microsoft.AlertsManagement` | other | ![Microsoft.AlertsManagement](docs/coverage/bars/Microsoft.AlertsManagement.svg) | 46.4% | 0.0% | 53.6% |
 
@@ -241,6 +241,44 @@ ko apply -k config/default    # CRDs, the manager (azureserviceoperator-system)
 
 There is no webhook: validation is CEL rules in the CRDs.
 
+### Writing Secrets
+
+Some kinds export keys Azure makes (an ExpressRoute circuit's service key, a
+circuit or port authorization's key) to the Secret their
+`operatorSpec.secrets` names, as ASO's own kinds do. The default install
+lets the manager read Secrets but not write them, so such an export fails
+with `forbidden` on the kind's Ready condition. To turn the export on, add
+the `config/secret-writer` component to your overlay of the install:
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- github.com/highfivelabs/aso-extensions/config/default
+components:
+- github.com/highfivelabs/aso-extensions/config/secret-writer
+```
+
+It grants the manager `create`, `update` and `delete` on Secrets in every
+namespace (a ClusterRole and a ClusterRoleBinding, both
+`aso-extensions-secret-writer`). If ASO's `AZURE_TARGET_NAMESPACES` limits
+the namespaces it manages, drop the ClusterRoleBinding (a `$patch: delete`
+in your overlay) and bind the same ClusterRole with a RoleBinding in each of
+those namespaces:
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: aso-extensions-secret-writer, namespace: team-a}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: aso-extensions-secret-writer}
+subjects:
+- {kind: ServiceAccount, name: aso-extensions-manager, namespace: azureserviceoperator-system}
+```
+
+`config/share-aso-identity` needs no component: ASO's account writes Secrets
+already. Whether the default should grant this is open (`docs/plan.md` §8,
+question 9).
+
 ## Developing it
 
 The commands are [Task](https://taskfile.dev) tasks (`brew install go-task`;
@@ -272,6 +310,7 @@ server (`docs/fake-cloud.md`).
 | `config/crds/` | generated CRDs (`hack/generate.sh`) |
 | `config/default/`, `config/install/`, `config/rbac/`, `config/manager/` | the install |
 | `config/share-aso-identity/` | the install as ASO's own service account (opt-in) |
+| `config/secret-writer/` | a component that lets the manager write the Secrets kinds export keys to (opt-in) |
 | `config/fake-cloud/`, `config/test/` | tests only: the fake cloud on kind, ASO's owner CRDs |
 | `pkg/reconcilers/<service>/` | each kind's reconciler |
 | `pkg/keyvault/` | the Key Vault data plane client (secrets and certificates) |

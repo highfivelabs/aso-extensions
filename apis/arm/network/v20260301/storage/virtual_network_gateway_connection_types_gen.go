@@ -372,28 +372,6 @@ type LocalNetworkGatewaySpec struct {
 	Reference *genruntime.ResourceReference `armReference:"Id" json:"reference,omitempty"`
 }
 
-// Storage version of v20260301.RoutingConfiguration
-// Routing Configuration indicating the associated and propagated route tables for this connection.
-type RoutingConfiguration struct {
-	AssociatedRouteTable  *SubResource           `json:"associatedRouteTable,omitempty"`
-	InboundRouteMap       *SubResource           `json:"inboundRouteMap,omitempty"`
-	OutboundRouteMap      *SubResource           `json:"outboundRouteMap,omitempty"`
-	PropagatedRouteTables *PropagatedRouteTable  `json:"propagatedRouteTables,omitempty"`
-	PropertyBag           genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	VnetRoutes            *VnetRoute             `json:"vnetRoutes,omitempty"`
-}
-
-// Storage version of v20260301.RoutingConfiguration_STATUS
-// Routing Configuration indicating the associated and propagated route tables for this connection.
-type RoutingConfiguration_STATUS struct {
-	AssociatedRouteTable  *SubResource_STATUS          `json:"associatedRouteTable,omitempty"`
-	InboundRouteMap       *SubResource_STATUS          `json:"inboundRouteMap,omitempty"`
-	OutboundRouteMap      *SubResource_STATUS          `json:"outboundRouteMap,omitempty"`
-	PropagatedRouteTables *PropagatedRouteTable_STATUS `json:"propagatedRouteTables,omitempty"`
-	PropertyBag           genruntime.PropertyBag       `json:"$propertyBag,omitempty"`
-	VnetRoutes            *VnetRoute_STATUS            `json:"vnetRoutes,omitempty"`
-}
-
 // Storage version of v20260301.TrafficSelectorPolicy
 // An traffic selector policy for a virtual network gateway connection.
 type TrafficSelectorPolicy struct {
@@ -457,73 +435,6 @@ type VirtualNetworkGatewaySpec struct {
 
 	// Reference: Resource ID.
 	Reference *genruntime.ResourceReference `armReference:"Id" json:"reference,omitempty"`
-}
-
-// Storage version of v20260301.PropagatedRouteTable
-// The list of RouteTables to advertise the routes to.
-type PropagatedRouteTable struct {
-	Ids         []SubResource          `json:"ids,omitempty"`
-	Labels      []string               `json:"labels,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20260301.PropagatedRouteTable_STATUS
-// The list of RouteTables to advertise the routes to.
-type PropagatedRouteTable_STATUS struct {
-	Ids         []SubResource_STATUS   `json:"ids,omitempty"`
-	Labels      []string               `json:"labels,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20260301.VnetRoute
-// List of routes that control routing from VirtualHub into a virtual network connection.
-type VnetRoute struct {
-	PropertyBag        genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	StaticRoutes       []StaticRoute          `json:"staticRoutes,omitempty"`
-	StaticRoutesConfig *StaticRoutesConfig    `json:"staticRoutesConfig,omitempty"`
-}
-
-// Storage version of v20260301.VnetRoute_STATUS
-// List of routes that control routing from VirtualHub into a virtual network connection.
-type VnetRoute_STATUS struct {
-	BgpConnections     []SubResource_STATUS       `json:"bgpConnections,omitempty"`
-	PropertyBag        genruntime.PropertyBag     `json:"$propertyBag,omitempty"`
-	StaticRoutes       []StaticRoute_STATUS       `json:"staticRoutes,omitempty"`
-	StaticRoutesConfig *StaticRoutesConfig_STATUS `json:"staticRoutesConfig,omitempty"`
-}
-
-// Storage version of v20260301.StaticRoute
-// List of all Static Routes.
-type StaticRoute struct {
-	AddressPrefixes  []string               `json:"addressPrefixes,omitempty"`
-	Name             *string                `json:"name,omitempty"`
-	NextHopIpAddress *string                `json:"nextHopIpAddress,omitempty"`
-	PropertyBag      genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20260301.StaticRoute_STATUS
-// List of all Static Routes.
-type StaticRoute_STATUS struct {
-	AddressPrefixes  []string               `json:"addressPrefixes,omitempty"`
-	Name             *string                `json:"name,omitempty"`
-	NextHopIpAddress *string                `json:"nextHopIpAddress,omitempty"`
-	PropertyBag      genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20260301.StaticRoutesConfig
-// Configuration for static routes on this HubVnetConnectionConfiguration for static routes on this HubVnetConnection.
-type StaticRoutesConfig struct {
-	PropagateStaticRoutes          *bool                  `json:"propagateStaticRoutes,omitempty"`
-	PropertyBag                    genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	VnetLocalRouteOverrideCriteria *string                `json:"vnetLocalRouteOverrideCriteria,omitempty"`
-}
-
-// Storage version of v20260301.StaticRoutesConfig_STATUS
-// Configuration for static routes on this HubVnetConnectionConfiguration for static routes on this HubVnetConnection.
-type StaticRoutesConfig_STATUS struct {
-	PropagateStaticRoutes          *bool                  `json:"propagateStaticRoutes,omitempty"`
-	PropertyBag                    genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	VnetLocalRouteOverrideCriteria *string                `json:"vnetLocalRouteOverrideCriteria,omitempty"`
 }
 
 func init() {

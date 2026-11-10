@@ -185,25 +185,6 @@ type LocalNetworkGatewaySpec struct {
 	Id *string `json:"id,omitempty"`
 }
 
-// Routing Configuration indicating the associated and propagated route tables for this connection.
-type RoutingConfiguration struct {
-	// AssociatedRouteTable: The resource id RouteTable associated with this RoutingConfiguration.
-	AssociatedRouteTable *SubResource `json:"associatedRouteTable,omitempty"`
-
-	// InboundRouteMap: The resource id of the RouteMap associated with this RoutingConfiguration for inbound learned routes.
-	InboundRouteMap *SubResource `json:"inboundRouteMap,omitempty"`
-
-	// OutboundRouteMap: The resource id of theRouteMap associated with this RoutingConfiguration for outbound advertised
-	// routes.
-	OutboundRouteMap *SubResource `json:"outboundRouteMap,omitempty"`
-
-	// PropagatedRouteTables: The list of RouteTables to advertise the routes to.
-	PropagatedRouteTables *PropagatedRouteTable `json:"propagatedRouteTables,omitempty"`
-
-	// VnetRoutes: List of routes that control routing from VirtualHub into a virtual network connection.
-	VnetRoutes *VnetRoute `json:"vnetRoutes,omitempty"`
-}
-
 // An traffic selector policy for a virtual network gateway connection.
 type TrafficSelectorPolicy struct {
 	// LocalAddressRanges: A collection of local address spaces in CIDR format.
@@ -432,60 +413,4 @@ var pfsGroup_Values = map[string]PfsGroup{
 	"pfs2048": PfsGroup_PFS2048,
 	"pfs24":   PfsGroup_PFS24,
 	"pfsmm":   PfsGroup_PFSMM,
-}
-
-// The list of RouteTables to advertise the routes to.
-type PropagatedRouteTable struct {
-	// Ids: The list of resource ids of all the RouteTables.
-	Ids []SubResource `json:"ids,omitempty"`
-
-	// Labels: The list of labels.
-	Labels []string `json:"labels,omitempty"`
-}
-
-// List of routes that control routing from VirtualHub into a virtual network connection.
-type VnetRoute struct {
-	// StaticRoutes: List of all Static Routes.
-	StaticRoutes []StaticRoute `json:"staticRoutes,omitempty"`
-
-	// StaticRoutesConfig: Configuration for static routes on this HubVnetConnection.
-	StaticRoutesConfig *StaticRoutesConfig `json:"staticRoutesConfig,omitempty"`
-}
-
-// List of all Static Routes.
-type StaticRoute struct {
-	// AddressPrefixes: List of all address prefixes.
-	AddressPrefixes []string `json:"addressPrefixes,omitempty"`
-
-	// Name: The name of the StaticRoute that is unique within a VnetRoute.
-	Name *string `json:"name,omitempty"`
-
-	// NextHopIpAddress: The ip address of the next hop.
-	NextHopIpAddress *string `json:"nextHopIpAddress,omitempty"`
-}
-
-// Configuration for static routes on this HubVnetConnectionConfiguration for static routes on this HubVnetConnection.
-type StaticRoutesConfig struct {
-	// PropagateStaticRoutes: Boolean indicating whether static routes on this connection are automatically propagate to route
-	// tables which this connection propagates to.
-	PropagateStaticRoutes *bool `json:"propagateStaticRoutes,omitempty"`
-
-	// VnetLocalRouteOverrideCriteria: Parameter determining whether NVA in spoke vnet is bypassed for traffic with destination
-	// in spoke.
-	VnetLocalRouteOverrideCriteria *VnetLocalRouteOverrideCriteria `json:"vnetLocalRouteOverrideCriteria,omitempty"`
-}
-
-// Parameter determining whether NVA in spoke vnet is bypassed for traffic with destination in spoke vnet.
-// +kubebuilder:validation:Enum={"Contains","Equal"}
-type VnetLocalRouteOverrideCriteria string
-
-const (
-	VnetLocalRouteOverrideCriteria_Contains = VnetLocalRouteOverrideCriteria("Contains")
-	VnetLocalRouteOverrideCriteria_Equal    = VnetLocalRouteOverrideCriteria("Equal")
-)
-
-// Mapping from string to VnetLocalRouteOverrideCriteria
-var vnetLocalRouteOverrideCriteria_Values = map[string]VnetLocalRouteOverrideCriteria{
-	"contains": VnetLocalRouteOverrideCriteria_Contains,
-	"equal":    VnetLocalRouteOverrideCriteria_Equal,
 }

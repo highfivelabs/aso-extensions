@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, Privileged Identity Management, budgets and cost exports (PR #25), lock owners, site-to-site VPN connections and local network gateways (PR #27), and ExpressRoute circuits, peerings, authorizations, Global Reach and ports (foundation rows 1 to 8, the first part of 9, and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent finishes row 9 of `docs/coverage/foundation.md` with ExpressRoute gateways and their connections (`virtualWan.json`: `expressRouteGateways`, `expressRouteGateways/expressRouteConnections`; the gateway needs a virtual hub, by ARM ID until row 10 builds `VirtualHub`; the connection's `authorizationKey` a Secret reference), then 10 (Virtual WAN), 11 (network manager connections), Maintenance `ConfigurationAssignment` (h1 below: generate it with patch 0006); `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
+State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, Privileged Identity Management, budgets and cost exports (PR #25), lock owners, site-to-site VPN connections and local network gateways (PR #27), ExpressRoute circuits, peerings, authorizations, Global Reach and ports (PR #28), and ExpressRoute gateways and their connections (foundation rows 1 to 9 and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The opt-in Secret writer of `docs/plan.md` §8 question 9 (`config/secret-writer`, PR #30) and the Maintenance `ConfigurationAssignment` (h1, PR #31) were built beside this, from `main`. The next agent builds row 10 (Virtual WAN; patch 0007 already makes its hub connections, hub route tables and VPN connections resources; it edits `generator/azure-arm/network.yaml`, so after this PR merges), then 11 (network manager connections; the `--verbose` log shows "no body parameter found for PUT operation" on their paths, look there first), then on down `docs/coverage/foundation.md`; `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
 
 ## What this repository is
 
@@ -18,7 +18,7 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | --- | --- | --- |
 | Data plane, hand-written | PostgreSQL `User`, `VaultSecret`, `VaultCertificate` | copied from ASO or written new; `pkg/reconcilers/` |
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
-| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions, and PIM eligibility and assignment schedule requests and role management policy assignments (two hand-written extension files, `generator/_extensions/`); `policyinsights.azure.hfl.dev` policy remediations and attestations; `consumption.azure.hfl.dev` `Budget`; `costmanagement.azure.hfl.dev` cost `Export`; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters, site-to-site VPN connections and local network gateways, ExpressRoute circuits, peerings, authorizations, Global Reach connections, ports and port authorizations (hand-written extensions in `generator/_extensions/network/`); `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
+| ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions, and PIM eligibility and assignment schedule requests and role management policy assignments (two hand-written extension files, `generator/_extensions/`); `policyinsights.azure.hfl.dev` policy remediations and attestations; `consumption.azure.hfl.dev` `Budget`; `costmanagement.azure.hfl.dev` cost `Export`; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters, site-to-site VPN connections and local network gateways, ExpressRoute circuits, peerings, authorizations, Global Reach connections, ports, port authorizations, gateways and gateway connections (hand-written extensions in `generator/_extensions/network/`); `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
 ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
@@ -343,8 +343,11 @@ Facts learned the hard way:
   `typeTransformers` `remove` keeps the key out of spec and `_STATUS`; a
   hand-written `KubernetesSecretExporter` reads it with a GET
   (`express_route_keys.go`) and writes the Secret. The default install's
-  manager may not create Secrets, so on kind the export would fail: open
-  question 9 in `docs/plan.md`. Keys the user gives are Secret references
+  manager may not create Secrets, so the export fails there (`forbidden` on
+  the Ready condition); the opt-in component `config/secret-writer` grants
+  `create`, `update` and `delete` on Secrets, and `tests/operator/run.sh`
+  shows both (open question 9 in `docs/plan.md`, recommended, awaiting the
+  builder). Keys the user gives are Secret references
   (`$importSecretMode: required`).
 - An extension that imports ASO's `api/<group>/customizations` builds in that
   group's API packages and their Azure SDK modules (`armnetwork` for
@@ -352,6 +355,22 @@ Facts learned the hard way:
 - A resource with PUT and no DELETE under a parent the generator does not take
   as a resource (ExpressRoute cross-connections and their peerings) fails
   `$exportAs` with "type not seen"; record it as not built.
+- **A child built on a `SubResource` with a `name` and no `type`** (network
+  2025-05-01 on: ExpressRoute gateway connections, hub virtual network
+  connections, hub route tables, VPN connections) is no resource to ASO's
+  generator: the TypeSpec conversion dropped `x-ms-azure-resource` from
+  network's `SubResource`, and `$exportAs` fails with "type not seen" (the
+  `--verbose` log shows the resource in every version up to 2025-03-01 and
+  none after). Patch 0007 (`ASO_GENERATOR_SUBRESOURCE_RESOURCES`) restores
+  it. A new kind that shares types with a built one (`RoutingConfiguration`)
+  moves them into the alphabetically first file: a diff in the built kind's
+  `_gen.go` files with no change to its CRD is that, not a regression.
+- `offload run --ubuntu` mirrors the local tree, so a clone without
+  `third_party/` loses it on the machine too (`hack/upstream.sh --check`:
+  "missing"); copy another clone's `third_party/` locally and run
+  `hack/upstream.sh --check` first. `hack/specs.sh` fails on the laptop
+  (the blob fetch gets HTTP 400); read a single spec file from
+  `raw.githubusercontent.com` at the specs commit instead.
 - A property named `owner` in the spec (an attestation's responsible person)
   collides with the Kubernetes `owner`; ASO's generator renames it to
   `properties_owner` (Go `PropertiesOwner`), still sent as `owner`.
@@ -424,7 +443,7 @@ That is a Spot VM, where both checks run (the operator e2e too, since
   `docs/coverage/foundation.md` are written by hand (mark a row built there).
 - Never edit `third_party/`. A change to ASO is a numbered patch in
   `patches/azure-service-operator/` (0001 exports the framework, 0002 changes
-  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`, 0005 gives children of a tenant scope resource an owner, 0006 makes a resource at several scopes an extension resource; 0003 also exports what hand-written extensions need); make the change in the
+  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`, 0005 gives children of a tenant scope resource an owner, 0006 makes a resource at several scopes an extension resource, 0007 makes a child built on a `SubResource` a resource (network 2025-05-01 on); 0003 also exports what hand-written extensions need); make the change in the
   checkout, `git diff` it into the patch, then `hack/upstream.sh` re-applies the
   series and `hack/upstream.sh --check` verifies it.
 
@@ -439,7 +458,10 @@ From `docs/plan.md` §8 and the pull requests; none blocks the queue.
 3. Open questions 1 to 5 and 7 of §8: licence (MIT vs Apache-2.0), offering b1
    and b2 upstream, relaxed workload identity as the default, reading Secrets
    cluster-wide, Azure SQL Entra users (a1), the `User` kind name.
-4. **Webhook-less validation**: generated kinds lack ASO's checks (reference
+4. **May the manager write Secrets** (§8 question 9): the opt-in
+   `config/secret-writer` is built (option b, recommended); whether the
+   default install should grant it (option a) is the builder's.
+5. **Webhook-less validation**: generated kinds lack ASO's checks (reference
    format, immutable `owner` and `azureName`). If wanted, add CEL rules by a
    generator patch; not done.
 

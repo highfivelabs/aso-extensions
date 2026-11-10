@@ -127,7 +127,7 @@ kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f 
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/team-a-hub,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualHubs/team-b-hub,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
@@ -422,6 +422,23 @@ metadata: {name: to-partner, namespace: $1}
 spec:
   owner: {name: er}
 ---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: ExpressRouteGateway
+metadata: {name: hub-er, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  virtualHub: {reference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/virtualHubs/$1-hub}}
+  autoScaleConfiguration: {bounds: {min: 1, max: 2}}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: ExpressRouteGatewaysExpressRouteConnection
+metadata: {name: to-er, namespace: $1}
+spec:
+  owner: {name: hub-er}
+  expressRouteCircuitPeering: {reference: {group: network.azure.hfl.dev, kind: ExpressRouteCircuitsPeering, name: private}}
+  routingWeight: 10
+---
 apiVersion: management.azure.hfl.dev/v20230401
 kind: ManagementGroup
 metadata: {name: platform, namespace: $1}
@@ -649,6 +666,12 @@ logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/provi
 pass "team-a ExpressRouteCircuitsPeering Ready: private peering owned by our circuit, the BGP key from a Secret"
 wait_for 90 "team-a's ExpressRouteCircuitsAuthorization Ready" ready expressroutecircuitsauthorizations.network.azure.hfl.dev team-a to-partner
 pass "team-a ExpressRouteCircuitsAuthorization Ready: owned by our circuit"
+wait_for 90 "team-a's ExpressRouteGateway Ready" ready expressroutegateways.network.azure.hfl.dev team-a hub-er
+pass "team-a ExpressRouteGateway Ready: owned by ASO's ResourceGroup, in a Virtual WAN hub by ARM ID"
+wait_for 90 "team-a's ExpressRouteGatewaysExpressRouteConnection Ready" ready expressroutegatewaysexpressrouteconnections.network.azure.hfl.dev team-a to-er
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er/expressRouteConnections/to-er 201" \
+  || fail "the fake resource manager saw no connection on team-a's ExpressRoute gateway"
+pass "team-a ExpressRouteGatewaysExpressRouteConnection Ready: owned by our gateway, to our circuit's private peering by object"
 wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
 pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
 [[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
@@ -755,6 +778,13 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/localNetworkGateways/onprem 200" \
   || fail "the fake resource manager saw no delete of the local network gateway"
 pass "the VPN connection and the local network gateway are deleted in Resource Manager"
+kubectl -n team-a delete expressroutegatewaysexpressrouteconnections.network.azure.hfl.dev to-er --timeout=120s
+kubectl -n team-a delete expressroutegateways.network.azure.hfl.dev hub-er --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er/expressRouteConnections/to-er 200" \
+  || fail "the fake resource manager saw no delete of the gateway connection"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er 200" \
+  || fail "the fake resource manager saw no delete of the ExpressRoute gateway"
+pass "the ExpressRoute gateway and its connection are deleted in Resource Manager"
 kubectl -n team-a delete expressroutecircuitsauthorizations.network.azure.hfl.dev to-partner --timeout=120s
 kubectl -n team-a delete expressroutecircuitspeerings.network.azure.hfl.dev private --timeout=120s
 kubectl -n team-a delete expressroutecircuits.network.azure.hfl.dev er --timeout=120s
@@ -821,6 +851,55 @@ kubectl -n team-a delete tagsets.resources.azure.hfl.dev rg-tags --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Resources/tags/default 200" \
   || fail "the fake resource manager saw no delete of the tags"
 pass "the tags are deleted in Resource Manager"
+
+step "keys Azure makes: not written by default, written with config/secret-writer"
+# docs/plan.md §8, question 9. The default install may read Secrets and not
+# create them (checked above), so exporting a key Azure makes fails; the
+# opt-in component grants create, update and delete, and the export works.
+kubectl apply -f - <<EOF
+apiVersion: network.azure.hfl.dev/v20260301
+kind: ExpressRouteCircuit
+metadata: {name: keys, namespace: team-a}
+spec:
+  owner: {name: rg}
+  location: westus
+  sku: {name: Standard_MeteredData, tier: Standard, family: MeteredData}
+  serviceProviderProperties: {serviceProviderName: Equinix, peeringLocation: Silicon Valley, bandwidthInMbps: 50}
+  operatorSpec: {secrets: {serviceKey: {name: er-keys, key: serviceKey}}}
+EOF
+wait_for 120 "the service key's export refused without the Secret writer" bash -c "[[ \"\$(kubectl get expressroutecircuits.network.azure.hfl.dev -n team-a keys -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *forbidden* ]]"
+kubectl -n team-a get secret er-keys >/dev/null 2>&1 && fail "the service key's Secret exists without the Secret writer"
+pass "keys not written by default: the circuit's service key export is refused (forbidden) on its Ready condition, no Secret"
+kubectl kustomize tests/operator/overlay-secret-writer > "${OUT}/install-secret-writer.yaml"
+GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install-secret-writer.yaml"
+for verb in create update delete; do
+  can "${verb}" secrets -n team-a || fail "may not ${verb} secrets with config/secret-writer"
+done
+! can patch secrets -n team-a || fail "may patch secrets: config/secret-writer grants create, update and delete only"
+pass "config/secret-writer on: the manager may create, update and delete Secrets"
+kubectl apply -f - <<EOF
+apiVersion: network.azure.hfl.dev/v20260301
+kind: ExpressRouteCircuitsAuthorization
+metadata: {name: keys-auth, namespace: team-a}
+spec:
+  owner: {name: keys}
+  operatorSpec: {secrets: {authorizationKey: {name: er-keys-auth, key: key}}}
+EOF
+wait_for 180 "team-a's circuit Ready once the Secret writer is on" ready expressroutecircuits.network.azure.hfl.dev team-a keys
+wait_for 120 "team-a's exporting authorization Ready" ready expressroutecircuitsauthorizations.network.azure.hfl.dev team-a keys-auth
+uuid='^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+service_key="$(kubectl -n team-a get secret er-keys -o jsonpath='{.data.serviceKey}' | base64 -d)"
+auth_key="$(kubectl -n team-a get secret er-keys-auth -o jsonpath='{.data.key}' | base64 -d)"
+[[ "${service_key}" =~ ${uuid} ]] || fail "the service key's Secret holds '${service_key}', not the key the fake made"
+[[ "${auth_key}" =~ ${uuid} && "${auth_key}" != "${service_key}" ]] || fail "the authorization key's Secret holds '${auth_key}'"
+statuses="$(kubectl -n team-a get expressroutecircuits.network.azure.hfl.dev keys -o jsonpath='{.status}'; kubectl -n team-a get expressroutecircuitsauthorizations.network.azure.hfl.dev keys-auth -o jsonpath='{.status}')"
+[[ "${statuses}" != *"${service_key}"* && "${statuses}" != *"${auth_key}"* ]] || fail "a key Azure made is in a status"
+pass "keys exported with config/secret-writer: a circuit's service key and an authorization's key in their Secrets, not in the status"
+kubectl -n team-a delete expressroutecircuitsauthorizations.network.azure.hfl.dev keys-auth --timeout=120s
+kubectl -n team-a delete expressroutecircuits.network.azure.hfl.dev keys --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteCircuits/keys 200" \
+  || fail "the fake resource manager saw no delete of the exporting circuit"
+pass "the exporting circuit and authorization are deleted in Resource Manager"
 
 echo
 echo "all checks passed"
