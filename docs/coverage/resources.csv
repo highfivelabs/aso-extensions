@@ -1246,7 +1246,7 @@ Microsoft.Insights,Microsoft.Insights/dataCollectionRules,140,insights.azure.com
 Microsoft.Insights,Microsoft.Insights/diagnosticSettings,14,insights.azure.com/DiagnosticSetting,12,,0,2,false,spec_api=2016-09-01; official_api=2021-05-01-preview; official-api-differs-from-spec
 Microsoft.Insights,Microsoft.Insights/guestDiagnosticSettings,15,,0,,0,15,false,spec_api=2018-06-01-preview; spec-preview-only
 Microsoft.Insights,Microsoft.Insights/guestDiagnosticSettingsAssociation,3,,0,,0,3,false,spec_api=2018-06-01-preview; spec-preview-only
-Microsoft.Insights,Microsoft.Insights/logprofiles,8,,0,,0,8,false,spec_api=2016-03-01
+Microsoft.Insights,Microsoft.Insights/logprofiles,8,,0,insights.azure.hfl.dev/LogProfile,8,0,false,spec_api=2016-03-01; ours_api=2016-03-01
 Microsoft.Insights,Microsoft.Insights/metricAlerts,41,insights.azure.com/MetricAlert,32,,0,9,false,spec_api=2026-01-01; official_api=2018-03-01; official-api-differs-from-spec
 Microsoft.Insights,Microsoft.Insights/myWorkbooks,13,,0,,0,13,false,spec_api=2021-03-08
 Microsoft.Insights,Microsoft.Insights/privateLinkScopes,7,,0,insights.azure.hfl.dev/PrivateLinkScope,7,0,false,spec_api=2021-09-01; ours_api=2021-09-01
@@ -1256,7 +1256,7 @@ Microsoft.Insights,Microsoft.Insights/scheduledQueryRules,39,insights.azure.com/
 Microsoft.Insights,Microsoft.Insights/tenantActionGroups,22,,0,,0,22,false,spec_api=2023-05-01-preview; spec-preview-only
 Microsoft.Insights,Microsoft.Insights/webtests,27,insights.azure.com/Webtest,27,,0,0,false,spec_api=2022-06-15; official_api=2022-06-15
 Microsoft.Insights,Microsoft.Insights/workbooks,14,insights.azure.com/Workbook,12,,0,2,false,spec_api=2023-06-01; official_api=2023-06-01
-Microsoft.Insights,Microsoft.Insights/workbooktemplates,16,,0,,0,16,false,spec_api=2020-11-20
+Microsoft.Insights,Microsoft.Insights/workbooktemplates,16,,0,insights.azure.hfl.dev/WorkbookTemplate,16,0,false,spec_api=2020-11-20; ours_api=2020-11-20
 Microsoft.IntegrationSpaces,Microsoft.IntegrationSpaces/spaces,3,,0,,0,3,false,spec_api=2023-11-14-preview; spec-preview-only
 Microsoft.IntegrationSpaces,Microsoft.IntegrationSpaces/spaces/applications,7,,0,,0,7,false,spec_api=2023-11-14-preview; spec-preview-only
 Microsoft.IntegrationSpaces,Microsoft.IntegrationSpaces/spaces/applications/businessProcesses,12,,0,,0,12,false,spec_api=2023-11-14-preview; spec-preview-only

@@ -83,7 +83,7 @@ stable); our generated kinds are pinned to the version they are generated from.
 | 15 | `ManagedClustersManagedNamespace`, `FleetsManagedNamespace`, `ManagedClustersPrivateEndpointConnection`, `ManagedClustersSnapshot` | `managedClusters/managedNamespaces` (12), `fleets/managedNamespaces` (26), `managedClusters/privateEndpointConnections` (3), `snapshots` (4); spec `containerservice/.../aks/stable/2026-08-01/managedClusters.json` | `ManagedCluster` (309 of 330, ASO 2026-05-01), `ManagedClustersAgentPool` (123 of 126), fleets (partly), maintenance, trusted access, identity bindings / none | managed namespaces; the missing cluster attributes are API-version lag (spec 2026-08-01) | none found | 1 (managed namespaces) | generator | M |
 | 16 | `SourceControlConfiguration`, `KubernetesConfigurationPrivateLinkScope` (+ endpoint connection) | `KubernetesConfiguration/sourceControlConfigurations` (11, legacy Flux v1, extension scope), `privateLinkScopes` (4) + `privateEndpointConnections` (4) | `Extension` (19 of 32), `FluxConfiguration` (70 of 71) / none | the legacy GitOps kind; `Extension` is behind the spec | none found | 0 | generator, arbitrary owner | S |
 | 17 | `RegistriesTask`, `RegistriesConnectedRegistry`, `RegistriesPrivateEndpointConnection` | `registries/tasks` (54), `connectedRegistries` (13), `privateEndpointConnections` (4); spec `containerregistry/.../RegistryTasks/stable/2019-04-01` | `Registry`, replications, cache rules (ASO); credential sets, scope maps, tokens, webhooks (ours) | tasks and connected registries | none found | 0 | generator | M |
-| 18 | Insights API lag: `MetricAlert`, `ScheduledQueryRule`, `DataCollectionEndpoint`, `ActivityLogAlert`, `Workbook`; `LogProfile`, `WorkbookTemplate` | `metricAlerts` (9 missing of 41), `scheduledQueryRules` (9 of 39), `dataCollectionEndpoints` (4 of 16) and others, `logprofiles` (8, subscription), `workbooktemplates` (16) | ASO has the kinds, at older API versions / none | newer properties; two more kinds | none found; belongs upstream (`$supportedFrom` a newer version) | 1 (metric alerts) | upstream; here only `LogProfile`, `WorkbookTemplate` by generator | S |
+| 18 | Insights API lag: `MetricAlert`, `ScheduledQueryRule`, `DataCollectionEndpoint`, `ActivityLogAlert`, `Workbook`; `LogProfile`, `WorkbookTemplate` | `metricAlerts` (9 missing of 41), `scheduledQueryRules` (9 of 39), `dataCollectionEndpoints` (4 of 16) and others, `logprofiles` (8, subscription), `workbooktemplates` (16) | ASO has the kinds, at older API versions / none | newer properties; two more kinds | none found; belongs upstream (`$supportedFrom` a newer version) | 1 (metric alerts) | upstream; here **`LogProfile` and `WorkbookTemplate` built 2026-11-10**, generated: `insights.azure.hfl.dev/v20160301` `LogProfile` (owned by the subscription, generator patch 0009), `v20201120` `WorkbookTemplate` | S |
 
 Already covered (nothing to build): virtual networks, subnets, peerings
 (`VirtualNetwork`, `VirtualNetworksSubnet`, `VirtualNetworksVirtualNetworkPeering`), route
@@ -125,12 +125,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 21.6% | 35.2% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 22.1% | 34.7% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.8% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (101 with no kind, 61 partly covered, 84 covered)
+### platform-foundation: 246 resources (99 with no kind, 61 partly covered, 86 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -175,23 +175,23 @@ Generated: every resource of the two categories, by the order of the services in
 | 39 | `Microsoft.CostManagement/views` | no kind |  |  | 0 / 0 / 34 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | M (34) | 0 |
 | 40 | `Microsoft.CostManagement/exports` | partial, 1 of 28 missing |  | `costmanagement/Export` | 0 / 27 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
 | 41 | `Microsoft.Insights/guestDiagnosticSettingsAssociation` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 42 | `Microsoft.Insights/logprofiles` | no kind |  |  | 0 / 0 / 8 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (8) | 0 |
-| 43 | `Microsoft.Insights/myWorkbooks` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
-| 44 | `Microsoft.Insights/guestDiagnosticSettings` | no kind |  |  | 0 / 0 / 15 | resourceGroup | generator | S (15) | 0 |
-| 45 | `Microsoft.Insights/workbooktemplates` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
-| 46 | `Microsoft.Insights/tenantActionGroups` | no kind |  |  | 0 / 0 / 22 | managementGroup | generator, arbitrary owner (several scopes, patch 0006) | S (22) | 0 |
-| 47 | `Microsoft.Insights/diagnosticSettings` | partial, 2 of 14 missing | `insights/DiagnosticSetting` |  | 12 / 0 / 2 | extension | extend: ASO's API version is older than the spec's | S (2) | 23 |
-| 48 | `Microsoft.Insights/dataCollectionEndpoints` | partial, 4 of 16 missing | `insights/DataCollectionEndpoint` |  | 12 / 0 / 4 | resourceGroup | extend: newer API version or property config | S (4) | 1 |
-| 49 | `Microsoft.Insights/metricAlerts` | partial, 9 of 41 missing | `insights/MetricAlert` |  | 32 / 0 / 9 | resourceGroup | extend: ASO's API version is older than the spec's | S (9) | 1 |
-| 50 | `Microsoft.Insights/privateLinkScopes/privateEndpointConnections` | partial, 1 of 4 missing |  | `insights/PrivateLinkScopesPrivateEndpointConnection` | 0 / 3 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 51 | `Microsoft.Insights/workbooks` | partial, 2 of 14 missing | `insights/Workbook` |  | 12 / 0 / 2 | resourceGroup | extend: newer API version or property config | S (2) | 0 |
-| 52 | `Microsoft.Insights/activityLogAlerts` | partial, 2 of 15 missing | `insights/ActivityLogAlert` |  | 13 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 0 |
-| 53 | `Microsoft.Insights/scheduledQueryRules` | partial, 9 of 39 missing | `insights/ScheduledQueryRule` |  | 30 / 0 / 9 | resourceGroup | extend: ASO's API version is older than the spec's | S (9) | 0 |
-| 54 | `Microsoft.Insights/privateLinkScopes/scopedResources` | covered |  | `insights/PrivateLinkScopesScopedResource` | 0 / 1 / 0 | resourceGroup | - | - | 2 |
-| 55 | `Microsoft.Insights/privateLinkScopes` | covered |  | `insights/PrivateLinkScope` | 0 / 7 / 0 | resourceGroup | - | - | 2 |
-| 56 | `Microsoft.Insights/dataCollectionRuleAssociations` | covered | `insights/DataCollectionRuleAssociation` |  | 3 / 0 / 0 | extension | - | - | 1 |
-| 57 | `Microsoft.Insights/actionGroups` | covered | `insights/ActionGroup` |  | 52 / 0 / 0 | resourceGroup | - | - | 1 |
-| 58 | `Microsoft.Insights/dataCollectionRules` | covered | `insights/DataCollectionRule` |  | 140 / 0 / 0 | resourceGroup | - | - | 1 |
+| 42 | `Microsoft.Insights/myWorkbooks` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
+| 43 | `Microsoft.Insights/guestDiagnosticSettings` | no kind |  |  | 0 / 0 / 15 | resourceGroup | generator | S (15) | 0 |
+| 44 | `Microsoft.Insights/tenantActionGroups` | no kind |  |  | 0 / 0 / 22 | managementGroup | generator, arbitrary owner (several scopes, patch 0006) | S (22) | 0 |
+| 45 | `Microsoft.Insights/diagnosticSettings` | partial, 2 of 14 missing | `insights/DiagnosticSetting` |  | 12 / 0 / 2 | extension | extend: ASO's API version is older than the spec's | S (2) | 23 |
+| 46 | `Microsoft.Insights/dataCollectionEndpoints` | partial, 4 of 16 missing | `insights/DataCollectionEndpoint` |  | 12 / 0 / 4 | resourceGroup | extend: newer API version or property config | S (4) | 1 |
+| 47 | `Microsoft.Insights/metricAlerts` | partial, 9 of 41 missing | `insights/MetricAlert` |  | 32 / 0 / 9 | resourceGroup | extend: ASO's API version is older than the spec's | S (9) | 1 |
+| 48 | `Microsoft.Insights/privateLinkScopes/privateEndpointConnections` | partial, 1 of 4 missing |  | `insights/PrivateLinkScopesPrivateEndpointConnection` | 0 / 3 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 49 | `Microsoft.Insights/workbooks` | partial, 2 of 14 missing | `insights/Workbook` |  | 12 / 0 / 2 | resourceGroup | extend: newer API version or property config | S (2) | 0 |
+| 50 | `Microsoft.Insights/activityLogAlerts` | partial, 2 of 15 missing | `insights/ActivityLogAlert` |  | 13 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 0 |
+| 51 | `Microsoft.Insights/scheduledQueryRules` | partial, 9 of 39 missing | `insights/ScheduledQueryRule` |  | 30 / 0 / 9 | resourceGroup | extend: ASO's API version is older than the spec's | S (9) | 0 |
+| 52 | `Microsoft.Insights/privateLinkScopes/scopedResources` | covered |  | `insights/PrivateLinkScopesScopedResource` | 0 / 1 / 0 | resourceGroup | - | - | 2 |
+| 53 | `Microsoft.Insights/privateLinkScopes` | covered |  | `insights/PrivateLinkScope` | 0 / 7 / 0 | resourceGroup | - | - | 2 |
+| 54 | `Microsoft.Insights/dataCollectionRuleAssociations` | covered | `insights/DataCollectionRuleAssociation` |  | 3 / 0 / 0 | extension | - | - | 1 |
+| 55 | `Microsoft.Insights/actionGroups` | covered | `insights/ActionGroup` |  | 52 / 0 / 0 | resourceGroup | - | - | 1 |
+| 56 | `Microsoft.Insights/dataCollectionRules` | covered | `insights/DataCollectionRule` |  | 140 / 0 / 0 | resourceGroup | - | - | 1 |
+| 57 | `Microsoft.Insights/logprofiles` | covered |  | `insights/LogProfile` | 0 / 8 / 0 | subscription | - | - | 0 |
+| 58 | `Microsoft.Insights/workbooktemplates` | covered |  | `insights/WorkbookTemplate` | 0 / 16 / 0 | resourceGroup | - | - | 0 |
 | 59 | `Microsoft.Insights/autoscalesettings` | covered | `insights/AutoscaleSetting` |  | 44 / 0 / 0 | resourceGroup | - | - | 0 |
 | 60 | `Microsoft.Network/applicationSecurityGroups/addressPrefixSets` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
 | 61 | `Microsoft.Network/expressRouteLags/authorizations` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
