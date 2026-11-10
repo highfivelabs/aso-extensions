@@ -397,6 +397,10 @@ Facts learned the hard way:
   `$resourceEmbeddedInParent: <the generator's resource name>` (ASO's
   `kusto.yaml` does it for a database); the spec then has one property per
   leaf (`adminRule`, `defaultAdminRule`), exactly one set.
+- **A kind name plus `List` must fit in 63 characters** (a DNS label): the
+  generator and `go build` accept a longer one, and envtest refuses the CRD
+  (`spec.names.listKind: Invalid value`). Choose a shorter `$exportAs` for
+  deep children (network manager rules: `NetworkManagersSecurityAdminRule`).
 - A property with `format: arm-id` is a reference already: labelling it
   `$referenceType: arm` fails ("value is not needed because Swagger already
   says it is an ARM reference").
