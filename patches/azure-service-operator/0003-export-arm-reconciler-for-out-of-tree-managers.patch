@@ -100,10 +100,10 @@ index 0000000..d250d9b
 +}
 diff --git a/v2/pkg/outoftree/extensions.go b/v2/pkg/outoftree/extensions.go
 new file mode 100644
-index 0000000..88e8c94
+index 0000000..a69a0a5
 --- /dev/null
 +++ b/v2/pkg/outoftree/extensions.go
-@@ -0,0 +1,38 @@
+@@ -0,0 +1,44 @@
 +/*
 +Copyright (c) Microsoft Corporation.
 +Licensed under the MIT license.
@@ -112,20 +112,26 @@ index 0000000..88e8c94
 +// Modified by High Five Labs: this file is new. It exports, unchanged, what
 +// a hand-written extension of an out-of-tree generated kind needs and ASO
 +// keeps in v2/internal/: the ARM client an ARMResourceModifier receives, the
-+// reflection helper ASO's role extensions set a property with, and the UUID
-+// naming ASO's role webhooks default a name with.
++// reflection helper ASO's role extensions set a property with, the UUID
++// naming ASO's role webhooks default a name with, and the set a
++// KubernetesSecretExporter receives.
 +
 +package outoftree
 +
 +import (
 +	"github.com/Azure/azure-service-operator/v2/internal/genericarmclient"
 +	"github.com/Azure/azure-service-operator/v2/internal/reflecthelpers"
++	"github.com/Azure/azure-service-operator/v2/internal/set"
 +	"github.com/Azure/azure-service-operator/v2/internal/util/randextensions"
 +)
 +
 +// GenericClient is ASO's ARM client, as extensions.ARMResourceModifier
 +// receives it.
 +type GenericClient = genericarmclient.GenericClient
++
++// Set is ASO's set, as genruntime.KubernetesSecretExporter receives the
++// names of the secrets its secret expressions need.
++type Set[T comparable] = set.Set[T]
 +
 +// SetProperty sets a property of an object by its dotted path, by
 +// reflection (reflecthelpers.SetProperty).

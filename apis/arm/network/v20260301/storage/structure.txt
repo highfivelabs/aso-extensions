@@ -4,6 +4,410 @@ github.com/highfivelabs/aso-extensions/apis/arm/network/v20260301/storage
 APIVersion: Enum (1 value)
 └── "2026-03-01"
 
+ExpressRouteCircuit: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (22 properties)
+│   ├── ActivationKey: *genruntime.SecretReference
+│   ├── AllowClassicOperations: *bool
+│   ├── AuthorizationKey: *genruntime.SecretReference
+│   ├── AzureName: string
+│   ├── BandwidthInGbps: *float64
+│   ├── CircuitProvisioningState: *string
+│   ├── EnableDirectPortRateLimit: *bool
+│   ├── ExpressRouteLag: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── ExpressRoutePort: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── GatewayManagerEtag: *string
+│   ├── GlobalReachEnabled: *bool
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (4 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── SecretExpressions: *core.DestinationExpression[]
+│   │   └── Secrets: *Object (2 properties)
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── ServiceKey: *genruntime.SecretDestination
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PartnerAccountId: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── ServiceProviderNotes: *string
+│   ├── ServiceProviderProperties: *Object (4 properties)
+│   │   ├── BandwidthInMbps: *int
+│   │   ├── PeeringLocation: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── ServiceProviderName: *string
+│   ├── ServiceProviderProvisioningState: *string
+│   ├── Sku: *Object (4 properties)
+│   │   ├── Family: *string
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Tier: *string
+│   └── Tags: map[string]string
+└── Status: Object (27 properties)
+    ├── AllowClassicOperations: *bool
+    ├── AuthorizationStatus: *string
+    ├── Authorizations: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── BandwidthInGbps: *float64
+    ├── CircuitProvisioningState: *string
+    ├── Conditions: conditions.Condition[]
+    ├── EnableDirectPortRateLimit: *bool
+    ├── Etag: *string
+    ├── ExpressRouteLag: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── ExpressRoutePort: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── GatewayManagerEtag: *string
+    ├── GlobalReachEnabled: *bool
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PartnerAccountId: *string
+    ├── Peerings: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ResiliencyLevel: *string
+    ├── ServiceProviderNotes: *string
+    ├── ServiceProviderProperties: *Object (4 properties)
+    │   ├── BandwidthInMbps: *int
+    │   ├── PeeringLocation: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── ServiceProviderName: *string
+    ├── ServiceProviderProvisioningState: *string
+    ├── Sku: *Object (4 properties)
+    │   ├── Family: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Tier: *string
+    ├── Stag: *int
+    ├── Tags: map[string]string
+    └── Type: *string
+
+ExpressRouteCircuitsAuthorization: Resource
+├── Owner: network/v20260301.ExpressRouteCircuit
+├── Spec: Object (6 properties)
+│   ├── AuthorizationUseStatus: *string
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (4 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── SecretExpressions: *core.DestinationExpression[]
+│   │   └── Secrets: *Object (2 properties)
+│   │       ├── AuthorizationKey: *genruntime.SecretDestination
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (9 properties)
+    ├── AuthorizationUseStatus: *string
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionResourceUri: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    └── Type: *string
+
+ExpressRouteCircuitsPeering: Resource
+├── Owner: network/v20260301.ExpressRouteCircuit
+├── Spec: Object (20 properties)
+│   ├── AzureASN: *int
+│   ├── AzureName: string
+│   ├── GatewayManagerEtag: *string
+│   ├── Ipv6PeeringConfig: *Object (6 properties)
+│   │   ├── MicrosoftPeeringConfig: *Object (7 properties)
+│   │   │   ├── AdvertisedCommunities: string[]
+│   │   │   ├── AdvertisedPublicPrefixInfo: Object (4 properties)[]
+│   │   │   │   ├── Prefix: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Signature: *string
+│   │   │   │   └── ValidationId: *string
+│   │   │   ├── AdvertisedPublicPrefixes: string[]
+│   │   │   ├── CustomerASN: *int
+│   │   │   ├── LegacyMode: *int
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── RoutingRegistryName: *string
+│   │   ├── PrimaryPeerAddressPrefix: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RouteFilter: *Object (2 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── SecondaryPeerAddressPrefix: *string
+│   │   └── State: *string
+│   ├── MicrosoftPeeringConfig: *Object (7 properties)
+│   │   ├── AdvertisedCommunities: string[]
+│   │   ├── AdvertisedPublicPrefixInfo: Object (4 properties)[]
+│   │   │   ├── Prefix: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Signature: *string
+│   │   │   └── ValidationId: *string
+│   │   ├── AdvertisedPublicPrefixes: string[]
+│   │   ├── CustomerASN: *int
+│   │   ├── LegacyMode: *int
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── RoutingRegistryName: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PeerASN: *int
+│   ├── PeeringType: *string
+│   ├── PrimaryAzurePort: *string
+│   ├── PrimaryPeerAddressPrefix: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RouteFilter: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── SecondaryAzurePort: *string
+│   ├── SecondaryPeerAddressPrefix: *string
+│   ├── SharedKey: *genruntime.SecretReference
+│   ├── State: *string
+│   ├── Stats: *Object (5 properties)
+│   │   ├── PrimarybytesIn: *int
+│   │   ├── PrimarybytesOut: *int
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── SecondarybytesIn: *int
+│   │   └── SecondarybytesOut: *int
+│   └── VlanId: *int
+└── Status: Object (25 properties)
+    ├── AzureASN: *int
+    ├── Conditions: conditions.Condition[]
+    ├── Connections: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Etag: *string
+    ├── ExpressRouteConnection: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── GatewayManagerEtag: *string
+    ├── Id: *string
+    ├── Ipv6PeeringConfig: *Object (6 properties)
+    │   ├── MicrosoftPeeringConfig: *Object (8 properties)
+    │   │   ├── AdvertisedCommunities: string[]
+    │   │   ├── AdvertisedPublicPrefixInfo: Object (5 properties)[]
+    │   │   │   ├── Prefix: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Signature: *string
+    │   │   │   ├── ValidationId: *string
+    │   │   │   └── ValidationState: *string
+    │   │   ├── AdvertisedPublicPrefixes: string[]
+    │   │   ├── AdvertisedPublicPrefixesState: *string
+    │   │   ├── CustomerASN: *int
+    │   │   ├── LegacyMode: *int
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── RoutingRegistryName: *string
+    │   ├── PrimaryPeerAddressPrefix: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RouteFilter: *Object (2 properties)
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── SecondaryPeerAddressPrefix: *string
+    │   └── State: *string
+    ├── LastModifiedBy: *string
+    ├── MicrosoftPeeringConfig: *Object (8 properties)
+    │   ├── AdvertisedCommunities: string[]
+    │   ├── AdvertisedPublicPrefixInfo: Object (5 properties)[]
+    │   │   ├── Prefix: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Signature: *string
+    │   │   ├── ValidationId: *string
+    │   │   └── ValidationState: *string
+    │   ├── AdvertisedPublicPrefixes: string[]
+    │   ├── AdvertisedPublicPrefixesState: *string
+    │   ├── CustomerASN: *int
+    │   ├── LegacyMode: *int
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── RoutingRegistryName: *string
+    ├── Name: *string
+    ├── PeerASN: *int
+    ├── PeeredConnections: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PeeringType: *string
+    ├── PrimaryAzurePort: *string
+    ├── PrimaryPeerAddressPrefix: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RouteFilter: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── SecondaryAzurePort: *string
+    ├── SecondaryPeerAddressPrefix: *string
+    ├── State: *string
+    ├── Stats: *Object (5 properties)
+    │   ├── PrimarybytesIn: *int
+    │   ├── PrimarybytesOut: *int
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── SecondarybytesIn: *int
+    │   └── SecondarybytesOut: *int
+    ├── Type: *string
+    └── VlanId: *int
+
+ExpressRouteCircuitsPeeringsConnection: Resource
+├── Owner: network/v20260301.ExpressRouteCircuitsPeering
+├── Spec: Object (10 properties)
+│   ├── AddressPrefix: *string
+│   ├── AuthorizationKey: *genruntime.SecretReference
+│   ├── AzureName: string
+│   ├── ExpressRouteCircuitPeering: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── Ipv6CircuitConnectionConfig: *Object (2 properties)
+│   │   ├── AddressPrefix: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PeerExpressRouteCircuitPeering: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (12 properties)
+    ├── AddressPrefix: *string
+    ├── CircuitConnectionStatus: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── ExpressRouteCircuitPeering: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Ipv6CircuitConnectionConfig: *Object (3 properties)
+    │   ├── AddressPrefix: *string
+    │   ├── CircuitConnectionStatus: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Name: *string
+    ├── PeerExpressRouteCircuitPeering: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    └── Type: *string
+
+ExpressRoutePort: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── BandwidthInGbps: *int
+│   ├── BillingType: *string
+│   ├── Encapsulation: *string
+│   ├── Identity: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Type: *string
+│   │   └── UserAssignedIdentities: Object (2 properties)[]
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Links: Object (5 properties)[]
+│   │   ├── AdminState: *string
+│   │   ├── Id: *string
+│   │   ├── MacSecConfig: *Object (5 properties)
+│   │   │   ├── CakSecretIdentifier: *string
+│   │   │   ├── Cipher: *string
+│   │   │   ├── CknSecretIdentifier: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SciState: *string
+│   │   ├── Name: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PeeringLocation: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (21 properties)
+    ├── AllocationDate: *string
+    ├── BandwidthInGbps: *int
+    ├── BillingType: *string
+    ├── Circuits: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── Encapsulation: *string
+    ├── Etag: *string
+    ├── EtherType: *string
+    ├── Id: *string
+    ├── Identity: *Object (5 properties)
+    │   ├── PrincipalId: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── TenantId: *string
+    │   ├── Type: *string
+    │   └── UserAssignedIdentities: map[string]Object (3 properties)
+    │       ├── ClientId: *string
+    │       ├── PrincipalId: *string
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── Links: Object (13 properties)[]
+    │   ├── AdminState: *string
+    │   ├── ColoLocation: *string
+    │   ├── ConnectorType: *string
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── InterfaceName: *string
+    │   ├── MacSecConfig: *Object (5 properties)
+    │   │   ├── CakSecretIdentifier: *string
+    │   │   ├── Cipher: *string
+    │   │   ├── CknSecretIdentifier: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SciState: *string
+    │   ├── Name: *string
+    │   ├── PatchPanelId: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisioningState: *string
+    │   ├── RackId: *string
+    │   └── RouterName: *string
+    ├── Location: *string
+    ├── Mtu: *string
+    ├── Name: *string
+    ├── PeeringLocation: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisionedBandwidthInGbps: *float64
+    ├── ProvisioningState: *string
+    ├── ResourceGuid: *string
+    ├── Tags: map[string]string
+    └── Type: *string
+
+ExpressRoutePortsAuthorization: Resource
+├── Owner: network/v20260301.ExpressRoutePort
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (4 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── SecretExpressions: *core.DestinationExpression[]
+│   │   └── Secrets: *Object (2 properties)
+│   │       ├── AuthorizationKey: *genruntime.SecretDestination
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (9 properties)
+    ├── AuthorizationUseStatus: *string
+    ├── CircuitResourceUri: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    └── Type: *string
+
 LocalNetworkGateway: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (11 properties)

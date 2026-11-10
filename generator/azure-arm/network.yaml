@@ -6,7 +6,7 @@ typeFilters:
   - action: include
     group: network
     version: v20260301
-    because: the newest stable version, for site-to-site VPN connections and local network gateways (foundation row 8); ASO has neither kind
+    because: the newest stable version, for site-to-site VPN connections and local network gateways (foundation row 8) and ExpressRoute (row 9); ASO has none of these kinds
 
 groupModelConfiguration:
   2025-05-01:
@@ -38,9 +38,107 @@ groupModelConfiguration:
     LocalNetworkGateway:
       $exportAs: LocalNetworkGateway
       $supportedFrom: v0.1.0
+    ExpressRouteCircuit:
+      $exportAs: ExpressRouteCircuit
+      $supportedFrom: v0.1.0
+      $azureGeneratedSecrets:
+        - ServiceKey # the key a connectivity provider provisions the circuit with, made by Azure
+    ExpressRouteCircuits_Authorization:
+      $exportAs: ExpressRouteCircuitsAuthorization
+      $supportedFrom: v0.1.0
+      $azureGeneratedSecrets:
+        - AuthorizationKey # made by Azure; another subscription's connection redeems it
+    ExpressRouteCircuits_Peering:
+      $exportAs: ExpressRouteCircuitsPeering
+      $supportedFrom: v0.1.0
+    ExpressRouteCircuits_Peerings_Connection:
+      $exportAs: ExpressRouteCircuitsPeeringsConnection
+      $supportedFrom: v0.1.0
+    ExpressRoutePort:
+      $exportAs: ExpressRoutePort
+      $supportedFrom: v0.1.0
+    ExpressRoutePorts_Authorization:
+      $exportAs: ExpressRoutePortsAuthorization
+      $supportedFrom: v0.1.0
+      $azureGeneratedSecrets:
+        - AuthorizationKey # made by Azure; a circuit on the port in another subscription redeems it
+    ExpressRouteCircuitPropertiesFormat:
+      Peerings:
+        $resourceLifecycleOwnedByParent: ExpressRouteCircuit # kept on a circuit's PUT by its extension, as ASO's RouteTable keeps its routes
+      Authorizations:
+        $resourceLifecycleOwnedByParent: ExpressRouteCircuit
+      AuthorizationKey:
+        $importSecretMode: required # an ExpressRoute Direct port authorization's key, to make a circuit on another subscription's port
+      ActivationKey:
+        $importSecretMode: required # the activation key a partner cloud provider gives
+    ExpressRouteCircuitPeeringPropertiesFormat:
+      Connections:
+        $resourceLifecycleOwnedByParent: ExpressRouteCircuits_Peering # (the generator's resource name) Global Reach connections, kept on a peering's PUT by its extension
+      SharedKey:
+        $importSecretMode: required # the BGP session's MD5 key
+    ExpressRouteCircuitPeering:
+      Id:
+        $referenceType: simple # a peering's own ID, in the circuit's ARM payload only (copied from Azure by the circuit's extension)
+    ExpressRouteCircuitAuthorization:
+      Id:
+        $referenceType: simple # the same, for an authorization
+    ExpressRouteCircuitConnection:
+      Id:
+        $referenceType: simple # the same, for a Global Reach connection in a peering's ARM payload (copied by the peering's extension)
+    ExpressRouteCircuitConnection_SubResourceEmbedded:
+      Id:
+        $referenceType: simple # the same, as the generator names it inside a peering
+    ExpressRouteLink:
+      Id:
+        $referenceType: simple # a port link's own ID, which Azure sets; not a reference to another resource
+    ExpressRouteCircuitConnectionPropertiesFormat:
+      AuthorizationKey:
+        $importSecretMode: required # the peer circuit's authorization key, for Global Reach
     SubResource:
       Id:
         $referenceType: arm # the peer, NAT rules and other references of a connection
     VirtualNetworkGatewayConnectionPropertiesFormat:
       AuthorizationKey:
         $importSecretMode: required # the key of an ExpressRoute circuit authorization, a credential (sharedKey is x-ms-secret in the spec already)
+
+typeTransformers:
+  # Keys Azure makes are exported to a Secret ($azureGeneratedSecrets above,
+  # generator/_extensions/network/customizations), not kept in the spec,
+  # which could only send a key Azure ignores, or the status, which anyone
+  # who may read the object reads.
+  - group: network
+    version: v20260301
+    name: ExpressRouteCircuitPropertiesFormat
+    property: ServiceKey
+    remove: true
+    because: made by Azure; exported to a Secret
+  - group: network
+    version: v20260301
+    name: ExpressRouteCircuitPropertiesFormat_STATUS
+    property: ServiceKey
+    remove: true
+    because: a key; exported to a Secret, not shown in the status
+  - group: network
+    version: v20260301
+    name: AuthorizationPropertiesFormat
+    property: AuthorizationKey
+    remove: true
+    because: made by Azure; exported to a Secret
+  - group: network
+    version: v20260301
+    name: AuthorizationPropertiesFormat_STATUS
+    property: AuthorizationKey
+    remove: true
+    because: a key; exported to a Secret, not shown in the status
+  - group: network
+    version: v20260301
+    name: ExpressRoutePortAuthorizationPropertiesFormat_STATUS
+    property: AuthorizationKey
+    remove: true
+    because: a key; exported to a Secret, not shown in the status
+  - group: network
+    version: v20260301
+    name: ExpressRouteCircuits_Authorization_Spec;ExpressRouteCircuits_Peering_Spec;ExpressRouteCircuits_Peerings_Connection_Spec;ExpressRoutePorts_Authorization_Spec
+    property: Id
+    remove: true
+    because: a child resource's own ARM ID (the spec's SubResource), which Azure sets; ASO's subnets and routes have none in their spec either

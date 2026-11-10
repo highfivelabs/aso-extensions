@@ -10,6 +10,12 @@ no_list: true
 
 | Resource                                      | ARM Version | CRD Version | Supported From | Sample |
 |-----------------------------------------------|-------------|-------------|----------------|--------|
+| ExpressRouteCircuit                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteCircuitsAuthorization             | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteCircuitsPeering                   | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteCircuitsPeeringsConnection        | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRoutePort                              | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRoutePortsAuthorization                | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | LocalNetworkGateway                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkSecurityPerimeter                      | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersLink                 | 2025-05-01  | v20250501   | v0.1.0         | -      |

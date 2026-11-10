@@ -249,11 +249,6 @@ type LocalNetworkGatewayList struct {
 	Items           []LocalNetworkGateway `json:"items"`
 }
 
-// +kubebuilder:validation:Enum={"2026-03-01"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2026-03-01")
-
 type LocalNetworkGateway_Spec struct {
 	// +kubebuilder:validation:MinLength=1
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
@@ -1757,28 +1752,6 @@ func (operator *LocalNetworkGatewayOperatorSpec) AssignProperties_To_LocalNetwor
 
 	// No error
 	return nil
-}
-
-// Provisioning states of a resource.
-type ProvisioningState_STATUS string
-
-const (
-	ProvisioningState_STATUS_Canceled  = ProvisioningState_STATUS("Canceled")
-	ProvisioningState_STATUS_Creating  = ProvisioningState_STATUS("Creating")
-	ProvisioningState_STATUS_Deleting  = ProvisioningState_STATUS("Deleting")
-	ProvisioningState_STATUS_Failed    = ProvisioningState_STATUS("Failed")
-	ProvisioningState_STATUS_Succeeded = ProvisioningState_STATUS("Succeeded")
-	ProvisioningState_STATUS_Updating  = ProvisioningState_STATUS("Updating")
-)
-
-// Mapping from string to ProvisioningState_STATUS
-var provisioningState_STATUS_Values = map[string]ProvisioningState_STATUS{
-	"canceled":  ProvisioningState_STATUS_Canceled,
-	"creating":  ProvisioningState_STATUS_Creating,
-	"deleting":  ProvisioningState_STATUS_Deleting,
-	"failed":    ProvisioningState_STATUS_Failed,
-	"succeeded": ProvisioningState_STATUS_Succeeded,
-	"updating":  ProvisioningState_STATUS_Updating,
 }
 
 // IpamPool prefix allocation reference.

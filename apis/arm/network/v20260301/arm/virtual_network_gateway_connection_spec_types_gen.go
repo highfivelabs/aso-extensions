@@ -204,12 +204,6 @@ type RoutingConfiguration struct {
 	VnetRoutes *VnetRoute `json:"vnetRoutes,omitempty"`
 }
 
-// Reference to another subresource.
-type SubResource struct {
-	// Id: Resource ID.
-	Id *string `json:"id,omitempty"`
-}
-
 // An traffic selector policy for a virtual network gateway connection.
 type TrafficSelectorPolicy struct {
 	// LocalAddressRanges: A collection of local address spaces in CIDR format.
