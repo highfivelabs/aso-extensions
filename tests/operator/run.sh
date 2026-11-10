@@ -823,5 +823,54 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
   || fail "the fake resource manager saw no delete of the tags"
 pass "the tags are deleted in Resource Manager"
 
+step "keys Azure makes: not written by default, written with config/secret-writer"
+# docs/plan.md §8, question 9. The default install may read Secrets and not
+# create them (checked above), so exporting a key Azure makes fails; the
+# opt-in component grants create, update and delete, and the export works.
+kubectl apply -f - <<EOF
+apiVersion: network.azure.hfl.dev/v20260301
+kind: ExpressRouteCircuit
+metadata: {name: keys, namespace: team-a}
+spec:
+  owner: {name: rg}
+  location: westus
+  sku: {name: Standard_MeteredData, tier: Standard, family: MeteredData}
+  serviceProviderProperties: {serviceProviderName: Equinix, peeringLocation: Silicon Valley, bandwidthInMbps: 50}
+  operatorSpec: {secrets: {serviceKey: {name: er-keys, key: serviceKey}}}
+EOF
+wait_for 120 "the service key's export refused without the Secret writer" bash -c "[[ \"\$(kubectl get expressroutecircuits.network.azure.hfl.dev -n team-a keys -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *forbidden* ]]"
+kubectl -n team-a get secret er-keys >/dev/null 2>&1 && fail "the service key's Secret exists without the Secret writer"
+pass "keys not written by default: the circuit's service key export is refused (forbidden) on its Ready condition, no Secret"
+kubectl kustomize tests/operator/overlay-secret-writer > "${OUT}/install-secret-writer.yaml"
+GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install-secret-writer.yaml"
+for verb in create update delete; do
+  can "${verb}" secrets -n team-a || fail "may not ${verb} secrets with config/secret-writer"
+done
+! can patch secrets -n team-a || fail "may patch secrets: config/secret-writer grants create, update and delete only"
+pass "config/secret-writer on: the manager may create, update and delete Secrets"
+kubectl apply -f - <<EOF
+apiVersion: network.azure.hfl.dev/v20260301
+kind: ExpressRouteCircuitsAuthorization
+metadata: {name: keys-auth, namespace: team-a}
+spec:
+  owner: {name: keys}
+  operatorSpec: {secrets: {authorizationKey: {name: er-keys-auth, key: key}}}
+EOF
+wait_for 180 "team-a's circuit Ready once the Secret writer is on" ready expressroutecircuits.network.azure.hfl.dev team-a keys
+wait_for 120 "team-a's exporting authorization Ready" ready expressroutecircuitsauthorizations.network.azure.hfl.dev team-a keys-auth
+uuid='^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+service_key="$(kubectl -n team-a get secret er-keys -o jsonpath='{.data.serviceKey}' | base64 -d)"
+auth_key="$(kubectl -n team-a get secret er-keys-auth -o jsonpath='{.data.key}' | base64 -d)"
+[[ "${service_key}" =~ ${uuid} ]] || fail "the service key's Secret holds '${service_key}', not the key the fake made"
+[[ "${auth_key}" =~ ${uuid} && "${auth_key}" != "${service_key}" ]] || fail "the authorization key's Secret holds '${auth_key}'"
+statuses="$(kubectl -n team-a get expressroutecircuits.network.azure.hfl.dev keys -o jsonpath='{.status}'; kubectl -n team-a get expressroutecircuitsauthorizations.network.azure.hfl.dev keys-auth -o jsonpath='{.status}')"
+[[ "${statuses}" != *"${service_key}"* && "${statuses}" != *"${auth_key}"* ]] || fail "a key Azure made is in a status"
+pass "keys exported with config/secret-writer: a circuit's service key and an authorization's key in their Secrets, not in the status"
+kubectl -n team-a delete expressroutecircuitsauthorizations.network.azure.hfl.dev keys-auth --timeout=120s
+kubectl -n team-a delete expressroutecircuits.network.azure.hfl.dev keys --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteCircuits/keys 200" \
+  || fail "the fake resource manager saw no delete of the exporting circuit"
+pass "the exporting circuit and authorization are deleted in Resource Manager"
+
 echo
 echo "all checks passed"

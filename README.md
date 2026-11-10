@@ -241,6 +241,44 @@ ko apply -k config/default    # CRDs, the manager (azureserviceoperator-system)
 
 There is no webhook: validation is CEL rules in the CRDs.
 
+### Writing Secrets
+
+Some kinds export keys Azure makes (an ExpressRoute circuit's service key, a
+circuit or port authorization's key) to the Secret their
+`operatorSpec.secrets` names, as ASO's own kinds do. The default install
+lets the manager read Secrets but not write them, so such an export fails
+with `forbidden` on the kind's Ready condition. To turn the export on, add
+the `config/secret-writer` component to your overlay of the install:
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- github.com/highfivelabs/aso-extensions/config/default
+components:
+- github.com/highfivelabs/aso-extensions/config/secret-writer
+```
+
+It grants the manager `create`, `update` and `delete` on Secrets in every
+namespace (a ClusterRole and a ClusterRoleBinding, both
+`aso-extensions-secret-writer`). If ASO's `AZURE_TARGET_NAMESPACES` limits
+the namespaces it manages, drop the ClusterRoleBinding (a `$patch: delete`
+in your overlay) and bind the same ClusterRole with a RoleBinding in each of
+those namespaces:
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: aso-extensions-secret-writer, namespace: team-a}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: aso-extensions-secret-writer}
+subjects:
+- {kind: ServiceAccount, name: aso-extensions-manager, namespace: azureserviceoperator-system}
+```
+
+`config/share-aso-identity` needs no component: ASO's account writes Secrets
+already. Whether the default should grant this is open (`docs/plan.md` §8,
+question 9).
+
 ## Developing it
 
 The commands are [Task](https://taskfile.dev) tasks (`brew install go-task`;
@@ -272,6 +310,7 @@ server (`docs/fake-cloud.md`).
 | `config/crds/` | generated CRDs (`hack/generate.sh`) |
 | `config/default/`, `config/install/`, `config/rbac/`, `config/manager/` | the install |
 | `config/share-aso-identity/` | the install as ASO's own service account (opt-in) |
+| `config/secret-writer/` | a component that lets the manager write the Secrets kinds export keys to (opt-in) |
 | `config/fake-cloud/`, `config/test/` | tests only: the fake cloud on kind, ASO's owner CRDs |
 | `pkg/reconcilers/<service>/` | each kind's reconciler |
 | `pkg/keyvault/` | the Key Vault data plane client (secrets and certificates) |

@@ -1,0 +1,8 @@
+# Tests only: the test install (../overlay) with the opt-in Secret writer
+# (config/secret-writer) turned on, as a user turns it on.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../overlay
+components:
+- ../../../config/secret-writer

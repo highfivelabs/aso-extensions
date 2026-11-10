@@ -1,0 +1,26 @@
+# Opt-in: let the manager write the Secrets a kind's operatorSpec.secrets
+# names, for keys Azure makes (an ExpressRoute circuit's service key, a
+# circuit or port authorization's key, and other $azureGeneratedSecrets).
+# Without it the default install may read Secrets and not create them, and
+# such an export fails with "forbidden" on the kind's Ready condition.
+# docs/plan.md §8, question 9 (recommended, awaiting the builder).
+#
+# A component, added to an overlay of the install:
+#
+#   apiVersion: kustomize.config.k8s.io/v1beta1
+#   kind: Kustomization
+#   resources:
+#   - github.com/highfivelabs/aso-extensions/config/default
+#   components:
+#   - github.com/highfivelabs/aso-extensions/config/secret-writer
+#
+# It grants create, update and delete on Secrets in every namespace (the
+# namespaces the manager watches unless AZURE_TARGET_NAMESPACES narrows them;
+# then replace the ClusterRoleBinding with a RoleBinding to the same
+# ClusterRole in each of those namespaces, README.md "Writing Secrets").
+# Not needed with config/share-aso-identity, whose account (ASO's) may write
+# Secrets already.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+- secret-writer.yaml
