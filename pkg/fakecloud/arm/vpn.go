@@ -24,6 +24,10 @@ import (
 //     will no longer return sharedKey in VirtualNetworkGatewayConnection
 //     Create/Update/Get/List/UpdateTags APIs response"); SharedKey reads it
 //     for tests, as Azure's GetSharedKey does;
+//   - an ExpressRoute connection to a circuit in another subscription gives
+//     one of the circuit's authorization keys (authorizationKey; 400 when
+//     missing, not the circuit's or in use by another), which is then in
+//     use (expressroute.go);
 //   - a local network gateway gives its gatewayIpAddress or its fqdn (400
 //     when neither).
 //
@@ -31,8 +35,8 @@ import (
 // whether the gateway's SKU and VPN type allow the connection's settings
 // (policy-based traffic selectors, custom IPsec policies, BGP), address
 // spaces overlapping, the gateway and the connection being in one region,
-// ExpressRoute authorization keys, the long provisioning of a real gateway
-// connection, and the error codes (this fake's own).
+// the long provisioning of a real gateway connection, and the error codes
+// (this fake's own).
 var (
 	connectionType   = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/connections/[^/]+$`)
 	localGatewayType = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/localnetworkgateways/[^/]+$`)
@@ -70,6 +74,11 @@ func (a *ARM) checkVPN(id string, body map[string]any) (status int, code, messag
 		}
 		if !a.exists(target) {
 			return http.StatusNotFound, "ResourceNotFound", "The resource " + target + " (" + name + ") was not found."
+		}
+	}
+	if peer := refID(props, "peer"); kind == "ExpressRoute" && (!sameSubscription(id, peer) || props["authorizationKey"] != nil) {
+		if a.redeem(peer, props["authorizationKey"], id, "connectionResourceUri") == "" {
+			return http.StatusBadRequest, "ExpressRouteAuthorizationKeyInvalid", "An ExpressRoute connection to the circuit " + peer + " in another subscription needs one of the circuit's authorization keys."
 		}
 	}
 	if k, ok := props["sharedKey"].(string); ok {
