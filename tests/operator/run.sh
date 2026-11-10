@@ -1098,43 +1098,6 @@ pass "team-b RoleEligibilityScheduleRequest refused: $(message roleeligibilitysc
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 
-step "team-a: GitOps on an Arc-enabled cluster and its private link scope (kubernetesconfiguration.azure.hfl.dev)"
-kc_arc="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Kubernetes/connectedClusters/team-a-arc"
-kc_rg="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.KubernetesConfiguration"
-kubectl apply -f - <<EOF
-apiVersion: kubernetesconfiguration.azure.hfl.dev/v20230501
-kind: SourceControlConfiguration
-metadata: {name: cluster-config, namespace: team-a}
-spec:
-  owner: {armId: ${kc_arc}}
-  repositoryUrl: https://github.com/contoso/cluster-config
-  operatorType: Flux
-  operatorScope: cluster
-  operatorNamespace: flux
-  operatorInstanceName: cluster-config
----
-apiVersion: kubernetesconfiguration.azure.hfl.dev/v20241101preview
-kind: PrivateLinkScope
-metadata: {name: arc, namespace: team-a}
-spec:
-  owner: {name: rg}
-  location: westus
-  properties:
-    clusterResourceReference: {armId: ${kc_arc}}
-    publicNetworkAccess: Disabled
-EOF
-wait_for 120 "team-a's SourceControlConfiguration Ready" ready sourcecontrolconfigurations.kubernetesconfiguration.azure.hfl.dev team-a cluster-config
-logged fakearm "request PUT ${kc_arc}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/cluster-config 201" || fail "the fake resource manager saw no source control configuration made on the cluster"
-pass "team-a SourceControlConfiguration Ready"
-wait_for 120 "team-a's PrivateLinkScope Ready" ready privatelinkscopes.kubernetesconfiguration.azure.hfl.dev team-a arc
-logged fakearm "request PUT ${kc_rg}/privateLinkScopes/arc 201" || fail "the fake resource manager saw no Kubernetes configuration private link scope made"
-pass "team-a Kubernetes configuration PrivateLinkScope Ready"
-kubectl -n team-a delete sourcecontrolconfigurations.kubernetesconfiguration.azure.hfl.dev cluster-config --timeout=120s
-kubectl -n team-a delete privatelinkscopes.kubernetesconfiguration.azure.hfl.dev arc --timeout=120s
-logged fakearm "request DELETE ${kc_arc}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/cluster-config 200" || fail "the fake resource manager saw no delete of the source control configuration"
-logged fakearm "request DELETE ${kc_rg}/privateLinkScopes/arc 200" || fail "the fake resource manager saw no delete of the private link scope"
-pass "the source control configuration and the private link scope are deleted in Resource Manager"
-
 step "deleting team-a's objects"
 kubectl -n team-a delete users.dbforpostgresql.azure.hfl.dev app-identity --timeout=60s
 kubectl -n team-a delete vaultsecrets.keyvault.azure.hfl.dev app-url --timeout=60s
@@ -1274,6 +1237,43 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.CostManagement/exports/daily-costs 200" \
   || fail "the fake resource manager saw no delete of the cost export"
 pass "the budget and the cost export are deleted in Resource Manager"
+
+step "team-a: GitOps on an Arc-enabled cluster and its private link scope (kubernetesconfiguration.azure.hfl.dev)"
+kc_arc="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Kubernetes/connectedClusters/team-a-arc"
+kc_rg="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.KubernetesConfiguration"
+kubectl apply -f - <<EOF
+apiVersion: kubernetesconfiguration.azure.hfl.dev/v20230501
+kind: SourceControlConfiguration
+metadata: {name: cluster-config, namespace: team-a}
+spec:
+  owner: {armId: ${kc_arc}}
+  repositoryUrl: https://github.com/contoso/cluster-config
+  operatorType: Flux
+  operatorScope: cluster
+  operatorNamespace: flux
+  operatorInstanceName: cluster-config
+---
+apiVersion: kubernetesconfiguration.azure.hfl.dev/v20241101preview
+kind: PrivateLinkScope
+metadata: {name: arc, namespace: team-a}
+spec:
+  owner: {name: rg}
+  location: westus
+  properties:
+    clusterResourceReference: {armId: ${kc_arc}}
+    publicNetworkAccess: Disabled
+EOF
+wait_for 120 "team-a's SourceControlConfiguration Ready" ready sourcecontrolconfigurations.kubernetesconfiguration.azure.hfl.dev team-a cluster-config
+logged fakearm "request PUT ${kc_arc}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/cluster-config 201" || fail "the fake resource manager saw no source control configuration made on the cluster"
+pass "team-a SourceControlConfiguration Ready"
+wait_for 120 "team-a's PrivateLinkScope Ready" ready privatelinkscopes.kubernetesconfiguration.azure.hfl.dev team-a arc
+logged fakearm "request PUT ${kc_rg}/privateLinkScopes/arc 201" || fail "the fake resource manager saw no Kubernetes configuration private link scope made"
+pass "team-a Kubernetes configuration PrivateLinkScope Ready"
+kubectl -n team-a delete sourcecontrolconfigurations.kubernetesconfiguration.azure.hfl.dev cluster-config --timeout=120s
+kubectl -n team-a delete privatelinkscopes.kubernetesconfiguration.azure.hfl.dev arc --timeout=120s
+logged fakearm "request DELETE ${kc_arc}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/cluster-config 200" || fail "the fake resource manager saw no delete of the source control configuration"
+logged fakearm "request DELETE ${kc_rg}/privateLinkScopes/arc 200" || fail "the fake resource manager saw no delete of the private link scope"
+pass "the source control configuration and the private link scope are deleted in Resource Manager"
 kubectl -n team-a delete roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader --timeout=120s
 if logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/${pim_name}"; then
   fail "the eligibility request was sent a DELETE, though it is detached (Azure refuses one)"
