@@ -438,7 +438,7 @@ That is a Spot VM, where both checks run (the operator e2e too, since
   tools` (`--prep`) fetches it and sets up envtest. Pass each task as its own
   `--step` (a wrapper that ends in `echo` hides the failure: one run "passed"
   in 0 s having run nothing). Artifacts are not copied back: `gsutil cp
-  gs://hfl-dev-514205-offload/runs/<id>/offload-artifacts/...`. `task check`,
+  gs://our-chassis-514316-r0-offload/runs/<id>/offload-artifacts/...`. `task check`,
   `task coverage` and, since 2026-11-09, `task operator-e2e` run there (16
   CPUs, 62 GB): the image once had Docker 29's containerd image store, which
   could not `kind load` `postgres:17` (`ctr ... content digest ... not
