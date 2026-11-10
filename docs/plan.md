@@ -459,6 +459,50 @@ the same object; once recorded it moves with the object.
   privileges the same way. `databasePrivileges` on a database the user
   owns are not managed: an owner holds them all.
 
+### The Azure SQL User
+
+`sql.azure.hfl.dev/v1` `User`: ASO's Azure SQL `User` (`sql.azure.com`,
+`localUser` only at the pin) with ASO pull request #5104's `aadUser`,
+copied read-only from its head (`1219643c`, 2026-11-10), as the PIM kinds
+were copied from #5638. The builder's answer to open question 5: "copy the
+ASO PR #5104. fix it up and ship it."
+
+- **What #5104 adds.** `spec.aadUser` (`alias`, `serverAdminUsername`)
+  beside `localUser`, exactly one of them; the `aadUser` connector, which
+  signs in to the database with an access token for
+  `https://database.windows.net/` from the credential ASO would use for
+  the object, runs `CREATE USER [name] FROM EXTERNAL PROVIDER` when the
+  user is missing, sets the roles as for a local user, and drops the user
+  on delete. The user name is the alias when given, else `azureName`.
+- **Fixed up here.** (1) The webhook's checks (exactly one of `localUser`
+  and `aadUser`; neither the user type nor `aadUser.alias` changes; nor
+  `azureName`) are CEL rules on the CRD, as the PostgreSQL `User`'s are.
+  (2) `azureName` falls back to `metadata.name` in code (#5104 relies on
+  ASO's defaulting webhook, so without one its user name was empty).
+  (3) `ConnectToDBUsingAAD` (ASO's, at the pin) built a DSN that left
+  encryption at go-mssqldb's default; here it uses the same configuration
+  as a password sign-in (encryption required, the server's certificate
+  checked against its host name) with go-mssqldb's security-token
+  connector. (4) `DropUser` is `DROP USER IF EXISTS`, so a user removed by
+  hand no longer holds its object's deletion forever (this changes the
+  password user too). (5) `aadUser.serverAdminUsername` is optional: #5104
+  requires it and never reads it (a token names who signs in); it is kept
+  so an object written for #5104 applies here unchanged.
+- **Who signs in.** The identity ASO resolves for the object (the
+  namespace's `aso-credential`, strict workload identity by default) must
+  be the server's Microsoft Entra administrator or a member of its
+  administrator group: only an Entra-authenticated connection may create
+  Entra users (Azure's error 33159).
+- **Owner.** ASO's `sql.azure.com` `ServersDatabase` (its hub,
+  `v20250101`), read through the cache with its `Server` (for
+  `status.fullyQualifiedDomainName`) and resource group, so all three are in
+  `controllers.OwnerTypes()` and the manager may list and watch them.
+- **Not built.** `WITH OBJECT_ID` (Azure's way to create a user for a
+  principal whose display name is not unique); database-level permissions
+  beyond the fixed roles; contained users for Entra groups by object ID.
+  Upstream review of #5104 may change its shape; the kind moves to ASO's
+  group when a release carries it (section 4).
+
 ### VaultSecret
 
 - The value comes from a key of a Kubernetes Secret in the namespace; a
@@ -547,7 +591,7 @@ rechecked 2026-11-08, see below):
 
 | # | What | State | Move |
 | --- | --- | --- | --- |
-| a1 | Azure SQL Entra users (`sql.azure.com` `User` with `aadUser`) | PR [#5104](https://github.com/Azure/azure-service-operator/pull/5104), open, last updated 2026-09-28 | next to build here, copying the PR, if a test without a real Azure SQL is acceptable: `CREATE USER … FROM EXTERNAL PROVIDER` runs only on Azure SQL, so no local server can run it (open question 5; answered 2026-11-10: copy it and ship it) |
+| a1 | Azure SQL Entra users (`sql.azure.com` `User` with `aadUser`) | PR [#5104](https://github.com/Azure/azure-service-operator/pull/5104), open, last updated 2026-09-28 (rechecked 2026-11-10, read-only: head `1219643c`, review required; not in `main` or a release, v2.22.0 still the latest) | **built** (open question 5, answered 2026-11-10: copy it and ship it): `sql.azure.hfl.dev/v1` `User`, ASO's Azure SQL `User` at the pin with #5104's `aadUser` copied in and fixed up (section 2, "The Azure SQL User"); proven on a fake Azure SQL server that speaks TDS (`pkg/fakecloud/azuresql`), since no local server runs `FROM EXTERNAL PROVIDER` |
 | a2 | Defender for Storage settings | PR #5783, open | ARM, configuration upstream; no kind here |
 | a3 | Privileged Identity Management | PR #5638, open | not an application need |
 | a4 | Databricks | PR #5028, draft | not an application need |
@@ -761,7 +805,7 @@ Rerun it when a kind or a pin changes.
 
 ## 7. Proven, and not
 
-Proven by `task test` (envtest, 24 tests, and the generated kinds' own
+Proven by `task test` (envtest, 59 tests, and the generated kinds' own
 serialization and conversion tests):
 
 - a password user gets exactly its database privileges, changes revoke
@@ -773,6 +817,20 @@ serialization and conversion tests):
   azidentity's client-assertion credential;
 - another namespace's identity cannot sign in as that administrator, and
   the fake vault refuses it;
+- an Azure SQL Entra user (`sql.azure.hfl.dev` `User`, `aadUser`) is
+  created with `CREATE USER ... FROM EXTERNAL PROVIDER` on a connection
+  signed in with the namespace's `aso-workload` token as the server's Entra
+  administrator, by name and by alias, with roles that follow the spec;
+  a name Entra does not know is refused (33130); another namespace's
+  identity is refused at sign-in; the alias and the user type cannot
+  change; deleting drops the user; ASO's password user still works
+  (created, its password and roles set, it signs in with the password);
+  the fake itself is tested with go-mssqldb (`pkg/fakecloud/azuresql`),
+  including TLS with the server's certificate checked and a password
+  administrator refused when creating an Entra user (33159). Not proven:
+  Azure SQL itself (that Entra resolves the display name to the intended
+  principal, group membership of the administrator, Azure's own error
+  texts beyond those copied from its documentation);
 - a `VaultSecret` follows its Kubernetes Secret (new versions), patches
   attributes and tags, soft-deletes, recovers with `createOrRecover`,
   replaces with `purgeThenCreate`, reports `recover` with nothing to

@@ -2119,6 +2119,7 @@ Microsoft.Sql,Microsoft.Sql/servers/databases/sqlVulnerabilityAssessments/baseli
 Microsoft.Sql,Microsoft.Sql/servers/databases/syncGroups,18,,0,,0,18,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/syncGroups/syncMembers,10,,0,,0,10,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/transparentDataEncryption,2,sql.azure.com/ServersDatabasesTransparentDataEncryption,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/users,8,,0,sql.azure.hfl.dev/User,8,0,false,"outside-denominator; a database user, not an ARM resource; ASO's Azure SQL User with Entra users (ASO pull request #5104)"
 Microsoft.Sql,Microsoft.Sql/servers/databases/vulnerabilityAssessments,6,sql.azure.com/ServersDatabasesVulnerabilityAssessment,6,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/vulnerabilityAssessments/rules/baselines,1,,0,,0,1,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/workloadGroups,6,,0,,0,6,false,spec_api=2025-01-01

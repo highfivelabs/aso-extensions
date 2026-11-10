@@ -10,3 +10,5 @@ resources:
 - operationalinsights.azure.com_workspaces.yaml
 - containerregistry.azure.com_registries.yaml
 - compute.azure.com_virtualmachines.yaml
+- sql.azure.com_servers.yaml
+- sql.azure.com_serversdatabases.yaml

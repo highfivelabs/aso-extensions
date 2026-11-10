@@ -115,3 +115,6 @@ the network manager's connectivity, security admin and security user configurati
 team-a Cluster Ready
 team-a WorkspacesDataSource Ready
 the Log Analytics cluster and the data source are deleted in Resource Manager
+team-a Azure SQL User Ready
+team-b Azure SQL User refused
+the Azure SQL Entra user app-identity is dropped
