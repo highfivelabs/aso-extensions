@@ -343,8 +343,11 @@ Facts learned the hard way:
   `typeTransformers` `remove` keeps the key out of spec and `_STATUS`; a
   hand-written `KubernetesSecretExporter` reads it with a GET
   (`express_route_keys.go`) and writes the Secret. The default install's
-  manager may not create Secrets, so on kind the export would fail: open
-  question 9 in `docs/plan.md`. Keys the user gives are Secret references
+  manager may not create Secrets, so the export fails there (`forbidden` on
+  the Ready condition); the opt-in component `config/secret-writer` grants
+  `create`, `update` and `delete` on Secrets, and `tests/operator/run.sh`
+  shows both (open question 9 in `docs/plan.md`, recommended, awaiting the
+  builder). Keys the user gives are Secret references
   (`$importSecretMode: required`).
 - An extension that imports ASO's `api/<group>/customizations` builds in that
   group's API packages and their Azure SDK modules (`armnetwork` for
@@ -439,7 +442,10 @@ From `docs/plan.md` §8 and the pull requests; none blocks the queue.
 3. Open questions 1 to 5 and 7 of §8: licence (MIT vs Apache-2.0), offering b1
    and b2 upstream, relaxed workload identity as the default, reading Secrets
    cluster-wide, Azure SQL Entra users (a1), the `User` kind name.
-4. **Webhook-less validation**: generated kinds lack ASO's checks (reference
+4. **May the manager write Secrets** (§8 question 9): the opt-in
+   `config/secret-writer` is built (option b, recommended); whether the
+   default install should grant it (option a) is the builder's.
+5. **Webhook-less validation**: generated kinds lack ASO's checks (reference
    format, immutable `owner` and `azureName`). If wanted, add CEL rules by a
    generator patch; not done.
 
