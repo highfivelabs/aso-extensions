@@ -89,3 +89,10 @@ team-a VirtualHubsRoutingIntent Ready
 team-a VirtualHubsBgpConnection Ready
 team-a VirtualHubsIpConfiguration Ready
 the virtual WAN, its hub and the hub's children are deleted
+team-a VpnSite Ready
+team-a VpnGateway Ready
+team-a VpnGatewaysNatRule Ready
+team-a VpnGatewaysVpnConnection Ready
+team-a VpnServerConfiguration Ready
+team-a P2sVpnGateway Ready
+the VPN gateways, their connection and NAT rule, the VPN site and the server configuration are deleted
