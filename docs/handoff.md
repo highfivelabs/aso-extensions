@@ -6,7 +6,7 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, Privileged Identity Management, and budgets and cost exports (foundation rows 1 to 6 and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The next agent starts at row 7 (lock owners) of `docs/coverage/foundation.md`, then 8 (VPN connections and local gateways), 9 (ExpressRoute), 10 (Virtual WAN), 11 (network manager connections), Maintenance `ConfigurationAssignment` (h1 below: generate it with patch 0006); `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
+State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, Privileged Identity Management, budgets and cost exports, and lock owners (foundation rows 1 to 7 and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). Row 7 (lock owners: `owners[].applicationId` on `ManagementLock`) is built. The next agent starts at row 8 (VPN connections and local gateways) of `docs/coverage/foundation.md`, then 9 (ExpressRoute), 10 (Virtual WAN), 11 (network manager connections), Maintenance `ConfigurationAssignment` (h1 below: generate it with patch 0006); `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
 
 ## What this repository is
 
@@ -288,12 +288,15 @@ Facts learned the hard way:
   `properties.type`** (`BuiltInRole`), not `roleType`; ASO dereferences it
   without a nil check, so a fake that omits it panics the reconciler (no Ready
   condition at all; run envtest with `E2E_VERBOSE=1` to see the manager's log).
-- **A copied `third_party/` can be stale and still pass `hack/upstream.sh
-  --check`**, which compares the list of changed files, not their contents: a
-  copy of an older checkout lacked patch 0006's code (the same file is changed
-  by 0005) and the generator failed at random on policy attestations. In a new
-  clone run `hack/upstream.sh` (it resets and re-applies the series) rather
-  than copying another clone's `third_party/`.
+- **A copied `third_party/` was once stale and still passed `hack/upstream.sh
+  --check`**, which then compared the list of changed files, not their
+  contents: a copy of an older checkout lacked patch 0006's code (the same file
+  is changed by 0005) and the generator failed at random on policy
+  attestations. The check now compares content (the pin plus the patches,
+  built in a temporary index; `hack/test-upstream-check.sh` tests it), so a
+  stale copy fails `task check`. In a new clone run `hack/upstream.sh` (it
+  resets and re-applies the series); copying another clone's `third_party/`
+  first only saves the fetch.
 - **A directly recursive type stops the generator at stage 12 even when no
   exported resource uses it** (Cost Management's `QueryFilter` and
   `ReportConfigFilter`, used only by queries and views): ASO prunes the whole

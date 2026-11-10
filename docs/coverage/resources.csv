@@ -241,7 +241,7 @@ Microsoft.Authorization,Microsoft.Authorization/accessReviewHistoryDefinitions,2
 Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleDefinitions,24,,0,,0,24,false,spec_api=2021-12-01-preview; spec-preview-only
 Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleDefinitions/instances,4,,0,,0,4,false,spec_api=2021-12-01-preview; spec-preview-only
 Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleSettings,15,,0,,0,15,false,spec_api=2021-12-01-preview; spec-preview-only
-Microsoft.Authorization,Microsoft.Authorization/locks,3,,0,authorization.azure.hfl.dev/ManagementLock,2,1,false,spec_api=2020-05-01; ours_api=2020-05-01
+Microsoft.Authorization,Microsoft.Authorization/locks,3,,0,authorization.azure.hfl.dev/ManagementLock,3,0,false,spec_api=2020-05-01; ours_api=2020-05-01
 Microsoft.Authorization,Microsoft.Authorization/policyassignments,27,,0,authorization.azure.hfl.dev/PolicyAssignment,27,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.Authorization,Microsoft.Authorization/policydefinitions,22,,0,authorization.azure.hfl.dev/PolicyDefinition,21,1,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.Authorization,Microsoft.Authorization/policyDefinitions/versions,21,,0,,0,21,false,spec_api=2026-07-01

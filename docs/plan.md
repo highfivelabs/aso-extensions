@@ -481,11 +481,15 @@ the same object; once recorded it moves with the object.
   on every ASO API group: a generated ClusterRole,
   `config/rbac/aso-owner-reader.yaml`, lists ASO's groups at the pin
   (`entra.azure.com` aside).
-- `level` is `CanNotDelete` or `ReadOnly`, `notes` up to 512 characters;
-  the lock's name is `azureName` or the object's name. Changes are a PUT
+- `level` is `CanNotDelete` or `ReadOnly`, `notes` up to 512 characters,
+  `owners` a list of application IDs (Azure's `properties.owners`, a legacy
+  list kept with the lock that grants nothing; added 2026-11-09, foundation
+  row 7, so every attribute of the lock is covered; ASO issue #3756 is still
+  open with no pull request, rechecked that day); the lock's name is `azureName` or the object's name. Changes are a PUT
   when Azure's lock differs. Deleting the object deletes the lock, from
   the ARM ID recorded when it was claimed, so it works with the owner
-  gone; a lock or scope Azure no longer has is deleted already.
+  gone; a lock or scope Azure no longer has is deleted already. The status
+  reports level, notes and owners as Azure returns them.
 - The credential is the one ASO picks for the object; ASO's subscription
   check refuses a scope in another subscription than the credential's.
   Resource Manager's endpoint and audience are ASO's settings

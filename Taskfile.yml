@@ -97,6 +97,7 @@ tasks:
       - hack/check-no-fake-cloud.sh
       - hack/check-spdx.sh
       - hack/test-operator-e2e-guard.sh
+      - hack/test-upstream-check.sh
       - task: build
       - task: test
 

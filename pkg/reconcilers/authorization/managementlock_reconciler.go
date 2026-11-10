@@ -238,11 +238,14 @@ func (r *ManagementLockReconciler) CreateOrUpdate(
 	}
 
 	desired := armlocks.Properties{Level: l.Spec.Level, Notes: l.Spec.Notes}
+	for _, o := range l.Spec.Owners {
+		desired.Owners = append(desired.Owners, armlocks.Owner{ApplicationID: o.ApplicationId})
+	}
 	current, err := c.Get(ctx, o.armID, name)
 	if err != nil && !armlocks.IsNotFound(err) {
 		return ctrl.Result{}, eris.Wrapf(err, "reading lock %s on %s", name, o.armID)
 	}
-	if err != nil || current.Properties != desired {
+	if err != nil || !current.Properties.Equal(desired) {
 		log.V(0).Info("Setting the lock", "scope", o.armID, "level", desired.Level)
 		current, err = c.CreateOrUpdate(ctx, o.armID, name, desired)
 		if err != nil {
@@ -260,6 +263,10 @@ func writeStatus(l *authv1.ManagementLock, scope string, lock *armlocks.Lock) {
 	l.Status.Scope = scope
 	l.Status.Level = lock.Properties.Level
 	l.Status.Notes = lock.Properties.Notes
+	l.Status.Owners = nil
+	for _, o := range lock.Properties.Owners {
+		l.Status.Owners = append(l.Status.Owners, authv1.LockOwner{ApplicationId: o.ApplicationID})
+	}
 }
 
 // scopeAndName splits a lock's ARM ID into its scope and name.

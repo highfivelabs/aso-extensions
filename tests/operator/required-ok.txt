@@ -63,3 +63,4 @@ team-a Budget Ready
 team-a Export Ready
 team-b Budget refused
 the budget and the cost export are deleted
+team-a ManagementLock owners

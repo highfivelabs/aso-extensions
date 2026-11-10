@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"reflect"
 	"strings"
 	"testing"
 
@@ -94,7 +95,7 @@ func expectLock(t *testing.T, id string, want arm.LockProperties) {
 		if !ok {
 			return fmt.Errorf("no lock; locks: %v", armFake.Locks())
 		}
-		if got != want {
+		if !reflect.DeepEqual(got, want) {
 			return fmt.Errorf("got %+v, want %+v", got, want)
 		}
 		return nil
@@ -135,9 +136,10 @@ func TestManagementLockOnResourceGroup(t *testing.T) {
 	l := &authv1.ManagementLock{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "keep-rg"},
 		Spec: authv1.ManagementLockSpec{
-			Owner: &genruntime.ArbitraryOwnerReference{Group: "resources.azure.com", Kind: "ResourceGroup", Name: "rg"},
-			Level: "CanNotDelete",
-			Notes: "production data",
+			Owner:  &genruntime.ArbitraryOwnerReference{Group: "resources.azure.com", Kind: "ResourceGroup", Name: "rg"},
+			Level:  "CanNotDelete",
+			Notes:  "production data",
+			Owners: []authv1.LockOwner{{ApplicationId: "00000000-0000-0000-0000-00000000a110"}},
 		},
 	}
 	if err := k8s.Create(ctx, l); err != nil {
@@ -145,7 +147,10 @@ func TestManagementLockOnResourceGroup(t *testing.T) {
 	}
 	eventually(t, timeout, "ManagementLock Ready", ready(l))
 	lockID := rgID + "/providers/Microsoft.Authorization/locks/keep-rg"
-	expectLock(t, lockID, arm.LockProperties{Level: "CanNotDelete", Notes: "production data"})
+	expectLock(t, lockID, arm.LockProperties{Level: "CanNotDelete", Notes: "production data", Owners: []arm.LockOwner{{ApplicationID: "00000000-0000-0000-0000-00000000a110"}}})
+	if len(l.Status.Owners) != 1 || l.Status.Owners[0].ApplicationId != "00000000-0000-0000-0000-00000000a110" {
+		t.Fatalf("status.owners: %+v", l.Status.Owners)
+	}
 	if l.Status.Id != lockID || l.Status.Scope != rgID || l.Status.Level != "CanNotDelete" || l.Annotations[genruntime.ResourceIDAnnotation] != lockID {
 		t.Fatalf("status %+v, resource-id %q", l.Status, l.Annotations[genruntime.ResourceIDAnnotation])
 	}
@@ -169,7 +174,11 @@ func TestManagementLockOnResourceGroup(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	update(func(l *authv1.ManagementLock) { l.Spec.Level = "ReadOnly"; l.Spec.Notes = "frozen" })
+	update(func(l *authv1.ManagementLock) {
+		l.Spec.Level = "ReadOnly"
+		l.Spec.Notes = "frozen"
+		l.Spec.Owners = nil
+	})
 	eventually(t, timeout, "ManagementLock Ready as ReadOnly", ready(l))
 	expectLock(t, lockID, arm.LockProperties{Level: "ReadOnly", Notes: "frozen"})
 	expectARM(t, ns, http.MethodPut, accountID, http.StatusConflict, "ScopeLocked")

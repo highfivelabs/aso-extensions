@@ -49,8 +49,14 @@ const locksType = "Microsoft.Authorization/locks"
 
 // LockProperties are a lock's properties.
 type LockProperties struct {
-	Level string `json:"level"`
-	Notes string `json:"notes,omitempty"`
+	Level  string      `json:"level"`
+	Notes  string      `json:"notes,omitempty"`
+	Owners []LockOwner `json:"owners,omitempty"`
+}
+
+// LockOwner is a lock owner, kept as sent; it changes nothing.
+type LockOwner struct {
+	ApplicationID string `json:"applicationId,omitempty"`
 }
 
 type lock struct {

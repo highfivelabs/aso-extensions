@@ -12,6 +12,7 @@ kinds:
     map:
       level: properties.level
       notes: properties.notes
+      owners[].applicationId: properties.owners[].applicationId
   - crd: config/crds/dbforpostgresql.azure.hfl.dev_users.yaml
     outside: Microsoft.DBforPostgreSQL/flexibleServers/users
     note: "a database role, not an ARM resource; extends ASO's PostgreSQL User"
