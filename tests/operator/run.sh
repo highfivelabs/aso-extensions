@@ -175,6 +175,8 @@ can list sites.web.azure.com -n team-a || fail "cannot read the owner of the gen
 can list workspaces.operationalinsights.azure.com -n team-a || fail "cannot read the owner of the generated Log Analytics kinds"
 can list registries.containerregistry.azure.com -n team-a || fail "cannot read the owner of the generated container registry kinds"
 can list virtualmachines.compute.azure.com -n team-a || fail "cannot read the owner of the generated compute kinds"
+can list managedclusters.containerservice.azure.com -n team-a || fail "cannot read the owner of the generated AKS kinds"
+can list fleets.containerservice.azure.com -n team-a || fail "cannot read the owner of the generated fleet kinds"
 can list serversdatabases.sql.azure.com -n team-a || fail "cannot read the owner of the Azure SQL User"
 ! can update servers.sql.azure.com -n team-a || fail "may change ASO's SQL servers"
 ! can list storageaccounts.storage.azure.com -n team-a || fail "may list ASO resources it only needs to get"
