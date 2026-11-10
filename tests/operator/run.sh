@@ -127,7 +127,7 @@ kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f 
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
@@ -426,6 +426,33 @@ spec:
   complianceState: Compliant
   comments: tagged by the team's pipeline
 ---
+apiVersion: consumption.azure.hfl.dev/v20260601
+kind: Budget
+metadata: {name: monthly, namespace: $1}
+spec:
+  owner: {group: resources.azure.com, kind: ResourceGroup, name: rg}
+  category: Cost
+  amount: 500
+  timeGrain: Monthly
+  timePeriod: {startDate: "2026-11-01T00:00:00Z"}
+  notifications:
+    actual80: {enabled: true, operator: GreaterThan, threshold: 80, contactEmails: [$1@example.com]}
+    forecast100: {enabled: true, operator: GreaterThan, threshold: 100, thresholdType: Forecasted, contactEmails: [$1@example.com], contactRoles: [Owner]}
+---
+apiVersion: costmanagement.azure.hfl.dev/v20260601
+kind: Export
+metadata: {name: daily-costs, namespace: $1}
+spec:
+  owner: {group: resources.azure.com, kind: ResourceGroup, name: rg}
+  format: Csv
+  deliveryInfo:
+    destination:
+      type: AzureBlob
+      resourceReference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Storage/storageAccounts/${1//-/}costs}
+      container: exports
+  definition: {type: ActualCost, timeframe: MonthToDate, dataSet: {granularity: Daily}}
+  schedule: {status: Active, recurrence: Daily, recurrencePeriod: {from: "2026-12-01T00:00:00Z"}}
+---
 apiVersion: authorization.azure.hfl.dev/v20201001
 kind: RoleEligibilityScheduleRequest
 metadata:
@@ -526,6 +553,14 @@ wait_for 90 "team-a's PolicyAttestation Ready" ready policyattestations.policyin
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.PolicyInsights/attestations/require-team-tag 201" \
   || fail "the fake resource manager saw no attestation on team-a's resource group"
 pass "team-a PolicyAttestation Ready: at an ASO ResourceGroup, naming the assignment by ARM ID"
+wait_for 90 "team-a's Budget Ready" ready budgets.consumption.azure.hfl.dev team-a monthly
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Consumption/budgets/monthly 201" \
+  || fail "the fake resource manager saw no budget on team-a's resource group"
+pass "team-a Budget Ready: at an ASO ResourceGroup, an extension resource, generated"
+wait_for 90 "team-a's Export Ready" ready exports.costmanagement.azure.hfl.dev team-a daily-costs
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.CostManagement/exports/daily-costs 201" \
+  || fail "the fake resource manager saw no cost export on team-a's resource group"
+pass "team-a Export Ready: at an ASO ResourceGroup, to a storage account by ARM ID, generated"
 wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
 pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
 [[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
@@ -576,6 +611,8 @@ wait_for 90 "team-b's PolicyDefinition refused" bash -c "[[ \"\$(kubectl get pol
 pass "team-b PolicyDefinition refused: $(message policydefinitions.authorization.azure.hfl.dev team-b require-team-tag | cut -c1-120)..."
 wait_for 90 "team-b's PolicyAttestation refused" bash -c "[[ \"\$(kubectl get policyattestations.policyinsights.azure.hfl.dev -n team-b require-team-tag -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
 pass "team-b PolicyAttestation refused: $(message policyattestations.policyinsights.azure.hfl.dev team-b require-team-tag | cut -c1-120)..."
+wait_for 90 "team-b's Budget refused" bash -c "[[ \"\$(kubectl get budgets.consumption.azure.hfl.dev -n team-b monthly -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
+pass "team-b Budget refused: $(message budgets.consumption.azure.hfl.dev team-b monthly | cut -c1-120)..."
 wait_for 90 "team-b's RoleEligibilityScheduleRequest refused" bash -c "[[ \"\$(kubectl get roleeligibilityschedulerequests.authorization.azure.hfl.dev -n team-b eligible-reader -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
 pass "team-b RoleEligibilityScheduleRequest refused: $(message roleeligibilityschedulerequests.authorization.azure.hfl.dev team-b eligible-reader | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
@@ -643,6 +680,13 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.PolicyInsights/attestations/require-team-tag 200" \
   || fail "the fake resource manager saw no delete of the attestation"
 pass "the policy remediation and attestation are deleted in Resource Manager"
+kubectl -n team-a delete budgets.consumption.azure.hfl.dev monthly --timeout=120s
+kubectl -n team-a delete exports.costmanagement.azure.hfl.dev daily-costs --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Consumption/budgets/monthly 200" \
+  || fail "the fake resource manager saw no delete of the budget"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.CostManagement/exports/daily-costs 200" \
+  || fail "the fake resource manager saw no delete of the cost export"
+pass "the budget and the cost export are deleted in Resource Manager"
 kubectl -n team-a delete roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader --timeout=120s
 if logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/${pim_name}"; then
   fail "the eligibility request was sent a DELETE, though it is detached (Azure refuses one)"

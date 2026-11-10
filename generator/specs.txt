@@ -15,3 +15,5 @@ specification/management
 specification/resources
 specification/policyinsights
 specification/authorization
+specification/consumption
+specification/cost-management

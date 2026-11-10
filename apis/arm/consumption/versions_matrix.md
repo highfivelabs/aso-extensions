@@ -1,0 +1,35 @@
+| Type Definitions in package "consumption" | v20260601 |
+|-------------------------------------------|-----------|
+| APIVersion                                | v20260601 |
+| Budget                                    | v20260601 |
+| BudgetComparisonExpression                | v20260601 |
+| BudgetComparisonExpression_STATUS         | v20260601 |
+| BudgetFilter                              | v20260601 |
+| BudgetFilterProperties                    | v20260601 |
+| BudgetFilterProperties_STATUS             | v20260601 |
+| BudgetFilter_STATUS                       | v20260601 |
+| BudgetOperatorType                        | v20260601 |
+| BudgetOperatorType_STATUS                 | v20260601 |
+| BudgetProperties                          | v20260601 |
+| BudgetProperties_STATUS                   | v20260601 |
+| BudgetTimePeriod                          | v20260601 |
+| BudgetTimePeriod_STATUS                   | v20260601 |
+| Budget_STATUS                             | v20260601 |
+| Budget_Spec                               | v20260601 |
+| CategoryType                              | v20260601 |
+| CategoryType_STATUS                       | v20260601 |
+| CultureCode                               | v20260601 |
+| CultureCode_STATUS                        | v20260601 |
+| CurrentSpend_STATUS                       | v20260601 |
+| ForecastSpend_STATUS                      | v20260601 |
+| Notification                              | v20260601 |
+| Notification_STATUS                       | v20260601 |
+| Notification_ThresholdType                | v20260601 |
+| Notification_ThresholdType_STATUS         | v20260601 |
+| OperatorType                              | v20260601 |
+| OperatorType_STATUS                       | v20260601 |
+| SystemData_CreatedByType_STATUS           | v20260601 |
+| SystemData_LastModifiedByType_STATUS      | v20260601 |
+| SystemData_STATUS                         | v20260601 |
+| TimeGrainType                             | v20260601 |
+| TimeGrainType_STATUS                      | v20260601 |
