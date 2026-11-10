@@ -2425,7 +2425,7 @@ VpnServerConfiguration: Resource
 │   └── VpnProtocols: Enum (2 values)[]
 │       ├── "IkeV2"
 │       └── "OpenVPN"
-└── Status: Object (22 properties)
+└── Status: Object (21 properties)
     ├── AadAuthenticationParameters: *Object (3 properties)
     │   ├── AadAudience: *string
     │   ├── AadIssuer: *string
@@ -2458,8 +2458,6 @@ VpnServerConfiguration: Resource
     ├── Id: *string
     ├── Location: *string
     ├── Name: *string
-    ├── P2SVpnGateways: Object (1 property)[]
-    │   └── Id: *string
     ├── PropertiesEtag: *string
     ├── PropertiesName: *string
     ├── ProvisioningState: *string

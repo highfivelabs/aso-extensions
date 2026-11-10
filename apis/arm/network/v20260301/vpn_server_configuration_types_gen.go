@@ -1281,9 +1281,6 @@ type VpnServerConfiguration_STATUS struct {
 	// Name: Resource name.
 	Name *string `json:"name,omitempty"`
 
-	// P2SVpnGateways: List of references to P2SVpnGateways.
-	P2SVpnGateways []P2SVpnGateway_STATUS `json:"p2SVpnGateways,omitempty"`
-
 	// PropertiesEtag: A unique read-only string that changes whenever the resource is updated.
 	PropertiesEtag *string `json:"properties_etag,omitempty"`
 
@@ -1444,19 +1441,6 @@ func (configuration *VpnServerConfiguration_STATUS) PopulateFromARM(owner genrun
 	if typedInput.Name != nil {
 		name := *typedInput.Name
 		configuration.Name = &name
-	}
-
-	// Set property "P2SVpnGateways":
-	// copying flattened property:
-	if typedInput.Properties != nil {
-		for _, item := range typedInput.Properties.P2SVpnGateways {
-			var item1 P2SVpnGateway_STATUS
-			err := item1.PopulateFromARM(owner, item)
-			if err != nil {
-				return err
-			}
-			configuration.P2SVpnGateways = append(configuration.P2SVpnGateways, item1)
-		}
 	}
 
 	// Set property "PropertiesEtag":
@@ -1657,22 +1641,6 @@ func (configuration *VpnServerConfiguration_STATUS) AssignProperties_From_VpnSer
 	// Name
 	configuration.Name = genruntime.ClonePointerToString(source.Name)
 
-	// P2SVpnGateways
-	if source.P2SVpnGateways != nil {
-		p2SVpnGatewayList := make([]P2SVpnGateway_STATUS, len(source.P2SVpnGateways))
-		for p2SVpnGatewayIndex, p2SVpnGatewayItem := range source.P2SVpnGateways {
-			var p2SVpnGateway P2SVpnGateway_STATUS
-			err := p2SVpnGateway.AssignProperties_From_P2SVpnGateway_STATUS(&p2SVpnGatewayItem)
-			if err != nil {
-				return eris.Wrap(err, "calling AssignProperties_From_P2SVpnGateway_STATUS() to populate field P2SVpnGateways")
-			}
-			p2SVpnGatewayList[p2SVpnGatewayIndex] = p2SVpnGateway
-		}
-		configuration.P2SVpnGateways = p2SVpnGatewayList
-	} else {
-		configuration.P2SVpnGateways = nil
-	}
-
 	// PropertiesEtag
 	configuration.PropertiesEtag = genruntime.ClonePointerToString(source.PropertiesEtag)
 
@@ -1860,22 +1828,6 @@ func (configuration *VpnServerConfiguration_STATUS) AssignProperties_To_VpnServe
 
 	// Name
 	destination.Name = genruntime.ClonePointerToString(configuration.Name)
-
-	// P2SVpnGateways
-	if configuration.P2SVpnGateways != nil {
-		p2SVpnGatewayList := make([]storage.P2SVpnGateway_STATUS, len(configuration.P2SVpnGateways))
-		for p2SVpnGatewayIndex, p2SVpnGatewayItem := range configuration.P2SVpnGateways {
-			var p2SVpnGateway storage.P2SVpnGateway_STATUS
-			err := p2SVpnGatewayItem.AssignProperties_To_P2SVpnGateway_STATUS(&p2SVpnGateway)
-			if err != nil {
-				return eris.Wrap(err, "calling AssignProperties_To_P2SVpnGateway_STATUS() to populate field P2SVpnGateways")
-			}
-			p2SVpnGatewayList[p2SVpnGatewayIndex] = p2SVpnGateway
-		}
-		destination.P2SVpnGateways = p2SVpnGatewayList
-	} else {
-		destination.P2SVpnGateways = nil
-	}
 
 	// PropertiesEtag
 	destination.PropertiesEtag = genruntime.ClonePointerToString(configuration.PropertiesEtag)
@@ -2233,65 +2185,6 @@ func (parameters *AadAuthenticationParameters_STATUS) AssignProperties_To_AadAut
 
 	// AadTenant
 	destination.AadTenant = genruntime.ClonePointerToString(parameters.AadTenant)
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// No error
-	return nil
-}
-
-// P2SVpnGateway Resource.
-type P2SVpnGateway_STATUS struct {
-	// Id: Resource ID.
-	Id *string `json:"id,omitempty"`
-}
-
-var _ genruntime.FromARMConverter = &P2SVpnGateway_STATUS{}
-
-// NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (gateway *P2SVpnGateway_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
-	return &arm.P2SVpnGateway_STATUS{}
-}
-
-// PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (gateway *P2SVpnGateway_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
-	typedInput, ok := armInput.(arm.P2SVpnGateway_STATUS)
-	if !ok {
-		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.P2SVpnGateway_STATUS, got %T", armInput)
-	}
-
-	// Set property "Id":
-	if typedInput.Id != nil {
-		id := *typedInput.Id
-		gateway.Id = &id
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_From_P2SVpnGateway_STATUS populates our P2SVpnGateway_STATUS from the provided source P2SVpnGateway_STATUS
-func (gateway *P2SVpnGateway_STATUS) AssignProperties_From_P2SVpnGateway_STATUS(source *storage.P2SVpnGateway_STATUS) error {
-
-	// Id
-	gateway.Id = genruntime.ClonePointerToString(source.Id)
-
-	// No error
-	return nil
-}
-
-// AssignProperties_To_P2SVpnGateway_STATUS populates the provided destination P2SVpnGateway_STATUS from our P2SVpnGateway_STATUS
-func (gateway *P2SVpnGateway_STATUS) AssignProperties_To_P2SVpnGateway_STATUS(destination *storage.P2SVpnGateway_STATUS) error {
-	// Create a new property bag
-	propertyBag := genruntime.NewPropertyBag()
-
-	// Id
-	destination.Id = genruntime.ClonePointerToString(gateway.Id)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {

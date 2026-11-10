@@ -41,9 +41,6 @@ type VpnServerConfigurationProperties_STATUS struct {
 	// Name: The name of the VpnServerConfiguration that is unique within a resource group.
 	Name *string `json:"name,omitempty"`
 
-	// P2SVpnGateways: List of references to P2SVpnGateways.
-	P2SVpnGateways []P2SVpnGateway_STATUS `json:"p2SVpnGateways,omitempty"`
-
 	// ProvisioningState: The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating',
 	// 'Deleting', and 'Failed'.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
@@ -87,12 +84,6 @@ type AadAuthenticationParameters_STATUS struct {
 
 	// AadTenant: AAD Vpn authentication parameter AAD tenant.
 	AadTenant *string `json:"aadTenant,omitempty"`
-}
-
-// P2SVpnGateway Resource.
-type P2SVpnGateway_STATUS struct {
-	// Id: Resource ID.
-	Id *string `json:"id,omitempty"`
 }
 
 // Radius Server Settings.

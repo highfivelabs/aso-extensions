@@ -1999,7 +1999,7 @@ VpnServerConfiguration: Resource
 │   │   ├── PropertyBag: genruntime.PropertyBag
 │   │   └── PublicCertData: *string
 │   └── VpnProtocols: string[]
-└── Status: Object (23 properties)
+└── Status: Object (22 properties)
     ├── AadAuthenticationParameters: *Object (4 properties)
     │   ├── AadAudience: *string
     │   ├── AadIssuer: *string
@@ -2027,9 +2027,6 @@ VpnServerConfiguration: Resource
     ├── Id: *string
     ├── Location: *string
     ├── Name: *string
-    ├── P2SVpnGateways: Object (2 properties)[]
-    │   ├── Id: *string
-    │   └── PropertyBag: genruntime.PropertyBag
     ├── PropertiesEtag: *string
     ├── PropertiesName: *string
     ├── PropertyBag: genruntime.PropertyBag

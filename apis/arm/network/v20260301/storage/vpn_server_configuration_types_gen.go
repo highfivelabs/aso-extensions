@@ -231,7 +231,6 @@ type VpnServerConfiguration_STATUS struct {
 	Id                           *string                                             `json:"id,omitempty"`
 	Location                     *string                                             `json:"location,omitempty"`
 	Name                         *string                                             `json:"name,omitempty"`
-	P2SVpnGateways               []P2SVpnGateway_STATUS                              `json:"p2SVpnGateways,omitempty"`
 	PropertiesEtag               *string                                             `json:"properties_etag,omitempty"`
 	PropertiesName               *string                                             `json:"properties_name,omitempty"`
 	PropertyBag                  genruntime.PropertyBag                              `json:"$propertyBag,omitempty"`
@@ -284,13 +283,6 @@ type AadAuthenticationParameters_STATUS struct {
 	AadAudience *string                `json:"aadAudience,omitempty"`
 	AadIssuer   *string                `json:"aadIssuer,omitempty"`
 	AadTenant   *string                `json:"aadTenant,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20260301.P2SVpnGateway_STATUS
-// P2SVpnGateway Resource.
-type P2SVpnGateway_STATUS struct {
-	Id          *string                `json:"id,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 

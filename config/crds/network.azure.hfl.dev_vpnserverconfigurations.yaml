@@ -625,16 +625,6 @@ spec:
               name:
                 description: 'Name: Resource name.'
                 type: string
-              p2SVpnGateways:
-                description: 'P2SVpnGateways: List of references to P2SVpnGateways.'
-                items:
-                  description: P2SVpnGateway Resource.
-                  properties:
-                    id:
-                      description: 'Id: Resource ID.'
-                      type: string
-                  type: object
-                type: array
               properties_etag:
                 description: 'PropertiesEtag: A unique read-only string that changes
                   whenever the resource is updated.'

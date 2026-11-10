@@ -207,7 +207,6 @@
 | P2SConnectionConfiguration_STATUS                                         |           | v20260301 |
 | P2SVpnGatewayProperties                                                   |           | v20260301 |
 | P2SVpnGatewayProperties_STATUS                                            |           | v20260301 |
-| P2SVpnGateway_STATUS                                                      |           | v20260301 |
 | P2sVpnGateway                                                             |           | v20260301 |
 | P2sVpnGateway_STATUS                                                      |           | v20260301 |
 | P2sVpnGateway_Spec                                                        |           | v20260301 |

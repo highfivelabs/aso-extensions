@@ -2547,7 +2547,7 @@ VpnServerConfiguration_STATUS: Object (7 properties)
 ├── Id: *string
 ├── Location: *string
 ├── Name: *string
-├── Properties: *Object (15 properties)
+├── Properties: *Object (14 properties)
 │   ├── AadAuthenticationParameters: *Object (3 properties)
 │   │   ├── AadAudience: *string
 │   │   ├── AadIssuer: *string
@@ -2578,8 +2578,6 @@ VpnServerConfiguration_STATUS: Object (7 properties)
 │   │   └── Type: *string
 │   ├── Etag: *string
 │   ├── Name: *string
-│   ├── P2SVpnGateways: Object (1 property)[]
-│   │   └── Id: *string
 │   ├── ProvisioningState: *string
 │   ├── RadiusClientRootCertificates: Object (2 properties)[]
 │   │   ├── Name: *string

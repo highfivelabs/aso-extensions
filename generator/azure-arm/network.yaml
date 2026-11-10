@@ -239,6 +239,12 @@ typeTransformers:
     property: SharedKey
     remove: true
     because: a key, deprecated; not shown in the status
+  - group: network
+    version: v20260301
+    name: VpnServerConfigurationProperties_STATUS
+    property: P2SVpnGateways
+    remove: true
+    because: whole point-to-site gateways (their own kind) in the status; the embedded copy's generated tests collide with the gateway kind's (RunJSONSerializationTestForP2SVpnGateway_STATUS redeclared)
   # Keys Azure makes are exported to a Secret ($azureGeneratedSecrets above,
   # generator/_extensions/network/customizations), not kept in the spec,
   # which could only send a key Azure ignores, or the status, which anyone

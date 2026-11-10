@@ -153,72 +153,6 @@ func AddIndependentPropertyGeneratorsForAadAuthenticationParameters_STATUS(gens 
 	gens["AadTenant"] = gen.PtrOf(gen.AlphaString())
 }
 
-func Test_P2SVpnGateway_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MinSuccessfulTests = 80
-	parameters.MaxSize = 3
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip of P2SVpnGateway_STATUS via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForP2SVpnGateway_STATUS, P2SVpnGateway_STATUSGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
-}
-
-// RunJSONSerializationTestForP2SVpnGateway_STATUS runs a test to see if a specific instance of P2SVpnGateway_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForP2SVpnGateway_STATUS(subject P2SVpnGateway_STATUS) string {
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Deserialize back into memory
-	var actual P2SVpnGateway_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-// Generator of P2SVpnGateway_STATUS instances for property testing - lazily instantiated by
-// P2SVpnGateway_STATUSGenerator()
-var p2SVpnGateway_STATUSGenerator gopter.Gen
-
-// P2SVpnGateway_STATUSGenerator returns a generator of P2SVpnGateway_STATUS instances for property testing.
-func P2SVpnGateway_STATUSGenerator() gopter.Gen {
-	if p2SVpnGateway_STATUSGenerator != nil {
-		return p2SVpnGateway_STATUSGenerator
-	}
-
-	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForP2SVpnGateway_STATUS(generators)
-	p2SVpnGateway_STATUSGenerator = gen.Struct(reflect.TypeOf(P2SVpnGateway_STATUS{}), generators)
-
-	return p2SVpnGateway_STATUSGenerator
-}
-
-// AddIndependentPropertyGeneratorsForP2SVpnGateway_STATUS is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForP2SVpnGateway_STATUS(gens map[string]gopter.Gen) {
-	gens["Id"] = gen.PtrOf(gen.AlphaString())
-}
-
 func Test_RadiusServer_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -1413,7 +1347,6 @@ func AddIndependentPropertyGeneratorsForVpnServerConfiguration_STATUS(gens map[s
 func AddRelatedPropertyGeneratorsForVpnServerConfiguration_STATUS(gens map[string]gopter.Gen) {
 	gens["AadAuthenticationParameters"] = gen.PtrOf(AadAuthenticationParameters_STATUSGenerator())
 	gens["ConfigurationPolicyGroups"] = gen.SliceOf(VpnServerConfigurationPolicyGroup_STATUSGenerator())
-	gens["P2SVpnGateways"] = gen.SliceOf(P2SVpnGateway_STATUSGenerator())
 	gens["RadiusClientRootCertificates"] = gen.SliceOf(VpnServerConfigRadiusClientRootCertificate_STATUSGenerator())
 	gens["RadiusServerRootCertificates"] = gen.SliceOf(VpnServerConfigRadiusServerRootCertificate_STATUSGenerator())
 	gens["RadiusServers"] = gen.SliceOf(RadiusServer_STATUSGenerator())
