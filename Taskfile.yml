@@ -110,6 +110,7 @@ tasks:
           HINT: generated files are stale; commit the output of task generate-arm
       - go vet ./...
       - go vet -tags fakecloud ./cmd/manager
+      - go vet -tags live ./test/live/
       - hack/check-no-fake-cloud.sh
       - hack/check-spdx.sh
       - hack/test-operator-e2e-guard.sh
@@ -129,6 +130,28 @@ tasks:
       - |
         KUBEBUILDER_ASSETS="$({{.BIN}}/setup-envtest use {{.ENVTEST_K8S_VERSION}} --bin-dir {{.BIN}}/envtest -p path)" \
           go test {{.PKGS}} -count=1{{if .RUN}} -run '{{.RUN}}'{{end}}
+
+  # Real Azure (docs/live-runs.md). Only these two tasks reach hack/live;
+  # check never calls them (it only compiles test/live with go vet).
+  test-live:
+    desc: 'The live tests against the real Azure target of hack/live/azure.env, from an offload VM run with --sa (docs/live-runs.md): ASO_EXT_LIVE=create-real-azure-resources task test-live [TESTS="TestLiveA TestLiveB"]'
+    cmds:
+      - task: upstream-check
+      - task: common:setup-envtest
+        vars: {BIN: '{{.BIN}}', PACKAGE: '{{.SETUP_ENVTEST}}'}
+      - |
+        KUBEBUILDER_ASSETS="$({{.BIN}}/setup-envtest use {{.ENVTEST_K8S_VERSION}} --bin-dir {{.BIN}}/envtest -p path)" \
+          hack/live/run.sh {{.TESTS}}
+
+  live-list:
+    desc: List what is in the live-test resource group, with the run's federated credentials (an offload VM run with --sa)
+    cmds:
+      - |
+        set -a; . hack/live/azure.env; set +a
+        . hack/live/credentials.sh
+        live_creds_start "$(mktemp -d)"
+        trap live_creds_stop EXIT
+        hack/live/sweep.sh --list
 
   operator-e2e:
     desc: The install on kind with the fake cloud (tests/operator/run.sh); fails unless it ends with "all checks passed"
