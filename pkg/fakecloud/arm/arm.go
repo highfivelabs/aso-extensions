@@ -41,6 +41,9 @@
 // created with, keys a PUT does not change and Resource Manager does not
 // delete, connections a private endpoint makes).
 //
+// Log Analytics clusters, data sources and storage insight configs are
+// checked too (loganalytics.go: commitment tiers, a storage key kept aside).
+//
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
 package arm
@@ -292,6 +295,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkMaintenance(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkLogAnalytics(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

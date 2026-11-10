@@ -168,8 +168,8 @@ Facts learned the hard way:
   nested flattened property stays an object, as `MaintenanceWindow` of a
   maintenance configuration does); **an object schema without `type: object` is dropped as empty** (the
   solutions' `SolutionProperties`); **a resource whose kind ends in `Source`
-  fails to compile** (the receiver `source` collides with the conversion
-  parameter; Log Analytics data sources); **an enum-valued name** (a
+  failed to compile** (the receiver `source` collided with the conversion
+  parameter; Log Analytics data sources; fixed by patch 0008); **an enum-valued name** (a
   multi-valued `Name` parameter) puts the enum in the storage version, which
   then imports the API version, an import cycle: add a `typeTransformers`
   entry turning the enum (`<Resource>_Name_Spec`) into `string`, as
@@ -481,7 +481,7 @@ That is a Spot VM, where both checks run (the operator e2e too, since
   `docs/coverage/foundation.md` are written by hand (mark a row built there).
 - Never edit `third_party/`. A change to ASO is a numbered patch in
   `patches/azure-service-operator/` (0001 exports the framework, 0002 changes
-  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`, 0005 gives children of a tenant scope resource an owner, 0006 makes a resource at several scopes an extension resource, 0007 makes a child built on a `SubResource` a resource (network 2025-05-01 on); 0003 also exports what hand-written extensions need); make the change in the
+  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`, 0005 gives children of a tenant scope resource an owner, 0006 makes a resource at several scopes an extension resource, 0007 makes a child built on a `SubResource` a resource (network 2025-05-01 on); 0008 keeps a receiver from being named `source` or `destination`, the conversion functions' parameters (Log Analytics data sources); 0003 also exports what hand-written extensions need); make the change in the
   checkout, `git diff` it into the patch, then `hack/upstream.sh` re-applies the
   series and `hack/upstream.sh --check` verifies it.
 

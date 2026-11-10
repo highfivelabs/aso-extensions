@@ -1305,6 +1305,38 @@ kubectl -n team-a delete managedhsms.keyvault.azure.hfl.dev hsm --timeout=120s
 logged fakearm "request DELETE ${hsm_id} 200" || fail "the fake resource manager saw no delete of the managed HSM"
 pass "the managed HSM key is detached, not deleted, and the managed HSM is deleted in Resource Manager"
 
+step "team-a: a Log Analytics cluster and a data source of the workspace (operationalinsights.azure.hfl.dev)"
+la_rg="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights"
+kubectl apply -f - <<EOF
+apiVersion: operationalinsights.azure.hfl.dev/v20250701
+kind: Cluster
+metadata: {name: logs, namespace: team-a}
+spec:
+  azureName: team-a-logs
+  owner: {name: rg}
+  location: westus
+  sku: {name: CapacityReservation, capacity: 500}
+---
+apiVersion: operationalinsights.azure.hfl.dev/v20250701
+kind: WorkspacesDataSource
+metadata: {name: syslog-auth, namespace: team-a}
+spec:
+  owner: {name: law}
+  kind: LinuxSyslog
+  properties: {syslogName: auth, syslogSeverities: [{severity: err}]}
+EOF
+wait_for 120 "team-a's Cluster Ready" ready clusters.operationalinsights.azure.hfl.dev team-a logs
+logged fakearm "request PUT ${la_rg}/clusters/team-a-logs 201" || fail "the fake resource manager saw no Log Analytics cluster made"
+pass "team-a Cluster Ready"
+wait_for 120 "team-a's WorkspacesDataSource Ready" ready workspacesdatasources.operationalinsights.azure.hfl.dev team-a syslog-auth
+logged fakearm "request PUT ${la_rg}/workspaces/team-a-law/dataSources/syslog-auth 201" || fail "the fake resource manager saw no data source made on ASO's Workspace"
+pass "team-a WorkspacesDataSource Ready"
+kubectl -n team-a delete workspacesdatasources.operationalinsights.azure.hfl.dev syslog-auth --timeout=120s
+kubectl -n team-a delete clusters.operationalinsights.azure.hfl.dev logs --timeout=120s
+logged fakearm "request DELETE ${la_rg}/workspaces/team-a-law/dataSources/syslog-auth 200" || fail "the fake resource manager saw no delete of the data source"
+logged fakearm "request DELETE ${la_rg}/clusters/team-a-logs 200" || fail "the fake resource manager saw no delete of the cluster"
+pass "the Log Analytics cluster and the data source are deleted in Resource Manager"
+
 step "keys Azure makes: not written by default, written with config/secret-writer"
 # docs/plan.md §8, question 9. The default install may read Secrets and not
 # create them (checked above), so exporting a key Azure makes fails; the

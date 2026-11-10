@@ -80,12 +80,15 @@ resources:
 - network.azure.hfl.dev_vpngatewaysvpnconnections.yaml
 - network.azure.hfl.dev_vpnserverconfigurations.yaml
 - network.azure.hfl.dev_vpnsites.yaml
+- operationalinsights.azure.hfl.dev_clusters.yaml
 - operationalinsights.azure.hfl.dev_querypacks.yaml
 - operationalinsights.azure.hfl.dev_querypacksqueries.yaml
 - operationalinsights.azure.hfl.dev_workspacesdataexports.yaml
+- operationalinsights.azure.hfl.dev_workspacesdatasources.yaml
 - operationalinsights.azure.hfl.dev_workspaceslinkedservices.yaml
 - operationalinsights.azure.hfl.dev_workspaceslinkedstorageaccounts.yaml
 - operationalinsights.azure.hfl.dev_workspacessavedsearches.yaml
+- operationalinsights.azure.hfl.dev_workspacesstorageinsightconfigs.yaml
 - operationalinsights.azure.hfl.dev_workspacestables.yaml
 - policyinsights.azure.hfl.dev_policyattestations.yaml
 - policyinsights.azure.hfl.dev_policyremediations.yaml

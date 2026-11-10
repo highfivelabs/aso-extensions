@@ -1750,17 +1750,17 @@ Microsoft.OffAzureSpringBoot,Microsoft.OffAzureSpringBoot/springbootsites/spring
 Microsoft.OnlineExperimentation,Microsoft.OnlineExperimentation/workspaces,13,,0,,0,13,false,spec_api=2025-08-01-preview; spec-preview-only
 Microsoft.OnlineExperimentation,Microsoft.OnlineExperimentation/workspaces/privateEndpointConnections,4,,0,,0,4,false,spec_api=2025-08-01-preview; spec-preview-only
 Microsoft.OpenEnergyPlatform,Microsoft.OpenEnergyPlatform/energyServices,4,,0,,0,4,false,spec_api=2022-04-04-preview; spec-preview-only
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/clusters,18,,0,,0,18,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/clusters,18,,0,operationalinsights.azure.hfl.dev/Cluster,16,2,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/queryPacks,3,,0,operationalinsights.azure.hfl.dev/QueryPack,2,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/queryPacks/queries,8,,0,operationalinsights.azure.hfl.dev/QueryPacksQuery,8,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces,23,operationalinsights.azure.com/Workspace,20,,0,3,false,spec_api=2026-03-01; official_api=2025-07-01; official-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/dataExports,7,,0,operationalinsights.azure.hfl.dev/WorkspacesDataExport,6,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/dataSources,4,,0,,0,4,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/dataSources,4,,0,operationalinsights.azure.hfl.dev/WorkspacesDataSource,4,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/features/machineGroups,8,,0,,0,8,false,spec_api=2015-11-01-preview; spec-preview-only
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedServices,4,,0,operationalinsights.azure.hfl.dev/WorkspacesLinkedService,4,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedStorageAccounts,1,,0,operationalinsights.azure.hfl.dev/WorkspacesLinkedStorageAccount,1,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/savedSearches,9,,0,operationalinsights.azure.hfl.dev/WorkspacesSavedSearch,9,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/storageInsightConfigs,6,,0,,0,6,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/storageInsightConfigs,6,,0,operationalinsights.azure.hfl.dev/WorkspacesStorageInsightConfig,6,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/summaryLogs,11,,0,,0,11,false,spec_api=2026-03-01
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/tables,20,,0,operationalinsights.azure.hfl.dev/WorkspacesTable,19,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementAssociations,2,,0,,0,2,false,spec_api=2015-11-01-preview; spec-preview-only
