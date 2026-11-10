@@ -1601,18 +1601,18 @@ Microsoft.Network,Microsoft.Network/NetworkExperimentProfiles,4,,0,,0,4,false,sp
 Microsoft.Network,Microsoft.Network/NetworkExperimentProfiles/Experiments,8,,0,,0,8,false,spec_api=2026-04-01
 Microsoft.Network,Microsoft.Network/networkInterfaces,531,network.azure.com/NetworkInterface,529,,0,2,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkInterfaces/tapConfigurations,281,,0,,0,281,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagerConnections,2,,0,,0,2,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers,6,,0,,0,6,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagerConnections,2,,0,network.azure.hfl.dev/NetworkManagerConnection,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers,6,,0,network.azure.hfl.dev/NetworkManager,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/commits,5,,0,,0,5,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/connectivityConfigurations,13,,0,,0,13,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/ipamPools,8,,0,,0,8,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/ipamPools/staticCidrs,3,,0,,0,3,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/networkGroups,2,,0,,0,2,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/networkGroups/staticMembers,1,,0,,0,1,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/networkGroups,2,,0,network.azure.hfl.dev/NetworkManagersNetworkGroup,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/networkGroups/staticMembers,1,,0,network.azure.hfl.dev/NetworkManagersNetworkGroupsStaticMember,1,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations,2,,0,,0,2,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations/ruleCollections,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations/ruleCollections/rules,5,,0,,0,5,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/scopeConnections,3,,0,,0,3,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/scopeConnections,3,,0,network.azure.hfl.dev/NetworkManagersScopeConnection,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections,2,,0,,0,2,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections/rules,12,,0,,0,12,false,spec_api=2026-03-01
