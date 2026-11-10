@@ -711,6 +711,238 @@ LocalNetworkGateway: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+NetworkManager: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (8 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[0-9a-zA-Z]([0-9a-zA-Z_.-]{0,62}[0-9a-zA-Z_])?$"
+│   ├── Description: *string
+│   ├── Location: *string
+│   ├── NetworkManagerScopeAccesses: Enum (4 values)[]
+│   │   ├── "Connectivity"
+│   │   ├── "Routing"
+│   │   ├── "SecurityAdmin"
+│   │   └── "SecurityUser"
+│   ├── NetworkManagerScopes: *Object (2 properties)
+│   │   ├── ManagementGroups: string[]
+│   │   └── Subscriptions: string[]
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (13 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NetworkManagerScopeAccesses: Enum (4 values)[]
+    │   ├── "Connectivity"
+    │   ├── "Routing"
+    │   ├── "SecurityAdmin"
+    │   └── "SecurityUser"
+    ├── NetworkManagerScopes: *Object (3 properties)
+    │   ├── CrossTenantScopes: Object (3 properties)[]
+    │   │   ├── ManagementGroups: string[]
+    │   │   ├── Subscriptions: string[]
+    │   │   └── TenantId: *string
+    │   ├── ManagementGroups: string[]
+    │   └── Subscriptions: string[]
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── ResourceGuid: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+NetworkManagerConnection: Resource
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── NetworkManagerReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.ArbitraryOwnerReference
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionState: *Enum (5 values)
+    │   ├── "Conflict"
+    │   ├── "Connected"
+    │   ├── "Pending"
+    │   ├── "Rejected"
+    │   └── "Revoked"
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── NetworkManagerId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+NetworkManagersNetworkGroup: Resource
+├── Owner: NetworkManager
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── MemberType: *Enum (2 values)
+│   │   ├── "Subnet"
+│   │   └── "VirtualNetwork"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── MemberType: *Enum (2 values)
+    │   ├── "Subnet"
+    │   └── "VirtualNetwork"
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── ResourceGuid: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+NetworkManagersNetworkGroupsStaticMember: Resource
+├── Owner: NetworkManagersNetworkGroup
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── ResourceReference: *genruntime.ResourceReference
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── Region: *string
+    ├── ResourceId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+NetworkManagersScopeConnection: Resource
+├── Owner: NetworkManager
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── ResourceReference: *genruntime.ResourceReference
+│   └── TenantId: *string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionState: *Enum (5 values)
+    │   ├── "Conflict"
+    │   ├── "Connected"
+    │   ├── "Pending"
+    │   ├── "Rejected"
+    │   └── "Revoked"
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── ResourceId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── TenantId: *string
+    └── Type: *string
+
 P2sVpnGateway: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (11 properties)

@@ -19,6 +19,11 @@ no_list: true
 | ExpressRoutePort                              | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ExpressRoutePortsAuthorization                | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | LocalNetworkGateway                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManager                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagerConnection                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersNetworkGroup                   | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersNetworkGroupsStaticMember      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersScopeConnection                | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkSecurityPerimeter                      | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersLink                 | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersLoggingConfiguration | 2025-05-01  | v20250501   | v0.1.0         | -      |

@@ -578,6 +578,55 @@ spec:
   - name: clients
     vpnClientAddressPool: {addressPrefixes: [172.16.0.0/24]}
 ---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManager
+metadata: {name: avnm, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  networkManagerScopes:
+    subscriptions: [/subscriptions/${SUB}]
+    managementGroups: [/providers/Microsoft.Management/managementGroups/$1-platform]
+  networkManagerScopeAccesses: [Connectivity, SecurityAdmin]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagerConnection
+metadata: {name: avnm-sub, namespace: $1}
+spec:
+  azureName: $1-avnm
+  owner: {armId: /subscriptions/${SUB}}
+  networkManagerReference: {group: network.azure.hfl.dev, kind: NetworkManager, name: avnm}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagerConnection
+metadata: {name: avnm-mg, namespace: $1}
+spec:
+  azureName: avnm
+  owner: {group: management.azure.hfl.dev, kind: ManagementGroup, name: platform}
+  networkManagerReference: {group: network.azure.hfl.dev, kind: NetworkManager, name: avnm}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersScopeConnection
+metadata: {name: partner, namespace: $1}
+spec:
+  owner: {name: avnm}
+  tenantId: 00000000-0000-0000-0000-0000000000e9
+  resourceReference: {armId: /subscriptions/00000000-0000-0000-0000-0000000000f9}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersNetworkGroup
+metadata: {name: spokes, namespace: $1}
+spec:
+  owner: {name: avnm}
+  memberType: VirtualNetwork
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersNetworkGroupsStaticMember
+metadata: {name: spoke, namespace: $1}
+spec:
+  owner: {name: spokes}
+  resourceReference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/virtualNetworks/$1-spoke}
+---
 apiVersion: management.azure.hfl.dev/v20230401
 kind: ManagementGroup
 metadata: {name: platform, namespace: $1}
@@ -847,6 +896,26 @@ wait_for 90 "team-a's VpnServerConfiguration Ready" ready vpnserverconfiguration
 pass "team-a VpnServerConfiguration Ready: RADIUS, its secret from a Secret"
 wait_for 90 "team-a's P2sVpnGateway Ready" ready p2svpngateways.network.azure.hfl.dev team-a users
 pass "team-a P2sVpnGateway Ready: in our VirtualHub, with our VpnServerConfiguration, by object"
+wait_for 90 "team-a's NetworkManager Ready" ready networkmanagers.network.azure.hfl.dev team-a avnm
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm 201" \
+  || fail "the fake resource manager saw no network manager created in team-a's resource group"
+pass "team-a NetworkManager Ready: over a subscription and a management group"
+wait_for 90 "team-a's subscription NetworkManagerConnection Ready" ready networkmanagerconnections.network.azure.hfl.dev team-a avnm-sub
+logged fakearm "request PUT /subscriptions/${SUB}/providers/Microsoft.Network/networkManagerConnections/team-a-avnm 201" \
+  || fail "the fake resource manager saw no network manager connection at the subscription"
+pass "team-a NetworkManagerConnection Ready: at a subscription, to our NetworkManager by object"
+wait_for 90 "team-a's management group NetworkManagerConnection Ready" ready networkmanagerconnections.network.azure.hfl.dev team-a avnm-mg
+logged fakearm "request PUT /providers/Microsoft.Management/managementGroups/team-a-platform/providers/Microsoft.Network/networkManagerConnections/avnm 201" \
+  || fail "the fake resource manager saw no network manager connection at the management group"
+pass "team-a NetworkManagerConnection Ready: at our ManagementGroup, to our NetworkManager by object"
+wait_for 90 "team-a's NetworkManagersScopeConnection Ready" ready networkmanagersscopeconnections.network.azure.hfl.dev team-a partner
+pass "team-a NetworkManagersScopeConnection Ready: to another tenant's subscription by ARM ID"
+wait_for 90 "team-a's NetworkManagersNetworkGroup Ready" ready networkmanagersnetworkgroups.network.azure.hfl.dev team-a spokes
+pass "team-a NetworkManagersNetworkGroup Ready: owned by our NetworkManager"
+wait_for 90 "team-a's NetworkManagersNetworkGroupsStaticMember Ready" ready networkmanagersnetworkgroupsstaticmembers.network.azure.hfl.dev team-a spoke
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/networkGroups/spokes/staticMembers/spoke 201" \
+  || fail "the fake resource manager saw no static member in team-a's network group"
+pass "team-a NetworkManagersNetworkGroupsStaticMember Ready: a virtual network by ARM ID"
 wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
 pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
 [[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
@@ -960,6 +1029,16 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er 200" \
   || fail "the fake resource manager saw no delete of the ExpressRoute gateway"
 pass "the ExpressRoute gateway and its connection are deleted in Resource Manager"
+for kind_name in networkmanagersnetworkgroupsstaticmembers/spoke networkmanagersnetworkgroups/spokes networkmanagersscopeconnections/partner networkmanagerconnections/avnm-mg networkmanagerconnections/avnm-sub networkmanagers/avnm; do
+  kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
+done
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/networkGroups/spokes/staticMembers/spoke 200" \
+  || fail "the fake resource manager saw no delete of the static member"
+logged fakearm "request DELETE /providers/Microsoft.Management/managementGroups/team-a-platform/providers/Microsoft.Network/networkManagerConnections/avnm 200" \
+  || fail "the fake resource manager saw no delete of the management group's network manager connection"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm 200" \
+  || fail "the fake resource manager saw no delete of the network manager"
+pass "the network manager, its connections, scope connection, network group and static member are deleted in Resource Manager"
 for kind_name in p2svpngateways/users vpnserverconfigurations/users vpngatewaysvpnconnections/branch vpngatewaysnatrules/egress vpngateways/s2s vpnsites/branch; do
   kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
 done

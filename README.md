@@ -31,6 +31,7 @@ Not affiliated with or endorsed by Microsoft.
 | `network.azure.hfl.dev/v20260301` `ExpressRouteCircuit`, `ExpressRouteCircuitsPeering`, `ExpressRouteCircuitsAuthorization`, `ExpressRouteCircuitsPeeringsConnection`, `ExpressRoutePort`, `ExpressRoutePortsAuthorization`, `ExpressRouteGateway`, `ExpressRouteGatewaysExpressRouteConnection` | ExpressRoute: a circuit through a connectivity provider or on an ExpressRoute Direct port, its private and Microsoft peerings, authorizations for other subscriptions, Global Reach between two circuits' peerings, Direct ports with their authorizations, and ExpressRoute gateways in a Virtual WAN hub (our `VirtualHub` by object, or an ARM ID) with their connections to a circuit's private peering. Owned by a resource group (circuit, port, gateway) or their parent kind; the keys you give (a peering's BGP key, an authorization key you redeem, a partner's activation key) come from Secrets, and the keys Azure makes (a circuit's service key, an authorization's key) are written to the Secret `operatorSpec.secrets` names, never to the status (the manager needs the right to write Secrets for that: `docs/plan.md` §8, question 9); a circuit's PUT keeps its peerings and authorizations, a peering's its Global Reach connections, a gateway's its connections. Generated, with hand-written extensions | ours; ASO issue [#4371](https://github.com/Azure/azure-service-operator/issues/4371) open, no pull request |
 | `network.azure.hfl.dev/v20260301` `VirtualWan`, `VirtualHub`, `VirtualHubsHubVirtualNetworkConnection`, `VirtualHubsHubRouteTable`, `VirtualHubsRouteTable`, `VirtualHubsRoutingIntent`, `VirtualHubsBgpConnection`, `VirtualHubsIpConfiguration` | Virtual WAN: a WAN and its hubs, and in a hub its virtual network connections, route tables (a route's next hop, such as a hub connection, by object or ARM ID), routing intent (private or Internet traffic to a firewall), BGP peers and router IP configurations. Owned by a resource group (WAN, hub) or the hub; a hub's PUT keeps its route tables. Generated, with one hand-written extension | ours; no ASO issue or pull request |
 | `network.azure.hfl.dev/v20260301` `VpnGateway`, `VpnGatewaysVpnConnection`, `VpnGatewaysNatRule`, `VpnSite`, `VpnServerConfiguration`, `P2sVpnGateway` | Virtual WAN VPN: a site-to-site VPN gateway in a hub (our `VirtualHub` by object, or an ARM ID) with its connections to VPN sites (each link connection's pre-shared key from a Secret, its NAT rules by reference) and NAT rules; VPN sites with their links (the site key from a Secret); point-to-site VPN server configurations (certificate, RADIUS with its secret from a Secret, or Entra ID) and point-to-site gateways that use them. Owned by a resource group or the gateway; a gateway's PUT keeps its connections and NAT rules. Generated, with one hand-written extension | ours; no ASO issue or pull request |
+| `network.azure.hfl.dev/v20260301` `NetworkManager`, `NetworkManagerConnection`, `NetworkManagersScopeConnection`, `NetworkManagersNetworkGroup`, `NetworkManagersNetworkGroupsStaticMember` | Azure Virtual Network Manager: a network manager over subscriptions and management groups, the connection a subscription or management group makes to it (owned by the subscription by ARM ID or our `ManagementGroup`; the manager by object or ARM ID), scope connections to another tenant's subscription or management group, network groups and their static members (a virtual network or subnet by ARM ID). Owned by a resource group or the manager; generated | ours; no ASO issue or pull request |
 | `authorization.azure.hfl.dev/v1` `ManagementLock` | a management lock (`Microsoft.Authorization/locks`, `CanNotDelete` or `ReadOnly`, with notes and its owners' application IDs) on a subscription, resource group or resource, owned by any ASO resource or an ARM ID; the first plain ARM kind here (`docs/plan.md`, section 1) | ours; ASO issue [#3756](https://github.com/Azure/azure-service-operator/issues/3756), open, needs a design for the lock's four scopes |
 
 ## Coverage
@@ -44,7 +45,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 
 | Category | Services | Resources | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 20.7% | 36.1% |
+| platform-foundation | 18 | 246 | 43.2% | 21.0% | 35.9% |
 | security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 33.1% | 3.8% | 63.2% |
 | other | 230 | 1,262 | 0.5% | 0.0% | 99.5% |
@@ -53,7 +54,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 
 | Tier | Services | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 12.7% | 44.3% |
+| 1 | 17 | 43.0% | 12.9% | 44.1% |
 | 2 | 18 | 26.5% | 6.9% | 66.6% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% |
 
@@ -69,7 +70,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 100.0% | 0.0% |
 | 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 21.3% | 78.7% |
 | 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 2.0% | 25.5% |
-| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 13.4% | 44.3% |
+| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 13.7% | 44.0% |
 | 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 0.0% | 59.8% |
 | 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 0.0% | 16.7% |
 | 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 40.2% | 43.4% |

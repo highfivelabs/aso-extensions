@@ -230,3 +230,5 @@ augmentConversionForSubResource: Interface
 
 augmentConversionForSubResource_STATUS: Interface
 
+augmentConversionForSystemData_STATUS: Interface
+

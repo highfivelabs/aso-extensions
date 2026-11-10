@@ -6,7 +6,7 @@ typeFilters:
   - action: include
     group: network
     version: v20260301
-    because: the newest stable version, for site-to-site VPN connections and local network gateways (foundation row 8), ExpressRoute (row 9) and Virtual WAN with its VPN gateways (row 10); ASO has none of these kinds
+    because: the newest stable version, for site-to-site VPN connections and local network gateways (foundation row 8), ExpressRoute (row 9) and Virtual WAN with its VPN gateways (row 10) and the network manager (row 11); ASO has none of these kinds
 
 groupModelConfiguration:
   2025-05-01:
@@ -110,6 +110,30 @@ groupModelConfiguration:
     P2sVpnGateway:
       $exportAs: P2sVpnGateway
       $supportedFrom: v0.1.0
+    NetworkManager:
+      $exportAs: NetworkManager
+      $supportedFrom: v0.1.0
+    NetworkManagerConnection:
+      $exportAs: NetworkManagerConnection
+      $supportedFrom: v0.1.0
+    NetworkManagers_ScopeConnection:
+      $exportAs: NetworkManagersScopeConnection
+      $supportedFrom: v0.1.0
+    NetworkManagers_NetworkGroup:
+      $exportAs: NetworkManagersNetworkGroup
+      $supportedFrom: v0.1.0
+    NetworkManagers_NetworkGroups_StaticMember:
+      $exportAs: NetworkManagersNetworkGroupsStaticMember
+      $supportedFrom: v0.1.0
+    NetworkManagerConnectionProperties:
+      NetworkManagerId:
+        $referenceType: arm # the network manager a subscription or management group joins (our NetworkManager, or an ARM ID)
+    ScopeConnectionProperties:
+      ResourceId:
+        $referenceType: arm # the subscription or management group, in another tenant, that a network manager asks to manage
+    StaticMemberProperties:
+      ResourceId:
+        $referenceType: arm # the virtual network or subnet a network group holds (ASO's VirtualNetwork, or an ARM ID)
     VpnGatewayProperties:
       Connections:
         $resourceLifecycleOwnedByParent: VpnGateway # VPN connections, kept on a gateway's PUT by its extension, as a circuit keeps its peerings
