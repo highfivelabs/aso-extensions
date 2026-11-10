@@ -9,7 +9,8 @@
 # with replace directives, so nothing builds until this has run.
 #
 #   hack/upstream.sh          fetch if missing, reset to the pin, apply patches
-#   hack/upstream.sh --check  fail if the checkout is not the pin plus patches
+#   hack/upstream.sh --check  fail unless every file of the checkout holds
+#                             what the pin plus patches give (by content)
 
 set -o errexit
 set -o nounset
@@ -19,10 +20,12 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${REPO_ROOT}"
 
 # The single source of the pin: the "Commit" row of UPSTREAM.md.
-ASO_COMMIT="$(sed -n 's/^| Commit | `\([0-9a-f]\{40\}\)`.*/\1/p' UPSTREAM.md | head -1)"
+# UPSTREAM_COMMIT, UPSTREAM_DEST and UPSTREAM_PATCHES replace the pin, the
+# checkout and the patch directory for hack/test-upstream-check.sh only.
+ASO_COMMIT="${UPSTREAM_COMMIT:-$(sed -n 's/^| Commit | `\([0-9a-f]\{40\}\)`.*/\1/p' UPSTREAM.md | head -1)}"
 ASO_REPO="https://github.com/Azure/azure-service-operator.git"
-DEST="third_party/azure-service-operator"
-PATCHES="${REPO_ROOT}/patches/azure-service-operator"
+DEST="${UPSTREAM_DEST:-third_party/azure-service-operator}"
+PATCHES="${UPSTREAM_PATCHES:-${REPO_ROOT}/patches/azure-service-operator}"
 
 if [[ -z "${ASO_COMMIT}" ]]; then
   echo "could not read the Azure Service Operator commit from UPSTREAM.md" >&2
@@ -39,17 +42,34 @@ if [[ "${1:-}" == "--check" ]]; then
     echo "${DEST} is at ${head}, UPSTREAM.md pins ${ASO_COMMIT}" >&2
     exit 1
   fi
-  # Every patch must be applied, and nothing else changed.
-  expected="$(mktemp)"
-  actual="$(mktemp)"
-  trap 'rm -f "${expected}" "${actual}"' EXIT
+  # Every file must hold what the pin plus the patches give, byte for byte.
+  # The expected tree is built in a temporary index (the pin's tree with
+  # each patch applied to it in order), and the working tree is compared to
+  # it by content. Comparing only the list of changed files let a stale copy
+  # pass: an older checkout lacked a later patch's change to a file an
+  # earlier patch also changes.
+  index="$(mktemp)"
+  out="$(mktemp)"
+  trap 'rm -f "${index}" "${out}"' EXIT
+  export GIT_INDEX_FILE="${index}"
+  git -C "${DEST}" read-tree "${ASO_COMMIT}"
   for p in "${PATCHES}"/*.patch; do
     [[ -e "${p}" ]] || continue
-    git -C "${DEST}" apply --numstat "${p}" | awk '{print $3}'
-  done | sort -u > "${expected}"
-  git -C "${DEST}" status --porcelain --untracked-files=all | awk '{print $2}' | sort -u > "${actual}"
-  if ! diff -u "${expected}" "${actual}"; then
-    echo "${DEST} differs from the pin plus patches/ (above: expected vs actual changed files)" >&2
+    if ! git -C "${DEST}" apply --cached --whitespace=nowarn "${p}" 2>"${out}"; then
+      cat "${out}" >&2
+      echo "$(basename "${p}") does not apply to the pin plus the patches before it" >&2
+      exit 1
+    fi
+  done
+  git -C "${DEST}" update-index -q --refresh >/dev/null || true
+  # Tracked files whose content or mode differs, or that are missing; then
+  # files that are neither expected nor ignored.
+  git -C "${DEST}" diff --name-status > "${out}"
+  git -C "${DEST}" ls-files --others --exclude-standard | sed 's/^/?\t/' >> "${out}"
+  unset GIT_INDEX_FILE
+  if [[ -s "${out}" ]]; then
+    cat "${out}" >&2
+    echo "${DEST} differs from the pin plus patches/ in the files above (M changed, D missing, ? not expected); run hack/upstream.sh" >&2
     exit 1
   fi
   echo "ok: ${DEST} is ${ASO_COMMIT} plus $(ls "${PATCHES}"/*.patch 2>/dev/null | wc -l | tr -d ' ') patch(es)"

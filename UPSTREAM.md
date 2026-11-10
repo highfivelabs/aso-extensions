@@ -4,7 +4,11 @@ This repository builds on Azure Service Operator v2 (ASO) at one commit of
 `main`. `hack/upstream.sh` reads the commit from the table below (the
 "Commit" row), fetches it into `third_party/azure-service-operator` and
 applies `patches/azure-service-operator/*.patch` in order;
-`hack/upstream.sh --check` fails if the checkout is anything else.
+`hack/upstream.sh --check` fails if the checkout is anything else: it
+builds the expected tree (the pin with each patch applied) in a temporary
+index and compares every file by content, so a stale copy that has the
+right files changed but an older patch's content fails too
+(`hack/test-upstream-check.sh`, in `task check`, tests the check).
 
 `upstream.yaml` says the same as this file's tables in machine-readable
 form (pins, pull requests, patches, copied files), for tools such as the

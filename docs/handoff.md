@@ -288,12 +288,15 @@ Facts learned the hard way:
   `properties.type`** (`BuiltInRole`), not `roleType`; ASO dereferences it
   without a nil check, so a fake that omits it panics the reconciler (no Ready
   condition at all; run envtest with `E2E_VERBOSE=1` to see the manager's log).
-- **A copied `third_party/` can be stale and still pass `hack/upstream.sh
-  --check`**, which compares the list of changed files, not their contents: a
-  copy of an older checkout lacked patch 0006's code (the same file is changed
-  by 0005) and the generator failed at random on policy attestations. In a new
-  clone run `hack/upstream.sh` (it resets and re-applies the series) rather
-  than copying another clone's `third_party/`.
+- **A copied `third_party/` was once stale and still passed `hack/upstream.sh
+  --check`**, which then compared the list of changed files, not their
+  contents: a copy of an older checkout lacked patch 0006's code (the same file
+  is changed by 0005) and the generator failed at random on policy
+  attestations. The check now compares content (the pin plus the patches,
+  built in a temporary index; `hack/test-upstream-check.sh` tests it), so a
+  stale copy fails `task check`. In a new clone run `hack/upstream.sh` (it
+  resets and re-applies the series); copying another clone's `third_party/`
+  first only saves the fetch.
 - A property named `owner` in the spec (an attestation's responsible person)
   collides with the Kubernetes `owner`; ASO's generator renames it to
   `properties_owner` (Go `PropertiesOwner`), still sent as `owner`.
