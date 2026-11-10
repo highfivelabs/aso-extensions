@@ -1640,7 +1640,7 @@ Microsoft.Network,Microsoft.Network/networkWatchers/connectionAnalyzers,23,,0,,0
 Microsoft.Network,Microsoft.Network/networkWatchers/connectionMonitors,46,,0,,0,46,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkWatchers/flowLogs,18,network.azure.com/NetworkWatchersFlowLog,16,,0,2,false,spec_api=2026-03-01; official_api=2024-10-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkWatchers/packetCaptures,20,,0,,0,20,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/p2svpnGateways,24,,0,,0,24,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/p2svpnGateways,24,,0,network.azure.hfl.dev/P2sVpnGateway,24,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/privateDnsZones,4,network.azure.com/PrivateDnsZone,3,,0,1,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.Network,Microsoft.Network/privateDnsZones/A,21,network.azure.com/PrivateDnsZonesARecord,21,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.Network,Microsoft.Network/privateDnsZones/AAAA,21,network.azure.com/PrivateDnsZonesAAAARecord,21,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
@@ -1696,13 +1696,13 @@ Microsoft.Network,Microsoft.Network/virtualNetworkTaps,280,,0,,0,280,false,spec_
 Microsoft.Network,Microsoft.Network/virtualRouters,6,,0,,0,6,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualRouters/peerings,2,,0,,0,2,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualWans,6,,0,network.azure.hfl.dev/VirtualWan,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
-Microsoft.Network,Microsoft.Network/vpnGateways,78,,0,,0,78,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/vpnGateways/natRules,7,,0,,0,7,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/vpnGateways/vpnConnections,56,,0,,0,56,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/vpnGateways,78,,0,network.azure.hfl.dev/VpnGateway,11,67,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/vpnGateways/natRules,7,,0,network.azure.hfl.dev/VpnGatewaysNatRule,7,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/vpnGateways/vpnConnections,56,,0,network.azure.hfl.dev/VpnGatewaysVpnConnection,55,1,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections/sharedKeys,2,,0,,0,2,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/vpnServerConfigurations,36,,0,,0,36,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/vpnServerConfigurations,36,,0,network.azure.hfl.dev/VpnServerConfiguration,36,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/vpnServerConfigurations/configurationPolicyGroups,5,,0,,0,5,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/vpnSites,28,,0,,0,28,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/vpnSites,28,,0,network.azure.hfl.dev/VpnSite,28,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network.Admin,Microsoft.Network.Admin/locations/quotas,8,,0,,0,8,false,spec_api=2015-06-15; spec-preview-only
 Microsoft.NetworkCloud,Microsoft.NetworkCloud/accessBridges,12,,0,,0,12,false,spec_api=2026-07-01
 Microsoft.NetworkCloud,Microsoft.NetworkCloud/bareMetalMachines,16,,0,,0,16,false,spec_api=2026-07-01
