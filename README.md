@@ -33,13 +33,13 @@ Not affiliated with or endorsed by Microsoft.
 <!-- coverage:start -->
 ![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)
 
-Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 1.7%; 81.8% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
+Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 1.8%; 81.8% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
 ![Coverage by category](docs/coverage/bars/_categories.svg)
 
 | Category | Services | Resources | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 3.9% | 52.9% |
+| platform-foundation | 18 | 246 | 43.2% | 4.6% | 52.2% |
 | security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 33.1% | 3.7% | 63.2% |
 | other | 230 | 1,262 | 0.5% | 0.0% | 99.5% |
@@ -48,7 +48,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 
 | Tier | Services | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 2.7% | 54.3% |
+| 1 | 17 | 43.0% | 3.1% | 53.9% |
 | 2 | 18 | 26.5% | 6.8% | 66.7% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% |
 
@@ -58,7 +58,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | ---: | --- | --- | --- | ---: | ---: | ---: |
 | 1 | `Microsoft.Management` | platform-foundation | ![Microsoft.Management](docs/coverage/bars/Microsoft.Management.svg) | 0.0% | 44.4% | 55.6% |
 | 1 | `Microsoft.Subscription` | platform-foundation | ![Microsoft.Subscription](docs/coverage/bars/Microsoft.Subscription.svg) | 60.0% | 0.0% | 40.0% |
-| 1 | `Microsoft.Authorization` | platform-foundation | ![Microsoft.Authorization](docs/coverage/bars/Microsoft.Authorization.svg) | 5.9% | 33.9% | 60.2% |
+| 1 | `Microsoft.Authorization` | platform-foundation | ![Microsoft.Authorization](docs/coverage/bars/Microsoft.Authorization.svg) | 5.9% | 46.5% | 47.6% |
 | 1 | `Microsoft.PolicyInsights` | platform-foundation | ![Microsoft.PolicyInsights](docs/coverage/bars/Microsoft.PolicyInsights.svg) | 0.0% | 94.4% | 5.6% |
 | 1 | `Microsoft.Resources` | platform-foundation | ![Microsoft.Resources](docs/coverage/bars/Microsoft.Resources.svg) | 2.1% | 0.7% | 97.2% |
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 0.0% | 100.0% |

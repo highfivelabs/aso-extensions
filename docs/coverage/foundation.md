@@ -125,12 +125,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 3.9% | 52.9% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 4.6% | 52.2% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.7% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (142 with no kind, 52 partly covered, 52 covered)
+### platform-foundation: 246 resources (139 with no kind, 52 partly covered, 55 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -147,22 +147,22 @@ Generated: every resource of the two categories, by the order of the services in
 | 11 | `Microsoft.Authorization/privateLinkAssociations` | no kind |  |  | 0 / 0 / 2 | managementGroup | generator, arbitrary owner (several scopes, patch 0006) | S (2) | 0 |
 | 12 | `Microsoft.Authorization/variables/values` | no kind |  |  | 0 / 0 / 2 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (2) | 0 |
 | 13 | `Microsoft.Authorization/roleAssignmentApprovals/stages` | no kind |  |  | 0 / 0 / 3 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | S (3) | 0 |
-| 14 | `Microsoft.Authorization/roleManagementPolicyAssignments` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 15 | `Microsoft.Authorization/accessReviewScheduleDefinitions/instances` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
-| 16 | `Microsoft.Authorization/roleEligibilityScheduleRequests` | no kind |  |  | 0 / 0 / 14 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (14) | 0 |
-| 17 | `Microsoft.Authorization/accessReviewScheduleSettings` | no kind |  |  | 0 / 0 / 15 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (15) | 0 |
-| 18 | `Microsoft.Authorization/roleAssignmentScheduleRequests` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
-| 19 | `Microsoft.Authorization/accessReviewHistoryDefinitions` | no kind |  |  | 0 / 0 / 20 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (20) | 0 |
-| 20 | `Microsoft.Authorization/policyDefinitions/versions` | no kind |  |  | 0 / 0 / 21 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (21) | 0 |
-| 21 | `Microsoft.Authorization/accessReviewScheduleDefinitions` | no kind |  |  | 0 / 0 / 24 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
-| 22 | `Microsoft.Authorization/policySetDefinitions/versions` | no kind |  |  | 0 / 0 / 24 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
-| 23 | `Microsoft.Authorization/locks` | partial, 1 of 3 missing |  | `authorization/ManagementLock` | 0 / 2 / 1 | extension,resourceGroup,subscription | extend: newer API version or property config | S (1) | 31 |
-| 24 | `Microsoft.Authorization/policydefinitions` | partial, 1 of 22 missing |  | `authorization/PolicyDefinition` | 0 / 21 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
-| 25 | `Microsoft.Authorization/policySetDefinitions` | partial, 1 of 25 missing |  | `authorization/PolicySetDefinition` | 0 / 24 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
-| 26 | `Microsoft.Authorization/roleAssignments` | covered | `authorization/RoleAssignment` |  | 7 / 0 / 0 | extension | - | - | 33 |
-| 27 | `Microsoft.Authorization/roleDefinitions` | covered | `authorization/RoleDefinition` |  | 8 / 0 / 0 | extension | - | - | 2 |
-| 28 | `Microsoft.Authorization/policyassignments` | covered |  | `authorization/PolicyAssignment` | 0 / 27 / 0 | extension | - | - | 1 |
-| 29 | `Microsoft.Authorization/policyExemptions` | covered |  | `authorization/PolicyExemption` | 0 / 12 / 0 | extension | - | - | 0 |
+| 14 | `Microsoft.Authorization/accessReviewScheduleDefinitions/instances` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
+| 15 | `Microsoft.Authorization/accessReviewScheduleSettings` | no kind |  |  | 0 / 0 / 15 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (15) | 0 |
+| 16 | `Microsoft.Authorization/accessReviewHistoryDefinitions` | no kind |  |  | 0 / 0 / 20 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (20) | 0 |
+| 17 | `Microsoft.Authorization/policyDefinitions/versions` | no kind |  |  | 0 / 0 / 21 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (21) | 0 |
+| 18 | `Microsoft.Authorization/accessReviewScheduleDefinitions` | no kind |  |  | 0 / 0 / 24 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
+| 19 | `Microsoft.Authorization/policySetDefinitions/versions` | no kind |  |  | 0 / 0 / 24 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
+| 20 | `Microsoft.Authorization/locks` | partial, 1 of 3 missing |  | `authorization/ManagementLock` | 0 / 2 / 1 | extension,resourceGroup,subscription | extend: newer API version or property config | S (1) | 31 |
+| 21 | `Microsoft.Authorization/policydefinitions` | partial, 1 of 22 missing |  | `authorization/PolicyDefinition` | 0 / 21 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
+| 22 | `Microsoft.Authorization/policySetDefinitions` | partial, 1 of 25 missing |  | `authorization/PolicySetDefinition` | 0 / 24 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
+| 23 | `Microsoft.Authorization/roleAssignments` | covered | `authorization/RoleAssignment` |  | 7 / 0 / 0 | extension | - | - | 33 |
+| 24 | `Microsoft.Authorization/roleDefinitions` | covered | `authorization/RoleDefinition` |  | 8 / 0 / 0 | extension | - | - | 2 |
+| 25 | `Microsoft.Authorization/policyassignments` | covered |  | `authorization/PolicyAssignment` | 0 / 27 / 0 | extension | - | - | 1 |
+| 26 | `Microsoft.Authorization/roleManagementPolicyAssignments` | covered |  | `authorization/RoleManagementPolicyAssignment` | 0 / 3 / 0 | extension | - | - | 0 |
+| 27 | `Microsoft.Authorization/policyExemptions` | covered |  | `authorization/PolicyExemption` | 0 / 12 / 0 | extension | - | - | 0 |
+| 28 | `Microsoft.Authorization/roleEligibilityScheduleRequests` | covered |  | `authorization/RoleEligibilityScheduleRequest` | 0 / 14 / 0 | extension | - | - | 0 |
+| 29 | `Microsoft.Authorization/roleAssignmentScheduleRequests` | covered |  | `authorization/RoleAssignmentScheduleRequest` | 0 / 15 / 0 | extension | - | - | 0 |
 | 30 | `Microsoft.PolicyInsights/remediations` | covered |  | `policyinsights/PolicyRemediation` | 0 / 8 / 0 | extension,resourceGroup,subscription | - | - | 0 |
 | 31 | `Microsoft.Resources/resourceGroups` | partial, 1 of 4 missing | `resources/ResourceGroup` |  | 3 / 0 / 1 | subscription | extend: ASO's API version is older than the spec's | S (1) | 2 |
 | 32 | `Microsoft.Resources/tags` | covered |  | `resources/TagSet` | 0 / 1 / 0 | extension | - | - | 1 |
