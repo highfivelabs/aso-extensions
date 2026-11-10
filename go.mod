@@ -15,6 +15,7 @@ require (
 	github.com/kr/pretty v0.3.1
 	github.com/kylelemons/godebug v1.1.0
 	github.com/leanovate/gopter v0.2.11
+	github.com/microsoft/go-mssqldb v1.11.2
 	github.com/onsi/gomega v1.44.0
 	github.com/rotisserie/eris v0.5.4
 	golang.org/x/exp v0.0.0-20260410095643-746e56fc9e2f
@@ -57,6 +58,8 @@ require (
 	github.com/go-openapi/swag/typeutils v0.28.0 // indirect
 	github.com/go-openapi/swag/yamlutils v0.28.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
+	github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9 // indirect
+	github.com/golang-sql/sqlexp v0.1.0 // indirect
 	github.com/google/cel-go v0.31.0 // indirect
 	github.com/google/gnostic-models v0.7.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -77,6 +80,7 @@ require (
 	github.com/prometheus/procfs v0.22.0 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/samber/lo v1.53.0 // indirect
+	github.com/shopspring/decimal v1.4.0 // indirect
 	github.com/spf13/cobra v1.10.2 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/x448/float16 v0.8.4 // indirect

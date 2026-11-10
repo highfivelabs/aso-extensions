@@ -9,10 +9,10 @@ kind: ClusterRole
 metadata:
   name: manager
 rules:
-- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev", "authorization.azure.hfl.dev"]
+- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev", "authorization.azure.hfl.dev", "sql.azure.hfl.dev"]
   resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev", "authorization.azure.hfl.dev"]
+- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev", "authorization.azure.hfl.dev", "sql.azure.hfl.dev"]
   resources: ["*/status", "*/finalizers"]
   verbs: ["get", "update", "patch"]
 - apiGroups: ["dbforpostgresql.azure.com"]
@@ -20,6 +20,9 @@ rules:
   verbs: ["get", "list", "watch"]
 - apiGroups: ["keyvault.azure.com"]
   resources: ["vaults"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["sql.azure.com"]
+  resources: ["servers", "serversdatabases"]
   verbs: ["get", "list", "watch"]
 # The ASO kinds the generated ARM kinds name as owners (generator/external-owners.txt)
 # and the resource group above them: read through the cache, so list and watch.
