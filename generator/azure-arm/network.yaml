@@ -125,6 +125,50 @@ groupModelConfiguration:
     NetworkManagers_NetworkGroups_StaticMember:
       $exportAs: NetworkManagersNetworkGroupsStaticMember
       $supportedFrom: v0.1.0
+    NetworkManagers_ConnectivityConfiguration:
+      $exportAs: NetworkManagersConnectivityConfiguration
+      $supportedFrom: v0.1.0
+    NetworkManagers_SecurityAdminConfiguration:
+      $exportAs: NetworkManagersSecurityAdminConfiguration
+      $supportedFrom: v0.1.0
+    NetworkManagers_SecurityAdminConfigurations_RuleCollection:
+      $exportAs: NetworkManagersSecurityAdminRuleCollection
+      $supportedFrom: v0.1.0
+    NetworkManagers_SecurityAdminConfigurations_RuleCollections_Rule:
+      $exportAs: NetworkManagersSecurityAdminRule
+      $supportedFrom: v0.1.0
+    # An admin rule is polymorphic (kind Custom or Default): the resource's
+    # spec is a OneOf of the two, and each leaf is labelled as embedded in the
+    # resource, as ASO's kusto.yaml does for a database.
+    AdminRule:
+      $resourceEmbeddedInParent: NetworkManagers_SecurityAdminConfigurations_RuleCollections_Rule
+    AdminRule_STATUS:
+      $resourceEmbeddedInParent: NetworkManagers_SecurityAdminConfigurations_RuleCollections_Rule
+    DefaultAdminRule:
+      $resourceEmbeddedInParent: NetworkManagers_SecurityAdminConfigurations_RuleCollections_Rule
+    DefaultAdminRule_STATUS:
+      $resourceEmbeddedInParent: NetworkManagers_SecurityAdminConfigurations_RuleCollections_Rule
+    NetworkManagers_SecurityUserConfiguration:
+      $exportAs: NetworkManagersSecurityUserConfiguration
+      $supportedFrom: v0.1.0
+    NetworkManagers_SecurityUserConfigurations_RuleCollection:
+      $exportAs: NetworkManagersSecurityUserRuleCollection
+      $supportedFrom: v0.1.0
+    NetworkManagers_SecurityUserConfigurations_RuleCollections_Rule:
+      $exportAs: NetworkManagersSecurityUserRule
+      $supportedFrom: v0.1.0
+    ConnectivityGroupItem:
+      NetworkGroupId:
+        $referenceType: arm # the network group a connectivity configuration applies to (our NetworkManagersNetworkGroup, or an ARM ID)
+    Hub:
+      ResourceId:
+        $referenceType: arm # the hub of a hub-and-spoke topology: a virtual network (ASO's VirtualNetwork) or a Virtual WAN hub (our VirtualHub), or an ARM ID
+    NetworkManagerSecurityGroupItem:
+      NetworkGroupId:
+        $referenceType: arm # the network group a security admin rule collection applies to
+    SecurityUserGroupItem:
+      NetworkGroupId:
+        $referenceType: arm # the network group a security user rule collection applies to
     NetworkManagerConnectionProperties:
       NetworkManagerId:
         $referenceType: arm # the network manager a subscription or management group joins (our NetworkManager, or an ARM ID)

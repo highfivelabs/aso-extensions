@@ -1604,7 +1604,7 @@ Microsoft.Network,Microsoft.Network/networkInterfaces/tapConfigurations,281,,0,,
 Microsoft.Network,Microsoft.Network/networkManagerConnections,2,,0,network.azure.hfl.dev/NetworkManagerConnection,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers,6,,0,network.azure.hfl.dev/NetworkManager,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/commits,5,,0,,0,5,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/connectivityConfigurations,13,,0,,0,13,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/connectivityConfigurations,13,,0,network.azure.hfl.dev/NetworkManagersConnectivityConfiguration,13,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/ipamPools,8,,0,,0,8,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/ipamPools/staticCidrs,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/networkGroups,2,,0,network.azure.hfl.dev/NetworkManagersNetworkGroup,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
@@ -1613,12 +1613,12 @@ Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations,2,,0,,
 Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations/ruleCollections,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations/ruleCollections/rules,5,,0,,0,5,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/scopeConnections,3,,0,network.azure.hfl.dev/NetworkManagersScopeConnection,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations,3,,0,,0,3,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections,2,,0,,0,2,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections/rules,12,,0,,0,12,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/securityUserConfigurations,1,,0,,0,1,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections,2,,0,,0,2,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections/rules,9,,0,,0,9,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations,3,,0,network.azure.hfl.dev/NetworkManagersSecurityAdminConfiguration,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections,2,,0,network.azure.hfl.dev/NetworkManagersSecurityAdminRuleCollection,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections/rules,12,,0,network.azure.hfl.dev/NetworkManagersSecurityAdminRule,0,12,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/securityUserConfigurations,1,,0,network.azure.hfl.dev/NetworkManagersSecurityUserConfiguration,1,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections,2,,0,network.azure.hfl.dev/NetworkManagersSecurityUserRuleCollection,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections/rules,9,,0,network.azure.hfl.dev/NetworkManagersSecurityUserRule,9,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisIntents,8,,0,,0,8,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisRuns,2,,0,,0,2,false,spec_api=2026-03-01

@@ -139,9 +139,16 @@ title: Supported Resources
 | LocalNetworkGateway                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManager                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagerConnection                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersConnectivityConfiguration      | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagersNetworkGroup                   | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagersNetworkGroupsStaticMember      | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagersScopeConnection                | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityAdminConfiguration     | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityAdminRule              | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityAdminRuleCollection    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityUserConfiguration      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityUserRule               | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersSecurityUserRuleCollection     | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkSecurityPerimeter                      | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersLink                 | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersLoggingConfiguration | 2025-05-01  | v20250501   | v0.1.0         | -      |

@@ -1,0 +1,563 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: networkmanagerssecurityadminrules.network.azure.hfl.dev
+spec:
+  group: network.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - network
+    kind: NetworkManagersSecurityAdminRule
+    listKind: NetworkManagersSecurityAdminRuleList
+    plural: networkmanagerssecurityadminrules
+    singular: networkmanagerssecurityadminrule
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260301
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/networkManager.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityAdminConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              adminRule:
+                description: 'AdminRule: Mutually exclusive with all other properties'
+                properties:
+                  access:
+                    description: 'Access: Indicates the access allowed for this particular
+                      rule'
+                    enum:
+                    - Allow
+                    - AlwaysAllow
+                    - Deny
+                    type: string
+                  description:
+                    description: 'Description: A description for this rule. Restricted
+                      to 140 chars.'
+                    type: string
+                  destinationPortRanges:
+                    description: 'DestinationPortRanges: The destination port ranges.'
+                    items:
+                      type: string
+                    type: array
+                  destinations:
+                    description: 'Destinations: The destination address prefixes.
+                      CIDR or destination IP ranges.'
+                    items:
+                      description: Address prefix item.
+                      properties:
+                        addressPrefix:
+                          description: 'AddressPrefix: Address prefix.'
+                          type: string
+                        addressPrefixType:
+                          description: 'AddressPrefixType: Address prefix type.'
+                          enum:
+                          - IPPrefix
+                          - NetworkGroup
+                          - ServiceTag
+                          type: string
+                      type: object
+                    type: array
+                  direction:
+                    description: 'Direction: Indicates if the traffic matched against
+                      the rule in inbound or outbound.'
+                    enum:
+                    - Inbound
+                    - Outbound
+                    type: string
+                  kind:
+                    description: 'Kind: Whether the rule is custom or default.'
+                    enum:
+                    - Custom
+                    type: string
+                  priority:
+                    description: |-
+                      Priority: The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each
+                      rule in the collection. The lower the priority number, the higher the priority of the rule.
+                    maximum: 4096
+                    minimum: 1
+                    type: integer
+                  protocol:
+                    description: 'Protocol: Network protocol this rule applies to.'
+                    enum:
+                    - Ah
+                    - Any
+                    - Esp
+                    - Icmp
+                    - Tcp
+                    - Udp
+                    type: string
+                  sourcePortRanges:
+                    description: 'SourcePortRanges: The source port ranges.'
+                    items:
+                      type: string
+                    type: array
+                  sources:
+                    description: 'Sources: The CIDR or source IP ranges.'
+                    items:
+                      description: Address prefix item.
+                      properties:
+                        addressPrefix:
+                          description: 'AddressPrefix: Address prefix.'
+                          type: string
+                        addressPrefixType:
+                          description: 'AddressPrefixType: Address prefix type.'
+                          enum:
+                          - IPPrefix
+                          - NetworkGroup
+                          - ServiceTag
+                          type: string
+                      type: object
+                    type: array
+                required:
+                - access
+                - direction
+                - kind
+                - priority
+                - protocol
+                type: object
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              defaultAdminRule:
+                description: 'DefaultAdminRule: Mutually exclusive with all other
+                  properties'
+                properties:
+                  flag:
+                    description: 'Flag: Default rule flag.'
+                    type: string
+                  kind:
+                    description: 'Kind: Whether the rule is custom or default.'
+                    enum:
+                    - Default
+                    type: string
+                required:
+                - kind
+                type: object
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a network.azure.hfl.dev/NetworkManagersSecurityAdminRuleCollection resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+            required:
+            - owner
+            type: object
+          status:
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              custom:
+                description: 'Custom: Mutually exclusive with all other properties'
+                properties:
+                  access:
+                    description: 'Access: Indicates the access allowed for this particular
+                      rule'
+                    type: string
+                  description:
+                    description: 'Description: A description for this rule. Restricted
+                      to 140 chars.'
+                    type: string
+                  destinationPortRanges:
+                    description: 'DestinationPortRanges: The destination port ranges.'
+                    items:
+                      type: string
+                    type: array
+                  destinations:
+                    description: 'Destinations: The destination address prefixes.
+                      CIDR or destination IP ranges.'
+                    items:
+                      description: Address prefix item.
+                      properties:
+                        addressPrefix:
+                          description: 'AddressPrefix: Address prefix.'
+                          type: string
+                        addressPrefixType:
+                          description: 'AddressPrefixType: Address prefix type.'
+                          type: string
+                      type: object
+                    type: array
+                  direction:
+                    description: 'Direction: Indicates if the traffic matched against
+                      the rule in inbound or outbound.'
+                    type: string
+                  etag:
+                    description: 'Etag: A unique read-only string that changes whenever
+                      the resource is updated.'
+                    type: string
+                  id:
+                    description: 'Id: Resource ID.'
+                    type: string
+                  kind:
+                    description: 'Kind: Whether the rule is custom or default.'
+                    type: string
+                  priority:
+                    description: |-
+                      Priority: The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each
+                      rule in the collection. The lower the priority number, the higher the priority of the rule.
+                    type: integer
+                  protocol:
+                    description: 'Protocol: Network protocol this rule applies to.'
+                    type: string
+                  provisioningState:
+                    description: 'ProvisioningState: The provisioning state of the
+                      resource.'
+                    type: string
+                  resourceGuid:
+                    description: 'ResourceGuid: Unique identifier for this resource.'
+                    type: string
+                  sourcePortRanges:
+                    description: 'SourcePortRanges: The source port ranges.'
+                    items:
+                      type: string
+                    type: array
+                  sources:
+                    description: 'Sources: The CIDR or source IP ranges.'
+                    items:
+                      description: Address prefix item.
+                      properties:
+                        addressPrefix:
+                          description: 'AddressPrefix: Address prefix.'
+                          type: string
+                        addressPrefixType:
+                          description: 'AddressPrefixType: Address prefix type.'
+                          type: string
+                      type: object
+                    type: array
+                  systemData:
+                    description: 'SystemData: The system metadata related to this
+                      resource.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  type:
+                    description: 'Type: Resource type.'
+                    type: string
+                type: object
+              default:
+                description: 'Default: Mutually exclusive with all other properties'
+                properties:
+                  access:
+                    description: 'Access: Indicates the access allowed for this particular
+                      rule'
+                    type: string
+                  description:
+                    description: 'Description: A description for this rule. Restricted
+                      to 140 chars.'
+                    type: string
+                  destinationPortRanges:
+                    description: 'DestinationPortRanges: The destination port ranges.'
+                    items:
+                      type: string
+                    type: array
+                  destinations:
+                    description: 'Destinations: The destination address prefixes.
+                      CIDR or destination IP ranges.'
+                    items:
+                      description: Address prefix item.
+                      properties:
+                        addressPrefix:
+                          description: 'AddressPrefix: Address prefix.'
+                          type: string
+                        addressPrefixType:
+                          description: 'AddressPrefixType: Address prefix type.'
+                          type: string
+                      type: object
+                    type: array
+                  direction:
+                    description: 'Direction: Indicates if the traffic matched against
+                      the rule in inbound or outbound.'
+                    type: string
+                  etag:
+                    description: 'Etag: A unique read-only string that changes whenever
+                      the resource is updated.'
+                    type: string
+                  flag:
+                    description: 'Flag: Default rule flag.'
+                    type: string
+                  id:
+                    description: 'Id: Resource ID.'
+                    type: string
+                  kind:
+                    description: 'Kind: Whether the rule is custom or default.'
+                    type: string
+                  priority:
+                    description: |-
+                      Priority: The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each
+                      rule in the collection. The lower the priority number, the higher the priority of the rule.
+                    type: integer
+                  protocol:
+                    description: 'Protocol: Network protocol this rule applies to.'
+                    type: string
+                  provisioningState:
+                    description: 'ProvisioningState: The provisioning state of the
+                      resource.'
+                    type: string
+                  resourceGuid:
+                    description: 'ResourceGuid: Unique identifier for this resource.'
+                    type: string
+                  sourcePortRanges:
+                    description: 'SourcePortRanges: The source port ranges.'
+                    items:
+                      type: string
+                    type: array
+                  sources:
+                    description: 'Sources: The CIDR or source IP ranges.'
+                    items:
+                      description: Address prefix item.
+                      properties:
+                        addressPrefix:
+                          description: 'AddressPrefix: Address prefix.'
+                          type: string
+                        addressPrefixType:
+                          description: 'AddressPrefixType: Address prefix type.'
+                          type: string
+                      type: object
+                    type: array
+                  systemData:
+                    description: 'SystemData: The system metadata related to this
+                      resource.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  type:
+                    description: 'Type: Resource type.'
+                    type: string
+                type: object
+              name:
+                description: 'Name: Resource name.'
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -23,11 +23,25 @@ NetworkManagerConnectionExtension: Object (0 properties)
 
 NetworkManagerExtension: Object (0 properties)
 
+NetworkManagersConnectivityConfigurationExtension: Object (0 properties)
+
 NetworkManagersNetworkGroupExtension: Object (0 properties)
 
 NetworkManagersNetworkGroupsStaticMemberExtension: Object (0 properties)
 
 NetworkManagersScopeConnectionExtension: Object (0 properties)
+
+NetworkManagersSecurityAdminConfigurationExtension: Object (0 properties)
+
+NetworkManagersSecurityAdminRuleCollectionExtension: Object (0 properties)
+
+NetworkManagersSecurityAdminRuleExtension: Object (0 properties)
+
+NetworkManagersSecurityUserConfigurationExtension: Object (0 properties)
+
+NetworkManagersSecurityUserRuleCollectionExtension: Object (0 properties)
+
+NetworkManagersSecurityUserRuleExtension: Object (0 properties)
 
 NetworkSecurityPerimeterExtension: Object (0 properties)
 

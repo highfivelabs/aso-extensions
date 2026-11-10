@@ -255,8 +255,15 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   exists; a scope connection gives a `tenantId` and a subscription's or
   management group's `resourceId`, and stays `Pending`; a static member names
   a resource that exists, a virtual network or a subnet as its group's
-  `memberType` says. Not modelled: a scope managed by two network managers
-  for the same feature, the other tenant accepting a scope connection, a
+  `memberType` says. Connectivity configurations are `HubAndSpoke` (with
+  hubs that exist) or `Mesh`; a connectivity configuration and a rule
+  collection apply to network groups of the same manager that exist; an
+  admin rule is `Custom` (protocol, direction, access `Allow`, `Deny` or
+  `AlwaysAllow`, priority 1 to 4096) or `Default` (a flag); a security user
+  rule gives protocol and direction. Not modelled: configurations reaching
+  the networks (nothing is deployed until committed), the rules a `Default`
+  rule's flag names, address prefixes checked, two rules with one priority,
+  a scope managed by two network managers for the same feature, the other tenant accepting a scope connection, a
   network manager connection's state, dynamic membership through Azure
   Policy, a static member's region, and the error codes (the fake's own).
 - Resource Manager checks no role: real Azure lets only Owner and User

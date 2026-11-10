@@ -33,6 +33,7 @@ Not affiliated with or endorsed by Microsoft.
 | `network.azure.hfl.dev/v20260301` `VirtualWan`, `VirtualHub`, `VirtualHubsHubVirtualNetworkConnection`, `VirtualHubsHubRouteTable`, `VirtualHubsRouteTable`, `VirtualHubsRoutingIntent`, `VirtualHubsBgpConnection`, `VirtualHubsIpConfiguration` | Virtual WAN: a WAN and its hubs, and in a hub its virtual network connections, route tables (a route's next hop, such as a hub connection, by object or ARM ID), routing intent (private or Internet traffic to a firewall), BGP peers and router IP configurations. Owned by a resource group (WAN, hub) or the hub; a hub's PUT keeps its route tables. Generated, with one hand-written extension | ours; no ASO issue or pull request |
 | `network.azure.hfl.dev/v20260301` `VpnGateway`, `VpnGatewaysVpnConnection`, `VpnGatewaysNatRule`, `VpnSite`, `VpnServerConfiguration`, `P2sVpnGateway` | Virtual WAN VPN: a site-to-site VPN gateway in a hub (our `VirtualHub` by object, or an ARM ID) with its connections to VPN sites (each link connection's pre-shared key from a Secret, its NAT rules by reference) and NAT rules; VPN sites with their links (the site key from a Secret); point-to-site VPN server configurations (certificate, RADIUS with its secret from a Secret, or Entra ID) and point-to-site gateways that use them. Owned by a resource group or the gateway; a gateway's PUT keeps its connections and NAT rules. Generated, with one hand-written extension | ours; no ASO issue or pull request |
 | `network.azure.hfl.dev/v20260301` `NetworkManager`, `NetworkManagerConnection`, `NetworkManagersScopeConnection`, `NetworkManagersNetworkGroup`, `NetworkManagersNetworkGroupsStaticMember` | Azure Virtual Network Manager: a network manager over subscriptions and management groups, the connection a subscription or management group makes to it (owned by the subscription by ARM ID or our `ManagementGroup`; the manager by object or ARM ID), scope connections to another tenant's subscription or management group, network groups and their static members (a virtual network or subnet by ARM ID). Owned by a resource group or the manager; generated | ours; no ASO issue or pull request |
+| `network.azure.hfl.dev/v20260301` `NetworkManagersConnectivityConfiguration`, `NetworkManagersSecurityAdminConfiguration`, `NetworkManagersSecurityAdminRuleCollection`, `NetworkManagersSecurityAdminRule`, `NetworkManagersSecurityUserConfiguration`, `NetworkManagersSecurityUserRuleCollection`, `NetworkManagersSecurityUserRule` | Virtual Network Manager configurations: mesh or hub-and-spoke connectivity for network groups (the hub a virtual network or Virtual WAN hub by reference), security admin rules (each either `adminRule`, a custom rule, or `defaultAdminRule`) and security user rules, in rule collections that apply to network groups by reference. Owned by the network manager or their parent; generated | ours; no ASO issue or pull request |
 | `authorization.azure.hfl.dev/v1` `ManagementLock` | a management lock (`Microsoft.Authorization/locks`, `CanNotDelete` or `ReadOnly`, with notes and its owners' application IDs) on a subscription, resource group or resource, owned by any ASO resource or an ARM ID; the first plain ARM kind here (`docs/plan.md`, section 1) | ours; ASO issue [#3756](https://github.com/Azure/azure-service-operator/issues/3756), open, needs a design for the lock's four scopes |
 
 ## Coverage
@@ -40,13 +41,13 @@ Not affiliated with or endorsed by Microsoft.
 <!-- coverage:start -->
 ![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)
 
-Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 3.6%; 80.0% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
+Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 3.7%; 79.9% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
 ![Coverage by category](docs/coverage/bars/_categories.svg)
 
 | Category | Services | Resources | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 21.0% | 35.9% |
+| platform-foundation | 18 | 246 | 43.2% | 21.6% | 35.2% |
 | security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 33.1% | 3.8% | 63.2% |
 | other | 230 | 1,262 | 0.5% | 0.0% | 99.5% |
@@ -55,7 +56,7 @@ Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST A
 
 | Tier | Services | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 12.9% | 44.1% |
+| 1 | 17 | 43.0% | 13.3% | 43.7% |
 | 2 | 18 | 26.5% | 6.9% | 66.6% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% |
 
@@ -71,7 +72,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 100.0% | 0.0% |
 | 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 21.3% | 78.7% |
 | 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 2.0% | 25.5% |
-| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 13.7% | 44.0% |
+| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 14.3% | 43.5% |
 | 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 0.0% | 59.8% |
 | 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 0.0% | 16.7% |
 | 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 40.2% | 43.4% |
