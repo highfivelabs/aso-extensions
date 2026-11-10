@@ -247,6 +247,7 @@ The commands are [Task](https://taskfile.dev) tasks (`brew install go-task`;
 
 ```sh
 task upstream      # fetch ASO at the pin (~675 MB) and apply patches/
+task tools         # task upstream, and setup-envtest into bin/
 task check         # pin, go.mod versions, generated files (ASO's generator is
                    # rerun: it needs the specs, hack/specs.sh), gofmt, vet,
                    # licence headers, no fake cloud in the production build, tests

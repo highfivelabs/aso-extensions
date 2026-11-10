@@ -343,22 +343,27 @@ kind, no generator. From the repository root:
   with other work (a Bundt mutation run, other agents): run at most one kind
   cluster at a time and never touch other clusters (`bundt-checks` and the
   other repositories' `*-operator`).
-- If it is unreachable: `../offload/offload run --hours 2 -- ...` (a Spot VM
-  that deletes itself); `offload ls` and `offload reap` if something is left.
-- **On a Spot VM** (learned 2026-11-09): the source is a tarball of tracked
-  and untracked-but-not-ignored files, so `third_party/` is not there: pass
-  `--prep 'hack/upstream.sh'` and each task as its own `--step` (a wrapper
-  that ends in `echo` hides the failure: one run "passed" in 0 s having run
-  nothing). Artifacts are not copied back: `gsutil cp
-  gs://hfl-dev-514205-offload/runs/<id>/offload-artifacts/...`. `task check`
-  and `task coverage` run there (16 CPUs, 62 GB); **`task operator-e2e` does
-  not**: the image's Docker 29 cannot `kind load` `postgres:17` (`ctr ...
-  content digest ... not found`), so run it on the Ubuntu machine.
+- When it is unreachable or busy (load above 25), or for any heavy run:
+  `../offload/offload run --prep 'task tools' --step-skippable 'task check'
+  --step 'task operator-e2e'` (a Spot VM that deletes itself; `offload ls` and
+  `offload reap` if something is left). Both checks run there.
+- **On a Spot VM:** the source is a tarball of tracked and
+  untracked-but-not-ignored files, so `third_party/` is not there: `task
+  tools` (`--prep`) fetches it and sets up envtest. Pass each task as its own
+  `--step` (a wrapper that ends in `echo` hides the failure: one run "passed"
+  in 0 s having run nothing). Artifacts are not copied back: `gsutil cp
+  gs://hfl-dev-514205-offload/runs/<id>/offload-artifacts/...`. `task check`,
+  `task coverage` and, since 2026-11-09, `task operator-e2e` run there (16
+  CPUs, 62 GB): the image once had Docker 29's containerd image store, which
+  could not `kind load` `postgres:17` (`ctr ... content digest ... not
+  found`); the image now has that store off, and the operator e2e passes on a
+  VM. When the project's CPU quota is used up, offload waits up to 20
+  minutes for room (`OFFLOAD_QUOTA_WAIT`).
 - The Ubuntu machine has 15 GB and is shared: a Bundt mutation run (gremlins)
   took its load near 400 and `systemd-oomd` killed a generated test package
   (`signal: killed`), and kind's etcd timed out (`etcdserver: request timed
-  out`). Check `uptime` and `pgrep -fc gremlins`; move `task check` to a
-  Spot VM when it is busy, and rerun a kind timeout once.
+  out`). Check `uptime` and `pgrep -fc gremlins`; go to a Spot VM when it is
+  busy, and rerun a kind timeout once.
 - `offload` copies the working tree (tracked or not, `third_party/` included;
   `bin/`, `.cache/` and `offload-artifacts/` are excluded and persist on the
   machine) to the same path there, runs the command, and copies
