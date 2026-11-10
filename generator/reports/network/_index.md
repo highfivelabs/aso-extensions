@@ -21,9 +21,13 @@ no_list: true
 | LocalNetworkGateway                           | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManager                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagerConnection                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersCommit                         | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagersConnectivityConfiguration      | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagersNetworkGroup                   | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagersNetworkGroupsStaticMember      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersRoutingConfiguration           | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersRoutingRule                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkManagersRoutingRuleCollection          | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagersScopeConnection                | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagersSecurityAdminConfiguration     | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagersSecurityAdminRule              | 2026-03-01  | v20260301   | v0.1.0         | -      |
