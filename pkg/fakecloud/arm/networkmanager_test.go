@@ -100,7 +100,9 @@ func TestNetworkManagerConfigurations(t *testing.T) {
 	hub := nw + "virtualNetworks/hub"
 	a.AddResource(hub)
 
-	applies := func(g string) string { return `"appliesToGroups":[{"networkGroupId":"` + g + `","groupConnectivity":"None"}]` }
+	applies := func(g string) string {
+		return `"appliesToGroups":[{"networkGroupId":"` + g + `","groupConnectivity":"None"}]`
+	}
 	cc := nm + "/connectivityConfigurations/hub-spoke"
 	put("connectivity of an unknown topology", cc, `{"properties":{"connectivityTopology":"Star",`+applies(group)+`}}`, http.StatusBadRequest)
 	put("hub and spoke without hubs", cc, `{"properties":{"connectivityTopology":"HubAndSpoke",`+applies(group)+`}}`, http.StatusBadRequest)
