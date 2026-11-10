@@ -25,7 +25,10 @@
 // this fake's, not Azure's.
 //
 // Azure Policy definitions, set definitions, assignments and exemptions are
-// checked for where they are kept and what they name (policy.go).
+// checked for where they are kept and what they name (policy.go); so are
+// policy remediations and attestations (policyinsights.go), and role
+// definitions and Privileged Identity Management requests (pim.go: built-in
+// roles listed by name, schedule requests that cannot be deleted).
 //
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
@@ -167,6 +170,9 @@ func (a *ARM) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		a.serveLock(rec, r, m[1], m[2])
 		return
 	}
+	if a.serveRoleDefinitions(rec, r, path) {
+		return
+	}
 	a.serveResource(rec, r, path)
 }
 
@@ -256,6 +262,11 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		status, code, msg, after := a.checkPIM(id, body)
+		if code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		if m := mgSubscription.FindStringSubmatch(id); m != nil {
 			a.moveSubscription(m[2], key)
 		}
@@ -265,14 +276,21 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		}
 		props["provisioningState"] = "Succeeded"
 		body["properties"] = props
-		status := http.StatusOK
+		status = http.StatusOK
 		if _, ok := a.resources[key]; !ok {
 			status = http.StatusCreated
 		}
 		res := resource(body)
 		a.resources[key] = &res
+		if after != nil {
+			after()
+		}
 		writeJSON(w, status, res)
 	case http.MethodDelete:
+		if isScheduleRequest(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A schedule request cannot be deleted; undo it with another request (AdminRemove, SelfDeactivate).")
+			return
+		}
 		if _, ok := a.resources[key]; !ok {
 			w.WriteHeader(http.StatusNoContent)
 			return
