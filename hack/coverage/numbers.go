@@ -12,7 +12,7 @@ import (
 // numbersBlock is the part of docs/coverage/README.md that the tool writes:
 // the figures that go with the method (what was read, what could not be
 // mapped, how far ASO lags), so they cannot drift from the data.
-func numbersBlock(src *sources, st *specStats, dc *DocsCheck, res map[string]*Resource, rows []*ResRow, svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow, official, ours []*Kind) string {
+func numbersBlock(src *sources, st *specStats, dc *DocsCheck, res map[string]*Resource, rows []*ResRow, svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow, official, ours []*Kind, tf *Terraform) string {
 	var b strings.Builder
 	p := func(format string, a ...any) { fmt.Fprintf(&b, format, a...) }
 
@@ -127,6 +127,30 @@ func numbersBlock(src *sources, st *specStats, dc *DocsCheck, res map[string]*Re
 	if len(dc.VersionDiffs) > 0 {
 		p("\nVersion differences: %s.\n", strings.Join(dc.VersionDiffs, "; "))
 	}
+
+	// Terraform.
+	var missing []string
+	for _, s := range svcs {
+		if _, ok := tf.service(s.Service); !ok {
+			missing = append(missing, s.Service)
+		}
+	}
+	extra := 0
+	have := map[string]bool{}
+	for _, s := range svcs {
+		have[s.Service] = true
+	}
+	for s := range tf.ByService {
+		if !have[s] {
+			extra++
+		}
+	}
+	p("\n**Terraform** (`%s`, catalog `%s`, %s, vendored %s; an estimate): %s of the catalog's %s attributes (%s%%) by the lenient rule (L2), %s (%s%%) by the strict rule (L1). "+
+		"The catalog counted the denominator at an earlier commit of this repository, so its totals can differ slightly from the ones above. "+
+		"Services here without a Terraform row: %d%s; Terraform rows for services not here: %d.\n",
+		tf.Provider, short(src.Terraform.Commit), src.Terraform.CommitDate, src.Terraform.Fetched,
+		commas(tf.All.l2), commas(tf.All.total), pct(tf.All.l2, tf.All.total), commas(tf.All.l1), pct(tf.All.l1, tf.All.total),
+		len(missing), listOrNone(missing), extra)
 	return b.String()
 }
 
