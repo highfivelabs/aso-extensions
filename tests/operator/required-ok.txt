@@ -59,3 +59,4 @@ the policy remediation and attestation are deleted
 team-a RoleEligibilityScheduleRequest Ready
 team-b RoleEligibilityScheduleRequest refused
 the eligibility request is detached, not deleted
+team-a ManagementLock owners

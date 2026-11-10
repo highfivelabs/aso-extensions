@@ -105,6 +105,17 @@ type ManagementLockSpec struct {
 	// Notes about the lock, up to 512 characters.
 	// +kubebuilder:validation:MaxLength=512
 	Notes string `json:"notes,omitempty"`
+
+	// Owners of the lock, by application ID (Azure's properties.owners).
+	// Azure keeps the list with the lock; it grants nothing and does not
+	// change who may remove the lock.
+	Owners []LockOwner `json:"owners,omitempty"`
+}
+
+// LockOwner is an owner of a lock.
+type LockOwner struct {
+	// ApplicationId is the application ID of the lock owner.
+	ApplicationId string `json:"applicationId,omitempty"`
 }
 
 // OriginalVersion returns the original API version used to create the resource.
@@ -123,9 +134,10 @@ type ManagementLockStatus struct {
 	// Scope is the ARM ID of what the lock is on.
 	Scope string `json:"scope,omitempty"`
 
-	// Level and Notes as Azure holds them.
-	Level string `json:"level,omitempty"`
-	Notes string `json:"notes,omitempty"`
+	// Level, Notes and Owners as Azure holds them.
+	Level  string      `json:"level,omitempty"`
+	Notes  string      `json:"notes,omitempty"`
+	Owners []LockOwner `json:"owners,omitempty"`
 }
 
 func init() {

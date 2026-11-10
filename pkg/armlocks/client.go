@@ -31,8 +31,28 @@ const ResourceType = "Microsoft.Authorization/locks"
 
 // Properties are a lock's properties.
 type Properties struct {
-	Level string `json:"level"`
-	Notes string `json:"notes,omitempty"`
+	Level  string  `json:"level"`
+	Notes  string  `json:"notes,omitempty"`
+	Owners []Owner `json:"owners,omitempty"`
+}
+
+// Owner is a lock owner (ManagementLockOwner).
+type Owner struct {
+	ApplicationID string `json:"applicationId,omitempty"`
+}
+
+// Equal is whether two locks' properties are the same; no owners and an
+// empty list of owners are the same.
+func (p Properties) Equal(o Properties) bool {
+	if p.Level != o.Level || p.Notes != o.Notes || len(p.Owners) != len(o.Owners) {
+		return false
+	}
+	for i := range p.Owners {
+		if p.Owners[i] != o.Owners[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Lock is a management lock.
