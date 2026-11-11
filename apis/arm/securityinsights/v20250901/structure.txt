@@ -402,7 +402,7 @@ AlertRulesAction: Resource
 │   ├── OperatorSpec: *Object (2 properties)
 │   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
 │   │   └── SecretExpressions: *core.DestinationExpression[]
-│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   ├── Owner: *genruntime.KnownResourceReference
 │   └── TriggerUri: *genruntime.SecretReference
 └── Status: Object (8 properties)
     ├── Conditions: conditions.Condition[]
@@ -2335,7 +2335,7 @@ WatchlistsWatchlistItem: Resource
 │   ├── OperatorSpec: *Object (2 properties)
 │   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
 │   │   └── SecretExpressions: *core.DestinationExpression[]
-│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   ├── Owner: *genruntime.KnownResourceReference
 │   ├── TenantId: *string
 │   ├── Updated: *string
 │   ├── UpdatedBy: *Object (1 property)

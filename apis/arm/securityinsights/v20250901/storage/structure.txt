@@ -208,7 +208,7 @@ AlertRulesAction: Resource
 │   │   ├── PropertyBag: genruntime.PropertyBag
 │   │   └── SecretExpressions: *core.DestinationExpression[]
 │   ├── OriginalVersion: string
-│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   ├── Owner: *genruntime.KnownResourceReference
 │   ├── PropertyBag: genruntime.PropertyBag
 │   └── TriggerUri: *genruntime.SecretReference
 └── Status: Object (9 properties)
@@ -1623,7 +1623,7 @@ WatchlistsWatchlistItem: Resource
 │   │   ├── PropertyBag: genruntime.PropertyBag
 │   │   └── SecretExpressions: *core.DestinationExpression[]
 │   ├── OriginalVersion: string
-│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   ├── Owner: *genruntime.KnownResourceReference
 │   ├── PropertyBag: genruntime.PropertyBag
 │   ├── TenantId: *string
 │   ├── Updated: *string

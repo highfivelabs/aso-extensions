@@ -118,7 +118,7 @@ func (item WatchlistsWatchlistItem) GetAPIVersion() string {
 
 // GetResourceScope returns the scope of the resource
 func (item *WatchlistsWatchlistItem) GetResourceScope() genruntime.ResourceScope {
-	return genruntime.ResourceScopeExtension
+	return genruntime.ResourceScopeResourceGroup
 }
 
 // GetSpec returns the specification of this resource
@@ -156,7 +156,8 @@ func (item *WatchlistsWatchlistItem) Owner() *genruntime.ResourceReference {
 		return nil
 	}
 
-	return item.Spec.Owner.AsResourceReference()
+	group, kind := genruntime.LookupOwnerGroupKind(item.Spec)
+	return item.Spec.Owner.AsResourceReference(group, kind)
 }
 
 // SetStatus sets the status of this resource
@@ -279,9 +280,9 @@ type WatchlistsWatchlistItem_Spec struct {
 
 	// +kubebuilder:validation:Required
 	// Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
-	// controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
-	// extension resource, which means that any other Azure resource can be its owner.
-	Owner *genruntime.ArbitraryOwnerReference `json:"owner,omitempty"`
+	// controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+	// reference to a securityinsights.azure.hfl.dev/Watchlist resource
+	Owner *genruntime.KnownResourceReference `group:"securityinsights.azure.hfl.dev" json:"owner,omitempty" kind:"Watchlist"`
 
 	// TenantId: The tenantId to which the watchlist item belongs to
 	TenantId *string `json:"tenantId,omitempty"`
@@ -455,7 +456,10 @@ func (item *WatchlistsWatchlistItem_Spec) PopulateFromARM(owner genruntime.Arbit
 	// no assignment for property "OperatorSpec"
 
 	// Set property "Owner":
-	item.Owner = &owner
+	item.Owner = &genruntime.KnownResourceReference{
+		Name:  owner.Name,
+		ARMID: owner.ARMID,
+	}
 
 	// Set property "TenantId":
 	// copying flattened property:

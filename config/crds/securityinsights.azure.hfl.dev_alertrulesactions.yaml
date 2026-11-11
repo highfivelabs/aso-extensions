@@ -182,18 +182,11 @@ spec:
               owner:
                 description: |-
                   Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
-                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
-                  extension resource, which means that any other Azure resource can be its owner.
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a securityinsights.azure.hfl.dev/AlertRule resource
                 properties:
                   armId:
-                    description: Ownership across namespaces is not supported.
                     pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
-                    type: string
-                  group:
-                    description: Group is the Kubernetes group of the resource.
-                    type: string
-                  kind:
-                    description: Kind is the Kubernetes kind of the resource.
                     type: string
                   name:
                     description: This is the name of the Kubernetes resource to reference.

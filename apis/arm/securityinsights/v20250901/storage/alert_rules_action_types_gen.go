@@ -85,7 +85,7 @@ func (action AlertRulesAction) GetAPIVersion() string {
 
 // GetResourceScope returns the scope of the resource
 func (action *AlertRulesAction) GetResourceScope() genruntime.ResourceScope {
-	return genruntime.ResourceScopeExtension
+	return genruntime.ResourceScopeResourceGroup
 }
 
 // GetSpec returns the specification of this resource
@@ -123,7 +123,8 @@ func (action *AlertRulesAction) Owner() *genruntime.ResourceReference {
 		return nil
 	}
 
-	return action.Spec.Owner.AsResourceReference()
+	group, kind := genruntime.LookupOwnerGroupKind(action.Spec)
+	return action.Spec.Owner.AsResourceReference(group, kind)
 }
 
 // SetStatus sets the status of this resource
@@ -184,11 +185,11 @@ type AlertRulesAction_Spec struct {
 
 	// +kubebuilder:validation:Required
 	// Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
-	// controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
-	// extension resource, which means that any other Azure resource can be its owner.
-	Owner       *genruntime.ArbitraryOwnerReference `json:"owner,omitempty"`
-	PropertyBag genruntime.PropertyBag              `json:"$propertyBag,omitempty"`
-	TriggerUri  *genruntime.SecretReference         `json:"triggerUri,omitempty"`
+	// controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+	// reference to a securityinsights.azure.hfl.dev/AlertRule resource
+	Owner       *genruntime.KnownResourceReference `group:"securityinsights.azure.hfl.dev" json:"owner,omitempty" kind:"AlertRule"`
+	PropertyBag genruntime.PropertyBag             `json:"$propertyBag,omitempty"`
+	TriggerUri  *genruntime.SecretReference        `json:"triggerUri,omitempty"`
 }
 
 var _ genruntime.ConvertibleSpec = &AlertRulesAction_Spec{}

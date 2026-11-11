@@ -865,7 +865,7 @@ func (in *AlertRulesAction_Spec) DeepCopyInto(out *AlertRulesAction_Spec) {
 	}
 	if in.Owner != nil {
 		in, out := &in.Owner, &out.Owner
-		*out = new(genruntime.ArbitraryOwnerReference)
+		*out = new(genruntime.KnownResourceReference)
 		**out = **in
 	}
 	if in.TriggerUri != nil {
@@ -9557,7 +9557,7 @@ func (in *WatchlistsWatchlistItem_Spec) DeepCopyInto(out *WatchlistsWatchlistIte
 	}
 	if in.Owner != nil {
 		in, out := &in.Owner, &out.Owner
-		*out = new(genruntime.ArbitraryOwnerReference)
+		*out = new(genruntime.KnownResourceReference)
 		**out = **in
 	}
 	if in.TenantId != nil {
