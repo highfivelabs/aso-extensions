@@ -38,7 +38,8 @@ import (
 // the fake Resource Manager: the object becomes Ready; the fake holds a
 // resource of the kind's ARM type at the ID ASO wrote on the object; a
 // change of tags is PUT again; deleting the object deletes the resource
-// (or, for a kind Azure cannot delete, leaves it).
+// (or, for a kind Azure cannot delete, the object is detached, as ASO
+// requires, and the resource stays).
 //
 // What it does not show is each kind's own behaviour (keys Azure makes,
 // children kept on a parent's PUT, references the fake checks, refusals):
@@ -235,7 +236,19 @@ func conformance(t *testing.T, gvk schema.GroupVersionKind, meta genruntime.ARMM
 	obj.SetGroupVersionKind(gvk)
 	obj.SetNamespace(ns)
 	obj.SetName("conformance")
-	obj.SetAnnotations(fix.annotations)
+	annotations := map[string]string{}
+	for k, v := range fix.annotations {
+		annotations[k] = v
+	}
+	stays := fix.stays
+	if !deletable(meta) {
+		// Azure has no DELETE for it: ASO refuses to delete the object
+		// until it is detached (DeleteActionNotPossibleInAzure), as a
+		// user must; the resource stays.
+		annotations["serviceoperator.azure.com/reconcile-policy"] = "detach-on-delete"
+		stays = true
+	}
+	obj.SetAnnotations(annotations)
 	if err := k8s.Create(ctx, obj); err != nil {
 		t.Fatalf("creating %s: %v\nspec: %v", gvk.Kind, err, spec)
 	}
@@ -279,11 +292,11 @@ func conformance(t *testing.T, gvk schema.GroupVersionKind, meta genruntime.ARMM
 		}
 		return fmt.Errorf("still there: %v", err)
 	})
-	if fix.stays {
+	if stays {
 		if !armFake.HasResource(id) {
 			t.Fatalf("%s detached, but %s is gone from the fake", gvk.Kind, id)
 		}
-	} else if deletable(meta) && armFake.HasResource(id) {
+	} else if armFake.HasResource(id) {
 		t.Fatalf("%s deleted, but %s is still in the fake", gvk.Kind, id)
 	}
 }
