@@ -127,3 +127,7 @@ the Log Analytics cluster and the data source are deleted in Resource Manager
 team-a Azure SQL User Ready
 team-b Azure SQL User refused
 the Azure SQL Entra user app-identity is dropped
+team-a DirectoryRoleAssignment Ready: Global Reader
+team-a DirectoryRoleAssignment Ready: User Administrator over an administrative unit
+team-b DirectoryRoleAssignment refused
+the directory role assignments are deleted in Microsoft Graph

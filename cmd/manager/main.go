@@ -74,7 +74,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	opts := manager.Options{EnableAzureCLI: enableAzureCLI}
+	// MICROSOFT_GRAPH_ENDPOINT: Microsoft Graph's address for the Entra
+	// kinds (https://graph.microsoft.com when unset; a national cloud, or
+	// the fake cloud in tests, sets its own).
+	opts := manager.Options{EnableAzureCLI: enableAzureCLI, GraphEndpoint: os.Getenv("MICROSOFT_GRAPH_ENDPOINT")}
 	if testOptions != nil {
 		testOptions(&opts)
 	}
