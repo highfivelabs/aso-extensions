@@ -336,15 +336,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 1,823 (4.2%) in 111 further resources; uncovered 34,426 (79.4%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 1,923 (4.4%) in 124 further resources; uncovered 34,326 (79.1%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 16.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 6.9% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.0% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 17.5% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 6.9% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.0% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 26.5% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 2.6% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 3.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 0.0% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 28.6% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 2.6% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 3.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 0.0% more by ours.
 
 **Ours.**
 
@@ -380,9 +380,11 @@ Generated; these cannot drift from the data.
 | `dbforpostgresql.azure.hfl.dev/User` | `Microsoft.DBforPostgreSQL/flexibleServers/users` | outside the denominator, not in any percentage |
 | `devtestlab.azure.hfl.dev/Schedule` | `Microsoft.DevTestLab/schedules` | ARM wire type of the generated kind (`apis/arm`) |
 | `entra.azure.hfl.dev/DirectoryRoleAssignment` | `Microsoft Graph roleManagement/directory/roleAssignments` | outside the denominator, not in any percentage |
+| `insights.azure.hfl.dev/LogProfile` | `Microsoft.Insights/logprofiles` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScope` | `Microsoft.Insights/privateLinkScopes` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection` | `Microsoft.Insights/privateLinkScopes/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScopesScopedResource` | `Microsoft.Insights/privateLinkScopes/scopedResources` | ARM wire type of the generated kind (`apis/arm`) |
+| `insights.azure.hfl.dev/WorkbookTemplate` | `Microsoft.Insights/workbooktemplates` | ARM wire type of the generated kind (`apis/arm`) |
 | `keyvault.azure.hfl.dev/ManagedHSM` | `Microsoft.KeyVault/managedHSMs` | ARM wire type of the generated kind (`apis/arm`) |
 | `keyvault.azure.hfl.dev/ManagedHSMsKey` | `Microsoft.KeyVault/managedHSMs/keys` | ARM wire type of the generated kind (`apis/arm`) |
 | `keyvault.azure.hfl.dev/ManagedHSMsPrivateEndpointConnection` | `Microsoft.KeyVault/managedHSMs/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
@@ -397,6 +399,11 @@ Generated; these cannot drift from the data.
 | `management.azure.hfl.dev/ManagementGroup` | `Microsoft.Management/managementGroups` | ARM wire type of the generated kind (`apis/arm`) |
 | `management.azure.hfl.dev/ManagementGroupsSetting` | `Microsoft.Management/managementGroups/settings` | ARM wire type of the generated kind (`apis/arm`) |
 | `management.azure.hfl.dev/ManagementGroupsSubscription` | `Microsoft.Management/managementGroups/subscriptions` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/DnsResolverDomainList` | `Microsoft.Network/dnsResolverDomainLists` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/DnsResolverPoliciesDnsSecurityRule` | `Microsoft.Network/dnsResolverPolicies/dnsSecurityRules` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/DnsResolverPoliciesVirtualNetworkLink` | `Microsoft.Network/dnsResolverPolicies/virtualNetworkLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/DnsResolverPolicy` | `Microsoft.Network/dnsResolverPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/DnsZonesSOARecord` | `Microsoft.Network/dnsZones/SOA` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/ExpressRouteCircuit` | `Microsoft.Network/expressRouteCircuits` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/ExpressRouteCircuitsAuthorization` | `Microsoft.Network/expressRouteCircuits/authorizations` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/ExpressRouteCircuitsPeering` | `Microsoft.Network/expressRouteCircuits/peerings` | ARM wire type of the generated kind (`apis/arm`) |
@@ -405,6 +412,7 @@ Generated; these cannot drift from the data.
 | `network.azure.hfl.dev/ExpressRouteGatewaysExpressRouteConnection` | `Microsoft.Network/expressRouteGateways/expressRouteConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/ExpressRoutePort` | `Microsoft.Network/ExpressRoutePorts` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/ExpressRoutePortsAuthorization` | `Microsoft.Network/expressRoutePorts/authorizations` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/IpGroup` | `Microsoft.Network/ipGroups` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/LocalNetworkGateway` | `Microsoft.Network/localNetworkGateways` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkManager` | `Microsoft.Network/networkManagers` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkManagerConnection` | `Microsoft.Network/networkManagerConnections` | ARM wire type of the generated kind (`apis/arm`) |
@@ -429,6 +437,11 @@ Generated; these cannot drift from the data.
 | `network.azure.hfl.dev/NetworkSecurityPerimetersProfilesAccessRule` | `Microsoft.Network/networkSecurityPerimeters/profiles/accessRules` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkSecurityPerimetersResourceAssociation` | `Microsoft.Network/networkSecurityPerimeters/resourceAssociations` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/P2sVpnGateway` | `Microsoft.Network/p2svpnGateways` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/PrivateDnsZonesSOARecord` | `Microsoft.Network/privateDnsZones/SOA` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/RouteFilter` | `Microsoft.Network/routeFilters` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/RouteFiltersRouteFilterRule` | `Microsoft.Network/routeFilters/routeFilterRules` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/ServiceEndpointPoliciesServiceEndpointPolicyDefinition` | `Microsoft.Network/serviceEndpointPolicies/serviceEndpointPolicyDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/ServiceEndpointPolicy` | `Microsoft.Network/serviceEndpointPolicies` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualHub` | `Microsoft.Network/virtualHubs` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualHubsBgpConnection` | `Microsoft.Network/virtualHubs/bgpConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualHubsHubRouteTable` | `Microsoft.Network/virtualHubs/hubRouteTables` | ARM wire type of the generated kind (`apis/arm`) |

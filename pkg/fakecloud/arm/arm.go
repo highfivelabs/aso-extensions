@@ -58,6 +58,9 @@
 // scopes are checked too (kubernetesconfiguration.go: the cluster, protected
 // settings kept but not returned).
 //
+// Activity log profiles and workbook templates are checked too (insights.go:
+// one log profile per subscription, its destination, a template's galleries).
+//
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
 package arm
@@ -332,6 +335,18 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := a.checkDNS(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkFilters(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkInsights(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		if status, code, msg := a.checkVPN(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
@@ -395,6 +410,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		}
 		if _, ok := a.resources[key]; !ok {
 			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		if soaDeleteRefused(id) {
+			writeError(w, http.StatusBadRequest, "BadRequest", "A zone's SOA record set cannot be deleted; it is deleted with its zone.")
 			return
 		}
 		if managementGroup.MatchString(id) {

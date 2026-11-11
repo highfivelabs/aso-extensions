@@ -10,7 +10,9 @@ no_list: true
 
 | Resource                                   | ARM Version | CRD Version | Supported From | Sample |
 |--------------------------------------------|-------------|-------------|----------------|--------|
+| LogProfile                                 | 2016-03-01  | v20160301   | v0.1.0         | -      |
 | PrivateLinkScope                           | 2021-09-01  | v20210901   | v0.1.0         | -      |
 | PrivateLinkScopesPrivateEndpointConnection | 2021-09-01  | v20210901   | v0.1.0         | -      |
 | PrivateLinkScopesScopedResource            | 2021-09-01  | v20210901   | v0.1.0         | -      |
+| WorkbookTemplate                           | 2020-11-20  | v20201120   | v0.1.0         | -      |
 
