@@ -142,6 +142,35 @@ func init() {
 			return map[string]any{"adminRule": map[string]any{"kind": "Custom", "access": "Allow", "direction": "Inbound", "priority": int64(100), "protocol": "Tcp"}}
 		}},
 		"NetworkManagersCommit": {coveredBy: "TestNetworkManagerRouting"},
+
+		// Defender for Cloud: a setting is polymorphic, exactly one leaf set.
+		"Setting": {spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"azureName": "MCAS", "dataExportSettings": map[string]any{"kind": "DataExportSettings", "enabled": true}}
+		}},
+	}
+	// Microsoft Sentinel: polymorphic resources and actions, exactly one
+	// leaf set.
+	sentinel := map[string]conformanceFixture{
+		"AlertRule": {spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"fusionAlertRule": map[string]any{"kind": "Fusion", "enabled": true,
+				"alertRuleTemplateName": "f71aba3d-28fb-450b-b192-4e76a83015c8"}}
+		}},
+		"DataConnector": {spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"ascDataConnector": map[string]any{"kind": "AzureSecurityCenter"}}
+		}},
+		"AutomationRule": {spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"actions": []any{map[string]any{"modifyProperties": map[string]any{
+				"actionType": "ModifyProperties", "order": int64(1),
+				"actionConfiguration": map[string]any{"status": "Closed"}}}}}
+		}},
+	}
+	// Deployment scripts: polymorphic (Azure PowerShell or Azure CLI).
+	sentinel["DeploymentScript"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureCliScript": map[string]any{"kind": "AzureCLI", "location": "westus",
+			"azCliVersion": "2.60.0", "retentionInterval": "PT1H", "scriptContent": "echo conformance"}}
+	}}
+	for k, v := range sentinel {
+		f[k] = v
 	}
 	// AKS: a node pool snapshot names the agent pool it is taken of, which
 	// must exist.

@@ -211,6 +211,90 @@ PolicyDefinition: Resource
     ├── Version: *string
     └── Versions: string[]
 
+PolicyDefinitionsVersion: Resource
+├── Owner: authorization/v20260701.PolicyDefinition
+├── Spec: Object (14 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── ExternalEvaluationEnforcementSettings: *Object (5 properties)
+│   │   ├── EndpointSettings: *Object (3 properties)
+│   │   │   ├── Details: *v1.JSON
+│   │   │   ├── Kind: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── MissingTokenAction: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── ResultLifespan: *string
+│   │   └── RoleDefinitionIds: string[]
+│   ├── Metadata: *v1.JSON
+│   ├── Mode: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Parameters: map[string]Object (6 properties)
+│   │   ├── AllowedValues: v1.JSON[]
+│   │   ├── DefaultValue: *v1.JSON
+│   │   ├── Metadata: *Object (6 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── AssignPermissions: *bool
+│   │   │   ├── Description: *string
+│   │   │   ├── DisplayName: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── StrongType: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   └── Type: *string
+│   ├── PolicyRule: *v1.JSON
+│   ├── PolicyType: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Version: *string
+└── Status: Object (15 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── ExternalEvaluationEnforcementSettings: *Object (5 properties)
+    │   ├── EndpointSettings: *Object (3 properties)
+    │   │   ├── Details: *v1.JSON
+    │   │   ├── Kind: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── MissingTokenAction: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ResultLifespan: *string
+    │   └── RoleDefinitionIds: string[]
+    ├── Id: *string
+    ├── Metadata: *v1.JSON
+    ├── Mode: *string
+    ├── Name: *string
+    ├── Parameters: map[string]Object (6 properties)
+    │   ├── AllowedValues: v1.JSON[]
+    │   ├── DefaultValue: *v1.JSON
+    │   ├── Metadata: *Object (6 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── AssignPermissions: *bool
+    │   │   ├── Description: *string
+    │   │   ├── DisplayName: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── StrongType: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   └── Type: *string
+    ├── PolicyRule: *v1.JSON
+    ├── PolicyType: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── Version: *string
+
 PolicySetDefinition: Resource
 ├── Spec: Object (14 properties)
 │   ├── AzureName: string
@@ -307,4 +391,100 @@ PolicySetDefinition: Resource
     ├── Type: *string
     ├── Version: *string
     └── Versions: string[]
+
+PolicySetDefinitionsVersion: Resource
+├── Owner: authorization/v20260701.PolicySetDefinition
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── Metadata: *v1.JSON
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Parameters: map[string]Object (6 properties)
+│   │   ├── AllowedValues: v1.JSON[]
+│   │   ├── DefaultValue: *v1.JSON
+│   │   ├── Metadata: *Object (6 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── AssignPermissions: *bool
+│   │   │   ├── Description: *string
+│   │   │   ├── DisplayName: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── StrongType: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   └── Type: *string
+│   ├── PolicyDefinitionGroups: Object (6 properties)[]
+│   │   ├── AdditionalMetadataReference: *genruntime.ResourceReference
+│   │   ├── Category: *string
+│   │   ├── Description: *string
+│   │   ├── DisplayName: *string
+│   │   ├── Name: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── PolicyDefinitions: Object (6 properties)[]
+│   │   ├── DefinitionVersion: *string
+│   │   ├── GroupNames: string[]
+│   │   ├── Parameters: map[string]Object (2 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Value: *v1.JSON
+│   │   ├── PolicyDefinitionReference: *genruntime.ResourceReference
+│   │   ├── PolicyDefinitionReferenceId: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── PolicyType: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Version: *string
+└── Status: Object (14 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── Id: *string
+    ├── Metadata: *v1.JSON
+    ├── Name: *string
+    ├── Parameters: map[string]Object (6 properties)
+    │   ├── AllowedValues: v1.JSON[]
+    │   ├── DefaultValue: *v1.JSON
+    │   ├── Metadata: *Object (6 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── AssignPermissions: *bool
+    │   │   ├── Description: *string
+    │   │   ├── DisplayName: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── StrongType: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   └── Type: *string
+    ├── PolicyDefinitionGroups: Object (6 properties)[]
+    │   ├── AdditionalMetadataId: *string
+    │   ├── Category: *string
+    │   ├── Description: *string
+    │   ├── DisplayName: *string
+    │   ├── Name: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PolicyDefinitions: Object (8 properties)[]
+    │   ├── DefinitionVersion: *string
+    │   ├── EffectiveDefinitionVersion: *string
+    │   ├── GroupNames: string[]
+    │   ├── LatestDefinitionVersion: *string
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Value: *v1.JSON
+    │   ├── PolicyDefinitionId: *string
+    │   ├── PolicyDefinitionReferenceId: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PolicyType: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── Version: *string
 

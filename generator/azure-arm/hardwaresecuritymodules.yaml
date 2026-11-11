@@ -1,0 +1,23 @@
+# Azure Cloud HSM and Dedicated HSM (Microsoft.HardwareSecurityModules,
+# 2025-03-31, the newest stable): foundation row 24 of
+# docs/coverage/foundation.md. In a resource group.
+typeFilters:
+  - action: include
+    group: hardwaresecuritymodules
+    version: v20250331
+    because: the newest stable version (Cloud HSM clusters and their private endpoint connections, Dedicated HSMs)
+  - action: prune
+    group: hardwaresecuritymodules
+    because: every other version is left alone
+
+groupModelConfiguration:
+  2025-03-31:
+    CloudHsmCluster:
+      $exportAs: CloudHsmCluster
+      $supportedFrom: v0.1.0
+    CloudHsmClusters_PrivateEndpointConnection:
+      $exportAs: CloudHsmClustersPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    DedicatedHsm:
+      $exportAs: DedicatedHsm
+      $supportedFrom: v0.1.0

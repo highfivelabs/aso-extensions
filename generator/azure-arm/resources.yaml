@@ -12,14 +12,59 @@ typeFilters:
     because: defined differently by different specs of the Resources API
   - action: include
     group: resources
+    version: v20220201
+    because: template specs and their versions, the newest stable version
+  - action: include
+    group: resources
+    version: v20230801
+    because: deployment scripts, the newest stable version
+  - action: include
+    group: resources
+    version: v20250701
+    because: deployment stacks, the newest stable version
+  - action: include
+    group: resources
     version: v20250401
     because: the newest stable version of the Resources API, which holds the tags resource
   - action: prune
     group: resources
     because: every other version is left alone
-
 groupModelConfiguration:
   2025-04-01:
     Tag:
       $exportAs: TagSet
       $supportedFrom: v0.1.0
+  2022-02-01:
+    TemplateSpec:
+      $exportAs: TemplateSpec
+      $supportedFrom: v0.1.0
+    TemplateSpecs_Version:
+      $exportAs: TemplateSpecsVersion
+      $supportedFrom: v0.1.0
+  2023-08-01:
+    DeploymentScript:
+      $exportAs: DeploymentScript
+      $supportedFrom: v0.1.0
+    # Polymorphic (kind AzurePowerShell or AzureCLI): one property per leaf,
+    # exactly one set.
+    AzurePowerShellScript:
+      $resourceEmbeddedInParent: DeploymentScript
+    AzurePowerShellScript_STATUS:
+      $resourceEmbeddedInParent: DeploymentScript
+    AzureCliScript:
+      $resourceEmbeddedInParent: DeploymentScript
+    AzureCliScript_STATUS:
+      $resourceEmbeddedInParent: DeploymentScript
+  2025-07-01:
+    DeploymentStack:
+      $exportAs: DeploymentStack
+      $supportedFrom: v0.1.0
+    DeploymentStackProperties:
+      DeploymentScope:
+        $referenceType: simple # autolabel: review
+    DeploymentStacksTemplateLink:
+      Id:
+        $referenceType: arm # autolabel: review
+    KeyVaultReference:
+      Id:
+        $referenceType: arm # autolabel: review

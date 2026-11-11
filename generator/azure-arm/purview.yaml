@@ -1,0 +1,25 @@
+# Microsoft Purview accounts (Microsoft.Purview, 2021-12-01, the newest
+# stable): foundation row 24 of docs/coverage/foundation.md. In a resource
+# group.
+typeFilters:
+  - action: include
+    group: purview
+    version: v20211201
+    because: the newest stable version (accounts, their Kafka configurations and private endpoint connections)
+  - action: prune
+    group: purview
+    because: every other version is left alone
+groupModelConfiguration:
+  2021-12-01:
+    Account:
+      $exportAs: Account
+      $supportedFrom: v0.1.0
+    Accounts_KafkaConfiguration:
+      $exportAs: AccountsKafkaConfiguration
+      $supportedFrom: v0.1.0
+    Accounts_PrivateEndpointConnection:
+      $exportAs: AccountsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    PrivateEndpoint:
+      Id:
+        $referenceType: arm # autolabel: review

@@ -9,12 +9,19 @@ typeFilters:
     because: policy exemptions exist only in preview versions; this is the newest
   - action: include
     group: authorization
+    version: v20200501
+    because: Resource Manager private links and their management group associations (the only version)
+  - action: include
+    group: authorization
+    version: v20241201preview
+    because: policy variables and their values (preview only)
+  - action: include
+    group: authorization
     version: v20201001
     because: Privileged Identity Management (role eligibility and assignment schedule requests, role management policy assignments); the version ASO PR #5638 generates its RoleEligibilityScheduleRequest from
   - action: prune
     group: authorization
     because: every other version is left alone (locks are the hand-written ManagementLock)
-
 groupModelConfiguration:
   # Privileged Identity Management. RoleEligibilityScheduleRequest is copied
   # from ASO PR #5638 (head 5d0e686e) as it is, but for $supportedFrom (our
@@ -70,6 +77,12 @@ groupModelConfiguration:
     PolicyDefinition:
       $exportAs: PolicyDefinition
       $supportedFrom: v0.1.0
+    PolicyDefinitions_Version:
+      $exportAs: PolicyDefinitionsVersion
+      $supportedFrom: v0.1.0
+    PolicySetDefinitions_Version:
+      $exportAs: PolicySetDefinitionsVersion
+      $supportedFrom: v0.1.0
     PolicySetDefinition:
       $exportAs: PolicySetDefinition
       $supportedFrom: v0.1.0
@@ -95,3 +108,22 @@ groupModelConfiguration:
     PolicyExemptionProperties:
       PolicyAssignmentId:
         $referenceType: arm # the assignment exempted from
+  2020-05-01:
+    PrivateLinkAssociation:
+      $exportAs: PrivateLinkAssociation
+      $supportedFrom: v0.1.0
+    ResourceManagementPrivateLink:
+      $exportAs: ResourceManagementPrivateLink
+      $supportedFrom: v0.1.0
+    PrivateLinkAssociationProperties:
+      PrivateLink:
+        $referenceType: arm # the Resource Manager private link (ResourceManagementPrivateLink) the association names
+  2024-12-01-preview:
+    Variable:
+      $exportAs: PolicyVariable
+      $supportedFrom: v0.1.0
+    # Not exported: Variables_Value. Its column value is a scalar (an
+    # integer, double, boolean, null or string) that the spec types as an
+    # object, so the generated kind sent an object and dropped an empty one
+    # (the conformance test caught it); it needs the spec fixed or a
+    # hand-written type.

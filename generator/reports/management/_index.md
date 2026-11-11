@@ -13,4 +13,5 @@ no_list: true
 | ManagementGroup              | 2023-04-01  | v20230401   | v0.1.0         | -      |
 | ManagementGroupsSetting      | 2023-04-01  | v20230401   | v0.1.0         | -      |
 | ManagementGroupsSubscription | 2023-04-01  | v20230401   | v0.1.0         | -      |
+| ServiceGroup                 | 2026-08-01  | v20260801   | v0.1.0         | -      |
 

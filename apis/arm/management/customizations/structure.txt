@@ -7,3 +7,5 @@ ManagementGroupsSettingExtension: Object (0 properties)
 
 ManagementGroupsSubscriptionExtension: Object (0 properties)
 
+ServiceGroupExtension: Object (0 properties)
+

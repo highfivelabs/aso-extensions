@@ -19,7 +19,7 @@ checked by `hack/coverage/run.sh --check`.
 | `attributes.csv` | attribute | `service,resource,attribute,type,required,covered_by,official_path,ours_path` |
 | `tiers.csv` | tier | `tier,services,attributes_total,attributes_official,attributes_ours_beyond,attributes_uncovered,pct_official,pct_ours_beyond,pct_uncovered,resources_total,resources_official,resources_ours_beyond` |
 | `categories.csv` | category | `category,services,resources_total,resources_official,resources_ours_beyond,attributes_total,attributes_official,attributes_ours_beyond,attributes_uncovered,pct_official,pct_ours_beyond,pct_uncovered` |
-| `priority.csv` | service, or resource type, ranked by hand | `service,tier,rationale,source,category` (hand-edited; the order of the rows is the order of importance) |
+| `priority.csv` | service, or resource type, the builder ranks | `service,tier,rationale,source,category` (hand-edited; the order of the rows is the order of importance) |
 | `avm-need.csv` | resource type | `resource,modules,named`: how many Azure Verified Modules need it (hand-edited) |
 | `foundation.md` | | the ranked foundation gap report, the work queue for the kind agents |
 | `bars/<service>.svg`, `bars/_total.svg`, `bars/_tiers.svg`, `bars/_categories.svg` | service, the whole, the tiers, the categories | stacked bars: blue official, green ours beyond official, light grey uncovered; under each, a separate purple bar for Terraform (`azurerm`, an estimate, with a dark tick at its strict figure; see "Terraform") |
@@ -146,12 +146,13 @@ partly "ASO has not moved to the new API version", which is a real gap for
 someone who needs the new property, and not the same as ASO lacking the
 resource.
 
-**Categories and tiers.** Not every service matters alike. The priority
-(2026-11-09): the foundational APIs of every cloud provider must be covered
-thoroughly. Everything up through a managed Kubernetes cluster is table stakes
-for a platform team establishing a target. The foundational services next to
-it matter to security teams. Beyond that come application primitives. The open
-source module space guides where the effort goes. So `priority.csv` gives each service, and where
+**Categories and tiers.** Not every service matters alike. The builder,
+2026-11-09: "the really baseline, the foundational APIs of all cloud providers
+really need to be covered fairly thoroughly. Everything up through a managed
+Kubernetes cluster is table stakes for a platform team establishing a target.
+The adjacent foundational things next to it are important for security teams.
+Beyond that, it's application primitives. The OSS module space should kind of
+guide where we put the effort." So `priority.csv` gives each service, and where
 it differs a resource type or a prefix of one, a **category**:
 
 - `platform-foundation`: management groups, subscriptions (aliases, tags,
@@ -178,7 +179,7 @@ from (`highfivelabs/catalog docs/azure.md`, read 2026-11-09), is kept as the
 `rationale` and breaks ties in `foundation.md`: usage by modules is a proxy for
 what teams need, taken from one registry at one date and counting a module once
 however many resources it creates. The order of the rows in `priority.csv` is
-the order of importance (a hand-kept list), which the foundation report uses.
+the order of importance (the builder's list), which the foundation report uses.
 The builder may change any row; the generator reads the file and never
 recomputes it, and fails on a row that names a service or resource type that is
 not in the data. Limits: a category is a judgment (virtual machines are
@@ -336,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 1,923 (4.4%) in 124 further resources; uncovered 34,326 (79.1%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 2,340 (5.4%) in 164 further resources; uncovered 33,909 (78.2%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 17.5% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 6.9% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.0% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 19.1% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 10.5% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.0% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 28.6% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 2.6% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 3.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 0.0% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 30.2% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 30.8% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 3.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 0.2% more by ours.
 
 **Ours.**
 
@@ -358,8 +359,13 @@ Generated; these cannot drift from the data.
 | `authorization.azure.hfl.dev/ManagementLock` | `Microsoft.Authorization/locks` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
 | `authorization.azure.hfl.dev/PolicyAssignment` | `Microsoft.Authorization/policyAssignments` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/PolicyDefinition` | `Microsoft.Authorization/policyDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
+| `authorization.azure.hfl.dev/PolicyDefinitionsVersion` | `Microsoft.Authorization/policyDefinitions/versions` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/PolicyExemption` | `Microsoft.Authorization/policyExemptions` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/PolicySetDefinition` | `Microsoft.Authorization/policySetDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
+| `authorization.azure.hfl.dev/PolicySetDefinitionsVersion` | `Microsoft.Authorization/policySetDefinitions/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `authorization.azure.hfl.dev/PolicyVariable` | `Microsoft.Authorization/variables` | ARM wire type of the generated kind (`apis/arm`) |
+| `authorization.azure.hfl.dev/PrivateLinkAssociation` | `Microsoft.Authorization/privateLinkAssociations` | ARM wire type of the generated kind (`apis/arm`) |
+| `authorization.azure.hfl.dev/ResourceManagementPrivateLink` | `Microsoft.Authorization/resourceManagementPrivateLinks` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/RoleAssignmentScheduleRequest` | `Microsoft.Authorization/roleAssignmentScheduleRequests` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/RoleEligibilityScheduleRequest` | `Microsoft.Authorization/roleEligibilityScheduleRequests` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/RoleManagementPolicyAssignment` | `Microsoft.Authorization/roleManagementPolicyAssignments` | ARM wire type of the generated kind (`apis/arm`) |
@@ -377,9 +383,13 @@ Generated; these cannot drift from the data.
 | `containerservice.azure.hfl.dev/ManagedClustersPrivateEndpointConnection` | `Microsoft.ContainerService/managedClusters/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerservice.azure.hfl.dev/Snapshot` | `Microsoft.ContainerService/snapshots` | ARM wire type of the generated kind (`apis/arm`) |
 | `costmanagement.azure.hfl.dev/Export` | `Microsoft.CostManagement/exports` | ARM wire type of the generated kind (`apis/arm`) |
+| `costmanagement.azure.hfl.dev/ScheduledAction` | `Microsoft.CostManagement/scheduledActions` | ARM wire type of the generated kind (`apis/arm`) |
 | `dbforpostgresql.azure.hfl.dev/User` | `Microsoft.DBforPostgreSQL/flexibleServers/users` | outside the denominator, not in any percentage |
 | `devtestlab.azure.hfl.dev/Schedule` | `Microsoft.DevTestLab/schedules` | ARM wire type of the generated kind (`apis/arm`) |
 | `entra.azure.hfl.dev/DirectoryRoleAssignment` | `Microsoft Graph roleManagement/directory/roleAssignments` | outside the denominator, not in any percentage |
+| `hardwaresecuritymodules.azure.hfl.dev/CloudHsmCluster` | `Microsoft.HardwareSecurityModules/cloudHsmClusters` | ARM wire type of the generated kind (`apis/arm`) |
+| `hardwaresecuritymodules.azure.hfl.dev/CloudHsmClustersPrivateEndpointConnection` | `Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `hardwaresecuritymodules.azure.hfl.dev/DedicatedHsm` | `Microsoft.HardwareSecurityModules/dedicatedHSMs` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/LogProfile` | `Microsoft.Insights/logprofiles` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScope` | `Microsoft.Insights/privateLinkScopes` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection` | `Microsoft.Insights/privateLinkScopes/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
@@ -399,6 +409,7 @@ Generated; these cannot drift from the data.
 | `management.azure.hfl.dev/ManagementGroup` | `Microsoft.Management/managementGroups` | ARM wire type of the generated kind (`apis/arm`) |
 | `management.azure.hfl.dev/ManagementGroupsSetting` | `Microsoft.Management/managementGroups/settings` | ARM wire type of the generated kind (`apis/arm`) |
 | `management.azure.hfl.dev/ManagementGroupsSubscription` | `Microsoft.Management/managementGroups/subscriptions` | ARM wire type of the generated kind (`apis/arm`) |
+| `management.azure.hfl.dev/ServiceGroup` | `Microsoft.Management/serviceGroups` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/DnsResolverDomainList` | `Microsoft.Network/dnsResolverDomainLists` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/DnsResolverPoliciesDnsSecurityRule` | `Microsoft.Network/dnsResolverPolicies/dnsSecurityRules` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/DnsResolverPoliciesVirtualNetworkLink` | `Microsoft.Network/dnsResolverPolicies/virtualNetworkLinks` | ARM wire type of the generated kind (`apis/arm`) |
@@ -469,11 +480,41 @@ Generated; these cannot drift from the data.
 | `operationsmanagement.azure.hfl.dev/Solution` | `Microsoft.OperationsManagement/solutions` | ARM wire type of the generated kind (`apis/arm`) |
 | `policyinsights.azure.hfl.dev/PolicyAttestation` | `Microsoft.PolicyInsights/attestations` | ARM wire type of the generated kind (`apis/arm`) |
 | `policyinsights.azure.hfl.dev/PolicyRemediation` | `Microsoft.PolicyInsights/remediations` | ARM wire type of the generated kind (`apis/arm`) |
+| `purview.azure.hfl.dev/Account` | `Microsoft.Purview/accounts` | ARM wire type of the generated kind (`apis/arm`) |
+| `purview.azure.hfl.dev/AccountsKafkaConfiguration` | `Microsoft.Purview/accounts/kafkaConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `purview.azure.hfl.dev/AccountsPrivateEndpointConnection` | `Microsoft.Purview/accounts/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `recoveryservices.azure.hfl.dev/Vault` | `Microsoft.RecoveryServices/vaults` | ARM wire type of the generated kind (`apis/arm`) |
 | `recoveryservices.azure.hfl.dev/VaultsBackupPolicy` | `Microsoft.RecoveryServices/vaults/backupPolicies` | ARM wire type of the generated kind (`apis/arm`) |
 | `recoveryservices.azure.hfl.dev/VaultsBackupResourceGuardProxy` | `Microsoft.RecoveryServices/vaults/backupResourceGuardProxies` | ARM wire type of the generated kind (`apis/arm`) |
 | `recoveryservices.azure.hfl.dev/VaultsPrivateEndpointConnection` | `Microsoft.RecoveryServices/vaults/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `resources.azure.hfl.dev/DeploymentScript` | `Microsoft.Resources/deploymentScripts` | ARM wire type of the generated kind (`apis/arm`) |
+| `resources.azure.hfl.dev/DeploymentStack` | `Microsoft.Resources/deploymentStacks` | ARM wire type of the generated kind (`apis/arm`) |
 | `resources.azure.hfl.dev/TagSet` | `Microsoft.Resources/tags` | ARM wire type of the generated kind (`apis/arm`) |
+| `resources.azure.hfl.dev/TemplateSpec` | `Microsoft.Resources/templateSpecs` | ARM wire type of the generated kind (`apis/arm`) |
+| `resources.azure.hfl.dev/TemplateSpecsVersion` | `Microsoft.Resources/templateSpecs/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/AdvancedThreatProtectionSetting` | `Microsoft.Security/advancedThreatProtectionSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/AutoProvisioningSetting` | `Microsoft.Security/autoProvisioningSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/Automation` | `Microsoft.Security/automations` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/CustomRecommendation` | `Microsoft.Security/customRecommendations` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/DefenderForStorageSetting` | `Microsoft.Security/defenderForStorageSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/Pricing` | `Microsoft.Security/pricings` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/SecurityContact` | `Microsoft.Security/securityContacts` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/SecurityStandard` | `Microsoft.Security/securityStandards` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/ServerVulnerabilityAssessmentsSetting` | `Microsoft.Security/serverVulnerabilityAssessmentsSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/Setting` | `Microsoft.Security/settings` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/StandardAssignment` | `Microsoft.Security/standardAssignments` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/WorkspaceSetting` | `Microsoft.Security/workspaceSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/AlertRule` | `Microsoft.SecurityInsights/alertRules` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/AlertRulesAction` | `Microsoft.SecurityInsights/alertRules/actions` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/AutomationRule` | `Microsoft.SecurityInsights/automationRules` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/ContentPackage` | `Microsoft.SecurityInsights/contentPackages` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/ContentTemplate` | `Microsoft.SecurityInsights/contentTemplates` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/DataConnector` | `Microsoft.SecurityInsights/dataConnectors` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/DataConnectorDefinition` | `Microsoft.SecurityInsights/dataConnectorDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/OnboardingState` | `Microsoft.SecurityInsights/onboardingStates` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/SecurityMLAnalyticsSetting` | `Microsoft.SecurityInsights/securityMLAnalyticsSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/Watchlist` | `Microsoft.SecurityInsights/watchlists` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/WatchlistsWatchlistItem` | `Microsoft.SecurityInsights/watchlists/watchlistItems` | ARM wire type of the generated kind (`apis/arm`) |
 | `sql.azure.hfl.dev/User` | `Microsoft.Sql/servers/databases/users` | outside the denominator, not in any percentage |
 | `web.azure.hfl.dev/Certificate` | `Microsoft.Web/certificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesHostNameBinding` | `Microsoft.Web/sites/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |

@@ -1,0 +1,188 @@
+# Microsoft Sentinel (Microsoft.SecurityInsights, 2025-09-01, the newest
+# stable): foundation row 22 of docs/coverage/foundation.md, the
+# configuration of a Sentinel workspace (onboarding, analytics and
+# automation rules, data connectors, content, watchlists, ML analytics
+# settings). Every resource is an extension resource of a Log Analytics
+# workspace (.../workspaces/{w}/providers/Microsoft.SecurityInsights/...),
+# owned by ASO's Workspace or its ARM ID. Not generated: incidents,
+# bookmarks, threat intelligence indicators and source controls (operational
+# data, not configuration).
+typeFilters:
+  - action: include
+    group: securityinsights
+    version: v20250901
+    because: the newest stable version of Microsoft Sentinel
+  - action: prune
+    group: securityinsights
+    because: every other version is left alone
+typeTransformers:
+  # Directly recursive types stop the generator ("cannot be unrolled"): a
+  # template's read-only dependantTemplates are templates, and a
+  # dependency's criteria are dependencies. Removed; a content item's single
+  # dependency (contentId, kind, version) stays, nested AND/OR criteria do
+  # not; a connector UI instruction step keeps no inner steps.
+  - name: TemplateProperties_STATUS
+    group: securityinsights
+    version: v20250901
+    property: DependantTemplates
+    remove: true
+    because: directly recursive (a template's dependant templates are templates)
+  - name: MetadataDependencies;MetadataDependencies_STATUS
+    group: securityinsights
+    version: v20250901
+    property: Criteria
+    remove: true
+    because: directly recursive (a dependency's criteria are dependencies)
+  - name: InstructionStep;InstructionStep_STATUS
+    group: securityinsights
+    version: v20250901
+    property: InnerSteps
+    remove: true
+    because: directly recursive (a connector UI instruction step's inner steps are steps)  # Indirectly recursive (the generator's spec initialization overflows the
+  # stack): an automation rule's boolean condition holds conditions, and an
+  # array condition holds item conditions. Removed: a rule keeps its list of
+  # conditions (all must hold), not nested AND/OR groups or per-item
+  # conditions.
+  - name: AutomationRuleBooleanCondition;AutomationRuleBooleanCondition_STATUS
+    group: securityinsights
+    version: v20250901
+    property: InnerConditions
+    remove: true
+    because: indirectly recursive (a boolean condition's inner conditions are conditions)
+  - name: AutomationRulePropertyArrayValuesCondition;AutomationRulePropertyArrayValuesCondition_STATUS
+    group: securityinsights
+    version: v20250901
+    property: ItemConditions
+    remove: true
+    because: indirectly recursive (an array condition's item conditions are conditions)
+  # A modify-properties action's incident owner is named Owner, which ASO's
+  # generator takes for the Kubernetes owner when it makes the storage
+  # version (the storage type imports the API version: an import cycle);
+  # $renameTo renames it in the wire type too and the conversions do not
+  # compile. Removed: an automation rule cannot assign an incident's owner.
+  - name: IncidentPropertiesAction;IncidentPropertiesAction_STATUS
+    group: securityinsights
+    version: v20250901
+    property: Owner
+    remove: true
+    because: the property named Owner breaks the storage version (see above)
+
+groupModelConfiguration:
+  2025-09-01:
+    OnboardingState:
+      $exportAs: OnboardingState
+      $supportedFrom: v0.1.0
+    AlertRule:
+      $exportAs: AlertRule
+      $supportedFrom: v0.1.0
+    AlertRules_Action:
+      $exportAs: AlertRulesAction
+      $supportedFrom: v0.1.0
+    AutomationRule:
+      $exportAs: AutomationRule
+      $supportedFrom: v0.1.0
+    DataConnector:
+      $exportAs: DataConnector
+      $supportedFrom: v0.1.0
+    DataConnectorDefinition:
+      $exportAs: DataConnectorDefinition
+      $supportedFrom: v0.1.0
+    ContentPackage:
+      $exportAs: ContentPackage
+      $supportedFrom: v0.1.0
+    ContentTemplate:
+      $exportAs: ContentTemplate
+      $supportedFrom: v0.1.0
+    SecurityMLAnalyticsSetting:
+      $exportAs: SecurityMLAnalyticsSetting
+      $supportedFrom: v0.1.0
+    Watchlist:
+      $exportAs: Watchlist
+      $supportedFrom: v0.1.0
+    Watchlists_WatchlistItem:
+      $exportAs: WatchlistsWatchlistItem
+      $supportedFrom: v0.1.0
+    # Polymorphic resources (kind): each leaf is embedded in its resource, as
+    # ASO's kusto.yaml does for a database; the spec has one property per
+    # leaf, exactly one set.
+    FusionAlertRule:
+      $resourceEmbeddedInParent: AlertRule
+    FusionAlertRule_STATUS:
+      $resourceEmbeddedInParent: AlertRule
+    MicrosoftSecurityIncidentCreationAlertRule:
+      $resourceEmbeddedInParent: AlertRule
+    MicrosoftSecurityIncidentCreationAlertRule_STATUS:
+      $resourceEmbeddedInParent: AlertRule
+    ScheduledAlertRule:
+      $resourceEmbeddedInParent: AlertRule
+    ScheduledAlertRule_STATUS:
+      $resourceEmbeddedInParent: AlertRule
+    AADDataConnector:
+      $resourceEmbeddedInParent: DataConnector
+    AADDataConnector_STATUS:
+      $resourceEmbeddedInParent: DataConnector
+    AATPDataConnector:
+      $resourceEmbeddedInParent: DataConnector
+    AATPDataConnector_STATUS:
+      $resourceEmbeddedInParent: DataConnector
+    ASCDataConnector:
+      $resourceEmbeddedInParent: DataConnector
+    ASCDataConnector_STATUS:
+      $resourceEmbeddedInParent: DataConnector
+    AwsCloudTrailDataConnector:
+      $resourceEmbeddedInParent: DataConnector
+    AwsCloudTrailDataConnector_STATUS:
+      $resourceEmbeddedInParent: DataConnector
+    MCASDataConnector:
+      $resourceEmbeddedInParent: DataConnector
+    MCASDataConnector_STATUS:
+      $resourceEmbeddedInParent: DataConnector
+    MDATPDataConnector:
+      $resourceEmbeddedInParent: DataConnector
+    MDATPDataConnector_STATUS:
+      $resourceEmbeddedInParent: DataConnector
+    MSTIDataConnector:
+      $resourceEmbeddedInParent: DataConnector
+    MSTIDataConnector_STATUS:
+      $resourceEmbeddedInParent: DataConnector
+    OfficeDataConnector:
+      $resourceEmbeddedInParent: DataConnector
+    OfficeDataConnector_STATUS:
+      $resourceEmbeddedInParent: DataConnector
+    PremiumMicrosoftDefenderForThreatIntelligence:
+      $resourceEmbeddedInParent: DataConnector
+    PremiumMicrosoftDefenderForThreatIntelligence_STATUS:
+      $resourceEmbeddedInParent: DataConnector
+    RestApiPollerDataConnector:
+      $resourceEmbeddedInParent: DataConnector
+    RestApiPollerDataConnector_STATUS:
+      $resourceEmbeddedInParent: DataConnector
+    TIDataConnector:
+      $resourceEmbeddedInParent: DataConnector
+    TIDataConnector_STATUS:
+      $resourceEmbeddedInParent: DataConnector
+    CustomizableConnectorDefinition:
+      $resourceEmbeddedInParent: DataConnectorDefinition
+    CustomizableConnectorDefinition_STATUS:
+      $resourceEmbeddedInParent: DataConnectorDefinition
+    AnomalySecurityMLAnalyticsSettings:
+      $resourceEmbeddedInParent: SecurityMLAnalyticsSetting
+    AnomalySecurityMLAnalyticsSettings_STATUS:
+      $resourceEmbeddedInParent: SecurityMLAnalyticsSetting
+    ActionRequestProperties:
+      LogicAppResourceId:
+        $referenceType: arm # autolabel: review
+    CustomizableConnectorUiConfig:
+      Id:
+        $referenceType: simple # the connector's own ID in the Sentinel UI, not an ARM ID
+    RestApiPollerDataConnectorProperties:
+      ConnectorDefinitionName:
+        $referenceType: simple # autolabel: review
+    JwtAuthModel:
+      TokenEndpoint:
+        $importSecretMode: never # autolabel: review
+    OAuthModel:
+      TokenEndpoint:
+        $importSecretMode: never # autolabel: review
+      AccessTokenPrepend:
+        $importSecretMode: never # autolabel: review

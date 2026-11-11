@@ -1,0 +1,694 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: contenttemplates.securityinsights.azure.hfl.dev
+spec:
+  group: securityinsights.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - securityinsights
+    kind: ContentTemplate
+    listKind: ContentTemplateList
+    plural: contenttemplates
+    singular: contenttemplate
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20250901
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /securityinsights/resource-manager/Microsoft.SecurityInsights/SecurityInsights/stable/2025-09-01/openapi.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              author:
+                description: 'Author: The creator of the content item.'
+                properties:
+                  email:
+                    description: 'Email: Email of author contact'
+                    type: string
+                  link:
+                    description: 'Link: Link for author/vendor page'
+                    type: string
+                  name:
+                    description: 'Name: Name of the author. Company or person.'
+                    type: string
+                type: object
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              categories:
+                description: 'Categories: Categories for the item'
+                properties:
+                  domains:
+                    description: 'Domains: domain for the solution content item'
+                    items:
+                      type: string
+                    type: array
+                  verticals:
+                    description: 'Verticals: Industry verticals for the solution content
+                      item'
+                    items:
+                      type: string
+                    type: array
+                type: object
+              contentId:
+                description: |-
+                  ContentId: Static ID for the content.  Used to identify dependencies and content from solutions or community.
+                  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name
+                type: string
+              contentKind:
+                description: 'ContentKind: The kind of content the template is for.'
+                enum:
+                - AnalyticsRule
+                - AnalyticsRuleTemplate
+                - AutomationRule
+                - AzureFunction
+                - DataConnector
+                - DataType
+                - HuntingQuery
+                - InvestigationQuery
+                - LogicAppsCustomConnector
+                - Notebook
+                - Parser
+                - Playbook
+                - PlaybookTemplate
+                - ResourcesDataConnector
+                - Solution
+                - Standalone
+                - SummaryRule
+                - Watchlist
+                - WatchlistTemplate
+                - Workbook
+                - WorkbookTemplate
+                type: string
+              contentProductId:
+                description: |-
+                  ContentProductId: Unique ID for the content. It should be generated based on the contentId of the package, contentId of
+                  the template, contentKind of the template and the contentVersion of the template
+                type: string
+              contentSchemaVersion:
+                description: |-
+                  ContentSchemaVersion: Schema version of the content. Can be used to distinguish between different flow based on the
+                  schema version
+                type: string
+              customVersion:
+                description: 'CustomVersion: The custom version of the content. A
+                  optional free text'
+                type: string
+              dependencies:
+                description: |-
+                  Dependencies: Dependencies for the content item, what other content items it requires to work.  Can describe more
+                  complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or
+                  operator/criteria for complex formats.
+                properties:
+                  contentId:
+                    description: 'ContentId: Id of the content item we depend on'
+                    type: string
+                  kind:
+                    description: 'Kind: Type of the content item we depend on'
+                    enum:
+                    - AnalyticsRule
+                    - AnalyticsRuleTemplate
+                    - AutomationRule
+                    - AzureFunction
+                    - DataConnector
+                    - DataType
+                    - HuntingQuery
+                    - InvestigationQuery
+                    - LogicAppsCustomConnector
+                    - Notebook
+                    - Parser
+                    - Playbook
+                    - PlaybookTemplate
+                    - ResourcesDataConnector
+                    - Solution
+                    - Standalone
+                    - SummaryRule
+                    - Watchlist
+                    - WatchlistTemplate
+                    - Workbook
+                    - WorkbookTemplate
+                    type: string
+                  name:
+                    description: 'Name: Name of the content item'
+                    type: string
+                  operator:
+                    description: 'Operator: Operator used for list of dependencies
+                      in criteria array.'
+                    enum:
+                    - AND
+                    - OR
+                    type: string
+                  version:
+                    description: |-
+                      Version: Version of the the content item we depend on.  Can be blank, * or missing to indicate any version fulfills the
+                      dependency.  If version does not match our defined numeric format then an exact match is required.
+                    type: string
+                type: object
+              displayName:
+                description: 'DisplayName: The display name of the template'
+                type: string
+              etag:
+                description: 'Etag: Etag of the azure resource'
+                type: string
+              firstPublishDate:
+                description: 'FirstPublishDate: first publish date content item'
+                type: string
+              icon:
+                description: 'Icon: the icon identifier. this id can later be fetched
+                  from the content metadata'
+                type: string
+              lastPublishDate:
+                description: 'LastPublishDate: last publish date for the content item'
+                type: string
+              mainTemplate:
+                description: 'MainTemplate: The JSON of the ARM template to deploy
+                  active content. Expandable.'
+                x-kubernetes-preserve-unknown-fields: true
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
+                  extension resource, which means that any other Azure resource can be its owner.
+                properties:
+                  armId:
+                    description: Ownership across namespaces is not supported.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+              packageId:
+                description: 'PackageId: the package Id contains this template'
+                type: string
+              packageKind:
+                description: 'PackageKind: the packageKind of the package contains
+                  this template'
+                enum:
+                - Solution
+                - Standalone
+                type: string
+              packageName:
+                description: 'PackageName: the name of the package contains this template'
+                type: string
+              packageVersion:
+                description: |-
+                  PackageVersion: Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0),
+                  following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks
+                type: string
+              previewImages:
+                description: 'PreviewImages: preview image file names. These will
+                  be taken from the solution artifacts'
+                items:
+                  type: string
+                type: array
+              previewImagesDark:
+                description: 'PreviewImagesDark: preview image file names. These will
+                  be taken from the solution artifacts. used for dark theme support'
+                items:
+                  type: string
+                type: array
+              providers:
+                description: 'Providers: Providers for the content item'
+                items:
+                  type: string
+                type: array
+              source:
+                description: 'Source: Source of the content.  This is where/how it
+                  was created.'
+                properties:
+                  kind:
+                    description: 'Kind: Source type of the content'
+                    enum:
+                    - Community
+                    - LocalWorkspace
+                    - Solution
+                    - SourceRepository
+                    type: string
+                  name:
+                    description: 'Name: Name of the content source.  The repo name,
+                      solution name, LA workspace name etc.'
+                    type: string
+                  sourceId:
+                    description: 'SourceId: ID of the content source.  The solution
+                      ID, workspace ID, etc'
+                    type: string
+                required:
+                - kind
+                type: object
+              support:
+                description: 'Support: Support information for the template - type,
+                  name, contact information'
+                properties:
+                  email:
+                    description: 'Email: Email of support contact'
+                    type: string
+                  link:
+                    description: 'Link: Link for support help, like to support page
+                      to open a ticket etc.'
+                    type: string
+                  name:
+                    description: 'Name: Name of the support contact. Company or person.'
+                    type: string
+                  tier:
+                    description: 'Tier: Type of support for content item'
+                    enum:
+                    - Community
+                    - Microsoft
+                    - Partner
+                    type: string
+                required:
+                - tier
+                type: object
+              threatAnalysisTactics:
+                description: 'ThreatAnalysisTactics: the tactics the resource covers'
+                items:
+                  type: string
+                type: array
+              threatAnalysisTechniques:
+                description: 'ThreatAnalysisTechniques: the techniques the resource
+                  covers, these have to be aligned with the tactics being used'
+                items:
+                  type: string
+                type: array
+              version:
+                description: |-
+                  Version: Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM
+                  metadata best practices.  Can also be any string, but then we cannot guarantee any version checks
+                type: string
+            required:
+            - owner
+            type: object
+          status:
+            properties:
+              author:
+                description: 'Author: The creator of the content item.'
+                properties:
+                  email:
+                    description: 'Email: Email of author contact'
+                    type: string
+                  link:
+                    description: 'Link: Link for author/vendor page'
+                    type: string
+                  name:
+                    description: 'Name: Name of the author. Company or person.'
+                    type: string
+                type: object
+              categories:
+                description: 'Categories: Categories for the item'
+                properties:
+                  domains:
+                    description: 'Domains: domain for the solution content item'
+                    items:
+                      type: string
+                    type: array
+                  verticals:
+                    description: 'Verticals: Industry verticals for the solution content
+                      item'
+                    items:
+                      type: string
+                    type: array
+                type: object
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              contentId:
+                description: |-
+                  ContentId: Static ID for the content.  Used to identify dependencies and content from solutions or community.
+                  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name
+                type: string
+              contentKind:
+                description: 'ContentKind: The kind of content the template is for.'
+                type: string
+              contentProductId:
+                description: |-
+                  ContentProductId: Unique ID for the content. It should be generated based on the contentId of the package, contentId of
+                  the template, contentKind of the template and the contentVersion of the template
+                type: string
+              contentSchemaVersion:
+                description: |-
+                  ContentSchemaVersion: Schema version of the content. Can be used to distinguish between different flow based on the
+                  schema version
+                type: string
+              customVersion:
+                description: 'CustomVersion: The custom version of the content. A
+                  optional free text'
+                type: string
+              dependencies:
+                description: |-
+                  Dependencies: Dependencies for the content item, what other content items it requires to work.  Can describe more
+                  complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or
+                  operator/criteria for complex formats.
+                properties:
+                  contentId:
+                    description: 'ContentId: Id of the content item we depend on'
+                    type: string
+                  kind:
+                    description: 'Kind: Type of the content item we depend on'
+                    type: string
+                  name:
+                    description: 'Name: Name of the content item'
+                    type: string
+                  operator:
+                    description: 'Operator: Operator used for list of dependencies
+                      in criteria array.'
+                    type: string
+                  version:
+                    description: |-
+                      Version: Version of the the content item we depend on.  Can be blank, * or missing to indicate any version fulfills the
+                      dependency.  If version does not match our defined numeric format then an exact match is required.
+                    type: string
+                type: object
+              displayName:
+                description: 'DisplayName: The display name of the template'
+                type: string
+              etag:
+                description: 'Etag: Etag of the azure resource'
+                type: string
+              firstPublishDate:
+                description: 'FirstPublishDate: first publish date content item'
+                type: string
+              icon:
+                description: 'Icon: the icon identifier. this id can later be fetched
+                  from the content metadata'
+                type: string
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. E.g.
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                type: string
+              isDeprecated:
+                description: 'IsDeprecated: Flag indicates if this template is deprecated'
+                type: string
+              lastPublishDate:
+                description: 'LastPublishDate: last publish date for the content item'
+                type: string
+              mainTemplate:
+                description: 'MainTemplate: The JSON of the ARM template to deploy
+                  active content. Expandable.'
+                x-kubernetes-preserve-unknown-fields: true
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              packageId:
+                description: 'PackageId: the package Id contains this template'
+                type: string
+              packageKind:
+                description: 'PackageKind: the packageKind of the package contains
+                  this template'
+                type: string
+              packageName:
+                description: 'PackageName: the name of the package contains this template'
+                type: string
+              packageVersion:
+                description: |-
+                  PackageVersion: Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0),
+                  following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks
+                type: string
+              previewImages:
+                description: 'PreviewImages: preview image file names. These will
+                  be taken from the solution artifacts'
+                items:
+                  type: string
+                type: array
+              previewImagesDark:
+                description: 'PreviewImagesDark: preview image file names. These will
+                  be taken from the solution artifacts. used for dark theme support'
+                items:
+                  type: string
+                type: array
+              providers:
+                description: 'Providers: Providers for the content item'
+                items:
+                  type: string
+                type: array
+              source:
+                description: 'Source: Source of the content.  This is where/how it
+                  was created.'
+                properties:
+                  kind:
+                    description: 'Kind: Source type of the content'
+                    type: string
+                  name:
+                    description: 'Name: Name of the content source.  The repo name,
+                      solution name, LA workspace name etc.'
+                    type: string
+                  sourceId:
+                    description: 'SourceId: ID of the content source.  The solution
+                      ID, workspace ID, etc'
+                    type: string
+                type: object
+              support:
+                description: 'Support: Support information for the template - type,
+                  name, contact information'
+                properties:
+                  email:
+                    description: 'Email: Email of support contact'
+                    type: string
+                  link:
+                    description: 'Link: Link for support help, like to support page
+                      to open a ticket etc.'
+                    type: string
+                  name:
+                    description: 'Name: Name of the support contact. Company or person.'
+                    type: string
+                  tier:
+                    description: 'Tier: Type of support for content item'
+                    type: string
+                type: object
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              threatAnalysisTactics:
+                description: 'ThreatAnalysisTactics: the tactics the resource covers'
+                items:
+                  type: string
+                type: array
+              threatAnalysisTechniques:
+                description: 'ThreatAnalysisTechniques: the techniques the resource
+                  covers, these have to be aligned with the tactics being used'
+                items:
+                  type: string
+                type: array
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+              version:
+                description: |-
+                  Version: Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM
+                  metadata best practices.  Can also be any string, but then we cannot guarantee any version checks
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

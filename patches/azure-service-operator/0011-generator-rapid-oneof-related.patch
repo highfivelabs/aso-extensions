@@ -1,0 +1,29 @@
+diff --git a/v2/tools/generator/internal/testcases/rapid_json_serialization_test_case.go b/v2/tools/generator/internal/testcases/rapid_json_serialization_test_case.go
+--- a/v2/tools/generator/internal/testcases/rapid_json_serialization_test_case.go
++++ b/v2/tools/generator/internal/testcases/rapid_json_serialization_test_case.go
+@@ -8,6 +8,7 @@
+ import (
+ 	"fmt"
+ 	"go/token"
++	"os"
+ 	"sort"
+ 
+ 	"github.com/dave/dst"
+@@ -129,7 +130,16 @@
+ 
+ 	// Merge independent and related generators
+ 	allGens := make([]generatorAssignment, 0, len(independentGens)+len(relatedGens))
+-	allGens = append(allGens, independentGens...)
++	// Modified by High Five Labs: with ASO_GENERATOR_RAPID_ONEOF_RELATED set,
++	// a OneOf type's generator chooses among its options (the related
++	// properties) only, as the gopter test case does
++	// (createGeneratorMethodForOneOf in json_serialization_test_case.go).
++	// Otherwise a OneOf resource's Name is one of the choices, and the drawn
++	// value, with no option set, cannot be marshalled ("unexpected end of
++	// JSON input"; Defender for Cloud settings, in a group that uses rapid).
++	if !r.isOneOf || os.Getenv("ASO_GENERATOR_RAPID_ONEOF_RELATED") == "" {
++		allGens = append(allGens, independentGens...)
++	}
+ 	allGens = append(allGens, relatedGens...)
+ 
+ 	// Sort by property name for deterministic output

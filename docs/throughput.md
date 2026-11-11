@@ -94,3 +94,23 @@ Recommended, not done here (each touches files the open queue edits):
   dispatch list in `arm.go`.
 - Let `tests/operator/run.sh` take one kind per group by default and leave
   the rest to conformance.
+
+## After the fix (2026-11-11, the same day)
+
+| | Before | After |
+| --- | --- | --- |
+| Kinds per pull request | 1 to 7 (median 4), one foundation row | 11 to 17, a resource provider or a theme (#58, #60) |
+| Machine runs per group | 3 to 6, a person between each | 1 to 3 (autolabel writes the labels; the rest were enum names, recursion and polymorphism, each a known fix) |
+| Machine run | 30 s on the Ubuntu machine (gone) | about 2 minutes on a Spot VM with the cache |
+| Hand-written lines per kind to merge | 150 to 500 (fake rules, envtest, kind run) | 0 to 10 (a conformance fixture when the fake asks) |
+| Kinds generated in the session | | 40 (Defender for Cloud 12, Sentinel 11, governance 11, Cloud HSM, Dedicated HSM and Purview 6) in about five hours, beside the fix |
+| Wall clock per batch | | 30 to 60 minutes from configuration to `task check` passing |
+
+What still costs time: errors the generator reports one at a time
+(recursion, enum names in the storage version, a property named `Owner`),
+each a round trip; four of them took two to four runs. A pre-check that
+lists a spec's recursive properties and enum-valued names before the first
+run would save most of those. Merging is the remaining wait: CI could not
+run on 2026-11-11 (GitHub Actions refused jobs for billing), so the
+pull requests carry a `task check` run on an offload VM instead and wait
+for CI.

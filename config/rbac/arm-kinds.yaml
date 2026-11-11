@@ -14,6 +14,7 @@ rules:
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
   - devtestlab.azure.hfl.dev
+  - hardwaresecuritymodules.azure.hfl.dev
   - insights.azure.hfl.dev
   - keyvault.azure.hfl.dev
   - kubernetesconfiguration.azure.hfl.dev
@@ -23,8 +24,11 @@ rules:
   - operationalinsights.azure.hfl.dev
   - operationsmanagement.azure.hfl.dev
   - policyinsights.azure.hfl.dev
+  - purview.azure.hfl.dev
   - recoveryservices.azure.hfl.dev
   - resources.azure.hfl.dev
+  - security.azure.hfl.dev
+  - securityinsights.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
@@ -37,6 +41,7 @@ rules:
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
   - devtestlab.azure.hfl.dev
+  - hardwaresecuritymodules.azure.hfl.dev
   - insights.azure.hfl.dev
   - keyvault.azure.hfl.dev
   - kubernetesconfiguration.azure.hfl.dev
@@ -46,8 +51,11 @@ rules:
   - operationalinsights.azure.hfl.dev
   - operationsmanagement.azure.hfl.dev
   - policyinsights.azure.hfl.dev
+  - purview.azure.hfl.dev
   - recoveryservices.azure.hfl.dev
   - resources.azure.hfl.dev
+  - security.azure.hfl.dev
+  - securityinsights.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*/status", "*/finalizers"]
   verbs: ["get", "update", "patch"]

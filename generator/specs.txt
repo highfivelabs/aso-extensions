@@ -22,6 +22,10 @@ specification/consumption
 specification/cost-management
 specification/keyvault
 specification/operationsmanagement
+specification/security
+specification/securityinsights
+specification/hardwaresecuritymodules
+specification/purview
 specification/containerservice
 specification/kubernetesconfiguration
 specification/applicationinsights

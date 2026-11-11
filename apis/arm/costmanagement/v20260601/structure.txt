@@ -212,3 +212,121 @@ Export: Resource
     │   └── SuspensionTime: *string
     └── Type: *string
 
+ScheduledAction: Resource
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── DisplayName: *string
+│   ├── ETag: *string
+│   ├── FileDestination: *Object (1 property)
+│   │   └── FileFormats: Enum (1 value)[]
+│   │       └── "Csv"
+│   ├── Kind: *Enum (2 values)
+│   │   ├── "Email"
+│   │   └── "InsightAlert"
+│   ├── Notification: *Object (5 properties)
+│   │   ├── Language: *string
+│   │   ├── Message: *string
+│   │   ├── RegionalFormat: *string
+│   │   ├── Subject: *string
+│   │   └── To: Validated<string[]> (2 rules)
+│   │       ├── Rule 0: MaxItems: 20
+│   │       └── Rule 1: MinItems: 1
+│   ├── NotificationEmail: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   ├── Schedule: *Object (7 properties)
+│   │   ├── DayOfMonth: *int
+│   │   ├── DaysOfWeek: Enum (7 values)[]
+│   │   │   ├── "Friday"
+│   │   │   ├── "Monday"
+│   │   │   ├── "Saturday"
+│   │   │   ├── "Sunday"
+│   │   │   ├── "Thursday"
+│   │   │   ├── "Tuesday"
+│   │   │   └── "Wednesday"
+│   │   ├── EndDate: *string
+│   │   ├── Frequency: *Enum (3 values)
+│   │   │   ├── "Daily"
+│   │   │   ├── "Monthly"
+│   │   │   └── "Weekly"
+│   │   ├── HourOfDay: *int
+│   │   ├── StartDate: *string
+│   │   └── WeeksOfMonth: Enum (5 values)[]
+│   │       ├── "First"
+│   │       ├── "Fourth"
+│   │       ├── "Last"
+│   │       ├── "Second"
+│   │       └── "Third"
+│   ├── Scope: *string
+│   ├── Status: *Enum (3 values)
+│   │   ├── "Disabled"
+│   │   ├── "Enabled"
+│   │   └── "Expired"
+│   └── ViewId: *string
+└── Status: Object (15 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DisplayName: *string
+    ├── ETag: *string
+    ├── FileDestination: *Object (1 property)
+    │   └── FileFormats: Enum (1 value)[]
+    │       └── "Csv"
+    ├── Id: *string
+    ├── Kind: *Enum (2 values)
+    │   ├── "Email"
+    │   └── "InsightAlert"
+    ├── Name: *string
+    ├── Notification: *Object (5 properties)
+    │   ├── Language: *string
+    │   ├── Message: *string
+    │   ├── RegionalFormat: *string
+    │   ├── Subject: *string
+    │   └── To: string[]
+    ├── NotificationEmail: *string
+    ├── Schedule: *Object (7 properties)
+    │   ├── DayOfMonth: *int
+    │   ├── DaysOfWeek: Enum (7 values)[]
+    │   │   ├── "Friday"
+    │   │   ├── "Monday"
+    │   │   ├── "Saturday"
+    │   │   ├── "Sunday"
+    │   │   ├── "Thursday"
+    │   │   ├── "Tuesday"
+    │   │   └── "Wednesday"
+    │   ├── EndDate: *string
+    │   ├── Frequency: *Enum (3 values)
+    │   │   ├── "Daily"
+    │   │   ├── "Monthly"
+    │   │   └── "Weekly"
+    │   ├── HourOfDay: *int
+    │   ├── StartDate: *string
+    │   └── WeeksOfMonth: Enum (5 values)[]
+    │       ├── "First"
+    │       ├── "Fourth"
+    │       ├── "Last"
+    │       ├── "Second"
+    │       └── "Third"
+    ├── Scope: *string
+    ├── Status: *Enum (3 values)
+    │   ├── "Disabled"
+    │   ├── "Enabled"
+    │   └── "Expired"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    └── ViewId: *string
+
