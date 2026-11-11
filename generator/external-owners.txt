@@ -11,3 +11,5 @@ compute/VirtualMachine
 keyvault/Vault
 containerservice/ManagedCluster
 containerservice/Fleet
+network/DnsZone
+network/PrivateDnsZone

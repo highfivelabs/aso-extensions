@@ -49,6 +49,11 @@ resources:
 - management.azure.hfl.dev_managementgroups.yaml
 - management.azure.hfl.dev_managementgroupssettings.yaml
 - management.azure.hfl.dev_managementgroupssubscriptions.yaml
+- network.azure.hfl.dev_dnsresolverdomainlists.yaml
+- network.azure.hfl.dev_dnsresolverpolicies.yaml
+- network.azure.hfl.dev_dnsresolverpoliciesdnssecurityrules.yaml
+- network.azure.hfl.dev_dnsresolverpoliciesvirtualnetworklinks.yaml
+- network.azure.hfl.dev_dnszonessoarecords.yaml
 - network.azure.hfl.dev_expressroutecircuits.yaml
 - network.azure.hfl.dev_expressroutecircuitsauthorizations.yaml
 - network.azure.hfl.dev_expressroutecircuitspeerings.yaml
@@ -57,6 +62,7 @@ resources:
 - network.azure.hfl.dev_expressroutegatewaysexpressrouteconnections.yaml
 - network.azure.hfl.dev_expressrouteports.yaml
 - network.azure.hfl.dev_expressrouteportsauthorizations.yaml
+- network.azure.hfl.dev_ipgroups.yaml
 - network.azure.hfl.dev_localnetworkgateways.yaml
 - network.azure.hfl.dev_networkmanagerconnections.yaml
 - network.azure.hfl.dev_networkmanagers.yaml
@@ -81,6 +87,11 @@ resources:
 - network.azure.hfl.dev_networksecurityperimetersprofilesaccessrules.yaml
 - network.azure.hfl.dev_networksecurityperimetersresourceassociations.yaml
 - network.azure.hfl.dev_p2svpngateways.yaml
+- network.azure.hfl.dev_privatednszonessoarecords.yaml
+- network.azure.hfl.dev_routefilters.yaml
+- network.azure.hfl.dev_routefiltersroutefilterrules.yaml
+- network.azure.hfl.dev_serviceendpointpolicies.yaml
+- network.azure.hfl.dev_serviceendpointpoliciesserviceendpointpolicydefinitions.yaml
 - network.azure.hfl.dev_virtualhubs.yaml
 - network.azure.hfl.dev_virtualhubsbgpconnections.yaml
 - network.azure.hfl.dev_virtualhubshubroutetables.yaml

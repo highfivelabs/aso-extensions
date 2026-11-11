@@ -1548,10 +1548,10 @@ Microsoft.Network,Microsoft.Network/ddosProtectionPlans,3,network.azure.com/Ddos
 Microsoft.Network,Microsoft.Network/dnsForwardingRulesets,3,network.azure.com/DnsForwardingRuleset,3,,0,0,false,spec_api=2025-05-01; official_api=2022-07-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/dnsForwardingRulesets/forwardingRules,5,network.azure.com/DnsForwardingRuleSetsForwardingRule,5,,0,0,false,spec_api=2025-05-01; official_api=2022-07-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks,2,network.azure.com/DnsForwardingRuleSetsVirtualNetworkLink,2,,0,0,false,spec_api=2025-05-01; official_api=2022-07-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/dnsResolverDomainLists,3,,0,,0,3,false,spec_api=2025-05-01
-Microsoft.Network,Microsoft.Network/dnsResolverPolicies,3,,0,,0,3,false,spec_api=2025-05-01
-Microsoft.Network,Microsoft.Network/dnsResolverPolicies/dnsSecurityRules,6,,0,,0,6,false,spec_api=2025-05-01
-Microsoft.Network,Microsoft.Network/dnsResolverPolicies/virtualNetworkLinks,3,,0,,0,3,false,spec_api=2025-05-01
+Microsoft.Network,Microsoft.Network/dnsResolverDomainLists,3,,0,network.azure.hfl.dev/DnsResolverDomainList,3,0,false,spec_api=2025-05-01; ours_api=2025-05-01
+Microsoft.Network,Microsoft.Network/dnsResolverPolicies,3,,0,network.azure.hfl.dev/DnsResolverPolicy,2,1,false,spec_api=2025-05-01; ours_api=2025-05-01
+Microsoft.Network,Microsoft.Network/dnsResolverPolicies/dnsSecurityRules,6,,0,network.azure.hfl.dev/DnsResolverPoliciesDnsSecurityRule,6,0,false,spec_api=2025-05-01; ours_api=2025-05-01
+Microsoft.Network,Microsoft.Network/dnsResolverPolicies/virtualNetworkLinks,3,,0,network.azure.hfl.dev/DnsResolverPoliciesVirtualNetworkLink,3,0,false,spec_api=2025-05-01; ours_api=2025-05-01
 Microsoft.Network,Microsoft.Network/dnsResolvers,3,network.azure.com/DnsResolver,3,,0,0,false,spec_api=2025-05-01; official_api=2022-07-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/dnsResolvers/inboundEndpoints,5,network.azure.com/DnsResolversInboundEndpoint,5,,0,0,false,spec_api=2025-05-01; official_api=2022-07-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/dnsResolvers/outboundEndpoints,3,network.azure.com/DnsResolversOutboundEndpoint,3,,0,0,false,spec_api=2025-05-01; official_api=2022-07-01; official-api-differs-from-spec
@@ -1563,7 +1563,7 @@ Microsoft.Network,Microsoft.Network/dnsZones/CNAME,26,network.azure.com/DnsZones
 Microsoft.Network,Microsoft.Network/dnsZones/MX,26,network.azure.com/DnsZonesMXRecord,25,,0,1,false,spec_api=2018-05-01; official_api=2018-05-01
 Microsoft.Network,Microsoft.Network/dnsZones/NS,26,network.azure.com/DnsZonesNSRecord,25,,0,1,false,spec_api=2018-05-01; official_api=2018-05-01
 Microsoft.Network,Microsoft.Network/dnsZones/PTR,26,network.azure.com/DnsZonesPTRRecord,25,,0,1,false,spec_api=2018-05-01; official_api=2018-05-01
-Microsoft.Network,Microsoft.Network/dnsZones/SOA,26,,0,,0,26,false,spec_api=2018-05-01
+Microsoft.Network,Microsoft.Network/dnsZones/SOA,26,,0,network.azure.hfl.dev/DnsZonesSOARecord,25,1,false,spec_api=2018-05-01; ours_api=2018-05-01
 Microsoft.Network,Microsoft.Network/dnsZones/SRV,26,network.azure.com/DnsZonesSRVRecord,25,,0,1,false,spec_api=2018-05-01; official_api=2018-05-01
 Microsoft.Network,Microsoft.Network/dnsZones/TXT,26,network.azure.com/DnsZonesTXTRecord,25,,0,1,false,spec_api=2018-05-01; official_api=2018-05-01
 Microsoft.Network,Microsoft.Network/dscpConfigurations,22,,0,,0,22,false,spec_api=2026-03-01
@@ -1592,7 +1592,7 @@ Microsoft.Network,Microsoft.Network/FrontDoorWebApplicationFirewallPolicies,57,n
 Microsoft.Network,Microsoft.Network/interconnectGroups,6,,0,,0,6,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/interfaceEndpoints,107,,0,,0,107,false,spec_api=2019-02-01
 Microsoft.Network,Microsoft.Network/IpAllocations,8,,0,,0,8,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/ipGroups,3,,0,,0,3,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/ipGroups,3,,0,network.azure.hfl.dev/IpGroup,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/loadBalancers,199,network.azure.com/LoadBalancer,189,,0,10,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/loadBalancers/backendAddressPools,14,,0,,0,14,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/loadBalancers/inboundNatRules,10,network.azure.com/LoadBalancersInboundNatRule,10,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
@@ -1648,7 +1648,7 @@ Microsoft.Network,Microsoft.Network/privateDnsZones/AAAA,21,network.azure.com/Pr
 Microsoft.Network,Microsoft.Network/privateDnsZones/CNAME,21,network.azure.com/PrivateDnsZonesCNAMERecord,21,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.Network,Microsoft.Network/privateDnsZones/MX,21,network.azure.com/PrivateDnsZonesMXRecord,21,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.Network,Microsoft.Network/privateDnsZones/PTR,21,network.azure.com/PrivateDnsZonesPTRRecord,21,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
-Microsoft.Network,Microsoft.Network/privateDnsZones/SOA,21,,0,,0,21,false,spec_api=2024-06-01
+Microsoft.Network,Microsoft.Network/privateDnsZones/SOA,21,,0,network.azure.hfl.dev/PrivateDnsZonesSOARecord,21,0,false,spec_api=2024-06-01; ours_api=2024-06-01
 Microsoft.Network,Microsoft.Network/privateDnsZones/SRV,21,network.azure.com/PrivateDnsZonesSRVRecord,21,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.Network,Microsoft.Network/privateDnsZones/TXT,21,network.azure.com/PrivateDnsZonesTXTRecord,21,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.Network,Microsoft.Network/privateDnsZones/virtualNetworkLinks,6,network.azure.com/PrivateDnsZonesVirtualNetworkLink,6,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
@@ -1662,13 +1662,13 @@ Microsoft.Network,Microsoft.Network/privateTrafficManagerProfiles/healthPolicies
 Microsoft.Network,Microsoft.Network/privateTrafficManagerProfiles/probingGateways,1,,0,,0,1,false,spec_api=2026-10-01-preview; spec-preview-only
 Microsoft.Network,Microsoft.Network/publicIPAddresses,39,network.azure.com/PublicIPAddress,36,,0,3,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/publicIPPrefixes,26,network.azure.com/PublicIPPrefix,25,,0,1,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/routeFilters,8,,0,,0,8,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/routeFilters/routeFilterRules,4,,0,,0,4,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/routeFilters,8,,0,network.azure.hfl.dev/RouteFilter,2,6,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/routeFilters/routeFilterRules,4,,0,network.azure.hfl.dev/RouteFiltersRouteFilterRule,4,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/routeTables,10,network.azure.com/RouteTable,3,,0,7,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/routeTables/routes,4,network.azure.com/RouteTablesRoute,3,,0,1,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/securityPartnerProviders,4,,0,,0,4,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/serviceEndpointPolicies,9,,0,,0,9,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/serviceEndpointPolicies/serviceEndpointPolicyDefinitions,3,,0,,0,3,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/serviceEndpointPolicies,9,,0,network.azure.hfl.dev/ServiceEndpointPolicy,4,5,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/serviceEndpointPolicies/serviceEndpointPolicyDefinitions,3,,0,network.azure.hfl.dev/ServiceEndpointPoliciesServiceEndpointPolicyDefinition,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/serviceGateways,270,,0,,0,270,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/topologyMaps,6,,0,,0,6,false,spec_api=2026-10-01-preview; spec-preview-only
 Microsoft.Network,Microsoft.Network/topologyMaps/sites,2,,0,,0,2,false,spec_api=2026-10-01-preview; spec-preview-only

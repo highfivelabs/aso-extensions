@@ -148,8 +148,8 @@ func TestNetworkSecurityPerimeter(t *testing.T) {
 		Spec: network.NetworkSecurityPerimetersResourceAssociation_Spec{
 			Owner:               &genruntime.KnownResourceReference{Name: "perimeter"},
 			AccessMode:          ptr(network.AssociationAccessMode_Learning),
-			PrivateLinkResource: &network.SubResource{Reference: &genruntime.ResourceReference{ARMID: storageID}},
-			Profile:             &network.SubResource{Reference: &genruntime.ResourceReference{ARMID: profileID}},
+			PrivateLinkResource: &network.NetworkSecurityPerimeterSubResource{Reference: &genruntime.ResourceReference{ARMID: storageID}},
+			Profile:             &network.NetworkSecurityPerimeterSubResource{Reference: &genruntime.ResourceReference{ARMID: profileID}},
 		},
 	}
 	for _, o := range []client.Object{rule, assoc} {
