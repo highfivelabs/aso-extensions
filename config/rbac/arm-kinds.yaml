@@ -19,6 +19,7 @@ rules:
   - management.azure.hfl.dev
   - network.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
+  - operationsmanagement.azure.hfl.dev
   - policyinsights.azure.hfl.dev
   - recoveryservices.azure.hfl.dev
   - resources.azure.hfl.dev
@@ -39,6 +40,7 @@ rules:
   - management.azure.hfl.dev
   - network.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
+  - operationsmanagement.azure.hfl.dev
   - policyinsights.azure.hfl.dev
   - recoveryservices.azure.hfl.dev
   - resources.azure.hfl.dev

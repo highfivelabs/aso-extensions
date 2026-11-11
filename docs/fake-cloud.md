@@ -210,6 +210,15 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   which is kept aside (`SharedKey`) and never returned, as Azure does not
   return it. Not modelled: linking workspaces to a cluster, data flowing,
   what each data source kind takes, and the error codes (the fake's own).
+- Operations Management solutions
+  (`Microsoft.OperationsManagement/solutions`;
+  `pkg/fakecloud/arm/operationsmanagement.go`): a solution names a Log
+  Analytics workspace that exists and gives a plan; a Microsoft gallery
+  solution is named, and its plan is named, `<type>(<workspace>)`, and its
+  product is `OMSGallery/<type>`; contained and referenced resources exist.
+  Not modelled: which solution types exist, contained resources locked and
+  deleted with the solution, third-party publishers' rules, and the error
+  codes (the fake's own).
 - Maintenance configuration assignments
   (`Microsoft.Maintenance/configurationAssignments` at any scope;
   `pkg/fakecloud/arm/maintenance.go`): an assignment names a maintenance

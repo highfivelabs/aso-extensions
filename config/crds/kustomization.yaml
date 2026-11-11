@@ -94,6 +94,7 @@ resources:
 - operationalinsights.azure.hfl.dev_workspacessavedsearches.yaml
 - operationalinsights.azure.hfl.dev_workspacesstorageinsightconfigs.yaml
 - operationalinsights.azure.hfl.dev_workspacestables.yaml
+- operationsmanagement.azure.hfl.dev_solutions.yaml
 - policyinsights.azure.hfl.dev_policyattestations.yaml
 - policyinsights.azure.hfl.dev_policyremediations.yaml
 - recoveryservices.azure.hfl.dev_vaults.yaml

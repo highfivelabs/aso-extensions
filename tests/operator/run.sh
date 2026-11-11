@@ -1300,6 +1300,27 @@ logged fakearm "request DELETE /subscriptions/${SUB}/providers/Microsoft.Authori
   || fail "the fake resource manager saw no delete of the policy definition"
 pass "the policy assignments and definition are deleted in Resource Manager"
 
+step "team-a: an Operations Management solution on the workspace (operationsmanagement.azure.hfl.dev)"
+oms_id="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationsManagement/solutions/Updates(team-a-law)"
+kubectl apply -f - <<EOF
+apiVersion: operationsmanagement.azure.hfl.dev/v20151101preview
+kind: Solution
+metadata: {name: updates, namespace: team-a}
+spec:
+  azureName: Updates(team-a-law)
+  owner: {name: rg}
+  location: westus
+  plan: {name: Updates(team-a-law), publisher: Microsoft, product: OMSGallery/Updates, promotionCode: ""}
+  properties:
+    workspaceResourceReference: {group: operationalinsights.azure.com, kind: Workspace, name: law}
+EOF
+wait_for 120 "team-a's Solution Ready" ready solutions.operationsmanagement.azure.hfl.dev team-a updates
+logged fakearm "request PUT ${oms_id} 201" || fail "the fake resource manager saw no solution made on ASO's Workspace"
+pass "team-a Solution Ready"
+kubectl -n team-a delete solutions.operationsmanagement.azure.hfl.dev updates --timeout=120s
+logged fakearm "request DELETE ${oms_id} 200" || fail "the fake resource manager saw no delete of the solution"
+pass "the Operations Management solution is deleted in Resource Manager"
+
 kubectl -n team-a delete managementgroupssubscriptions.management.azure.hfl.dev workload --timeout=120s
 logged fakearm "request DELETE /providers/Microsoft.Management/managementGroups/team-a-platform/subscriptions/${SUB} 200" \
   || fail "the fake resource manager saw no removal of the subscription from the management group"

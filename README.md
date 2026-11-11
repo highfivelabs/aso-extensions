@@ -49,7 +49,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 
 | Category | Services | Resources | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 23.5% | 33.3% | ~18.7% |
+| platform-foundation | 18 | 246 | 43.2% | 23.7% | 33.1% | ~18.7% |
 | security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% | ~11.1% |
 | application | 35 | 823 | 33.1% | 3.8% | 63.2% | ~11.3% |
 | other | 230 | 1,262 | 0.5% | 0.0% | 99.5% | ~3.9% |
@@ -58,7 +58,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 
 | Tier | Services | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 14.5% | 42.6% | ~13.8% |
+| 1 | 17 | 43.0% | 14.6% | 42.4% | ~13.8% |
 | 2 | 18 | 26.5% | 6.9% | 66.6% | ~8.2% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% | ~6.6% |
 
@@ -78,7 +78,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 45.8% | 14.0% | ~20.2% |
 | 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 0.0% | 16.7% | ~100.0% |
 | 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 61.5% | 22.1% | ~18.0% |
-| 1 | `Microsoft.OperationsManagement` | platform-foundation | ![Microsoft.OperationsManagement](docs/coverage/bars/Microsoft.OperationsManagement.svg) | 0.0% | 0.0% | 100.0% | ~35.3% |
+| 1 | `Microsoft.OperationsManagement` | platform-foundation | ![Microsoft.OperationsManagement](docs/coverage/bars/Microsoft.OperationsManagement.svg) | 0.0% | 52.9% | 47.1% | ~35.3% |
 | 1 | `Microsoft.Monitor` | platform-foundation | ![Microsoft.Monitor](docs/coverage/bars/Microsoft.Monitor.svg) | 2.2% | 0.0% | 97.8% | ~1.4% |
 | 1 | `Microsoft.ContainerService` | platform-foundation | ![Microsoft.ContainerService](docs/coverage/bars/Microsoft.ContainerService.svg) | 70.2% | 0.0% | 29.8% | ~19.4% |
 | 1 | `Microsoft.KubernetesConfiguration` | platform-foundation | ![Microsoft.KubernetesConfiguration](docs/coverage/bars/Microsoft.KubernetesConfiguration.svg) | 73.0% | 0.0% | 27.0% | ~31.1% |
