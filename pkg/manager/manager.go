@@ -48,6 +48,12 @@ type Options struct {
 	// ARMHTTPClient is what every Resource Manager request goes through,
 	// for the generated kinds and for locks; nil is the default transport.
 	ARMHTTPClient *http.Client
+	// GraphEndpoint is Microsoft Graph's address, for the Entra kinds
+	// (empty: https://graph.microsoft.com; a national cloud has its own).
+	GraphEndpoint string
+	// GraphHTTPClient is what every Microsoft Graph request goes through;
+	// nil is the default transport.
+	GraphHTTPClient *http.Client
 	// EnableAzureCLI allows the Azure CLI credential in the global chain,
 	// as ASO's --enable-azure-cli-authentication.
 	EnableAzureCLI bool
@@ -109,6 +115,8 @@ func Setup(ctx context.Context, mgr ctrl.Manager, cfg outoftree.ConfigValues, op
 	if opts.ARMHTTPClient != nil {
 		reconcilers.ManagementLock.ClientOptions = azcore.ClientOptions{Transport: opts.ARMHTTPClient}
 	}
+	reconcilers.DirectoryRoleAssignment.Clients.Endpoint = opts.GraphEndpoint
+	reconcilers.DirectoryRoleAssignment.Clients.HTTPClient = opts.GraphHTTPClient
 	reconcilers.ManagementLock.OwnerReader = mgr.GetAPIReader()
 	reconcilers.ManagementLock.Mapper = mgr.GetRESTMapper()
 	if err := resolver.IndexStorageTypes(mgr.GetScheme(), append(controllers.OwnerTypes(), types...)); err != nil {

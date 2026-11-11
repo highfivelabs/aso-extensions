@@ -60,15 +60,26 @@ itself lives in its own repository and is never changed from here.
   a recommendation, and stop. Direction calls are the builder's: licence,
   names, API groups, identity defaults, a new upstream dependency,
   anything that makes the repository public.
+- Test against real Azure (a live run, under the rule in "Never") in
+  two cases (builder, 2026-11-11):
+  1. where the fake cloud cannot give the signal: the service or behaviour is not
+     faked, or the case depends on real permissions, quotas, defaults or
+     eventual consistency; and
+  2. on a regular basis, to check that the fake cloud still agrees with real
+     Azure, starting with kinds that cost nothing to create.
+  The fake cloud stays the test of record for `task check`. Record each live
+  result in `docs/live-runs.md`.
 
 ## Never
 
-- Never use real cloud credentials, projects, accounts or subscriptions,
-  with one exception: the live runs of `docs/live-runs.md` (the builder's
-  decision, 2026-11-10), through `task test-live` from an offload VM, with
-  the federated identity and the one resource group named there. Never
-  change that identity or ask it for wider roles; never use the builder's
-  own `az` session for tests. Everything else uses the fake cloud.
+- Never reach real Azure except through a live run: subscription
+  `149e8810-e0fe-48e2-a46e-6f8f575bde01` only, resource group
+  `aso-extensions-live-tests` only, as the app `aso-extensions-live-tests`
+  through its federated credential only, from an offload Spot VM only,
+  with `ASO_EXT_LIVE` set (`docs/live-runs.md`). Never on a laptop, never
+  with a stored secret or certificate, never in any other subscription or
+  resource group, and never from `task check`. Every live resource carries
+  the run's name and is deleted by the test or the sweeper.
 - Never open, comment on, review or react to upstream pull requests or
   issues. Reading them (`gh` read-only, `git fetch`) is fine.
 - Never force-push, rewrite pushed history, or change the repository's

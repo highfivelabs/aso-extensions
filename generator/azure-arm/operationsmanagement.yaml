@@ -1,0 +1,26 @@
+typeFilters:
+  - action: include
+    group: operationsmanagement
+    version: v20151101preview
+    because: the only version of Operations Management solutions (2015-11-01-preview)
+
+groupModelConfiguration:
+  2015-11-01-preview:
+    Solution:
+      $exportAs: Solution
+      $supportedFrom: v0.1.0
+    # The spec marks a solution's properties x-ms-azure-resource, so the
+    # generator takes them for a resource embedded in the solution and keeps
+    # only their (missing) Id: the type comes out empty and is removed. They
+    # are the solution's own properties, embedded in it, as ASO's kusto.yaml
+    # labels a database's.
+    SolutionProperties:
+      $resourceEmbeddedInParent: Solution
+      WorkspaceResourceId:
+        $referenceType: arm # the Log Analytics workspace the solution is enabled on (ASO's Workspace)
+      ContainedResources:
+        $referenceType: arm
+      ReferencedResources:
+        $referenceType: arm
+    SolutionProperties_STATUS:
+      $resourceEmbeddedInParent: Solution
