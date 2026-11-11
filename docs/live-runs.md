@@ -154,8 +154,8 @@ fake; each is now in `test/live`, and the fake should learn them):
   registered in the account's subscription.
 - A point-to-site gateway made together with its server configuration is
   refused while the configuration is updating, and ASO's retries did not
-  get past it in over an hour; the test now makes it last, after the
-  configuration is Ready.
+  get past it in over an hour; made after the configuration is Ready, it
+  succeeded (the fifth run).
 - `Standard_B1s`, `Standard_B2ats_v2` and `Standard_B2als_v2` were refused for
   capacity in eastus2 (`SkuNotAvailable`); `Standard_D2als_v6` was taken.
 
@@ -167,3 +167,4 @@ fake; each is now in `test/live`, and the fake should learn them):
 | 2026-11-10 | `ax101813e66a` | `33e8146`+ | vWAN, NSP, TagSet, Budget, Export, VM run command | Budget PASS; 5 FAIL | VM sizes refused (`SkuNotAvailable`), VPN site without address space refused, tag name with `/` refused, NSP logging needs a feature, exports need a provider; group empty afterwards |
 | 2026-11-10 | `ax101935c071` | `04f021c` | VM run command, vWAN/site/server configuration, NSP, TagSet, Export, virtual hub, VNet gateway connection | PASS: `VirtualMachinesRunCommand` (on Standard_D2als_v6), `VirtualWan`, `VpnSite`, `VpnServerConfiguration`, NSP and its profile, access rule, association, link, `LocalNetworkGateway` and `VirtualNetworkGatewayConnection` (VpnGw1AZ, 41 min); Export SKIP (provider); TagSet FAIL (a test bug: no tags read back as `{}`, fixed) | the VM was deleted by offload after 45 minutes without a log line while the hub's gateways were being made, so the run's cleanup never ran: a sweep from another VM removed the hub, VPN gateway, site, server configuration, WAN and network (gateways take about 15 minutes to delete). The waits now log every 4 minutes. |
 | 2026-11-10 | `ax102159e7d7` | `57e3eb4` | TagSet, virtual hub | PASS: `TagSet`, `VirtualHub`, `VirtualHubsHubVirtualNetworkConnection`, `VirtualHubsHubRouteTable`, `VirtualHubsBgpConnection`, `VpnGateway` (made, Ready after about 40 min); `P2sVpnGateway` not Ready | the point-to-site gateway, made at once with its server configuration, was refused for over an hour (`ReferencedResourceNotProvisioned`: the configuration "is in Updating state", though it read Succeeded), holding the NAT rule and VPN connection behind it; the run was stopped before the VM's limit and swept (the hub and its gateways took about 35 minutes to delete) |
+| 2026-11-11 | `ax1100357acb` | `d7a4544` | virtual hub | PASS (each step): `VirtualHub` and its connection, hub route table, BGP connection; `VpnGateway`, `VpnGatewaysNatRule`, `VpnGatewaysVpnConnection`; `VpnServerConfiguration` then `P2sVpnGateway` (Ready after about 35 min) | the Spot VM was preempted while the point-to-site gateway was being deleted, after every check had passed; a sweep from another VM emptied the group. Hub runs take about two hours end to end (hub 30 min, each gateway 35 to 40 min, deletes 15 to 35 min). |
