@@ -270,10 +270,10 @@ type NetworkSecurityPerimetersResourceAssociation_Spec struct {
 	Owner *genruntime.KnownResourceReference `group:"network.azure.hfl.dev" json:"owner,omitempty" kind:"NetworkSecurityPerimeter"`
 
 	// PrivateLinkResource: The PaaS resource to be associated.
-	PrivateLinkResource *SubResource `json:"privateLinkResource,omitempty"`
+	PrivateLinkResource *NetworkSecurityPerimeterSubResource `json:"privateLinkResource,omitempty"`
 
 	// Profile: Profile id to which the PaaS resource is associated.
-	Profile *SubResource `json:"profile,omitempty"`
+	Profile *NetworkSecurityPerimeterSubResource `json:"profile,omitempty"`
 }
 
 var _ genruntime.ARMTransformer = &NetworkSecurityPerimetersResourceAssociation_Spec{}
@@ -305,7 +305,7 @@ func (association *NetworkSecurityPerimetersResourceAssociation_Spec) ConvertToA
 		if err != nil {
 			return nil, err
 		}
-		privateLinkResource := *privateLinkResource_ARM.(*arm.SubResource)
+		privateLinkResource := *privateLinkResource_ARM.(*arm.NetworkSecurityPerimeterSubResource)
 		result.Properties.PrivateLinkResource = &privateLinkResource
 	}
 	if association.Profile != nil {
@@ -313,7 +313,7 @@ func (association *NetworkSecurityPerimetersResourceAssociation_Spec) ConvertToA
 		if err != nil {
 			return nil, err
 		}
-		profile := *profile_ARM.(*arm.SubResource)
+		profile := *profile_ARM.(*arm.NetworkSecurityPerimeterSubResource)
 		result.Properties.Profile = &profile
 	}
 	return result, nil
@@ -357,7 +357,7 @@ func (association *NetworkSecurityPerimetersResourceAssociation_Spec) PopulateFr
 	// copying flattened property:
 	if typedInput.Properties != nil {
 		if typedInput.Properties.PrivateLinkResource != nil {
-			var privateLinkResource1 SubResource
+			var privateLinkResource1 NetworkSecurityPerimeterSubResource
 			err := privateLinkResource1.PopulateFromARM(owner, *typedInput.Properties.PrivateLinkResource)
 			if err != nil {
 				return err
@@ -371,7 +371,7 @@ func (association *NetworkSecurityPerimetersResourceAssociation_Spec) PopulateFr
 	// copying flattened property:
 	if typedInput.Properties != nil {
 		if typedInput.Properties.Profile != nil {
-			var profile1 SubResource
+			var profile1 NetworkSecurityPerimeterSubResource
 			err := profile1.PopulateFromARM(owner, *typedInput.Properties.Profile)
 			if err != nil {
 				return err
@@ -472,10 +472,10 @@ func (association *NetworkSecurityPerimetersResourceAssociation_Spec) AssignProp
 
 	// PrivateLinkResource
 	if source.PrivateLinkResource != nil {
-		var privateLinkResource SubResource
-		err := privateLinkResource.AssignProperties_From_SubResource(source.PrivateLinkResource)
+		var privateLinkResource NetworkSecurityPerimeterSubResource
+		err := privateLinkResource.AssignProperties_From_NetworkSecurityPerimeterSubResource(source.PrivateLinkResource)
 		if err != nil {
-			return eris.Wrap(err, "calling AssignProperties_From_SubResource() to populate field PrivateLinkResource")
+			return eris.Wrap(err, "calling AssignProperties_From_NetworkSecurityPerimeterSubResource() to populate field PrivateLinkResource")
 		}
 		association.PrivateLinkResource = &privateLinkResource
 	} else {
@@ -484,10 +484,10 @@ func (association *NetworkSecurityPerimetersResourceAssociation_Spec) AssignProp
 
 	// Profile
 	if source.Profile != nil {
-		var profile SubResource
-		err := profile.AssignProperties_From_SubResource(source.Profile)
+		var profile NetworkSecurityPerimeterSubResource
+		err := profile.AssignProperties_From_NetworkSecurityPerimeterSubResource(source.Profile)
 		if err != nil {
-			return eris.Wrap(err, "calling AssignProperties_From_SubResource() to populate field Profile")
+			return eris.Wrap(err, "calling AssignProperties_From_NetworkSecurityPerimeterSubResource() to populate field Profile")
 		}
 		association.Profile = &profile
 	} else {
@@ -539,10 +539,10 @@ func (association *NetworkSecurityPerimetersResourceAssociation_Spec) AssignProp
 
 	// PrivateLinkResource
 	if association.PrivateLinkResource != nil {
-		var privateLinkResource storage.SubResource
-		err := association.PrivateLinkResource.AssignProperties_To_SubResource(&privateLinkResource)
+		var privateLinkResource storage.NetworkSecurityPerimeterSubResource
+		err := association.PrivateLinkResource.AssignProperties_To_NetworkSecurityPerimeterSubResource(&privateLinkResource)
 		if err != nil {
-			return eris.Wrap(err, "calling AssignProperties_To_SubResource() to populate field PrivateLinkResource")
+			return eris.Wrap(err, "calling AssignProperties_To_NetworkSecurityPerimeterSubResource() to populate field PrivateLinkResource")
 		}
 		destination.PrivateLinkResource = &privateLinkResource
 	} else {
@@ -551,10 +551,10 @@ func (association *NetworkSecurityPerimetersResourceAssociation_Spec) AssignProp
 
 	// Profile
 	if association.Profile != nil {
-		var profile storage.SubResource
-		err := association.Profile.AssignProperties_To_SubResource(&profile)
+		var profile storage.NetworkSecurityPerimeterSubResource
+		err := association.Profile.AssignProperties_To_NetworkSecurityPerimeterSubResource(&profile)
 		if err != nil {
-			return eris.Wrap(err, "calling AssignProperties_To_SubResource() to populate field Profile")
+			return eris.Wrap(err, "calling AssignProperties_To_NetworkSecurityPerimeterSubResource() to populate field Profile")
 		}
 		destination.Profile = &profile
 	} else {
@@ -585,10 +585,10 @@ func (association *NetworkSecurityPerimetersResourceAssociation_Spec) Initialize
 
 	// PrivateLinkResource
 	if source.PrivateLinkResource != nil {
-		var privateLinkResource SubResource
-		err := privateLinkResource.Initialize_From_SubResource_STATUS(source.PrivateLinkResource)
+		var privateLinkResource NetworkSecurityPerimeterSubResource
+		err := privateLinkResource.Initialize_From_NetworkSecurityPerimeterSubResource_STATUS(source.PrivateLinkResource)
 		if err != nil {
-			return eris.Wrap(err, "calling Initialize_From_SubResource_STATUS() to populate field PrivateLinkResource")
+			return eris.Wrap(err, "calling Initialize_From_NetworkSecurityPerimeterSubResource_STATUS() to populate field PrivateLinkResource")
 		}
 		association.PrivateLinkResource = &privateLinkResource
 	} else {
@@ -597,10 +597,10 @@ func (association *NetworkSecurityPerimetersResourceAssociation_Spec) Initialize
 
 	// Profile
 	if source.Profile != nil {
-		var profile SubResource
-		err := profile.Initialize_From_SubResource_STATUS(source.Profile)
+		var profile NetworkSecurityPerimeterSubResource
+		err := profile.Initialize_From_NetworkSecurityPerimeterSubResource_STATUS(source.Profile)
 		if err != nil {
-			return eris.Wrap(err, "calling Initialize_From_SubResource_STATUS() to populate field Profile")
+			return eris.Wrap(err, "calling Initialize_From_NetworkSecurityPerimeterSubResource_STATUS() to populate field Profile")
 		}
 		association.Profile = &profile
 	} else {
@@ -639,10 +639,10 @@ type NetworkSecurityPerimetersResourceAssociation_STATUS struct {
 	Name *string `json:"name,omitempty"`
 
 	// PrivateLinkResource: The PaaS resource to be associated.
-	PrivateLinkResource *SubResource_STATUS `json:"privateLinkResource,omitempty"`
+	PrivateLinkResource *NetworkSecurityPerimeterSubResource_STATUS `json:"privateLinkResource,omitempty"`
 
 	// Profile: Profile id to which the PaaS resource is associated.
-	Profile *SubResource_STATUS `json:"profile,omitempty"`
+	Profile *NetworkSecurityPerimeterSubResource_STATUS `json:"profile,omitempty"`
 
 	// ProvisioningState: The provisioning state of the resource  association resource.
 	ProvisioningState *NspProvisioningState_STATUS `json:"provisioningState,omitempty"`
@@ -756,7 +756,7 @@ func (association *NetworkSecurityPerimetersResourceAssociation_STATUS) Populate
 	// copying flattened property:
 	if typedInput.Properties != nil {
 		if typedInput.Properties.PrivateLinkResource != nil {
-			var privateLinkResource1 SubResource_STATUS
+			var privateLinkResource1 NetworkSecurityPerimeterSubResource_STATUS
 			err := privateLinkResource1.PopulateFromARM(owner, *typedInput.Properties.PrivateLinkResource)
 			if err != nil {
 				return err
@@ -770,7 +770,7 @@ func (association *NetworkSecurityPerimetersResourceAssociation_STATUS) Populate
 	// copying flattened property:
 	if typedInput.Properties != nil {
 		if typedInput.Properties.Profile != nil {
-			var profile1 SubResource_STATUS
+			var profile1 NetworkSecurityPerimeterSubResource_STATUS
 			err := profile1.PopulateFromARM(owner, *typedInput.Properties.Profile)
 			if err != nil {
 				return err
@@ -838,10 +838,10 @@ func (association *NetworkSecurityPerimetersResourceAssociation_STATUS) AssignPr
 
 	// PrivateLinkResource
 	if source.PrivateLinkResource != nil {
-		var privateLinkResource SubResource_STATUS
-		err := privateLinkResource.AssignProperties_From_SubResource_STATUS(source.PrivateLinkResource)
+		var privateLinkResource NetworkSecurityPerimeterSubResource_STATUS
+		err := privateLinkResource.AssignProperties_From_NetworkSecurityPerimeterSubResource_STATUS(source.PrivateLinkResource)
 		if err != nil {
-			return eris.Wrap(err, "calling AssignProperties_From_SubResource_STATUS() to populate field PrivateLinkResource")
+			return eris.Wrap(err, "calling AssignProperties_From_NetworkSecurityPerimeterSubResource_STATUS() to populate field PrivateLinkResource")
 		}
 		association.PrivateLinkResource = &privateLinkResource
 	} else {
@@ -850,10 +850,10 @@ func (association *NetworkSecurityPerimetersResourceAssociation_STATUS) AssignPr
 
 	// Profile
 	if source.Profile != nil {
-		var profile SubResource_STATUS
-		err := profile.AssignProperties_From_SubResource_STATUS(source.Profile)
+		var profile NetworkSecurityPerimeterSubResource_STATUS
+		err := profile.AssignProperties_From_NetworkSecurityPerimeterSubResource_STATUS(source.Profile)
 		if err != nil {
-			return eris.Wrap(err, "calling AssignProperties_From_SubResource_STATUS() to populate field Profile")
+			return eris.Wrap(err, "calling AssignProperties_From_NetworkSecurityPerimeterSubResource_STATUS() to populate field Profile")
 		}
 		association.Profile = &profile
 	} else {
@@ -915,10 +915,10 @@ func (association *NetworkSecurityPerimetersResourceAssociation_STATUS) AssignPr
 
 	// PrivateLinkResource
 	if association.PrivateLinkResource != nil {
-		var privateLinkResource storage.SubResource_STATUS
-		err := association.PrivateLinkResource.AssignProperties_To_SubResource_STATUS(&privateLinkResource)
+		var privateLinkResource storage.NetworkSecurityPerimeterSubResource_STATUS
+		err := association.PrivateLinkResource.AssignProperties_To_NetworkSecurityPerimeterSubResource_STATUS(&privateLinkResource)
 		if err != nil {
-			return eris.Wrap(err, "calling AssignProperties_To_SubResource_STATUS() to populate field PrivateLinkResource")
+			return eris.Wrap(err, "calling AssignProperties_To_NetworkSecurityPerimeterSubResource_STATUS() to populate field PrivateLinkResource")
 		}
 		destination.PrivateLinkResource = &privateLinkResource
 	} else {
@@ -927,10 +927,10 @@ func (association *NetworkSecurityPerimetersResourceAssociation_STATUS) AssignPr
 
 	// Profile
 	if association.Profile != nil {
-		var profile storage.SubResource_STATUS
-		err := association.Profile.AssignProperties_To_SubResource_STATUS(&profile)
+		var profile storage.NetworkSecurityPerimeterSubResource_STATUS
+		err := association.Profile.AssignProperties_To_NetworkSecurityPerimeterSubResource_STATUS(&profile)
 		if err != nil {
-			return eris.Wrap(err, "calling AssignProperties_To_SubResource_STATUS() to populate field Profile")
+			return eris.Wrap(err, "calling AssignProperties_To_NetworkSecurityPerimeterSubResource_STATUS() to populate field Profile")
 		}
 		destination.Profile = &profile
 	} else {
@@ -1101,19 +1101,19 @@ func (operator *NetworkSecurityPerimetersResourceAssociationOperatorSpec) Assign
 }
 
 // Reference to another subresource.
-type SubResource struct {
+type NetworkSecurityPerimeterSubResource struct {
 	// Reference: Resource ID.
 	Reference *genruntime.ResourceReference `armReference:"Id" json:"reference,omitempty"`
 }
 
-var _ genruntime.ARMTransformer = &SubResource{}
+var _ genruntime.ARMTransformer = &NetworkSecurityPerimeterSubResource{}
 
 // ConvertToARM converts from a Kubernetes CRD object to an ARM object
-func (resource *SubResource) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
+func (resource *NetworkSecurityPerimeterSubResource) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
 	if resource == nil {
 		return nil, nil
 	}
-	result := &arm.SubResource{}
+	result := &arm.NetworkSecurityPerimeterSubResource{}
 
 	// Set property "Id":
 	if resource.Reference != nil {
@@ -1128,15 +1128,15 @@ func (resource *SubResource) ConvertToARM(resolved genruntime.ConvertToARMResolv
 }
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (resource *SubResource) NewEmptyARMValue() genruntime.ARMResourceStatus {
-	return &arm.SubResource{}
+func (resource *NetworkSecurityPerimeterSubResource) NewEmptyARMValue() genruntime.ARMResourceStatus {
+	return &arm.NetworkSecurityPerimeterSubResource{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (resource *SubResource) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
-	_, ok := armInput.(arm.SubResource)
+func (resource *NetworkSecurityPerimeterSubResource) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+	_, ok := armInput.(arm.NetworkSecurityPerimeterSubResource)
 	if !ok {
-		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.SubResource, got %T", armInput)
+		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.NetworkSecurityPerimeterSubResource, got %T", armInput)
 	}
 
 	// no assignment for property "Reference"
@@ -1145,8 +1145,8 @@ func (resource *SubResource) PopulateFromARM(owner genruntime.ArbitraryOwnerRefe
 	return nil
 }
 
-// AssignProperties_From_SubResource populates our SubResource from the provided source SubResource
-func (resource *SubResource) AssignProperties_From_SubResource(source *storage.SubResource) error {
+// AssignProperties_From_NetworkSecurityPerimeterSubResource populates our NetworkSecurityPerimeterSubResource from the provided source NetworkSecurityPerimeterSubResource
+func (resource *NetworkSecurityPerimeterSubResource) AssignProperties_From_NetworkSecurityPerimeterSubResource(source *storage.NetworkSecurityPerimeterSubResource) error {
 
 	// Reference
 	if source.Reference != nil {
@@ -1160,8 +1160,8 @@ func (resource *SubResource) AssignProperties_From_SubResource(source *storage.S
 	return nil
 }
 
-// AssignProperties_To_SubResource populates the provided destination SubResource from our SubResource
-func (resource *SubResource) AssignProperties_To_SubResource(destination *storage.SubResource) error {
+// AssignProperties_To_NetworkSecurityPerimeterSubResource populates the provided destination NetworkSecurityPerimeterSubResource from our NetworkSecurityPerimeterSubResource
+func (resource *NetworkSecurityPerimeterSubResource) AssignProperties_To_NetworkSecurityPerimeterSubResource(destination *storage.NetworkSecurityPerimeterSubResource) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
@@ -1184,8 +1184,8 @@ func (resource *SubResource) AssignProperties_To_SubResource(destination *storag
 	return nil
 }
 
-// Initialize_From_SubResource_STATUS populates our SubResource from the provided source SubResource_STATUS
-func (resource *SubResource) Initialize_From_SubResource_STATUS(source *SubResource_STATUS) error {
+// Initialize_From_NetworkSecurityPerimeterSubResource_STATUS populates our NetworkSecurityPerimeterSubResource from the provided source NetworkSecurityPerimeterSubResource_STATUS
+func (resource *NetworkSecurityPerimeterSubResource) Initialize_From_NetworkSecurityPerimeterSubResource_STATUS(source *NetworkSecurityPerimeterSubResource_STATUS) error {
 
 	// Reference
 	if source.Id != nil {
@@ -1200,23 +1200,23 @@ func (resource *SubResource) Initialize_From_SubResource_STATUS(source *SubResou
 }
 
 // Reference to another subresource.
-type SubResource_STATUS struct {
+type NetworkSecurityPerimeterSubResource_STATUS struct {
 	// Id: Resource ID.
 	Id *string `json:"id,omitempty"`
 }
 
-var _ genruntime.FromARMConverter = &SubResource_STATUS{}
+var _ genruntime.FromARMConverter = &NetworkSecurityPerimeterSubResource_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (resource *SubResource_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
-	return &arm.SubResource_STATUS{}
+func (resource *NetworkSecurityPerimeterSubResource_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+	return &arm.NetworkSecurityPerimeterSubResource_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (resource *SubResource_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
-	typedInput, ok := armInput.(arm.SubResource_STATUS)
+func (resource *NetworkSecurityPerimeterSubResource_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+	typedInput, ok := armInput.(arm.NetworkSecurityPerimeterSubResource_STATUS)
 	if !ok {
-		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.SubResource_STATUS, got %T", armInput)
+		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.NetworkSecurityPerimeterSubResource_STATUS, got %T", armInput)
 	}
 
 	// Set property "Id":
@@ -1229,8 +1229,8 @@ func (resource *SubResource_STATUS) PopulateFromARM(owner genruntime.ArbitraryOw
 	return nil
 }
 
-// AssignProperties_From_SubResource_STATUS populates our SubResource_STATUS from the provided source SubResource_STATUS
-func (resource *SubResource_STATUS) AssignProperties_From_SubResource_STATUS(source *storage.SubResource_STATUS) error {
+// AssignProperties_From_NetworkSecurityPerimeterSubResource_STATUS populates our NetworkSecurityPerimeterSubResource_STATUS from the provided source NetworkSecurityPerimeterSubResource_STATUS
+func (resource *NetworkSecurityPerimeterSubResource_STATUS) AssignProperties_From_NetworkSecurityPerimeterSubResource_STATUS(source *storage.NetworkSecurityPerimeterSubResource_STATUS) error {
 
 	// Id
 	resource.Id = genruntime.ClonePointerToString(source.Id)
@@ -1239,8 +1239,8 @@ func (resource *SubResource_STATUS) AssignProperties_From_SubResource_STATUS(sou
 	return nil
 }
 
-// AssignProperties_To_SubResource_STATUS populates the provided destination SubResource_STATUS from our SubResource_STATUS
-func (resource *SubResource_STATUS) AssignProperties_To_SubResource_STATUS(destination *storage.SubResource_STATUS) error {
+// AssignProperties_To_NetworkSecurityPerimeterSubResource_STATUS populates the provided destination NetworkSecurityPerimeterSubResource_STATUS from our NetworkSecurityPerimeterSubResource_STATUS
+func (resource *NetworkSecurityPerimeterSubResource_STATUS) AssignProperties_To_NetworkSecurityPerimeterSubResource_STATUS(destination *storage.NetworkSecurityPerimeterSubResource_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 

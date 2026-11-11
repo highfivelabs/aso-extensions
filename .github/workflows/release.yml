@@ -1,0 +1,86 @@
+# Copyright 2026 High Five Labs
+# SPDX-License-Identifier: MIT
+#
+# On a v* tag: build the manager image with ko (as README.md's install and
+# tests/operator do) for linux/amd64 and linux/arm64, push it to the
+# High Five Labs registry as
+#   us-central1-docker.pkg.dev/hfl-dev-514205/hfl-oci/aso-extensions/manager:<tag>
+# and keep the resolved install (config/default with that image) as the
+# run's `install` artifact.
+#
+# It signs in to Google Cloud through Workload Identity Federation as
+# hfl-release@hfl-dev-514205 (only artifactregistry.writer on hfl-oci; it cannot create VMs); no key is stored.
+# It does nothing until the repository variable RELEASE_ENABLED is 'true',
+# which the builder sets once the federation admits this repository.
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  KO_VERSION: v0.19.1
+  REGISTRY: us-central1-docker.pkg.dev
+  KO_DOCKER_REPO: us-central1-docker.pkg.dev/hfl-dev-514205/hfl-oci/aso-extensions
+
+jobs:
+  images:
+    if: vars.RELEASE_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+
+      - name: ASO at the pin plus patches/
+        run: |
+          hack/upstream.sh
+          hack/upstream.sh --check
+
+      - name: Install ko
+        run: |
+          GOTOOLCHAIN=auto GOBIN="${HOME}/tools/bin" go install "github.com/google/ko@${KO_VERSION}"
+          echo "${HOME}/tools/bin" >> "${GITHUB_PATH}"
+
+      - id: auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          workload_identity_provider: projects/361760340954/locations/global/workloadIdentityPools/github/providers/factory
+          service_account: hfl-release@hfl-dev-514205.iam.gserviceaccount.com
+          token_format: access_token
+
+      - name: Sign in to the registry
+        env:
+          TOKEN: ${{ steps.auth.outputs.access_token }}
+        run: ko login "${REGISTRY}" --username oauth2accesstoken --password-stdin <<<"${TOKEN}"
+
+      - name: Build and push the manager
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          kubectl kustomize config/default \
+            | ko resolve --base-import-paths --tags "${TAG}" --platform linux/amd64,linux/arm64 -f - \
+            > "dist/aso-extensions-${TAG}.yaml"
+          grep -E 'image: ' "dist/aso-extensions-${TAG}.yaml" | sort -u | tee -a "${GITHUB_STEP_SUMMARY}"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: install
+          path: dist/

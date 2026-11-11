@@ -29,10 +29,10 @@ type NspAssociationProperties_STATUS struct {
 	HasProvisioningIssues *string `json:"hasProvisioningIssues,omitempty"`
 
 	// PrivateLinkResource: The PaaS resource to be associated.
-	PrivateLinkResource *SubResource_STATUS `json:"privateLinkResource,omitempty"`
+	PrivateLinkResource *NetworkSecurityPerimeterSubResource_STATUS `json:"privateLinkResource,omitempty"`
 
 	// Profile: Profile id to which the PaaS resource is associated.
-	Profile *SubResource_STATUS `json:"profile,omitempty"`
+	Profile *NetworkSecurityPerimeterSubResource_STATUS `json:"profile,omitempty"`
 
 	// ProvisioningState: The provisioning state of the resource  association resource.
 	ProvisioningState *NspProvisioningState_STATUS `json:"provisioningState,omitempty"`
@@ -55,7 +55,7 @@ var associationAccessMode_STATUS_Values = map[string]AssociationAccessMode_STATU
 }
 
 // Reference to another subresource.
-type SubResource_STATUS struct {
+type NetworkSecurityPerimeterSubResource_STATUS struct {
 	// Id: Resource ID.
 	Id *string `json:"id,omitempty"`
 }
