@@ -79,15 +79,8 @@
 | PolicyVariableColumn_STATUS                                                  |           |           | v20241201preview |                  |           |
 | PolicyVariableProperties                                                     |           |           | v20241201preview |                  |           |
 | PolicyVariableProperties_STATUS                                              |           |           | v20241201preview |                  |           |
-| PolicyVariableValueColumnValue                                               |           |           | v20241201preview |                  |           |
-| PolicyVariableValueColumnValue_STATUS                                        |           |           | v20241201preview |                  |           |
-| PolicyVariableValueProperties                                                |           |           | v20241201preview |                  |           |
-| PolicyVariableValueProperties_STATUS                                         |           |           | v20241201preview |                  |           |
 | PolicyVariable_STATUS                                                        |           |           | v20241201preview |                  |           |
 | PolicyVariable_Spec                                                          |           |           | v20241201preview |                  |           |
-| PolicyVariablesValue                                                         |           |           | v20241201preview |                  |           |
-| PolicyVariablesValue_STATUS                                                  |           |           | v20241201preview |                  |           |
-| PolicyVariablesValue_Spec                                                    |           |           | v20241201preview |                  |           |
 | Principal_STATUS                                                             |           | v20201001 |                  |                  |           |
 | PrivateLinkAssociation                                                       | v20200501 |           |                  |                  |           |
 | PrivateLinkAssociationProperties                                             | v20200501 |           |                  |                  |           |

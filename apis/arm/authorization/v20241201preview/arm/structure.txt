@@ -30,34 +30,3 @@ PolicyVariable_Spec: Object (2 properties)
     └── Columns: Object (1 property)[]
         └── ColumnName: *string
 
-PolicyVariablesValue_STATUS: Object (5 properties)
-├── Id: *string
-├── Name: *string
-├── Properties: *Object (1 property)
-│   └── Values: Object (2 properties)[]
-│       ├── ColumnName: *string
-│       └── ColumnValue: map[string]v1.JSON
-├── SystemData: *Object (6 properties)
-│   ├── CreatedAt: *string
-│   ├── CreatedBy: *string
-│   ├── CreatedByType: *Enum (4 values)
-│   │   ├── "Application"
-│   │   ├── "Key"
-│   │   ├── "ManagedIdentity"
-│   │   └── "User"
-│   ├── LastModifiedAt: *string
-│   ├── LastModifiedBy: *string
-│   └── LastModifiedByType: *Enum (4 values)
-│       ├── "Application"
-│       ├── "Key"
-│       ├── "ManagedIdentity"
-│       └── "User"
-└── Type: *string
-
-PolicyVariablesValue_Spec: Object (2 properties)
-├── Name: string
-└── Properties: *Object (1 property)
-    └── Values: Object (2 properties)[]
-        ├── ColumnName: *string
-        └── ColumnValue: map[string]v1.JSON
-

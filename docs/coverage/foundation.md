@@ -125,40 +125,40 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 26.1% | 30.7% |
-| security-adjacent | 7 | 93 | 1,049 | 8.6% | 2.6% | 88.8% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 27.7% | 29.1% |
+| security-adjacent | 7 | 93 | 1,049 | 8.6% | 30.8% | 60.6% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.8% | 63.2% |
-| other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
+| other | 230 | 1,262 | 22,824 | 0.5% | 0.2% | 99.3% |
 
-### platform-foundation: 246 resources (82 with no kind, 66 partly covered, 98 covered)
+### platform-foundation: 246 resources (75 with no kind, 68 partly covered, 103 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
-| 1 | `Microsoft.Management/serviceGroups` | no kind |  |  | 0 / 0 / 5 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (5) | 0 |
-| 2 | `Microsoft.Management/managementGroups` | covered |  | `management/ManagementGroup` | 0 / 2 / 0 | tenant | - | - | 2 |
-| 3 | `Microsoft.Management/managementGroups/subscriptions` | covered |  | `management/ManagementGroupsSubscription` | 0 / 0 / 0 | tenant | - | - | 1 |
-| 4 | `Microsoft.Management/managementGroups/settings` | covered |  | `management/ManagementGroupsSetting` | 0 / 2 / 0 | tenant | - | - | 0 |
+| 1 | `Microsoft.Management/managementGroups` | covered |  | `management/ManagementGroup` | 0 / 2 / 0 | tenant | - | - | 2 |
+| 2 | `Microsoft.Management/managementGroups/subscriptions` | covered |  | `management/ManagementGroupsSubscription` | 0 / 0 / 0 | tenant | - | - | 1 |
+| 3 | `Microsoft.Management/managementGroups/settings` | covered |  | `management/ManagementGroupsSetting` | 0 / 2 / 0 | tenant | - | - | 0 |
+| 4 | `Microsoft.Management/serviceGroups` | covered |  | `management/ServiceGroup` | 0 / 5 / 0 | tenant | - | - | 0 |
 | 5 | `Microsoft.Subscription/policies` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
 | 6 | `Microsoft.Subscription/subscriptionDefinitions` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
 | 7 | `Microsoft.Subscription/aliases` | covered | `subscription/Alias` |  | 9 / 0 / 0 | tenant | - | - | 1 |
 | 8 | `Microsoft.Authorization/privilegedResourceFavorites` | no kind |  |  | 0 / 0 / 1 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (1) | 0 |
-| 9 | `Microsoft.Authorization/resourceManagementPrivateLinks` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
-| 10 | `Microsoft.Authorization/variables` | no kind |  |  | 0 / 0 / 1 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (1) | 0 |
-| 11 | `Microsoft.Authorization/privateLinkAssociations` | no kind |  |  | 0 / 0 / 2 | managementGroup | generator, arbitrary owner (several scopes, patch 0006) | S (2) | 0 |
-| 12 | `Microsoft.Authorization/variables/values` | no kind |  |  | 0 / 0 / 2 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (2) | 0 |
-| 13 | `Microsoft.Authorization/roleAssignmentApprovals/stages` | no kind |  |  | 0 / 0 / 3 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | S (3) | 0 |
-| 14 | `Microsoft.Authorization/accessReviewScheduleDefinitions/instances` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
-| 15 | `Microsoft.Authorization/accessReviewScheduleSettings` | no kind |  |  | 0 / 0 / 15 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (15) | 0 |
-| 16 | `Microsoft.Authorization/accessReviewHistoryDefinitions` | no kind |  |  | 0 / 0 / 20 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (20) | 0 |
-| 17 | `Microsoft.Authorization/policyDefinitions/versions` | no kind |  |  | 0 / 0 / 21 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (21) | 0 |
-| 18 | `Microsoft.Authorization/accessReviewScheduleDefinitions` | no kind |  |  | 0 / 0 / 24 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
-| 19 | `Microsoft.Authorization/policySetDefinitions/versions` | no kind |  |  | 0 / 0 / 24 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
-| 20 | `Microsoft.Authorization/policydefinitions` | partial, 1 of 22 missing |  | `authorization/PolicyDefinition` | 0 / 21 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
-| 21 | `Microsoft.Authorization/policySetDefinitions` | partial, 1 of 25 missing |  | `authorization/PolicySetDefinition` | 0 / 24 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
-| 22 | `Microsoft.Authorization/roleAssignments` | covered | `authorization/RoleAssignment` |  | 7 / 0 / 0 | extension | - | - | 33 |
-| 23 | `Microsoft.Authorization/locks` | covered |  | `authorization/ManagementLock` | 0 / 3 / 0 | extension,resourceGroup,subscription | - | - | 31 |
-| 24 | `Microsoft.Authorization/roleDefinitions` | covered | `authorization/RoleDefinition` |  | 8 / 0 / 0 | extension | - | - | 2 |
-| 25 | `Microsoft.Authorization/policyassignments` | covered |  | `authorization/PolicyAssignment` | 0 / 27 / 0 | extension | - | - | 1 |
+| 9 | `Microsoft.Authorization/variables/values` | no kind |  |  | 0 / 0 / 2 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (2) | 0 |
+| 10 | `Microsoft.Authorization/roleAssignmentApprovals/stages` | no kind |  |  | 0 / 0 / 3 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | S (3) | 0 |
+| 11 | `Microsoft.Authorization/accessReviewScheduleDefinitions/instances` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
+| 12 | `Microsoft.Authorization/accessReviewScheduleSettings` | no kind |  |  | 0 / 0 / 15 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (15) | 0 |
+| 13 | `Microsoft.Authorization/accessReviewHistoryDefinitions` | no kind |  |  | 0 / 0 / 20 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (20) | 0 |
+| 14 | `Microsoft.Authorization/accessReviewScheduleDefinitions` | no kind |  |  | 0 / 0 / 24 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
+| 15 | `Microsoft.Authorization/policydefinitions` | partial, 1 of 22 missing |  | `authorization/PolicyDefinition` | 0 / 21 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
+| 16 | `Microsoft.Authorization/policySetDefinitions` | partial, 1 of 25 missing |  | `authorization/PolicySetDefinition` | 0 / 24 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
+| 17 | `Microsoft.Authorization/policyDefinitions/versions` | partial, 1 of 21 missing |  | `authorization/PolicyDefinitionsVersion` | 0 / 20 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 0 |
+| 18 | `Microsoft.Authorization/policySetDefinitions/versions` | partial, 1 of 24 missing |  | `authorization/PolicySetDefinitionsVersion` | 0 / 23 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 0 |
+| 19 | `Microsoft.Authorization/roleAssignments` | covered | `authorization/RoleAssignment` |  | 7 / 0 / 0 | extension | - | - | 33 |
+| 20 | `Microsoft.Authorization/locks` | covered |  | `authorization/ManagementLock` | 0 / 3 / 0 | extension,resourceGroup,subscription | - | - | 31 |
+| 21 | `Microsoft.Authorization/roleDefinitions` | covered | `authorization/RoleDefinition` |  | 8 / 0 / 0 | extension | - | - | 2 |
+| 22 | `Microsoft.Authorization/policyassignments` | covered |  | `authorization/PolicyAssignment` | 0 / 27 / 0 | extension | - | - | 1 |
+| 23 | `Microsoft.Authorization/resourceManagementPrivateLinks` | covered |  | `authorization/ResourceManagementPrivateLink` | 0 / 1 / 0 | resourceGroup | - | - | 0 |
+| 24 | `Microsoft.Authorization/variables` | covered |  | `authorization/PolicyVariable` | 0 / 1 / 0 | managementGroup,subscription | - | - | 0 |
+| 25 | `Microsoft.Authorization/privateLinkAssociations` | covered |  | `authorization/PrivateLinkAssociation` | 0 / 2 / 0 | managementGroup | - | - | 0 |
 | 26 | `Microsoft.Authorization/roleManagementPolicyAssignments` | covered |  | `authorization/RoleManagementPolicyAssignment` | 0 / 3 / 0 | extension | - | - | 0 |
 | 27 | `Microsoft.Authorization/policyExemptions` | covered |  | `authorization/PolicyExemption` | 0 / 12 / 0 | extension | - | - | 0 |
 | 28 | `Microsoft.Authorization/roleEligibilityScheduleRequests` | covered |  | `authorization/RoleEligibilityScheduleRequest` | 0 / 14 / 0 | extension | - | - | 0 |
@@ -170,10 +170,10 @@ Generated: every resource of the two categories, by the order of the services in
 | 34 | `Microsoft.CostManagement/settings` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
 | 35 | `Microsoft.CostManagement/markupRules` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |
 | 36 | `Microsoft.CostManagement/costAllocationRules` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
-| 37 | `Microsoft.CostManagement/scheduledActions` | no kind |  |  | 0 / 0 / 20 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | S (20) | 0 |
-| 38 | `Microsoft.CostManagement/budgets` | no kind |  |  | 0 / 0 / 27 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (27) | 0 |
-| 39 | `Microsoft.CostManagement/views` | no kind |  |  | 0 / 0 / 34 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | M (34) | 0 |
-| 40 | `Microsoft.CostManagement/exports` | partial, 1 of 28 missing |  | `costmanagement/Export` | 0 / 27 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 37 | `Microsoft.CostManagement/budgets` | no kind |  |  | 0 / 0 / 27 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (27) | 0 |
+| 38 | `Microsoft.CostManagement/views` | no kind |  |  | 0 / 0 / 34 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | M (34) | 0 |
+| 39 | `Microsoft.CostManagement/exports` | partial, 1 of 28 missing |  | `costmanagement/Export` | 0 / 27 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 40 | `Microsoft.CostManagement/scheduledActions` | covered |  | `costmanagement/ScheduledAction` | 0 / 20 / 0 | extension,tenant | - | - | 0 |
 | 41 | `Microsoft.Insights/guestDiagnosticSettingsAssociation` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
 | 42 | `Microsoft.Insights/logprofiles` | no kind |  |  | 0 / 0 / 8 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (8) | 0 |
 | 43 | `Microsoft.Insights/myWorkbooks` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
@@ -381,7 +381,7 @@ Generated: every resource of the two categories, by the order of the services in
 | 245 | `Microsoft.ContainerRegistry/registries/privateEndpointConnections` | covered |  | `containerregistry/RegistriesPrivateEndpointConnection` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 246 | `Microsoft.Billing/billingAccounts/billingSubscriptionAliases` | no kind |  |  | 0 / 0 / 17 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (17) | 0 |
 
-### security-adjacent: 93 resources (82 with no kind, 7 partly covered, 4 covered)
+### security-adjacent: 93 resources (53 with no kind, 18 partly covered, 22 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -400,82 +400,82 @@ Generated: every resource of the two categories, by the order of the services in
 | 13 | `Microsoft.Security/apiCollections` | no kind |  |  | 0 / 0 / 0 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (0) | 0 |
 | 14 | `Microsoft.Security/pricings/securityOperators` | no kind |  |  | 0 / 0 / 0 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (0) | 0 |
 | 15 | `Microsoft.Security/serverVulnerabilityAssessments` | no kind |  |  | 0 / 0 / 0 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (0) | 0 |
-| 16 | `Microsoft.Security/advancedThreatProtectionSettings` | no kind |  |  | 0 / 0 / 1 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (1) | 0 |
-| 17 | `Microsoft.Security/autoProvisioningSettings` | no kind |  |  | 0 / 0 / 1 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (1) | 0 |
-| 18 | `Microsoft.Security/sqlVulnerabilityAssessments` | no kind |  |  | 0 / 0 / 1 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (1) | 0 |
-| 19 | `Microsoft.Security/dataScanners` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 20 | `Microsoft.Security/serverVulnerabilityAssessmentsSettings` | no kind |  |  | 0 / 0 / 2 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (2) | 0 |
-| 21 | `Microsoft.Security/settings` | no kind |  |  | 0 / 0 / 2 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (2) | 0 |
-| 22 | `Microsoft.Security/sqlVulnerabilityAssessments/baselineRules` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 23 | `Microsoft.Security/workspaceSettings` | no kind |  |  | 0 / 0 / 2 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (2) | 0 |
-| 24 | `Microsoft.Security/privateLinks` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 25 | `Microsoft.Security/sensitivitySettings` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
-| 26 | `Microsoft.Security/serviceEntitlementSettings` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 27 | `Microsoft.Security/applications` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
-| 28 | `Microsoft.Security/privateLinks/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 29 | `Microsoft.Security/serviceEntitlements` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 30 | `Microsoft.Security/securityStandards` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |
-| 31 | `Microsoft.Security/alertsSuppressionRules` | no kind |  |  | 0 / 0 / 7 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (7) | 0 |
-| 32 | `Microsoft.Security/customRecommendations` | no kind |  |  | 0 / 0 / 7 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (7) | 0 |
-| 33 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs` | no kind |  |  | 0 / 0 / 7 | resourceGroup | generator | S (7) | 0 |
-| 34 | `Microsoft.Security/pricings` | no kind |  |  | 0 / 0 / 8 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (8) | 0 |
-| 35 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
-| 36 | `Microsoft.Security/securityContacts` | no kind |  |  | 0 / 0 / 8 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (8) | 0 |
-| 37 | `Microsoft.Security/batchPricings` | no kind |  |  | 0 / 0 / 9 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (9) | 0 |
-| 38 | `Microsoft.Security/securityConnectors/devops` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 39 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects/repos` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 40 | `Microsoft.Security/standards` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 41 | `Microsoft.Security/assessments/governanceAssignments` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
-| 42 | `Microsoft.Security/defenderForStorageSettings` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
-| 43 | `Microsoft.Security/assignments` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
-| 44 | `Microsoft.Security/standardAssignments` | no kind |  |  | 0 / 0 / 13 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (13) | 0 |
-| 45 | `Microsoft.Security/deviceSecurityGroups` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
-| 46 | `Microsoft.Security/informationProtectionPolicies` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
-| 47 | `Microsoft.Security/governanceRules` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
-| 48 | `Microsoft.Security/iotSecuritySolutions` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
-| 49 | `Microsoft.Security/assessmentMetadata` | no kind |  |  | 0 / 0 / 18 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (18) | 0 |
-| 50 | `Microsoft.Security/locations/jitNetworkAccessPolicies` | no kind |  |  | 0 / 0 / 19 | resourceGroup | generator | S (19) | 0 |
-| 51 | `Microsoft.Security/automations` | no kind |  |  | 0 / 0 / 20 | resourceGroup | generator | S (20) | 0 |
-| 52 | `Microsoft.Security/assessments` | no kind |  |  | 0 / 0 / 36 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (36) | 0 |
-| 53 | `Microsoft.Security/securityConnectors` | no kind |  |  | 0 / 0 / 78 | resourceGroup | generator | M (78) | 0 |
+| 16 | `Microsoft.Security/sqlVulnerabilityAssessments` | no kind |  |  | 0 / 0 / 1 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (1) | 0 |
+| 17 | `Microsoft.Security/dataScanners` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
+| 18 | `Microsoft.Security/sqlVulnerabilityAssessments/baselineRules` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
+| 19 | `Microsoft.Security/privateLinks` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
+| 20 | `Microsoft.Security/sensitivitySettings` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
+| 21 | `Microsoft.Security/serviceEntitlementSettings` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
+| 22 | `Microsoft.Security/applications` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
+| 23 | `Microsoft.Security/privateLinks/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
+| 24 | `Microsoft.Security/serviceEntitlements` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
+| 25 | `Microsoft.Security/alertsSuppressionRules` | no kind |  |  | 0 / 0 / 7 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (7) | 0 |
+| 26 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs` | no kind |  |  | 0 / 0 / 7 | resourceGroup | generator | S (7) | 0 |
+| 27 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
+| 28 | `Microsoft.Security/batchPricings` | no kind |  |  | 0 / 0 / 9 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (9) | 0 |
+| 29 | `Microsoft.Security/securityConnectors/devops` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
+| 30 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects/repos` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
+| 31 | `Microsoft.Security/standards` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
+| 32 | `Microsoft.Security/assessments/governanceAssignments` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
+| 33 | `Microsoft.Security/assignments` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
+| 34 | `Microsoft.Security/deviceSecurityGroups` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
+| 35 | `Microsoft.Security/informationProtectionPolicies` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
+| 36 | `Microsoft.Security/governanceRules` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
+| 37 | `Microsoft.Security/iotSecuritySolutions` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
+| 38 | `Microsoft.Security/assessmentMetadata` | no kind |  |  | 0 / 0 / 18 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (18) | 0 |
+| 39 | `Microsoft.Security/locations/jitNetworkAccessPolicies` | no kind |  |  | 0 / 0 / 19 | resourceGroup | generator | S (19) | 0 |
+| 40 | `Microsoft.Security/assessments` | no kind |  |  | 0 / 0 / 36 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (36) | 0 |
+| 41 | `Microsoft.Security/securityConnectors` | no kind |  |  | 0 / 0 / 78 | resourceGroup | generator | M (78) | 0 |
+| 42 | `Microsoft.Security/settings` | partial, 2 of 2 missing |  | `security/Setting` | 0 / 0 / 2 | subscription | extend: newer API version or property config | S (2) | 0 |
+| 43 | `Microsoft.Security/securityStandards` | partial, 1 of 6 missing |  | `security/SecurityStandard` | 0 / 5 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 44 | `Microsoft.Security/standardAssignments` | partial, 1 of 13 missing |  | `security/StandardAssignment` | 0 / 12 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 45 | `Microsoft.Security/advancedThreatProtectionSettings` | covered |  | `security/AdvancedThreatProtectionSetting` | 0 / 1 / 0 | extension | - | - | 0 |
+| 46 | `Microsoft.Security/autoProvisioningSettings` | covered |  | `security/AutoProvisioningSetting` | 0 / 1 / 0 | subscription | - | - | 0 |
+| 47 | `Microsoft.Security/serverVulnerabilityAssessmentsSettings` | covered |  | `security/ServerVulnerabilityAssessmentsSetting` | 0 / 2 / 0 | subscription | - | - | 0 |
+| 48 | `Microsoft.Security/workspaceSettings` | covered |  | `security/WorkspaceSetting` | 0 / 2 / 0 | subscription | - | - | 0 |
+| 49 | `Microsoft.Security/customRecommendations` | covered |  | `security/CustomRecommendation` | 0 / 7 / 0 | extension | - | - | 0 |
+| 50 | `Microsoft.Security/pricings` | covered |  | `security/Pricing` | 0 / 8 / 0 | extension | - | - | 0 |
+| 51 | `Microsoft.Security/securityContacts` | covered |  | `security/SecurityContact` | 0 / 8 / 0 | subscription | - | - | 0 |
+| 52 | `Microsoft.Security/defenderForStorageSettings` | covered |  | `security/DefenderForStorageSetting` | 0 / 10 / 0 | extension | - | - | 0 |
+| 53 | `Microsoft.Security/automations` | covered |  | `security/Automation` | 0 / 20 / 0 | resourceGroup | - | - | 0 |
 | 54 | `Microsoft.SecurityInsights/cases/comments` | no kind |  |  | 0 / 0 / 1 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (1) | 0 |
 | 55 | `Microsoft.SecurityInsights/workspaceManagerConfigurations` | no kind |  |  | 0 / 0 / 1 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (1) | 0 |
 | 56 | `Microsoft.SecurityInsights/hunts/comments` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
 | 57 | `Microsoft.SecurityInsights/incidents/comments` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
 | 58 | `Microsoft.SecurityInsights/incidents/relations` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 59 | `Microsoft.SecurityInsights/onboardingStates` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 60 | `Microsoft.SecurityInsights/workspaceManagerAssignments` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 61 | `Microsoft.SecurityInsights/workspaceManagerMembers` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 62 | `Microsoft.SecurityInsights/alertRules/actions` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 63 | `Microsoft.SecurityInsights/hunts/relations` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 64 | `Microsoft.SecurityInsights/settings` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 65 | `Microsoft.SecurityInsights/workspaceManagerGroups` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 66 | `Microsoft.SecurityInsights/alertRules` | no kind |  |  | 0 / 0 / 4 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (4) | 0 |
-| 67 | `Microsoft.SecurityInsights/dataConnectors` | no kind |  |  | 0 / 0 / 4 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (4) | 0 |
-| 68 | `Microsoft.SecurityInsights/fileImports` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |
-| 69 | `Microsoft.SecurityInsights/cases/relations` | no kind |  |  | 0 / 0 / 8 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (8) | 0 |
-| 70 | `Microsoft.SecurityInsights/cases` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
-| 71 | `Microsoft.SecurityInsights/entityQueries` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
-| 72 | `Microsoft.SecurityInsights/watchlists/watchlistItems` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
-| 73 | `Microsoft.SecurityInsights/incidents/tasks` | no kind |  |  | 0 / 0 / 12 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (12) | 0 |
-| 74 | `Microsoft.SecurityInsights/hunts` | no kind |  |  | 0 / 0 / 13 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (13) | 0 |
-| 75 | `Microsoft.SecurityInsights/automationRules` | no kind |  |  | 0 / 0 / 14 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (14) | 0 |
-| 76 | `Microsoft.SecurityInsights/incidents` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
-| 77 | `Microsoft.SecurityInsights/securityMLAnalyticsSettings` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
-| 78 | `Microsoft.SecurityInsights/sourcecontrols` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
-| 79 | `Microsoft.SecurityInsights/bookmarks` | no kind |  |  | 0 / 0 / 17 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (17) | 0 |
-| 80 | `Microsoft.SecurityInsights/watchlists` | no kind |  |  | 0 / 0 / 22 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (22) | 0 |
-| 81 | `Microsoft.SecurityInsights/metadata` | no kind |  |  | 0 / 0 / 33 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (33) | 0 |
-| 82 | `Microsoft.SecurityInsights/contentPackages` | no kind |  |  | 0 / 0 / 37 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (37) | 0 |
-| 83 | `Microsoft.SecurityInsights/dataConnectorDefinitions` | no kind |  |  | 0 / 0 / 38 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (38) | 0 |
-| 84 | `Microsoft.SecurityInsights/contentTemplates` | no kind |  |  | 0 / 0 / 39 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (39) | 0 |
-| 85 | `Microsoft.SecurityInsights/threatIntelligence/indicators` | no kind |  |  | 0 / 0 / 39 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (39) | 0 |
-| 86 | `Microsoft.Purview/accounts/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 87 | `Microsoft.Purview/accounts/kafkaConfigurations` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
-| 88 | `Microsoft.Purview/accounts` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 89 | `Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections` | no kind |  |  | 0 / 0 / 5 | resourceGroup | generator | S (5) | 0 |
-| 90 | `Microsoft.HardwareSecurityModules/cloudHsmClusters` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 91 | `Microsoft.HardwareSecurityModules/dedicatedHSMs` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
+| 59 | `Microsoft.SecurityInsights/workspaceManagerAssignments` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
+| 60 | `Microsoft.SecurityInsights/workspaceManagerMembers` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
+| 61 | `Microsoft.SecurityInsights/hunts/relations` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
+| 62 | `Microsoft.SecurityInsights/settings` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
+| 63 | `Microsoft.SecurityInsights/workspaceManagerGroups` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
+| 64 | `Microsoft.SecurityInsights/fileImports` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |
+| 65 | `Microsoft.SecurityInsights/cases/relations` | no kind |  |  | 0 / 0 / 8 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (8) | 0 |
+| 66 | `Microsoft.SecurityInsights/cases` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
+| 67 | `Microsoft.SecurityInsights/entityQueries` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
+| 68 | `Microsoft.SecurityInsights/incidents/tasks` | no kind |  |  | 0 / 0 / 12 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (12) | 0 |
+| 69 | `Microsoft.SecurityInsights/hunts` | no kind |  |  | 0 / 0 / 13 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (13) | 0 |
+| 70 | `Microsoft.SecurityInsights/incidents` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
+| 71 | `Microsoft.SecurityInsights/sourcecontrols` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
+| 72 | `Microsoft.SecurityInsights/bookmarks` | no kind |  |  | 0 / 0 / 17 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (17) | 0 |
+| 73 | `Microsoft.SecurityInsights/metadata` | no kind |  |  | 0 / 0 / 33 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (33) | 0 |
+| 74 | `Microsoft.SecurityInsights/threatIntelligence/indicators` | no kind |  |  | 0 / 0 / 39 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (39) | 0 |
+| 75 | `Microsoft.SecurityInsights/alertRules` | partial, 4 of 4 missing |  | `securityinsights/AlertRule` | 0 / 0 / 4 | extension | extend: newer API version or property config | S (4) | 0 |
+| 76 | `Microsoft.SecurityInsights/dataConnectors` | partial, 4 of 4 missing |  | `securityinsights/DataConnector` | 0 / 0 / 4 | extension | extend: newer API version or property config | S (4) | 0 |
+| 77 | `Microsoft.SecurityInsights/automationRules` | partial, 1 of 14 missing |  | `securityinsights/AutomationRule` | 0 / 13 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 78 | `Microsoft.SecurityInsights/contentPackages` | partial, 1 of 37 missing |  | `securityinsights/ContentPackage` | 0 / 36 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 79 | `Microsoft.SecurityInsights/dataConnectorDefinitions` | partial, 1 of 38 missing |  | `securityinsights/DataConnectorDefinition` | 0 / 37 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 80 | `Microsoft.SecurityInsights/contentTemplates` | partial, 1 of 39 missing |  | `securityinsights/ContentTemplate` | 0 / 38 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 81 | `Microsoft.SecurityInsights/onboardingStates` | covered |  | `securityinsights/OnboardingState` | 0 / 2 / 0 | extension | - | - | 0 |
+| 82 | `Microsoft.SecurityInsights/alertRules/actions` | covered |  | `securityinsights/AlertRulesAction` | 0 / 3 / 0 | extension | - | - | 0 |
+| 83 | `Microsoft.SecurityInsights/watchlists/watchlistItems` | covered |  | `securityinsights/WatchlistsWatchlistItem` | 0 / 11 / 0 | extension | - | - | 0 |
+| 84 | `Microsoft.SecurityInsights/securityMLAnalyticsSettings` | covered |  | `securityinsights/SecurityMLAnalyticsSetting` | 0 / 16 / 0 | extension | - | - | 0 |
+| 85 | `Microsoft.SecurityInsights/watchlists` | covered |  | `securityinsights/Watchlist` | 0 / 22 / 0 | extension | - | - | 0 |
+| 86 | `Microsoft.Purview/accounts` | partial, 1 of 9 missing |  | `purview/Account` | 0 / 8 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 87 | `Microsoft.Purview/accounts/privateEndpointConnections` | covered |  | `purview/AccountsPrivateEndpointConnection` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
+| 88 | `Microsoft.Purview/accounts/kafkaConfigurations` | covered |  | `purview/AccountsKafkaConfiguration` | 0 / 8 / 0 | resourceGroup | - | - | 0 |
+| 89 | `Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections` | partial, 1 of 5 missing |  | `hardwaresecuritymodules/CloudHsmClustersPrivateEndpointConnection` | 0 / 4 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 90 | `Microsoft.HardwareSecurityModules/cloudHsmClusters` | covered |  | `hardwaresecuritymodules/CloudHsmCluster` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
+| 91 | `Microsoft.HardwareSecurityModules/dedicatedHSMs` | covered |  | `hardwaresecuritymodules/DedicatedHsm` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
 | 92 | `Microsoft.Cdn/cdnWebApplicationFirewallPolicies` | no kind |  |  | 0 / 0 / 39 | resourceGroup | generator | M (39) | 0 |
 | 93 | `Microsoft.Cdn/profiles/securityPolicies` | partial, 2 of 6 missing | `cdn/SecurityPolicy` |  | 4 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 0 |
 <!-- foundation:end -->

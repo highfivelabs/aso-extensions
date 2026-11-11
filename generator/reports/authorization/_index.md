@@ -17,7 +17,6 @@ no_list: true
 | PolicySetDefinition            | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | PolicySetDefinitionsVersion    | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | PolicyVariable                 | 2024-12-01-preview | v20241201preview | v0.1.0         | -      |
-| PolicyVariablesValue           | 2024-12-01-preview | v20241201preview | v0.1.0         | -      |
 | PrivateLinkAssociation         | 2020-05-01         | v20200501        | v0.1.0         | -      |
 | ResourceManagementPrivateLink  | 2020-05-01         | v20200501        | v0.1.0         | -      |
 | RoleAssignmentScheduleRequest  | 2020-10-01         | v20201001        | v0.1.0         | -      |

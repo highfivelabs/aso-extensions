@@ -4,10 +4,9 @@ The following resources have newer versions available in the Azure REST API spec
 
 ## authorization
 
-|      | Resource             | Available Stable | Supported Stable | Available Preview      | Supported Preview  |
-|------|----------------------|------------------|------------------|------------------------|--------------------|
-| 💡    | PolicyVariable       | -                | -                | **2026-01-01-preview** | 2024-12-01-preview |
-| 💡    | PolicyVariablesValue | -                | -                | **2026-01-01-preview** | 2024-12-01-preview |
+|      | Resource       | Available Stable | Supported Stable | Available Preview      | Supported Preview  |
+|------|----------------|------------------|------------------|------------------------|--------------------|
+| 💡    | PolicyVariable | -                | -                | **2026-01-01-preview** | 2024-12-01-preview |
 
 ## compute
 

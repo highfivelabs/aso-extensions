@@ -15,8 +15,6 @@ PolicySetDefinitionsVersionExtension: Object (0 properties)
 
 PolicyVariableExtension: Object (0 properties)
 
-PolicyVariablesValueExtension: Object (0 properties)
-
 PrivateLinkAssociationExtension: Object (0 properties)
 
 ResourceManagementPrivateLinkExtension: Object (0 properties)

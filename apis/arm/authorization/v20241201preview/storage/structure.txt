@@ -35,39 +35,5 @@ PolicyVariable: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
-PolicyVariablesValue: Resource
-├── Owner: authorization/v20241201preview.PolicyVariable
-├── Spec: Object (6 properties)
-│   ├── AzureName: string
-│   ├── OperatorSpec: *Object (3 properties)
-│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
-│   │   ├── PropertyBag: genruntime.PropertyBag
-│   │   └── SecretExpressions: *core.DestinationExpression[]
-│   ├── OriginalVersion: string
-│   ├── Owner: *genruntime.KnownResourceReference
-│   ├── PropertyBag: genruntime.PropertyBag
-│   └── Values: Object (3 properties)[]
-│       ├── ColumnName: *string
-│       ├── ColumnValue: map[string]v1.JSON
-│       └── PropertyBag: genruntime.PropertyBag
-└── Status: Object (7 properties)
-    ├── Conditions: conditions.Condition[]
-    ├── Id: *string
-    ├── Name: *string
-    ├── PropertyBag: genruntime.PropertyBag
-    ├── SystemData: *Object (7 properties)
-    │   ├── CreatedAt: *string
-    │   ├── CreatedBy: *string
-    │   ├── CreatedByType: *string
-    │   ├── LastModifiedAt: *string
-    │   ├── LastModifiedBy: *string
-    │   ├── LastModifiedByType: *string
-    │   └── PropertyBag: genruntime.PropertyBag
-    ├── Type: *string
-    └── Values: Object (3 properties)[]
-        ├── ColumnName: *string
-        ├── ColumnValue: map[string]v1.JSON
-        └── PropertyBag: genruntime.PropertyBag
-
 augmentConversionForSystemData_STATUS: Interface
 

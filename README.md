@@ -47,7 +47,7 @@ Not affiliated with or endorsed by Microsoft.
 <!-- coverage:start -->
 ![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)
 
-Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 4.2%; 79.4% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
+Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 5.1%; 78.5% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
 The purple bar is Terraform's `azurerm` provider beside them, an estimate: the share of the same attributes that a writable attribute of a mapped Terraform resource matches by the lenient rule (L2, 8.2% overall), with the strict rule (L1, 7.2%) as its tick; the method and its error are in the catalog's ["Method and error"](https://github.com/highfivelabs/catalog/blob/13064af34996c47f1a5498bb17aca16194c4574e/docs/terraform-leverage.md#method-and-error), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at catalog `13064af34996`. `azapi` is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema.
 
@@ -55,30 +55,30 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 
 | Category | Services | Resources | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 26.1% | 30.7% | ~18.7% |
-| security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% | ~11.1% |
+| platform-foundation | 18 | 246 | 43.2% | 27.7% | 29.1% | ~18.7% |
+| security-adjacent | 7 | 93 | 8.6% | 30.8% | 60.6% | ~11.1% |
 | application | 35 | 823 | 33.1% | 3.8% | 63.2% | ~11.3% |
-| other | 230 | 1,262 | 0.5% | 0.0% | 99.5% | ~3.9% |
+| other | 230 | 1,262 | 0.5% | 0.2% | 99.3% | ~3.9% |
 
 ![Coverage by tier](docs/coverage/bars/_tiers.svg)
 
 | Tier | Services | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 16.0% | 41.0% | ~13.8% |
-| 2 | 18 | 26.5% | 6.9% | 66.6% | ~8.2% |
+| 1 | 17 | 43.0% | 17.6% | 39.4% | ~13.8% |
+| 2 | 18 | 26.5% | 10.5% | 62.9% | ~8.2% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% | ~6.6% |
 
 By service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), all services in [`services.csv`](docs/coverage/services.csv).
 
 | Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | ---: | --- | --- | --- | ---: | ---: | ---: | ---: |
-| 1 | `Microsoft.Management` | platform-foundation | ![Microsoft.Management](docs/coverage/bars/Microsoft.Management.svg) | 0.0% | 44.4% | 55.6% | ~11.1% |
+| 1 | `Microsoft.Management` | platform-foundation | ![Microsoft.Management](docs/coverage/bars/Microsoft.Management.svg) | 0.0% | 100.0% | 0.0% | ~11.1% |
 | 1 | `Microsoft.Subscription` | platform-foundation | ![Microsoft.Subscription](docs/coverage/bars/Microsoft.Subscription.svg) | 60.0% | 0.0% | 40.0% | ~13.3% |
-| 1 | `Microsoft.Authorization` | platform-foundation | ![Microsoft.Authorization](docs/coverage/bars/Microsoft.Authorization.svg) | 5.9% | 46.9% | 47.2% | ~25.2% |
+| 1 | `Microsoft.Authorization` | platform-foundation | ![Microsoft.Authorization](docs/coverage/bars/Microsoft.Authorization.svg) | 5.9% | 65.4% | 28.7% | ~25.2% |
 | 1 | `Microsoft.PolicyInsights` | platform-foundation | ![Microsoft.PolicyInsights](docs/coverage/bars/Microsoft.PolicyInsights.svg) | 0.0% | 94.4% | 5.6% | ~27.8% |
-| 1 | `Microsoft.Resources` | platform-foundation | ![Microsoft.Resources](docs/coverage/bars/Microsoft.Resources.svg) | 2.1% | 0.7% | 97.2% | ~12.5% |
+| 1 | `Microsoft.Resources` | platform-foundation | ![Microsoft.Resources](docs/coverage/bars/Microsoft.Resources.svg) | 2.1% | 34.7% | 63.2% | ~12.5% |
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 100.0% | 0.0% | ~92.3% |
-| 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 21.3% | 78.7% | ~27.6% |
+| 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 37.0% | 63.0% | ~27.6% |
 | 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 2.0% | 25.5% | ~33.3% |
 | 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 14.6% | 43.2% | ~9.0% |
 | 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 45.8% | 14.0% | ~20.2% |
@@ -94,10 +94,10 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 
 | Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | ---: | --- | --- | --- | ---: | ---: | ---: | ---: |
-| 2 | `Microsoft.Security` | security-adjacent | ![Microsoft.Security](docs/coverage/bars/Microsoft.Security.svg) | 0.0% | 0.0% | 100.0% | ~3.5% |
-| 2 | `Microsoft.SecurityInsights` | security-adjacent | ![Microsoft.SecurityInsights](docs/coverage/bars/Microsoft.SecurityInsights.svg) | 0.0% | 0.0% | 100.0% | ~8.9% |
-| 2 | `Microsoft.Purview` | security-adjacent | ![Microsoft.Purview](docs/coverage/bars/Microsoft.Purview.svg) | 0.0% | 0.0% | 100.0% | ~19.0% |
-| 2 | `Microsoft.HardwareSecurityModules` | security-adjacent | ![Microsoft.HardwareSecurityModules](docs/coverage/bars/Microsoft.HardwareSecurityModules.svg) | 0.0% | 0.0% | 100.0% | ~30.4% |
+| 2 | `Microsoft.Security` | security-adjacent | ![Microsoft.Security](docs/coverage/bars/Microsoft.Security.svg) | 0.0% | 19.0% | 81.0% | ~3.5% |
+| 2 | `Microsoft.SecurityInsights` | security-adjacent | ![Microsoft.SecurityInsights](docs/coverage/bars/Microsoft.SecurityInsights.svg) | 0.0% | 45.3% | 54.7% | ~8.9% |
+| 2 | `Microsoft.Purview` | security-adjacent | ![Microsoft.Purview](docs/coverage/bars/Microsoft.Purview.svg) | 0.0% | 95.2% | 4.8% | ~19.0% |
+| 2 | `Microsoft.HardwareSecurityModules` | security-adjacent | ![Microsoft.HardwareSecurityModules](docs/coverage/bars/Microsoft.HardwareSecurityModules.svg) | 0.0% | 95.7% | 4.3% | ~30.4% |
 | 2 | `Microsoft.Storage` | application | ![Microsoft.Storage](docs/coverage/bars/Microsoft.Storage.svg) | 63.1% | 0.0% | 36.9% | ~7.1% |
 | 2 | `Microsoft.Compute` | application | ![Microsoft.Compute](docs/coverage/bars/Microsoft.Compute.svg) | 38.0% | 1.0% | 61.0% | ~12.8% |
 | 2 | `Microsoft.Web` | application | ![Microsoft.Web](docs/coverage/bars/Microsoft.Web.svg) | 16.2% | 14.1% | 69.7% | ~1.1% |

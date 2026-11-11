@@ -15,7 +15,6 @@ resources:
 - authorization.azure.hfl.dev_policysetdefinitions.yaml
 - authorization.azure.hfl.dev_policysetdefinitionsversions.yaml
 - authorization.azure.hfl.dev_policyvariables.yaml
-- authorization.azure.hfl.dev_policyvariablesvalues.yaml
 - authorization.azure.hfl.dev_privatelinkassociations.yaml
 - authorization.azure.hfl.dev_resourcemanagementprivatelinks.yaml
 - authorization.azure.hfl.dev_roleassignmentschedulerequests.yaml
