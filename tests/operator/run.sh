@@ -1536,6 +1536,42 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.PolicyInsights/attestations/require-team-tag 200" \
   || fail "the fake resource manager saw no delete of the attestation"
 pass "the policy remediation and attestation are deleted in Resource Manager"
+
+step "team-a: the subscription's activity log profile and a workbook template (insights.azure.hfl.dev)"
+kubectl apply -f - <<EOF
+apiVersion: insights.azure.hfl.dev/v20160301
+kind: LogProfile
+metadata: {name: activity, namespace: team-a}
+spec:
+  azureName: default
+  owner: {armId: /subscriptions/${SUB}}
+  location: global
+  categories: [Write, Delete, Action]
+  locations: [global, westus]
+  storageAccountReference: {armId: /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts}
+  retentionPolicy: {enabled: true, days: 90}
+---
+apiVersion: insights.azure.hfl.dev/v20201120
+kind: WorkbookTemplate
+metadata: {name: costs, namespace: team-a}
+spec:
+  owner: {name: rg}
+  location: westus
+  priority: 1
+  templateData: {version: Notebook/1.0, items: []}
+  galleries: [{name: Costs, category: Platform, type: workbook, resourceType: Azure Monitor, order: 100}]
+EOF
+wait_for 120 "team-a's LogProfile Ready" ready logprofiles.insights.azure.hfl.dev team-a activity
+logged fakearm "request PUT /subscriptions/${SUB}/providers/Microsoft.Insights/logprofiles/default 201" || fail "the fake resource manager saw no log profile made on the subscription"
+pass "team-a LogProfile Ready"
+wait_for 120 "team-a's WorkbookTemplate Ready" ready workbooktemplates.insights.azure.hfl.dev team-a costs
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Insights/workbooktemplates/costs 201" || fail "the fake resource manager saw no workbook template made"
+pass "team-a WorkbookTemplate Ready"
+kubectl -n team-a delete logprofiles.insights.azure.hfl.dev activity --timeout=120s
+kubectl -n team-a delete workbooktemplates.insights.azure.hfl.dev costs --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/providers/Microsoft.Insights/logprofiles/default 200" || fail "the fake resource manager saw no delete of the log profile"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Insights/workbooktemplates/costs 200" || fail "the fake resource manager saw no delete of the workbook template"
+pass "the log profile and the workbook template are deleted in Resource Manager"
 kubectl -n team-a delete budgets.consumption.azure.hfl.dev monthly --timeout=120s
 kubectl -n team-a delete exports.costmanagement.azure.hfl.dev daily-costs --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Consumption/budgets/monthly 200" \

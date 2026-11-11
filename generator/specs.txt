@@ -24,3 +24,4 @@ specification/keyvault
 specification/operationsmanagement
 specification/containerservice
 specification/kubernetesconfiguration
+specification/applicationinsights

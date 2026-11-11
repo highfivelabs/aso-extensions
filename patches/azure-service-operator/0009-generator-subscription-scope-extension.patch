@@ -1,0 +1,36 @@
+diff --git a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+--- a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
++++ b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+@@ -1043,6 +1043,17 @@
+ 		return astmodel.ResourceScopeResourceGroup
+ 	}
+ 
++	// Modified by High Five Labs: with ASO_GENERATOR_SUBSCRIPTION_EXTENSION
++	// set, a resource kept directly under a subscription
++	// (/subscriptions/{subscriptionId}/providers/{namespace}/{type}/{name}) is
++	// an extension resource whose owner is the subscription (an ARM ID), as a
++	// resource at several scopes is with ASO_GENERATOR_MULTI_SCOPE. As
++	// Location scope, which the generator cannot yet model (see below), its
++	// ARM ID came out as a resource group named after it.
++	if os.Getenv("ASO_GENERATOR_SUBSCRIPTION_EXTENSION") != "" && isSubscriptionScope(armURI) {
++		return astmodel.ResourceScopeExtension
++	}
++
+ 	if locationScopeRegex.MatchString(armURI) {
+ 		return astmodel.ResourceScopeLocation
+ 	}
+@@ -1051,6 +1062,14 @@
+ 	return astmodel.ResourceScopeTenant
+ }
+ 
++// isSubscriptionScope is whether armURI is
++// /subscriptions/{subscriptionId}/providers/{namespace}/{type}/{name}: one
++// resource, kept directly under a subscription.
++func isSubscriptionScope(armURI string) bool {
++	parts := strings.Split(strings.Trim(armURI, "/"), "/")
++	return len(parts) == 6 && strings.EqualFold(parts[0], "subscriptions") && strings.EqualFold(parts[2], "providers")
++}
++
+ // isTenantScopeChild is whether armURI is /providers/{namespace}/{type}/{name}
+ // followed by at least one more {type}/{name} pair.
+ func isTenantScopeChild(armURI string) bool {
