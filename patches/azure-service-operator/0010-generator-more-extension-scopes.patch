@@ -1,0 +1,72 @@
+diff --git a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+--- a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
++++ b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+@@ -317,6 +317,15 @@
+ 		//  o  specify discriminator property
+ 		//  o  contains a 'x-ms-discriminator-value' extension value
+ 		if _, found := def.Extensions.GetString("x-ms-discriminator-value"); !found && def.Discriminator == "" {
++			continue
++		}
++
++		// Modified by High Five Labs: the prune check comes before the type is
++		// made, as open ASO pull request #5783 (head d6842ab7) moves it, so a
++		// pruned version's one-of types the generator cannot make (Security
++		// 2022-01-01's AlertSimulatorRequestProperties) do not stop the run.
++		typeName := astmodel.MakeInternalTypeName(extractor.outputPackage, name)
++		if action, _ := scanner.configuration.ShouldPrune(typeName); action == config.Prune {
+ 			continue
+ 		}
+ 
+@@ -343,13 +352,6 @@
+ 			continue
+ 		}
+ 
+-		typeName := astmodel.MakeInternalTypeName(extractor.outputPackage, name)
+-
+-		if action, _ := scanner.configuration.ShouldPrune(typeName); action == config.Prune {
+-			// Pruned type
+-			continue
+-		}
+-
+ 		result.OtherDefinitions[typeName] = astmodel.MakeTypeDefinition(typeName, t)
+ 	}
+ 
+@@ -1007,7 +1009,10 @@
+ var (
+ 	resourceGroupScopeRegex = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/.*`)
+ 	locationScopeRegex      = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/.*`)
+-	extensionScopePrefixes  = []string{
++	// Modified by High Five Labs (ASO_GENERATOR_MORE_EXTENSION_SCOPES): a
++	// resource directly under a subscription.
++	subscriptionProviderRegex = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/providers/`)
++	extensionScopePrefixes    = []string{
+ 		"/{scope}/",
+ 		"/{resourceUri}/",
+ 	}
+@@ -1023,6 +1028,26 @@
+ 		}
+ 	}
+ 
++	// Modified by High Five Labs: with ASO_GENERATOR_MORE_EXTENSION_SCOPES set,
++	// two more names of an arbitrary scope are extension prefixes,
++	// /{resourceId}/ (as open ASO pull request #5783 adds, for Defender for
++	// Storage settings) and /{scopeId}/ (Defender pricings), and a resource
++	// directly under a subscription (/subscriptions/{subscriptionId}/providers/...)
++	// is an extension resource too, owned by the subscription's ARM ID (or any
++	// resource), as a budget is. Without it ASO calls the first two Tenant scope
++	// and the last Location scope, and builds neither's ARM ID (the resolver
++	// roots a Location scope resource at a resource group).
++	if os.Getenv("ASO_GENERATOR_MORE_EXTENSION_SCOPES") != "" {
++		for _, prefix := range []string{"/{resourceId}/", "/{scopeId}/"} {
++			if len(armURI) >= len(prefix) && strings.EqualFold(prefix, armURI[:len(prefix)]) {
++				return astmodel.ResourceScopeExtension
++			}
++		}
++		if subscriptionProviderRegex.MatchString(armURI) {
++			return astmodel.ResourceScopeExtension
++		}
++	}
++
+ 	// Modified by High Five Labs: with ASO_GENERATOR_TENANT_CHILDREN set, a
+ 	// resource nested under a tenant scope resource
+ 	// (/providers/Microsoft.Management/managementGroups/{groupId}/subscriptions/{subscriptionId})

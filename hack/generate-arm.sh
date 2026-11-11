@@ -36,6 +36,7 @@ export ASO_GENERATOR_TENANT_CHILDREN=1
 export ASO_GENERATOR_MULTI_SCOPE=1
 export ASO_GENERATOR_SUBRESOURCE_RESOURCES=1
 export ASO_GENERATOR_RECEIVER_NOT_PARAMETER=1
+export ASO_GENERATOR_MORE_EXTENSION_SCOPES=1
 
 rm -rf apis/arm pkg/controllers/arm_resources_gen.go generator/reports
 mkdir -p generator/reports/fragments
