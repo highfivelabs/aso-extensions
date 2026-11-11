@@ -295,14 +295,20 @@ metadata:
   namespace: $1
   annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.ContainerService/fleets/$1-fleet}
 spec: {azureName: $1-fleet, owner: {name: rg}}
+---
 apiVersion: network.azure.com/v1api20180501storage
 kind: DnsZone
+metadata:
   name: zone
+  namespace: $1
   annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/dnsZones/$1.example}
 spec: {azureName: $1.example, location: global, owner: {name: rg}}
+---
 apiVersion: network.azure.com/v1api20240601storage
 kind: PrivateDnsZone
+metadata:
   name: private-zone
+  namespace: $1
   annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/privateDnsZones/$1.internal}
 spec: {azureName: $1.internal, location: global, owner: {name: rg}}
 EOF
@@ -331,7 +337,9 @@ EOF
   kubectl -n "$1" patch managedclusters.containerservice.azure.com aks --subresource=status --type=merge \
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl -n "$1" patch fleets.containerservice.azure.com fleet --subresource=status --type=merge \
+    -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl -n "$1" patch dnszones.network.azure.com zone --subresource=status --type=merge \
+    -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl -n "$1" patch privatednszones.network.azure.com private-zone --subresource=status --type=merge \
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl apply -f - <<EOF
