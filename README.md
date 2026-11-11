@@ -20,6 +20,7 @@ Not affiliated with or endorsed by Microsoft.
 | `web.azure.hfl.dev/v20260715` `SitesSlot`, `SitesHostNameBinding`, `SitesSlotsHostNameBinding`, `Certificate` | App Service deployment slots and custom domains (on the app and on a slot) and certificates, which ASO's `Site` has none of; owned by ASO's `Site` or `ResourceGroup`; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `operationalinsights.azure.hfl.dev/v20250701` `WorkspacesTable`, `WorkspacesSavedSearch`, `WorkspacesLinkedService`, `WorkspacesLinkedStorageAccount`, `WorkspacesDataExport`, `QueryPack`, `QueryPacksQuery` | the children of a Log Analytics workspace (custom tables and their retention and plan, saved searches, linked Automation accounts, linked storage accounts) and query packs with their queries, which ASO's `Workspace` has none of; owned by ASO's `Workspace` or `ResourceGroup` (a query by our pack); generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `containerservice.azure.hfl.dev/v20260501` `ManagedClustersManagedNamespace`, `ManagedClustersPrivateEndpointConnection`, `Snapshot`; `v20260601` `FleetsManagedNamespace` | AKS managed namespaces (labels, quota, network policy) on a cluster or across a fleet, a cluster's private endpoint connections, and node pool snapshots, which ASO's `ManagedCluster` and `Fleet` have none of; owned by ASO's `ManagedCluster` or `Fleet` (a snapshot by the resource group); generated like the Container Apps kinds | ours; none at ASO's pin, in a release, in `main` or in an open pull request (2026-11-10) |
+| `kubernetesconfiguration.azure.hfl.dev/v20230501` `SourceControlConfiguration`; `v20241101preview` `PrivateLinkScope`, `PrivateLinkScopesPrivateEndpointConnection` | legacy (Flux v1) GitOps configurations on an AKS or Arc-enabled cluster, their protected settings from a Secret, and the private link scope of Arc-enabled clusters with its endpoint connections, which ASO's `Extension` and `FluxConfiguration` do not cover; generated like the Container Apps kinds | ours; none at ASO's pin, in a release, in `main` or in an open pull request (2026-11-10) |
 | `insights.azure.hfl.dev/v20210901` `PrivateLinkScope`, `PrivateLinkScopesScopedResource`, `PrivateLinkScopesPrivateEndpointConnection`; `network.azure.hfl.dev/v20250501` `NetworkSecurityPerimeter`, `NetworkSecurityPerimetersProfile`, `NetworkSecurityPerimetersProfilesAccessRule`, `NetworkSecurityPerimetersResourceAssociation`, `NetworkSecurityPerimetersLink`, `NetworkSecurityPerimetersLoggingConfiguration` | an Azure Monitor private link scope with its scoped workspaces and endpoint connections, and a network security perimeter with its profiles, access rules, associations of PaaS resources, links and logging; ASO has none of them; owned by the resource group or by our parent kind; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `containerregistry.azure.hfl.dev/v20251101` `RegistriesToken`, `RegistriesScopeMap`, `RegistriesCredentialSet`, `RegistriesWebhook`, `RegistriesConnectedRegistry`, `RegistriesPrivateEndpointConnection`; `v20190401` `RegistriesTask` | the repository tokens, scope maps, credential sets (for cache rules), webhooks, connected registries, private endpoint connections and tasks (ACR builds and their triggers) of a container registry, which ASO's `Registry` has none of; owned by ASO's `Registry`; a webhook's URI and headers and a task's tokens and registry credentials come from Secrets; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `compute.azure.hfl.dev/v20220301` `VirtualMachinesRunCommand`; `devtestlab.azure.hfl.dev/v20180915` `Schedule`; `maintenance.azure.hfl.dev/v20230401` `MaintenanceConfiguration` | what a virtual machine needs beside the VM: a run command (script, parameters, run-as password from a Secret), the auto-shutdown schedule, and Azure Maintenance configurations; ASO's `VirtualMachine` has none of them; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
@@ -51,7 +52,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 
 | Category | Services | Resources | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 26.1% | 30.7% | ~18.7% |
+| platform-foundation | 18 | 246 | 43.2% | 26.5% | 30.3% | ~18.7% |
 | security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% | ~11.1% |
 | application | 35 | 823 | 33.1% | 3.8% | 63.2% | ~11.3% |
 | other | 230 | 1,262 | 0.5% | 0.0% | 99.5% | ~3.9% |
@@ -60,7 +61,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 
 | Tier | Services | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 16.0% | 41.0% | ~13.8% |
+| 1 | 17 | 43.0% | 16.2% | 40.8% | ~13.8% |
 | 2 | 18 | 26.5% | 6.9% | 66.6% | ~8.2% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% | ~6.6% |
 
@@ -83,7 +84,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.OperationsManagement` | platform-foundation | ![Microsoft.OperationsManagement](docs/coverage/bars/Microsoft.OperationsManagement.svg) | 0.0% | 52.9% | 47.1% | ~35.3% |
 | 1 | `Microsoft.Monitor` | platform-foundation | ![Microsoft.Monitor](docs/coverage/bars/Microsoft.Monitor.svg) | 2.2% | 0.0% | 97.8% | ~1.4% |
 | 1 | `Microsoft.ContainerService` | platform-foundation | ![Microsoft.ContainerService](docs/coverage/bars/Microsoft.ContainerService.svg) | 70.2% | 6.6% | 23.2% | ~19.4% |
-| 1 | `Microsoft.KubernetesConfiguration` | platform-foundation | ![Microsoft.KubernetesConfiguration](docs/coverage/bars/Microsoft.KubernetesConfiguration.svg) | 73.0% | 0.0% | 27.0% | ~31.1% |
+| 1 | `Microsoft.KubernetesConfiguration` | platform-foundation | ![Microsoft.KubernetesConfiguration](docs/coverage/bars/Microsoft.KubernetesConfiguration.svg) | 73.0% | 13.9% | 13.1% | ~31.1% |
 | 1 | `Microsoft.ContainerRegistry` | platform-foundation | ![Microsoft.ContainerRegistry](docs/coverage/bars/Microsoft.ContainerRegistry.svg) | 25.8% | 71.1% | 3.1% | ~25.0% |
 
 <details><summary>Tier 2: 18 services</summary>
@@ -311,7 +312,7 @@ server (`docs/fake-cloud.md`).
 
 ### The merge gate
 
-GitHub Actions is off in the organization (the builder, 2026-11-11); the
+GitHub Actions is off in the organization (since 2026-11-11); the
 workflows in `.github/workflows/` stay, disabled. Their pull-request jobs
 run before the push instead, on an offload Spot VM:
 
@@ -331,7 +332,9 @@ needs the memory). Only the fake cloud (in process, and PostgreSQL in Docker): n
 
 It then posts the commit status `offload/ci` (success or failure, the
 machine and the minutes, a link to the run's log in the offload bucket)
-on the commit. The pre-push hook (`hack/hooks/pre-push`) runs it for
+on the commit. It needs `OFFLOAD_PROJECT` and `OFFLOAD_BUCKET`, from the
+environment or a git-ignored `.env` at the repository's root (copy
+`.env.example`), and stops naming the one that is missing. The pre-push hook (`hack/hooks/pre-push`) runs it for
 every branch commit pushed and refuses the push on a failure; a commit
 that already has `offload/ci` success is not run again.
 

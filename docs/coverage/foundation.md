@@ -1,13 +1,12 @@
 # Foundation gap report
 
 The work queue for the kind agents: what a platform team needs from Azure and
-what neither ASO nor we cover yet. The builder, 2026-11-09: "the really
-baseline, the foundational APIs of all cloud providers really need to be
-covered fairly thoroughly. Everything up through a managed Kubernetes cluster
-is table stakes for a platform team establishing a target. The adjacent
-foundational things next to it are important for security teams. Beyond that,
-it's application primitives. The OSS module space should kind of guide where we
-put effort."
+what neither ASO nor we cover yet. The priority (2026-11-09): the
+foundational APIs of every cloud provider must be covered thoroughly.
+Everything up through a managed Kubernetes cluster is table stakes for a
+platform team establishing a target. The foundational services next to it
+matter to security teams. Beyond that come application primitives. The open
+source module space guides where the effort goes.
 
 It has two parts. **The queue** (below, written by hand) ranks the work, a row
 being one or a few kinds an agent can build in one session. **The inventory**
@@ -18,7 +17,7 @@ report; the queue's rows are groups of its lines. The categories are in
 the numbers in [`categories.csv`](categories.csv) and
 [`resources.csv`](resources.csv); the method is in [README.md](README.md).
 
-**Ranking.** Foundation importance first, in the builder's own order (management
+**Ranking.** Foundation importance first, in the recorded priority order (management
 groups, subscriptions, policy, RBAC, resource groups and locks, tags, budgets and
 cost, diagnostic settings, networking, Key Vault, identities, Log Analytics, AKS
 and what it needs); then the number of Azure Verified Modules that need it
@@ -125,12 +124,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 26.1% | 30.7% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 26.5% | 30.3% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.8% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (82 with no kind, 66 partly covered, 98 covered)
+### platform-foundation: 246 resources (79 with no kind, 68 partly covered, 99 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -364,11 +363,11 @@ Generated: every resource of the two categories, by the order of the services in
 | 228 | `Microsoft.ContainerService/snapshots` | covered |  | `containerservice/Snapshot` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 229 | `Microsoft.ContainerService/fleets` | covered | `containerservice/Fleet` |  | 10 / 0 / 0 | resourceGroup | - | - | 0 |
 | 230 | `Microsoft.ContainerService/fleets/managedNamespaces` | covered |  | `containerservice/FleetsManagedNamespace` | 0 / 26 / 0 | resourceGroup | - | - | 0 |
-| 231 | `Microsoft.KubernetesConfiguration/privateLinkScopes` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 232 | `Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 233 | `Microsoft.KubernetesConfiguration/sourceControlConfigurations` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
-| 234 | `Microsoft.KubernetesConfiguration/extensions` | partial, 13 of 32 missing | `kubernetesconfiguration/Extension` |  | 19 / 0 / 13 | extension | extend: ASO's API version is older than the spec's | S (13) | 0 |
-| 235 | `Microsoft.KubernetesConfiguration/fluxConfigurations` | partial, 1 of 71 missing | `kubernetesconfiguration/FluxConfiguration` |  | 70 / 0 / 1 | extension | extend: ASO's API version is older than the spec's | S (1) | 0 |
+| 231 | `Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections` | partial, 1 of 4 missing |  | `kubernetesconfiguration/PrivateLinkScopesPrivateEndpointConnection` | 0 / 3 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 232 | `Microsoft.KubernetesConfiguration/sourceControlConfigurations` | partial, 1 of 11 missing |  | `kubernetesconfiguration/SourceControlConfiguration` | 0 / 10 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 233 | `Microsoft.KubernetesConfiguration/extensions` | partial, 13 of 32 missing | `kubernetesconfiguration/Extension` |  | 19 / 0 / 13 | extension | extend: ASO's API version is older than the spec's | S (13) | 0 |
+| 234 | `Microsoft.KubernetesConfiguration/fluxConfigurations` | partial, 1 of 71 missing | `kubernetesconfiguration/FluxConfiguration` |  | 70 / 0 / 1 | extension | extend: ASO's API version is older than the spec's | S (1) | 0 |
+| 235 | `Microsoft.KubernetesConfiguration/privateLinkScopes` | covered |  | `kubernetesconfiguration/PrivateLinkScope` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 236 | `Microsoft.ContainerRegistry/registries/webhooks` | partial, 1 of 7 missing |  | `containerregistry/RegistriesWebhook` | 0 / 6 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
 | 237 | `Microsoft.ContainerRegistry/registries/connectedRegistries` | partial, 1 of 13 missing |  | `containerregistry/RegistriesConnectedRegistry` | 0 / 12 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
 | 238 | `Microsoft.ContainerRegistry/registries/tasks` | partial, 2 of 54 missing |  | `containerregistry/RegistriesTask` | 0 / 52 / 2 | resourceGroup | extend: newer API version or property config | S (2) | 0 |
