@@ -24,3 +24,4 @@ specification/securityinsights
 specification/hardwaresecuritymodules
 specification/purview
 specification/containerservice
+specification/kubernetesconfiguration

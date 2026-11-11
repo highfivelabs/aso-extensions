@@ -1,0 +1,5 @@
+# The only Azure targets live tests may touch (docs/live-runs.md), one
+# <subscription ID>/<resource group> per line. Added by a reviewed change,
+# never from the command line. The identity is Contributor on this resource
+# group only.
+149e8810-e0fe-48e2-a46e-6f8f575bde01/aso-extensions-live-tests

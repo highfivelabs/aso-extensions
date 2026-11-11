@@ -1316,9 +1316,9 @@ Microsoft.KeyVault,Microsoft.KeyVault/vaults/secrets (data plane),9,,0,keyvault.
 Microsoft.Kubernetes,Microsoft.Kubernetes/connectedClusters,28,,0,,0,28,false,spec_api=2026-05-01
 Microsoft.KubernetesConfiguration,Microsoft.KubernetesConfiguration/extensions,32,kubernetesconfiguration.azure.com/Extension,19,,0,13,false,spec_api=2025-03-01; official_api=2024-11-01; official-api-differs-from-spec
 Microsoft.KubernetesConfiguration,Microsoft.KubernetesConfiguration/fluxConfigurations,71,kubernetesconfiguration.azure.com/FluxConfiguration,70,,0,1,false,spec_api=2025-04-01; official_api=2024-11-01; official-api-differs-from-spec
-Microsoft.KubernetesConfiguration,Microsoft.KubernetesConfiguration/privateLinkScopes,4,,0,,0,4,false,spec_api=2024-11-01-preview; spec-preview-only
-Microsoft.KubernetesConfiguration,Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections,4,,0,,0,4,false,spec_api=2024-11-01-preview; spec-preview-only
-Microsoft.KubernetesConfiguration,Microsoft.KubernetesConfiguration/sourceControlConfigurations,11,,0,,0,11,false,spec_api=2023-05-01
+Microsoft.KubernetesConfiguration,Microsoft.KubernetesConfiguration/privateLinkScopes,4,,0,kubernetesconfiguration.azure.hfl.dev/PrivateLinkScope,4,0,false,spec_api=2024-11-01-preview; spec-preview-only; ours_api=2024-11-01-preview
+Microsoft.KubernetesConfiguration,Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections,4,,0,kubernetesconfiguration.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection,3,1,false,spec_api=2024-11-01-preview; spec-preview-only; ours_api=2024-11-01-preview
+Microsoft.KubernetesConfiguration,Microsoft.KubernetesConfiguration/sourceControlConfigurations,11,,0,kubernetesconfiguration.azure.hfl.dev/SourceControlConfiguration,10,1,false,spec_api=2023-05-01; ours_api=2023-05-01
 Microsoft.KubernetesRuntime,Microsoft.KubernetesRuntime/bgpPeers,3,,0,,0,3,false,spec_api=2024-03-01
 Microsoft.KubernetesRuntime,Microsoft.KubernetesRuntime/loadBalancers,4,,0,,0,4,false,spec_api=2024-03-01
 Microsoft.KubernetesRuntime,Microsoft.KubernetesRuntime/services,1,,0,,0,1,false,spec_api=2024-03-01
