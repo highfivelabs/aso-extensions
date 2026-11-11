@@ -15,6 +15,14 @@ The following resources have newer versions available in the Azure REST API spec
 |------|---------------------------|------------------|------------------|-------------------|-------------------|
 | 💡    | VirtualMachinesRunCommand | **2026-04-01**   | 2022-03-01       | -                 | -                 |
 
+## containerservice
+
+|  | Resource                                 | Available Stable | Supported Stable | Available Preview | Supported Preview |
+|--|------------------------------------------|------------------|------------------|-------------------|-------------------|
+|  | ManagedClustersManagedNamespace          | 2026-06-01       | 2026-05-01       | -                 | -                 |
+|  | ManagedClustersPrivateEndpointConnection | 2026-06-01       | 2026-05-01       | -                 | -                 |
+|  | Snapshot                                 | 2026-06-01       | 2026-05-01       | -                 | -                 |
+
 ## network
 
 |  | Resource                                      | Available Stable | Supported Stable | Available Preview | Supported Preview |

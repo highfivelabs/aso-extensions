@@ -11,6 +11,7 @@ rules:
   - compute.azure.hfl.dev
   - consumption.azure.hfl.dev
   - containerregistry.azure.hfl.dev
+  - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - hardwaresecuritymodules.azure.hfl.dev
@@ -36,6 +37,7 @@ rules:
   - compute.azure.hfl.dev
   - consumption.azure.hfl.dev
   - containerregistry.azure.hfl.dev
+  - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - hardwaresecuritymodules.azure.hfl.dev

@@ -23,10 +23,17 @@ resources:
 - authorization.azure.hfl.dev_rolemanagementpolicyassignments.yaml
 - compute.azure.hfl.dev_virtualmachinesruncommands.yaml
 - consumption.azure.hfl.dev_budgets.yaml
+- containerregistry.azure.hfl.dev_registriesconnectedregistries.yaml
 - containerregistry.azure.hfl.dev_registriescredentialsets.yaml
+- containerregistry.azure.hfl.dev_registriesprivateendpointconnections.yaml
 - containerregistry.azure.hfl.dev_registriesscopemaps.yaml
+- containerregistry.azure.hfl.dev_registriestasks.yaml
 - containerregistry.azure.hfl.dev_registriestokens.yaml
 - containerregistry.azure.hfl.dev_registrieswebhooks.yaml
+- containerservice.azure.hfl.dev_fleetsmanagednamespaces.yaml
+- containerservice.azure.hfl.dev_managedclustersmanagednamespaces.yaml
+- containerservice.azure.hfl.dev_managedclustersprivateendpointconnections.yaml
+- containerservice.azure.hfl.dev_snapshots.yaml
 - costmanagement.azure.hfl.dev_exports.yaml
 - costmanagement.azure.hfl.dev_scheduledactions.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml

@@ -3,9 +3,79 @@ typeFilters:
     group: containerregistry
     version: v20251101
     because: the version of ASO's Registry, the owner of what we generate
+  - action: include
+    group: containerregistry
+    version: v20190401
+    because: >-
+      the newest stable Registry Tasks API (tasks are in their own spec,
+      RegistryTasks/stable/2019-04-01; its only newer version is a preview)
+
+typeTransformers:
+  - group: containerregistry
+    version: v20190401
+    name: AuthInfo_STATUS
+    property: Token;RefreshToken
+    remove: true
+    because: >-
+      a task's source control tokens come from Secrets (below); Azure does
+      not return them, and a status must not hold them if it did
+  - group: containerregistry
+    version: v20190401
+    name: DockerBuildStep_STATUS;EncodedTaskStep_STATUS;FileTaskStep_STATUS
+    property: ContextAccessToken
+    remove: true
+    because: as a source control token
+  - group: containerregistry
+    version: v20190401
+    name: SecretObject_STATUS
+    property: Value
+    remove: true
+    because: a custom registry's credentials come from Secrets (below)
 
 groupModelConfiguration:
+  2019-04-01:
+    Registries_Task:
+      $exportAs: RegistriesTask
+      $supportedFrom: v0.1.0
+    IdentityProperties:
+      PrincipalId:
+        $referenceType: simple # a GUID Azure assigns, not a resource
+    AuthInfo:
+      Token:
+        $importSecretMode: required # a source control token (a GitHub PAT, an Azure Repos token), from a Secret
+      RefreshToken:
+        $importSecretMode: required
+    DockerBuildStep:
+      ContextAccessToken:
+        $importSecretMode: required # the token that reads the build context
+    EncodedTaskStep:
+      ContextAccessToken:
+        $importSecretMode: required
+    FileTaskStep:
+      ContextAccessToken:
+        $importSecretMode: required
+    SecretObject:
+      Value:
+        $importSecretMode: required # a custom registry's user name or password, or a Key Vault secret URI, from a Secret
   2025-11-01:
+    Registries_ConnectedRegistry:
+      $exportAs: RegistriesConnectedRegistry
+      $supportedFrom: v0.1.0
+    Registries_PrivateEndpointConnection:
+      $exportAs: RegistriesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    ConnectedRegistryProperties:
+      ClientTokenIds:
+        $referenceType: arm # the registry's tokens clients pull with (our RegistriesToken)
+    SyncProperties:
+      TokenId:
+        $referenceType: arm # the token the connected registry syncs with (our RegistriesToken)
+    SyncProperties_STATUS:
+      TokenId:
+        $importSecretMode: never # the token's ARM ID, not its password
+    PrivateEndpoint:
+      Id:
+        $referenceType: arm # the consumer's private endpoint a connection is from
     Registries_Token:
       $exportAs: RegistriesToken
       $supportedFrom: v0.1.0
