@@ -35,6 +35,15 @@ TENANT=00000000-0000-0000-0000-00000000000a
 CLIENT_A=00000000-0000-0000-0000-0000000000c1
 CLIENT_B=00000000-0000-0000-0000-0000000000c2
 SUB=00000000-0000-0000-0000-0000000000f1
+# The fake Microsoft Graph's directory: principals for the directory role
+# assignments (one assignment of ENTRA_EXISTING's is made outside Kubernetes
+# and adopted) and an administrative unit.
+ENTRA_READER=6a2f0e1b-0000-4000-8000-0000000000a1
+ENTRA_ADMIN=6a2f0e1b-0000-4000-8000-0000000000a2
+ENTRA_EXISTING=6a2f0e1b-0000-4000-8000-0000000000a3
+ENTRA_UNIT=7b3c1f2a-0000-4000-8000-0000000000b1
+GLOBAL_READER=f2ef992c-3afb-46b9-b7cf-a126ee74c451
+USER_ADMINISTRATOR=fe930be7-5e62-47db-91af-98c3a49a38b1
 # A built-in policy definition (Allowed locations), at the tenant root.
 BUILTIN_POLICY=/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c
 OUT="${REPO_ROOT}/bin/operator-e2e"
@@ -118,6 +127,7 @@ kubectl -n "${ASO_NS}" create secret generic aso-controller-settings \
   --from-literal=AZURE_WORKLOAD_IDENTITY_AUTH_MODE=strict \
   --from-literal=AZURE_RESOURCE_MANAGER_ENDPOINT=https://fakearm.fake-cloud.svc \
   --from-literal=AZURE_RESOURCE_MANAGER_AUDIENCE=https://fakearm.fake-cloud.svc \
+  --from-literal=MICROSOFT_GRAPH_ENDPOINT=https://fakegraph.fake-cloud.svc \
   --dry-run=client -o yaml | kubectl apply -f -
 
 step "the fake cloud"
@@ -127,26 +137,30 @@ kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f 
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create secret tls fakegraph-tls --cert "${OUT}/fixtures/fakegraph.crt" --key "${OUT}/fixtures/fakegraph.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakesql-tls --cert "${OUT}/fixtures/fakesql.crt" --key "${OUT}/fixtures/fakesql.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakesql-principals --from-literal=team-a="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" \
   --from-literal=team-b="${CLIENT_B}=system:serviceaccount:team-b:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/team-a-hub,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualHubs/team-b-hub,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/azureFirewalls/team-a-fw,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/azureFirewalls/team-b-fw,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakegraph-directory --from-literal=principals="${ENTRA_READER},${ENTRA_ADMIN},${ENTRA_EXISTING}" \
+  --from-literal=administrativeUnits="${ENTRA_UNIT}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
 ko_apply config/fake-cloud/fake-cloud.yaml
 # On a reused cluster the fixtures (CA, certificates) are new: restart so
 # every pod reads them. PostgreSQL keeps no volume, so it starts empty.
-kubectl -n fake-cloud rollout restart deploy/postgres deploy/fakevault deploy/fakearm deploy/fakesql >/dev/null
+kubectl -n fake-cloud rollout restart deploy/postgres deploy/fakevault deploy/fakearm deploy/fakegraph deploy/fakesql >/dev/null
 kubectl -n fake-cloud rollout status deploy/postgres --timeout=180s
 kubectl -n fake-cloud rollout status deploy/fakevault --timeout=120s
 kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
+kubectl -n fake-cloud rollout status deploy/fakegraph --timeout=120s
 kubectl -n fake-cloud rollout status deploy/fakesql --timeout=120s
 
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev users.sql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev managementgroups.management.azure.hfl.dev tagsets.resources.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev users.sql.azure.hfl.dev directoryroleassignments.entra.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev managementgroups.management.azure.hfl.dev tagsets.resources.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -305,6 +319,27 @@ spec:
   owner: {name: appdb}
   aadUser: {}
   roles: [db_datareader, db_datawriter]
+---
+apiVersion: entra.azure.hfl.dev/v1
+kind: DirectoryRoleAssignment
+metadata: {name: global-reader, namespace: $1}
+spec:
+  principalId: ${ENTRA_READER}
+  roleDefinitionId: ${GLOBAL_READER}
+  directoryScopeId: /
+---
+apiVersion: entra.azure.hfl.dev/v1
+kind: DirectoryRoleAssignment
+metadata: {name: unit-admin, namespace: $1}
+spec:
+  principalIdFromConfig: {name: entra-admins, key: principalId}
+  roleDefinitionId: ${USER_ADMINISTRATOR}
+  directoryScopeId: /administrativeUnits/${ENTRA_UNIT}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: entra-admins, namespace: $1}
+data: {principalId: ${ENTRA_ADMIN}}
 ---
 apiVersion: keyvault.azure.hfl.dev/v1
 kind: VaultSecret
@@ -882,6 +917,16 @@ logged fakesql "aso-sql-admins signed in to appdb with a token, as the Entra adm
 logged fakesql "CREATE USER [app-identity] FROM EXTERNAL PROVIDER" || fail "the fake Azure SQL saw no CREATE USER ... FROM EXTERNAL PROVIDER"
 logged fakesql "ALTER ROLE [db_datareader] ADD MEMBER [app-identity]" || fail "the fake Azure SQL saw no role grant"
 pass "team-a Azure SQL User Ready: app-identity created FROM EXTERNAL PROVIDER, signed in with team-a's aso-workload token"
+wait_for 90 "team-a's DirectoryRoleAssignment Ready" ready directoryroleassignments.entra.azure.hfl.dev team-a global-reader
+logged fakegraph "sub=system:serviceaccount:team-a:aso-workload scope=https://fakegraph.fake-cloud.svc/.default accepted=true" \
+  || fail "the fake Microsoft Graph saw no token of team-a's aso-workload"
+logged fakegraph "request POST /beta/roleManagement/directory/roleAssignments 201" \
+  || fail "the fake Microsoft Graph saw no role assignment created"
+pass "team-a DirectoryRoleAssignment Ready: Global Reader over the directory, with team-a's aso-workload token"
+wait_for 90 "team-a's DirectoryRoleAssignment from a ConfigMap Ready" ready directoryroleassignments.entra.azure.hfl.dev team-a unit-admin
+[[ "$(kubectl -n team-a get directoryroleassignments.entra.azure.hfl.dev unit-admin -o jsonpath='{.status.principalId} {.status.directoryScopeId}')" == "${ENTRA_ADMIN} /administrativeUnits/${ENTRA_UNIT}" ]] \
+  || fail "unit-admin's status is not the principal from the ConfigMap at the administrative unit"
+pass "team-a DirectoryRoleAssignment Ready: User Administrator over an administrative unit, the principal from a ConfigMap"
 wait_for 90 "team-a's VaultSecret Ready" ready vaultsecrets.keyvault.azure.hfl.dev team-a app-url
 pass "team-a VaultSecret Ready"
 psql() { kubectl -n fake-cloud exec deploy/postgres -- psql -U postgres -tAc "$1"; }
@@ -1141,6 +1186,8 @@ wait_for 90 "team-b's RoleEligibilityScheduleRequest refused" bash -c "[[ \"\$(k
 pass "team-b RoleEligibilityScheduleRequest refused: $(message roleeligibilityschedulerequests.authorization.azure.hfl.dev team-b eligible-reader | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
+wait_for 90 "team-b's DirectoryRoleAssignment refused" bash -c "[[ \"\$(kubectl get directoryroleassignments.entra.azure.hfl.dev -n team-b global-reader -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Microsoft Graph'* ]]"
+pass "team-b DirectoryRoleAssignment refused: $(message directoryroleassignments.entra.azure.hfl.dev team-b global-reader | cut -c1-120)..."
 
 step "deleting team-a's objects"
 kubectl -n team-a delete users.dbforpostgresql.azure.hfl.dev app-identity --timeout=60s
@@ -1148,6 +1195,11 @@ kubectl -n team-a delete vaultsecrets.keyvault.azure.hfl.dev app-url --timeout=6
 kubectl -n team-a delete users.sql.azure.hfl.dev app-identity --timeout=60s
 logged fakesql "DROP USER IF EXISTS [app-identity]" || fail "the fake Azure SQL saw no DROP USER of app-identity"
 pass "the Azure SQL Entra user app-identity is dropped"
+kubectl -n team-a delete directoryroleassignments.entra.azure.hfl.dev global-reader unit-admin --timeout=60s
+graph_log="$(kubectl -n fake-cloud logs deploy/fakegraph)"
+[[ "$(grep -cE 'request DELETE /beta/roleManagement/directory/roleAssignments/[^ ]+ 204' <<<"${graph_log}")" -ge 2 ]] \
+  || fail "the fake Microsoft Graph saw no delete of the two directory role assignments"
+pass "the directory role assignments are deleted in Microsoft Graph"
 [[ -z "$(psql "SELECT 1 FROM pg_roles WHERE rolname = 'app-identity'")" ]] || fail "the role app-identity was not dropped"
 pass "the Entra role app-identity is dropped"
 [[ "$(psql "SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname = 'orders'")" == "hfl_owner" ]] \

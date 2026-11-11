@@ -148,6 +148,57 @@ spec:
   ports:
   - {port: 443, targetPort: 8443}
 ---
+# The fake Microsoft Graph (cmd/fakegraph): directory role assignments.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fakegraph
+  namespace: fake-cloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: fakegraph}
+  template:
+    metadata:
+      labels: {app: fakegraph}
+    spec:
+      containers:
+      - name: fakegraph
+        image: ko://github.com/highfivelabs/aso-extensions/cmd/fakegraph
+        args:
+        - --listen=:8443
+        - --audience=https://fakegraph.fake-cloud.svc
+        - --trust=$(TRUST)
+        - --principal=$(PRINCIPALS)
+        - --administrative-unit=$(UNITS)
+        env:
+        - name: TRUST
+          valueFrom:
+            configMapKeyRef: {name: fakevault-trust, key: trust}
+        - name: PRINCIPALS
+          valueFrom:
+            configMapKeyRef: {name: fakegraph-directory, key: principals}
+        - name: UNITS
+          valueFrom:
+            configMapKeyRef: {name: fakegraph-directory, key: administrativeUnits}
+        ports:
+        - containerPort: 8443
+        volumeMounts:
+        - {name: tls, mountPath: /tls, readOnly: true}
+      volumes:
+      - name: tls
+        secret: {secretName: fakegraph-tls}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fakegraph
+  namespace: fake-cloud
+spec:
+  selector: {app: fakegraph}
+  ports:
+  - {port: 443, targetPort: 8443}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
