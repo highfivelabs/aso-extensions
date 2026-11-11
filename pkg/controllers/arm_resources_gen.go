@@ -35,6 +35,9 @@ import (
 	devtestlab_customizations "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/customizations"
 	devtestlab_v20180915 "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915"
 	devtestlab_v20180915s "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915/storage"
+	hardwaresecuritymodules_customizations "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/customizations"
+	hardwaresecuritymodules_v20250331 "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331"
+	hardwaresecuritymodules_v20250331s "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331/storage"
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
 	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
 	insights_v20210901s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901/storage"
@@ -63,6 +66,9 @@ import (
 	policyinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/customizations"
 	policyinsights_v20241001 "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/v20241001"
 	policyinsights_v20241001s "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/v20241001/storage"
+	purview_customizations "github.com/highfivelabs/aso-extensions/apis/arm/purview/customizations"
+	purview_v20211201 "github.com/highfivelabs/aso-extensions/apis/arm/purview/v20211201"
+	purview_v20211201s "github.com/highfivelabs/aso-extensions/apis/arm/purview/v20211201/storage"
 	recoveryservices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/customizations"
 	recoveryservices_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/v20260701"
 	recoveryservices_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/v20260701/storage"
@@ -270,6 +276,9 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.ScheduledAction)})
 	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Schedule)})
+	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)})
+	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
@@ -537,6 +546,9 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(operationsmanagement_v20151101p.Solution)})
 	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyAttestation)})
 	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyRemediation)})
+	result = append(result, &registration.StorageType{Obj: new(purview_v20211201.Account)})
+	result = append(result, &registration.StorageType{Obj: new(purview_v20211201.AccountsKafkaConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(purview_v20211201.AccountsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.Vault)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)})
@@ -775,6 +787,16 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)},
+		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331s.CloudHsmCluster)},
+		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331s.CloudHsmClustersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331s.DedicatedHsm)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScope)},
 		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
@@ -939,6 +961,16 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyAttestation)}, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyRemediation)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(purview_v20211201.Account)},
+		&registration.KnownType{Obj: new(purview_v20211201.AccountsKafkaConfiguration)},
+		&registration.KnownType{Obj: new(purview_v20211201.AccountsPrivateEndpointConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(purview_v20211201s.Account)},
+		&registration.KnownType{Obj: new(purview_v20211201s.AccountsKafkaConfiguration)},
+		&registration.KnownType{Obj: new(purview_v20211201s.AccountsPrivateEndpointConnection)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.Vault)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupPolicy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)},
@@ -1048,6 +1080,8 @@ func createScheme() *runtime.Scheme {
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
+	_ = hardwaresecuritymodules_v20250331.AddToScheme(scheme)
+	_ = hardwaresecuritymodules_v20250331s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
 	_ = insights_v20210901s.AddToScheme(scheme)
 	_ = keyvault_v20260515.AddToScheme(scheme)
@@ -1068,6 +1102,8 @@ func createScheme() *runtime.Scheme {
 	_ = operationsmanagement_v20151101ps.AddToScheme(scheme)
 	_ = policyinsights_v20241001.AddToScheme(scheme)
 	_ = policyinsights_v20241001s.AddToScheme(scheme)
+	_ = purview_v20211201.AddToScheme(scheme)
+	_ = purview_v20211201s.AddToScheme(scheme)
 	_ = recoveryservices_v20260701.AddToScheme(scheme)
 	_ = recoveryservices_v20260701s.AddToScheme(scheme)
 	_ = resources_v20220201.AddToScheme(scheme)
@@ -1131,6 +1167,9 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &costmanagement_customizations.ScheduledActionExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
+	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClusterExtension{})
+	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClustersPrivateEndpointConnectionExtension{})
+	result = append(result, &hardwaresecuritymodules_customizations.DedicatedHsmExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
@@ -1203,6 +1242,9 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &operationsmanagement_customizations.SolutionExtension{})
 	result = append(result, &policyinsights_customizations.PolicyAttestationExtension{})
 	result = append(result, &policyinsights_customizations.PolicyRemediationExtension{})
+	result = append(result, &purview_customizations.AccountExtension{})
+	result = append(result, &purview_customizations.AccountsKafkaConfigurationExtension{})
+	result = append(result, &purview_customizations.AccountsPrivateEndpointConnectionExtension{})
 	result = append(result, &recoveryservices_customizations.VaultExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsBackupPolicyExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsBackupResourceGuardProxyExtension{})

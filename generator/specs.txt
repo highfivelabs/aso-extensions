@@ -21,3 +21,5 @@ specification/keyvault
 specification/operationsmanagement
 specification/security
 specification/securityinsights
+specification/hardwaresecuritymodules
+specification/purview

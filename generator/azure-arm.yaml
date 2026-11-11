@@ -55,6 +55,8 @@ imports:
   operationsmanagement: azure-arm/operationsmanagement.yaml
   security: azure-arm/security.yaml
   securityinsights: azure-arm/securityinsights.yaml
+  hardwaresecuritymodules: azure-arm/hardwaresecuritymodules.yaml
+  purview: azure-arm/purview.yaml
 
 # Filters are applied in document order; the earliest match wins (as in ASO's
 # azure-arm.yaml, from which these are taken).

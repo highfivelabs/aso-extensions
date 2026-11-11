@@ -32,6 +32,9 @@ resources:
 - dbforpostgresql.azure.hfl.dev_users.yaml
 - devtestlab.azure.hfl.dev_schedules.yaml
 - entra.azure.hfl.dev_directoryroleassignments.yaml
+- hardwaresecuritymodules.azure.hfl.dev_cloudhsmclusters.yaml
+- hardwaresecuritymodules.azure.hfl.dev_cloudhsmclustersprivateendpointconnections.yaml
+- hardwaresecuritymodules.azure.hfl.dev_dedicatedhsms.yaml
 - insights.azure.hfl.dev_privatelinkscopes.yaml
 - insights.azure.hfl.dev_privatelinkscopesprivateendpointconnections.yaml
 - insights.azure.hfl.dev_privatelinkscopesscopedresources.yaml
@@ -106,6 +109,9 @@ resources:
 - operationsmanagement.azure.hfl.dev_solutions.yaml
 - policyinsights.azure.hfl.dev_policyattestations.yaml
 - policyinsights.azure.hfl.dev_policyremediations.yaml
+- purview.azure.hfl.dev_accounts.yaml
+- purview.azure.hfl.dev_accountskafkaconfigurations.yaml
+- purview.azure.hfl.dev_accountsprivateendpointconnections.yaml
 - recoveryservices.azure.hfl.dev_vaults.yaml
 - recoveryservices.azure.hfl.dev_vaultsbackuppolicies.yaml
 - recoveryservices.azure.hfl.dev_vaultsbackupresourceguardproxies.yaml
