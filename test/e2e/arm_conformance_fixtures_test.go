@@ -164,22 +164,19 @@ func init() {
 		spec: func(c *conformanceContext) map[string]any {
 			return map[string]any{"repositoryUrl": "https://github.com/example/cluster-config"}
 		}}
-	// Monitor: a log profile is at a subscription.
-	f["LogProfile"] = conformanceFixture{owner: func(c *conformanceContext) string { return "/subscriptions/" + subID }}
-	// DNS: a zone's SOA record set is named @.
-	soa := conformanceFixture{spec: func(c *conformanceContext) map[string]any { return map[string]any{"azureName": "@"} }}
+	// Kinds whose smallest valid object names others the fake checks (a
+	// destination, domain lists, service resources): their own tests run
+	// them. A SOA record set is never deleted alone (Azure deletes it with
+	// its zone): the resource stays.
+	f["LogProfile"] = conformanceFixture{coveredBy: "TestLogProfileAndWorkbookTemplate"}
+	soa := conformanceFixture{stays: true, spec: func(c *conformanceContext) map[string]any { return map[string]any{"azureName": "@"} }}
 	f["DnsZonesSOARecord"] = soa
 	f["PrivateDnsZonesSOARecord"] = soa
-	f["DnsResolverPoliciesDnsSecurityRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
-		return map[string]any{"priority": int64(100)}
-	}}
-	// Network: Microsoft's BGP communities; a service endpoint policy's service.
+	f["DnsResolverPoliciesDnsSecurityRule"] = conformanceFixture{coveredBy: "TestDNSSecurityPolicy"}
 	f["RouteFiltersRouteFilterRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
-		return map[string]any{"communities": []any{"12076:5010"}}
+		return map[string]any{"access": "Allow", "routeFilterRuleType": "Community", "communities": []any{"12076:5010"}}
 	}}
-	f["ServiceEndpointPoliciesServiceEndpointPolicyDefinition"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
-		return map[string]any{"service": "Microsoft.Storage"}
-	}}
+	f["ServiceEndpointPoliciesServiceEndpointPolicyDefinition"] = conformanceFixture{coveredBy: "TestNetworkFilters"}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}
