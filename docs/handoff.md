@@ -137,7 +137,13 @@ Everything is in `docs/plan.md` §2, "Generated ARM kinds". The short form:
    `config/rbac/role.yaml`, and add its CRD to the test CRDs in
    `hack/generate.sh` (ASO's hub package for a group is the one
    `internal/controllers/controller_resources_gen.go` registers).
-4. **Generate.** `task generate-arm` (on the Ubuntu machine, see below). The
+4. **Generate.** `offload run --prep 'task tools' --step 'env
+   GENERATOR_ARGS=--verbose hack/generate-iterate.sh'` runs the generator until
+   it passes, writing the reference labels it asks for between runs
+   (`hack/autolabel`, each marked `autolabel: review`: read the generated
+   `structure.txt` and keep or change each), then `hack/generate.sh`; the
+   output is `offload-artifacts/generate.tgz` in the run's bucket. Otherwise
+   `task generate-arm` (on the Ubuntu machine, see below). The
    generator reports the next missing label one error at a time; fix the
    configuration and repeat; a run is about 30 seconds. To find a resource's
    generated name, run the generator with `--verbose` and read the
@@ -148,7 +154,14 @@ Everything is in `docs/plan.md` §2, "Generated ARM kinds". The short form:
    `offload`, tar them into `offload-artifacts/` (it is copied back), extract
    in the repository, then run `hack/generate.sh` locally (deepcopy and CRDs;
    light). Never edit generated files.
-6. **Tests.** `test/e2e/arm_*_test.go` are the pattern: stand-ins for the ASO
+6. **Tests.** Since 2026-11-11 every generated kind is tested by the
+   conformance test (`test/e2e/arm_conformance_test.go`, `docs/testing.md`)
+   with nothing written for it; when the fake's rules refuse the smallest
+   object, add a few lines to `conformanceFixtures`
+   (`arm_conformance_fixtures_test.go`). That is enough to merge a kind. Write
+   a kind test as below only for behaviour of its own (an extension, keys,
+   children kept by a parent's PUT, a reference the fake should check).
+   `test/e2e/arm_*_test.go` are the pattern: stand-ins for the ASO
    owners (`resourceGroup`, `managedEnvironment`, `webSite` in
    `helpers_test.go`, which carry the `serviceoperator.azure.com/resource-id`
    annotation ASO writes), the ARM IDs added to the fake Resource Manager
