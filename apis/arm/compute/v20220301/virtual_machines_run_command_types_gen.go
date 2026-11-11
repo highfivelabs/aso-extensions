@@ -1817,39 +1817,39 @@ type VirtualMachineRunCommandScriptSource struct {
 var _ genruntime.ARMTransformer = &VirtualMachineRunCommandScriptSource{}
 
 // ConvertToARM converts from a Kubernetes CRD object to an ARM object
-func (source *VirtualMachineRunCommandScriptSource) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
-	if source == nil {
+func (scriptSource *VirtualMachineRunCommandScriptSource) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
+	if scriptSource == nil {
 		return nil, nil
 	}
 	result := &arm.VirtualMachineRunCommandScriptSource{}
 
 	// Set property "CommandId":
-	if source.CommandId != nil {
-		commandId := *source.CommandId
+	if scriptSource.CommandId != nil {
+		commandId := *scriptSource.CommandId
 		result.CommandId = &commandId
 	}
 
 	// Set property "Script":
-	if source.Script != nil {
-		script := *source.Script
+	if scriptSource.Script != nil {
+		script := *scriptSource.Script
 		result.Script = &script
 	}
 
 	// Set property "ScriptUri":
-	if source.ScriptUri != nil {
-		scriptUri := *source.ScriptUri
+	if scriptSource.ScriptUri != nil {
+		scriptUri := *scriptSource.ScriptUri
 		result.ScriptUri = &scriptUri
 	}
 	return result, nil
 }
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (source *VirtualMachineRunCommandScriptSource) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (scriptSource *VirtualMachineRunCommandScriptSource) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.VirtualMachineRunCommandScriptSource{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (source *VirtualMachineRunCommandScriptSource) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (scriptSource *VirtualMachineRunCommandScriptSource) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.VirtualMachineRunCommandScriptSource)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.VirtualMachineRunCommandScriptSource, got %T", armInput)
@@ -1858,19 +1858,19 @@ func (source *VirtualMachineRunCommandScriptSource) PopulateFromARM(owner genrun
 	// Set property "CommandId":
 	if typedInput.CommandId != nil {
 		commandId := *typedInput.CommandId
-		source.CommandId = &commandId
+		scriptSource.CommandId = &commandId
 	}
 
 	// Set property "Script":
 	if typedInput.Script != nil {
 		script := *typedInput.Script
-		source.Script = &script
+		scriptSource.Script = &script
 	}
 
 	// Set property "ScriptUri":
 	if typedInput.ScriptUri != nil {
 		scriptUri := *typedInput.ScriptUri
-		source.ScriptUri = &scriptUri
+		scriptSource.ScriptUri = &scriptUri
 	}
 
 	// No error
@@ -1878,34 +1878,34 @@ func (source *VirtualMachineRunCommandScriptSource) PopulateFromARM(owner genrun
 }
 
 // AssignProperties_From_VirtualMachineRunCommandScriptSource populates our VirtualMachineRunCommandScriptSource from the provided source VirtualMachineRunCommandScriptSource
-func (source *VirtualMachineRunCommandScriptSource) AssignProperties_From_VirtualMachineRunCommandScriptSource(origin *storage.VirtualMachineRunCommandScriptSource) error {
+func (scriptSource *VirtualMachineRunCommandScriptSource) AssignProperties_From_VirtualMachineRunCommandScriptSource(source *storage.VirtualMachineRunCommandScriptSource) error {
 
 	// CommandId
-	source.CommandId = genruntime.ClonePointerToString(origin.CommandId)
+	scriptSource.CommandId = genruntime.ClonePointerToString(source.CommandId)
 
 	// Script
-	source.Script = genruntime.ClonePointerToString(origin.Script)
+	scriptSource.Script = genruntime.ClonePointerToString(source.Script)
 
 	// ScriptUri
-	source.ScriptUri = genruntime.ClonePointerToString(origin.ScriptUri)
+	scriptSource.ScriptUri = genruntime.ClonePointerToString(source.ScriptUri)
 
 	// No error
 	return nil
 }
 
 // AssignProperties_To_VirtualMachineRunCommandScriptSource populates the provided destination VirtualMachineRunCommandScriptSource from our VirtualMachineRunCommandScriptSource
-func (source *VirtualMachineRunCommandScriptSource) AssignProperties_To_VirtualMachineRunCommandScriptSource(destination *storage.VirtualMachineRunCommandScriptSource) error {
+func (scriptSource *VirtualMachineRunCommandScriptSource) AssignProperties_To_VirtualMachineRunCommandScriptSource(destination *storage.VirtualMachineRunCommandScriptSource) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// CommandId
-	destination.CommandId = genruntime.ClonePointerToString(source.CommandId)
+	destination.CommandId = genruntime.ClonePointerToString(scriptSource.CommandId)
 
 	// Script
-	destination.Script = genruntime.ClonePointerToString(source.Script)
+	destination.Script = genruntime.ClonePointerToString(scriptSource.Script)
 
 	// ScriptUri
-	destination.ScriptUri = genruntime.ClonePointerToString(source.ScriptUri)
+	destination.ScriptUri = genruntime.ClonePointerToString(scriptSource.ScriptUri)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {
@@ -1919,16 +1919,16 @@ func (source *VirtualMachineRunCommandScriptSource) AssignProperties_To_VirtualM
 }
 
 // Initialize_From_VirtualMachineRunCommandScriptSource_STATUS populates our VirtualMachineRunCommandScriptSource from the provided source VirtualMachineRunCommandScriptSource_STATUS
-func (source *VirtualMachineRunCommandScriptSource) Initialize_From_VirtualMachineRunCommandScriptSource_STATUS(origin *VirtualMachineRunCommandScriptSource_STATUS) error {
+func (scriptSource *VirtualMachineRunCommandScriptSource) Initialize_From_VirtualMachineRunCommandScriptSource_STATUS(source *VirtualMachineRunCommandScriptSource_STATUS) error {
 
 	// CommandId
-	source.CommandId = genruntime.ClonePointerToString(origin.CommandId)
+	scriptSource.CommandId = genruntime.ClonePointerToString(source.CommandId)
 
 	// Script
-	source.Script = genruntime.ClonePointerToString(origin.Script)
+	scriptSource.Script = genruntime.ClonePointerToString(source.Script)
 
 	// ScriptUri
-	source.ScriptUri = genruntime.ClonePointerToString(origin.ScriptUri)
+	scriptSource.ScriptUri = genruntime.ClonePointerToString(source.ScriptUri)
 
 	// No error
 	return nil
@@ -1949,12 +1949,12 @@ type VirtualMachineRunCommandScriptSource_STATUS struct {
 var _ genruntime.FromARMConverter = &VirtualMachineRunCommandScriptSource_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (source *VirtualMachineRunCommandScriptSource_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (scriptSource *VirtualMachineRunCommandScriptSource_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.VirtualMachineRunCommandScriptSource_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (source *VirtualMachineRunCommandScriptSource_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (scriptSource *VirtualMachineRunCommandScriptSource_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.VirtualMachineRunCommandScriptSource_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.VirtualMachineRunCommandScriptSource_STATUS, got %T", armInput)
@@ -1963,19 +1963,19 @@ func (source *VirtualMachineRunCommandScriptSource_STATUS) PopulateFromARM(owner
 	// Set property "CommandId":
 	if typedInput.CommandId != nil {
 		commandId := *typedInput.CommandId
-		source.CommandId = &commandId
+		scriptSource.CommandId = &commandId
 	}
 
 	// Set property "Script":
 	if typedInput.Script != nil {
 		script := *typedInput.Script
-		source.Script = &script
+		scriptSource.Script = &script
 	}
 
 	// Set property "ScriptUri":
 	if typedInput.ScriptUri != nil {
 		scriptUri := *typedInput.ScriptUri
-		source.ScriptUri = &scriptUri
+		scriptSource.ScriptUri = &scriptUri
 	}
 
 	// No error
@@ -1983,34 +1983,34 @@ func (source *VirtualMachineRunCommandScriptSource_STATUS) PopulateFromARM(owner
 }
 
 // AssignProperties_From_VirtualMachineRunCommandScriptSource_STATUS populates our VirtualMachineRunCommandScriptSource_STATUS from the provided source VirtualMachineRunCommandScriptSource_STATUS
-func (source *VirtualMachineRunCommandScriptSource_STATUS) AssignProperties_From_VirtualMachineRunCommandScriptSource_STATUS(origin *storage.VirtualMachineRunCommandScriptSource_STATUS) error {
+func (scriptSource *VirtualMachineRunCommandScriptSource_STATUS) AssignProperties_From_VirtualMachineRunCommandScriptSource_STATUS(source *storage.VirtualMachineRunCommandScriptSource_STATUS) error {
 
 	// CommandId
-	source.CommandId = genruntime.ClonePointerToString(origin.CommandId)
+	scriptSource.CommandId = genruntime.ClonePointerToString(source.CommandId)
 
 	// Script
-	source.Script = genruntime.ClonePointerToString(origin.Script)
+	scriptSource.Script = genruntime.ClonePointerToString(source.Script)
 
 	// ScriptUri
-	source.ScriptUri = genruntime.ClonePointerToString(origin.ScriptUri)
+	scriptSource.ScriptUri = genruntime.ClonePointerToString(source.ScriptUri)
 
 	// No error
 	return nil
 }
 
 // AssignProperties_To_VirtualMachineRunCommandScriptSource_STATUS populates the provided destination VirtualMachineRunCommandScriptSource_STATUS from our VirtualMachineRunCommandScriptSource_STATUS
-func (source *VirtualMachineRunCommandScriptSource_STATUS) AssignProperties_To_VirtualMachineRunCommandScriptSource_STATUS(destination *storage.VirtualMachineRunCommandScriptSource_STATUS) error {
+func (scriptSource *VirtualMachineRunCommandScriptSource_STATUS) AssignProperties_To_VirtualMachineRunCommandScriptSource_STATUS(destination *storage.VirtualMachineRunCommandScriptSource_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// CommandId
-	destination.CommandId = genruntime.ClonePointerToString(source.CommandId)
+	destination.CommandId = genruntime.ClonePointerToString(scriptSource.CommandId)
 
 	// Script
-	destination.Script = genruntime.ClonePointerToString(source.Script)
+	destination.Script = genruntime.ClonePointerToString(scriptSource.Script)
 
 	// ScriptUri
-	destination.ScriptUri = genruntime.ClonePointerToString(source.ScriptUri)
+	destination.ScriptUri = genruntime.ClonePointerToString(scriptSource.ScriptUri)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {

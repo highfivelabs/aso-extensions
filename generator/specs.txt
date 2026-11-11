@@ -17,3 +17,5 @@ specification/policyinsights
 specification/authorization
 specification/consumption
 specification/cost-management
+specification/keyvault
+specification/operationsmanagement
