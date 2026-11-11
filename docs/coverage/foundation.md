@@ -1,13 +1,12 @@
 # Foundation gap report
 
 The work queue for the kind agents: what a platform team needs from Azure and
-what neither ASO nor we cover yet. The builder, 2026-11-09: "the really
-baseline, the foundational APIs of all cloud providers really need to be
-covered fairly thoroughly. Everything up through a managed Kubernetes cluster
-is table stakes for a platform team establishing a target. The adjacent
-foundational things next to it are important for security teams. Beyond that,
-it's application primitives. The OSS module space should kind of guide where we
-put effort."
+what neither ASO nor we cover yet. The priority (2026-11-09): the
+foundational APIs of every cloud provider must be covered thoroughly.
+Everything up through a managed Kubernetes cluster is table stakes for a
+platform team establishing a target. The foundational services next to it
+matter to security teams. Beyond that come application primitives. The open
+source module space guides where the effort goes.
 
 It has two parts. **The queue** (below, written by hand) ranks the work, a row
 being one or a few kinds an agent can build in one session. **The inventory**
@@ -18,7 +17,7 @@ report; the queue's rows are groups of its lines. The categories are in
 the numbers in [`categories.csv`](categories.csv) and
 [`resources.csv`](resources.csv); the method is in [README.md](README.md).
 
-**Ranking.** Foundation importance first, in the builder's own order (management
+**Ranking.** Foundation importance first, in the recorded priority order (management
 groups, subscriptions, policy, RBAC, resource groups and locks, tags, budgets and
 cost, diagnostic settings, networking, Key Vault, identities, Log Analytics, AKS
 and what it needs); then the number of Azure Verified Modules that need it

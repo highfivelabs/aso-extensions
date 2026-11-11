@@ -19,7 +19,7 @@ checked by `hack/coverage/run.sh --check`.
 | `attributes.csv` | attribute | `service,resource,attribute,type,required,covered_by,official_path,ours_path` |
 | `tiers.csv` | tier | `tier,services,attributes_total,attributes_official,attributes_ours_beyond,attributes_uncovered,pct_official,pct_ours_beyond,pct_uncovered,resources_total,resources_official,resources_ours_beyond` |
 | `categories.csv` | category | `category,services,resources_total,resources_official,resources_ours_beyond,attributes_total,attributes_official,attributes_ours_beyond,attributes_uncovered,pct_official,pct_ours_beyond,pct_uncovered` |
-| `priority.csv` | service, or resource type, the builder ranks | `service,tier,rationale,source,category` (hand-edited; the order of the rows is the order of importance) |
+| `priority.csv` | service, or resource type, ranked by hand | `service,tier,rationale,source,category` (hand-edited; the order of the rows is the order of importance) |
 | `avm-need.csv` | resource type | `resource,modules,named`: how many Azure Verified Modules need it (hand-edited) |
 | `foundation.md` | | the ranked foundation gap report, the work queue for the kind agents |
 | `bars/<service>.svg`, `bars/_total.svg`, `bars/_tiers.svg`, `bars/_categories.svg` | service, the whole, the tiers, the categories | stacked bars: blue official, green ours beyond official, light grey uncovered; under each, a separate purple bar for Terraform (`azurerm`, an estimate, with a dark tick at its strict figure; see "Terraform") |
@@ -146,13 +146,12 @@ partly "ASO has not moved to the new API version", which is a real gap for
 someone who needs the new property, and not the same as ASO lacking the
 resource.
 
-**Categories and tiers.** Not every service matters alike. The builder,
-2026-11-09: "the really baseline, the foundational APIs of all cloud providers
-really need to be covered fairly thoroughly. Everything up through a managed
-Kubernetes cluster is table stakes for a platform team establishing a target.
-The adjacent foundational things next to it are important for security teams.
-Beyond that, it's application primitives. The OSS module space should kind of
-guide where we put the effort." So `priority.csv` gives each service, and where
+**Categories and tiers.** Not every service matters alike. The priority
+(2026-11-09): the foundational APIs of every cloud provider must be covered
+thoroughly. Everything up through a managed Kubernetes cluster is table stakes
+for a platform team establishing a target. The foundational services next to
+it matter to security teams. Beyond that come application primitives. The open
+source module space guides where the effort goes. So `priority.csv` gives each service, and where
 it differs a resource type or a prefix of one, a **category**:
 
 - `platform-foundation`: management groups, subscriptions (aliases, tags,
@@ -179,7 +178,7 @@ from (`highfivelabs/catalog docs/azure.md`, read 2026-11-09), is kept as the
 `rationale` and breaks ties in `foundation.md`: usage by modules is a proxy for
 what teams need, taken from one registry at one date and counting a module once
 however many resources it creates. The order of the rows in `priority.csv` is
-the order of importance (the builder's list), which the foundation report uses.
+the order of importance (a hand-kept list), which the foundation report uses.
 The builder may change any row; the generator reads the file and never
 recomputes it, and fails on a row that names a service or resource type that is
 not in the data. Limits: a category is a judgment (virtual machines are
