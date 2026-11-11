@@ -50,6 +50,9 @@ team-a ManagementGroup Ready
 team-a ManagementGroupsSubscription Ready
 team-b ManagementGroup refused
 the management group and its subscription placement are deleted
+team-a ManagedClustersManagedNamespace Ready
+team-a Snapshot Ready
+the managed namespace and the snapshot are deleted in Resource Manager
 team-a TagSet Ready
 team-b TagSet refused
 the tags are deleted in Resource Manager

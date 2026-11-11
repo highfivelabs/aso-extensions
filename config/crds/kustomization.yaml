@@ -21,6 +21,10 @@ resources:
 - containerregistry.azure.hfl.dev_registriesscopemaps.yaml
 - containerregistry.azure.hfl.dev_registriestokens.yaml
 - containerregistry.azure.hfl.dev_registrieswebhooks.yaml
+- containerservice.azure.hfl.dev_fleetsmanagednamespaces.yaml
+- containerservice.azure.hfl.dev_managedclustersmanagednamespaces.yaml
+- containerservice.azure.hfl.dev_managedclustersprivateendpointconnections.yaml
+- containerservice.azure.hfl.dev_snapshots.yaml
 - costmanagement.azure.hfl.dev_exports.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
 - devtestlab.azure.hfl.dev_schedules.yaml
