@@ -80,6 +80,9 @@ import (
 	security_v20250601s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250601/storage"
 	security_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260701"
 	security_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260701/storage"
+	securityinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/customizations"
+	securityinsights_v20250901 "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901"
+	securityinsights_v20250901s "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901/storage"
 	web_customizations "github.com/highfivelabs/aso-extensions/apis/arm/web/customizations"
 	web_v20260715 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715"
 	web_v20260715s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715/storage"
@@ -531,6 +534,73 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(security_v20240801.StandardAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(security_v20250601.DefenderForStorageSetting)})
 	result = append(result, &registration.StorageType{Obj: new(security_v20260701.Pricing)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.AlertRule)})
+	result = append(result, &registration.StorageType{
+		Obj: new(securityinsights_v20250901.AlertRulesAction),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.triggerUri",
+				Func: indexSecurityinsightsAlertRulesActionTriggerUri,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.triggerUri",
+					},
+					&securityinsights_v20250901.AlertRulesActionList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.AutomationRule)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.ContentPackage)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.ContentTemplate)})
+	result = append(result, &registration.StorageType{
+		Obj: new(securityinsights_v20250901.DataConnector),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.restApiPollerDataConnector.auth.oAuth2.authorizationCode",
+				Func: indexSecurityinsightsDataConnectorAuthorizationCode,
+			},
+			{
+				Key:  ".spec.restApiPollerDataConnector.auth.basic.password",
+				Func: indexSecurityinsightsDataConnectorBasicPassword,
+			},
+			{
+				Key:  ".spec.restApiPollerDataConnector.auth.oAuth2.clientSecret",
+				Func: indexSecurityinsightsDataConnectorClientSecret,
+			},
+			{
+				Key:  ".spec.restApiPollerDataConnector.auth.jwtToken.password",
+				Func: indexSecurityinsightsDataConnectorJwtTokenPassword,
+			},
+			{
+				Key:  ".spec.restApiPollerDataConnector.auth.session.password",
+				Func: indexSecurityinsightsDataConnectorSessionPassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.restApiPollerDataConnector.auth.basic.password",
+						".spec.restApiPollerDataConnector.auth.jwtToken.password",
+						".spec.restApiPollerDataConnector.auth.oAuth2.authorizationCode",
+						".spec.restApiPollerDataConnector.auth.oAuth2.clientSecret",
+						".spec.restApiPollerDataConnector.auth.session.password",
+					},
+					&securityinsights_v20250901.DataConnectorList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.DataConnectorDefinition)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.OnboardingState)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.SecurityMLAnalyticsSetting)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.Watchlist)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.WatchlistsWatchlistItem)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.Certificate),
 		Indexes: []registration.Index{
@@ -840,6 +910,32 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(security_v20260701s.Pricing)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(securityinsights_v20250901.AlertRule)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.AlertRulesAction)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.AutomationRule)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.ContentPackage)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.ContentTemplate)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.DataConnector)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.DataConnectorDefinition)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.OnboardingState)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.SecurityMLAnalyticsSetting)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.Watchlist)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.WatchlistsWatchlistItem)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.AlertRule)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.AlertRulesAction)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.AutomationRule)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.ContentPackage)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.ContentTemplate)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.DataConnector)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.DataConnectorDefinition)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.OnboardingState)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.SecurityMLAnalyticsSetting)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.Watchlist)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.WatchlistsWatchlistItem)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesHostNameBinding)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlot)},
@@ -913,6 +1009,8 @@ func createScheme() *runtime.Scheme {
 	_ = security_v20250601s.AddToScheme(scheme)
 	_ = security_v20260701.AddToScheme(scheme)
 	_ = security_v20260701s.AddToScheme(scheme)
+	_ = securityinsights_v20250901.AddToScheme(scheme)
+	_ = securityinsights_v20250901s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
 	_ = web_v20260715s.AddToScheme(scheme)
 	return scheme
@@ -1029,6 +1127,17 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &security_customizations.SettingExtension{})
 	result = append(result, &security_customizations.StandardAssignmentExtension{})
 	result = append(result, &security_customizations.WorkspaceSettingExtension{})
+	result = append(result, &securityinsights_customizations.AlertRuleExtension{})
+	result = append(result, &securityinsights_customizations.AlertRulesActionExtension{})
+	result = append(result, &securityinsights_customizations.AutomationRuleExtension{})
+	result = append(result, &securityinsights_customizations.ContentPackageExtension{})
+	result = append(result, &securityinsights_customizations.ContentTemplateExtension{})
+	result = append(result, &securityinsights_customizations.DataConnectorDefinitionExtension{})
+	result = append(result, &securityinsights_customizations.DataConnectorExtension{})
+	result = append(result, &securityinsights_customizations.OnboardingStateExtension{})
+	result = append(result, &securityinsights_customizations.SecurityMLAnalyticsSettingExtension{})
+	result = append(result, &securityinsights_customizations.WatchlistExtension{})
+	result = append(result, &securityinsights_customizations.WatchlistsWatchlistItemExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
 	result = append(result, &web_customizations.SitesHostNameBindingExtension{})
 	result = append(result, &web_customizations.SitesSlotExtension{})
@@ -1334,6 +1443,123 @@ func indexOperationalinsightsWorkspacesStorageInsightConfigKey(rawObj client.Obj
 		return nil
 	}
 	return obj.Spec.StorageAccount.Key.Index()
+}
+
+// indexSecurityinsightsAlertRulesActionTriggerUri an index function for securityinsights_v20250901.AlertRulesAction .spec.triggerUri
+func indexSecurityinsightsAlertRulesActionTriggerUri(rawObj client.Object) []string {
+	obj, ok := rawObj.(*securityinsights_v20250901.AlertRulesAction)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.TriggerUri == nil {
+		return nil
+	}
+	return obj.Spec.TriggerUri.Index()
+}
+
+// indexSecurityinsightsDataConnectorAuthorizationCode an index function for securityinsights_v20250901.DataConnector .spec.restApiPollerDataConnector.auth.oAuth2.authorizationCode
+func indexSecurityinsightsDataConnectorAuthorizationCode(rawObj client.Object) []string {
+	obj, ok := rawObj.(*securityinsights_v20250901.DataConnector)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth.OAuth2 == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth.OAuth2.AuthorizationCode == nil {
+		return nil
+	}
+	return obj.Spec.RestApiPollerDataConnector.Auth.OAuth2.AuthorizationCode.Index()
+}
+
+// indexSecurityinsightsDataConnectorBasicPassword an index function for securityinsights_v20250901.DataConnector .spec.restApiPollerDataConnector.auth.basic.password
+func indexSecurityinsightsDataConnectorBasicPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*securityinsights_v20250901.DataConnector)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth.Basic == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth.Basic.Password == nil {
+		return nil
+	}
+	return obj.Spec.RestApiPollerDataConnector.Auth.Basic.Password.Index()
+}
+
+// indexSecurityinsightsDataConnectorClientSecret an index function for securityinsights_v20250901.DataConnector .spec.restApiPollerDataConnector.auth.oAuth2.clientSecret
+func indexSecurityinsightsDataConnectorClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*securityinsights_v20250901.DataConnector)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth.OAuth2 == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth.OAuth2.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.RestApiPollerDataConnector.Auth.OAuth2.ClientSecret.Index()
+}
+
+// indexSecurityinsightsDataConnectorJwtTokenPassword an index function for securityinsights_v20250901.DataConnector .spec.restApiPollerDataConnector.auth.jwtToken.password
+func indexSecurityinsightsDataConnectorJwtTokenPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*securityinsights_v20250901.DataConnector)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth.JwtToken == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth.JwtToken.Password == nil {
+		return nil
+	}
+	return obj.Spec.RestApiPollerDataConnector.Auth.JwtToken.Password.Index()
+}
+
+// indexSecurityinsightsDataConnectorSessionPassword an index function for securityinsights_v20250901.DataConnector .spec.restApiPollerDataConnector.auth.session.password
+func indexSecurityinsightsDataConnectorSessionPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*securityinsights_v20250901.DataConnector)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth.Session == nil {
+		return nil
+	}
+	if obj.Spec.RestApiPollerDataConnector.Auth.Session.Password == nil {
+		return nil
+	}
+	return obj.Spec.RestApiPollerDataConnector.Auth.Session.Password.Index()
 }
 
 // indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password

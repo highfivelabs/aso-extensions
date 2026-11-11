@@ -24,6 +24,7 @@ rules:
   - recoveryservices.azure.hfl.dev
   - resources.azure.hfl.dev
   - security.azure.hfl.dev
+  - securityinsights.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
@@ -46,6 +47,7 @@ rules:
   - recoveryservices.azure.hfl.dev
   - resources.azure.hfl.dev
   - security.azure.hfl.dev
+  - securityinsights.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*/status", "*/finalizers"]
   verbs: ["get", "update", "patch"]

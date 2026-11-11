@@ -115,6 +115,17 @@ resources:
 - security.azure.hfl.dev_settings.yaml
 - security.azure.hfl.dev_standardassignments.yaml
 - security.azure.hfl.dev_workspacesettings.yaml
+- securityinsights.azure.hfl.dev_alertrules.yaml
+- securityinsights.azure.hfl.dev_alertrulesactions.yaml
+- securityinsights.azure.hfl.dev_automationrules.yaml
+- securityinsights.azure.hfl.dev_contentpackages.yaml
+- securityinsights.azure.hfl.dev_contenttemplates.yaml
+- securityinsights.azure.hfl.dev_dataconnectordefinitions.yaml
+- securityinsights.azure.hfl.dev_dataconnectors.yaml
+- securityinsights.azure.hfl.dev_onboardingstates.yaml
+- securityinsights.azure.hfl.dev_securitymlanalyticssettings.yaml
+- securityinsights.azure.hfl.dev_watchlists.yaml
+- securityinsights.azure.hfl.dev_watchlistswatchlistitems.yaml
 - sql.azure.hfl.dev_users.yaml
 - web.azure.hfl.dev_certificates.yaml
 - web.azure.hfl.dev_siteshostnamebindings.yaml

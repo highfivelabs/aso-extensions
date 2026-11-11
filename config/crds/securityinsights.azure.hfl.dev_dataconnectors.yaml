@@ -1,0 +1,2588 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: dataconnectors.securityinsights.azure.hfl.dev
+spec:
+  group: securityinsights.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - securityinsights
+    kind: DataConnector
+    listKind: DataConnectorList
+    plural: dataconnectors
+    singular: dataconnector
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20250901
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /securityinsights/resource-manager/Microsoft.SecurityInsights/SecurityInsights/stable/2025-09-01/openapi.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              aadDataConnector:
+                description: 'AADDataConnector: Mutually exclusive with all other
+                  properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      alerts:
+                        description: 'Alerts: Alerts data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                    required:
+                    - alerts
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - AzureActiveDirectory
+                    type: string
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                required:
+                - kind
+                - tenantId
+                type: object
+              aatpDataConnector:
+                description: 'AATPDataConnector: Mutually exclusive with all other
+                  properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      alerts:
+                        description: 'Alerts: Alerts data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                    required:
+                    - alerts
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - AzureAdvancedThreatProtection
+                    type: string
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                required:
+                - kind
+                - tenantId
+                type: object
+              ascDataConnector:
+                description: 'ASCDataConnector: Mutually exclusive with all other
+                  properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      alerts:
+                        description: 'Alerts: Alerts data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                    required:
+                    - alerts
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - AzureSecurityCenter
+                    type: string
+                  subscriptionId:
+                    description: 'SubscriptionId: The subscription id to connect to,
+                      and get the data from.'
+                    type: string
+                required:
+                - kind
+                type: object
+              awsCloudTrailDataConnector:
+                description: 'AwsCloudTrailDataConnector: Mutually exclusive with
+                  all other properties'
+                properties:
+                  awsRoleArn:
+                    description: 'AwsRoleArn: The Aws Role Arn (with CloudTrailReadOnly
+                      policy) that is used to access the Aws account.'
+                    type: string
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      logs:
+                        description: 'Logs: Logs data type.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                    required:
+                    - logs
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - AmazonWebServicesCloudTrail
+                    type: string
+                required:
+                - dataTypes
+                - kind
+                type: object
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              mcasDataConnector:
+                description: 'MCASDataConnector: Mutually exclusive with all other
+                  properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      alerts:
+                        description: 'Alerts: Alerts data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                      discoveryLogs:
+                        description: 'DiscoveryLogs: Discovery log data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                    required:
+                    - alerts
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - MicrosoftCloudAppSecurity
+                    type: string
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                required:
+                - dataTypes
+                - kind
+                - tenantId
+                type: object
+              mdatpDataConnector:
+                description: 'MDATPDataConnector: Mutually exclusive with all other
+                  properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      alerts:
+                        description: 'Alerts: Alerts data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                    required:
+                    - alerts
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - MicrosoftDefenderAdvancedThreatProtection
+                    type: string
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                required:
+                - kind
+                - tenantId
+                type: object
+              mstiDataConnector:
+                description: 'MSTIDataConnector: Mutually exclusive with all other
+                  properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      microsoftEmergingThreatFeed:
+                        description: 'MicrosoftEmergingThreatFeed: Data type for Microsoft
+                          Threat Intelligence Platforms data connector.'
+                        properties:
+                          lookbackPeriod:
+                            description: 'LookbackPeriod: The lookback period for
+                              the feed to be imported.'
+                            type: string
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - lookbackPeriod
+                        - state
+                        type: object
+                    required:
+                    - microsoftEmergingThreatFeed
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - MicrosoftThreatIntelligence
+                    type: string
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                required:
+                - dataTypes
+                - kind
+                - tenantId
+                type: object
+              officeDataConnector:
+                description: 'OfficeDataConnector: Mutually exclusive with all other
+                  properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      exchange:
+                        description: 'Exchange: Exchange data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                      sharePoint:
+                        description: 'SharePoint: SharePoint data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                      teams:
+                        description: 'Teams: Teams data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                    required:
+                    - exchange
+                    - sharePoint
+                    - teams
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - Office365
+                    type: string
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                required:
+                - dataTypes
+                - kind
+                - tenantId
+                type: object
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
+                  extension resource, which means that any other Azure resource can be its owner.
+                properties:
+                  armId:
+                    description: Ownership across namespaces is not supported.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+              premiumMicrosoftDefenderForThreatIntelligence:
+                description: 'PremiumMicrosoftDefenderForThreatIntelligence: Mutually
+                  exclusive with all other properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      connector:
+                        description: 'Connector: Data type for Microsoft Defender
+                          for Threat Intelligence Premium data connector.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                    required:
+                    - connector
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - PremiumMicrosoftDefenderForThreatIntelligence
+                    type: string
+                  lookbackPeriod:
+                    description: |-
+                      LookbackPeriod: The lookback period for the feed to be imported. The date-time to begin importing the feed from, for
+                      example: 2024-01-01T00:00:00.000Z.
+                    type: string
+                  requiredSKUsPresent:
+                    description: 'RequiredSKUsPresent: The flag to indicate whether
+                      the tenant has the premium SKU required to access this connector.'
+                    type: boolean
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                required:
+                - dataTypes
+                - kind
+                - lookbackPeriod
+                - tenantId
+                type: object
+              restApiPollerDataConnector:
+                description: 'RestApiPollerDataConnector: Mutually exclusive with
+                  all other properties'
+                properties:
+                  addOnAttributes:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      AddOnAttributes: The add on attributes. The key name will become attribute name (a column) and the value will become the
+                      attribute value in the payload.
+                    type: object
+                  auth:
+                    description: 'Auth: The a authentication model.'
+                    properties:
+                      apiKey:
+                        description: 'APIKey: Mutually exclusive with all other properties'
+                        properties:
+                          apiKey:
+                            description: 'ApiKey: API Key for the user secret key
+                              credential'
+                            type: string
+                          apiKeyIdentifier:
+                            description: 'ApiKeyIdentifier: API Key Identifier'
+                            type: string
+                          apiKeyName:
+                            description: 'ApiKeyName: API Key name'
+                            type: string
+                          isApiKeyInPostPayload:
+                            description: 'IsApiKeyInPostPayload: Flag to indicate
+                              if API key is set in HTTP POST payload'
+                            type: boolean
+                          type:
+                            description: 'Type: The auth type'
+                            enum:
+                            - APIKey
+                            type: string
+                        required:
+                        - apiKey
+                        - apiKeyName
+                        - type
+                        type: object
+                      aws:
+                        description: 'AWS: Mutually exclusive with all other properties'
+                        properties:
+                          externalId:
+                            description: |-
+                              ExternalId: AWS STS assume role external ID. This is used to prevent the confused deputy problem:
+                              'https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html'
+                            type: string
+                          roleArn:
+                            description: 'RoleArn: AWS STS assume role ARN'
+                            type: string
+                          type:
+                            description: 'Type: The auth type'
+                            enum:
+                            - AWS
+                            type: string
+                        required:
+                        - roleArn
+                        - type
+                        type: object
+                      basic:
+                        description: 'Basic: Mutually exclusive with all other properties'
+                        properties:
+                          password:
+                            description: 'Password: The password'
+                            properties:
+                              key:
+                                description: Key is the key in the Kubernetes secret
+                                  being referenced
+                                type: string
+                              name:
+                                description: |-
+                                  Name is the name of the Kubernetes secret being referenced.
+                                  The secret must be in the same namespace as the resource
+                                type: string
+                            required:
+                            - key
+                            - name
+                            type: object
+                          type:
+                            description: 'Type: The auth type'
+                            enum:
+                            - Basic
+                            type: string
+                          userName:
+                            description: 'UserName: The user name.'
+                            type: string
+                        required:
+                        - password
+                        - type
+                        - userName
+                        type: object
+                      gcp:
+                        description: 'GCP: Mutually exclusive with all other properties'
+                        properties:
+                          projectNumber:
+                            description: 'ProjectNumber: GCP Project Number'
+                            type: string
+                          serviceAccountEmail:
+                            description: 'ServiceAccountEmail: GCP Service Account
+                              Email'
+                            type: string
+                          type:
+                            description: 'Type: The auth type'
+                            enum:
+                            - GCP
+                            type: string
+                          workloadIdentityProviderId:
+                            description: 'WorkloadIdentityProviderId: GCP Workload
+                              Identity Provider ID'
+                            type: string
+                        required:
+                        - projectNumber
+                        - serviceAccountEmail
+                        - type
+                        - workloadIdentityProviderId
+                        type: object
+                      gitHub:
+                        description: 'GitHub: Mutually exclusive with all other properties'
+                        properties:
+                          installationId:
+                            description: 'InstallationId: The GitHubApp auth installation
+                              id.'
+                            type: string
+                          type:
+                            description: 'Type: The auth type'
+                            enum:
+                            - GitHub
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      jwtToken:
+                        description: 'JwtToken: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          headers:
+                            additionalProperties:
+                              type: string
+                            description: 'Headers: The custom headers we want to add
+                              once we send request to token endpoint.'
+                            type: object
+                          isCredentialsInHeaders:
+                            description: |-
+                              IsCredentialsInHeaders: Flag indicating whether we want to send the user name and password to token endpoint in the
+                              headers.
+                            type: boolean
+                          isJsonRequest:
+                            description: |-
+                              IsJsonRequest: Flag indicating whether the body request is JSON (header Content-Type = application/json), meaning its a
+                              Form URL encoded request (header Content-Type = application/x-www-form-urlencoded).
+                            type: boolean
+                          password:
+                            description: 'Password: The password'
+                            properties:
+                              name:
+                                description: |-
+                                  Name is the name of the Kubernetes secret being referenced.
+                                  The secret must be in the same namespace as the resource
+                                type: string
+                            required:
+                            - name
+                            type: object
+                          queryParameters:
+                            additionalProperties:
+                              type: string
+                            description: 'QueryParameters: The custom query parameter
+                              we want to add once we send request to token endpoint.'
+                            type: object
+                          requestTimeoutInSeconds:
+                            description: 'RequestTimeoutInSeconds: Request timeout
+                              in seconds.'
+                            maximum: 180
+                            type: integer
+                          tokenEndpoint:
+                            description: 'TokenEndpoint: Token endpoint to request
+                              JWT'
+                            type: string
+                          type:
+                            description: 'Type: The auth type'
+                            enum:
+                            - JwtToken
+                            type: string
+                          userName:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              UserName: The user name. If user name and password sent in header request we only need to populate the `value` property
+                              with the user name (Same as basic auth). If user name and password sent in body request we need to specify the `Key` and
+                              `Value`.
+                            type: object
+                        required:
+                        - password
+                        - tokenEndpoint
+                        - type
+                        - userName
+                        type: object
+                      none:
+                        description: 'None: Mutually exclusive with all other properties'
+                        properties:
+                          type:
+                            description: 'Type: The auth type'
+                            enum:
+                            - None
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      oAuth2:
+                        description: 'OAuth2: Mutually exclusive with all other properties'
+                        properties:
+                          accessTokenPrepend:
+                            description: 'AccessTokenPrepend: Access token prepend.
+                              Default is ''Bearer''.'
+                            type: string
+                          authorizationCode:
+                            description: 'AuthorizationCode: The user''s authorization
+                              code.'
+                            properties:
+                              key:
+                                description: Key is the key in the Kubernetes secret
+                                  being referenced
+                                type: string
+                              name:
+                                description: |-
+                                  Name is the name of the Kubernetes secret being referenced.
+                                  The secret must be in the same namespace as the resource
+                                type: string
+                            required:
+                            - key
+                            - name
+                            type: object
+                          authorizationEndpoint:
+                            description: 'AuthorizationEndpoint: The authorization
+                              endpoint.'
+                            type: string
+                          authorizationEndpointHeaders:
+                            additionalProperties:
+                              type: string
+                            description: 'AuthorizationEndpointHeaders: The authorization
+                              endpoint headers.'
+                            type: object
+                          authorizationEndpointQueryParameters:
+                            additionalProperties:
+                              type: string
+                            description: 'AuthorizationEndpointQueryParameters: The
+                              authorization endpoint query parameters.'
+                            type: object
+                          clientId:
+                            description: 'ClientId: The Application (client) ID that
+                              the OAuth provider assigned to your app.'
+                            type: string
+                          clientSecret:
+                            description: 'ClientSecret: The Application (client) secret
+                              that the OAuth provider assigned to your app.'
+                            properties:
+                              key:
+                                description: Key is the key in the Kubernetes secret
+                                  being referenced
+                                type: string
+                              name:
+                                description: |-
+                                  Name is the name of the Kubernetes secret being referenced.
+                                  The secret must be in the same namespace as the resource
+                                type: string
+                            required:
+                            - key
+                            - name
+                            type: object
+                          grantType:
+                            description: 'GrantType: The grant type, usually will
+                              be ''authorization code''.'
+                            type: string
+                          isCredentialsInHeaders:
+                            description: |-
+                              IsCredentialsInHeaders: Indicating whether we want to send the clientId and clientSecret to token endpoint in the
+                              headers.
+                            type: boolean
+                          isJwtBearerFlow:
+                            description: 'IsJwtBearerFlow: A value indicating whether
+                              it''s a JWT flow.'
+                            type: boolean
+                          redirectUri:
+                            description: 'RedirectUri: The Application redirect url
+                              that the user config in the OAuth provider.'
+                            pattern: ^[a-zA-Z][a-zA-Z0-9+-.]*:[^\s]*$
+                            type: string
+                          scope:
+                            description: 'Scope: The Application (client) Scope that
+                              the OAuth provider assigned to your app.'
+                            type: string
+                          tokenEndpoint:
+                            description: 'TokenEndpoint: The token endpoint. Defines
+                              the OAuth2 refresh token.'
+                            type: string
+                          tokenEndpointHeaders:
+                            additionalProperties:
+                              type: string
+                            description: 'TokenEndpointHeaders: The token endpoint
+                              headers.'
+                            type: object
+                          tokenEndpointQueryParameters:
+                            additionalProperties:
+                              type: string
+                            description: 'TokenEndpointQueryParameters: The token
+                              endpoint query parameters.'
+                            type: object
+                          type:
+                            description: 'Type: The auth type'
+                            enum:
+                            - OAuth2
+                            type: string
+                        required:
+                        - clientId
+                        - clientSecret
+                        - grantType
+                        - tokenEndpoint
+                        - type
+                        type: object
+                      oracle:
+                        description: 'Oracle: Mutually exclusive with all other properties'
+                        properties:
+                          pemFile:
+                            description: 'PemFile: Content of the PRM file'
+                            type: string
+                          publicFingerprint:
+                            description: 'PublicFingerprint: Public Fingerprint'
+                            type: string
+                          tenantId:
+                            description: 'TenantId: Oracle tenant ID'
+                            type: string
+                          type:
+                            description: 'Type: The auth type'
+                            enum:
+                            - Oracle
+                            type: string
+                          userId:
+                            description: 'UserId: Oracle user ID'
+                            type: string
+                        required:
+                        - pemFile
+                        - publicFingerprint
+                        - tenantId
+                        - type
+                        - userId
+                        type: object
+                      serviceBus:
+                        description: 'ServiceBus: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          credentialsConfig:
+                            additionalProperties:
+                              type: string
+                            description: 'CredentialsConfig: Credentials for service
+                              bus namespace, keyvault uri for access key'
+                            type: object
+                          storageAccountCredentialsConfig:
+                            additionalProperties:
+                              type: string
+                            description: 'StorageAccountCredentialsConfig: Credentials
+                              for storage account, keyvault uri for access key'
+                            type: object
+                          type:
+                            description: 'Type: The auth type'
+                            enum:
+                            - ServiceBus
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      session:
+                        description: 'Session: Mutually exclusive with all other properties'
+                        properties:
+                          headers:
+                            additionalProperties:
+                              type: string
+                            description: 'Headers: HTTP request headers to session
+                              service endpoint.'
+                            type: object
+                          isPostPayloadJson:
+                            description: 'IsPostPayloadJson: Indicating whether API
+                              key is set in HTTP POST payload.'
+                            type: boolean
+                          password:
+                            description: 'Password: The password attribute name.'
+                            properties:
+                              name:
+                                description: |-
+                                  Name is the name of the Kubernetes secret being referenced.
+                                  The secret must be in the same namespace as the resource
+                                type: string
+                            required:
+                            - name
+                            type: object
+                          queryParameters:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            description: 'QueryParameters: Query parameters to session
+                              service endpoint.'
+                            type: object
+                          sessionIdName:
+                            description: 'SessionIdName: Session id attribute name
+                              from HTTP response header.'
+                            type: string
+                          sessionLoginRequestUri:
+                            description: 'SessionLoginRequestUri: HTTP request URL
+                              to session service endpoint.'
+                            type: string
+                          sessionTimeoutInMinutes:
+                            description: 'SessionTimeoutInMinutes: Session timeout
+                              in minutes.'
+                            type: integer
+                          type:
+                            description: 'Type: The auth type'
+                            enum:
+                            - Session
+                            type: string
+                          userName:
+                            additionalProperties:
+                              type: string
+                            description: 'UserName: The user name attribute key value.'
+                            type: object
+                        required:
+                        - password
+                        - type
+                        - userName
+                        type: object
+                    type: object
+                  connectorDefinitionName:
+                    description: 'ConnectorDefinitionName: The connector definition
+                      name (the dataConnectorDefinition resource id).'
+                    type: string
+                  dataType:
+                    description: 'DataType: The Log Analytics table destination.'
+                    type: string
+                  dcrConfig:
+                    description: 'DcrConfig: The DCR related properties.'
+                    properties:
+                      dataCollectionEndpoint:
+                        description: 'DataCollectionEndpoint: Represents the data
+                          collection ingestion endpoint in log analytics.'
+                        type: string
+                      dataCollectionRuleImmutableId:
+                        description: |-
+                          DataCollectionRuleImmutableId: The data collection rule immutable id, the rule defines the transformation and data
+                          destination.
+                        type: string
+                      streamName:
+                        description: 'StreamName: The stream we are sending the data
+                          to.'
+                        type: string
+                    required:
+                    - dataCollectionEndpoint
+                    - dataCollectionRuleImmutableId
+                    - streamName
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  isActive:
+                    description: 'IsActive: Indicates whether the connector is active
+                      or not.'
+                    type: boolean
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - RestApiPoller
+                    type: string
+                  paging:
+                    description: 'Paging: The paging configuration.'
+                    properties:
+                      pageSize:
+                        description: 'PageSize: Page size'
+                        type: integer
+                      pageSizeParameterName:
+                        description: 'PageSizeParameterName: Page size parameter name'
+                        type: string
+                      pagingType:
+                        description: 'PagingType: Type of paging'
+                        enum:
+                        - CountBasedPaging
+                        - LinkHeader
+                        - NextPageToken
+                        - NextPageUrl
+                        - Offset
+                        - PersistentLinkHeader
+                        - PersistentToken
+                        type: string
+                    required:
+                    - pagingType
+                    type: object
+                  request:
+                    description: 'Request: The request configuration.'
+                    properties:
+                      apiEndpoint:
+                        description: 'ApiEndpoint: The API endpoint.'
+                        type: string
+                      endTimeAttributeName:
+                        description: |-
+                          EndTimeAttributeName: The query parameter name which the remote server expect to end query. This property goes hand to
+                          hand with `startTimeAttributeName`
+                        type: string
+                      headers:
+                        additionalProperties:
+                          type: string
+                        description: 'Headers: The header for the request for the
+                          remote server.'
+                        type: object
+                      httpMethod:
+                        description: 'HttpMethod: The HTTP method, default value GET.'
+                        enum:
+                        - DELETE
+                        - GET
+                        - POST
+                        - PUT
+                        type: string
+                      isPostPayloadJson:
+                        description: 'IsPostPayloadJson: Flag to indicate if HTTP
+                          POST payload is in JSON format (vs form-urlencoded).'
+                        type: boolean
+                      queryParameters:
+                        additionalProperties:
+                          x-kubernetes-preserve-unknown-fields: true
+                        description: 'QueryParameters: The HTTP query parameters to
+                          RESTful API.'
+                        type: object
+                      queryParametersTemplate:
+                        description: |-
+                          QueryParametersTemplate: the query parameters template. Defines the query parameters template to use when passing query
+                          parameters in advanced scenarios.
+                        type: string
+                      queryTimeFormat:
+                        description: |-
+                          QueryTimeFormat: The query time format. A remote server can have a query to pull data from range 'start' to 'end'. This
+                          property indicate what is the expected time format the remote server know to parse.
+                        type: string
+                      queryTimeIntervalAttributeName:
+                        description: |-
+                          QueryTimeIntervalAttributeName: The query parameter name which we need to send the server for query logs in time
+                          interval. Should be defined with `queryTimeIntervalPrepend` and `queryTimeIntervalDelimiter`
+                        type: string
+                      queryTimeIntervalDelimiter:
+                        description: |-
+                          QueryTimeIntervalDelimiter: The delimiter string between 2 QueryTimeFormat in the query parameter
+                          `queryTimeIntervalAttributeName`.
+                        type: string
+                      queryTimeIntervalPrepend:
+                        description: 'QueryTimeIntervalPrepend: The string prepend
+                          to the value of the query parameter in `queryTimeIntervalAttributeName`.'
+                        type: string
+                      queryWindowInMin:
+                        description: 'QueryWindowInMin: The query window in minutes
+                          for the request.'
+                        type: integer
+                      rateLimitQPS:
+                        description: 'RateLimitQPS: The Rate limit queries per second
+                          for the request..'
+                        type: integer
+                      retryCount:
+                        description: 'RetryCount: The retry count.'
+                        type: integer
+                      startTimeAttributeName:
+                        description: |-
+                          StartTimeAttributeName: The query parameter name which the remote server expect to start query. This property goes hand
+                          to hand with `endTimeAttributeName`.
+                        type: string
+                      timeoutInSeconds:
+                        description: 'TimeoutInSeconds: The timeout in seconds.'
+                        type: integer
+                    required:
+                    - apiEndpoint
+                    type: object
+                  response:
+                    description: 'Response: The response configuration.'
+                    properties:
+                      compressionAlgo:
+                        description: 'CompressionAlgo: The compression algorithm.
+                          For Example: ''gzip'', ''multi-gzip'', ''deflate''.'
+                        type: string
+                      convertChildPropertiesToArray:
+                        description: |-
+                          ConvertChildPropertiesToArray: The value indicating whether the response isn't an array of events / logs.  By setting
+                          this flag to true it means the remote server will response with an object which each property has as a value an array of
+                          events / logs.
+                        type: boolean
+                      csvDelimiter:
+                        description: 'CsvDelimiter: The csv delimiter, in case the
+                          response format is CSV.'
+                        type: string
+                      csvEscape:
+                        description: 'CsvEscape: The character used to escape characters
+                          in CSV.'
+                        maxLength: 1
+                        minLength: 1
+                        type: string
+                      eventsJsonPaths:
+                        description: 'EventsJsonPaths: The json paths, ''$'' char
+                          is the json root.'
+                        items:
+                          type: string
+                        type: array
+                      format:
+                        description: 'Format: The response format. possible values
+                          are json,csv,xml'
+                        type: string
+                      hasCsvBoundary:
+                        description: 'HasCsvBoundary: The value indicating whether
+                          the response has CSV boundary in case the response in CSV
+                          format.'
+                        type: boolean
+                      hasCsvHeader:
+                        description: 'HasCsvHeader: The value indicating whether the
+                          response has headers in case the response in CSV format.'
+                        type: boolean
+                      isGzipCompressed:
+                        description: 'IsGzipCompressed: The value indicating whether
+                          the remote server support Gzip and we should expect Gzip
+                          response.'
+                        type: boolean
+                      successStatusJsonPath:
+                        description: 'SuccessStatusJsonPath: The value where the status
+                          message/code should appear in the response.'
+                        type: string
+                      successStatusValue:
+                        description: 'SuccessStatusValue: The status value.'
+                        type: string
+                    required:
+                    - eventsJsonPaths
+                    type: object
+                required:
+                - auth
+                - connectorDefinitionName
+                - kind
+                - request
+                type: object
+              tiDataConnector:
+                description: 'TIDataConnector: Mutually exclusive with all other properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      indicators:
+                        description: 'Indicators: Data type for indicators connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            enum:
+                            - Disabled
+                            - Enabled
+                            type: string
+                        required:
+                        - state
+                        type: object
+                    required:
+                    - indicators
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - ThreatIntelligence
+                    type: string
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                  tipLookbackPeriod:
+                    description: 'TipLookbackPeriod: The lookback period for the feed
+                      to be imported.'
+                    type: string
+                required:
+                - dataTypes
+                - kind
+                - tenantId
+                type: object
+            required:
+            - owner
+            type: object
+          status:
+            properties:
+              amazonWebServicesCloudTrail:
+                description: 'AmazonWebServicesCloudTrail: Mutually exclusive with
+                  all other properties'
+                properties:
+                  awsRoleArn:
+                    description: 'AwsRoleArn: The Aws Role Arn (with CloudTrailReadOnly
+                      policy) that is used to access the Aws account.'
+                    type: string
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      logs:
+                        description: 'Logs: Logs data type.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              azureActiveDirectory:
+                description: 'AzureActiveDirectory: Mutually exclusive with all other
+                  properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      alerts:
+                        description: 'Alerts: Alerts data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              azureAdvancedThreatProtection:
+                description: 'AzureAdvancedThreatProtection: Mutually exclusive with
+                  all other properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      alerts:
+                        description: 'Alerts: Alerts data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              azureSecurityCenter:
+                description: 'AzureSecurityCenter: Mutually exclusive with all other
+                  properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      alerts:
+                        description: 'Alerts: Alerts data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  subscriptionId:
+                    description: 'SubscriptionId: The subscription id to connect to,
+                      and get the data from.'
+                    type: string
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              microsoftCloudAppSecurity:
+                description: 'MicrosoftCloudAppSecurity: Mutually exclusive with all
+                  other properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      alerts:
+                        description: 'Alerts: Alerts data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                      discoveryLogs:
+                        description: 'DiscoveryLogs: Discovery log data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              microsoftDefenderAdvancedThreatProtection:
+                description: 'MicrosoftDefenderAdvancedThreatProtection: Mutually
+                  exclusive with all other properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      alerts:
+                        description: 'Alerts: Alerts data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              microsoftThreatIntelligence:
+                description: 'MicrosoftThreatIntelligence: Mutually exclusive with
+                  all other properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      microsoftEmergingThreatFeed:
+                        description: 'MicrosoftEmergingThreatFeed: Data type for Microsoft
+                          Threat Intelligence Platforms data connector.'
+                        properties:
+                          lookbackPeriod:
+                            description: 'LookbackPeriod: The lookback period for
+                              the feed to be imported.'
+                            type: string
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              office365:
+                description: 'Office365: Mutually exclusive with all other properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      exchange:
+                        description: 'Exchange: Exchange data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                      sharePoint:
+                        description: 'SharePoint: SharePoint data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                      teams:
+                        description: 'Teams: Teams data type connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              premiumMicrosoftDefenderForThreatIntelligence:
+                description: 'PremiumMicrosoftDefenderForThreatIntelligence: Mutually
+                  exclusive with all other properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      connector:
+                        description: 'Connector: Data type for Microsoft Defender
+                          for Threat Intelligence Premium data connector.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  lookbackPeriod:
+                    description: |-
+                      LookbackPeriod: The lookback period for the feed to be imported. The date-time to begin importing the feed from, for
+                      example: 2024-01-01T00:00:00.000Z.
+                    type: string
+                  requiredSKUsPresent:
+                    description: 'RequiredSKUsPresent: The flag to indicate whether
+                      the tenant has the premium SKU required to access this connector.'
+                    type: boolean
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              restApiPoller:
+                description: 'RestApiPoller: Mutually exclusive with all other properties'
+                properties:
+                  addOnAttributes:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      AddOnAttributes: The add on attributes. The key name will become attribute name (a column) and the value will become the
+                      attribute value in the payload.
+                    type: object
+                  auth:
+                    description: 'Auth: The a authentication model.'
+                    properties:
+                      apiKey:
+                        description: 'APIKey: Mutually exclusive with all other properties'
+                        properties:
+                          apiKey:
+                            description: 'ApiKey: API Key for the user secret key
+                              credential'
+                            type: string
+                          apiKeyIdentifier:
+                            description: 'ApiKeyIdentifier: API Key Identifier'
+                            type: string
+                          apiKeyName:
+                            description: 'ApiKeyName: API Key name'
+                            type: string
+                          isApiKeyInPostPayload:
+                            description: 'IsApiKeyInPostPayload: Flag to indicate
+                              if API key is set in HTTP POST payload'
+                            type: boolean
+                          type:
+                            description: 'Type: The auth type'
+                            type: string
+                        type: object
+                      aws:
+                        description: 'AWS: Mutually exclusive with all other properties'
+                        properties:
+                          externalId:
+                            description: |-
+                              ExternalId: AWS STS assume role external ID. This is used to prevent the confused deputy problem:
+                              'https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html'
+                            type: string
+                          roleArn:
+                            description: 'RoleArn: AWS STS assume role ARN'
+                            type: string
+                          type:
+                            description: 'Type: The auth type'
+                            type: string
+                        type: object
+                      basic:
+                        description: 'Basic: Mutually exclusive with all other properties'
+                        properties:
+                          type:
+                            description: 'Type: The auth type'
+                            type: string
+                          userName:
+                            description: 'UserName: The user name.'
+                            type: string
+                        type: object
+                      gcp:
+                        description: 'GCP: Mutually exclusive with all other properties'
+                        properties:
+                          projectNumber:
+                            description: 'ProjectNumber: GCP Project Number'
+                            type: string
+                          serviceAccountEmail:
+                            description: 'ServiceAccountEmail: GCP Service Account
+                              Email'
+                            type: string
+                          type:
+                            description: 'Type: The auth type'
+                            type: string
+                          workloadIdentityProviderId:
+                            description: 'WorkloadIdentityProviderId: GCP Workload
+                              Identity Provider ID'
+                            type: string
+                        type: object
+                      gitHub:
+                        description: 'GitHub: Mutually exclusive with all other properties'
+                        properties:
+                          installationId:
+                            description: 'InstallationId: The GitHubApp auth installation
+                              id.'
+                            type: string
+                          type:
+                            description: 'Type: The auth type'
+                            type: string
+                        type: object
+                      jwtToken:
+                        description: 'JwtToken: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          headers:
+                            additionalProperties:
+                              type: string
+                            description: 'Headers: The custom headers we want to add
+                              once we send request to token endpoint.'
+                            type: object
+                          isCredentialsInHeaders:
+                            description: |-
+                              IsCredentialsInHeaders: Flag indicating whether we want to send the user name and password to token endpoint in the
+                              headers.
+                            type: boolean
+                          isJsonRequest:
+                            description: |-
+                              IsJsonRequest: Flag indicating whether the body request is JSON (header Content-Type = application/json), meaning its a
+                              Form URL encoded request (header Content-Type = application/x-www-form-urlencoded).
+                            type: boolean
+                          password:
+                            additionalProperties:
+                              type: string
+                            description: 'Password: The password'
+                            type: object
+                          queryParameters:
+                            additionalProperties:
+                              type: string
+                            description: 'QueryParameters: The custom query parameter
+                              we want to add once we send request to token endpoint.'
+                            type: object
+                          requestTimeoutInSeconds:
+                            description: 'RequestTimeoutInSeconds: Request timeout
+                              in seconds.'
+                            type: integer
+                          tokenEndpoint:
+                            description: 'TokenEndpoint: Token endpoint to request
+                              JWT'
+                            type: string
+                          type:
+                            description: 'Type: The auth type'
+                            type: string
+                          userName:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              UserName: The user name. If user name and password sent in header request we only need to populate the `value` property
+                              with the user name (Same as basic auth). If user name and password sent in body request we need to specify the `Key` and
+                              `Value`.
+                            type: object
+                        type: object
+                      none:
+                        description: 'None: Mutually exclusive with all other properties'
+                        properties:
+                          type:
+                            description: 'Type: The auth type'
+                            type: string
+                        type: object
+                      oAuth2:
+                        description: 'OAuth2: Mutually exclusive with all other properties'
+                        properties:
+                          accessTokenPrepend:
+                            description: 'AccessTokenPrepend: Access token prepend.
+                              Default is ''Bearer''.'
+                            type: string
+                          authorizationEndpoint:
+                            description: 'AuthorizationEndpoint: The authorization
+                              endpoint.'
+                            type: string
+                          authorizationEndpointHeaders:
+                            additionalProperties:
+                              type: string
+                            description: 'AuthorizationEndpointHeaders: The authorization
+                              endpoint headers.'
+                            type: object
+                          authorizationEndpointQueryParameters:
+                            additionalProperties:
+                              type: string
+                            description: 'AuthorizationEndpointQueryParameters: The
+                              authorization endpoint query parameters.'
+                            type: object
+                          clientId:
+                            description: 'ClientId: The Application (client) ID that
+                              the OAuth provider assigned to your app.'
+                            type: string
+                          grantType:
+                            description: 'GrantType: The grant type, usually will
+                              be ''authorization code''.'
+                            type: string
+                          isCredentialsInHeaders:
+                            description: |-
+                              IsCredentialsInHeaders: Indicating whether we want to send the clientId and clientSecret to token endpoint in the
+                              headers.
+                            type: boolean
+                          isJwtBearerFlow:
+                            description: 'IsJwtBearerFlow: A value indicating whether
+                              it''s a JWT flow.'
+                            type: boolean
+                          redirectUri:
+                            description: 'RedirectUri: The Application redirect url
+                              that the user config in the OAuth provider.'
+                            type: string
+                          scope:
+                            description: 'Scope: The Application (client) Scope that
+                              the OAuth provider assigned to your app.'
+                            type: string
+                          tokenEndpoint:
+                            description: 'TokenEndpoint: The token endpoint. Defines
+                              the OAuth2 refresh token.'
+                            type: string
+                          tokenEndpointHeaders:
+                            additionalProperties:
+                              type: string
+                            description: 'TokenEndpointHeaders: The token endpoint
+                              headers.'
+                            type: object
+                          tokenEndpointQueryParameters:
+                            additionalProperties:
+                              type: string
+                            description: 'TokenEndpointQueryParameters: The token
+                              endpoint query parameters.'
+                            type: object
+                          type:
+                            description: 'Type: The auth type'
+                            type: string
+                        type: object
+                      oracle:
+                        description: 'Oracle: Mutually exclusive with all other properties'
+                        properties:
+                          pemFile:
+                            description: 'PemFile: Content of the PRM file'
+                            type: string
+                          publicFingerprint:
+                            description: 'PublicFingerprint: Public Fingerprint'
+                            type: string
+                          tenantId:
+                            description: 'TenantId: Oracle tenant ID'
+                            type: string
+                          type:
+                            description: 'Type: The auth type'
+                            type: string
+                          userId:
+                            description: 'UserId: Oracle user ID'
+                            type: string
+                        type: object
+                      serviceBus:
+                        description: 'ServiceBus: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          credentialsConfig:
+                            additionalProperties:
+                              type: string
+                            description: 'CredentialsConfig: Credentials for service
+                              bus namespace, keyvault uri for access key'
+                            type: object
+                          storageAccountCredentialsConfig:
+                            additionalProperties:
+                              type: string
+                            description: 'StorageAccountCredentialsConfig: Credentials
+                              for storage account, keyvault uri for access key'
+                            type: object
+                          type:
+                            description: 'Type: The auth type'
+                            type: string
+                        type: object
+                      session:
+                        description: 'Session: Mutually exclusive with all other properties'
+                        properties:
+                          headers:
+                            additionalProperties:
+                              type: string
+                            description: 'Headers: HTTP request headers to session
+                              service endpoint.'
+                            type: object
+                          isPostPayloadJson:
+                            description: 'IsPostPayloadJson: Indicating whether API
+                              key is set in HTTP POST payload.'
+                            type: boolean
+                          password:
+                            additionalProperties:
+                              type: string
+                            description: 'Password: The password attribute name.'
+                            type: object
+                          queryParameters:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            description: 'QueryParameters: Query parameters to session
+                              service endpoint.'
+                            type: object
+                          sessionIdName:
+                            description: 'SessionIdName: Session id attribute name
+                              from HTTP response header.'
+                            type: string
+                          sessionLoginRequestUri:
+                            description: 'SessionLoginRequestUri: HTTP request URL
+                              to session service endpoint.'
+                            type: string
+                          sessionTimeoutInMinutes:
+                            description: 'SessionTimeoutInMinutes: Session timeout
+                              in minutes.'
+                            type: integer
+                          type:
+                            description: 'Type: The auth type'
+                            type: string
+                          userName:
+                            additionalProperties:
+                              type: string
+                            description: 'UserName: The user name attribute key value.'
+                            type: object
+                        type: object
+                    type: object
+                  connectorDefinitionName:
+                    description: 'ConnectorDefinitionName: The connector definition
+                      name (the dataConnectorDefinition resource id).'
+                    type: string
+                  dataType:
+                    description: 'DataType: The Log Analytics table destination.'
+                    type: string
+                  dcrConfig:
+                    description: 'DcrConfig: The DCR related properties.'
+                    properties:
+                      dataCollectionEndpoint:
+                        description: 'DataCollectionEndpoint: Represents the data
+                          collection ingestion endpoint in log analytics.'
+                        type: string
+                      dataCollectionRuleImmutableId:
+                        description: |-
+                          DataCollectionRuleImmutableId: The data collection rule immutable id, the rule defines the transformation and data
+                          destination.
+                        type: string
+                      streamName:
+                        description: 'StreamName: The stream we are sending the data
+                          to.'
+                        type: string
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  isActive:
+                    description: 'IsActive: Indicates whether the connector is active
+                      or not.'
+                    type: boolean
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  paging:
+                    description: 'Paging: The paging configuration.'
+                    properties:
+                      pageSize:
+                        description: 'PageSize: Page size'
+                        type: integer
+                      pageSizeParameterName:
+                        description: 'PageSizeParameterName: Page size parameter name'
+                        type: string
+                      pagingType:
+                        description: 'PagingType: Type of paging'
+                        type: string
+                    type: object
+                  request:
+                    description: 'Request: The request configuration.'
+                    properties:
+                      apiEndpoint:
+                        description: 'ApiEndpoint: The API endpoint.'
+                        type: string
+                      endTimeAttributeName:
+                        description: |-
+                          EndTimeAttributeName: The query parameter name which the remote server expect to end query. This property goes hand to
+                          hand with `startTimeAttributeName`
+                        type: string
+                      headers:
+                        additionalProperties:
+                          type: string
+                        description: 'Headers: The header for the request for the
+                          remote server.'
+                        type: object
+                      httpMethod:
+                        description: 'HttpMethod: The HTTP method, default value GET.'
+                        type: string
+                      isPostPayloadJson:
+                        description: 'IsPostPayloadJson: Flag to indicate if HTTP
+                          POST payload is in JSON format (vs form-urlencoded).'
+                        type: boolean
+                      queryParameters:
+                        additionalProperties:
+                          x-kubernetes-preserve-unknown-fields: true
+                        description: 'QueryParameters: The HTTP query parameters to
+                          RESTful API.'
+                        type: object
+                      queryParametersTemplate:
+                        description: |-
+                          QueryParametersTemplate: the query parameters template. Defines the query parameters template to use when passing query
+                          parameters in advanced scenarios.
+                        type: string
+                      queryTimeFormat:
+                        description: |-
+                          QueryTimeFormat: The query time format. A remote server can have a query to pull data from range 'start' to 'end'. This
+                          property indicate what is the expected time format the remote server know to parse.
+                        type: string
+                      queryTimeIntervalAttributeName:
+                        description: |-
+                          QueryTimeIntervalAttributeName: The query parameter name which we need to send the server for query logs in time
+                          interval. Should be defined with `queryTimeIntervalPrepend` and `queryTimeIntervalDelimiter`
+                        type: string
+                      queryTimeIntervalDelimiter:
+                        description: |-
+                          QueryTimeIntervalDelimiter: The delimiter string between 2 QueryTimeFormat in the query parameter
+                          `queryTimeIntervalAttributeName`.
+                        type: string
+                      queryTimeIntervalPrepend:
+                        description: 'QueryTimeIntervalPrepend: The string prepend
+                          to the value of the query parameter in `queryTimeIntervalAttributeName`.'
+                        type: string
+                      queryWindowInMin:
+                        description: 'QueryWindowInMin: The query window in minutes
+                          for the request.'
+                        type: integer
+                      rateLimitQPS:
+                        description: 'RateLimitQPS: The Rate limit queries per second
+                          for the request..'
+                        type: integer
+                      retryCount:
+                        description: 'RetryCount: The retry count.'
+                        type: integer
+                      startTimeAttributeName:
+                        description: |-
+                          StartTimeAttributeName: The query parameter name which the remote server expect to start query. This property goes hand
+                          to hand with `endTimeAttributeName`.
+                        type: string
+                      timeoutInSeconds:
+                        description: 'TimeoutInSeconds: The timeout in seconds.'
+                        type: integer
+                    type: object
+                  response:
+                    description: 'Response: The response configuration.'
+                    properties:
+                      compressionAlgo:
+                        description: 'CompressionAlgo: The compression algorithm.
+                          For Example: ''gzip'', ''multi-gzip'', ''deflate''.'
+                        type: string
+                      convertChildPropertiesToArray:
+                        description: |-
+                          ConvertChildPropertiesToArray: The value indicating whether the response isn't an array of events / logs.  By setting
+                          this flag to true it means the remote server will response with an object which each property has as a value an array of
+                          events / logs.
+                        type: boolean
+                      csvDelimiter:
+                        description: 'CsvDelimiter: The csv delimiter, in case the
+                          response format is CSV.'
+                        type: string
+                      csvEscape:
+                        description: 'CsvEscape: The character used to escape characters
+                          in CSV.'
+                        type: string
+                      eventsJsonPaths:
+                        description: 'EventsJsonPaths: The json paths, ''$'' char
+                          is the json root.'
+                        items:
+                          type: string
+                        type: array
+                      format:
+                        description: 'Format: The response format. possible values
+                          are json,csv,xml'
+                        type: string
+                      hasCsvBoundary:
+                        description: 'HasCsvBoundary: The value indicating whether
+                          the response has CSV boundary in case the response in CSV
+                          format.'
+                        type: boolean
+                      hasCsvHeader:
+                        description: 'HasCsvHeader: The value indicating whether the
+                          response has headers in case the response in CSV format.'
+                        type: boolean
+                      isGzipCompressed:
+                        description: 'IsGzipCompressed: The value indicating whether
+                          the remote server support Gzip and we should expect Gzip
+                          response.'
+                        type: boolean
+                      successStatusJsonPath:
+                        description: 'SuccessStatusJsonPath: The value where the status
+                          message/code should appear in the response.'
+                        type: string
+                      successStatusValue:
+                        description: 'SuccessStatusValue: The status value.'
+                        type: string
+                    type: object
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              threatIntelligence:
+                description: 'ThreatIntelligence: Mutually exclusive with all other
+                  properties'
+                properties:
+                  dataTypes:
+                    description: 'DataTypes: The available data types for the connector.'
+                    properties:
+                      indicators:
+                        description: 'Indicators: Data type for indicators connection.'
+                        properties:
+                          state:
+                            description: 'State: Describe whether this data type connection
+                              is enabled or not.'
+                            type: string
+                        type: object
+                    type: object
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  tenantId:
+                    description: 'TenantId: The tenant id to connect to, and get the
+                      data from.'
+                    type: string
+                  tipLookbackPeriod:
+                    description: 'TipLookbackPeriod: The lookback period for the feed
+                      to be imported.'
+                    type: string
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
