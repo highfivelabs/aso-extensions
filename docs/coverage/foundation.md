@@ -125,12 +125,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 28.6% | 28.2% |
-| security-adjacent | 7 | 93 | 1,049 | 8.6% | 2.6% | 88.8% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 30.2% | 26.6% |
+| security-adjacent | 7 | 93 | 1,049 | 8.6% | 30.8% | 60.6% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.8% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.2% | 99.3% |
 
-### platform-foundation: 246 resources (66 with no kind, 72 partly covered, 108 covered)
+### platform-foundation: 246 resources (59 with no kind, 74 partly covered, 113 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -364,11 +364,11 @@ Generated: every resource of the two categories, by the order of the services in
 | 228 | `Microsoft.ContainerService/snapshots` | covered |  | `containerservice/Snapshot` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 229 | `Microsoft.ContainerService/fleets` | covered | `containerservice/Fleet` |  | 10 / 0 / 0 | resourceGroup | - | - | 0 |
 | 230 | `Microsoft.ContainerService/fleets/managedNamespaces` | covered |  | `containerservice/FleetsManagedNamespace` | 0 / 26 / 0 | resourceGroup | - | - | 0 |
-| 231 | `Microsoft.KubernetesConfiguration/privateLinkScopes` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 232 | `Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 233 | `Microsoft.KubernetesConfiguration/sourceControlConfigurations` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
-| 234 | `Microsoft.KubernetesConfiguration/extensions` | partial, 13 of 32 missing | `kubernetesconfiguration/Extension` |  | 19 / 0 / 13 | extension | extend: ASO's API version is older than the spec's | S (13) | 0 |
-| 235 | `Microsoft.KubernetesConfiguration/fluxConfigurations` | partial, 1 of 71 missing | `kubernetesconfiguration/FluxConfiguration` |  | 70 / 0 / 1 | extension | extend: ASO's API version is older than the spec's | S (1) | 0 |
+| 231 | `Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections` | partial, 1 of 4 missing |  | `kubernetesconfiguration/PrivateLinkScopesPrivateEndpointConnection` | 0 / 3 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 232 | `Microsoft.KubernetesConfiguration/sourceControlConfigurations` | partial, 1 of 11 missing |  | `kubernetesconfiguration/SourceControlConfiguration` | 0 / 10 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 233 | `Microsoft.KubernetesConfiguration/extensions` | partial, 13 of 32 missing | `kubernetesconfiguration/Extension` |  | 19 / 0 / 13 | extension | extend: ASO's API version is older than the spec's | S (13) | 0 |
+| 234 | `Microsoft.KubernetesConfiguration/fluxConfigurations` | partial, 1 of 71 missing | `kubernetesconfiguration/FluxConfiguration` |  | 70 / 0 / 1 | extension | extend: ASO's API version is older than the spec's | S (1) | 0 |
+| 235 | `Microsoft.KubernetesConfiguration/privateLinkScopes` | covered |  | `kubernetesconfiguration/PrivateLinkScope` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 236 | `Microsoft.ContainerRegistry/registries/webhooks` | partial, 1 of 7 missing |  | `containerregistry/RegistriesWebhook` | 0 / 6 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
 | 237 | `Microsoft.ContainerRegistry/registries/connectedRegistries` | partial, 1 of 13 missing |  | `containerregistry/RegistriesConnectedRegistry` | 0 / 12 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
 | 238 | `Microsoft.ContainerRegistry/registries/tasks` | partial, 2 of 54 missing |  | `containerregistry/RegistriesTask` | 0 / 52 / 2 | resourceGroup | extend: newer API version or property config | S (2) | 0 |
