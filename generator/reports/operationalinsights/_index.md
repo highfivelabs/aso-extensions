@@ -10,11 +10,14 @@ no_list: true
 
 | Resource                       | ARM Version | CRD Version | Supported From | Sample |
 |--------------------------------|-------------|-------------|----------------|--------|
+| Cluster                        | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | QueryPack                      | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | QueryPacksQuery                | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | WorkspacesDataExport           | 2025-07-01  | v20250701   | v0.1.0         | -      |
+| WorkspacesDataSource           | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | WorkspacesLinkedService        | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | WorkspacesLinkedStorageAccount | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | WorkspacesSavedSearch          | 2025-07-01  | v20250701   | v0.1.0         | -      |
+| WorkspacesStorageInsightConfig | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | WorkspacesTable                | 2025-07-01  | v20250701   | v0.1.0         | -      |
 

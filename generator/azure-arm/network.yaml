@@ -169,6 +169,21 @@ groupModelConfiguration:
     SecurityUserGroupItem:
       NetworkGroupId:
         $referenceType: arm # the network group a security user rule collection applies to
+    NetworkManagers_RoutingConfiguration:
+      $exportAs: NetworkManagersRoutingConfiguration
+      $supportedFrom: v0.1.0
+    NetworkManagers_RoutingConfigurations_RuleCollection:
+      $exportAs: NetworkManagersRoutingRuleCollection # shorter than the generator's name, as the security rule kinds are (a kind plus List must fit in 63 characters)
+      $supportedFrom: v0.1.0
+    NetworkManagers_RoutingConfigurations_RuleCollections_Rule:
+      $exportAs: NetworkManagersRoutingRule
+      $supportedFrom: v0.1.0
+    NetworkManagers_Commit:
+      $exportAs: NetworkManagersCommit
+      $supportedFrom: v0.1.0
+    NetworkManagerRoutingGroupItem:
+      NetworkGroupId:
+        $referenceType: arm # the network group a routing rule collection applies to
     NetworkManagerConnectionProperties:
       NetworkManagerId:
         $referenceType: arm # the network manager a subscription or management group joins (our NetworkManager, or an ARM ID)
