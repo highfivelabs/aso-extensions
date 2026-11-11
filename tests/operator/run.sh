@@ -35,6 +35,15 @@ TENANT=00000000-0000-0000-0000-00000000000a
 CLIENT_A=00000000-0000-0000-0000-0000000000c1
 CLIENT_B=00000000-0000-0000-0000-0000000000c2
 SUB=00000000-0000-0000-0000-0000000000f1
+# The fake Microsoft Graph's directory: principals for the directory role
+# assignments (one assignment of ENTRA_EXISTING's is made outside Kubernetes
+# and adopted) and an administrative unit.
+ENTRA_READER=6a2f0e1b-0000-4000-8000-0000000000a1
+ENTRA_ADMIN=6a2f0e1b-0000-4000-8000-0000000000a2
+ENTRA_EXISTING=6a2f0e1b-0000-4000-8000-0000000000a3
+ENTRA_UNIT=7b3c1f2a-0000-4000-8000-0000000000b1
+GLOBAL_READER=f2ef992c-3afb-46b9-b7cf-a126ee74c451
+USER_ADMINISTRATOR=fe930be7-5e62-47db-91af-98c3a49a38b1
 # A built-in policy definition (Allowed locations), at the tenant root.
 BUILTIN_POLICY=/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c
 OUT="${REPO_ROOT}/bin/operator-e2e"
@@ -118,6 +127,7 @@ kubectl -n "${ASO_NS}" create secret generic aso-controller-settings \
   --from-literal=AZURE_WORKLOAD_IDENTITY_AUTH_MODE=strict \
   --from-literal=AZURE_RESOURCE_MANAGER_ENDPOINT=https://fakearm.fake-cloud.svc \
   --from-literal=AZURE_RESOURCE_MANAGER_AUDIENCE=https://fakearm.fake-cloud.svc \
+  --from-literal=MICROSOFT_GRAPH_ENDPOINT=https://fakegraph.fake-cloud.svc \
   --dry-run=client -o yaml | kubectl apply -f -
 
 step "the fake cloud"
@@ -127,26 +137,30 @@ kubectl create namespace fake-cloud --dry-run=client -o yaml | kubectl apply -f 
 kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/postgres.crt" --key "${OUT}/fixtures/postgres.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create secret tls fakegraph-tls --cert "${OUT}/fixtures/fakegraph.crt" --key "${OUT}/fixtures/fakegraph.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakesql-tls --cert "${OUT}/fixtures/fakesql.crt" --key "${OUT}/fixtures/fakesql.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakesql-principals --from-literal=team-a="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" \
   --from-literal=team-b="${CLIENT_B}=system:serviceaccount:team-b:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/managedClusters/team-a-aks,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/managedClusters/team-a-aks/agentPools/system,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/fleets/team-a-fleet,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/team-a-hub,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualHubs/team-b-hub,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/azureFirewalls/team-a-fw,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/azureFirewalls/team-b-fw,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/team-a-hub,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualHubs/team-b-hub,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/azureFirewalls/team-a-fw,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/azureFirewalls/team-b-fw,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/managedClusters/team-a-aks,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/managedClusters/team-a-aks/agentPools/system,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/fleets/team-a-fleet,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakegraph-directory --from-literal=principals="${ENTRA_READER},${ENTRA_ADMIN},${ENTRA_EXISTING}" \
+  --from-literal=administrativeUnits="${ENTRA_UNIT}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakevault-trust --from-literal=trust="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
 ko_apply config/fake-cloud/fake-cloud.yaml
 # On a reused cluster the fixtures (CA, certificates) are new: restart so
 # every pod reads them. PostgreSQL keeps no volume, so it starts empty.
-kubectl -n fake-cloud rollout restart deploy/postgres deploy/fakevault deploy/fakearm deploy/fakesql >/dev/null
+kubectl -n fake-cloud rollout restart deploy/postgres deploy/fakevault deploy/fakearm deploy/fakegraph deploy/fakesql >/dev/null
 kubectl -n fake-cloud rollout status deploy/postgres --timeout=180s
 kubectl -n fake-cloud rollout status deploy/fakevault --timeout=120s
 kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
+kubectl -n fake-cloud rollout status deploy/fakegraph --timeout=120s
 kubectl -n fake-cloud rollout status deploy/fakesql --timeout=120s
 
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev users.sql.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev managementgroups.management.azure.hfl.dev tagsets.resources.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev users.sql.azure.hfl.dev directoryroleassignments.entra.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev managementgroups.management.azure.hfl.dev tagsets.resources.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -327,6 +341,27 @@ spec:
   owner: {name: appdb}
   aadUser: {}
   roles: [db_datareader, db_datawriter]
+---
+apiVersion: entra.azure.hfl.dev/v1
+kind: DirectoryRoleAssignment
+metadata: {name: global-reader, namespace: $1}
+spec:
+  principalId: ${ENTRA_READER}
+  roleDefinitionId: ${GLOBAL_READER}
+  directoryScopeId: /
+---
+apiVersion: entra.azure.hfl.dev/v1
+kind: DirectoryRoleAssignment
+metadata: {name: unit-admin, namespace: $1}
+spec:
+  principalIdFromConfig: {name: entra-admins, key: principalId}
+  roleDefinitionId: ${USER_ADMINISTRATOR}
+  directoryScopeId: /administrativeUnits/${ENTRA_UNIT}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: entra-admins, namespace: $1}
+data: {principalId: ${ENTRA_ADMIN}}
 ---
 apiVersion: keyvault.azure.hfl.dev/v1
 kind: VaultSecret
@@ -637,7 +672,7 @@ spec:
   networkManagerScopes:
     subscriptions: [/subscriptions/${SUB}]
     managementGroups: [/providers/Microsoft.Management/managementGroups/$1-platform]
-  networkManagerScopeAccesses: [Connectivity, SecurityAdmin]
+  networkManagerScopeAccesses: [Connectivity, SecurityAdmin, Routing]
 ---
 apiVersion: network.azure.hfl.dev/v20260301
 kind: NetworkManagerConnection
@@ -745,6 +780,38 @@ spec:
   protocol: Tcp
   direction: Inbound
   destinationPortRanges: ["443"]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersRoutingConfiguration
+metadata: {name: egress, namespace: $1}
+spec:
+  owner: {name: avnm}
+  routeTableUsageMode: ManagedOnly
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersRoutingRuleCollection
+metadata: {name: spokes, namespace: $1}
+spec:
+  owner: {name: egress}
+  appliesTo: [{networkGroupReference: {group: network.azure.hfl.dev, kind: NetworkManagersNetworkGroup, name: spokes}}]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersRoutingRule
+metadata: {name: default, namespace: $1}
+spec:
+  owner: {name: spokes}
+  destination: {type: AddressPrefix, destinationAddress: 0.0.0.0/0}
+  nextHop: {nextHopType: VirtualAppliance, nextHopAddress: 10.0.1.4}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersCommit
+metadata: {name: routing, namespace: $1}
+spec:
+  owner: {name: avnm}
+  properties:
+    commitType: Routing
+    targetLocations: [westus]
+    configurationReferences: [{group: network.azure.hfl.dev, kind: NetworkManagersRoutingConfiguration, name: egress}]
 ---
 apiVersion: management.azure.hfl.dev/v20230401
 kind: ManagementGroup
@@ -872,6 +939,16 @@ logged fakesql "aso-sql-admins signed in to appdb with a token, as the Entra adm
 logged fakesql "CREATE USER [app-identity] FROM EXTERNAL PROVIDER" || fail "the fake Azure SQL saw no CREATE USER ... FROM EXTERNAL PROVIDER"
 logged fakesql "ALTER ROLE [db_datareader] ADD MEMBER [app-identity]" || fail "the fake Azure SQL saw no role grant"
 pass "team-a Azure SQL User Ready: app-identity created FROM EXTERNAL PROVIDER, signed in with team-a's aso-workload token"
+wait_for 90 "team-a's DirectoryRoleAssignment Ready" ready directoryroleassignments.entra.azure.hfl.dev team-a global-reader
+logged fakegraph "sub=system:serviceaccount:team-a:aso-workload scope=https://fakegraph.fake-cloud.svc/.default accepted=true" \
+  || fail "the fake Microsoft Graph saw no token of team-a's aso-workload"
+logged fakegraph "request POST /beta/roleManagement/directory/roleAssignments 201" \
+  || fail "the fake Microsoft Graph saw no role assignment created"
+pass "team-a DirectoryRoleAssignment Ready: Global Reader over the directory, with team-a's aso-workload token"
+wait_for 90 "team-a's DirectoryRoleAssignment from a ConfigMap Ready" ready directoryroleassignments.entra.azure.hfl.dev team-a unit-admin
+[[ "$(kubectl -n team-a get directoryroleassignments.entra.azure.hfl.dev unit-admin -o jsonpath='{.status.principalId} {.status.directoryScopeId}')" == "${ENTRA_ADMIN} /administrativeUnits/${ENTRA_UNIT}" ]] \
+  || fail "unit-admin's status is not the principal from the ConfigMap at the administrative unit"
+pass "team-a DirectoryRoleAssignment Ready: User Administrator over an administrative unit, the principal from a ConfigMap"
 wait_for 90 "team-a's VaultSecret Ready" ready vaultsecrets.keyvault.azure.hfl.dev team-a app-url
 pass "team-a VaultSecret Ready"
 psql() { kubectl -n fake-cloud exec deploy/postgres -- psql -U postgres -tAc "$1"; }
@@ -1061,6 +1138,18 @@ wait_for 90 "team-a's NetworkManagersSecurityUserRuleCollection Ready" ready net
 pass "team-a NetworkManagersSecurityUserRuleCollection Ready: for our network group by object"
 wait_for 90 "team-a's NetworkManagersSecurityUserRule Ready" ready networkmanagerssecurityuserrules.network.azure.hfl.dev team-a https
 pass "team-a NetworkManagersSecurityUserRule Ready: owned by our rule collection"
+wait_for 90 "team-a's NetworkManagersRoutingConfiguration Ready" ready networkmanagersroutingconfigurations.network.azure.hfl.dev team-a egress
+pass "team-a NetworkManagersRoutingConfiguration Ready: owned by our NetworkManager"
+wait_for 90 "team-a's NetworkManagersRoutingRuleCollection Ready" ready networkmanagersroutingrulecollections.network.azure.hfl.dev team-a spokes
+pass "team-a NetworkManagersRoutingRuleCollection Ready: for our network group by object"
+wait_for 90 "team-a's NetworkManagersRoutingRule Ready" ready networkmanagersroutingrules.network.azure.hfl.dev team-a default
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/routingConfigurations/egress/ruleCollections/spokes/rules/default 201" \
+  || fail "the fake resource manager saw no PUT of the routing rule"
+pass "team-a NetworkManagersRoutingRule Ready: a default route to a virtual appliance"
+wait_for 90 "team-a's NetworkManagersCommit Ready" ready networkmanagerscommits.network.azure.hfl.dev team-a routing
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/commits/routing 201" \
+  || fail "the fake resource manager saw no PUT of the commit"
+pass "team-a NetworkManagersCommit Ready: our routing configuration by object"
 wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
 pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
 [[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
@@ -1119,6 +1208,8 @@ wait_for 90 "team-b's RoleEligibilityScheduleRequest refused" bash -c "[[ \"\$(k
 pass "team-b RoleEligibilityScheduleRequest refused: $(message roleeligibilityschedulerequests.authorization.azure.hfl.dev team-b eligible-reader | cut -c1-120)..."
 wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
+wait_for 90 "team-b's DirectoryRoleAssignment refused" bash -c "[[ \"\$(kubectl get directoryroleassignments.entra.azure.hfl.dev -n team-b global-reader -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Microsoft Graph'* ]]"
+pass "team-b DirectoryRoleAssignment refused: $(message directoryroleassignments.entra.azure.hfl.dev team-b global-reader | cut -c1-120)..."
 
 step "deleting team-a's objects"
 kubectl -n team-a delete users.dbforpostgresql.azure.hfl.dev app-identity --timeout=60s
@@ -1126,6 +1217,11 @@ kubectl -n team-a delete vaultsecrets.keyvault.azure.hfl.dev app-url --timeout=6
 kubectl -n team-a delete users.sql.azure.hfl.dev app-identity --timeout=60s
 logged fakesql "DROP USER IF EXISTS [app-identity]" || fail "the fake Azure SQL saw no DROP USER of app-identity"
 pass "the Azure SQL Entra user app-identity is dropped"
+kubectl -n team-a delete directoryroleassignments.entra.azure.hfl.dev global-reader unit-admin --timeout=60s
+graph_log="$(kubectl -n fake-cloud logs deploy/fakegraph)"
+[[ "$(grep -cE 'request DELETE /beta/roleManagement/directory/roleAssignments/[^ ]+ 204' <<<"${graph_log}")" -ge 2 ]] \
+  || fail "the fake Microsoft Graph saw no delete of the two directory role assignments"
+pass "the directory role assignments are deleted in Microsoft Graph"
 [[ -z "$(psql "SELECT 1 FROM pg_roles WHERE rolname = 'app-identity'")" ]] || fail "the role app-identity was not dropped"
 pass "the Entra role app-identity is dropped"
 [[ "$(psql "SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname = 'orders'")" == "hfl_owner" ]] \
@@ -1179,7 +1275,7 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er 200" \
   || fail "the fake resource manager saw no delete of the ExpressRoute gateway"
 pass "the ExpressRoute gateway and its connection are deleted in Resource Manager"
-for kind_name in networkmanagerssecurityuserrules/https networkmanagerssecurityuserrulecollections/app networkmanagerssecurityuserconfigurations/team networkmanagerssecurityadminrules/default networkmanagerssecurityadminrules/deny-rdp networkmanagerssecurityadminrulecollections/deny-mgmt networkmanagerssecurityadminconfigurations/baseline networkmanagersconnectivityconfigurations/hub-spoke; do
+for kind_name in networkmanagerscommits/routing networkmanagersroutingrules/default networkmanagersroutingrulecollections/spokes networkmanagersroutingconfigurations/egress networkmanagerssecurityuserrules/https networkmanagerssecurityuserrulecollections/app networkmanagerssecurityuserconfigurations/team networkmanagerssecurityadminrules/default networkmanagerssecurityadminrules/deny-rdp networkmanagerssecurityadminrulecollections/deny-mgmt networkmanagerssecurityadminconfigurations/baseline networkmanagersconnectivityconfigurations/hub-spoke; do
   kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
 done
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/securityAdminConfigurations/baseline/ruleCollections/deny-mgmt/rules/deny-rdp 200" \
@@ -1188,7 +1284,11 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
   || fail "the fake resource manager saw no delete of the security user configuration"
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/connectivityConfigurations/hub-spoke 200" \
   || fail "the fake resource manager saw no delete of the connectivity configuration"
-pass "the network manager's connectivity, security admin and security user configurations, rule collections and rules are deleted in Resource Manager"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/routingConfigurations/egress/ruleCollections/spokes/rules/default 200" \
+  || fail "the fake resource manager saw no delete of the routing rule"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/commits/routing 200" \
+  || fail "the fake resource manager saw no delete of the commit"
+pass "the network manager's commit, connectivity, routing, security admin and security user configurations, rule collections and rules are deleted in Resource Manager"
 for kind_name in networkmanagersnetworkgroupsstaticmembers/spoke networkmanagersnetworkgroups/spokes networkmanagersscopeconnections/partner networkmanagerconnections/avnm-mg networkmanagerconnections/avnm-sub networkmanagers/avnm; do
   kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
 done
@@ -1274,6 +1374,27 @@ logged fakearm "request DELETE /subscriptions/${SUB}/providers/Microsoft.Authori
   || fail "the fake resource manager saw no delete of the policy definition"
 pass "the policy assignments and definition are deleted in Resource Manager"
 
+step "team-a: an Operations Management solution on the workspace (operationsmanagement.azure.hfl.dev)"
+oms_id="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationsManagement/solutions/Updates(team-a-law)"
+kubectl apply -f - <<EOF
+apiVersion: operationsmanagement.azure.hfl.dev/v20151101preview
+kind: Solution
+metadata: {name: updates, namespace: team-a}
+spec:
+  azureName: Updates(team-a-law)
+  owner: {name: rg}
+  location: westus
+  plan: {name: Updates(team-a-law), publisher: Microsoft, product: OMSGallery/Updates, promotionCode: ""}
+  properties:
+    workspaceResourceReference: {group: operationalinsights.azure.com, kind: Workspace, name: law}
+EOF
+wait_for 120 "team-a's Solution Ready" ready solutions.operationsmanagement.azure.hfl.dev team-a updates
+logged fakearm "request PUT ${oms_id} 201" || fail "the fake resource manager saw no solution made on ASO's Workspace"
+pass "team-a Solution Ready"
+kubectl -n team-a delete solutions.operationsmanagement.azure.hfl.dev updates --timeout=120s
+logged fakearm "request DELETE ${oms_id} 200" || fail "the fake resource manager saw no delete of the solution"
+pass "the Operations Management solution is deleted in Resource Manager"
+
 kubectl -n team-a delete managementgroupssubscriptions.management.azure.hfl.dev workload --timeout=120s
 logged fakearm "request DELETE /providers/Microsoft.Management/managementGroups/team-a-platform/subscriptions/${SUB} 200" \
   || fail "the fake resource manager saw no removal of the subscription from the management group"
@@ -1320,6 +1441,79 @@ kubectl -n team-a delete tagsets.resources.azure.hfl.dev rg-tags --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Resources/tags/default 200" \
   || fail "the fake resource manager saw no delete of the tags"
 pass "the tags are deleted in Resource Manager"
+
+step "team-a: a managed HSM and a key in it (keyvault.azure.hfl.dev)"
+hsm_id="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.KeyVault/managedHSMs/team-a-hsm"
+kubectl apply -f - <<EOF
+apiVersion: keyvault.azure.hfl.dev/v20260515
+kind: ManagedHSM
+metadata: {name: hsm, namespace: team-a}
+spec:
+  azureName: team-a-hsm
+  owner: {name: rg}
+  location: westus
+  sku: {family: B, name: Standard_B1}
+  properties:
+    tenantId: "00000000-0000-0000-0000-0000000000aa"
+    initialAdminObjectIds: ["00000000-0000-0000-0000-0000000000bb"]
+    softDeleteRetentionInDays: 30
+---
+apiVersion: keyvault.azure.hfl.dev/v20260515
+kind: ManagedHSMsKey
+metadata:
+  name: cmk
+  namespace: team-a
+  annotations: {serviceoperator.azure.com/reconcile-policy: detach-on-delete}
+spec:
+  azureName: storage-cmk
+  owner: {name: hsm}
+  properties: {kty: RSA-HSM, keySize: 3072}
+EOF
+wait_for 120 "team-a's ManagedHSM Ready" ready managedhsms.keyvault.azure.hfl.dev team-a hsm
+logged fakearm "request PUT ${hsm_id} 201" || fail "the fake resource manager saw no managed HSM made"
+pass "team-a ManagedHSM Ready"
+wait_for 120 "team-a's ManagedHSMsKey Ready" ready managedhsmskeys.keyvault.azure.hfl.dev team-a cmk
+logged fakearm "request PUT ${hsm_id}/keys/storage-cmk 201" || fail "the fake resource manager saw no key made in the managed HSM"
+pass "team-a ManagedHSMsKey Ready"
+kubectl -n team-a delete managedhsmskeys.keyvault.azure.hfl.dev cmk --timeout=120s
+if logged fakearm "request DELETE ${hsm_id}/keys/storage-cmk"; then
+  fail "the key was sent a DELETE, though it is detached (Resource Manager has none for a key)"
+fi
+kubectl -n team-a delete managedhsms.keyvault.azure.hfl.dev hsm --timeout=120s
+logged fakearm "request DELETE ${hsm_id} 200" || fail "the fake resource manager saw no delete of the managed HSM"
+pass "the managed HSM key is detached, not deleted, and the managed HSM is deleted in Resource Manager"
+
+step "team-a: a Log Analytics cluster and a data source of the workspace (operationalinsights.azure.hfl.dev)"
+la_rg="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights"
+kubectl apply -f - <<EOF
+apiVersion: operationalinsights.azure.hfl.dev/v20250701
+kind: Cluster
+metadata: {name: logs, namespace: team-a}
+spec:
+  azureName: team-a-logs
+  owner: {name: rg}
+  location: westus
+  sku: {name: CapacityReservation, capacity: 500}
+---
+apiVersion: operationalinsights.azure.hfl.dev/v20250701
+kind: WorkspacesDataSource
+metadata: {name: syslog-auth, namespace: team-a}
+spec:
+  owner: {name: law}
+  kind: LinuxSyslog
+  properties: {syslogName: auth, syslogSeverities: [{severity: err}]}
+EOF
+wait_for 120 "team-a's Cluster Ready" ready clusters.operationalinsights.azure.hfl.dev team-a logs
+logged fakearm "request PUT ${la_rg}/clusters/team-a-logs 201" || fail "the fake resource manager saw no Log Analytics cluster made"
+pass "team-a Cluster Ready"
+wait_for 120 "team-a's WorkspacesDataSource Ready" ready workspacesdatasources.operationalinsights.azure.hfl.dev team-a syslog-auth
+logged fakearm "request PUT ${la_rg}/workspaces/team-a-law/dataSources/syslog-auth 201" || fail "the fake resource manager saw no data source made on ASO's Workspace"
+pass "team-a WorkspacesDataSource Ready"
+kubectl -n team-a delete workspacesdatasources.operationalinsights.azure.hfl.dev syslog-auth --timeout=120s
+kubectl -n team-a delete clusters.operationalinsights.azure.hfl.dev logs --timeout=120s
+logged fakearm "request DELETE ${la_rg}/workspaces/team-a-law/dataSources/syslog-auth 200" || fail "the fake resource manager saw no delete of the data source"
+logged fakearm "request DELETE ${la_rg}/clusters/team-a-logs 200" || fail "the fake resource manager saw no delete of the cluster"
+pass "the Log Analytics cluster and the data source are deleted in Resource Manager"
 
 step "keys Azure makes: not written by default, written with config/secret-writer"
 # docs/plan.md §8, question 9. The default install may read Secrets and not

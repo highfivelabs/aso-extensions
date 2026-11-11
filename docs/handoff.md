@@ -6,7 +6,9 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, Privileged Identity Management, budgets and cost exports (PR #25), lock owners, site-to-site VPN connections and local network gateways (PR #27), ExpressRoute circuits, peerings, authorizations, Global Reach and ports (PR #28), ExpressRoute gateways and their connections, Virtual WAN with its hubs and their children, and the Virtual WAN VPN gateways, sites, server configurations and point-to-site gateways (foundation rows 1 to 10 and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The opt-in Secret writer of `docs/plan.md` §8 question 9 (`config/secret-writer`, PR #30) and the Maintenance `ConfigurationAssignment` (h1, PR #31) were built beside this, from `main`. Row 11 (Virtual Network Manager, `networkManager.json` 2026-03-01) is split into three pull requests, each editing `generator/azure-arm/network.yaml`: (1) the manager, its connections at a subscription and a management group, scope connections, network groups and static members (built 2026-11-10, PR #34, no generator patch, 100% generated); (2) connectivity configurations and the security admin and security user configurations with their rule collections and rules (built 2026-11-10; admin rules are polymorphic, `kind` Custom or Default: `$resourceEmbeddedInParent` on the two leaves, as ASO's `kusto.yaml` does, see "Facts learned the hard way"); (3) routing configurations with their rule collections and rules, and `commits`. The next agent builds the next of these not yet merged (about the older versions: the `--verbose` log's "no body parameter found for PUT operation" on their paths is harmless and needs no patch: it comes from the older spec versions (2022-02-01-preview to 2025-03-01), which declare their parameters at path level, and ASO's `findARMResourceSchema` (`swagger_type_extractor.go`) then uses the path-level list *instead of* the PUT's own ("overriding parameters"), dropping the body; 2026-03-01 declares them per operation, and a probe with `NetworkManagerConnection` exported generated cleanly, 2026-11-09), then on down `docs/coverage/foundation.md`; `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
+State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, Privileged Identity Management, budgets and cost exports (PR #25), lock owners, site-to-site VPN connections and local network gateways (PR #27), ExpressRoute circuits, peerings, authorizations, Global Reach and ports (PR #28), ExpressRoute gateways and their connections, Virtual WAN with its hubs and their children, and the Virtual WAN VPN gateways, sites, server configurations and point-to-site gateways (foundation rows 1 to 10 and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The opt-in Secret writer of `docs/plan.md` §8 question 9 (`config/secret-writer`, PR #30) and the Maintenance `ConfigurationAssignment` (h1, PR #31) were built beside this, from `main`. Row 11 (Virtual Network Manager, `networkManager.json` 2026-03-01) is split into three pull requests, each editing `generator/azure-arm/network.yaml`: (1) the manager, its connections at a subscription and a management group, scope connections, network groups and static members (built 2026-11-10, PR #34, no generator patch, 100% generated); (2) connectivity configurations and the security admin and security user configurations with their rule collections and rules (built 2026-11-10; admin rules are polymorphic, `kind` Custom or Default: `$resourceEmbeddedInParent` on the two leaves, as ASO's `kusto.yaml` does, see "Facts learned the hard way"); (3) routing configurations with their rule collections and rules, and `commits` (built 2026-11-10, 100% generated, no label beyond `networkGroupId`; row 11 is complete but for IPAM pools and verifier workspaces). The next agent goes on down `docs/coverage/foundation.md` (about the older network manager spec versions: the `--verbose` log's "no body parameter found for PUT operation" on their paths is harmless and needs no patch: it comes from the older spec versions (2022-02-01-preview to 2025-03-01), which declare their parameters at path level, and ASO's `findARMResourceSchema` (`swagger_type_extractor.go`) then uses the path-level list *instead of* the PUT's own ("overriding parameters"), dropping the body; 2026-03-01 declares them per operation, and a probe with `NetworkManagerConnection` exported generated cleanly, 2026-11-09). `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
+
+**Two kind agents, 2026-11-10.** One owns `generator/azure-arm/network.yaml` (row 11's later parts, row 12's network leftovers, SQL Entra users, Entra directory roles); the other works down the non-network rows from 13. Row 13 (Key Vault: `ManagedHSM`, `ManagedHSMsKey` and the private endpoint connections of an HSM and of ASO's `Vault`, `docs/plan.md` f13) is built; its ids in `docs/plan.md` §3 are `f<row>` so they do not collide with the `c8` letters of the other agent.
 
 ## What this repository is
 
@@ -92,8 +94,15 @@ Then generate `roleAssignmentScheduleRequests` and
 Not in the catalog's order, both answered 2026-11-10: Azure SQL Entra users
 (a1, **built** from ASO PR #5104, `docs/plan.md` "The Azure SQL User"; the
 fake is a TDS server, `pkg/fakecloud/azuresql`) and Entra directory roles
-(c15, build unless ASO's `entra` group has them; it has applications,
-security groups and service principals at the pin, no directory roles).
+(c15, **built** as `entra.azure.hfl.dev/v1` `DirectoryRoleAssignment`, by
+hand on the base reconciler of open ASO PR #5821; ASO's `entra` group has
+applications, security groups and service principals at the pin, no
+directory roles; the fake Microsoft Graph is `pkg/fakecloud/graph`, run on
+kind as `cmd/fakegraph`, and the manager reaches Graph at
+`MICROSOFT_GRAPH_ENDPOINT`). A further Entra kind (directory role
+eligibility through PIM for Graph, administrative units, custom role
+definitions) goes beside it in `pkg/reconcilers/entra/` on the same base and
+client, with the fake extended.
 
 For every kind, before building: recheck upstream read-only (`gh release
 list`, `gh api repos/Azure/azure-service-operator/compare/<pin>...main`,
@@ -166,8 +175,8 @@ Facts learned the hard way:
   nested flattened property stays an object, as `MaintenanceWindow` of a
   maintenance configuration does); **an object schema without `type: object` is dropped as empty** (the
   solutions' `SolutionProperties`); **a resource whose kind ends in `Source`
-  fails to compile** (the receiver `source` collides with the conversion
-  parameter; Log Analytics data sources); **an enum-valued name** (a
+  failed to compile** (the receiver `source` collided with the conversion
+  parameter; Log Analytics data sources; fixed by patch 0008); **an enum-valued name** (a
   multi-valued `Name` parameter) puts the enum in the storage version, which
   then imports the API version, an import cycle: add a `typeTransformers`
   entry turning the enum (`<Resource>_Name_Spec`) into `string`, as
@@ -407,6 +416,16 @@ Facts learned the hard way:
 - A property with `format: arm-id` is a reference already: labelling it
   `$referenceType: arm` fails ("value is not needed because Swagger already
   says it is an ARM reference").
+- **The Microsoft Graph SDK gzips request bodies** (its default middleware,
+  used when the client is nil). A test that hands the SDK a plain
+  `http.Client` skips the middleware and hides it: the first kind run of
+  `DirectoryRoleAssignment` failed with the fake reading `\x1f`. The
+  Graph client (`pkg/reconcilers/entra/client.go`) puts a given client's
+  transport under the SDK's middleware, and the fake Graph takes gzip.
+- A quick envtest loop on the Ubuntu machine, one test only:
+  `bin/setup-envtest use 1.37.0 --bin-dir $PWD/bin/envtest -p path` (an
+  absolute `--bin-dir`; a relative one fails to start etcd) as
+  `KUBEBUILDER_ASSETS`, then `go test ./test/e2e/ -run <Test>`.
 - A property named `owner` in the spec (an attestation's responsible person)
   collides with the Kubernetes `owner`; ASO's generator renames it to
   `properties_owner` (Go `PropertiesOwner`), still sent as `owner`.
@@ -479,7 +498,7 @@ That is a Spot VM, where both checks run (the operator e2e too, since
   `docs/coverage/foundation.md` are written by hand (mark a row built there).
 - Never edit `third_party/`. A change to ASO is a numbered patch in
   `patches/azure-service-operator/` (0001 exports the framework, 0002 changes
-  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`, 0005 gives children of a tenant scope resource an owner, 0006 makes a resource at several scopes an extension resource, 0007 makes a child built on a `SubResource` a resource (network 2025-05-01 on); 0003 also exports what hand-written extensions need); make the change in the
+  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`, 0005 gives children of a tenant scope resource an owner, 0006 makes a resource at several scopes an extension resource, 0007 makes a child built on a `SubResource` a resource (network 2025-05-01 on); 0008 keeps a receiver from being named `source` or `destination`, the conversion functions' parameters (Log Analytics data sources); 0003 also exports what hand-written extensions need); make the change in the
   checkout, `git diff` it into the patch, then `hack/upstream.sh` re-applies the
   series and `hack/upstream.sh --check` verifies it.
 

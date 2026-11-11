@@ -36,7 +36,16 @@
 // authorizations, Global Reach connections, ports, and gateways in a
 // Virtual WAN hub with their connections (expressroute.go: keys Azure makes,
 // children a parent's PUT keeps or deletes, authorization keys redeemed
-// across subscriptions, one gateway per hub).
+// across subscriptions, one gateway per hub), and managed HSMs, their keys
+// and Key Vault private endpoint connections (keyvault.go: what an HSM is
+// created with, keys a PUT does not change and Resource Manager does not
+// delete, connections a private endpoint makes).
+//
+// Log Analytics clusters, data sources and storage insight configs are
+// checked too (loganalytics.go: commitment tiers, a storage key kept aside).
+//
+// Operations Management solutions are checked too (operationsmanagement.go:
+// the workspace a solution is enabled on, a gallery solution's name and plan).
 //
 // AKS and fleet managed namespaces and node pool snapshots are checked too
 // (containerservice.go: namespace names, the agent pool a snapshot is of).
@@ -295,6 +304,14 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := a.checkLogAnalytics(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkOperationsManagement(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		if status, code, msg := a.checkContainerService(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
@@ -318,6 +335,15 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		status, code, msg, erAfter := a.checkExpressRoute(id, body)
 		if code != "" {
 			writeError(w, status, code, msg)
+			return
+		}
+		status, code, msg, unchanged := a.checkKeyVault(id, body)
+		if code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if unchanged != nil {
+			writeJSON(w, http.StatusOK, a.render(id, *unchanged))
 			return
 		}
 		if m := mgSubscription.FindStringSubmatch(id); m != nil {
@@ -345,6 +371,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 	case http.MethodDelete:
 		if isScheduleRequest(id) {
 			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A schedule request cannot be deleted; undo it with another request (AdminRemove, SelfDeactivate).")
+			return
+		}
+		if isManagedHSMKey(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A managed HSM key cannot be deleted through Resource Manager; delete it in the HSM's data plane.")
 			return
 		}
 		if _, ok := a.resources[key]; !ok {

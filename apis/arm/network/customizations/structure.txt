@@ -23,11 +23,19 @@ NetworkManagerConnectionExtension: Object (0 properties)
 
 NetworkManagerExtension: Object (0 properties)
 
+NetworkManagersCommitExtension: Object (0 properties)
+
 NetworkManagersConnectivityConfigurationExtension: Object (0 properties)
 
 NetworkManagersNetworkGroupExtension: Object (0 properties)
 
 NetworkManagersNetworkGroupsStaticMemberExtension: Object (0 properties)
+
+NetworkManagersRoutingConfigurationExtension: Object (0 properties)
+
+NetworkManagersRoutingRuleCollectionExtension: Object (0 properties)
+
+NetworkManagersRoutingRuleExtension: Object (0 properties)
 
 NetworkManagersScopeConnectionExtension: Object (0 properties)
 

@@ -135,3 +135,53 @@ func TestNetworkManagerConfigurations(t *testing.T) {
 	put("user rule without a protocol", user+"/ruleCollections/app/rules/https", `{"properties":{"direction":"Inbound"}}`, http.StatusBadRequest)
 	put("user rule", user+"/ruleCollections/app/rules/https", `{"properties":{"protocol":"Tcp","direction":"Inbound","destinationPortRanges":["443"]}}`, http.StatusCreated)
 }
+
+// What a routing rule collection, a routing rule and a commit must give.
+func TestNetworkManagerRoutingAndCommits(t *testing.T) {
+	a := New(func(string) bool { return true })
+	put := func(what, path, body string, want int) map[string]any {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, path, body)
+		expect(t, what, code, resp, want)
+		out := map[string]any{}
+		_ = json.Unmarshal([]byte(resp), &out)
+		return out
+	}
+	sub := "/subscriptions/" + sub1
+	rg := sub + "/resourceGroups/net"
+	put("resource group", rg, `{"location":"westus"}`, http.StatusCreated)
+	nm := rg + "/providers/Microsoft.Network/networkManagers/avnm"
+	put("manager", nm, `{"location":"westus","properties":{"networkManagerScopes":{"subscriptions":["`+sub+`"]},"networkManagerScopeAccesses":["Connectivity","Routing"]}}`, http.StatusCreated)
+	group := nm + "/networkGroups/spokes"
+	put("network group", group, `{"properties":{}}`, http.StatusCreated)
+
+	routing := nm + "/routingConfigurations/egress"
+	put("routing configuration", routing, `{"properties":{}}`, http.StatusCreated)
+	coll := routing + "/ruleCollections/spokes"
+	put("routing collection without groups", coll, `{"properties":{}}`, http.StatusBadRequest)
+	put("routing collection to a missing group", coll, `{"properties":{"appliesTo":[{"networkGroupId":"`+group+`-nope"}]}}`, http.StatusNotFound)
+	put("routing collection", coll, `{"properties":{"appliesTo":[{"networkGroupId":"`+group+`"}]}}`, http.StatusCreated)
+	rule := coll + "/rules/default"
+	put("rule without a destination", rule, `{"properties":{"nextHop":{"nextHopType":"Internet"}}}`, http.StatusBadRequest)
+	put("rule of an unknown destination type", rule, `{"properties":{"destination":{"type":"Region","destinationAddress":"westus"},"nextHop":{"nextHopType":"Internet"}}}`, http.StatusBadRequest)
+	put("rule without a next hop", rule, `{"properties":{"destination":{"type":"AddressPrefix","destinationAddress":"0.0.0.0/0"}}}`, http.StatusBadRequest)
+	put("appliance without an address", rule, `{"properties":{"destination":{"type":"AddressPrefix","destinationAddress":"0.0.0.0/0"},"nextHop":{"nextHopType":"VirtualAppliance"}}}`, http.StatusBadRequest)
+	put("rule", rule, `{"properties":{"destination":{"type":"AddressPrefix","destinationAddress":"0.0.0.0/0"},"nextHop":{"nextHopType":"VirtualAppliance","nextHopAddress":"10.0.1.4"}}}`, http.StatusCreated)
+
+	mesh := nm + "/connectivityConfigurations/mesh"
+	put("mesh", mesh, `{"properties":{"connectivityTopology":"Mesh","appliesToGroups":[{"networkGroupId":"`+group+`","groupConnectivity":"DirectlyConnected"}]}}`, http.StatusCreated)
+	commit := nm + "/commits/routing"
+	body := func(kind, locations, configs string) string {
+		return `{"properties":{"commitType":"` + kind + `","targetLocations":[` + locations + `],"configurationIds":[` + configs + `]}}`
+	}
+	put("commit of an unknown type", commit, body("Everything", `"westus"`, `"`+routing+`"`), http.StatusBadRequest)
+	put("commit the manager has no access for", commit, body("SecurityAdmin", `"westus"`, ""), http.StatusBadRequest)
+	put("commit without locations", commit, body("Routing", "", `"`+routing+`"`), http.StatusBadRequest)
+	put("routing commit of a connectivity configuration", commit, body("Routing", `"westus"`, `"`+mesh+`"`), http.StatusBadRequest)
+	put("commit of a missing configuration", commit, body("Routing", `"westus"`, `"`+routing+`-nope"`), http.StatusNotFound)
+	r := put("commit", commit, body("Routing", `"westus","eastus"`, `"`+routing+`"`), http.StatusCreated)
+	if active, _ := r["properties"].(map[string]any)["activeLocations"].([]any); len(active) != 2 {
+		t.Fatalf("a commit's target locations become active: %v", r)
+	}
+	put("connectivity commit", nm+"/commits/connectivity", body("Connectivity", `"westus"`, `"`+mesh+`"`), http.StatusCreated)
+}

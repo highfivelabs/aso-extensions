@@ -1,0 +1,228 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: directoryroleassignments.entra.azure.hfl.dev
+spec:
+  group: entra.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - entra
+    - aad
+    kind: DirectoryRoleAssignment
+    listKind: DirectoryRoleAssignmentList
+    plural: directoryroleassignments
+    singular: directoryroleassignment
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v1
+    schema:
+      openAPIV3Schema:
+        description: |-
+          DirectoryRoleAssignment assigns a Microsoft Entra directory role (a
+          built-in role such as Global Reader, or a custom one) to a user, group or
+          service principal, at the whole directory ("/"), an administrative unit
+          or an application. Graph does not update an assignment: every property
+          but operatorSpec is fixed once set; change one by replacing the object.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              appScopeId:
+                description: |-
+                  AppScopeId: an application-specific scope, for roles that an
+                  application defines. Exactly one of directoryScopeId and appScopeId.
+                type: string
+              condition:
+                description: |-
+                  Condition: a condition on the assignment (Graph's beta API; for
+                  roles that support conditions).
+                type: string
+              directoryScopeId:
+                description: |-
+                  DirectoryScopeId: where the role applies in the directory: "/" for
+                  the whole tenant, or /administrativeUnits/{id}. Exactly one of
+                  directoryScopeId and appScopeId.
+                type: string
+              operatorSpec:
+                description: 'OperatorSpec: settings for the operator, not sent to
+                  Microsoft Graph.'
+                properties:
+                  creationMode:
+                    description: |-
+                      CreationMode: whether an existing assignment of the same role to the
+                      same principal at the same scope is adopted (AdoptOrCreate, the
+                      default, or AdoptOnly) and whether one is created (AdoptOrCreate,
+                      AlwaysCreate). An adopted assignment is deleted with the object
+                      unless the mode is AdoptOnly.
+                    enum:
+                    - AdoptOrCreate
+                    - AlwaysCreate
+                    - AdoptOnly
+                    type: string
+                type: object
+              principalId:
+                description: |-
+                  PrincipalId: the object ID of the user, group or service principal
+                  the role is assigned to. Exactly one of principalId and
+                  principalIdFromConfig.
+                type: string
+              principalIdFromConfig:
+                description: |-
+                  PrincipalIdFromConfig: the principal's object ID from a ConfigMap
+                  (an ASO SecurityGroup or ServicePrincipal can export its ID to one).
+                properties:
+                  key:
+                    description: Key is the key in the Kubernetes configmap being
+                      referenced
+                    type: string
+                  name:
+                    description: |-
+                      Name is the name of the Kubernetes configmap being referenced.
+                      The configmap must be in the same namespace as the resource
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              roleDefinitionId:
+                description: |-
+                  RoleDefinitionId: the role's ID; for a built-in role, its template ID
+                  (Global Reader is f2ef992c-3afb-46b9-b7cf-a126ee74c451).
+                type: string
+                x-kubernetes-validations:
+                - message: 'roleDefinitionId cannot be changed: Microsoft Graph does
+                    not update a role assignment'
+                  rule: self == oldSelf
+            required:
+            - roleDefinitionId
+            type: object
+            x-kubernetes-validations:
+            - message: exactly one of principalId and principalIdFromConfig is required
+              rule: has(self.principalId) != has(self.principalIdFromConfig)
+            - message: exactly one of directoryScopeId and appScopeId is required
+              rule: has(self.directoryScopeId) != has(self.appScopeId)
+            - message: 'principalId cannot be changed: Microsoft Graph does not update
+                a role assignment'
+              rule: has(oldSelf.principalId) == has(self.principalId) && (!has(self.principalId)
+                || self.principalId == oldSelf.principalId)
+            - message: 'principalIdFromConfig cannot be changed: Microsoft Graph does
+                not update a role assignment'
+              rule: has(oldSelf.principalIdFromConfig) == has(self.principalIdFromConfig)
+                && (!has(self.principalIdFromConfig) || self.principalIdFromConfig
+                == oldSelf.principalIdFromConfig)
+            - message: 'directoryScopeId cannot be changed: Microsoft Graph does not
+                update a role assignment'
+              rule: has(oldSelf.directoryScopeId) == has(self.directoryScopeId) &&
+                (!has(self.directoryScopeId) || self.directoryScopeId == oldSelf.directoryScopeId)
+            - message: 'appScopeId cannot be changed: Microsoft Graph does not update
+                a role assignment'
+              rule: has(oldSelf.appScopeId) == has(self.appScopeId) && (!has(self.appScopeId)
+                || self.appScopeId == oldSelf.appScopeId)
+            - message: 'condition cannot be changed: Microsoft Graph does not update
+                a role assignment'
+              rule: has(oldSelf.condition) == has(self.condition) && (!has(self.condition)
+                || self.condition == oldSelf.condition)
+          status:
+            description: DirectoryRoleAssignmentStatus is the assignment as Microsoft
+              Graph has it.
+            properties:
+              appScopeId:
+                type: string
+              condition:
+                type: string
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              directoryScopeId:
+                type: string
+              id:
+                description: 'Id: the assignment''s ID in Microsoft Graph.'
+                type: string
+              principalId:
+                type: string
+              roleDefinitionId:
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
