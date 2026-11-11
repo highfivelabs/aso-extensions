@@ -148,6 +148,25 @@ func init() {
 			return map[string]any{"azureName": "MCAS", "dataExportSettings": map[string]any{"kind": "DataExportSettings", "enabled": true}}
 		}},
 	}
+	// Microsoft Sentinel: polymorphic resources and actions, exactly one
+	// leaf set.
+	sentinel := map[string]conformanceFixture{
+		"AlertRule": {spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"fusionAlertRule": map[string]any{"kind": "Fusion", "enabled": true,
+				"alertRuleTemplateName": "f71aba3d-28fb-450b-b192-4e76a83015c8"}}
+		}},
+		"DataConnector": {spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"ascDataConnector": map[string]any{"kind": "AzureSecurityCenter"}}
+		}},
+		"AutomationRule": {spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"actions": []any{map[string]any{"modifyProperties": map[string]any{
+				"actionType": "ModifyProperties", "order": int64(1),
+				"actionConfiguration": map[string]any{"status": "Closed"}}}}}
+		}},
+	}
+	for k, v := range sentinel {
+		f[k] = v
+	}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}
