@@ -9,7 +9,8 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
-	storage "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701/storage"
+	v20241201ps "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20241201preview/storage"
+	v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701/storage"
 	"github.com/rotisserie/eris"
 	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -284,7 +285,7 @@ type ResourceSelector struct {
 }
 
 // AssignProperties_From_ResourceSelector populates our ResourceSelector from the provided source ResourceSelector
-func (selector *ResourceSelector) AssignProperties_From_ResourceSelector(source *storage.ResourceSelector) error {
+func (selector *ResourceSelector) AssignProperties_From_ResourceSelector(source *v20260701s.ResourceSelector) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
 
@@ -328,7 +329,7 @@ func (selector *ResourceSelector) AssignProperties_From_ResourceSelector(source 
 }
 
 // AssignProperties_To_ResourceSelector populates the provided destination ResourceSelector from our ResourceSelector
-func (selector *ResourceSelector) AssignProperties_To_ResourceSelector(destination *storage.ResourceSelector) error {
+func (selector *ResourceSelector) AssignProperties_To_ResourceSelector(destination *v20260701s.ResourceSelector) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(selector.PropertyBag)
 
@@ -337,9 +338,9 @@ func (selector *ResourceSelector) AssignProperties_To_ResourceSelector(destinati
 
 	// Selectors
 	if selector.Selectors != nil {
-		selectorList := make([]storage.Selector, len(selector.Selectors))
+		selectorList := make([]v20260701s.Selector, len(selector.Selectors))
 		for selectorIndex, selectorItem := range selector.Selectors {
-			var selectorLocal storage.Selector
+			var selectorLocal v20260701s.Selector
 			err := selectorItem.AssignProperties_To_Selector(&selectorLocal)
 			if err != nil {
 				return eris.Wrap(err, "calling AssignProperties_To_Selector() to populate field Selectors")
@@ -380,7 +381,7 @@ type ResourceSelector_STATUS struct {
 }
 
 // AssignProperties_From_ResourceSelector_STATUS populates our ResourceSelector_STATUS from the provided source ResourceSelector_STATUS
-func (selector *ResourceSelector_STATUS) AssignProperties_From_ResourceSelector_STATUS(source *storage.ResourceSelector_STATUS) error {
+func (selector *ResourceSelector_STATUS) AssignProperties_From_ResourceSelector_STATUS(source *v20260701s.ResourceSelector_STATUS) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
 
@@ -424,7 +425,7 @@ func (selector *ResourceSelector_STATUS) AssignProperties_From_ResourceSelector_
 }
 
 // AssignProperties_To_ResourceSelector_STATUS populates the provided destination ResourceSelector_STATUS from our ResourceSelector_STATUS
-func (selector *ResourceSelector_STATUS) AssignProperties_To_ResourceSelector_STATUS(destination *storage.ResourceSelector_STATUS) error {
+func (selector *ResourceSelector_STATUS) AssignProperties_To_ResourceSelector_STATUS(destination *v20260701s.ResourceSelector_STATUS) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(selector.PropertyBag)
 
@@ -433,9 +434,9 @@ func (selector *ResourceSelector_STATUS) AssignProperties_To_ResourceSelector_ST
 
 	// Selectors
 	if selector.Selectors != nil {
-		selectorList := make([]storage.Selector_STATUS, len(selector.Selectors))
+		selectorList := make([]v20260701s.Selector_STATUS, len(selector.Selectors))
 		for selectorIndex, selectorItem := range selector.Selectors {
-			var selectorLocal storage.Selector_STATUS
+			var selectorLocal v20260701s.Selector_STATUS
 			err := selectorItem.AssignProperties_To_Selector_STATUS(&selectorLocal)
 			if err != nil {
 				return eris.Wrap(err, "calling AssignProperties_To_Selector_STATUS() to populate field Selectors")
@@ -480,7 +481,7 @@ type SystemData_STATUS struct {
 }
 
 // AssignProperties_From_SystemData_STATUS populates our SystemData_STATUS from the provided source SystemData_STATUS
-func (data *SystemData_STATUS) AssignProperties_From_SystemData_STATUS(source *storage.SystemData_STATUS) error {
+func (data *SystemData_STATUS) AssignProperties_From_SystemData_STATUS(source *v20241201ps.SystemData_STATUS) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
 
@@ -523,7 +524,7 @@ func (data *SystemData_STATUS) AssignProperties_From_SystemData_STATUS(source *s
 }
 
 // AssignProperties_To_SystemData_STATUS populates the provided destination SystemData_STATUS from our SystemData_STATUS
-func (data *SystemData_STATUS) AssignProperties_To_SystemData_STATUS(destination *storage.SystemData_STATUS) error {
+func (data *SystemData_STATUS) AssignProperties_To_SystemData_STATUS(destination *v20241201ps.SystemData_STATUS) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(data.PropertyBag)
 
@@ -566,18 +567,18 @@ func (data *SystemData_STATUS) AssignProperties_To_SystemData_STATUS(destination
 }
 
 type augmentConversionForResourceSelector interface {
-	AssignPropertiesFrom(src *storage.ResourceSelector) error
-	AssignPropertiesTo(dst *storage.ResourceSelector) error
+	AssignPropertiesFrom(src *v20260701s.ResourceSelector) error
+	AssignPropertiesTo(dst *v20260701s.ResourceSelector) error
 }
 
 type augmentConversionForResourceSelector_STATUS interface {
-	AssignPropertiesFrom(src *storage.ResourceSelector_STATUS) error
-	AssignPropertiesTo(dst *storage.ResourceSelector_STATUS) error
+	AssignPropertiesFrom(src *v20260701s.ResourceSelector_STATUS) error
+	AssignPropertiesTo(dst *v20260701s.ResourceSelector_STATUS) error
 }
 
 type augmentConversionForSystemData_STATUS interface {
-	AssignPropertiesFrom(src *storage.SystemData_STATUS) error
-	AssignPropertiesTo(dst *storage.SystemData_STATUS) error
+	AssignPropertiesFrom(src *v20241201ps.SystemData_STATUS) error
+	AssignPropertiesTo(dst *v20241201ps.SystemData_STATUS) error
 }
 
 // Storage version of v20260101preview.Selector
@@ -590,7 +591,7 @@ type Selector struct {
 }
 
 // AssignProperties_From_Selector populates our Selector from the provided source Selector
-func (selector *Selector) AssignProperties_From_Selector(source *storage.Selector) error {
+func (selector *Selector) AssignProperties_From_Selector(source *v20260701s.Selector) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
 
@@ -631,7 +632,7 @@ func (selector *Selector) AssignProperties_From_Selector(source *storage.Selecto
 }
 
 // AssignProperties_To_Selector populates the provided destination Selector from our Selector
-func (selector *Selector) AssignProperties_To_Selector(destination *storage.Selector) error {
+func (selector *Selector) AssignProperties_To_Selector(destination *v20260701s.Selector) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(selector.PropertyBag)
 
@@ -687,7 +688,7 @@ type Selector_STATUS struct {
 }
 
 // AssignProperties_From_Selector_STATUS populates our Selector_STATUS from the provided source Selector_STATUS
-func (selector *Selector_STATUS) AssignProperties_From_Selector_STATUS(source *storage.Selector_STATUS) error {
+func (selector *Selector_STATUS) AssignProperties_From_Selector_STATUS(source *v20260701s.Selector_STATUS) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
 
@@ -728,7 +729,7 @@ func (selector *Selector_STATUS) AssignProperties_From_Selector_STATUS(source *s
 }
 
 // AssignProperties_To_Selector_STATUS populates the provided destination Selector_STATUS from our Selector_STATUS
-func (selector *Selector_STATUS) AssignProperties_To_Selector_STATUS(destination *storage.Selector_STATUS) error {
+func (selector *Selector_STATUS) AssignProperties_To_Selector_STATUS(destination *v20260701s.Selector_STATUS) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(selector.PropertyBag)
 
@@ -775,13 +776,13 @@ func (selector *Selector_STATUS) AssignProperties_To_Selector_STATUS(destination
 }
 
 type augmentConversionForSelector interface {
-	AssignPropertiesFrom(src *storage.Selector) error
-	AssignPropertiesTo(dst *storage.Selector) error
+	AssignPropertiesFrom(src *v20260701s.Selector) error
+	AssignPropertiesTo(dst *v20260701s.Selector) error
 }
 
 type augmentConversionForSelector_STATUS interface {
-	AssignPropertiesFrom(src *storage.Selector_STATUS) error
-	AssignPropertiesTo(dst *storage.Selector_STATUS) error
+	AssignPropertiesFrom(src *v20260701s.Selector_STATUS) error
+	AssignPropertiesTo(dst *v20260701s.Selector_STATUS) error
 }
 
 func init() {

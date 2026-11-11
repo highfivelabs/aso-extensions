@@ -8,7 +8,8 @@ no_list: true
 
 ### Released
 
-| Resource | ARM Version | CRD Version | Supported From | Sample |
-|----------|-------------|-------------|----------------|--------|
-| Export   | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| Resource        | ARM Version | CRD Version | Supported From | Sample |
+|-----------------|-------------|-------------|----------------|--------|
+| Export          | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| ScheduledAction | 2026-06-01  | v20260601   | v0.1.0         | -      |
 

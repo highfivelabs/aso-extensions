@@ -123,3 +123,5 @@ ManagementGroupsSubscription: Resource
     ├── Tenant: *string
     └── Type: *string
 
+augmentConversionForSystemData_STATUS: Interface
+

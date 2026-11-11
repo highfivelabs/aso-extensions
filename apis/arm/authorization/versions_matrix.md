@@ -1,121 +1,156 @@
-| Type Definitions in package "authorization"                                  | v20201001 | v20260101preview | v20260701 |
-|------------------------------------------------------------------------------|-----------|------------------|-----------|
-| APIVersion                                                                   | v20201001 | v20260101preview | v20260701 |
-| AssignmentScopeValidation                                                    |           | v20260101preview |           |
-| AssignmentScopeValidation_STATUS                                             |           | v20260101preview |           |
-| AssignmentType                                                               |           |                  | v20260701 |
-| AssignmentType_STATUS                                                        |           |                  | v20260701 |
-| ExemptionCategory                                                            |           | v20260101preview |           |
-| ExemptionCategory_STATUS                                                     |           | v20260101preview |           |
-| ExpandedProperties_Principal_STATUS                                          | v20201001 |                  |           |
-| ExpandedProperties_RoleDefinition_STATUS                                     | v20201001 |                  |           |
-| ExpandedProperties_STATUS                                                    | v20201001 |                  |           |
-| ExpandedProperties_Scope_STATUS                                              | v20201001 |                  |           |
-| ExternalEvaluationEndpointSettings                                           |           |                  | v20260701 |
-| ExternalEvaluationEndpointSettings_STATUS                                    |           |                  | v20260701 |
-| ExternalEvaluationEnforcementSettings                                        |           |                  | v20260701 |
-| ExternalEvaluationEnforcementSettings_STATUS                                 |           |                  | v20260701 |
-| Identity                                                                     |           |                  | v20260701 |
-| Identity_STATUS                                                              |           |                  | v20260701 |
-| NonComplianceMessage                                                         |           |                  | v20260701 |
-| NonComplianceMessage_STATUS                                                  |           |                  | v20260701 |
-| Override                                                                     |           |                  | v20260701 |
-| OverrideKind                                                                 |           |                  | v20260701 |
-| OverrideKind_STATUS                                                          |           |                  | v20260701 |
-| Override_STATUS                                                              |           |                  | v20260701 |
-| ParameterDefinitionsValue                                                    |           |                  | v20260701 |
-| ParameterDefinitionsValueMetadata                                            |           |                  | v20260701 |
-| ParameterDefinitionsValueMetadata_STATUS                                     |           |                  | v20260701 |
-| ParameterDefinitionsValue_STATUS                                             |           |                  | v20260701 |
-| ParameterType                                                                |           |                  | v20260701 |
-| ParameterType_STATUS                                                         |           |                  | v20260701 |
-| ParameterValuesValue                                                         |           |                  | v20260701 |
-| ParameterValuesValue_STATUS                                                  |           |                  | v20260701 |
-| PolicyAssignment                                                             |           |                  | v20260701 |
-| PolicyAssignmentProperties                                                   |           |                  | v20260701 |
-| PolicyAssignmentProperties_EnforcementMode                                   |           |                  | v20260701 |
-| PolicyAssignmentProperties_EnforcementMode_STATUS                            |           |                  | v20260701 |
-| PolicyAssignmentProperties_Policy_STATUS                                     | v20201001 |                  |           |
-| PolicyAssignmentProperties_RoleDefinition_STATUS                             | v20201001 |                  |           |
-| PolicyAssignmentProperties_STATUS                                            | v20201001 |                  | v20260701 |
-| PolicyAssignmentProperties_Scope_STATUS                                      | v20201001 |                  |           |
-| PolicyAssignment_STATUS                                                      |           |                  | v20260701 |
-| PolicyAssignment_Spec                                                        |           |                  | v20260701 |
-| PolicyDefinition                                                             |           |                  | v20260701 |
-| PolicyDefinitionGroup                                                        |           |                  | v20260701 |
-| PolicyDefinitionGroup_STATUS                                                 |           |                  | v20260701 |
-| PolicyDefinitionProperties                                                   |           |                  | v20260701 |
-| PolicyDefinitionProperties_STATUS                                            |           |                  | v20260701 |
-| PolicyDefinitionReference                                                    |           |                  | v20260701 |
-| PolicyDefinitionReference_STATUS                                             |           |                  | v20260701 |
-| PolicyDefinition_STATUS                                                      |           |                  | v20260701 |
-| PolicyDefinition_Spec                                                        |           |                  | v20260701 |
-| PolicyExemption                                                              |           | v20260101preview |           |
-| PolicyExemptionProperties                                                    |           | v20260101preview |           |
-| PolicyExemptionProperties_ExemptionManagementMode                            |           | v20260101preview |           |
-| PolicyExemptionProperties_ExemptionManagementMode_STATUS                     |           | v20260101preview |           |
-| PolicyExemptionProperties_STATUS                                             |           | v20260101preview |           |
-| PolicyExemption_STATUS                                                       |           | v20260101preview |           |
-| PolicyExemption_Spec                                                         |           | v20260101preview |           |
-| PolicySetDefinition                                                          |           |                  | v20260701 |
-| PolicySetDefinitionProperties                                                |           |                  | v20260701 |
-| PolicySetDefinitionProperties_STATUS                                         |           |                  | v20260701 |
-| PolicySetDefinition_STATUS                                                   |           |                  | v20260701 |
-| PolicySetDefinition_Spec                                                     |           |                  | v20260701 |
-| PolicyType                                                                   |           |                  | v20260701 |
-| PolicyType_STATUS                                                            |           |                  | v20260701 |
-| Principal_STATUS                                                             | v20201001 |                  |           |
-| ResourceIdentityType                                                         |           |                  | v20260701 |
-| ResourceIdentityType_STATUS                                                  |           |                  | v20260701 |
-| ResourceSelector                                                             |           | v20260101preview | v20260701 |
-| ResourceSelector_STATUS                                                      |           | v20260101preview | v20260701 |
-| RoleAssignmentScheduleRequest                                                | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties                                      | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_PrincipalType_STATUS                 | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_RequestType                          | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_RequestType_STATUS                   | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_STATUS                               | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_ScheduleInfo                         | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_ScheduleInfo_Expiration              | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_ScheduleInfo_Expiration_STATUS       | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_ScheduleInfo_Expiration_Type         | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_ScheduleInfo_Expiration_Type_STATUS  | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_ScheduleInfo_STATUS                  | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_Status_STATUS                        | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_TicketInfo                           | v20201001 |                  |           |
-| RoleAssignmentScheduleRequestProperties_TicketInfo_STATUS                    | v20201001 |                  |           |
-| RoleAssignmentScheduleRequest_STATUS                                         | v20201001 |                  |           |
-| RoleAssignmentScheduleRequest_Spec                                           | v20201001 |                  |           |
-| RoleEligibilityScheduleRequest                                               | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties                                     | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_PrincipalType_STATUS                | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_RequestType                         | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_RequestType_STATUS                  | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_STATUS                              | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_ScheduleInfo                        | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_ScheduleInfo_Expiration             | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_ScheduleInfo_Expiration_STATUS      | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_ScheduleInfo_Expiration_Type        | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_ScheduleInfo_Expiration_Type_STATUS | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_ScheduleInfo_STATUS                 | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_Status_STATUS                       | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_TicketInfo                          | v20201001 |                  |           |
-| RoleEligibilityScheduleRequestProperties_TicketInfo_STATUS                   | v20201001 |                  |           |
-| RoleEligibilityScheduleRequest_STATUS                                        | v20201001 |                  |           |
-| RoleEligibilityScheduleRequest_Spec                                          | v20201001 |                  |           |
-| RoleManagementPolicyAssignment                                               | v20201001 |                  |           |
-| RoleManagementPolicyAssignmentProperties                                     | v20201001 |                  |           |
-| RoleManagementPolicyAssignmentProperties_STATUS                              | v20201001 |                  |           |
-| RoleManagementPolicyAssignment_STATUS                                        | v20201001 |                  |           |
-| RoleManagementPolicyAssignment_Spec                                          | v20201001 |                  |           |
-| Selector                                                                     |           | v20260101preview | v20260701 |
-| SelectorKind                                                                 |           | v20260101preview | v20260701 |
-| SelectorKind_STATUS                                                          |           | v20260101preview | v20260701 |
-| Selector_STATUS                                                              |           | v20260101preview | v20260701 |
-| SelfServeExemptionSettings                                                   |           |                  | v20260701 |
-| SelfServeExemptionSettings_STATUS                                            |           |                  | v20260701 |
-| SystemData_CreatedByType_STATUS                                              |           | v20260101preview | v20260701 |
-| SystemData_LastModifiedByType_STATUS                                         |           | v20260101preview | v20260701 |
-| SystemData_STATUS                                                            |           | v20260101preview | v20260701 |
-| UserAssignedIdentitiesValue_STATUS                                           |           |                  | v20260701 |
-| UserAssignedIdentityDetails                                                  |           |                  | v20260701 |
+| Type Definitions in package "authorization"                                  | v20200501 | v20201001 | v20241201preview | v20260101preview | v20260701 |
+|------------------------------------------------------------------------------|-----------|-----------|------------------|------------------|-----------|
+| APIVersion                                                                   | v20200501 | v20201001 | v20241201preview | v20260101preview | v20260701 |
+| AssignmentScopeValidation                                                    |           |           |                  | v20260101preview |           |
+| AssignmentScopeValidation_STATUS                                             |           |           |                  | v20260101preview |           |
+| AssignmentType                                                               |           |           |                  |                  | v20260701 |
+| AssignmentType_STATUS                                                        |           |           |                  |                  | v20260701 |
+| ExemptionCategory                                                            |           |           |                  | v20260101preview |           |
+| ExemptionCategory_STATUS                                                     |           |           |                  | v20260101preview |           |
+| ExpandedProperties_Principal_STATUS                                          |           | v20201001 |                  |                  |           |
+| ExpandedProperties_RoleDefinition_STATUS                                     |           | v20201001 |                  |                  |           |
+| ExpandedProperties_STATUS                                                    |           | v20201001 |                  |                  |           |
+| ExpandedProperties_Scope_STATUS                                              |           | v20201001 |                  |                  |           |
+| ExternalEvaluationEndpointSettings                                           |           |           |                  |                  | v20260701 |
+| ExternalEvaluationEndpointSettings_STATUS                                    |           |           |                  |                  | v20260701 |
+| ExternalEvaluationEnforcementSettings                                        |           |           |                  |                  | v20260701 |
+| ExternalEvaluationEnforcementSettings_STATUS                                 |           |           |                  |                  | v20260701 |
+| Identity                                                                     |           |           |                  |                  | v20260701 |
+| Identity_STATUS                                                              |           |           |                  |                  | v20260701 |
+| NonComplianceMessage                                                         |           |           |                  |                  | v20260701 |
+| NonComplianceMessage_STATUS                                                  |           |           |                  |                  | v20260701 |
+| Override                                                                     |           |           |                  |                  | v20260701 |
+| OverrideKind                                                                 |           |           |                  |                  | v20260701 |
+| OverrideKind_STATUS                                                          |           |           |                  |                  | v20260701 |
+| Override_STATUS                                                              |           |           |                  |                  | v20260701 |
+| ParameterDefinitionsValue                                                    |           |           |                  |                  | v20260701 |
+| ParameterDefinitionsValueMetadata                                            |           |           |                  |                  | v20260701 |
+| ParameterDefinitionsValueMetadata_STATUS                                     |           |           |                  |                  | v20260701 |
+| ParameterDefinitionsValue_STATUS                                             |           |           |                  |                  | v20260701 |
+| ParameterType                                                                |           |           |                  |                  | v20260701 |
+| ParameterType_STATUS                                                         |           |           |                  |                  | v20260701 |
+| ParameterValuesValue                                                         |           |           |                  |                  | v20260701 |
+| ParameterValuesValue_STATUS                                                  |           |           |                  |                  | v20260701 |
+| PolicyAssignment                                                             |           |           |                  |                  | v20260701 |
+| PolicyAssignmentProperties                                                   |           |           |                  |                  | v20260701 |
+| PolicyAssignmentProperties_EnforcementMode                                   |           |           |                  |                  | v20260701 |
+| PolicyAssignmentProperties_EnforcementMode_STATUS                            |           |           |                  |                  | v20260701 |
+| PolicyAssignmentProperties_Policy_STATUS                                     |           | v20201001 |                  |                  |           |
+| PolicyAssignmentProperties_RoleDefinition_STATUS                             |           | v20201001 |                  |                  |           |
+| PolicyAssignmentProperties_STATUS                                            |           | v20201001 |                  |                  | v20260701 |
+| PolicyAssignmentProperties_Scope_STATUS                                      |           | v20201001 |                  |                  |           |
+| PolicyAssignment_STATUS                                                      |           |           |                  |                  | v20260701 |
+| PolicyAssignment_Spec                                                        |           |           |                  |                  | v20260701 |
+| PolicyDefinition                                                             |           |           |                  |                  | v20260701 |
+| PolicyDefinitionGroup                                                        |           |           |                  |                  | v20260701 |
+| PolicyDefinitionGroup_STATUS                                                 |           |           |                  |                  | v20260701 |
+| PolicyDefinitionProperties                                                   |           |           |                  |                  | v20260701 |
+| PolicyDefinitionProperties_STATUS                                            |           |           |                  |                  | v20260701 |
+| PolicyDefinitionReference                                                    |           |           |                  |                  | v20260701 |
+| PolicyDefinitionReference_STATUS                                             |           |           |                  |                  | v20260701 |
+| PolicyDefinitionVersionProperties                                            |           |           |                  |                  | v20260701 |
+| PolicyDefinitionVersionProperties_STATUS                                     |           |           |                  |                  | v20260701 |
+| PolicyDefinition_STATUS                                                      |           |           |                  |                  | v20260701 |
+| PolicyDefinition_Spec                                                        |           |           |                  |                  | v20260701 |
+| PolicyDefinitionsVersion                                                     |           |           |                  |                  | v20260701 |
+| PolicyDefinitionsVersion_STATUS                                              |           |           |                  |                  | v20260701 |
+| PolicyDefinitionsVersion_Spec                                                |           |           |                  |                  | v20260701 |
+| PolicyExemption                                                              |           |           |                  | v20260101preview |           |
+| PolicyExemptionProperties                                                    |           |           |                  | v20260101preview |           |
+| PolicyExemptionProperties_ExemptionManagementMode                            |           |           |                  | v20260101preview |           |
+| PolicyExemptionProperties_ExemptionManagementMode_STATUS                     |           |           |                  | v20260101preview |           |
+| PolicyExemptionProperties_STATUS                                             |           |           |                  | v20260101preview |           |
+| PolicyExemption_STATUS                                                       |           |           |                  | v20260101preview |           |
+| PolicyExemption_Spec                                                         |           |           |                  | v20260101preview |           |
+| PolicySetDefinition                                                          |           |           |                  |                  | v20260701 |
+| PolicySetDefinitionProperties                                                |           |           |                  |                  | v20260701 |
+| PolicySetDefinitionProperties_STATUS                                         |           |           |                  |                  | v20260701 |
+| PolicySetDefinitionVersionProperties                                         |           |           |                  |                  | v20260701 |
+| PolicySetDefinitionVersionProperties_STATUS                                  |           |           |                  |                  | v20260701 |
+| PolicySetDefinition_STATUS                                                   |           |           |                  |                  | v20260701 |
+| PolicySetDefinition_Spec                                                     |           |           |                  |                  | v20260701 |
+| PolicySetDefinitionsVersion                                                  |           |           |                  |                  | v20260701 |
+| PolicySetDefinitionsVersion_STATUS                                           |           |           |                  |                  | v20260701 |
+| PolicySetDefinitionsVersion_Spec                                             |           |           |                  |                  | v20260701 |
+| PolicyType                                                                   |           |           |                  |                  | v20260701 |
+| PolicyType_STATUS                                                            |           |           |                  |                  | v20260701 |
+| PolicyVariable                                                               |           |           | v20241201preview |                  |           |
+| PolicyVariableColumn                                                         |           |           | v20241201preview |                  |           |
+| PolicyVariableColumn_STATUS                                                  |           |           | v20241201preview |                  |           |
+| PolicyVariableProperties                                                     |           |           | v20241201preview |                  |           |
+| PolicyVariableProperties_STATUS                                              |           |           | v20241201preview |                  |           |
+| PolicyVariableValueColumnValue                                               |           |           | v20241201preview |                  |           |
+| PolicyVariableValueColumnValue_STATUS                                        |           |           | v20241201preview |                  |           |
+| PolicyVariableValueProperties                                                |           |           | v20241201preview |                  |           |
+| PolicyVariableValueProperties_STATUS                                         |           |           | v20241201preview |                  |           |
+| PolicyVariable_STATUS                                                        |           |           | v20241201preview |                  |           |
+| PolicyVariable_Spec                                                          |           |           | v20241201preview |                  |           |
+| PolicyVariablesValue                                                         |           |           | v20241201preview |                  |           |
+| PolicyVariablesValue_STATUS                                                  |           |           | v20241201preview |                  |           |
+| PolicyVariablesValue_Spec                                                    |           |           | v20241201preview |                  |           |
+| Principal_STATUS                                                             |           | v20201001 |                  |                  |           |
+| PrivateLinkAssociation                                                       | v20200501 |           |                  |                  |           |
+| PrivateLinkAssociationProperties                                             | v20200501 |           |                  |                  |           |
+| PrivateLinkAssociationPropertiesExpanded_PublicNetworkAccess_STATUS          | v20200501 |           |                  |                  |           |
+| PrivateLinkAssociationPropertiesExpanded_STATUS                              | v20200501 |           |                  |                  |           |
+| PrivateLinkAssociationProperties_PublicNetworkAccess                         | v20200501 |           |                  |                  |           |
+| PrivateLinkAssociation_STATUS                                                | v20200501 |           |                  |                  |           |
+| PrivateLinkAssociation_Spec                                                  | v20200501 |           |                  |                  |           |
+| ResourceIdentityType                                                         |           |           |                  |                  | v20260701 |
+| ResourceIdentityType_STATUS                                                  |           |           |                  |                  | v20260701 |
+| ResourceManagementPrivateLink                                                | v20200501 |           |                  |                  |           |
+| ResourceManagementPrivateLinkEndpointConnections_STATUS                      | v20200501 |           |                  |                  |           |
+| ResourceManagementPrivateLink_STATUS                                         | v20200501 |           |                  |                  |           |
+| ResourceManagementPrivateLink_Spec                                           | v20200501 |           |                  |                  |           |
+| ResourceSelector                                                             |           |           |                  | v20260101preview | v20260701 |
+| ResourceSelector_STATUS                                                      |           |           |                  | v20260101preview | v20260701 |
+| RoleAssignmentScheduleRequest                                                |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties                                      |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_PrincipalType_STATUS                 |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_RequestType                          |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_RequestType_STATUS                   |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_STATUS                               |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_ScheduleInfo                         |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_ScheduleInfo_Expiration              |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_ScheduleInfo_Expiration_STATUS       |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_ScheduleInfo_Expiration_Type         |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_ScheduleInfo_Expiration_Type_STATUS  |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_ScheduleInfo_STATUS                  |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_Status_STATUS                        |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_TicketInfo                           |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequestProperties_TicketInfo_STATUS                    |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequest_STATUS                                         |           | v20201001 |                  |                  |           |
+| RoleAssignmentScheduleRequest_Spec                                           |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequest                                               |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties                                     |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_PrincipalType_STATUS                |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_RequestType                         |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_RequestType_STATUS                  |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_STATUS                              |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_ScheduleInfo                        |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_ScheduleInfo_Expiration             |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_ScheduleInfo_Expiration_STATUS      |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_ScheduleInfo_Expiration_Type        |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_ScheduleInfo_Expiration_Type_STATUS |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_ScheduleInfo_STATUS                 |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_Status_STATUS                       |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_TicketInfo                          |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequestProperties_TicketInfo_STATUS                   |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequest_STATUS                                        |           | v20201001 |                  |                  |           |
+| RoleEligibilityScheduleRequest_Spec                                          |           | v20201001 |                  |                  |           |
+| RoleManagementPolicyAssignment                                               |           | v20201001 |                  |                  |           |
+| RoleManagementPolicyAssignmentProperties                                     |           | v20201001 |                  |                  |           |
+| RoleManagementPolicyAssignmentProperties_STATUS                              |           | v20201001 |                  |                  |           |
+| RoleManagementPolicyAssignment_STATUS                                        |           | v20201001 |                  |                  |           |
+| RoleManagementPolicyAssignment_Spec                                          |           | v20201001 |                  |                  |           |
+| Selector                                                                     |           |           |                  | v20260101preview | v20260701 |
+| SelectorKind                                                                 |           |           |                  | v20260101preview | v20260701 |
+| SelectorKind_STATUS                                                          |           |           |                  | v20260101preview | v20260701 |
+| Selector_STATUS                                                              |           |           |                  | v20260101preview | v20260701 |
+| SelfServeExemptionSettings                                                   |           |           |                  |                  | v20260701 |
+| SelfServeExemptionSettings_STATUS                                            |           |           |                  |                  | v20260701 |
+| SystemData_CreatedByType_STATUS                                              |           |           | v20241201preview | v20260101preview | v20260701 |
+| SystemData_LastModifiedByType_STATUS                                         |           |           | v20241201preview | v20260101preview | v20260701 |
+| SystemData_STATUS                                                            |           |           | v20241201preview | v20260101preview | v20260701 |
+| UserAssignedIdentitiesValue_STATUS                                           |           |           |                  |                  | v20260701 |
+| UserAssignedIdentityDetails                                                  |           |           |                  |                  | v20260701 |

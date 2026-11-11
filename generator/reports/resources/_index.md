@@ -8,7 +8,11 @@ no_list: true
 
 ### Released
 
-| Resource | ARM Version | CRD Version | Supported From | Sample |
-|----------|-------------|-------------|----------------|--------|
-| TagSet   | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| Resource             | ARM Version | CRD Version | Supported From | Sample |
+|----------------------|-------------|-------------|----------------|--------|
+| DeploymentScript     | 2023-08-01  | v20230801   | v0.1.0         | -      |
+| DeploymentStack      | 2025-07-01  | v20250701   | v0.1.0         | -      |
+| TagSet               | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| TemplateSpec         | 2022-02-01  | v20220201   | v0.1.0         | -      |
+| TemplateSpecsVersion | 2022-02-01  | v20220201   | v0.1.0         | -      |
 

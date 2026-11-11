@@ -152,3 +152,80 @@ Export: Resource
     │   └── SuspensionTime: *string
     └── Type: *string
 
+ScheduledAction: Resource
+├── Spec: Object (15 properties)
+│   ├── AzureName: string
+│   ├── DisplayName: *string
+│   ├── ETag: *string
+│   ├── FileDestination: *Object (2 properties)
+│   │   ├── FileFormats: string[]
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Kind: *string
+│   ├── Notification: *Object (6 properties)
+│   │   ├── Language: *string
+│   │   ├── Message: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RegionalFormat: *string
+│   │   ├── Subject: *string
+│   │   └── To: string[]
+│   ├── NotificationEmail: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Schedule: *Object (8 properties)
+│   │   ├── DayOfMonth: *int
+│   │   ├── DaysOfWeek: string[]
+│   │   ├── EndDate: *string
+│   │   ├── Frequency: *string
+│   │   ├── HourOfDay: *int
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── StartDate: *string
+│   │   └── WeeksOfMonth: string[]
+│   ├── Scope: *string
+│   ├── Status: *string
+│   └── ViewId: *string
+└── Status: Object (16 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DisplayName: *string
+    ├── ETag: *string
+    ├── FileDestination: *Object (2 properties)
+    │   ├── FileFormats: string[]
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── Notification: *Object (6 properties)
+    │   ├── Language: *string
+    │   ├── Message: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RegionalFormat: *string
+    │   ├── Subject: *string
+    │   └── To: string[]
+    ├── NotificationEmail: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Schedule: *Object (8 properties)
+    │   ├── DayOfMonth: *int
+    │   ├── DaysOfWeek: string[]
+    │   ├── EndDate: *string
+    │   ├── Frequency: *string
+    │   ├── HourOfDay: *int
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── StartDate: *string
+    │   └── WeeksOfMonth: string[]
+    ├── Scope: *string
+    ├── Status: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── ViewId: *string
+

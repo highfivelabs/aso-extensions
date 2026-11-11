@@ -26,8 +26,14 @@ title: Supported Resources
 |--------------------------------|--------------------|------------------|----------------|--------|
 | PolicyAssignment               | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | PolicyDefinition               | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| PolicyDefinitionsVersion       | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | PolicyExemption                | 2026-01-01-preview | v20260101preview | v0.1.0         | -      |
 | PolicySetDefinition            | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| PolicySetDefinitionsVersion    | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| PolicyVariable                 | 2024-12-01-preview | v20241201preview | v0.1.0         | -      |
+| PolicyVariablesValue           | 2024-12-01-preview | v20241201preview | v0.1.0         | -      |
+| PrivateLinkAssociation         | 2020-05-01         | v20200501        | v0.1.0         | -      |
+| ResourceManagementPrivateLink  | 2020-05-01         | v20200501        | v0.1.0         | -      |
 | RoleAssignmentScheduleRequest  | 2020-10-01         | v20201001        | v0.1.0         | -      |
 | RoleEligibilityScheduleRequest | 2020-10-01         | v20201001        | v0.1.0         | -      |
 | RoleManagementPolicyAssignment | 2020-10-01         | v20201001        | v0.1.0         | -      |
@@ -71,9 +77,10 @@ title: Supported Resources
 
 ### Released
 
-| Resource | ARM Version | CRD Version | Supported From | Sample |
-|----------|-------------|-------------|----------------|--------|
-| Export   | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| Resource        | ARM Version | CRD Version | Supported From | Sample |
+|-----------------|-------------|-------------|----------------|--------|
+| Export          | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| ScheduledAction | 2026-06-01  | v20260601   | v0.1.0         | -      |
 
 ## DevTestLab
 
@@ -132,6 +139,7 @@ title: Supported Resources
 | ManagementGroup              | 2023-04-01  | v20230401   | v0.1.0         | -      |
 | ManagementGroupsSetting      | 2023-04-01  | v20230401   | v0.1.0         | -      |
 | ManagementGroupsSubscription | 2023-04-01  | v20230401   | v0.1.0         | -      |
+| ServiceGroup                 | 2026-08-01  | v20260801   | v0.1.0         | -      |
 
 ## Network
 
@@ -247,9 +255,13 @@ title: Supported Resources
 
 ### Released
 
-| Resource | ARM Version | CRD Version | Supported From | Sample |
-|----------|-------------|-------------|----------------|--------|
-| TagSet   | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| Resource             | ARM Version | CRD Version | Supported From | Sample |
+|----------------------|-------------|-------------|----------------|--------|
+| DeploymentScript     | 2023-08-01  | v20230801   | v0.1.0         | -      |
+| DeploymentStack      | 2025-07-01  | v20250701   | v0.1.0         | -      |
+| TagSet               | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| TemplateSpec         | 2022-02-01  | v20220201   | v0.1.0         | -      |
+| TemplateSpecsVersion | 2022-02-01  | v20220201   | v0.1.0         | -      |
 
 ## Security
 

@@ -1,0 +1,1376 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: deploymentstacks.resources.azure.hfl.dev
+spec:
+  group: resources.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - resources
+    kind: DeploymentStack
+    listKind: DeploymentStackList
+    plural: deploymentstacks
+    singular: deploymentstack
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20250701
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /resources/resource-manager/Microsoft.Resources/deploymentStacks/stable/2025-07-01/deploymentStacks.json
+          - ARM URI: /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              actionOnUnmanage:
+                description: |-
+                  ActionOnUnmanage: Defines the behavior of resources that are no longer managed after the Deployment stack is updated or
+                  deleted.
+                properties:
+                  managementGroups:
+                    description: 'ManagementGroups: Specifies an action for a newly
+                      unmanaged resource management group.'
+                    enum:
+                    - delete
+                    - detach
+                    type: string
+                  resourceGroups:
+                    description: 'ResourceGroups: Specifies an action for a newly
+                      unmanaged resource group.'
+                    enum:
+                    - delete
+                    - detach
+                    type: string
+                  resources:
+                    description: 'Resources: Specifies an action for a newly unmanaged
+                      resource.'
+                    enum:
+                    - delete
+                    - detach
+                    type: string
+                  resourcesWithoutDeleteSupport:
+                    description: |-
+                      ResourcesWithoutDeleteSupport: Some resources do not support deletion.  This flag will denote how the stack should
+                      handle those resources.
+                    enum:
+                    - detach
+                    - fail
+                    type: string
+                required:
+                - resources
+                type: object
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                maxLength: 90
+                minLength: 1
+                pattern: ^[-\w\._\(\)]+$
+                type: string
+              bypassStackOutOfSyncError:
+                description: |-
+                  BypassStackOutOfSyncError: Flag to bypass service errors that indicate the stack resource list is not correctly
+                  synchronized.
+                type: boolean
+              debugSetting:
+                description: 'DebugSetting: The debug setting of the deployment.'
+                properties:
+                  detailLevel:
+                    description: |-
+                      DetailLevel: Specifies the type of information to log for debugging. The permitted values are none, requestContent,
+                      responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this
+                      value, carefully consider the type of information that is being passed in during deployment. By logging information
+                      about the request or response, sensitive data that is retrieved through the deployment operations could potentially be
+                      exposed.
+                    type: string
+                type: object
+              denySettings:
+                description: 'DenySettings: Defines how resources deployed by the
+                  stack are locked.'
+                properties:
+                  applyToChildScopes:
+                    description: |-
+                      ApplyToChildScopes: DenySettings will be applied to child resource scopes of every managed resource with a deny
+                      assignment.
+                    type: boolean
+                  excludedActions:
+                    description: |-
+                      ExcludedActions: List of role-based management operations that are excluded from the denySettings. Up to 200 actions are
+                      permitted. If the denySetting mode is set to 'denyWriteAndDelete', then the following actions are automatically appended
+                      to 'excludedActions': '*\/read' and 'Microsoft.Authorization/locks/delete'. If the denySetting mode is set to
+                      'denyDelete', then the following actions are automatically appended to 'excludedActions':
+                      'Microsoft.Authorization/locks/delete'. Duplicate actions will be removed.
+                    items:
+                      type: string
+                    type: array
+                  excludedPrincipals:
+                    description: 'ExcludedPrincipals: List of AAD principal IDs excluded
+                      from the lock. Up to 5 principals are permitted.'
+                    items:
+                      type: string
+                    type: array
+                  mode:
+                    description: 'Mode: denySettings Mode that defines denied actions.'
+                    enum:
+                    - denyDelete
+                    - denyWriteAndDelete
+                    - none
+                    type: string
+                required:
+                - mode
+                type: object
+              deploymentScope:
+                description: |-
+                  DeploymentScope: The scope at which the initial deployment should be created. If a scope is not specified, it will
+                  default to the scope of the deployment stack. Valid scopes are: management group (format:
+                  '/providers/Microsoft.Management/managementGroups/{managementGroupId}'), subscription (format:
+                  '/subscriptions/{subscriptionId}'), resource group (format:
+                  '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}').
+                type: string
+              description:
+                description: 'Description: Deployment stack description. Max length
+                  of 4096 characters.'
+                maxLength: 4096
+                type: string
+              extensionConfigs:
+                additionalProperties:
+                  additionalProperties:
+                    description: The value or how to get a value for an extension
+                      config property.
+                    properties:
+                      keyVaultReference:
+                        description: 'KeyVaultReference: The key vault reference of
+                          the config item.'
+                        properties:
+                          keyVault:
+                            description: 'KeyVault: Azure Key Vault reference.'
+                            properties:
+                              reference:
+                                description: 'Reference: Azure Key Vault resourceId.'
+                                properties:
+                                  armId:
+                                    description: |-
+                                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                                    type: string
+                                  group:
+                                    description: Group is the Kubernetes group of
+                                      the resource.
+                                    type: string
+                                  kind:
+                                    description: Kind is the Kubernetes kind of the
+                                      resource.
+                                    type: string
+                                  name:
+                                    description: Name is the Kubernetes name of the
+                                      resource.
+                                    type: string
+                                type: object
+                            required:
+                            - reference
+                            type: object
+                          secretName:
+                            description: 'SecretName: Azure Key Vault secret name.'
+                            type: string
+                          secretVersion:
+                            description: 'SecretVersion: Azure Key Vault secret version.'
+                            type: string
+                        required:
+                        - keyVault
+                        - secretName
+                        type: object
+                      value:
+                        description: 'Value: The value of the config item. The type
+                          is determined by the extension config schema.'
+                        x-kubernetes-preserve-unknown-fields: true
+                    type: object
+                  type: object
+                description: |-
+                  ExtensionConfigs: The deployment extension configs. Keys of this object are extension aliases as defined in the
+                  deployment template.
+                type: object
+              externalInputDefinitions:
+                additionalProperties:
+                  description: Deployment external input definition for parameterization.
+                  properties:
+                    config:
+                      description: 'Config: Configuration for the external input.'
+                      x-kubernetes-preserve-unknown-fields: true
+                    kind:
+                      description: 'Kind: The kind of external input.'
+                      type: string
+                  required:
+                  - kind
+                  type: object
+                description: 'ExternalInputDefinitions: External input definitions,
+                  used by external tooling to define expected external input values.'
+                type: object
+              externalInputs:
+                additionalProperties:
+                  description: Deployment external input for parameterization.
+                  properties:
+                    value:
+                      description: 'Value: External input value.'
+                      x-kubernetes-preserve-unknown-fields: true
+                  required:
+                  - value
+                  type: object
+                description: 'ExternalInputs: External input values, used by external
+                  tooling for parameter evaluation.'
+                type: object
+              location:
+                description: |-
+                  Location: The geo-location where the resource lives. Required for subscription and management group scoped stacks. The
+                  location is inherited from the resource group for resource group scoped stacks.
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
+                  extension resource, which means that any other Azure resource can be its owner.
+                properties:
+                  armId:
+                    description: Ownership across namespaces is not supported.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+              parameters:
+                additionalProperties:
+                  description: Deployment parameter for the template.
+                  properties:
+                    expression:
+                      description: 'Expression: Input expression to the parameter.'
+                      type: string
+                    reference:
+                      description: 'Reference: Azure Key Vault parameter reference.'
+                      properties:
+                        keyVault:
+                          description: 'KeyVault: Azure Key Vault reference.'
+                          properties:
+                            reference:
+                              description: 'Reference: Azure Key Vault resourceId.'
+                              properties:
+                                armId:
+                                  description: |-
+                                    ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                    The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                    ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                                  pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                                  type: string
+                                group:
+                                  description: Group is the Kubernetes group of the
+                                    resource.
+                                  type: string
+                                kind:
+                                  description: Kind is the Kubernetes kind of the
+                                    resource.
+                                  type: string
+                                name:
+                                  description: Name is the Kubernetes name of the
+                                    resource.
+                                  type: string
+                              type: object
+                          required:
+                          - reference
+                          type: object
+                        secretName:
+                          description: 'SecretName: Azure Key Vault secret name.'
+                          type: string
+                        secretVersion:
+                          description: 'SecretVersion: Azure Key Vault secret version.'
+                          type: string
+                      required:
+                      - keyVault
+                      - secretName
+                      type: object
+                    type:
+                      description: 'Type: Type of the value.'
+                      type: string
+                    value:
+                      description: 'Value: Input value to the parameter.'
+                      x-kubernetes-preserve-unknown-fields: true
+                  type: object
+                description: |-
+                  Parameters: Name and value pairs that define the deployment parameters for the template. Use this element when providing
+                  the parameter values directly in the request, rather than linking to an existing parameter file. Use either the
+                  parametersLink property or the parameters property, but not both.
+                type: object
+              parametersLink:
+                description: |-
+                  ParametersLink: The URI of parameters file. Use this element to link to an existing parameters file. Use either the
+                  parametersLink property or the parameters property, but not both.
+                properties:
+                  contentVersion:
+                    description: 'ContentVersion: If included, must match the ContentVersion
+                      in the template.'
+                    type: string
+                  uri:
+                    description: 'Uri: The URI of the parameters file.'
+                    type: string
+                required:
+                - uri
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              template:
+                additionalProperties:
+                  x-kubernetes-preserve-unknown-fields: true
+                description: |-
+                  Template: The template content. You use this element when you want to pass the template syntax directly in the request
+                  rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink
+                  property or the template property, but not both.
+                type: object
+              templateLink:
+                description: 'TemplateLink: The URI of the template. Use either the
+                  templateLink property or the template property, but not both.'
+                properties:
+                  contentVersion:
+                    description: 'ContentVersion: If included, must match the ContentVersion
+                      in the template.'
+                    type: string
+                  queryString:
+                    description: 'QueryString: The query string (for example, a SAS
+                      token) to be used with the templateLink URI.'
+                    type: string
+                  reference:
+                    description: 'Reference: The resourceId of a Template Spec. Use
+                      either the id or uri property, but not both.'
+                    properties:
+                      armId:
+                        description: |-
+                          ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                          The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                          ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                        pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                        type: string
+                      group:
+                        description: Group is the Kubernetes group of the resource.
+                        type: string
+                      kind:
+                        description: Kind is the Kubernetes kind of the resource.
+                        type: string
+                      name:
+                        description: Name is the Kubernetes name of the resource.
+                        type: string
+                    type: object
+                  relativePath:
+                    description: |-
+                      RelativePath: The relativePath property can be used to deploy a linked template at a location relative to the parent. If
+                      the parent template was linked with a TemplateSpec, this will reference an artifact in the TemplateSpec.  If the parent
+                      was linked with a URI, the child deployment will be a combination of the parent and relativePath URIs.
+                    type: string
+                  uri:
+                    description: 'Uri: The URI of the template to deploy. Use either
+                      the uri or id property, but not both.'
+                    type: string
+                type: object
+              validationLevel:
+                description: 'ValidationLevel: The validation level of the deployment
+                  stack'
+                enum:
+                - Provider
+                - ProviderNoRbac
+                - Template
+                type: string
+            required:
+            - actionOnUnmanage
+            - denySettings
+            - owner
+            type: object
+          status:
+            description: Deployment stack object.
+            properties:
+              actionOnUnmanage:
+                description: |-
+                  ActionOnUnmanage: Defines the behavior of resources that are no longer managed after the Deployment stack is updated or
+                  deleted.
+                properties:
+                  managementGroups:
+                    description: 'ManagementGroups: Specifies an action for a newly
+                      unmanaged resource management group.'
+                    type: string
+                  resourceGroups:
+                    description: 'ResourceGroups: Specifies an action for a newly
+                      unmanaged resource group.'
+                    type: string
+                  resources:
+                    description: 'Resources: Specifies an action for a newly unmanaged
+                      resource.'
+                    type: string
+                  resourcesWithoutDeleteSupport:
+                    description: |-
+                      ResourcesWithoutDeleteSupport: Some resources do not support deletion.  This flag will denote how the stack should
+                      handle those resources.
+                    type: string
+                type: object
+              bypassStackOutOfSyncError:
+                description: |-
+                  BypassStackOutOfSyncError: Flag to bypass service errors that indicate the stack resource list is not correctly
+                  synchronized.
+                type: boolean
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              correlationId:
+                description: |-
+                  CorrelationId: The correlation id of the last Deployment stack upsert or delete operation. It is in GUID format and is
+                  used for tracing.
+                type: string
+              debugSetting:
+                description: 'DebugSetting: The debug setting of the deployment.'
+                properties:
+                  detailLevel:
+                    description: |-
+                      DetailLevel: Specifies the type of information to log for debugging. The permitted values are none, requestContent,
+                      responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this
+                      value, carefully consider the type of information that is being passed in during deployment. By logging information
+                      about the request or response, sensitive data that is retrieved through the deployment operations could potentially be
+                      exposed.
+                    type: string
+                type: object
+              deletedResources:
+                description: |-
+                  DeletedResources: An array of resources that were deleted during the most recent Deployment stack update. Deleted means
+                  that the resource was removed from the template and relevant deletion operations were specified.
+                items:
+                  description: The resourceId model.
+                  properties:
+                    apiVersion:
+                      description: 'APIVersion: The API version the resource was deployed
+                        with'
+                      type: string
+                    extension:
+                      description: 'Extension: The extension the resource was deployed
+                        with.'
+                      properties:
+                        config:
+                          additionalProperties:
+                            description: The value or how to get a value for an extension
+                              config property.
+                            properties:
+                              keyVaultReference:
+                                description: 'KeyVaultReference: The key vault reference
+                                  of the config item.'
+                                properties:
+                                  keyVault:
+                                    description: 'KeyVault: Azure Key Vault reference.'
+                                    properties:
+                                      id:
+                                        description: 'Id: Azure Key Vault resourceId.'
+                                        type: string
+                                    type: object
+                                  secretName:
+                                    description: 'SecretName: Azure Key Vault secret
+                                      name.'
+                                    type: string
+                                  secretVersion:
+                                    description: 'SecretVersion: Azure Key Vault secret
+                                      version.'
+                                    type: string
+                                type: object
+                              type:
+                                description: 'Type: The type of the value.'
+                                type: string
+                              value:
+                                description: 'Value: The value of the config item.
+                                  The type is determined by the extension config schema.'
+                                x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          description: 'Config: The configuration used for deployment.
+                            The keys of this object should align with the extension
+                            config schema.'
+                          type: object
+                        configId:
+                          description: 'ConfigId: The configuration ID of the extension
+                            usage. It uniquely identifies a target the extension deploys
+                            to.'
+                          type: string
+                        name:
+                          description: 'Name: The extension name.'
+                          type: string
+                        version:
+                          description: 'Version: The extension version.'
+                          type: string
+                      type: object
+                    id:
+                      description: 'Id: The ARM Resource ID of a resource managed
+                        by the deployment stack.'
+                      type: string
+                    identifiers:
+                      additionalProperties:
+                        x-kubernetes-preserve-unknown-fields: true
+                      description: 'Identifiers: The extensible resource identifiers.'
+                      type: object
+                    type:
+                      description: 'Type: The resource type.'
+                      type: string
+                  type: object
+                type: array
+              denySettings:
+                description: 'DenySettings: Defines how resources deployed by the
+                  stack are locked.'
+                properties:
+                  applyToChildScopes:
+                    description: |-
+                      ApplyToChildScopes: DenySettings will be applied to child resource scopes of every managed resource with a deny
+                      assignment.
+                    type: boolean
+                  excludedActions:
+                    description: |-
+                      ExcludedActions: List of role-based management operations that are excluded from the denySettings. Up to 200 actions are
+                      permitted. If the denySetting mode is set to 'denyWriteAndDelete', then the following actions are automatically appended
+                      to 'excludedActions': '*\/read' and 'Microsoft.Authorization/locks/delete'. If the denySetting mode is set to
+                      'denyDelete', then the following actions are automatically appended to 'excludedActions':
+                      'Microsoft.Authorization/locks/delete'. Duplicate actions will be removed.
+                    items:
+                      type: string
+                    type: array
+                  excludedPrincipals:
+                    description: 'ExcludedPrincipals: List of AAD principal IDs excluded
+                      from the lock. Up to 5 principals are permitted.'
+                    items:
+                      type: string
+                    type: array
+                  mode:
+                    description: 'Mode: denySettings Mode that defines denied actions.'
+                    type: string
+                type: object
+              deploymentExtensions:
+                description: |-
+                  DeploymentExtensions: The extensions used during deployment. Contains extension data for all extensible resources
+                  managed by the stack.
+                items:
+                  description: Details about the usage of a deployment extension.
+                  properties:
+                    config:
+                      additionalProperties:
+                        description: The value or how to get a value for an extension
+                          config property.
+                        properties:
+                          keyVaultReference:
+                            description: 'KeyVaultReference: The key vault reference
+                              of the config item.'
+                            properties:
+                              keyVault:
+                                description: 'KeyVault: Azure Key Vault reference.'
+                                properties:
+                                  id:
+                                    description: 'Id: Azure Key Vault resourceId.'
+                                    type: string
+                                type: object
+                              secretName:
+                                description: 'SecretName: Azure Key Vault secret name.'
+                                type: string
+                              secretVersion:
+                                description: 'SecretVersion: Azure Key Vault secret
+                                  version.'
+                                type: string
+                            type: object
+                          type:
+                            description: 'Type: The type of the value.'
+                            type: string
+                          value:
+                            description: 'Value: The value of the config item. The
+                              type is determined by the extension config schema.'
+                            x-kubernetes-preserve-unknown-fields: true
+                        type: object
+                      description: 'Config: The configuration used for deployment.
+                        The keys of this object should align with the extension config
+                        schema.'
+                      type: object
+                    configId:
+                      description: 'ConfigId: The configuration ID of the extension
+                        usage. It uniquely identifies a target the extension deploys
+                        to.'
+                      type: string
+                    name:
+                      description: 'Name: The extension name.'
+                      type: string
+                    version:
+                      description: 'Version: The extension version.'
+                      type: string
+                  type: object
+                type: array
+              deploymentId:
+                description: 'DeploymentId: The resourceId of the deployment resource
+                  created by the deployment stack.'
+                type: string
+              deploymentScope:
+                description: |-
+                  DeploymentScope: The scope at which the initial deployment should be created. If a scope is not specified, it will
+                  default to the scope of the deployment stack. Valid scopes are: management group (format:
+                  '/providers/Microsoft.Management/managementGroups/{managementGroupId}'), subscription (format:
+                  '/subscriptions/{subscriptionId}'), resource group (format:
+                  '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}').
+                type: string
+              description:
+                description: 'Description: Deployment stack description. Max length
+                  of 4096 characters.'
+                type: string
+              detachedResources:
+                description: |-
+                  DetachedResources: An array of resources that were detached during the most recent Deployment stack update. Detached
+                  means that the resource was removed from the template, but no relevant deletion operations were specified. So, the
+                  resource still exists while no longer being associated with the stack.
+                items:
+                  description: The resourceId model.
+                  properties:
+                    apiVersion:
+                      description: 'APIVersion: The API version the resource was deployed
+                        with'
+                      type: string
+                    extension:
+                      description: 'Extension: The extension the resource was deployed
+                        with.'
+                      properties:
+                        config:
+                          additionalProperties:
+                            description: The value or how to get a value for an extension
+                              config property.
+                            properties:
+                              keyVaultReference:
+                                description: 'KeyVaultReference: The key vault reference
+                                  of the config item.'
+                                properties:
+                                  keyVault:
+                                    description: 'KeyVault: Azure Key Vault reference.'
+                                    properties:
+                                      id:
+                                        description: 'Id: Azure Key Vault resourceId.'
+                                        type: string
+                                    type: object
+                                  secretName:
+                                    description: 'SecretName: Azure Key Vault secret
+                                      name.'
+                                    type: string
+                                  secretVersion:
+                                    description: 'SecretVersion: Azure Key Vault secret
+                                      version.'
+                                    type: string
+                                type: object
+                              type:
+                                description: 'Type: The type of the value.'
+                                type: string
+                              value:
+                                description: 'Value: The value of the config item.
+                                  The type is determined by the extension config schema.'
+                                x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          description: 'Config: The configuration used for deployment.
+                            The keys of this object should align with the extension
+                            config schema.'
+                          type: object
+                        configId:
+                          description: 'ConfigId: The configuration ID of the extension
+                            usage. It uniquely identifies a target the extension deploys
+                            to.'
+                          type: string
+                        name:
+                          description: 'Name: The extension name.'
+                          type: string
+                        version:
+                          description: 'Version: The extension version.'
+                          type: string
+                      type: object
+                    id:
+                      description: 'Id: The ARM Resource ID of a resource managed
+                        by the deployment stack.'
+                      type: string
+                    identifiers:
+                      additionalProperties:
+                        x-kubernetes-preserve-unknown-fields: true
+                      description: 'Identifiers: The extensible resource identifiers.'
+                      type: object
+                    type:
+                      description: 'Type: The resource type.'
+                      type: string
+                  type: object
+                type: array
+              duration:
+                description: 'Duration: The duration of the last successful Deployment
+                  stack update.'
+                type: string
+              error:
+                description: 'Error: The error detail.'
+                properties:
+                  additionalInfo:
+                    description: 'AdditionalInfo: The error additional info.'
+                    items:
+                      description: The resource management error additional info.
+                      properties:
+                        info:
+                          additionalProperties:
+                            x-kubernetes-preserve-unknown-fields: true
+                          description: 'Info: The additional info.'
+                          type: object
+                        type:
+                          description: 'Type: The additional info type.'
+                          type: string
+                      type: object
+                    type: array
+                  code:
+                    description: 'Code: The error code.'
+                    type: string
+                  details:
+                    description: 'Details: The error details.'
+                    items:
+                      properties:
+                        additionalInfo:
+                          description: 'AdditionalInfo: The error additional info.'
+                          items:
+                            description: The resource management error additional
+                              info.
+                            properties:
+                              info:
+                                additionalProperties:
+                                  x-kubernetes-preserve-unknown-fields: true
+                                description: 'Info: The additional info.'
+                                type: object
+                              type:
+                                description: 'Type: The additional info type.'
+                                type: string
+                            type: object
+                          type: array
+                        code:
+                          description: 'Code: The error code.'
+                          type: string
+                        message:
+                          description: 'Message: The error message.'
+                          type: string
+                        target:
+                          description: 'Target: The error target.'
+                          type: string
+                      type: object
+                    type: array
+                  message:
+                    description: 'Message: The error message.'
+                    type: string
+                  target:
+                    description: 'Target: The error target.'
+                    type: string
+                type: object
+              extensionConfigs:
+                additionalProperties:
+                  additionalProperties:
+                    description: The value or how to get a value for an extension
+                      config property.
+                    properties:
+                      keyVaultReference:
+                        description: 'KeyVaultReference: The key vault reference of
+                          the config item.'
+                        properties:
+                          keyVault:
+                            description: 'KeyVault: Azure Key Vault reference.'
+                            properties:
+                              id:
+                                description: 'Id: Azure Key Vault resourceId.'
+                                type: string
+                            type: object
+                          secretName:
+                            description: 'SecretName: Azure Key Vault secret name.'
+                            type: string
+                          secretVersion:
+                            description: 'SecretVersion: Azure Key Vault secret version.'
+                            type: string
+                        type: object
+                      type:
+                        description: 'Type: The type of the value.'
+                        type: string
+                      value:
+                        description: 'Value: The value of the config item. The type
+                          is determined by the extension config schema.'
+                        x-kubernetes-preserve-unknown-fields: true
+                    type: object
+                  type: object
+                description: |-
+                  ExtensionConfigs: The deployment extension configs. Keys of this object are extension aliases as defined in the
+                  deployment template.
+                type: object
+              externalInputDefinitions:
+                additionalProperties:
+                  description: Deployment external input definition for parameterization.
+                  properties:
+                    config:
+                      description: 'Config: Configuration for the external input.'
+                      x-kubernetes-preserve-unknown-fields: true
+                    kind:
+                      description: 'Kind: The kind of external input.'
+                      type: string
+                  type: object
+                description: 'ExternalInputDefinitions: External input definitions,
+                  used by external tooling to define expected external input values.'
+                type: object
+              externalInputs:
+                additionalProperties:
+                  description: Deployment external input for parameterization.
+                  properties:
+                    value:
+                      description: 'Value: External input value.'
+                      x-kubernetes-preserve-unknown-fields: true
+                  type: object
+                description: 'ExternalInputs: External input values, used by external
+                  tooling for parameter evaluation.'
+                type: object
+              failedResources:
+                description: |-
+                  FailedResources: An array of resources that failed to reach goal state during the most recent update. Each resourceId is
+                  accompanied by an error message.
+                items:
+                  description: The resourceId extended model. This is used to document
+                    failed resources with a resourceId and a corresponding error.
+                  properties:
+                    apiVersion:
+                      description: 'APIVersion: The API version the resource was deployed
+                        with'
+                      type: string
+                    error:
+                      description: 'Error: The error detail.'
+                      properties:
+                        additionalInfo:
+                          description: 'AdditionalInfo: The error additional info.'
+                          items:
+                            description: The resource management error additional
+                              info.
+                            properties:
+                              info:
+                                additionalProperties:
+                                  x-kubernetes-preserve-unknown-fields: true
+                                description: 'Info: The additional info.'
+                                type: object
+                              type:
+                                description: 'Type: The additional info type.'
+                                type: string
+                            type: object
+                          type: array
+                        code:
+                          description: 'Code: The error code.'
+                          type: string
+                        details:
+                          description: 'Details: The error details.'
+                          items:
+                            properties:
+                              additionalInfo:
+                                description: 'AdditionalInfo: The error additional
+                                  info.'
+                                items:
+                                  description: The resource management error additional
+                                    info.
+                                  properties:
+                                    info:
+                                      additionalProperties:
+                                        x-kubernetes-preserve-unknown-fields: true
+                                      description: 'Info: The additional info.'
+                                      type: object
+                                    type:
+                                      description: 'Type: The additional info type.'
+                                      type: string
+                                  type: object
+                                type: array
+                              code:
+                                description: 'Code: The error code.'
+                                type: string
+                              message:
+                                description: 'Message: The error message.'
+                                type: string
+                              target:
+                                description: 'Target: The error target.'
+                                type: string
+                            type: object
+                          type: array
+                        message:
+                          description: 'Message: The error message.'
+                          type: string
+                        target:
+                          description: 'Target: The error target.'
+                          type: string
+                      type: object
+                    extension:
+                      description: 'Extension: The extension the resource was deployed
+                        with.'
+                      properties:
+                        config:
+                          additionalProperties:
+                            description: The value or how to get a value for an extension
+                              config property.
+                            properties:
+                              keyVaultReference:
+                                description: 'KeyVaultReference: The key vault reference
+                                  of the config item.'
+                                properties:
+                                  keyVault:
+                                    description: 'KeyVault: Azure Key Vault reference.'
+                                    properties:
+                                      id:
+                                        description: 'Id: Azure Key Vault resourceId.'
+                                        type: string
+                                    type: object
+                                  secretName:
+                                    description: 'SecretName: Azure Key Vault secret
+                                      name.'
+                                    type: string
+                                  secretVersion:
+                                    description: 'SecretVersion: Azure Key Vault secret
+                                      version.'
+                                    type: string
+                                type: object
+                              type:
+                                description: 'Type: The type of the value.'
+                                type: string
+                              value:
+                                description: 'Value: The value of the config item.
+                                  The type is determined by the extension config schema.'
+                                x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          description: 'Config: The configuration used for deployment.
+                            The keys of this object should align with the extension
+                            config schema.'
+                          type: object
+                        configId:
+                          description: 'ConfigId: The configuration ID of the extension
+                            usage. It uniquely identifies a target the extension deploys
+                            to.'
+                          type: string
+                        name:
+                          description: 'Name: The extension name.'
+                          type: string
+                        version:
+                          description: 'Version: The extension version.'
+                          type: string
+                      type: object
+                    id:
+                      description: 'Id: The ARM Resource ID of a resource managed
+                        by the deployment stack.'
+                      type: string
+                    identifiers:
+                      additionalProperties:
+                        x-kubernetes-preserve-unknown-fields: true
+                      description: 'Identifiers: The extensible resource identifiers.'
+                      type: object
+                    type:
+                      description: 'Type: The resource type.'
+                      type: string
+                  type: object
+                type: array
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. E.g.
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                type: string
+              location:
+                description: |-
+                  Location: The geo-location where the resource lives. Required for subscription and management group scoped stacks. The
+                  location is inherited from the resource group for resource group scoped stacks.
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              outputs:
+                additionalProperties:
+                  x-kubernetes-preserve-unknown-fields: true
+                description: 'Outputs: The outputs of the deployment resource created
+                  by the deployment stack.'
+                type: object
+              parameters:
+                additionalProperties:
+                  description: Deployment parameter for the template.
+                  properties:
+                    expression:
+                      description: 'Expression: Input expression to the parameter.'
+                      type: string
+                    reference:
+                      description: 'Reference: Azure Key Vault parameter reference.'
+                      properties:
+                        keyVault:
+                          description: 'KeyVault: Azure Key Vault reference.'
+                          properties:
+                            id:
+                              description: 'Id: Azure Key Vault resourceId.'
+                              type: string
+                          type: object
+                        secretName:
+                          description: 'SecretName: Azure Key Vault secret name.'
+                          type: string
+                        secretVersion:
+                          description: 'SecretVersion: Azure Key Vault secret version.'
+                          type: string
+                      type: object
+                    type:
+                      description: 'Type: Type of the value.'
+                      type: string
+                    value:
+                      description: 'Value: Input value to the parameter.'
+                      x-kubernetes-preserve-unknown-fields: true
+                  type: object
+                description: |-
+                  Parameters: Name and value pairs that define the deployment parameters for the template. Use this element when providing
+                  the parameter values directly in the request, rather than linking to an existing parameter file. Use either the
+                  parametersLink property or the parameters property, but not both.
+                type: object
+              parametersLink:
+                description: |-
+                  ParametersLink: The URI of parameters file. Use this element to link to an existing parameters file. Use either the
+                  parametersLink property or the parameters property, but not both.
+                properties:
+                  contentVersion:
+                    description: 'ContentVersion: If included, must match the ContentVersion
+                      in the template.'
+                    type: string
+                  uri:
+                    description: 'Uri: The URI of the parameters file.'
+                    type: string
+                type: object
+              provisioningState:
+                description: 'ProvisioningState: State of the deployment stack.'
+                type: string
+              resources:
+                description: 'Resources: An array of resources currently managed by
+                  the deployment stack.'
+                items:
+                  description: The managed resource model.
+                  properties:
+                    apiVersion:
+                      description: 'APIVersion: The API version the resource was deployed
+                        with'
+                      type: string
+                    denyStatus:
+                      description: 'DenyStatus: denyAssignment settings applied to
+                        the resource.'
+                      type: string
+                    extension:
+                      description: 'Extension: The extension the resource was deployed
+                        with.'
+                      properties:
+                        config:
+                          additionalProperties:
+                            description: The value or how to get a value for an extension
+                              config property.
+                            properties:
+                              keyVaultReference:
+                                description: 'KeyVaultReference: The key vault reference
+                                  of the config item.'
+                                properties:
+                                  keyVault:
+                                    description: 'KeyVault: Azure Key Vault reference.'
+                                    properties:
+                                      id:
+                                        description: 'Id: Azure Key Vault resourceId.'
+                                        type: string
+                                    type: object
+                                  secretName:
+                                    description: 'SecretName: Azure Key Vault secret
+                                      name.'
+                                    type: string
+                                  secretVersion:
+                                    description: 'SecretVersion: Azure Key Vault secret
+                                      version.'
+                                    type: string
+                                type: object
+                              type:
+                                description: 'Type: The type of the value.'
+                                type: string
+                              value:
+                                description: 'Value: The value of the config item.
+                                  The type is determined by the extension config schema.'
+                                x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          description: 'Config: The configuration used for deployment.
+                            The keys of this object should align with the extension
+                            config schema.'
+                          type: object
+                        configId:
+                          description: 'ConfigId: The configuration ID of the extension
+                            usage. It uniquely identifies a target the extension deploys
+                            to.'
+                          type: string
+                        name:
+                          description: 'Name: The extension name.'
+                          type: string
+                        version:
+                          description: 'Version: The extension version.'
+                          type: string
+                      type: object
+                    id:
+                      description: 'Id: The ARM Resource ID of a resource managed
+                        by the deployment stack.'
+                      type: string
+                    identifiers:
+                      additionalProperties:
+                        x-kubernetes-preserve-unknown-fields: true
+                      description: 'Identifiers: The extensible resource identifiers.'
+                      type: object
+                    status:
+                      description: 'Status: Current management state of the resource
+                        in the deployment stack.'
+                      type: string
+                    type:
+                      description: 'Type: The resource type.'
+                      type: string
+                  type: object
+                type: array
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              template:
+                additionalProperties:
+                  x-kubernetes-preserve-unknown-fields: true
+                description: |-
+                  Template: The template content. You use this element when you want to pass the template syntax directly in the request
+                  rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink
+                  property or the template property, but not both.
+                type: object
+              templateLink:
+                description: 'TemplateLink: The URI of the template. Use either the
+                  templateLink property or the template property, but not both.'
+                properties:
+                  contentVersion:
+                    description: 'ContentVersion: If included, must match the ContentVersion
+                      in the template.'
+                    type: string
+                  id:
+                    description: 'Id: The resourceId of a Template Spec. Use either
+                      the id or uri property, but not both.'
+                    type: string
+                  queryString:
+                    description: 'QueryString: The query string (for example, a SAS
+                      token) to be used with the templateLink URI.'
+                    type: string
+                  relativePath:
+                    description: |-
+                      RelativePath: The relativePath property can be used to deploy a linked template at a location relative to the parent. If
+                      the parent template was linked with a TemplateSpec, this will reference an artifact in the TemplateSpec.  If the parent
+                      was linked with a URI, the child deployment will be a combination of the parent and relativePath URIs.
+                    type: string
+                  uri:
+                    description: 'Uri: The URI of the template to deploy. Use either
+                      the uri or id property, but not both.'
+                    type: string
+                type: object
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+              validationLevel:
+                description: 'ValidationLevel: The validation level of the deployment
+                  stack'
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

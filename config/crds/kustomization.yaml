@@ -10,8 +10,14 @@ resources:
 - authorization.azure.hfl.dev_managementlocks.yaml
 - authorization.azure.hfl.dev_policyassignments.yaml
 - authorization.azure.hfl.dev_policydefinitions.yaml
+- authorization.azure.hfl.dev_policydefinitionsversions.yaml
 - authorization.azure.hfl.dev_policyexemptions.yaml
 - authorization.azure.hfl.dev_policysetdefinitions.yaml
+- authorization.azure.hfl.dev_policysetdefinitionsversions.yaml
+- authorization.azure.hfl.dev_policyvariables.yaml
+- authorization.azure.hfl.dev_policyvariablesvalues.yaml
+- authorization.azure.hfl.dev_privatelinkassociations.yaml
+- authorization.azure.hfl.dev_resourcemanagementprivatelinks.yaml
 - authorization.azure.hfl.dev_roleassignmentschedulerequests.yaml
 - authorization.azure.hfl.dev_roleeligibilityschedulerequests.yaml
 - authorization.azure.hfl.dev_rolemanagementpolicyassignments.yaml
@@ -22,6 +28,7 @@ resources:
 - containerregistry.azure.hfl.dev_registriestokens.yaml
 - containerregistry.azure.hfl.dev_registrieswebhooks.yaml
 - costmanagement.azure.hfl.dev_exports.yaml
+- costmanagement.azure.hfl.dev_scheduledactions.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
 - devtestlab.azure.hfl.dev_schedules.yaml
 - entra.azure.hfl.dev_directoryroleassignments.yaml
@@ -39,6 +46,7 @@ resources:
 - management.azure.hfl.dev_managementgroups.yaml
 - management.azure.hfl.dev_managementgroupssettings.yaml
 - management.azure.hfl.dev_managementgroupssubscriptions.yaml
+- management.azure.hfl.dev_servicegroups.yaml
 - network.azure.hfl.dev_expressroutecircuits.yaml
 - network.azure.hfl.dev_expressroutecircuitsauthorizations.yaml
 - network.azure.hfl.dev_expressroutecircuitspeerings.yaml
@@ -102,7 +110,11 @@ resources:
 - recoveryservices.azure.hfl.dev_vaultsbackuppolicies.yaml
 - recoveryservices.azure.hfl.dev_vaultsbackupresourceguardproxies.yaml
 - recoveryservices.azure.hfl.dev_vaultsprivateendpointconnections.yaml
+- resources.azure.hfl.dev_deploymentscripts.yaml
+- resources.azure.hfl.dev_deploymentstacks.yaml
 - resources.azure.hfl.dev_tagsets.yaml
+- resources.azure.hfl.dev_templatespecs.yaml
+- resources.azure.hfl.dev_templatespecsversions.yaml
 - security.azure.hfl.dev_advancedthreatprotectionsettings.yaml
 - security.azure.hfl.dev_automations.yaml
 - security.azure.hfl.dev_autoprovisioningsettings.yaml
