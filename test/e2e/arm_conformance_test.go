@@ -420,7 +420,13 @@ func conformanceValue(c *conformanceContext, name string, s apiextensionsv1.JSON
 		}
 		return []any{conformanceValue(c, name, *s.Items.Schema)}
 	}
-	// An object (or a schema with no type: free-form JSON).
+	// Free-form JSON (no type): a scalar, which survives the typed round
+	// trip ({} came back empty on the reconciler's update and a required
+	// field was refused).
+	if s.Type == "" && len(s.Properties) == 0 {
+		return "conformance"
+	}
+	// An object.
 	if _, ok := s.Properties["armId"]; ok {
 		return armRef(c.ref)
 	}

@@ -164,6 +164,11 @@ func init() {
 				"actionConfiguration": map[string]any{"status": "Closed"}}}}}
 		}},
 	}
+	// Deployment scripts: polymorphic (Azure PowerShell or Azure CLI).
+	sentinel["DeploymentScript"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureCliScript": map[string]any{"kind": "AzureCLI", "location": "westus",
+			"azCliVersion": "2.60.0", "retentionInterval": "PT1H", "scriptContent": "echo conformance"}}
+	}}
 	for k, v := range sentinel {
 		f[k] = v
 	}
