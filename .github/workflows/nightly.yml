@@ -1,7 +1,7 @@
 # Copyright 2026 High Five Labs
 # SPDX-License-Identifier: MIT
 #
-# The whole suite on main, once a day (the builder, 2026-11-10): task check
+# The whole suite on main, once a day (decided 2026-11-10): task check
 # and task operator-e2e, one after the other on one offload Spot VM (no
 # Actions minutes but the launcher's). A failure opens one issue labelled
 # ci-nightly, or comments on it if it is open already (a green night runs
@@ -26,6 +26,10 @@ concurrency:
 env:
   # offload, vendored in the factory repository (offload/), at this commit.
   FACTORY_REF: ba59cca20632966e07bd5b9f36ed0a1b525ea023
+  # The environment, for .github/actions/spot-runner (repository variables).
+  GCP_PROJECT: ${{ vars.GCP_PROJECT }}
+  GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+  OFFLOAD_SERVICE_ACCOUNT: ${{ vars.OFFLOAD_SERVICE_ACCOUNT }}
 
 jobs:
   launch:

@@ -1,7 +1,7 @@
 # Copyright 2026 High Five Labs
 # SPDX-License-Identifier: MIT
 #
-# Pull requests (the builder's decisions of 2026-11-10, O22 and "selective"):
+# Pull requests (decided 2026-11-10, O22: selective runs):
 #
 #   plan    hack/ci/select.sh maps the changed paths to what must run:
 #           none (docs only), groups (check:static, build and the changed
@@ -34,6 +34,10 @@ concurrency:
 env:
   # offload, vendored in the factory repository (offload/), at this commit.
   FACTORY_REF: ba59cca20632966e07bd5b9f36ed0a1b525ea023
+  # The environment, for .github/actions/spot-runner (repository variables).
+  GCP_PROJECT: ${{ vars.GCP_PROJECT }}
+  GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+  OFFLOAD_SERVICE_ACCOUNT: ${{ vars.OFFLOAD_SERVICE_ACCOUNT }}
 
 jobs:
   plan:
