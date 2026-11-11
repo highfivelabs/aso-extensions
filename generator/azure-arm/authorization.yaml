@@ -122,6 +122,8 @@ groupModelConfiguration:
     Variable:
       $exportAs: PolicyVariable
       $supportedFrom: v0.1.0
-    Variables_Value:
-      $exportAs: PolicyVariablesValue
-      $supportedFrom: v0.1.0
+    # Not exported: Variables_Value. Its column value is a scalar (an
+    # integer, double, boolean, null or string) that the spec types as an
+    # object, so the generated kind sent an object and dropped an empty one
+    # (the conformance test caught it); it needs the spec fixed or a
+    # hand-written type.

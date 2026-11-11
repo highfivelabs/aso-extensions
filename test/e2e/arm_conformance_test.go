@@ -426,6 +426,10 @@ func conformanceValue(c *conformanceContext, name string, s apiextensionsv1.JSON
 	if s.Type == "" && len(s.Properties) == 0 {
 		return "conformance"
 	}
+	// A map: one entry (an empty map is dropped as omitempty).
+	if s.AdditionalProperties != nil && s.AdditionalProperties.Schema != nil && len(s.Properties) == 0 {
+		return map[string]any{"conformance": conformanceValue(c, name, *s.AdditionalProperties.Schema)}
+	}
 	// An object.
 	if _, ok := s.Properties["armId"]; ok {
 		return armRef(c.ref)
