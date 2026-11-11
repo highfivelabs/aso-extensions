@@ -1,0 +1,109 @@
+diff --git a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+--- a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
++++ b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+@@ -281,6 +281,13 @@
+ 			if uri, ok := multiScopeURI(existingResource.ARMURI, operationPath); ok {
+ 				existingResource.ARMURI = uri
+ 				existingResource.Scope = astmodel.ResourceScopeExtension
++				// Modified by High Five Labs: with
++				// ASO_GENERATOR_EXTENSION_CHILDREN set, a child of a resource at
++				// several scopes is a child, owned by its parent (see
++				// isExtensionChild).
++				if os.Getenv("ASO_GENERATOR_EXTENSION_CHILDREN") != "" && isExtensionChild(uri) {
++					existingResource.Scope = astmodel.ResourceScopeResourceGroup
++				}
+ 				result.ResourceDefinitions[resourceName] = existingResource
+ 			}
+ 		}
+@@ -1019,6 +1026,18 @@
+ )
+ 
+ func categorizeResourceScope(armURI string) astmodel.ResourceScope {
++	// Modified by High Five Labs: with ASO_GENERATOR_EXTENSION_CHILDREN set, a
++	// child of an extension resource (a Sentinel watchlist's items,
++	// .../workspaces/{w}/providers/Microsoft.SecurityInsights/watchlists/{a}/watchlistItems/{i})
++	// is categorized as a resource group scope resource, which is what a child
++	// of any resource is: it is owned by its parent, and the resolver builds
++	// its ARM ID from the parent's. As an extension resource ASO's resolver
++	// refuses it ("extension resource cannot have more than one resource
++	// type").
++	if os.Getenv("ASO_GENERATOR_EXTENSION_CHILDREN") != "" && isExtensionChild(armURI) {
++		return astmodel.ResourceScopeResourceGroup
++	}
++
+ 	// this is a bit of a hack, eventually we should have better scope support.
+ 	// at the moment we assume that a resource is an extension if it has a specific prefix
+ 	for _, prefix := range extensionScopePrefixes {
+@@ -1076,6 +1095,26 @@
+ 	return astmodel.ResourceScopeTenant
+ }
+ 
++// isExtensionChild is whether armURI is an extension resource's path (an
++// arbitrary scope prefix, or more than one /providers/ segment) whose part
++// after the last /providers/{namespace}/ has more than one {type}/{name} pair.
++func isExtensionChild(armURI string) bool {
++	lower := strings.ToLower(armURI)
++	extension := strings.Count(lower, "/providers/") > 1
++	for _, prefix := range append([]string{"/{resourceid}/", "/{scopeid}/"}, extensionScopePrefixes...) {
++		if strings.HasPrefix(lower, strings.ToLower(prefix)) {
++			extension = true
++		}
++	}
++	if !extension {
++		return false
++	}
++	i := strings.LastIndex(lower, "/providers/")
++	parts := strings.Split(strings.Trim(armURI[i+len("/providers/"):], "/"), "/")
++	// namespace, type, name, type, name, ...
++	return len(parts) >= 5 && len(parts)%2 == 1
++}
++
+ // isTenantScopeChild is whether armURI is /providers/{namespace}/{type}/{name}
+ // followed by at least one more {type}/{name} pair.
+ func isTenantScopeChild(armURI string) bool {
+diff --git a/v2/internal/resolver/resource_hierarchy.go b/v2/internal/resolver/resource_hierarchy.go
+--- a/v2/internal/resolver/resource_hierarchy.go
++++ b/v2/internal/resolver/resource_hierarchy.go
+@@ -131,6 +131,24 @@
+ 		return fmt.Sprintf("%s/providers/%s/%s/%s", parentARMID, provider, types[0], lastResource.AzureName()), nil
+ 	}
+ 
++	// Modified by High Five Labs: a child of an extension resource (a Sentinel
++	// watchlist's item, a policy definition's version) is named after its
++	// parent, whose ARM ID is built as an extension resource's is; the
++	// roots below would name it from the resource group or the tenant, with
++	// the extension's scope left out. The child's own ARM type is the last
++	// of its resource types.
++	if len(h) > 1 && h[:len(h)-1].hasExtension() {
++		parentARMID, err := h[:len(h)-1].fullyQualifiedARMIDImpl(subscriptionID, originalHierarchy)
++		if err != nil {
++			return "", err
++		}
++		_, types, err := genruntime.GetResourceTypeAndProvider(lastResource)
++		if err != nil {
++			return "", err
++		}
++		return fmt.Sprintf("%s/%s/%s", parentARMID, types[len(types)-1], lastResource.AzureName()), nil
++	}
++
+ 	azureNames := h.getAzureNames()
+ 
+ 	rootKind := h.rootKind(originalHierarchy)
+@@ -280,6 +298,17 @@
+ 	}
+ }
+ 
++// hasExtension is whether a resource of the hierarchy is an extension
++// resource (High Five Labs).
++func (h ResourceHierarchy) hasExtension() bool {
++	for _, res := range h {
++		if res.GetResourceScope() == genruntime.ResourceScopeExtension {
++			return true
++		}
++	}
++	return false
++}
++
+ // rootKind returns the ResourceHierarchyRoot type of the hierarchy.
+ // There are 6 cases here:
+ //  1. The hierarchy is comprised solely of a resource group. This is subscription rooted.
