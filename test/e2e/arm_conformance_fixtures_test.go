@@ -184,6 +184,11 @@ func init() {
 		return map[string]any{"platform": map[string]any{"os": "Linux"},
 			"step": map[string]any{"encodedTask": map[string]any{"type": "EncodedTask", "encodedTaskContent": "dmVyc2lvbjogdjEuMS4wCnN0ZXBzOiBbXQo="}}}
 	}}
+	// Kubernetes configuration: a source control configuration is on a
+	// managed or Arc-enabled cluster.
+	f["SourceControlConfiguration"] = conformanceFixture{owner: func(c *conformanceContext) string {
+		return c.add(c.in("Microsoft.ContainerService/managedClusters/aks"))
+	}}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}
