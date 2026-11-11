@@ -23,8 +23,15 @@ import (
 	consumption_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601"
 	consumption_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601/storage"
 	containerregistry_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/customizations"
+	containerregistry_v20190401 "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20190401"
+	containerregistry_v20190401s "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20190401/storage"
 	containerregistry_v20251101 "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101"
 	containerregistry_v20251101s "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101/storage"
+	containerservice_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/customizations"
+	containerservice_v20260501 "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260501"
+	containerservice_v20260501s "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260501/storage"
+	containerservice_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260601"
+	containerservice_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260601/storage"
 	costmanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/customizations"
 	costmanagement_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601"
 	costmanagement_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601/storage"
@@ -184,7 +191,58 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicySetDefinition)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.StorageType{Obj: new(consumption_v20260601.Budget)})
+	result = append(result, &registration.StorageType{
+		Obj: new(containerregistry_v20190401.RegistriesTask),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.step.docker.contextAccessToken",
+				Func: indexContainerregistryRegistriesTaskDockerContextAccessToken,
+			},
+			{
+				Key:  ".spec.step.encodedTask.contextAccessToken",
+				Func: indexContainerregistryRegistriesTaskEncodedTaskContextAccessToken,
+			},
+			{
+				Key:  ".spec.step.fileTask.contextAccessToken",
+				Func: indexContainerregistryRegistriesTaskFileTaskContextAccessToken,
+			},
+			{
+				Key:  ".spec.credentials.customRegistries.password.value",
+				Func: indexContainerregistryRegistriesTaskPasswordValue,
+			},
+			{
+				Key:  ".spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.refreshToken",
+				Func: indexContainerregistryRegistriesTaskRefreshToken,
+			},
+			{
+				Key:  ".spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.token",
+				Func: indexContainerregistryRegistriesTaskToken,
+			},
+			{
+				Key:  ".spec.credentials.customRegistries.userName.value",
+				Func: indexContainerregistryRegistriesTaskUserNameValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.credentials.customRegistries.password.value",
+						".spec.credentials.customRegistries.userName.value",
+						".spec.step.docker.contextAccessToken",
+						".spec.step.encodedTask.contextAccessToken",
+						".spec.step.fileTask.contextAccessToken",
+						".spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.refreshToken",
+						".spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.token",
+					},
+					&containerregistry_v20190401.RegistriesTaskList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesConnectedRegistry)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesCredentialSet)})
+	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesScopeMap)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesToken)})
 	result = append(result, &registration.StorageType{
@@ -211,6 +269,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.ManagedClustersManagedNamespace)})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.ManagedClustersPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.Snapshot)})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260601.FleetsManagedNamespace)})
 	result = append(result, &registration.StorageType{
 		Obj: new(costmanagement_v20260601.Export),
 		Indexes: []registration.Index{
@@ -593,18 +655,36 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301s.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601s.Budget)})
+	result = append(result, &registration.KnownType{Obj: new(containerregistry_v20190401.RegistriesTask)})
+	result = append(result, &registration.KnownType{Obj: new(containerregistry_v20190401s.RegistriesTask)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesConnectedRegistry)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesCredentialSet)},
+		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesScopeMap)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesToken)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesWebhook)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesConnectedRegistry)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesCredentialSet)},
+		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesScopeMap)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesToken)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesWebhook)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(containerservice_v20260501.ManagedClustersManagedNamespace)},
+		&registration.KnownType{Obj: new(containerservice_v20260501.ManagedClustersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(containerservice_v20260501.Snapshot)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(containerservice_v20260501s.ManagedClustersManagedNamespace)},
+		&registration.KnownType{Obj: new(containerservice_v20260501s.ManagedClustersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(containerservice_v20260501s.Snapshot)})
+	result = append(result, &registration.KnownType{Obj: new(containerservice_v20260601.FleetsManagedNamespace)})
+	result = append(result, &registration.KnownType{Obj: new(containerservice_v20260601s.FleetsManagedNamespace)})
 	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601.Export)})
 	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601s.Export)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
@@ -816,8 +896,14 @@ func createScheme() *runtime.Scheme {
 	_ = compute_v20220301s.AddToScheme(scheme)
 	_ = consumption_v20260601.AddToScheme(scheme)
 	_ = consumption_v20260601s.AddToScheme(scheme)
+	_ = containerregistry_v20190401.AddToScheme(scheme)
+	_ = containerregistry_v20190401s.AddToScheme(scheme)
 	_ = containerregistry_v20251101.AddToScheme(scheme)
 	_ = containerregistry_v20251101s.AddToScheme(scheme)
+	_ = containerservice_v20260501.AddToScheme(scheme)
+	_ = containerservice_v20260501s.AddToScheme(scheme)
+	_ = containerservice_v20260601.AddToScheme(scheme)
+	_ = containerservice_v20260601s.AddToScheme(scheme)
 	_ = costmanagement_v20260601.AddToScheme(scheme)
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
@@ -866,10 +952,17 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &authorization_customizations.RoleManagementPolicyAssignmentExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
 	result = append(result, &consumption_customizations.BudgetExtension{})
+	result = append(result, &containerregistry_customizations.RegistriesConnectedRegistryExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesCredentialSetExtension{})
+	result = append(result, &containerregistry_customizations.RegistriesPrivateEndpointConnectionExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesScopeMapExtension{})
+	result = append(result, &containerregistry_customizations.RegistriesTaskExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesTokenExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesWebhookExtension{})
+	result = append(result, &containerservice_customizations.FleetsManagedNamespaceExtension{})
+	result = append(result, &containerservice_customizations.ManagedClustersManagedNamespaceExtension{})
+	result = append(result, &containerservice_customizations.ManagedClustersPrivateEndpointConnectionExtension{})
+	result = append(result, &containerservice_customizations.SnapshotExtension{})
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
@@ -1041,6 +1134,154 @@ func indexAuthorizationRoleEligibilityScheduleRequestPrincipalIdFromConfig(rawOb
 		return nil
 	}
 	return obj.Spec.PrincipalIdFromConfig.Index()
+}
+
+// indexContainerregistryRegistriesTaskDockerContextAccessToken an index function for containerregistry_v20190401.RegistriesTask .spec.step.docker.contextAccessToken
+func indexContainerregistryRegistriesTaskDockerContextAccessToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Step == nil {
+		return nil
+	}
+	if obj.Spec.Step.Docker == nil {
+		return nil
+	}
+	if obj.Spec.Step.Docker.ContextAccessToken == nil {
+		return nil
+	}
+	return obj.Spec.Step.Docker.ContextAccessToken.Index()
+}
+
+// indexContainerregistryRegistriesTaskEncodedTaskContextAccessToken an index function for containerregistry_v20190401.RegistriesTask .spec.step.encodedTask.contextAccessToken
+func indexContainerregistryRegistriesTaskEncodedTaskContextAccessToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Step == nil {
+		return nil
+	}
+	if obj.Spec.Step.EncodedTask == nil {
+		return nil
+	}
+	if obj.Spec.Step.EncodedTask.ContextAccessToken == nil {
+		return nil
+	}
+	return obj.Spec.Step.EncodedTask.ContextAccessToken.Index()
+}
+
+// indexContainerregistryRegistriesTaskFileTaskContextAccessToken an index function for containerregistry_v20190401.RegistriesTask .spec.step.fileTask.contextAccessToken
+func indexContainerregistryRegistriesTaskFileTaskContextAccessToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Step == nil {
+		return nil
+	}
+	if obj.Spec.Step.FileTask == nil {
+		return nil
+	}
+	if obj.Spec.Step.FileTask.ContextAccessToken == nil {
+		return nil
+	}
+	return obj.Spec.Step.FileTask.ContextAccessToken.Index()
+}
+
+// indexContainerregistryRegistriesTaskPasswordValue an index function for containerregistry_v20190401.RegistriesTask .spec.credentials.customRegistries.password.value
+func indexContainerregistryRegistriesTaskPasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Credentials == nil {
+		return nil
+	}
+	for _, value := range obj.Spec.Credentials.CustomRegistries {
+		if value.Password == nil {
+			continue
+		}
+		if value.Password.Value == nil {
+			continue
+		}
+		result = append(result, value.Password.Value.Index()...)
+	}
+	return result
+}
+
+// indexContainerregistryRegistriesTaskRefreshToken an index function for containerregistry_v20190401.RegistriesTask .spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.refreshToken
+func indexContainerregistryRegistriesTaskRefreshToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Trigger == nil {
+		return nil
+	}
+	for _, sourceTriggerItem := range obj.Spec.Trigger.SourceTriggers {
+		if sourceTriggerItem.SourceRepository == nil {
+			continue
+		}
+		if sourceTriggerItem.SourceRepository.SourceControlAuthProperties == nil {
+			continue
+		}
+		if sourceTriggerItem.SourceRepository.SourceControlAuthProperties.RefreshToken == nil {
+			continue
+		}
+		result = append(result, sourceTriggerItem.SourceRepository.SourceControlAuthProperties.RefreshToken.Index()...)
+	}
+	return result
+}
+
+// indexContainerregistryRegistriesTaskToken an index function for containerregistry_v20190401.RegistriesTask .spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.token
+func indexContainerregistryRegistriesTaskToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Trigger == nil {
+		return nil
+	}
+	for _, sourceTriggerItem := range obj.Spec.Trigger.SourceTriggers {
+		if sourceTriggerItem.SourceRepository == nil {
+			continue
+		}
+		if sourceTriggerItem.SourceRepository.SourceControlAuthProperties == nil {
+			continue
+		}
+		if sourceTriggerItem.SourceRepository.SourceControlAuthProperties.Token == nil {
+			continue
+		}
+		result = append(result, sourceTriggerItem.SourceRepository.SourceControlAuthProperties.Token.Index()...)
+	}
+	return result
+}
+
+// indexContainerregistryRegistriesTaskUserNameValue an index function for containerregistry_v20190401.RegistriesTask .spec.credentials.customRegistries.userName.value
+func indexContainerregistryRegistriesTaskUserNameValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Credentials == nil {
+		return nil
+	}
+	for _, value := range obj.Spec.Credentials.CustomRegistries {
+		if value.UserName == nil {
+			continue
+		}
+		if value.UserName.Value == nil {
+			continue
+		}
+		result = append(result, value.UserName.Value.Index()...)
+	}
+	return result
 }
 
 // indexContainerregistryRegistriesWebhookCustomHeaders an index function for containerregistry_v20251101.RegistriesWebhook .spec.customHeaders

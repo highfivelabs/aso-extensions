@@ -9,3 +9,5 @@ operationalinsights/Workspace
 containerregistry/Registry
 compute/VirtualMachine
 keyvault/Vault
+containerservice/ManagedCluster
+containerservice/Fleet
