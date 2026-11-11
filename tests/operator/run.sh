@@ -650,7 +650,7 @@ spec:
   networkManagerScopes:
     subscriptions: [/subscriptions/${SUB}]
     managementGroups: [/providers/Microsoft.Management/managementGroups/$1-platform]
-  networkManagerScopeAccesses: [Connectivity, SecurityAdmin]
+  networkManagerScopeAccesses: [Connectivity, SecurityAdmin, Routing]
 ---
 apiVersion: network.azure.hfl.dev/v20260301
 kind: NetworkManagerConnection
@@ -758,6 +758,38 @@ spec:
   protocol: Tcp
   direction: Inbound
   destinationPortRanges: ["443"]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersRoutingConfiguration
+metadata: {name: egress, namespace: $1}
+spec:
+  owner: {name: avnm}
+  routeTableUsageMode: ManagedOnly
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersRoutingRuleCollection
+metadata: {name: spokes, namespace: $1}
+spec:
+  owner: {name: egress}
+  appliesTo: [{networkGroupReference: {group: network.azure.hfl.dev, kind: NetworkManagersNetworkGroup, name: spokes}}]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersRoutingRule
+metadata: {name: default, namespace: $1}
+spec:
+  owner: {name: spokes}
+  destination: {type: AddressPrefix, destinationAddress: 0.0.0.0/0}
+  nextHop: {nextHopType: VirtualAppliance, nextHopAddress: 10.0.1.4}
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: NetworkManagersCommit
+metadata: {name: routing, namespace: $1}
+spec:
+  owner: {name: avnm}
+  properties:
+    commitType: Routing
+    targetLocations: [westus]
+    configurationReferences: [{group: network.azure.hfl.dev, kind: NetworkManagersRoutingConfiguration, name: egress}]
 ---
 apiVersion: management.azure.hfl.dev/v20230401
 kind: ManagementGroup
@@ -1084,6 +1116,18 @@ wait_for 90 "team-a's NetworkManagersSecurityUserRuleCollection Ready" ready net
 pass "team-a NetworkManagersSecurityUserRuleCollection Ready: for our network group by object"
 wait_for 90 "team-a's NetworkManagersSecurityUserRule Ready" ready networkmanagerssecurityuserrules.network.azure.hfl.dev team-a https
 pass "team-a NetworkManagersSecurityUserRule Ready: owned by our rule collection"
+wait_for 90 "team-a's NetworkManagersRoutingConfiguration Ready" ready networkmanagersroutingconfigurations.network.azure.hfl.dev team-a egress
+pass "team-a NetworkManagersRoutingConfiguration Ready: owned by our NetworkManager"
+wait_for 90 "team-a's NetworkManagersRoutingRuleCollection Ready" ready networkmanagersroutingrulecollections.network.azure.hfl.dev team-a spokes
+pass "team-a NetworkManagersRoutingRuleCollection Ready: for our network group by object"
+wait_for 90 "team-a's NetworkManagersRoutingRule Ready" ready networkmanagersroutingrules.network.azure.hfl.dev team-a default
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/routingConfigurations/egress/ruleCollections/spokes/rules/default 201" \
+  || fail "the fake resource manager saw no PUT of the routing rule"
+pass "team-a NetworkManagersRoutingRule Ready: a default route to a virtual appliance"
+wait_for 90 "team-a's NetworkManagersCommit Ready" ready networkmanagerscommits.network.azure.hfl.dev team-a routing
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/commits/routing 201" \
+  || fail "the fake resource manager saw no PUT of the commit"
+pass "team-a NetworkManagersCommit Ready: our routing configuration by object"
 wait_for 90 "team-a's RoleEligibilityScheduleRequest Ready" ready roleeligibilityschedulerequests.authorization.azure.hfl.dev team-a eligible-reader
 pim_name="$(kubectl -n team-a get roleeligibilityschedulerequests.authorization.azure.hfl.dev eligible-reader -o jsonpath='{.spec.azureName}')"
 [[ "${pim_name}" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] \
@@ -1209,7 +1253,7 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er 200" \
   || fail "the fake resource manager saw no delete of the ExpressRoute gateway"
 pass "the ExpressRoute gateway and its connection are deleted in Resource Manager"
-for kind_name in networkmanagerssecurityuserrules/https networkmanagerssecurityuserrulecollections/app networkmanagerssecurityuserconfigurations/team networkmanagerssecurityadminrules/default networkmanagerssecurityadminrules/deny-rdp networkmanagerssecurityadminrulecollections/deny-mgmt networkmanagerssecurityadminconfigurations/baseline networkmanagersconnectivityconfigurations/hub-spoke; do
+for kind_name in networkmanagerscommits/routing networkmanagersroutingrules/default networkmanagersroutingrulecollections/spokes networkmanagersroutingconfigurations/egress networkmanagerssecurityuserrules/https networkmanagerssecurityuserrulecollections/app networkmanagerssecurityuserconfigurations/team networkmanagerssecurityadminrules/default networkmanagerssecurityadminrules/deny-rdp networkmanagerssecurityadminrulecollections/deny-mgmt networkmanagerssecurityadminconfigurations/baseline networkmanagersconnectivityconfigurations/hub-spoke; do
   kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
 done
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/securityAdminConfigurations/baseline/ruleCollections/deny-mgmt/rules/deny-rdp 200" \
@@ -1218,7 +1262,11 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
   || fail "the fake resource manager saw no delete of the security user configuration"
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/connectivityConfigurations/hub-spoke 200" \
   || fail "the fake resource manager saw no delete of the connectivity configuration"
-pass "the network manager's connectivity, security admin and security user configurations, rule collections and rules are deleted in Resource Manager"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/routingConfigurations/egress/ruleCollections/spokes/rules/default 200" \
+  || fail "the fake resource manager saw no delete of the routing rule"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/networkManagers/avnm/commits/routing 200" \
+  || fail "the fake resource manager saw no delete of the commit"
+pass "the network manager's commit, connectivity, routing, security admin and security user configurations, rule collections and rules are deleted in Resource Manager"
 for kind_name in networkmanagersnetworkgroupsstaticmembers/spoke networkmanagersnetworkgroups/spokes networkmanagersscopeconnections/partner networkmanagerconnections/avnm-mg networkmanagerconnections/avnm-sub networkmanagers/avnm; do
   kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
 done
@@ -1304,6 +1352,27 @@ logged fakearm "request DELETE /subscriptions/${SUB}/providers/Microsoft.Authori
   || fail "the fake resource manager saw no delete of the policy definition"
 pass "the policy assignments and definition are deleted in Resource Manager"
 
+step "team-a: an Operations Management solution on the workspace (operationsmanagement.azure.hfl.dev)"
+oms_id="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationsManagement/solutions/Updates(team-a-law)"
+kubectl apply -f - <<EOF
+apiVersion: operationsmanagement.azure.hfl.dev/v20151101preview
+kind: Solution
+metadata: {name: updates, namespace: team-a}
+spec:
+  azureName: Updates(team-a-law)
+  owner: {name: rg}
+  location: westus
+  plan: {name: Updates(team-a-law), publisher: Microsoft, product: OMSGallery/Updates, promotionCode: ""}
+  properties:
+    workspaceResourceReference: {group: operationalinsights.azure.com, kind: Workspace, name: law}
+EOF
+wait_for 120 "team-a's Solution Ready" ready solutions.operationsmanagement.azure.hfl.dev team-a updates
+logged fakearm "request PUT ${oms_id} 201" || fail "the fake resource manager saw no solution made on ASO's Workspace"
+pass "team-a Solution Ready"
+kubectl -n team-a delete solutions.operationsmanagement.azure.hfl.dev updates --timeout=120s
+logged fakearm "request DELETE ${oms_id} 200" || fail "the fake resource manager saw no delete of the solution"
+pass "the Operations Management solution is deleted in Resource Manager"
+
 kubectl -n team-a delete managementgroupssubscriptions.management.azure.hfl.dev workload --timeout=120s
 logged fakearm "request DELETE /providers/Microsoft.Management/managementGroups/team-a-platform/subscriptions/${SUB} 200" \
   || fail "the fake resource manager saw no removal of the subscription from the management group"
@@ -1315,6 +1384,79 @@ kubectl -n team-a delete tagsets.resources.azure.hfl.dev rg-tags --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Resources/tags/default 200" \
   || fail "the fake resource manager saw no delete of the tags"
 pass "the tags are deleted in Resource Manager"
+
+step "team-a: a managed HSM and a key in it (keyvault.azure.hfl.dev)"
+hsm_id="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.KeyVault/managedHSMs/team-a-hsm"
+kubectl apply -f - <<EOF
+apiVersion: keyvault.azure.hfl.dev/v20260515
+kind: ManagedHSM
+metadata: {name: hsm, namespace: team-a}
+spec:
+  azureName: team-a-hsm
+  owner: {name: rg}
+  location: westus
+  sku: {family: B, name: Standard_B1}
+  properties:
+    tenantId: "00000000-0000-0000-0000-0000000000aa"
+    initialAdminObjectIds: ["00000000-0000-0000-0000-0000000000bb"]
+    softDeleteRetentionInDays: 30
+---
+apiVersion: keyvault.azure.hfl.dev/v20260515
+kind: ManagedHSMsKey
+metadata:
+  name: cmk
+  namespace: team-a
+  annotations: {serviceoperator.azure.com/reconcile-policy: detach-on-delete}
+spec:
+  azureName: storage-cmk
+  owner: {name: hsm}
+  properties: {kty: RSA-HSM, keySize: 3072}
+EOF
+wait_for 120 "team-a's ManagedHSM Ready" ready managedhsms.keyvault.azure.hfl.dev team-a hsm
+logged fakearm "request PUT ${hsm_id} 201" || fail "the fake resource manager saw no managed HSM made"
+pass "team-a ManagedHSM Ready"
+wait_for 120 "team-a's ManagedHSMsKey Ready" ready managedhsmskeys.keyvault.azure.hfl.dev team-a cmk
+logged fakearm "request PUT ${hsm_id}/keys/storage-cmk 201" || fail "the fake resource manager saw no key made in the managed HSM"
+pass "team-a ManagedHSMsKey Ready"
+kubectl -n team-a delete managedhsmskeys.keyvault.azure.hfl.dev cmk --timeout=120s
+if logged fakearm "request DELETE ${hsm_id}/keys/storage-cmk"; then
+  fail "the key was sent a DELETE, though it is detached (Resource Manager has none for a key)"
+fi
+kubectl -n team-a delete managedhsms.keyvault.azure.hfl.dev hsm --timeout=120s
+logged fakearm "request DELETE ${hsm_id} 200" || fail "the fake resource manager saw no delete of the managed HSM"
+pass "the managed HSM key is detached, not deleted, and the managed HSM is deleted in Resource Manager"
+
+step "team-a: a Log Analytics cluster and a data source of the workspace (operationalinsights.azure.hfl.dev)"
+la_rg="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights"
+kubectl apply -f - <<EOF
+apiVersion: operationalinsights.azure.hfl.dev/v20250701
+kind: Cluster
+metadata: {name: logs, namespace: team-a}
+spec:
+  azureName: team-a-logs
+  owner: {name: rg}
+  location: westus
+  sku: {name: CapacityReservation, capacity: 500}
+---
+apiVersion: operationalinsights.azure.hfl.dev/v20250701
+kind: WorkspacesDataSource
+metadata: {name: syslog-auth, namespace: team-a}
+spec:
+  owner: {name: law}
+  kind: LinuxSyslog
+  properties: {syslogName: auth, syslogSeverities: [{severity: err}]}
+EOF
+wait_for 120 "team-a's Cluster Ready" ready clusters.operationalinsights.azure.hfl.dev team-a logs
+logged fakearm "request PUT ${la_rg}/clusters/team-a-logs 201" || fail "the fake resource manager saw no Log Analytics cluster made"
+pass "team-a Cluster Ready"
+wait_for 120 "team-a's WorkspacesDataSource Ready" ready workspacesdatasources.operationalinsights.azure.hfl.dev team-a syslog-auth
+logged fakearm "request PUT ${la_rg}/workspaces/team-a-law/dataSources/syslog-auth 201" || fail "the fake resource manager saw no data source made on ASO's Workspace"
+pass "team-a WorkspacesDataSource Ready"
+kubectl -n team-a delete workspacesdatasources.operationalinsights.azure.hfl.dev syslog-auth --timeout=120s
+kubectl -n team-a delete clusters.operationalinsights.azure.hfl.dev logs --timeout=120s
+logged fakearm "request DELETE ${la_rg}/workspaces/team-a-law/dataSources/syslog-auth 200" || fail "the fake resource manager saw no delete of the data source"
+logged fakearm "request DELETE ${la_rg}/clusters/team-a-logs 200" || fail "the fake resource manager saw no delete of the cluster"
+pass "the Log Analytics cluster and the data source are deleted in Resource Manager"
 
 step "keys Azure makes: not written by default, written with config/secret-writer"
 # docs/plan.md §8, question 9. The default install may read Secrets and not

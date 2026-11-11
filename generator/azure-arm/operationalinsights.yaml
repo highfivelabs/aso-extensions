@@ -39,6 +39,20 @@ groupModelConfiguration:
     Destination:
       ResourceId:
         $referenceType: arm # a storage account, an Event Hubs namespace or an event hub
+    Cluster:
+      $exportAs: Cluster
+      $supportedFrom: v0.1.0
+    Workspaces_DataSource:
+      $exportAs: WorkspacesDataSource
+      $supportedFrom: v0.1.0
+    Workspaces_StorageInsightConfig:
+      $exportAs: WorkspacesStorageInsightConfig
+      $supportedFrom: v0.1.0
+    StorageAccount:
+      Id:
+        $referenceType: arm # the storage account a storage insight config reads
+      Key:
+        $importSecretMode: required # the storage account's access key, from a Secret
     QueryPack:
       $exportAs: QueryPack
       $supportedFrom: v0.1.0

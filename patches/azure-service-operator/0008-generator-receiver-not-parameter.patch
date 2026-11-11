@@ -1,0 +1,42 @@
+diff --git a/v2/tools/generator/internal/astmodel/identifier_factory.go b/v2/tools/generator/internal/astmodel/identifier_factory.go
+index 46b4245..16a9073 100644
+--- a/v2/tools/generator/internal/astmodel/identifier_factory.go
++++ b/v2/tools/generator/internal/astmodel/identifier_factory.go
+@@ -6,6 +6,7 @@
+ package astmodel
+ 
+ import (
++	"os"
+ 	"regexp"
+ 	"strings"
+ 	"sync"
+@@ -238,7 +239,7 @@ func (factory *identifierFactory) CreateReceiver(name string) string {
+ 	if len(words) > 1 {
+ 		lowerBase := strings.ToLower(base)
+ 		_, reserved := factory.reservedWords[lowerBase]
+-		if reserved || len(base) <= 3 || forbiddenReceiverNames.Contains(lowerBase) {
++		if reserved || len(base) <= 3 || isForbiddenReceiverName(lowerBase) {
+ 			base = words[len(words)-2] + base
+ 		}
+ 	}
+@@ -303,6 +304,20 @@ func createForbiddenReceiverSuffixes() set.Set[string] {
+ // (e.g. a type ending in "Storage" yields receiver "storage", clashing with the storage subpackage alias).
+ var forbiddenReceiverNames = set.Make(strings.ToLower(ARMPackageName), strings.ToLower(StoragePackageName))
+ 
++// Modified by High Five Labs: with ASO_GENERATOR_RECEIVER_NOT_PARAMETER set,
++// a receiver may not be named after the parameter of a generated conversion
++// function either ("source" or "destination"): a type ending in "Source"
++// (Log Analytics' Workspaces_DataSource) yielded receiver "source", which
++// the AssignProperties_From_... parameter then shadowed, and the storage
++// conversions did not compile.
++func isForbiddenReceiverName(lowerBase string) bool {
++	if forbiddenReceiverNames.Contains(lowerBase) {
++		return true
++	}
++
++	return os.Getenv("ASO_GENERATOR_RECEIVER_NOT_PARAMETER") != "" && (lowerBase == "source" || lowerBase == "destination")
++}
++
+ func (factory *identifierFactory) CreateGroupName(group string) string {
+ 	return strings.TrimPrefix(strings.ToLower(group), "microsoft.")
+ }
