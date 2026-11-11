@@ -46,10 +46,15 @@ the perimeter is deleted in Resource Manager
 the scope map is deleted in Resource Manager
 the run command is deleted in Resource Manager
 the vault is deleted in Resource Manager
+team-a RegistriesTask Ready
+the registry task is deleted in Resource Manager
 team-a ManagementGroup Ready
 team-a ManagementGroupsSubscription Ready
 team-b ManagementGroup refused
 the management group and its subscription placement are deleted
+team-a ManagedClustersManagedNamespace Ready
+team-a Snapshot Ready
+the managed namespace and the snapshot are deleted in Resource Manager
 team-a TagSet Ready
 team-b TagSet refused
 the tags are deleted in Resource Manager
@@ -58,10 +63,15 @@ team-a PolicyAssignment Ready
 team-a PolicyAssignment at the management group Ready
 team-b PolicyDefinition refused
 the policy assignments and definition are deleted
+team-a Solution Ready
+the Operations Management solution is deleted in Resource Manager
 team-a PolicyRemediation Ready
 team-a PolicyAttestation Ready
 team-b PolicyAttestation refused
 the policy remediation and attestation are deleted
+team-a LogProfile Ready
+team-a WorkbookTemplate Ready
+the log profile and the workbook template are deleted
 team-a RoleEligibilityScheduleRequest Ready
 team-b RoleEligibilityScheduleRequest refused
 the eligibility request is detached, not deleted
@@ -69,10 +79,27 @@ team-a Budget Ready
 team-a Export Ready
 team-b Budget refused
 the budget and the cost export are deleted
+# after the lock on team-a-rg is gone: it would block deleting them
+team-a SourceControlConfiguration Ready
+team-a Kubernetes configuration PrivateLinkScope Ready
+the source control configuration and the private link scope are deleted
 team-a ManagementLock owners
 team-a LocalNetworkGateway Ready
 team-a VirtualNetworkGatewayConnection Ready
 the VPN connection and the local network gateway are deleted
+team-a IpGroup Ready
+team-a RouteFilter Ready
+team-a RouteFiltersRouteFilterRule Ready
+team-a ServiceEndpointPolicy Ready
+team-a ServiceEndpointPoliciesServiceEndpointPolicyDefinition Ready
+team-a DnsZonesSOARecord Ready
+team-a PrivateDnsZonesSOARecord Ready
+team-a DnsResolverDomainList Ready
+team-a DnsResolverPolicy Ready
+team-a DnsResolverPoliciesDnsSecurityRule Ready
+team-a DnsResolverPoliciesVirtualNetworkLink Ready
+the IP group, route filter and rule, service endpoint policy and definition, and DNS security policy, rule, link and domain list are deleted
+the SOA record sets' objects are deleted and the record sets left in Azure
 team-a ExpressRouteCircuit Ready
 team-a ExpressRouteCircuitsPeering Ready
 team-a ExpressRouteCircuitsAuthorization Ready
@@ -111,7 +138,21 @@ team-a NetworkManagersSecurityAdminRule Ready: a Default rule
 team-a NetworkManagersSecurityUserConfiguration Ready
 team-a NetworkManagersSecurityUserRuleCollection Ready
 team-a NetworkManagersSecurityUserRule Ready
-the network manager's connectivity, security admin and security user configurations, rule collections and rules are deleted
+team-a NetworkManagersRoutingConfiguration Ready
+team-a NetworkManagersRoutingRuleCollection Ready
+team-a NetworkManagersRoutingRule Ready
+team-a NetworkManagersCommit Ready
+the network manager's commit, connectivity, routing, security admin and security user configurations, rule collections and rules are deleted
+team-a ManagedHSM Ready
+team-a ManagedHSMsKey Ready
+the managed HSM key is detached, not deleted, and the managed HSM is deleted in Resource Manager
+team-a Cluster Ready
+team-a WorkspacesDataSource Ready
+the Log Analytics cluster and the data source are deleted in Resource Manager
 team-a Azure SQL User Ready
 team-b Azure SQL User refused
 the Azure SQL Entra user app-identity is dropped
+team-a DirectoryRoleAssignment Ready: Global Reader
+team-a DirectoryRoleAssignment Ready: User Administrator over an administrative unit
+team-b DirectoryRoleAssignment refused
+the directory role assignments are deleted in Microsoft Graph

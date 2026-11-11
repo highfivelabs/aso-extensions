@@ -6,7 +6,9 @@ same), then this file, then `docs/plan.md` for the reasons. Where this file
 and the plan disagree, the plan is newer or this file is wrong: fix this
 file.
 
-State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, Privileged Identity Management, budgets and cost exports (PR #25), lock owners, site-to-site VPN connections and local network gateways (PR #27), ExpressRoute circuits, peerings, authorizations, Global Reach and ports (PR #28), ExpressRoute gateways and their connections, Virtual WAN with its hubs and their children, and the Virtual WAN VPN gateways, sites, server configurations and point-to-site gateways (foundation rows 1 to 10 and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: the builder put platform foundations first** (see "The queue"). The opt-in Secret writer of `docs/plan.md` §8 question 9 (`config/secret-writer`, PR #30) and the Maintenance `ConfigurationAssignment` (h1, PR #31) were built beside this, from `main`. Row 11 (Virtual Network Manager, `networkManager.json` 2026-03-01) is split into three pull requests, each editing `generator/azure-arm/network.yaml`: (1) the manager, its connections at a subscription and a management group, scope connections, network groups and static members (built 2026-11-10, PR #34, no generator patch, 100% generated); (2) connectivity configurations and the security admin and security user configurations with their rule collections and rules (built 2026-11-10; admin rules are polymorphic, `kind` Custom or Default: `$resourceEmbeddedInParent` on the two leaves, as ASO's `kusto.yaml` does, see "Facts learned the hard way"); (3) routing configurations with their rule collections and rules, and `commits`. The next agent builds the next of these not yet merged (about the older versions: the `--verbose` log's "no body parameter found for PUT operation" on their paths is harmless and needs no patch: it comes from the older spec versions (2022-02-01-preview to 2025-03-01), which declare their parameters at path level, and ASO's `findARMResourceSchema` (`swagger_type_extractor.go`) then uses the path-level list *instead of* the PUT's own ("overriding parameters"), dropping the body; 2026-03-01 declares them per operation, and a probe with `NetworkManagerConnection` exported generated cleanly, 2026-11-09), then on down `docs/coverage/foundation.md`; `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
+State at the writing: 2026-11-09, after management groups, `TagSet`, Azure Policy, policy remediations and attestations, Privileged Identity Management, budgets and cost exports (PR #25), lock owners, site-to-site VPN connections and local network gateways (PR #27), ExpressRoute circuits, peerings, authorizations, Global Reach and ports (PR #28), ExpressRoute gateways and their connections, Virtual WAN with its hubs and their children, and the Virtual WAN VPN gateways, sites, server configurations and point-to-site gateways (foundation rows 1 to 10 and 21; PIM is the first kind with hand-written extensions of a generated kind, see "Facts learned the hard way"; the policy kinds came with generator patch 0006, resources at several scopes, which also changes how later rows are built: see "Facts learned the hard way"). **The queue changed that day: platform foundations came first** (see "The queue"). The opt-in Secret writer of `docs/plan.md` §8 question 9 (`config/secret-writer`, PR #30) and the Maintenance `ConfigurationAssignment` (h1, PR #31) were built beside this, from `main`. Row 11 (Virtual Network Manager, `networkManager.json` 2026-03-01) is split into three pull requests, each editing `generator/azure-arm/network.yaml`: (1) the manager, its connections at a subscription and a management group, scope connections, network groups and static members (built 2026-11-10, PR #34, no generator patch, 100% generated); (2) connectivity configurations and the security admin and security user configurations with their rule collections and rules (built 2026-11-10; admin rules are polymorphic, `kind` Custom or Default: `$resourceEmbeddedInParent` on the two leaves, as ASO's `kusto.yaml` does, see "Facts learned the hard way"); (3) routing configurations with their rule collections and rules, and `commits` (built 2026-11-10, 100% generated, no label beyond `networkGroupId`; row 11 is complete but for IPAM pools and verifier workspaces). The next agent goes on down `docs/coverage/foundation.md` (about the older network manager spec versions: the `--verbose` log's "no body parameter found for PUT operation" on their paths is harmless and needs no patch: it comes from the older spec versions (2022-02-01-preview to 2025-03-01), which declare their parameters at path level, and ASO's `findARMResourceSchema` (`swagger_type_extractor.go`) then uses the path-level list *instead of* the PUT's own ("overriding parameters"), dropping the body; 2026-03-01 declares them per operation, and a probe with `NetworkManagerConnection` exported generated cleanly, 2026-11-09). `BillingSubscriptionAlias` and `Microsoft.Subscription/policies` of row 2 are left (reasons in `docs/plan.md` c8b).
+
+**Two kind agents, 2026-11-10.** One owns `generator/azure-arm/network.yaml` (row 11's later parts, row 12's network leftovers, SQL Entra users, Entra directory roles); the other works down the non-network rows from 13. Row 13 (Key Vault: `ManagedHSM`, `ManagedHSMsKey` and the private endpoint connections of an HSM and of ASO's `Vault`, `docs/plan.md` f13) is built; its ids in `docs/plan.md` §3 are `f<row>` so they do not collide with the `c8` letters of the other agent.
 
 ## What this repository is
 
@@ -20,16 +22,78 @@ have, run as one manager beside ASO. Three sorts, all in groups
 | ARM, hand-written | `ManagementLock` | `pkg/reconcilers/authorization/` (a lock is one type at four scopes, which ASO's generator cannot yet model) |
 | ARM, generated | `authorization.azure.hfl.dev` Azure Policy definitions, set definitions, assignments, exemptions, and PIM eligibility and assignment schedule requests and role management policy assignments (two hand-written extension files, `generator/_extensions/`); `policyinsights.azure.hfl.dev` policy remediations and attestations; `consumption.azure.hfl.dev` `Budget`; `costmanagement.azure.hfl.dev` cost `Export`; `management.azure.hfl.dev` management groups; `resources.azure.hfl.dev` `TagSet`; `app.azure.hfl.dev` Container Apps environment children; `web.azure.hfl.dev` App Service slots, host name bindings, certificates; `operationalinsights.azure.hfl.dev` Log Analytics tables, saved searches, linked services, linked storage accounts, query packs and queries; `insights.azure.hfl.dev` Monitor private link scopes; `network.azure.hfl.dev` network security perimeters, site-to-site VPN connections and local network gateways, ExpressRoute circuits, peerings, authorizations, Global Reach connections, ports, port authorizations, gateways and gateway connections, Virtual WANs, hubs and the hub's connections, route tables, routing intent, BGP connections and IP configurations, VPN gateways with their connections and NAT rules, VPN sites, VPN server configurations and point-to-site gateways (hand-written extensions in `generator/_extensions/network/`); `containerregistry.azure.hfl.dev` registry tokens, scope maps, credential sets, webhooks; `compute`, `devtestlab`, `maintenance` VM extras | ASO's own generator, patched, over the pinned specs; `apis/arm/` |
 
-ARM resources are in scope; the builder said so ("Build them or pull them
-from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
+ARM resources are in scope: build them or take them from upstream, whichever
+is easier (`docs/plan.md` §1, §8 Q6). Prefer, in
 order: skip what ASO has; copy upstream where it exists; generate; hand-write.
+
+## State on 2026-11-10, the second Azure kinds agent (foundation rows 14 to 18)
+
+Built and left open, each from `main` with its passing Spot results in the
+description (not merged; the coordinator merges):
+
+| PR | Row | Kinds | Generator |
+| --- | --- | --- | --- |
+| #45 | 14, part 2 | `operationsmanagement.azure.hfl.dev/v20151101preview` `Solution` | no patch: `$resourceEmbeddedInParent` |
+| #47 | 15 | `containerservice.azure.hfl.dev` `ManagedClustersManagedNamespace`, `ManagedClustersPrivateEndpointConnection`, `Snapshot` (v20260501), `FleetsManagedNamespace` (v20260601) | new external owners `ManagedCluster`, `Fleet` |
+| #49 | 16 | `kubernetesconfiguration.azure.hfl.dev` `SourceControlConfiguration` (v20230501), `PrivateLinkScope`, `PrivateLinkScopesPrivateEndpointConnection` (v20241101preview) | none |
+| #48 | 17 | `containerregistry.azure.hfl.dev` `RegistriesTask` (v20190401), `RegistriesConnectedRegistry`, `RegistriesPrivateEndpointConnection` | none |
+| #51 | 18 (ours) | `insights.azure.hfl.dev` `LogProfile` (v20160301), `WorkbookTemplate` (v20201120) | **patch 0009** |
+
+They conflict with each other (and with #40, #41, #43) only in generated or
+appended places: the coverage outputs, the `fakearm-resources` line of
+`tests/operator/run.sh`, `generator/specs.txt`, `generator/azure-arm.yaml`'s
+imports, and the fake's check list in `pkg/fakecloud/arm/arm.go`. Merge main
+into the next one, keep both sides, rerun `task coverage`. Patch numbers: 0008
+is #41's; 0009 is #51's.
+
+**Next:** the security rows. Row 19 (`DefenderForStorageSetting`): copy it
+from ASO PR #5783, read-only, and record the PR's head in `upstream.yaml`
+`pull_requests` and `UPSTREAM.md`. Then row 20 (Defender plans, contacts,
+settings), 22 (Sentinel, six kinds first), 23, 24.
+
+Facts learned in these rows:
+
+- **A properties type marked `x-ms-azure-resource`** (Operations Management's
+  `SolutionProperties`) is emptied by the embedded-resource remover, which
+  keeps only an `Id`; "lacks `type: object`" was a wrong diagnosis (the
+  generator treats any schema with properties as an object).
+  `$resourceEmbeddedInParent: <Resource>` on the type and its `_STATUS`
+  keeps it whole.
+- **A resource directly under a subscription**
+  (`/subscriptions/{id}/providers/{ns}/{type}/{name}`) got Location scope
+  and its PUT went to a resource group named after it. Patch 0009
+  (`ASO_GENERATOR_SUBSCRIPTION_EXTENSION`) makes it an extension resource
+  owned by the subscription's ARM ID.
+- **A new external owner** needs five places: `generator/external-owners.txt`,
+  the scheme and `OwnerTypes()` in `pkg/controllers/controllers.go`,
+  `hack/generate.sh` (its test CRD into `config/test/aso-crds`),
+  **`config/rbac/role.yaml` (get, list, watch)**, and the footprint in
+  `tests/operator/run.sh`. Without the role, envtest passes and kind fails:
+  the manager's informers are forbidden and nothing reconciles.
+- **On kind, team-a-rg holds a CanNotDelete lock** until the "deleting
+  team-a's objects" step removes it. A kind step whose objects are under
+  team-a-rg must delete them after that: put it after the lock is removed.
+- **Secrets in status types:** `$importSecretMode: required` on the spec
+  type, and a `typeTransformers` `remove` on the `_STATUS` type (registry
+  tasks' tokens). A token *ID* the generator suspects is a secret takes
+  `$importSecretMode: never`.
+- A properties field from a shared common type (common-types v3
+  `PrivateEndpointConnectionProperties.provisioningState`) cannot be removed
+  per group: a transform on it would touch every group's kinds.
+- `hack/specs.sh` failing with "HTTP 400 … could not fetch … from promisor
+  remote" on a large sparse checkout: `git -C .cache/azure-rest-api-specs
+  config http.postBuffer 524288000`. Copying another clone's `.cache` first
+  saves the fetch.
+- The Ubuntu machine's disk was full (about 6 GB free after removing our
+  own clones). Each `_work` clone mirrored there takes about 2 GB; remove your
+  own when done.
 
 ## The queue
 
-**The builder's priority, 2026-11-09:** "everything up through a managed
-Kubernetes cluster is table stakes for a platform team; the adjacent
-foundational things are important for security teams; beyond that,
-application primitives. The OSS module space should guide where we put effort."
+**The priority, 2026-11-09:** everything up through a managed Kubernetes
+cluster is table stakes for a platform team; the foundational services next to
+it matter to security teams; beyond that come application primitives. The open
+source module space guides where the effort goes.
 The ranked list is **`docs/coverage/foundation.md`** (its "queue" tables, rows
 1 to 24; the generated inventory below them lists every resource so nothing is
 missing). Work its rows in order, one pull request per row or a few related
@@ -92,8 +156,15 @@ Then generate `roleAssignmentScheduleRequests` and
 Not in the catalog's order, both answered 2026-11-10: Azure SQL Entra users
 (a1, **built** from ASO PR #5104, `docs/plan.md` "The Azure SQL User"; the
 fake is a TDS server, `pkg/fakecloud/azuresql`) and Entra directory roles
-(c15, build unless ASO's `entra` group has them; it has applications,
-security groups and service principals at the pin, no directory roles).
+(c15, **built** as `entra.azure.hfl.dev/v1` `DirectoryRoleAssignment`, by
+hand on the base reconciler of open ASO PR #5821; ASO's `entra` group has
+applications, security groups and service principals at the pin, no
+directory roles; the fake Microsoft Graph is `pkg/fakecloud/graph`, run on
+kind as `cmd/fakegraph`, and the manager reaches Graph at
+`MICROSOFT_GRAPH_ENDPOINT`). A further Entra kind (directory role
+eligibility through PIM for Graph, administrative units, custom role
+definitions) goes beside it in `pkg/reconcilers/entra/` on the same base and
+client, with the fake extended.
 
 For every kind, before building: recheck upstream read-only (`gh release
 list`, `gh api repos/Azure/azure-service-operator/compare/<pin>...main`,
@@ -166,8 +237,8 @@ Facts learned the hard way:
   nested flattened property stays an object, as `MaintenanceWindow` of a
   maintenance configuration does); **an object schema without `type: object` is dropped as empty** (the
   solutions' `SolutionProperties`); **a resource whose kind ends in `Source`
-  fails to compile** (the receiver `source` collides with the conversion
-  parameter; Log Analytics data sources); **an enum-valued name** (a
+  failed to compile** (the receiver `source` collided with the conversion
+  parameter; Log Analytics data sources; fixed by patch 0008); **an enum-valued name** (a
   multi-valued `Name` parameter) puts the enum in the storage version, which
   then imports the API version, an import cycle: add a `typeTransformers`
   entry turning the enum (`<Resource>_Name_Spec`) into `string`, as
@@ -407,9 +478,37 @@ Facts learned the hard way:
 - A property with `format: arm-id` is a reference already: labelling it
   `$referenceType: arm` fails ("value is not needed because Swagger already
   says it is an ARM reference").
+- **The Microsoft Graph SDK gzips request bodies** (its default middleware,
+  used when the client is nil). A test that hands the SDK a plain
+  `http.Client` skips the middleware and hides it: the first kind run of
+  `DirectoryRoleAssignment` failed with the fake reading `\x1f`. The
+  Graph client (`pkg/reconcilers/entra/client.go`) puts a given client's
+  transport under the SDK's middleware, and the fake Graph takes gzip.
+- A quick envtest loop on the Ubuntu machine, one test only:
+  `bin/setup-envtest use 1.37.0 --bin-dir $PWD/bin/envtest -p path` (an
+  absolute `--bin-dir`; a relative one fails to start etcd) as
+  `KUBEBUILDER_ASSETS`, then `go test ./test/e2e/ -run <Test>`.
 - A property named `owner` in the spec (an attestation's responsible person)
   collides with the Kubernetes `owner`; ASO's generator renames it to
   `properties_owner` (Go `PropertiesOwner`), still sent as `owner`.
+- **Two spec files of one API version in one package** (dnsresolver's
+  `openapi.json` and the network security perimeter's file, both
+  2025-05-01): the generator renames a type both define after its file
+  (`OpenapiSubResource`, `NetworkSecurityPerimeterSubResource`), so a label
+  on the plain name stops applying and the built kinds' Go type changes
+  name (their CRDs do not). Label each renamed type, fix the Go tests.
+- **A resource Azure makes and deletes with its parent** (a zone's SOA
+  record set, row 12): generate it, own it by ASO's parent kind
+  (`generator/external-owners.txt`, the owner's storage type in
+  `controllers.OwnerTypes()` and the scheme, `list`/`watch` in
+  `config/rbac/role.yaml`, its CRD in `hack/generate.sh`'s test CRDs), and
+  give it a `Deleter` that returns `DeleteCompleted` without the DELETE
+  (`soa_record_extensions.go`). ASO's network packages are
+  `v1api<date>`, not `v<date>`.
+- The Ubuntu machine's disk filled (2026-11-10, 0 bytes free) and a sync
+  there failed; the Spot VMs generate as well (`--prep 'task tools'`, the
+  generator in a `--step`, then `gsutil cp` the tarball back), about two
+  minutes a run.
 
 ## Running things: offload and the Ubuntu machine
 
@@ -438,7 +537,7 @@ That is a Spot VM, where both checks run (the operator e2e too, since
   tools` (`--prep`) fetches it and sets up envtest. Pass each task as its own
   `--step` (a wrapper that ends in `echo` hides the failure: one run "passed"
   in 0 s having run nothing). Artifacts are not copied back: `gsutil cp
-  gs://hfl-dev-514205-offload/runs/<id>/offload-artifacts/...`. `task check`,
+  ${OFFLOAD_BUCKET}/runs/<id>/offload-artifacts/...`. `task check`,
   `task coverage` and, since 2026-11-09, `task operator-e2e` run there (16
   CPUs, 62 GB): the image once had Docker 29's containerd image store, which
   could not `kind load` `postgres:17` (`ctr ... content digest ... not
@@ -479,7 +578,7 @@ That is a Spot VM, where both checks run (the operator e2e too, since
   `docs/coverage/foundation.md` are written by hand (mark a row built there).
 - Never edit `third_party/`. A change to ASO is a numbered patch in
   `patches/azure-service-operator/` (0001 exports the framework, 0002 changes
-  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`, 0005 gives children of a tenant scope resource an owner, 0006 makes a resource at several scopes an extension resource, 0007 makes a child built on a `SubResource` a resource (network 2025-05-01 on); 0003 also exports what hand-written extensions need); make the change in the
+  the generator, 0003 exports the ARM reconciler, 0004 lets the generator handle nested `x-ms-client-flatten`, 0005 gives children of a tenant scope resource an owner, 0006 makes a resource at several scopes an extension resource, 0007 makes a child built on a `SubResource` a resource (network 2025-05-01 on); 0008 keeps a receiver from being named `source` or `destination`, the conversion functions' parameters (Log Analytics data sources); 0003 also exports what hand-written extensions need); make the change in the
   checkout, `git diff` it into the patch, then `hack/upstream.sh` re-applies the
   series and `hack/upstream.sh --check` verifies it.
 

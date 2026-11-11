@@ -5,6 +5,9 @@ specification/web
 specification/operationalinsights
 specification/monitor
 specification/network
+specification/dns
+specification/privatedns
+specification/dnsresolver
 specification/containerregistry
 specification/compute
 specification/devtestlabs
@@ -17,3 +20,8 @@ specification/policyinsights
 specification/authorization
 specification/consumption
 specification/cost-management
+specification/keyvault
+specification/operationsmanagement
+specification/containerservice
+specification/kubernetesconfiguration
+specification/applicationinsights

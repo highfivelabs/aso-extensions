@@ -3,3 +3,4 @@
 /.cache/
 /offload-artifacts/
 /.task/
+/.env
