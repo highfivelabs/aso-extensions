@@ -420,7 +420,17 @@ func conformanceValue(c *conformanceContext, name string, s apiextensionsv1.JSON
 		}
 		return []any{conformanceValue(c, name, *s.Items.Schema)}
 	}
-	// An object (or a schema with no type: free-form JSON).
+	// Free-form JSON (no type): a scalar, which survives the typed round
+	// trip ({} came back empty on the reconciler's update and a required
+	// field was refused).
+	if s.Type == "" && len(s.Properties) == 0 {
+		return "conformance"
+	}
+	// A map: one entry (an empty map is dropped as omitempty).
+	if s.AdditionalProperties != nil && s.AdditionalProperties.Schema != nil && len(s.Properties) == 0 {
+		return map[string]any{"conformance": conformanceValue(c, name, *s.AdditionalProperties.Schema)}
+	}
+	// An object.
 	if _, ok := s.Properties["armId"]; ok {
 		return armRef(c.ref)
 	}

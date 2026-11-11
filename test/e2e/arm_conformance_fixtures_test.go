@@ -143,6 +143,18 @@ func init() {
 		}},
 		"NetworkManagersCommit": {coveredBy: "TestNetworkManagerRouting"},
 	}
+	// AKS: a node pool snapshot names the agent pool it is taken of, which
+	// must exist.
+	f["Snapshot"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		cluster := c.add(c.in("Microsoft.ContainerService/managedClusters/aks"))
+		return map[string]any{"creationData": map[string]any{"sourceResourceReference": armRef(c.add(cluster + "/agentPools/system"))}}
+	}}
+	// Container registry tasks: a step is polymorphic (Docker, encoded or
+	// file task), exactly one set.
+	f["RegistriesTask"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"platform": map[string]any{"os": "Linux"},
+			"step": map[string]any{"encodedTask": map[string]any{"type": "EncodedTask", "encodedTaskContent": "dmVyc2lvbjogdjEuMS4wCnN0ZXBzOiBbXQo="}}}
+	}}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}
