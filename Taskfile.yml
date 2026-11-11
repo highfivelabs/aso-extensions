@@ -131,7 +131,7 @@ tasks:
         KUBEBUILDER_ASSETS="$({{.BIN}}/setup-envtest use {{.ENVTEST_K8S_VERSION}} --bin-dir {{.BIN}}/envtest -p path)" \
           go test {{.PKGS}} -count=1{{if .RUN}} -run '{{.RUN}}'{{end}}
 
-  # Real Azure (docs/live-runs.md). Only these two tasks reach hack/live;
+  # Real Azure (docs/live-runs.md). Only these three tasks reach hack/live;
   # check never calls them (it only compiles test/live with go vet).
   test-live:
     desc: 'The live tests against the real Azure target (AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID, AZURE_CLIENT_ID from the environment, checked by hack/live/azure.env), from an offload VM run with --sa (docs/live-runs.md): ASO_EXT_LIVE=create-real-azure-resources task test-live [TESTS="TestLiveA TestLiveB"]'
@@ -152,6 +152,11 @@ tasks:
         live_creds_start "$(mktemp -d)"
         trap live_creds_stop EXIT
         hack/live/sweep.sh --list
+
+  live-providers:
+    desc: The registration state of every resource provider in the live-test subscription, read only (an offload VM run with --sa)
+    cmds:
+      - hack/live/providers.sh
 
   operator-e2e:
     desc: The install on kind with the fake cloud (tests/operator/run.sh); fails unless it ends with "all checks passed"
