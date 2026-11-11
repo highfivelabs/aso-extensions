@@ -69,6 +69,9 @@ team-a PolicyRemediation Ready
 team-a PolicyAttestation Ready
 team-b PolicyAttestation refused
 the policy remediation and attestation are deleted
+team-a LogProfile Ready
+team-a WorkbookTemplate Ready
+the log profile and the workbook template are deleted
 team-a RoleEligibilityScheduleRequest Ready
 team-b RoleEligibilityScheduleRequest refused
 the eligibility request is detached, not deleted
@@ -84,6 +87,19 @@ team-a ManagementLock owners
 team-a LocalNetworkGateway Ready
 team-a VirtualNetworkGatewayConnection Ready
 the VPN connection and the local network gateway are deleted
+team-a IpGroup Ready
+team-a RouteFilter Ready
+team-a RouteFiltersRouteFilterRule Ready
+team-a ServiceEndpointPolicy Ready
+team-a ServiceEndpointPoliciesServiceEndpointPolicyDefinition Ready
+team-a DnsZonesSOARecord Ready
+team-a PrivateDnsZonesSOARecord Ready
+team-a DnsResolverDomainList Ready
+team-a DnsResolverPolicy Ready
+team-a DnsResolverPoliciesDnsSecurityRule Ready
+team-a DnsResolverPoliciesVirtualNetworkLink Ready
+the IP group, route filter and rule, service endpoint policy and definition, and DNS security policy, rule, link and domain list are deleted
+the SOA record sets' objects are deleted and the record sets left in Azure
 team-a ExpressRouteCircuit Ready
 team-a ExpressRouteCircuitsPeering Ready
 team-a ExpressRouteCircuitsAuthorization Ready

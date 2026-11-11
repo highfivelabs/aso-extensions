@@ -184,8 +184,8 @@ func TestLiveNetworkSecurityPerimeter(t *testing.T) {
 	assoc.Spec = nspapi.NetworkSecurityPerimetersResourceAssociation_Spec{
 		Owner:               owner("perimeter"),
 		AccessMode:          ptr(nspapi.AssociationAccessMode_Learning),
-		PrivateLinkResource: &nspapi.SubResource{Reference: &genruntime.ResourceReference{ARMID: storageID}},
-		Profile:             &nspapi.SubResource{Reference: &genruntime.ResourceReference{ARMID: profileID}},
+		PrivateLinkResource: &nspapi.NetworkSecurityPerimeterSubResource{Reference: &genruntime.ResourceReference{ARMID: storageID}},
+		Profile:             &nspapi.NetworkSecurityPerimeterSubResource{Reference: &genruntime.ResourceReference{ARMID: profileID}},
 	}
 	logging := &nspapi.NetworkSecurityPerimetersLoggingConfiguration{}
 	logging.Namespace, logging.Name = ns, "logging"
