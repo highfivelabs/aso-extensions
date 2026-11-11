@@ -14,7 +14,8 @@
 # REGISTRY_TOKEN (optional), GITHUB_STEP_SUMMARY (optional).
 set -euo pipefail
 
-: "${TAG:?TAG is the version tag}" "${KO_DOCKER_REPO:?}" "${REGISTRY:?}"
+: "${TAG:?TAG is the version tag}" "${REGISTRY:?}"
+: "${KO_DOCKER_REPO:?set KO_DOCKER_REPO, or GCP_PROJECT (the project of the registry; see .env.example)}"
 if [[ -n "${REGISTRY_TOKEN:-}" ]]; then
   ko login "${REGISTRY}" --username oauth2accesstoken --password-stdin <<<"${REGISTRY_TOKEN}"
 fi

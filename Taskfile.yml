@@ -179,7 +179,9 @@ tasks:
     env:
       TAG: '{{.TAG}}'
       REGISTRY: '{{.REGISTRY | default "us-central1-docker.pkg.dev"}}'
-      KO_DOCKER_REPO: '{{.KO_DOCKER_REPO | default "us-central1-docker.pkg.dev/hfl-dev-514205/hfl-oci/aso-extensions"}}'
+      # The registry's project is GCP_PROJECT (.env; release.yml: the
+      # repository variable), unless KO_DOCKER_REPO is given whole.
+      KO_DOCKER_REPO: '{{if .KO_DOCKER_REPO}}{{.KO_DOCKER_REPO}}{{else if .GCP_PROJECT}}us-central1-docker.pkg.dev/{{.GCP_PROJECT}}/hfl-oci/aso-extensions{{end}}'
     cmds:
       - hack/release.sh
 

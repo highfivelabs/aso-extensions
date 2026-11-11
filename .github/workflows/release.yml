@@ -40,19 +40,16 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
       - name: The environment's identifiers
         env:
           GCP_PROJECT: ${{ vars.GCP_PROJECT }}
           GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           RELEASE_SERVICE_ACCOUNT: ${{ vars.RELEASE_SERVICE_ACCOUNT }}
-        run: |
-          for v in GCP_PROJECT GCP_WORKLOAD_IDENTITY_PROVIDER RELEASE_SERVICE_ACCOUNT; do
-            [[ -n "${!v:-}" ]] || { echo "::error::${v} is not set: set the repository variable ${v}"; exit 1; }
-          done
-
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
+        run: hack/ci/require-vars.sh GCP_PROJECT GCP_WORKLOAD_IDENTITY_PROVIDER RELEASE_SERVICE_ACCOUNT
 
       # Go from go.mod, and ko and kubectl at hack/ci/tools.sh's pins (as
       # task ci:tools installs them).
