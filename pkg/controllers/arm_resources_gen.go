@@ -63,6 +63,23 @@ import (
 	resources_customizations "github.com/highfivelabs/aso-extensions/apis/arm/resources/customizations"
 	resources_v20250401 "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20250401"
 	resources_v20250401s "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20250401/storage"
+	security_customizations "github.com/highfivelabs/aso-extensions/apis/arm/security/customizations"
+	security_v20170801p "github.com/highfivelabs/aso-extensions/apis/arm/security/v20170801preview"
+	security_v20170801ps "github.com/highfivelabs/aso-extensions/apis/arm/security/v20170801preview/storage"
+	security_v20190101 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20190101"
+	security_v20190101s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20190101/storage"
+	security_v20220501 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20220501"
+	security_v20220501s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20220501/storage"
+	security_v20230501 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20230501"
+	security_v20230501s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20230501/storage"
+	security_v20231201p "github.com/highfivelabs/aso-extensions/apis/arm/security/v20231201preview"
+	security_v20231201ps "github.com/highfivelabs/aso-extensions/apis/arm/security/v20231201preview/storage"
+	security_v20240801 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20240801"
+	security_v20240801s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20240801/storage"
+	security_v20250601 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250601"
+	security_v20250601s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250601/storage"
+	security_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260701"
+	security_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260701/storage"
 	web_customizations "github.com/highfivelabs/aso-extensions/apis/arm/web/customizations"
 	web_v20260715 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715"
 	web_v20260715s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715/storage"
@@ -502,6 +519,18 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(resources_v20250401.TagSet)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20170801p.AutoProvisioningSetting)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20170801p.WorkspaceSetting)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20190101.AdvancedThreatProtectionSetting)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20220501.Setting)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20230501.ServerVulnerabilityAssessmentsSetting)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20231201p.Automation)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20231201p.SecurityContact)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20240801.CustomRecommendation)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20240801.SecurityStandard)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20240801.StandardAssignment)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20250601.DefenderForStorageSetting)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20260701.Pricing)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.Certificate),
 		Indexes: []registration.Index{
@@ -785,6 +814,30 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(resources_v20250401.TagSet)})
 	result = append(result, &registration.KnownType{Obj: new(resources_v20250401s.TagSet)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20170801p.AutoProvisioningSetting)}, &registration.KnownType{Obj: new(security_v20170801p.WorkspaceSetting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20170801ps.AutoProvisioningSetting)}, &registration.KnownType{Obj: new(security_v20170801ps.WorkspaceSetting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20190101.AdvancedThreatProtectionSetting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20190101s.AdvancedThreatProtectionSetting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20220501.Setting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20220501s.Setting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20230501.ServerVulnerabilityAssessmentsSetting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20230501s.ServerVulnerabilityAssessmentsSetting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20231201p.Automation)}, &registration.KnownType{Obj: new(security_v20231201p.SecurityContact)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20231201ps.Automation)}, &registration.KnownType{Obj: new(security_v20231201ps.SecurityContact)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(security_v20240801.CustomRecommendation)},
+		&registration.KnownType{Obj: new(security_v20240801.SecurityStandard)},
+		&registration.KnownType{Obj: new(security_v20240801.StandardAssignment)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(security_v20240801s.CustomRecommendation)},
+		&registration.KnownType{Obj: new(security_v20240801s.SecurityStandard)},
+		&registration.KnownType{Obj: new(security_v20240801s.StandardAssignment)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20250601.DefenderForStorageSetting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20250601s.DefenderForStorageSetting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20260701.Pricing)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20260701s.Pricing)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
@@ -844,6 +897,22 @@ func createScheme() *runtime.Scheme {
 	_ = recoveryservices_v20260701s.AddToScheme(scheme)
 	_ = resources_v20250401.AddToScheme(scheme)
 	_ = resources_v20250401s.AddToScheme(scheme)
+	_ = security_v20170801p.AddToScheme(scheme)
+	_ = security_v20170801ps.AddToScheme(scheme)
+	_ = security_v20190101.AddToScheme(scheme)
+	_ = security_v20190101s.AddToScheme(scheme)
+	_ = security_v20220501.AddToScheme(scheme)
+	_ = security_v20220501s.AddToScheme(scheme)
+	_ = security_v20230501.AddToScheme(scheme)
+	_ = security_v20230501s.AddToScheme(scheme)
+	_ = security_v20231201p.AddToScheme(scheme)
+	_ = security_v20231201ps.AddToScheme(scheme)
+	_ = security_v20240801.AddToScheme(scheme)
+	_ = security_v20240801s.AddToScheme(scheme)
+	_ = security_v20250601.AddToScheme(scheme)
+	_ = security_v20250601s.AddToScheme(scheme)
+	_ = security_v20260701.AddToScheme(scheme)
+	_ = security_v20260701s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
 	_ = web_v20260715s.AddToScheme(scheme)
 	return scheme
@@ -948,6 +1017,18 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &recoveryservices_customizations.VaultsBackupResourceGuardProxyExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsPrivateEndpointConnectionExtension{})
 	result = append(result, &resources_customizations.TagSetExtension{})
+	result = append(result, &security_customizations.AdvancedThreatProtectionSettingExtension{})
+	result = append(result, &security_customizations.AutoProvisioningSettingExtension{})
+	result = append(result, &security_customizations.AutomationExtension{})
+	result = append(result, &security_customizations.CustomRecommendationExtension{})
+	result = append(result, &security_customizations.DefenderForStorageSettingExtension{})
+	result = append(result, &security_customizations.PricingExtension{})
+	result = append(result, &security_customizations.SecurityContactExtension{})
+	result = append(result, &security_customizations.SecurityStandardExtension{})
+	result = append(result, &security_customizations.ServerVulnerabilityAssessmentsSettingExtension{})
+	result = append(result, &security_customizations.SettingExtension{})
+	result = append(result, &security_customizations.StandardAssignmentExtension{})
+	result = append(result, &security_customizations.WorkspaceSettingExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
 	result = append(result, &web_customizations.SitesHostNameBindingExtension{})
 	result = append(result, &web_customizations.SitesSlotExtension{})
