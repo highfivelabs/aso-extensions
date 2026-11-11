@@ -20,3 +20,4 @@ specification/cost-management
 specification/keyvault
 specification/operationsmanagement
 specification/security
+specification/securityinsights
