@@ -146,6 +146,21 @@ tasks:
     cmds:
       - hack/coverage/run.sh --check
 
+  # The merge gate while GitHub Actions is off (README.md, "The merge
+  # gate"): ci.yml's pull-request jobs on an offload Spot VM, then the
+  # commit status offload/ci on the commit.
+  ci:
+    desc: 'ci.yml''s pull-request jobs (plan, check, operator-e2e) for one commit on an offload Spot VM, then the offload/ci status on it: task ci [SHA=HEAD] [CI_BASE=origin/main].'
+    env:
+      CI_BASE: '{{.CI_BASE}}'
+    cmds:
+      - hack/ci/gate.sh {{.SHA | default "HEAD"}}
+
+  hooks:
+    desc: Install the pre-push hook (hack/hooks/pre-push, which runs task ci) with core.hooksPath.
+    cmds:
+      - git config core.hooksPath hack/hooks
+
   clean:
     desc: Remove bin/
     cmds:

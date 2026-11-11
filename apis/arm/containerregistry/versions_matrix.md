@@ -1,55 +1,174 @@
-| Type Definitions in package "containerregistry" | v20251101 |
-|-------------------------------------------------|-----------|
-| APIVersion                                      | v20251101 |
-| AuthCredential                                  | v20251101 |
-| AuthCredential_STATUS                           | v20251101 |
-| CredentialHealthStatus_STATUS                   | v20251101 |
-| CredentialHealth_STATUS                         | v20251101 |
-| CredentialName                                  | v20251101 |
-| CredentialName_STATUS                           | v20251101 |
-| CredentialSetProperties                         | v20251101 |
-| CredentialSetProperties_STATUS                  | v20251101 |
-| IdentityProperties                              | v20251101 |
-| IdentityProperties_STATUS                       | v20251101 |
-| ProvisioningState_STATUS                        | v20251101 |
-| RegistriesCredentialSet                         | v20251101 |
-| RegistriesCredentialSet_STATUS                  | v20251101 |
-| RegistriesCredentialSet_Spec                    | v20251101 |
-| RegistriesScopeMap                              | v20251101 |
-| RegistriesScopeMap_STATUS                       | v20251101 |
-| RegistriesScopeMap_Spec                         | v20251101 |
-| RegistriesToken                                 | v20251101 |
-| RegistriesToken_STATUS                          | v20251101 |
-| RegistriesToken_Spec                            | v20251101 |
-| RegistriesWebhook                               | v20251101 |
-| RegistriesWebhook_STATUS                        | v20251101 |
-| RegistriesWebhook_Spec                          | v20251101 |
-| ResourceIdentityType                            | v20251101 |
-| ResourceIdentityType_STATUS                     | v20251101 |
-| ScopeMapProperties                              | v20251101 |
-| ScopeMapProperties_STATUS                       | v20251101 |
-| SystemData_CreatedByType_STATUS                 | v20251101 |
-| SystemData_LastModifiedByType_STATUS            | v20251101 |
-| SystemData_STATUS                               | v20251101 |
-| TokenCertificate                                | v20251101 |
-| TokenCertificateName                            | v20251101 |
-| TokenCertificateName_STATUS                     | v20251101 |
-| TokenCertificate_STATUS                         | v20251101 |
-| TokenCredentialsProperties                      | v20251101 |
-| TokenCredentialsProperties_STATUS               | v20251101 |
-| TokenPassword                                   | v20251101 |
-| TokenPasswordName                               | v20251101 |
-| TokenPasswordName_STATUS                        | v20251101 |
-| TokenPassword_STATUS                            | v20251101 |
-| TokenProperties                                 | v20251101 |
-| TokenProperties_STATUS                          | v20251101 |
-| TokenStatus                                     | v20251101 |
-| TokenStatus_STATUS                              | v20251101 |
-| UserAssignedIdentityDetails                     | v20251101 |
-| UserIdentityProperties_STATUS                   | v20251101 |
-| WebhookAction                                   | v20251101 |
-| WebhookAction_STATUS                            | v20251101 |
-| WebhookPropertiesCreateParameters               | v20251101 |
-| WebhookProperties_STATUS                        | v20251101 |
-| WebhookStatus                                   | v20251101 |
-| WebhookStatus_STATUS                            | v20251101 |
+| Type Definitions in package "containerregistry" | v20190401 | v20251101 |
+|-------------------------------------------------|-----------|-----------|
+| APIVersion                                      | v20190401 | v20251101 |
+| ActionsRequired                                 |           | v20251101 |
+| ActionsRequired_STATUS                          |           | v20251101 |
+| ActivationProperties_STATUS                     |           | v20251101 |
+| ActivationStatus_STATUS                         |           | v20251101 |
+| AgentProperties                                 | v20190401 |           |
+| AgentProperties_STATUS                          | v20190401 |           |
+| Argument                                        | v20190401 |           |
+| Argument_STATUS                                 | v20190401 |           |
+| AuthCredential                                  |           | v20251101 |
+| AuthCredential_STATUS                           |           | v20251101 |
+| AuthInfo                                        | v20190401 |           |
+| AuthInfo_STATUS                                 | v20190401 |           |
+| AuthInfo_TokenType                              | v20190401 |           |
+| AuthInfo_TokenType_STATUS                       | v20190401 |           |
+| BaseImageDependency_STATUS                      | v20190401 |           |
+| BaseImageDependency_Type_STATUS                 | v20190401 |           |
+| BaseImageTrigger                                | v20190401 |           |
+| BaseImageTrigger_BaseImageTriggerType           | v20190401 |           |
+| BaseImageTrigger_BaseImageTriggerType_STATUS    | v20190401 |           |
+| BaseImageTrigger_STATUS                         | v20190401 |           |
+| BaseImageTrigger_Status                         | v20190401 |           |
+| BaseImageTrigger_Status_STATUS                  | v20190401 |           |
+| CertificateType_STATUS                          |           | v20251101 |
+| ConnectedRegistryMode                           |           | v20251101 |
+| ConnectedRegistryMode_STATUS                    |           | v20251101 |
+| ConnectedRegistryProperties                     |           | v20251101 |
+| ConnectedRegistryProperties_STATUS              |           | v20251101 |
+| ConnectionState_STATUS                          |           | v20251101 |
+| ConnectionStatus                                |           | v20251101 |
+| ConnectionStatus_STATUS                         |           | v20251101 |
+| CredentialHealthStatus_STATUS                   |           | v20251101 |
+| CredentialHealth_STATUS                         |           | v20251101 |
+| CredentialName                                  |           | v20251101 |
+| CredentialName_STATUS                           |           | v20251101 |
+| CredentialSetProperties                         |           | v20251101 |
+| CredentialSetProperties_STATUS                  |           | v20251101 |
+| Credentials                                     | v20190401 |           |
+| Credentials_STATUS                              | v20190401 |           |
+| CustomRegistryCredentials                       | v20190401 |           |
+| CustomRegistryCredentials_STATUS                | v20190401 |           |
+| DockerBuildStep                                 | v20190401 |           |
+| DockerBuildStep_STATUS                          | v20190401 |           |
+| DockerBuildStep_Type                            | v20190401 |           |
+| DockerBuildStep_Type_STATUS                     | v20190401 |           |
+| EncodedTaskStep                                 | v20190401 |           |
+| EncodedTaskStep_STATUS                          | v20190401 |           |
+| EncodedTaskStep_Type                            | v20190401 |           |
+| EncodedTaskStep_Type_STATUS                     | v20190401 |           |
+| FileTaskStep                                    | v20190401 |           |
+| FileTaskStep_STATUS                             | v20190401 |           |
+| FileTaskStep_Type                               | v20190401 |           |
+| FileTaskStep_Type_STATUS                        | v20190401 |           |
+| GarbageCollectionProperties                     |           | v20251101 |
+| GarbageCollectionProperties_STATUS              |           | v20251101 |
+| IdentityProperties                              | v20190401 | v20251101 |
+| IdentityProperties_STATUS                       | v20190401 | v20251101 |
+| IdentityProperties_Type                         | v20190401 |           |
+| IdentityProperties_Type_STATUS                  | v20190401 |           |
+| LoggingProperties                               |           | v20251101 |
+| LoggingProperties_AuditLogStatus                |           | v20251101 |
+| LoggingProperties_AuditLogStatus_STATUS         |           | v20251101 |
+| LoggingProperties_LogLevel                      |           | v20251101 |
+| LoggingProperties_LogLevel_STATUS               |           | v20251101 |
+| LoggingProperties_STATUS                        |           | v20251101 |
+| LoginServerProperties_STATUS                    |           | v20251101 |
+| ParentProperties                                |           | v20251101 |
+| ParentProperties_STATUS                         |           | v20251101 |
+| PlatformProperties                              | v20190401 |           |
+| PlatformProperties_Architecture                 | v20190401 |           |
+| PlatformProperties_Architecture_STATUS          | v20190401 |           |
+| PlatformProperties_Os                           | v20190401 |           |
+| PlatformProperties_Os_STATUS                    | v20190401 |           |
+| PlatformProperties_STATUS                       | v20190401 |           |
+| PlatformProperties_Variant                      | v20190401 |           |
+| PlatformProperties_Variant_STATUS               | v20190401 |           |
+| PrivateEndpoint                                 |           | v20251101 |
+| PrivateEndpointConnectionProperties             |           | v20251101 |
+| PrivateEndpointConnectionProperties_STATUS      |           | v20251101 |
+| PrivateEndpoint_STATUS                          |           | v20251101 |
+| PrivateLinkServiceConnectionState               |           | v20251101 |
+| PrivateLinkServiceConnectionState_STATUS        |           | v20251101 |
+| ProvisioningState_STATUS                        |           | v20251101 |
+| RegistriesConnectedRegistry                     |           | v20251101 |
+| RegistriesConnectedRegistry_STATUS              |           | v20251101 |
+| RegistriesConnectedRegistry_Spec                |           | v20251101 |
+| RegistriesCredentialSet                         |           | v20251101 |
+| RegistriesCredentialSet_STATUS                  |           | v20251101 |
+| RegistriesCredentialSet_Spec                    |           | v20251101 |
+| RegistriesPrivateEndpointConnection             |           | v20251101 |
+| RegistriesPrivateEndpointConnection_STATUS      |           | v20251101 |
+| RegistriesPrivateEndpointConnection_Spec        |           | v20251101 |
+| RegistriesScopeMap                              |           | v20251101 |
+| RegistriesScopeMap_STATUS                       |           | v20251101 |
+| RegistriesScopeMap_Spec                         |           | v20251101 |
+| RegistriesTask                                  | v20190401 |           |
+| RegistriesTask_STATUS                           | v20190401 |           |
+| RegistriesTask_Spec                             | v20190401 |           |
+| RegistriesToken                                 |           | v20251101 |
+| RegistriesToken_STATUS                          |           | v20251101 |
+| RegistriesToken_Spec                            |           | v20251101 |
+| RegistriesWebhook                               |           | v20251101 |
+| RegistriesWebhook_STATUS                        |           | v20251101 |
+| RegistriesWebhook_Spec                          |           | v20251101 |
+| ResourceIdentityType                            |           | v20251101 |
+| ResourceIdentityType_STATUS                     |           | v20251101 |
+| ScopeMapProperties                              |           | v20251101 |
+| ScopeMapProperties_STATUS                       |           | v20251101 |
+| SecretObject                                    | v20190401 |           |
+| SecretObject_STATUS                             | v20190401 |           |
+| SecretObject_Type                               | v20190401 |           |
+| SecretObject_Type_STATUS                        | v20190401 |           |
+| SetValue                                        | v20190401 |           |
+| SetValue_STATUS                                 | v20190401 |           |
+| SourceProperties                                | v20190401 |           |
+| SourceProperties_STATUS                         | v20190401 |           |
+| SourceProperties_SourceControlType              | v20190401 |           |
+| SourceProperties_SourceControlType_STATUS       | v20190401 |           |
+| SourceRegistryCredentials                       | v20190401 |           |
+| SourceRegistryCredentials_LoginMode             | v20190401 |           |
+| SourceRegistryCredentials_LoginMode_STATUS      | v20190401 |           |
+| SourceRegistryCredentials_STATUS                | v20190401 |           |
+| SourceTrigger                                   | v20190401 |           |
+| SourceTrigger_STATUS                            | v20190401 |           |
+| SourceTrigger_SourceTriggerEvents               | v20190401 |           |
+| SourceTrigger_SourceTriggerEvents_STATUS        | v20190401 |           |
+| SourceTrigger_Status                            | v20190401 |           |
+| SourceTrigger_Status_STATUS                     | v20190401 |           |
+| StatusDetailProperties_STATUS                   |           | v20251101 |
+| SyncProperties                                  |           | v20251101 |
+| SyncProperties_STATUS                           |           | v20251101 |
+| SystemData_CreatedByType_STATUS                 |           | v20251101 |
+| SystemData_LastModifiedByType_STATUS            |           | v20251101 |
+| SystemData_STATUS                               |           | v20251101 |
+| TaskProperties                                  | v20190401 |           |
+| TaskProperties_ProvisioningState_STATUS         | v20190401 |           |
+| TaskProperties_STATUS                           | v20190401 |           |
+| TaskProperties_Status                           | v20190401 |           |
+| TaskProperties_Status_STATUS                    | v20190401 |           |
+| TaskStepProperties                              | v20190401 |           |
+| TaskStepProperties_STATUS                       | v20190401 |           |
+| TimerTrigger                                    | v20190401 |           |
+| TimerTrigger_STATUS                             | v20190401 |           |
+| TimerTrigger_Status                             | v20190401 |           |
+| TimerTrigger_Status_STATUS                      | v20190401 |           |
+| TlsCertificateProperties_STATUS                 |           | v20251101 |
+| TlsProperties_STATUS                            |           | v20251101 |
+| TlsStatus_STATUS                                |           | v20251101 |
+| TokenCertificate                                |           | v20251101 |
+| TokenCertificateName                            |           | v20251101 |
+| TokenCertificateName_STATUS                     |           | v20251101 |
+| TokenCertificate_STATUS                         |           | v20251101 |
+| TokenCredentialsProperties                      |           | v20251101 |
+| TokenCredentialsProperties_STATUS               |           | v20251101 |
+| TokenPassword                                   |           | v20251101 |
+| TokenPasswordName                               |           | v20251101 |
+| TokenPasswordName_STATUS                        |           | v20251101 |
+| TokenPassword_STATUS                            |           | v20251101 |
+| TokenProperties                                 |           | v20251101 |
+| TokenProperties_STATUS                          |           | v20251101 |
+| TokenStatus                                     |           | v20251101 |
+| TokenStatus_STATUS                              |           | v20251101 |
+| TriggerProperties                               | v20190401 |           |
+| TriggerProperties_STATUS                        | v20190401 |           |
+| UserAssignedIdentityDetails                     | v20190401 | v20251101 |
+| UserIdentityProperties_STATUS                   | v20190401 | v20251101 |
+| WebhookAction                                   |           | v20251101 |
+| WebhookAction_STATUS                            |           | v20251101 |
+| WebhookPropertiesCreateParameters               |           | v20251101 |
+| WebhookProperties_STATUS                        |           | v20251101 |
+| WebhookStatus                                   |           | v20251101 |
+| WebhookStatus_STATUS                            |           | v20251101 |

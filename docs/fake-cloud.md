@@ -228,6 +228,23 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   Not modelled: which solution types exist, contained resources locked and
   deleted with the solution, third-party publishers' rules, and the error
   codes (the fake's own).
+- AKS and fleet managed namespaces and node pool snapshots
+  (`Microsoft.ContainerService/managedClusters/managedNamespaces`,
+  `fleets/managedNamespaces`, `snapshots`;
+  `pkg/fakecloud/arm/containerservice.go`): a managed namespace's name is a
+  DNS-1123 label and not `kube-system`, `kube-public` or `kube-node-lease`;
+  a snapshot names an agent pool that exists. Not modelled: the namespace
+  in the cluster, quotas and network policies in effect, propagation to a
+  fleet's members, adoption, and the error codes (the fake's own).
+- Container registry tasks and connected registries
+  (`Microsoft.ContainerRegistry/registries/tasks`, `connectedRegistries`;
+  `pkg/fakecloud/arm/containerregistry.go`): a task gives a platform os and
+  one step of type Docker (with its Dockerfile), EncodedTask or FileTask, and
+  a timeout of 300 to 28,800 seconds; its tokens and custom registry
+  credentials are kept aside (`SharedKey`) and never returned; a connected
+  registry gives a mode and a sync token that exists, and its client tokens
+  exist. Not modelled: runs, triggers firing, activation, the registry's
+  SKU, and the error codes (the fake's own).
 - Maintenance configuration assignments
   (`Microsoft.Maintenance/configurationAssignments` at any scope;
   `pkg/fakecloud/arm/maintenance.go`): an assignment names a maintenance

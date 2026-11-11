@@ -4,6 +4,98 @@ github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101/stor
 APIVersion: Enum (1 value)
 └── "2025-11-01"
 
+RegistriesConnectedRegistry: Resource
+├── Owner: containerregistry/v20251101.Registry
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── ClientTokenReferences: genruntime.ResourceReference[]
+│   ├── GarbageCollection: *Object (3 properties)
+│   │   ├── Enabled: *bool
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Schedule: *string
+│   ├── Logging: *Object (3 properties)
+│   │   ├── AuditLogStatus: *string
+│   │   ├── LogLevel: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Mode: *string
+│   ├── NotificationsList: string[]
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Parent: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Reference: *genruntime.ResourceReference
+│   │   └── SyncProperties: *Object (5 properties)
+│   │       ├── MessageTtl: *string
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── Schedule: *string
+│   │       ├── SyncWindow: *string
+│   │       └── TokenReference: *genruntime.ResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (19 properties)
+    ├── Activation: *Object (2 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Status: *string
+    ├── ClientTokenIds: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionState: *string
+    ├── GarbageCollection: *Object (3 properties)
+    │   ├── Enabled: *bool
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Schedule: *string
+    ├── Id: *string
+    ├── LastActivityTime: *string
+    ├── Logging: *Object (3 properties)
+    │   ├── AuditLogStatus: *string
+    │   ├── LogLevel: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── LoginServer: *Object (3 properties)
+    │   ├── Host: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Tls: *Object (3 properties)
+    │       ├── Certificate: *Object (3 properties)
+    │       │   ├── Location: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── Type: *string
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── Status: *string
+    ├── Mode: *string
+    ├── Name: *string
+    ├── NotificationsList: string[]
+    ├── Parent: *Object (3 properties)
+    │   ├── Id: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── SyncProperties: *Object (7 properties)
+    │       ├── GatewayEndpoint: *string
+    │       ├── LastSyncTime: *string
+    │       ├── MessageTtl: *string
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── Schedule: *string
+    │       ├── SyncWindow: *string
+    │       └── TokenId: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── StatusDetails: Object (6 properties)[]
+    │   ├── Code: *string
+    │   ├── CorrelationId: *string
+    │   ├── Description: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Timestamp: *string
+    │   └── Type: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── Version: *string
+
 RegistriesCredentialSet: Resource
 ├── Owner: containerregistry/v20251101.Registry
 ├── Spec: Object (8 properties)
@@ -52,6 +144,49 @@ RegistriesCredentialSet: Resource
     │       └── PropertyBag: genruntime.PropertyBag
     ├── LoginServer: *string
     ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+RegistriesPrivateEndpointConnection: Resource
+├── Owner: containerregistry/v20251101.Registry
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PrivateEndpoint: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+│   │   ├── ActionsRequired: *string
+│   │   ├── Description: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Status: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+    │   ├── ActionsRequired: *string
+    │   ├── Description: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Status: *string
     ├── PropertyBag: genruntime.PropertyBag
     ├── ProvisioningState: *string
     ├── SystemData: *Object (7 properties)

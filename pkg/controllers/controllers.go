@@ -41,6 +41,8 @@ import (
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
 	asocompute "github.com/Azure/azure-service-operator/v2/api/compute/v20220301/storage"
 	asoregistry "github.com/Azure/azure-service-operator/v2/api/containerregistry/v20251101/storage"
+	asofleet "github.com/Azure/azure-service-operator/v2/api/containerservice/v1api20250301/storage"
+	asoaks "github.com/Azure/azure-service-operator/v2/api/containerservice/v20260501/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
@@ -82,6 +84,8 @@ func CreateScheme() *runtime.Scheme {
 	_ = asoresources.AddToScheme(scheme)
 	_ = asoweb.AddToScheme(scheme)
 	_ = asoworkspace.AddToScheme(scheme)
+	_ = asoaks.AddToScheme(scheme)
+	_ = asofleet.AddToScheme(scheme)
 	_ = asoregistry.AddToScheme(scheme)
 	_ = asocompute.AddToScheme(scheme)
 	_ = asosql.AddToScheme(scheme)
@@ -102,6 +106,8 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asocompute.VirtualMachine{}, Name: "aso_compute_virtualmachine"},
 		{Obj: &asosql.Server{}, Name: "aso_sql_server"},
 		{Obj: &asosql.ServersDatabase{}, Name: "aso_sql_serversdatabase"},
+		{Obj: &asoaks.ManagedCluster{}, Name: "aso_containerservice_managedcluster"},
+		{Obj: &asofleet.Fleet{}, Name: "aso_containerservice_fleet"},
 	}
 }
 

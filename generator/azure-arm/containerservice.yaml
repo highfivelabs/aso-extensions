@@ -1,0 +1,36 @@
+typeFilters:
+  - action: include
+    group: containerservice
+    version: v20260501
+    because: the version of ASO's ManagedCluster (its storage version), the owner of what we generate there
+  - action: include
+    group: containerservice
+    version: v20260601
+    because: >-
+      the first stable fleet API with managed namespaces (ASO's Fleet is at
+      2025-03-01, which has none)
+  - action: prune
+    group: containerservice
+    because: every other version is left alone
+
+groupModelConfiguration:
+  $payloadType: explicitCollections # as ASO's containerservice.yaml
+  2026-05-01:
+    ManagedClusters_ManagedNamespace:
+      $exportAs: ManagedClustersManagedNamespace
+      $supportedFrom: v0.1.0
+    ManagedClusters_PrivateEndpointConnection:
+      $exportAs: ManagedClustersPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Snapshot:
+      $exportAs: Snapshot
+      $supportedFrom: v0.1.0
+    # CreationData.SourceResourceId (the agent pool a snapshot is taken of)
+    # is an ARM reference in the spec already (x-ms-arm-id-details).
+    PrivateEndpoint:
+      Id:
+        $referenceType: arm # the consumer's private endpoint a connection is from
+  2026-06-01:
+    Fleets_ManagedNamespace:
+      $exportAs: FleetsManagedNamespace
+      $supportedFrom: v0.1.0

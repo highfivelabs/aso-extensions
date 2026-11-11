@@ -82,7 +82,7 @@ stable); our generated kinds are pinned to the version they are generated from.
 | 14 | `OperationsManagementSolution`, `WorkspacesDataSource`, `WorkspacesStorageInsightConfig`, `LogAnalyticsCluster` | `OperationsManagement/solutions` (9, preview 2015-11-01-preview), `OperationalInsights/workspaces/dataSources` (4), `storageInsightConfigs` (6), `clusters` (18) | `Workspace` (20 of 23) / tables, data exports, linked services, linked storage, saved searches, query packs | solutions; the rest of a workspace | none found | 1 (solutions) | **first part built 2026-11-10**, generated: `operationalinsights.azure.hfl.dev/v20250701` `Cluster`, `WorkspacesDataSource` (generator patch 0008), `WorkspacesStorageInsightConfig` (the key a Secret reference). **Solutions built 2026-11-10**, generated: `operationsmanagement.azure.hfl.dev/v20151101preview` `Solution`, owned by a resource group, the workspace ASO's `Workspace` by object or an ARM ID (the spec marks `SolutionProperties` `x-ms-azure-resource`, which emptied it; `$resourceEmbeddedInParent: Solution` keeps it, no generator patch). | M |
 | 15 | `ManagedClustersManagedNamespace`, `FleetsManagedNamespace`, `ManagedClustersPrivateEndpointConnection`, `ManagedClustersSnapshot` | `managedClusters/managedNamespaces` (12), `fleets/managedNamespaces` (26), `managedClusters/privateEndpointConnections` (3), `snapshots` (4); spec `containerservice/.../aks/stable/2026-08-01/managedClusters.json` | `ManagedCluster` (309 of 330, ASO 2026-05-01), `ManagedClustersAgentPool` (123 of 126), fleets (partly), maintenance, trusted access, identity bindings / none | managed namespaces; the missing cluster attributes are API-version lag (spec 2026-08-01) | none found | 1 (managed namespaces) | generator | M |
 | 16 | `SourceControlConfiguration`, `KubernetesConfigurationPrivateLinkScope` (+ endpoint connection) | `KubernetesConfiguration/sourceControlConfigurations` (11, legacy Flux v1, extension scope), `privateLinkScopes` (4) + `privateEndpointConnections` (4) | `Extension` (19 of 32), `FluxConfiguration` (70 of 71) / none | the legacy GitOps kind; `Extension` is behind the spec | none found | 0 | generator, arbitrary owner | S |
-| 17 | `RegistriesTask`, `RegistriesConnectedRegistry`, `RegistriesPrivateEndpointConnection` | `registries/tasks` (54), `connectedRegistries` (13), `privateEndpointConnections` (4); spec `containerregistry/.../RegistryTasks/stable/2019-04-01` | `Registry`, replications, cache rules (ASO); credential sets, scope maps, tokens, webhooks (ours) | tasks and connected registries | none found | 0 | generator | M |
+| 17 | `RegistriesTask`, `RegistriesConnectedRegistry`, `RegistriesPrivateEndpointConnection` | `registries/tasks` (54), `connectedRegistries` (13), `privateEndpointConnections` (4); spec `containerregistry/.../RegistryTasks/stable/2019-04-01` | `Registry`, replications, cache rules (ASO); credential sets, scope maps, tokens, webhooks (ours) | tasks and connected registries | none found | 0 | **built 2026-11-10**, generated: `containerregistry.azure.hfl.dev/v20190401` `RegistriesTask` (tokens and credentials Secret references), `v20251101` `RegistriesConnectedRegistry` (its tokens our `RegistriesToken` by reference), `RegistriesPrivateEndpointConnection`; owned by ASO's `Registry` | M |
 | 18 | Insights API lag: `MetricAlert`, `ScheduledQueryRule`, `DataCollectionEndpoint`, `ActivityLogAlert`, `Workbook`; `LogProfile`, `WorkbookTemplate` | `metricAlerts` (9 missing of 41), `scheduledQueryRules` (9 of 39), `dataCollectionEndpoints` (4 of 16) and others, `logprofiles` (8, subscription), `workbooktemplates` (16) | ASO has the kinds, at older API versions / none | newer properties; two more kinds | none found; belongs upstream (`$supportedFrom` a newer version) | 1 (metric alerts) | upstream; here only `LogProfile`, `WorkbookTemplate` by generator | S |
 
 Already covered (nothing to build): virtual networks, subnets, peerings
@@ -125,12 +125,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 23.7% | 33.1% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 26.1% | 30.7% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 2.6% | 88.8% |
 | application | 35 | 823 | 14,821 | 33.1% | 3.8% | 63.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 0.0% | 99.5% |
 
-### platform-foundation: 246 resources (89 with no kind, 64 partly covered, 93 covered)
+### platform-foundation: 246 resources (82 with no kind, 66 partly covered, 98 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -349,36 +349,36 @@ Generated: every resource of the two categories, by the order of the services in
 | 213 | `Microsoft.Monitor/pipelineGroups` | no kind |  |  | 0 / 0 / 52 | resourceGroup | generator | M (52) | 0 |
 | 214 | `Microsoft.Monitor/slis` | no kind |  |  | 0 / 0 / 58 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (58) | 0 |
 | 215 | `Microsoft.Monitor/accounts` | partial, 3 of 6 missing | `monitor/Account` |  | 3 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 0 |
-| 216 | `Microsoft.ContainerService/managedClusters/managedNamespaces` | no kind |  |  | 0 / 0 / 12 | resourceGroup | generator | S (12) | 1 |
-| 217 | `Microsoft.ContainerService/deploymentSafeguards` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 218 | `Microsoft.ContainerService/managedClusters/privateEndpointConnections` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 219 | `Microsoft.ContainerService/snapshots` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 220 | `Microsoft.ContainerService/fleets/managedNamespaces` | no kind |  |  | 0 / 0 / 26 | resourceGroup | generator | M (26) | 0 |
-| 221 | `Microsoft.ContainerService/managedClusters/agentPools` | partial, 3 of 126 missing | `containerservice/ManagedClustersAgentPool` |  | 123 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 1 |
-| 222 | `Microsoft.ContainerService/managedClusters` | partial, 21 of 330 missing | `containerservice/ManagedCluster` |  | 309 / 0 / 21 | resourceGroup | extend: ASO's API version is older than the spec's | S (21) | 1 |
-| 223 | `Microsoft.ContainerService/fleets/members` | partial, 1 of 3 missing | `containerservice/FleetsMember` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 0 |
-| 224 | `Microsoft.ContainerService/fleets/autoUpgradeProfiles` | partial, 3 of 7 missing | `containerservice/FleetsAutoUpgradeProfile` |  | 4 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 0 |
-| 225 | `Microsoft.ContainerService/fleets/updateStrategies` | partial, 10 of 13 missing | `containerservice/FleetsUpdateStrategy` |  | 3 / 0 / 10 | resourceGroup | extend: ASO's API version is older than the spec's | S (10) | 0 |
-| 226 | `Microsoft.ContainerService/fleets/updateRuns` | partial, 11 of 18 missing | `containerservice/FleetsUpdateRun` |  | 7 / 0 / 11 | resourceGroup | extend: ASO's API version is older than the spec's | S (11) | 0 |
-| 227 | `Microsoft.ContainerService/managedClusters/maintenanceConfigurations` | covered | `containerservice/MaintenanceConfiguration` |  | 18 / 0 / 0 | resourceGroup | - | - | 1 |
-| 228 | `Microsoft.ContainerService/managedClusters/identityBindings` | covered | `containerservice/IdentityBinding` |  | 1 / 0 / 0 | resourceGroup | - | - | 0 |
-| 229 | `Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings` | covered | `containerservice/TrustedAccessRoleBinding` |  | 2 / 0 / 0 | resourceGroup | - | - | 0 |
-| 230 | `Microsoft.ContainerService/fleets` | covered | `containerservice/Fleet` |  | 10 / 0 / 0 | resourceGroup | - | - | 0 |
+| 216 | `Microsoft.ContainerService/deploymentSafeguards` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
+| 217 | `Microsoft.ContainerService/managedClusters/agentPools` | partial, 3 of 126 missing | `containerservice/ManagedClustersAgentPool` |  | 123 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 1 |
+| 218 | `Microsoft.ContainerService/managedClusters` | partial, 21 of 330 missing | `containerservice/ManagedCluster` |  | 309 / 0 / 21 | resourceGroup | extend: ASO's API version is older than the spec's | S (21) | 1 |
+| 219 | `Microsoft.ContainerService/fleets/members` | partial, 1 of 3 missing | `containerservice/FleetsMember` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 0 |
+| 220 | `Microsoft.ContainerService/fleets/autoUpgradeProfiles` | partial, 3 of 7 missing | `containerservice/FleetsAutoUpgradeProfile` |  | 4 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 0 |
+| 221 | `Microsoft.ContainerService/fleets/updateStrategies` | partial, 10 of 13 missing | `containerservice/FleetsUpdateStrategy` |  | 3 / 0 / 10 | resourceGroup | extend: ASO's API version is older than the spec's | S (10) | 0 |
+| 222 | `Microsoft.ContainerService/fleets/updateRuns` | partial, 11 of 18 missing | `containerservice/FleetsUpdateRun` |  | 7 / 0 / 11 | resourceGroup | extend: ASO's API version is older than the spec's | S (11) | 0 |
+| 223 | `Microsoft.ContainerService/managedClusters/managedNamespaces` | covered |  | `containerservice/ManagedClustersManagedNamespace` | 0 / 12 / 0 | resourceGroup | - | - | 1 |
+| 224 | `Microsoft.ContainerService/managedClusters/maintenanceConfigurations` | covered | `containerservice/MaintenanceConfiguration` |  | 18 / 0 / 0 | resourceGroup | - | - | 1 |
+| 225 | `Microsoft.ContainerService/managedClusters/identityBindings` | covered | `containerservice/IdentityBinding` |  | 1 / 0 / 0 | resourceGroup | - | - | 0 |
+| 226 | `Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings` | covered | `containerservice/TrustedAccessRoleBinding` |  | 2 / 0 / 0 | resourceGroup | - | - | 0 |
+| 227 | `Microsoft.ContainerService/managedClusters/privateEndpointConnections` | covered |  | `containerservice/ManagedClustersPrivateEndpointConnection` | 0 / 3 / 0 | resourceGroup | - | - | 0 |
+| 228 | `Microsoft.ContainerService/snapshots` | covered |  | `containerservice/Snapshot` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
+| 229 | `Microsoft.ContainerService/fleets` | covered | `containerservice/Fleet` |  | 10 / 0 / 0 | resourceGroup | - | - | 0 |
+| 230 | `Microsoft.ContainerService/fleets/managedNamespaces` | covered |  | `containerservice/FleetsManagedNamespace` | 0 / 26 / 0 | resourceGroup | - | - | 0 |
 | 231 | `Microsoft.KubernetesConfiguration/privateLinkScopes` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
 | 232 | `Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
 | 233 | `Microsoft.KubernetesConfiguration/sourceControlConfigurations` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
 | 234 | `Microsoft.KubernetesConfiguration/extensions` | partial, 13 of 32 missing | `kubernetesconfiguration/Extension` |  | 19 / 0 / 13 | extension | extend: ASO's API version is older than the spec's | S (13) | 0 |
 | 235 | `Microsoft.KubernetesConfiguration/fluxConfigurations` | partial, 1 of 71 missing | `kubernetesconfiguration/FluxConfiguration` |  | 70 / 0 / 1 | extension | extend: ASO's API version is older than the spec's | S (1) | 0 |
-| 236 | `Microsoft.ContainerRegistry/registries/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 237 | `Microsoft.ContainerRegistry/registries/connectedRegistries` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
-| 238 | `Microsoft.ContainerRegistry/registries/tasks` | no kind |  |  | 0 / 0 / 54 | resourceGroup | generator | M (54) | 0 |
-| 239 | `Microsoft.ContainerRegistry/registries/webhooks` | partial, 1 of 7 missing |  | `containerregistry/RegistriesWebhook` | 0 / 6 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 240 | `Microsoft.ContainerRegistry/registries/scopeMaps` | covered |  | `containerregistry/RegistriesScopeMap` | 0 / 2 / 0 | resourceGroup | - | - | 1 |
-| 241 | `Microsoft.ContainerRegistry/registries/cacheRules` | covered | `containerregistry/RegistryCacheRule` |  | 3 / 0 / 0 | resourceGroup | - | - | 1 |
-| 242 | `Microsoft.ContainerRegistry/registries/replications` | covered | `containerregistry/RegistryReplication` |  | 4 / 0 / 0 | resourceGroup | - | - | 1 |
-| 243 | `Microsoft.ContainerRegistry/registries/credentialSets` | covered |  | `containerregistry/RegistriesCredentialSet` | 0 / 6 / 0 | resourceGroup | - | - | 1 |
-| 244 | `Microsoft.ContainerRegistry/registries/tokens` | covered |  | `containerregistry/RegistriesToken` | 0 / 9 / 0 | resourceGroup | - | - | 1 |
-| 245 | `Microsoft.ContainerRegistry/registries` | covered | `containerregistry/Registry` |  | 26 / 0 / 0 | resourceGroup | - | - | 1 |
+| 236 | `Microsoft.ContainerRegistry/registries/webhooks` | partial, 1 of 7 missing |  | `containerregistry/RegistriesWebhook` | 0 / 6 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 237 | `Microsoft.ContainerRegistry/registries/connectedRegistries` | partial, 1 of 13 missing |  | `containerregistry/RegistriesConnectedRegistry` | 0 / 12 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 238 | `Microsoft.ContainerRegistry/registries/tasks` | partial, 2 of 54 missing |  | `containerregistry/RegistriesTask` | 0 / 52 / 2 | resourceGroup | extend: newer API version or property config | S (2) | 0 |
+| 239 | `Microsoft.ContainerRegistry/registries/scopeMaps` | covered |  | `containerregistry/RegistriesScopeMap` | 0 / 2 / 0 | resourceGroup | - | - | 1 |
+| 240 | `Microsoft.ContainerRegistry/registries/cacheRules` | covered | `containerregistry/RegistryCacheRule` |  | 3 / 0 / 0 | resourceGroup | - | - | 1 |
+| 241 | `Microsoft.ContainerRegistry/registries/replications` | covered | `containerregistry/RegistryReplication` |  | 4 / 0 / 0 | resourceGroup | - | - | 1 |
+| 242 | `Microsoft.ContainerRegistry/registries/credentialSets` | covered |  | `containerregistry/RegistriesCredentialSet` | 0 / 6 / 0 | resourceGroup | - | - | 1 |
+| 243 | `Microsoft.ContainerRegistry/registries/tokens` | covered |  | `containerregistry/RegistriesToken` | 0 / 9 / 0 | resourceGroup | - | - | 1 |
+| 244 | `Microsoft.ContainerRegistry/registries` | covered | `containerregistry/Registry` |  | 26 / 0 / 0 | resourceGroup | - | - | 1 |
+| 245 | `Microsoft.ContainerRegistry/registries/privateEndpointConnections` | covered |  | `containerregistry/RegistriesPrivateEndpointConnection` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 246 | `Microsoft.Billing/billingAccounts/billingSubscriptionAliases` | no kind |  |  | 0 / 0 / 17 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (17) | 0 |
 
 ### security-adjacent: 93 resources (82 with no kind, 7 partly covered, 4 covered)
