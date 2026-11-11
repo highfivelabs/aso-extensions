@@ -337,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 1,693 (3.9%) in 101 further resources; uncovered 34,556 (79.7%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 1,823 (4.2%) in 111 further resources; uncovered 34,426 (79.4%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 14.6% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 6.9% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.0% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 16.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 6.9% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.0% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 23.7% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 2.6% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 3.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 0.0% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 26.5% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 2.6% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 3.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 0.0% more by ours.
 
 **Ours.**
 
@@ -366,10 +366,17 @@ Generated; these cannot drift from the data.
 | `authorization.azure.hfl.dev/RoleManagementPolicyAssignment` | `Microsoft.Authorization/roleManagementPolicyAssignments` | ARM wire type of the generated kind (`apis/arm`) |
 | `compute.azure.hfl.dev/VirtualMachinesRunCommand` | `Microsoft.Compute/virtualMachines/runCommands` | ARM wire type of the generated kind (`apis/arm`) |
 | `consumption.azure.hfl.dev/Budget` | `Microsoft.Consumption/budgets` | ARM wire type of the generated kind (`apis/arm`) |
+| `containerregistry.azure.hfl.dev/RegistriesConnectedRegistry` | `Microsoft.ContainerRegistry/registries/connectedRegistries` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesCredentialSet` | `Microsoft.ContainerRegistry/registries/credentialSets` | ARM wire type of the generated kind (`apis/arm`) |
+| `containerregistry.azure.hfl.dev/RegistriesPrivateEndpointConnection` | `Microsoft.ContainerRegistry/registries/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesScopeMap` | `Microsoft.ContainerRegistry/registries/scopeMaps` | ARM wire type of the generated kind (`apis/arm`) |
+| `containerregistry.azure.hfl.dev/RegistriesTask` | `Microsoft.ContainerRegistry/registries/tasks` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesToken` | `Microsoft.ContainerRegistry/registries/tokens` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesWebhook` | `Microsoft.ContainerRegistry/registries/webhooks` | ARM wire type of the generated kind (`apis/arm`) |
+| `containerservice.azure.hfl.dev/FleetsManagedNamespace` | `Microsoft.ContainerService/fleets/managedNamespaces` | ARM wire type of the generated kind (`apis/arm`) |
+| `containerservice.azure.hfl.dev/ManagedClustersManagedNamespace` | `Microsoft.ContainerService/managedClusters/managedNamespaces` | ARM wire type of the generated kind (`apis/arm`) |
+| `containerservice.azure.hfl.dev/ManagedClustersPrivateEndpointConnection` | `Microsoft.ContainerService/managedClusters/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `containerservice.azure.hfl.dev/Snapshot` | `Microsoft.ContainerService/snapshots` | ARM wire type of the generated kind (`apis/arm`) |
 | `costmanagement.azure.hfl.dev/Export` | `Microsoft.CostManagement/exports` | ARM wire type of the generated kind (`apis/arm`) |
 | `dbforpostgresql.azure.hfl.dev/User` | `Microsoft.DBforPostgreSQL/flexibleServers/users` | outside the denominator, not in any percentage |
 | `devtestlab.azure.hfl.dev/Schedule` | `Microsoft.DevTestLab/schedules` | ARM wire type of the generated kind (`apis/arm`) |
@@ -383,6 +390,9 @@ Generated; these cannot drift from the data.
 | `keyvault.azure.hfl.dev/VaultCertificate` | `Microsoft.KeyVault/vaults/certificates (data plane)` | outside the denominator, not in any percentage |
 | `keyvault.azure.hfl.dev/VaultSecret` | `Microsoft.KeyVault/vaults/secrets (data plane)` | outside the denominator, not in any percentage |
 | `keyvault.azure.hfl.dev/VaultsPrivateEndpointConnection` | `Microsoft.KeyVault/vaults/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `kubernetesconfiguration.azure.hfl.dev/PrivateLinkScope` | `Microsoft.KubernetesConfiguration/privateLinkScopes` | ARM wire type of the generated kind (`apis/arm`) |
+| `kubernetesconfiguration.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection` | `Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `kubernetesconfiguration.azure.hfl.dev/SourceControlConfiguration` | `Microsoft.KubernetesConfiguration/sourceControlConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
 | `maintenance.azure.hfl.dev/ConfigurationAssignment` | `Microsoft.Maintenance/configurationAssignments` | ARM wire type of the generated kind (`apis/arm`) |
 | `maintenance.azure.hfl.dev/MaintenanceConfiguration` | `Microsoft.Maintenance/maintenanceConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
 | `management.azure.hfl.dev/ManagementGroup` | `Microsoft.Management/managementGroups` | ARM wire type of the generated kind (`apis/arm`) |

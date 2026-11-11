@@ -4,6 +4,128 @@ github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101
 APIVersion: Enum (1 value)
 └── "2025-11-01"
 
+RegistriesConnectedRegistry: Resource
+├── Owner: Registry
+├── Spec: Object (9 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 50
+│   │   ├── Rule 1: MinLength: 5
+│   │   └── Rule 2: Pattern: "^[a-zA-Z0-9]*$"
+│   ├── ClientTokenReferences: genruntime.ResourceReference[]
+│   ├── GarbageCollection: *Object (2 properties)
+│   │   ├── Enabled: *bool
+│   │   └── Schedule: *string
+│   ├── Logging: *Object (2 properties)
+│   │   ├── AuditLogStatus: *Enum (2 values)
+│   │   │   ├── "Disabled"
+│   │   │   └── "Enabled"
+│   │   └── LogLevel: *Enum (5 values)
+│   │       ├── "Debug"
+│   │       ├── "Error"
+│   │       ├── "Information"
+│   │       ├── "None"
+│   │       └── "Warning"
+│   ├── Mode: *Enum (4 values)
+│   │   ├── "Mirror"
+│   │   ├── "ReadOnly"
+│   │   ├── "ReadWrite"
+│   │   └── "Registry"
+│   ├── NotificationsList: string[]
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Parent: *Object (2 properties)
+│       ├── Reference: *genruntime.ResourceReference
+│       └── SyncProperties: *Object (4 properties)
+│           ├── MessageTtl: *string
+│           ├── Schedule: *string
+│           ├── SyncWindow: *string
+│           └── TokenReference: *genruntime.ResourceReference
+└── Status: Object (18 properties)
+    ├── Activation: *Object (1 property)
+    │   └── Status: *Enum (2 values)
+    │       ├── "Active"
+    │       └── "Inactive"
+    ├── ClientTokenIds: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionState: *Enum (4 values)
+    │   ├── "Offline"
+    │   ├── "Online"
+    │   ├── "Syncing"
+    │   └── "Unhealthy"
+    ├── GarbageCollection: *Object (2 properties)
+    │   ├── Enabled: *bool
+    │   └── Schedule: *string
+    ├── Id: *string
+    ├── LastActivityTime: *string
+    ├── Logging: *Object (2 properties)
+    │   ├── AuditLogStatus: *Enum (2 values)
+    │   │   ├── "Disabled"
+    │   │   └── "Enabled"
+    │   └── LogLevel: *Enum (5 values)
+    │       ├── "Debug"
+    │       ├── "Error"
+    │       ├── "Information"
+    │       ├── "None"
+    │       └── "Warning"
+    ├── LoginServer: *Object (2 properties)
+    │   ├── Host: *string
+    │   └── Tls: *Object (2 properties)
+    │       ├── Certificate: *Object (2 properties)
+    │       │   ├── Location: *string
+    │       │   └── Type: *Enum (1 value)
+    │       │       └── "LocalDirectory"
+    │       └── Status: *Enum (2 values)
+    │           ├── "Disabled"
+    │           └── "Enabled"
+    ├── Mode: *Enum (4 values)
+    │   ├── "Mirror"
+    │   ├── "ReadOnly"
+    │   ├── "ReadWrite"
+    │   └── "Registry"
+    ├── Name: *string
+    ├── NotificationsList: string[]
+    ├── Parent: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── SyncProperties: *Object (6 properties)
+    │       ├── GatewayEndpoint: *string
+    │       ├── LastSyncTime: *string
+    │       ├── MessageTtl: *string
+    │       ├── Schedule: *string
+    │       ├── SyncWindow: *string
+    │       └── TokenId: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── StatusDetails: Object (5 properties)[]
+    │   ├── Code: *string
+    │   ├── CorrelationId: *string
+    │   ├── Description: *string
+    │   ├── Timestamp: *string
+    │   └── Type: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    └── Version: *string
+
 RegistriesCredentialSet: Resource
 ├── Owner: Registry
 ├── Spec: Object (6 properties)
@@ -57,6 +179,66 @@ RegistriesCredentialSet: Resource
     │       └── PrincipalId: *string
     ├── LoginServer: *string
     ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+RegistriesPrivateEndpointConnection: Resource
+├── Owner: Registry
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PrivateEndpoint: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── PrivateLinkServiceConnectionState: *Object (3 properties)
+│       ├── ActionsRequired: *Enum (2 values)
+│       │   ├── "None"
+│       │   └── "Recreate"
+│       ├── Description: *string
+│       └── Status: *Enum (4 values)
+│           ├── "Approved"
+│           ├── "Disconnected"
+│           ├── "Pending"
+│           └── "Rejected"
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (1 property)
+    │   └── Id: *string
+    ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+    │   ├── ActionsRequired: *Enum (2 values)
+    │   │   ├── "None"
+    │   │   └── "Recreate"
+    │   ├── Description: *string
+    │   └── Status: *Enum (4 values)
+    │       ├── "Approved"
+    │       ├── "Disconnected"
+    │       ├── "Pending"
+    │       └── "Rejected"
     ├── ProvisioningState: *Enum (6 values)
     │   ├── "Canceled"
     │   ├── "Creating"

@@ -17,10 +17,17 @@ resources:
 - authorization.azure.hfl.dev_rolemanagementpolicyassignments.yaml
 - compute.azure.hfl.dev_virtualmachinesruncommands.yaml
 - consumption.azure.hfl.dev_budgets.yaml
+- containerregistry.azure.hfl.dev_registriesconnectedregistries.yaml
 - containerregistry.azure.hfl.dev_registriescredentialsets.yaml
+- containerregistry.azure.hfl.dev_registriesprivateendpointconnections.yaml
 - containerregistry.azure.hfl.dev_registriesscopemaps.yaml
+- containerregistry.azure.hfl.dev_registriestasks.yaml
 - containerregistry.azure.hfl.dev_registriestokens.yaml
 - containerregistry.azure.hfl.dev_registrieswebhooks.yaml
+- containerservice.azure.hfl.dev_fleetsmanagednamespaces.yaml
+- containerservice.azure.hfl.dev_managedclustersmanagednamespaces.yaml
+- containerservice.azure.hfl.dev_managedclustersprivateendpointconnections.yaml
+- containerservice.azure.hfl.dev_snapshots.yaml
 - costmanagement.azure.hfl.dev_exports.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
 - devtestlab.azure.hfl.dev_schedules.yaml
@@ -34,6 +41,9 @@ resources:
 - keyvault.azure.hfl.dev_vaultcertificates.yaml
 - keyvault.azure.hfl.dev_vaultsecrets.yaml
 - keyvault.azure.hfl.dev_vaultsprivateendpointconnections.yaml
+- kubernetesconfiguration.azure.hfl.dev_privatelinkscopes.yaml
+- kubernetesconfiguration.azure.hfl.dev_privatelinkscopesprivateendpointconnections.yaml
+- kubernetesconfiguration.azure.hfl.dev_sourcecontrolconfigurations.yaml
 - maintenance.azure.hfl.dev_configurationassignments.yaml
 - maintenance.azure.hfl.dev_maintenanceconfigurations.yaml
 - management.azure.hfl.dev_managementgroups.yaml

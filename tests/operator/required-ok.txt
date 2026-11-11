@@ -46,10 +46,15 @@ the perimeter is deleted in Resource Manager
 the scope map is deleted in Resource Manager
 the run command is deleted in Resource Manager
 the vault is deleted in Resource Manager
+team-a RegistriesTask Ready
+the registry task is deleted in Resource Manager
 team-a ManagementGroup Ready
 team-a ManagementGroupsSubscription Ready
 team-b ManagementGroup refused
 the management group and its subscription placement are deleted
+team-a ManagedClustersManagedNamespace Ready
+team-a Snapshot Ready
+the managed namespace and the snapshot are deleted in Resource Manager
 team-a TagSet Ready
 team-b TagSet refused
 the tags are deleted in Resource Manager
@@ -71,6 +76,10 @@ team-a Budget Ready
 team-a Export Ready
 team-b Budget refused
 the budget and the cost export are deleted
+# after the lock on team-a-rg is gone: it would block deleting them
+team-a SourceControlConfiguration Ready
+team-a Kubernetes configuration PrivateLinkScope Ready
+the source control configuration and the private link scope are deleted
 team-a ManagementLock owners
 team-a LocalNetworkGateway Ready
 team-a VirtualNetworkGatewayConnection Ready
