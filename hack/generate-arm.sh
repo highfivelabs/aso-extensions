@@ -39,7 +39,9 @@ export ASO_GENERATOR_RECEIVER_NOT_PARAMETER=1
 
 rm -rf apis/arm pkg/controllers/arm_resources_gen.go generator/reports
 mkdir -p generator/reports/fragments
-bin/generator gen-types generator/azure-arm.yaml
+# GENERATOR_ARGS: extra flags, such as --verbose (hack/generate-iterate.sh).
+# shellcheck disable=SC2086
+bin/generator gen-types ${GENERATOR_ARGS:-} generator/azure-arm.yaml
 
 # Hand-written extensions of generated kinds (an ASO customizations file, as
 # ASO keeps beside its generated ones: a Claimer, an ARMResourceModifier).
