@@ -50,6 +50,10 @@
 // AKS and fleet managed namespaces and node pool snapshots are checked too
 // (containerservice.go: namespace names, the agent pool a snapshot is of).
 //
+// Container registry tasks and connected registries are checked too
+// (containerregistry.go: a task's step and platform, tokens and credentials
+// kept but not returned, a connected registry's mode and tokens).
+//
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
 package arm
@@ -313,6 +317,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkContainerService(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkContainerRegistry(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

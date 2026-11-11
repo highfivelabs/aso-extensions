@@ -1345,6 +1345,29 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
   || fail "the fake resource manager saw no delete of the vault"
 pass "the vault is deleted in Resource Manager"
 
+step "team-a: a task of the registry (containerregistry.azure.hfl.dev, Registry Tasks)"
+acr_reg="/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg"
+kubectl apply -f - <<EOF
+apiVersion: containerregistry.azure.hfl.dev/v20190401
+kind: RegistriesTask
+metadata: {name: build-app, namespace: team-a}
+spec:
+  owner: {name: reg}
+  location: westus
+  platform: {os: Linux}
+  timeout: 600
+  step:
+    docker: {type: Docker, dockerFilePath: Dockerfile, contextPath: "https://github.com/contoso/app.git", imageNames: ["app:latest"]}
+  trigger:
+    timerTriggers: [{name: nightly, schedule: "0 2 * * *"}]
+EOF
+wait_for 120 "team-a's RegistriesTask Ready" ready registriestasks.containerregistry.azure.hfl.dev team-a build-app
+logged fakearm "request PUT ${acr_reg}/tasks/build-app 201" || fail "the fake resource manager saw no task made on ASO's Registry"
+pass "team-a RegistriesTask Ready"
+kubectl -n team-a delete registriestasks.containerregistry.azure.hfl.dev build-app --timeout=120s
+logged fakearm "request DELETE ${acr_reg}/tasks/build-app 200" || fail "the fake resource manager saw no delete of the task"
+pass "the registry task is deleted in Resource Manager"
+
 kubectl -n team-a delete policyremediations.policyinsights.azure.hfl.dev require-team-tag --timeout=120s
 kubectl -n team-a delete policyattestations.policyinsights.azure.hfl.dev require-team-tag --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.PolicyInsights/remediations/require-team-tag 200" \

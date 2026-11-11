@@ -46,6 +46,8 @@ the perimeter is deleted in Resource Manager
 the scope map is deleted in Resource Manager
 the run command is deleted in Resource Manager
 the vault is deleted in Resource Manager
+team-a RegistriesTask Ready
+the registry task is deleted in Resource Manager
 team-a ManagementGroup Ready
 team-a ManagementGroupsSubscription Ready
 team-b ManagementGroup refused

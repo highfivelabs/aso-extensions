@@ -701,12 +701,12 @@ Microsoft.ContainerInstance,Microsoft.ContainerInstance/ngroups,37,,0,,0,37,fals
 Microsoft.ContainerInstance,Microsoft.ContainerInstance/sandboxGroups,5,,0,,0,5,false,spec_api=2026-07-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries,26,containerregistry.azure.com/Registry,26,,0,0,false,spec_api=2025-11-01; official_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/cacheRules,3,containerregistry.azure.com/RegistryCacheRule,3,,0,0,false,spec_api=2025-11-01; official_api=2025-11-01
-Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/connectedRegistries,13,,0,,0,13,false,spec_api=2025-11-01
+Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/connectedRegistries,13,,0,containerregistry.azure.hfl.dev/RegistriesConnectedRegistry,12,1,false,spec_api=2025-11-01; ours_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/credentialSets,6,,0,containerregistry.azure.hfl.dev/RegistriesCredentialSet,6,0,false,spec_api=2025-11-01; ours_api=2025-11-01
-Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/privateEndpointConnections,4,,0,,0,4,false,spec_api=2025-11-01
+Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/privateEndpointConnections,4,,0,containerregistry.azure.hfl.dev/RegistriesPrivateEndpointConnection,4,0,false,spec_api=2025-11-01; ours_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/replications,4,containerregistry.azure.com/RegistryReplication,4,,0,0,false,spec_api=2025-11-01; official_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/scopeMaps,2,,0,containerregistry.azure.hfl.dev/RegistriesScopeMap,2,0,false,spec_api=2025-11-01; ours_api=2025-11-01
-Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/tasks,54,,0,,0,54,false,spec_api=2019-04-01
+Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/tasks,54,,0,containerregistry.azure.hfl.dev/RegistriesTask,52,2,false,spec_api=2019-04-01; ours_api=2019-04-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/tokens,9,,0,containerregistry.azure.hfl.dev/RegistriesToken,9,0,false,spec_api=2025-11-01; ours_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/webhooks,7,,0,containerregistry.azure.hfl.dev/RegistriesWebhook,6,1,false,spec_api=2025-11-01; ours_api=2025-11-01
 Microsoft.ContainerRegistry.Admin,Microsoft.ContainerRegistry.Admin/locations/configurations,1,,0,,0,1,false,spec_api=2019-11-01-preview; spec-preview-only
