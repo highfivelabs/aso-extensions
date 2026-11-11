@@ -142,6 +142,11 @@ func init() {
 			return map[string]any{"adminRule": map[string]any{"kind": "Custom", "access": "Allow", "direction": "Inbound", "priority": int64(100), "protocol": "Tcp"}}
 		}},
 		"NetworkManagersCommit": {coveredBy: "TestNetworkManagerRouting"},
+
+		// Defender for Cloud: a setting is polymorphic, exactly one leaf set.
+		"Setting": {spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"azureName": "MCAS", "dataExportSettings": map[string]any{"kind": "DataExportSettings", "enabled": true}}
+		}},
 	}
 	for k, v := range f {
 		conformanceFixtures[k] = v

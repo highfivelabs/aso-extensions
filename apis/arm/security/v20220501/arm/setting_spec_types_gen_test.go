@@ -310,11 +310,6 @@ func Setting_SpecGenerator() *rapid.Generator[Setting_Spec] {
 			Draw(t, "DataExport")
 		return result
 	}))
-	gens = append(gens, rapid.Custom(func(t *rapid.T) Setting_Spec {
-		var result Setting_Spec
-		result.Name = rapid.String().Draw(t, "Name")
-		return result
-	}))
 	setting_SpecGenerator = rapid.OneOf(gens...)
 
 	return setting_SpecGenerator

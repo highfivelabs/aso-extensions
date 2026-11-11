@@ -320,11 +320,6 @@ func Setting_STATUSGenerator() *rapid.Generator[Setting_STATUS] {
 			Draw(t, "DataExport")
 		return result
 	}))
-	gens = append(gens, rapid.Custom(func(t *rapid.T) Setting_STATUS {
-		var result Setting_STATUS
-		result.Name = rapid.Ptr(rapid.String(), true).Draw(t, "Name")
-		return result
-	}))
 	setting_STATUSGenerator = rapid.OneOf(gens...)
 
 	return setting_STATUSGenerator
