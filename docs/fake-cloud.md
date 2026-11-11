@@ -22,6 +22,7 @@ run the real client code against them.
 | Entra | an `http.RoundTripper` answering instance discovery, OpenID metadata and `/oauth2/v2.0/token`; azidentity's own credentials run against it, through ASO's `TokenCredentialProvider` hook. A token it issues reads as the tenant, client ID, subject (the client assertion's `sub`, or a digest of the client secret) and audience | `pkg/fakecloud/entra` |
 | Key Vault | the data plane, REST 7.5. Secrets: set, get (latest or a version), update attributes, soft delete, get deleted, recover, purge. Certificates: PEM import (refused unless it holds a certificate and the key that matches it), get, update attributes, soft delete, get deleted, recover, purge, each with the secret of the same name and version Key Vault keeps (the PEM as its value). Soft delete is always on; requests carry a bearer token the test decides to accept | `pkg/fakecloud/keyvault`, `cmd/fakevault` |
 | Azure Database for PostgreSQL | PostgreSQL 17 in Docker (tests) or a pod (kind), TLS on, with `azure_pg_admin`, a password administrator, Entra administrators whose password is the fake token of the identity that may sign in as them, and stand-ins for `pgaadauth_create_principal` and `pgaadauth_create_principal_with_oid` | `pkg/fakecloud/postgres` |
+| Microsoft Graph | directory role assignments (`/beta` and `/v1.0` `roleManagement/directory/roleAssignments`: create, get, list with a `$filter` on `principalId`, `roleDefinitionId` and `directoryScopeId`, delete; no update, as in Graph) over a directory of principals, administrative units and role definitions (four built-in roles by template ID, and any a test adds); refuses an unknown principal, role or administrative unit (404), a scope that is neither `/` nor an administrative unit, both or neither of `directoryScopeId` and `appScopeId` (400) and the same assignment twice (409); takes gzipped bodies, as the Graph SDK's default middleware sends them; requests carry a bearer token the test decides to accept | `pkg/fakecloud/graph`, `cmd/fakegraph` |
 | Azure SQL Database | a TDS 7.4 server over TLS (go-mssqldb runs unchanged against it) with the database users and fixed-role memberships ASO's statements change: sign-in with the SQL administrator's password, a contained user's password, or an access token that signs in as an Entra principal (the server's Entra administrator, or a user created `FROM EXTERNAL PROVIDER`); only an administrator changes users; only a token connection creates Entra users (33159), and only for a name in its directory (33130); names compare without case | `pkg/fakecloud/azuresql`, `cmd/fakesql` |
 | Resource Manager | a store of resources by ARM ID (PUT with the parent existing, GET, DELETE; the body is kept as sent with `id`, `name`, `type` and `provisioningState: Succeeded` added, no properties checked but the management group hierarchy's, Azure Policy's, Privileged Identity Management's, budgets', cost exports', site-to-site VPN's and ExpressRoute's (circuits, ports, gateways), Virtual WAN's (hubs, VPN gateways), Virtual Network Manager's and maintenance assignments' references and scopes; built-in role definitions listed by name; ASO's own ARM client, for the generated kinds, talks to it) and management locks (`Microsoft.Authorization/locks`, 2020-05-01, level, notes and owners kept as sent) at any scope that exists; a lock covers its scope and everything under it: `CanNotDelete` refuses deletes (and deleting a scope that holds a locked resource), `ReadOnly` also refuses writes, each with 409 `ScopeLocked`; locks themselves can always be changed; requests carry a bearer token the test decides to accept | `pkg/fakecloud/arm`, `cmd/fakearm` |
 | ASO | not run: its owner CRDs (generated from ASO's types at the pin) and `FlexibleServer`/`Vault`/`ResourceGroup` objects carrying the status, Ready condition and ARM ID annotation ASO would write | `config/test/aso-crds`, the tests |
@@ -40,6 +41,14 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
 
 ## Where the fakes differ from Azure
 
+- Microsoft Graph: only directory role assignments. Not modelled: the
+  rights the caller needs (Privileged Role Administrator, or the
+  application permission `RoleManagement.ReadWrite.Directory`), roles that
+  cannot be scoped to an administrative unit, application scopes and
+  conditions (sent and kept, not checked), custom role definitions' own
+  API, Graph's replication delay (a new assignment appears in a `$filter`
+  after some seconds), and the error codes and messages (the fake's own,
+  close to Graph's).
 - Azure SQL: no SQL Server runs (SQL Server outside Azure has no Entra
   sign-in and refuses `FROM EXTERNAL PROVIDER`). The fake interprets
   exactly the statements ASO's Azure SQL User sends and refuses anything
@@ -201,6 +210,50 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   above. Not modelled: scale units, the routes a hub learns, a connection's
   routing configuration checked against the hub's route tables, internet
   security and FastPath, and the time a real gateway takes.
+- Log Analytics clusters, data sources and storage insight configs
+  (`Microsoft.OperationalInsights/clusters`, `workspaces/dataSources`,
+  `workspaces/storageInsightConfigs`; `pkg/fakecloud/arm/loganalytics.go`):
+  a cluster's sku is `CapacityReservation` at one of Azure's commitment
+  tiers (100 to 50,000 GB a day); a data source gives its `kind`; a storage
+  insight config names a storage account that exists and gives its key,
+  which is kept aside (`SharedKey`) and never returned, as Azure does not
+  return it. Not modelled: linking workspaces to a cluster, data flowing,
+  what each data source kind takes, and the error codes (the fake's own).
+- Operations Management solutions
+  (`Microsoft.OperationsManagement/solutions`;
+  `pkg/fakecloud/arm/operationsmanagement.go`): a solution names a Log
+  Analytics workspace that exists and gives a plan; a Microsoft gallery
+  solution is named, and its plan is named, `<type>(<workspace>)`, and its
+  product is `OMSGallery/<type>`; contained and referenced resources exist.
+  Not modelled: which solution types exist, contained resources locked and
+  deleted with the solution, third-party publishers' rules, and the error
+  codes (the fake's own).
+- AKS and fleet managed namespaces and node pool snapshots
+  (`Microsoft.ContainerService/managedClusters/managedNamespaces`,
+  `fleets/managedNamespaces`, `snapshots`;
+  `pkg/fakecloud/arm/containerservice.go`): a managed namespace's name is a
+  DNS-1123 label and not `kube-system`, `kube-public` or `kube-node-lease`;
+  a snapshot names an agent pool that exists. Not modelled: the namespace
+  in the cluster, quotas and network policies in effect, propagation to a
+  fleet's members, adoption, and the error codes (the fake's own).
+- Container registry tasks and connected registries
+  (`Microsoft.ContainerRegistry/registries/tasks`, `connectedRegistries`;
+  `pkg/fakecloud/arm/containerregistry.go`): a task gives a platform os and
+  one step of type Docker (with its Dockerfile), EncodedTask or FileTask, and
+  a timeout of 300 to 28,800 seconds; its tokens and custom registry
+  credentials are kept aside (`SharedKey`) and never returned; a connected
+  registry gives a mode and a sync token that exists, and its client tokens
+  exist. Not modelled: runs, triggers firing, activation, the registry's
+  SKU, and the error codes (the fake's own).
+- Source control configurations and Kubernetes configuration private link
+  scopes (`Microsoft.KubernetesConfiguration/sourceControlConfigurations`,
+  `privateLinkScopes`; `pkg/fakecloud/arm/kubernetesconfiguration.go`): a
+  configuration is on a managed or Arc-enabled cluster, gives a repository
+  URL and an operator type of Flux; its protected settings are kept aside
+  (`SharedKey`, under the configuration's ID and `/<name>`) and never
+  returned; a scope names a cluster that exists. Not modelled: Flux in the
+  cluster, the generated SSH key, compliance, connections arriving from a
+  consumer, and the error codes (the fake's own).
 - Activity log profiles and workbook templates
   (`Microsoft.Insights/logprofiles`, `workbooktemplates`;
   `pkg/fakecloud/arm/insights.go`): a log profile is at a subscription, one
@@ -218,6 +271,22 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   configuration (assumed from Azure's documentation of dynamic scoping). Not
   modelled: which resource types a configuration's scope can maintain, the
   machines a filter selects, and the error codes (the fake's own).
+- Managed HSMs, their keys and Key Vault private endpoint connections
+  (`Microsoft.KeyVault/managedHSMs`, `managedHSMs/keys`, and
+  `privateEndpointConnections` of a managed HSM or a vault;
+  `pkg/fakecloud/arm/keyvault.go`): an HSM is made with a `sku`, a
+  `tenantId` and at least one `initialAdminObjectIds`; soft delete cannot be
+  turned off, `softDeleteRetentionInDays` is 7 to 90 and cannot change, and
+  purge protection once on stays on (Azure's documentation of Managed HSM
+  soft delete). A key needs its `kty`; a PUT on a key that exists returns it
+  unchanged (the API's own description) and a key cannot be deleted through
+  Resource Manager (no DELETE in the spec: 405). A private endpoint
+  connection is made by a private endpoint, so a PUT updates one that exists
+  and is refused 404 otherwise (assumed from the API's "Updates the specified
+  private endpoint connection"; tests add the connection as the endpoint
+  would). Not modelled: the security domain download that activates an HSM,
+  regions and network rules taking effect, key versions, rotation and
+  release, the private endpoint itself, and the error codes (the fake's own).
 - Virtual WAN (`Microsoft.Network/virtualWans`, `virtualHubs` and a hub's
   `hubVirtualNetworkConnections`, `hubRouteTables`, `routeTables`,
   `routingIntent`, `bgpConnections`, `ipConfigurations`;
@@ -255,7 +324,8 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   gateway, client VPN profiles, the hour a real gateway takes, and the
   error codes (the fake's own).
 - Virtual Network Manager (`Microsoft.Network/networkManagers` with their
-  `scopeConnections`, `networkGroups` and a group's `staticMembers`, and
+  `scopeConnections`, `networkGroups` and a group's `staticMembers`, their
+  configurations, rule collections and rules, `commits`, and
   `networkManagerConnections` at a subscription or a management group;
   `pkg/fakecloud/arm/networkmanager.go`): a network manager gives
   `networkManagerScopes` with at least one subscription or management group,
@@ -268,8 +338,16 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
   collection apply to network groups of the same manager that exist; an
   admin rule is `Custom` (protocol, direction, access `Allow`, `Deny` or
   `AlwaysAllow`, priority 1 to 4096) or `Default` (a flag); a security user
-  rule gives protocol and direction. Not modelled: configurations reaching
-  the networks (nothing is deployed until committed), the rules a `Default`
+  rule gives protocol and direction. A routing rule collection applies to
+  network groups as above; a routing rule gives a destination (type
+  `AddressPrefix` or `ServiceTag` and its address) and a next hop type,
+  with an address for `VirtualAppliance`. A commit's `commitType` must be
+  in the manager's `networkManagerScopeAccesses`, it needs target
+  locations, and each configuration it names is one of that type in the
+  same manager (400) that exists (404); its target locations become its
+  active locations at once. Not modelled: configurations reaching the
+  networks (a commit is only recorded), a commit's time and per-region
+  failures, configurations a commit leaves out being removed, the rules a `Default`
   rule's flag names, address prefixes checked, two rules with one priority,
   a scope managed by two network managers for the same feature, the other tenant accepting a scope connection, a
   network manager connection's state, dynamic membership through Azure

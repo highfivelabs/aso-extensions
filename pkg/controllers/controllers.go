@@ -41,8 +41,12 @@ import (
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
 	asocompute "github.com/Azure/azure-service-operator/v2/api/compute/v20220301/storage"
 	asoregistry "github.com/Azure/azure-service-operator/v2/api/containerregistry/v20251101/storage"
+	asofleet "github.com/Azure/azure-service-operator/v2/api/containerservice/v1api20250301/storage"
+	asoaks "github.com/Azure/azure-service-operator/v2/api/containerservice/v20260501/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
+	asodns "github.com/Azure/azure-service-operator/v2/api/network/v1api20180501/storage"
+	asoprivatedns "github.com/Azure/azure-service-operator/v2/api/network/v1api20240601/storage"
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
 	asosql "github.com/Azure/azure-service-operator/v2/api/sql/v20250101/storage"
@@ -54,10 +58,12 @@ import (
 
 	authorizationv1 "github.com/highfivelabs/aso-extensions/apis/authorization/v1"
 	postgresqlv1 "github.com/highfivelabs/aso-extensions/apis/dbforpostgresql/v1"
+	entrav1 "github.com/highfivelabs/aso-extensions/apis/entra/v1"
 	keyvaultv1 "github.com/highfivelabs/aso-extensions/apis/keyvault/v1"
 	sqlv1 "github.com/highfivelabs/aso-extensions/apis/sql/v1"
 	authreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/authorization"
 	sqlreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/azuresql"
+	entrareconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/entra"
 	kvreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/keyvault"
 	pgreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/postgresql"
 )
@@ -73,15 +79,20 @@ func CreateScheme() *runtime.Scheme {
 	_ = keyvaultv1.AddToScheme(scheme)
 	_ = authorizationv1.AddToScheme(scheme)
 	_ = sqlv1.AddToScheme(scheme)
+	_ = entrav1.AddToScheme(scheme)
 	_ = asopostgresql.AddToScheme(scheme)
 	_ = asokeyvault.AddToScheme(scheme)
 	_ = asoapp.AddToScheme(scheme)
 	_ = asoresources.AddToScheme(scheme)
 	_ = asoweb.AddToScheme(scheme)
 	_ = asoworkspace.AddToScheme(scheme)
+	_ = asoaks.AddToScheme(scheme)
+	_ = asofleet.AddToScheme(scheme)
 	_ = asoregistry.AddToScheme(scheme)
 	_ = asocompute.AddToScheme(scheme)
 	_ = asosql.AddToScheme(scheme)
+	_ = asodns.AddToScheme(scheme)
+	_ = asoprivatedns.AddToScheme(scheme)
 	return scheme
 }
 
@@ -99,6 +110,10 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asocompute.VirtualMachine{}, Name: "aso_compute_virtualmachine"},
 		{Obj: &asosql.Server{}, Name: "aso_sql_server"},
 		{Obj: &asosql.ServersDatabase{}, Name: "aso_sql_serversdatabase"},
+		{Obj: &asoaks.ManagedCluster{}, Name: "aso_containerservice_managedcluster"},
+		{Obj: &asofleet.Fleet{}, Name: "aso_containerservice_fleet"},
+		{Obj: &asodns.DnsZone{}, Name: "aso_network_dnszone"},
+		{Obj: &asoprivatedns.PrivateDnsZone{}, Name: "aso_network_privatednszone"},
 	}
 }
 
@@ -109,6 +124,8 @@ type Reconcilers struct {
 	VaultCertificate *kvreconciler.VaultCertificateReconciler
 	ManagementLock   *authreconciler.ManagementLockReconciler
 	AzureSQLUser     *sqlreconciler.AzureSQLUserReconciler
+	// DirectoryRoleAssignment reaches Microsoft Graph through its Clients.
+	DirectoryRoleAssignment *entrareconciler.DirectoryRoleAssignmentReconciler
 }
 
 // ARM is what the generated ARM kinds are reconciled with: ASO's generic ARM
@@ -131,11 +148,12 @@ func StorageTypes(
 	cfg outoftree.ConfigValues,
 ) ([]*registration.StorageType, *Reconcilers, error) {
 	rs := &Reconcilers{
-		PostgreSQLUser:   pgreconciler.NewPostgreSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
-		VaultSecret:      kvreconciler.NewVaultSecretReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
-		VaultCertificate: kvreconciler.NewVaultCertificateReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
-		ManagementLock:   authreconciler.NewManagementLockReconciler(kubeClient, positiveConditions, credentialProvider, cfg),
-		AzureSQLUser:     sqlreconciler.NewAzureSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
+		PostgreSQLUser:          pgreconciler.NewPostgreSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
+		VaultSecret:             kvreconciler.NewVaultSecretReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
+		VaultCertificate:        kvreconciler.NewVaultCertificateReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
+		ManagementLock:          authreconciler.NewManagementLockReconciler(kubeClient, positiveConditions, credentialProvider, cfg),
+		AzureSQLUser:            sqlreconciler.NewAzureSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
+		DirectoryRoleAssignment: entrareconciler.NewDirectoryRoleAssignmentReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
 	}
 	generated, err := generatedStorageTypes(scheme, kubeClient, resolver, positiveConditions, arm, cfg)
 	if err != nil {
@@ -196,6 +214,12 @@ func StorageTypes(
 			Watches: []registration.Watch{
 				{Type: &corev1.Secret{}, MakeEventHandler: watchSecretsFactory([]string{".spec.localUser.password"}, &sqlv1.UserList{})},
 			},
+		},
+		{
+			Obj:        &entrav1.DirectoryRoleAssignment{},
+			Name:       "hfl_entra_directoryroleassignment",
+			Reconciler: rs.DirectoryRoleAssignment,
+			Predicate:  standardPredicate(),
 		},
 	}...), rs, nil
 }
