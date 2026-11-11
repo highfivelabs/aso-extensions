@@ -42,6 +42,7 @@ patches:
   - {file: patches/azure-service-operator/0006-generator-multi-scope-extension.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
   - {file: patches/azure-service-operator/0007-generator-subresource-resources.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
   - {file: patches/azure-service-operator/0008-generator-receiver-not-parameter.patch, pin: azure-service-operator, upstream_candidate: "yes"}
+  - {file: patches/azure-service-operator/0009-generator-subscription-scope-extension.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
   - {file: patches/azure-service-operator/0010-generator-more-extension-scopes.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
   - {file: patches/azure-service-operator/0011-generator-rapid-oneof-related.patch, pin: azure-service-operator, upstream_candidate: "yes"}
   - {file: patches/azure-service-operator/0012-extension-resource-children.patch, pin: azure-service-operator, upstream_candidate: "maybe"}

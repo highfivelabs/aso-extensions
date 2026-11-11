@@ -10,12 +10,8 @@ import (
 	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
 	authorization_customizations "github.com/highfivelabs/aso-extensions/apis/arm/authorization/customizations"
-	authorization_v20200501 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501"
-	authorization_v20200501s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501/storage"
 	authorization_v20201001 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20201001"
 	authorization_v20201001s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20201001/storage"
-	authorization_v20241201p "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20241201preview"
-	authorization_v20241201ps "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20241201preview/storage"
 	authorization_v20260101p "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260101preview"
 	authorization_v20260101ps "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260101preview/storage"
 	authorization_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701"
@@ -42,10 +38,11 @@ import (
 	devtestlab_customizations "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/customizations"
 	devtestlab_v20180915 "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915"
 	devtestlab_v20180915s "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915/storage"
-	hardwaresecuritymodules_customizations "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/customizations"
-	hardwaresecuritymodules_v20250331 "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331"
-	hardwaresecuritymodules_v20250331s "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331/storage"
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
+	insights_v20160301 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301"
+	insights_v20160301s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301/storage"
+	insights_v20201120 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20201120"
+	insights_v20201120s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20201120/storage"
 	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
 	insights_v20210901s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901/storage"
 	keyvault_customizations "github.com/highfivelabs/aso-extensions/apis/arm/keyvault/customizations"
@@ -62,9 +59,11 @@ import (
 	management_customizations "github.com/highfivelabs/aso-extensions/apis/arm/management/customizations"
 	management_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/management/v20230401"
 	management_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/management/v20230401/storage"
-	management_v20260801 "github.com/highfivelabs/aso-extensions/apis/arm/management/v20260801"
-	management_v20260801s "github.com/highfivelabs/aso-extensions/apis/arm/management/v20260801/storage"
 	network_customizations "github.com/highfivelabs/aso-extensions/apis/arm/network/customizations"
+	network_v20180501 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20180501"
+	network_v20180501s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20180501/storage"
+	network_v20240601 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20240601"
+	network_v20240601s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20240601/storage"
 	network_v20250501 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501"
 	network_v20250501s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501/storage"
 	network_v20260301 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20260301"
@@ -78,41 +77,12 @@ import (
 	policyinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/customizations"
 	policyinsights_v20241001 "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/v20241001"
 	policyinsights_v20241001s "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/v20241001/storage"
-	purview_customizations "github.com/highfivelabs/aso-extensions/apis/arm/purview/customizations"
-	purview_v20211201 "github.com/highfivelabs/aso-extensions/apis/arm/purview/v20211201"
-	purview_v20211201s "github.com/highfivelabs/aso-extensions/apis/arm/purview/v20211201/storage"
 	recoveryservices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/customizations"
 	recoveryservices_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/v20260701"
 	recoveryservices_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/v20260701/storage"
 	resources_customizations "github.com/highfivelabs/aso-extensions/apis/arm/resources/customizations"
-	resources_v20220201 "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20220201"
-	resources_v20220201s "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20220201/storage"
-	resources_v20230801 "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20230801"
-	resources_v20230801s "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20230801/storage"
 	resources_v20250401 "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20250401"
 	resources_v20250401s "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20250401/storage"
-	resources_v20250701 "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20250701"
-	resources_v20250701s "github.com/highfivelabs/aso-extensions/apis/arm/resources/v20250701/storage"
-	security_customizations "github.com/highfivelabs/aso-extensions/apis/arm/security/customizations"
-	security_v20170801p "github.com/highfivelabs/aso-extensions/apis/arm/security/v20170801preview"
-	security_v20170801ps "github.com/highfivelabs/aso-extensions/apis/arm/security/v20170801preview/storage"
-	security_v20190101 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20190101"
-	security_v20190101s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20190101/storage"
-	security_v20220501 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20220501"
-	security_v20220501s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20220501/storage"
-	security_v20230501 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20230501"
-	security_v20230501s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20230501/storage"
-	security_v20231201p "github.com/highfivelabs/aso-extensions/apis/arm/security/v20231201preview"
-	security_v20231201ps "github.com/highfivelabs/aso-extensions/apis/arm/security/v20231201preview/storage"
-	security_v20240801 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20240801"
-	security_v20240801s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20240801/storage"
-	security_v20250601 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250601"
-	security_v20250601s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250601/storage"
-	security_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260701"
-	security_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260701/storage"
-	securityinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/customizations"
-	securityinsights_v20250901 "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901"
-	securityinsights_v20250901s "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901/storage"
 	web_customizations "github.com/highfivelabs/aso-extensions/apis/arm/web/customizations"
 	web_v20260715 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715"
 	web_v20260715s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715/storage"
@@ -189,8 +159,6 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
-	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.PrivateLinkAssociation)})
-	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.ResourceManagementPrivateLink)})
 	result = append(result, &registration.StorageType{
 		Obj: new(authorization_v20201001.RoleAssignmentScheduleRequest),
 		Indexes: []registration.Index{
@@ -230,13 +198,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20201001.RoleManagementPolicyAssignment)})
-	result = append(result, &registration.StorageType{Obj: new(authorization_v20241201p.PolicyVariable)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260101p.PolicyExemption)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicyAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicyDefinition)})
-	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicyDefinitionsVersion)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicySetDefinition)})
-	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicySetDefinitionsVersion)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.StorageType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.StorageType{
@@ -340,11 +305,9 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
-	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.ScheduledAction)})
 	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Schedule)})
-	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)})
-	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)})
-	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20160301.LogProfile)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20201120.WorkbookTemplate)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
@@ -396,7 +359,12 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroup)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroupsSetting)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroupsSubscription)})
-	result = append(result, &registration.StorageType{Obj: new(management_v20260801.ServiceGroup)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20180501.DnsZonesSOARecord)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20240601.PrivateDnsZonesSOARecord)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.DnsResolverDomainList)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.DnsResolverPoliciesDnsSecurityRule)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.DnsResolverPoliciesVirtualNetworkLink)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.DnsResolverPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimeter)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersLink)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersLoggingConfiguration)})
@@ -488,6 +456,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePort)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.IpGroup)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManager)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagerConnection)})
@@ -506,6 +475,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRuleCollection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.P2sVpnGateway)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFilter)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ServiceEndpointPoliciesServiceEndpointPolicyDefinition)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ServiceEndpointPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHub)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsBgpConnection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsHubRouteTable)})
@@ -633,130 +606,11 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(operationsmanagement_v20151101p.Solution)})
 	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyAttestation)})
 	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyRemediation)})
-	result = append(result, &registration.StorageType{Obj: new(purview_v20211201.Account)})
-	result = append(result, &registration.StorageType{Obj: new(purview_v20211201.AccountsKafkaConfiguration)})
-	result = append(result, &registration.StorageType{Obj: new(purview_v20211201.AccountsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.Vault)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsPrivateEndpointConnection)})
-	result = append(result, &registration.StorageType{Obj: new(resources_v20220201.TemplateSpec)})
-	result = append(result, &registration.StorageType{Obj: new(resources_v20220201.TemplateSpecsVersion)})
-	result = append(result, &registration.StorageType{
-		Obj: new(resources_v20230801.DeploymentScript),
-		Indexes: []registration.Index{
-			{
-				Key:  ".spec.azureCliScript.environmentVariables.secureValue",
-				Func: indexResourcesDeploymentScriptAzureCliSecureValue,
-			},
-			{
-				Key:  ".spec.azureCliScript.storageAccountSettings.storageAccountKey",
-				Func: indexResourcesDeploymentScriptAzureCliStorageAccountKey,
-			},
-			{
-				Key:  ".spec.azurePowerShellScript.environmentVariables.secureValue",
-				Func: indexResourcesDeploymentScriptAzurePowerShellSecureValue,
-			},
-			{
-				Key:  ".spec.azurePowerShellScript.storageAccountSettings.storageAccountKey",
-				Func: indexResourcesDeploymentScriptAzurePowerShellStorageAccountKey,
-			},
-		},
-		Watches: []registration.Watch{
-			{
-				Type: &v1.Secret{},
-				MakeEventHandler: watchSecretsFactory(
-					[]string{
-						".spec.azureCliScript.environmentVariables.secureValue",
-						".spec.azureCliScript.storageAccountSettings.storageAccountKey",
-						".spec.azurePowerShellScript.environmentVariables.secureValue",
-						".spec.azurePowerShellScript.storageAccountSettings.storageAccountKey",
-					},
-					&resources_v20230801.DeploymentScriptList{}),
-			},
-		},
-	})
 	result = append(result, &registration.StorageType{Obj: new(resources_v20250401.TagSet)})
-	result = append(result, &registration.StorageType{Obj: new(resources_v20250701.DeploymentStack)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20170801p.AutoProvisioningSetting)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20170801p.WorkspaceSetting)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20190101.AdvancedThreatProtectionSetting)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20220501.Setting)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20230501.ServerVulnerabilityAssessmentsSetting)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20231201p.Automation)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20231201p.SecurityContact)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20240801.CustomRecommendation)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20240801.SecurityStandard)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20240801.StandardAssignment)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20250601.DefenderForStorageSetting)})
-	result = append(result, &registration.StorageType{Obj: new(security_v20260701.Pricing)})
-	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.AlertRule)})
-	result = append(result, &registration.StorageType{
-		Obj: new(securityinsights_v20250901.AlertRulesAction),
-		Indexes: []registration.Index{
-			{
-				Key:  ".spec.triggerUri",
-				Func: indexSecurityinsightsAlertRulesActionTriggerUri,
-			},
-		},
-		Watches: []registration.Watch{
-			{
-				Type: &v1.Secret{},
-				MakeEventHandler: watchSecretsFactory(
-					[]string{
-						".spec.triggerUri",
-					},
-					&securityinsights_v20250901.AlertRulesActionList{}),
-			},
-		},
-	})
-	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.AutomationRule)})
-	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.ContentPackage)})
-	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.ContentTemplate)})
-	result = append(result, &registration.StorageType{
-		Obj: new(securityinsights_v20250901.DataConnector),
-		Indexes: []registration.Index{
-			{
-				Key:  ".spec.restApiPollerDataConnector.auth.oAuth2.authorizationCode",
-				Func: indexSecurityinsightsDataConnectorAuthorizationCode,
-			},
-			{
-				Key:  ".spec.restApiPollerDataConnector.auth.basic.password",
-				Func: indexSecurityinsightsDataConnectorBasicPassword,
-			},
-			{
-				Key:  ".spec.restApiPollerDataConnector.auth.oAuth2.clientSecret",
-				Func: indexSecurityinsightsDataConnectorClientSecret,
-			},
-			{
-				Key:  ".spec.restApiPollerDataConnector.auth.jwtToken.password",
-				Func: indexSecurityinsightsDataConnectorJwtTokenPassword,
-			},
-			{
-				Key:  ".spec.restApiPollerDataConnector.auth.session.password",
-				Func: indexSecurityinsightsDataConnectorSessionPassword,
-			},
-		},
-		Watches: []registration.Watch{
-			{
-				Type: &v1.Secret{},
-				MakeEventHandler: watchSecretsFactory(
-					[]string{
-						".spec.restApiPollerDataConnector.auth.basic.password",
-						".spec.restApiPollerDataConnector.auth.jwtToken.password",
-						".spec.restApiPollerDataConnector.auth.oAuth2.authorizationCode",
-						".spec.restApiPollerDataConnector.auth.oAuth2.clientSecret",
-						".spec.restApiPollerDataConnector.auth.session.password",
-					},
-					&securityinsights_v20250901.DataConnectorList{}),
-			},
-		},
-	})
-	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.DataConnectorDefinition)})
-	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.OnboardingState)})
-	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.SecurityMLAnalyticsSetting)})
-	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.Watchlist)})
-	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.WatchlistsWatchlistItem)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.Certificate),
 		Indexes: []registration.Index{
@@ -822,8 +676,6 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsJavaComponent)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsManagedCertificate)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsStorage)})
-	result = append(result, &registration.KnownType{Obj: new(authorization_v20200501.PrivateLinkAssociation)}, &registration.KnownType{Obj: new(authorization_v20200501.ResourceManagementPrivateLink)})
-	result = append(result, &registration.KnownType{Obj: new(authorization_v20200501s.PrivateLinkAssociation)}, &registration.KnownType{Obj: new(authorization_v20200501s.ResourceManagementPrivateLink)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(authorization_v20201001.RoleAssignmentScheduleRequest)},
@@ -834,24 +686,18 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(authorization_v20201001s.RoleAssignmentScheduleRequest)},
 		&registration.KnownType{Obj: new(authorization_v20201001s.RoleEligibilityScheduleRequest)},
 		&registration.KnownType{Obj: new(authorization_v20201001s.RoleManagementPolicyAssignment)})
-	result = append(result, &registration.KnownType{Obj: new(authorization_v20241201p.PolicyVariable)})
-	result = append(result, &registration.KnownType{Obj: new(authorization_v20241201ps.PolicyVariable)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20260101p.PolicyExemption)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20260101ps.PolicyExemption)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(authorization_v20260701.PolicyAssignment)},
 		&registration.KnownType{Obj: new(authorization_v20260701.PolicyDefinition)},
-		&registration.KnownType{Obj: new(authorization_v20260701.PolicyDefinitionsVersion)},
-		&registration.KnownType{Obj: new(authorization_v20260701.PolicySetDefinition)},
-		&registration.KnownType{Obj: new(authorization_v20260701.PolicySetDefinitionsVersion)})
+		&registration.KnownType{Obj: new(authorization_v20260701.PolicySetDefinition)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(authorization_v20260701s.PolicyAssignment)},
 		&registration.KnownType{Obj: new(authorization_v20260701s.PolicyDefinition)},
-		&registration.KnownType{Obj: new(authorization_v20260701s.PolicyDefinitionsVersion)},
-		&registration.KnownType{Obj: new(authorization_v20260701s.PolicySetDefinition)},
-		&registration.KnownType{Obj: new(authorization_v20260701s.PolicySetDefinitionsVersion)})
+		&registration.KnownType{Obj: new(authorization_v20260701s.PolicySetDefinition)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301s.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601.Budget)})
@@ -886,20 +732,14 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(containerservice_v20260501s.Snapshot)})
 	result = append(result, &registration.KnownType{Obj: new(containerservice_v20260601.FleetsManagedNamespace)})
 	result = append(result, &registration.KnownType{Obj: new(containerservice_v20260601s.FleetsManagedNamespace)})
-	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601.Export)}, &registration.KnownType{Obj: new(costmanagement_v20260601.ScheduledAction)})
-	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601s.Export)}, &registration.KnownType{Obj: new(costmanagement_v20260601s.ScheduledAction)})
+	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601.Export)})
+	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601s.Export)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
-	result = append(
-		result,
-		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)},
-		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)},
-		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
-	result = append(
-		result,
-		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331s.CloudHsmCluster)},
-		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331s.CloudHsmClustersPrivateEndpointConnection)},
-		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331s.DedicatedHsm)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20160301.LogProfile)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20160301s.LogProfile)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20201120.WorkbookTemplate)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20201120s.WorkbookTemplate)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScope)},
@@ -938,10 +778,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(management_v20230401s.ManagementGroup)},
 		&registration.KnownType{Obj: new(management_v20230401s.ManagementGroupsSetting)},
 		&registration.KnownType{Obj: new(management_v20230401s.ManagementGroupsSubscription)})
-	result = append(result, &registration.KnownType{Obj: new(management_v20260801.ServiceGroup)})
-	result = append(result, &registration.KnownType{Obj: new(management_v20260801s.ServiceGroup)})
+	result = append(result, &registration.KnownType{Obj: new(network_v20180501.DnsZonesSOARecord)})
+	result = append(result, &registration.KnownType{Obj: new(network_v20180501s.DnsZonesSOARecord)})
+	result = append(result, &registration.KnownType{Obj: new(network_v20240601.PrivateDnsZonesSOARecord)})
+	result = append(result, &registration.KnownType{Obj: new(network_v20240601s.PrivateDnsZonesSOARecord)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(network_v20250501.DnsResolverDomainList)},
+		&registration.KnownType{Obj: new(network_v20250501.DnsResolverPoliciesDnsSecurityRule)},
+		&registration.KnownType{Obj: new(network_v20250501.DnsResolverPoliciesVirtualNetworkLink)},
+		&registration.KnownType{Obj: new(network_v20250501.DnsResolverPolicy)},
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimeter)},
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersLink)},
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersLoggingConfiguration)},
@@ -950,6 +796,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersResourceAssociation)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(network_v20250501s.DnsResolverDomainList)},
+		&registration.KnownType{Obj: new(network_v20250501s.DnsResolverPoliciesDnsSecurityRule)},
+		&registration.KnownType{Obj: new(network_v20250501s.DnsResolverPoliciesVirtualNetworkLink)},
+		&registration.KnownType{Obj: new(network_v20250501s.DnsResolverPolicy)},
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimeter)},
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersLink)},
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersLoggingConfiguration)},
@@ -966,6 +816,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteGatewaysExpressRouteConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagerConnection)},
@@ -984,6 +835,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserRule)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserRuleCollection)},
 		&registration.KnownType{Obj: new(network_v20260301.P2sVpnGateway)},
+		&registration.KnownType{Obj: new(network_v20260301.RouteFilter)},
+		&registration.KnownType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)},
+		&registration.KnownType{Obj: new(network_v20260301.ServiceEndpointPoliciesServiceEndpointPolicyDefinition)},
+		&registration.KnownType{Obj: new(network_v20260301.ServiceEndpointPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHub)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsBgpConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsHubRouteTable)},
@@ -1008,6 +863,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteGatewaysExpressRouteConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePortsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301s.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagerConnection)},
@@ -1026,6 +882,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserRule)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserRuleCollection)},
 		&registration.KnownType{Obj: new(network_v20260301s.P2sVpnGateway)},
+		&registration.KnownType{Obj: new(network_v20260301s.RouteFilter)},
+		&registration.KnownType{Obj: new(network_v20260301s.RouteFiltersRouteFilterRule)},
+		&registration.KnownType{Obj: new(network_v20260301s.ServiceEndpointPoliciesServiceEndpointPolicyDefinition)},
+		&registration.KnownType{Obj: new(network_v20260301s.ServiceEndpointPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHub)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsBgpConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsHubRouteTable)},
@@ -1070,16 +930,6 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyAttestation)}, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyRemediation)})
 	result = append(
 		result,
-		&registration.KnownType{Obj: new(purview_v20211201.Account)},
-		&registration.KnownType{Obj: new(purview_v20211201.AccountsKafkaConfiguration)},
-		&registration.KnownType{Obj: new(purview_v20211201.AccountsPrivateEndpointConnection)})
-	result = append(
-		result,
-		&registration.KnownType{Obj: new(purview_v20211201s.Account)},
-		&registration.KnownType{Obj: new(purview_v20211201s.AccountsKafkaConfiguration)},
-		&registration.KnownType{Obj: new(purview_v20211201s.AccountsPrivateEndpointConnection)})
-	result = append(
-		result,
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.Vault)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupPolicy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)},
@@ -1090,64 +940,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupPolicy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupResourceGuardProxy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsPrivateEndpointConnection)})
-	result = append(result, &registration.KnownType{Obj: new(resources_v20220201.TemplateSpec)}, &registration.KnownType{Obj: new(resources_v20220201.TemplateSpecsVersion)})
-	result = append(result, &registration.KnownType{Obj: new(resources_v20220201s.TemplateSpec)}, &registration.KnownType{Obj: new(resources_v20220201s.TemplateSpecsVersion)})
-	result = append(result, &registration.KnownType{Obj: new(resources_v20230801.DeploymentScript)})
-	result = append(result, &registration.KnownType{Obj: new(resources_v20230801s.DeploymentScript)})
 	result = append(result, &registration.KnownType{Obj: new(resources_v20250401.TagSet)})
 	result = append(result, &registration.KnownType{Obj: new(resources_v20250401s.TagSet)})
-	result = append(result, &registration.KnownType{Obj: new(resources_v20250701.DeploymentStack)})
-	result = append(result, &registration.KnownType{Obj: new(resources_v20250701s.DeploymentStack)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20170801p.AutoProvisioningSetting)}, &registration.KnownType{Obj: new(security_v20170801p.WorkspaceSetting)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20170801ps.AutoProvisioningSetting)}, &registration.KnownType{Obj: new(security_v20170801ps.WorkspaceSetting)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20190101.AdvancedThreatProtectionSetting)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20190101s.AdvancedThreatProtectionSetting)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20220501.Setting)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20220501s.Setting)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20230501.ServerVulnerabilityAssessmentsSetting)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20230501s.ServerVulnerabilityAssessmentsSetting)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20231201p.Automation)}, &registration.KnownType{Obj: new(security_v20231201p.SecurityContact)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20231201ps.Automation)}, &registration.KnownType{Obj: new(security_v20231201ps.SecurityContact)})
-	result = append(
-		result,
-		&registration.KnownType{Obj: new(security_v20240801.CustomRecommendation)},
-		&registration.KnownType{Obj: new(security_v20240801.SecurityStandard)},
-		&registration.KnownType{Obj: new(security_v20240801.StandardAssignment)})
-	result = append(
-		result,
-		&registration.KnownType{Obj: new(security_v20240801s.CustomRecommendation)},
-		&registration.KnownType{Obj: new(security_v20240801s.SecurityStandard)},
-		&registration.KnownType{Obj: new(security_v20240801s.StandardAssignment)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20250601.DefenderForStorageSetting)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20250601s.DefenderForStorageSetting)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20260701.Pricing)})
-	result = append(result, &registration.KnownType{Obj: new(security_v20260701s.Pricing)})
-	result = append(
-		result,
-		&registration.KnownType{Obj: new(securityinsights_v20250901.AlertRule)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901.AlertRulesAction)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901.AutomationRule)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901.ContentPackage)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901.ContentTemplate)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901.DataConnector)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901.DataConnectorDefinition)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901.OnboardingState)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901.SecurityMLAnalyticsSetting)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901.Watchlist)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901.WatchlistsWatchlistItem)})
-	result = append(
-		result,
-		&registration.KnownType{Obj: new(securityinsights_v20250901s.AlertRule)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901s.AlertRulesAction)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901s.AutomationRule)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901s.ContentPackage)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901s.ContentTemplate)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901s.DataConnector)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901s.DataConnectorDefinition)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901s.OnboardingState)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901s.SecurityMLAnalyticsSetting)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901s.Watchlist)},
-		&registration.KnownType{Obj: new(securityinsights_v20250901s.WatchlistsWatchlistItem)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
@@ -1169,12 +963,8 @@ func createScheme() *runtime.Scheme {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = app_v20250101.AddToScheme(scheme)
 	_ = app_v20250101s.AddToScheme(scheme)
-	_ = authorization_v20200501.AddToScheme(scheme)
-	_ = authorization_v20200501s.AddToScheme(scheme)
 	_ = authorization_v20201001.AddToScheme(scheme)
 	_ = authorization_v20201001s.AddToScheme(scheme)
-	_ = authorization_v20241201p.AddToScheme(scheme)
-	_ = authorization_v20241201ps.AddToScheme(scheme)
 	_ = authorization_v20260101p.AddToScheme(scheme)
 	_ = authorization_v20260101ps.AddToScheme(scheme)
 	_ = authorization_v20260701.AddToScheme(scheme)
@@ -1195,8 +985,10 @@ func createScheme() *runtime.Scheme {
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
-	_ = hardwaresecuritymodules_v20250331.AddToScheme(scheme)
-	_ = hardwaresecuritymodules_v20250331s.AddToScheme(scheme)
+	_ = insights_v20160301.AddToScheme(scheme)
+	_ = insights_v20160301s.AddToScheme(scheme)
+	_ = insights_v20201120.AddToScheme(scheme)
+	_ = insights_v20201120s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
 	_ = insights_v20210901s.AddToScheme(scheme)
 	_ = keyvault_v20260515.AddToScheme(scheme)
@@ -1209,8 +1001,10 @@ func createScheme() *runtime.Scheme {
 	_ = maintenance_v20230401s.AddToScheme(scheme)
 	_ = management_v20230401.AddToScheme(scheme)
 	_ = management_v20230401s.AddToScheme(scheme)
-	_ = management_v20260801.AddToScheme(scheme)
-	_ = management_v20260801s.AddToScheme(scheme)
+	_ = network_v20180501.AddToScheme(scheme)
+	_ = network_v20180501s.AddToScheme(scheme)
+	_ = network_v20240601.AddToScheme(scheme)
+	_ = network_v20240601s.AddToScheme(scheme)
 	_ = network_v20250501.AddToScheme(scheme)
 	_ = network_v20250501s.AddToScheme(scheme)
 	_ = network_v20260301.AddToScheme(scheme)
@@ -1221,36 +1015,10 @@ func createScheme() *runtime.Scheme {
 	_ = operationsmanagement_v20151101ps.AddToScheme(scheme)
 	_ = policyinsights_v20241001.AddToScheme(scheme)
 	_ = policyinsights_v20241001s.AddToScheme(scheme)
-	_ = purview_v20211201.AddToScheme(scheme)
-	_ = purview_v20211201s.AddToScheme(scheme)
 	_ = recoveryservices_v20260701.AddToScheme(scheme)
 	_ = recoveryservices_v20260701s.AddToScheme(scheme)
-	_ = resources_v20220201.AddToScheme(scheme)
-	_ = resources_v20220201s.AddToScheme(scheme)
-	_ = resources_v20230801.AddToScheme(scheme)
-	_ = resources_v20230801s.AddToScheme(scheme)
 	_ = resources_v20250401.AddToScheme(scheme)
 	_ = resources_v20250401s.AddToScheme(scheme)
-	_ = resources_v20250701.AddToScheme(scheme)
-	_ = resources_v20250701s.AddToScheme(scheme)
-	_ = security_v20170801p.AddToScheme(scheme)
-	_ = security_v20170801ps.AddToScheme(scheme)
-	_ = security_v20190101.AddToScheme(scheme)
-	_ = security_v20190101s.AddToScheme(scheme)
-	_ = security_v20220501.AddToScheme(scheme)
-	_ = security_v20220501s.AddToScheme(scheme)
-	_ = security_v20230501.AddToScheme(scheme)
-	_ = security_v20230501s.AddToScheme(scheme)
-	_ = security_v20231201p.AddToScheme(scheme)
-	_ = security_v20231201ps.AddToScheme(scheme)
-	_ = security_v20240801.AddToScheme(scheme)
-	_ = security_v20240801s.AddToScheme(scheme)
-	_ = security_v20250601.AddToScheme(scheme)
-	_ = security_v20250601s.AddToScheme(scheme)
-	_ = security_v20260701.AddToScheme(scheme)
-	_ = security_v20260701s.AddToScheme(scheme)
-	_ = securityinsights_v20250901.AddToScheme(scheme)
-	_ = securityinsights_v20250901s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
 	_ = web_v20260715s.AddToScheme(scheme)
 	return scheme
@@ -1266,13 +1034,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
 	result = append(result, &authorization_customizations.PolicyAssignmentExtension{})
 	result = append(result, &authorization_customizations.PolicyDefinitionExtension{})
-	result = append(result, &authorization_customizations.PolicyDefinitionsVersionExtension{})
 	result = append(result, &authorization_customizations.PolicyExemptionExtension{})
 	result = append(result, &authorization_customizations.PolicySetDefinitionExtension{})
-	result = append(result, &authorization_customizations.PolicySetDefinitionsVersionExtension{})
-	result = append(result, &authorization_customizations.PolicyVariableExtension{})
-	result = append(result, &authorization_customizations.PrivateLinkAssociationExtension{})
-	result = append(result, &authorization_customizations.ResourceManagementPrivateLinkExtension{})
 	result = append(result, &authorization_customizations.RoleAssignmentScheduleRequestExtension{})
 	result = append(result, &authorization_customizations.RoleEligibilityScheduleRequestExtension{})
 	result = append(result, &authorization_customizations.RoleManagementPolicyAssignmentExtension{})
@@ -1290,14 +1053,12 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &containerservice_customizations.ManagedClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &containerservice_customizations.SnapshotExtension{})
 	result = append(result, &costmanagement_customizations.ExportExtension{})
-	result = append(result, &costmanagement_customizations.ScheduledActionExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
-	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClusterExtension{})
-	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClustersPrivateEndpointConnectionExtension{})
-	result = append(result, &hardwaresecuritymodules_customizations.DedicatedHsmExtension{})
+	result = append(result, &insights_customizations.LogProfileExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
+	result = append(result, &insights_customizations.WorkbookTemplateExtension{})
 	result = append(result, &keyvault_customizations.ManagedHSMExtension{})
 	result = append(result, &keyvault_customizations.ManagedHSMsKeyExtension{})
 	result = append(result, &keyvault_customizations.ManagedHSMsPrivateEndpointConnectionExtension{})
@@ -1310,7 +1071,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &management_customizations.ManagementGroupExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSettingExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSubscriptionExtension{})
-	result = append(result, &management_customizations.ServiceGroupExtension{})
+	result = append(result, &network_customizations.DnsResolverDomainListExtension{})
+	result = append(result, &network_customizations.DnsResolverPoliciesDnsSecurityRuleExtension{})
+	result = append(result, &network_customizations.DnsResolverPoliciesVirtualNetworkLinkExtension{})
+	result = append(result, &network_customizations.DnsResolverPolicyExtension{})
+	result = append(result, &network_customizations.DnsZonesSOARecordExtension{})
 	result = append(result, &network_customizations.ExpressRouteCircuitExtension{})
 	result = append(result, &network_customizations.ExpressRouteCircuitsAuthorizationExtension{})
 	result = append(result, &network_customizations.ExpressRouteCircuitsPeeringExtension{})
@@ -1319,6 +1084,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.ExpressRouteGatewaysExpressRouteConnectionExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortsAuthorizationExtension{})
+	result = append(result, &network_customizations.IpGroupExtension{})
 	result = append(result, &network_customizations.LocalNetworkGatewayExtension{})
 	result = append(result, &network_customizations.NetworkManagerConnectionExtension{})
 	result = append(result, &network_customizations.NetworkManagerExtension{})
@@ -1343,6 +1109,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfilesAccessRuleExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersResourceAssociationExtension{})
 	result = append(result, &network_customizations.P2sVpnGatewayExtension{})
+	result = append(result, &network_customizations.PrivateDnsZonesSOARecordExtension{})
+	result = append(result, &network_customizations.RouteFilterExtension{})
+	result = append(result, &network_customizations.RouteFiltersRouteFilterRuleExtension{})
+	result = append(result, &network_customizations.ServiceEndpointPoliciesServiceEndpointPolicyDefinitionExtension{})
+	result = append(result, &network_customizations.ServiceEndpointPolicyExtension{})
 	result = append(result, &network_customizations.VirtualHubExtension{})
 	result = append(result, &network_customizations.VirtualHubsBgpConnectionExtension{})
 	result = append(result, &network_customizations.VirtualHubsHubRouteTableExtension{})
@@ -1370,41 +1141,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &operationsmanagement_customizations.SolutionExtension{})
 	result = append(result, &policyinsights_customizations.PolicyAttestationExtension{})
 	result = append(result, &policyinsights_customizations.PolicyRemediationExtension{})
-	result = append(result, &purview_customizations.AccountExtension{})
-	result = append(result, &purview_customizations.AccountsKafkaConfigurationExtension{})
-	result = append(result, &purview_customizations.AccountsPrivateEndpointConnectionExtension{})
 	result = append(result, &recoveryservices_customizations.VaultExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsBackupPolicyExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsBackupResourceGuardProxyExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsPrivateEndpointConnectionExtension{})
-	result = append(result, &resources_customizations.DeploymentScriptExtension{})
-	result = append(result, &resources_customizations.DeploymentStackExtension{})
 	result = append(result, &resources_customizations.TagSetExtension{})
-	result = append(result, &resources_customizations.TemplateSpecExtension{})
-	result = append(result, &resources_customizations.TemplateSpecsVersionExtension{})
-	result = append(result, &security_customizations.AdvancedThreatProtectionSettingExtension{})
-	result = append(result, &security_customizations.AutoProvisioningSettingExtension{})
-	result = append(result, &security_customizations.AutomationExtension{})
-	result = append(result, &security_customizations.CustomRecommendationExtension{})
-	result = append(result, &security_customizations.DefenderForStorageSettingExtension{})
-	result = append(result, &security_customizations.PricingExtension{})
-	result = append(result, &security_customizations.SecurityContactExtension{})
-	result = append(result, &security_customizations.SecurityStandardExtension{})
-	result = append(result, &security_customizations.ServerVulnerabilityAssessmentsSettingExtension{})
-	result = append(result, &security_customizations.SettingExtension{})
-	result = append(result, &security_customizations.StandardAssignmentExtension{})
-	result = append(result, &security_customizations.WorkspaceSettingExtension{})
-	result = append(result, &securityinsights_customizations.AlertRuleExtension{})
-	result = append(result, &securityinsights_customizations.AlertRulesActionExtension{})
-	result = append(result, &securityinsights_customizations.AutomationRuleExtension{})
-	result = append(result, &securityinsights_customizations.ContentPackageExtension{})
-	result = append(result, &securityinsights_customizations.ContentTemplateExtension{})
-	result = append(result, &securityinsights_customizations.DataConnectorDefinitionExtension{})
-	result = append(result, &securityinsights_customizations.DataConnectorExtension{})
-	result = append(result, &securityinsights_customizations.OnboardingStateExtension{})
-	result = append(result, &securityinsights_customizations.SecurityMLAnalyticsSettingExtension{})
-	result = append(result, &securityinsights_customizations.WatchlistExtension{})
-	result = append(result, &securityinsights_customizations.WatchlistsWatchlistItemExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
 	result = append(result, &web_customizations.SitesHostNameBindingExtension{})
 	result = append(result, &web_customizations.SitesSlotExtension{})
@@ -1870,197 +1611,6 @@ func indexOperationalinsightsWorkspacesStorageInsightConfigKey(rawObj client.Obj
 		return nil
 	}
 	return obj.Spec.StorageAccount.Key.Index()
-}
-
-// indexResourcesDeploymentScriptAzureCliSecureValue an index function for resources_v20230801.DeploymentScript .spec.azureCliScript.environmentVariables.secureValue
-func indexResourcesDeploymentScriptAzureCliSecureValue(rawObj client.Object) []string {
-	obj, ok := rawObj.(*resources_v20230801.DeploymentScript)
-	if !ok {
-		return nil
-	}
-	var result []string
-	if obj.Spec.AzureCli == nil {
-		return nil
-	}
-	for _, environmentVariableItem := range obj.Spec.AzureCli.EnvironmentVariables {
-		if environmentVariableItem.SecureValue == nil {
-			continue
-		}
-		result = append(result, environmentVariableItem.SecureValue.Index()...)
-	}
-	return result
-}
-
-// indexResourcesDeploymentScriptAzureCliStorageAccountKey an index function for resources_v20230801.DeploymentScript .spec.azureCliScript.storageAccountSettings.storageAccountKey
-func indexResourcesDeploymentScriptAzureCliStorageAccountKey(rawObj client.Object) []string {
-	obj, ok := rawObj.(*resources_v20230801.DeploymentScript)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.AzureCli == nil {
-		return nil
-	}
-	if obj.Spec.AzureCli.StorageAccountSettings == nil {
-		return nil
-	}
-	if obj.Spec.AzureCli.StorageAccountSettings.StorageAccountKey == nil {
-		return nil
-	}
-	return obj.Spec.AzureCli.StorageAccountSettings.StorageAccountKey.Index()
-}
-
-// indexResourcesDeploymentScriptAzurePowerShellSecureValue an index function for resources_v20230801.DeploymentScript .spec.azurePowerShellScript.environmentVariables.secureValue
-func indexResourcesDeploymentScriptAzurePowerShellSecureValue(rawObj client.Object) []string {
-	obj, ok := rawObj.(*resources_v20230801.DeploymentScript)
-	if !ok {
-		return nil
-	}
-	var result []string
-	if obj.Spec.AzurePowerShell == nil {
-		return nil
-	}
-	for _, environmentVariableItem := range obj.Spec.AzurePowerShell.EnvironmentVariables {
-		if environmentVariableItem.SecureValue == nil {
-			continue
-		}
-		result = append(result, environmentVariableItem.SecureValue.Index()...)
-	}
-	return result
-}
-
-// indexResourcesDeploymentScriptAzurePowerShellStorageAccountKey an index function for resources_v20230801.DeploymentScript .spec.azurePowerShellScript.storageAccountSettings.storageAccountKey
-func indexResourcesDeploymentScriptAzurePowerShellStorageAccountKey(rawObj client.Object) []string {
-	obj, ok := rawObj.(*resources_v20230801.DeploymentScript)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.AzurePowerShell == nil {
-		return nil
-	}
-	if obj.Spec.AzurePowerShell.StorageAccountSettings == nil {
-		return nil
-	}
-	if obj.Spec.AzurePowerShell.StorageAccountSettings.StorageAccountKey == nil {
-		return nil
-	}
-	return obj.Spec.AzurePowerShell.StorageAccountSettings.StorageAccountKey.Index()
-}
-
-// indexSecurityinsightsAlertRulesActionTriggerUri an index function for securityinsights_v20250901.AlertRulesAction .spec.triggerUri
-func indexSecurityinsightsAlertRulesActionTriggerUri(rawObj client.Object) []string {
-	obj, ok := rawObj.(*securityinsights_v20250901.AlertRulesAction)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.TriggerUri == nil {
-		return nil
-	}
-	return obj.Spec.TriggerUri.Index()
-}
-
-// indexSecurityinsightsDataConnectorAuthorizationCode an index function for securityinsights_v20250901.DataConnector .spec.restApiPollerDataConnector.auth.oAuth2.authorizationCode
-func indexSecurityinsightsDataConnectorAuthorizationCode(rawObj client.Object) []string {
-	obj, ok := rawObj.(*securityinsights_v20250901.DataConnector)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth.OAuth2 == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth.OAuth2.AuthorizationCode == nil {
-		return nil
-	}
-	return obj.Spec.RestApiPollerDataConnector.Auth.OAuth2.AuthorizationCode.Index()
-}
-
-// indexSecurityinsightsDataConnectorBasicPassword an index function for securityinsights_v20250901.DataConnector .spec.restApiPollerDataConnector.auth.basic.password
-func indexSecurityinsightsDataConnectorBasicPassword(rawObj client.Object) []string {
-	obj, ok := rawObj.(*securityinsights_v20250901.DataConnector)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth.Basic == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth.Basic.Password == nil {
-		return nil
-	}
-	return obj.Spec.RestApiPollerDataConnector.Auth.Basic.Password.Index()
-}
-
-// indexSecurityinsightsDataConnectorClientSecret an index function for securityinsights_v20250901.DataConnector .spec.restApiPollerDataConnector.auth.oAuth2.clientSecret
-func indexSecurityinsightsDataConnectorClientSecret(rawObj client.Object) []string {
-	obj, ok := rawObj.(*securityinsights_v20250901.DataConnector)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth.OAuth2 == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth.OAuth2.ClientSecret == nil {
-		return nil
-	}
-	return obj.Spec.RestApiPollerDataConnector.Auth.OAuth2.ClientSecret.Index()
-}
-
-// indexSecurityinsightsDataConnectorJwtTokenPassword an index function for securityinsights_v20250901.DataConnector .spec.restApiPollerDataConnector.auth.jwtToken.password
-func indexSecurityinsightsDataConnectorJwtTokenPassword(rawObj client.Object) []string {
-	obj, ok := rawObj.(*securityinsights_v20250901.DataConnector)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth.JwtToken == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth.JwtToken.Password == nil {
-		return nil
-	}
-	return obj.Spec.RestApiPollerDataConnector.Auth.JwtToken.Password.Index()
-}
-
-// indexSecurityinsightsDataConnectorSessionPassword an index function for securityinsights_v20250901.DataConnector .spec.restApiPollerDataConnector.auth.session.password
-func indexSecurityinsightsDataConnectorSessionPassword(rawObj client.Object) []string {
-	obj, ok := rawObj.(*securityinsights_v20250901.DataConnector)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth.Session == nil {
-		return nil
-	}
-	if obj.Spec.RestApiPollerDataConnector.Auth.Session.Password == nil {
-		return nil
-	}
-	return obj.Spec.RestApiPollerDataConnector.Auth.Session.Password.Index()
 }
 
 // indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password

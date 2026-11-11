@@ -141,7 +141,7 @@ kubectl -n fake-cloud create secret tls fakegraph-tls --cert "${OUT}/fixtures/fa
 kubectl -n fake-cloud create secret tls fakesql-tls --cert "${OUT}/fixtures/fakesql.crt" --key "${OUT}/fixtures/fakesql.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakesql-principals --from-literal=team-a="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" \
   --from-literal=team-b="${CLIENT_B}=system:serviceaccount:team-b:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/team-a-hub,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualHubs/team-b-hub,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/azureFirewalls/team-a-fw,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/azureFirewalls/team-b-fw,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/managedClusters/team-a-aks,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/managedClusters/team-a-aks/agentPools/system,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/fleets/team-a-fleet,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Kubernetes/connectedClusters/team-a-arc,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fakearm-resources --from-literal=resources="/subscriptions/${SUB}/resourceGroups/team-a-rg,/subscriptions/${SUB}/resourceGroups/team-b-rg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.App/managedEnvironments/team-a-env,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.App/managedEnvironments/team-b-env,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Web/sites/team-b-site,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.OperationalInsights/workspaces/team-b-law,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerRegistry/registries/teamareg,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.ContainerRegistry/registries/teambreg,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Compute/virtualMachines/teambvm,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Storage/storageAccounts/teambcosts,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworkGateways/team-a-vng,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworkGateways/team-b-vng,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualHubs/team-a-hub,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualHubs/team-b-hub,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/virtualNetworks/team-a-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/azureFirewalls/team-a-fw,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/virtualNetworks/team-b-spoke/subnets/RouteServerSubnet,/subscriptions/${SUB}/resourceGroups/team-b-rg/providers/Microsoft.Network/azureFirewalls/team-b-fw,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/managedClusters/team-a-aks,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/managedClusters/team-a-aks/agentPools/system,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.ContainerService/fleets/team-a-fleet,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Kubernetes/connectedClusters/team-a-arc,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/dnsZones/team-a.example,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/dnsZones/team-a.example/SOA/@,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/privateDnsZones/team-a.internal,/subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/privateDnsZones/team-a.internal/SOA/@,${BUILTIN_POLICY}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakegraph-directory --from-literal=principals="${ENTRA_READER},${ENTRA_ADMIN},${ENTRA_EXISTING}" \
   --from-literal=administrativeUnits="${ENTRA_UNIT}" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap postgres-init --from-file=init.sql="${OUT}/fixtures/init.sql" --dry-run=client -o yaml | kubectl apply -f -
@@ -295,6 +295,22 @@ metadata:
   namespace: $1
   annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.ContainerService/fleets/$1-fleet}
 spec: {azureName: $1-fleet, owner: {name: rg}}
+---
+apiVersion: network.azure.com/v1api20180501storage
+kind: DnsZone
+metadata:
+  name: zone
+  namespace: $1
+  annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/dnsZones/$1.example}
+spec: {azureName: $1.example, location: global, owner: {name: rg}}
+---
+apiVersion: network.azure.com/v1api20240601storage
+kind: PrivateDnsZone
+metadata:
+  name: private-zone
+  namespace: $1
+  annotations: {serviceoperator.azure.com/resource-id: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/privateDnsZones/$1.internal}
+spec: {azureName: $1.internal, location: global, owner: {name: rg}}
 EOF
   local now; now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
   local cond="{\"type\":\"Ready\",\"status\":\"True\",\"severity\":\"\",\"reason\":\"Succeeded\",\"lastTransitionTime\":\"${now}\",\"observedGeneration\":1}"
@@ -321,6 +337,10 @@ EOF
   kubectl -n "$1" patch managedclusters.containerservice.azure.com aks --subresource=status --type=merge \
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl -n "$1" patch fleets.containerservice.azure.com fleet --subresource=status --type=merge \
+    -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
+  kubectl -n "$1" patch dnszones.network.azure.com zone --subresource=status --type=merge \
+    -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
+  kubectl -n "$1" patch privatednszones.network.azure.com private-zone --subresource=status --type=merge \
     -p "{\"status\":{\"conditions\":[${cond}]}}" >/dev/null
   kubectl apply -f - <<EOF
 apiVersion: dbforpostgresql.azure.hfl.dev/v1
@@ -459,6 +479,97 @@ metadata: {name: perimeter, namespace: $1}
 spec:
   owner: {name: rg}
   location: westus
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: IpGroup
+metadata: {name: branches, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  ipAddresses: [10.10.0.0/16, 192.0.2.7, 10.20.0.1-10.20.0.9]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: RouteFilter
+metadata: {name: m365, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: RouteFiltersRouteFilterRule
+metadata: {name: exchange, namespace: $1}
+spec:
+  owner: {name: m365}
+  location: westus
+  access: Allow
+  routeFilterRuleType: Community
+  communities: ["12076:5010"]
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: ServiceEndpointPolicy
+metadata: {name: storage-only, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+---
+apiVersion: network.azure.hfl.dev/v20260301
+kind: ServiceEndpointPoliciesServiceEndpointPolicyDefinition
+metadata: {name: ours, namespace: $1}
+spec:
+  owner: {name: storage-only}
+  service: Microsoft.Storage
+  serviceResources: [/subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Storage/storageAccounts/${1//-/}costs]
+---
+apiVersion: network.azure.hfl.dev/v20180501
+kind: DnsZonesSOARecord
+metadata: {name: zone-soa, namespace: $1}
+spec:
+  owner: {name: zone}
+  azureName: "@"
+  TTL: 3600
+  SOARecord: {email: hostmaster.$1.example, refreshTime: 3600, retryTime: 300, expireTime: 2419200, minimumTTL: 300}
+---
+apiVersion: network.azure.hfl.dev/v20240601
+kind: PrivateDnsZonesSOARecord
+metadata: {name: private-zone-soa, namespace: $1}
+spec:
+  owner: {name: private-zone}
+  azureName: "@"
+  ttl: 3600
+  soaRecord: {email: hostmaster.$1.internal, minimumTtl: 10}
+---
+apiVersion: network.azure.hfl.dev/v20250501
+kind: DnsResolverDomainList
+metadata: {name: blocked, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+  domains: [malware.example.]
+---
+apiVersion: network.azure.hfl.dev/v20250501
+kind: DnsResolverPolicy
+metadata: {name: egress, namespace: $1}
+spec:
+  owner: {name: rg}
+  location: westus
+---
+apiVersion: network.azure.hfl.dev/v20250501
+kind: DnsResolverPoliciesDnsSecurityRule
+metadata: {name: block, namespace: $1}
+spec:
+  owner: {name: egress}
+  location: westus
+  priority: 100
+  action: {actionType: Block}
+  dnsResolverDomainLists: [{reference: {group: network.azure.hfl.dev, kind: DnsResolverDomainList, name: blocked}}]
+---
+apiVersion: network.azure.hfl.dev/v20250501
+kind: DnsResolverPoliciesVirtualNetworkLink
+metadata: {name: spoke, namespace: $1}
+spec:
+  owner: {name: egress}
+  location: westus
+  virtualNetwork: {reference: {armId: /subscriptions/${SUB}/resourceGroups/$1-rg/providers/Microsoft.Network/virtualNetworks/$1-spoke}}
 ---
 apiVersion: network.azure.hfl.dev/v20260301
 kind: LocalNetworkGateway
@@ -1042,6 +1153,42 @@ wait_for 90 "team-a's Export Ready" ready exports.costmanagement.azure.hfl.dev t
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.CostManagement/exports/daily-costs 201" \
   || fail "the fake resource manager saw no cost export on team-a's resource group"
 pass "team-a Export Ready: at an ASO ResourceGroup, to a storage account by ARM ID, generated"
+wait_for 90 "team-a's IpGroup Ready" ready ipgroups.network.azure.hfl.dev team-a branches
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/ipGroups/branches 201" \
+  || fail "the fake resource manager saw no IP group on team-a's resource group"
+pass "team-a IpGroup Ready: a prefix, an address and a range, owned by ASO's ResourceGroup, generated"
+wait_for 90 "team-a's RouteFilter Ready" ready routefilters.network.azure.hfl.dev team-a m365
+pass "team-a RouteFilter Ready: owned by ASO's ResourceGroup, generated"
+wait_for 90 "team-a's RouteFiltersRouteFilterRule Ready" ready routefiltersroutefilterrules.network.azure.hfl.dev team-a exchange
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/routeFilters/m365/routeFilterRules/exchange 201" \
+  || fail "the fake resource manager saw no rule on team-a's route filter"
+pass "team-a RouteFiltersRouteFilterRule Ready: Allow a Microsoft BGP community, owned by our RouteFilter"
+wait_for 90 "team-a's ServiceEndpointPolicy Ready" ready serviceendpointpolicies.network.azure.hfl.dev team-a storage-only
+pass "team-a ServiceEndpointPolicy Ready: owned by ASO's ResourceGroup, generated"
+wait_for 90 "team-a's ServiceEndpointPoliciesServiceEndpointPolicyDefinition Ready" ready serviceendpointpoliciesserviceendpointpolicydefinitions.network.azure.hfl.dev team-a ours
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/serviceEndpointPolicies/storage-only/serviceEndpointPolicyDefinitions/ours 201" \
+  || fail "the fake resource manager saw no definition on team-a's service endpoint policy"
+pass "team-a ServiceEndpointPoliciesServiceEndpointPolicyDefinition Ready: a storage account by ARM ID, owned by our ServiceEndpointPolicy"
+wait_for 90 "team-a's DnsZonesSOARecord Ready" ready dnszonessoarecords.network.azure.hfl.dev team-a zone-soa
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/dnsZones/team-a.example/SOA/@ 200" \
+  || fail "the fake resource manager saw no change of team-a's public zone's SOA record set"
+pass "team-a DnsZonesSOARecord Ready: the SOA record set Azure made with ASO's DnsZone, changed"
+wait_for 90 "team-a's PrivateDnsZonesSOARecord Ready" ready privatednszonessoarecords.network.azure.hfl.dev team-a private-zone-soa
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/privateDnsZones/team-a.internal/SOA/@ 200" \
+  || fail "the fake resource manager saw no change of team-a's private zone's SOA record set"
+pass "team-a PrivateDnsZonesSOARecord Ready: the SOA record set of ASO's PrivateDnsZone, changed"
+wait_for 90 "team-a's DnsResolverDomainList Ready" ready dnsresolverdomainlists.network.azure.hfl.dev team-a blocked
+pass "team-a DnsResolverDomainList Ready: owned by ASO's ResourceGroup, generated"
+wait_for 90 "team-a's DnsResolverPolicy Ready" ready dnsresolverpolicies.network.azure.hfl.dev team-a egress
+pass "team-a DnsResolverPolicy Ready: owned by ASO's ResourceGroup, generated"
+wait_for 90 "team-a's DnsResolverPoliciesDnsSecurityRule Ready" ready dnsresolverpoliciesdnssecurityrules.network.azure.hfl.dev team-a block
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/dnsResolverPolicies/egress/dnsSecurityRules/block 201" \
+  || fail "the fake resource manager saw no DNS security rule on team-a's policy"
+pass "team-a DnsResolverPoliciesDnsSecurityRule Ready: blocks our DnsResolverDomainList by object"
+wait_for 90 "team-a's DnsResolverPoliciesVirtualNetworkLink Ready" ready dnsresolverpoliciesvirtualnetworklinks.network.azure.hfl.dev team-a spoke
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/dnsResolverPolicies/egress/virtualNetworkLinks/spoke 201" \
+  || fail "the fake resource manager saw no virtual network link on team-a's DNS security policy"
+pass "team-a DnsResolverPoliciesVirtualNetworkLink Ready: a virtual network by ARM ID"
 wait_for 90 "team-a's LocalNetworkGateway Ready" ready localnetworkgateways.network.azure.hfl.dev team-a onprem
 pass "team-a LocalNetworkGateway Ready: owned by ASO's ResourceGroup, generated"
 wait_for 90 "team-a's VirtualNetworkGatewayConnection Ready" ready virtualnetworkgatewayconnections.network.azure.hfl.dev team-a to-onprem
@@ -1268,6 +1415,20 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/localNetworkGateways/onprem 200" \
   || fail "the fake resource manager saw no delete of the local network gateway"
 pass "the VPN connection and the local network gateway are deleted in Resource Manager"
+for kind_name in dnsresolverpoliciesvirtualnetworklinks/spoke dnsresolverpoliciesdnssecurityrules/block dnsresolverpolicies/egress dnsresolverdomainlists/blocked serviceendpointpoliciesserviceendpointpolicydefinitions/ours serviceendpointpolicies/storage-only routefiltersroutefilterrules/exchange routefilters/m365 ipgroups/branches; do
+  kubectl -n team-a delete "${kind_name%%/*}.network.azure.hfl.dev" "${kind_name#*/}" --timeout=120s
+done
+for path in dnsResolverPolicies/egress/virtualNetworkLinks/spoke dnsResolverPolicies/egress dnsResolverDomainLists/blocked serviceEndpointPolicies/storage-only routeFilters/m365 ipGroups/branches; do
+  logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/${path} 200" \
+    || fail "the fake resource manager saw no delete of ${path}"
+done
+pass "the IP group, route filter and rule, service endpoint policy and definition, and DNS security policy, rule, link and domain list are deleted in Resource Manager"
+kubectl -n team-a delete dnszonessoarecords.network.azure.hfl.dev zone-soa --timeout=120s
+kubectl -n team-a delete privatednszonessoarecords.network.azure.hfl.dev private-zone-soa --timeout=120s
+if logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/dnsZones/team-a.example/SOA/@" || logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/privateDnsZones/team-a.internal/SOA/@"; then
+  fail "a SOA record set's delete reached Resource Manager; Azure deletes it only with its zone"
+fi
+pass "the SOA record sets' objects are deleted and the record sets left in Azure, with their zones"
 kubectl -n team-a delete expressroutegatewaysexpressrouteconnections.network.azure.hfl.dev to-er --timeout=120s
 kubectl -n team-a delete expressroutegateways.network.azure.hfl.dev hub-er --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Network/expressRouteGateways/hub-er/expressRouteConnections/to-er 200" \
@@ -1375,6 +1536,42 @@ logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/pr
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.PolicyInsights/attestations/require-team-tag 200" \
   || fail "the fake resource manager saw no delete of the attestation"
 pass "the policy remediation and attestation are deleted in Resource Manager"
+
+step "team-a: the subscription's activity log profile and a workbook template (insights.azure.hfl.dev)"
+kubectl apply -f - <<EOF
+apiVersion: insights.azure.hfl.dev/v20160301
+kind: LogProfile
+metadata: {name: activity, namespace: team-a}
+spec:
+  azureName: default
+  owner: {armId: /subscriptions/${SUB}}
+  location: global
+  categories: [Write, Delete, Action]
+  locations: [global, westus]
+  storageAccountReference: {armId: /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Storage/storageAccounts/teamacosts}
+  retentionPolicy: {enabled: true, days: 90}
+---
+apiVersion: insights.azure.hfl.dev/v20201120
+kind: WorkbookTemplate
+metadata: {name: costs, namespace: team-a}
+spec:
+  owner: {name: rg}
+  location: westus
+  priority: 1
+  templateData: {version: Notebook/1.0, items: []}
+  galleries: [{name: Costs, category: Platform, type: workbook, resourceType: Azure Monitor, order: 100}]
+EOF
+wait_for 120 "team-a's LogProfile Ready" ready logprofiles.insights.azure.hfl.dev team-a activity
+logged fakearm "request PUT /subscriptions/${SUB}/providers/Microsoft.Insights/logprofiles/default 201" || fail "the fake resource manager saw no log profile made on the subscription"
+pass "team-a LogProfile Ready"
+wait_for 120 "team-a's WorkbookTemplate Ready" ready workbooktemplates.insights.azure.hfl.dev team-a costs
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Insights/workbooktemplates/costs 201" || fail "the fake resource manager saw no workbook template made"
+pass "team-a WorkbookTemplate Ready"
+kubectl -n team-a delete logprofiles.insights.azure.hfl.dev activity --timeout=120s
+kubectl -n team-a delete workbooktemplates.insights.azure.hfl.dev costs --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/providers/Microsoft.Insights/logprofiles/default 200" || fail "the fake resource manager saw no delete of the log profile"
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Insights/workbooktemplates/costs 200" || fail "the fake resource manager saw no delete of the workbook template"
+pass "the log profile and the workbook template are deleted in Resource Manager"
 kubectl -n team-a delete budgets.consumption.azure.hfl.dev monthly --timeout=120s
 kubectl -n team-a delete exports.costmanagement.azure.hfl.dev daily-costs --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Consumption/budgets/monthly 200" \

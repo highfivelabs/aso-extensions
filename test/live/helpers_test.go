@@ -109,13 +109,19 @@ func azName(base string) string { return strings.ToLower(base + "-" + runID) }
 // for provisioningState Succeeded) and deletes it when the test ends.
 func fixture(t *testing.T, id, apiVersion string, body map[string]any) map[string]any {
 	t.Helper()
+	return fixtureWait(t, timeout, id, apiVersion, body)
+}
+
+// fixtureWait is fixture for resources that take longer than timeout.
+func fixtureWait(t *testing.T, wait time.Duration, id, apiVersion string, body map[string]any) map[string]any {
+	t.Helper()
 	ctx := context.Background()
 	if _, _, err := azure.do(ctx, http.MethodPut, id, apiVersion, body); err != nil {
 		t.Fatalf("fixture: %v", err)
 	}
 	t.Cleanup(func() { deleteARM(t, id, apiVersion) })
 	var got map[string]any
-	eventually(t, timeout, "fixture "+id+" Succeeded", func() error {
+	eventually(t, wait, "fixture "+id+" Succeeded", func() error {
 		_, r, err := azure.get(ctx, id, apiVersion)
 		if err != nil {
 			return err

@@ -45,6 +45,8 @@ import (
 	asoaks "github.com/Azure/azure-service-operator/v2/api/containerservice/v20260501/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
+	asodns "github.com/Azure/azure-service-operator/v2/api/network/v1api20180501/storage"
+	asoprivatedns "github.com/Azure/azure-service-operator/v2/api/network/v1api20240601/storage"
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
 	asosql "github.com/Azure/azure-service-operator/v2/api/sql/v20250101/storage"
@@ -89,6 +91,8 @@ func CreateScheme() *runtime.Scheme {
 	_ = asoregistry.AddToScheme(scheme)
 	_ = asocompute.AddToScheme(scheme)
 	_ = asosql.AddToScheme(scheme)
+	_ = asodns.AddToScheme(scheme)
+	_ = asoprivatedns.AddToScheme(scheme)
 	return scheme
 }
 
@@ -108,6 +112,8 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asosql.ServersDatabase{}, Name: "aso_sql_serversdatabase"},
 		{Obj: &asoaks.ManagedCluster{}, Name: "aso_containerservice_managedcluster"},
 		{Obj: &asofleet.Fleet{}, Name: "aso_containerservice_fleet"},
+		{Obj: &asodns.DnsZone{}, Name: "aso_network_dnszone"},
+		{Obj: &asoprivatedns.PrivateDnsZone{}, Name: "aso_network_privatednszone"},
 	}
 }
 

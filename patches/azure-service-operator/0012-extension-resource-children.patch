@@ -15,7 +15,7 @@ diff --git a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go b/v2/
  				result.ResourceDefinitions[resourceName] = existingResource
  			}
  		}
-@@ -1019,6 +1026,18 @@
+@@ -1016,6 +1023,18 @@
  )
  
  func categorizeResourceScope(armURI string) astmodel.ResourceScope {
@@ -34,8 +34,8 @@ diff --git a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go b/v2/
  	// this is a bit of a hack, eventually we should have better scope support.
  	// at the moment we assume that a resource is an extension if it has a specific prefix
  	for _, prefix := range extensionScopePrefixes {
-@@ -1076,6 +1095,26 @@
- 	return astmodel.ResourceScopeTenant
+@@ -1087,6 +1106,26 @@
+ 	return len(parts) == 6 && strings.EqualFold(parts[0], "subscriptions") && strings.EqualFold(parts[2], "providers")
  }
  
 +// isExtensionChild is whether armURI is an extension resource's path (an

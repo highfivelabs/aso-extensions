@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 #
 # Run the live tests (test/live, -tags live) against the real Azure
-# subscription in hack/live/azure.env, from an offload VM whose service
+# subscription AZURE_SUBSCRIPTION_ID (hack/live/azure.env), from an offload VM whose service
 # account the live-test identity trusts (docs/live-runs.md). `task test-live`
 # calls this; task check never does.
 #
@@ -31,7 +31,17 @@ if [[ "${ASO_EXT_LIVE:-}" != create-real-azure-resources ]]; then
   echo "live: a live run creates real Azure resources; set ASO_EXT_LIVE=create-real-azure-resources to mean it" >&2
   exit 2
 fi
-grep -qx "${AZURE_SUBSCRIPTION_ID}/${LIVE_RESOURCE_GROUP}" <(sed 's/#.*//; s/[[:space:]]//g' hack/live/targets.txt) \
+# targets.txt writes the subscription as ${AZURE_SUBSCRIPTION_ID} (the ID is
+# not in the tree): put its value in before comparing.
+targets() {
+  local line
+  while IFS= read -r line || [[ -n "${line}" ]]; do
+    line="${line%%#*}"; line="${line//[[:space:]]/}"
+    # shellcheck disable=SC2016 # the placeholder is literal text
+    if [[ -n "${line}" ]]; then echo "${line//'${AZURE_SUBSCRIPTION_ID}'/${AZURE_SUBSCRIPTION_ID}}"; fi
+  done < hack/live/targets.txt
+}
+grep -qx "${AZURE_SUBSCRIPTION_ID}/${LIVE_RESOURCE_GROUP}" <(targets) \
   || { echo "live: ${AZURE_SUBSCRIPTION_ID}/${LIVE_RESOURCE_GROUP} is not in hack/live/targets.txt" >&2; exit 2; }
 : "${KUBEBUILDER_ASSETS:?run through task test-live, which installs envtest}"
 pattern="."

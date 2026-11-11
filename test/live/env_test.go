@@ -82,7 +82,7 @@ func refuse() string {
 }
 
 // allowedTargets reads hack/live/targets.txt: "<subscription>/<resource group>"
-// per line, a reviewed change.
+// per line, a reviewed change, the subscription as ${AZURE_SUBSCRIPTION_ID}.
 func allowedTargets() (map[string]bool, error) {
 	root, _ := filepath.Abs("../..")
 	f, err := os.Open(filepath.Join(root, "hack/live/targets.txt"))
@@ -94,6 +94,9 @@ func allowedTargets() (map[string]bool, error) {
 	s := bufio.NewScanner(f)
 	for s.Scan() {
 		line := strings.TrimSpace(strings.SplitN(s.Text(), "#", 2)[0])
+		// The subscription is written as ${AZURE_SUBSCRIPTION_ID}: the ID is
+		// not in the tree (.env.example).
+		line = strings.ReplaceAll(line, "${AZURE_SUBSCRIPTION_ID}", os.Getenv("AZURE_SUBSCRIPTION_ID"))
 		if line != "" {
 			out[line] = true
 		}
