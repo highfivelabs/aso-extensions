@@ -1,6 +1,10 @@
 typeFilters:
   - action: include
     group: management
+    version: v20260801
+    because: service groups (2026-08-01, the only stable version)
+  - action: include
+    group: management
     version: v20230401
     because: the newest stable version of the Azure management groups; they are tenant scope resources (no owner), as ASO's subscription Alias is
   - action: prune
@@ -8,6 +12,10 @@ typeFilters:
     because: every other version is left alone
 
 groupModelConfiguration:
+  2026-08-01:
+    ServiceGroup:
+      $exportAs: ServiceGroup
+      $supportedFrom: v0.1.0
   2023-04-01:
     ManagementGroup:
       $exportAs: ManagementGroup

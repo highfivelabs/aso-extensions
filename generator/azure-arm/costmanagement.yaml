@@ -23,6 +23,9 @@ groupModelConfiguration:
     Export:
       $exportAs: Export
       $supportedFrom: v0.1.0
+    ScheduledAction:
+      $exportAs: ScheduledAction
+      $supportedFrom: v0.1.0
     ExportDeliveryDestination:
       ResourceId:
         $referenceType: arm # the storage account the export writes to: ASO's StorageAccount, or an ARM ID
