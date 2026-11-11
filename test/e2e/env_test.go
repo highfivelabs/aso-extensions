@@ -43,6 +43,7 @@ import (
 	"github.com/highfivelabs/aso-extensions/pkg/controllers"
 	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/arm"
 	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/entra"
+	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/graph"
 	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/keyvault"
 	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/postgres"
 	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/tlsutil"
@@ -62,7 +63,10 @@ const (
 	armHost     = "fakearm.test"
 	armAudience = "https://fakearm.test"
 	armScope    = "https://fakearm.test/.default"
-	pgImage     = "postgres:17"
+	// The fake Microsoft Graph's host; its audience is its URL.
+	graphHost  = "fakegraph.test"
+	graphScope = "https://fakegraph.test/.default"
+	pgImage    = "postgres:17"
 )
 
 var (
@@ -72,6 +76,9 @@ var (
 	armFake     *arm.ARM
 	armURL      = "https://" + armHost
 	armHTTP     *http.Client
+	graphFake   *graph.Graph
+	graphURL    = "https://" + graphHost
+	graphHTTP   *http.Client
 	vaultURL    = "https://" + vaultHost
 	pgPort      int
 	pgSuper     *sql.DB
@@ -112,6 +119,8 @@ func run(m *testing.M) int {
 	defer stopVault()
 	stopARM := startARM(ca)
 	defer stopARM()
+	stopGraph := startGraph(ca)
+	defer stopGraph()
 	stopSQL := startSQL(ca)
 	defer stopSQL()
 
@@ -148,6 +157,8 @@ func run(m *testing.M) int {
 	_, err = manager.Setup(ctx, mgr, cfg, manager.Options{
 		TokenProvider:         entra.TokenProvider(entraFake),
 		KeyVaultClientOptions: azcore.ClientOptions{Transport: kvClient},
+		GraphEndpoint:         graphURL,
+		GraphHTTPClient:       graphHTTP,
 		ARMHTTPClient:         armHTTP,
 	})
 	must(err)
@@ -309,6 +320,34 @@ func startARM(ca *tlsutil.CA) func() {
 	srv.StartTLS()
 	addr := srv.Listener.Addr().String()
 	armHTTP = &http.Client{Transport: &http.Transport{
+		TLSClientConfig: &tls.Config{RootCAs: ca.Pool()},
+		DialContext: func(ctx context.Context, network, _ string) (net.Conn, error) {
+			return (&net.Dialer{}).DialContext(ctx, network, addr)
+		},
+	}}
+	return srv.Close
+}
+
+// startGraph serves the fake Microsoft Graph over TLS for graphHost,
+// trusting the same identities as the fake vault (client A), for its own
+// audience; graphHTTP reaches it and trusts its certificate.
+func startGraph(ca *tlsutil.CA) func() {
+	graphFake = graph.New(func(token string) bool {
+		c, err := entra.Parse(token)
+		if err != nil || c.Scope != graphScope || c.Tenant != tenantID || c.ClientID != clientA {
+			return false
+		}
+		trustedMu.Lock()
+		defer trustedMu.Unlock()
+		return trusted[c.Subject]
+	})
+	srv := httptest.NewUnstartedServer(graphFake)
+	cert, err := ca.ServerTLS(graphHost)
+	must(err)
+	srv.TLS = &tls.Config{Certificates: []tls.Certificate{cert}}
+	srv.StartTLS()
+	addr := srv.Listener.Addr().String()
+	graphHTTP = &http.Client{Transport: &http.Transport{
 		TLSClientConfig: &tls.Config{RootCAs: ca.Pool()},
 		DialContext: func(ctx context.Context, network, _ string) (net.Conn, error) {
 			return (&net.Dialer{}).DialContext(ctx, network, addr)

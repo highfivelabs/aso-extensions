@@ -12,6 +12,7 @@ Not affiliated with or endorsed by Microsoft.
 | Kind | Gap it fills | Upstream |
 | --- | --- | --- |
 | `dbforpostgresql.azure.hfl.dev/v1` `User` | ASO's PostgreSQL `User` can neither be a Microsoft Entra principal (`aadUser`, which ASO's MySQL `User` has) nor hold privileges on a database (`databasePrivileges`, which ASO's MySQL `User` also has), on a schema (`schemaPrivileges`) or on objects another role creates later (`defaultPrivileges`), nor own a database (`ownedDatabases`; given to a `NOLOGIN` role, `hfl_owner`, rather than orphaned when the user goes) | ASO's PostgreSQL `User`, copied and extended; per-database privileges are ASO issue [#4694](https://github.com/Azure/azure-service-operator/issues/4694), still open; ASO has nothing for schema or default privileges or database ownership |
+| `entra.azure.hfl.dev/v1` `DirectoryRoleAssignment` | a Microsoft Entra directory role (a built-in role such as Global Reader, or a custom one) assigned to a user, group or service principal over the directory, an administrative unit or an application: Microsoft Graph's `roleManagement/directory/roleAssignments`, with ASO's Entra conventions (`operatorSpec.creationMode` to adopt or create, the principal by object ID or from a ConfigMap) | ours: ASO's `entra.azure.com` has no directory roles; built on the base reconciler of open pull request [#5821](https://github.com/Azure/azure-service-operator/pull/5821) |
 | `sql.azure.hfl.dev/v1` `User` | an Azure SQL database user that is a Microsoft Entra principal (`aadUser`: `CREATE USER ... FROM EXTERNAL PROVIDER`, signed in with the operator's own token), beside ASO's password users (`localUser`) | ASO's Azure SQL `User` with open pull request [#5104](https://github.com/Azure/azure-service-operator/pull/5104) copied and fixed up; moves to ASO's `sql.azure.com` when a release carries it |
 | `keyvault.azure.hfl.dev/v1` `VaultSecret` | a Key Vault secret whose value comes from a Kubernetes Secret; ASO has `Vault` and `VaultKey` but declined to manage secrets ([#1894](https://github.com/Azure/azure-service-operator/issues/1894)) | ours, with ASO's `VaultKey` create and delete modes |
 | `keyvault.azure.hfl.dev/v1` `VaultCertificate` | a Key Vault certificate imported from a certificate and key in Kubernetes Secrets (cert-manager's `kubernetes.io/tls`); renewals become new versions | ours, with `VaultSecret`'s create and delete modes; ASO has no certificate kind |
@@ -41,7 +42,7 @@ Not affiliated with or endorsed by Microsoft.
 <!-- coverage:start -->
 ![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)
 
-Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 3.7%; 79.9% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
+Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 3.9%; 79.7% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
 The purple bar is Terraform's `azurerm` provider beside them, an estimate: the share of the same attributes that a writable attribute of a mapped Terraform resource matches by the lenient rule (L2, 8.2% overall), with the strict rule (L1, 7.2%) as its tick; the method and its error are in the catalog's ["Method and error"](https://github.com/highfivelabs/catalog/blob/13064af34996c47f1a5498bb17aca16194c4574e/docs/terraform-leverage.md#method-and-error), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at catalog `13064af34996`. `azapi` is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema.
 
@@ -49,7 +50,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 
 | Category | Services | Resources | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 21.6% | 35.2% | ~18.7% |
+| platform-foundation | 18 | 246 | 43.2% | 23.7% | 33.1% | ~18.7% |
 | security-adjacent | 7 | 93 | 8.6% | 2.6% | 88.8% | ~11.1% |
 | application | 35 | 823 | 33.1% | 3.8% | 63.2% | ~11.3% |
 | other | 230 | 1,262 | 0.5% | 0.0% | 99.5% | ~3.9% |
@@ -58,7 +59,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 
 | Tier | Services | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 13.3% | 43.7% | ~13.8% |
+| 1 | 17 | 43.0% | 14.6% | 42.4% | ~13.8% |
 | 2 | 18 | 26.5% | 6.9% | 66.6% | ~8.2% |
 | 3 | 245 | 5.9% | 0.0% | 94.1% | ~6.6% |
 
@@ -74,11 +75,11 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 100.0% | 0.0% | ~92.3% |
 | 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 21.3% | 78.7% | ~27.6% |
 | 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 2.0% | 25.5% | ~33.3% |
-| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 14.3% | 43.5% | ~9.0% |
-| 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 0.0% | 59.8% | ~20.2% |
+| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 14.6% | 43.2% | ~9.0% |
+| 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 45.8% | 14.0% | ~20.2% |
 | 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 0.0% | 16.7% | ~100.0% |
-| 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 40.2% | 43.4% | ~18.0% |
-| 1 | `Microsoft.OperationsManagement` | platform-foundation | ![Microsoft.OperationsManagement](docs/coverage/bars/Microsoft.OperationsManagement.svg) | 0.0% | 0.0% | 100.0% | ~35.3% |
+| 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 61.5% | 22.1% | ~18.0% |
+| 1 | `Microsoft.OperationsManagement` | platform-foundation | ![Microsoft.OperationsManagement](docs/coverage/bars/Microsoft.OperationsManagement.svg) | 0.0% | 52.9% | 47.1% | ~35.3% |
 | 1 | `Microsoft.Monitor` | platform-foundation | ![Microsoft.Monitor](docs/coverage/bars/Microsoft.Monitor.svg) | 2.2% | 0.0% | 97.8% | ~1.4% |
 | 1 | `Microsoft.ContainerService` | platform-foundation | ![Microsoft.ContainerService](docs/coverage/bars/Microsoft.ContainerService.svg) | 70.2% | 0.0% | 29.8% | ~19.4% |
 | 1 | `Microsoft.KubernetesConfiguration` | platform-foundation | ![Microsoft.KubernetesConfiguration](docs/coverage/bars/Microsoft.KubernetesConfiguration.svg) | 73.0% | 0.0% | 27.0% | ~31.1% |

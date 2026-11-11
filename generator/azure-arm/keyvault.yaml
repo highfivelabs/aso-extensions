@@ -1,0 +1,29 @@
+typeFilters:
+  - action: include
+    group: keyvault
+    version: v20260515
+    because: the newest stable Key Vault API (managed HSMs, their keys, private endpoint connections), one TypeSpec file
+  - action: prune
+    group: keyvault
+    because: every other version is left alone (ASO has Vault and VaultKey at 2023-07-01)
+
+groupModelConfiguration:
+  2026-05-15:
+    ManagedHSM:
+      $exportAs: ManagedHSM
+      $supportedFrom: v0.1.0
+    ManagedHSMs_Key:
+      $exportAs: ManagedHSMsKey
+      $supportedFrom: v0.1.0
+    ManagedHSMs_PrivateEndpointConnection:
+      $exportAs: ManagedHSMsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Vaults_PrivateEndpointConnection:
+      $exportAs: VaultsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    MHSMVirtualNetworkRule:
+      Id:
+        $referenceType: arm # a subnet: ASO's VirtualNetworksSubnet, or an ARM ID
+    ManagedHsmProperties:
+      TenantId:
+        $importConfigMapMode: optional # as ASO's Vault: the tenant may come from a ConfigMap
