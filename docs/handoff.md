@@ -26,6 +26,68 @@ ARM resources are in scope; the builder said so ("Build them or pull them
 from upstream, whichever is easier", `docs/plan.md` §1, §8 Q6). Prefer, in
 order: skip what ASO has; copy upstream where it exists; generate; hand-write.
 
+## State on 2026-11-10, the second Azure kinds agent (foundation rows 14 to 18)
+
+Built and left open, each from `main` with its passing Spot results in the
+description (not merged; the coordinator merges):
+
+| PR | Row | Kinds | Generator |
+| --- | --- | --- | --- |
+| #45 | 14, part 2 | `operationsmanagement.azure.hfl.dev/v20151101preview` `Solution` | no patch: `$resourceEmbeddedInParent` |
+| #47 | 15 | `containerservice.azure.hfl.dev` `ManagedClustersManagedNamespace`, `ManagedClustersPrivateEndpointConnection`, `Snapshot` (v20260501), `FleetsManagedNamespace` (v20260601) | new external owners `ManagedCluster`, `Fleet` |
+| #49 | 16 | `kubernetesconfiguration.azure.hfl.dev` `SourceControlConfiguration` (v20230501), `PrivateLinkScope`, `PrivateLinkScopesPrivateEndpointConnection` (v20241101preview) | none |
+| #48 | 17 | `containerregistry.azure.hfl.dev` `RegistriesTask` (v20190401), `RegistriesConnectedRegistry`, `RegistriesPrivateEndpointConnection` | none |
+| #51 | 18 (ours) | `insights.azure.hfl.dev` `LogProfile` (v20160301), `WorkbookTemplate` (v20201120) | **patch 0009** |
+
+They conflict with each other (and with #40, #41, #43) only in generated or
+appended places: the coverage outputs, the `fakearm-resources` line of
+`tests/operator/run.sh`, `generator/specs.txt`, `generator/azure-arm.yaml`'s
+imports, and the fake's check list in `pkg/fakecloud/arm/arm.go`. Merge main
+into the next one, keep both sides, rerun `task coverage`. Patch numbers: 0008
+is #41's; 0009 is #51's.
+
+**Next:** the security rows. Row 19 (`DefenderForStorageSetting`): copy it
+from ASO PR #5783, read-only, and record the PR's head in `upstream.yaml`
+`pull_requests` and `UPSTREAM.md`. Then row 20 (Defender plans, contacts,
+settings), 22 (Sentinel, six kinds first), 23, 24.
+
+Facts learned in these rows:
+
+- **A properties type marked `x-ms-azure-resource`** (Operations Management's
+  `SolutionProperties`) is emptied by the embedded-resource remover, which
+  keeps only an `Id`; "lacks `type: object`" was a wrong diagnosis (the
+  generator treats any schema with properties as an object).
+  `$resourceEmbeddedInParent: <Resource>` on the type and its `_STATUS`
+  keeps it whole.
+- **A resource directly under a subscription**
+  (`/subscriptions/{id}/providers/{ns}/{type}/{name}`) got Location scope
+  and its PUT went to a resource group named after it. Patch 0009
+  (`ASO_GENERATOR_SUBSCRIPTION_EXTENSION`) makes it an extension resource
+  owned by the subscription's ARM ID.
+- **A new external owner** needs five places: `generator/external-owners.txt`,
+  the scheme and `OwnerTypes()` in `pkg/controllers/controllers.go`,
+  `hack/generate.sh` (its test CRD into `config/test/aso-crds`),
+  **`config/rbac/role.yaml` (get, list, watch)**, and the footprint in
+  `tests/operator/run.sh`. Without the role, envtest passes and kind fails:
+  the manager's informers are forbidden and nothing reconciles.
+- **On kind, team-a-rg holds a CanNotDelete lock** until the "deleting
+  team-a's objects" step removes it. A kind step whose objects are under
+  team-a-rg must delete them after that: put it after the lock is removed.
+- **Secrets in status types:** `$importSecretMode: required` on the spec
+  type, and a `typeTransformers` `remove` on the `_STATUS` type (registry
+  tasks' tokens). A token *ID* the generator suspects is a secret takes
+  `$importSecretMode: never`.
+- A properties field from a shared common type (common-types v3
+  `PrivateEndpointConnectionProperties.provisioningState`) cannot be removed
+  per group: a transform on it would touch every group's kinds.
+- `hack/specs.sh` failing with "HTTP 400 … could not fetch … from promisor
+  remote" on a large sparse checkout: `git -C .cache/azure-rest-api-specs
+  config http.postBuffer 524288000`. Copying another clone's `.cache` first
+  saves the fetch.
+- The Ubuntu machine's disk was full (about 6 GB free after removing our
+  own clones). Each `_work` clone mirrored there takes about 2 GB; remove your
+  own when done.
+
 ## The queue
 
 **The builder's priority, 2026-11-09:** "everything up through a managed
