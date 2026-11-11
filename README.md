@@ -313,7 +313,7 @@ server (`docs/fake-cloud.md`).
 
 ### The merge gate
 
-GitHub Actions is off in the organization (the builder, 2026-11-11); the
+GitHub Actions is off in the organization (since 2026-11-11); the
 workflows in `.github/workflows/` stay, disabled. Their pull-request jobs
 run before the push instead, on an offload Spot VM:
 
@@ -333,7 +333,9 @@ needs the memory). Only the fake cloud (in process, and PostgreSQL in Docker): n
 
 It then posts the commit status `offload/ci` (success or failure, the
 machine and the minutes, a link to the run's log in the offload bucket)
-on the commit. The pre-push hook (`hack/hooks/pre-push`) runs it for
+on the commit. It needs `OFFLOAD_PROJECT` and `OFFLOAD_BUCKET`, from the
+environment or a git-ignored `.env` at the repository's root (copy
+`.env.example`), and stops naming the one that is missing. The pre-push hook (`hack/hooks/pre-push`) runs it for
 every branch commit pushed and refuses the push on a failure; a commit
 that already has `offload/ci` success is not run again.
 
