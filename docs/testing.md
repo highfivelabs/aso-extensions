@@ -55,7 +55,7 @@ lines in `tests/operator/required-ok.txt`.
 
 Real Azure only through the live harness (PR #54, `docs/live-runs.md`):
 
-- **Where:** subscription `149e8810-e0fe-48e2-a46e-6f8f575bde01`, resource
+- **Where:** the subscription in `AZURE_SUBSCRIPTION_ID`, resource
   group `aso-extensions-live-tests` (eastus2), nothing else. The target
   list (`hack/live/targets.txt`) is a reviewed change.
 - **As whom:** the app registration `aso-extensions-live-tests`
