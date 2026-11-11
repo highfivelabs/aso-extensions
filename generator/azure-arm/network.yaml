@@ -7,9 +7,46 @@ typeFilters:
     group: network
     version: v20260301
     because: the newest stable version, for site-to-site VPN connections and local network gateways (foundation row 8), ExpressRoute (row 9) and Virtual WAN with its VPN gateways (row 10) and the network manager (row 11); ASO has none of these kinds
+  - action: include
+    group: network
+    version: v20180501
+    because: the version of ASO's DnsZone (public DNS), for its SOA record set (foundation row 12), so the record and its owner share a vintage
+  - action: include
+    group: network
+    version: v20240601
+    because: the version of ASO's PrivateDnsZone, for its SOA record set (foundation row 12)
 
 groupModelConfiguration:
+  2018-05-01:
+    # A zone's SOA record set: Azure makes it with the zone and never deletes
+    # it alone (the kind's Deleter leaves it, generator/_extensions); ASO
+    # exports every other record type of this version.
+    DnsZones_SOA:
+      $exportAs: DnsZonesSOARecord
+      $supportedFrom: v0.1.0
+    SubResource:
+      Id:
+        $referenceType: arm # a record set's targetResource (an alias to a public IP, Front Door or Traffic Manager profile)
+  2024-06-01:
+    PrivateDnsZones_SOA:
+      $exportAs: PrivateDnsZonesSOARecord
+      $supportedFrom: v0.1.0
   2025-05-01:
+    # Foundation row 12: DNS security policies (dnsresolver 2025-05-01, the
+    # newest stable; ASO's DnsResolver kinds are at 2022-07-01, which has
+    # none of these).
+    DnsResolverPolicy:
+      $exportAs: DnsResolverPolicy
+      $supportedFrom: v0.1.0
+    DnsResolverPolicies_DnsSecurityRule:
+      $exportAs: DnsResolverPoliciesDnsSecurityRule
+      $supportedFrom: v0.1.0
+    DnsResolverPolicies_VirtualNetworkLink:
+      $exportAs: DnsResolverPoliciesVirtualNetworkLink
+      $supportedFrom: v0.1.0
+    DnsResolverDomainList:
+      $exportAs: DnsResolverDomainList
+      $supportedFrom: v0.1.0
     NetworkSecurityPerimeter:
       $exportAs: NetworkSecurityPerimeter
       $supportedFrom: v0.1.0
@@ -28,9 +65,14 @@ groupModelConfiguration:
     NetworkSecurityPerimeters_LoggingConfiguration:
       $exportAs: NetworkSecurityPerimetersLoggingConfiguration
       $supportedFrom: v0.1.0
-    SubResource:
+    # With the DNS resolver spec (openapi.json) loaded beside the network
+    # security perimeter's, each file's SubResource is renamed after its file.
+    NetworkSecurityPerimeterSubResource:
       Id:
         $referenceType: arm # the profile and the associated PaaS resource of an association
+    OpenapiSubResource:
+      Id:
+        $referenceType: arm # a DNS security rule's domain lists, a policy link's virtual network
   2026-03-01:
     Connection:
       $exportAs: VirtualNetworkGatewayConnection
@@ -38,6 +80,37 @@ groupModelConfiguration:
     LocalNetworkGateway:
       $exportAs: LocalNetworkGateway
       $supportedFrom: v0.1.0
+    # Foundation row 12: IP groups (Azure Firewall rules name them), route
+    # filters (which BGP communities a circuit's Microsoft peering takes) and
+    # service endpoint policies (which storage accounts a subnet's service
+    # endpoint may reach), with their children.
+    IpGroup:
+      $exportAs: IpGroup
+      $supportedFrom: v0.1.0
+    RouteFilter:
+      $exportAs: RouteFilter
+      $supportedFrom: v0.1.0
+    RouteFilters_RouteFilterRule:
+      $exportAs: RouteFiltersRouteFilterRule
+      $supportedFrom: v0.1.0
+    ServiceEndpointPolicy:
+      $exportAs: ServiceEndpointPolicy
+      $supportedFrom: v0.1.0
+    ServiceEndpointPolicies_ServiceEndpointPolicyDefinition:
+      $exportAs: ServiceEndpointPoliciesServiceEndpointPolicyDefinition
+      $supportedFrom: v0.1.0
+    RouteFilterPropertiesFormat:
+      Rules:
+        $resourceLifecycleOwnedByParent: RouteFilter # route filter rules, kept on a filter's PUT by its extension, as a circuit keeps its peerings
+    RouteFilterRule:
+      Id:
+        $referenceType: simple # a rule's own ID, in the filter's ARM payload only (copied from Azure by the filter's extension)
+    ServiceEndpointPolicyPropertiesFormat:
+      ServiceEndpointPolicyDefinitions:
+        $resourceLifecycleOwnedByParent: ServiceEndpointPolicy # policy definitions, kept on a policy's PUT by its extension
+    ServiceEndpointPolicyDefinition:
+      Id:
+        $referenceType: simple # a definition's own ID, in the policy's ARM payload only (copied from Azure by the policy's extension)
     ExpressRouteCircuit:
       $exportAs: ExpressRouteCircuit
       $supportedFrom: v0.1.0
@@ -306,6 +379,18 @@ groupModelConfiguration:
         $importSecretMode: required # the key of an ExpressRoute circuit authorization, a credential (sharedKey is x-ms-secret in the spec already)
 
 typeTransformers:
+  - group: network
+    version: v20180501
+    name: DnsZones_SOA_Spec
+    property: Etag
+    remove: true
+    because: Etag is supposed to be marked ReadOnly in Swagger (ASO removes it from the other record types of this version)
+  - group: network
+    version: v20260301
+    name: RouteFilters_RouteFilterRule_Spec;ServiceEndpointPolicies_ServiceEndpointPolicyDefinition_Spec
+    property: Id
+    remove: true
+    because: a child resource's own ARM ID (the spec's SubResource), which Azure sets (foundation row 12)
   # A VPN connection's own sharedKey is deprecated in the spec ("no more
   # used"); each link connection carries its key (x-ms-secret, a Secret
   # reference). $importSecretMode on it is never consumed by the generator,

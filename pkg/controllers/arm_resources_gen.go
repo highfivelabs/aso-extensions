@@ -39,6 +39,10 @@ import (
 	devtestlab_v20180915 "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915"
 	devtestlab_v20180915s "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915/storage"
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
+	insights_v20160301 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301"
+	insights_v20160301s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301/storage"
+	insights_v20201120 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20201120"
+	insights_v20201120s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20201120/storage"
 	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
 	insights_v20210901s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901/storage"
 	keyvault_customizations "github.com/highfivelabs/aso-extensions/apis/arm/keyvault/customizations"
@@ -56,6 +60,10 @@ import (
 	management_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/management/v20230401"
 	management_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/management/v20230401/storage"
 	network_customizations "github.com/highfivelabs/aso-extensions/apis/arm/network/customizations"
+	network_v20180501 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20180501"
+	network_v20180501s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20180501/storage"
+	network_v20240601 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20240601"
+	network_v20240601s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20240601/storage"
 	network_v20250501 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501"
 	network_v20250501s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501/storage"
 	network_v20260301 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20260301"
@@ -298,6 +306,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Schedule)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20160301.LogProfile)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20201120.WorkbookTemplate)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
@@ -349,6 +359,12 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroup)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroupsSetting)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroupsSubscription)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20180501.DnsZonesSOARecord)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20240601.PrivateDnsZonesSOARecord)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.DnsResolverDomainList)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.DnsResolverPoliciesDnsSecurityRule)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.DnsResolverPoliciesVirtualNetworkLink)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20250501.DnsResolverPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimeter)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersLink)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersLoggingConfiguration)})
@@ -440,6 +456,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePort)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.IpGroup)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManager)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagerConnection)})
@@ -458,6 +475,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRuleCollection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.P2sVpnGateway)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFilter)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ServiceEndpointPoliciesServiceEndpointPolicyDefinition)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ServiceEndpointPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHub)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsBgpConnection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsHubRouteTable)})
@@ -715,6 +736,10 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601s.Export)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20160301.LogProfile)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20160301s.LogProfile)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20201120.WorkbookTemplate)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20201120s.WorkbookTemplate)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScope)},
@@ -753,8 +778,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(management_v20230401s.ManagementGroup)},
 		&registration.KnownType{Obj: new(management_v20230401s.ManagementGroupsSetting)},
 		&registration.KnownType{Obj: new(management_v20230401s.ManagementGroupsSubscription)})
+	result = append(result, &registration.KnownType{Obj: new(network_v20180501.DnsZonesSOARecord)})
+	result = append(result, &registration.KnownType{Obj: new(network_v20180501s.DnsZonesSOARecord)})
+	result = append(result, &registration.KnownType{Obj: new(network_v20240601.PrivateDnsZonesSOARecord)})
+	result = append(result, &registration.KnownType{Obj: new(network_v20240601s.PrivateDnsZonesSOARecord)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(network_v20250501.DnsResolverDomainList)},
+		&registration.KnownType{Obj: new(network_v20250501.DnsResolverPoliciesDnsSecurityRule)},
+		&registration.KnownType{Obj: new(network_v20250501.DnsResolverPoliciesVirtualNetworkLink)},
+		&registration.KnownType{Obj: new(network_v20250501.DnsResolverPolicy)},
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimeter)},
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersLink)},
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersLoggingConfiguration)},
@@ -763,6 +796,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20250501.NetworkSecurityPerimetersResourceAssociation)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(network_v20250501s.DnsResolverDomainList)},
+		&registration.KnownType{Obj: new(network_v20250501s.DnsResolverPoliciesDnsSecurityRule)},
+		&registration.KnownType{Obj: new(network_v20250501s.DnsResolverPoliciesVirtualNetworkLink)},
+		&registration.KnownType{Obj: new(network_v20250501s.DnsResolverPolicy)},
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimeter)},
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersLink)},
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersLoggingConfiguration)},
@@ -779,6 +816,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteGatewaysExpressRouteConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagerConnection)},
@@ -797,6 +835,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserRule)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserRuleCollection)},
 		&registration.KnownType{Obj: new(network_v20260301.P2sVpnGateway)},
+		&registration.KnownType{Obj: new(network_v20260301.RouteFilter)},
+		&registration.KnownType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)},
+		&registration.KnownType{Obj: new(network_v20260301.ServiceEndpointPoliciesServiceEndpointPolicyDefinition)},
+		&registration.KnownType{Obj: new(network_v20260301.ServiceEndpointPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHub)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsBgpConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsHubRouteTable)},
@@ -821,6 +863,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteGatewaysExpressRouteConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePortsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301s.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagerConnection)},
@@ -839,6 +882,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserRule)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserRuleCollection)},
 		&registration.KnownType{Obj: new(network_v20260301s.P2sVpnGateway)},
+		&registration.KnownType{Obj: new(network_v20260301s.RouteFilter)},
+		&registration.KnownType{Obj: new(network_v20260301s.RouteFiltersRouteFilterRule)},
+		&registration.KnownType{Obj: new(network_v20260301s.ServiceEndpointPoliciesServiceEndpointPolicyDefinition)},
+		&registration.KnownType{Obj: new(network_v20260301s.ServiceEndpointPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHub)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsBgpConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsHubRouteTable)},
@@ -938,6 +985,10 @@ func createScheme() *runtime.Scheme {
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
+	_ = insights_v20160301.AddToScheme(scheme)
+	_ = insights_v20160301s.AddToScheme(scheme)
+	_ = insights_v20201120.AddToScheme(scheme)
+	_ = insights_v20201120s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
 	_ = insights_v20210901s.AddToScheme(scheme)
 	_ = keyvault_v20260515.AddToScheme(scheme)
@@ -950,6 +1001,10 @@ func createScheme() *runtime.Scheme {
 	_ = maintenance_v20230401s.AddToScheme(scheme)
 	_ = management_v20230401.AddToScheme(scheme)
 	_ = management_v20230401s.AddToScheme(scheme)
+	_ = network_v20180501.AddToScheme(scheme)
+	_ = network_v20180501s.AddToScheme(scheme)
+	_ = network_v20240601.AddToScheme(scheme)
+	_ = network_v20240601s.AddToScheme(scheme)
 	_ = network_v20250501.AddToScheme(scheme)
 	_ = network_v20250501s.AddToScheme(scheme)
 	_ = network_v20260301.AddToScheme(scheme)
@@ -999,9 +1054,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &containerservice_customizations.SnapshotExtension{})
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
+	result = append(result, &insights_customizations.LogProfileExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
+	result = append(result, &insights_customizations.WorkbookTemplateExtension{})
 	result = append(result, &keyvault_customizations.ManagedHSMExtension{})
 	result = append(result, &keyvault_customizations.ManagedHSMsKeyExtension{})
 	result = append(result, &keyvault_customizations.ManagedHSMsPrivateEndpointConnectionExtension{})
@@ -1014,6 +1071,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &management_customizations.ManagementGroupExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSettingExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSubscriptionExtension{})
+	result = append(result, &network_customizations.DnsResolverDomainListExtension{})
+	result = append(result, &network_customizations.DnsResolverPoliciesDnsSecurityRuleExtension{})
+	result = append(result, &network_customizations.DnsResolverPoliciesVirtualNetworkLinkExtension{})
+	result = append(result, &network_customizations.DnsResolverPolicyExtension{})
+	result = append(result, &network_customizations.DnsZonesSOARecordExtension{})
 	result = append(result, &network_customizations.ExpressRouteCircuitExtension{})
 	result = append(result, &network_customizations.ExpressRouteCircuitsAuthorizationExtension{})
 	result = append(result, &network_customizations.ExpressRouteCircuitsPeeringExtension{})
@@ -1022,6 +1084,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.ExpressRouteGatewaysExpressRouteConnectionExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortsAuthorizationExtension{})
+	result = append(result, &network_customizations.IpGroupExtension{})
 	result = append(result, &network_customizations.LocalNetworkGatewayExtension{})
 	result = append(result, &network_customizations.NetworkManagerConnectionExtension{})
 	result = append(result, &network_customizations.NetworkManagerExtension{})
@@ -1046,6 +1109,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfilesAccessRuleExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersResourceAssociationExtension{})
 	result = append(result, &network_customizations.P2sVpnGatewayExtension{})
+	result = append(result, &network_customizations.PrivateDnsZonesSOARecordExtension{})
+	result = append(result, &network_customizations.RouteFilterExtension{})
+	result = append(result, &network_customizations.RouteFiltersRouteFilterRuleExtension{})
+	result = append(result, &network_customizations.ServiceEndpointPoliciesServiceEndpointPolicyDefinitionExtension{})
+	result = append(result, &network_customizations.ServiceEndpointPolicyExtension{})
 	result = append(result, &network_customizations.VirtualHubExtension{})
 	result = append(result, &network_customizations.VirtualHubsBgpConnectionExtension{})
 	result = append(result, &network_customizations.VirtualHubsHubRouteTableExtension{})

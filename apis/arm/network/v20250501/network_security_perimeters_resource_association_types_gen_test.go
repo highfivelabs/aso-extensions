@@ -18,6 +18,226 @@ import (
 	"testing"
 )
 
+func Test_NetworkSecurityPerimeterSubResource_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from NetworkSecurityPerimeterSubResource to NetworkSecurityPerimeterSubResource via AssignProperties_To_NetworkSecurityPerimeterSubResource & AssignProperties_From_NetworkSecurityPerimeterSubResource returns original",
+		prop.ForAll(RunPropertyAssignmentTestForNetworkSecurityPerimeterSubResource, NetworkSecurityPerimeterSubResourceGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForNetworkSecurityPerimeterSubResource tests if a specific instance of NetworkSecurityPerimeterSubResource can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForNetworkSecurityPerimeterSubResource(subject NetworkSecurityPerimeterSubResource) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other storage.NetworkSecurityPerimeterSubResource
+	err := copied.AssignProperties_To_NetworkSecurityPerimeterSubResource(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual NetworkSecurityPerimeterSubResource
+	err = actual.AssignProperties_From_NetworkSecurityPerimeterSubResource(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
+func Test_NetworkSecurityPerimeterSubResource_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MinSuccessfulTests = 100
+	parameters.MaxSize = 3
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip of NetworkSecurityPerimeterSubResource via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForNetworkSecurityPerimeterSubResource, NetworkSecurityPerimeterSubResourceGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
+}
+
+// RunJSONSerializationTestForNetworkSecurityPerimeterSubResource runs a test to see if a specific instance of NetworkSecurityPerimeterSubResource round trips to JSON and back losslessly
+func RunJSONSerializationTestForNetworkSecurityPerimeterSubResource(subject NetworkSecurityPerimeterSubResource) string {
+	// Serialize to JSON
+	bin, err := json.Marshal(subject)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Deserialize back into memory
+	var actual NetworkSecurityPerimeterSubResource
+	err = json.Unmarshal(bin, &actual)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for outcome
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
+// Generator of NetworkSecurityPerimeterSubResource instances for property testing - lazily instantiated by
+// NetworkSecurityPerimeterSubResourceGenerator()
+var networkSecurityPerimeterSubResourceGenerator gopter.Gen
+
+// NetworkSecurityPerimeterSubResourceGenerator returns a generator of NetworkSecurityPerimeterSubResource instances for property testing.
+func NetworkSecurityPerimeterSubResourceGenerator() gopter.Gen {
+	if networkSecurityPerimeterSubResourceGenerator != nil {
+		return networkSecurityPerimeterSubResourceGenerator
+	}
+
+	generators := make(map[string]gopter.Gen)
+	networkSecurityPerimeterSubResourceGenerator = gen.Struct(reflect.TypeOf(NetworkSecurityPerimeterSubResource{}), generators)
+
+	return networkSecurityPerimeterSubResourceGenerator
+}
+
+func Test_NetworkSecurityPerimeterSubResource_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from NetworkSecurityPerimeterSubResource_STATUS to NetworkSecurityPerimeterSubResource_STATUS via AssignProperties_To_NetworkSecurityPerimeterSubResource_STATUS & AssignProperties_From_NetworkSecurityPerimeterSubResource_STATUS returns original",
+		prop.ForAll(RunPropertyAssignmentTestForNetworkSecurityPerimeterSubResource_STATUS, NetworkSecurityPerimeterSubResource_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForNetworkSecurityPerimeterSubResource_STATUS tests if a specific instance of NetworkSecurityPerimeterSubResource_STATUS can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForNetworkSecurityPerimeterSubResource_STATUS(subject NetworkSecurityPerimeterSubResource_STATUS) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other storage.NetworkSecurityPerimeterSubResource_STATUS
+	err := copied.AssignProperties_To_NetworkSecurityPerimeterSubResource_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual NetworkSecurityPerimeterSubResource_STATUS
+	err = actual.AssignProperties_From_NetworkSecurityPerimeterSubResource_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
+func Test_NetworkSecurityPerimeterSubResource_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MinSuccessfulTests = 80
+	parameters.MaxSize = 3
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip of NetworkSecurityPerimeterSubResource_STATUS via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForNetworkSecurityPerimeterSubResource_STATUS, NetworkSecurityPerimeterSubResource_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
+}
+
+// RunJSONSerializationTestForNetworkSecurityPerimeterSubResource_STATUS runs a test to see if a specific instance of NetworkSecurityPerimeterSubResource_STATUS round trips to JSON and back losslessly
+func RunJSONSerializationTestForNetworkSecurityPerimeterSubResource_STATUS(subject NetworkSecurityPerimeterSubResource_STATUS) string {
+	// Serialize to JSON
+	bin, err := json.Marshal(subject)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Deserialize back into memory
+	var actual NetworkSecurityPerimeterSubResource_STATUS
+	err = json.Unmarshal(bin, &actual)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for outcome
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
+// Generator of NetworkSecurityPerimeterSubResource_STATUS instances for property testing - lazily instantiated by
+// NetworkSecurityPerimeterSubResource_STATUSGenerator()
+var networkSecurityPerimeterSubResource_STATUSGenerator gopter.Gen
+
+// NetworkSecurityPerimeterSubResource_STATUSGenerator returns a generator of NetworkSecurityPerimeterSubResource_STATUS instances for property testing.
+func NetworkSecurityPerimeterSubResource_STATUSGenerator() gopter.Gen {
+	if networkSecurityPerimeterSubResource_STATUSGenerator != nil {
+		return networkSecurityPerimeterSubResource_STATUSGenerator
+	}
+
+	generators := make(map[string]gopter.Gen)
+	AddIndependentPropertyGeneratorsForNetworkSecurityPerimeterSubResource_STATUS(generators)
+	networkSecurityPerimeterSubResource_STATUSGenerator = gen.Struct(reflect.TypeOf(NetworkSecurityPerimeterSubResource_STATUS{}), generators)
+
+	return networkSecurityPerimeterSubResource_STATUSGenerator
+}
+
+// AddIndependentPropertyGeneratorsForNetworkSecurityPerimeterSubResource_STATUS is a factory method for creating gopter generators
+func AddIndependentPropertyGeneratorsForNetworkSecurityPerimeterSubResource_STATUS(gens map[string]gopter.Gen) {
+	gens["Id"] = gen.PtrOf(gen.AlphaString())
+}
+
 func Test_NetworkSecurityPerimetersResourceAssociation_WhenConvertedToHub_RoundTripsWithoutLoss(t *testing.T) {
 	t.Parallel()
 
@@ -422,8 +642,8 @@ func AddIndependentPropertyGeneratorsForNetworkSecurityPerimetersResourceAssocia
 
 // AddRelatedPropertyGeneratorsForNetworkSecurityPerimetersResourceAssociation_STATUS is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForNetworkSecurityPerimetersResourceAssociation_STATUS(gens map[string]gopter.Gen) {
-	gens["PrivateLinkResource"] = gen.PtrOf(SubResource_STATUSGenerator())
-	gens["Profile"] = gen.PtrOf(SubResource_STATUSGenerator())
+	gens["PrivateLinkResource"] = gen.PtrOf(NetworkSecurityPerimeterSubResource_STATUSGenerator())
+	gens["Profile"] = gen.PtrOf(NetworkSecurityPerimeterSubResource_STATUSGenerator())
 	gens["SystemData"] = gen.PtrOf(SystemData_STATUSGenerator())
 }
 
@@ -553,224 +773,6 @@ func AddIndependentPropertyGeneratorsForNetworkSecurityPerimetersResourceAssocia
 // AddRelatedPropertyGeneratorsForNetworkSecurityPerimetersResourceAssociation_Spec is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForNetworkSecurityPerimetersResourceAssociation_Spec(gens map[string]gopter.Gen) {
 	gens["OperatorSpec"] = gen.PtrOf(NetworkSecurityPerimetersResourceAssociationOperatorSpecGenerator())
-	gens["PrivateLinkResource"] = gen.PtrOf(SubResourceGenerator())
-	gens["Profile"] = gen.PtrOf(SubResourceGenerator())
-}
-
-func Test_SubResource_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MaxSize = 10
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip from SubResource to SubResource via AssignProperties_To_SubResource & AssignProperties_From_SubResource returns original",
-		prop.ForAll(RunPropertyAssignmentTestForSubResource, SubResourceGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
-}
-
-// RunPropertyAssignmentTestForSubResource tests if a specific instance of SubResource can be assigned to storage and back losslessly
-func RunPropertyAssignmentTestForSubResource(subject SubResource) string {
-	// Copy subject to make sure assignment doesn't modify it
-	copied := subject.DeepCopy()
-
-	// Use AssignPropertiesTo() for the first stage of conversion
-	var other storage.SubResource
-	err := copied.AssignProperties_To_SubResource(&other)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Use AssignPropertiesFrom() to convert back to our original type
-	var actual SubResource
-	err = actual.AssignProperties_From_SubResource(&other)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for a match
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-func Test_SubResource_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MinSuccessfulTests = 100
-	parameters.MaxSize = 3
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip of SubResource via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForSubResource, SubResourceGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
-}
-
-// RunJSONSerializationTestForSubResource runs a test to see if a specific instance of SubResource round trips to JSON and back losslessly
-func RunJSONSerializationTestForSubResource(subject SubResource) string {
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Deserialize back into memory
-	var actual SubResource
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-// Generator of SubResource instances for property testing - lazily instantiated by SubResourceGenerator()
-var subResourceGenerator gopter.Gen
-
-// SubResourceGenerator returns a generator of SubResource instances for property testing.
-func SubResourceGenerator() gopter.Gen {
-	if subResourceGenerator != nil {
-		return subResourceGenerator
-	}
-
-	generators := make(map[string]gopter.Gen)
-	subResourceGenerator = gen.Struct(reflect.TypeOf(SubResource{}), generators)
-
-	return subResourceGenerator
-}
-
-func Test_SubResource_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MaxSize = 10
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip from SubResource_STATUS to SubResource_STATUS via AssignProperties_To_SubResource_STATUS & AssignProperties_From_SubResource_STATUS returns original",
-		prop.ForAll(RunPropertyAssignmentTestForSubResource_STATUS, SubResource_STATUSGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
-}
-
-// RunPropertyAssignmentTestForSubResource_STATUS tests if a specific instance of SubResource_STATUS can be assigned to storage and back losslessly
-func RunPropertyAssignmentTestForSubResource_STATUS(subject SubResource_STATUS) string {
-	// Copy subject to make sure assignment doesn't modify it
-	copied := subject.DeepCopy()
-
-	// Use AssignPropertiesTo() for the first stage of conversion
-	var other storage.SubResource_STATUS
-	err := copied.AssignProperties_To_SubResource_STATUS(&other)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Use AssignPropertiesFrom() to convert back to our original type
-	var actual SubResource_STATUS
-	err = actual.AssignProperties_From_SubResource_STATUS(&other)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for a match
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-func Test_SubResource_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MinSuccessfulTests = 80
-	parameters.MaxSize = 3
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip of SubResource_STATUS via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForSubResource_STATUS, SubResource_STATUSGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
-}
-
-// RunJSONSerializationTestForSubResource_STATUS runs a test to see if a specific instance of SubResource_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForSubResource_STATUS(subject SubResource_STATUS) string {
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Deserialize back into memory
-	var actual SubResource_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-// Generator of SubResource_STATUS instances for property testing - lazily instantiated by SubResource_STATUSGenerator()
-var subResource_STATUSGenerator gopter.Gen
-
-// SubResource_STATUSGenerator returns a generator of SubResource_STATUS instances for property testing.
-func SubResource_STATUSGenerator() gopter.Gen {
-	if subResource_STATUSGenerator != nil {
-		return subResource_STATUSGenerator
-	}
-
-	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForSubResource_STATUS(generators)
-	subResource_STATUSGenerator = gen.Struct(reflect.TypeOf(SubResource_STATUS{}), generators)
-
-	return subResource_STATUSGenerator
-}
-
-// AddIndependentPropertyGeneratorsForSubResource_STATUS is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForSubResource_STATUS(gens map[string]gopter.Gen) {
-	gens["Id"] = gen.PtrOf(gen.AlphaString())
+	gens["PrivateLinkResource"] = gen.PtrOf(NetworkSecurityPerimeterSubResourceGenerator())
+	gens["Profile"] = gen.PtrOf(NetworkSecurityPerimeterSubResourceGenerator())
 }

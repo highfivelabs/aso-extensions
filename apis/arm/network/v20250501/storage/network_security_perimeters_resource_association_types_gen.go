@@ -9,7 +9,6 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
-	storage "github.com/highfivelabs/aso-extensions/apis/arm/network/v20260301/storage"
 	"github.com/rotisserie/eris"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -184,10 +183,10 @@ type NetworkSecurityPerimetersResourceAssociation_Spec struct {
 	// Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
 	// controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
 	// reference to a network.azure.hfl.dev/NetworkSecurityPerimeter resource
-	Owner               *genruntime.KnownResourceReference `group:"network.azure.hfl.dev" json:"owner,omitempty" kind:"NetworkSecurityPerimeter"`
-	PrivateLinkResource *SubResource                       `json:"privateLinkResource,omitempty"`
-	Profile             *SubResource                       `json:"profile,omitempty"`
-	PropertyBag         genruntime.PropertyBag             `json:"$propertyBag,omitempty"`
+	Owner               *genruntime.KnownResourceReference   `group:"network.azure.hfl.dev" json:"owner,omitempty" kind:"NetworkSecurityPerimeter"`
+	PrivateLinkResource *NetworkSecurityPerimeterSubResource `json:"privateLinkResource,omitempty"`
+	Profile             *NetworkSecurityPerimeterSubResource `json:"profile,omitempty"`
+	PropertyBag         genruntime.PropertyBag               `json:"$propertyBag,omitempty"`
 }
 
 var _ genruntime.ConvertibleSpec = &NetworkSecurityPerimetersResourceAssociation_Spec{}
@@ -212,17 +211,17 @@ func (association *NetworkSecurityPerimetersResourceAssociation_Spec) ConvertSpe
 
 // Storage version of v20250501.NetworkSecurityPerimetersResourceAssociation_STATUS
 type NetworkSecurityPerimetersResourceAssociation_STATUS struct {
-	AccessMode            *string                `json:"accessMode,omitempty"`
-	Conditions            []conditions.Condition `json:"conditions,omitempty"`
-	HasProvisioningIssues *string                `json:"hasProvisioningIssues,omitempty"`
-	Id                    *string                `json:"id,omitempty"`
-	Name                  *string                `json:"name,omitempty"`
-	PrivateLinkResource   *SubResource_STATUS    `json:"privateLinkResource,omitempty"`
-	Profile               *SubResource_STATUS    `json:"profile,omitempty"`
-	PropertyBag           genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	ProvisioningState     *string                `json:"provisioningState,omitempty"`
-	SystemData            *SystemData_STATUS     `json:"systemData,omitempty"`
-	Type                  *string                `json:"type,omitempty"`
+	AccessMode            *string                                     `json:"accessMode,omitempty"`
+	Conditions            []conditions.Condition                      `json:"conditions,omitempty"`
+	HasProvisioningIssues *string                                     `json:"hasProvisioningIssues,omitempty"`
+	Id                    *string                                     `json:"id,omitempty"`
+	Name                  *string                                     `json:"name,omitempty"`
+	PrivateLinkResource   *NetworkSecurityPerimeterSubResource_STATUS `json:"privateLinkResource,omitempty"`
+	Profile               *NetworkSecurityPerimeterSubResource_STATUS `json:"profile,omitempty"`
+	PropertyBag           genruntime.PropertyBag                      `json:"$propertyBag,omitempty"`
+	ProvisioningState     *string                                     `json:"provisioningState,omitempty"`
+	SystemData            *SystemData_STATUS                          `json:"systemData,omitempty"`
+	Type                  *string                                     `json:"type,omitempty"`
 }
 
 var _ genruntime.ConvertibleStatus = &NetworkSecurityPerimetersResourceAssociation_STATUS{}
@@ -253,152 +252,20 @@ type NetworkSecurityPerimetersResourceAssociationOperatorSpec struct {
 	SecretExpressions    []*core.DestinationExpression `json:"secretExpressions,omitempty"`
 }
 
-// Storage version of v20250501.SubResource
+// Storage version of v20250501.NetworkSecurityPerimeterSubResource
 // Reference to another subresource.
-type SubResource struct {
+type NetworkSecurityPerimeterSubResource struct {
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 
 	// Reference: Resource ID.
 	Reference *genruntime.ResourceReference `armReference:"Id" json:"reference,omitempty"`
 }
 
-// AssignProperties_From_SubResource populates our SubResource from the provided source SubResource
-func (resource *SubResource) AssignProperties_From_SubResource(source *storage.SubResource) error {
-	// Clone the existing property bag
-	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
-
-	// Reference
-	if source.Reference != nil {
-		reference := source.Reference.Copy()
-		resource.Reference = &reference
-	} else {
-		resource.Reference = nil
-	}
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		resource.PropertyBag = propertyBag
-	} else {
-		resource.PropertyBag = nil
-	}
-
-	// Invoke the augmentConversionForSubResource interface (if implemented) to customize the conversion
-	var resourceAsAny any = resource
-	if augmentedResource, ok := resourceAsAny.(augmentConversionForSubResource); ok {
-		err := augmentedResource.AssignPropertiesFrom(source)
-		if err != nil {
-			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
-		}
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_To_SubResource populates the provided destination SubResource from our SubResource
-func (resource *SubResource) AssignProperties_To_SubResource(destination *storage.SubResource) error {
-	// Clone the existing property bag
-	propertyBag := genruntime.NewPropertyBag(resource.PropertyBag)
-
-	// Reference
-	if resource.Reference != nil {
-		reference := resource.Reference.Copy()
-		destination.Reference = &reference
-	} else {
-		destination.Reference = nil
-	}
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// Invoke the augmentConversionForSubResource interface (if implemented) to customize the conversion
-	var resourceAsAny any = resource
-	if augmentedResource, ok := resourceAsAny.(augmentConversionForSubResource); ok {
-		err := augmentedResource.AssignPropertiesTo(destination)
-		if err != nil {
-			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
-		}
-	}
-
-	// No error
-	return nil
-}
-
-// Storage version of v20250501.SubResource_STATUS
+// Storage version of v20250501.NetworkSecurityPerimeterSubResource_STATUS
 // Reference to another subresource.
-type SubResource_STATUS struct {
+type NetworkSecurityPerimeterSubResource_STATUS struct {
 	Id          *string                `json:"id,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// AssignProperties_From_SubResource_STATUS populates our SubResource_STATUS from the provided source SubResource_STATUS
-func (resource *SubResource_STATUS) AssignProperties_From_SubResource_STATUS(source *storage.SubResource_STATUS) error {
-	// Clone the existing property bag
-	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
-
-	// Id
-	resource.Id = genruntime.ClonePointerToString(source.Id)
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		resource.PropertyBag = propertyBag
-	} else {
-		resource.PropertyBag = nil
-	}
-
-	// Invoke the augmentConversionForSubResource_STATUS interface (if implemented) to customize the conversion
-	var resourceAsAny any = resource
-	if augmentedResource, ok := resourceAsAny.(augmentConversionForSubResource_STATUS); ok {
-		err := augmentedResource.AssignPropertiesFrom(source)
-		if err != nil {
-			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
-		}
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_To_SubResource_STATUS populates the provided destination SubResource_STATUS from our SubResource_STATUS
-func (resource *SubResource_STATUS) AssignProperties_To_SubResource_STATUS(destination *storage.SubResource_STATUS) error {
-	// Clone the existing property bag
-	propertyBag := genruntime.NewPropertyBag(resource.PropertyBag)
-
-	// Id
-	destination.Id = genruntime.ClonePointerToString(resource.Id)
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// Invoke the augmentConversionForSubResource_STATUS interface (if implemented) to customize the conversion
-	var resourceAsAny any = resource
-	if augmentedResource, ok := resourceAsAny.(augmentConversionForSubResource_STATUS); ok {
-		err := augmentedResource.AssignPropertiesTo(destination)
-		if err != nil {
-			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
-		}
-	}
-
-	// No error
-	return nil
-}
-
-type augmentConversionForSubResource interface {
-	AssignPropertiesFrom(src *storage.SubResource) error
-	AssignPropertiesTo(dst *storage.SubResource) error
-}
-
-type augmentConversionForSubResource_STATUS interface {
-	AssignPropertiesFrom(src *storage.SubResource_STATUS) error
-	AssignPropertiesTo(dst *storage.SubResource_STATUS) error
 }
 
 func init() {
