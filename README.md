@@ -308,6 +308,28 @@ credentials against an in-process fake Entra, a fake Key Vault and a fake
 Resource Manager over TLS, and PostgreSQL in Docker set up like a flexible
 server (`docs/fake-cloud.md`).
 
+### Run CI locally
+
+Every workflow job's work is a `task` target or a `hack/ci/` script, so
+CI runs the same way on a laptop, an offload VM or GitHub's runner:
+
+| Workflow job | Locally |
+| --- | --- |
+| tools (every job) | `task tools` (its `ci:tools`: task, kind, ko, crane, kubectl, helm at `hack/ci/tools.sh`'s pins into `bin/ci`, first on every task's `PATH`) |
+| ci.yml plan | `hack/ci/select.sh plan origin/main HEAD` |
+| ci.yml check | `task ci:check MODE=full` (or `MODE=groups GROUPS="..."`) |
+| ci.yml e2e | `task operator-e2e`; `task operator-e2e:debug` after a failure |
+| nightly.yml full | `task tools`, `task check`, `task operator-e2e` |
+| release.yml images | `task upstream`, then `task release TAG=v0.1.0` (needs registry write access) |
+| all of ci.yml, as one | `task ci` (below) |
+
+Go is go.mod's version, as `setup-go` picks it; `task ci` sets
+`GOTOOLCHAIN` to it. The GitHub-only steps (freeing the runner's disk,
+`hack/ci/free-disk.sh`; choosing Spot runners, `hack/ci/runners.sh`; the
+required `ci` status, `hack/ci/results.sh`; the nightly issue,
+`hack/ci/nightly-report.sh`) have no local counterpart: `task ci`'s exit
+status is the result.
+
 ### The merge gate
 
 GitHub Actions is off in the organization (the builder, 2026-11-11); the
