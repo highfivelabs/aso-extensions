@@ -12,8 +12,13 @@ no_list: true
 |--------------------------------|--------------------|------------------|----------------|--------|
 | PolicyAssignment               | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | PolicyDefinition               | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| PolicyDefinitionsVersion       | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | PolicyExemption                | 2026-01-01-preview | v20260101preview | v0.1.0         | -      |
 | PolicySetDefinition            | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| PolicySetDefinitionsVersion    | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| PolicyVariable                 | 2024-12-01-preview | v20241201preview | v0.1.0         | -      |
+| PrivateLinkAssociation         | 2020-05-01         | v20200501        | v0.1.0         | -      |
+| ResourceManagementPrivateLink  | 2020-05-01         | v20200501        | v0.1.0         | -      |
 | RoleAssignmentScheduleRequest  | 2020-10-01         | v20201001        | v0.1.0         | -      |
 | RoleEligibilityScheduleRequest | 2020-10-01         | v20201001        | v0.1.0         | -      |
 | RoleManagementPolicyAssignment | 2020-10-01         | v20201001        | v0.1.0         | -      |

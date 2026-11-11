@@ -51,6 +51,14 @@ imports:
   policyinsights: azure-arm/policyinsights.yaml
   consumption: azure-arm/consumption.yaml
   costmanagement: azure-arm/costmanagement.yaml
+  keyvault: azure-arm/keyvault.yaml
+  operationsmanagement: azure-arm/operationsmanagement.yaml
+  security: azure-arm/security.yaml
+  securityinsights: azure-arm/securityinsights.yaml
+  hardwaresecuritymodules: azure-arm/hardwaresecuritymodules.yaml
+  purview: azure-arm/purview.yaml
+  containerservice: azure-arm/containerservice.yaml
+  kubernetesconfiguration: azure-arm/kubernetesconfiguration.yaml
 
 # Filters are applied in document order; the earliest match wins (as in ASO's
 # azure-arm.yaml, from which these are taken).

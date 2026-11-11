@@ -3,3 +3,5 @@ github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/customizations
 -----------------------------------------------------------------------------
 ExportExtension: Object (0 properties)
 
+ScheduledActionExtension: Object (0 properties)
+

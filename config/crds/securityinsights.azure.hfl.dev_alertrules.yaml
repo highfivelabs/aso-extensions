@@ -1,0 +1,1066 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: alertrules.securityinsights.azure.hfl.dev
+spec:
+  group: securityinsights.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - securityinsights
+    kind: AlertRule
+    listKind: AlertRuleList
+    plural: alertrules
+    singular: alertrule
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20250901
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /securityinsights/resource-manager/Microsoft.SecurityInsights/SecurityInsights/stable/2025-09-01/openapi.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              fusionAlertRule:
+                description: 'Fusion: Mutually exclusive with all other properties'
+                properties:
+                  alertRuleTemplateName:
+                    description: 'AlertRuleTemplateName: The Name of the alert rule
+                      template used to create this rule.'
+                    type: string
+                  enabled:
+                    description: 'Enabled: Determines whether this alert rule is enabled
+                      or disabled.'
+                    type: boolean
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - Fusion
+                    type: string
+                required:
+                - alertRuleTemplateName
+                - enabled
+                - kind
+                type: object
+              microsoftSecurityIncidentCreationAlertRule:
+                description: 'MicrosoftSecurityIncidentCreation: Mutually exclusive
+                  with all other properties'
+                properties:
+                  alertRuleTemplateName:
+                    description: 'AlertRuleTemplateName: The Name of the alert rule
+                      template used to create this rule.'
+                    type: string
+                  description:
+                    description: 'Description: The description of the alert rule.'
+                    type: string
+                  displayName:
+                    description: 'DisplayName: The display name for alerts created
+                      by this alert rule.'
+                    type: string
+                  displayNamesExcludeFilter:
+                    description: 'DisplayNamesExcludeFilter: the alerts'' displayNames
+                      on which the cases will not be generated'
+                    items:
+                      type: string
+                    type: array
+                  displayNamesFilter:
+                    description: 'DisplayNamesFilter: the alerts'' displayNames on
+                      which the cases will be generated'
+                    items:
+                      type: string
+                    type: array
+                  enabled:
+                    description: 'Enabled: Determines whether this alert rule is enabled
+                      or disabled.'
+                    type: boolean
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - MicrosoftSecurityIncidentCreation
+                    type: string
+                  productFilter:
+                    description: 'ProductFilter: The alerts'' productName on which
+                      the cases will be generated'
+                    enum:
+                    - Azure Active Directory Identity Protection
+                    - Azure Advanced Threat Protection
+                    - Azure Security Center
+                    - Azure Security Center for IoT
+                    - Microsoft Cloud App Security
+                    type: string
+                  severitiesFilter:
+                    description: 'SeveritiesFilter: the alerts'' severities on which
+                      the cases will be generated'
+                    items:
+                      description: The severity of the alert
+                      enum:
+                      - High
+                      - Informational
+                      - Low
+                      - Medium
+                      type: string
+                    type: array
+                required:
+                - displayName
+                - enabled
+                - kind
+                - productFilter
+                type: object
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
+                  extension resource, which means that any other Azure resource can be its owner.
+                properties:
+                  armId:
+                    description: Ownership across namespaces is not supported.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+              scheduledAlertRule:
+                description: 'Scheduled: Mutually exclusive with all other properties'
+                properties:
+                  alertDetailsOverride:
+                    description: 'AlertDetailsOverride: The alert details override
+                      settings'
+                    properties:
+                      alertDescriptionFormat:
+                        description: 'AlertDescriptionFormat: the format containing
+                          columns name(s) to override the alert description'
+                        type: string
+                      alertDisplayNameFormat:
+                        description: 'AlertDisplayNameFormat: the format containing
+                          columns name(s) to override the alert name'
+                        type: string
+                      alertDynamicProperties:
+                        description: 'AlertDynamicProperties: List of additional dynamic
+                          properties to override'
+                        items:
+                          description: A single alert property mapping to override
+                          properties:
+                            alertProperty:
+                              description: 'AlertProperty: The V3 alert property'
+                              enum:
+                              - AlertLink
+                              - ConfidenceLevel
+                              - ConfidenceScore
+                              - ExtendedLinks
+                              - ProductComponentName
+                              - ProductName
+                              - ProviderName
+                              - RemediationSteps
+                              - Techniques
+                              type: string
+                            value:
+                              description: 'Value: the column name to use to override
+                                this property'
+                              type: string
+                          type: object
+                        type: array
+                      alertSeverityColumnName:
+                        description: 'AlertSeverityColumnName: the column name to
+                          take the alert severity from'
+                        type: string
+                      alertTacticsColumnName:
+                        description: 'AlertTacticsColumnName: the column name to take
+                          the alert tactics from'
+                        type: string
+                    type: object
+                  alertRuleTemplateName:
+                    description: 'AlertRuleTemplateName: The Name of the alert rule
+                      template used to create this rule.'
+                    type: string
+                  customDetails:
+                    additionalProperties:
+                      type: string
+                    description: 'CustomDetails: Dictionary of string key-value pairs
+                      of columns to be attached to the alert'
+                    type: object
+                  description:
+                    description: 'Description: The description of the alert rule.'
+                    type: string
+                  displayName:
+                    description: 'DisplayName: The display name for alerts created
+                      by this alert rule.'
+                    type: string
+                  enabled:
+                    description: 'Enabled: Determines whether this alert rule is enabled
+                      or disabled.'
+                    type: boolean
+                  entityMappings:
+                    description: 'EntityMappings: Array of the entity mappings of
+                      the alert rule'
+                    items:
+                      description: Single entity mapping for the alert rule
+                      properties:
+                        entityType:
+                          description: 'EntityType: The V3 type of the mapped entity'
+                          enum:
+                          - Account
+                          - AzureResource
+                          - CloudApplication
+                          - DNS
+                          - File
+                          - FileHash
+                          - Host
+                          - IP
+                          - MailCluster
+                          - MailMessage
+                          - Mailbox
+                          - Malware
+                          - Process
+                          - RegistryKey
+                          - RegistryValue
+                          - SecurityGroup
+                          - SubmissionMail
+                          - URL
+                          type: string
+                        fieldMappings:
+                          description: 'FieldMappings: array of field mappings for
+                            the given entity mapping'
+                          items:
+                            description: A single field mapping of the mapped entity
+                            properties:
+                              columnName:
+                                description: 'ColumnName: the column name to be mapped
+                                  to the identifier'
+                                type: string
+                              identifier:
+                                description: 'Identifier: the V3 identifier of the
+                                  entity'
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  eventGroupingSettings:
+                    description: 'EventGroupingSettings: The event grouping settings.'
+                    properties:
+                      aggregationKind:
+                        description: 'AggregationKind: The event grouping aggregation
+                          kinds'
+                        enum:
+                        - AlertPerResult
+                        - SingleAlert
+                        type: string
+                    type: object
+                  incidentConfiguration:
+                    description: 'IncidentConfiguration: The settings of the incidents
+                      that created from alerts triggered by this analytics rule'
+                    properties:
+                      createIncident:
+                        description: 'CreateIncident: Create incidents from alerts
+                          triggered by this analytics rule'
+                        type: boolean
+                      groupingConfiguration:
+                        description: 'GroupingConfiguration: Set how the alerts that
+                          are triggered by this analytics rule, are grouped into incidents'
+                        properties:
+                          enabled:
+                            description: 'Enabled: Grouping enabled'
+                            type: boolean
+                          groupByAlertDetails:
+                            description: 'GroupByAlertDetails: A list of alert details
+                              to group by (when matchingMethod is Selected)'
+                            items:
+                              description: Alert detail
+                              enum:
+                              - DisplayName
+                              - Severity
+                              type: string
+                            type: array
+                          groupByCustomDetails:
+                            description: |-
+                              GroupByCustomDetails: A list of custom details keys to group by (when matchingMethod is Selected). Only keys defined in
+                              the current alert rule may be used.
+                            items:
+                              type: string
+                            type: array
+                          groupByEntities:
+                            description: |-
+                              GroupByEntities: A list of entity types to group by (when matchingMethod is Selected). Only entities defined in the
+                              current alert rule may be used.
+                            items:
+                              description: The V3 type of the mapped entity
+                              enum:
+                              - Account
+                              - AzureResource
+                              - CloudApplication
+                              - DNS
+                              - File
+                              - FileHash
+                              - Host
+                              - IP
+                              - MailCluster
+                              - MailMessage
+                              - Mailbox
+                              - Malware
+                              - Process
+                              - RegistryKey
+                              - RegistryValue
+                              - SecurityGroup
+                              - SubmissionMail
+                              - URL
+                              type: string
+                            type: array
+                          lookbackDuration:
+                            description: 'LookbackDuration: Limit the group to alerts
+                              created within the lookback duration (in ISO 8601 duration
+                              format)'
+                            type: string
+                          matchingMethod:
+                            description: |-
+                              MatchingMethod: Grouping matching method. When method is Selected at least one of groupByEntities, groupByAlertDetails,
+                              groupByCustomDetails must be provided and not empty.
+                            enum:
+                            - AllEntities
+                            - AnyAlert
+                            - Selected
+                            type: string
+                          reopenClosedIncident:
+                            description: 'ReopenClosedIncident: Re-open closed matching
+                              incidents'
+                            type: boolean
+                        required:
+                        - enabled
+                        - lookbackDuration
+                        - matchingMethod
+                        - reopenClosedIncident
+                        type: object
+                    required:
+                    - createIncident
+                    type: object
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    enum:
+                    - Scheduled
+                    type: string
+                  query:
+                    description: 'Query: The query that creates alerts for this rule.'
+                    type: string
+                  queryFrequency:
+                    description: 'QueryFrequency: The frequency (in ISO 8601 duration
+                      format) for this alert rule to run.'
+                    type: string
+                  queryPeriod:
+                    description: 'QueryPeriod: The period (in ISO 8601 duration format)
+                      that this alert rule looks at.'
+                    type: string
+                  severity:
+                    description: 'Severity: The severity for alerts created by this
+                      alert rule.'
+                    enum:
+                    - High
+                    - Informational
+                    - Low
+                    - Medium
+                    type: string
+                  suppressionDuration:
+                    description: |-
+                      SuppressionDuration: The suppression (in ISO 8601 duration format) to wait since last time this alert rule been
+                      triggered.
+                    type: string
+                  suppressionEnabled:
+                    description: 'SuppressionEnabled: Determines whether the suppression
+                      for this alert rule is enabled or disabled.'
+                    type: boolean
+                  tactics:
+                    description: 'Tactics: The tactics of the alert rule'
+                    items:
+                      description: The severity for alerts created by this alert rule.
+                      enum:
+                      - Collection
+                      - CommandAndControl
+                      - CredentialAccess
+                      - DefenseEvasion
+                      - Discovery
+                      - Execution
+                      - Exfiltration
+                      - Impact
+                      - ImpairProcessControl
+                      - InhibitResponseFunction
+                      - InitialAccess
+                      - LateralMovement
+                      - Persistence
+                      - PreAttack
+                      - PrivilegeEscalation
+                      - Reconnaissance
+                      - ResourceDevelopment
+                      type: string
+                    type: array
+                  techniques:
+                    description: 'Techniques: The techniques of the alert rule'
+                    items:
+                      type: string
+                    type: array
+                  templateVersion:
+                    description: |-
+                      TemplateVersion: The version of the alert rule template used to create this rule - in format <a.b.c>, where all are
+                      numbers, for example 0 <1.0.2>
+                    type: string
+                  triggerOperator:
+                    description: 'TriggerOperator: The operation against the threshold
+                      that triggers alert rule.'
+                    enum:
+                    - Equal
+                    - GreaterThan
+                    - LessThan
+                    - NotEqual
+                    type: string
+                  triggerThreshold:
+                    description: 'TriggerThreshold: The threshold triggers this alert
+                      rule.'
+                    type: integer
+                required:
+                - displayName
+                - enabled
+                - kind
+                - suppressionDuration
+                - suppressionEnabled
+                type: object
+            required:
+            - owner
+            type: object
+          status:
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              fusion:
+                description: 'Fusion: Mutually exclusive with all other properties'
+                properties:
+                  alertRuleTemplateName:
+                    description: 'AlertRuleTemplateName: The Name of the alert rule
+                      template used to create this rule.'
+                    type: string
+                  description:
+                    description: 'Description: The description of the alert rule.'
+                    type: string
+                  displayName:
+                    description: 'DisplayName: The display name for alerts created
+                      by this alert rule.'
+                    type: string
+                  enabled:
+                    description: 'Enabled: Determines whether this alert rule is enabled
+                      or disabled.'
+                    type: boolean
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  lastModifiedUtc:
+                    description: 'LastModifiedUtc: The last time that this alert has
+                      been modified.'
+                    type: string
+                  severity:
+                    description: 'Severity: The severity for alerts created by this
+                      alert rule.'
+                    type: string
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  tactics:
+                    description: 'Tactics: The tactics of the alert rule'
+                    items:
+                      description: The severity for alerts created by this alert rule.
+                      type: string
+                    type: array
+                  techniques:
+                    description: 'Techniques: The techniques of the alert rule'
+                    items:
+                      type: string
+                    type: array
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              microsoftSecurityIncidentCreation:
+                description: 'MicrosoftSecurityIncidentCreation: Mutually exclusive
+                  with all other properties'
+                properties:
+                  alertRuleTemplateName:
+                    description: 'AlertRuleTemplateName: The Name of the alert rule
+                      template used to create this rule.'
+                    type: string
+                  description:
+                    description: 'Description: The description of the alert rule.'
+                    type: string
+                  displayName:
+                    description: 'DisplayName: The display name for alerts created
+                      by this alert rule.'
+                    type: string
+                  displayNamesExcludeFilter:
+                    description: 'DisplayNamesExcludeFilter: the alerts'' displayNames
+                      on which the cases will not be generated'
+                    items:
+                      type: string
+                    type: array
+                  displayNamesFilter:
+                    description: 'DisplayNamesFilter: the alerts'' displayNames on
+                      which the cases will be generated'
+                    items:
+                      type: string
+                    type: array
+                  enabled:
+                    description: 'Enabled: Determines whether this alert rule is enabled
+                      or disabled.'
+                    type: boolean
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  lastModifiedUtc:
+                    description: 'LastModifiedUtc: The last time that this alert has
+                      been modified.'
+                    type: string
+                  productFilter:
+                    description: 'ProductFilter: The alerts'' productName on which
+                      the cases will be generated'
+                    type: string
+                  severitiesFilter:
+                    description: 'SeveritiesFilter: the alerts'' severities on which
+                      the cases will be generated'
+                    items:
+                      description: The severity of the alert
+                      type: string
+                    type: array
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              scheduled:
+                description: 'Scheduled: Mutually exclusive with all other properties'
+                properties:
+                  alertDetailsOverride:
+                    description: 'AlertDetailsOverride: The alert details override
+                      settings'
+                    properties:
+                      alertDescriptionFormat:
+                        description: 'AlertDescriptionFormat: the format containing
+                          columns name(s) to override the alert description'
+                        type: string
+                      alertDisplayNameFormat:
+                        description: 'AlertDisplayNameFormat: the format containing
+                          columns name(s) to override the alert name'
+                        type: string
+                      alertDynamicProperties:
+                        description: 'AlertDynamicProperties: List of additional dynamic
+                          properties to override'
+                        items:
+                          description: A single alert property mapping to override
+                          properties:
+                            alertProperty:
+                              description: 'AlertProperty: The V3 alert property'
+                              type: string
+                            value:
+                              description: 'Value: the column name to use to override
+                                this property'
+                              type: string
+                          type: object
+                        type: array
+                      alertSeverityColumnName:
+                        description: 'AlertSeverityColumnName: the column name to
+                          take the alert severity from'
+                        type: string
+                      alertTacticsColumnName:
+                        description: 'AlertTacticsColumnName: the column name to take
+                          the alert tactics from'
+                        type: string
+                    type: object
+                  alertRuleTemplateName:
+                    description: 'AlertRuleTemplateName: The Name of the alert rule
+                      template used to create this rule.'
+                    type: string
+                  customDetails:
+                    additionalProperties:
+                      type: string
+                    description: 'CustomDetails: Dictionary of string key-value pairs
+                      of columns to be attached to the alert'
+                    type: object
+                  description:
+                    description: 'Description: The description of the alert rule.'
+                    type: string
+                  displayName:
+                    description: 'DisplayName: The display name for alerts created
+                      by this alert rule.'
+                    type: string
+                  enabled:
+                    description: 'Enabled: Determines whether this alert rule is enabled
+                      or disabled.'
+                    type: boolean
+                  entityMappings:
+                    description: 'EntityMappings: Array of the entity mappings of
+                      the alert rule'
+                    items:
+                      description: Single entity mapping for the alert rule
+                      properties:
+                        entityType:
+                          description: 'EntityType: The V3 type of the mapped entity'
+                          type: string
+                        fieldMappings:
+                          description: 'FieldMappings: array of field mappings for
+                            the given entity mapping'
+                          items:
+                            description: A single field mapping of the mapped entity
+                            properties:
+                              columnName:
+                                description: 'ColumnName: the column name to be mapped
+                                  to the identifier'
+                                type: string
+                              identifier:
+                                description: 'Identifier: the V3 identifier of the
+                                  entity'
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  eventGroupingSettings:
+                    description: 'EventGroupingSettings: The event grouping settings.'
+                    properties:
+                      aggregationKind:
+                        description: 'AggregationKind: The event grouping aggregation
+                          kinds'
+                        type: string
+                    type: object
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  incidentConfiguration:
+                    description: 'IncidentConfiguration: The settings of the incidents
+                      that created from alerts triggered by this analytics rule'
+                    properties:
+                      createIncident:
+                        description: 'CreateIncident: Create incidents from alerts
+                          triggered by this analytics rule'
+                        type: boolean
+                      groupingConfiguration:
+                        description: 'GroupingConfiguration: Set how the alerts that
+                          are triggered by this analytics rule, are grouped into incidents'
+                        properties:
+                          enabled:
+                            description: 'Enabled: Grouping enabled'
+                            type: boolean
+                          groupByAlertDetails:
+                            description: 'GroupByAlertDetails: A list of alert details
+                              to group by (when matchingMethod is Selected)'
+                            items:
+                              description: Alert detail
+                              type: string
+                            type: array
+                          groupByCustomDetails:
+                            description: |-
+                              GroupByCustomDetails: A list of custom details keys to group by (when matchingMethod is Selected). Only keys defined in
+                              the current alert rule may be used.
+                            items:
+                              type: string
+                            type: array
+                          groupByEntities:
+                            description: |-
+                              GroupByEntities: A list of entity types to group by (when matchingMethod is Selected). Only entities defined in the
+                              current alert rule may be used.
+                            items:
+                              description: The V3 type of the mapped entity
+                              type: string
+                            type: array
+                          lookbackDuration:
+                            description: 'LookbackDuration: Limit the group to alerts
+                              created within the lookback duration (in ISO 8601 duration
+                              format)'
+                            type: string
+                          matchingMethod:
+                            description: |-
+                              MatchingMethod: Grouping matching method. When method is Selected at least one of groupByEntities, groupByAlertDetails,
+                              groupByCustomDetails must be provided and not empty.
+                            type: string
+                          reopenClosedIncident:
+                            description: 'ReopenClosedIncident: Re-open closed matching
+                              incidents'
+                            type: boolean
+                        type: object
+                    type: object
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  lastModifiedUtc:
+                    description: 'LastModifiedUtc: The last time that this alert rule
+                      has been modified.'
+                    type: string
+                  query:
+                    description: 'Query: The query that creates alerts for this rule.'
+                    type: string
+                  queryFrequency:
+                    description: 'QueryFrequency: The frequency (in ISO 8601 duration
+                      format) for this alert rule to run.'
+                    type: string
+                  queryPeriod:
+                    description: 'QueryPeriod: The period (in ISO 8601 duration format)
+                      that this alert rule looks at.'
+                    type: string
+                  severity:
+                    description: 'Severity: The severity for alerts created by this
+                      alert rule.'
+                    type: string
+                  suppressionDuration:
+                    description: |-
+                      SuppressionDuration: The suppression (in ISO 8601 duration format) to wait since last time this alert rule been
+                      triggered.
+                    type: string
+                  suppressionEnabled:
+                    description: 'SuppressionEnabled: Determines whether the suppression
+                      for this alert rule is enabled or disabled.'
+                    type: boolean
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  tactics:
+                    description: 'Tactics: The tactics of the alert rule'
+                    items:
+                      description: The severity for alerts created by this alert rule.
+                      type: string
+                    type: array
+                  techniques:
+                    description: 'Techniques: The techniques of the alert rule'
+                    items:
+                      type: string
+                    type: array
+                  templateVersion:
+                    description: |-
+                      TemplateVersion: The version of the alert rule template used to create this rule - in format <a.b.c>, where all are
+                      numbers, for example 0 <1.0.2>
+                    type: string
+                  triggerOperator:
+                    description: 'TriggerOperator: The operation against the threshold
+                      that triggers alert rule.'
+                    type: string
+                  triggerThreshold:
+                    description: 'TriggerThreshold: The threshold triggers this alert
+                      rule.'
+                    type: integer
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

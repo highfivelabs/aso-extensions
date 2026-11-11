@@ -2,11 +2,25 @@
 
 The following resources have newer versions available in the Azure REST API specifications. Resources with a 💡 have a recommended or overdue update.
 
+## authorization
+
+|      | Resource       | Available Stable | Supported Stable | Available Preview      | Supported Preview  |
+|------|----------------|------------------|------------------|------------------------|--------------------|
+| 💡    | PolicyVariable | -                | -                | **2026-01-01-preview** | 2024-12-01-preview |
+
 ## compute
 
 |      | Resource                  | Available Stable | Supported Stable | Available Preview | Supported Preview |
 |------|---------------------------|------------------|------------------|-------------------|-------------------|
 | 💡    | VirtualMachinesRunCommand | **2026-04-01**   | 2022-03-01       | -                 | -                 |
+
+## containerservice
+
+|  | Resource                                 | Available Stable | Supported Stable | Available Preview | Supported Preview |
+|--|------------------------------------------|------------------|------------------|-------------------|-------------------|
+|  | ManagedClustersManagedNamespace          | 2026-06-01       | 2026-05-01       | -                 | -                 |
+|  | ManagedClustersPrivateEndpointConnection | 2026-06-01       | 2026-05-01       | -                 | -                 |
+|  | Snapshot                                 | 2026-06-01       | 2026-05-01       | -                 | -                 |
 
 ## network
 

@@ -1,0 +1,833 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: dataconnectordefinitions.securityinsights.azure.hfl.dev
+spec:
+  group: securityinsights.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - securityinsights
+    kind: DataConnectorDefinition
+    listKind: DataConnectorDefinitionList
+    plural: dataconnectordefinitions
+    singular: dataconnectordefinition
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20250901
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /securityinsights/resource-manager/Microsoft.SecurityInsights/SecurityInsights/stable/2025-09-01/openapi.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                pattern: ^[a-z0-9A-Z-_]*$
+                type: string
+              connectionsConfig:
+                description: 'ConnectionsConfig: The UiConfig for ''Customizable''
+                  connector definition kind.'
+                properties:
+                  templateSpecName:
+                    description: |-
+                      TemplateSpecName: Gets or sets the template name. The template includes ARM templates that can be created by the
+                      connector, usually it will be the dataConnectors ARM templates.
+                    type: string
+                  templateSpecVersion:
+                    description: 'TemplateSpecVersion: Gets or sets the template version.'
+                    type: string
+                required:
+                - templateSpecName
+                - templateSpecVersion
+                type: object
+              connectorUiConfig:
+                description: 'ConnectorUiConfig: The UiConfig for ''Customizable''
+                  connector definition kind.'
+                properties:
+                  availability:
+                    description: 'Availability: The exposure status of the connector
+                      to the customers.'
+                    properties:
+                      isPreview:
+                        description: 'IsPreview: Gets or sets a value indicating whether
+                          the connector is preview.'
+                        type: boolean
+                      status:
+                        description: |-
+                          Status: The exposure status of the connector to the customers. Available values are 0-4 (0=None, 1=Available,
+                          2=FeatureFlag, 3=Internal).
+                        type: integer
+                    type: object
+                  connectivityCriteria:
+                    description: 'ConnectivityCriteria: Gets or sets the way the connector
+                      checks whether the connector is connected.'
+                    items:
+                      description: |-
+                        The criteria by which we determine whether the connector is connected or not.
+                        For Example, use a KQL query to check if
+                        the expected data type is flowing).
+                      properties:
+                        type:
+                          description: 'Type: Gets or sets the type of connectivity.'
+                          type: string
+                        value:
+                          description: 'Value: Gets or sets the queries for checking
+                            connectivity.'
+                          items:
+                            type: string
+                          type: array
+                      required:
+                      - type
+                      type: object
+                    type: array
+                  dataTypes:
+                    description: 'DataTypes: Gets or sets the data types to check
+                      for last data received.'
+                    items:
+                      description: |-
+                        The data type which is created by the connector,
+                        including a query indicated when was the last time that data type was
+                        received in the workspace.
+                      properties:
+                        lastDataReceivedQuery:
+                          description: 'LastDataReceivedQuery: Gets or sets the query
+                            to indicate when relevant data was last received in the
+                            workspace.'
+                          type: string
+                        name:
+                          description: 'Name: Gets or sets the name of the data type
+                            to show in the graph.'
+                          type: string
+                      required:
+                      - lastDataReceivedQuery
+                      - name
+                      type: object
+                    type: array
+                  descriptionMarkdown:
+                    description: 'DescriptionMarkdown: Gets or sets the connector
+                      description in markdown format.'
+                    type: string
+                  graphQueries:
+                    description: 'GraphQueries: Gets or sets the graph queries to
+                      show the current data volume over time.'
+                    items:
+                      description: The graph query to show the volume of data arriving
+                        into the workspace over time.
+                      properties:
+                        baseQuery:
+                          description: |-
+                            BaseQuery: Gets or sets the base query for the graph.
+                            The base query is wrapped by Sentinel UI infra with a KQL query, that measures the volume over time.
+                          type: string
+                        legend:
+                          description: 'Legend: Gets or sets the legend for the graph.'
+                          type: string
+                        metricName:
+                          description: 'MetricName: Gets or sets the metric name that
+                            the query is checking. For example: ''Total data receive''.'
+                          type: string
+                      required:
+                      - baseQuery
+                      - legend
+                      - metricName
+                      type: object
+                    type: array
+                  id:
+                    description: 'Id: Gets or sets custom connector id. optional field.'
+                    type: string
+                  instructionSteps:
+                    description: 'InstructionSteps: Gets or sets the instruction steps
+                      to enable the connector.'
+                    items:
+                      description: Instruction steps to enable the connector.
+                      properties:
+                        description:
+                          description: 'Description: Gets or sets the instruction
+                            step description.'
+                          type: string
+                        instructions:
+                          description: 'Instructions: Gets or sets the instruction
+                            step details.'
+                          items:
+                            description: Instruction step details, to be displayed
+                              in the Instructions steps section in the connector's
+                              page in Sentinel Portal.
+                            properties:
+                              parameters:
+                                description: 'Parameters: Gets or sets the instruction
+                                  type parameters settings.'
+                                x-kubernetes-preserve-unknown-fields: true
+                              type:
+                                description: 'Type: Gets or sets the instruction type
+                                  name.'
+                                type: string
+                            required:
+                            - parameters
+                            - type
+                            type: object
+                          type: array
+                        title:
+                          description: 'Title: Gets or sets the instruction step title.'
+                          type: string
+                      type: object
+                    type: array
+                  isConnectivityCriteriasMatchSome:
+                    description: |-
+                      IsConnectivityCriteriasMatchSome: Gets or sets a value indicating whether to use 'OR'(SOME) or 'AND' between
+                      ConnectivityCriteria items.
+                    type: boolean
+                  logo:
+                    description: |-
+                      Logo: Gets or sets the connector logo to be used when displaying the connector within Azure Sentinel's connector's
+                      gallery.
+                      The logo value should be in SVG format.
+                    type: string
+                  permissions:
+                    description: 'Permissions: The required Permissions for the connector.'
+                    properties:
+                      customs:
+                        description: 'Customs: Gets or sets the customs permissions
+                          required for the user to create connections.'
+                        items:
+                          description: The Custom permissions required for the connector.
+                          properties:
+                            description:
+                              description: 'Description: Gets or sets the custom permissions
+                                description.'
+                              type: string
+                            name:
+                              description: 'Name: Gets or sets the custom permissions
+                                name.'
+                              type: string
+                          required:
+                          - description
+                          - name
+                          type: object
+                        type: array
+                      licenses:
+                        description: 'Licenses: Gets or sets the required licenses
+                          for the user to create connections.'
+                        items:
+                          type: string
+                        type: array
+                      resourceProvider:
+                        description: 'ResourceProvider: Gets or sets the resource
+                          provider permissions required for the user to create connections.'
+                        items:
+                          description: |-
+                            The resource provider details include the required permissions for the user to create connections.
+                            The user should have
+                            the required permissions(Read\Write, ..) in the specified scope ProviderPermissionsScope against the specified resource
+                            provider.
+                          properties:
+                            permissionsDisplayText:
+                              description: 'PermissionsDisplayText: Gets or sets the
+                                permissions description text.'
+                              type: string
+                            provider:
+                              description: 'Provider: Gets or sets the provider name.'
+                              type: string
+                            providerDisplayName:
+                              description: 'ProviderDisplayName: Gets or sets the
+                                permissions provider display name.'
+                              type: string
+                            requiredPermissions:
+                              description: |-
+                                RequiredPermissions: Required permissions for the connector resource provider that define in ResourceProviders.
+                                For more information about the permissions see <see
+                                href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format">here</see>.
+                              properties:
+                                action:
+                                  description: 'Action: Gets or sets a value indicating
+                                    whether the permission is custom actions (POST).'
+                                  type: boolean
+                                delete:
+                                  description: 'Delete: Gets or sets a value indicating
+                                    whether the permission is delete action (DELETE).'
+                                  type: boolean
+                                read:
+                                  description: 'Read: Gets or sets a value indicating
+                                    whether the permission is read action (GET).'
+                                  type: boolean
+                                write:
+                                  description: 'Write: Gets or sets a value indicating
+                                    whether the permission is write action (PUT or
+                                    PATCH).'
+                                  type: boolean
+                              type: object
+                            scope:
+                              description: 'Scope: The scope on which the user should
+                                have permissions, in order to be able to create connections.'
+                              enum:
+                              - ResourceGroup
+                              - Subscription
+                              - Workspace
+                              type: string
+                          required:
+                          - permissionsDisplayText
+                          - provider
+                          - providerDisplayName
+                          - requiredPermissions
+                          - scope
+                          type: object
+                        type: array
+                      tenant:
+                        description: 'Tenant: Gets or sets the required tenant permissions
+                          for the connector.'
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  publisher:
+                    description: 'Publisher: Gets or sets the connector publisher
+                      name.'
+                    type: string
+                  title:
+                    description: 'Title: Gets or sets the connector blade title.'
+                    type: string
+                required:
+                - connectivityCriteria
+                - dataTypes
+                - descriptionMarkdown
+                - graphQueries
+                - instructionSteps
+                - permissions
+                - publisher
+                - title
+                type: object
+              createdTimeUtc:
+                description: 'CreatedTimeUtc: Gets or sets the connector definition
+                  created date in UTC format.'
+                type: string
+              etag:
+                description: 'Etag: Etag of the azure resource'
+                type: string
+              kind:
+                description: |-
+                  Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                  ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                  value.
+                enum:
+                - Customizable
+                type: string
+              lastModifiedUtc:
+                description: 'LastModifiedUtc: Gets or sets the connector definition
+                  last modified date in UTC format.'
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
+                  extension resource, which means that any other Azure resource can be its owner.
+                properties:
+                  armId:
+                    description: Ownership across namespaces is not supported.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+            required:
+            - connectorUiConfig
+            - kind
+            - owner
+            type: object
+          status:
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              customizable:
+                description: 'Customizable: Mutually exclusive with all other properties'
+                properties:
+                  connectionsConfig:
+                    description: 'ConnectionsConfig: The UiConfig for ''Customizable''
+                      connector definition kind.'
+                    properties:
+                      templateSpecName:
+                        description: |-
+                          TemplateSpecName: Gets or sets the template name. The template includes ARM templates that can be created by the
+                          connector, usually it will be the dataConnectors ARM templates.
+                        type: string
+                      templateSpecVersion:
+                        description: 'TemplateSpecVersion: Gets or sets the template
+                          version.'
+                        type: string
+                    type: object
+                  connectorUiConfig:
+                    description: 'ConnectorUiConfig: The UiConfig for ''Customizable''
+                      connector definition kind.'
+                    properties:
+                      availability:
+                        description: 'Availability: The exposure status of the connector
+                          to the customers.'
+                        properties:
+                          isPreview:
+                            description: 'IsPreview: Gets or sets a value indicating
+                              whether the connector is preview.'
+                            type: boolean
+                          status:
+                            description: |-
+                              Status: The exposure status of the connector to the customers. Available values are 0-4 (0=None, 1=Available,
+                              2=FeatureFlag, 3=Internal).
+                            type: integer
+                        type: object
+                      connectivityCriteria:
+                        description: 'ConnectivityCriteria: Gets or sets the way the
+                          connector checks whether the connector is connected.'
+                        items:
+                          description: |-
+                            The criteria by which we determine whether the connector is connected or not.
+                            For Example, use a KQL query to check if
+                            the expected data type is flowing).
+                          properties:
+                            type:
+                              description: 'Type: Gets or sets the type of connectivity.'
+                              type: string
+                            value:
+                              description: 'Value: Gets or sets the queries for checking
+                                connectivity.'
+                              items:
+                                type: string
+                              type: array
+                          type: object
+                        type: array
+                      dataTypes:
+                        description: 'DataTypes: Gets or sets the data types to check
+                          for last data received.'
+                        items:
+                          description: |-
+                            The data type which is created by the connector,
+                            including a query indicated when was the last time that data type was
+                            received in the workspace.
+                          properties:
+                            lastDataReceivedQuery:
+                              description: 'LastDataReceivedQuery: Gets or sets the
+                                query to indicate when relevant data was last received
+                                in the workspace.'
+                              type: string
+                            name:
+                              description: 'Name: Gets or sets the name of the data
+                                type to show in the graph.'
+                              type: string
+                          type: object
+                        type: array
+                      descriptionMarkdown:
+                        description: 'DescriptionMarkdown: Gets or sets the connector
+                          description in markdown format.'
+                        type: string
+                      graphQueries:
+                        description: 'GraphQueries: Gets or sets the graph queries
+                          to show the current data volume over time.'
+                        items:
+                          description: The graph query to show the volume of data
+                            arriving into the workspace over time.
+                          properties:
+                            baseQuery:
+                              description: |-
+                                BaseQuery: Gets or sets the base query for the graph.
+                                The base query is wrapped by Sentinel UI infra with a KQL query, that measures the volume over time.
+                              type: string
+                            legend:
+                              description: 'Legend: Gets or sets the legend for the
+                                graph.'
+                              type: string
+                            metricName:
+                              description: 'MetricName: Gets or sets the metric name
+                                that the query is checking. For example: ''Total data
+                                receive''.'
+                              type: string
+                          type: object
+                        type: array
+                      id:
+                        description: 'Id: Gets or sets custom connector id. optional
+                          field.'
+                        type: string
+                      instructionSteps:
+                        description: 'InstructionSteps: Gets or sets the instruction
+                          steps to enable the connector.'
+                        items:
+                          description: Instruction steps to enable the connector.
+                          properties:
+                            description:
+                              description: 'Description: Gets or sets the instruction
+                                step description.'
+                              type: string
+                            instructions:
+                              description: 'Instructions: Gets or sets the instruction
+                                step details.'
+                              items:
+                                description: Instruction step details, to be displayed
+                                  in the Instructions steps section in the connector's
+                                  page in Sentinel Portal.
+                                properties:
+                                  parameters:
+                                    description: 'Parameters: Gets or sets the instruction
+                                      type parameters settings.'
+                                    x-kubernetes-preserve-unknown-fields: true
+                                  type:
+                                    description: 'Type: Gets or sets the instruction
+                                      type name.'
+                                    type: string
+                                type: object
+                              type: array
+                            title:
+                              description: 'Title: Gets or sets the instruction step
+                                title.'
+                              type: string
+                          type: object
+                        type: array
+                      isConnectivityCriteriasMatchSome:
+                        description: |-
+                          IsConnectivityCriteriasMatchSome: Gets or sets a value indicating whether to use 'OR'(SOME) or 'AND' between
+                          ConnectivityCriteria items.
+                        type: boolean
+                      logo:
+                        description: |-
+                          Logo: Gets or sets the connector logo to be used when displaying the connector within Azure Sentinel's connector's
+                          gallery.
+                          The logo value should be in SVG format.
+                        type: string
+                      permissions:
+                        description: 'Permissions: The required Permissions for the
+                          connector.'
+                        properties:
+                          customs:
+                            description: 'Customs: Gets or sets the customs permissions
+                              required for the user to create connections.'
+                            items:
+                              description: The Custom permissions required for the
+                                connector.
+                              properties:
+                                description:
+                                  description: 'Description: Gets or sets the custom
+                                    permissions description.'
+                                  type: string
+                                name:
+                                  description: 'Name: Gets or sets the custom permissions
+                                    name.'
+                                  type: string
+                              type: object
+                            type: array
+                          licenses:
+                            description: 'Licenses: Gets or sets the required licenses
+                              for the user to create connections.'
+                            items:
+                              type: string
+                            type: array
+                          resourceProvider:
+                            description: 'ResourceProvider: Gets or sets the resource
+                              provider permissions required for the user to create
+                              connections.'
+                            items:
+                              description: |-
+                                The resource provider details include the required permissions for the user to create connections.
+                                The user should have
+                                the required permissions(Read\Write, ..) in the specified scope ProviderPermissionsScope against the specified resource
+                                provider.
+                              properties:
+                                permissionsDisplayText:
+                                  description: 'PermissionsDisplayText: Gets or sets
+                                    the permissions description text.'
+                                  type: string
+                                provider:
+                                  description: 'Provider: Gets or sets the provider
+                                    name.'
+                                  type: string
+                                providerDisplayName:
+                                  description: 'ProviderDisplayName: Gets or sets
+                                    the permissions provider display name.'
+                                  type: string
+                                requiredPermissions:
+                                  description: |-
+                                    RequiredPermissions: Required permissions for the connector resource provider that define in ResourceProviders.
+                                    For more information about the permissions see <see
+                                    href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format">here</see>.
+                                  properties:
+                                    action:
+                                      description: 'Action: Gets or sets a value indicating
+                                        whether the permission is custom actions (POST).'
+                                      type: boolean
+                                    delete:
+                                      description: 'Delete: Gets or sets a value indicating
+                                        whether the permission is delete action (DELETE).'
+                                      type: boolean
+                                    read:
+                                      description: 'Read: Gets or sets a value indicating
+                                        whether the permission is read action (GET).'
+                                      type: boolean
+                                    write:
+                                      description: 'Write: Gets or sets a value indicating
+                                        whether the permission is write action (PUT
+                                        or PATCH).'
+                                      type: boolean
+                                  type: object
+                                scope:
+                                  description: 'Scope: The scope on which the user
+                                    should have permissions, in order to be able to
+                                    create connections.'
+                                  type: string
+                              type: object
+                            type: array
+                          tenant:
+                            description: 'Tenant: Gets or sets the required tenant
+                              permissions for the connector.'
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      publisher:
+                        description: 'Publisher: Gets or sets the connector publisher
+                          name.'
+                        type: string
+                      title:
+                        description: 'Title: Gets or sets the connector blade title.'
+                        type: string
+                    type: object
+                  createdTimeUtc:
+                    description: 'CreatedTimeUtc: Gets or sets the connector definition
+                      created date in UTC format.'
+                    type: string
+                  etag:
+                    description: 'Etag: Etag of the azure resource'
+                    type: string
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. E.g.
+                      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                    type: string
+                  kind:
+                    description: |-
+                      Kind: Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g.
+                      ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this
+                      value.
+                    type: string
+                  lastModifiedUtc:
+                    description: 'LastModifiedUtc: Gets or sets the connector definition
+                      last modified date in UTC format.'
+                    type: string
+                  systemData:
+                    description: 'SystemData: Azure Resource Manager metadata containing
+                      createdBy and modifiedBy information.'
+                    properties:
+                      createdAt:
+                        description: 'CreatedAt: The timestamp of resource creation
+                          (UTC).'
+                        type: string
+                      createdBy:
+                        description: 'CreatedBy: The identity that created the resource.'
+                        type: string
+                      createdByType:
+                        description: 'CreatedByType: The type of identity that created
+                          the resource.'
+                        type: string
+                      lastModifiedAt:
+                        description: 'LastModifiedAt: The timestamp of resource last
+                          modification (UTC)'
+                        type: string
+                      lastModifiedBy:
+                        description: 'LastModifiedBy: The identity that last modified
+                          the resource.'
+                        type: string
+                      lastModifiedByType:
+                        description: 'LastModifiedByType: The type of identity that
+                          last modified the resource.'
+                        type: string
+                    type: object
+                  type:
+                    description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                      or "Microsoft.Storage/storageAccounts"'
+                    type: string
+                type: object
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

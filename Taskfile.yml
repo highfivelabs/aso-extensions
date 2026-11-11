@@ -4,11 +4,20 @@
 # Every task needs the pinned Azure Service Operator checkout;
 # `task upstream` fetches it (about 675 MB, not committed). The task names
 # are the Makefile's they replace. Tasks that more than one repository needs
-# are in taskfiles/common.yml.
+# are factory's taskfiles/go.yml, included below.
 version: '3'
 
 includes:
-  common: ./taskfiles/common.yml
+  # The tasks the extension repositories share (go:install-tool,
+  # go:fmt-check, go:committed, go:test-envtest), from factory at a tag,
+  # pinned by checksum (factory taskfiles/README.md). Task fetches it with
+  # your git credentials and caches it in .task/remote/ (.taskrc.yml);
+  # offload packs that cache for its VMs.
+  go:
+    taskfile: https://github.com/highfivelabs/factory.git//taskfiles/go.yml?ref=taskfiles/v1.0.0
+    checksum: 4e300f59230b59ea875e8409e786064dd76cc3c28d5de37ec46bb856d7366f32
+    vars:
+      BIN: '{{.ROOT_DIR}}/bin'
 
 vars:
   # The project's name: the image, and the prefix of the install's objects.
@@ -20,6 +29,10 @@ vars:
 
 env:
   GOTOOLCHAIN: '{{if .GOTOOLCHAIN}}{{.GOTOOLCHAIN}}{{else}}local{{end}}'
+  # The pinned command-line tools (hack/ci/tools.sh, task ci:tools) come
+  # first on PATH, so every task runs the versions CI runs.
+  PATH:
+    sh: echo "$(hack/ci/tools.sh --dir):$PATH"
 
 tasks:
   default:
@@ -33,11 +46,17 @@ tasks:
       - task: check
 
   tools:
-    desc: ASO at the pin plus patches/ (task upstream) and setup-envtest; what a fresh checkout needs first (an offload Spot VM, --prep 'task tools')
+    desc: The pinned command-line tools (ci:tools), ASO at the pin plus patches/ (task upstream) and setup-envtest; what a fresh checkout needs first (an offload Spot VM, --prep 'task tools')
     cmds:
+      - task: ci:tools
       - task: upstream
-      - task: common:setup-envtest
-        vars: {BIN: '{{.BIN}}', PACKAGE: '{{.SETUP_ENVTEST}}'}
+      - task: setup-envtest
+
+  setup-envtest:
+    internal: true
+    cmds:
+      - task: go:install-tool
+        vars: {NAME: setup-envtest, PKG: '{{.SETUP_ENVTEST}}'}
 
   upstream:
     desc: Fetch ASO at the pin (about 675 MB) and apply patches/
@@ -80,39 +99,108 @@ tasks:
     cmds:
       - task: upstream-check
       - hack/check-tests-present.sh
-      - task: common:setup-envtest
-        vars: {BIN: '{{.BIN}}', PACKAGE: '{{.SETUP_ENVTEST}}'}
-      - |
-        KUBEBUILDER_ASSETS="$({{.BIN}}/setup-envtest use {{.ENVTEST_K8S_VERSION}} --bin-dir {{.BIN}}/envtest -p path)" \
-          go test ./... -count=1 {{.CLI_ARGS}}
+      - task: setup-envtest
+      - task: go:test-envtest
+        vars:
+          ENVTEST_K8S_VERSION: '{{.ENVTEST_K8S_VERSION}}'
+          CMD: go test ./... -count=1 {{.CLI_ARGS}}
 
   check:
     desc: Everything that must hold before a commit
     cmds:
+      - task: check:static
+      - task: build
+      - task: test
+
+  # check without build and the tests: what every pull request runs, whatever
+  # it changed (hack/ci/select.sh; a kind's own tests follow).
+  "check:static":
+    desc: check's pin, generated-files, gofmt, vet, SPDX and guard checks, without the build and the tests
+    cmds:
       - task: upstream-check
       - task: upstream:yaml-check
-      - task: common:gofmt
+      - task: go:fmt-check
         vars: {DIRS: apis cmd pkg test}
       - hack/generate-arm.sh
       - hack/generate.sh
-      - task: common:diff-clean
+      - task: go:committed
         vars:
           PATHS: apis config pkg/controllers generator
-          HINT: generated files are stale; commit the output of task generate-arm
+          HINT: task generate-arm
       - go vet ./...
       - go vet -tags fakecloud ./cmd/manager
+      - go vet -tags live ./test/live/
       - hack/check-no-fake-cloud.sh
       - hack/check-spdx.sh
       - hack/test-operator-e2e-guard.sh
       - hack/test-upstream-check.sh
-      - task: build
-      - task: test
+
+  # Some packages' tests, as test runs them: what CI runs for a pull request
+  # that changes only some kinds (hack/ci/select.sh).
+  "test:pkgs":
+    desc: 'The tests of some packages (envtest, the fake cloud, PostgreSQL in Docker): task test:pkgs PKGS="./apis/arm/network/..." [RUN=regexp]'
+    requires:
+      vars: [PKGS]
+    cmds:
+      - task: upstream-check
+      - hack/check-tests-present.sh
+      - task: setup-envtest
+      - |
+        KUBEBUILDER_ASSETS="$({{.BIN}}/setup-envtest use {{.ENVTEST_K8S_VERSION}} --bin-dir {{.BIN}}/envtest -p path)" \
+          go test {{.PKGS}} -count=1{{if .RUN}} -run '{{.RUN}}'{{end}}
+
+  # Real Azure (docs/live-runs.md). Only these three tasks reach hack/live;
+  # check never calls them (it only compiles test/live with go vet).
+  test-live:
+    desc: 'The live tests against the real Azure target (AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID, AZURE_CLIENT_ID from the environment, checked by hack/live/azure.env), from an offload VM run with --sa (docs/live-runs.md): ASO_EXT_LIVE=create-real-azure-resources task test-live [TESTS="TestLiveA TestLiveB"]'
+    cmds:
+      - task: upstream-check
+      - task: setup-envtest
+      - |
+        KUBEBUILDER_ASSETS="$({{.BIN}}/setup-envtest use {{.ENVTEST_K8S_VERSION}} --bin-dir {{.BIN}}/envtest -p path)" \
+          hack/live/run.sh {{.TESTS}}
+
+  live-list:
+    desc: List what is in the live-test resource group, with the run's federated credentials (an offload VM run with --sa)
+    cmds:
+      - |
+        set -a; . hack/live/azure.env; set +a
+        . hack/live/credentials.sh
+        live_creds_start "$(mktemp -d)"
+        trap live_creds_stop EXIT
+        hack/live/sweep.sh --list
+
+  live-providers:
+    desc: The registration state of every resource provider in the live-test subscription, read only (an offload VM run with --sa)
+    cmds:
+      - hack/live/providers.sh
 
   operator-e2e:
     desc: The install on kind with the fake cloud (tests/operator/run.sh); fails unless it ends with "all checks passed"
     cmds:
       - task: upstream-check
       - NAME={{.NAME}} hack/operator-e2e.sh
+
+  "operator-e2e:debug":
+    desc: The kind cluster's pods and recent events, after a failed operator-e2e (ci.yml and nightly.yml run it on failure).
+    cmds:
+      # Diagnostics only: the job has failed already; a missing cluster
+      # must not hide that failure behind this step's own.
+      - kubectl get pods -A -o wide || true
+      - kubectl get events -A --sort-by=.lastTimestamp | tail -n 100 || true
+
+  release:
+    desc: 'release.yml''s images job: ko-build the images (production builds), push them to KO_DOCKER_REPO tagged TAG, write dist/aso-extensions-TAG.yaml. task release TAG=v0.1.0 (after task upstream; needs registry write access).'
+    requires:
+      vars: [TAG]
+    env:
+      TAG: '{{.TAG}}'
+      REGISTRY: '{{.REGISTRY | default "us-central1-docker.pkg.dev"}}'
+      # The registry's project is GCP_PROJECT (.env; release.yml: the
+      # repository variable), unless KO_DOCKER_REPO is given whole.
+      KO_DOCKER_REPO: '{{if .KO_DOCKER_REPO}}{{.KO_DOCKER_REPO}}{{else if .GCP_PROJECT}}us-central1-docker.pkg.dev/{{.GCP_PROJECT}}/hfl-oci/aso-extensions{{end}}'
+    cmds:
+      - hack/release.sh
 
   coverage:
     desc: Regenerate the coverage dashboard (docs/coverage and the README's Coverage section)
@@ -123,6 +211,50 @@ tasks:
     desc: Fail if the committed coverage dashboard differs from a regeneration
     cmds:
       - hack/coverage/run.sh --check
+
+  # The merge gate while GitHub Actions is off (README.md, "The merge
+  # gate"): ci.yml's pull-request jobs on an offload Spot VM, then the
+  # commit status offload/ci on the commit.
+  ci:
+    desc: 'ci.yml''s pull-request jobs (plan, check, operator-e2e) for one commit on an offload Spot VM, then the offload/ci status on it: task ci [SHA=HEAD] [CI_BASE=origin/main].'
+    env:
+      CI_BASE: '{{.CI_BASE}}'
+    cmds:
+      - hack/ci/gate.sh {{.SHA | default "HEAD"}}
+
+  "ci:tools":
+    desc: task, kind, ko, crane, kubectl, helm at CI's pins into bin/ci (hack/ci/tools.sh; CI_TOOLS_DIR), first on every task's PATH.
+    cmds:
+      - hack/ci/tools.sh
+
+  # ci.yml's check job: what the plan (hack/ci/select.sh plan) selects.
+  "ci:check":
+    desc: 'ci.yml''s check job for a plan: task ci:check MODE=full|groups|none [GROUPS="..."].'
+    requires:
+      vars: [MODE]
+    cmds:
+      - |
+        case "{{.MODE}}" in
+          full) "{{.TASK_EXE}}" check ;;
+          groups) hack/ci/select.sh run {{.GROUPS}} ;;
+          none) echo "ci:check: docs only, nothing to run" ;;
+          *) echo "ci:check: MODE is full, groups or none, not '{{.MODE}}'"; exit 2 ;;
+        esac
+
+  "ci:remote":
+    desc: Fill this checkout's cache of the remote factory include (.task/remote) under a per-user lock; run it in a new worktree before starting several tasks at once (hack/ci/task-remote.sh).
+    cmds:
+      - hack/ci/task-remote.sh
+
+  "ci:remote-test":
+    desc: 'Start N checkouts with no cache at once (xargs -P): each fills it through ci:remote, then runs task --list; all must pass. Fetches from GitHub, so not part of check: task ci:remote-test [N=3].'
+    cmds:
+      - hack/ci/task-remote-test.sh {{.N | default "3"}}
+
+  hooks:
+    desc: Install the pre-push hook (hack/hooks/pre-push, which runs task ci) with core.hooksPath.
+    cmds:
+      - git config core.hooksPath hack/hooks
 
   clean:
     desc: Remove bin/

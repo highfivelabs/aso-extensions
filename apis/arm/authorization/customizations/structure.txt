@@ -5,9 +5,19 @@ PolicyAssignmentExtension: Object (0 properties)
 
 PolicyDefinitionExtension: Object (0 properties)
 
+PolicyDefinitionsVersionExtension: Object (0 properties)
+
 PolicyExemptionExtension: Object (0 properties)
 
 PolicySetDefinitionExtension: Object (0 properties)
+
+PolicySetDefinitionsVersionExtension: Object (0 properties)
+
+PolicyVariableExtension: Object (0 properties)
+
+PrivateLinkAssociationExtension: Object (0 properties)
+
+ResourceManagementPrivateLinkExtension: Object (0 properties)
 
 RoleAssignmentScheduleRequestExtension: Object (0 properties)
 

@@ -3631,21 +3631,21 @@ type ExportDeliveryDestination struct {
 var _ genruntime.ARMTransformer = &ExportDeliveryDestination{}
 
 // ConvertToARM converts from a Kubernetes CRD object to an ARM object
-func (destination *ExportDeliveryDestination) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
-	if destination == nil {
+func (deliveryDestination *ExportDeliveryDestination) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
+	if deliveryDestination == nil {
 		return nil, nil
 	}
 	result := &arm.ExportDeliveryDestination{}
 
 	// Set property "Container":
-	if destination.Container != nil {
-		container := *destination.Container
+	if deliveryDestination.Container != nil {
+		container := *deliveryDestination.Container
 		result.Container = &container
 	}
 
 	// Set property "ResourceId":
-	if destination.ResourceReference != nil {
-		resourceReferenceARMID, err := resolved.ResolvedReferences.Lookup(*destination.ResourceReference)
+	if deliveryDestination.ResourceReference != nil {
+		resourceReferenceARMID, err := resolved.ResolvedReferences.Lookup(*deliveryDestination.ResourceReference)
 		if err != nil {
 			return nil, err
 		}
@@ -3654,14 +3654,14 @@ func (destination *ExportDeliveryDestination) ConvertToARM(resolved genruntime.C
 	}
 
 	// Set property "RootFolderPath":
-	if destination.RootFolderPath != nil {
-		rootFolderPath := *destination.RootFolderPath
+	if deliveryDestination.RootFolderPath != nil {
+		rootFolderPath := *deliveryDestination.RootFolderPath
 		result.RootFolderPath = &rootFolderPath
 	}
 
 	// Set property "SasToken":
-	if destination.SasToken != nil {
-		sasTokenSecret, err := resolved.ResolvedSecrets.Lookup(*destination.SasToken)
+	if deliveryDestination.SasToken != nil {
+		sasTokenSecret, err := resolved.ResolvedSecrets.Lookup(*deliveryDestination.SasToken)
 		if err != nil {
 			return nil, eris.Wrap(err, "looking up secret for property SasToken")
 		}
@@ -3670,15 +3670,15 @@ func (destination *ExportDeliveryDestination) ConvertToARM(resolved genruntime.C
 	}
 
 	// Set property "StorageAccount":
-	if destination.StorageAccount != nil {
-		storageAccount := *destination.StorageAccount
+	if deliveryDestination.StorageAccount != nil {
+		storageAccount := *deliveryDestination.StorageAccount
 		result.StorageAccount = &storageAccount
 	}
 
 	// Set property "Type":
-	if destination.Type != nil {
+	if deliveryDestination.Type != nil {
 		var temp string
-		temp = string(*destination.Type)
+		temp = string(*deliveryDestination.Type)
 		typeVar := arm.DestinationType(temp)
 		result.Type = &typeVar
 	}
@@ -3686,12 +3686,12 @@ func (destination *ExportDeliveryDestination) ConvertToARM(resolved genruntime.C
 }
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (destination *ExportDeliveryDestination) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (deliveryDestination *ExportDeliveryDestination) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.ExportDeliveryDestination{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (destination *ExportDeliveryDestination) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (deliveryDestination *ExportDeliveryDestination) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.ExportDeliveryDestination)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.ExportDeliveryDestination, got %T", armInput)
@@ -3700,7 +3700,7 @@ func (destination *ExportDeliveryDestination) PopulateFromARM(owner genruntime.A
 	// Set property "Container":
 	if typedInput.Container != nil {
 		container := *typedInput.Container
-		destination.Container = &container
+		deliveryDestination.Container = &container
 	}
 
 	// no assignment for property "ResourceReference"
@@ -3708,7 +3708,7 @@ func (destination *ExportDeliveryDestination) PopulateFromARM(owner genruntime.A
 	// Set property "RootFolderPath":
 	if typedInput.RootFolderPath != nil {
 		rootFolderPath := *typedInput.RootFolderPath
-		destination.RootFolderPath = &rootFolderPath
+		deliveryDestination.RootFolderPath = &rootFolderPath
 	}
 
 	// no assignment for property "SasToken"
@@ -3716,7 +3716,7 @@ func (destination *ExportDeliveryDestination) PopulateFromARM(owner genruntime.A
 	// Set property "StorageAccount":
 	if typedInput.StorageAccount != nil {
 		storageAccount := *typedInput.StorageAccount
-		destination.StorageAccount = &storageAccount
+		deliveryDestination.StorageAccount = &storageAccount
 	}
 
 	// Set property "Type":
@@ -3724,7 +3724,7 @@ func (destination *ExportDeliveryDestination) PopulateFromARM(owner genruntime.A
 		var temp string
 		temp = string(*typedInput.Type)
 		typeVar := DestinationType(temp)
-		destination.Type = &typeVar
+		deliveryDestination.Type = &typeVar
 	}
 
 	// No error
@@ -3732,40 +3732,40 @@ func (destination *ExportDeliveryDestination) PopulateFromARM(owner genruntime.A
 }
 
 // AssignProperties_From_ExportDeliveryDestination populates our ExportDeliveryDestination from the provided source ExportDeliveryDestination
-func (destination *ExportDeliveryDestination) AssignProperties_From_ExportDeliveryDestination(source *storage.ExportDeliveryDestination) error {
+func (deliveryDestination *ExportDeliveryDestination) AssignProperties_From_ExportDeliveryDestination(source *storage.ExportDeliveryDestination) error {
 
 	// Container
-	destination.Container = genruntime.ClonePointerToString(source.Container)
+	deliveryDestination.Container = genruntime.ClonePointerToString(source.Container)
 
 	// ResourceReference
 	if source.ResourceReference != nil {
 		resourceReference := source.ResourceReference.Copy()
-		destination.ResourceReference = &resourceReference
+		deliveryDestination.ResourceReference = &resourceReference
 	} else {
-		destination.ResourceReference = nil
+		deliveryDestination.ResourceReference = nil
 	}
 
 	// RootFolderPath
-	destination.RootFolderPath = genruntime.ClonePointerToString(source.RootFolderPath)
+	deliveryDestination.RootFolderPath = genruntime.ClonePointerToString(source.RootFolderPath)
 
 	// SasToken
 	if source.SasToken != nil {
 		sasToken := source.SasToken.Copy()
-		destination.SasToken = &sasToken
+		deliveryDestination.SasToken = &sasToken
 	} else {
-		destination.SasToken = nil
+		deliveryDestination.SasToken = nil
 	}
 
 	// StorageAccount
-	destination.StorageAccount = genruntime.ClonePointerToString(source.StorageAccount)
+	deliveryDestination.StorageAccount = genruntime.ClonePointerToString(source.StorageAccount)
 
 	// Type
 	if source.Type != nil {
 		typeVar := *source.Type
 		typeTemp := genruntime.ToEnum(typeVar, destinationType_Values)
-		destination.Type = &typeTemp
+		deliveryDestination.Type = &typeTemp
 	} else {
-		destination.Type = nil
+		deliveryDestination.Type = nil
 	}
 
 	// No error
@@ -3773,48 +3773,48 @@ func (destination *ExportDeliveryDestination) AssignProperties_From_ExportDelive
 }
 
 // AssignProperties_To_ExportDeliveryDestination populates the provided destination ExportDeliveryDestination from our ExportDeliveryDestination
-func (destination *ExportDeliveryDestination) AssignProperties_To_ExportDeliveryDestination(target *storage.ExportDeliveryDestination) error {
+func (deliveryDestination *ExportDeliveryDestination) AssignProperties_To_ExportDeliveryDestination(destination *storage.ExportDeliveryDestination) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// Container
-	target.Container = genruntime.ClonePointerToString(destination.Container)
+	destination.Container = genruntime.ClonePointerToString(deliveryDestination.Container)
 
 	// ResourceReference
-	if destination.ResourceReference != nil {
-		resourceReference := destination.ResourceReference.Copy()
-		target.ResourceReference = &resourceReference
+	if deliveryDestination.ResourceReference != nil {
+		resourceReference := deliveryDestination.ResourceReference.Copy()
+		destination.ResourceReference = &resourceReference
 	} else {
-		target.ResourceReference = nil
+		destination.ResourceReference = nil
 	}
 
 	// RootFolderPath
-	target.RootFolderPath = genruntime.ClonePointerToString(destination.RootFolderPath)
+	destination.RootFolderPath = genruntime.ClonePointerToString(deliveryDestination.RootFolderPath)
 
 	// SasToken
-	if destination.SasToken != nil {
-		sasToken := destination.SasToken.Copy()
-		target.SasToken = &sasToken
+	if deliveryDestination.SasToken != nil {
+		sasToken := deliveryDestination.SasToken.Copy()
+		destination.SasToken = &sasToken
 	} else {
-		target.SasToken = nil
+		destination.SasToken = nil
 	}
 
 	// StorageAccount
-	target.StorageAccount = genruntime.ClonePointerToString(destination.StorageAccount)
+	destination.StorageAccount = genruntime.ClonePointerToString(deliveryDestination.StorageAccount)
 
 	// Type
-	if destination.Type != nil {
-		typeVar := string(*destination.Type)
-		target.Type = &typeVar
+	if deliveryDestination.Type != nil {
+		typeVar := string(*deliveryDestination.Type)
+		destination.Type = &typeVar
 	} else {
-		target.Type = nil
+		destination.Type = nil
 	}
 
 	// Update the property bag
 	if len(propertyBag) > 0 {
-		target.PropertyBag = propertyBag
+		destination.PropertyBag = propertyBag
 	} else {
-		target.PropertyBag = nil
+		destination.PropertyBag = nil
 	}
 
 	// No error
@@ -3822,31 +3822,31 @@ func (destination *ExportDeliveryDestination) AssignProperties_To_ExportDelivery
 }
 
 // Initialize_From_ExportDeliveryDestination_STATUS populates our ExportDeliveryDestination from the provided source ExportDeliveryDestination_STATUS
-func (destination *ExportDeliveryDestination) Initialize_From_ExportDeliveryDestination_STATUS(source *ExportDeliveryDestination_STATUS) error {
+func (deliveryDestination *ExportDeliveryDestination) Initialize_From_ExportDeliveryDestination_STATUS(source *ExportDeliveryDestination_STATUS) error {
 
 	// Container
-	destination.Container = genruntime.ClonePointerToString(source.Container)
+	deliveryDestination.Container = genruntime.ClonePointerToString(source.Container)
 
 	// ResourceReference
 	if source.ResourceId != nil {
 		resourceReference := genruntime.CreateResourceReferenceFromARMID(*source.ResourceId)
-		destination.ResourceReference = &resourceReference
+		deliveryDestination.ResourceReference = &resourceReference
 	} else {
-		destination.ResourceReference = nil
+		deliveryDestination.ResourceReference = nil
 	}
 
 	// RootFolderPath
-	destination.RootFolderPath = genruntime.ClonePointerToString(source.RootFolderPath)
+	deliveryDestination.RootFolderPath = genruntime.ClonePointerToString(source.RootFolderPath)
 
 	// StorageAccount
-	destination.StorageAccount = genruntime.ClonePointerToString(source.StorageAccount)
+	deliveryDestination.StorageAccount = genruntime.ClonePointerToString(source.StorageAccount)
 
 	// Type
 	if source.Type != nil {
 		typeVar := genruntime.ToEnum(string(*source.Type), destinationType_Values)
-		destination.Type = &typeVar
+		deliveryDestination.Type = &typeVar
 	} else {
-		destination.Type = nil
+		deliveryDestination.Type = nil
 	}
 
 	// No error
@@ -3887,12 +3887,12 @@ type ExportDeliveryDestination_STATUS struct {
 var _ genruntime.FromARMConverter = &ExportDeliveryDestination_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (destination *ExportDeliveryDestination_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (deliveryDestination *ExportDeliveryDestination_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.ExportDeliveryDestination_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (destination *ExportDeliveryDestination_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (deliveryDestination *ExportDeliveryDestination_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.ExportDeliveryDestination_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.ExportDeliveryDestination_STATUS, got %T", armInput)
@@ -3901,25 +3901,25 @@ func (destination *ExportDeliveryDestination_STATUS) PopulateFromARM(owner genru
 	// Set property "Container":
 	if typedInput.Container != nil {
 		container := *typedInput.Container
-		destination.Container = &container
+		deliveryDestination.Container = &container
 	}
 
 	// Set property "ResourceId":
 	if typedInput.ResourceId != nil {
 		resourceId := *typedInput.ResourceId
-		destination.ResourceId = &resourceId
+		deliveryDestination.ResourceId = &resourceId
 	}
 
 	// Set property "RootFolderPath":
 	if typedInput.RootFolderPath != nil {
 		rootFolderPath := *typedInput.RootFolderPath
-		destination.RootFolderPath = &rootFolderPath
+		deliveryDestination.RootFolderPath = &rootFolderPath
 	}
 
 	// Set property "StorageAccount":
 	if typedInput.StorageAccount != nil {
 		storageAccount := *typedInput.StorageAccount
-		destination.StorageAccount = &storageAccount
+		deliveryDestination.StorageAccount = &storageAccount
 	}
 
 	// Set property "Type":
@@ -3927,7 +3927,7 @@ func (destination *ExportDeliveryDestination_STATUS) PopulateFromARM(owner genru
 		var temp string
 		temp = string(*typedInput.Type)
 		typeVar := DestinationType_STATUS(temp)
-		destination.Type = &typeVar
+		deliveryDestination.Type = &typeVar
 	}
 
 	// No error
@@ -3935,27 +3935,27 @@ func (destination *ExportDeliveryDestination_STATUS) PopulateFromARM(owner genru
 }
 
 // AssignProperties_From_ExportDeliveryDestination_STATUS populates our ExportDeliveryDestination_STATUS from the provided source ExportDeliveryDestination_STATUS
-func (destination *ExportDeliveryDestination_STATUS) AssignProperties_From_ExportDeliveryDestination_STATUS(source *storage.ExportDeliveryDestination_STATUS) error {
+func (deliveryDestination *ExportDeliveryDestination_STATUS) AssignProperties_From_ExportDeliveryDestination_STATUS(source *storage.ExportDeliveryDestination_STATUS) error {
 
 	// Container
-	destination.Container = genruntime.ClonePointerToString(source.Container)
+	deliveryDestination.Container = genruntime.ClonePointerToString(source.Container)
 
 	// ResourceId
-	destination.ResourceId = genruntime.ClonePointerToString(source.ResourceId)
+	deliveryDestination.ResourceId = genruntime.ClonePointerToString(source.ResourceId)
 
 	// RootFolderPath
-	destination.RootFolderPath = genruntime.ClonePointerToString(source.RootFolderPath)
+	deliveryDestination.RootFolderPath = genruntime.ClonePointerToString(source.RootFolderPath)
 
 	// StorageAccount
-	destination.StorageAccount = genruntime.ClonePointerToString(source.StorageAccount)
+	deliveryDestination.StorageAccount = genruntime.ClonePointerToString(source.StorageAccount)
 
 	// Type
 	if source.Type != nil {
 		typeVar := *source.Type
 		typeTemp := genruntime.ToEnum(typeVar, destinationType_STATUS_Values)
-		destination.Type = &typeTemp
+		deliveryDestination.Type = &typeTemp
 	} else {
-		destination.Type = nil
+		deliveryDestination.Type = nil
 	}
 
 	// No error
@@ -3963,35 +3963,35 @@ func (destination *ExportDeliveryDestination_STATUS) AssignProperties_From_Expor
 }
 
 // AssignProperties_To_ExportDeliveryDestination_STATUS populates the provided destination ExportDeliveryDestination_STATUS from our ExportDeliveryDestination_STATUS
-func (destination *ExportDeliveryDestination_STATUS) AssignProperties_To_ExportDeliveryDestination_STATUS(target *storage.ExportDeliveryDestination_STATUS) error {
+func (deliveryDestination *ExportDeliveryDestination_STATUS) AssignProperties_To_ExportDeliveryDestination_STATUS(destination *storage.ExportDeliveryDestination_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// Container
-	target.Container = genruntime.ClonePointerToString(destination.Container)
+	destination.Container = genruntime.ClonePointerToString(deliveryDestination.Container)
 
 	// ResourceId
-	target.ResourceId = genruntime.ClonePointerToString(destination.ResourceId)
+	destination.ResourceId = genruntime.ClonePointerToString(deliveryDestination.ResourceId)
 
 	// RootFolderPath
-	target.RootFolderPath = genruntime.ClonePointerToString(destination.RootFolderPath)
+	destination.RootFolderPath = genruntime.ClonePointerToString(deliveryDestination.RootFolderPath)
 
 	// StorageAccount
-	target.StorageAccount = genruntime.ClonePointerToString(destination.StorageAccount)
+	destination.StorageAccount = genruntime.ClonePointerToString(deliveryDestination.StorageAccount)
 
 	// Type
-	if destination.Type != nil {
-		typeVar := string(*destination.Type)
-		target.Type = &typeVar
+	if deliveryDestination.Type != nil {
+		typeVar := string(*deliveryDestination.Type)
+		destination.Type = &typeVar
 	} else {
-		target.Type = nil
+		destination.Type = nil
 	}
 
 	// Update the property bag
 	if len(propertyBag) > 0 {
-		target.PropertyBag = propertyBag
+		destination.PropertyBag = propertyBag
 	} else {
-		target.PropertyBag = nil
+		destination.PropertyBag = nil
 	}
 
 	// No error

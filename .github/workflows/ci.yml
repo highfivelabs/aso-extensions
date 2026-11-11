@@ -1,0 +1,165 @@
+# Copyright 2026 High Five Labs
+# SPDX-License-Identifier: MIT
+#
+# Pull requests (decided 2026-11-10, O22: selective runs):
+#
+#   plan    hack/ci/select.sh maps the changed paths to what must run:
+#           none (docs only), groups (check:static, build and the changed
+#           kind groups' own tests) or full (task check). When the Spot runners
+#           are on (repository variable SPOT_RUNNERS_ENABLED), it also
+#           starts the offload Spot VMs the heavy jobs run on
+#           (.github/actions/spot-runner).
+#   check   on GitHub's runner (Actions minutes), or on a Spot VM when
+#           CHECK_ON_SPOT is 'true' too.
+#   e2e     task operator-e2e on a Spot VM: no Actions minutes. Skipped
+#           while the Spot runners are off (the plan's summary says so).
+#   ci      the one status to require: fails if any job above failed or
+#           was cancelled; a skipped job is fine.
+#
+# Everything runs against the fake cloud (in process, and PostgreSQL in Docker): no
+# credentials reach a test.
+# The whole suite runs nightly on main (nightly.yml).
+name: ci
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # offload, vendored in the factory repository (offload/), at this commit.
+  FACTORY_REF: ba59cca20632966e07bd5b9f36ed0a1b525ea023
+  # The environment, for .github/actions/spot-runner (repository variables).
+  GCP_PROJECT: ${{ vars.GCP_PROJECT }}
+  GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+  OFFLOAD_SERVICE_ACCOUNT: ${{ vars.OFFLOAD_SERVICE_ACCOUNT }}
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      mode: ${{ steps.plan.outputs.mode }}
+      groups: ${{ steps.plan.outputs.groups }}
+      e2e: ${{ steps.plan.outputs.e2e }}
+      check-runner: ${{ steps.runners.outputs.check }}
+      e2e-runner: ${{ steps.runners.outputs.e2e }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: What this pull request runs
+        id: plan
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          hack/ci/select.sh plan "${BASE}" "${HEAD}" > plan.out 2>> "${GITHUB_STEP_SUMMARY}"
+          cat plan.out
+          cat plan.out >> "${GITHUB_OUTPUT}"
+
+      - name: Where the heavy jobs run
+        id: runners
+        env:
+          MODE: ${{ steps.plan.outputs.mode }}
+          E2E: ${{ steps.plan.outputs.e2e }}
+          SPOT: ${{ vars.SPOT_RUNNERS_ENABLED == 'true' }}
+          CHECK_ON_SPOT: ${{ vars.CHECK_ON_SPOT == 'true' }}
+          # A pull request from a fork gets no Spot runner (no id-token for it).
+          SAME_REPO: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+          PREFIX: ci-${{ github.event.repository.name }}-${{ github.run_id }}-${{ github.run_attempt }}
+        run: hack/ci/runners.sh
+
+      - name: Spot runner for check
+        if: steps.runners.outputs.check != 'ubuntu-latest' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        uses: ./.github/actions/spot-runner
+        with:
+          label: ${{ steps.runners.outputs.check }}
+
+      - name: Spot runner for operator-e2e
+        if: steps.runners.outputs.e2e != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        uses: ./.github/actions/spot-runner
+        with:
+          label: ${{ steps.runners.outputs.e2e }}
+
+  check:
+    needs: plan
+    if: needs.plan.outputs.mode != 'none'
+    runs-on: ${{ needs.plan.outputs.check-runner }}
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/factory-access
+        with:
+          app-id: ${{ secrets.FACTORY_APP_ID }}
+          private-key: ${{ secrets.FACTORY_APP_PRIVATE_KEY }}
+      # A Spot VM has the tools and the Go cache already (the offload image).
+      - if: runner.environment == 'github-hosted'
+        uses: ./.github/actions/tools
+      # ASO's checkout, its Go build cache and the generator's output do
+      # not fit in GitHub's runner's free disk otherwise.
+      - name: Free disk space
+        if: runner.environment == 'github-hosted'
+        run: hack/ci/free-disk.sh
+      - name: ASO at the pin, the ARM specs, setup-envtest and envtest
+        if: runner.environment == 'github-hosted'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            third_party/azure-service-operator
+            .cache/azure-rest-api-specs
+            bin/setup-envtest
+            bin/envtest
+          key: repo-tools-${{ runner.os }}-${{ hashFiles('UPSTREAM.md', 'patches/**', 'generator/specs.txt', 'Taskfile.yml', 'taskfiles/**') }}
+      - run: task tools
+      - name: task check (full) or the changed kind groups' checks (groups)
+        env:
+          MODE: ${{ needs.plan.outputs.mode }}
+          SELECTED: ${{ needs.plan.outputs.groups }}
+        run: task ci:check MODE="${MODE}" GROUPS="${SELECTED}"
+
+  e2e:
+    needs: plan
+    if: needs.plan.outputs.e2e-runner != ''
+    runs-on: ${{ needs.plan.outputs.e2e-runner }}
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/factory-access
+        with:
+          app-id: ${{ secrets.FACTORY_APP_ID }}
+          private-key: ${{ secrets.FACTORY_APP_PRIVATE_KEY }}
+      - run: task tools
+      - run: task operator-e2e
+      - name: Cluster state on failure
+        if: failure()
+        run: task operator-e2e:debug
+
+  # The one status branch protection requires.
+  ci:
+    needs: [plan, check, e2e]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: hack/ci/results.sh "${RESULTS}"

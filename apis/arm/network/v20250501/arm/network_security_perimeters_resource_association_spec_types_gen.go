@@ -34,10 +34,10 @@ type NspAssociationProperties struct {
 	AccessMode *AssociationAccessMode `json:"accessMode,omitempty"`
 
 	// PrivateLinkResource: The PaaS resource to be associated.
-	PrivateLinkResource *SubResource `json:"privateLinkResource,omitempty"`
+	PrivateLinkResource *NetworkSecurityPerimeterSubResource `json:"privateLinkResource,omitempty"`
 
 	// Profile: Profile id to which the PaaS resource is associated.
-	Profile *SubResource `json:"profile,omitempty"`
+	Profile *NetworkSecurityPerimeterSubResource `json:"profile,omitempty"`
 }
 
 // Access mode on the association.
@@ -58,7 +58,7 @@ var associationAccessMode_Values = map[string]AssociationAccessMode{
 }
 
 // Reference to another subresource.
-type SubResource struct {
+type NetworkSecurityPerimeterSubResource struct {
 	// Id: Resource ID.
 	Id *string `json:"id,omitempty"`
 }

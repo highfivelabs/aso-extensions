@@ -1,0 +1,84 @@
+# Copyright 2026 High Five Labs
+# SPDX-License-Identifier: MIT
+#
+# On a v* tag: build the manager image with ko (as README.md's install and
+# tests/operator do) for linux/amd64 and linux/arm64, push it to the
+# High Five Labs registry as
+#   us-central1-docker.pkg.dev/<GCP_PROJECT>/hfl-oci/aso-extensions/manager:<tag>
+# and keep the resolved install (config/default with that image) as the
+# run's `install` artifact.
+#
+# It signs in to Google Cloud through Workload Identity Federation as
+# the RELEASE_SERVICE_ACCOUNT (only artifactregistry.writer on hfl-oci; it cannot create VMs); no key is stored.
+# The repository variables GCP_PROJECT, GCP_WORKLOAD_IDENTITY_PROVIDER and
+# RELEASE_SERVICE_ACCOUNT name the environment.
+# It does nothing until the repository variable RELEASE_ENABLED is 'true',
+# which the builder sets once the federation admits this repository.
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY: us-central1-docker.pkg.dev
+  KO_DOCKER_REPO: us-central1-docker.pkg.dev/${{ vars.GCP_PROJECT }}/hfl-oci/aso-extensions
+
+jobs:
+  images:
+    if: vars.RELEASE_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/factory-access
+        with:
+          app-id: ${{ secrets.FACTORY_APP_ID }}
+          private-key: ${{ secrets.FACTORY_APP_PRIVATE_KEY }}
+
+      - name: The environment's identifiers
+        env:
+          GCP_PROJECT: ${{ vars.GCP_PROJECT }}
+          GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          RELEASE_SERVICE_ACCOUNT: ${{ vars.RELEASE_SERVICE_ACCOUNT }}
+        run: hack/ci/require-vars.sh GCP_PROJECT GCP_WORKLOAD_IDENTITY_PROVIDER RELEASE_SERVICE_ACCOUNT
+
+      # Go from go.mod, and ko and kubectl at hack/ci/tools.sh's pins (as
+      # task ci:tools installs them).
+      - uses: ./.github/actions/tools
+
+      - name: ASO at the pin plus patches/
+        run: task upstream
+
+      - name: ASO is the pin plus patches/
+        run: task upstream-check
+
+      - id: auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.RELEASE_SERVICE_ACCOUNT }}
+          token_format: access_token
+
+      - name: Build and push the images
+        env:
+          TAG: ${{ github.ref_name }}
+          REGISTRY_TOKEN: ${{ steps.auth.outputs.access_token }}
+        run: task release TAG="${TAG}" REGISTRY="${REGISTRY}" KO_DOCKER_REPO="${KO_DOCKER_REPO}"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: install
+          path: dist/

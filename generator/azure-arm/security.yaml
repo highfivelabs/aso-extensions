@@ -1,0 +1,151 @@
+# Microsoft Defender for Cloud (Microsoft.Security): foundation rows 19, 20
+# and 23 of docs/coverage/foundation.md. The Security specs keep each
+# resource in its own API version, so this group includes several versions,
+# each resource at the newest version that has it (stable where there is
+# one). Extension scopes /{resourceId}/ and /{scopeId}/ and resources
+# directly under a subscription are extension resources by generator patch
+# 0010 (ASO_GENERATOR_MORE_EXTENSION_SCOPES), owned by a subscription's ARM
+# ID or any resource.
+typeFilters:
+  - action: include
+    group: security
+    version: v20260701
+    because: Defender plans (pricings), the newest stable version
+  - action: include
+    group: security
+    version: v20250601
+    because: Defender for Storage settings, the version open ASO PR #5783 generates
+  - action: include
+    group: security
+    version: v20240801
+    because: security standards, standard assignments and custom recommendations, the newest stable version
+  - action: include
+    group: security
+    version: v20231201preview
+    because: security contacts and workflow automations (preview only)
+  - action: include
+    group: security
+    version: v20230501
+    because: server vulnerability assessment settings, the newest stable version
+  - action: include
+    group: security
+    version: v20220501
+    because: settings (data export and alert sync), the newest stable version
+  - action: include
+    group: security
+    version: v20190101
+    because: advanced threat protection settings, the newest stable version
+  - action: include
+    group: security
+    version: v20170801preview
+    because: auto-provisioning and workspace settings (preview only)
+  - action: prune
+    group: security
+    because: every other version is left alone (other versions define the same resources again)
+typeTransformers:
+  - name: DataExportSettings_Name
+    group: security
+    version: v20220501
+    target:
+      name: string
+    because: >-
+      A setting's name is one of six values (MCAS, WDATP, Sentinel, ...),
+      typed after the first polymorphic leaf. ASO's generator keeps such an
+      enum in the storage version, which then imports the API version: an
+      import cycle (as for Log Analytics linked storage accounts,
+      operationalinsights.yaml).
+  # Copied from open ASO PR #5783 (head d6842ab7), with int for its uint64:
+  # the generator at the pin has no uint64 test generator.
+  - name: OnUploadFilters;OnUploadFilters_STATUS
+    group: security
+    version: v20250601
+    property: ExcludeBlobsLargerThan
+    target:
+      name: int
+      optional: true
+    because: The Swagger omits type integer; a non-negative byte limit.
+groupModelConfiguration:
+  2026-07-01:
+    Pricing:
+      $exportAs: Pricing
+      $supportedFrom: v0.1.0
+    Extension:
+      SecurityOperatorResourceId:
+        $referenceType: arm # autolabel: review
+    PricingProperties:
+      SecurityOperatorResourceId:
+        $referenceType: arm # autolabel: review
+  2025-06-01:
+    DefenderForStorageSetting:
+      $exportAs: DefenderForStorageSetting
+      $supportedFrom: v0.1.0
+    MalwareScanningProperties:
+      ScanResultsEventGridTopicResourceId:
+        $referenceType: arm
+  2024-08-01:
+    SecurityStandard:
+      $exportAs: SecurityStandard
+      $supportedFrom: v0.1.0
+    StandardAssignment:
+      $exportAs: StandardAssignment
+      $supportedFrom: v0.1.0
+    CustomRecommendation:
+      $exportAs: CustomRecommendation
+      $supportedFrom: v0.1.0
+    CommonAssignedStandardItem:
+      Id:
+        $referenceType: arm # autolabel: review
+  2023-12-01-preview:
+    SecurityContact:
+      $exportAs: SecurityContact
+      $supportedFrom: v0.1.0
+    Automation:
+      $exportAs: Automation
+      $supportedFrom: v0.1.0
+    AutomationScope:
+      ScopePath:
+        $referenceType: simple # autolabel: review
+    AutomationActionEventHub:
+      EventHubResourceId:
+        $referenceType: arm # autolabel: review
+    AutomationActionWorkspace:
+      WorkspaceResourceId:
+        $referenceType: arm # autolabel: review
+    AutomationActionLogicApp:
+      LogicAppResourceId:
+        $referenceType: arm # autolabel: review
+  2023-05-01:
+    ServerVulnerabilityAssessmentsSetting:
+      $exportAs: ServerVulnerabilityAssessmentsSetting
+      $supportedFrom: v0.1.0
+    # Polymorphic (kind): the one leaf is embedded, as ASO's kusto.yaml
+    # does for a database.
+    AzureServersSetting:
+      $resourceEmbeddedInParent: ServerVulnerabilityAssessmentsSetting
+    AzureServersSetting_STATUS:
+      $resourceEmbeddedInParent: ServerVulnerabilityAssessmentsSetting
+  2022-05-01:
+    Setting:
+      $exportAs: Setting
+      $supportedFrom: v0.1.0
+    # Polymorphic (kind DataExportSettings or AlertSyncSettings): one
+    # property per leaf, exactly one set.
+    DataExportSettings:
+      $resourceEmbeddedInParent: Setting
+    DataExportSettings_STATUS:
+      $resourceEmbeddedInParent: Setting
+    AlertSyncSettings:
+      $resourceEmbeddedInParent: Setting
+    AlertSyncSettings_STATUS:
+      $resourceEmbeddedInParent: Setting
+  2019-01-01:
+    AdvancedThreatProtectionSetting:
+      $exportAs: AdvancedThreatProtectionSetting
+      $supportedFrom: v0.1.0
+  2017-08-01-preview:
+    AutoProvisioningSetting:
+      $exportAs: AutoProvisioningSetting
+      $supportedFrom: v0.1.0
+    WorkspaceSetting:
+      $exportAs: WorkspaceSetting
+      $supportedFrom: v0.1.0

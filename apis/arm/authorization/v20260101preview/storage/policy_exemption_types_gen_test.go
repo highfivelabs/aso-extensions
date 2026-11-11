@@ -7,7 +7,8 @@ import (
 	"encoding/json"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	storage "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701/storage"
+	v20241201ps "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20241201preview/storage"
+	v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701/storage"
 	"github.com/kr/pretty"
 	"github.com/kylelemons/godebug/diff"
 	"pgregory.net/rapid"
@@ -280,7 +281,7 @@ func Test_ResourceSelector_WhenPropertiesConverted_RoundTripsWithoutLoss(t *test
 		copied := subject.DeepCopy()
 
 		// Use AssignPropertiesTo() for the first stage of conversion
-		var other storage.ResourceSelector
+		var other v20260701s.ResourceSelector
 		err := copied.AssignProperties_To_ResourceSelector(&other)
 		if err != nil {
 			t.Fatal("AssignPropertiesTo: " + err.Error())
@@ -376,7 +377,7 @@ func Test_ResourceSelector_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(
 		copied := subject.DeepCopy()
 
 		// Use AssignPropertiesTo() for the first stage of conversion
-		var other storage.ResourceSelector_STATUS
+		var other v20260701s.ResourceSelector_STATUS
 		err := copied.AssignProperties_To_ResourceSelector_STATUS(&other)
 		if err != nil {
 			t.Fatal("AssignPropertiesTo: " + err.Error())
@@ -473,7 +474,7 @@ func Test_Selector_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
 		copied := subject.DeepCopy()
 
 		// Use AssignPropertiesTo() for the first stage of conversion
-		var other storage.Selector
+		var other v20260701s.Selector
 		err := copied.AssignProperties_To_Selector(&other)
 		if err != nil {
 			t.Fatal("AssignPropertiesTo: " + err.Error())
@@ -570,7 +571,7 @@ func Test_Selector_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testi
 		copied := subject.DeepCopy()
 
 		// Use AssignPropertiesTo() for the first stage of conversion
-		var other storage.Selector_STATUS
+		var other v20260701s.Selector_STATUS
 		err := copied.AssignProperties_To_Selector_STATUS(&other)
 		if err != nil {
 			t.Fatal("AssignPropertiesTo: " + err.Error())
@@ -667,7 +668,7 @@ func Test_SystemData_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *tes
 		copied := subject.DeepCopy()
 
 		// Use AssignPropertiesTo() for the first stage of conversion
-		var other storage.SystemData_STATUS
+		var other v20241201ps.SystemData_STATUS
 		err := copied.AssignProperties_To_SystemData_STATUS(&other)
 		if err != nil {
 			t.Fatal("AssignPropertiesTo: " + err.Error())

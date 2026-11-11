@@ -1,0 +1,46 @@
+# Copyright 2026 High Five Labs
+# SPDX-License-Identifier: MIT
+#
+# Go from go.mod, and the command-line tools the tasks call at the pins in
+# hack/ci/tools.sh (task ci:tools runs the same script).
+# Tools are cached by version; Go's module and build caches by job and
+# go.sum.
+name: tools
+description: Go, task, kind, ko, crane, kubectl and helm at pinned versions
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+      with:
+        go-version-file: go.mod
+        # Cached below per job: the check and operator-e2e jobs build
+        # different things, and setup-go's one key would let one evict the
+        # other.
+        cache: false
+
+    - name: Go caches
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: |
+          ~/go/pkg/mod
+          ~/.cache/go-build
+        key: go-${{ runner.os }}-${{ github.job }}-${{ hashFiles('go.sum') }}
+        restore-keys: |
+          go-${{ runner.os }}-${{ github.job }}-
+          go-${{ runner.os }}-
+
+    - name: Tool cache
+      id: tools-cache
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ~/ci-tools/bin
+        key: ci-tools-${{ runner.os }}-${{ hashFiles('hack/ci/tools.sh') }}
+
+    # The same script and pins as task ci:tools and the merge gate.
+    - name: Install tools
+      shell: bash
+      run: |
+        CI_TOOLS_DIR="${HOME}/ci-tools/bin" hack/ci/tools.sh
+        echo "CI_TOOLS_DIR=${HOME}/ci-tools/bin" >> "${GITHUB_ENV}"
+        echo "${HOME}/ci-tools/bin" >> "${GITHUB_PATH}"

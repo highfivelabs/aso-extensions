@@ -1,0 +1,6 @@
+# The only Azure targets live tests may touch (docs/live-runs.md), one
+# <subscription ID>/<resource group> per line. ${AZURE_SUBSCRIPTION_ID}
+# stands for that variable's value: the ID is not in the tree
+# (.env.example). Added by a reviewed change, never from the command line.
+# The identity is Contributor on this resource group only.
+${AZURE_SUBSCRIPTION_ID}/aso-extensions-live-tests

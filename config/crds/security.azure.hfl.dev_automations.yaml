@@ -1,0 +1,657 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: automations.security.azure.hfl.dev
+spec:
+  group: security.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - security
+    kind: Automation
+    listKind: AutomationList
+    plural: automations
+    singular: automation
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20231201preview
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /security/resource-manager/Microsoft.Security/Security/preview/2023-12-01-preview/security-Automations.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              actions:
+                description: |-
+                  Actions: A collection of the actions which are triggered if all the configured rules evaluations, within at least one
+                  rule set, are true.
+                items:
+                  properties:
+                    eventHub:
+                      description: 'EventHub: Mutually exclusive with all other properties'
+                      properties:
+                        actionType:
+                          description: 'ActionType: The type of the action that will
+                            be triggered by the Automation'
+                          enum:
+                          - EventHub
+                          type: string
+                        connectionString:
+                          description: 'ConnectionString: The target Event Hub connection
+                            string (it will not be included in any response).'
+                          type: string
+                        eventHubResourceReference:
+                          description: 'EventHubResourceReference: The target Event
+                            Hub Azure Resource ID.'
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                          type: object
+                        isTrustedServiceEnabled:
+                          description: 'IsTrustedServiceEnabled: Indicates whether
+                            the trusted service is enabled or not.'
+                          type: boolean
+                      required:
+                      - actionType
+                      type: object
+                    logicApp:
+                      description: 'LogicApp: Mutually exclusive with all other properties'
+                      properties:
+                        actionType:
+                          description: 'ActionType: The type of the action that will
+                            be triggered by the Automation'
+                          enum:
+                          - LogicApp
+                          type: string
+                        logicAppResourceReference:
+                          description: |-
+                            LogicAppResourceReference: The triggered Logic App Azure Resource ID. This can also reside on other subscriptions, given
+                            that you have permissions to trigger the Logic App
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                          type: object
+                        uri:
+                          description: 'Uri: The Logic App trigger URI endpoint (it
+                            will not be included in any response).'
+                          pattern: ^[a-zA-Z][a-zA-Z0-9+-.]*:[^\s]*$
+                          type: string
+                      required:
+                      - actionType
+                      type: object
+                    workspace:
+                      description: 'Workspace: Mutually exclusive with all other properties'
+                      properties:
+                        actionType:
+                          description: 'ActionType: The type of the action that will
+                            be triggered by the Automation'
+                          enum:
+                          - Workspace
+                          type: string
+                        workspaceResourceReference:
+                          description: 'WorkspaceResourceReference: The fully qualified
+                            Log Analytics Workspace Azure Resource ID.'
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                          type: object
+                      required:
+                      - actionType
+                      type: object
+                  type: object
+                type: array
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              description:
+                description: 'Description: The security automation description.'
+                type: string
+              etag:
+                description: 'Etag: Entity tag is used for comparing two or more entities
+                  from the same requested resource.'
+                type: string
+              isEnabled:
+                description: 'IsEnabled: Indicates whether the security automation
+                  is enabled.'
+                type: boolean
+              kind:
+                description: 'Kind: Kind of the resource'
+                type: string
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a resources.azure.com/ResourceGroup resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+              scopes:
+                description: |-
+                  Scopes: A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription
+                  itself or a resource group under that subscription. The automation will only apply on defined scopes.
+                items:
+                  description: A single automation scope.
+                  properties:
+                    description:
+                      description: 'Description: The resources scope description.'
+                      type: string
+                    scopePath:
+                      description: |-
+                        ScopePath: The resources scope path. Can be the subscription on which the automation is defined on or a resource group
+                        under that subscription (fully qualified Azure resource IDs).
+                      type: string
+                  type: object
+                type: array
+              sources:
+                description: 'Sources: A collection of the source event types which
+                  evaluate the security automation set of rules.'
+                items:
+                  description: |-
+                    The source event types which evaluate the security automation set of rules. For example - security alerts and security
+                    assessments. To learn more about the supported security events data models schemas - please visit
+                    https://aka.ms/ASCAutomationSchemas.
+                  properties:
+                    eventSource:
+                      description: 'EventSource: A valid event source type.'
+                      enum:
+                      - Alerts
+                      - Assessments
+                      - AssessmentsSnapshot
+                      - AttackPaths
+                      - AttackPathsSnapshot
+                      - RegulatoryComplianceAssessment
+                      - RegulatoryComplianceAssessmentSnapshot
+                      - SecureScoreControls
+                      - SecureScoreControlsSnapshot
+                      - SecureScores
+                      - SecureScoresSnapshot
+                      - SubAssessments
+                      - SubAssessmentsSnapshot
+                      type: string
+                    ruleSets:
+                      description: |-
+                        RuleSets: A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule
+                        sets (logical 'or').
+                      items:
+                        description: |-
+                          A rule set which evaluates all its rules upon an event interception. Only when all the included rules in the rule set
+                          will be evaluated as 'true', will the event trigger the defined actions.
+                        properties:
+                          rules:
+                            items:
+                              description: |-
+                                A rule which is evaluated upon event interception. The rule is configured by comparing a specific value from the event
+                                model to an expected value. This comparison is done by using one of the supported operators set.
+                              properties:
+                                expectedValue:
+                                  description: 'ExpectedValue: The expected value.'
+                                  type: string
+                                operator:
+                                  description: 'Operator: A valid comparer operator
+                                    to use. A case-insensitive comparison will be
+                                    applied for String PropertyType.'
+                                  enum:
+                                  - Contains
+                                  - EndsWith
+                                  - Equals
+                                  - GreaterThan
+                                  - GreaterThanOrEqualTo
+                                  - LesserThan
+                                  - LesserThanOrEqualTo
+                                  - NotEquals
+                                  - StartsWith
+                                  type: string
+                                propertyJPath:
+                                  description: 'PropertyJPath: The JPath of the entity
+                                    model property that should be checked.'
+                                  type: string
+                                propertyType:
+                                  description: 'PropertyType: The data type of the
+                                    compared operands (string, integer, floating point
+                                    number or a boolean [true/false]]'
+                                  enum:
+                                  - Boolean
+                                  - Integer
+                                  - Number
+                                  - String
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      type: array
+                  type: object
+                type: array
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+            required:
+            - owner
+            type: object
+          status:
+            description: The security automation resource.
+            properties:
+              actions:
+                description: |-
+                  Actions: A collection of the actions which are triggered if all the configured rules evaluations, within at least one
+                  rule set, are true.
+                items:
+                  properties:
+                    eventHub:
+                      description: 'EventHub: Mutually exclusive with all other properties'
+                      properties:
+                        actionType:
+                          description: 'ActionType: The type of the action that will
+                            be triggered by the Automation'
+                          type: string
+                        connectionString:
+                          description: 'ConnectionString: The target Event Hub connection
+                            string (it will not be included in any response).'
+                          type: string
+                        eventHubResourceId:
+                          description: 'EventHubResourceId: The target Event Hub Azure
+                            Resource ID.'
+                          type: string
+                        isTrustedServiceEnabled:
+                          description: 'IsTrustedServiceEnabled: Indicates whether
+                            the trusted service is enabled or not.'
+                          type: boolean
+                        sasPolicyName:
+                          description: 'SasPolicyName: The target Event Hub SAS policy
+                            name.'
+                          type: string
+                      type: object
+                    logicApp:
+                      description: 'LogicApp: Mutually exclusive with all other properties'
+                      properties:
+                        actionType:
+                          description: 'ActionType: The type of the action that will
+                            be triggered by the Automation'
+                          type: string
+                        logicAppResourceId:
+                          description: |-
+                            LogicAppResourceId: The triggered Logic App Azure Resource ID. This can also reside on other subscriptions, given that
+                            you have permissions to trigger the Logic App
+                          type: string
+                        uri:
+                          description: 'Uri: The Logic App trigger URI endpoint (it
+                            will not be included in any response).'
+                          type: string
+                      type: object
+                    workspace:
+                      description: 'Workspace: Mutually exclusive with all other properties'
+                      properties:
+                        actionType:
+                          description: 'ActionType: The type of the action that will
+                            be triggered by the Automation'
+                          type: string
+                        workspaceResourceId:
+                          description: 'WorkspaceResourceId: The fully qualified Log
+                            Analytics Workspace Azure Resource ID.'
+                          type: string
+                      type: object
+                  type: object
+                type: array
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              description:
+                description: 'Description: The security automation description.'
+                type: string
+              etag:
+                description: 'Etag: Entity tag is used for comparing two or more entities
+                  from the same requested resource.'
+                type: string
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. E.g.
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                type: string
+              isEnabled:
+                description: 'IsEnabled: Indicates whether the security automation
+                  is enabled.'
+                type: boolean
+              kind:
+                description: 'Kind: Kind of the resource'
+                type: string
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              scopes:
+                description: |-
+                  Scopes: A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription
+                  itself or a resource group under that subscription. The automation will only apply on defined scopes.
+                items:
+                  description: A single automation scope.
+                  properties:
+                    description:
+                      description: 'Description: The resources scope description.'
+                      type: string
+                    scopePath:
+                      description: |-
+                        ScopePath: The resources scope path. Can be the subscription on which the automation is defined on or a resource group
+                        under that subscription (fully qualified Azure resource IDs).
+                      type: string
+                  type: object
+                type: array
+              sources:
+                description: 'Sources: A collection of the source event types which
+                  evaluate the security automation set of rules.'
+                items:
+                  description: |-
+                    The source event types which evaluate the security automation set of rules. For example - security alerts and security
+                    assessments. To learn more about the supported security events data models schemas - please visit
+                    https://aka.ms/ASCAutomationSchemas.
+                  properties:
+                    eventSource:
+                      description: 'EventSource: A valid event source type.'
+                      type: string
+                    ruleSets:
+                      description: |-
+                        RuleSets: A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule
+                        sets (logical 'or').
+                      items:
+                        description: |-
+                          A rule set which evaluates all its rules upon an event interception. Only when all the included rules in the rule set
+                          will be evaluated as 'true', will the event trigger the defined actions.
+                        properties:
+                          rules:
+                            items:
+                              description: |-
+                                A rule which is evaluated upon event interception. The rule is configured by comparing a specific value from the event
+                                model to an expected value. This comparison is done by using one of the supported operators set.
+                              properties:
+                                expectedValue:
+                                  description: 'ExpectedValue: The expected value.'
+                                  type: string
+                                operator:
+                                  description: 'Operator: A valid comparer operator
+                                    to use. A case-insensitive comparison will be
+                                    applied for String PropertyType.'
+                                  type: string
+                                propertyJPath:
+                                  description: 'PropertyJPath: The JPath of the entity
+                                    model property that should be checked.'
+                                  type: string
+                                propertyType:
+                                  description: 'PropertyType: The data type of the
+                                    compared operands (string, integer, floating point
+                                    number or a boolean [true/false]]'
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      type: array
+                  type: object
+                type: array
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

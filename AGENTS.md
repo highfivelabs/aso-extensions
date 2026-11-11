@@ -22,7 +22,7 @@ itself lives in its own repository and is never changed from here.
 - **Unreleased upstream code** (master, pull requests): `docs/plan.md`
   §1 (how ASO v2 is built), §2 (how a kind is built here; `patches/` adds `v2/pkg/outoftree` to reach ASO's reconciler), §4 (upstream and sync).
 - **What to build next:** `docs/plan.md` §3 "Candidates". Plain Azure API
-  (ARM) resources are in scope, as are data-plane kinds (the builder's
+  (ARM) resources are in scope, as are data-plane kinds (a recorded
   decision, `docs/plan.md` §1 and §8 Q6). Upstream first, by habit: a kind
   that ASO has released, or has in the pinned code, is skipped (record the
   skip); one that an open ASO pull request or unreleased `main` adds is
@@ -53,6 +53,9 @@ itself lives in its own repository and is never changed from here.
 ## Always
 
 - Sign off every commit (`git commit -s`, DCO).
+- Merge only when the `offload/ci` status on the PR head is success
+  (`task ci`, which the pre-push hook runs; README.md, "The merge
+  gate").
 - Commit as this repository's configured author (a GitHub no-reply
   address). Never change `user.email`.
 - Keep one change per commit, described plainly.
@@ -60,12 +63,26 @@ itself lives in its own repository and is never changed from here.
   a recommendation, and stop. Direction calls are the builder's: licence,
   names, API groups, identity defaults, a new upstream dependency,
   anything that makes the repository public.
+- Test against real Azure (a live run, under the rule in "Never") in
+  two cases (decided 2026-11-11):
+  1. where the fake cloud cannot give the signal: the service or behaviour is not
+     faked, or the case depends on real permissions, quotas, defaults or
+     eventual consistency; and
+  2. on a regular basis, to check that the fake cloud still agrees with real
+     Azure, starting with kinds that cost nothing to create.
+  The fake cloud stays the test of record for `task check`. Record each live
+  result in `docs/live-runs.md`.
 
 ## Never
 
-- Never use real cloud credentials, projects, accounts or subscriptions.
-  Only the fake cloud. A change that needs the real cloud is written up,
-  not tested.
+- Never reach real Azure except through a live run: subscription
+  `$AZURE_SUBSCRIPTION_ID` (`.env.example`) only, resource group
+  `aso-extensions-live-tests` only, as the app `aso-extensions-live-tests`
+  through its federated credential only, from an offload Spot VM only,
+  with `ASO_EXT_LIVE` set (`docs/live-runs.md`). Never on a laptop, never
+  with a stored secret or certificate, never in any other subscription or
+  resource group, and never from `task check`. Every live resource carries
+  the run's name and is deleted by the test or the sweeper.
 - Never open, comment on, review or react to upstream pull requests or
   issues. Reading them (`gh` read-only, `git fetch`) is fine.
 - Never force-push, rewrite pushed history, or change the repository's

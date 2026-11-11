@@ -1,12 +1,109 @@
-| Type Definitions in package "resources" | v20250401 |
-|-----------------------------------------|-----------|
-| APIVersion                              | v20250401 |
-| SystemData_CreatedByType_STATUS         | v20250401 |
-| SystemData_LastModifiedByType_STATUS    | v20250401 |
-| SystemData_STATUS                       | v20250401 |
-| TagSet                                  | v20250401 |
-| TagSet_STATUS                           | v20250401 |
-| TagSet_Spec                             | v20250401 |
-| Tag_Name_Spec                           | v20250401 |
-| Tags                                    | v20250401 |
-| Tags_STATUS                             | v20250401 |
+| Type Definitions in package "resources"                  | v20220201 | v20230801 | v20250401 | v20250701 |
+|----------------------------------------------------------|-----------|-----------|-----------|-----------|
+| APIVersion                                               | v20220201 | v20230801 | v20250401 | v20250701 |
+| ActionOnUnmanage                                         |           |           |           | v20250701 |
+| ActionOnUnmanage_STATUS                                  |           |           |           | v20250701 |
+| AzureCliScript                                           |           | v20230801 |           |           |
+| AzureCliScriptProperties                                 |           | v20230801 |           |           |
+| AzureCliScriptProperties_CleanupPreference               |           | v20230801 |           |           |
+| AzureCliScriptProperties_CleanupPreference_STATUS        |           | v20230801 |           |           |
+| AzureCliScriptProperties_STATUS                          |           | v20230801 |           |           |
+| AzureCliScript_Kind                                      |           | v20230801 |           |           |
+| AzureCliScript_Kind_STATUS                               |           | v20230801 |           |           |
+| AzureCliScript_STATUS                                    |           | v20230801 |           |           |
+| AzurePowerShellScript                                    |           | v20230801 |           |           |
+| AzurePowerShellScriptProperties                          |           | v20230801 |           |           |
+| AzurePowerShellScriptProperties_CleanupPreference        |           | v20230801 |           |           |
+| AzurePowerShellScriptProperties_CleanupPreference_STATUS |           | v20230801 |           |           |
+| AzurePowerShellScriptProperties_STATUS                   |           | v20230801 |           |           |
+| AzurePowerShellScript_Kind                               |           | v20230801 |           |           |
+| AzurePowerShellScript_Kind_STATUS                        |           | v20230801 |           |           |
+| AzurePowerShellScript_STATUS                             |           | v20230801 |           |           |
+| ContainerConfiguration                                   |           | v20230801 |           |           |
+| ContainerConfiguration_STATUS                            |           | v20230801 |           |           |
+| ContainerGroupSubnetId                                   |           | v20230801 |           |           |
+| ContainerGroupSubnetId_STATUS                            |           | v20230801 |           |           |
+| DenySettings                                             |           |           |           | v20250701 |
+| DenySettingsMode                                         |           |           |           | v20250701 |
+| DenySettingsMode_STATUS                                  |           |           |           | v20250701 |
+| DenySettings_STATUS                                      |           |           |           | v20250701 |
+| DeploymentExtensionConfigItem                            |           |           |           | v20250701 |
+| DeploymentExtensionConfigItem_STATUS                     |           |           |           | v20250701 |
+| DeploymentExtension_STATUS                               |           |           |           | v20250701 |
+| DeploymentExternalInput                                  |           |           |           | v20250701 |
+| DeploymentExternalInputDefinition                        |           |           |           | v20250701 |
+| DeploymentExternalInputDefinition_STATUS                 |           |           |           | v20250701 |
+| DeploymentExternalInput_STATUS                           |           |           |           | v20250701 |
+| DeploymentParameter                                      |           |           |           | v20250701 |
+| DeploymentParameter_STATUS                               |           |           |           | v20250701 |
+| DeploymentScript                                         |           | v20230801 |           |           |
+| DeploymentScript_STATUS                                  |           | v20230801 |           |           |
+| DeploymentScript_Spec                                    |           | v20230801 |           |           |
+| DeploymentStack                                          |           |           |           | v20250701 |
+| DeploymentStackProperties                                |           |           |           | v20250701 |
+| DeploymentStackProperties_STATUS                         |           |           |           | v20250701 |
+| DeploymentStackProvisioningState_STATUS                  |           |           |           | v20250701 |
+| DeploymentStack_STATUS                                   |           |           |           | v20250701 |
+| DeploymentStack_Spec                                     |           |           |           | v20250701 |
+| DeploymentStacksDebugSetting                             |           |           |           | v20250701 |
+| DeploymentStacksDebugSetting_STATUS                      |           |           |           | v20250701 |
+| DeploymentStacksParametersLink                           |           |           |           | v20250701 |
+| DeploymentStacksParametersLink_STATUS                    |           |           |           | v20250701 |
+| DeploymentStacksTemplateLink                             |           |           |           | v20250701 |
+| DeploymentStacksTemplateLink_STATUS                      |           |           |           | v20250701 |
+| EnvironmentVariable                                      |           | v20230801 |           |           |
+| EnvironmentVariable_STATUS                               |           | v20230801 |           |           |
+| ErrorAdditionalInfo_STATUS                               |           | v20230801 |           | v20250701 |
+| ErrorDetail_STATUS                                       |           | v20230801 |           | v20250701 |
+| ErrorDetail_STATUS_Unrolled                              |           | v20230801 |           | v20250701 |
+| KeyVaultParameterReference                               |           |           |           | v20250701 |
+| KeyVaultParameterReference_STATUS                        |           |           |           | v20250701 |
+| KeyVaultReference                                        |           |           |           | v20250701 |
+| KeyVaultReference_STATUS                                 |           |           |           | v20250701 |
+| LinkedTemplateArtifact                                   | v20220201 |           |           |           |
+| LinkedTemplateArtifact_STATUS                            | v20220201 |           |           |           |
+| ManagedResourceReference_DenyStatus_STATUS               |           |           |           | v20250701 |
+| ManagedResourceReference_STATUS                          |           |           |           | v20250701 |
+| ManagedServiceIdentity                                   |           | v20230801 |           |           |
+| ManagedServiceIdentityType                               |           | v20230801 |           |           |
+| ManagedServiceIdentityType_STATUS                        |           | v20230801 |           |           |
+| ManagedServiceIdentity_STATUS                            |           | v20230801 |           |           |
+| ResourceReferenceExtended_STATUS                         |           |           |           | v20250701 |
+| ResourceReference_STATUS                                 |           |           |           | v20250701 |
+| ResourceStatusMode_STATUS                                |           |           |           | v20250701 |
+| ResourcesWithoutDeleteSupportAction                      |           |           |           | v20250701 |
+| ResourcesWithoutDeleteSupportAction_STATUS               |           |           |           | v20250701 |
+| ScriptProvisioningState_STATUS                           |           | v20230801 |           |           |
+| ScriptStatus_STATUS                                      |           | v20230801 |           |           |
+| StorageAccountConfiguration                              |           | v20230801 |           |           |
+| StorageAccountConfiguration_STATUS                       |           | v20230801 |           |           |
+| SystemData_CreatedByType_STATUS                          | v20220201 | v20230801 | v20250401 | v20250701 |
+| SystemData_LastModifiedByType_STATUS                     | v20220201 | v20230801 | v20250401 | v20250701 |
+| SystemData_STATUS                                        | v20220201 | v20230801 | v20250401 | v20250701 |
+| TagSet                                                   |           |           | v20250401 |           |
+| TagSet_STATUS                                            |           |           | v20250401 |           |
+| TagSet_Spec                                              |           |           | v20250401 |           |
+| Tag_Name_Spec                                            |           |           | v20250401 |           |
+| Tags                                                     |           |           | v20250401 |           |
+| Tags_STATUS                                              |           |           | v20250401 |           |
+| TemplateSpec                                             | v20220201 |           |           |           |
+| TemplateSpecProperties                                   | v20220201 |           |           |           |
+| TemplateSpecProperties_STATUS                            | v20220201 |           |           |           |
+| TemplateSpecVersionInfo_STATUS                           | v20220201 |           |           |           |
+| TemplateSpecVersionProperties                            | v20220201 |           |           |           |
+| TemplateSpecVersionProperties_STATUS                     | v20220201 |           |           |           |
+| TemplateSpec_STATUS                                      | v20220201 |           |           |           |
+| TemplateSpec_Spec                                        | v20220201 |           |           |           |
+| TemplateSpecsVersion                                     | v20220201 |           |           |           |
+| TemplateSpecsVersion_STATUS                              | v20220201 |           |           |           |
+| TemplateSpecsVersion_Spec                                | v20220201 |           |           |           |
+| UnmanageActionManagementGroupMode                        |           |           |           | v20250701 |
+| UnmanageActionManagementGroupMode_STATUS                 |           |           |           | v20250701 |
+| UnmanageActionResourceGroupMode                          |           |           |           | v20250701 |
+| UnmanageActionResourceGroupMode_STATUS                   |           |           |           | v20250701 |
+| UnmanageActionResourceMode                               |           |           |           | v20250701 |
+| UnmanageActionResourceMode_STATUS                        |           |           |           | v20250701 |
+| UserAssignedIdentityDetails                              |           | v20230801 |           |           |
+| UserAssignedIdentity_STATUS                              |           | v20230801 |           |           |
+| ValidationLevel                                          |           |           |           | v20250701 |
+| ValidationLevel_STATUS                                   |           |           |           | v20250701 |

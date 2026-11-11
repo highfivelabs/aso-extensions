@@ -29,7 +29,9 @@ pins:
 
 pull_requests:
   - {ref: Azure/azure-service-operator#5104, head: 1219643c9e2f53328681876769a79fba92379e99, read_on: "2026-11-10", role: copied, for: "Azure SQL User with aadUser (Microsoft Entra users): the type's field, the aadUser connector, the webhook's checks as CEL rules"}
+  - {ref: Azure/azure-service-operator#5821, head: 6c93419bafcc5e2dbdedf35ffe0a93c313d84512, read_on: "2026-11-10", role: copied, for: "DirectoryRoleAssignment (Microsoft Entra directory roles): the base reconciler of ASO's Entra kinds"}
   - {ref: Azure/azure-service-operator#5638, head: 5d0e686e8b0a36b1a59b5ad4e34d68ccc27b949a, read_on: "2026-11-09", role: copied, for: "RoleEligibilityScheduleRequest (Privileged Identity Management): generator configuration, ARM resource modifier, name defaulting"}
+  - {ref: Azure/azure-service-operator#5783, head: d6842ab70f54daa05a5acb39c9645f0afe53fb57, read_on: "2026-11-11", role: copied, for: "DefenderForStorageSetting (Defender for Storage settings): generator configuration and the /{resourceId}/ extension prefix"}
 
 patches:
   - {file: patches/azure-service-operator/0001-export-framework-for-out-of-tree-managers.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
@@ -39,6 +41,11 @@ patches:
   - {file: patches/azure-service-operator/0005-generator-tenant-scope-children.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
   - {file: patches/azure-service-operator/0006-generator-multi-scope-extension.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
   - {file: patches/azure-service-operator/0007-generator-subresource-resources.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
+  - {file: patches/azure-service-operator/0008-generator-receiver-not-parameter.patch, pin: azure-service-operator, upstream_candidate: "yes"}
+  - {file: patches/azure-service-operator/0009-generator-subscription-scope-extension.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
+  - {file: patches/azure-service-operator/0010-generator-more-extension-scopes.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
+  - {file: patches/azure-service-operator/0011-generator-rapid-oneof-related.patch, pin: azure-service-operator, upstream_candidate: "yes"}
+  - {file: patches/azure-service-operator/0012-extension-resource-children.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
 
 # "What is copied, from where": here (our paths) and from (ASO's paths at
 # the pin, from the repository root, so under v2/; a directory ends in /).
@@ -57,6 +64,14 @@ copied:
     from: {pin: azure-service-operator, paths: [v2/internal/controllers/controller_resources.go, v2/internal/controllers/indexers.go]}
   - here: [pkg/manager/manager.go]
     from: {pin: azure-service-operator, paths: [v2/cmd/controller/app/setup.go]}
+  - here: [apis/entra/v1/groupversion_info.go]
+    from: {pin: azure-service-operator, paths: [v2/api/entra/v1/groupversion_info.go]}
+  - here: [apis/entra/v1/creation_mode.go]
+    from: {pin: azure-service-operator, paths: [v2/api/entra/v1/creation_mode.go]}
+  - here: [pkg/reconcilers/entra/reconciler_base.go]
+    from: {pr: Azure/azure-service-operator#5821, paths: [v2/internal/reconcilers/entra/reconciler_base.go]}
+  - here: [pkg/reconcilers/entra/client.go]
+    from: {pin: azure-service-operator, paths: [v2/internal/reconcilers/entra/entra_client_cache.go, v2/internal/reconcilers/entra/entra_client.go]}
   - here: [generator/azure-arm/authorization.yaml]
     from: {pr: Azure/azure-service-operator#5638, paths: [v2/azure-arm/authorization.yaml]}
   - here: [generator/_extensions/authorization/customizations/role_eligibility_schedule_request_extensions.go, generator/_extensions/authorization/customizations/role_assignment_schedule_request_extensions.go]
@@ -71,5 +86,7 @@ copied:
     from: {pin: azure-service-operator, paths: [v2/internal/reconcilers/azuresql/]}
   - here: [pkg/reconcilers/azuresql/aad_user.go]
     from: {pr: Azure/azure-service-operator#5104, paths: [v2/internal/reconcilers/azuresql/aad_user.go]}
+  - here: [generator/azure-arm/security.yaml]
+    from: {pr: Azure/azure-service-operator#5783, paths: [v2/azure-arm/security.yaml]}
   - here: [pkg/util/azuresql/azuresql.go, pkg/util/azuresql/role.go]
     from: {pin: azure-service-operator, paths: [v2/internal/util/azuresql/]}
