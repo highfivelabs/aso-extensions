@@ -20,10 +20,13 @@ func init() {
 		"Solution": {coveredBy: "TestOperationsManagementSolution"},
 
 		// Maintenance.
-		"ConfigurationAssignment": {spec: func(c *conformanceContext) map[string]any {
-			return map[string]any{"maintenanceConfigurationReference": armRef(c.add(c.in("Microsoft.Maintenance/maintenanceConfigurations/mc"))),
-				"filter": map[string]any{"locations": []any{"westus"}}}
-		}},
+		// On a virtual machine (at a subscription or resource group it would
+		// need an InGuestPatch configuration and a filter).
+		"ConfigurationAssignment": {
+			owner: func(c *conformanceContext) string { return c.add(c.in("Microsoft.Compute/virtualMachines/vm")) },
+			spec: func(c *conformanceContext) map[string]any {
+				return map[string]any{"maintenanceConfigurationReference": armRef(c.add(c.in("Microsoft.Maintenance/maintenanceConfigurations/mc")))}
+			}},
 
 		// Cost Management: a destination storage account by ARM ID.
 		"Export": {spec: func(c *conformanceContext) map[string]any {
@@ -38,8 +41,9 @@ func init() {
 				"properties": map[string]any{"tenantId": tenantID, "initialAdminObjectIds": []any{conformancePrincipal}},
 			}
 		}},
-		// A PUT on a key that exists returns it unchanged.
-		"ManagedHSMsKey": {keeps: true, spec: func(c *conformanceContext) map[string]any {
+		// A PUT on a key that exists returns it unchanged, and Resource
+		// Manager cannot delete a key: the object is detached.
+		"ManagedHSMsKey": {keeps: true, annotations: detach, stays: true, spec: func(c *conformanceContext) map[string]any {
 			return map[string]any{"properties": map[string]any{"kty": "RSA-HSM"}}
 		}},
 		// A private endpoint makes the connection; a PUT only changes it.
