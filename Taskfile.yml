@@ -139,7 +139,7 @@ tasks:
   # Real Azure (docs/live-runs.md). Only these two tasks reach hack/live;
   # check never calls them (it only compiles test/live with go vet).
   test-live:
-    desc: 'The live tests against the real Azure target of hack/live/azure.env, from an offload VM run with --sa (docs/live-runs.md): ASO_EXT_LIVE=create-real-azure-resources task test-live [TESTS="TestLiveA TestLiveB"]'
+    desc: 'The live tests against the real Azure target (AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID, AZURE_CLIENT_ID from the environment, checked by hack/live/azure.env), from an offload VM run with --sa (docs/live-runs.md): ASO_EXT_LIVE=create-real-azure-resources task test-live [TESTS="TestLiveA TestLiveB"]'
     cmds:
       - task: upstream-check
       - task: common:setup-envtest

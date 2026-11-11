@@ -6,20 +6,22 @@ below; the fake cloud (`docs/fake-cloud.md`) stays the test of record for
 from everything else, and what each run found. The AWS sibling's
 `docs/live-runs.md` (ack-extensions) is the model.
 
-**Status, 2026-11-10:** the builder made the sandbox and the identity and
-said "feel free to start testing against those asap".
+**Status, 2026-11-10:** the sandbox and the identity exist, and live runs
+against them are approved.
 
 | What | Value |
 | --- | --- |
-| Subscription | `149e8810-e0fe-48e2-a46e-6f8f575bde01` ("Azure subscription 1") |
-| Tenant | `13b0f5ef-4412-44a3-bd17-eec79070fb78` |
+| Subscription | `$AZURE_SUBSCRIPTION_ID` (`.env.example`) |
+| Tenant | `$AZURE_TENANT_ID` |
 | Resource group (the only target) | `aso-extensions-live-tests`, eastus2 |
-| App registration | `aso-extensions-live-tests`, client ID `cfe23580-20d6-4bd4-bb42-5d302fc07c03`, service principal `2628ee15-e543-48b3-863f-309a35250a4e` |
-| Its credentials | no secret, no certificate; one federated credential, `google-offload-runner`: issuer `https://accounts.google.com`, subject `102306610785199453342` (the Google service account `offload-runner@our-chassis-514316-r0`), audience `api://AzureADTokenExchange` |
+| App registration | `aso-extensions-live-tests`, client ID `$AZURE_CLIENT_ID` |
+| Its credentials | no secret, no certificate; one federated credential, `google-offload-runner`: issuer `https://accounts.google.com`, subject the unique ID of the offload VMs' Google service account (`$OFFLOAD_SA`), audience `api://AzureADTokenExchange` |
 | Its role | Contributor on the resource group, nothing else |
 
-The builder owns the identity and the group; agents never change them.
-These IDs are in `hack/live/azure.env`; none is a secret.
+The identity and the group are owned outside this repository; agents never
+change them. Their IDs are not in the tree: a live run takes them from the
+environment (`.env.example`), and `hack/live/azure.env` fails with the
+name of any that is missing.
 
 ## What keeps it apart
 
@@ -28,9 +30,9 @@ These IDs are in `hack/live/azure.env`; none is a secret.
 | The code that reaches real Azure is compiled only with `-tags live` | `test/live` |
 | `task check` compiles it (`go vet -tags live ./test/live/`) and runs none of it; only `task test-live` and `task live-list` reach `hack/live` | `Taskfile.yml` |
 | An explicit opt-in on every run: `ASO_EXT_LIVE=create-real-azure-resources` | `hack/live/run.sh`, `test/live/env_test.go` |
-| The subscription and group must be in `hack/live/targets.txt`, a reviewed change | the same |
+| The group must be in `hack/live/targets.txt` (as `${AZURE_SUBSCRIPTION_ID}/<group>`), a reviewed change | the same |
 | Federated credentials only: a client secret, certificate or user password in the environment refuses the run, and the Azure CLI's directory is pointed at an empty one | `hack/live/credentials.sh`, `test/live/env_test.go` |
-| Contributor on one resource group: nothing outside it can be made or changed | the identity (the builder's) |
+| Contributor on one resource group: nothing outside it can be made or changed | the identity |
 
 The manager runs as production runs it (`manager.Options{}` zero): ASO's
 global credential from the `AZURE_*` environment, workload identity, the
@@ -39,12 +41,12 @@ identity (`azidentity.NewWorkloadIdentityCredential`).
 
 ## Credentials: federation from the offload VMs
 
-On an offload VM started with `--sa offload-runner@our-chassis-514316-r0...`,
+On an offload VM started with `--sa "$OFFLOAD_SA"`,
 `hack/live/credentials.sh` asks Google's metadata server for an ID token of
 the VM's service account with the audience `api://AzureADTokenExchange`,
 writes it to a file and exports `AZURE_FEDERATED_TOKEN_FILE` (with
-`AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` from
-`hack/live/azure.env`, and `USE_WORKLOAD_IDENTITY_AUTH=true`). azidentity
+`AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` from the
+environment, checked by `hack/live/azure.env`, and `USE_WORKLOAD_IDENTITY_AUTH=true`). azidentity
 sends it to Entra as a client assertion; Entra checks it against the
 federated credential (issuer, subject = the service account's unique ID,
 audience) and returns a token for the app registration. Google's tokens
@@ -52,21 +54,21 @@ last an hour; a background loop writes a fresh one every 20 minutes.
 
 First checked 2026-11-10: the token's claims were `iss`
 `https://accounts.google.com`, `aud` `api://AzureADTokenExchange`, `sub`
-`102306610785199453342`; Entra issued a Resource Manager token, and the
+the service account's unique ID; Entra issued a Resource Manager token, and the
 identity read the resource group.
 
 ## Running one
 
-our-chassis has 12 vCPUs of quota: one 8-vCPU VM at a time.
+The live project has 12 vCPUs of quota: one 8-vCPU VM at a time.
 
 ```sh
-OFFLOAD_PROJECT=our-chassis-514316-r0 \
-OFFLOAD_BUCKET=gs://our-chassis-514316-r0-offload \
-OFFLOAD_SA=offload-runner@our-chassis-514316-r0.iam.gserviceaccount.com \
+set -a; . ./.env; set +a   # OFFLOAD_*, AZURE_* (.env.example)
 ../offload/offload run --machine e2-standard-8 \
-  --sa offload-runner@our-chassis-514316-r0.iam.gserviceaccount.com \
+  --sa "$OFFLOAD_SA" \
   --prep 'task tools' -- \
-  env ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveLocalNetworkGateway"
+  env AZURE_SUBSCRIPTION_ID="$AZURE_SUBSCRIPTION_ID" AZURE_TENANT_ID="$AZURE_TENANT_ID" \
+  AZURE_CLIENT_ID="$AZURE_CLIENT_ID" \
+  ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveLocalNetworkGateway"
 ```
 
 `hack/live/run.sh` sweeps the group of leftovers older than 2 hours, runs
@@ -84,7 +86,7 @@ answers 404 afterwards. Extension resources at the group (its `TagSet`, a
 budget, a cost export) are not listed as resources: the tests remove them,
 and `sweep.sh --list` shows the group's tags and budgets.
 
-## What cannot run here (for the builder)
+## What cannot run here (needs the subscription's owner)
 
 **Resource providers not registered in the subscription.** Registering
 one is a subscription-scope action (`*/register/action`), which Contributor
@@ -112,7 +114,7 @@ a registration, by provider:
 **Subscription features.** `NetworkSecurityPerimetersLoggingConfiguration`
 was refused: "tenant is not whitelisted and EnableServiceTagsInNsp AFEC flag
 is not registered for the subscription" (`az feature register --namespace
-Microsoft.Network --name EnableServiceTagsInNsp`, the builder's). Its subtest
+Microsoft.Network --name EnableServiceTagsInNsp`, for the subscription's owner). Its subtest
 runs with `LIVE_NSP_LOGGING=1`. While Azure refused it, deleting the
 object hung too: ASO's delete got the same refusal and kept the finalizer
 (the test now creates it only when the feature is on).
