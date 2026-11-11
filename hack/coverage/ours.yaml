@@ -21,6 +21,10 @@ kinds:
     outside: Microsoft.Sql/servers/databases/users
     note: "a database user, not an ARM resource; ASO's Azure SQL User with Entra users (ASO pull request #5104)"
     ignore: [owner, azureName]
+  - crd: config/crds/entra.azure.hfl.dev_directoryroleassignments.yaml
+    outside: Microsoft Graph roleManagement/directory/roleAssignments
+    note: "a Microsoft Entra directory role assignment (Microsoft Graph), not an ARM resource; c15"
+    ignore: [principalId, principalIdFromConfig, roleDefinitionId, directoryScopeId, appScopeId, condition, operatorSpec]
   - crd: config/crds/keyvault.azure.hfl.dev_vaultsecrets.yaml
     outside: Microsoft.KeyVault/vaults/secrets (data plane)
     api: "7.5"

@@ -12,5 +12,7 @@ resources:
 - compute.azure.com_virtualmachines.yaml
 - sql.azure.com_servers.yaml
 - sql.azure.com_serversdatabases.yaml
+- containerservice.azure.com_managedclusters.yaml
+- containerservice.azure.com_fleets.yaml
 - network.azure.com_dnszones.yaml
 - network.azure.com_privatednszones.yaml

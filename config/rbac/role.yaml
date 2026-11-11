@@ -1,5 +1,5 @@
 # The manager's rights: our kinds; reading the ASO owners it resolves
-# (FlexibleServer, Vault, ManagedEnvironment, ResourceGroup, Site, Workspace, Registry, VirtualMachine); reading Secrets and ConfigMaps (aso-credential,
+# (FlexibleServer, Vault, ManagedEnvironment, ResourceGroup, Site, Workspace, Registry, VirtualMachine, ManagedCluster, Fleet); reading Secrets and ConfigMaps (aso-credential,
 # credential-from secrets, the values our kinds name; ASO's framework keeps
 # informers on both); reading Namespaces (ASO's reconcile-policy annotation
 # on a namespace); events. Of ASO's, only get on its resources, for a
@@ -9,10 +9,10 @@ kind: ClusterRole
 metadata:
   name: manager
 rules:
-- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev", "authorization.azure.hfl.dev", "sql.azure.hfl.dev"]
+- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev", "authorization.azure.hfl.dev", "sql.azure.hfl.dev", "entra.azure.hfl.dev"]
   resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev", "authorization.azure.hfl.dev", "sql.azure.hfl.dev"]
+- apiGroups: ["dbforpostgresql.azure.hfl.dev", "keyvault.azure.hfl.dev", "authorization.azure.hfl.dev", "sql.azure.hfl.dev", "entra.azure.hfl.dev"]
   resources: ["*/status", "*/finalizers"]
   verbs: ["get", "update", "patch"]
 - apiGroups: ["dbforpostgresql.azure.com"]
@@ -46,6 +46,9 @@ rules:
   verbs: ["get", "list", "watch"]
 - apiGroups: ["compute.azure.com"]
   resources: ["virtualmachines"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["containerservice.azure.com"]
+  resources: ["managedclusters", "fleets"]
   verbs: ["get", "list", "watch"]
 - apiGroups: [""]
   resources: ["secrets", "configmaps", "namespaces"]

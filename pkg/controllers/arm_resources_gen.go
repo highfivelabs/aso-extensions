@@ -23,8 +23,15 @@ import (
 	consumption_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601"
 	consumption_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601/storage"
 	containerregistry_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/customizations"
+	containerregistry_v20190401 "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20190401"
+	containerregistry_v20190401s "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20190401/storage"
 	containerregistry_v20251101 "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101"
 	containerregistry_v20251101s "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101/storage"
+	containerservice_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/customizations"
+	containerservice_v20260501 "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260501"
+	containerservice_v20260501s "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260501/storage"
+	containerservice_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260601"
+	containerservice_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260601/storage"
 	costmanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/customizations"
 	costmanagement_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601"
 	costmanagement_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601/storage"
@@ -34,6 +41,14 @@ import (
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
 	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
 	insights_v20210901s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901/storage"
+	keyvault_customizations "github.com/highfivelabs/aso-extensions/apis/arm/keyvault/customizations"
+	keyvault_v20260515 "github.com/highfivelabs/aso-extensions/apis/arm/keyvault/v20260515"
+	keyvault_v20260515s "github.com/highfivelabs/aso-extensions/apis/arm/keyvault/v20260515/storage"
+	kubernetesconfiguration_customizations "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/customizations"
+	kubernetesconfiguration_v20230501 "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/v20230501"
+	kubernetesconfiguration_v20230501s "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/v20230501/storage"
+	kubernetesconfiguration_v20241101p "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/v20241101preview"
+	kubernetesconfiguration_v20241101ps "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/v20241101preview/storage"
 	maintenance_customizations "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/customizations"
 	maintenance_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401"
 	maintenance_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401/storage"
@@ -52,6 +67,9 @@ import (
 	operationalinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/customizations"
 	operationalinsights_v20250701 "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701"
 	operationalinsights_v20250701s "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701/storage"
+	operationsmanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/operationsmanagement/customizations"
+	operationsmanagement_v20151101p "github.com/highfivelabs/aso-extensions/apis/arm/operationsmanagement/v20151101preview"
+	operationsmanagement_v20151101ps "github.com/highfivelabs/aso-extensions/apis/arm/operationsmanagement/v20151101preview/storage"
 	policyinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/customizations"
 	policyinsights_v20241001 "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/v20241001"
 	policyinsights_v20241001s "github.com/highfivelabs/aso-extensions/apis/arm/policyinsights/v20241001/storage"
@@ -182,7 +200,58 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicySetDefinition)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.StorageType{Obj: new(consumption_v20260601.Budget)})
+	result = append(result, &registration.StorageType{
+		Obj: new(containerregistry_v20190401.RegistriesTask),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.step.docker.contextAccessToken",
+				Func: indexContainerregistryRegistriesTaskDockerContextAccessToken,
+			},
+			{
+				Key:  ".spec.step.encodedTask.contextAccessToken",
+				Func: indexContainerregistryRegistriesTaskEncodedTaskContextAccessToken,
+			},
+			{
+				Key:  ".spec.step.fileTask.contextAccessToken",
+				Func: indexContainerregistryRegistriesTaskFileTaskContextAccessToken,
+			},
+			{
+				Key:  ".spec.credentials.customRegistries.password.value",
+				Func: indexContainerregistryRegistriesTaskPasswordValue,
+			},
+			{
+				Key:  ".spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.refreshToken",
+				Func: indexContainerregistryRegistriesTaskRefreshToken,
+			},
+			{
+				Key:  ".spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.token",
+				Func: indexContainerregistryRegistriesTaskToken,
+			},
+			{
+				Key:  ".spec.credentials.customRegistries.userName.value",
+				Func: indexContainerregistryRegistriesTaskUserNameValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.credentials.customRegistries.password.value",
+						".spec.credentials.customRegistries.userName.value",
+						".spec.step.docker.contextAccessToken",
+						".spec.step.encodedTask.contextAccessToken",
+						".spec.step.fileTask.contextAccessToken",
+						".spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.refreshToken",
+						".spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.token",
+					},
+					&containerregistry_v20190401.RegistriesTaskList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesConnectedRegistry)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesCredentialSet)})
+	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesScopeMap)})
 	result = append(result, &registration.StorageType{Obj: new(containerregistry_v20251101.RegistriesToken)})
 	result = append(result, &registration.StorageType{
@@ -209,6 +278,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.ManagedClustersManagedNamespace)})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.ManagedClustersPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.Snapshot)})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260601.FleetsManagedNamespace)})
 	result = append(result, &registration.StorageType{
 		Obj: new(costmanagement_v20260601.Export),
 		Indexes: []registration.Index{
@@ -232,6 +305,49 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
+	result = append(result, &registration.StorageType{
+		Obj: new(keyvault_v20260515.ManagedHSM),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.tenantIdFromConfig",
+				Func: indexKeyvaultManagedHSMTenantIdFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.properties.tenantIdFromConfig",
+					},
+					&keyvault_v20260515.ManagedHSMList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(keyvault_v20260515.ManagedHSMsKey)})
+	result = append(result, &registration.StorageType{Obj: new(keyvault_v20260515.ManagedHSMsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(keyvault_v20260515.VaultsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{
+		Obj: new(kubernetesconfiguration_v20230501.SourceControlConfiguration),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.configurationProtectedSettings",
+				Func: indexKubernetesconfigurationSourceControlConfigurationConfigurationProtectedSettings,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.configurationProtectedSettings",
+					},
+					&kubernetesconfiguration_v20230501.SourceControlConfigurationList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScope)})
+	result = append(result, &registration.StorageType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.ConfigurationAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroup)})
@@ -338,9 +454,13 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManager)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagerConnection)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersCommit)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersConnectivityConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersNetworkGroup)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersNetworkGroupsStaticMember)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersRoutingConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersRoutingRule)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersRoutingRuleCollection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersScopeConnection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityAdminConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityAdminRule)})
@@ -449,13 +569,35 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.Cluster)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPack)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesDataExport)})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesDataSource)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedService)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedStorageAccount)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesSavedSearch)})
+	result = append(result, &registration.StorageType{
+		Obj: new(operationalinsights_v20250701.WorkspacesStorageInsightConfig),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.storageAccount.key",
+				Func: indexOperationalinsightsWorkspacesStorageInsightConfigKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.storageAccount.key",
+					},
+					&operationalinsights_v20250701.WorkspacesStorageInsightConfigList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesTable)})
+	result = append(result, &registration.StorageType{Obj: new(operationsmanagement_v20151101p.Solution)})
 	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyAttestation)})
 	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyRemediation)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.Vault)})
@@ -554,18 +696,36 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301s.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601s.Budget)})
+	result = append(result, &registration.KnownType{Obj: new(containerregistry_v20190401.RegistriesTask)})
+	result = append(result, &registration.KnownType{Obj: new(containerregistry_v20190401s.RegistriesTask)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesConnectedRegistry)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesCredentialSet)},
+		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesScopeMap)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesToken)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101.RegistriesWebhook)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesConnectedRegistry)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesCredentialSet)},
+		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesScopeMap)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesToken)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesWebhook)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(containerservice_v20260501.ManagedClustersManagedNamespace)},
+		&registration.KnownType{Obj: new(containerservice_v20260501.ManagedClustersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(containerservice_v20260501.Snapshot)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(containerservice_v20260501s.ManagedClustersManagedNamespace)},
+		&registration.KnownType{Obj: new(containerservice_v20260501s.ManagedClustersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(containerservice_v20260501s.Snapshot)})
+	result = append(result, &registration.KnownType{Obj: new(containerservice_v20260601.FleetsManagedNamespace)})
+	result = append(result, &registration.KnownType{Obj: new(containerservice_v20260601s.FleetsManagedNamespace)})
 	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601.Export)})
 	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601s.Export)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
@@ -580,6 +740,22 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScope)},
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesScopedResource)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(keyvault_v20260515.ManagedHSM)},
+		&registration.KnownType{Obj: new(keyvault_v20260515.ManagedHSMsKey)},
+		&registration.KnownType{Obj: new(keyvault_v20260515.ManagedHSMsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(keyvault_v20260515.VaultsPrivateEndpointConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(keyvault_v20260515s.ManagedHSM)},
+		&registration.KnownType{Obj: new(keyvault_v20260515s.ManagedHSMsKey)},
+		&registration.KnownType{Obj: new(keyvault_v20260515s.ManagedHSMsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(keyvault_v20260515s.VaultsPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20230501.SourceControlConfiguration)})
+	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20230501s.SourceControlConfiguration)})
+	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScope)}, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScopesPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101ps.PrivateLinkScope)}, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101ps.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401s.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401s.MaintenanceConfiguration)})
 	result = append(
@@ -634,9 +810,13 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagerConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersCommit)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersConnectivityConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersNetworkGroup)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersNetworkGroupsStaticMember)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersRoutingConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersRoutingRule)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersRoutingRuleCollection)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersScopeConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityAdminConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityAdminRule)},
@@ -677,9 +857,13 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagerConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersCommit)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersConnectivityConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersNetworkGroup)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersNetworkGroupsStaticMember)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersRoutingConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersRoutingRule)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersRoutingRuleCollection)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersScopeConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityAdminConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityAdminRule)},
@@ -708,22 +892,30 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.VpnSite)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.Cluster)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPack)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesDataExport)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesDataSource)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedService)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedStorageAccount)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesSavedSearch)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesStorageInsightConfig)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesTable)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.Cluster)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.QueryPack)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.QueryPacksQuery)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesDataExport)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesDataSource)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesLinkedService)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesLinkedStorageAccount)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesSavedSearch)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesStorageInsightConfig)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesTable)})
+	result = append(result, &registration.KnownType{Obj: new(operationsmanagement_v20151101p.Solution)})
+	result = append(result, &registration.KnownType{Obj: new(operationsmanagement_v20151101ps.Solution)})
 	result = append(result, &registration.KnownType{Obj: new(policyinsights_v20241001.PolicyAttestation)}, &registration.KnownType{Obj: new(policyinsights_v20241001.PolicyRemediation)})
 	result = append(result, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyAttestation)}, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyRemediation)})
 	result = append(
@@ -771,14 +963,26 @@ func createScheme() *runtime.Scheme {
 	_ = compute_v20220301s.AddToScheme(scheme)
 	_ = consumption_v20260601.AddToScheme(scheme)
 	_ = consumption_v20260601s.AddToScheme(scheme)
+	_ = containerregistry_v20190401.AddToScheme(scheme)
+	_ = containerregistry_v20190401s.AddToScheme(scheme)
 	_ = containerregistry_v20251101.AddToScheme(scheme)
 	_ = containerregistry_v20251101s.AddToScheme(scheme)
+	_ = containerservice_v20260501.AddToScheme(scheme)
+	_ = containerservice_v20260501s.AddToScheme(scheme)
+	_ = containerservice_v20260601.AddToScheme(scheme)
+	_ = containerservice_v20260601s.AddToScheme(scheme)
 	_ = costmanagement_v20260601.AddToScheme(scheme)
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
 	_ = insights_v20210901s.AddToScheme(scheme)
+	_ = keyvault_v20260515.AddToScheme(scheme)
+	_ = keyvault_v20260515s.AddToScheme(scheme)
+	_ = kubernetesconfiguration_v20230501.AddToScheme(scheme)
+	_ = kubernetesconfiguration_v20230501s.AddToScheme(scheme)
+	_ = kubernetesconfiguration_v20241101p.AddToScheme(scheme)
+	_ = kubernetesconfiguration_v20241101ps.AddToScheme(scheme)
 	_ = maintenance_v20230401.AddToScheme(scheme)
 	_ = maintenance_v20230401s.AddToScheme(scheme)
 	_ = management_v20230401.AddToScheme(scheme)
@@ -793,6 +997,8 @@ func createScheme() *runtime.Scheme {
 	_ = network_v20260301s.AddToScheme(scheme)
 	_ = operationalinsights_v20250701.AddToScheme(scheme)
 	_ = operationalinsights_v20250701s.AddToScheme(scheme)
+	_ = operationsmanagement_v20151101p.AddToScheme(scheme)
+	_ = operationsmanagement_v20151101ps.AddToScheme(scheme)
 	_ = policyinsights_v20241001.AddToScheme(scheme)
 	_ = policyinsights_v20241001s.AddToScheme(scheme)
 	_ = recoveryservices_v20260701.AddToScheme(scheme)
@@ -821,15 +1027,29 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &authorization_customizations.RoleManagementPolicyAssignmentExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
 	result = append(result, &consumption_customizations.BudgetExtension{})
+	result = append(result, &containerregistry_customizations.RegistriesConnectedRegistryExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesCredentialSetExtension{})
+	result = append(result, &containerregistry_customizations.RegistriesPrivateEndpointConnectionExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesScopeMapExtension{})
+	result = append(result, &containerregistry_customizations.RegistriesTaskExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesTokenExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesWebhookExtension{})
+	result = append(result, &containerservice_customizations.FleetsManagedNamespaceExtension{})
+	result = append(result, &containerservice_customizations.ManagedClustersManagedNamespaceExtension{})
+	result = append(result, &containerservice_customizations.ManagedClustersPrivateEndpointConnectionExtension{})
+	result = append(result, &containerservice_customizations.SnapshotExtension{})
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
+	result = append(result, &keyvault_customizations.ManagedHSMExtension{})
+	result = append(result, &keyvault_customizations.ManagedHSMsKeyExtension{})
+	result = append(result, &keyvault_customizations.ManagedHSMsPrivateEndpointConnectionExtension{})
+	result = append(result, &keyvault_customizations.VaultsPrivateEndpointConnectionExtension{})
+	result = append(result, &kubernetesconfiguration_customizations.PrivateLinkScopeExtension{})
+	result = append(result, &kubernetesconfiguration_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
+	result = append(result, &kubernetesconfiguration_customizations.SourceControlConfigurationExtension{})
 	result = append(result, &maintenance_customizations.ConfigurationAssignmentExtension{})
 	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})
 	result = append(result, &management_customizations.ManagementGroupExtension{})
@@ -852,9 +1072,13 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.LocalNetworkGatewayExtension{})
 	result = append(result, &network_customizations.NetworkManagerConnectionExtension{})
 	result = append(result, &network_customizations.NetworkManagerExtension{})
+	result = append(result, &network_customizations.NetworkManagersCommitExtension{})
 	result = append(result, &network_customizations.NetworkManagersConnectivityConfigurationExtension{})
 	result = append(result, &network_customizations.NetworkManagersNetworkGroupExtension{})
 	result = append(result, &network_customizations.NetworkManagersNetworkGroupsStaticMemberExtension{})
+	result = append(result, &network_customizations.NetworkManagersRoutingConfigurationExtension{})
+	result = append(result, &network_customizations.NetworkManagersRoutingRuleCollectionExtension{})
+	result = append(result, &network_customizations.NetworkManagersRoutingRuleExtension{})
 	result = append(result, &network_customizations.NetworkManagersScopeConnectionExtension{})
 	result = append(result, &network_customizations.NetworkManagersSecurityAdminConfigurationExtension{})
 	result = append(result, &network_customizations.NetworkManagersSecurityAdminRuleCollectionExtension{})
@@ -888,13 +1112,17 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.VpnGatewaysVpnConnectionExtension{})
 	result = append(result, &network_customizations.VpnServerConfigurationExtension{})
 	result = append(result, &network_customizations.VpnSiteExtension{})
+	result = append(result, &operationalinsights_customizations.ClusterExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPackExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPacksQueryExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesDataExportExtension{})
+	result = append(result, &operationalinsights_customizations.WorkspacesDataSourceExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesLinkedServiceExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesLinkedStorageAccountExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesSavedSearchExtension{})
+	result = append(result, &operationalinsights_customizations.WorkspacesStorageInsightConfigExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesTableExtension{})
+	result = append(result, &operationsmanagement_customizations.SolutionExtension{})
 	result = append(result, &policyinsights_customizations.PolicyAttestationExtension{})
 	result = append(result, &policyinsights_customizations.PolicyRemediationExtension{})
 	result = append(result, &recoveryservices_customizations.VaultExtension{})
@@ -997,6 +1225,154 @@ func indexAuthorizationRoleEligibilityScheduleRequestPrincipalIdFromConfig(rawOb
 	return obj.Spec.PrincipalIdFromConfig.Index()
 }
 
+// indexContainerregistryRegistriesTaskDockerContextAccessToken an index function for containerregistry_v20190401.RegistriesTask .spec.step.docker.contextAccessToken
+func indexContainerregistryRegistriesTaskDockerContextAccessToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Step == nil {
+		return nil
+	}
+	if obj.Spec.Step.Docker == nil {
+		return nil
+	}
+	if obj.Spec.Step.Docker.ContextAccessToken == nil {
+		return nil
+	}
+	return obj.Spec.Step.Docker.ContextAccessToken.Index()
+}
+
+// indexContainerregistryRegistriesTaskEncodedTaskContextAccessToken an index function for containerregistry_v20190401.RegistriesTask .spec.step.encodedTask.contextAccessToken
+func indexContainerregistryRegistriesTaskEncodedTaskContextAccessToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Step == nil {
+		return nil
+	}
+	if obj.Spec.Step.EncodedTask == nil {
+		return nil
+	}
+	if obj.Spec.Step.EncodedTask.ContextAccessToken == nil {
+		return nil
+	}
+	return obj.Spec.Step.EncodedTask.ContextAccessToken.Index()
+}
+
+// indexContainerregistryRegistriesTaskFileTaskContextAccessToken an index function for containerregistry_v20190401.RegistriesTask .spec.step.fileTask.contextAccessToken
+func indexContainerregistryRegistriesTaskFileTaskContextAccessToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Step == nil {
+		return nil
+	}
+	if obj.Spec.Step.FileTask == nil {
+		return nil
+	}
+	if obj.Spec.Step.FileTask.ContextAccessToken == nil {
+		return nil
+	}
+	return obj.Spec.Step.FileTask.ContextAccessToken.Index()
+}
+
+// indexContainerregistryRegistriesTaskPasswordValue an index function for containerregistry_v20190401.RegistriesTask .spec.credentials.customRegistries.password.value
+func indexContainerregistryRegistriesTaskPasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Credentials == nil {
+		return nil
+	}
+	for _, value := range obj.Spec.Credentials.CustomRegistries {
+		if value.Password == nil {
+			continue
+		}
+		if value.Password.Value == nil {
+			continue
+		}
+		result = append(result, value.Password.Value.Index()...)
+	}
+	return result
+}
+
+// indexContainerregistryRegistriesTaskRefreshToken an index function for containerregistry_v20190401.RegistriesTask .spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.refreshToken
+func indexContainerregistryRegistriesTaskRefreshToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Trigger == nil {
+		return nil
+	}
+	for _, sourceTriggerItem := range obj.Spec.Trigger.SourceTriggers {
+		if sourceTriggerItem.SourceRepository == nil {
+			continue
+		}
+		if sourceTriggerItem.SourceRepository.SourceControlAuthProperties == nil {
+			continue
+		}
+		if sourceTriggerItem.SourceRepository.SourceControlAuthProperties.RefreshToken == nil {
+			continue
+		}
+		result = append(result, sourceTriggerItem.SourceRepository.SourceControlAuthProperties.RefreshToken.Index()...)
+	}
+	return result
+}
+
+// indexContainerregistryRegistriesTaskToken an index function for containerregistry_v20190401.RegistriesTask .spec.trigger.sourceTriggers.sourceRepository.sourceControlAuthProperties.token
+func indexContainerregistryRegistriesTaskToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Trigger == nil {
+		return nil
+	}
+	for _, sourceTriggerItem := range obj.Spec.Trigger.SourceTriggers {
+		if sourceTriggerItem.SourceRepository == nil {
+			continue
+		}
+		if sourceTriggerItem.SourceRepository.SourceControlAuthProperties == nil {
+			continue
+		}
+		if sourceTriggerItem.SourceRepository.SourceControlAuthProperties.Token == nil {
+			continue
+		}
+		result = append(result, sourceTriggerItem.SourceRepository.SourceControlAuthProperties.Token.Index()...)
+	}
+	return result
+}
+
+// indexContainerregistryRegistriesTaskUserNameValue an index function for containerregistry_v20190401.RegistriesTask .spec.credentials.customRegistries.userName.value
+func indexContainerregistryRegistriesTaskUserNameValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Credentials == nil {
+		return nil
+	}
+	for _, value := range obj.Spec.Credentials.CustomRegistries {
+		if value.UserName == nil {
+			continue
+		}
+		if value.UserName.Value == nil {
+			continue
+		}
+		result = append(result, value.UserName.Value.Index()...)
+	}
+	return result
+}
+
 // indexContainerregistryRegistriesWebhookCustomHeaders an index function for containerregistry_v20251101.RegistriesWebhook .spec.customHeaders
 func indexContainerregistryRegistriesWebhookCustomHeaders(rawObj client.Object) []string {
 	obj, ok := rawObj.(*containerregistry_v20251101.RegistriesWebhook)
@@ -1037,6 +1413,33 @@ func indexCostmanagementExportSasToken(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.DeliveryInfo.Destination.SasToken.Index()
+}
+
+// indexKeyvaultManagedHSMTenantIdFromConfig an index function for keyvault_v20260515.ManagedHSM .spec.properties.tenantIdFromConfig
+func indexKeyvaultManagedHSMTenantIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*keyvault_v20260515.ManagedHSM)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.TenantIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.Properties.TenantIdFromConfig.Index()
+}
+
+// indexKubernetesconfigurationSourceControlConfigurationConfigurationProtectedSettings an index function for kubernetesconfiguration_v20230501.SourceControlConfiguration .spec.configurationProtectedSettings
+func indexKubernetesconfigurationSourceControlConfigurationConfigurationProtectedSettings(rawObj client.Object) []string {
+	obj, ok := rawObj.(*kubernetesconfiguration_v20230501.SourceControlConfiguration)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ConfigurationProtectedSettings == nil {
+		return nil
+	}
+	return obj.Spec.ConfigurationProtectedSettings.Index()
 }
 
 // indexNetworkExpressRouteCircuitActivationKey an index function for network_v20260301.ExpressRouteCircuit .spec.activationKey
@@ -1177,6 +1580,21 @@ func indexNetworkVpnSiteSiteKey(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.SiteKey.Index()
+}
+
+// indexOperationalinsightsWorkspacesStorageInsightConfigKey an index function for operationalinsights_v20250701.WorkspacesStorageInsightConfig .spec.storageAccount.key
+func indexOperationalinsightsWorkspacesStorageInsightConfigKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*operationalinsights_v20250701.WorkspacesStorageInsightConfig)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageAccount == nil {
+		return nil
+	}
+	if obj.Spec.StorageAccount.Key == nil {
+		return nil
+	}
+	return obj.Spec.StorageAccount.Key.Index()
 }
 
 // indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password

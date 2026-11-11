@@ -326,69 +326,6 @@ func RegistriesCredentialSet_STATUSGenerator() *rapid.Generator[RegistriesCreden
 	return registriesCredentialSet_STATUSGenerator
 }
 
-func Test_SystemData_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForSystemData_STATUS)
-}
-
-// RunJSONSerializationTestForSystemData_STATUS runs a test to see if a specific instance of SystemData_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForSystemData_STATUS(t *rapid.T) {
-	subject := SystemData_STATUSGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual SystemData_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of SystemData_STATUS instances for property testing - lazily instantiated by SystemData_STATUSGenerator()
-var systemData_STATUSGenerator *rapid.Generator[SystemData_STATUS]
-
-// SystemData_STATUSGenerator returns a generator of SystemData_STATUS instances for property testing.
-func SystemData_STATUSGenerator() *rapid.Generator[SystemData_STATUS] {
-	if systemData_STATUSGenerator != nil {
-		return systemData_STATUSGenerator
-	}
-
-	ptrString := rapid.Ptr(rapid.String(), true)
-	createdByType := rapid.Ptr(rapid.SampledFrom([]SystemData_CreatedByType_STATUS{SystemData_CreatedByType_STATUS_Application, SystemData_CreatedByType_STATUS_Key, SystemData_CreatedByType_STATUS_ManagedIdentity, SystemData_CreatedByType_STATUS_User}), true)
-	lastModifiedByType := rapid.Ptr(rapid.SampledFrom([]SystemData_LastModifiedByType_STATUS{SystemData_LastModifiedByType_STATUS_Application, SystemData_LastModifiedByType_STATUS_Key, SystemData_LastModifiedByType_STATUS_ManagedIdentity, SystemData_LastModifiedByType_STATUS_User}), true)
-
-	systemData_STATUSGenerator = rapid.Custom(func(t *rapid.T) SystemData_STATUS {
-		var result SystemData_STATUS
-		result.CreatedAt = ptrString.Draw(t, "CreatedAt")
-		result.CreatedBy = ptrString.Draw(t, "CreatedBy")
-		result.CreatedByType = createdByType.Draw(t, "CreatedByType")
-		result.LastModifiedAt = ptrString.Draw(t, "LastModifiedAt")
-		result.LastModifiedBy = ptrString.Draw(t, "LastModifiedBy")
-		result.LastModifiedByType = lastModifiedByType.Draw(t, "LastModifiedByType")
-		return result
-	})
-
-	return systemData_STATUSGenerator
-}
-
 func Test_UserIdentityProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
