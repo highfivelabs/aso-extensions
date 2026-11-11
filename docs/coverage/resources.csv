@@ -25,6 +25,7 @@ Informatica.DataManagement,Informatica.DataManagement/organizations/serverlessRu
 Kore.AgentPlatform,Kore.AgentPlatform/organizations,28,,0,,0,28,false,spec_api=2026-07-01-preview; spec-preview-only
 Kore.AgentPlatform,Kore.AgentPlatform/organizations/workspaces,11,,0,,0,11,false,spec_api=2026-07-01-preview; spec-preview-only
 LambdaTest.HyperExecute,LambdaTest.HyperExecute/organizations,22,,0,,0,22,false,spec_api=2024-02-01
+Microsoft Graph roleManagement,Microsoft Graph roleManagement/directory/roleAssignments,0,,0,entra.azure.hfl.dev/DirectoryRoleAssignment,0,0,false,"outside-denominator; a Microsoft Entra directory role assignment (Microsoft Graph), not an ARM resource; c15"
 Microsoft.AAD,Microsoft.AAD/domainServices,38,,0,,0,38,false,spec_api=2022-12-01
 Microsoft.AAD,Microsoft.AAD/domainServices/ouContainer,3,,0,,0,3,false,spec_api=2022-12-01
 microsoft.aadiam,microsoft.aadiam/azureADMetrics,3,,0,,0,3,false,spec_api=2020-07-01-preview; spec-preview-only
@@ -700,12 +701,12 @@ Microsoft.ContainerInstance,Microsoft.ContainerInstance/ngroups,37,,0,,0,37,fals
 Microsoft.ContainerInstance,Microsoft.ContainerInstance/sandboxGroups,5,,0,,0,5,false,spec_api=2026-07-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries,26,containerregistry.azure.com/Registry,26,,0,0,false,spec_api=2025-11-01; official_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/cacheRules,3,containerregistry.azure.com/RegistryCacheRule,3,,0,0,false,spec_api=2025-11-01; official_api=2025-11-01
-Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/connectedRegistries,13,,0,,0,13,false,spec_api=2025-11-01
+Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/connectedRegistries,13,,0,containerregistry.azure.hfl.dev/RegistriesConnectedRegistry,12,1,false,spec_api=2025-11-01; ours_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/credentialSets,6,,0,containerregistry.azure.hfl.dev/RegistriesCredentialSet,6,0,false,spec_api=2025-11-01; ours_api=2025-11-01
-Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/privateEndpointConnections,4,,0,,0,4,false,spec_api=2025-11-01
+Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/privateEndpointConnections,4,,0,containerregistry.azure.hfl.dev/RegistriesPrivateEndpointConnection,4,0,false,spec_api=2025-11-01; ours_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/replications,4,containerregistry.azure.com/RegistryReplication,4,,0,0,false,spec_api=2025-11-01; official_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/scopeMaps,2,,0,containerregistry.azure.hfl.dev/RegistriesScopeMap,2,0,false,spec_api=2025-11-01; ours_api=2025-11-01
-Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/tasks,54,,0,,0,54,false,spec_api=2019-04-01
+Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/tasks,54,,0,containerregistry.azure.hfl.dev/RegistriesTask,52,2,false,spec_api=2019-04-01; ours_api=2019-04-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/tokens,9,,0,containerregistry.azure.hfl.dev/RegistriesToken,9,0,false,spec_api=2025-11-01; ours_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/webhooks,7,,0,containerregistry.azure.hfl.dev/RegistriesWebhook,6,1,false,spec_api=2025-11-01; ours_api=2025-11-01
 Microsoft.ContainerRegistry.Admin,Microsoft.ContainerRegistry.Admin/locations/configurations,1,,0,,0,1,false,spec_api=2019-11-01-preview; spec-preview-only
@@ -719,7 +720,7 @@ Microsoft.ContainerService,Microsoft.ContainerService/containerServices,31,,0,,0
 Microsoft.ContainerService,Microsoft.ContainerService/deploymentSafeguards,3,,0,,0,3,false,spec_api=2025-07-01
 Microsoft.ContainerService,Microsoft.ContainerService/fleets,10,containerservice.azure.com/Fleet,10,,0,0,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/fleets/autoUpgradeProfiles,7,containerservice.azure.com/FleetsAutoUpgradeProfile,4,,0,3,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.ContainerService,Microsoft.ContainerService/fleets/managedNamespaces,26,,0,,0,26,false,spec_api=2026-06-01
+Microsoft.ContainerService,Microsoft.ContainerService/fleets/managedNamespaces,26,,0,containerservice.azure.hfl.dev/FleetsManagedNamespace,26,0,false,spec_api=2026-06-01; ours_api=2026-06-01
 Microsoft.ContainerService,Microsoft.ContainerService/fleets/members,3,containerservice.azure.com/FleetsMember,2,,0,1,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/fleets/updateRuns,18,containerservice.azure.com/FleetsUpdateRun,7,,0,11,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/fleets/updateStrategies,13,containerservice.azure.com/FleetsUpdateStrategy,3,,0,10,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
@@ -727,13 +728,13 @@ Microsoft.ContainerService,Microsoft.ContainerService/managedClusters,330,contai
 Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/agentPools,126,containerservice.azure.com/ManagedClustersAgentPool,123,,0,3,false,spec_api=2026-08-01; official_api=2026-05-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/identityBindings,1,containerservice.azure.com/IdentityBinding,1,,0,0,false,spec_api=2026-08-01; official_api=2026-05-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/maintenanceConfigurations,18,containerservice.azure.com/MaintenanceConfiguration,18,,0,0,false,spec_api=2026-08-01; official_api=2026-05-01; official-api-differs-from-spec
-Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/managedNamespaces,12,,0,,0,12,false,spec_api=2026-08-01
-Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/privateEndpointConnections,3,,0,,0,3,false,spec_api=2026-08-01
+Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/managedNamespaces,12,,0,containerservice.azure.hfl.dev/ManagedClustersManagedNamespace,12,0,false,spec_api=2026-08-01; ours_api=2026-05-01; ours-api-differs-from-spec
+Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/privateEndpointConnections,3,,0,containerservice.azure.hfl.dev/ManagedClustersPrivateEndpointConnection,3,0,false,spec_api=2026-08-01; ours_api=2026-05-01; ours-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings,2,containerservice.azure.com/TrustedAccessRoleBinding,2,,0,0,false,spec_api=2026-08-01; official_api=2026-05-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/nodeCustomizations,10,,0,,0,10,false,spec_api=2025-09-02-preview; spec-preview-only
 Microsoft.ContainerService,Microsoft.ContainerService/openShiftManagedClusters,28,,0,,0,28,false,spec_api=2019-04-30
 Microsoft.ContainerService,Microsoft.ContainerService/preparedImageSpecifications,10,,0,,0,10,false,spec_api=2026-05-02-preview; spec-preview-only
-Microsoft.ContainerService,Microsoft.ContainerService/snapshots,4,,0,,0,4,false,spec_api=2026-08-01
+Microsoft.ContainerService,Microsoft.ContainerService/snapshots,4,,0,containerservice.azure.hfl.dev/Snapshot,4,0,false,spec_api=2026-08-01; ours_api=2026-05-01; ours-api-differs-from-spec
 Microsoft.ContainerStorage,Microsoft.ContainerStorage/pools,21,,0,,0,21,false,spec_api=2023-07-01-preview; spec-preview-only
 Microsoft.ContainerStorage,Microsoft.ContainerStorage/pools/snapshots,1,,0,,0,1,false,spec_api=2023-07-01-preview; spec-preview-only
 Microsoft.ContainerStorage,Microsoft.ContainerStorage/pools/volumes,2,,0,,0,2,false,spec_api=2023-07-01-preview; spec-preview-only
@@ -1302,14 +1303,14 @@ Microsoft.IoTOperationsMQ,Microsoft.IoTOperationsMQ/mq/mqttBridgeConnector/topic
 Microsoft.IoTOperationsOrchestrator,Microsoft.IoTOperationsOrchestrator/instances,10,,0,,0,10,false,spec_api=2023-10-04-preview; spec-preview-only
 Microsoft.IoTOperationsOrchestrator,Microsoft.IoTOperationsOrchestrator/solutions,9,,0,,0,9,false,spec_api=2023-10-04-preview; spec-preview-only
 Microsoft.IoTOperationsOrchestrator,Microsoft.IoTOperationsOrchestrator/targets,15,,0,,0,15,false,spec_api=2023-10-04-preview; spec-preview-only
-Microsoft.KeyVault,Microsoft.KeyVault/managedHSMs,20,,0,,0,20,false,spec_api=2026-05-15
-Microsoft.KeyVault,Microsoft.KeyVault/managedHSMs/keys,15,,0,,0,15,false,spec_api=2026-05-15
-Microsoft.KeyVault,Microsoft.KeyVault/managedHSMs/privateEndpointConnections,11,,0,,0,11,false,spec_api=2026-05-15
+Microsoft.KeyVault,Microsoft.KeyVault/managedHSMs,20,,0,keyvault.azure.hfl.dev/ManagedHSM,20,0,false,spec_api=2026-05-15; ours_api=2026-05-15
+Microsoft.KeyVault,Microsoft.KeyVault/managedHSMs/keys,15,,0,keyvault.azure.hfl.dev/ManagedHSMsKey,15,0,false,spec_api=2026-05-15; ours_api=2026-05-15
+Microsoft.KeyVault,Microsoft.KeyVault/managedHSMs/privateEndpointConnections,11,,0,keyvault.azure.hfl.dev/ManagedHSMsPrivateEndpointConnection,10,1,false,spec_api=2026-05-15; ours_api=2026-05-15
 Microsoft.KeyVault,Microsoft.KeyVault/vaults,28,keyvault.azure.com/Vault,28,,0,0,false,spec_api=2026-05-15; official_api=2023-07-01; official-api-differs-from-spec
 Microsoft.KeyVault,Microsoft.KeyVault/vaults/accessPolicies,7,,0,,0,7,false,spec_api=2026-05-15
 Microsoft.KeyVault,Microsoft.KeyVault/vaults/certificates (data plane),8,,0,keyvault.azure.hfl.dev/VaultCertificate,8,0,false,outside-denominator; the vault's data plane (certificates); ARM has no such resource; ours_api=7.5
 Microsoft.KeyVault,Microsoft.KeyVault/vaults/keys,15,keyvault.azure.com/VaultKey,15,,0,0,false,spec_api=2026-05-15; official_api=2023-07-01; official-api-differs-from-spec
-Microsoft.KeyVault,Microsoft.KeyVault/vaults/privateEndpointConnections,5,,0,,0,5,false,spec_api=2026-05-15
+Microsoft.KeyVault,Microsoft.KeyVault/vaults/privateEndpointConnections,5,,0,keyvault.azure.hfl.dev/VaultsPrivateEndpointConnection,4,1,false,spec_api=2026-05-15; ours_api=2026-05-15
 Microsoft.KeyVault,Microsoft.KeyVault/vaults/secrets,6,,0,,0,6,false,spec_api=2026-05-15
 Microsoft.KeyVault,Microsoft.KeyVault/vaults/secrets (data plane),9,,0,keyvault.azure.hfl.dev/VaultSecret,9,0,false,"outside-denominator; the vault's data plane (secrets), not the ARM vaults/secrets resource; ours_api=7.5"
 Microsoft.Kubernetes,Microsoft.Kubernetes/connectedClusters,28,,0,,0,28,false,spec_api=2026-05-01
@@ -1603,15 +1604,15 @@ Microsoft.Network,Microsoft.Network/networkInterfaces,531,network.azure.com/Netw
 Microsoft.Network,Microsoft.Network/networkInterfaces/tapConfigurations,281,,0,,0,281,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagerConnections,2,,0,network.azure.hfl.dev/NetworkManagerConnection,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers,6,,0,network.azure.hfl.dev/NetworkManager,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/commits,5,,0,,0,5,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/commits,5,,0,network.azure.hfl.dev/NetworkManagersCommit,5,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/connectivityConfigurations,13,,0,network.azure.hfl.dev/NetworkManagersConnectivityConfiguration,13,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/ipamPools,8,,0,,0,8,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/ipamPools/staticCidrs,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/networkGroups,2,,0,network.azure.hfl.dev/NetworkManagersNetworkGroup,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/networkGroups/staticMembers,1,,0,network.azure.hfl.dev/NetworkManagersNetworkGroupsStaticMember,1,0,false,spec_api=2026-03-01; ours_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations,2,,0,,0,2,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations/ruleCollections,3,,0,,0,3,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations/ruleCollections/rules,5,,0,,0,5,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations,2,,0,network.azure.hfl.dev/NetworkManagersRoutingConfiguration,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations/ruleCollections,3,,0,network.azure.hfl.dev/NetworkManagersRoutingRuleCollection,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations/ruleCollections/rules,5,,0,network.azure.hfl.dev/NetworkManagersRoutingRule,5,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/scopeConnections,3,,0,network.azure.hfl.dev/NetworkManagersScopeConnection,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations,3,,0,network.azure.hfl.dev/NetworkManagersSecurityAdminConfiguration,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections,2,,0,network.azure.hfl.dev/NetworkManagersSecurityAdminRuleCollection,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
@@ -1750,22 +1751,22 @@ Microsoft.OffAzureSpringBoot,Microsoft.OffAzureSpringBoot/springbootsites/spring
 Microsoft.OnlineExperimentation,Microsoft.OnlineExperimentation/workspaces,13,,0,,0,13,false,spec_api=2025-08-01-preview; spec-preview-only
 Microsoft.OnlineExperimentation,Microsoft.OnlineExperimentation/workspaces/privateEndpointConnections,4,,0,,0,4,false,spec_api=2025-08-01-preview; spec-preview-only
 Microsoft.OpenEnergyPlatform,Microsoft.OpenEnergyPlatform/energyServices,4,,0,,0,4,false,spec_api=2022-04-04-preview; spec-preview-only
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/clusters,18,,0,,0,18,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/clusters,18,,0,operationalinsights.azure.hfl.dev/Cluster,16,2,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/queryPacks,3,,0,operationalinsights.azure.hfl.dev/QueryPack,2,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/queryPacks/queries,8,,0,operationalinsights.azure.hfl.dev/QueryPacksQuery,8,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces,23,operationalinsights.azure.com/Workspace,20,,0,3,false,spec_api=2026-03-01; official_api=2025-07-01; official-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/dataExports,7,,0,operationalinsights.azure.hfl.dev/WorkspacesDataExport,6,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/dataSources,4,,0,,0,4,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/dataSources,4,,0,operationalinsights.azure.hfl.dev/WorkspacesDataSource,4,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/features/machineGroups,8,,0,,0,8,false,spec_api=2015-11-01-preview; spec-preview-only
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedServices,4,,0,operationalinsights.azure.hfl.dev/WorkspacesLinkedService,4,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedStorageAccounts,1,,0,operationalinsights.azure.hfl.dev/WorkspacesLinkedStorageAccount,1,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/savedSearches,9,,0,operationalinsights.azure.hfl.dev/WorkspacesSavedSearch,9,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/storageInsightConfigs,6,,0,,0,6,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/storageInsightConfigs,6,,0,operationalinsights.azure.hfl.dev/WorkspacesStorageInsightConfig,6,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/summaryLogs,11,,0,,0,11,false,spec_api=2026-03-01
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/tables,20,,0,operationalinsights.azure.hfl.dev/WorkspacesTable,19,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementAssociations,2,,0,,0,2,false,spec_api=2015-11-01-preview; spec-preview-only
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementConfigurations,6,,0,,0,6,false,spec_api=2015-11-01-preview; spec-preview-only
-Microsoft.OperationsManagement,Microsoft.OperationsManagement/solutions,9,,0,,0,9,false,spec_api=2015-11-01-preview; spec-preview-only
+Microsoft.OperationsManagement,Microsoft.OperationsManagement/solutions,9,,0,operationsmanagement.azure.hfl.dev/Solution,9,0,false,spec_api=2015-11-01-preview; spec-preview-only; ours_api=2015-11-01-preview
 Microsoft.Orbital,Microsoft.Orbital/contactProfiles,26,,0,,0,26,false,spec_api=2022-11-01
 Microsoft.Orbital,Microsoft.Orbital/edgeSites,3,,0,,0,3,false,spec_api=2024-03-01
 Microsoft.Orbital,Microsoft.Orbital/geoCatalogs,6,,0,,0,6,false,spec_api=2026-04-15

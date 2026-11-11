@@ -4,6 +4,125 @@ github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701
 APIVersion: Enum (1 value)
 └── "2025-07-01"
 
+Cluster: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (12 properties)
+│   ├── AzureName: string
+│   ├── BillingType: *Enum (2 values)
+│   │   ├── "Cluster"
+│   │   └── "Workspaces"
+│   ├── Identity: *Object (2 properties)
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssigned,UserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── IsAvailabilityZonesEnabled: *bool
+│   ├── IsDoubleEncryptionEnabled: *bool
+│   ├── KeyVaultProperties: *Object (4 properties)
+│   │   ├── KeyName: *string
+│   │   ├── KeyRsaSize: *int
+│   │   ├── KeyVaultUri: *string
+│   │   └── KeyVersion: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Replication: *Object (3 properties)
+│   │   ├── Enabled: *bool
+│   │   ├── IsAvailabilityZonesEnabled: *bool
+│   │   └── Location: *string
+│   ├── Sku: *Object (2 properties)
+│   │   ├── Capacity: *int
+│   │   └── Name: *Enum (1 value)
+│   │       └── "CapacityReservation"
+│   └── Tags: map[string]string
+└── Status: Object (20 properties)
+    ├── AssociatedWorkspaces: Object (4 properties)[]
+    │   ├── AssociateDate: *string
+    │   ├── ResourceId: *string
+    │   ├── WorkspaceId: *string
+    │   └── WorkspaceName: *string
+    ├── BillingType: *Enum (2 values)
+    │   ├── "Cluster"
+    │   └── "Workspaces"
+    ├── CapacityReservationProperties: *Object (2 properties)
+    │   ├── LastSkuUpdate: *string
+    │   └── MinCapacity: *int
+    ├── ClusterId: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssigned,UserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── IsAvailabilityZonesEnabled: *bool
+    ├── IsDoubleEncryptionEnabled: *bool
+    ├── KeyVaultProperties: *Object (4 properties)
+    │   ├── KeyName: *string
+    │   ├── KeyRsaSize: *int
+    │   ├── KeyVaultUri: *string
+    │   └── KeyVersion: *string
+    ├── LastModifiedDate: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (7 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "ProvisioningAccount"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── Replication: *Object (6 properties)
+    │   ├── CreatedDate: *string
+    │   ├── Enabled: *bool
+    │   ├── IsAvailabilityZonesEnabled: *bool
+    │   ├── LastModifiedDate: *string
+    │   ├── Location: *string
+    │   └── ProvisioningState: *Enum (9 values)
+    │       ├── "Canceled"
+    │       ├── "DisableRequested"
+    │       ├── "Disabling"
+    │       ├── "EnableRequested"
+    │       ├── "Enabling"
+    │       ├── "Failed"
+    │       ├── "RollbackRequested"
+    │       ├── "RollingBack"
+    │       └── "Succeeded"
+    ├── Sku: *Object (2 properties)
+    │   ├── Capacity: *int
+    │   └── Name: *Enum (1 value)
+    │       └── "CapacityReservation"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
 QueryPack: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (5 properties)
@@ -140,6 +259,109 @@ WorkspacesDataExport: Resource
     ├── TableNames: string[]
     └── Type: *string
 
+WorkspacesDataSource: Resource
+├── Owner: Workspace
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Etag: *string
+│   ├── Kind: *Enum (33 values)
+│   │   ├── "ApplicationInsights"
+│   │   ├── "AzureActivityLog"
+│   │   ├── "AzureAuditLog"
+│   │   ├── "ChangeTrackingContentLocation"
+│   │   ├── "ChangeTrackingCustomPath"
+│   │   ├── "ChangeTrackingDataTypeConfiguration"
+│   │   ├── "ChangeTrackingDefaultRegistry"
+│   │   ├── "ChangeTrackingLinuxPath"
+│   │   ├── "ChangeTrackingPath"
+│   │   ├── "ChangeTrackingRegistry"
+│   │   ├── "ChangeTrackingServices"
+│   │   ├── "CustomLog"
+│   │   ├── "CustomLogCollection"
+│   │   ├── "DnsAnalytics"
+│   │   ├── "GenericDataSource"
+│   │   ├── "IISLogs"
+│   │   ├── "ImportComputerGroup"
+│   │   ├── "Itsm"
+│   │   ├── "LinuxChangeTrackingPath"
+│   │   ├── "LinuxPerformanceCollection"
+│   │   ├── "LinuxPerformanceObject"
+│   │   ├── "LinuxSyslog"
+│   │   ├── "LinuxSyslogCollection"
+│   │   ├── "NetworkMonitoring"
+│   │   ├── "Office365"
+│   │   ├── "SecurityCenterSecurityWindowsBaselineConfiguration"
+│   │   ├── "SecurityEventCollectionConfiguration"
+│   │   ├── "SecurityInsightsSecurityEventCollectionConfiguration"
+│   │   ├── "SecurityWindowsBaselineConfiguration"
+│   │   ├── "SqlDataClassification"
+│   │   ├── "WindowsEvent"
+│   │   ├── "WindowsPerformanceCounter"
+│   │   └── "WindowsTelemetry"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *v1.JSON
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Kind: *Enum (33 values)
+    │   ├── "ApplicationInsights"
+    │   ├── "AzureActivityLog"
+    │   ├── "AzureAuditLog"
+    │   ├── "ChangeTrackingContentLocation"
+    │   ├── "ChangeTrackingCustomPath"
+    │   ├── "ChangeTrackingDataTypeConfiguration"
+    │   ├── "ChangeTrackingDefaultRegistry"
+    │   ├── "ChangeTrackingLinuxPath"
+    │   ├── "ChangeTrackingPath"
+    │   ├── "ChangeTrackingRegistry"
+    │   ├── "ChangeTrackingServices"
+    │   ├── "CustomLog"
+    │   ├── "CustomLogCollection"
+    │   ├── "DnsAnalytics"
+    │   ├── "GenericDataSource"
+    │   ├── "IISLogs"
+    │   ├── "ImportComputerGroup"
+    │   ├── "Itsm"
+    │   ├── "LinuxChangeTrackingPath"
+    │   ├── "LinuxPerformanceCollection"
+    │   ├── "LinuxPerformanceObject"
+    │   ├── "LinuxSyslog"
+    │   ├── "LinuxSyslogCollection"
+    │   ├── "NetworkMonitoring"
+    │   ├── "Office365"
+    │   ├── "SecurityCenterSecurityWindowsBaselineConfiguration"
+    │   ├── "SecurityEventCollectionConfiguration"
+    │   ├── "SecurityInsightsSecurityEventCollectionConfiguration"
+    │   ├── "SecurityWindowsBaselineConfiguration"
+    │   ├── "SqlDataClassification"
+    │   ├── "WindowsEvent"
+    │   ├── "WindowsPerformanceCounter"
+    │   └── "WindowsTelemetry"
+    ├── Name: *string
+    ├── Properties: *v1.JSON
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
 WorkspacesLinkedService: Resource
 ├── Owner: Workspace
 ├── Spec: Object (7 properties)
@@ -270,6 +492,53 @@ WorkspacesSavedSearch: Resource
     │   └── Value: *string
     ├── Type: *string
     └── Version: *int
+
+WorkspacesStorageInsightConfig: Resource
+├── Owner: Workspace
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Containers: string[]
+│   ├── ETag: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── StorageAccount: *Object (2 properties)
+│   │   ├── Key: *genruntime.SecretReference
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── Tables: string[]
+│   └── Tags: map[string]string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Containers: string[]
+    ├── ETag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Status: *Object (2 properties)
+    │   ├── Description: *string
+    │   └── State: *Enum (2 values)
+    │       ├── "ERROR"
+    │       └── "OK"
+    ├── StorageAccount: *Object (1 property)
+    │   └── Id: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tables: string[]
+    ├── Tags: map[string]string
+    └── Type: *string
 
 WorkspacesTable: Resource
 ├── Owner: Workspace
