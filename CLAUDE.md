@@ -22,7 +22,7 @@ itself lives in its own repository and is never changed from here.
 - **Unreleased upstream code** (master, pull requests): `docs/plan.md`
   §1 (how ASO v2 is built), §2 (how a kind is built here; `patches/` adds `v2/pkg/outoftree` to reach ASO's reconciler), §4 (upstream and sync).
 - **What to build next:** `docs/plan.md` §3 "Candidates". Plain Azure API
-  (ARM) resources are in scope, as are data-plane kinds (the builder's
+  (ARM) resources are in scope, as are data-plane kinds (a recorded
   decision, `docs/plan.md` §1 and §8 Q6). Upstream first, by habit: a kind
   that ASO has released, or has in the pinned code, is skipped (record the
   skip); one that an open ASO pull request or unreleased `main` adds is
@@ -64,7 +64,7 @@ itself lives in its own repository and is never changed from here.
   names, API groups, identity defaults, a new upstream dependency,
   anything that makes the repository public.
 - Test against real Azure (a live run, under the rule in "Never") in
-  two cases (builder, 2026-11-11):
+  two cases (decided 2026-11-11):
   1. where the fake cloud cannot give the signal: the service or behaviour is not
      faked, or the case depends on real permissions, quotas, defaults or
      eventual consistency; and
@@ -76,7 +76,7 @@ itself lives in its own repository and is never changed from here.
 ## Never
 
 - Never reach real Azure except through a live run: subscription
-  `149e8810-e0fe-48e2-a46e-6f8f575bde01` only, resource group
+  `$AZURE_SUBSCRIPTION_ID` (`.env.example`) only, resource group
   `aso-extensions-live-tests` only, as the app `aso-extensions-live-tests`
   through its federated credential only, from an offload Spot VM only,
   with `ASO_EXT_LIVE` set (`docs/live-runs.md`). Never on a laptop, never

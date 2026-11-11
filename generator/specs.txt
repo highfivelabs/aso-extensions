@@ -19,3 +19,5 @@ specification/consumption
 specification/cost-management
 specification/keyvault
 specification/operationsmanagement
+specification/containerservice
+specification/kubernetesconfiguration
