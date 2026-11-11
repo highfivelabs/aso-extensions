@@ -8,12 +8,21 @@
 //
 //	<package>/<Type>.<Property> looks like a resource reference but was not labelled as one
 //
+// and
+//
+//	visiting type "<package>/<Type>": ... property <Property> might be a secret and must be configured with $importSecretMode
+//
 // A property whose name says it holds an ARM ID (Id, ...ResourceId,
 // ...ResourceIds, ...ArmId, ...Ids; the generator's own name rule plus the
 // plural) is labelled `$referenceType: arm`, and becomes a Kubernetes
 // reference; any other (the generator matched only its description, as
 // for a type name or a free-form scope) is labelled `$referenceType:
-// simple` and stays a string. Each label it writes carries the comment
+// simple` and stays a string. A property that might be a secret is
+// labelled `$importSecretMode: required` (a Secret reference) when its name
+// ends in a secret's word (Password, Secret, Key, Token, ...) and `never`
+// otherwise (a TokenEndpoint, an AccessTokenPrepend); a _STATUS type's
+// label goes on the type without the suffix, where the generator looks.
+// Each label it writes carries the comment
 // "autolabel: review"; a person reviews the generated structure.txt and
 // removes the comment, as for any label (docs/throughput.md).
 //
@@ -42,10 +51,12 @@ var (
 	// v20231201preview.
 	packagePath = regexp.MustCompile(`/([a-z0-9]+)/v(\d{4})(\d{2})(\d{2})(preview)?$`)
 	armName     = regexp.MustCompile(`(?i)(^Id$|ResourceIds?$|ARMIDs?$|Ids$|ResourceId)`)
+	maybeSecret = regexp.MustCompile(`visiting type \\?"(\S+)/([A-Za-z0-9_]+)\\?": [^"]*?property ([A-Za-z0-9_]+) might be a secret and must be configured with \$importSecretMode`)
+	secretName  = regexp.MustCompile(`(?i)(password|secret|key|keys|token|credential|credentials|connectionstring|sas)$`)
 )
 
 type label struct {
-	group, version, typ, prop, value string
+	group, version, typ, prop, key, value string
 }
 
 func main() {
@@ -92,19 +103,30 @@ func read(path string) ([]label, error) {
 	sc.Buffer(make([]byte, 1<<20), 1<<24)
 	for sc.Scan() {
 		for _, m := range unlabelled.FindAllStringSubmatch(sc.Text(), -1) {
-			p := packagePath.FindStringSubmatch(m[1])
-			if p == nil {
+			version, group, ok := groupVersion(m[1])
+			if !ok {
 				return nil, fmt.Errorf("autolabel: cannot read a group and version from %q", m[1])
-			}
-			version := p[2] + "-" + p[3] + "-" + p[4]
-			if p[5] != "" {
-				version += "-preview"
 			}
 			value := "simple"
 			if armName.MatchString(m[3]) {
 				value = "arm"
 			}
-			l := label{group: p[1], version: version, typ: m[2], prop: m[3], value: value}
+			l := label{group: group, version: version, typ: m[2], prop: m[3], key: "$referenceType", value: value}
+			if !seen[l] {
+				seen[l] = true
+				out = append(out, l)
+			}
+		}
+		for _, m := range maybeSecret.FindAllStringSubmatch(sc.Text(), -1) {
+			version, group, ok := groupVersion(m[1])
+			if !ok {
+				return nil, fmt.Errorf("autolabel: cannot read a group and version from %q", m[1])
+			}
+			value := "never"
+			if secretName.MatchString(m[3]) {
+				value = "required"
+			}
+			l := label{group: group, version: version, typ: strings.TrimSuffix(m[2], "_STATUS"), prop: m[3], key: "$importSecretMode", value: value}
 			if !seen[l] {
 				seen[l] = true
 				out = append(out, l)
@@ -112,6 +134,20 @@ func read(path string) ([]label, error) {
 		}
 	}
 	return out, sc.Err()
+}
+
+// groupVersion reads the configuration's version (2025-06-01,
+// 2023-12-01-preview) and the group from a package path.
+func groupVersion(pkg string) (version, group string, ok bool) {
+	p := packagePath.FindStringSubmatch(pkg)
+	if p == nil {
+		return "", "", false
+	}
+	version = p[2] + "-" + p[3] + "-" + p[4]
+	if p[5] != "" {
+		version += "-preview"
+	}
+	return version, p[1], true
 }
 
 // write adds the labels to a group's configuration file, keeping what is
@@ -129,13 +165,13 @@ func write(path string, labels []label) error {
 	gmc := child(root, "groupModelConfiguration")
 	for _, l := range labels {
 		prop := child(child(child(gmc, l.version), l.typ), l.prop)
-		if v := value(prop, "$referenceType"); v != nil {
-			return fmt.Errorf("autolabel: %s: %s.%s.%s already has $referenceType %s; the generator still asks", path, l.version, l.typ, l.prop, v.Value)
+		if v := value(prop, l.key); v != nil {
+			return fmt.Errorf("autolabel: %s: %s.%s.%s already has %s %s; the generator still asks", path, l.version, l.typ, l.prop, l.key, v.Value)
 		}
 		prop.Content = append(prop.Content,
-			&yaml.Node{Kind: yaml.ScalarNode, Value: "$referenceType"},
+			&yaml.Node{Kind: yaml.ScalarNode, Value: l.key},
 			&yaml.Node{Kind: yaml.ScalarNode, Value: l.value, LineComment: "autolabel: review"})
-		fmt.Printf("%s: %s %s.%s: $referenceType: %s\n", path, l.version, l.typ, l.prop, l.value)
+		fmt.Printf("%s: %s %s.%s: %s: %s\n", path, l.version, l.typ, l.prop, l.key, l.value)
 	}
 	var buf bytes.Buffer
 	enc := yaml.NewEncoder(&buf)
