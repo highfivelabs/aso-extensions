@@ -764,6 +764,50 @@ NetworkManagerConnection: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+NetworkManagersCommit: Resource
+├── Owner: network/v20260301.NetworkManager
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (6 properties)
+│   │   ├── CommitType: *string
+│   │   ├── ConfigurationReferences: genruntime.ResourceReference[]
+│   │   ├── Description: *string
+│   │   ├── ForceUpdateTag: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── TargetLocations: string[]
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (9 properties)
+    │   ├── ActiveLocations: string[]
+    │   ├── CommitType: *string
+    │   ├── ConfigurationIds: string[]
+    │   ├── Description: *string
+    │   ├── ForceUpdateTag: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisioningState: *string
+    │   ├── ResourceGuid: *string
+    │   └── TargetLocations: string[]
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 NetworkManagersConnectivityConfiguration: Resource
 ├── Owner: network/v20260301.NetworkManager
 ├── Spec: Object (12 properties)
@@ -885,6 +929,125 @@ NetworkManagersNetworkGroupsStaticMember: Resource
     ├── ProvisioningState: *string
     ├── Region: *string
     ├── ResourceId: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+NetworkManagersRoutingConfiguration: Resource
+├── Owner: network/v20260301.NetworkManager
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── RouteTableUsageMode: *string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ResourceGuid: *string
+    ├── RouteTableUsageMode: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+NetworkManagersRoutingRule: Resource
+├── Owner: network/v20260301.NetworkManagersRoutingRuleCollection
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── Destination: *Object (3 properties)
+│   │   ├── DestinationAddress: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Type: *string
+│   ├── NextHop: *Object (3 properties)
+│   │   ├── NextHopAddress: *string
+│   │   ├── NextHopType: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Destination: *Object (3 properties)
+    │   ├── DestinationAddress: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Type: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── NextHop: *Object (3 properties)
+    │   ├── NextHopAddress: *string
+    │   ├── NextHopType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ResourceGuid: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+NetworkManagersRoutingRuleCollection: Resource
+├── Owner: network/v20260301.NetworkManagersRoutingConfiguration
+├── Spec: Object (8 properties)
+│   ├── AppliesTo: Object (2 properties)[]
+│   │   ├── NetworkGroupReference: *genruntime.ResourceReference
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── DisableBgpRoutePropagation: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (12 properties)
+    ├── AppliesTo: Object (2 properties)[]
+    │   ├── NetworkGroupId: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── DisableBgpRoutePropagation: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ResourceGuid: *string
     ├── SystemData: *Object (7 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string

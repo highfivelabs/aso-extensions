@@ -8,10 +8,13 @@ no_list: true
 
 ### Released
 
-| Resource                | ARM Version | CRD Version | Supported From | Sample |
-|-------------------------|-------------|-------------|----------------|--------|
-| RegistriesCredentialSet | 2025-11-01  | v20251101   | v0.1.0         | -      |
-| RegistriesScopeMap      | 2025-11-01  | v20251101   | v0.1.0         | -      |
-| RegistriesToken         | 2025-11-01  | v20251101   | v0.1.0         | -      |
-| RegistriesWebhook       | 2025-11-01  | v20251101   | v0.1.0         | -      |
+| Resource                            | ARM Version | CRD Version | Supported From | Sample |
+|-------------------------------------|-------------|-------------|----------------|--------|
+| RegistriesConnectedRegistry         | 2025-11-01  | v20251101   | v0.1.0         | -      |
+| RegistriesCredentialSet             | 2025-11-01  | v20251101   | v0.1.0         | -      |
+| RegistriesPrivateEndpointConnection | 2025-11-01  | v20251101   | v0.1.0         | -      |
+| RegistriesScopeMap                  | 2025-11-01  | v20251101   | v0.1.0         | -      |
+| RegistriesTask                      | 2019-04-01  | v20190401   | v0.1.0         | -      |
+| RegistriesToken                     | 2025-11-01  | v20251101   | v0.1.0         | -      |
+| RegistriesWebhook                   | 2025-11-01  | v20251101   | v0.1.0         | -      |
 

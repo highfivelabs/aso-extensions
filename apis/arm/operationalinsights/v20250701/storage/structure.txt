@@ -4,6 +4,104 @@ github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701/st
 APIVersion: Enum (1 value)
 └── "2025-07-01"
 
+Cluster: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (14 properties)
+│   ├── AzureName: string
+│   ├── BillingType: *string
+│   ├── Identity: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Type: *string
+│   │   └── UserAssignedIdentities: Object (2 properties)[]
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── IsAvailabilityZonesEnabled: *bool
+│   ├── IsDoubleEncryptionEnabled: *bool
+│   ├── KeyVaultProperties: *Object (5 properties)
+│   │   ├── KeyName: *string
+│   │   ├── KeyRsaSize: *int
+│   │   ├── KeyVaultUri: *string
+│   │   ├── KeyVersion: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Replication: *Object (4 properties)
+│   │   ├── Enabled: *bool
+│   │   ├── IsAvailabilityZonesEnabled: *bool
+│   │   ├── Location: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Sku: *Object (3 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Name: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (21 properties)
+    ├── AssociatedWorkspaces: Object (5 properties)[]
+    │   ├── AssociateDate: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ResourceId: *string
+    │   ├── WorkspaceId: *string
+    │   └── WorkspaceName: *string
+    ├── BillingType: *string
+    ├── CapacityReservationProperties: *Object (3 properties)
+    │   ├── LastSkuUpdate: *string
+    │   ├── MinCapacity: *int
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── ClusterId: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── Id: *string
+    ├── Identity: *Object (5 properties)
+    │   ├── PrincipalId: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── TenantId: *string
+    │   ├── Type: *string
+    │   └── UserAssignedIdentities: map[string]Object (3 properties)
+    │       ├── ClientId: *string
+    │       ├── PrincipalId: *string
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── IsAvailabilityZonesEnabled: *bool
+    ├── IsDoubleEncryptionEnabled: *bool
+    ├── KeyVaultProperties: *Object (5 properties)
+    │   ├── KeyName: *string
+    │   ├── KeyRsaSize: *int
+    │   ├── KeyVaultUri: *string
+    │   ├── KeyVersion: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── LastModifiedDate: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Replication: *Object (7 properties)
+    │   ├── CreatedDate: *string
+    │   ├── Enabled: *bool
+    │   ├── IsAvailabilityZonesEnabled: *bool
+    │   ├── LastModifiedDate: *string
+    │   ├── Location: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── ProvisioningState: *string
+    ├── Sku: *Object (3 properties)
+    │   ├── Capacity: *int
+    │   ├── Name: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
 QueryPack: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (7 properties)
@@ -133,6 +231,40 @@ WorkspacesDataExport: Resource
     ├── TableNames: string[]
     └── Type: *string
 
+WorkspacesDataSource: Resource
+├── Owner: operationalinsights/v20250701.Workspace
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Etag: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *v1.JSON
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── Properties: *v1.JSON
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
 WorkspacesLinkedService: Resource
 ├── Owner: operationalinsights/v20250701.Workspace
 ├── Spec: Object (9 properties)
@@ -243,6 +375,51 @@ WorkspacesSavedSearch: Resource
     │   └── Value: *string
     ├── Type: *string
     └── Version: *int
+
+WorkspacesStorageInsightConfig: Resource
+├── Owner: operationalinsights/v20250701.Workspace
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── Containers: string[]
+│   ├── ETag: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── StorageAccount: *Object (3 properties)
+│   │   ├── Key: *genruntime.SecretReference
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── Tables: string[]
+│   └── Tags: map[string]string
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Containers: string[]
+    ├── ETag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Status: *Object (3 properties)
+    │   ├── Description: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── State: *string
+    ├── StorageAccount: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tables: string[]
+    ├── Tags: map[string]string
+    └── Type: *string
 
 WorkspacesTable: Resource
 ├── Owner: operationalinsights/v20250701.Workspace

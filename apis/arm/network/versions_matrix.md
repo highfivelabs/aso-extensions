@@ -47,6 +47,8 @@
 | CircuitConnectionStatus_STATUS                                                                         |           |           |           | v20260301 |
 | CnameRecord                                                                                            | v20180501 | v20240601 |           |           |
 | CnameRecord_STATUS                                                                                     | v20180501 | v20240601 |           |           |
+| CommitProperties                                                                                       |           |           |           | v20260301 |
+| CommitProperties_STATUS                                                                                |           |           |           | v20260301 |
 | ConfigurationType                                                                                      |           |           |           | v20260301 |
 | ConfigurationType_STATUS                                                                               |           |           |           | v20260301 |
 | ConnectionAuthenticationType                                                                           |           |           |           | v20260301 |
@@ -78,6 +80,8 @@
 | DeviceProperties_STATUS                                                                                |           |           |           | v20260301 |
 | DhGroup                                                                                                |           |           |           | v20260301 |
 | DhGroup_STATUS                                                                                         |           |           |           | v20260301 |
+| DisableBgpRoutePropagation                                                                             |           |           |           | v20260301 |
+| DisableBgpRoutePropagation_STATUS                                                                      |           |           |           | v20260301 |
 | DnsResolverDomainList                                                                                  |           |           | v20250501 |           |
 | DnsResolverDomainListProperties                                                                        |           |           | v20250501 |           |
 | DnsResolverDomainListProperties_STATUS                                                                 |           |           | v20250501 |           |
@@ -270,10 +274,19 @@
 | NetworkManagerPropertiesNetworkManagerScopes                                                           |           |           |           | v20260301 |
 | NetworkManagerPropertiesNetworkManagerScopes_STATUS                                                    |           |           |           | v20260301 |
 | NetworkManagerProperties_STATUS                                                                        |           |           |           | v20260301 |
+| NetworkManagerRoutingConfigurationPropertiesFormat                                                     |           |           |           | v20260301 |
+| NetworkManagerRoutingConfigurationPropertiesFormat_RouteTableUsageMode                                 |           |           |           | v20260301 |
+| NetworkManagerRoutingConfigurationPropertiesFormat_RouteTableUsageMode_STATUS                          |           |           |           | v20260301 |
+| NetworkManagerRoutingConfigurationPropertiesFormat_STATUS                                              |           |           |           | v20260301 |
+| NetworkManagerRoutingGroupItem                                                                         |           |           |           | v20260301 |
+| NetworkManagerRoutingGroupItem_STATUS                                                                  |           |           |           | v20260301 |
 | NetworkManagerSecurityGroupItem                                                                        |           |           |           | v20260301 |
 | NetworkManagerSecurityGroupItem_STATUS                                                                 |           |           |           | v20260301 |
 | NetworkManager_STATUS                                                                                  |           |           |           | v20260301 |
 | NetworkManager_Spec                                                                                    |           |           |           | v20260301 |
+| NetworkManagersCommit                                                                                  |           |           |           | v20260301 |
+| NetworkManagersCommit_STATUS                                                                           |           |           |           | v20260301 |
+| NetworkManagersCommit_Spec                                                                             |           |           |           | v20260301 |
 | NetworkManagersConnectivityConfiguration                                                               |           |           |           | v20260301 |
 | NetworkManagersConnectivityConfiguration_STATUS                                                        |           |           |           | v20260301 |
 | NetworkManagersConnectivityConfiguration_Spec                                                          |           |           |           | v20260301 |
@@ -283,6 +296,15 @@
 | NetworkManagersNetworkGroupsStaticMember                                                               |           |           |           | v20260301 |
 | NetworkManagersNetworkGroupsStaticMember_STATUS                                                        |           |           |           | v20260301 |
 | NetworkManagersNetworkGroupsStaticMember_Spec                                                          |           |           |           | v20260301 |
+| NetworkManagersRoutingConfiguration                                                                    |           |           |           | v20260301 |
+| NetworkManagersRoutingConfiguration_STATUS                                                             |           |           |           | v20260301 |
+| NetworkManagersRoutingConfiguration_Spec                                                               |           |           |           | v20260301 |
+| NetworkManagersRoutingRule                                                                             |           |           |           | v20260301 |
+| NetworkManagersRoutingRuleCollection                                                                   |           |           |           | v20260301 |
+| NetworkManagersRoutingRuleCollection_STATUS                                                            |           |           |           | v20260301 |
+| NetworkManagersRoutingRuleCollection_Spec                                                              |           |           |           | v20260301 |
+| NetworkManagersRoutingRule_STATUS                                                                      |           |           |           | v20260301 |
+| NetworkManagersRoutingRule_Spec                                                                        |           |           |           | v20260301 |
 | NetworkManagersScopeConnection                                                                         |           |           |           | v20260301 |
 | NetworkManagersScopeConnection_STATUS                                                                  |           |           |           | v20260301 |
 | NetworkManagersScopeConnection_Spec                                                                    |           |           |           | v20260301 |
@@ -400,6 +422,18 @@
 | RoutingIntentProperties_STATUS                                                                         |           |           |           | v20260301 |
 | RoutingPolicy                                                                                          |           |           |           | v20260301 |
 | RoutingPolicy_STATUS                                                                                   |           |           |           | v20260301 |
+| RoutingRuleCollectionPropertiesFormat                                                                  |           |           |           | v20260301 |
+| RoutingRuleCollectionPropertiesFormat_STATUS                                                           |           |           |           | v20260301 |
+| RoutingRuleDestinationType                                                                             |           |           |           | v20260301 |
+| RoutingRuleDestinationType_STATUS                                                                      |           |           |           | v20260301 |
+| RoutingRuleNextHop                                                                                     |           |           |           | v20260301 |
+| RoutingRuleNextHopType                                                                                 |           |           |           | v20260301 |
+| RoutingRuleNextHopType_STATUS                                                                          |           |           |           | v20260301 |
+| RoutingRuleNextHop_STATUS                                                                              |           |           |           | v20260301 |
+| RoutingRulePropertiesFormat                                                                            |           |           |           | v20260301 |
+| RoutingRulePropertiesFormat_STATUS                                                                     |           |           |           | v20260301 |
+| RoutingRuleRouteDestination                                                                            |           |           |           | v20260301 |
+| RoutingRuleRouteDestination_STATUS                                                                     |           |           |           | v20260301 |
 | RoutingState_STATUS                                                                                    |           |           |           | v20260301 |
 | ScopeConnectionProperties                                                                              |           |           |           | v20260301 |
 | ScopeConnectionProperties_STATUS                                                                       |           |           |           | v20260301 |
