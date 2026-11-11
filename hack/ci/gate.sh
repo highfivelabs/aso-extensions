@@ -2,9 +2,9 @@
 # Copyright 2026 High Five Labs
 # SPDX-License-Identifier: MIT
 #
-# The merge gate while GitHub Actions is off (the builder, 2026-11-11:
-# "run those actions locally (or on the vm) prior to commit; keep the gh
-# actions but disable for now").
+# The merge gate while GitHub Actions is off (decided 2026-11-11: run the
+# workflows' jobs locally or on a VM before a commit; the workflows stay,
+# disabled).
 #
 #   hack/ci/gate.sh [SHA]      task ci [SHA=...]; the pre-push hook runs it
 #
@@ -33,7 +33,9 @@
 #
 # Environment: CI_BASE (default origin/main), OFFLOAD (the offload command,
 # default ../scripts/offload/offload beside this repository, else on PATH),
-# CI_NO_STATUS=1 (run, post nothing).
+# CI_NO_STATUS=1 (run, post nothing), and OFFLOAD_PROJECT and OFFLOAD_BUCKET
+# (required: offload's project and bucket, for the run's link; from .env at
+# the repository's root when set there, see .env.example).
 set -euo pipefail
 
 # A git hook runs with GIT_DIR (and GIT_INDEX_FILE ...) set to this
@@ -43,11 +45,15 @@ set -euo pipefail
 unset $(git rev-parse --local-env-vars)
 
 STATUS_CONTEXT=offload/ci
-BUCKET=hfl-dev-514205-offload
-PROJECT=hfl-dev-514205
 
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
+# shellcheck disable=SC1091 # .env is local and git-ignored
+if [[ -f .env ]]; then set -a; . ./.env; set +a; fi
+: "${OFFLOAD_PROJECT:?set OFFLOAD_PROJECT (see .env.example)}"
+: "${OFFLOAD_BUCKET:?set OFFLOAD_BUCKET (see .env.example)}"
+PROJECT="$OFFLOAD_PROJECT"
+BUCKET="${OFFLOAD_BUCKET#gs://}"
 die() { echo "gate: $*" >&2; exit 2; }
 
 SHA="$(git rev-parse --verify "${1:-HEAD}^{commit}")" || die "no commit ${1:-HEAD}"
