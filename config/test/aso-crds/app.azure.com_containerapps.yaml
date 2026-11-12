@@ -1,0 +1,2489 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: containerapps.app.azure.com
+spec:
+  group: app.azure.com
+  names:
+    categories:
+    - azure
+    - app
+    kind: ContainerApp
+    listKind: ContainerAppList
+    plural: containerapps
+    singular: containerapp
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20250101storage
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Storage version of v20250101.ContainerApp
+          Generator information:
+          - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/stable/2025-01-01/ContainerApps.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: Storage version of v20250101.ContainerApp_Spec
+            properties:
+              $propertyBag:
+                additionalProperties:
+                  type: string
+                description: |-
+                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                  resources, allowing for full fidelity round trip conversions
+                type: object
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              configuration:
+                description: |-
+                  Storage version of v20250101.Configuration
+                  Non versioned Container App configuration properties that define the mutable settings of a Container app
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  activeRevisionsMode:
+                    type: string
+                  dapr:
+                    description: |-
+                      Storage version of v20250101.Dapr
+                      Container App Dapr configuration.
+                    properties:
+                      $propertyBag:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                          resources, allowing for full fidelity round trip conversions
+                        type: object
+                      appId:
+                        type: string
+                      appPort:
+                        type: integer
+                      appProtocol:
+                        type: string
+                      enableApiLogging:
+                        type: boolean
+                      enabled:
+                        type: boolean
+                      httpMaxRequestSize:
+                        type: integer
+                      httpReadBufferSize:
+                        type: integer
+                      logLevel:
+                        type: string
+                    type: object
+                  identitySettings:
+                    items:
+                      description: |-
+                        Storage version of v20250101.IdentitySettings
+                        Optional settings for a Managed Identity that is assigned to the Container App.
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        identityReference:
+                          description: |-
+                            IdentityReference: The resource ID of a user-assigned managed identity that is assigned to the Container App, or
+                            'system' for system-assigned identity.
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                            wellKnownName:
+                              type: string
+                          type: object
+                        lifecycle:
+                          type: string
+                      required:
+                      - identityReference
+                      type: object
+                    type: array
+                  ingress:
+                    description: |-
+                      Storage version of v20250101.Ingress
+                      Container App Ingress configuration.
+                    properties:
+                      $propertyBag:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                          resources, allowing for full fidelity round trip conversions
+                        type: object
+                      additionalPortMappings:
+                        items:
+                          description: |-
+                            Storage version of v20250101.IngressPortMapping
+                            Port mappings of container app ingress
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            exposedPort:
+                              type: integer
+                            external:
+                              type: boolean
+                            targetPort:
+                              type: integer
+                          type: object
+                        type: array
+                      allowInsecure:
+                        type: boolean
+                      clientCertificateMode:
+                        type: string
+                      corsPolicy:
+                        description: |-
+                          Storage version of v20250101.CorsPolicy
+                          Cross-Origin-Resource-Sharing policy
+                        properties:
+                          $propertyBag:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                              resources, allowing for full fidelity round trip conversions
+                            type: object
+                          allowCredentials:
+                            type: boolean
+                          allowedHeaders:
+                            items:
+                              type: string
+                            type: array
+                          allowedMethods:
+                            items:
+                              type: string
+                            type: array
+                          allowedOrigins:
+                            items:
+                              type: string
+                            type: array
+                          exposeHeaders:
+                            items:
+                              type: string
+                            type: array
+                          maxAge:
+                            type: integer
+                        type: object
+                      customDomains:
+                        items:
+                          description: |-
+                            Storage version of v20250101.CustomDomain
+                            Custom Domain of a Container App
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            bindingType:
+                              type: string
+                            certificateReference:
+                              description: 'CertificateReference: Resource Id of the
+                                Certificate to be bound to this hostname. Must exist
+                                in the Managed Environment.'
+                              properties:
+                                armId:
+                                  description: |-
+                                    ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                    The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                    ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                                  pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                                  type: string
+                                group:
+                                  description: Group is the Kubernetes group of the
+                                    resource.
+                                  type: string
+                                kind:
+                                  description: Kind is the Kubernetes kind of the
+                                    resource.
+                                  type: string
+                                name:
+                                  description: Name is the Kubernetes name of the
+                                    resource.
+                                  type: string
+                              type: object
+                            name:
+                              type: string
+                          type: object
+                        type: array
+                      exposedPort:
+                        type: integer
+                      external:
+                        type: boolean
+                      ipSecurityRestrictions:
+                        items:
+                          description: |-
+                            Storage version of v20250101.IpSecurityRestrictionRule
+                            Rule to restrict incoming IP address.
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            action:
+                              type: string
+                            description:
+                              type: string
+                            ipAddressRange:
+                              type: string
+                            name:
+                              type: string
+                          type: object
+                        type: array
+                      stickySessions:
+                        description: Storage version of v20250101.Ingress_StickySessions
+                        properties:
+                          $propertyBag:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                              resources, allowing for full fidelity round trip conversions
+                            type: object
+                          affinity:
+                            type: string
+                        type: object
+                      targetPort:
+                        type: integer
+                      traffic:
+                        items:
+                          description: |-
+                            Storage version of v20250101.TrafficWeight
+                            Traffic weight assigned to a revision
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            label:
+                              type: string
+                            latestRevision:
+                              type: boolean
+                            revisionName:
+                              type: string
+                            weight:
+                              type: integer
+                          type: object
+                        type: array
+                      transport:
+                        type: string
+                    type: object
+                  maxInactiveRevisions:
+                    type: integer
+                  registries:
+                    items:
+                      description: |-
+                        Storage version of v20250101.RegistryCredentials
+                        Container App Private Registry
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        identityReference:
+                          description: |-
+                            IdentityReference: A Managed Identity to use to authenticate with Azure Container Registry. For user-assigned
+                            identities, use the full user-assigned identity Resource ID. For system-assigned identities, use 'system'
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                            wellKnownName:
+                              type: string
+                          type: object
+                        passwordSecretRef:
+                          type: string
+                        server:
+                          type: string
+                        username:
+                          type: string
+                      type: object
+                    type: array
+                  runtime:
+                    description: |-
+                      Storage version of v20250101.Runtime
+                      Container App Runtime configuration.
+                    properties:
+                      $propertyBag:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                          resources, allowing for full fidelity round trip conversions
+                        type: object
+                      java:
+                        description: Storage version of v20250101.Runtime_Java
+                        properties:
+                          $propertyBag:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                              resources, allowing for full fidelity round trip conversions
+                            type: object
+                          enableMetrics:
+                            type: boolean
+                        type: object
+                    type: object
+                  secrets:
+                    items:
+                      description: |-
+                        Storage version of v20250101.Secret
+                        Secret definition.
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        identityReference:
+                          description: |-
+                            IdentityReference: Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a
+                            system-assigned identity.
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                            wellKnownName:
+                              type: string
+                          type: object
+                        keyVaultUrl:
+                          type: string
+                        name:
+                          type: string
+                        value:
+                          description: |-
+                            SecretReference is a reference to a Kubernetes secret and key in the same namespace as
+                            the resource it is on.
+                          properties:
+                            key:
+                              description: Key is the key in the Kubernetes secret
+                                being referenced
+                              type: string
+                            name:
+                              description: |-
+                                Name is the name of the Kubernetes secret being referenced.
+                                The secret must be in the same namespace as the resource
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                      type: object
+                    type: array
+                  service:
+                    description: |-
+                      Storage version of v20250101.Service
+                      Container App to be a dev service
+                    properties:
+                      $propertyBag:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                          resources, allowing for full fidelity round trip conversions
+                        type: object
+                      type:
+                        type: string
+                    type: object
+                type: object
+              environmentReference:
+                description: 'EnvironmentReference: Resource ID of environment.'
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              extendedLocation:
+                description: |-
+                  Storage version of v20250101.ExtendedLocation
+                  The complex type of the extended location.
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  name:
+                    type: string
+                  type:
+                    type: string
+                type: object
+              identity:
+                description: |-
+                  Storage version of v20250101.ManagedServiceIdentity
+                  Managed service identity (system assigned and/or user assigned identities)
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  type:
+                    type: string
+                  userAssignedIdentities:
+                    items:
+                      description: |-
+                        Storage version of v20250101.UserAssignedIdentityDetails
+                        Information about the user assigned identity for the resource
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        reference:
+                          description: ResourceReference represents a resource reference,
+                            either to a Kubernetes resource or directly to an Azure
+                            resource via ARMID
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                type: object
+              location:
+                type: string
+              managedByReference:
+                description: |-
+                  ManagedByReference: The fully qualified resource ID of the resource that manages this resource. Indicates if this
+                  resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource
+                  if it is removed from the template since it is managed by another resource.
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              managedEnvironmentReference:
+                description: 'ManagedEnvironmentReference: Deprecated. Resource ID
+                  of the Container App''s environment.'
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              operatorSpec:
+                description: |-
+                  Storage version of v20250101.ContainerAppOperatorSpec
+                  Details for configuring operator behavior. Fields in this struct are interpreted by the operator directly rather than being passed to Azure
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  configMapExpressions:
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  configMaps:
+                    description: Storage version of v20250101.ContainerAppOperatorConfigMaps
+                    properties:
+                      $propertyBag:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                          resources, allowing for full fidelity round trip conversions
+                        type: object
+                      eventStreamEndpoint:
+                        description: |-
+                          ConfigMapDestination describes the location to store a single configmap value
+                          Note: This is similar to: SecretDestination in secrets.go.
+                          Changes to one may need to be made to the others as well.
+                        properties:
+                          annotations:
+                            additionalProperties:
+                              type: string
+                            description: Annotations is an optional set of annotations
+                              to apply to the ConfigMap.
+                            type: object
+                          key:
+                            description: Key is the key in the ConfigMap being referenced
+                            type: string
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: Labels is an optional set of labels to apply
+                              to the ConfigMap.
+                            type: object
+                          name:
+                            description: |-
+                              Name is the name of the Kubernetes ConfigMap to write to.
+                              The ConfigMap will be created in the same namespace as the resource.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        type: object
+                      fqdn:
+                        description: |-
+                          ConfigMapDestination describes the location to store a single configmap value
+                          Note: This is similar to: SecretDestination in secrets.go.
+                          Changes to one may need to be made to the others as well.
+                        properties:
+                          annotations:
+                            additionalProperties:
+                              type: string
+                            description: Annotations is an optional set of annotations
+                              to apply to the ConfigMap.
+                            type: object
+                          key:
+                            description: Key is the key in the ConfigMap being referenced
+                            type: string
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: Labels is an optional set of labels to apply
+                              to the ConfigMap.
+                            type: object
+                          name:
+                            description: |-
+                              Name is the name of the Kubernetes ConfigMap to write to.
+                              The ConfigMap will be created in the same namespace as the resource.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        type: object
+                    type: object
+                  secretExpressions:
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              originalVersion:
+                type: string
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a resources.azure.com/ResourceGroup resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                type: object
+              template:
+                description: |-
+                  Storage version of v20250101.Template
+                  Container App versioned application definition.
+                  Defines the desired state of an immutable revision.
+                  Any changes to this
+                  section Will result in a new revision being created
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  containers:
+                    items:
+                      description: |-
+                        Storage version of v20250101.Container
+                        Container App container definition
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        args:
+                          items:
+                            type: string
+                          type: array
+                        command:
+                          items:
+                            type: string
+                          type: array
+                        env:
+                          items:
+                            description: |-
+                              Storage version of v20250101.EnvironmentVar
+                              Container App container environment variable.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              name:
+                                type: string
+                              secretRef:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        image:
+                          type: string
+                        name:
+                          type: string
+                        probes:
+                          items:
+                            description: |-
+                              Storage version of v20250101.ContainerAppProbe
+                              Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive
+                              traffic.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              failureThreshold:
+                                type: integer
+                              httpGet:
+                                description: Storage version of v20250101.ContainerAppProbe_HttpGet
+                                properties:
+                                  $propertyBag:
+                                    additionalProperties:
+                                      type: string
+                                    description: |-
+                                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                      resources, allowing for full fidelity round trip conversions
+                                    type: object
+                                  host:
+                                    type: string
+                                  httpHeaders:
+                                    items:
+                                      description: Storage version of v20250101.ContainerAppProbe_HttpGet_HttpHeaders
+                                      properties:
+                                        $propertyBag:
+                                          additionalProperties:
+                                            type: string
+                                          description: |-
+                                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                            resources, allowing for full fidelity round trip conversions
+                                          type: object
+                                        name:
+                                          type: string
+                                        value:
+                                          type: string
+                                      type: object
+                                    type: array
+                                  path:
+                                    type: string
+                                  port:
+                                    type: integer
+                                  scheme:
+                                    type: string
+                                type: object
+                              initialDelaySeconds:
+                                type: integer
+                              periodSeconds:
+                                type: integer
+                              successThreshold:
+                                type: integer
+                              tcpSocket:
+                                description: Storage version of v20250101.ContainerAppProbe_TcpSocket
+                                properties:
+                                  $propertyBag:
+                                    additionalProperties:
+                                      type: string
+                                    description: |-
+                                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                      resources, allowing for full fidelity round trip conversions
+                                    type: object
+                                  host:
+                                    type: string
+                                  port:
+                                    type: integer
+                                type: object
+                              terminationGracePeriodSeconds:
+                                type: integer
+                              timeoutSeconds:
+                                type: integer
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        resources:
+                          description: |-
+                            Storage version of v20250101.ContainerResources
+                            Container App container resource requirements.
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            cpu:
+                              type: number
+                            memory:
+                              type: string
+                          type: object
+                        volumeMounts:
+                          items:
+                            description: |-
+                              Storage version of v20250101.VolumeMount
+                              Volume mount for the Container App.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              mountPath:
+                                type: string
+                              subPath:
+                                type: string
+                              volumeName:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  initContainers:
+                    items:
+                      description: |-
+                        Storage version of v20250101.BaseContainer
+                        Container App base container definition.
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        args:
+                          items:
+                            type: string
+                          type: array
+                        command:
+                          items:
+                            type: string
+                          type: array
+                        env:
+                          items:
+                            description: |-
+                              Storage version of v20250101.EnvironmentVar
+                              Container App container environment variable.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              name:
+                                type: string
+                              secretRef:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        image:
+                          type: string
+                        name:
+                          type: string
+                        resources:
+                          description: |-
+                            Storage version of v20250101.ContainerResources
+                            Container App container resource requirements.
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            cpu:
+                              type: number
+                            memory:
+                              type: string
+                          type: object
+                        volumeMounts:
+                          items:
+                            description: |-
+                              Storage version of v20250101.VolumeMount
+                              Volume mount for the Container App.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              mountPath:
+                                type: string
+                              subPath:
+                                type: string
+                              volumeName:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  revisionSuffix:
+                    type: string
+                  scale:
+                    description: |-
+                      Storage version of v20250101.Scale
+                      Container App scaling configurations.
+                    properties:
+                      $propertyBag:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                          resources, allowing for full fidelity round trip conversions
+                        type: object
+                      cooldownPeriod:
+                        type: integer
+                      maxReplicas:
+                        type: integer
+                      minReplicas:
+                        type: integer
+                      pollingInterval:
+                        type: integer
+                      rules:
+                        items:
+                          description: |-
+                            Storage version of v20250101.ScaleRule
+                            Container App container scaling rule.
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            azureQueue:
+                              description: |-
+                                Storage version of v20250101.QueueScaleRule
+                                Container App container Azure Queue based scaling rule.
+                              properties:
+                                $propertyBag:
+                                  additionalProperties:
+                                    type: string
+                                  description: |-
+                                    PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                    resources, allowing for full fidelity round trip conversions
+                                  type: object
+                                accountName:
+                                  type: string
+                                auth:
+                                  items:
+                                    description: |-
+                                      Storage version of v20250101.ScaleRuleAuth
+                                      Auth Secrets for Scale Rule
+                                    properties:
+                                      $propertyBag:
+                                        additionalProperties:
+                                          type: string
+                                        description: |-
+                                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                          resources, allowing for full fidelity round trip conversions
+                                        type: object
+                                      secretRef:
+                                        type: string
+                                      triggerParameter:
+                                        type: string
+                                    type: object
+                                  type: array
+                                identityReference:
+                                  description: |-
+                                    IdentityReference: The resource ID of a user-assigned managed identity that is assigned to the Container App, or
+                                    'system' for system-assigned identity.
+                                  properties:
+                                    armId:
+                                      description: |-
+                                        ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                        The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                        ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                                      pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                                      type: string
+                                    group:
+                                      description: Group is the Kubernetes group of
+                                        the resource.
+                                      type: string
+                                    kind:
+                                      description: Kind is the Kubernetes kind of
+                                        the resource.
+                                      type: string
+                                    name:
+                                      description: Name is the Kubernetes name of
+                                        the resource.
+                                      type: string
+                                    wellKnownName:
+                                      type: string
+                                  type: object
+                                queueLength:
+                                  type: integer
+                                queueName:
+                                  type: string
+                              type: object
+                            custom:
+                              description: |-
+                                Storage version of v20250101.CustomScaleRule
+                                Container App container Custom scaling rule.
+                              properties:
+                                $propertyBag:
+                                  additionalProperties:
+                                    type: string
+                                  description: |-
+                                    PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                    resources, allowing for full fidelity round trip conversions
+                                  type: object
+                                auth:
+                                  items:
+                                    description: |-
+                                      Storage version of v20250101.ScaleRuleAuth
+                                      Auth Secrets for Scale Rule
+                                    properties:
+                                      $propertyBag:
+                                        additionalProperties:
+                                          type: string
+                                        description: |-
+                                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                          resources, allowing for full fidelity round trip conversions
+                                        type: object
+                                      secretRef:
+                                        type: string
+                                      triggerParameter:
+                                        type: string
+                                    type: object
+                                  type: array
+                                identityReference:
+                                  description: |-
+                                    IdentityReference: The resource ID of a user-assigned managed identity that is assigned to the Container App, or
+                                    'system' for system-assigned identity.
+                                  properties:
+                                    armId:
+                                      description: |-
+                                        ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                        The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                        ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                                      pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                                      type: string
+                                    group:
+                                      description: Group is the Kubernetes group of
+                                        the resource.
+                                      type: string
+                                    kind:
+                                      description: Kind is the Kubernetes kind of
+                                        the resource.
+                                      type: string
+                                    name:
+                                      description: Name is the Kubernetes name of
+                                        the resource.
+                                      type: string
+                                    wellKnownName:
+                                      type: string
+                                  type: object
+                                metadata:
+                                  additionalProperties:
+                                    type: string
+                                  type: object
+                                type:
+                                  type: string
+                              type: object
+                            http:
+                              description: |-
+                                Storage version of v20250101.HttpScaleRule
+                                Container App container Http scaling rule.
+                              properties:
+                                $propertyBag:
+                                  additionalProperties:
+                                    type: string
+                                  description: |-
+                                    PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                    resources, allowing for full fidelity round trip conversions
+                                  type: object
+                                auth:
+                                  items:
+                                    description: |-
+                                      Storage version of v20250101.ScaleRuleAuth
+                                      Auth Secrets for Scale Rule
+                                    properties:
+                                      $propertyBag:
+                                        additionalProperties:
+                                          type: string
+                                        description: |-
+                                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                          resources, allowing for full fidelity round trip conversions
+                                        type: object
+                                      secretRef:
+                                        type: string
+                                      triggerParameter:
+                                        type: string
+                                    type: object
+                                  type: array
+                                identityReference:
+                                  description: |-
+                                    IdentityReference: The resource ID of a user-assigned managed identity that is assigned to the Container App, or
+                                    'system' for system-assigned identity.
+                                  properties:
+                                    armId:
+                                      description: |-
+                                        ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                        The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                        ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                                      pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                                      type: string
+                                    group:
+                                      description: Group is the Kubernetes group of
+                                        the resource.
+                                      type: string
+                                    kind:
+                                      description: Kind is the Kubernetes kind of
+                                        the resource.
+                                      type: string
+                                    name:
+                                      description: Name is the Kubernetes name of
+                                        the resource.
+                                      type: string
+                                    wellKnownName:
+                                      type: string
+                                  type: object
+                                metadata:
+                                  additionalProperties:
+                                    type: string
+                                  type: object
+                              type: object
+                            name:
+                              type: string
+                            tcp:
+                              description: |-
+                                Storage version of v20250101.TcpScaleRule
+                                Container App container Tcp scaling rule.
+                              properties:
+                                $propertyBag:
+                                  additionalProperties:
+                                    type: string
+                                  description: |-
+                                    PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                    resources, allowing for full fidelity round trip conversions
+                                  type: object
+                                auth:
+                                  items:
+                                    description: |-
+                                      Storage version of v20250101.ScaleRuleAuth
+                                      Auth Secrets for Scale Rule
+                                    properties:
+                                      $propertyBag:
+                                        additionalProperties:
+                                          type: string
+                                        description: |-
+                                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                          resources, allowing for full fidelity round trip conversions
+                                        type: object
+                                      secretRef:
+                                        type: string
+                                      triggerParameter:
+                                        type: string
+                                    type: object
+                                  type: array
+                                identityReference:
+                                  description: |-
+                                    IdentityReference: The resource ID of a user-assigned managed identity that is assigned to the Container App, or
+                                    'system' for system-assigned identity.
+                                  properties:
+                                    armId:
+                                      description: |-
+                                        ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                        The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                        ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                                      pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                                      type: string
+                                    group:
+                                      description: Group is the Kubernetes group of
+                                        the resource.
+                                      type: string
+                                    kind:
+                                      description: Kind is the Kubernetes kind of
+                                        the resource.
+                                      type: string
+                                    name:
+                                      description: Name is the Kubernetes name of
+                                        the resource.
+                                      type: string
+                                    wellKnownName:
+                                      type: string
+                                  type: object
+                                metadata:
+                                  additionalProperties:
+                                    type: string
+                                  type: object
+                              type: object
+                          type: object
+                        type: array
+                    type: object
+                  serviceBinds:
+                    items:
+                      description: |-
+                        Storage version of v20250101.ServiceBind
+                        Configuration to bind a ContainerApp to a dev ContainerApp Service
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        name:
+                          type: string
+                        serviceReference:
+                          description: 'ServiceReference: Resource id of the target
+                            service'
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  terminationGracePeriodSeconds:
+                    type: integer
+                  volumes:
+                    items:
+                      description: |-
+                        Storage version of v20250101.Volume
+                        Volume definitions for the Container App.
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        mountOptions:
+                          type: string
+                        name:
+                          type: string
+                        secrets:
+                          items:
+                            description: |-
+                              Storage version of v20250101.SecretVolumeItem
+                              Secret to be added to volume.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              path:
+                                type: string
+                              secretRef:
+                                type: string
+                            type: object
+                          type: array
+                        storageName:
+                          type: string
+                        storageType:
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              workloadProfileName:
+                type: string
+            required:
+            - owner
+            type: object
+          status:
+            description: |-
+              Storage version of v20250101.ContainerApp_STATUS
+              Container App.
+            properties:
+              $propertyBag:
+                additionalProperties:
+                  type: string
+                description: |-
+                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                  resources, allowing for full fidelity round trip conversions
+                type: object
+              conditions:
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              configuration:
+                description: |-
+                  Storage version of v20250101.Configuration_STATUS
+                  Non versioned Container App configuration properties that define the mutable settings of a Container app
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  activeRevisionsMode:
+                    type: string
+                  dapr:
+                    description: |-
+                      Storage version of v20250101.Dapr_STATUS
+                      Container App Dapr configuration.
+                    properties:
+                      $propertyBag:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                          resources, allowing for full fidelity round trip conversions
+                        type: object
+                      appId:
+                        type: string
+                      appPort:
+                        type: integer
+                      appProtocol:
+                        type: string
+                      enableApiLogging:
+                        type: boolean
+                      enabled:
+                        type: boolean
+                      httpMaxRequestSize:
+                        type: integer
+                      httpReadBufferSize:
+                        type: integer
+                      logLevel:
+                        type: string
+                    type: object
+                  identitySettings:
+                    items:
+                      description: |-
+                        Storage version of v20250101.IdentitySettings_STATUS
+                        Optional settings for a Managed Identity that is assigned to the Container App.
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        identity:
+                          type: string
+                        lifecycle:
+                          type: string
+                      type: object
+                    type: array
+                  ingress:
+                    description: |-
+                      Storage version of v20250101.Ingress_STATUS
+                      Container App Ingress configuration.
+                    properties:
+                      $propertyBag:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                          resources, allowing for full fidelity round trip conversions
+                        type: object
+                      additionalPortMappings:
+                        items:
+                          description: |-
+                            Storage version of v20250101.IngressPortMapping_STATUS
+                            Port mappings of container app ingress
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            exposedPort:
+                              type: integer
+                            external:
+                              type: boolean
+                            targetPort:
+                              type: integer
+                          type: object
+                        type: array
+                      allowInsecure:
+                        type: boolean
+                      clientCertificateMode:
+                        type: string
+                      corsPolicy:
+                        description: |-
+                          Storage version of v20250101.CorsPolicy_STATUS
+                          Cross-Origin-Resource-Sharing policy
+                        properties:
+                          $propertyBag:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                              resources, allowing for full fidelity round trip conversions
+                            type: object
+                          allowCredentials:
+                            type: boolean
+                          allowedHeaders:
+                            items:
+                              type: string
+                            type: array
+                          allowedMethods:
+                            items:
+                              type: string
+                            type: array
+                          allowedOrigins:
+                            items:
+                              type: string
+                            type: array
+                          exposeHeaders:
+                            items:
+                              type: string
+                            type: array
+                          maxAge:
+                            type: integer
+                        type: object
+                      customDomains:
+                        items:
+                          description: |-
+                            Storage version of v20250101.CustomDomain_STATUS
+                            Custom Domain of a Container App
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            bindingType:
+                              type: string
+                            certificateId:
+                              type: string
+                            name:
+                              type: string
+                          type: object
+                        type: array
+                      exposedPort:
+                        type: integer
+                      external:
+                        type: boolean
+                      fqdn:
+                        type: string
+                      ipSecurityRestrictions:
+                        items:
+                          description: |-
+                            Storage version of v20250101.IpSecurityRestrictionRule_STATUS
+                            Rule to restrict incoming IP address.
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            action:
+                              type: string
+                            description:
+                              type: string
+                            ipAddressRange:
+                              type: string
+                            name:
+                              type: string
+                          type: object
+                        type: array
+                      stickySessions:
+                        description: Storage version of v20250101.Ingress_StickySessions_STATUS
+                        properties:
+                          $propertyBag:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                              resources, allowing for full fidelity round trip conversions
+                            type: object
+                          affinity:
+                            type: string
+                        type: object
+                      targetPort:
+                        type: integer
+                      traffic:
+                        items:
+                          description: |-
+                            Storage version of v20250101.TrafficWeight_STATUS
+                            Traffic weight assigned to a revision
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            label:
+                              type: string
+                            latestRevision:
+                              type: boolean
+                            revisionName:
+                              type: string
+                            weight:
+                              type: integer
+                          type: object
+                        type: array
+                      transport:
+                        type: string
+                    type: object
+                  maxInactiveRevisions:
+                    type: integer
+                  registries:
+                    items:
+                      description: |-
+                        Storage version of v20250101.RegistryCredentials_STATUS
+                        Container App Private Registry
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        identity:
+                          type: string
+                        passwordSecretRef:
+                          type: string
+                        server:
+                          type: string
+                        username:
+                          type: string
+                      type: object
+                    type: array
+                  runtime:
+                    description: |-
+                      Storage version of v20250101.Runtime_STATUS
+                      Container App Runtime configuration.
+                    properties:
+                      $propertyBag:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                          resources, allowing for full fidelity round trip conversions
+                        type: object
+                      java:
+                        description: Storage version of v20250101.Runtime_Java_STATUS
+                        properties:
+                          $propertyBag:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                              resources, allowing for full fidelity round trip conversions
+                            type: object
+                          enableMetrics:
+                            type: boolean
+                        type: object
+                    type: object
+                  secrets:
+                    items:
+                      description: |-
+                        Storage version of v20250101.Secret_STATUS
+                        Secret definition.
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        identity:
+                          type: string
+                        keyVaultUrl:
+                          type: string
+                        name:
+                          type: string
+                      type: object
+                    type: array
+                  service:
+                    description: |-
+                      Storage version of v20250101.Service_STATUS
+                      Container App to be a dev service
+                    properties:
+                      $propertyBag:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                          resources, allowing for full fidelity round trip conversions
+                        type: object
+                      type:
+                        type: string
+                    type: object
+                type: object
+              customDomainVerificationId:
+                type: string
+              environmentId:
+                type: string
+              eventStreamEndpoint:
+                type: string
+              extendedLocation:
+                description: |-
+                  Storage version of v20250101.ExtendedLocation_STATUS
+                  The complex type of the extended location.
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  name:
+                    type: string
+                  type:
+                    type: string
+                type: object
+              id:
+                type: string
+              identity:
+                description: |-
+                  Storage version of v20250101.ManagedServiceIdentity_STATUS
+                  Managed service identity (system assigned and/or user assigned identities)
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  principalId:
+                    type: string
+                  tenantId:
+                    type: string
+                  type:
+                    type: string
+                  userAssignedIdentities:
+                    additionalProperties:
+                      description: |-
+                        Storage version of v20250101.UserAssignedIdentity_STATUS
+                        User assigned identity properties
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        clientId:
+                          type: string
+                        principalId:
+                          type: string
+                      type: object
+                    type: object
+                type: object
+              latestReadyRevisionName:
+                type: string
+              latestRevisionFqdn:
+                type: string
+              latestRevisionName:
+                type: string
+              location:
+                type: string
+              managedBy:
+                type: string
+              managedEnvironmentId:
+                type: string
+              name:
+                type: string
+              outboundIpAddresses:
+                items:
+                  type: string
+                type: array
+              provisioningState:
+                type: string
+              runningStatus:
+                type: string
+              systemData:
+                description: |-
+                  Storage version of v20250101.SystemData_STATUS
+                  Metadata pertaining to creation and last modification of the resource.
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  createdAt:
+                    type: string
+                  createdBy:
+                    type: string
+                  createdByType:
+                    type: string
+                  lastModifiedAt:
+                    type: string
+                  lastModifiedBy:
+                    type: string
+                  lastModifiedByType:
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                type: object
+              template:
+                description: |-
+                  Storage version of v20250101.Template_STATUS
+                  Container App versioned application definition.
+                  Defines the desired state of an immutable revision.
+                  Any changes to this
+                  section Will result in a new revision being created
+                properties:
+                  $propertyBag:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                      resources, allowing for full fidelity round trip conversions
+                    type: object
+                  containers:
+                    items:
+                      description: |-
+                        Storage version of v20250101.Container_STATUS
+                        Container App container definition
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        args:
+                          items:
+                            type: string
+                          type: array
+                        command:
+                          items:
+                            type: string
+                          type: array
+                        env:
+                          items:
+                            description: |-
+                              Storage version of v20250101.EnvironmentVar_STATUS
+                              Container App container environment variable.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              name:
+                                type: string
+                              secretRef:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        image:
+                          type: string
+                        name:
+                          type: string
+                        probes:
+                          items:
+                            description: |-
+                              Storage version of v20250101.ContainerAppProbe_STATUS
+                              Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive
+                              traffic.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              failureThreshold:
+                                type: integer
+                              httpGet:
+                                description: Storage version of v20250101.ContainerAppProbe_HttpGet_STATUS
+                                properties:
+                                  $propertyBag:
+                                    additionalProperties:
+                                      type: string
+                                    description: |-
+                                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                      resources, allowing for full fidelity round trip conversions
+                                    type: object
+                                  host:
+                                    type: string
+                                  httpHeaders:
+                                    items:
+                                      description: Storage version of v20250101.ContainerAppProbe_HttpGet_HttpHeaders_STATUS
+                                      properties:
+                                        $propertyBag:
+                                          additionalProperties:
+                                            type: string
+                                          description: |-
+                                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                            resources, allowing for full fidelity round trip conversions
+                                          type: object
+                                        name:
+                                          type: string
+                                        value:
+                                          type: string
+                                      type: object
+                                    type: array
+                                  path:
+                                    type: string
+                                  port:
+                                    type: integer
+                                  scheme:
+                                    type: string
+                                type: object
+                              initialDelaySeconds:
+                                type: integer
+                              periodSeconds:
+                                type: integer
+                              successThreshold:
+                                type: integer
+                              tcpSocket:
+                                description: Storage version of v20250101.ContainerAppProbe_TcpSocket_STATUS
+                                properties:
+                                  $propertyBag:
+                                    additionalProperties:
+                                      type: string
+                                    description: |-
+                                      PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                      resources, allowing for full fidelity round trip conversions
+                                    type: object
+                                  host:
+                                    type: string
+                                  port:
+                                    type: integer
+                                type: object
+                              terminationGracePeriodSeconds:
+                                type: integer
+                              timeoutSeconds:
+                                type: integer
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        resources:
+                          description: |-
+                            Storage version of v20250101.ContainerResources_STATUS
+                            Container App container resource requirements.
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            cpu:
+                              type: number
+                            ephemeralStorage:
+                              type: string
+                            memory:
+                              type: string
+                          type: object
+                        volumeMounts:
+                          items:
+                            description: |-
+                              Storage version of v20250101.VolumeMount_STATUS
+                              Volume mount for the Container App.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              mountPath:
+                                type: string
+                              subPath:
+                                type: string
+                              volumeName:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  initContainers:
+                    items:
+                      description: |-
+                        Storage version of v20250101.BaseContainer_STATUS
+                        Container App base container definition.
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        args:
+                          items:
+                            type: string
+                          type: array
+                        command:
+                          items:
+                            type: string
+                          type: array
+                        env:
+                          items:
+                            description: |-
+                              Storage version of v20250101.EnvironmentVar_STATUS
+                              Container App container environment variable.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              name:
+                                type: string
+                              secretRef:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        image:
+                          type: string
+                        name:
+                          type: string
+                        resources:
+                          description: |-
+                            Storage version of v20250101.ContainerResources_STATUS
+                            Container App container resource requirements.
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            cpu:
+                              type: number
+                            ephemeralStorage:
+                              type: string
+                            memory:
+                              type: string
+                          type: object
+                        volumeMounts:
+                          items:
+                            description: |-
+                              Storage version of v20250101.VolumeMount_STATUS
+                              Volume mount for the Container App.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              mountPath:
+                                type: string
+                              subPath:
+                                type: string
+                              volumeName:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  revisionSuffix:
+                    type: string
+                  scale:
+                    description: |-
+                      Storage version of v20250101.Scale_STATUS
+                      Container App scaling configurations.
+                    properties:
+                      $propertyBag:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                          resources, allowing for full fidelity round trip conversions
+                        type: object
+                      cooldownPeriod:
+                        type: integer
+                      maxReplicas:
+                        type: integer
+                      minReplicas:
+                        type: integer
+                      pollingInterval:
+                        type: integer
+                      rules:
+                        items:
+                          description: |-
+                            Storage version of v20250101.ScaleRule_STATUS
+                            Container App container scaling rule.
+                          properties:
+                            $propertyBag:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                resources, allowing for full fidelity round trip conversions
+                              type: object
+                            azureQueue:
+                              description: |-
+                                Storage version of v20250101.QueueScaleRule_STATUS
+                                Container App container Azure Queue based scaling rule.
+                              properties:
+                                $propertyBag:
+                                  additionalProperties:
+                                    type: string
+                                  description: |-
+                                    PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                    resources, allowing for full fidelity round trip conversions
+                                  type: object
+                                accountName:
+                                  type: string
+                                auth:
+                                  items:
+                                    description: |-
+                                      Storage version of v20250101.ScaleRuleAuth_STATUS
+                                      Auth Secrets for Scale Rule
+                                    properties:
+                                      $propertyBag:
+                                        additionalProperties:
+                                          type: string
+                                        description: |-
+                                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                          resources, allowing for full fidelity round trip conversions
+                                        type: object
+                                      secretRef:
+                                        type: string
+                                      triggerParameter:
+                                        type: string
+                                    type: object
+                                  type: array
+                                identity:
+                                  type: string
+                                queueLength:
+                                  type: integer
+                                queueName:
+                                  type: string
+                              type: object
+                            custom:
+                              description: |-
+                                Storage version of v20250101.CustomScaleRule_STATUS
+                                Container App container Custom scaling rule.
+                              properties:
+                                $propertyBag:
+                                  additionalProperties:
+                                    type: string
+                                  description: |-
+                                    PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                    resources, allowing for full fidelity round trip conversions
+                                  type: object
+                                auth:
+                                  items:
+                                    description: |-
+                                      Storage version of v20250101.ScaleRuleAuth_STATUS
+                                      Auth Secrets for Scale Rule
+                                    properties:
+                                      $propertyBag:
+                                        additionalProperties:
+                                          type: string
+                                        description: |-
+                                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                          resources, allowing for full fidelity round trip conversions
+                                        type: object
+                                      secretRef:
+                                        type: string
+                                      triggerParameter:
+                                        type: string
+                                    type: object
+                                  type: array
+                                identity:
+                                  type: string
+                                metadata:
+                                  additionalProperties:
+                                    type: string
+                                  type: object
+                                type:
+                                  type: string
+                              type: object
+                            http:
+                              description: |-
+                                Storage version of v20250101.HttpScaleRule_STATUS
+                                Container App container Http scaling rule.
+                              properties:
+                                $propertyBag:
+                                  additionalProperties:
+                                    type: string
+                                  description: |-
+                                    PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                    resources, allowing for full fidelity round trip conversions
+                                  type: object
+                                auth:
+                                  items:
+                                    description: |-
+                                      Storage version of v20250101.ScaleRuleAuth_STATUS
+                                      Auth Secrets for Scale Rule
+                                    properties:
+                                      $propertyBag:
+                                        additionalProperties:
+                                          type: string
+                                        description: |-
+                                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                          resources, allowing for full fidelity round trip conversions
+                                        type: object
+                                      secretRef:
+                                        type: string
+                                      triggerParameter:
+                                        type: string
+                                    type: object
+                                  type: array
+                                identity:
+                                  type: string
+                                metadata:
+                                  additionalProperties:
+                                    type: string
+                                  type: object
+                              type: object
+                            name:
+                              type: string
+                            tcp:
+                              description: |-
+                                Storage version of v20250101.TcpScaleRule_STATUS
+                                Container App container Tcp scaling rule.
+                              properties:
+                                $propertyBag:
+                                  additionalProperties:
+                                    type: string
+                                  description: |-
+                                    PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                    resources, allowing for full fidelity round trip conversions
+                                  type: object
+                                auth:
+                                  items:
+                                    description: |-
+                                      Storage version of v20250101.ScaleRuleAuth_STATUS
+                                      Auth Secrets for Scale Rule
+                                    properties:
+                                      $propertyBag:
+                                        additionalProperties:
+                                          type: string
+                                        description: |-
+                                          PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                          resources, allowing for full fidelity round trip conversions
+                                        type: object
+                                      secretRef:
+                                        type: string
+                                      triggerParameter:
+                                        type: string
+                                    type: object
+                                  type: array
+                                identity:
+                                  type: string
+                                metadata:
+                                  additionalProperties:
+                                    type: string
+                                  type: object
+                              type: object
+                          type: object
+                        type: array
+                    type: object
+                  serviceBinds:
+                    items:
+                      description: |-
+                        Storage version of v20250101.ServiceBind_STATUS
+                        Configuration to bind a ContainerApp to a dev ContainerApp Service
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        name:
+                          type: string
+                        serviceId:
+                          type: string
+                      type: object
+                    type: array
+                  terminationGracePeriodSeconds:
+                    type: integer
+                  volumes:
+                    items:
+                      description: |-
+                        Storage version of v20250101.Volume_STATUS
+                        Volume definitions for the Container App.
+                      properties:
+                        $propertyBag:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                            resources, allowing for full fidelity round trip conversions
+                          type: object
+                        mountOptions:
+                          type: string
+                        name:
+                          type: string
+                        secrets:
+                          items:
+                            description: |-
+                              Storage version of v20250101.SecretVolumeItem_STATUS
+                              Secret to be added to volume.
+                            properties:
+                              $propertyBag:
+                                additionalProperties:
+                                  type: string
+                                description: |-
+                                  PropertyBag is an unordered set of stashed information that used for properties not directly supported by storage
+                                  resources, allowing for full fidelity round trip conversions
+                                type: object
+                              path:
+                                type: string
+                              secretRef:
+                                type: string
+                            type: object
+                          type: array
+                        storageName:
+                          type: string
+                        storageType:
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              type:
+                type: string
+              workloadProfileName:
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

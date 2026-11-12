@@ -2,6 +2,16 @@
 
 The following resources have newer versions available in the Azure REST API specifications. Resources with a 💡 have a recommended or overdue update.
 
+## app
+
+|  | Resource                              | Available Stable | Supported Stable | Available Preview | Supported Preview |
+|--|---------------------------------------|------------------|------------------|-------------------|-------------------|
+|  | ManagedEnvironmentsCertificate        | 2026-01-01       | 2025-01-01       | -                 | -                 |
+|  | ManagedEnvironmentsDaprComponent      | 2026-01-01       | 2025-01-01       | -                 | -                 |
+|  | ManagedEnvironmentsJavaComponent      | 2026-01-01       | 2025-01-01       | -                 | -                 |
+|  | ManagedEnvironmentsManagedCertificate | 2026-01-01       | 2025-01-01       | -                 | -                 |
+|  | ManagedEnvironmentsStorage            | 2026-01-01       | 2025-01-01       | -                 | -                 |
+
 ## authorization
 
 |      | Resource       | Available Stable | Supported Stable | Available Preview      | Supported Preview  |

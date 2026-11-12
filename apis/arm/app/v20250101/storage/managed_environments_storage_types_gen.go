@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101/storage"
 	"github.com/rotisserie/eris"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -269,6 +270,110 @@ type AzureFileProperties struct {
 	ShareName   *string                     `json:"shareName,omitempty"`
 }
 
+// AssignProperties_From_AzureFileProperties populates our AzureFileProperties from the provided source AzureFileProperties
+func (properties *AzureFileProperties) AssignProperties_From_AzureFileProperties(source *storage.AzureFileProperties) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// AccessMode
+	properties.AccessMode = genruntime.ClonePointerToString(source.AccessMode)
+
+	// AccountKey
+	if source.AccountKey != nil {
+		accountKey := source.AccountKey.Copy()
+		properties.AccountKey = &accountKey
+	} else {
+		properties.AccountKey = nil
+	}
+
+	// AccountKeyVaultProperties
+	if source.AccountKeyVaultProperties != nil {
+		propertyBag.Add("AccountKeyVaultProperties", *source.AccountKeyVaultProperties)
+	} else {
+		propertyBag.Remove("AccountKeyVaultProperties")
+	}
+
+	// AccountName
+	properties.AccountName = genruntime.ClonePointerToString(source.AccountName)
+
+	// ShareName
+	properties.ShareName = genruntime.ClonePointerToString(source.ShareName)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		properties.PropertyBag = propertyBag
+	} else {
+		properties.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForAzureFileProperties interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForAzureFileProperties); ok {
+		err := augmentedProperties.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_AzureFileProperties populates the provided destination AzureFileProperties from our AzureFileProperties
+func (properties *AzureFileProperties) AssignProperties_To_AzureFileProperties(destination *storage.AzureFileProperties) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(properties.PropertyBag)
+
+	// AccessMode
+	destination.AccessMode = genruntime.ClonePointerToString(properties.AccessMode)
+
+	// AccountKey
+	if properties.AccountKey != nil {
+		accountKey := properties.AccountKey.Copy()
+		destination.AccountKey = &accountKey
+	} else {
+		destination.AccountKey = nil
+	}
+
+	// AccountKeyVaultProperties
+	if propertyBag.Contains("AccountKeyVaultProperties") {
+		var accountKeyVaultProperty storage.SecretKeyVaultProperties
+		err := propertyBag.Pull("AccountKeyVaultProperties", &accountKeyVaultProperty)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'AccountKeyVaultProperties' from propertyBag")
+		}
+
+		destination.AccountKeyVaultProperties = &accountKeyVaultProperty
+	} else {
+		destination.AccountKeyVaultProperties = nil
+	}
+
+	// AccountName
+	destination.AccountName = genruntime.ClonePointerToString(properties.AccountName)
+
+	// ShareName
+	destination.ShareName = genruntime.ClonePointerToString(properties.ShareName)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForAzureFileProperties interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForAzureFileProperties); ok {
+		err := augmentedProperties.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20250101.AzureFileProperties_STATUS
 // Azure File Properties.
 type AzureFileProperties_STATUS struct {
@@ -276,6 +381,94 @@ type AzureFileProperties_STATUS struct {
 	AccountName *string                `json:"accountName,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	ShareName   *string                `json:"shareName,omitempty"`
+}
+
+// AssignProperties_From_AzureFileProperties_STATUS populates our AzureFileProperties_STATUS from the provided source AzureFileProperties_STATUS
+func (properties *AzureFileProperties_STATUS) AssignProperties_From_AzureFileProperties_STATUS(source *storage.AzureFileProperties_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// AccessMode
+	properties.AccessMode = genruntime.ClonePointerToString(source.AccessMode)
+
+	// AccountKeyVaultProperties
+	if source.AccountKeyVaultProperties != nil {
+		propertyBag.Add("AccountKeyVaultProperties", *source.AccountKeyVaultProperties)
+	} else {
+		propertyBag.Remove("AccountKeyVaultProperties")
+	}
+
+	// AccountName
+	properties.AccountName = genruntime.ClonePointerToString(source.AccountName)
+
+	// ShareName
+	properties.ShareName = genruntime.ClonePointerToString(source.ShareName)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		properties.PropertyBag = propertyBag
+	} else {
+		properties.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForAzureFileProperties_STATUS interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForAzureFileProperties_STATUS); ok {
+		err := augmentedProperties.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_AzureFileProperties_STATUS populates the provided destination AzureFileProperties_STATUS from our AzureFileProperties_STATUS
+func (properties *AzureFileProperties_STATUS) AssignProperties_To_AzureFileProperties_STATUS(destination *storage.AzureFileProperties_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(properties.PropertyBag)
+
+	// AccessMode
+	destination.AccessMode = genruntime.ClonePointerToString(properties.AccessMode)
+
+	// AccountKeyVaultProperties
+	if propertyBag.Contains("AccountKeyVaultProperties") {
+		var accountKeyVaultProperty storage.SecretKeyVaultProperties_STATUS
+		err := propertyBag.Pull("AccountKeyVaultProperties", &accountKeyVaultProperty)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'AccountKeyVaultProperties' from propertyBag")
+		}
+
+		destination.AccountKeyVaultProperties = &accountKeyVaultProperty
+	} else {
+		destination.AccountKeyVaultProperties = nil
+	}
+
+	// AccountName
+	destination.AccountName = genruntime.ClonePointerToString(properties.AccountName)
+
+	// ShareName
+	destination.ShareName = genruntime.ClonePointerToString(properties.ShareName)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForAzureFileProperties_STATUS interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForAzureFileProperties_STATUS); ok {
+		err := augmentedProperties.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
 }
 
 // Storage version of v20250101.NfsAzureFileProperties
@@ -294,6 +487,16 @@ type NfsAzureFileProperties_STATUS struct {
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	Server      *string                `json:"server,omitempty"`
 	ShareName   *string                `json:"shareName,omitempty"`
+}
+
+type augmentConversionForAzureFileProperties interface {
+	AssignPropertiesFrom(src *storage.AzureFileProperties) error
+	AssignPropertiesTo(dst *storage.AzureFileProperties) error
+}
+
+type augmentConversionForAzureFileProperties_STATUS interface {
+	AssignPropertiesFrom(src *storage.AzureFileProperties_STATUS) error
+	AssignPropertiesTo(dst *storage.AzureFileProperties_STATUS) error
 }
 
 func init() {

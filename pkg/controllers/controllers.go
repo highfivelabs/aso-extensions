@@ -104,6 +104,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asopostgresql.FlexibleServer{}, Name: "aso_postgresql_flexibleserver"},
 		{Obj: &asokeyvault.Vault{}, Name: "aso_keyvault_vault"},
 		{Obj: &asoapp.ManagedEnvironment{}, Name: "aso_app_managedenvironment"},
+		{Obj: &asoapp.ContainerApp{}, Name: "aso_app_containerapp"},
 		{Obj: &asoresources.ResourceGroup{}, Name: "aso_resources_resourcegroup"},
 		{Obj: &asoweb.Site{}, Name: "aso_web_site"},
 		{Obj: &asoworkspace.Workspace{}, Name: "aso_operationalinsights_workspace"},

@@ -6,6 +6,7 @@ resources:
 - keyvault.azure.com_vaults.yaml
 - resources.azure.com_resourcegroups.yaml
 - app.azure.com_managedenvironments.yaml
+- app.azure.com_containerapps.yaml
 - web.azure.com_sites.yaml
 - operationalinsights.azure.com_workspaces.yaml
 - containerregistry.azure.com_registries.yaml

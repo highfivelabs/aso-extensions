@@ -3,6 +3,7 @@
 # app.azure.com, not app.azure.hfl.dev, and the manager reads them as ASO's
 # types (pkg/controllers OwnerTypes).
 app/ManagedEnvironment
+app/ContainerApp
 resources/ResourceGroup
 web/Site
 operationalinsights/Workspace
