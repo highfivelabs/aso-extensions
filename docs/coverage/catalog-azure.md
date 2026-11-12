@@ -46,9 +46,11 @@ an empty template, no platform need; ASO prunes deployments, so neither
 covers it); locks, role assignments, diagnostic settings, private endpoints
 and their DNS zone groups through `var.resource_types` (ASO and ours, as
 above); and per module, the resource itself (a vault, a site, a storage
-account: ASO). Uncovered among them: the Container Apps environment's
-**HTTP route configs, Dapr subscriptions, .NET components and maintenance
-configurations** (preview API versions only; `docs/plan.md` c3) and
+account: ASO). The Container Apps environment's HTTP route configs and
+maintenance configurations are built here since 2026-11-12
+(`app.azure.hfl.dev/v20260101`, `docs/plan.md` c3b). Uncovered among them:
+the environment's **Dapr subscriptions and .NET components** (preview API
+versions only) and
 Application Insights **linked storage accounts**
 (`microsoft.insights/components/linkedStorageAccounts`); the App Service
 **config sections** (`sites/config/metadata`, the slot swap action), which

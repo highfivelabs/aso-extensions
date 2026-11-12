@@ -337,3 +337,21 @@ ManagedEnvironmentsStorage: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+augmentConversionForAzureFileProperties: Interface
+
+augmentConversionForAzureFileProperties_STATUS: Interface
+
+augmentConversionForCertificateKeyVaultProperties: Interface
+
+augmentConversionForCertificateKeyVaultProperties_STATUS: Interface
+
+augmentConversionForDaprMetadata: Interface
+
+augmentConversionForDaprMetadata_STATUS: Interface
+
+augmentConversionForSecret: Interface
+
+augmentConversionForSecret_STATUS: Interface
+
+augmentConversionForSystemData_STATUS: Interface
+

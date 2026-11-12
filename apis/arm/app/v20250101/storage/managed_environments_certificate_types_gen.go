@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101/storage"
 	"github.com/rotisserie/eris"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -290,6 +291,97 @@ type SystemData_STATUS struct {
 	PropertyBag        genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
+// AssignProperties_From_SystemData_STATUS populates our SystemData_STATUS from the provided source SystemData_STATUS
+func (data *SystemData_STATUS) AssignProperties_From_SystemData_STATUS(source *storage.SystemData_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// CreatedAt
+	data.CreatedAt = genruntime.ClonePointerToString(source.CreatedAt)
+
+	// CreatedBy
+	data.CreatedBy = genruntime.ClonePointerToString(source.CreatedBy)
+
+	// CreatedByType
+	data.CreatedByType = genruntime.ClonePointerToString(source.CreatedByType)
+
+	// LastModifiedAt
+	data.LastModifiedAt = genruntime.ClonePointerToString(source.LastModifiedAt)
+
+	// LastModifiedBy
+	data.LastModifiedBy = genruntime.ClonePointerToString(source.LastModifiedBy)
+
+	// LastModifiedByType
+	data.LastModifiedByType = genruntime.ClonePointerToString(source.LastModifiedByType)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		data.PropertyBag = propertyBag
+	} else {
+		data.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForSystemData_STATUS interface (if implemented) to customize the conversion
+	var dataAsAny any = data
+	if augmentedData, ok := dataAsAny.(augmentConversionForSystemData_STATUS); ok {
+		err := augmentedData.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_SystemData_STATUS populates the provided destination SystemData_STATUS from our SystemData_STATUS
+func (data *SystemData_STATUS) AssignProperties_To_SystemData_STATUS(destination *storage.SystemData_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(data.PropertyBag)
+
+	// CreatedAt
+	destination.CreatedAt = genruntime.ClonePointerToString(data.CreatedAt)
+
+	// CreatedBy
+	destination.CreatedBy = genruntime.ClonePointerToString(data.CreatedBy)
+
+	// CreatedByType
+	destination.CreatedByType = genruntime.ClonePointerToString(data.CreatedByType)
+
+	// LastModifiedAt
+	destination.LastModifiedAt = genruntime.ClonePointerToString(data.LastModifiedAt)
+
+	// LastModifiedBy
+	destination.LastModifiedBy = genruntime.ClonePointerToString(data.LastModifiedBy)
+
+	// LastModifiedByType
+	destination.LastModifiedByType = genruntime.ClonePointerToString(data.LastModifiedByType)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForSystemData_STATUS interface (if implemented) to customize the conversion
+	var dataAsAny any = data
+	if augmentedData, ok := dataAsAny.(augmentConversionForSystemData_STATUS); ok {
+		err := augmentedData.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+type augmentConversionForSystemData_STATUS interface {
+	AssignPropertiesFrom(src *storage.SystemData_STATUS) error
+	AssignPropertiesTo(dst *storage.SystemData_STATUS) error
+}
+
 // Storage version of v20250101.CertificateKeyVaultProperties
 // Properties for a certificate stored in a Key Vault.
 type CertificateKeyVaultProperties struct {
@@ -300,12 +392,156 @@ type CertificateKeyVaultProperties struct {
 	PropertyBag       genruntime.PropertyBag                 `json:"$propertyBag,omitempty"`
 }
 
+// AssignProperties_From_CertificateKeyVaultProperties populates our CertificateKeyVaultProperties from the provided source CertificateKeyVaultProperties
+func (properties *CertificateKeyVaultProperties) AssignProperties_From_CertificateKeyVaultProperties(source *storage.CertificateKeyVaultProperties) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// IdentityReference
+	if source.IdentityReference != nil {
+		identityReference := source.IdentityReference.Copy()
+		properties.IdentityReference = &identityReference
+	} else {
+		properties.IdentityReference = nil
+	}
+
+	// KeyVaultUrl
+	properties.KeyVaultUrl = genruntime.ClonePointerToString(source.KeyVaultUrl)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		properties.PropertyBag = propertyBag
+	} else {
+		properties.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCertificateKeyVaultProperties interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForCertificateKeyVaultProperties); ok {
+		err := augmentedProperties.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_CertificateKeyVaultProperties populates the provided destination CertificateKeyVaultProperties from our CertificateKeyVaultProperties
+func (properties *CertificateKeyVaultProperties) AssignProperties_To_CertificateKeyVaultProperties(destination *storage.CertificateKeyVaultProperties) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(properties.PropertyBag)
+
+	// IdentityReference
+	if properties.IdentityReference != nil {
+		identityReference := properties.IdentityReference.Copy()
+		destination.IdentityReference = &identityReference
+	} else {
+		destination.IdentityReference = nil
+	}
+
+	// KeyVaultUrl
+	destination.KeyVaultUrl = genruntime.ClonePointerToString(properties.KeyVaultUrl)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCertificateKeyVaultProperties interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForCertificateKeyVaultProperties); ok {
+		err := augmentedProperties.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20250101.CertificateKeyVaultProperties_STATUS
 // Properties for a certificate stored in a Key Vault.
 type CertificateKeyVaultProperties_STATUS struct {
 	Identity    *string                `json:"identity,omitempty"`
 	KeyVaultUrl *string                `json:"keyVaultUrl,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
+}
+
+// AssignProperties_From_CertificateKeyVaultProperties_STATUS populates our CertificateKeyVaultProperties_STATUS from the provided source CertificateKeyVaultProperties_STATUS
+func (properties *CertificateKeyVaultProperties_STATUS) AssignProperties_From_CertificateKeyVaultProperties_STATUS(source *storage.CertificateKeyVaultProperties_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// Identity
+	properties.Identity = genruntime.ClonePointerToString(source.Identity)
+
+	// KeyVaultUrl
+	properties.KeyVaultUrl = genruntime.ClonePointerToString(source.KeyVaultUrl)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		properties.PropertyBag = propertyBag
+	} else {
+		properties.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCertificateKeyVaultProperties_STATUS interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForCertificateKeyVaultProperties_STATUS); ok {
+		err := augmentedProperties.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_CertificateKeyVaultProperties_STATUS populates the provided destination CertificateKeyVaultProperties_STATUS from our CertificateKeyVaultProperties_STATUS
+func (properties *CertificateKeyVaultProperties_STATUS) AssignProperties_To_CertificateKeyVaultProperties_STATUS(destination *storage.CertificateKeyVaultProperties_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(properties.PropertyBag)
+
+	// Identity
+	destination.Identity = genruntime.ClonePointerToString(properties.Identity)
+
+	// KeyVaultUrl
+	destination.KeyVaultUrl = genruntime.ClonePointerToString(properties.KeyVaultUrl)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCertificateKeyVaultProperties_STATUS interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForCertificateKeyVaultProperties_STATUS); ok {
+		err := augmentedProperties.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+type augmentConversionForCertificateKeyVaultProperties interface {
+	AssignPropertiesFrom(src *storage.CertificateKeyVaultProperties) error
+	AssignPropertiesTo(dst *storage.CertificateKeyVaultProperties) error
+}
+
+type augmentConversionForCertificateKeyVaultProperties_STATUS interface {
+	AssignPropertiesFrom(src *storage.CertificateKeyVaultProperties_STATUS) error
+	AssignPropertiesTo(dst *storage.CertificateKeyVaultProperties_STATUS) error
 }
 
 func init() {

@@ -138,6 +138,8 @@ kubectl -n fake-cloud create secret tls postgres-tls --cert "${OUT}/fixtures/pos
 kubectl -n fake-cloud create secret tls fakevault-tls --cert "${OUT}/fixtures/fakevault.crt" --key "${OUT}/fixtures/fakevault.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakearm-tls --cert "${OUT}/fixtures/fakearm.crt" --key "${OUT}/fixtures/fakearm.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakegraph-tls --cert "${OUT}/fixtures/fakegraph.crt" --key "${OUT}/fixtures/fakegraph.key" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create secret tls fakeentra-tls --cert "${OUT}/fixtures/fakeentra.crt" --key "${OUT}/fixtures/fakeentra.key" --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n fake-cloud create configmap fake-cloud-ca --from-file=ca.crt="${OUT}/fixtures/ca.crt" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create secret tls fakesql-tls --cert "${OUT}/fixtures/fakesql.crt" --key "${OUT}/fixtures/fakesql.key" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n fake-cloud create configmap fakesql-principals --from-literal=team-a="${CLIENT_A}=system:serviceaccount:team-a:aso-workload" \
   --from-literal=team-b="${CLIENT_B}=system:serviceaccount:team-b:aso-workload" --dry-run=client -o yaml | kubectl apply -f -
@@ -150,12 +152,35 @@ kubectl -n "${ASO_NS}" create configmap fake-cloud-ca --from-file=ca.crt="${OUT}
 ko_apply config/fake-cloud/fake-cloud.yaml
 # On a reused cluster the fixtures (CA, certificates) are new: restart so
 # every pod reads them. PostgreSQL keeps no volume, so it starts empty.
-kubectl -n fake-cloud rollout restart deploy/postgres deploy/fakevault deploy/fakearm deploy/fakegraph deploy/fakesql >/dev/null
+kubectl -n fake-cloud rollout restart deploy/postgres deploy/fakevault deploy/fakearm deploy/fakegraph deploy/fakesql deploy/fakeentra >/dev/null
 kubectl -n fake-cloud rollout status deploy/postgres --timeout=180s
 kubectl -n fake-cloud rollout status deploy/fakevault --timeout=120s
 kubectl -n fake-cloud rollout status deploy/fakearm --timeout=120s
 kubectl -n fake-cloud rollout status deploy/fakegraph --timeout=120s
 kubectl -n fake-cloud rollout status deploy/fakesql --timeout=120s
+kubectl -n fake-cloud rollout status deploy/fakeentra --timeout=120s
+
+step "the fake Entra for stock ASO: login.microsoftonline.com is the fake in this cluster"
+# MSAL asks login.microsoftonline.com for instance discovery whatever
+# authority host it has, so stock ASO needs the fake there: a CoreDNS
+# rewrite sends the name to the fakeentra Service, and the answer carries the
+# name asked for.
+corefile="$(kubectl -n kube-system get configmap coredns -o jsonpath='{.data.Corefile}')"
+if ! grep -q 'login.microsoftonline.com' <<<"${corefile}"; then
+  corefile="$(awk '{print} /^ *ready *$/ {print "    rewrite name exact login.microsoftonline.com fakeentra.fake-cloud.svc.cluster.local answer auto"}' <<<"${corefile}")"
+  grep -q 'login.microsoftonline.com' <<<"${corefile}" || fail "could not add the CoreDNS rewrite (no ready line in the Corefile)"
+  kubectl -n kube-system create configmap coredns --from-literal=Corefile="${corefile}" --dry-run=client -o yaml | kubectl apply -f -
+  kubectl -n kube-system rollout restart deploy/coredns >/dev/null
+  kubectl -n kube-system rollout status deploy/coredns --timeout=120s
+fi
+kubectl -n fake-cloud delete job fakeentra-check --ignore-not-found --wait=true >/dev/null
+ko_apply config/fake-cloud/entra-check.yaml
+kubectl -n fake-cloud wait --for=condition=complete job/fakeentra-check --timeout=180s \
+  || { kubectl -n fake-cloud logs job/fakeentra-check >&2 || true; fail "a stock azidentity client got no token from the fake Entra"; }
+checked="$(kubectl -n fake-cloud logs job/fakeentra-check)"
+[[ "${checked}" == *"fake entra token: tenant=00000000-0000-0000-0000-00000000000a client=00000000-0000-0000-0000-00000000000b"* ]] \
+  || fail "the fake Entra's token was not what the check asked for: ${checked}"
+pass "fake Entra answers a stock azidentity client as login.microsoftonline.com: ${checked}"
 
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"

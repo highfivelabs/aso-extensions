@@ -248,3 +248,42 @@ spec:
   selector: {app: fakesql}
   ports:
   - {port: 1433, targetPort: 1433}
+---
+# The fake Microsoft Entra ID (cmd/fakeentra), for stock Azure Service
+# Operator: it answers as login.microsoftonline.com, where the cluster's DNS
+# sends that name (tests/operator/run.sh rewrites it in CoreDNS);
+# docs/fake-cloud.md, "Stock ASO against the fake cloud".
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fakeentra
+  namespace: fake-cloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: fakeentra}
+  template:
+    metadata:
+      labels: {app: fakeentra}
+    spec:
+      containers:
+      - name: fakeentra
+        image: ko://github.com/highfivelabs/aso-extensions/cmd/fakeentra
+        args: [--listen=:8443]
+        ports:
+        - containerPort: 8443
+        volumeMounts:
+        - {name: tls, mountPath: /tls, readOnly: true}
+      volumes:
+      - name: tls
+        secret: {secretName: fakeentra-tls}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fakeentra
+  namespace: fake-cloud
+spec:
+  selector: {app: fakeentra}
+  ports:
+  - {port: 443, targetPort: 8443}

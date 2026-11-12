@@ -2,11 +2,20 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- app.azure.hfl.dev_connectedenvironments.yaml
+- app.azure.hfl.dev_connectedenvironmentscertificates.yaml
+- app.azure.hfl.dev_connectedenvironmentsdaprcomponents.yaml
+- app.azure.hfl.dev_connectedenvironmentsstorages.yaml
+- app.azure.hfl.dev_containerappssourcecontrols.yaml
 - app.azure.hfl.dev_managedenvironmentscertificates.yaml
 - app.azure.hfl.dev_managedenvironmentsdaprcomponents.yaml
+- app.azure.hfl.dev_managedenvironmentshttprouteconfigs.yaml
 - app.azure.hfl.dev_managedenvironmentsjavacomponents.yaml
+- app.azure.hfl.dev_managedenvironmentsmaintenanceconfigurations.yaml
 - app.azure.hfl.dev_managedenvironmentsmanagedcertificates.yaml
+- app.azure.hfl.dev_managedenvironmentsprivateendpointconnections.yaml
 - app.azure.hfl.dev_managedenvironmentsstorages.yaml
+- app.azure.hfl.dev_sessionpools.yaml
 - authorization.azure.hfl.dev_managementlocks.yaml
 - authorization.azure.hfl.dev_policyassignments.yaml
 - authorization.azure.hfl.dev_policydefinitions.yaml
