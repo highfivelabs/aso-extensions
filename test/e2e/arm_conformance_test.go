@@ -6,6 +6,7 @@ package e2e
 import (
 	"context"
 	"fmt"
+	"hash/fnv"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -328,7 +329,11 @@ func deletable(meta genruntime.ARMMetaObject) bool {
 func conformanceNamespace(gvk schema.GroupVersionKind) string {
 	ns := "conf-" + strings.SplitN(gvk.Group, ".", 2)[0] + "-" + strings.ToLower(gvk.Kind)
 	if len(ns) > 55 {
-		ns = ns[:55]
+		// Cut, with a hash of the whole name so two long kinds that share
+		// a prefix (a Cosmos DB table and its throughput setting) differ.
+		h := fnv.New32a()
+		_, _ = h.Write([]byte(ns))
+		ns = strings.TrimRight(ns[:46], "-") + fmt.Sprintf("-%08x", h.Sum32())
 	}
 	return strings.TrimRight(ns, "-")
 }

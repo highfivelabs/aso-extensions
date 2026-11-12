@@ -14,6 +14,7 @@ rules:
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
   - devtestlab.azure.hfl.dev
+  - documentdb.azure.hfl.dev
   - hardwaresecuritymodules.azure.hfl.dev
   - insights.azure.hfl.dev
   - keyvault.azure.hfl.dev
@@ -41,6 +42,7 @@ rules:
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
   - devtestlab.azure.hfl.dev
+  - documentdb.azure.hfl.dev
   - hardwaresecuritymodules.azure.hfl.dev
   - insights.azure.hfl.dev
   - keyvault.azure.hfl.dev
