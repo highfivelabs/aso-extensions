@@ -140,9 +140,19 @@ func fixtureWait(t *testing.T, wait time.Duration, id, apiVersion string, body m
 		// resource, and only the operation says why.
 		if op != "" {
 			_, o, _, err := azure.send(ctx, http.MethodGet, op, id, nil)
-			if err == nil && o["status"] == "Failed" {
+			if err != nil {
+				return err
+			}
+			switch o["status"] {
+			case "Succeeded":
+			case "Failed", "Canceled":
 				failed, _ = o["error"].(map[string]any)
+				if failed == nil {
+					failed = map[string]any{"code": o["status"]}
+				}
 				return nil
+			default:
+				return fmt.Errorf("create operation %v", o["status"])
 			}
 		}
 		_, r, err := azure.get(ctx, id, apiVersion)
