@@ -337,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 2,455 (5.7%) in 178 further resources; uncovered 33,794 (77.9%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 2,557 (5.9%) in 191 further resources; uncovered 33,692 (77.7%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 19.1% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 11.9% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.0% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 19.1% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 13.2% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.0% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 30.2% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 30.8% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 4.5% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 0.2% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 30.2% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 30.8% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 5.2% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 0.2% more by ours.
 
 **Ours.**
 
@@ -369,6 +369,19 @@ Generated; these cannot drift from the data.
 | `authorization.azure.hfl.dev/RoleAssignmentScheduleRequest` | `Microsoft.Authorization/roleAssignmentScheduleRequests` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/RoleEligibilityScheduleRequest` | `Microsoft.Authorization/roleEligibilityScheduleRequests` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/RoleManagementPolicyAssignment` | `Microsoft.Authorization/roleManagementPolicyAssignments` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsCapabilityHost` | `Microsoft.CognitiveServices/accounts/capabilityHosts` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsCommitmentPlan` | `Microsoft.CognitiveServices/accounts/commitmentPlans` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsConnection` | `Microsoft.CognitiveServices/accounts/connections` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsDefenderForAISetting` | `Microsoft.CognitiveServices/accounts/defenderForAISettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsEncryptionScope` | `Microsoft.CognitiveServices/accounts/encryptionScopes` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsPrivateEndpointConnection` | `Microsoft.CognitiveServices/accounts/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsProjectsCapabilityHost` | `Microsoft.CognitiveServices/accounts/projects/capabilityHosts` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsProjectsConnection` | `Microsoft.CognitiveServices/accounts/projects/connections` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsRaiBlocklist` | `Microsoft.CognitiveServices/accounts/raiBlocklists` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsRaiBlocklistsRaiBlocklistItem` | `Microsoft.CognitiveServices/accounts/raiBlocklists/raiBlocklistItems` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsRaiPolicy` | `Microsoft.CognitiveServices/accounts/raiPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/CommitmentPlan` | `Microsoft.CognitiveServices/commitmentPlans` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/CommitmentPlansAccountAssociation` | `Microsoft.CognitiveServices/commitmentPlans/accountAssociations` | ARM wire type of the generated kind (`apis/arm`) |
 | `compute.azure.hfl.dev/VirtualMachinesRunCommand` | `Microsoft.Compute/virtualMachines/runCommands` | ARM wire type of the generated kind (`apis/arm`) |
 | `consumption.azure.hfl.dev/Budget` | `Microsoft.Consumption/budgets` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesConnectedRegistry` | `Microsoft.ContainerRegistry/registries/connectedRegistries` | ARM wire type of the generated kind (`apis/arm`) |

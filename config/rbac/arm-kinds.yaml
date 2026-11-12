@@ -8,6 +8,7 @@ rules:
 - apiGroups:
   - app.azure.hfl.dev
   - authorization.azure.hfl.dev
+  - cognitiveservices.azure.hfl.dev
   - compute.azure.hfl.dev
   - consumption.azure.hfl.dev
   - containerregistry.azure.hfl.dev
@@ -36,6 +37,7 @@ rules:
 - apiGroups:
   - app.azure.hfl.dev
   - authorization.azure.hfl.dev
+  - cognitiveservices.azure.hfl.dev
   - compute.azure.hfl.dev
   - consumption.azure.hfl.dev
   - containerregistry.azure.hfl.dev

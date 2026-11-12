@@ -30,3 +30,4 @@ specification/containerservice
 specification/kubernetesconfiguration
 specification/applicationinsights
 specification/cosmos-db
+specification/cognitiveservices
