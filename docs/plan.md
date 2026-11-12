@@ -590,6 +590,120 @@ request #5104, fix it up and ship it.
   propagation (kubectl's default) the owner waits until the lock is
   deleted. That is the point of a lock.
 
+### Moving resources between slots
+
+Hosted Bundt runs its infra clusters as *slots* (current, previous), each
+running one version of every provider, and moves an organisation's objects
+from one slot to another with one sequence: pause or release the object on
+the old slot, adopt the resource on the new one, check there is no
+difference, delete the old object. It treats ours and ASO's alike, so ours
+use ASO's names for each step (checked 2026-11-12, at the pin).
+
+**Release, adopt, pause, per kind family.** Every kind here runs on ASO's
+generic reconciler (`pkg/manager`, `outoftree.RegisterAll`), which reads
+`serviceoperator.azure.com/reconcile-policy` (on the object, else its
+namespace, else ASO's default) before calling a kind's reconciler
+(`third_party/azure-service-operator/v2/internal/reconcilers/generic/generic_reconciler.go`,
+`createOrUpdate` and `delete`): `skip` calls neither CreateOrUpdate nor
+Delete (it reads the status only) and lets the object go without a delete;
+`detach-on-delete` reconciles as usual and lets the object go without a
+delete. So pause and release were there for every kind before this work;
+nothing was added.
+
+| Family | Release | Adopt | Pause | Where |
+|---|---|---|---|---|
+| Generated ARM kinds (`apis/arm/**`) | had: `detach-on-delete`, `skip` | had: ASO's PUT of the spec onto the existing resource | had: `skip` | `pkg/controllers/controllers.go` (`generatedStorageTypes`, ASO's `NewAzureDeploymentReconciler`) |
+| Kinds Azure cannot delete (PIM requests, managed HSM keys, SOA record sets) | had: `detach-on-delete` is required to let the object go | had | had | conformance fixtures, `test/e2e/arm_pim_test.go` |
+| ManagementLock (hand-written, ARM) | had | had: PUT of the lock | had | `pkg/reconcilers/authorization` |
+| VaultSecret, VaultCertificate (Key Vault data plane) | had, and `deleteMode: detach` is their default | had: an existing secret or certificate is read and written only where it differs | had | `pkg/reconcilers/keyvault` |
+| PostgreSQL User, Azure SQL User (SQL) | had | had: an existing role or user is altered, not made again | had | `pkg/reconcilers/postgresql`, `pkg/reconcilers/azuresql` |
+| DirectoryRoleAssignment (Microsoft Graph) | had | had: `adoptionPolicy` (AdoptOrCreate, the default; AdoptOnly) | had | `pkg/reconcilers/entra` |
+
+**The slot guard (added).** Off unless the manager is given a slot:
+`--slot=<name>`, else `HFL_SLOT`; neither, and nothing changes. With a
+slot, `pkg/slot` sits under every Resource Manager and Key Vault request
+(a `http.RoundTripper` in the ARM connection factory's and the Key Vault
+client's transport) and around every kind's reconciler. For a kind whose
+cloud resource carries tags (its spec has a `map[string]string` `tags`),
+each write (PUT, PATCH, DELETE, a certificate import) is preceded by a GET
+of the same resource:
+
+- no `hfl-dev-slot` tag, or this slot's: the write is sent, with
+  `hfl-dev-slot: <slot>` added to its tags (create and adopt claim it);
+- another slot's tag: the write is not sent. The reconciler gets a 409
+  `SlotMismatch`, the object's Ready condition is False with reason
+  `SlotMismatch` (severity Warning, retried slowly), and a Warning event
+  `SlotMismatch` says `cloud resource is held by slot <x>; this controller
+  is slot <y>`. Reads are never refused. A delete is refused the same way,
+  so the object stays until it is released (`skip`);
+- the slot the object names in `hfl.dev/slot-takeover`: the write is
+  sent and the resource moves to this slot. This is the adopting half of
+  a move; without the annotation a slot never takes another's resource.
+  The name and meaning are config-connector-extensions' (aligned
+  2026-11-12). Adding, changing or removing it reconciles the object at
+  once (`slot.TakeoverChanged`, in every kind's predicate), and a refused
+  write is an error ASO retries, so a refused object takes the resource
+  over when it is given the annotation later.
+
+A slot's own tag is removed from what its reconciler reads, so it is never
+a difference between spec and Azure (status shows the user's tags only).
+Another slot's tag is left, so a reconciler that writes only on a
+difference (VaultSecret) sees one on a takeover and writes, which claims
+the resource. The tag name is not the label's because Azure tag names
+cannot hold `/`. On each successful create or update the object gets the
+label `hfl.dev/slot: <slot>`.
+
+The move, with the guard: annotate the old object `reconcile-policy: skip`;
+create the new object with `hfl.dev/slot-takeover: <old slot>`; when
+it is Ready, compare (the resource's `systemData.createdAt` or a secret's
+version shows it was not made again); delete the old object (with `skip`
+no delete is sent); remove the takeover annotation at leisure (it only
+widens what the new slot may write).
+
+**What the guard cannot cover.** A resource without tags cannot hold the
+lease, so for these kinds the guard does nothing (they are still labelled)
+and Bundt must rely on the pause alone, pausing the old slot's object
+before the new one is created and never unpausing it:
+
+- generated ARM kinds whose spec has no resource tags: child and
+  extension resources mostly (the `tags=0` kinds: policy definitions,
+  assignments and exemptions, PIM requests and policy assignments,
+  budgets, cost exports and scheduled actions, Security Center settings
+  and standards, Sentinel alert rules, network manager configurations,
+  groups and rules, ExpressRoute and VPN children, route filter rules,
+  query pack queries, whose `tags` are lists of labels, management groups
+  and their settings and subscriptions, and the rest of `apis/arm` whose
+  spec lacks `tags`); `slot.Taggable` decides, per kind, from the Go type;
+- ManagementLock (a lock has no tags);
+- PostgreSQL User and Azure SQL User (database roles);
+- DirectoryRoleAssignment (Microsoft Graph has no tags).
+
+Also not guarded: POST actions other than a certificate import (listKeys
+and other actions). Any other write is checked against its own target's
+tag, so a write an extension makes to another resource is guarded by that
+resource's holder, not the object's.
+
+**Proven offline** (`task test:slot-move`, `test/slotmove`): two managers
+wired as `cmd/manager`, slots blue and green, each watching its own
+namespace, against one fake Resource Manager and one fake Key Vault.
+For IpGroup and QueryPack (generated, tagged), QueryPacksQuery (generated,
+no tags) and VaultSecret (hand-written, data plane): blue makes the
+resource and holds it; blue is paused; green takes it over and holds it,
+with Azure unchanged but the tag and the resource not made again (same
+`createdAt`, same secret version, no DELETE); blue's object is deleted and
+the resource stays; a blue object for it again is refused (condition,
+event, no write reaches Azure), and so is its deletion; green deletes it.
+Without the takeover annotation green is refused a resource blue holds.
+
+**Proven live** (`TestLiveSlotMove`, run `ax1209571e99`, 2026-11-12,
+docs/live-runs.md): the same sequence on a real IP group, with
+Resource Manager's `createdTime` as the witness (IP groups return no
+`systemData`).
+`pkg/slot`'s unit tests cover the flag and variable, the tag on create and
+update, the refusals, the takeover and the pass-through. Both managers run
+one build; two releases side by side (the previous release beside main)
+would need the previous release built first, and it has no guard.
+
 ## 3. Candidates
 
 Ranked by how much an application stack on Azure needs them and how cheap
@@ -830,6 +944,12 @@ Rerun it when a kind or a pin changes.
 Proven by `task test` (envtest, 59 tests, and the generated kinds' own
 serialization and conversion tests):
 
+- a move between two slots (section 2, "Moving resources between
+  slots"; `test/slotmove`, 2026-11-12): two managers as slots blue and
+  green; IpGroup, QueryPack, QueryPacksQuery and VaultSecret are paused on
+  blue, taken over by green without being made again or changed, and
+  blue's later writes and deletes are refused with `SlotMismatch` before
+  they reach Azure;
 - a password user gets exactly its database privileges, changes revoke
   what is no longer listed (including grants made by hand), and deletion
   drops the role with its privileges;

@@ -109,5 +109,6 @@ honest:
 | --- | --- | --- |
 | `task check` | an offload Spot VM or CI | the fakes only |
 | `task test:pkgs PKGS=./test/e2e RUN=TestGeneratedKindsConformance` | an offload Spot VM | the fakes only (layer 1 alone, about a minute after the build) |
+| `task test:slot-move` | anywhere `task test` runs (it is part of it) | the fakes only: two managers as two slots (docs/plan.md, "Moving resources between slots") |
 | `task operator-e2e` | an offload Spot VM | the fakes on kind |
 | `task test-live TESTS=...` | an offload VM with the live service account | the live group only |

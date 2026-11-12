@@ -146,8 +146,9 @@ func run(m *testing.M) int {
 	k8s, err = client.New(restConfig, client.Options{Scheme: scheme})
 	must(err)
 	mgr, err := ctrl.NewManager(restConfig, ctrl.Options{
-		Scheme:  scheme,
-		Cache:   cache.Options{ReaderFailOnMissingInformer: true},
+		Scheme: scheme,
+		// The slots' namespaces are their own managers' (slot_test.go).
+		Cache:   cache.Options{ReaderFailOnMissingInformer: true, DefaultFieldSelector: notSlotNamespaces()},
 		Metrics: metricsserver.Options{BindAddress: "0"},
 	})
 	must(err)
@@ -167,6 +168,10 @@ func run(m *testing.M) int {
 			fmt.Fprintln(os.Stderr, "manager:", err)
 		}
 	}()
+	if err := startSlotManagers(ctx, restConfig); err != nil {
+		fmt.Fprintln(os.Stderr, "live: slot managers:", err)
+		return 1
+	}
 	return m.Run()
 }
 

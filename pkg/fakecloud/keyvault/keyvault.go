@@ -87,6 +87,22 @@ func (v *Vault) Value(name string) (string, bool) {
 	return *s.versions[len(s.versions)-1].Value, true
 }
 
+// Latest is a live secret's latest version: its ID and tags, for tests.
+func (v *Vault) Latest(name string) (id string, tags map[string]string, ok bool) {
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	s, ok := v.live[strings.ToLower(name)]
+	if !ok || len(s.versions) == 0 {
+		return "", nil, false
+	}
+	b := s.versions[len(s.versions)-1]
+	tags = map[string]string{}
+	for k, val := range b.Tags {
+		tags[k] = val
+	}
+	return b.ID, tags, true
+}
+
 // Versions is how many versions a live secret has, for tests.
 func (v *Vault) Versions(name string) int {
 	v.mu.Lock()
