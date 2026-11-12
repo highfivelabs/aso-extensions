@@ -636,9 +636,14 @@ of the same resource:
   `SlotMismatch` says `cloud resource is held by slot <x>; this controller
   is slot <y>`. Reads are never refused. A delete is refused the same way,
   so the object stays until it is released (`skip`);
-- the slot the object names in `hfl.dev/slot-takeover-from`: the write is
+- the slot the object names in `hfl.dev/slot-takeover`: the write is
   sent and the resource moves to this slot. This is the adopting half of
   a move; without the annotation a slot never takes another's resource.
+  The name and meaning are config-connector-extensions' (aligned
+  2026-11-12). Adding, changing or removing it reconciles the object at
+  once (`slot.TakeoverChanged`, in every kind's predicate), and a refused
+  write is an error ASO retries, so a refused object takes the resource
+  over when it is given the annotation later.
 
 A slot's own tag is removed from what its reconciler reads, so it is never
 a difference between spec and Azure (status shows the user's tags only).
@@ -649,7 +654,7 @@ cannot hold `/`. On each successful create or update the object gets the
 label `hfl.dev/slot: <slot>`.
 
 The move, with the guard: annotate the old object `reconcile-policy: skip`;
-create the new object with `hfl.dev/slot-takeover-from: <old slot>`; when
+create the new object with `hfl.dev/slot-takeover: <old slot>`; when
 it is Ready, compare (the resource's `systemData.createdAt` or a secret's
 version shows it was not made again); delete the old object (with `skip`
 no delete is sent); remove the takeover annotation at leisure (it only

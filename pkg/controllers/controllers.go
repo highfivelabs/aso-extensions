@@ -66,6 +66,7 @@ import (
 	entrareconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/entra"
 	kvreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/keyvault"
 	pgreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/postgresql"
+	"github.com/highfivelabs/aso-extensions/pkg/slot"
 )
 
 // CreateScheme holds our kinds (the generated ARM kinds, from
@@ -294,6 +295,8 @@ func standardPredicate() predicate.Predicate {
 		predicate.GenerationChangedPredicate{},
 		outoftree.ARMReconcilerAnnotationChangedPredicate(),
 		outoftree.ARMPerResourceSecretAnnotationChangedPredicate(),
+		// Ours: a slot takeover added to a refused object (pkg/slot).
+		slot.TakeoverChanged(),
 	)
 }
 

@@ -231,7 +231,7 @@ func TestSlotMove(t *testing.T) {
 }
 
 // Without the takeover annotation, a slot does not adopt what another
-// slot holds.
+// slot holds; with it, added later, it does.
 func TestNoTakeoverWithoutAnnotation(t *testing.T) {
 	f := fixtures()[0]
 	f.object = func(ns string) conditioned {
@@ -253,17 +253,36 @@ func TestNoTakeoverWithoutAnnotation(t *testing.T) {
 	if s := armState(id)(t); s.holder != blue {
 		t.Fatalf("the resource holds %q", s.holder)
 	}
-	setPolicy(t, other, annotations.ReconcilePolicySkip)
+
+	// The takeover annotation added later wakes the refused object at once
+	// (it does not wait for the slow retry of the refusal).
+	setPolicy(t, held, annotations.ReconcilePolicySkip)
+	eventuallyWithin(t, 15*time.Second, "annotating green's refused object", func() error {
+		if err := k8s.Get(context.Background(), client.ObjectKeyFromObject(other), other); err != nil {
+			return err
+		}
+		a := other.GetAnnotations()
+		if a == nil {
+			a = map[string]string{}
+		}
+		a[slot.TakeoverAnnotation] = blue
+		other.SetAnnotations(a)
+		return k8s.Update(context.Background(), other)
+	})
+	eventuallyWithin(t, 15*time.Second, "green takes it over once annotated", ready(other))
+	if s := armState(id)(t); s.holder != green {
+		t.Fatalf("after the annotation the resource holds %q", s.holder)
+	}
+	if err := k8s.Delete(context.Background(), held); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, "blue's paused object gone", gone(held))
 	if err := k8s.Delete(context.Background(), other); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, "green's object gone", gone(other))
-	if err := k8s.Delete(context.Background(), held); err != nil {
-		t.Fatal(err)
-	}
-	eventually(t, "blue's object gone", gone(held))
 	if armFake.HasResource(id) {
-		t.Fatal("blue's deletion left the resource")
+		t.Fatal("green's deletion left the resource")
 	}
 }
 
@@ -458,7 +477,12 @@ func gone(obj client.Object) func() error {
 
 func eventually(t *testing.T, what string, f func() error) {
 	t.Helper()
-	deadline := time.Now().Add(timeout)
+	eventuallyWithin(t, timeout, what, f)
+}
+
+func eventuallyWithin(t *testing.T, within time.Duration, what string, f func() error) {
+	t.Helper()
+	deadline := time.Now().Add(within)
 	var err error
 	for time.Now().Before(deadline) {
 		if err = f(); err == nil {

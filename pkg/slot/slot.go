@@ -17,7 +17,7 @@
 //   - another slot's tag: the write is refused without reaching Azure; the
 //     object's Ready condition is False with reason SlotMismatch and a
 //     Warning event says which slot holds it;
-//   - the slot named by the object's hfl.dev/slot-takeover-from annotation:
+//   - the slot named by the object's hfl.dev/slot-takeover annotation:
 //     the write goes ahead and moves the resource to this slot (the
 //     adopting half of a move).
 //
@@ -44,6 +44,8 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/tools/record"
 	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/event"
+	"sigs.k8s.io/controller-runtime/pkg/predicate"
 
 	"github.com/Azure/azure-service-operator/v2/pkg/common/annotations"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
@@ -59,7 +61,7 @@ const (
 	Label = "hfl.dev/slot"
 	// TakeoverAnnotation, on an object, names the slot this controller may
 	// take the object's cloud resource over from.
-	TakeoverAnnotation = "hfl.dev/slot-takeover-from"
+	TakeoverAnnotation = "hfl.dev/slot-takeover"
 	// Reason is the Ready condition's reason, the event's reason and the
 	// refused request's error code.
 	Reason = "SlotMismatch"
@@ -413,4 +415,23 @@ func (r *reconciler) UpdateStatus(
 ) error {
 	ctx, _ = r.write(ctx, obj)
 	return r.inner.UpdateStatus(ctx, log, eventRecorder, obj, reconcilePolicies)
+}
+
+// TakeoverChanged is a predicate that passes an update whose takeover
+// annotation changed, so an object refused for another slot's tag is
+// reconciled as soon as it is given the annotation, not at its next slow
+// retry. It is part of every kind's predicate; with no guard it only causes
+// a reconcile that changes nothing.
+func TakeoverChanged() predicate.Predicate {
+	return predicate.Funcs{
+		CreateFunc:  func(event.CreateEvent) bool { return false },
+		DeleteFunc:  func(event.DeleteEvent) bool { return false },
+		GenericFunc: func(event.GenericEvent) bool { return false },
+		UpdateFunc: func(e event.UpdateEvent) bool {
+			if e.ObjectOld == nil || e.ObjectNew == nil {
+				return false
+			}
+			return e.ObjectOld.GetAnnotations()[TakeoverAnnotation] != e.ObjectNew.GetAnnotations()[TakeoverAnnotation]
+		},
+	}
 }

@@ -265,7 +265,7 @@ labels the object `hfl.dev/slot`, and refuses (Ready False, reason
 `SlotMismatch`, a Warning event, no call to Azure) to write or delete a
 resource another slot's tag holds. To move an object: `reconcile-policy:
 skip` on the old slot, the object on the new slot with
-`hfl.dev/slot-takeover-from: <old slot>`, then delete the old object.
+`hfl.dev/slot-takeover: <old slot>`, then delete the old object.
 Kinds without tags are not guarded. See docs/plan.md, "Moving resources
 between slots"; `task test:slot-move` runs the move against the fakes.
 

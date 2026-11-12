@@ -16,6 +16,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/tools/record"
 	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/event"
 
 	"github.com/Azure/azure-service-operator/v2/pkg/common/annotations"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
@@ -318,5 +319,31 @@ func TestTaggable(t *testing.T) {
 	// tag can be one of.
 	if Taggable(&querypacks.QueryPacksQuery{}) {
 		t.Error("QueryPacksQuery has no resource tags")
+	}
+}
+
+// TakeoverChanged passes an update that adds, changes or removes the
+// takeover annotation, and nothing else.
+func TestTakeoverChanged(t *testing.T) {
+	p := TakeoverChanged()
+	obj := func(a map[string]string) *ipgroups.IpGroup {
+		return &ipgroups.IpGroup{ObjectMeta: metav1.ObjectMeta{Name: "ips", Annotations: a}}
+	}
+	for _, c := range []struct {
+		old, new map[string]string
+		want     bool
+	}{
+		{nil, map[string]string{TakeoverAnnotation: "blue"}, true},
+		{map[string]string{TakeoverAnnotation: "blue"}, map[string]string{TakeoverAnnotation: "red"}, true},
+		{map[string]string{TakeoverAnnotation: "blue"}, nil, true},
+		{map[string]string{TakeoverAnnotation: "blue"}, map[string]string{TakeoverAnnotation: "blue", "x": "y"}, false},
+		{nil, map[string]string{"x": "y"}, false},
+	} {
+		if got := p.Update(event.UpdateEvent{ObjectOld: obj(c.old), ObjectNew: obj(c.new)}); got != c.want {
+			t.Errorf("%v -> %v: %v, want %v", c.old, c.new, got, c.want)
+		}
+	}
+	if p.Create(event.CreateEvent{Object: obj(map[string]string{TakeoverAnnotation: "blue"})}) {
+		t.Error("a create passes; the standard predicate already does")
 	}
 }
