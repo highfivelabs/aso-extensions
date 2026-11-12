@@ -109,7 +109,7 @@ Microsoft.DevSpaces,1,0,0,6,0,0,6,0.0,0.0,100.0
 Microsoft.DevTestLab,19,0,1,321,0,15,306,0.0,4.7,95.3
 Microsoft.DigitalTwins,4,0,0,44,0,0,44,0.0,0.0,100.0
 Microsoft.Discovery,11,0,0,82,0,0,82,0.0,0.0,100.0
-Microsoft.DocumentDB,52,19,0,554,250,0,304,45.1,0.0,54.9
+Microsoft.DocumentDB,52,19,14,554,250,115,189,45.1,20.8,34.1
 Microsoft.DomainRegistration,2,0,0,70,0,0,70,0.0,0.0,100.0
 Microsoft.DurableTask,4,0,0,13,0,0,13,0.0,0.0,100.0
 Microsoft.Dynamics365FraudProtection,1,0,0,3,0,0,3,0.0,0.0,100.0

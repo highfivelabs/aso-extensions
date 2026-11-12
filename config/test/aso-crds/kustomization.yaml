@@ -16,5 +16,7 @@ resources:
 - containerservice.azure.com_fleets.yaml
 - network.azure.com_dnszones.yaml
 - network.azure.com_privatednszones.yaml
+- documentdb.azure.com_databaseaccounts.yaml
+- documentdb.azure.com_sqldatabases.yaml
 - cognitiveservices.azure.com_accounts.yaml
 - cognitiveservices.azure.com_projects.yaml

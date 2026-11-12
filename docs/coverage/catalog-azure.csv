@@ -1,0 +1,137 @@
+resource_type,modules,class,kind
+azapi_resource,22,generic,"generic: the ARM types it makes are listed as azapi_resource:<type> rows and in ""azapi_resource by ARM type"" below"
+azurerm_role_assignment,19,aso,authorization RoleAssignment
+azurerm_management_lock,17,ours,authorization.azure.hfl.dev ManagementLock
+azurerm_monitor_diagnostic_setting,13,aso,insights DiagnosticSetting
+azurerm_private_endpoint_application_security_group_association,6,aso,network PrivateEndpoint (applicationSecurityGroups)
+azurerm_private_endpoint,6,aso,network PrivateEndpoint
+azapi_update_resource,5,generic,generic: see its azapi_update_resource:<type> rows
+azapi_resource_action,5,generic,"generic: see its azapi_resource_action:<type> rows and ""Actions"" below"
+azurerm_public_ip,3,aso,network PublicIPAddress
+azurerm_key_vault_secret,3,ours,keyvault.azure.hfl.dev VaultSecret
+azurerm_user_assigned_identity,2,aso,managedidentity UserAssignedIdentity
+azurerm_network_interface_backend_address_pool_association,2,aso,network NetworkInterface (ipConfigurations)
+azurerm_log_analytics_workspace,2,aso,operationalinsights Workspace
+azurerm_log_analytics_solution,2,ours,operationsmanagement.azure.hfl.dev Solution
+azurerm_log_analytics_linked_service,2,ours,operationalinsights.azure.hfl.dev WorkspacesLinkedService
+azapi_resource:Microsoft.Resources/resourceGroups,2,aso,resources ResourceGroup
+azapi_resource:Microsoft.Authorization/locks,2,ours,ManagementLock
+azurerm_windows_virtual_machine,1,aso,compute VirtualMachine
+azurerm_virtual_machine_run_command,1,ours,compute.azure.hfl.dev VirtualMachinesRunCommand
+azurerm_virtual_machine_extension,1,aso,compute VirtualMachinesExtension
+azurerm_virtual_machine_data_disk_attachment,1,aso,compute VirtualMachine (dataDisks)
+azurerm_subnet_route_table_association,1,aso,network VirtualNetworksSubnet (routeTable)
+azurerm_route_table,1,aso,network RouteTable
+azurerm_route,1,aso,network RouteTablesRoute
+azurerm_resource_group,1,aso,resources ResourceGroup
+azurerm_redis_linked_server,1,aso,cache RedisLinkedServer
+azurerm_redis_firewall_rule,1,aso,cache RedisFirewallRule
+azurerm_redis_cache_access_policy_assignment,1,aso,cache RedisAccessPolicyAssignment
+azurerm_redis_cache_access_policy,1,aso,cache RedisAccessPolicy
+azurerm_redis_cache,1,aso,cache Redis
+azurerm_private_dns_resolver_virtual_network_link,1,aso,network DnsForwardingRuleSetsVirtualNetworkLink
+azurerm_private_dns_resolver_outbound_endpoint,1,aso,network DnsResolversOutboundEndpoint
+azurerm_private_dns_resolver_inbound_endpoint,1,aso,network DnsResolversInboundEndpoint
+azurerm_private_dns_resolver_forwarding_rule,1,aso,network DnsForwardingRuleSetsForwardingRule
+azurerm_private_dns_resolver_dns_forwarding_ruleset,1,aso,network DnsForwardingRuleset
+azurerm_private_dns_resolver,1,aso,network DnsResolver
+azurerm_postgresql_flexible_server_virtual_endpoint,1,aso,dbforpostgresql FlexibleServersVirtualEndpoint
+azurerm_postgresql_flexible_server_firewall_rule,1,aso,dbforpostgresql FlexibleServersFirewallRule
+azurerm_postgresql_flexible_server_database,1,aso,dbforpostgresql FlexibleServersDatabase
+azurerm_postgresql_flexible_server_configuration,1,aso,dbforpostgresql FlexibleServersConfiguration
+azurerm_postgresql_flexible_server_active_directory_administrator,1,aso,dbforpostgresql FlexibleServersAdministrator
+azurerm_postgresql_flexible_server,1,aso,dbforpostgresql FlexibleServer
+azurerm_network_interface_security_group_association,1,aso,network NetworkInterface (networkSecurityGroup)
+azurerm_network_interface_nat_rule_association,1,aso,network NetworkInterface (loadBalancerInboundNatRules)
+azurerm_network_interface_application_security_group_association,1,aso,network NetworkInterface (applicationSecurityGroups)
+azurerm_network_interface_application_gateway_backend_address_pool_association,1,aso,network NetworkInterface (applicationGatewayBackendAddressPools)
+azurerm_network_interface,1,aso,network NetworkInterface
+azurerm_network_ddos_protection_plan,1,aso,network DdosProtectionPlan
+azurerm_mssql_server,1,aso,sql Server
+azurerm_mssql_firewall_rule,1,aso,sql ServersFirewallRule
+azurerm_mssql_elasticpool,1,aso,sql ServersElasticPool
+azurerm_mssql_database,1,aso,sql ServersDatabase
+azurerm_monitor_private_link_scoped_service,1,ours,insights.azure.hfl.dev PrivateLinkScopesScopedResource
+azurerm_managed_disk,1,aso,compute Disk
+azurerm_log_analytics_linked_storage_account,1,ours,operationalinsights.azure.hfl.dev WorkspacesLinkedStorageAccount
+azurerm_linux_virtual_machine,1,aso,compute VirtualMachine
+azurerm_lb_rule,1,aso,network LoadBalancer (loadBalancingRules)
+azurerm_lb_probe,1,aso,network LoadBalancer (probes)
+azurerm_lb_outbound_rule,1,aso,network LoadBalancer (outboundRules)
+azurerm_lb_nat_rule,1,aso,network LoadBalancersInboundNatRule
+azurerm_lb_nat_pool,1,aso,network LoadBalancer (inboundNatPools)
+azurerm_lb_backend_address_pool_address,1,aso,network LoadBalancer (backendAddressPools[].loadBalancerBackendAddresses)
+azurerm_lb_backend_address_pool,1,aso,network LoadBalancer (backendAddressPools)
+azurerm_lb,1,aso,network LoadBalancer
+azurerm_key_vault_key,1,aso,"keyvault VaultKey (at the pin, #5564)"
+azurerm_key_vault_certificate_contacts,1,neither,Key Vault data plane (certificate contacts of a vault): a hand-written data-plane kind beside VaultCertificate; not built
+azurerm_firewall_policy_rule_collection_group,1,aso,network FirewallPoliciesRuleCollectionGroup
+azurerm_firewall_policy,1,aso,network FirewallPolicy
+azurerm_federated_identity_credential,1,aso,managedidentity FederatedIdentityCredential
+azurerm_dev_test_global_vm_shutdown_schedule,1,ours,devtestlab.azure.hfl.dev Schedule
+azurerm_cosmosdb_sql_trigger,1,aso,documentdb SqlDatabaseContainerTrigger
+azurerm_cosmosdb_sql_stored_procedure,1,aso,documentdb SqlDatabaseContainerStoredProcedure
+azurerm_cosmosdb_sql_function,1,aso,documentdb SqlDatabaseContainerUserDefinedFunction
+azurerm_cosmosdb_sql_dedicated_gateway,1,new,documentdb.azure.hfl.dev DatabaseAccountsService
+azurerm_cosmosdb_sql_database,1,aso,documentdb SqlDatabase
+azurerm_cosmosdb_sql_container,1,aso,documentdb SqlDatabaseContainer
+azurerm_cosmosdb_mongo_database,1,aso,documentdb MongodbDatabase
+azurerm_cosmosdb_mongo_collection,1,aso,documentdb MongodbDatabaseCollection
+azurerm_cosmosdb_gremlin_graph,1,new,documentdb.azure.hfl.dev DatabaseAccountsGremlinDatabasesGraph
+azurerm_cosmosdb_gremlin_database,1,new,documentdb.azure.hfl.dev DatabaseAccountsGremlinDatabase
+azurerm_cosmosdb_account,1,aso,documentdb DatabaseAccount
+azurerm_container_registry_token_password,1,neither,"a token password is the generateCredentials action's answer, returned once (c9): a hand-written kind that writes it to a Secret; not built"
+azurerm_container_registry_token,1,ours,containerregistry.azure.hfl.dev RegistriesToken
+azurerm_container_registry_scope_map,1,ours,containerregistry.azure.hfl.dev RegistriesScopeMap
+azurerm_container_registry,1,aso,containerregistry Registry
+azurerm_cognitive_account_customer_managed_key,1,aso,cognitiveservices Account (encryption)
+azurerm_automation_account,1,new,automation.azure.hfl.dev AutomationAccount
+azuread_directory_role_assignment,1,ours,entra.azure.hfl.dev DirectoryRoleAssignment
+azuread_directory_role,1,neither,"activating a directory role from its template (Microsoft Graph directoryRoles): a hand-written Graph kind beside DirectoryRoleAssignment; Graph activates a built-in role on its first assignment, so it is rarely needed; not built"
+azapi_update_resource:Microsoft.Resources/tags,1,ours,resources.azure.hfl.dev TagSet
+azapi_update_resource:Microsoft.OperationalInsights/workspaces/tables,1,ours,operationalinsights.azure.hfl.dev WorkspacesTable
+azapi_update_resource:Microsoft.OperationalInsights/workspaces,1,aso,operationalinsights Workspace
+azapi_update_resource:Microsoft.Network/virtualNetworks/virtualNetworkPeerings,1,aso,network VirtualNetworksVirtualNetworkPeering
+azapi_update_resource:Microsoft.Network/privateDnsZones/SOA,1,ours,network.azure.hfl.dev PrivateDnsZonesSOARecord
+azapi_update_resource:microsoft.insights/privateLinkScopes,1,ours,insights.azure.hfl.dev PrivateLinkScope
+azapi_update_resource:Microsoft.CognitiveServices/accounts,1,aso,cognitiveservices Account
+azapi_resource:Microsoft.Subscription/aliases,1,aso,subscription Alias
+azapi_resource:Microsoft.SecurityInsights/onboardingStates,1,ours,securityinsights.azure.hfl.dev OnboardingState
+azapi_resource:Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,1,neither,Recovery Services protected item (backup for a VM): its path has a fixed backupFabrics/Azure segment the generator cannot own through; a hand-written candidate (docs/handoff.md h1.2); not built
+azapi_resource:Microsoft.OperationalInsights/workspaces/tables,1,ours,WorkspacesTable
+azapi_resource:Microsoft.OperationalInsights/workspaces/dataExports,1,ours,operationalinsights.azure.hfl.dev WorkspacesDataExport
+azapi_resource:Microsoft.OperationalInsights/queryPacks/queries,1,ours,operationalinsights.azure.hfl.dev QueryPacksQuery
+azapi_resource:Microsoft.OperationalInsights/queryPacks,1,ours,operationalinsights.azure.hfl.dev QueryPack
+azapi_resource:Microsoft.Network/virtualNetworks/virtualNetworkPeerings,1,aso,network VirtualNetworksVirtualNetworkPeering
+azapi_resource:Microsoft.Network/virtualNetworks/subnets,1,aso,network VirtualNetworksSubnet
+azapi_resource:Microsoft.Network/virtualNetworks,1,aso,network VirtualNetwork
+azapi_resource:Microsoft.Network/virtualHubs/hubVirtualNetworkConnections,1,ours,network.azure.hfl.dev VirtualHubsHubVirtualNetworkConnection
+azapi_resource:Microsoft.Network/routeTables/routes,1,aso,network RouteTablesRoute
+azapi_resource:Microsoft.Network/publicIPAddresses,1,aso,network PublicIPAddress
+azapi_resource:Microsoft.Network/privateDnsZones/virtualNetworkLinks,1,aso,network PrivateDnsZonesVirtualNetworkLink
+azapi_resource:Microsoft.Network/privateDnsZones/TXT,1,aso,network PrivateDnsZonesTXTRecord
+azapi_resource:Microsoft.Network/privateDnsZones/SRV,1,aso,network PrivateDnsZonesSRVRecord
+azapi_resource:Microsoft.Network/privateDnsZones/SOA,1,ours,network.azure.hfl.dev PrivateDnsZonesSOARecord
+azapi_resource:Microsoft.Network/privateDnsZones/PTR,1,aso,network PrivateDnsZonesPTRRecord
+azapi_resource:Microsoft.Network/privateDnsZones/MX,1,aso,network PrivateDnsZonesMXRecord
+azapi_resource:Microsoft.Network/privateDnsZones/CNAME,1,aso,network PrivateDnsZonesCNAMERecord
+azapi_resource:Microsoft.Network/privateDnsZones/AAAA,1,aso,network PrivateDnsZonesAAAARecord
+azapi_resource:Microsoft.Network/privateDnsZones/A,1,aso,network PrivateDnsZonesARecord
+azapi_resource:Microsoft.Network/privateDnsZones,1,aso,network PrivateDnsZone
+azapi_resource:Microsoft.Network/networkSecurityPerimeters/resourceAssociations,1,ours,network.azure.hfl.dev NetworkSecurityPerimetersResourceAssociation
+azapi_resource:Microsoft.Network/natGateways,1,aso,network NatGateway
+azapi_resource:Microsoft.Network/bastionHosts,1,aso,network BastionHost
+azapi_resource:Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials,1,aso,managedidentity FederatedIdentityCredential
+azapi_resource:Microsoft.ManagedIdentity/userAssignedIdentities,1,aso,managedidentity UserAssignedIdentity
+azapi_resource:Microsoft.Maintenance/configurationAssignments,1,ours,maintenance.azure.hfl.dev ConfigurationAssignment
+azapi_resource:Microsoft.Insights/privateLinkScopes/scopedResources,1,ours,PrivateLinkScopesScopedResource
+azapi_resource:microsoft.insights/privateLinkScopes,1,ours,insights.azure.hfl.dev PrivateLinkScope
+azapi_resource:Microsoft.Consumption/budgets,1,ours,consumption.azure.hfl.dev Budget
+azapi_resource:Microsoft.CognitiveServices/accounts/raiPolicies,1,new,cognitiveservices.azure.hfl.dev AccountsRaiPolicy
+azapi_resource:Microsoft.CognitiveServices/accounts/deployments,1,aso,cognitiveservices Deployment
+azapi_resource:Microsoft.CognitiveServices/accounts,1,aso,cognitiveservices Account
+azapi_resource:Microsoft.Authorization/roleAssignments,1,aso,authorization RoleAssignment
+azapi_resource:Microsoft.App/containerApps/authConfigs,1,aso,app AuthConfig
+azapi_resource:Microsoft.App/containerApps,1,aso,app ContainerApp
+azapi_resource_action:Microsoft.Resources/subscriptions,1,neither,"actions on a subscription: resource provider registration, rename, cancel (POST); no desired state to own; not built"
+azapi_resource_action:Microsoft.Management/managementGroups/subscriptions,1,ours,management.azure.hfl.dev ManagementGroupsSubscription
