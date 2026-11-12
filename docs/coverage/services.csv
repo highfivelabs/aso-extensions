@@ -55,7 +55,7 @@ Microsoft.CertificateRegistration,2,0,0,16,0,0,16,0.0,0.0,100.0
 Microsoft.Chaos,4,0,0,26,0,0,26,0.0,0.0,100.0
 Microsoft.CloudHealth,6,0,0,119,0,0,119,0.0,0.0,100.0
 Microsoft.CodeSigning,2,0,0,10,0,0,10,0.0,0.0,100.0
-Microsoft.CognitiveServices,26,3,0,338,81,0,257,24.0,0.0,76.0
+Microsoft.CognitiveServices,26,3,13,338,81,102,155,24.0,30.2,45.9
 Microsoft.Communication,7,4,0,25,15,0,10,60.0,0.0,40.0
 Microsoft.Community,1,0,0,22,0,0,22,0.0,0.0,100.0
 Microsoft.Compute,41,12,1,1458,554,15,889,38.0,1.0,61.0
