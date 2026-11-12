@@ -256,6 +256,19 @@ ko apply -k config/default    # CRDs, the manager (azureserviceoperator-system)
 
 There is no webhook: validation is CEL rules in the CRDs.
 
+### Slots
+
+Run as one of several *slots* (hosted Bundt's infra clusters, each with
+one version of every provider), give the manager `--slot=<name>` or
+`HFL_SLOT`. It then tags what it creates or adopts `hfl-dev-slot: <name>`,
+labels the object `hfl.dev/slot`, and refuses (Ready False, reason
+`SlotMismatch`, a Warning event, no call to Azure) to write or delete a
+resource another slot's tag holds. To move an object: `reconcile-policy:
+skip` on the old slot, the object on the new slot with
+`hfl.dev/slot-takeover-from: <old slot>`, then delete the old object.
+Kinds without tags are not guarded. See docs/plan.md, "Moving resources
+between slots"; `task test:slot-move` runs the move against the fakes.
+
 ### Writing Secrets
 
 Some kinds export keys Azure makes (an ExpressRoute circuit's service key, a
