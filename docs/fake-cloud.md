@@ -19,7 +19,7 @@ run the real client code against them.
 
 | Part | What it is | Where |
 | --- | --- | --- |
-| Entra | an `http.RoundTripper` answering instance discovery, OpenID metadata and `/oauth2/v2.0/token`; azidentity's own credentials run against it, through ASO's `TokenCredentialProvider` hook. A token it issues reads as the tenant, client ID, subject (the client assertion's `sub`, or a digest of the client secret) and audience | `pkg/fakecloud/entra` |
+| Entra | an `http.RoundTripper` answering instance discovery, OpenID metadata and `/oauth2/v2.0/token`; azidentity's own credentials run against it, through ASO's `TokenCredentialProvider` hook. A token it issues reads as the tenant, client ID, subject (the client assertion's `sub`, or a digest of the client secret) and audience. The same answers over HTTPS (`entra.Handler`, `cmd/fakeentra`) for stock ASO, below | `pkg/fakecloud/entra`, `cmd/fakeentra` |
 | Key Vault | the data plane, REST 7.5. Secrets: set, get (latest or a version), update attributes, soft delete, get deleted, recover, purge. Certificates: PEM import (refused unless it holds a certificate and the key that matches it), get, update attributes, soft delete, get deleted, recover, purge, each with the secret of the same name and version Key Vault keeps (the PEM as its value). Soft delete is always on; requests carry a bearer token the test decides to accept | `pkg/fakecloud/keyvault`, `cmd/fakevault` |
 | Azure Database for PostgreSQL | PostgreSQL 17 in Docker (tests) or a pod (kind), TLS on, with `azure_pg_admin`, a password administrator, Entra administrators whose password is the fake token of the identity that may sign in as them, and stand-ins for `pgaadauth_create_principal` and `pgaadauth_create_principal_with_oid` | `pkg/fakecloud/postgres` |
 | Microsoft Graph | directory role assignments (`/beta` and `/v1.0` `roleManagement/directory/roleAssignments`: create, get, list with a `$filter` on `principalId`, `roleDefinitionId` and `directoryScopeId`, delete; no update, as in Graph) over a directory of principals, administrative units and role definitions (four built-in roles by template ID, and any a test adds); refuses an unknown principal, role or administrative unit (404), a scope that is neither `/` nor an administrative unit, both or neither of `directoryScopeId` and `appScopeId` (400) and the same assignment twice (409); takes gzipped bodies, as the Graph SDK's default middleware sends them; requests carry a bearer token the test decides to accept | `pkg/fakecloud/graph`, `cmd/fakegraph` |
@@ -38,6 +38,36 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
 `task test` needs Docker and pulls `postgres:17` if it is missing.
 `task operator-e2e` also needs kind and ko; it leaves the cluster
 (`aso-extensions-operator`) up unless `KEEP=0`.
+
+## Stock ASO against the fake cloud
+
+The manager here takes the fake Entra in process (`-tags fakecloud`).
+Stock Azure Service Operator cannot: it fetches tokens from Entra over
+HTTPS, and MSAL asks `login.microsoftonline.com` for instance discovery
+whatever authority host it is given (`AZURE_AUTHORITY_HOST` alone is not
+enough; MSAL then fails discovery against the real Entra, or reaches it).
+So the fake answers *as* `login.microsoftonline.com` (added 2026-11-12):
+
+| Piece | What | Where |
+| --- | --- | --- |
+| The server | `cmd/fakeentra`, TLS, a certificate for `login.microsoftonline.com` and `fakeentra.fake-cloud.svc` from the fake cloud's CA | `config/fake-cloud/fake-cloud.yaml` (Deployment and Service `fakeentra`), `tests/operator/fixtures` |
+| The name | a CoreDNS rewrite in the test cluster: `rewrite name exact login.microsoftonline.com fakeentra.fake-cloud.svc.cluster.local answer auto`, after `ready` in the Corefile | `tests/operator/run.sh`, "the fake Entra for stock ASO" |
+| The trust | the fake cloud's CA in the client's `SSL_CERT_FILE` (a ConfigMap `fake-cloud-ca` mounted at `/fake-cloud-ca`) | the same, `config/fake-cloud/entra-check.yaml` |
+| The proof | a Job running `fakeentra --check`: azidentity's client-secret credential, the public cloud unchanged, gets a fake token; `ok: fake Entra answers a stock azidentity client as login.microsoftonline.com` | `tests/operator/run.sh`, `pkg/fakecloud/entra/handler_test.go` (client secret and workload identity over HTTPS, and an untrusting client refused) |
+
+To run stock ASO against it (a chart's `tests/mock.values.yaml`), in the
+same kind cluster: install ASO with `AZURE_RESOURCE_MANAGER_ENDPOINT` and
+`AZURE_RESOURCE_MANAGER_AUDIENCE` set to `https://fakearm.fake-cloud.svc`
+(and `MICROSOFT_GRAPH_ENDPOINT` to `https://fakegraph.fake-cloud.svc` for
+Entra kinds), `AZURE_SUBSCRIPTION_ID` and `AZURE_TENANT_ID` any GUIDs,
+`AZURE_CLIENT_ID` and `AZURE_CLIENT_SECRET` any values (a client secret's
+token carries `secret:<digest>` as its subject) or workload identity (the
+subject is the service account), and the `fake-cloud-ca` ConfigMap mounted
+in the controller with `SSL_CERT_FILE=/fake-cloud-ca/ca.crt`. `fakearm`
+accepts a token whose client and subject are listed in its `--trust`
+(`fakevault-trust`): add `<client ID>=<subject>` there. Not done here:
+installing ASO itself in the install test (its chart and image are
+upstream's); the catalog's chart tests do that.
 
 ## Where the fakes differ from Azure
 

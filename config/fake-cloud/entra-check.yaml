@@ -1,0 +1,24 @@
+# A client as stock ASO is one (azidentity, the public cloud's authority,
+# the fake cloud's CA in SSL_CERT_FILE) asking for a token: the install test
+# runs it once the CoreDNS rewrite is in place. Tests only.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fakeentra-check
+  namespace: fake-cloud
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: check
+        image: ko://github.com/highfivelabs/aso-extensions/cmd/fakeentra
+        args: [--check]
+        env:
+        - {name: SSL_CERT_FILE, value: /fake-cloud-ca/ca.crt}
+        volumeMounts:
+        - {name: fake-cloud-ca, mountPath: /fake-cloud-ca, readOnly: true}
+      volumes:
+      - name: fake-cloud-ca
+        configMap: {name: fake-cloud-ca}

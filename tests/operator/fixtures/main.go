@@ -36,6 +36,12 @@ func main() {
 		write(*out, name+".crt", c)
 		write(*out, name+".key", k)
 	}
+	// The fake Entra answers as login.microsoftonline.com (MSAL's instance
+	// discovery host), reached there through a CoreDNS rewrite.
+	entraCert, entraKey, err := ca.Server("login.microsoftonline.com", "fakeentra.fake-cloud.svc")
+	must(err)
+	write(*out, "fakeentra.crt", entraCert)
+	write(*out, "fakeentra.key", entraKey)
 	// An application's TLS certificate, as cert-manager would leave in a
 	// kubernetes.io/tls Secret, for VaultCertificate.
 	appCert, appKey, err := ca.Server("app.example")
