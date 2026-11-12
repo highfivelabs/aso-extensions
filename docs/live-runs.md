@@ -16,13 +16,19 @@ changed: every other provider below still read `NotRegistered`. The tests
 for those kinds are written and skip, naming the provider, until it is
 registered.
 
+**Status, 2026-11-12:** live runs work again: the offload VMs' service
+account now has a federated credential on the identity, and an ID token
+from an offload VM is exchanged at Entra (first run `ax120809d931`). Read
+back the same day, every provider in the table under "What cannot run
+here" is `Registered`, so the tests that skipped for a provider now run.
+
 | What | Value |
 | --- | --- |
 | Subscription | `$AZURE_SUBSCRIPTION_ID` (`.env.example`) |
 | Tenant | `$AZURE_TENANT_ID` |
 | Resource group (the only target) | `aso-extensions-live-tests`, eastus2 |
 | App registration | `aso-extensions-live-tests`, client ID `$AZURE_CLIENT_ID` |
-| Its credentials | no secret, no certificate; one federated credential, `google-offload-runner`: issuer `https://accounts.google.com`, subject the unique ID of the offload VMs' Google service account (`$OFFLOAD_SA`), audience `api://AzureADTokenExchange` |
+| Its credentials | no secret, no certificate; federated credentials only: issuer `https://accounts.google.com`, subject the unique ID of the offload VMs' Google service account (`$OFFLOAD_SA`), audience `api://AzureADTokenExchange` |
 | Its role | Contributor on the resource group, nothing else |
 
 The identity and the group are owned outside this repository; agents never
@@ -104,12 +110,14 @@ on a group cannot do, so every kind whose provider is unregistered fails
 with `MissingSubscriptionRegistration`. Registered on 2026-11-10:
 Authorization, Compute, Consumption, CostManagement, ManagedIdentity,
 Network, Resources, Storage (and some not used here); on 2026-11-11 also
-CostManagementExports. Still `NotRegistered` on 2026-11-11, and the kinds
-(and live tests) waiting on each:
+CostManagementExports; by 2026-11-12 every provider in the table below
+(`task live-providers`). The tests still call `requireProvider`, so a
+provider unregistered later skips again rather than fails. The kinds (and
+live tests) that need each:
 
-| Provider | Kinds | Live test (skips until registered) |
+| Provider | Kinds | Live test (skips while unregistered) |
 | --- | --- | --- |
-| `Microsoft.OperationalInsights` | `QueryPack`, `QueryPacksQuery`, workspace `SavedSearch`, `Table`, `DataExport`, `LinkedService`, `LinkedStorageAccount` | `TestLiveQueryPack`, `TestLiveWorkspaceChildren`, `TestLiveMonitorPrivateLinkScope` (its workspace) |
+| `Microsoft.OperationalInsights` | `QueryPack`, `QueryPacksQuery`, workspace `SavedSearch`, `Table`, `DataExport`, `LinkedService`, `LinkedStorageAccount` (also needs a role assignment, below) | `TestLiveQueryPack`, `TestLiveWorkspaceChildren`, `TestLiveMonitorPrivateLinkScope` (its workspace) |
 | `Microsoft.Insights` | `PrivateLinkScope`, `PrivateLinkScopesScopedResource`, `PrivateLinkScopesPrivateEndpointConnection` | `TestLiveMonitorPrivateLinkScope` |
 | `Microsoft.ContainerRegistry` | `RegistriesScopeMap`, `RegistriesToken`, `RegistriesWebhook`, `RegistriesCredentialSet` | `TestLiveContainerRegistry` |
 | `Microsoft.App` | `ManagedEnvironmentsDaprComponent`, `ManagedEnvironmentsCertificate`, `ManagedEnvironmentsJavaComponent`, `ManagedEnvironmentsManagedCertificate`, `ManagedEnvironmentsStorage` | `TestLiveContainerApps` (not `ManagedEnvironmentsManagedCertificate`: below) |
@@ -138,6 +146,8 @@ group:
 | Kind | Needs |
 | --- | --- |
 | `ManagementLock` | `Microsoft.Authorization/locks/write` (Owner or User Access Administrator, or a custom role) on the group |
+| `ResourceManagementPrivateLink` | `Microsoft.Authorization/resourceManagementPrivateLinks/write` on the group (refused `AuthorizationFailed`, 2026-11-12); `TestLiveResourceManagementPrivateLink` reads the identity's permissions on the group and skips until a role grants it |
+| `WorkspacesLinkedStorageAccount` | a role assignment (`Microsoft.Authorization/roleAssignments/write`): Azure retired `CustomLogs` links in 2025, and a `Query` or `Alerts` link needs the workspace's managed identity to hold Storage Table Data Contributor on the account; the `LinkedStorageAccount` step of `TestLiveWorkspaceChildren` skips the same way |
 | `PolicyDefinition`, `PolicySetDefinition` | subscription or management group scope |
 | `PolicyAssignment`, `PolicyExemption` | `Microsoft.Authorization/policyAssignments/write`, `.../policyExemptions/write` |
 | `PolicyRemediation`, `PolicyAttestation` | a policy assignment to act on (above) |
@@ -165,21 +175,14 @@ authorizations, `ExpressRouteGateway` and its connections),
 `VirtualHubsIpConfiguration` (a Route Server-style hub, about $0.45 an hour,
 not yet written). Key Vault managed HSMs and AKS kinds are not on `main`.
 
-**Federation from the previous dev project.** On 2026-11-11 the offload
-VMs run as `$OFFLOAD_SA`, the previous dev project's `offload-runner`.
-The identity's federated credential does not match its subject, so every
-live run stops at the token exchange (`AADSTS700213`). One of these, for
-the identity's owner, unblocks it: add a second federated credential for
-that account's unique ID,
-
-```sh
-az ad app federated-credential create --id "$AZURE_CLIENT_ID" --parameters \
-  "{\"name\":\"google-offload-runner-dev\",\"issuer\":\"https://accounts.google.com\",\"subject\":\"$(gcloud iam service-accounts describe "$OFFLOAD_SA" --format='value(uniqueId)')\",\"audiences\":[\"api://AzureADTokenExchange\"]}"
-```
-
-or let the person who starts offload attach the service account the
-credential already trusts to the VMs (`roles/iam.serviceAccountUser` on
-it) and set `OFFLOAD_SA` to it.
+**Federation from the previous dev project** (resolved 2026-11-12). On
+2026-11-11 the offload VMs ran as `$OFFLOAD_SA`, the previous dev project's
+`offload-runner`, whose unique ID no federated credential named, so every
+live run stopped at the token exchange (`AADSTS700213`). The identity's
+owner added a federated credential for that account; from an offload VM
+the token's claims are `iss` `https://accounts.google.com`, `aud`
+`api://AzureADTokenExchange`, `sub` the account's unique ID, and Entra
+issues a Resource Manager token for them.
 
 ## What Azure checks that the fake did not
 
@@ -199,6 +202,23 @@ fake; each is now in `test/live`, and the fake should learn them):
   succeeded (the fifth run).
 - `Standard_B1s`, `Standard_B2ats_v2` and `Standard_B2als_v2` were refused for
   capacity in eastus2 (`SkuNotAvailable`); `Standard_D2als_v6` was taken.
+
+Found 2026-11-12 (run `ax120809d931`):
+
+- A query pack's PUT needs a `properties` object, even an empty one: the
+  spec marks it required and every property in it read-only, so the
+  generator dropped the field and Azure answered 400 `Value cannot be
+  null.`. Fixed: an `ARMResourceModifier` sends `"properties": {}`, and the
+  fake now refuses a pack without it (it had accepted one).
+- Azure refuses a `CustomLogs` linked storage account (`InvalidParameter`,
+  "might be considered faulted due to mismatch between workspace region
+  ... or ... not assigned as bypass for AzureService"; the region and the
+  account's network rules were fine). Azure retired custom-log storage links
+  in 2025, and a `Query` or `Alerts` link now needs the workspace's managed
+  identity and a role assignment on the account. The fake does not model
+  either.
+- `Microsoft.Authorization/resourceManagementPrivateLinks/write` is a
+  Microsoft.Authorization action, outside Contributor.
 
 ## Ledger
 
