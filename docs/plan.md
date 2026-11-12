@@ -1644,3 +1644,26 @@ summarised here:
    **Answered, 2026-11-10.** (b) is confirmed: the opt-in
    `config/secret-writer` overlay; the default install stays unable to
    create Secrets.
+
+10. **Move `ManagementLock` to the generator?** (asked 2026-11-12, for the
+   standing rule "where a kind is hand-written but the generator could own
+   it, move it"). `ManagementLock` was hand-written because a lock is one
+   type at four scopes, which ASO's generator could not model then
+   (section 1). Generator patch 0006 (2026-11-09) now makes a resource at
+   several scopes an extension resource with an arbitrary owner, the shape
+   `ManagementLock` already has, so `Microsoft.Authorization/locks`
+   (`specification/resources`, 2020-05-01) could be generated like the
+   policy kinds and the hand-written reconciler and `pkg/armlocks` removed.
+   The other hand-written kinds (`VaultSecret`, `VaultCertificate`, the
+   PostgreSQL and Azure SQL `User`, `DirectoryRoleAssignment`) are data
+   plane or Microsoft Graph, which the generator does not reach.
+   The catch: the generated kind's API version is the ARM version,
+   `authorization.azure.hfl.dev/v20200501`, not `v1`, and a CRD here has one
+   version (section 2), so existing `v1` objects (Bundt's catalog does not
+   use locks yet, K10) would have to be recreated (with
+   `reconcile-policy: skip` first so the lock stays in Azure). Options: (a)
+   generate it as `v20200501` `ManagementLock` and drop `v1`; (b) keep the
+   hand-written `v1`; (c) generate it under another kind name beside `v1`
+   and deprecate `v1`. Recommended: (a) now, while no catalog uses the
+   kind. Not done: a kind's API version is the builder's call. Nothing
+   waits on it.
