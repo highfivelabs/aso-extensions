@@ -39,6 +39,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
+	asocognitive "github.com/Azure/azure-service-operator/v2/api/cognitiveservices/v20250601/storage"
 	asocompute "github.com/Azure/azure-service-operator/v2/api/compute/v20220301/storage"
 	asoregistry "github.com/Azure/azure-service-operator/v2/api/containerregistry/v20251101/storage"
 	asofleet "github.com/Azure/azure-service-operator/v2/api/containerservice/v1api20250301/storage"
@@ -96,6 +97,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asodns.AddToScheme(scheme)
 	_ = asoprivatedns.AddToScheme(scheme)
 	_ = asocosmos.AddToScheme(scheme)
+	_ = asocognitive.AddToScheme(scheme)
 	return scheme
 }
 
@@ -119,6 +121,8 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asoprivatedns.PrivateDnsZone{}, Name: "aso_network_privatednszone"},
 		{Obj: &asocosmos.DatabaseAccount{}, Name: "aso_documentdb_databaseaccount"},
 		{Obj: &asocosmos.SqlDatabase{}, Name: "aso_documentdb_sqldatabase"},
+		{Obj: &asocognitive.Account{}, Name: "aso_cognitiveservices_account"},
+		{Obj: &asocognitive.Project{}, Name: "aso_cognitiveservices_project"},
 	}
 }
 

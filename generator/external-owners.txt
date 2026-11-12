@@ -15,3 +15,5 @@ network/DnsZone
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/SqlDatabase
+cognitiveservices/Account
+cognitiveservices/Project

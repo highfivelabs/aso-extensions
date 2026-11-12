@@ -122,13 +122,87 @@ func fixture(t *testing.T, id, apiVersion string, body map[string]any) map[strin
 // fixtureWait is fixture for resources that take longer than timeout.
 func fixtureWait(t *testing.T, wait time.Duration, id, apiVersion string, body map[string]any) map[string]any {
 	t.Helper()
+	got, limit := tryFixture(t, wait, id, apiVersion, body)
+	if limit != "" {
+		t.Skipf("Azure refused fixture %s for this subscription: %s", id, limit)
+	}
+	return got
+}
+
+// candidate is one way to make a fixture: its ID and body (a SKU, a region).
+type candidate struct {
+	id   string
+	body map[string]any
+}
+
+// fixtureFirst makes the first candidate the subscription's limits allow
+// and returns its index and resource. The sandbox subscription refuses some
+// SKUs and regions (eastus2, 2026-11-12: App Service S1 quota 0, Azure SQL
+// ProvisioningDisabled, PostgreSQL B1ms SkuNotAvailable), so a fixture
+// lists cheap alternatives, cheapest and nearest first. The test skips,
+// naming every refusal, only when none is allowed.
+func fixtureFirst(t *testing.T, wait time.Duration, apiVersion string, cands []candidate) (int, map[string]any) {
+	t.Helper()
+	var refused []string
+	for i, c := range cands {
+		got, limit := tryFixture(t, wait, c.id, apiVersion, c.body)
+		if limit == "" {
+			if i > 0 {
+				t.Logf("fixture %s made after %d refusals: %s", c.id, i, strings.Join(refused, "; "))
+			}
+			return i, got
+		}
+		t.Logf("fixture %s refused: %s", c.id, limit)
+		refused = append(refused, c.id+": "+limit)
+	}
+	t.Skipf("Azure refused every candidate for this subscription: %s", strings.Join(refused, "; "))
+	return -1, nil
+}
+
+// fallbackRegions are the regions a fixture tries after the run's own
+// (LIVE_LOCATION) when the subscription's limits refuse it there: US
+// regions, in no order but this one. A resource group holds resources in
+// any region; the sweep deletes them all.
+var fallbackRegions = []string{"centralus", "westus3", "northcentralus", "westus2", "eastus", "southcentralus"}
+
+// regions is the run's region, then fallbackRegions without it.
+func regions() []string {
+	out := []string{location}
+	for _, r := range fallbackRegions {
+		if r != location {
+			out = append(out, r)
+		}
+	}
+	return out
+}
+
+// regionLimits are the error codes Azure gives for a subscription's limits
+// in a region (a SKU, a quota, provisioning closed), as opposed to a fault
+// in the request. Lifting one is the builder's request to Azure.
+var regionLimits = []string{
+	"ProvisioningDisabled", "SkuNotAvailable", "LocationIsOfferRestricted",
+	"RegionDoesNotAllowProvisioning", "cannot be completed without additional quota",
+}
+
+func regionLimit(s string) bool {
+	for _, l := range regionLimits {
+		if strings.Contains(s, l) {
+			return true
+		}
+	}
+	return false
+}
+
+// tryFixture makes a fixture and waits for it. It returns the resource, or
+// Azure's message when a region's limits refused it (the test then tries
+// another candidate or skips); any other failure fails the test.
+func tryFixture(t *testing.T, wait time.Duration, id, apiVersion string, body map[string]any) (map[string]any, string) {
+	t.Helper()
 	ctx := context.Background()
 	_, _, hdr, err := azure.send(ctx, http.MethodPut, armEndpoint+id+"?api-version="+apiVersion, id, body)
 	if err != nil {
-		// A quota of zero is the subscription's (App Service plans had
-		// none, 2026-11-12); raising it is the builder's request to Azure.
-		if strings.Contains(err.Error(), "cannot be completed without additional quota") {
-			t.Skipf("the subscription has no quota for fixture %s: the builder requests it: %v", id, err)
+		if regionLimit(err.Error()) {
+			return nil, fmt.Sprint(body["location"], ": ", err)
 		}
 		t.Fatalf("fixture: %v", err)
 	}
@@ -166,16 +240,12 @@ func fixtureWait(t *testing.T, wait time.Duration, id, apiVersion string, body m
 		return nil
 	})
 	if failed != nil {
-		// A region's limits are the subscription's (eastus2, 2026-11-12:
-		// Azure SQL ProvisioningDisabled, PostgreSQL B1ms SkuNotAvailable);
-		// lifting them is the builder's request to Azure.
-		switch failed["code"] {
-		case "ProvisioningDisabled", "SkuNotAvailable":
-			t.Skipf("Azure refused fixture %s in %s for this subscription: %v: %v", id, location, failed["code"], failed["message"])
+		if code := fmt.Sprint(failed["code"]); regionLimit(code) {
+			return nil, fmt.Sprint(body["location"], ": ", code, ": ", failed["message"])
 		}
 		t.Fatalf("fixture %s failed: %v", id, failed)
 	}
-	return got
+	return got, ""
 }
 
 // deleteARM deletes id if it is still there and waits until it is gone.
