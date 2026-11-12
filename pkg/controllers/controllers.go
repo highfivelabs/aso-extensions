@@ -44,6 +44,7 @@ import (
 	asofleet "github.com/Azure/azure-service-operator/v2/api/containerservice/v1api20250301/storage"
 	asoaks "github.com/Azure/azure-service-operator/v2/api/containerservice/v20260501/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
+	asocosmos "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240815/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
 	asodns "github.com/Azure/azure-service-operator/v2/api/network/v1api20180501/storage"
 	asoprivatedns "github.com/Azure/azure-service-operator/v2/api/network/v1api20240601/storage"
@@ -94,6 +95,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asosql.AddToScheme(scheme)
 	_ = asodns.AddToScheme(scheme)
 	_ = asoprivatedns.AddToScheme(scheme)
+	_ = asocosmos.AddToScheme(scheme)
 	return scheme
 }
 
@@ -115,6 +117,8 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asofleet.Fleet{}, Name: "aso_containerservice_fleet"},
 		{Obj: &asodns.DnsZone{}, Name: "aso_network_dnszone"},
 		{Obj: &asoprivatedns.PrivateDnsZone{}, Name: "aso_network_privatednszone"},
+		{Obj: &asocosmos.DatabaseAccount{}, Name: "aso_documentdb_databaseaccount"},
+		{Obj: &asocosmos.SqlDatabase{}, Name: "aso_documentdb_sqldatabase"},
 	}
 }
 
