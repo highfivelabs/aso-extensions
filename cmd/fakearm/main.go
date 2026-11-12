@@ -70,7 +70,7 @@ func main() {
 	logged := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		rec := &statusRecorder{ResponseWriter: w, status: http.StatusOK}
 		a.ServeHTTP(rec, r)
-		log.Printf("request %s %s%s %d", r.Method, r.Host, r.URL.Path, rec.status)
+		log.Printf("request %s %s %d", r.Method, r.URL.Path, rec.status)
 	})
 	log.Fatal(http.ListenAndServeTLS(*listen, *cert, *key, logged))
 }
