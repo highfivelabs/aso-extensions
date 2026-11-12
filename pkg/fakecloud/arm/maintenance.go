@@ -20,7 +20,10 @@ import (
 //     otherwise); Azure sets it when it is left out;
 //   - at a subscription or a resource group (dynamic scope) it gives a filter
 //     and names an InGuestPatch configuration (400), the only scope Azure's
-//     dynamic scoping serves.
+//     dynamic scoping serves;
+//   - at a resource group its location is a region, not "global" or empty,
+//     which Azure allows at a subscription only (400; real Azure, live run
+//     of 2026-11-12).
 //
 // Not modelled: whether the resource type can be maintained by the
 // configuration's scope (Host, OSImage, Extension), the filter selecting
@@ -51,7 +54,10 @@ func (a *ARM) checkMaintenance(id string, body map[string]any) (status int, code
 	if !ok {
 		return http.StatusNotFound, "ResourceNotFound", "The maintenance configuration " + config + " was not found."
 	}
-	if dynamicScope.MatchString(scope) {
+	if m := dynamicScope.FindStringSubmatch(scope); m != nil {
+		if loc, _ := body["location"].(string); m[1] != "" && (loc == "" || strings.EqualFold(loc, "global")) {
+			return http.StatusBadRequest, "BadRequest", "Invalid location: 'global'/empty location is allowed for subscription level configuration assignment only."
+		}
 		if _, ok := props["filter"].(map[string]any); !ok {
 			return http.StatusBadRequest, "ConfigurationAssignmentFilterMissing", "A configuration assignment at a subscription or resource group needs a filter."
 		}
