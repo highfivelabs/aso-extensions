@@ -240,21 +240,37 @@ func TestLiveContainerApps(t *testing.T) {
 
 // An App Service deployment slot, host name bindings on the site's and the
 // slot's own azurewebsites.net names (no custom domain to verify), and an
-// uploaded certificate, on a Standard S1 Linux plan (about $0.10 an hour;
-// slots need Standard).
+// uploaded certificate, on a Linux plan: Standard S1 (about $0.10 an hour)
+// or Premium v3 P0v3 (about $0.08 an hour), which have slots, else Basic B1
+// (about $0.02 an hour), which has certificates and host name bindings but
+// no slots. The sandbox subscription had no S1 quota in eastus2
+// (2026-11-12), so the plan goes to the first SKU and region it takes.
 func TestLiveWebSlotAndCertificate(t *testing.T) {
 	t.Parallel()
 	requireProvider(t, "Microsoft.Web")
 	ns := namespace(t, "web")
-	planID := rgID() + "/providers/Microsoft.Web/serverfarms/" + azName("plan")
-	fixture(t, planID, "2023-12-01", map[string]any{
-		"location": location, "kind": "linux", "sku": map[string]any{"name": "S1", "tier": "Standard"},
-		"properties": map[string]any{"reserved": true},
-	})
+	type plan struct{ name, tier string }
+	var cands []candidate
+	var plans []plan
+	for _, p := range []plan{{"S1", "Standard"}, {"P0v3", "PremiumV3"}, {"B1", "Basic"}} {
+		for _, region := range regions() {
+			cands = append(cands, candidate{
+				id: rgID() + "/providers/Microsoft.Web/serverfarms/" + azName(fmt.Sprintf("plan%d", len(cands))),
+				body: map[string]any{
+					"location": region, "kind": "linux", "sku": map[string]any{"name": p.name, "tier": p.tier},
+					"properties": map[string]any{"reserved": true},
+				},
+			})
+			plans = append(plans, p)
+		}
+	}
+	i, _ := fixtureFirst(t, timeout, "2023-12-01", cands)
+	planID, webRegion, sku := cands[i].id, fmt.Sprint(cands[i].body["location"]), plans[i]
+	t.Logf("App Service plan %s (%s) in %s", sku.name, sku.tier, webRegion)
 	siteName := azName("site")
 	siteID := rgID() + "/providers/Microsoft.Web/sites/" + siteName
 	fixture(t, siteID, "2023-12-01", map[string]any{
-		"location": location, "kind": "app,linux",
+		"location": webRegion, "kind": "app,linux",
 		"properties": map[string]any{"serverFarmId": planID, "httpsOnly": true, "siteConfig": map[string]any{"linuxFxVersion": "NODE|20-lts"}},
 	})
 	site := &asoweb.Site{}
@@ -262,35 +278,12 @@ func TestLiveWebSlotAndCertificate(t *testing.T) {
 	site.Spec.AzureName, site.Spec.Owner = siteName, owner("rg")
 	standIn(t, site, siteID, nil)
 
-	slot := &webv1.SitesSlot{}
-	slot.Namespace, slot.Name = ns, "staging"
-	slot.Spec = webv1.SitesSlot_Spec{
-		AzureName: "staging", Owner: owner("site"), Location: ptr(location), Kind: ptr("app,linux"), HttpsOnly: ptr(true),
-		ServerFarmReference: &genruntime.ResourceReference{ARMID: planID},
-	}
-	create(t, timeout, slot)
-	slotID := siteID + "/slots/staging"
-	expectResource(t, slotID, webAPI, func(r map[string]any) error {
-		if p := properties(r); p["httpsOnly"] != true || !strings.EqualFold(fmt.Sprint(p["serverFarmId"]), planID) {
-			return fmt.Errorf("resource: %v", r)
-		}
-		return nil
-	})
-	update(t, slot, func(s *webv1.SitesSlot) { s.Spec.HttpsOnly = ptr(false) })
-	eventually(t, timeout, "SitesSlot Ready after the change", ready(slot))
-	expectResource(t, slotID, webAPI, func(r map[string]any) error {
-		if properties(r)["httpsOnly"] != false {
-			return fmt.Errorf("resource: %v", r)
-		}
-		return nil
-	})
-
 	pfxBlob, pfxPass := pfx(t, "live.example.com")
 	secret(t, ns, "pfx", map[string]string{"blob": pfxBlob, "password": pfxPass})
 	cert := &webv1.Certificate{}
 	cert.Namespace, cert.Name = ns, "www"
 	cert.Spec = webv1.Certificate_Spec{
-		AzureName: azName("www"), Owner: owner("rg"), Location: ptr(location),
+		AzureName: azName("www"), Owner: owner("rg"), Location: ptr(webRegion),
 		PfxBlob:             &genruntime.SecretReference{Name: "pfx", Key: "blob"},
 		Password:            &genruntime.SecretReference{Name: "pfx", Key: "password"},
 		ServerFarmReference: &genruntime.ResourceReference{ARMID: planID},
@@ -316,27 +309,57 @@ func TestLiveWebSlotAndCertificate(t *testing.T) {
 
 	// Host name bindings: a custom domain needs DNS records Azure checks, in a
 	// zone we do not have; the site's own azurewebsites.net name needs none.
-	t.Run("HostNameBindings", func(t *testing.T) {
+	t.Run("HostNameBinding", func(t *testing.T) {
 		host := siteName + ".azurewebsites.net"
 		b := &webv1.SitesHostNameBinding{}
 		b.Namespace, b.Name = ns, "default-host"
 		b.Spec = webv1.SitesHostNameBinding_Spec{AzureName: host, Owner: owner("site"), SiteName: ptr(siteName), HostNameType: ptr(webv1.HostNameType("Verified"))}
-		slotHost := siteName + "-staging.azurewebsites.net"
-		sb := &webv1.SitesSlotsHostNameBinding{}
-		sb.Namespace, sb.Name = ns, "slot-host"
-		sb.Spec = webv1.SitesSlotsHostNameBinding_Spec{AzureName: slotHost, Owner: owner("staging"), SiteName: ptr(siteName), HostNameType: ptr(webv1.HostNameType("Verified"))}
-		create(t, 5*time.Minute, b, sb)
+		create(t, 5*time.Minute, b)
 		expectResource(t, siteID+"/hostNameBindings/"+host, webAPI, func(r map[string]any) error {
 			if properties(r)["siteName"] != siteName {
 				return fmt.Errorf("resource: %v", r)
 			}
 			return nil
 		})
-		expectResource(t, slotID+"/hostNameBindings/"+slotHost, webAPI, func(r map[string]any) error { return nil })
-		remove(t, 5*time.Minute, sb)
 		remove(t, 5*time.Minute, b)
 	})
 
-	remove(t, timeout, slot)
-	expectGone(t, slotID, webAPI)
+	t.Run("Slot", func(t *testing.T) {
+		if sku.tier == "Basic" {
+			t.Skipf("a Basic plan has no deployment slots, and the subscription took no Standard S1 or Premium v3 P0v3 plan in %v (quota): the builder requests App Service quota for one of them", regions())
+		}
+		slot := &webv1.SitesSlot{}
+		slot.Namespace, slot.Name = ns, "staging"
+		slot.Spec = webv1.SitesSlot_Spec{
+			AzureName: "staging", Owner: owner("site"), Location: ptr(webRegion), Kind: ptr("app,linux"), HttpsOnly: ptr(true),
+			ServerFarmReference: &genruntime.ResourceReference{ARMID: planID},
+		}
+		create(t, timeout, slot)
+		slotID := siteID + "/slots/staging"
+		expectResource(t, slotID, webAPI, func(r map[string]any) error {
+			if p := properties(r); p["httpsOnly"] != true || !strings.EqualFold(fmt.Sprint(p["serverFarmId"]), planID) {
+				return fmt.Errorf("resource: %v", r)
+			}
+			return nil
+		})
+		update(t, slot, func(s *webv1.SitesSlot) { s.Spec.HttpsOnly = ptr(false) })
+		eventually(t, timeout, "SitesSlot Ready after the change", ready(slot))
+		expectResource(t, slotID, webAPI, func(r map[string]any) error {
+			if properties(r)["httpsOnly"] != false {
+				return fmt.Errorf("resource: %v", r)
+			}
+			return nil
+		})
+
+		slotHost := siteName + "-staging.azurewebsites.net"
+		sb := &webv1.SitesSlotsHostNameBinding{}
+		sb.Namespace, sb.Name = ns, "slot-host"
+		sb.Spec = webv1.SitesSlotsHostNameBinding_Spec{AzureName: slotHost, Owner: owner("staging"), SiteName: ptr(siteName), HostNameType: ptr(webv1.HostNameType("Verified"))}
+		create(t, 5*time.Minute, sb)
+		expectResource(t, slotID+"/hostNameBindings/"+slotHost, webAPI, func(r map[string]any) error { return nil })
+		remove(t, 5*time.Minute, sb)
+
+		remove(t, timeout, slot)
+		expectGone(t, slotID, webAPI)
+	})
 }
