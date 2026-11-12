@@ -8,11 +8,20 @@ no_list: true
 
 ### Released
 
-| Resource                              | ARM Version | CRD Version | Supported From | Sample |
-|---------------------------------------|-------------|-------------|----------------|--------|
-| ManagedEnvironmentsCertificate        | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ManagedEnvironmentsDaprComponent      | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ManagedEnvironmentsJavaComponent      | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ManagedEnvironmentsManagedCertificate | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ManagedEnvironmentsStorage            | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| Resource                                     | ARM Version | CRD Version | Supported From | Sample |
+|----------------------------------------------|-------------|-------------|----------------|--------|
+| ConnectedEnvironment                         | 2026-01-01  | v20260101   | v0.1.0         | -      |
+| ConnectedEnvironmentsCertificate             | 2026-01-01  | v20260101   | v0.1.0         | -      |
+| ConnectedEnvironmentsDaprComponent           | 2026-01-01  | v20260101   | v0.1.0         | -      |
+| ConnectedEnvironmentsStorage                 | 2026-01-01  | v20260101   | v0.1.0         | -      |
+| ContainerAppsSourceControl                   | 2026-01-01  | v20260101   | v0.1.0         | -      |
+| ManagedEnvironmentsCertificate               | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedEnvironmentsDaprComponent             | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedEnvironmentsHttpRouteConfig           | 2026-01-01  | v20260101   | v0.1.0         | -      |
+| ManagedEnvironmentsJavaComponent             | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedEnvironmentsMaintenanceConfiguration  | 2026-01-01  | v20260101   | v0.1.0         | -      |
+| ManagedEnvironmentsManagedCertificate        | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedEnvironmentsPrivateEndpointConnection | 2026-01-01  | v20260101   | v0.1.0         | -      |
+| ManagedEnvironmentsStorage                   | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| SessionPool                                  | 2026-01-01  | v20260101   | v0.1.0         | -      |
 

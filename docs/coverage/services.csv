@@ -18,7 +18,7 @@ Microsoft.AlertsManagement,5,2,0,69,32,0,37,46.4,0.0,53.6
 Microsoft.AnalysisServices,1,0,0,18,0,0,18,0.0,0.0,100.0
 Microsoft.ApiCenter,8,0,0,45,0,0,45,0.0,0.0,100.0
 Microsoft.ApiManagement,112,26,0,1078,270,0,808,25.0,0.0,75.0
-Microsoft.App,30,4,5,616,312,37,267,50.6,6.0,43.3
+Microsoft.App,30,4,14,616,312,139,165,50.6,22.6,26.8
 Microsoft.AppComplianceAutomation,4,0,0,27,0,0,27,0.0,0.0,100.0
 Microsoft.AppConfiguration,5,4,0,27,24,0,3,88.9,0.0,11.1
 Microsoft.AppLink,2,0,0,16,0,0,16,0.0,0.0,100.0

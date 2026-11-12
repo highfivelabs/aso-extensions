@@ -9,6 +9,8 @@ import (
 	app_customizations "github.com/highfivelabs/aso-extensions/apis/arm/app/customizations"
 	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
+	app_v20260101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101"
+	app_v20260101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101/storage"
 	authorization_customizations "github.com/highfivelabs/aso-extensions/apis/arm/authorization/customizations"
 	authorization_v20200501 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501"
 	authorization_v20200501s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501/storage"
@@ -206,6 +208,158 @@ func getKnownStorageTypes() []*registration.StorageType {
 						".spec.properties.azureFile.accountKey",
 					},
 					&app_v20250101.ManagedEnvironmentsStorageList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(app_v20260101.ConnectedEnvironment),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.customDomainConfiguration.certificatePassword",
+				Func: indexAppConnectedEnvironmentCertificatePassword,
+			},
+			{
+				Key:  ".spec.customDomainConfiguration.certificateValue",
+				Func: indexAppConnectedEnvironmentCertificateValue,
+			},
+			{
+				Key:  ".spec.daprAIConnectionString",
+				Func: indexAppConnectedEnvironmentDaprAIConnectionString,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.customDomainConfiguration.certificatePassword",
+						".spec.customDomainConfiguration.certificateValue",
+						".spec.daprAIConnectionString",
+					},
+					&app_v20260101.ConnectedEnvironmentList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(app_v20260101.ConnectedEnvironmentsCertificate),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.password",
+				Func: indexAppConnectedEnvironmentsCertificatePassword,
+			},
+			{
+				Key:  ".spec.properties.value",
+				Func: indexAppConnectedEnvironmentsCertificateValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.password",
+						".spec.properties.value",
+					},
+					&app_v20260101.ConnectedEnvironmentsCertificateList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(app_v20260101.ConnectedEnvironmentsDaprComponent),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.secrets.value",
+				Func: indexAppConnectedEnvironmentsDaprComponentValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.secrets.value",
+					},
+					&app_v20260101.ConnectedEnvironmentsDaprComponentList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(app_v20260101.ConnectedEnvironmentsStorage),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.azureFile.accountKey",
+				Func: indexAppConnectedEnvironmentsStorageAccountKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.azureFile.accountKey",
+					},
+					&app_v20260101.ConnectedEnvironmentsStorageList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(app_v20260101.ContainerAppsSourceControl),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.githubActionConfiguration.azureCredentials.clientId",
+				Func: indexAppContainerAppsSourceControlClientId,
+			},
+			{
+				Key:  ".spec.githubActionConfiguration.azureCredentials.clientSecret",
+				Func: indexAppContainerAppsSourceControlClientSecret,
+			},
+			{
+				Key:  ".spec.githubActionConfiguration.githubPersonalAccessToken",
+				Func: indexAppContainerAppsSourceControlGithubPersonalAccessToken,
+			},
+			{
+				Key:  ".spec.githubActionConfiguration.registryInfo.registryPassword",
+				Func: indexAppContainerAppsSourceControlRegistryPassword,
+			},
+			{
+				Key:  ".spec.githubActionConfiguration.azureCredentials.tenantId",
+				Func: indexAppContainerAppsSourceControlTenantId,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.githubActionConfiguration.azureCredentials.clientId",
+						".spec.githubActionConfiguration.azureCredentials.clientSecret",
+						".spec.githubActionConfiguration.azureCredentials.tenantId",
+						".spec.githubActionConfiguration.githubPersonalAccessToken",
+						".spec.githubActionConfiguration.registryInfo.registryPassword",
+					},
+					&app_v20260101.ContainerAppsSourceControlList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(app_v20260101.ManagedEnvironmentsHttpRouteConfig)})
+	result = append(result, &registration.StorageType{Obj: new(app_v20260101.ManagedEnvironmentsMaintenanceConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(app_v20260101.ManagedEnvironmentsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{
+		Obj: new(app_v20260101.SessionPool),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.secrets.value",
+				Func: indexAppSessionPoolValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.secrets.value",
+					},
+					&app_v20260101.SessionPoolList{}),
 			},
 		},
 	})
@@ -1159,6 +1313,28 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsJavaComponent)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsManagedCertificate)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsStorage)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(app_v20260101.ConnectedEnvironment)},
+		&registration.KnownType{Obj: new(app_v20260101.ConnectedEnvironmentsCertificate)},
+		&registration.KnownType{Obj: new(app_v20260101.ConnectedEnvironmentsDaprComponent)},
+		&registration.KnownType{Obj: new(app_v20260101.ConnectedEnvironmentsStorage)},
+		&registration.KnownType{Obj: new(app_v20260101.ContainerAppsSourceControl)},
+		&registration.KnownType{Obj: new(app_v20260101.ManagedEnvironmentsHttpRouteConfig)},
+		&registration.KnownType{Obj: new(app_v20260101.ManagedEnvironmentsMaintenanceConfiguration)},
+		&registration.KnownType{Obj: new(app_v20260101.ManagedEnvironmentsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(app_v20260101.SessionPool)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(app_v20260101s.ConnectedEnvironment)},
+		&registration.KnownType{Obj: new(app_v20260101s.ConnectedEnvironmentsCertificate)},
+		&registration.KnownType{Obj: new(app_v20260101s.ConnectedEnvironmentsDaprComponent)},
+		&registration.KnownType{Obj: new(app_v20260101s.ConnectedEnvironmentsStorage)},
+		&registration.KnownType{Obj: new(app_v20260101s.ContainerAppsSourceControl)},
+		&registration.KnownType{Obj: new(app_v20260101s.ManagedEnvironmentsHttpRouteConfig)},
+		&registration.KnownType{Obj: new(app_v20260101s.ManagedEnvironmentsMaintenanceConfiguration)},
+		&registration.KnownType{Obj: new(app_v20260101s.ManagedEnvironmentsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(app_v20260101s.SessionPool)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20200501.PrivateLinkAssociation)}, &registration.KnownType{Obj: new(authorization_v20200501.ResourceManagementPrivateLink)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20200501s.PrivateLinkAssociation)}, &registration.KnownType{Obj: new(authorization_v20200501s.ResourceManagementPrivateLink)})
 	result = append(
@@ -1654,6 +1830,8 @@ func createScheme() *runtime.Scheme {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = app_v20250101.AddToScheme(scheme)
 	_ = app_v20250101s.AddToScheme(scheme)
+	_ = app_v20260101.AddToScheme(scheme)
+	_ = app_v20260101s.AddToScheme(scheme)
 	_ = authorization_v20200501.AddToScheme(scheme)
 	_ = authorization_v20200501s.AddToScheme(scheme)
 	_ = authorization_v20201001.AddToScheme(scheme)
@@ -1760,11 +1938,20 @@ func createScheme() *runtime.Scheme {
 // getResourceExtensions returns a list of resource extensions
 func getResourceExtensions() []genruntime.ResourceExtension {
 	var result []genruntime.ResourceExtension
+	result = append(result, &app_customizations.ConnectedEnvironmentExtension{})
+	result = append(result, &app_customizations.ConnectedEnvironmentsCertificateExtension{})
+	result = append(result, &app_customizations.ConnectedEnvironmentsDaprComponentExtension{})
+	result = append(result, &app_customizations.ConnectedEnvironmentsStorageExtension{})
+	result = append(result, &app_customizations.ContainerAppsSourceControlExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsCertificateExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsDaprComponentExtension{})
+	result = append(result, &app_customizations.ManagedEnvironmentsHttpRouteConfigExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsJavaComponentExtension{})
+	result = append(result, &app_customizations.ManagedEnvironmentsMaintenanceConfigurationExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsManagedCertificateExtension{})
+	result = append(result, &app_customizations.ManagedEnvironmentsPrivateEndpointConnectionExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
+	result = append(result, &app_customizations.SessionPoolExtension{})
 	result = append(result, &authorization_customizations.PolicyAssignmentExtension{})
 	result = append(result, &authorization_customizations.PolicyDefinitionExtension{})
 	result = append(result, &authorization_customizations.PolicyDefinitionsVersionExtension{})
@@ -1979,6 +2166,199 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	return result
 }
 
+// indexAppConnectedEnvironmentCertificatePassword an index function for app_v20260101.ConnectedEnvironment .spec.customDomainConfiguration.certificatePassword
+func indexAppConnectedEnvironmentCertificatePassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ConnectedEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.CustomDomainConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.CustomDomainConfiguration.CertificatePassword == nil {
+		return nil
+	}
+	return obj.Spec.CustomDomainConfiguration.CertificatePassword.Index()
+}
+
+// indexAppConnectedEnvironmentCertificateValue an index function for app_v20260101.ConnectedEnvironment .spec.customDomainConfiguration.certificateValue
+func indexAppConnectedEnvironmentCertificateValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ConnectedEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.CustomDomainConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.CustomDomainConfiguration.CertificateValue == nil {
+		return nil
+	}
+	return obj.Spec.CustomDomainConfiguration.CertificateValue.Index()
+}
+
+// indexAppConnectedEnvironmentDaprAIConnectionString an index function for app_v20260101.ConnectedEnvironment .spec.daprAIConnectionString
+func indexAppConnectedEnvironmentDaprAIConnectionString(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ConnectedEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DaprAIConnectionString == nil {
+		return nil
+	}
+	return obj.Spec.DaprAIConnectionString.Index()
+}
+
+// indexAppConnectedEnvironmentsCertificatePassword an index function for app_v20260101.ConnectedEnvironmentsCertificate .spec.properties.password
+func indexAppConnectedEnvironmentsCertificatePassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ConnectedEnvironmentsCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Password == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Password.Index()
+}
+
+// indexAppConnectedEnvironmentsCertificateValue an index function for app_v20260101.ConnectedEnvironmentsCertificate .spec.properties.value
+func indexAppConnectedEnvironmentsCertificateValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ConnectedEnvironmentsCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Value.Index()
+}
+
+// indexAppConnectedEnvironmentsDaprComponentValue an index function for app_v20260101.ConnectedEnvironmentsDaprComponent .spec.secrets.value
+func indexAppConnectedEnvironmentsDaprComponentValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ConnectedEnvironmentsDaprComponent)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, secretItem := range obj.Spec.Secrets {
+		if secretItem.Value == nil {
+			continue
+		}
+		result = append(result, secretItem.Value.Index()...)
+	}
+	return result
+}
+
+// indexAppConnectedEnvironmentsStorageAccountKey an index function for app_v20260101.ConnectedEnvironmentsStorage .spec.properties.azureFile.accountKey
+func indexAppConnectedEnvironmentsStorageAccountKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ConnectedEnvironmentsStorage)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.AccountKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureFile.AccountKey.Index()
+}
+
+// indexAppContainerAppsSourceControlClientId an index function for app_v20260101.ContainerAppsSourceControl .spec.githubActionConfiguration.azureCredentials.clientId
+func indexAppContainerAppsSourceControlClientId(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ContainerAppsSourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration.AzureCredentials == nil {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration.AzureCredentials.ClientId == nil {
+		return nil
+	}
+	return obj.Spec.GithubActionConfiguration.AzureCredentials.ClientId.Index()
+}
+
+// indexAppContainerAppsSourceControlClientSecret an index function for app_v20260101.ContainerAppsSourceControl .spec.githubActionConfiguration.azureCredentials.clientSecret
+func indexAppContainerAppsSourceControlClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ContainerAppsSourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration.AzureCredentials == nil {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration.AzureCredentials.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.GithubActionConfiguration.AzureCredentials.ClientSecret.Index()
+}
+
+// indexAppContainerAppsSourceControlGithubPersonalAccessToken an index function for app_v20260101.ContainerAppsSourceControl .spec.githubActionConfiguration.githubPersonalAccessToken
+func indexAppContainerAppsSourceControlGithubPersonalAccessToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ContainerAppsSourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration.GithubPersonalAccessToken == nil {
+		return nil
+	}
+	return obj.Spec.GithubActionConfiguration.GithubPersonalAccessToken.Index()
+}
+
+// indexAppContainerAppsSourceControlRegistryPassword an index function for app_v20260101.ContainerAppsSourceControl .spec.githubActionConfiguration.registryInfo.registryPassword
+func indexAppContainerAppsSourceControlRegistryPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ContainerAppsSourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration.RegistryInfo == nil {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration.RegistryInfo.RegistryPassword == nil {
+		return nil
+	}
+	return obj.Spec.GithubActionConfiguration.RegistryInfo.RegistryPassword.Index()
+}
+
+// indexAppContainerAppsSourceControlTenantId an index function for app_v20260101.ContainerAppsSourceControl .spec.githubActionConfiguration.azureCredentials.tenantId
+func indexAppContainerAppsSourceControlTenantId(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.ContainerAppsSourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration.AzureCredentials == nil {
+		return nil
+	}
+	if obj.Spec.GithubActionConfiguration.AzureCredentials.TenantId == nil {
+		return nil
+	}
+	return obj.Spec.GithubActionConfiguration.AzureCredentials.TenantId.Index()
+}
+
 // indexAppManagedEnvironmentsCertificatePassword an index function for app_v20250101.ManagedEnvironmentsCertificate .spec.properties.password
 func indexAppManagedEnvironmentsCertificatePassword(rawObj client.Object) []string {
 	obj, ok := rawObj.(*app_v20250101.ManagedEnvironmentsCertificate)
@@ -2041,6 +2421,22 @@ func indexAppManagedEnvironmentsStorageAccountKey(rawObj client.Object) []string
 		return nil
 	}
 	return obj.Spec.Properties.AzureFile.AccountKey.Index()
+}
+
+// indexAppSessionPoolValue an index function for app_v20260101.SessionPool .spec.secrets.value
+func indexAppSessionPoolValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260101.SessionPool)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, secretItem := range obj.Spec.Secrets {
+		if secretItem.Value == nil {
+			continue
+		}
+		result = append(result, secretItem.Value.Index()...)
+	}
+	return result
 }
 
 // indexAuthorizationRoleAssignmentScheduleRequestPrincipalIdFromConfig an index function for authorization_v20201001.RoleAssignmentScheduleRequest .spec.principalIdFromConfig
