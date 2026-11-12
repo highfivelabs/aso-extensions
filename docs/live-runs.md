@@ -156,6 +156,15 @@ group:
 | `NetworkManager` and its children, `NetworkManagerConnection` | a scope of a subscription or management group (`networkManagerScopes`), read on it; the connection is a subscription resource |
 | Entra `DirectoryRoleAssignment` (open pull request #46) | Microsoft Graph application permissions the identity lacks (`RoleManagement.ReadWrite.Directory`) |
 
+**The subscription's limits in eastus2** (found 2026-11-12; the tests skip
+and name them):
+
+| Test | Refused | Lifted by |
+| --- | --- | --- |
+| `TestLiveWebSlotAndCertificate` | App Service plan S1: quota 0 ("Operation cannot be completed without additional quota") | a quota request for Standard (S1) App Service in eastus2 (portal: Quotas, App Service) |
+| `TestLiveSqlUser` | Azure SQL server: `ProvisioningDisabled` ("Provisioning is restricted in this region") | a support request, issue type "Service and subscription limits (quotas)", Azure SQL Database, region access for eastus2 |
+| `TestLivePostgresUser` | PostgreSQL flexible server Burstable B1ms: `SkuNotAvailable` | a support request for region access to PostgreSQL flexible server in eastus2, or a test change to another region or SKU (a decision for the builder: the group's resources have stayed in eastus2) |
+
 **Needs a domain we control.** `ManagedEnvironmentsManagedCertificate`
 (a free certificate Azure issues only after it sees a CNAME or TXT record
 for the name, pointing at an app in the environment) has no live test: the
@@ -203,7 +212,7 @@ fake; each is now in `test/live`, and the fake should learn them):
 - `Standard_B1s`, `Standard_B2ats_v2` and `Standard_B2als_v2` were refused for
   capacity in eastus2 (`SkuNotAvailable`); `Standard_D2als_v6` was taken.
 
-Found 2026-11-12 (run `ax120809d931`):
+Found 2026-11-12 (runs `ax120809d931`, `ax120853723a`, `ax1210377aa0`):
 
 - A query pack's PUT needs a `properties` object, even an empty one: the
   spec marks it required and every property in it read-only, so the
@@ -219,6 +228,32 @@ Found 2026-11-12 (run `ax120809d931`):
   either.
 - `Microsoft.Authorization/resourceManagementPrivateLinks/write` is a
   Microsoft.Authorization action, outside Contributor.
+- A resource guard proxy's DELETE is refused
+  (`BMSUserErrorUnlockPreviligeAccessIsNeeded`) until a POST to the proxy's
+  `unlockDelete` names it and the guard's `deleteResourceGuardProxyRequests`
+  request. Fixed: the kind's `Deleter` sends the unlock first, and the fake
+  now refuses the delete without it (it had deleted at once). The unlock
+  itself was accepted for the live identity.
+- A maintenance configuration assignment at a resource group takes the
+  group's region: `global` or empty is allowed at a subscription only
+  (`BadRequest`). The live test had sent `global`; fixed there, and the
+  fake now refuses it.
+- The subscription's limits in eastus2: App Service S1 has a quota of 0
+  (refused at once, "without additional quota"); Azure SQL servers are
+  `ProvisioningDisabled` ("Provisioning is restricted in this region", a
+  support request lifts it); PostgreSQL flexible server Burstable B1ms is
+  `SkuNotAvailable`. SQL and PostgreSQL accept the PUT and fail the
+  operation later, dropping the server; fixtures now read the operation and
+  skip on these, naming them.
+- Two tests made one Log Analytics workspace (the same name in a run); the
+  private link scope's link to it refused the other test's delete
+  (`CannotDeleteWorkspaceWhenLinkedToPrivateLinkScopes`). Each test now has
+  its own.
+- A Container Apps environment (Consumption workload profile, eastus2)
+  stayed in provisioningState `Waiting` for the fixture's 15 minutes in two
+  runs, and its delete took another 15 to 30 minutes; none of our kinds was
+  reached. Not understood yet: the operation reported no error while
+  waiting. `TestLiveContainerApps` stays untested on real Azure.
 
 ## Ledger
 
@@ -231,3 +266,7 @@ Found 2026-11-12 (run `ax120809d931`):
 | 2026-11-11 | `ax1100357acb` | `d7a4544` | virtual hub | PASS (each step): `VirtualHub` and its connection, hub route table, BGP connection; `VpnGateway`, `VpnGatewaysNatRule`, `VpnGatewaysVpnConnection`; `VpnServerConfiguration` then `P2sVpnGateway` (Ready after about 35 min) | the Spot VM was preempted while the point-to-site gateway was being deleted, after every check had passed; a sweep from another VM emptied the group. Hub runs take about two hours end to end (hub 30 min, each gateway 35 to 40 min, deletes 15 to 35 min). |
 | 2026-11-11 | none | `c80dc92` | `TestLiveTemplateSpec`, `TestLiveResourceManagementPrivateLink` (new), `TestLiveQueryPack`, `TestLiveWorkspaceChildren`, and `task live-providers` to read O36b back | NOT RUN: Entra refused the token exchange | `go vet -tags live` passed on the VM; then Entra answered `AADSTS700213: No matching federated identity record found for presented assertion subject` for the VM's account, the previous dev project's `offload-runner`. The identity's federated credential trusts another Google service account, which the person starting offload may not attach to a VM. Nothing was made in Azure, so there was nothing to clean up; the providers (O36b) could not be read back. Needs the identity's owner: "Federation from the previous dev project" |
 | 2026-11-11 | `ax110816141d` | `c9afc12` (run from the tree before the commit) | Export, and the tests for every kind waiting on a provider (O36) | PASS: `Export` (`TestLiveCostExport`, 52s; `Microsoft.CostManagementExports` now registered); SKIP: the other 11 tests, each naming its provider, `NotRegistered` | O36, reported done, had registered only `Microsoft.CostManagementExports`: OperationalInsights, Insights, ContainerRegistry, App, Web, RecoveryServices, Maintenance, DevTestLab, KeyVault, DBforPostgreSQL, Sql, PolicyInsights, Automation and DataProtection still read `NotRegistered` (`task live-providers`); nothing was made but the export's storage account; the group empty afterwards |
+| 2026-11-12 | `ax120809d931` | `7c1a24a` | `task live-providers`; `TestLiveTemplateSpec`, `TestLiveResourceManagementPrivateLink`, `TestLiveQueryPack`, `TestLiveWorkspaceChildren`, `TestLiveTagSet`, `TestLiveBudget`, `TestLiveLocalNetworkGateway` | PASS: `TemplateSpec`, `TemplateSpecsVersion`, `TagSet`, `Budget`, `LocalNetworkGateway`; FAIL: `ResourceManagementPrivateLink` (`AuthorizationFailed`), `QueryPack` (`Value cannot be null.`), `WorkspacesLinkedStorageAccount` (`CustomLogs` refused) | the first run after federation was fixed: the token exchange worked; every provider read `Registered`. The three failures are above ("Found 2026-11-12"); the group empty afterwards |
+| 2026-11-12 | `ax120853723a` | `d6b4af9` | the twelve tests that had skipped for a provider, and the three fixed | PASS: `QueryPack` and `QueryPacksQuery`, `RegistriesScopeMap`/`Token`/`Webhook`/`CredentialSet` (`TestLiveContainerRegistry`), `VaultSecret`/`VaultCertificate` (`TestLiveKeyVault`), `PrivateLinkScope` and its scoped resource and endpoint connection (`TestLiveMonitorPrivateLinkScope`), `WorkspacesTable`, `WorkspacesSavedSearch`, `WorkspacesDataExport`, `WorkspacesLinkedService` (each step of `TestLiveWorkspaceChildren`; the test failed on its fixture's delete), `Vault`, `VaultsBackupPolicy`, `VaultsPrivateEndpointConnection`, `VaultsBackupResourceGuardProxy` made (`TestLiveRecoveryServices`); SKIP: `ResourceManagementPrivateLink`, `WorkspacesLinkedStorageAccount` (roles); FAIL: the proxy's delete (unlock), `ConfigurationAssignment` at the group (`global`), the App Service plan (quota 0), the SQL server and PostgreSQL server fixtures (region limits), the Container Apps environment fixture (provisioningState `Waiting` for 30 minutes, then cancelled by the sweep) | each failure is above; the sweep took the environment, and the group was empty afterwards |
+| 2026-11-12 | `ax1210377aa0` | `979ec24` | the tests that failed in `ax120853723a`, with the fixes | PASS: `WorkspacesTable`, `WorkspacesSavedSearch`, `WorkspacesDataExport`, `WorkspacesLinkedService` (`TestLiveWorkspaceChildren`, a workspace of its own), `MaintenanceConfiguration`, `ConfigurationAssignment` (on a VM and at the group), DevTestLab `Schedule` (`TestLiveMaintenanceAndShutdown`), `Vault`, `VaultsBackupPolicy`, `VaultsPrivateEndpointConnection`, `VaultsBackupResourceGuardProxy` (made, unlocked and deleted by the kind); SKIP: `TestLiveWebSlotAndCertificate` (S1 quota 0), `TestLiveSqlUser` (`ProvisioningDisabled`), `WorkspacesLinkedStorageAccount` (role); FAIL: `TestLivePostgresUser` (the server dropped for `SkuNotAvailable`, seen before the fixture waited for its operation), `TestLiveContainerApps` (the environment fixture `Waiting`) | the fixes for the query pack, the resource guard proxy and the assignment's location hold on real Azure; the group empty afterwards (the environment went in the sweep) |
+| 2026-11-12 | `ax121126a94c` | `2d08ae3` | `TestLivePostgresUser`, `TestLiveSqlUser` | SKIP both: `SkuNotAvailable` (PostgreSQL B1ms) and `ProvisioningDisabled` (Azure SQL), each read from the create operation | the fixtures now wait for the operation and name the region's limit; the group empty afterwards |
