@@ -32,7 +32,9 @@ const (
 // Workspace "law" standing for it in ns; it returns the workspace's ID.
 func workspaceStandIn(t *testing.T, ns string) string {
 	t.Helper()
-	id := logAnalyticsWorkspace(t, "law")
+	// Its own workspace per test: two tests sharing one in a run collided
+	// (the private link scope's link held the other test's delete, 2026-11-12).
+	id := logAnalyticsWorkspace(t, "law-"+strings.TrimSuffix(ns, "-"+runID))
 	ws := &asoworkspace.Workspace{}
 	ws.Namespace, ws.Name = ns, "law"
 	ws.Spec.AzureName = id[strings.LastIndex(id, "/")+1:]

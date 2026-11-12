@@ -118,6 +118,11 @@ func fixtureWait(t *testing.T, wait time.Duration, id, apiVersion string, body m
 	t.Helper()
 	ctx := context.Background()
 	if _, _, err := azure.do(ctx, http.MethodPut, id, apiVersion, body); err != nil {
+		// A quota of zero is the subscription's (App Service plans had
+		// none, 2026-11-12); raising it is the builder's request to Azure.
+		if strings.Contains(err.Error(), "cannot be completed without additional quota") {
+			t.Skipf("the subscription has no quota for fixture %s: the builder requests it: %v", id, err)
+		}
 		t.Fatalf("fixture: %v", err)
 	}
 	t.Cleanup(func() { deleteARM(t, id, apiVersion) })
