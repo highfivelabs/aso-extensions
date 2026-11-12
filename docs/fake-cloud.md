@@ -41,6 +41,11 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
 
 ## Where the fakes differ from Azure
 
+- App Service: a site's (and a slot's) default host name binding,
+  `<site>.azurewebsites.net`, is made by Azure with the site and is never
+  deleted on its own; the fake deletes it on a DELETE. Found live, run
+  `ax12160408f5` (`docs/live-runs.md`).
+
 - Resource Manager's `systemData`: the fake writes `createdAt` when a
   resource is made, keeps it on every later PUT, and sets
   `lastModifiedAt` on each PUT; it does not write `createdBy`,

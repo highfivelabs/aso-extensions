@@ -1,0 +1,121 @@
+# Azure Automation (Microsoft.Automation, 2024-10-23, the newest stable): an
+# Automation account and what it holds. ASO has no automation group. The
+# catalog's modules make an Automation account for a Log Analytics linked
+# service (docs/coverage/catalog-azure.md). Owned by a resource group, then
+# by our account. Not built: jobs and runbook drafts (actions, not desired
+# state), source control sync jobs (runs), Python 2 packages (Python 2 is
+# retired), DSC node configurations (the spec's status gives `source` as a
+# string and the spec as an object, and the generator cannot convert one to
+# the other; State Configuration is retired by Azure in 2027), Python 3
+# packages (the generator names a receiver of their ARM types `3P...`, which
+# does not compile; a generator patch, not written; runtime environment
+# packages cover new Python runbooks).
+typeFilters:
+  - action: include
+    group: automation
+    version: v20241023
+    because: the newest stable version
+  - action: prune
+    group: automation
+    because: every other version is left alone
+
+groupModelConfiguration:
+  2024-10-23:
+    AutomationAccount:
+      $exportAs: AutomationAccount
+      $supportedFrom: v0.1.0
+    AutomationAccounts_Certificate:
+      $exportAs: AutomationAccountsCertificate
+      $supportedFrom: v0.1.0
+    AutomationAccounts_Configuration:
+      $exportAs: AutomationAccountsConfiguration
+      $supportedFrom: v0.1.0
+    AutomationAccounts_Connection:
+      $exportAs: AutomationAccountsConnection
+      $supportedFrom: v0.1.0
+    AutomationAccounts_ConnectionType:
+      $exportAs: AutomationAccountsConnectionType
+      $supportedFrom: v0.1.0
+    AutomationAccounts_Credential:
+      $exportAs: AutomationAccountsCredential
+      $supportedFrom: v0.1.0
+    AutomationAccounts_HybridRunbookWorkerGroup:
+      $exportAs: AutomationAccountsHybridRunbookWorkerGroup
+      $supportedFrom: v0.1.0
+    AutomationAccounts_HybridRunbookWorkerGroups_HybridRunbookWorker:
+      # Shortened: the mechanical name plus List is over 63 characters.
+      $exportAs: AutomationAccountsHybridRunbookWorker
+      $supportedFrom: v0.1.0
+    AutomationAccounts_JobSchedule:
+      $exportAs: AutomationAccountsJobSchedule
+      $supportedFrom: v0.1.0
+    AutomationAccounts_Module:
+      $exportAs: AutomationAccountsModule
+      $supportedFrom: v0.1.0
+    AutomationAccounts_PrivateEndpointConnection:
+      $exportAs: AutomationAccountsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    AutomationAccounts_Runbook:
+      $exportAs: AutomationAccountsRunbook
+      $supportedFrom: v0.1.0
+    AutomationAccounts_RuntimeEnvironment:
+      $exportAs: AutomationAccountsRuntimeEnvironment
+      $supportedFrom: v0.1.0
+    AutomationAccounts_RuntimeEnvironments_Package:
+      $exportAs: AutomationAccountsRuntimeEnvironmentsPackage
+      $supportedFrom: v0.1.0
+    AutomationAccounts_Schedule:
+      $exportAs: AutomationAccountsSchedule
+      $supportedFrom: v0.1.0
+    AutomationAccounts_SoftwareUpdateConfiguration:
+      $exportAs: AutomationAccountsSoftwareUpdateConfiguration
+      $supportedFrom: v0.1.0
+    AutomationAccounts_SourceControl:
+      $exportAs: AutomationAccountsSourceControl
+      $supportedFrom: v0.1.0
+    AutomationAccounts_Variable:
+      $exportAs: AutomationAccountsVariable
+      $supportedFrom: v0.1.0
+    AutomationAccounts_Watcher:
+      $exportAs: AutomationAccountsWatcher
+      $supportedFrom: v0.1.0
+    AutomationAccounts_Webhook:
+      $exportAs: AutomationAccountsWebhook
+      $supportedFrom: v0.1.0
+    # Secrets the user gives, from Kubernetes Secrets (not x-ms-secret in the
+    # spec): a certificate's PFX, a credential's password, a connection's
+    # field values (a key, a certificate thumbprint, an application ID; the
+    # connection type says which are encrypted, so all of them), a source
+    # control's tokens, and a webhook's URI (the URI is the credential).
+    CertificateCreateOrUpdateProperties:
+      Base64Value:
+        $importSecretMode: required
+    CredentialCreateOrUpdateProperties:
+      Password:
+        $importSecretMode: required
+    ConnectionCreateOrUpdateProperties:
+      FieldDefinitionValues:
+        $importSecretMode: required
+    SourceControlSecurityTokenProperties:
+      AccessToken:
+        $importSecretMode: required
+      RefreshToken:
+        $importSecretMode: required
+    WebhookCreateOrUpdateProperties:
+      Uri:
+        $importSecretMode: required
+    # Labels autolabel wrote, reviewed: a software update's query scopes
+    # are scopes (a subscription or group, any), its machines and a hybrid
+    # worker's VM are ARM references, as is a private endpoint.
+    AzureQueryProperties:
+      Scope:
+        $referenceType: simple
+    PrivateEndpointProperty:
+      Id:
+        $referenceType: arm
+    UpdateConfiguration:
+      AzureVirtualMachines:
+        $referenceType: arm
+    HybridRunbookWorkerCreateOrUpdateParameters:
+      VmResourceId:
+        $referenceType: arm

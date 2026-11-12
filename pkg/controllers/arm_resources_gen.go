@@ -22,6 +22,12 @@ import (
 	authorization_v20260101ps "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260101preview/storage"
 	authorization_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701"
 	authorization_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701/storage"
+	automation_customizations "github.com/highfivelabs/aso-extensions/apis/arm/automation/customizations"
+	automation_v20241023 "github.com/highfivelabs/aso-extensions/apis/arm/automation/v20241023"
+	automation_v20241023s "github.com/highfivelabs/aso-extensions/apis/arm/automation/v20241023/storage"
+	cognitiveservices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/customizations"
+	cognitiveservices_v20250601 "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20250601"
+	cognitiveservices_v20250601s "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20250601/storage"
 	compute_customizations "github.com/highfivelabs/aso-extensions/apis/arm/compute/customizations"
 	compute_v20220301 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301"
 	compute_v20220301s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301/storage"
@@ -402,6 +408,290 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicyDefinitionsVersion)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicySetDefinition)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicySetDefinitionsVersion)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccount)})
+	result = append(result, &registration.StorageType{
+		Obj: new(automation_v20241023.AutomationAccountsCertificate),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.base64Value",
+				Func: indexAutomationAutomationAccountsCertificateBase64Value,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.base64Value",
+					},
+					&automation_v20241023.AutomationAccountsCertificateList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsConfiguration)})
+	result = append(result, &registration.StorageType{
+		Obj: new(automation_v20241023.AutomationAccountsConnection),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.fieldDefinitionValues",
+				Func: indexAutomationAutomationAccountsConnectionFieldDefinitionValues,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.fieldDefinitionValues",
+					},
+					&automation_v20241023.AutomationAccountsConnectionList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsConnectionType)})
+	result = append(result, &registration.StorageType{
+		Obj: new(automation_v20241023.AutomationAccountsCredential),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.password",
+				Func: indexAutomationAutomationAccountsCredentialPassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.password",
+					},
+					&automation_v20241023.AutomationAccountsCredentialList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsHybridRunbookWorker)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsHybridRunbookWorkerGroup)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsJobSchedule)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsModule)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsRunbook)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsRuntimeEnvironment)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsRuntimeEnvironmentsPackage)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsSchedule)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsSoftwareUpdateConfiguration)})
+	result = append(result, &registration.StorageType{
+		Obj: new(automation_v20241023.AutomationAccountsSourceControl),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.securityToken.accessToken",
+				Func: indexAutomationAutomationAccountsSourceControlAccessToken,
+			},
+			{
+				Key:  ".spec.securityToken.refreshToken",
+				Func: indexAutomationAutomationAccountsSourceControlRefreshToken,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.securityToken.accessToken",
+						".spec.securityToken.refreshToken",
+					},
+					&automation_v20241023.AutomationAccountsSourceControlList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsVariable)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsWatcher)})
+	result = append(result, &registration.StorageType{
+		Obj: new(automation_v20241023.AutomationAccountsWebhook),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.uri",
+				Func: indexAutomationAutomationAccountsWebhookUri,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.uri",
+					},
+					&automation_v20241023.AutomationAccountsWebhookList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsCapabilityHost)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsCommitmentPlan)})
+	result = append(result, &registration.StorageType{
+		Obj: new(cognitiveservices_v20250601.AccountsConnection),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.accountKey.credentials.key",
+				Func: indexCognitiveservicesAccountsConnectionAccountKeyKey,
+			},
+			{
+				Key:  ".spec.properties.apiKey.credentials.key",
+				Func: indexCognitiveservicesAccountsConnectionApiKeyKey,
+			},
+			{
+				Key:  ".spec.properties.customKeys.credentials.keys",
+				Func: indexCognitiveservicesAccountsConnectionKeys,
+			},
+			{
+				Key:  ".spec.properties.oAuth2.credentials.clientSecret",
+				Func: indexCognitiveservicesAccountsConnectionOAuth2ClientSecret,
+			},
+			{
+				Key:  ".spec.properties.oAuth2.credentials.developerToken",
+				Func: indexCognitiveservicesAccountsConnectionOAuth2DeveloperToken,
+			},
+			{
+				Key:  ".spec.properties.oAuth2.credentials.password",
+				Func: indexCognitiveservicesAccountsConnectionOAuth2Password,
+			},
+			{
+				Key:  ".spec.properties.oAuth2.credentials.refreshToken",
+				Func: indexCognitiveservicesAccountsConnectionOAuth2RefreshToken,
+			},
+			{
+				Key:  ".spec.properties.pat.credentials.pat",
+				Func: indexCognitiveservicesAccountsConnectionPat,
+			},
+			{
+				Key:  ".spec.properties.sas.credentials.sas",
+				Func: indexCognitiveservicesAccountsConnectionSas,
+			},
+			{
+				Key:  ".spec.properties.accessKey.credentials.secretAccessKey",
+				Func: indexCognitiveservicesAccountsConnectionSecretAccessKey,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipal.credentials.clientSecret",
+				Func: indexCognitiveservicesAccountsConnectionServicePrincipalClientSecret,
+			},
+			{
+				Key:  ".spec.properties.usernamePassword.credentials.password",
+				Func: indexCognitiveservicesAccountsConnectionUsernamePasswordPassword,
+			},
+			{
+				Key:  ".spec.properties.usernamePassword.credentials.securityToken",
+				Func: indexCognitiveservicesAccountsConnectionUsernamePasswordSecurityToken,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.accessKey.credentials.secretAccessKey",
+						".spec.properties.accountKey.credentials.key",
+						".spec.properties.apiKey.credentials.key",
+						".spec.properties.customKeys.credentials.keys",
+						".spec.properties.oAuth2.credentials.clientSecret",
+						".spec.properties.oAuth2.credentials.developerToken",
+						".spec.properties.oAuth2.credentials.password",
+						".spec.properties.oAuth2.credentials.refreshToken",
+						".spec.properties.pat.credentials.pat",
+						".spec.properties.sas.credentials.sas",
+						".spec.properties.servicePrincipal.credentials.clientSecret",
+						".spec.properties.usernamePassword.credentials.password",
+						".spec.properties.usernamePassword.credentials.securityToken",
+					},
+					&cognitiveservices_v20250601.AccountsConnectionList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsDefenderForAISetting)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsEncryptionScope)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsProjectsCapabilityHost)})
+	result = append(result, &registration.StorageType{
+		Obj: new(cognitiveservices_v20250601.AccountsProjectsConnection),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.accountKey.credentials.key",
+				Func: indexCognitiveservicesAccountsProjectsConnectionAccountKeyKey,
+			},
+			{
+				Key:  ".spec.properties.apiKey.credentials.key",
+				Func: indexCognitiveservicesAccountsProjectsConnectionApiKeyKey,
+			},
+			{
+				Key:  ".spec.properties.customKeys.credentials.keys",
+				Func: indexCognitiveservicesAccountsProjectsConnectionKeys,
+			},
+			{
+				Key:  ".spec.properties.oAuth2.credentials.clientSecret",
+				Func: indexCognitiveservicesAccountsProjectsConnectionOAuth2ClientSecret,
+			},
+			{
+				Key:  ".spec.properties.oAuth2.credentials.developerToken",
+				Func: indexCognitiveservicesAccountsProjectsConnectionOAuth2DeveloperToken,
+			},
+			{
+				Key:  ".spec.properties.oAuth2.credentials.password",
+				Func: indexCognitiveservicesAccountsProjectsConnectionOAuth2Password,
+			},
+			{
+				Key:  ".spec.properties.oAuth2.credentials.refreshToken",
+				Func: indexCognitiveservicesAccountsProjectsConnectionOAuth2RefreshToken,
+			},
+			{
+				Key:  ".spec.properties.pat.credentials.pat",
+				Func: indexCognitiveservicesAccountsProjectsConnectionPat,
+			},
+			{
+				Key:  ".spec.properties.sas.credentials.sas",
+				Func: indexCognitiveservicesAccountsProjectsConnectionSas,
+			},
+			{
+				Key:  ".spec.properties.accessKey.credentials.secretAccessKey",
+				Func: indexCognitiveservicesAccountsProjectsConnectionSecretAccessKey,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipal.credentials.clientSecret",
+				Func: indexCognitiveservicesAccountsProjectsConnectionServicePrincipalClientSecret,
+			},
+			{
+				Key:  ".spec.properties.usernamePassword.credentials.password",
+				Func: indexCognitiveservicesAccountsProjectsConnectionUsernamePasswordPassword,
+			},
+			{
+				Key:  ".spec.properties.usernamePassword.credentials.securityToken",
+				Func: indexCognitiveservicesAccountsProjectsConnectionUsernamePasswordSecurityToken,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.accessKey.credentials.secretAccessKey",
+						".spec.properties.accountKey.credentials.key",
+						".spec.properties.apiKey.credentials.key",
+						".spec.properties.customKeys.credentials.keys",
+						".spec.properties.oAuth2.credentials.clientSecret",
+						".spec.properties.oAuth2.credentials.developerToken",
+						".spec.properties.oAuth2.credentials.password",
+						".spec.properties.oAuth2.credentials.refreshToken",
+						".spec.properties.pat.credentials.pat",
+						".spec.properties.sas.credentials.sas",
+						".spec.properties.servicePrincipal.credentials.clientSecret",
+						".spec.properties.usernamePassword.credentials.password",
+						".spec.properties.usernamePassword.credentials.securityToken",
+					},
+					&cognitiveservices_v20250601.AccountsProjectsConnectionList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsRaiBlocklist)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsRaiBlocklistsRaiBlocklistItem)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsRaiPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.CommitmentPlan)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.CommitmentPlansAccountAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.StorageType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.StorageType{
@@ -1066,6 +1356,80 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(authorization_v20260701s.PolicyDefinitionsVersion)},
 		&registration.KnownType{Obj: new(authorization_v20260701s.PolicySetDefinition)},
 		&registration.KnownType{Obj: new(authorization_v20260701s.PolicySetDefinitionsVersion)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccount)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsCertificate)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsConfiguration)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsConnection)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsConnectionType)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsCredential)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsHybridRunbookWorker)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsHybridRunbookWorkerGroup)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsJobSchedule)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsModule)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsRunbook)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsRuntimeEnvironment)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsRuntimeEnvironmentsPackage)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsSchedule)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsSoftwareUpdateConfiguration)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsSourceControl)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsVariable)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsWatcher)},
+		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsWebhook)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccount)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsCertificate)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsConfiguration)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsConnection)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsConnectionType)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsCredential)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsHybridRunbookWorker)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsHybridRunbookWorkerGroup)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsJobSchedule)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsModule)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsRunbook)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsRuntimeEnvironment)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsRuntimeEnvironmentsPackage)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsSchedule)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsSoftwareUpdateConfiguration)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsSourceControl)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsVariable)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsWatcher)},
+		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsWebhook)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsCapabilityHost)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsCommitmentPlan)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsDefenderForAISetting)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsEncryptionScope)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsProjectsCapabilityHost)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsProjectsConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsRaiBlocklist)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsRaiBlocklistsRaiBlocklistItem)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsRaiPolicy)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.CommitmentPlan)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.CommitmentPlansAccountAssociation)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsCapabilityHost)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsCommitmentPlan)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsDefenderForAISetting)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsEncryptionScope)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsProjectsCapabilityHost)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsProjectsConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsRaiBlocklist)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsRaiBlocklistsRaiBlocklistItem)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsRaiPolicy)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.CommitmentPlan)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.CommitmentPlansAccountAssociation)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301s.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601.Budget)})
@@ -1453,6 +1817,10 @@ func createScheme() *runtime.Scheme {
 	_ = authorization_v20260101ps.AddToScheme(scheme)
 	_ = authorization_v20260701.AddToScheme(scheme)
 	_ = authorization_v20260701s.AddToScheme(scheme)
+	_ = automation_v20241023.AddToScheme(scheme)
+	_ = automation_v20241023s.AddToScheme(scheme)
+	_ = cognitiveservices_v20250601.AddToScheme(scheme)
+	_ = cognitiveservices_v20250601s.AddToScheme(scheme)
 	_ = compute_v20220301.AddToScheme(scheme)
 	_ = compute_v20220301s.AddToScheme(scheme)
 	_ = consumption_v20260601.AddToScheme(scheme)
@@ -1569,6 +1937,39 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &authorization_customizations.RoleAssignmentScheduleRequestExtension{})
 	result = append(result, &authorization_customizations.RoleEligibilityScheduleRequestExtension{})
 	result = append(result, &authorization_customizations.RoleManagementPolicyAssignmentExtension{})
+	result = append(result, &automation_customizations.AutomationAccountExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsCertificateExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsConfigurationExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsConnectionExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsConnectionTypeExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsCredentialExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsHybridRunbookWorkerExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsHybridRunbookWorkerGroupExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsJobScheduleExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsModuleExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsPrivateEndpointConnectionExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsRunbookExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsRuntimeEnvironmentExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsRuntimeEnvironmentsPackageExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsScheduleExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsSoftwareUpdateConfigurationExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsSourceControlExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsVariableExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsWatcherExtension{})
+	result = append(result, &automation_customizations.AutomationAccountsWebhookExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsCapabilityHostExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsCommitmentPlanExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsConnectionExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsDefenderForAISettingExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsEncryptionScopeExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsPrivateEndpointConnectionExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsProjectsCapabilityHostExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsProjectsConnectionExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsRaiBlocklistExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsRaiBlocklistsRaiBlocklistItemExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsRaiPolicyExtension{})
+	result = append(result, &cognitiveservices_customizations.CommitmentPlanExtension{})
+	result = append(result, &cognitiveservices_customizations.CommitmentPlansAccountAssociationExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
 	result = append(result, &consumption_customizations.BudgetExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesConnectedRegistryExtension{})
@@ -2027,6 +2428,630 @@ func indexAuthorizationRoleEligibilityScheduleRequestPrincipalIdFromConfig(rawOb
 		return nil
 	}
 	return obj.Spec.PrincipalIdFromConfig.Index()
+}
+
+// indexAutomationAutomationAccountsCertificateBase64Value an index function for automation_v20241023.AutomationAccountsCertificate .spec.base64Value
+func indexAutomationAutomationAccountsCertificateBase64Value(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Base64Value == nil {
+		return nil
+	}
+	return obj.Spec.Base64Value.Index()
+}
+
+// indexAutomationAutomationAccountsConnectionFieldDefinitionValues an index function for automation_v20241023.AutomationAccountsConnection .spec.fieldDefinitionValues
+func indexAutomationAutomationAccountsConnectionFieldDefinitionValues(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.FieldDefinitionValues == nil {
+		return nil
+	}
+	return obj.Spec.FieldDefinitionValues.Index()
+}
+
+// indexAutomationAutomationAccountsCredentialPassword an index function for automation_v20241023.AutomationAccountsCredential .spec.password
+func indexAutomationAutomationAccountsCredentialPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsCredential)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Password == nil {
+		return nil
+	}
+	return obj.Spec.Password.Index()
+}
+
+// indexAutomationAutomationAccountsSourceControlAccessToken an index function for automation_v20241023.AutomationAccountsSourceControl .spec.securityToken.accessToken
+func indexAutomationAutomationAccountsSourceControlAccessToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsSourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SecurityToken == nil {
+		return nil
+	}
+	if obj.Spec.SecurityToken.AccessToken == nil {
+		return nil
+	}
+	return obj.Spec.SecurityToken.AccessToken.Index()
+}
+
+// indexAutomationAutomationAccountsSourceControlRefreshToken an index function for automation_v20241023.AutomationAccountsSourceControl .spec.securityToken.refreshToken
+func indexAutomationAutomationAccountsSourceControlRefreshToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsSourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SecurityToken == nil {
+		return nil
+	}
+	if obj.Spec.SecurityToken.RefreshToken == nil {
+		return nil
+	}
+	return obj.Spec.SecurityToken.RefreshToken.Index()
+}
+
+// indexAutomationAutomationAccountsWebhookUri an index function for automation_v20241023.AutomationAccountsWebhook .spec.uri
+func indexAutomationAutomationAccountsWebhookUri(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsWebhook)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Uri == nil {
+		return nil
+	}
+	return obj.Spec.Uri.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionAccountKeyKey an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.accountKey.credentials.key
+func indexCognitiveservicesAccountsConnectionAccountKeyKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey.Credentials.Key == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AccountKey.Credentials.Key.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionApiKeyKey an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.apiKey.credentials.key
+func indexCognitiveservicesAccountsConnectionApiKeyKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ApiKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ApiKey.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ApiKey.Credentials.Key == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ApiKey.Credentials.Key.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionKeys an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.customKeys.credentials.keys
+func indexCognitiveservicesAccountsConnectionKeys(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.CustomKeys == nil {
+		return nil
+	}
+	if obj.Spec.Properties.CustomKeys.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.CustomKeys.Credentials.Keys == nil {
+		return nil
+	}
+	return obj.Spec.Properties.CustomKeys.Credentials.Keys.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionOAuth2ClientSecret an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.oAuth2.credentials.clientSecret
+func indexCognitiveservicesAccountsConnectionOAuth2ClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OAuth2.Credentials.ClientSecret.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionOAuth2DeveloperToken an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.oAuth2.credentials.developerToken
+func indexCognitiveservicesAccountsConnectionOAuth2DeveloperToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials.DeveloperToken == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OAuth2.Credentials.DeveloperToken.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionOAuth2Password an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.oAuth2.credentials.password
+func indexCognitiveservicesAccountsConnectionOAuth2Password(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials.Password == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OAuth2.Credentials.Password.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionOAuth2RefreshToken an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.oAuth2.credentials.refreshToken
+func indexCognitiveservicesAccountsConnectionOAuth2RefreshToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials.RefreshToken == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OAuth2.Credentials.RefreshToken.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionPat an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.pat.credentials.pat
+func indexCognitiveservicesAccountsConnectionPat(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.PAT == nil {
+		return nil
+	}
+	if obj.Spec.Properties.PAT.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.PAT.Credentials.Pat == nil {
+		return nil
+	}
+	return obj.Spec.Properties.PAT.Credentials.Pat.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionSas an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.sas.credentials.sas
+func indexCognitiveservicesAccountsConnectionSas(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SAS == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SAS.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SAS.Credentials.Sas == nil {
+		return nil
+	}
+	return obj.Spec.Properties.SAS.Credentials.Sas.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionSecretAccessKey an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.accessKey.credentials.secretAccessKey
+func indexCognitiveservicesAccountsConnectionSecretAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccessKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccessKey.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccessKey.Credentials.SecretAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AccessKey.Credentials.SecretAccessKey.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionServicePrincipalClientSecret an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.servicePrincipal.credentials.clientSecret
+func indexCognitiveservicesAccountsConnectionServicePrincipalClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipal == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipal.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipal.Credentials.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipal.Credentials.ClientSecret.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionUsernamePasswordPassword an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.usernamePassword.credentials.password
+func indexCognitiveservicesAccountsConnectionUsernamePasswordPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword.Credentials.Password == nil {
+		return nil
+	}
+	return obj.Spec.Properties.UsernamePassword.Credentials.Password.Index()
+}
+
+// indexCognitiveservicesAccountsConnectionUsernamePasswordSecurityToken an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.usernamePassword.credentials.securityToken
+func indexCognitiveservicesAccountsConnectionUsernamePasswordSecurityToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword.Credentials.SecurityToken == nil {
+		return nil
+	}
+	return obj.Spec.Properties.UsernamePassword.Credentials.SecurityToken.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionAccountKeyKey an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.accountKey.credentials.key
+func indexCognitiveservicesAccountsProjectsConnectionAccountKeyKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey.Credentials.Key == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AccountKey.Credentials.Key.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionApiKeyKey an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.apiKey.credentials.key
+func indexCognitiveservicesAccountsProjectsConnectionApiKeyKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ApiKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ApiKey.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ApiKey.Credentials.Key == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ApiKey.Credentials.Key.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionKeys an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.customKeys.credentials.keys
+func indexCognitiveservicesAccountsProjectsConnectionKeys(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.CustomKeys == nil {
+		return nil
+	}
+	if obj.Spec.Properties.CustomKeys.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.CustomKeys.Credentials.Keys == nil {
+		return nil
+	}
+	return obj.Spec.Properties.CustomKeys.Credentials.Keys.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionOAuth2ClientSecret an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.oAuth2.credentials.clientSecret
+func indexCognitiveservicesAccountsProjectsConnectionOAuth2ClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OAuth2.Credentials.ClientSecret.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionOAuth2DeveloperToken an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.oAuth2.credentials.developerToken
+func indexCognitiveservicesAccountsProjectsConnectionOAuth2DeveloperToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials.DeveloperToken == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OAuth2.Credentials.DeveloperToken.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionOAuth2Password an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.oAuth2.credentials.password
+func indexCognitiveservicesAccountsProjectsConnectionOAuth2Password(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials.Password == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OAuth2.Credentials.Password.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionOAuth2RefreshToken an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.oAuth2.credentials.refreshToken
+func indexCognitiveservicesAccountsProjectsConnectionOAuth2RefreshToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OAuth2.Credentials.RefreshToken == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OAuth2.Credentials.RefreshToken.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionPat an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.pat.credentials.pat
+func indexCognitiveservicesAccountsProjectsConnectionPat(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.PAT == nil {
+		return nil
+	}
+	if obj.Spec.Properties.PAT.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.PAT.Credentials.Pat == nil {
+		return nil
+	}
+	return obj.Spec.Properties.PAT.Credentials.Pat.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionSas an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.sas.credentials.sas
+func indexCognitiveservicesAccountsProjectsConnectionSas(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SAS == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SAS.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SAS.Credentials.Sas == nil {
+		return nil
+	}
+	return obj.Spec.Properties.SAS.Credentials.Sas.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionSecretAccessKey an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.accessKey.credentials.secretAccessKey
+func indexCognitiveservicesAccountsProjectsConnectionSecretAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccessKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccessKey.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccessKey.Credentials.SecretAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AccessKey.Credentials.SecretAccessKey.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionServicePrincipalClientSecret an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.servicePrincipal.credentials.clientSecret
+func indexCognitiveservicesAccountsProjectsConnectionServicePrincipalClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipal == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipal.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipal.Credentials.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipal.Credentials.ClientSecret.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionUsernamePasswordPassword an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.usernamePassword.credentials.password
+func indexCognitiveservicesAccountsProjectsConnectionUsernamePasswordPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword.Credentials.Password == nil {
+		return nil
+	}
+	return obj.Spec.Properties.UsernamePassword.Credentials.Password.Index()
+}
+
+// indexCognitiveservicesAccountsProjectsConnectionUsernamePasswordSecurityToken an index function for cognitiveservices_v20250601.AccountsProjectsConnection .spec.properties.usernamePassword.credentials.securityToken
+func indexCognitiveservicesAccountsProjectsConnectionUsernamePasswordSecurityToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20250601.AccountsProjectsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.UsernamePassword.Credentials.SecurityToken == nil {
+		return nil
+	}
+	return obj.Spec.Properties.UsernamePassword.Credentials.SecurityToken.Index()
 }
 
 // indexContainerregistryRegistriesTaskDockerContextAccessToken an index function for containerregistry_v20190401.RegistriesTask .spec.step.docker.contextAccessToken

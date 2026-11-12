@@ -184,6 +184,14 @@ func init() {
 		return map[string]any{"platform": map[string]any{"os": "Linux"},
 			"step": map[string]any{"encodedTask": map[string]any{"type": "EncodedTask", "encodedTaskContent": "dmVyc2lvbjogdjEuMS4wCnN0ZXBzOiBbXQo="}}}
 	}}
+	// Cognitive Services: a connection's properties are polymorphic on its
+	// authType, exactly one set (with none set the payload cannot be built).
+	connection := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"none": map[string]any{
+			"authType": "None", "category": "GenericHttp", "target": "https://example.com"}}}
+	}}
+	f["AccountsConnection"] = connection
+	f["AccountsProjectsConnection"] = connection
 	// Kubernetes configuration: a source control configuration is on a
 	// managed or Arc-enabled cluster.
 	f["SourceControlConfiguration"] = conformanceFixture{

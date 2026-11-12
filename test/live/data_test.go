@@ -174,21 +174,31 @@ func TestLiveSqlUser(t *testing.T) {
 	t.Parallel()
 	requireProvider(t, "Microsoft.Sql")
 	ns := namespace(t, "sql")
-	serverName := azName("sql")
-	serverID := rgID() + "/providers/Microsoft.Sql/servers/" + serverName
 	adminPass, userPass := password(), password()
-	fixtureWait(t, 20*time.Minute, serverID, "2023-08-01", map[string]any{
-		"location": location,
-		"properties": map[string]any{
-			"administratorLogin": "liveadmin", "administratorLoginPassword": adminPass, "version": "12.0",
-			"minimalTlsVersion": "1.2", "publicNetworkAccess": "Enabled",
-		},
-	})
+	// Azure SQL is ProvisioningDisabled in eastus2 for this subscription
+	// (2026-11-12): the server goes to the first region that takes it.
+	var cands []candidate
+	for i, region := range regions() {
+		cands = append(cands, candidate{
+			id: rgID() + "/providers/Microsoft.Sql/servers/" + azName(fmt.Sprintf("sql%d", i)),
+			body: map[string]any{
+				"location": region,
+				"properties": map[string]any{
+					"administratorLogin": "liveadmin", "administratorLoginPassword": adminPass, "version": "12.0",
+					"minimalTlsVersion": "1.2", "publicNetworkAccess": "Enabled",
+				},
+			},
+		})
+	}
+	i, _ := fixtureFirst(t, 20*time.Minute, "2023-08-01", cands)
+	serverID, sqlRegion := cands[i].id, regions()[i]
+	serverName := serverID[strings.LastIndex(serverID, "/")+1:]
+	t.Logf("Azure SQL server in %s", sqlRegion)
 	ip := runnerIP(t)
 	fixture(t, serverID+"/firewallRules/runner", "2023-08-01", map[string]any{"properties": map[string]any{"startIpAddress": ip, "endIpAddress": ip}})
 	dbID := serverID + "/databases/livedb"
 	fixtureWait(t, 20*time.Minute, dbID, "2023-08-01", map[string]any{
-		"location": location, "sku": map[string]any{"name": "Basic", "tier": "Basic"},
+		"location": sqlRegion, "sku": map[string]any{"name": "Basic", "tier": "Basic"},
 	})
 	fqdn := serverName + ".database.windows.net"
 	server := &asosql.Server{}
@@ -260,20 +270,32 @@ func TestLivePostgresUser(t *testing.T) {
 	t.Parallel()
 	requireProvider(t, "Microsoft.DBforPostgreSQL")
 	ns := namespace(t, "pg")
-	serverName := azName("pg")
-	serverID := rgID() + "/providers/Microsoft.DBforPostgreSQL/flexibleServers/" + serverName
 	const pgAPI = "2024-08-01"
 	adminPass, userPass := password(), password()
-	fixtureWait(t, 30*time.Minute, serverID, pgAPI, map[string]any{
-		"location": location,
-		"sku":      map[string]any{"name": "Standard_B1ms", "tier": "Burstable"},
-		"properties": map[string]any{
-			"version": "16", "administratorLogin": "liveadmin", "administratorLoginPassword": adminPass,
-			"storage": map[string]any{"storageSizeGB": 32}, "backup": map[string]any{"backupRetentionDays": 7, "geoRedundantBackup": "Disabled"},
-			"highAvailability": map[string]any{"mode": "Disabled"}, "network": map[string]any{"publicNetworkAccess": "Enabled"},
-			"authConfig": map[string]any{"passwordAuth": "Enabled", "activeDirectoryAuth": "Disabled"},
-		},
-	})
+	// Burstable B1ms is SkuNotAvailable in eastus2 for this subscription
+	// (2026-11-12): each region with B1ms, then B2s, the next Burstable size.
+	var cands []candidate
+	for _, sku := range []string{"Standard_B1ms", "Standard_B2s"} {
+		for _, region := range regions() {
+			cands = append(cands, candidate{
+				id: rgID() + "/providers/Microsoft.DBforPostgreSQL/flexibleServers/" + azName(fmt.Sprintf("pg%d", len(cands))),
+				body: map[string]any{
+					"location": region,
+					"sku":      map[string]any{"name": sku, "tier": "Burstable"},
+					"properties": map[string]any{
+						"version": "16", "administratorLogin": "liveadmin", "administratorLoginPassword": adminPass,
+						"storage": map[string]any{"storageSizeGB": 32}, "backup": map[string]any{"backupRetentionDays": 7, "geoRedundantBackup": "Disabled"},
+						"highAvailability": map[string]any{"mode": "Disabled"}, "network": map[string]any{"publicNetworkAccess": "Enabled"},
+						"authConfig": map[string]any{"passwordAuth": "Enabled", "activeDirectoryAuth": "Disabled"},
+					},
+				},
+			})
+		}
+	}
+	i, _ := fixtureFirst(t, 30*time.Minute, pgAPI, cands)
+	serverID := cands[i].id
+	serverName := serverID[strings.LastIndex(serverID, "/")+1:]
+	t.Logf("PostgreSQL server %v in %v", cands[i].body["sku"], cands[i].body["location"])
 	eventually(t, 30*time.Minute, "the PostgreSQL server Ready", func() error {
 		_, r, err := azure.get(context.Background(), serverID, pgAPI)
 		if err != nil {
