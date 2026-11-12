@@ -6,10 +6,14 @@
 package live
 
 import (
+	"context"
 	"fmt"
+	"net/http"
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/google/uuid"
 
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 
@@ -82,9 +86,9 @@ func TestLiveQueryPack(t *testing.T) {
 	expectGone(t, packID, oiAPI)
 }
 
-// A workspace's custom table, saved search, linked storage account, data
-// export and linked service (an Automation account), on a workspace fixture
-// with nothing ingested (free; storage cents).
+// A workspace's custom table, saved search, data export, linked service (an
+// Automation account) and linked storage account, on a workspace fixture with
+// nothing ingested (free; storage cents).
 func TestLiveWorkspaceChildren(t *testing.T) {
 	t.Parallel()
 	requireProvider(t, "Microsoft.OperationalInsights")
@@ -109,18 +113,13 @@ func TestLiveWorkspaceChildren(t *testing.T) {
 		Query: ptr("AppEvents_CL | where Message contains 'error'"), Version: ptr(2),
 		Tags: []oi.Tag{{Name: ptr("team"), Value: ptr("platform")}},
 	}
-	linkedStorage := &oi.WorkspacesLinkedStorageAccount{}
-	linkedStorage.Namespace, linkedStorage.Name = ns, "customlogs"
-	linkedStorage.Spec = oi.WorkspacesLinkedStorageAccount_Spec{
-		AzureName: "CustomLogs", Owner: owner("law"), StorageAccountReferences: []genruntime.ResourceReference{{ARMID: storageID}},
-	}
 	export := &oi.WorkspacesDataExport{}
 	export.Namespace, export.Name = ns, "archive"
 	export.Spec = oi.WorkspacesDataExport_Spec{
 		AzureName: "archive", Owner: owner("law"), TableNames: []string{"AppEvents_CL"}, Enable: ptr(true),
 		Destination: &oi.Destination{ResourceReference: &genruntime.ResourceReference{ARMID: storageID}},
 	}
-	create(t, timeout, table, search, linkedStorage, export)
+	create(t, timeout, table, search, export)
 
 	tableID := wsID + "/tables/AppEvents_CL"
 	expectResource(t, tableID, oiAPI, func(r map[string]any) error {
@@ -132,13 +131,6 @@ func TestLiveWorkspaceChildren(t *testing.T) {
 	})
 	expectResource(t, wsID+"/savedSearches/app-errors", oiAPI, func(r map[string]any) error {
 		if p := properties(r); p["category"] != "Application" || p["query"] != "AppEvents_CL | where Message contains 'error'" {
-			return fmt.Errorf("resource: %v", r)
-		}
-		return nil
-	})
-	expectResource(t, wsID+"/linkedStorageAccounts/CustomLogs", oiAPI, func(r map[string]any) error {
-		ids, _ := properties(r)["storageAccountIds"].([]any)
-		if len(ids) != 1 || !strings.EqualFold(fmt.Sprint(ids[0]), storageID) {
 			return fmt.Errorf("resource: %v", r)
 		}
 		return nil
@@ -192,10 +184,48 @@ func TestLiveWorkspaceChildren(t *testing.T) {
 		expectGone(t, id, oiAPI)
 	})
 
-	for _, o := range []conditioned{export, linkedStorage, search, table} {
+	// Azure links a storage account for saved queries (Query) only to a
+	// workspace with a managed identity that holds Storage Table Data
+	// Contributor on the account, a role assignment Contributor cannot make;
+	// CustomLogs links were retired in 2025 (refused InvalidParameter, live
+	// run of 2026-11-12).
+	t.Run("LinkedStorageAccount", func(t *testing.T) {
+		requireAction(t, "Microsoft.Authorization/roleAssignments/write")
+		ctx := context.Background()
+		_, w, err := azure.do(ctx, http.MethodPatch, wsID, "2023-09-01", map[string]any{"identity": map[string]any{"type": "SystemAssigned"}})
+		if err != nil {
+			t.Fatalf("workspace identity: %v", err)
+		}
+		identity, _ := w["identity"].(map[string]any)
+		const tableDataContributor = "0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3"
+		fixture(t, storageID+"/providers/Microsoft.Authorization/roleAssignments/"+uuid.NewString(), "2022-04-01", map[string]any{
+			"properties": map[string]any{
+				"roleDefinitionId": "/subscriptions/" + subID + "/providers/Microsoft.Authorization/roleDefinitions/" + tableDataContributor,
+				"principalId":      identity["principalId"], "principalType": "ServicePrincipal",
+			},
+		})
+		linked := &oi.WorkspacesLinkedStorageAccount{}
+		linked.Namespace, linked.Name = ns, "query"
+		linked.Spec = oi.WorkspacesLinkedStorageAccount_Spec{
+			AzureName: "Query", Owner: owner("law"), StorageAccountReferences: []genruntime.ResourceReference{{ARMID: storageID}},
+		}
+		create(t, timeout, linked)
+		id := wsID + "/linkedStorageAccounts/Query"
+		expectResource(t, id, oiAPI, func(r map[string]any) error {
+			ids, _ := properties(r)["storageAccountIds"].([]any)
+			if len(ids) != 1 || !strings.EqualFold(fmt.Sprint(ids[0]), storageID) {
+				return fmt.Errorf("resource: %v", r)
+			}
+			return nil
+		})
+		remove(t, timeout, linked)
+		expectGone(t, id, oiAPI)
+	})
+
+	for _, o := range []conditioned{export, search, table} {
 		remove(t, timeout, o)
 	}
-	for _, id := range []string{wsID + "/dataExports/archive", wsID + "/linkedStorageAccounts/CustomLogs", wsID + "/savedSearches/app-errors"} {
+	for _, id := range []string{wsID + "/dataExports/archive", wsID + "/savedSearches/app-errors"} {
 		expectGone(t, id, oiAPI)
 	}
 	// A deleted table is kept, soft-deleted, while its retention runs; Azure

@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"path"
 	"strings"
 	"testing"
 	"time"
@@ -351,4 +352,45 @@ func requireProvider(t *testing.T, ns string) {
 	if s, _ := r["registrationState"].(string); s != "Registered" {
 		t.Skipf("the subscription has not registered %s (%s): the builder registers it", ns, s)
 	}
+}
+
+// requireAction skips the test when the identity may not take action on the
+// resource group: Contributor excludes Microsoft.Authorization/*/write, and
+// the identity's roles are the builder's (docs/live-runs.md, "Rights
+// Contributor does not have"). Read from the group's permissions, so the test
+// runs once a role grants it.
+func requireAction(t *testing.T, action string) {
+	t.Helper()
+	_, r, err := azure.get(context.Background(), rgID()+"/providers/Microsoft.Authorization/permissions", "2022-04-01")
+	if err != nil {
+		t.Skipf("cannot read the identity's permissions on the group: %v", err)
+	}
+	if !permitted(r, action) {
+		t.Skipf("the identity may not %s on the group (Contributor excludes it): the builder grants a role that has it", action)
+	}
+}
+
+// permitted is whether a permissions list (value: [{actions, notActions}])
+// allows action, matching Azure's * wildcards without regard to case.
+func permitted(r map[string]any, action string) bool {
+	match := func(list any) bool {
+		patterns, _ := list.([]any)
+		for _, p := range patterns {
+			if ok, _ := path.Match(strings.ToLower(fmt.Sprint(p)), strings.ToLower(action)); ok {
+				return true
+			}
+			if strings.HasSuffix(fmt.Sprint(p), "*") && strings.HasPrefix(strings.ToLower(action), strings.ToLower(strings.TrimSuffix(fmt.Sprint(p), "*"))) {
+				return true
+			}
+		}
+		return false
+	}
+	entries, _ := r["value"].([]any)
+	for _, e := range entries {
+		m, _ := e.(map[string]any)
+		if match(m["actions"]) && !match(m["notActions"]) {
+			return true
+		}
+	}
+	return false
 }

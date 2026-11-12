@@ -86,9 +86,12 @@ func TestLiveTemplateSpec(t *testing.T) {
 }
 
 // A Resource Manager private link (free: it is the target a private
-// endpoint for Azure Resource Manager points at; none is made here).
+// endpoint for Azure Resource Manager points at; none is made here). Its
+// write is a Microsoft.Authorization action, which Contributor excludes
+// (refused AuthorizationFailed, live run of 2026-11-12).
 func TestLiveResourceManagementPrivateLink(t *testing.T) {
 	t.Parallel()
+	requireAction(t, "Microsoft.Authorization/resourceManagementPrivateLinks/write")
 	ns := namespace(t, "rmpl")
 	link := &authorization.ResourceManagementPrivateLink{}
 	link.Namespace, link.Name = ns, "link"
