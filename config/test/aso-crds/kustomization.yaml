@@ -20,3 +20,4 @@ resources:
 - documentdb.azure.com_sqldatabases.yaml
 - cognitiveservices.azure.com_accounts.yaml
 - cognitiveservices.azure.com_projects.yaml
+- storage.azure.com_storageaccounts.yaml

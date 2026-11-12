@@ -17,3 +17,4 @@ documentdb/DatabaseAccount
 documentdb/SqlDatabase
 cognitiveservices/Account
 cognitiveservices/Project
+storage/StorageAccount

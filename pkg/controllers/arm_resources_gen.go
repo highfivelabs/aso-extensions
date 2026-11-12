@@ -130,6 +130,9 @@ import (
 	securityinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/customizations"
 	securityinsights_v20250901 "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901"
 	securityinsights_v20250901s "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901/storage"
+	storage_customizations "github.com/highfivelabs/aso-extensions/apis/arm/storage/customizations"
+	storage_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/storage/v20260601"
+	storage_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/storage/v20260601/storage"
 	web_customizations "github.com/highfivelabs/aso-extensions/apis/arm/web/customizations"
 	web_v20260715 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715"
 	web_v20260715s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715/storage"
@@ -1085,6 +1088,12 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.SecurityMLAnalyticsSetting)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.Watchlist)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.WatchlistsWatchlistItem)})
+	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)})
+	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsInventoryPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsLocalUser)})
+	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsObjectReplicationPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsStorageTaskAssignment)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.Certificate),
 		Indexes: []registration.Index{
@@ -1610,6 +1619,22 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.WatchlistsWatchlistItem)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)},
+		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsInventoryPolicy)},
+		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsLocalUser)},
+		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsObjectReplicationPolicy)},
+		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsStorageTaskAssignment)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsEncryptionScope)},
+		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsInventoryPolicy)},
+		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsLocalUser)},
+		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsObjectReplicationPolicy)},
+		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsStorageTaskAssignment)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesHostNameBinding)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlot)},
@@ -1725,6 +1750,8 @@ func createScheme() *runtime.Scheme {
 	_ = security_v20260701s.AddToScheme(scheme)
 	_ = securityinsights_v20250901.AddToScheme(scheme)
 	_ = securityinsights_v20250901s.AddToScheme(scheme)
+	_ = storage_v20260601.AddToScheme(scheme)
+	_ = storage_v20260601s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
 	_ = web_v20260715s.AddToScheme(scheme)
 	return scheme
@@ -1939,6 +1966,12 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &securityinsights_customizations.SecurityMLAnalyticsSettingExtension{})
 	result = append(result, &securityinsights_customizations.WatchlistExtension{})
 	result = append(result, &securityinsights_customizations.WatchlistsWatchlistItemExtension{})
+	result = append(result, &storage_customizations.StorageAccountsEncryptionScopeExtension{})
+	result = append(result, &storage_customizations.StorageAccountsInventoryPolicyExtension{})
+	result = append(result, &storage_customizations.StorageAccountsLocalUserExtension{})
+	result = append(result, &storage_customizations.StorageAccountsObjectReplicationPolicyExtension{})
+	result = append(result, &storage_customizations.StorageAccountsPrivateEndpointConnectionExtension{})
+	result = append(result, &storage_customizations.StorageAccountsStorageTaskAssignmentExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
 	result = append(result, &web_customizations.SitesHostNameBindingExtension{})
 	result = append(result, &web_customizations.SitesSlotExtension{})
