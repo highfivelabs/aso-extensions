@@ -1,0 +1,83 @@
+# Azure Cosmos DB children ASO does not export (Microsoft.DocumentDB,
+# 2024-08-15, the version of ASO's DatabaseAccount, so owner and child share
+# a vintage): Gremlin databases and graphs, Cassandra keyspaces and tables,
+# Table API tables, their throughput settings, dedicated gateways and other
+# services, SQL role definitions, private endpoint connections and client
+# encryption keys. The catalog's modules use Gremlin and the SQL dedicated
+# gateway (docs/coverage/catalog-azure.md). Owned by ASO's DatabaseAccount
+# (or SqlDatabase, a client encryption key), then by our kinds.
+typeFilters:
+  - action: include
+    group: documentdb
+    version: v20240815
+    because: the version of ASO's DatabaseAccount (v1api20240815, its storage version)
+  - action: prune
+    group: documentdb
+    because: every other version is left alone
+groupModelConfiguration:
+  2024-08-15:
+    DatabaseAccounts_GremlinDatabase:
+      $exportAs: DatabaseAccountsGremlinDatabase
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_GremlinDatabases_ThroughputSetting:
+      $exportAs: DatabaseAccountsGremlinDatabasesThroughputSetting
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_GremlinDatabases_Graph:
+      $exportAs: DatabaseAccountsGremlinDatabasesGraph
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_GremlinDatabases_Graphs_ThroughputSetting:
+      $exportAs: DatabaseAccountsGremlinDatabasesGraphsThroughputSetting
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_CassandraKeyspace:
+      $exportAs: DatabaseAccountsCassandraKeyspace
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_CassandraKeyspaces_ThroughputSetting:
+      $exportAs: DatabaseAccountsCassandraKeyspacesThroughputSetting
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_CassandraKeyspaces_Table:
+      $exportAs: DatabaseAccountsCassandraKeyspacesTable
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_CassandraKeyspaces_Tables_ThroughputSetting:
+      $exportAs: DatabaseAccountsCassandraKeyspacesTablesThroughputSetting
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_Table:
+      $exportAs: DatabaseAccountsTable
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_Tables_ThroughputSetting:
+      $exportAs: DatabaseAccountsTablesThroughputSetting
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_Service:
+      $exportAs: DatabaseAccountsService
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_SqlRoleDefinition:
+      $exportAs: DatabaseAccountsSqlRoleDefinition
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_PrivateEndpointConnection:
+      $exportAs: DatabaseAccountsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    DatabaseAccounts_SqlDatabases_ClientEncryptionKey:
+      $exportAs: DatabaseAccountsSqlDatabasesClientEncryptionKey
+      $supportedFrom: v0.1.0
+    # A database's, graph's, keyspace's or table's own name, not a
+    # reference (as ASO labels the SQL and MongoDB resources').
+    GremlinDatabaseResource:
+      Id:
+        $referenceType: simple
+    GremlinGraphResource:
+      Id:
+        $referenceType: simple
+    CassandraKeyspaceResource:
+      Id:
+        $referenceType: simple
+    CassandraTableResource:
+      Id:
+        $referenceType: simple
+    TableResource:
+      Id:
+        $referenceType: simple
+    ClientEncryptionKeyResource:
+      Id:
+        $referenceType: simple
+    PrivateEndpointProperty:
+      Id:
+        $referenceType: arm # the private endpoint's ARM ID (autolabel, reviewed)

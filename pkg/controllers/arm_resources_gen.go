@@ -45,6 +45,9 @@ import (
 	devtestlab_customizations "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/customizations"
 	devtestlab_v20180915 "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915"
 	devtestlab_v20180915s "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915/storage"
+	documentdb_customizations "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/customizations"
+	documentdb_v20240815 "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20240815"
+	documentdb_v20240815s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20240815/storage"
 	hardwaresecuritymodules_customizations "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/customizations"
 	hardwaresecuritymodules_v20250331 "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331"
 	hardwaresecuritymodules_v20250331s "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331/storage"
@@ -468,6 +471,20 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.ScheduledAction)})
 	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Schedule)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspace)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspacesTable)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspacesTablesThroughputSetting)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspacesThroughputSetting)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsGremlinDatabase)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsGremlinDatabasesGraph)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsGremlinDatabasesGraphsThroughputSetting)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsGremlinDatabasesThroughputSetting)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsService)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsSqlDatabasesClientEncryptionKey)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsSqlRoleDefinition)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsTable)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsTablesThroughputSetting)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
@@ -1075,6 +1092,38 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspace)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspacesTable)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspacesTablesThroughputSetting)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspacesThroughputSetting)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsGremlinDatabase)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsGremlinDatabasesGraph)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsGremlinDatabasesGraphsThroughputSetting)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsGremlinDatabasesThroughputSetting)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsService)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsSqlDatabasesClientEncryptionKey)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsSqlRoleDefinition)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsTable)},
+		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsTablesThroughputSetting)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsCassandraKeyspace)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsCassandraKeyspacesTable)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsCassandraKeyspacesTablesThroughputSetting)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsCassandraKeyspacesThroughputSetting)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsGremlinDatabase)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsGremlinDatabasesGraph)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsGremlinDatabasesGraphsThroughputSetting)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsGremlinDatabasesThroughputSetting)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsService)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsSqlDatabasesClientEncryptionKey)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsSqlRoleDefinition)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsTable)},
+		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsTablesThroughputSetting)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)},
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
@@ -1406,6 +1455,8 @@ func createScheme() *runtime.Scheme {
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
+	_ = documentdb_v20240815.AddToScheme(scheme)
+	_ = documentdb_v20240815s.AddToScheme(scheme)
 	_ = hardwaresecuritymodules_v20250331.AddToScheme(scheme)
 	_ = hardwaresecuritymodules_v20250331s.AddToScheme(scheme)
 	_ = insights_v20160301.AddToScheme(scheme)
@@ -1531,6 +1582,20 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &costmanagement_customizations.ScheduledActionExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspaceExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspacesTableExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspacesTablesThroughputSettingExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspacesThroughputSettingExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsGremlinDatabaseExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsGremlinDatabasesGraphExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsGremlinDatabasesGraphsThroughputSettingExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsGremlinDatabasesThroughputSettingExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsPrivateEndpointConnectionExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsServiceExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsSqlDatabasesClientEncryptionKeyExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsSqlRoleDefinitionExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsTableExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsTablesThroughputSettingExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClusterExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.DedicatedHsmExtension{})
