@@ -1,12 +1,33 @@
+typeTransformers:
+  # As ASO's app.yaml: 2026-01-01 imports ManagedServiceIdentity from two
+  # versions of common-types; take v6's.
+  - name: ContainerApp_Spec;ManagedEnvironment_Spec;Job_Spec;SessionPool_Spec;ConnectedEnvironment_Spec
+    property: Identity
+    target:
+      name: ManagedServiceIdentity
+      version: v6
+      optional: true
+    because: Multiple incompatible versions of ManagedServiceIdentity are being imported from different versions of common
+  - name: ContainerApp_STATUS;ManagedEnvironment_STATUS;Job_STATUS;SessionPool_STATUS;ConnectedEnvironment_STATUS
+    property: Identity
+    target:
+      name: ManagedServiceIdentity_STATUS
+      version: v6
+      optional: true
+    because: Multiple incompatible versions of ManagedServiceIdentity_STATUS are being imported from different versions of common
 typeFilters:
   - action: include
     group: app
     version: v20250101
     because: the version of the owner, ASO's ManagedEnvironment, and the newest stable one with the children we generate
+  - action: include
+    group: app
+    version: v20260101
+    because: >-
+      the newest stable version, for the kinds 2025-01-01 lacks (connected environments and their children, an environment's HTTP route configs, maintenance configurations and private endpoint connections, a container app's source controls, session pools); ASO's owners stay at 2025-01-01, the versions need not match
   - action: prune
     group: app
     because: every other version is left alone
-
 groupModelConfiguration:
   2025-01-01:
     ManagedEnvironments_DaprComponent:
@@ -33,3 +54,51 @@ groupModelConfiguration:
     ManagedEnvironments_ManagedCertificate_Properties_STATUS:
       ValidationToken:
         $importSecretMode: never # a DNS TXT record's value, not a secret
+  2026-01-01:
+    ConnectedEnvironment:
+      $exportAs: ConnectedEnvironment
+      $supportedFrom: v0.1.0
+    ConnectedEnvironments_Certificate:
+      $exportAs: ConnectedEnvironmentsCertificate
+      $supportedFrom: v0.1.0
+    ConnectedEnvironments_DaprComponent:
+      $exportAs: ConnectedEnvironmentsDaprComponent
+      $supportedFrom: v0.1.0
+    ConnectedEnvironments_Storage:
+      $exportAs: ConnectedEnvironmentsStorage
+      $supportedFrom: v0.1.0
+    ContainerApps_SourceControl:
+      $exportAs: ContainerAppsSourceControl
+      $supportedFrom: v0.1.0
+    ManagedEnvironments_HttpRouteConfig:
+      $exportAs: ManagedEnvironmentsHttpRouteConfig
+      $supportedFrom: v0.1.0
+    ManagedEnvironments_MaintenanceConfiguration:
+      $exportAs: ManagedEnvironmentsMaintenanceConfiguration
+      $supportedFrom: v0.1.0
+    ManagedEnvironments_PrivateEndpointConnection:
+      $exportAs: ManagedEnvironmentsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    SessionPool:
+      $exportAs: SessionPool
+      $supportedFrom: v0.1.0
+    CertificateKeyVaultProperties:
+      Identity:
+        $referenceType: arm+wellknown # permits `system` to use a system-assigned identity (autolabel wrote simple)
+    ManagedIdentitySetting:
+      Identity:
+        $referenceType: arm+wellknown # permits `system` to use a system-assigned identity (autolabel wrote simple)
+    CustomDomain:
+      CertificateId:
+        $referenceType: arm # a certificate's ARM ID (autolabel wrote simple)
+    SecretKeyVaultProperties:
+      Identity:
+        $referenceType: arm+wellknown # permits `system` to use a system-assigned identity (autolabel wrote simple)
+    SessionRegistryCredentials:
+      Identity:
+        $referenceType: arm+wellknown # permits `system` to use a system-assigned identity (autolabel wrote simple)
+      PasswordSecretRef:
+        $importSecretMode: never # the name of a secret of the pool, not a secret (autolabel, reviewed)
+    Secret:
+      Identity:
+        $referenceType: arm+wellknown # permits `system` to use a system-assigned identity (autolabel wrote simple)

@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101/storage"
 	"github.com/kr/pretty"
 	"github.com/kylelemons/godebug/diff"
 	"github.com/leanovate/gopter"
@@ -16,6 +17,53 @@ import (
 	"reflect"
 	"testing"
 )
+
+func Test_AzureFileProperties_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from AzureFileProperties to AzureFileProperties via AssignProperties_To_AzureFileProperties & AssignProperties_From_AzureFileProperties returns original",
+		prop.ForAll(RunPropertyAssignmentTestForAzureFileProperties, AzureFilePropertiesGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForAzureFileProperties tests if a specific instance of AzureFileProperties can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForAzureFileProperties(subject AzureFileProperties) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other storage.AzureFileProperties
+	err := copied.AssignProperties_To_AzureFileProperties(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual AzureFileProperties
+	err = actual.AssignProperties_From_AzureFileProperties(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
 
 func Test_AzureFileProperties_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
@@ -83,6 +131,53 @@ func AddIndependentPropertyGeneratorsForAzureFileProperties(gens map[string]gopt
 	gens["AccessMode"] = gen.PtrOf(gen.AlphaString())
 	gens["AccountName"] = gen.PtrOf(gen.AlphaString())
 	gens["ShareName"] = gen.PtrOf(gen.AlphaString())
+}
+
+func Test_AzureFileProperties_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from AzureFileProperties_STATUS to AzureFileProperties_STATUS via AssignProperties_To_AzureFileProperties_STATUS & AssignProperties_From_AzureFileProperties_STATUS returns original",
+		prop.ForAll(RunPropertyAssignmentTestForAzureFileProperties_STATUS, AzureFileProperties_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForAzureFileProperties_STATUS tests if a specific instance of AzureFileProperties_STATUS can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForAzureFileProperties_STATUS(subject AzureFileProperties_STATUS) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other storage.AzureFileProperties_STATUS
+	err := copied.AssignProperties_To_AzureFileProperties_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual AzureFileProperties_STATUS
+	err = actual.AssignProperties_From_AzureFileProperties_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
 }
 
 func Test_AzureFileProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
