@@ -59,6 +59,7 @@ imports:
   purview: azure-arm/purview.yaml
   containerservice: azure-arm/containerservice.yaml
   kubernetesconfiguration: azure-arm/kubernetesconfiguration.yaml
+  cognitiveservices: azure-arm/cognitiveservices.yaml
 
 # Filters are applied in document order; the earliest match wins (as in ASO's
 # azure-arm.yaml, from which these are taken).

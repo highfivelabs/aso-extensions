@@ -1,0 +1,70 @@
+# Azure AI services (Cognitive Services) children ASO does not export
+# (Microsoft.CognitiveServices, 2025-06-01, the version of ASO's Account,
+# Deployment and Project, so owner and child share a vintage): RAI (content
+# filter) policies and blocklists with their items, encryption scopes,
+# commitment plans and their account associations, private endpoint
+# connections, Defender for AI settings, connections and capability hosts
+# of an account and of a project. The catalog's modules use RAI policies
+# (docs/coverage/catalog-azure.md). Owned by ASO's Account or Project, a
+# resource group (a shared commitment plan), then by our kinds.
+typeFilters:
+  - action: include
+    group: cognitiveservices
+    version: v20250601
+    because: the version of ASO's Account, Deployment and Project
+  - action: prune
+    group: cognitiveservices
+    because: every other version is left alone
+groupModelConfiguration:
+  2025-06-01:
+    Accounts_RaiPolicy:
+      $exportAs: AccountsRaiPolicy
+      $supportedFrom: v0.1.0
+    Accounts_RaiBlocklist:
+      $exportAs: AccountsRaiBlocklist
+      $supportedFrom: v0.1.0
+    Accounts_RaiBlocklists_RaiBlocklistItem:
+      $exportAs: AccountsRaiBlocklistsRaiBlocklistItem
+      $supportedFrom: v0.1.0
+    Accounts_EncryptionScope:
+      $exportAs: AccountsEncryptionScope
+      $supportedFrom: v0.1.0
+    Accounts_CommitmentPlan:
+      $exportAs: AccountsCommitmentPlan
+      $supportedFrom: v0.1.0
+    CommitmentPlan:
+      $exportAs: CommitmentPlan
+      $supportedFrom: v0.1.0
+    CommitmentPlans_AccountAssociation:
+      $exportAs: CommitmentPlansAccountAssociation
+      $supportedFrom: v0.1.0
+    Accounts_PrivateEndpointConnection:
+      $exportAs: AccountsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Accounts_DefenderForAISetting:
+      $exportAs: AccountsDefenderForAISetting
+      $supportedFrom: v0.1.0
+    Accounts_Connection:
+      $exportAs: AccountsConnection
+      $supportedFrom: v0.1.0
+    Accounts_Projects_Connection:
+      $exportAs: AccountsProjectsConnection
+      $supportedFrom: v0.1.0
+    Accounts_CapabilityHost:
+      $exportAs: AccountsCapabilityHost
+      $supportedFrom: v0.1.0
+    Accounts_Projects_CapabilityHost:
+      $exportAs: AccountsProjectsCapabilityHost
+      $supportedFrom: v0.1.0
+    # A custom-keys connection's keys are secrets (the other credential
+    # types are x-ms-secret in the spec), as ASO labels the Machine
+    # Learning workspace connection's.
+    CustomKeys:
+      Keys:
+        $importSecretMode: required
+    ConnectionManagedIdentity:
+      ResourceId:
+        $referenceType: arm # a user-assigned identity's ARM ID (autolabel, reviewed)
+    CommitmentPlanAccountAssociationProperties:
+      AccountId:
+        $referenceType: arm # the account's ARM ID (autolabel wrote simple)
