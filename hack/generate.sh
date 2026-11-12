@@ -81,7 +81,7 @@ trap 'rm -rf "${out}"' EXIT
 rm -rf config/test/aso-crds
 mkdir -p config/test/aso-crds
 cp "${out}/dbforpostgresql.azure.com_flexibleservers.yaml" "${out}/keyvault.azure.com_vaults.yaml" \
-  "${out}/resources.azure.com_resourcegroups.yaml" "${out}/app.azure.com_managedenvironments.yaml" \
+  "${out}/resources.azure.com_resourcegroups.yaml" "${out}/app.azure.com_managedenvironments.yaml" "${out}/app.azure.com_containerapps.yaml" \
   "${out}/web.azure.com_sites.yaml" "${out}/operationalinsights.azure.com_workspaces.yaml" \
   "${out}/containerregistry.azure.com_registries.yaml" "${out}/compute.azure.com_virtualmachines.yaml" \
   "${out}/sql.azure.com_servers.yaml" "${out}/sql.azure.com_serversdatabases.yaml" \
@@ -98,6 +98,7 @@ cp "${out}/dbforpostgresql.azure.com_flexibleservers.yaml" "${out}/keyvault.azur
   echo "- keyvault.azure.com_vaults.yaml"
   echo "- resources.azure.com_resourcegroups.yaml"
   echo "- app.azure.com_managedenvironments.yaml"
+  echo "- app.azure.com_containerapps.yaml"
   echo "- web.azure.com_sites.yaml"
   echo "- operationalinsights.azure.com_workspaces.yaml"
   echo "- containerregistry.azure.com_registries.yaml"

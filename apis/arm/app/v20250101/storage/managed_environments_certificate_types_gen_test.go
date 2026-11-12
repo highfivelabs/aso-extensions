@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101/storage"
 	"github.com/kr/pretty"
 	"github.com/kylelemons/godebug/diff"
 	"github.com/leanovate/gopter"
@@ -16,6 +17,53 @@ import (
 	"reflect"
 	"testing"
 )
+
+func Test_CertificateKeyVaultProperties_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from CertificateKeyVaultProperties to CertificateKeyVaultProperties via AssignProperties_To_CertificateKeyVaultProperties & AssignProperties_From_CertificateKeyVaultProperties returns original",
+		prop.ForAll(RunPropertyAssignmentTestForCertificateKeyVaultProperties, CertificateKeyVaultPropertiesGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForCertificateKeyVaultProperties tests if a specific instance of CertificateKeyVaultProperties can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForCertificateKeyVaultProperties(subject CertificateKeyVaultProperties) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other storage.CertificateKeyVaultProperties
+	err := copied.AssignProperties_To_CertificateKeyVaultProperties(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual CertificateKeyVaultProperties
+	err = actual.AssignProperties_From_CertificateKeyVaultProperties(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
 
 func Test_CertificateKeyVaultProperties_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
@@ -81,6 +129,53 @@ func CertificateKeyVaultPropertiesGenerator() gopter.Gen {
 // AddIndependentPropertyGeneratorsForCertificateKeyVaultProperties is a factory method for creating gopter generators
 func AddIndependentPropertyGeneratorsForCertificateKeyVaultProperties(gens map[string]gopter.Gen) {
 	gens["KeyVaultUrl"] = gen.PtrOf(gen.AlphaString())
+}
+
+func Test_CertificateKeyVaultProperties_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from CertificateKeyVaultProperties_STATUS to CertificateKeyVaultProperties_STATUS via AssignProperties_To_CertificateKeyVaultProperties_STATUS & AssignProperties_From_CertificateKeyVaultProperties_STATUS returns original",
+		prop.ForAll(RunPropertyAssignmentTestForCertificateKeyVaultProperties_STATUS, CertificateKeyVaultProperties_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForCertificateKeyVaultProperties_STATUS tests if a specific instance of CertificateKeyVaultProperties_STATUS can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForCertificateKeyVaultProperties_STATUS(subject CertificateKeyVaultProperties_STATUS) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other storage.CertificateKeyVaultProperties_STATUS
+	err := copied.AssignProperties_To_CertificateKeyVaultProperties_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual CertificateKeyVaultProperties_STATUS
+	err = actual.AssignProperties_From_CertificateKeyVaultProperties_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
 }
 
 func Test_CertificateKeyVaultProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -602,6 +697,53 @@ func ManagedEnvironments_Certificate_Properties_SpecGenerator() gopter.Gen {
 // AddRelatedPropertyGeneratorsForManagedEnvironments_Certificate_Properties_Spec is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForManagedEnvironments_Certificate_Properties_Spec(gens map[string]gopter.Gen) {
 	gens["CertificateKeyVaultProperties"] = gen.PtrOf(CertificateKeyVaultPropertiesGenerator())
+}
+
+func Test_SystemData_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from SystemData_STATUS to SystemData_STATUS via AssignProperties_To_SystemData_STATUS & AssignProperties_From_SystemData_STATUS returns original",
+		prop.ForAll(RunPropertyAssignmentTestForSystemData_STATUS, SystemData_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForSystemData_STATUS tests if a specific instance of SystemData_STATUS can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForSystemData_STATUS(subject SystemData_STATUS) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other storage.SystemData_STATUS
+	err := copied.AssignProperties_To_SystemData_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual SystemData_STATUS
+	err = actual.AssignProperties_From_SystemData_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
 }
 
 func Test_SystemData_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
