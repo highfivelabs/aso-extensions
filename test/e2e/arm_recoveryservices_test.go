@@ -134,3 +134,58 @@ func TestRecoveryServicesVaultAndPolicy(t *testing.T) {
 		t.Fatal("the vault or its policy is still in Resource Manager")
 	}
 }
+
+// A resource guard proxy on our vault, naming a resource guard: Azure
+// refuses its DELETE until an unlockDelete names it and the guard's delete
+// request (live run of 2026-11-12), so the kind unlocks before it deletes.
+func TestResourceGuardProxyUnlocksDelete(t *testing.T) {
+	ctx := context.Background()
+	ns := namespace(t, "rsg")
+	strictCredential(t, ns, clientA)
+	trustNamespace(ns)
+	rgID := "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"
+	armFake.AddResource(rgID)
+	resourceGroup(t, ns, "rg", ns+"-rg")
+	guardID := rgID + "/providers/Microsoft.DataProtection/resourceGuards/guard"
+	armFake.AddResource(guardID)
+
+	vault := &rs.Vault{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "vault"},
+		Spec: rs.Vault_Spec{
+			AzureName: "backups", Owner: &genruntime.KnownResourceReference{Name: "rg"}, Location: ptr("westus"),
+			Sku: &rs.Sku{Name: ptr(rs.SkuName_RS0), Tier: ptr("Standard")},
+		},
+	}
+	proxy := &rs.VaultsBackupResourceGuardProxy{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "guard"},
+		Spec: rs.VaultsBackupResourceGuardProxy_Spec{
+			AzureName: "VaultProxy", Owner: &genruntime.KnownResourceReference{Name: "vault"},
+			Properties: &rs.ResourceGuardProxyBase{ResourceGuardResourceReference: &genruntime.ResourceReference{ARMID: guardID}},
+		},
+	}
+	for _, o := range []client.Object{vault, proxy} {
+		if err := k8s.Create(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	eventually(t, timeout, "VaultsBackupResourceGuardProxy Ready", ready(proxy))
+	proxyID := rgID + "/providers/Microsoft.RecoveryServices/vaults/backups/backupResourceGuardProxies/VaultProxy"
+	expectResource(t, proxyID, func(r map[string]any) error {
+		if properties(r)["resourceGuardResourceId"] != guardID {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+
+	if err := k8s.Delete(ctx, proxy); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "VaultsBackupResourceGuardProxy gone", gone(proxy))
+	if armFake.HasResource(proxyID) {
+		t.Fatal("the proxy is still in Resource Manager")
+	}
+	if err := k8s.Delete(ctx, vault); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "Vault gone", gone(vault))
+}

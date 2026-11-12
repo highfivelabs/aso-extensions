@@ -73,13 +73,14 @@ Real Azure only through the live harness (PR #54, `docs/live-runs.md`):
 - **Ledger:** one row per kind in `docs/live-runs.md` (the kind, the run ID,
   the date, pass or fail and what a failure taught). A kind with no row is
   untested on real Azure, and the README says so.
-- **Providers not registered:** fourteen resource providers in the
-  subscription are not registered until the builder re-runs registration
-  (register O36: OperationalInsights, Insights, ContainerRegistry, App,
-  Web, RecoveryServices, Maintenance, DevTestLab, KeyVault, DBforPostgreSQL,
-  Sql, PolicyInsights, Automation, DataProtection). A live test of a kind
-  in one of them skips and names the provider; agents never register
-  providers or change roles.
+- **Providers not registered:** a live test of a kind whose resource
+  provider the subscription has not registered skips and names the
+  provider; agents never register providers or change roles. Since
+  2026-11-12 every provider the tests use is registered (register O36).
+- **Actions Contributor excludes:** a test whose kind needs a
+  `Microsoft.Authorization` write (a Resource Manager private link, a role
+  assignment) reads the identity's permissions on the group and skips,
+  naming the action, until a role grants it.
 - **Scope the group cannot give:** a kind at a subscription, management
   group or tenant scope (policy definitions, Defender plans, management
   groups) needs a role the identity does not have; its live test is

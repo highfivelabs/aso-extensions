@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"path"
 	"strings"
 	"testing"
 	"time"
@@ -59,21 +60,27 @@ func newARMClient() (*armClient, error) {
 
 // do sends one request; a status of 400 or more is an error with Azure's message.
 func (a *armClient) do(ctx context.Context, method, id, apiVersion string, body any) (int, map[string]any, error) {
+	status, out, _, err := a.send(ctx, method, armEndpoint+id+"?api-version="+apiVersion, id, body)
+	return status, out, err
+}
+
+// send is do for a full URL, with the response's headers.
+func (a *armClient) send(ctx context.Context, method, url, id string, body any) (int, map[string]any, http.Header, error) {
 	tok, err := a.cred.GetToken(ctx, policy.TokenRequestOptions{Scopes: []string{armEndpoint + "/.default"}})
 	if err != nil {
-		return 0, nil, err
+		return 0, nil, nil, err
 	}
 	var rd io.Reader
 	if body != nil {
 		b, err := json.Marshal(body)
 		if err != nil {
-			return 0, nil, err
+			return 0, nil, nil, err
 		}
 		rd = bytes.NewReader(b)
 	}
-	req, err := http.NewRequestWithContext(ctx, method, armEndpoint+id+"?api-version="+apiVersion, rd)
+	req, err := http.NewRequestWithContext(ctx, method, url, rd)
 	if err != nil {
-		return 0, nil, err
+		return 0, nil, nil, err
 	}
 	req.Header.Set("Authorization", "Bearer "+tok.Token)
 	if body != nil {
@@ -81,7 +88,7 @@ func (a *armClient) do(ctx context.Context, method, id, apiVersion string, body 
 	}
 	resp, err := a.http.Do(req)
 	if err != nil {
-		return 0, nil, err
+		return 0, nil, nil, err
 	}
 	defer resp.Body.Close()
 	raw, _ := io.ReadAll(resp.Body)
@@ -91,9 +98,9 @@ func (a *armClient) do(ctx context.Context, method, id, apiVersion string, body 
 	}
 	if resp.StatusCode >= 400 {
 		// One line, so the run's filtered log shows Azure's message.
-		return resp.StatusCode, out, fmt.Errorf("%s %s: %d %s", method, id, resp.StatusCode, strings.Join(strings.Fields(string(raw)), " "))
+		return resp.StatusCode, out, resp.Header, fmt.Errorf("%s %s: %d %s", method, id, resp.StatusCode, strings.Join(strings.Fields(string(raw)), " "))
 	}
-	return resp.StatusCode, out, nil
+	return resp.StatusCode, out, resp.Header, nil
 }
 
 func (a *armClient) get(ctx context.Context, id, apiVersion string) (int, map[string]any, error) {
@@ -116,12 +123,38 @@ func fixture(t *testing.T, id, apiVersion string, body map[string]any) map[strin
 func fixtureWait(t *testing.T, wait time.Duration, id, apiVersion string, body map[string]any) map[string]any {
 	t.Helper()
 	ctx := context.Background()
-	if _, _, err := azure.do(ctx, http.MethodPut, id, apiVersion, body); err != nil {
+	_, _, hdr, err := azure.send(ctx, http.MethodPut, armEndpoint+id+"?api-version="+apiVersion, id, body)
+	if err != nil {
+		// A quota of zero is the subscription's (App Service plans had
+		// none, 2026-11-12); raising it is the builder's request to Azure.
+		if strings.Contains(err.Error(), "cannot be completed without additional quota") {
+			t.Skipf("the subscription has no quota for fixture %s: the builder requests it: %v", id, err)
+		}
 		t.Fatalf("fixture: %v", err)
 	}
 	t.Cleanup(func() { deleteARM(t, id, apiVersion) })
-	var got map[string]any
+	op := hdr.Get("Azure-AsyncOperation")
+	var got, failed map[string]any
 	eventually(t, wait, "fixture "+id+" Succeeded", func() error {
+		// An accepted create can still fail; Azure then drops the
+		// resource, and only the operation says why.
+		if op != "" {
+			_, o, _, err := azure.send(ctx, http.MethodGet, op, id, nil)
+			if err != nil {
+				return err
+			}
+			switch o["status"] {
+			case "Succeeded":
+			case "Failed", "Canceled":
+				failed, _ = o["error"].(map[string]any)
+				if failed == nil {
+					failed = map[string]any{"code": o["status"]}
+				}
+				return nil
+			default:
+				return fmt.Errorf("create operation %v", o["status"])
+			}
+		}
 		_, r, err := azure.get(ctx, id, apiVersion)
 		if err != nil {
 			return err
@@ -132,6 +165,16 @@ func fixtureWait(t *testing.T, wait time.Duration, id, apiVersion string, body m
 		got = r
 		return nil
 	})
+	if failed != nil {
+		// A region's limits are the subscription's (eastus2, 2026-11-12:
+		// Azure SQL ProvisioningDisabled, PostgreSQL B1ms SkuNotAvailable);
+		// lifting them is the builder's request to Azure.
+		switch failed["code"] {
+		case "ProvisioningDisabled", "SkuNotAvailable":
+			t.Skipf("Azure refused fixture %s in %s for this subscription: %v: %v", id, location, failed["code"], failed["message"])
+		}
+		t.Fatalf("fixture %s failed: %v", id, failed)
+	}
 	return got
 }
 
@@ -351,4 +394,45 @@ func requireProvider(t *testing.T, ns string) {
 	if s, _ := r["registrationState"].(string); s != "Registered" {
 		t.Skipf("the subscription has not registered %s (%s): the builder registers it", ns, s)
 	}
+}
+
+// requireAction skips the test when the identity may not take action on the
+// resource group: Contributor excludes Microsoft.Authorization/*/write, and
+// the identity's roles are the builder's (docs/live-runs.md, "Rights
+// Contributor does not have"). Read from the group's permissions, so the test
+// runs once a role grants it.
+func requireAction(t *testing.T, action string) {
+	t.Helper()
+	_, r, err := azure.get(context.Background(), rgID()+"/providers/Microsoft.Authorization/permissions", "2022-04-01")
+	if err != nil {
+		t.Skipf("cannot read the identity's permissions on the group: %v", err)
+	}
+	if !permitted(r, action) {
+		t.Skipf("the identity may not %s on the group (Contributor excludes it): the builder grants a role that has it", action)
+	}
+}
+
+// permitted is whether a permissions list (value: [{actions, notActions}])
+// allows action, matching Azure's * wildcards without regard to case.
+func permitted(r map[string]any, action string) bool {
+	match := func(list any) bool {
+		patterns, _ := list.([]any)
+		for _, p := range patterns {
+			if ok, _ := path.Match(strings.ToLower(fmt.Sprint(p)), strings.ToLower(action)); ok {
+				return true
+			}
+			if strings.HasSuffix(fmt.Sprint(p), "*") && strings.HasPrefix(strings.ToLower(action), strings.ToLower(strings.TrimSuffix(fmt.Sprint(p), "*"))) {
+				return true
+			}
+		}
+		return false
+	}
+	entries, _ := r["value"].([]any)
+	for _, e := range entries {
+		m, _ := e.(map[string]any)
+		if match(m["actions"]) && !match(m["notActions"]) {
+			return true
+		}
+	}
+	return false
 }

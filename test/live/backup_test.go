@@ -225,7 +225,7 @@ func TestLiveMaintenanceAndShutdown(t *testing.T) {
 	dynamic := &maintenance.ConfigurationAssignment{}
 	dynamic.Namespace, dynamic.Name = ns, "weekly"
 	dynamic.Spec = maintenance.ConfigurationAssignment_Spec{
-		AzureName: azName("weekly"), Owner: rgRef(), Location: ptr("global"), MaintenanceConfigurationReference: configRef,
+		AzureName: azName("weekly"), Owner: rgRef(), Location: ptr(location), MaintenanceConfigurationReference: configRef,
 		Filter: &maintenance.ConfigurationAssignmentFilterProperties{
 			ResourceTypes: []string{"Microsoft.Compute/virtualMachines"},
 			OsTypes:       []string{"Linux"},

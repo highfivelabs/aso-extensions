@@ -112,6 +112,9 @@ type ARM struct {
 	// sharedKeys holds connections' shared keys, which are not returned
 	// (vpn.go), by lower-case connection ID.
 	sharedKeys map[string]string
+	// unlocked holds the resource guard proxies an unlockDelete has opened
+	// for their next DELETE (backup.go).
+	unlocked map[string]bool
 	// Log records every request: "METHOD path status".
 	Log []string
 	// Now is the clock systemData's times come from (time.Now when nil).
@@ -120,7 +123,7 @@ type ARM struct {
 
 // New returns an empty fake Resource Manager.
 func New(authorize func(token string) bool) *ARM {
-	return &ARM{Authorize: authorize, resources: map[string]*resource{}, locks: map[string]*lock{}, sharedKeys: map[string]string{}}
+	return &ARM{Authorize: authorize, resources: map[string]*resource{}, locks: map[string]*lock{}, sharedKeys: map[string]string{}, unlocked: map[string]bool{}}
 }
 
 // AddResource puts a resource (a resource group, or any resource) in the
@@ -214,6 +217,9 @@ func (a *ARM) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if a.serveRoleDefinitions(rec, r, path) {
+		return
+	}
+	if a.serveUnlockDelete(rec, r, path) {
 		return
 	}
 	a.serveResource(rec, r, path)
@@ -414,6 +420,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		}
 		if _, ok := a.resources[key]; !ok {
 			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		if status, code, msg := a.checkGuardProxyDelete(id); code != "" {
+			writeError(w, status, code, msg)
 			return
 		}
 		if soaDeleteRefused(id) {

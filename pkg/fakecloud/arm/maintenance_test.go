@@ -50,4 +50,7 @@ func TestMaintenanceAssignment(t *testing.T) {
 	put("dynamic scope with a Host configuration", onSub, assign(host, filter), http.StatusBadRequest)
 	put("dynamic scope on a subscription", onSub, assign(cfg, filter), http.StatusCreated)
 	put("dynamic scope on a resource group", rg+"/providers/Microsoft.Maintenance/configurationAssignments/weekly", assign(cfg, filter), http.StatusCreated)
+	global := `{"location":"global","properties":{"maintenanceConfigurationId":"` + cfg + `"` + filter + `}}`
+	put("global dynamic scope on a resource group", rg+"/providers/Microsoft.Maintenance/configurationAssignments/global", global, http.StatusBadRequest)
+	put("global dynamic scope on a subscription", sub+"/providers/Microsoft.Maintenance/configurationAssignments/global", global, http.StatusCreated)
 }
