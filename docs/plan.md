@@ -689,6 +689,11 @@ with Azure unchanged but the tag and the resource not made again (same
 the resource stays; a blue object for it again is refused (condition,
 event, no write reaches Azure), and so is its deletion; green deletes it.
 Without the takeover annotation green is refused a resource blue holds.
+
+**Proven live** (`TestLiveSlotMove`, run `ax1209571e99`, 2026-11-12,
+docs/live-runs.md): the same sequence on a real IP group, with
+Resource Manager's `createdTime` as the witness (IP groups return no
+`systemData`).
 `pkg/slot`'s unit tests cover the flag and variable, the tag on create and
 update, the refusals, the takeover and the pass-through. Both managers run
 one build; two releases side by side (the previous release beside main)
