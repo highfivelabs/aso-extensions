@@ -156,14 +156,45 @@ group:
 | `NetworkManager` and its children, `NetworkManagerConnection` | a scope of a subscription or management group (`networkManagerScopes`), read on it; the connection is a subscription resource |
 | Entra `DirectoryRoleAssignment` (open pull request #46) | Microsoft Graph application permissions the identity lacks (`RoleManagement.ReadWrite.Directory`) |
 
-**The subscription's limits in eastus2** (found 2026-11-12; the tests skip
-and name them):
+**The subscription's limits in eastus2** (found 2026-11-12). The fixtures
+for these tests now try other SKUs and US regions in turn
+(`fixtureFirst`, `regions()` in `test/live/helpers_test.go`: the run's
+region, then centralus, westus3, northcentralus, westus2, eastus,
+southcentralus), so a refusal moves the fixture rather than skipping the
+test; the test skips only when every candidate is refused, naming each
+refusal. The group is in eastus2, but a resource group holds resources in
+any region and the sweep deletes them all. What the subscription allowed
+(runs `ax1215322672`, `ax12160408f5`, `ax121631c6ec`; each test now passes):
 
-| Test | Refused | Lifted by |
+| Test | Refused | Taken |
 | --- | --- | --- |
-| `TestLiveWebSlotAndCertificate` | App Service plan S1: quota 0 ("Operation cannot be completed without additional quota") | a quota request for Standard (S1) App Service in eastus2 (portal: Quotas, App Service) |
-| `TestLiveSqlUser` | Azure SQL server: `ProvisioningDisabled` ("Provisioning is restricted in this region") | a support request, issue type "Service and subscription limits (quotas)", Azure SQL Database, region access for eastus2 |
-| `TestLivePostgresUser` | PostgreSQL flexible server Burstable B1ms: `SkuNotAvailable` | a support request for region access to PostgreSQL flexible server in eastus2, or a test change to another region or SKU (a decision for the builder: the group's resources have stayed in eastus2) |
+| `TestLiveWebSlotAndCertificate` | App Service plan S1 in eastus2 and centralus: quota 0 ("Operation cannot be completed without additional quota", `Current Limit (S1 VMs): 0`) | S1 in westus3; then Premium v3 P0v3, then Basic B1 (no slots: the slot steps skip and name the quota) |
+| `TestLiveSqlUser` | Azure SQL server in eastus2: `ProvisioningDisabled` ("Provisioning is restricted in this region") | centralus |
+| `TestLivePostgresUser` | PostgreSQL flexible server Burstable B1ms in eastus2: `SkuNotAvailable` | B1ms in centralus; then B2s |
+
+Lifting the eastus2 limits is a request to Azure, no longer needed for
+these tests: a quota request for Standard (S1) App Service in eastus2
+(portal: Quotas, App Service), and a support request, issue type "Service
+and subscription limits (quotas)", for Azure SQL Database and PostgreSQL
+flexible server region access in eastus2.
+
+**The live manager stopped two minutes in** (found 2026-11-12, run
+`ax1215322672`): since the slot moves (PR #69) the live harness's main
+manager filtered its cache by `metadata.namespace`, which Kubernetes
+refuses on cluster-scoped Namespaces; the Namespace informer never synced
+and the manager exited ("failed to wait for ... caches to sync") after its
+two-minute timeout, so any object created later had no Ready condition.
+Runs since #69 had finished their kinds inside the two minutes. Fixed in
+`test/live/env_test.go`: Namespaces are cached without the selector.
+
+**A site's default host name binding** (`<site>.azurewebsites.net`, and a
+slot's) is Azure's: it is made with the site, and Azure keeps it until the
+site goes; deleting a `SitesHostNameBinding` for it with the default
+reconcile policy left the object waiting in deletion (run `ax12160408f5`).
+The test now detaches it (`reconcile-policy: detach-on-delete`) and checks
+Azure still has it. The fake deletes it (`docs/fake-cloud.md` should learn
+this; a `Deleter` that leaves a default host name's binding in Azure, as the
+SOA record sets have, is the fix in the kind, not written).
 
 **Needs a domain we control.** `ManagedEnvironmentsManagedCertificate`
 (a free certificate Azure issues only after it sees a CNAME or TXT record
@@ -271,3 +302,6 @@ Found 2026-11-12 (runs `ax120809d931`, `ax120853723a`, `ax1210377aa0`):
 | 2026-11-12 | `ax1209571e99` | `6a0a3f0` | `TestLiveSlotMove` (docs/plan.md, "Moving resources between slots") | PASS (37s): two managers as slots blue and green; an `IpGroup` made by blue carried `hfl-dev-slot: blue`; with blue paused (`skip`) green took it over (the annotation then named `hfl.dev/slot-takeover-from: blue`, renamed `hfl.dev/slot-takeover` the same day to match config-connector-extensions), the tag became green, and its `createdTime` (Resource Manager's resource list; IP groups return no `systemData`) and addresses did not change; blue's object deleted with the group kept; a blue object for it again, with another address, was Ready False `SlotMismatch` with the Warning event and Azure unchanged; green deleted it | nothing new; the group was empty before and after |
 | 2026-11-12 | `ax1210377aa0` | `979ec24` | the tests that failed in `ax120853723a`, with the fixes | PASS: `WorkspacesTable`, `WorkspacesSavedSearch`, `WorkspacesDataExport`, `WorkspacesLinkedService` (`TestLiveWorkspaceChildren`, a workspace of its own), `MaintenanceConfiguration`, `ConfigurationAssignment` (on a VM and at the group), DevTestLab `Schedule` (`TestLiveMaintenanceAndShutdown`), `Vault`, `VaultsBackupPolicy`, `VaultsPrivateEndpointConnection`, `VaultsBackupResourceGuardProxy` (made, unlocked and deleted by the kind); SKIP: `TestLiveWebSlotAndCertificate` (S1 quota 0), `TestLiveSqlUser` (`ProvisioningDisabled`), `WorkspacesLinkedStorageAccount` (role); FAIL: `TestLivePostgresUser` (the server dropped for `SkuNotAvailable`, seen before the fixture waited for its operation), `TestLiveContainerApps` (the environment fixture `Waiting`) | the fixes for the query pack, the resource guard proxy and the assignment's location hold on real Azure; the group empty afterwards (the environment went in the sweep) |
 | 2026-11-12 | `ax121126a94c` | `2d08ae3` | `TestLivePostgresUser`, `TestLiveSqlUser` | SKIP both: `SkuNotAvailable` (PostgreSQL B1ms) and `ProvisioningDisabled` (Azure SQL), each read from the create operation | the fixtures now wait for the operation and name the region's limit; the group empty afterwards |
+| 2026-11-12 | `ax1215322672` | `5539c29`+ | `TestLiveSqlUser`, `TestLivePostgresUser`, `TestLiveWebSlotAndCertificate`, with fixtures that try other SKUs and regions | FAIL all three: every fixture was made (Azure SQL in centralus, PostgreSQL B1ms in centralus, App Service S1 in westus3, after eastus2's refusals), then no object of ours got a Ready condition | the live manager had stopped two minutes in (a `metadata.namespace` cache selector on Namespaces, since PR #69); fixed in `test/live/env_test.go`; the group empty afterwards |
+| 2026-11-12 | `ax12160408f5` | `8face67`+ | the same three | PASS: Azure SQL `User` (`TestLiveSqlUser`, centralus), PostgreSQL `User` (`TestLivePostgresUser`, B1ms in centralus), `Certificate`; FAIL: the host name bindings' deletes (`TestLiveWebSlotAndCertificate`; `SitesSlot` made and changed) | Azure keeps a default host name's binding (above); the group empty afterwards |
+| 2026-11-12 | `ax121631c6ec` | `686f659`+ | `TestLiveWebSlotAndCertificate` | PASS: `Certificate`, `SitesHostNameBinding`, `SitesSlot`, `SitesSlotsHostNameBinding` (S1 in westus3; the bindings detached and kept by Azure) | the first App Service run on real Azure; the group empty afterwards |

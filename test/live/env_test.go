@@ -21,6 +21,8 @@ import (
 	"strings"
 	"testing"
 
+	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/fields"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -148,7 +150,14 @@ func run(m *testing.M) int {
 	mgr, err := ctrl.NewManager(restConfig, ctrl.Options{
 		Scheme: scheme,
 		// The slots' namespaces are their own managers' (slot_test.go).
-		Cache:   cache.Options{ReaderFailOnMissingInformer: true, DefaultFieldSelector: notSlotNamespaces()},
+		// Namespaces themselves are cluster scoped: a metadata.namespace
+		// selector on them is refused, the informer never syncs, and the
+		// manager stopped two minutes in (run ax1215322672), so they are
+		// listed whole.
+		Cache: cache.Options{
+			ReaderFailOnMissingInformer: true, DefaultFieldSelector: notSlotNamespaces(),
+			ByObject: map[client.Object]cache.ByObject{&corev1.Namespace{}: {Field: fields.Everything()}},
+		},
 		Metrics: metricsserver.Options{BindAddress: "0"},
 	})
 	must(err)
