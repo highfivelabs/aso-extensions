@@ -32,3 +32,4 @@ specification/applicationinsights
 specification/cosmos-db
 specification/cognitiveservices
 specification/automation
+specification/storage

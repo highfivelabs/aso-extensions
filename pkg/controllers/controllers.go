@@ -52,6 +52,7 @@ import (
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
 	asosql "github.com/Azure/azure-service-operator/v2/api/sql/v20250101/storage"
+	asostorage "github.com/Azure/azure-service-operator/v2/api/storage/v20260601/storage"
 	asoweb "github.com/Azure/azure-service-operator/v2/api/web/v20260715/storage"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
@@ -98,6 +99,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asoprivatedns.AddToScheme(scheme)
 	_ = asocosmos.AddToScheme(scheme)
 	_ = asocognitive.AddToScheme(scheme)
+	_ = asostorage.AddToScheme(scheme)
 	return scheme
 }
 
@@ -124,6 +126,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asocosmos.SqlDatabase{}, Name: "aso_documentdb_sqldatabase"},
 		{Obj: &asocognitive.Account{}, Name: "aso_cognitiveservices_account"},
 		{Obj: &asocognitive.Project{}, Name: "aso_cognitiveservices_project"},
+		{Obj: &asostorage.StorageAccount{}, Name: "aso_storage_storageaccount"},
 	}
 }
 

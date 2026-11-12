@@ -218,7 +218,10 @@ can list managedclusters.containerservice.azure.com -n team-a || fail "cannot re
 can list fleets.containerservice.azure.com -n team-a || fail "cannot read the owner of the generated fleet kinds"
 can list serversdatabases.sql.azure.com -n team-a || fail "cannot read the owner of the Azure SQL User"
 ! can update servers.sql.azure.com -n team-a || fail "may change ASO's SQL servers"
-! can list storageaccounts.storage.azure.com -n team-a || fail "may list ASO resources it only needs to get"
+can list storageaccounts.storage.azure.com -n team-a || fail "cannot read the owner of the generated storage kinds"
+# ASO's StorageAccount is an owner since the storage kinds (list and watch);
+# a storage kind that owns nothing of ours is still only read by name.
+! can list storageaccountsblobservices.storage.azure.com -n team-a || fail "may list ASO resources it only needs to get"
 ! can update resourcegroups.resources.azure.com -n team-a || fail "may change ASO's ResourceGroups"
 pass "aso-workload tokens, read secrets and the ASO owners, get any ASO resource, our kinds; nothing of ASO's to change"
 

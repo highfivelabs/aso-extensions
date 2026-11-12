@@ -243,7 +243,7 @@ Microsoft.Sovereign,3,0,0,52,0,0,52,0.0,0.0,100.0
 Microsoft.Sql,93,28,0,539,240,0,299,44.5,0.0,55.5
 Microsoft.SqlVirtualMachine,3,0,0,116,0,0,116,0.0,0.0,100.0
 Microsoft.StandbyPool,2,0,0,20,0,0,20,0.0,0.0,100.0
-Microsoft.Storage,23,10,0,336,212,0,124,63.1,0.0,36.9
+Microsoft.Storage,23,10,6,336,212,58,66,63.1,17.3,19.6
 Microsoft.Storage.Admin,2,0,0,2,0,0,2,0.0,0.0,100.0
 Microsoft.StorageActions,1,0,0,15,0,0,15,0.0,0.0,100.0
 Microsoft.StorageCache,7,0,0,104,0,0,104,0.0,0.0,100.0
