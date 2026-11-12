@@ -44,6 +44,7 @@ Not affiliated with or endorsed by Microsoft.
 | `hardwaresecuritymodules.azure.hfl.dev/v20250331` `CloudHsmCluster`, `CloudHsmClustersPrivateEndpointConnection`, `DedicatedHsm`; `purview.azure.hfl.dev/v20211201` `Account`, `AccountsKafkaConfiguration`, `AccountsPrivateEndpointConnection` | Azure Cloud HSM clusters with their private endpoint connections, Dedicated HSMs, and Microsoft Purview accounts with their Kafka configurations and private endpoint connections; ASO has none | ours; none in a release, `main` or an open pull request (2026-11-11) |
 | `documentdb.azure.hfl.dev/v20240815` `DatabaseAccountsGremlinDatabase`, `DatabaseAccountsGremlinDatabasesGraph`, `DatabaseAccountsCassandraKeyspace`, `DatabaseAccountsCassandraKeyspacesTable`, `DatabaseAccountsTable`, their five `...ThroughputSetting` kinds, `DatabaseAccountsService`, `DatabaseAccountsSqlRoleDefinition`, `DatabaseAccountsPrivateEndpointConnection`, `DatabaseAccountsSqlDatabasesClientEncryptionKey` | the Cosmos DB APIs and pieces ASO's `DatabaseAccount` lacks: Gremlin databases and graphs, Cassandra keyspaces and tables, Table API tables and the throughput of each, dedicated gateways and other services (one of `sqlDedicatedGateway`, `dataTransfer`, `graphAPICompute`, `materializedViewsBuilder`), SQL role definitions (the name must be a GUID: give it as `azureName`), private endpoint connections and Always Encrypted client encryption keys (owned by ASO's `SqlDatabase`). Owned by ASO's `DatabaseAccount` or our parent kind; generated at 2024-08-15, the account's version | ours; none at ASO's pin, in a release, in `main` or in an open pull request (2026-11-12) |
 | `cognitiveservices.azure.hfl.dev/v20250601` `AccountsRaiPolicy`, `AccountsRaiBlocklist`, `AccountsRaiBlocklistsRaiBlocklistItem`, `AccountsEncryptionScope`, `AccountsCommitmentPlan`, `CommitmentPlan`, `CommitmentPlansAccountAssociation`, `AccountsPrivateEndpointConnection`, `AccountsDefenderForAISetting`, `AccountsConnection`, `AccountsProjectsConnection`, `AccountsCapabilityHost`, `AccountsProjectsCapabilityHost` | what an Azure AI services (Cognitive Services, Azure OpenAI, AI Foundry) account needs beside ASO's `Account`, `Deployment` and `Project`: content filters (RAI policies) and blocklists with their items, encryption scopes, commitment plans (an account's, or a shared one in a resource group with its account associations), private endpoint connections, Defender for AI, connections of an account or a project (one of the credential types; keys, tokens and secrets from Secrets) and capability hosts. Owned by ASO's `Account` or `Project`, a resource group or our parent kind; generated at 2025-06-01, the account's version | ours; none at ASO's pin, in a release, in `main` or in an open pull request (2026-11-12) |
+| `automation.azure.hfl.dev/v20241023` `AutomationAccount` and its `AutomationAccountsCertificate`, `...Configuration`, `...Connection`, `...ConnectionType`, `...Credential`, `...HybridRunbookWorkerGroup`, `AutomationAccountsHybridRunbookWorker`, `...JobSchedule`, `...Module`, `...PrivateEndpointConnection`, `...Runbook`, `...RuntimeEnvironment`, `...RuntimeEnvironmentsPackage`, `...Schedule`, `...SoftwareUpdateConfiguration`, `...SourceControl`, `...Variable`, `...Watcher`, `...Webhook` | Azure Automation: an account (what a Log Analytics workspace links to) and its runbooks, schedules and job schedules, modules, runtime environments and their packages, variables, certificates, credentials and connections (the PFX, password, field values, source control tokens and a webhook's URI from Secrets), hybrid worker groups and workers, DSC configurations, update management schedules, source control, watchers and webhooks; ASO has no Automation group. Owned by a resource group, then by our account; generated | ours; none at ASO's pin, in a release, in `main` or in an open pull request (2026-11-12) |
 | `authorization.azure.hfl.dev/v1` `ManagementLock` | a management lock (`Microsoft.Authorization/locks`, `CanNotDelete` or `ReadOnly`, with notes and its owners' application IDs) on a subscription, resource group or resource, owned by any ASO resource or an ARM ID; the first plain ARM kind here (`docs/plan.md`, section 1) | ours; ASO issue [#3756](https://github.com/Azure/azure-service-operator/issues/3756), open, needs a design for the lock's four scopes |
 
 ## Coverage
@@ -51,7 +52,7 @@ Not affiliated with or endorsed by Microsoft.
 <!-- coverage:start -->
 ![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)
 
-Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 5.9%; 77.7% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
+Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 6.3%; 77.3% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
 The purple bar is Terraform's `azurerm` provider beside them, an estimate: the share of the same attributes that a writable attribute of a mapped Terraform resource matches by the lenient rule (L2, 8.2% overall), with the strict rule (L1, 7.2%) as its tick; the method and its error are in the catalog's ["Method and error"](https://github.com/highfivelabs/catalog/blob/13064af34996c47f1a5498bb17aca16194c4574e/docs/terraform-leverage.md#method-and-error), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at catalog `13064af34996`. `azapi` is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema.
 
@@ -62,7 +63,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 | platform-foundation | 18 | 246 | 43.2% | 30.2% | 26.6% | ~18.7% |
 | security-adjacent | 7 | 93 | 8.6% | 30.8% | 60.6% | ~11.1% |
 | application | 35 | 823 | 33.1% | 5.2% | 61.7% | ~11.3% |
-| other | 230 | 1,262 | 0.5% | 0.2% | 99.3% | ~3.9% |
+| other | 230 | 1,262 | 0.5% | 1.0% | 98.6% | ~3.9% |
 
 ![Coverage by tier](docs/coverage/bars/_tiers.svg)
 
@@ -70,7 +71,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 | --- | ---: | ---: | ---: | ---: | ---: |
 | 1 | 17 | 43.0% | 19.1% | 37.9% | ~13.8% |
 | 2 | 18 | 26.5% | 13.2% | 60.3% | ~8.2% |
-| 3 | 245 | 5.9% | 0.0% | 94.1% | ~6.6% |
+| 3 | 245 | 5.9% | 0.6% | 93.5% | ~6.6% |
 
 By service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), all services in [`services.csv`](docs/coverage/services.csv).
 
@@ -119,7 +120,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 
 </details>
 
-<details><summary>Tier 3: 23 services</summary>
+<details><summary>Tier 3: 24 services</summary>
 
 | Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | ---: | --- | --- | --- | ---: | ---: | ---: | ---: |
@@ -141,6 +142,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 3 | `Microsoft.NotificationHubs` | application | ![Microsoft.NotificationHubs](docs/coverage/bars/Microsoft.NotificationHubs.svg) | 90.8% | 0.0% | 9.2% | ~13.3% |
 | 3 | `Microsoft.ServiceLinker` | application | ![Microsoft.ServiceLinker](docs/coverage/bars/Microsoft.ServiceLinker.svg) | 24.7% | 0.0% | 75.3% | ~0.0% |
 | 3 | `Microsoft.RedHatOpenShift` | application | ![Microsoft.RedHatOpenShift](docs/coverage/bars/Microsoft.RedHatOpenShift.svg) | 94.7% | 0.0% | 5.3% | ~14.9% |
+| 3 | `Microsoft.Automation` | other | ![Microsoft.Automation](docs/coverage/bars/Microsoft.Automation.svg) | 0.0% | 81.2% | 18.8% | ~30.9% |
 | 3 | `Microsoft.DatabaseWatcher` | other | ![Microsoft.DatabaseWatcher](docs/coverage/bars/Microsoft.DatabaseWatcher.svg) | 84.8% | 0.0% | 15.2% | ~0.0% |
 | 3 | `Microsoft.Portal` | other | ![Microsoft.Portal](docs/coverage/bars/Microsoft.Portal.svg) | 45.9% | 0.0% | 54.1% | ~5.4% |
 | 3 | `Microsoft.Communication` | other | ![Microsoft.Communication](docs/coverage/bars/Microsoft.Communication.svg) | 60.0% | 0.0% | 40.0% | ~28.0% |
@@ -149,7 +151,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 
 </details>
 
-222 other services in the specs have no coverage from either and are in tier 3.
+221 other services in the specs have no coverage from either and are in tier 3.
 <!-- coverage:end -->
 
 ## Where it sits

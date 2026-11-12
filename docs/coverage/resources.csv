@@ -263,34 +263,34 @@ Microsoft.Authorization,Microsoft.Authorization/variables/values,2,,0,,0,2,false
 Microsoft.Automanage,Microsoft.Automanage/configurationProfileAssignments,1,,0,,0,1,false,spec_api=2022-05-04
 Microsoft.Automanage,Microsoft.Automanage/configurationProfiles,3,,0,,0,3,false,spec_api=2022-05-04
 Microsoft.Automanage,Microsoft.Automanage/configurationProfiles/versions,3,,0,,0,3,false,spec_api=2022-05-04
-Microsoft.Automation,Microsoft.Automation/automationAccounts,14,,0,,0,14,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/certificates,4,,0,,0,4,false,spec_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts,14,,0,automation.azure.hfl.dev/AutomationAccount,14,0,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/certificates,4,,0,automation.azure.hfl.dev/AutomationAccountsCertificate,4,0,false,spec_api=2024-10-23; ours_api=2024-10-23
 Microsoft.Automation,Microsoft.Automation/automationAccounts/compilationjobs,5,,0,,0,5,false,spec_api=2019-06-01
-Microsoft.Automation,Microsoft.Automation/automationAccounts/configurations,14,,0,,0,14,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/connections,3,,0,,0,3,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/connectionTypes,4,,0,,0,4,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/credentials,3,,0,,0,3,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups,1,,0,,0,1,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups/hybridRunbookWorkers,1,,0,,0,1,false,spec_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/configurations,14,,0,automation.azure.hfl.dev/AutomationAccountsConfiguration,14,0,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/connections,3,,0,automation.azure.hfl.dev/AutomationAccountsConnection,2,1,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/connectionTypes,4,,0,automation.azure.hfl.dev/AutomationAccountsConnectionType,4,0,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/credentials,3,,0,automation.azure.hfl.dev/AutomationAccountsCredential,3,0,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups,1,,0,automation.azure.hfl.dev/AutomationAccountsHybridRunbookWorkerGroup,1,0,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups/hybridRunbookWorkers,1,,0,automation.azure.hfl.dev/AutomationAccountsHybridRunbookWorker,1,0,false,spec_api=2024-10-23; ours_api=2024-10-23
 Microsoft.Automation,Microsoft.Automation/automationAccounts/jobs,3,,0,,0,3,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/jobSchedules,4,,0,,0,4,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/modules,6,,0,,0,6,false,spec_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/jobSchedules,4,,0,automation.azure.hfl.dev/AutomationAccountsJobSchedule,4,0,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/modules,6,,0,automation.azure.hfl.dev/AutomationAccountsModule,6,0,false,spec_api=2024-10-23; ours_api=2024-10-23
 Microsoft.Automation,Microsoft.Automation/automationAccounts/nodeConfigurations,8,,0,,0,8,false,spec_api=2024-10-23
 Microsoft.Automation,Microsoft.Automation/automationAccounts/powerShell72Modules,6,,0,,0,6,false,spec_api=2023-11-01
-Microsoft.Automation,Microsoft.Automation/automationAccounts/privateEndpointConnections,4,,0,,0,4,false,spec_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/privateEndpointConnections,4,,0,automation.azure.hfl.dev/AutomationAccountsPrivateEndpointConnection,4,0,false,spec_api=2024-10-23; ours_api=2024-10-23
 Microsoft.Automation,Microsoft.Automation/automationAccounts/python2Packages,5,,0,,0,5,false,spec_api=2024-10-23
 Microsoft.Automation,Microsoft.Automation/automationAccounts/python3Packages,5,,0,,0,5,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/runbooks,24,,0,,0,24,false,spec_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/runbooks,24,,0,automation.azure.hfl.dev/AutomationAccountsRunbook,24,0,false,spec_api=2024-10-23; ours_api=2024-10-23
 Microsoft.Automation,Microsoft.Automation/automationAccounts/runbooks/draft,3,,0,,0,3,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/runtimeEnvironments,6,,0,,0,6,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/runtimeEnvironments/packages,6,,0,,0,6,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/schedules,10,,0,,0,10,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/softwareUpdateConfigurations,40,,0,,0,40,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/sourceControls,10,,0,,0,10,false,spec_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/runtimeEnvironments,6,,0,automation.azure.hfl.dev/AutomationAccountsRuntimeEnvironment,6,0,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/runtimeEnvironments/packages,6,,0,automation.azure.hfl.dev/AutomationAccountsRuntimeEnvironmentsPackage,4,2,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/schedules,10,,0,automation.azure.hfl.dev/AutomationAccountsSchedule,10,0,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/softwareUpdateConfigurations,40,,0,automation.azure.hfl.dev/AutomationAccountsSoftwareUpdateConfiguration,40,0,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/sourceControls,10,,0,automation.azure.hfl.dev/AutomationAccountsSourceControl,10,0,false,spec_api=2024-10-23; ours_api=2024-10-23
 Microsoft.Automation,Microsoft.Automation/automationAccounts/sourceControls/sourceControlSyncJobs,1,,0,,0,1,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/variables,3,,0,,0,3,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/watchers,8,,0,,0,8,false,spec_api=2024-10-23
-Microsoft.Automation,Microsoft.Automation/automationAccounts/webhooks,6,,0,,0,6,false,spec_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/variables,3,,0,automation.azure.hfl.dev/AutomationAccountsVariable,3,0,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/watchers,8,,0,automation.azure.hfl.dev/AutomationAccountsWatcher,8,0,false,spec_api=2024-10-23; ours_api=2024-10-23
+Microsoft.Automation,Microsoft.Automation/automationAccounts/webhooks,6,,0,automation.azure.hfl.dev/AutomationAccountsWebhook,6,0,false,spec_api=2024-10-23; ours_api=2024-10-23
 Microsoft.AVS,Microsoft.AVS/privateClouds,46,,0,,0,46,false,spec_api=2026-03-01
 Microsoft.AVS,Microsoft.AVS/privateClouds/addons,7,,0,,0,7,false,spec_api=2026-03-01
 Microsoft.AVS,Microsoft.AVS/privateClouds/authorizations,1,,0,,0,1,false,spec_api=2026-03-01
