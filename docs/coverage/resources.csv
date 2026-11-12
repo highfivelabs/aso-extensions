@@ -995,19 +995,19 @@ Microsoft.Discovery,Microsoft.Discovery/workspaces/projects,4,,0,,0,4,false,spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/cassandraClusters,30,documentdb.azure.com/CassandraCluster,24,,0,6,false,spec_api=2026-03-15; official_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/cassandraClusters/dataCenters,25,documentdb.azure.com/CassandraDataCenter,19,,0,6,false,spec_api=2026-03-15; official_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts,65,documentdb.azure.com/DatabaseAccount,59,,0,6,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces,7,,0,,0,7,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables,14,,0,,0,14,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables/throughputSettings,8,,0,,0,8,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings,8,,0,,0,8,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces,7,,0,documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspace,5,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables,14,,0,documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesTable,12,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables/throughputSettings,8,,0,documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesTablesThroughputSetting,6,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings,8,,0,documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesThroughputSetting,6,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraRoleAssignments,3,,0,,0,3,false,spec_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraRoleDefinitions,7,,0,,0,7,false,spec_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/chaosFaults,4,,0,,0,4,false,spec_api=2025-05-01-preview; spec-preview-only
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/copyJobs,8,,0,,0,8,false,spec_api=2025-05-01-preview; spec-preview-only
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/dataTransferJobs,22,,0,,0,22,false,spec_api=2025-05-01-preview; spec-preview-only
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases,11,,0,,0,11,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs,37,,0,,0,37,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs/throughputSettings,8,,0,,0,8,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings,8,,0,,0,8,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases,11,,0,documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabase,9,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs,37,,0,documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesGraph,29,8,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs/throughputSettings,8,,0,documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesGraphsThroughputSetting,6,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings,8,,0,documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesThroughputSetting,6,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinRoleAssignments,3,,0,,0,3,false,spec_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinRoleDefinitions,7,,0,,0,7,false,spec_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongodbDatabases,11,documentdb.azure.com/MongodbDatabase,9,,0,2,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
@@ -1019,10 +1019,10 @@ Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinition
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongoMIRoleAssignments,3,,0,,0,3,false,spec_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongoMIRoleDefinitions,7,,0,,0,7,false,spec_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/notebookWorkspaces,0,,0,,0,0,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections,5,,0,,0,5,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/services,4,,0,,0,4,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections,5,,0,documentdb.azure.hfl.dev/DatabaseAccountsPrivateEndpointConnection,5,0,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/services,4,,0,documentdb.azure.hfl.dev/DatabaseAccountsService,4,0,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlDatabases,11,documentdb.azure.com/SqlDatabase,9,,0,2,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys,7,,0,,0,7,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys,7,,0,documentdb.azure.hfl.dev/DatabaseAccountsSqlDatabasesClientEncryptionKey,7,0,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers,51,documentdb.azure.com/SqlDatabaseContainer,36,,0,15,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures,8,documentdb.azure.com/SqlDatabaseContainerStoredProcedure,6,,0,2,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/throughputSettings,8,documentdb.azure.com/SqlDatabaseContainerThroughputSetting,6,,0,2,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
@@ -1030,11 +1030,11 @@ Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containe
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/userDefinedFunctions,8,documentdb.azure.com/SqlDatabaseContainerUserDefinedFunction,6,,0,2,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlDatabases/throughputSettings,8,documentdb.azure.com/SqlDatabaseThroughputSetting,6,,0,2,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments,3,documentdb.azure.com/SqlRoleAssignment,3,,0,0,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions,6,,0,,0,6,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions,6,,0,documentdb.azure.hfl.dev/DatabaseAccountsSqlRoleDefinition,5,1,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tableRoleAssignments,3,,0,,0,3,false,spec_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tableRoleDefinitions,7,,0,,0,7,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tables,11,,0,,0,11,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tables/throughputSettings,8,,0,,0,8,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tables,11,,0,documentdb.azure.hfl.dev/DatabaseAccountsTable,9,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tables/throughputSettings,8,,0,documentdb.azure.hfl.dev/DatabaseAccountsTablesThroughputSetting,6,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/fleets,3,,0,,0,3,false,spec_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces,7,,0,,0,7,false,spec_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces/fleetspaceAccounts,2,,0,,0,2,false,spec_api=2026-03-15
