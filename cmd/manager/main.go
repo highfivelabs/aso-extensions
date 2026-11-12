@@ -23,6 +23,7 @@ import (
 
 	"github.com/highfivelabs/aso-extensions/pkg/controllers"
 	"github.com/highfivelabs/aso-extensions/pkg/manager"
+	"github.com/highfivelabs/aso-extensions/pkg/slot"
 )
 
 // testOptions is set only in builds with -tags fakecloud (fakecloud.go).
@@ -34,11 +35,13 @@ func main() {
 		healthAddr     string
 		leaderElection bool
 		enableAzureCLI bool
+		slotName       string
 	)
 	flag.StringVar(&metricsAddr, "metrics-addr", ":8080", "address the metrics endpoint binds to; 0 disables it")
 	flag.StringVar(&healthAddr, "health-addr", ":8081", "address the health endpoint binds to")
 	flag.BoolVar(&leaderElection, "enable-leader-election", false, "enable leader election")
 	flag.BoolVar(&enableAzureCLI, "enable-azure-cli-authentication", false, "allow the Azure CLI credential in the global credential chain, as ASO's flag")
+	flag.StringVar(&slotName, "slot", "", "the slot this manager is (docs/plan.md, \"Moving resources between slots\"): writes are checked against and claim the cloud resource's hfl-dev-slot tag; empty reads HFL_SLOT, and with neither there is no guard")
 	zapOpts := zap.Options{}
 	zapOpts.BindFlags(flag.CommandLine)
 	flag.Parse()
@@ -77,7 +80,11 @@ func main() {
 	// MICROSOFT_GRAPH_ENDPOINT: Microsoft Graph's address for the Entra
 	// kinds (https://graph.microsoft.com when unset; a national cloud, or
 	// the fake cloud in tests, sets its own).
-	opts := manager.Options{EnableAzureCLI: enableAzureCLI, GraphEndpoint: os.Getenv("MICROSOFT_GRAPH_ENDPOINT")}
+	opts := manager.Options{
+		EnableAzureCLI: enableAzureCLI,
+		GraphEndpoint:  os.Getenv("MICROSOFT_GRAPH_ENDPOINT"),
+		Slot:           slot.Resolve(slotName, os.Getenv),
+	}
 	if testOptions != nil {
 		testOptions(&opts)
 	}
