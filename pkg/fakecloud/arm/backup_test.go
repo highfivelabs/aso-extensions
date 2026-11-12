@@ -49,6 +49,11 @@ func TestGuardProxyUnlockDelete(t *testing.T) {
 	put()
 	code, resp = do(t, a, http.MethodDelete, proxy, ``)
 	expect(t, "a second delete needs a second unlock", code, resp, http.StatusBadRequest)
+	bare := vault + "/backupResourceGuardProxies/bare"
+	code, resp = do(t, a, http.MethodPut, bare, `{"properties":{}}`)
+	expect(t, "proxy naming no guard", code, resp, http.StatusCreated)
+	code, resp = do(t, a, http.MethodDelete, bare, ``)
+	expect(t, "delete of a proxy naming no guard", code, resp, http.StatusOK)
 	code, resp = do(t, a, http.MethodPost, vault+"/backupResourceGuardProxies/none/unlockDelete", `{}`)
 	expect(t, "unlock a missing proxy", code, resp, http.StatusNotFound)
 }

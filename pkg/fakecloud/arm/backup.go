@@ -18,7 +18,8 @@ import (
 // 2026-11-12) until a POST to the proxy's unlockDelete names the proxy as
 // resourceToBeDeleted and a deleteResourceGuardProxyRequests request of the
 // guard the proxy names (its resourceGuardResourceId). One unlock opens one
-// DELETE.
+// DELETE. A proxy naming no guard (which Azure would not have made) is
+// deleted at once.
 //
 // Not modelled: the unlock's expiry, and the guard's own role checks (in
 // Azure the caller needs a role on the guard; here anyone may unlock).
@@ -74,6 +75,14 @@ func (a *ARM) checkGuardProxyDelete(id string) (status int, code, message string
 		return 0, "", ""
 	}
 	key := strings.ToLower(id)
+	res, ok := a.resources[key]
+	if !ok {
+		return 0, "", ""
+	}
+	props, _ := (*res)["properties"].(map[string]any)
+	if guard, _ := props["resourceGuardResourceId"].(string); guard == "" {
+		return 0, "", "" // no guard named: nothing protects it
+	}
 	if !a.unlocked[key] {
 		return http.StatusBadRequest, "BMSUserErrorUnlockPreviligeAccessIsNeeded", "Unlock privilege access is needed to delete the ResourceGuard proxy"
 	}
