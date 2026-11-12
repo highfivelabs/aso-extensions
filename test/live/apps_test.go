@@ -6,7 +6,9 @@
 package live
 
 import (
+	"context"
 	"fmt"
+	"net/http"
 	"reflect"
 	"strings"
 	"testing"
@@ -140,14 +142,7 @@ func TestLiveContainerApps(t *testing.T) {
 	t.Parallel()
 	requireProvider(t, "Microsoft.App")
 	ns := namespace(t, "aca")
-	envName := azName("env")
-	envID := rgID() + "/providers/Microsoft.App/managedEnvironments/" + envName
-	fixture(t, envID, "2024-03-01", map[string]any{
-		"location": location,
-		"properties": map[string]any{
-			"workloadProfiles": []any{map[string]any{"name": "Consumption", "workloadProfileType": "Consumption"}},
-		},
-	})
+	envName, envID, acaRegion := containerAppsEnvironment(t)
 	env := &asoapp.ManagedEnvironment{}
 	env.Namespace, env.Name = ns, "env"
 	env.Spec.AzureName, env.Spec.Owner = envName, owner("rg")
@@ -184,7 +179,7 @@ func TestLiveContainerApps(t *testing.T) {
 	}}
 	cert := &appv1.ManagedEnvironmentsCertificate{}
 	cert.Namespace, cert.Name = ns, "tls"
-	cert.Spec = appv1.ManagedEnvironmentsCertificate_Spec{Owner: owner("env"), Location: ptr(location), Properties: &appv1.ManagedEnvironments_Certificate_Properties_Spec{
+	cert.Spec = appv1.ManagedEnvironmentsCertificate_Spec{Owner: owner("env"), Location: ptr(acaRegion), Properties: &appv1.ManagedEnvironments_Certificate_Properties_Spec{
 		Value:    &genruntime.SecretReference{Name: "app", Key: "pfx"},
 		Password: &genruntime.SecretReference{Name: "app", Key: "pfx-password"},
 	}}
@@ -370,4 +365,74 @@ func TestLiveWebSlotAndCertificate(t *testing.T) {
 		remove(t, timeout, slot)
 		expectGone(t, slotID, webAPI)
 	})
+}
+
+// containerAppsEnvironment makes a Consumption environment fixture in the
+// first region where it becomes ready. In eastus2 one stayed in
+// provisioningState Waiting, with no error, for 12 to 30 minutes in three
+// runs (2026-11-12), so eastus2 is tried last; each region gets 12 minutes.
+// The subscription may hold one Container Apps environment
+// (MaxNumberOfGlobalEnvironmentsInSubExceeded, run ax12165076f0), so one
+// still waiting is deleted, and gone, before the next region is tried. The
+// test skips, naming each region's state, when none is ready.
+func containerAppsEnvironment(t *testing.T) (name, id, region string) {
+	t.Helper()
+	ctx := context.Background()
+	var waited []string
+	order := append(regions()[1:], regions()[0])
+	if location != "eastus2" {
+		order = regions()
+	}
+	for i, r := range order {
+		name = azName(fmt.Sprintf("env%d", i))
+		id = rgID() + "/providers/Microsoft.App/managedEnvironments/" + name
+		_, _, err := azure.do(ctx, http.MethodPut, id, "2024-03-01", map[string]any{
+			"location": r,
+			"properties": map[string]any{
+				"workloadProfiles": []any{map[string]any{"name": "Consumption", "workloadProfileType": "Consumption"}},
+			},
+		})
+		if err != nil {
+			if regionLimit(err.Error()) {
+				waited = append(waited, r+": "+err.Error())
+				continue
+			}
+			t.Fatalf("fixture: %v", err)
+		}
+		envID := id
+		t.Cleanup(func() { deleteARMWithin(t, 45*time.Minute, envID, "2024-03-01") })
+		var st string
+		for deadline := time.Now().Add(12 * time.Minute); time.Now().Before(deadline); time.Sleep(20 * time.Second) {
+			_, got, err := azure.get(ctx, id, "2024-03-01")
+			if err != nil {
+				continue
+			}
+			st = state(got)
+			if st == "Succeeded" || st == "Failed" || st == "Canceled" {
+				break
+			}
+		}
+		if st == "Succeeded" {
+			t.Logf("Container Apps environment in %s", r)
+			return name, id, r
+		}
+		t.Logf("Container Apps environment in %s: provisioningState %s after 12 minutes; deleting it, then the next region", r, st)
+		waited = append(waited, r+": "+st)
+		// An environment's delete takes 15 to 30 minutes (docs/live-runs.md).
+		if _, _, err := azure.do(ctx, http.MethodDelete, id, "2024-03-01", nil); err != nil {
+			t.Fatalf("deleting the waiting environment: %v", err)
+		}
+		eventually(t, 45*time.Minute, "environment "+id+" deleted in Azure", func() error {
+			code, _, err := azure.get(ctx, id, "2024-03-01")
+			if code == http.StatusNotFound {
+				return nil
+			}
+			if err != nil {
+				return err
+			}
+			return fmt.Errorf("still there")
+		})
+	}
+	t.Skipf("no region made a Container Apps environment ready: %s", strings.Join(waited, "; "))
+	return "", "", ""
 }

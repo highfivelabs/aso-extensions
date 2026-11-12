@@ -182,6 +182,9 @@ func regions() []string {
 var regionLimits = []string{
 	"ProvisioningDisabled", "SkuNotAvailable", "LocationIsOfferRestricted",
 	"RegionDoesNotAllowProvisioning", "cannot be completed without additional quota",
+	// Cosmos DB refuses a new account in a busy region ("... is currently
+	// experiencing high demand", ServiceUnavailable).
+	"experiencing high demand",
 }
 
 func regionLimit(s string) bool {
@@ -251,6 +254,13 @@ func tryFixture(t *testing.T, wait time.Duration, id, apiVersion string, body ma
 // deleteARM deletes id if it is still there and waits until it is gone.
 func deleteARM(t *testing.T, id, apiVersion string) {
 	t.Helper()
+	deleteARMWithin(t, timeout, id, apiVersion)
+}
+
+// deleteARMWithin is deleteARM for resources whose delete takes longer than
+// timeout (a Container Apps environment: 15 to 30 minutes).
+func deleteARMWithin(t *testing.T, wait time.Duration, id, apiVersion string) {
+	t.Helper()
 	ctx := context.Background()
 	code, _, err := azure.do(ctx, http.MethodDelete, id, apiVersion, nil)
 	if code == http.StatusNotFound || code == http.StatusNoContent {
@@ -260,7 +270,16 @@ func deleteARM(t *testing.T, id, apiVersion string) {
 		t.Errorf("cleanup: %v", err)
 		return
 	}
-	expectGone(t, id, apiVersion)
+	eventually(t, wait, "resource "+id+" deleted in Azure", func() error {
+		code, _, err := azure.get(ctx, id, apiVersion)
+		if code == http.StatusNotFound {
+			return nil
+		}
+		if err != nil {
+			return err
+		}
+		return fmt.Errorf("still there")
+	})
 }
 
 func state(r map[string]any) string {

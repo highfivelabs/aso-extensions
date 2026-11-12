@@ -126,6 +126,7 @@ live tests) that need each:
 | `Microsoft.Maintenance` | `MaintenanceConfiguration`, `ConfigurationAssignment` | `TestLiveMaintenanceAndShutdown` |
 | `Microsoft.DevTestLab` | `Schedule` | `TestLiveMaintenanceAndShutdown` |
 | `Microsoft.KeyVault` | `VaultSecret`, `VaultCertificate` (data plane, on a vault) | `TestLiveKeyVault` |
+| `Microsoft.DocumentDB` (**NotRegistered**, 2026-11-12, run `ax1218083181`) | the Cosmos DB children (`documentdb.azure.hfl.dev`) | `TestLiveCosmosGremlin` (skips, naming the provider; the builder: `az provider register --namespace Microsoft.DocumentDB --subscription "$AZURE_SUBSCRIPTION_ID"`) |
 | `Microsoft.DBforPostgreSQL`, `Microsoft.Sql` | PostgreSQL `User`, Azure SQL `User` (data plane, on a server) | `TestLivePostgresUser`, `TestLiveSqlUser` |
 | `Microsoft.PolicyInsights` | `PolicyRemediation`, `PolicyAttestation` (they also need a policy assignment, below) | none: they need a policy assignment (below) |
 | `Microsoft.Automation` | none of ours: the Automation account `WorkspacesLinkedService` links to | the `LinkedService` step of `TestLiveWorkspaceChildren` |
@@ -145,7 +146,7 @@ group:
 
 | Kind | Needs |
 | --- | --- |
-| `ManagementLock` | `Microsoft.Authorization/locks/write` (Owner or User Access Administrator, or a custom role) on the group |
+| `ManagementLock` | `Microsoft.Authorization/locks/write` (Owner or User Access Administrator, or a custom role) on the group; `TestLiveManagementLock` (a lock on an IP group fixture) reads the identity's permissions and skips, naming the action, until a role grants it (`ax1218083181`) |
 | `ResourceManagementPrivateLink` | `Microsoft.Authorization/resourceManagementPrivateLinks/write` on the group (refused `AuthorizationFailed`, 2026-11-12); `TestLiveResourceManagementPrivateLink` reads the identity's permissions on the group and skips until a role grants it |
 | `WorkspacesLinkedStorageAccount` | a role assignment (`Microsoft.Authorization/roleAssignments/write`): Azure retired `CustomLogs` links in 2025, and a `Query` or `Alerts` link needs the workspace's managed identity to hold Storage Table Data Contributor on the account; the `LinkedStorageAccount` step of `TestLiveWorkspaceChildren` skips the same way |
 | `PolicyDefinition`, `PolicySetDefinition` | subscription or management group scope |
@@ -284,7 +285,12 @@ Found 2026-11-12 (runs `ax120809d931`, `ax120853723a`, `ax1210377aa0`):
   stayed in provisioningState `Waiting` for the fixture's 15 minutes in two
   runs, and its delete took another 15 to 30 minutes; none of our kinds was
   reached. Not understood yet: the operation reported no error while
-  waiting. `TestLiveContainerApps` stays untested on real Azure.
+  waiting. Resolved 2026-11-12 (run `ax1218083181`): the environment
+  fixture now tries other regions, eastus2 last, and was ready in
+  centralus within minutes; the subscription holds **one** Container Apps
+  environment (`MaxNumberOfGlobalEnvironmentsInSubExceeded`, run
+  `ax12165076f0`), so a waiting one is deleted, and gone, before the next
+  region is tried, and the fixture's delete may take 30 minutes or more.
 
 ## Ledger
 
@@ -305,3 +311,6 @@ Found 2026-11-12 (runs `ax120809d931`, `ax120853723a`, `ax1210377aa0`):
 | 2026-11-12 | `ax1215322672` | `5539c29`+ | `TestLiveSqlUser`, `TestLivePostgresUser`, `TestLiveWebSlotAndCertificate`, with fixtures that try other SKUs and regions | FAIL all three: every fixture was made (Azure SQL in centralus, PostgreSQL B1ms in centralus, App Service S1 in westus3, after eastus2's refusals), then no object of ours got a Ready condition | the live manager had stopped two minutes in (a `metadata.namespace` cache selector on Namespaces, since PR #69); fixed in `test/live/env_test.go`; the group empty afterwards |
 | 2026-11-12 | `ax12160408f5` | `8face67`+ | the same three | PASS: Azure SQL `User` (`TestLiveSqlUser`, centralus), PostgreSQL `User` (`TestLivePostgresUser`, B1ms in centralus), `Certificate`; FAIL: the host name bindings' deletes (`TestLiveWebSlotAndCertificate`; `SitesSlot` made and changed) | Azure keeps a default host name's binding (above); the group empty afterwards |
 | 2026-11-12 | `ax121631c6ec` | `686f659`+ | `TestLiveWebSlotAndCertificate` | PASS: `Certificate`, `SitesHostNameBinding`, `SitesSlot`, `SitesSlotsHostNameBinding` (S1 in westus3; the bindings detached and kept by Azure) | the first App Service run on real Azure; the group empty afterwards |
+| 2026-11-12 | `ax12165076f0` | `7b50314`+ | `TestLiveContainerApps`, the environment fixture trying other regions | FAIL: the eastus2 environment `Waiting` after 12 minutes; the next region was refused, `MaxNumberOfGlobalEnvironmentsInSubExceeded` (one environment per subscription) | the fixture now deletes a waiting environment before the next region, and tries eastus2 last; the group empty afterwards |
+| 2026-11-12 | `ax12172992bc` | `7b50314`+ | `TestLiveContainerApps` | PASS of every step (`ManagedEnvironmentsDaprComponent`, `ManagedEnvironmentsStorage`, `ManagedEnvironmentsCertificate`, `ManagedEnvironmentsJavaComponent`, on an environment in centralus); FAIL: the fixture's delete outlasted 15 minutes | the environment's cleanup now waits 45 minutes; the sweep removed it |
+| 2026-11-12 | `ax1218083181` | `9029eda`+ | `TestLiveContainerApps`, `TestLiveAutomation`, `TestLiveManagementLock`, `TestLiveCosmosGremlin` (new) | PASS: `TestLiveContainerApps` (centralus; the first pass on real Azure), `AutomationAccount`, `AutomationAccountsRunbook`, `AutomationAccountsVariable`, `AutomationAccountsSchedule` (`TestLiveAutomation`, 53s); SKIP: `ManagementLock` (`Microsoft.Authorization/locks/write`), `TestLiveCosmosGremlin` (`Microsoft.DocumentDB` NotRegistered) | the group empty afterwards |
