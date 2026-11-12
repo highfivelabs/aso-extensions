@@ -20,12 +20,12 @@ import (
 	authorization_v20260101ps "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260101preview/storage"
 	authorization_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701"
 	authorization_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260701/storage"
-	cognitiveservices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/customizations"
-	cognitiveservices_v20250601 "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20250601"
-	cognitiveservices_v20250601s "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20250601/storage"
 	automation_customizations "github.com/highfivelabs/aso-extensions/apis/arm/automation/customizations"
 	automation_v20241023 "github.com/highfivelabs/aso-extensions/apis/arm/automation/v20241023"
 	automation_v20241023s "github.com/highfivelabs/aso-extensions/apis/arm/automation/v20241023/storage"
+	cognitiveservices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/customizations"
+	cognitiveservices_v20250601 "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20250601"
+	cognitiveservices_v20250601s "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20250601/storage"
 	compute_customizations "github.com/highfivelabs/aso-extensions/apis/arm/compute/customizations"
 	compute_v20220301 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301"
 	compute_v20220301s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301/storage"
@@ -254,6 +254,121 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicyDefinitionsVersion)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicySetDefinition)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicySetDefinitionsVersion)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccount)})
+	result = append(result, &registration.StorageType{
+		Obj: new(automation_v20241023.AutomationAccountsCertificate),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.base64Value",
+				Func: indexAutomationAutomationAccountsCertificateBase64Value,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.base64Value",
+					},
+					&automation_v20241023.AutomationAccountsCertificateList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsConfiguration)})
+	result = append(result, &registration.StorageType{
+		Obj: new(automation_v20241023.AutomationAccountsConnection),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.fieldDefinitionValues",
+				Func: indexAutomationAutomationAccountsConnectionFieldDefinitionValues,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.fieldDefinitionValues",
+					},
+					&automation_v20241023.AutomationAccountsConnectionList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsConnectionType)})
+	result = append(result, &registration.StorageType{
+		Obj: new(automation_v20241023.AutomationAccountsCredential),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.password",
+				Func: indexAutomationAutomationAccountsCredentialPassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.password",
+					},
+					&automation_v20241023.AutomationAccountsCredentialList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsHybridRunbookWorker)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsHybridRunbookWorkerGroup)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsJobSchedule)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsModule)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsRunbook)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsRuntimeEnvironment)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsRuntimeEnvironmentsPackage)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsSchedule)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsSoftwareUpdateConfiguration)})
+	result = append(result, &registration.StorageType{
+		Obj: new(automation_v20241023.AutomationAccountsSourceControl),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.securityToken.accessToken",
+				Func: indexAutomationAutomationAccountsSourceControlAccessToken,
+			},
+			{
+				Key:  ".spec.securityToken.refreshToken",
+				Func: indexAutomationAutomationAccountsSourceControlRefreshToken,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.securityToken.accessToken",
+						".spec.securityToken.refreshToken",
+					},
+					&automation_v20241023.AutomationAccountsSourceControlList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsVariable)})
+	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsWatcher)})
+	result = append(result, &registration.StorageType{
+		Obj: new(automation_v20241023.AutomationAccountsWebhook),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.uri",
+				Func: indexAutomationAutomationAccountsWebhookUri,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.uri",
+					},
+					&automation_v20241023.AutomationAccountsWebhookList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsCapabilityHost)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsCommitmentPlan)})
 	result = append(result, &registration.StorageType{
@@ -310,13 +425,6 @@ func getKnownStorageTypes() []*registration.StorageType {
 			{
 				Key:  ".spec.properties.usernamePassword.credentials.securityToken",
 				Func: indexCognitiveservicesAccountsConnectionUsernamePasswordSecurityToken,
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccount)})
-	result = append(result, &registration.StorageType{
-		Obj: new(automation_v20241023.AutomationAccountsCertificate),
-		Indexes: []registration.Index{
-			{
-				Key:  ".spec.base64Value",
-				Func: indexAutomationAutomationAccountsCertificateBase64Value,
 			},
 		},
 		Watches: []registration.Watch{
@@ -400,19 +508,6 @@ func getKnownStorageTypes() []*registration.StorageType {
 			{
 				Key:  ".spec.properties.usernamePassword.credentials.securityToken",
 				Func: indexCognitiveservicesAccountsProjectsConnectionUsernamePasswordSecurityToken,
-						".spec.base64Value",
-					},
-					&automation_v20241023.AutomationAccountsCertificateList{}),
-			},
-		},
-	})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsConfiguration)})
-	result = append(result, &registration.StorageType{
-		Obj: new(automation_v20241023.AutomationAccountsConnection),
-		Indexes: []registration.Index{
-			{
-				Key:  ".spec.fieldDefinitionValues",
-				Func: indexAutomationAutomationAccountsConnectionFieldDefinitionValues,
 			},
 		},
 		Watches: []registration.Watch{
@@ -443,87 +538,6 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsRaiPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.CommitmentPlan)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.CommitmentPlansAccountAssociation)})
-						".spec.fieldDefinitionValues",
-					},
-					&automation_v20241023.AutomationAccountsConnectionList{}),
-			},
-		},
-	})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsConnectionType)})
-	result = append(result, &registration.StorageType{
-		Obj: new(automation_v20241023.AutomationAccountsCredential),
-		Indexes: []registration.Index{
-			{
-				Key:  ".spec.password",
-				Func: indexAutomationAutomationAccountsCredentialPassword,
-			},
-		},
-		Watches: []registration.Watch{
-			{
-				Type: &v1.Secret{},
-				MakeEventHandler: watchSecretsFactory(
-					[]string{
-						".spec.password",
-					},
-					&automation_v20241023.AutomationAccountsCredentialList{}),
-			},
-		},
-	})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsHybridRunbookWorker)})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsHybridRunbookWorkerGroup)})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsJobSchedule)})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsModule)})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsPrivateEndpointConnection)})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsRunbook)})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsRuntimeEnvironment)})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsRuntimeEnvironmentsPackage)})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsSchedule)})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsSoftwareUpdateConfiguration)})
-	result = append(result, &registration.StorageType{
-		Obj: new(automation_v20241023.AutomationAccountsSourceControl),
-		Indexes: []registration.Index{
-			{
-				Key:  ".spec.securityToken.accessToken",
-				Func: indexAutomationAutomationAccountsSourceControlAccessToken,
-			},
-			{
-				Key:  ".spec.securityToken.refreshToken",
-				Func: indexAutomationAutomationAccountsSourceControlRefreshToken,
-			},
-		},
-		Watches: []registration.Watch{
-			{
-				Type: &v1.Secret{},
-				MakeEventHandler: watchSecretsFactory(
-					[]string{
-						".spec.securityToken.accessToken",
-						".spec.securityToken.refreshToken",
-					},
-					&automation_v20241023.AutomationAccountsSourceControlList{}),
-			},
-		},
-	})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsVariable)})
-	result = append(result, &registration.StorageType{Obj: new(automation_v20241023.AutomationAccountsWatcher)})
-	result = append(result, &registration.StorageType{
-		Obj: new(automation_v20241023.AutomationAccountsWebhook),
-		Indexes: []registration.Index{
-			{
-				Key:  ".spec.uri",
-				Func: indexAutomationAutomationAccountsWebhookUri,
-			},
-		},
-		Watches: []registration.Watch{
-			{
-				Type: &v1.Secret{},
-				MakeEventHandler: watchSecretsFactory(
-					[]string{
-						".spec.uri",
-					},
-					&automation_v20241023.AutomationAccountsWebhookList{}),
-			},
-		},
-	})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.StorageType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.StorageType{
@@ -1168,34 +1182,6 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(authorization_v20260701s.PolicySetDefinitionsVersion)})
 	result = append(
 		result,
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsCapabilityHost)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsCommitmentPlan)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsConnection)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsDefenderForAISetting)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsEncryptionScope)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsPrivateEndpointConnection)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsProjectsCapabilityHost)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsProjectsConnection)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsRaiBlocklist)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsRaiBlocklistsRaiBlocklistItem)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsRaiPolicy)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.CommitmentPlan)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601.CommitmentPlansAccountAssociation)})
-	result = append(
-		result,
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsCapabilityHost)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsCommitmentPlan)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsConnection)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsDefenderForAISetting)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsEncryptionScope)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsPrivateEndpointConnection)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsProjectsCapabilityHost)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsProjectsConnection)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsRaiBlocklist)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsRaiBlocklistsRaiBlocklistItem)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsRaiPolicy)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.CommitmentPlan)},
-		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.CommitmentPlansAccountAssociation)})
 		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccount)},
 		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsCertificate)},
 		&registration.KnownType{Obj: new(automation_v20241023.AutomationAccountsConfiguration)},
@@ -1238,6 +1224,36 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsVariable)},
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsWatcher)},
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsWebhook)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsCapabilityHost)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsCommitmentPlan)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsDefenderForAISetting)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsEncryptionScope)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsProjectsCapabilityHost)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsProjectsConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsRaiBlocklist)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsRaiBlocklistsRaiBlocklistItem)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsRaiPolicy)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.CommitmentPlan)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601.CommitmentPlansAccountAssociation)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsCapabilityHost)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsCommitmentPlan)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsDefenderForAISetting)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsEncryptionScope)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsProjectsCapabilityHost)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsProjectsConnection)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsRaiBlocklist)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsRaiBlocklistsRaiBlocklistItem)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsRaiPolicy)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.CommitmentPlan)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.CommitmentPlansAccountAssociation)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301s.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601.Budget)})
@@ -1623,10 +1639,10 @@ func createScheme() *runtime.Scheme {
 	_ = authorization_v20260101ps.AddToScheme(scheme)
 	_ = authorization_v20260701.AddToScheme(scheme)
 	_ = authorization_v20260701s.AddToScheme(scheme)
-	_ = cognitiveservices_v20250601.AddToScheme(scheme)
-	_ = cognitiveservices_v20250601s.AddToScheme(scheme)
 	_ = automation_v20241023.AddToScheme(scheme)
 	_ = automation_v20241023s.AddToScheme(scheme)
+	_ = cognitiveservices_v20250601.AddToScheme(scheme)
+	_ = cognitiveservices_v20250601s.AddToScheme(scheme)
 	_ = compute_v20220301.AddToScheme(scheme)
 	_ = compute_v20220301s.AddToScheme(scheme)
 	_ = consumption_v20260601.AddToScheme(scheme)
@@ -1734,19 +1750,6 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &authorization_customizations.RoleAssignmentScheduleRequestExtension{})
 	result = append(result, &authorization_customizations.RoleEligibilityScheduleRequestExtension{})
 	result = append(result, &authorization_customizations.RoleManagementPolicyAssignmentExtension{})
-	result = append(result, &cognitiveservices_customizations.AccountsCapabilityHostExtension{})
-	result = append(result, &cognitiveservices_customizations.AccountsCommitmentPlanExtension{})
-	result = append(result, &cognitiveservices_customizations.AccountsConnectionExtension{})
-	result = append(result, &cognitiveservices_customizations.AccountsDefenderForAISettingExtension{})
-	result = append(result, &cognitiveservices_customizations.AccountsEncryptionScopeExtension{})
-	result = append(result, &cognitiveservices_customizations.AccountsPrivateEndpointConnectionExtension{})
-	result = append(result, &cognitiveservices_customizations.AccountsProjectsCapabilityHostExtension{})
-	result = append(result, &cognitiveservices_customizations.AccountsProjectsConnectionExtension{})
-	result = append(result, &cognitiveservices_customizations.AccountsRaiBlocklistExtension{})
-	result = append(result, &cognitiveservices_customizations.AccountsRaiBlocklistsRaiBlocklistItemExtension{})
-	result = append(result, &cognitiveservices_customizations.AccountsRaiPolicyExtension{})
-	result = append(result, &cognitiveservices_customizations.CommitmentPlanExtension{})
-	result = append(result, &cognitiveservices_customizations.CommitmentPlansAccountAssociationExtension{})
 	result = append(result, &automation_customizations.AutomationAccountExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsCertificateExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsConfigurationExtension{})
@@ -1767,6 +1770,19 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &automation_customizations.AutomationAccountsVariableExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsWatcherExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsWebhookExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsCapabilityHostExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsCommitmentPlanExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsConnectionExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsDefenderForAISettingExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsEncryptionScopeExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsPrivateEndpointConnectionExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsProjectsCapabilityHostExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsProjectsConnectionExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsRaiBlocklistExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsRaiBlocklistsRaiBlocklistItemExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsRaiPolicyExtension{})
+	result = append(result, &cognitiveservices_customizations.CommitmentPlanExtension{})
+	result = append(result, &cognitiveservices_customizations.CommitmentPlansAccountAssociationExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
 	result = append(result, &consumption_customizations.BudgetExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesConnectedRegistryExtension{})
@@ -2016,6 +2032,84 @@ func indexAuthorizationRoleEligibilityScheduleRequestPrincipalIdFromConfig(rawOb
 		return nil
 	}
 	return obj.Spec.PrincipalIdFromConfig.Index()
+}
+
+// indexAutomationAutomationAccountsCertificateBase64Value an index function for automation_v20241023.AutomationAccountsCertificate .spec.base64Value
+func indexAutomationAutomationAccountsCertificateBase64Value(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Base64Value == nil {
+		return nil
+	}
+	return obj.Spec.Base64Value.Index()
+}
+
+// indexAutomationAutomationAccountsConnectionFieldDefinitionValues an index function for automation_v20241023.AutomationAccountsConnection .spec.fieldDefinitionValues
+func indexAutomationAutomationAccountsConnectionFieldDefinitionValues(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.FieldDefinitionValues == nil {
+		return nil
+	}
+	return obj.Spec.FieldDefinitionValues.Index()
+}
+
+// indexAutomationAutomationAccountsCredentialPassword an index function for automation_v20241023.AutomationAccountsCredential .spec.password
+func indexAutomationAutomationAccountsCredentialPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsCredential)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Password == nil {
+		return nil
+	}
+	return obj.Spec.Password.Index()
+}
+
+// indexAutomationAutomationAccountsSourceControlAccessToken an index function for automation_v20241023.AutomationAccountsSourceControl .spec.securityToken.accessToken
+func indexAutomationAutomationAccountsSourceControlAccessToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsSourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SecurityToken == nil {
+		return nil
+	}
+	if obj.Spec.SecurityToken.AccessToken == nil {
+		return nil
+	}
+	return obj.Spec.SecurityToken.AccessToken.Index()
+}
+
+// indexAutomationAutomationAccountsSourceControlRefreshToken an index function for automation_v20241023.AutomationAccountsSourceControl .spec.securityToken.refreshToken
+func indexAutomationAutomationAccountsSourceControlRefreshToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsSourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SecurityToken == nil {
+		return nil
+	}
+	if obj.Spec.SecurityToken.RefreshToken == nil {
+		return nil
+	}
+	return obj.Spec.SecurityToken.RefreshToken.Index()
+}
+
+// indexAutomationAutomationAccountsWebhookUri an index function for automation_v20241023.AutomationAccountsWebhook .spec.uri
+func indexAutomationAutomationAccountsWebhookUri(rawObj client.Object) []string {
+	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsWebhook)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Uri == nil {
+		return nil
+	}
+	return obj.Spec.Uri.Index()
 }
 
 // indexCognitiveservicesAccountsConnectionAccountKeyKey an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.accountKey.credentials.key
@@ -2562,82 +2656,6 @@ func indexCognitiveservicesAccountsProjectsConnectionUsernamePasswordSecurityTok
 		return nil
 	}
 	return obj.Spec.Properties.UsernamePassword.Credentials.SecurityToken.Index()
-// indexAutomationAutomationAccountsCertificateBase64Value an index function for automation_v20241023.AutomationAccountsCertificate .spec.base64Value
-func indexAutomationAutomationAccountsCertificateBase64Value(rawObj client.Object) []string {
-	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsCertificate)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.Base64Value == nil {
-		return nil
-	}
-	return obj.Spec.Base64Value.Index()
-}
-
-// indexAutomationAutomationAccountsConnectionFieldDefinitionValues an index function for automation_v20241023.AutomationAccountsConnection .spec.fieldDefinitionValues
-func indexAutomationAutomationAccountsConnectionFieldDefinitionValues(rawObj client.Object) []string {
-	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsConnection)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.FieldDefinitionValues == nil {
-		return nil
-	}
-	return obj.Spec.FieldDefinitionValues.Index()
-}
-
-// indexAutomationAutomationAccountsCredentialPassword an index function for automation_v20241023.AutomationAccountsCredential .spec.password
-func indexAutomationAutomationAccountsCredentialPassword(rawObj client.Object) []string {
-	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsCredential)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.Password == nil {
-		return nil
-	}
-	return obj.Spec.Password.Index()
-}
-
-// indexAutomationAutomationAccountsSourceControlAccessToken an index function for automation_v20241023.AutomationAccountsSourceControl .spec.securityToken.accessToken
-func indexAutomationAutomationAccountsSourceControlAccessToken(rawObj client.Object) []string {
-	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsSourceControl)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.SecurityToken == nil {
-		return nil
-	}
-	if obj.Spec.SecurityToken.AccessToken == nil {
-		return nil
-	}
-	return obj.Spec.SecurityToken.AccessToken.Index()
-}
-
-// indexAutomationAutomationAccountsSourceControlRefreshToken an index function for automation_v20241023.AutomationAccountsSourceControl .spec.securityToken.refreshToken
-func indexAutomationAutomationAccountsSourceControlRefreshToken(rawObj client.Object) []string {
-	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsSourceControl)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.SecurityToken == nil {
-		return nil
-	}
-	if obj.Spec.SecurityToken.RefreshToken == nil {
-		return nil
-	}
-	return obj.Spec.SecurityToken.RefreshToken.Index()
-}
-
-// indexAutomationAutomationAccountsWebhookUri an index function for automation_v20241023.AutomationAccountsWebhook .spec.uri
-func indexAutomationAutomationAccountsWebhookUri(rawObj client.Object) []string {
-	obj, ok := rawObj.(*automation_v20241023.AutomationAccountsWebhook)
-	if !ok {
-		return nil
-	}
-	if obj.Spec.Uri == nil {
-		return nil
-	}
-	return obj.Spec.Uri.Index()
 }
 
 // indexContainerregistryRegistriesTaskDockerContextAccessToken an index function for containerregistry_v20190401.RegistriesTask .spec.step.docker.contextAccessToken
