@@ -12,6 +12,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Azure/azure-service-operator/v2/pkg/common/annotations"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
@@ -321,7 +322,12 @@ func TestLiveWebSlotAndCertificate(t *testing.T) {
 			}
 			return nil
 		})
+		// The default host name's binding is Azure's: made with the site and
+		// never deleted (a DELETE of it is refused, and the object waited in
+		// deletion, run ax12160408f5). Detach it, and Azure keeps it.
+		setReconcilePolicy(t, b, annotations.ReconcilePolicyDetachOnDelete)
 		remove(t, 5*time.Minute, b)
+		expectResource(t, siteID+"/hostNameBindings/"+host, webAPI, func(r map[string]any) error { return nil })
 	})
 
 	t.Run("Slot", func(t *testing.T) {
@@ -357,7 +363,9 @@ func TestLiveWebSlotAndCertificate(t *testing.T) {
 		sb.Spec = webv1.SitesSlotsHostNameBinding_Spec{AzureName: slotHost, Owner: owner("staging"), SiteName: ptr(siteName), HostNameType: ptr(webv1.HostNameType("Verified"))}
 		create(t, 5*time.Minute, sb)
 		expectResource(t, slotID+"/hostNameBindings/"+slotHost, webAPI, func(r map[string]any) error { return nil })
+		setReconcilePolicy(t, sb, annotations.ReconcilePolicyDetachOnDelete) // the slot's default host name, as the site's
 		remove(t, 5*time.Minute, sb)
+		expectResource(t, slotID+"/hostNameBindings/"+slotHost, webAPI, func(r map[string]any) error { return nil })
 
 		remove(t, timeout, slot)
 		expectGone(t, slotID, webAPI)
