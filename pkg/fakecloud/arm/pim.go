@@ -195,6 +195,9 @@ func isScheduleRequest(id string) bool {
 // request to the schedules it makes or removes (after is called once the
 // request is stored); code is "" when it is allowed or id is neither.
 func (a *ARM) checkPIM(id string, body map[string]any) (status int, code, message string, after func()) {
+	if !policyAssignmentPIM.MatchString(id) && !isScheduleRequest(id) {
+		return 0, "", "", nil // not PIM's: the body is left as sent
+	}
 	props, _ := body["properties"].(map[string]any)
 	if props == nil {
 		props = map[string]any{}

@@ -47,3 +47,17 @@ func TestLogAnalyticsClusterSourceInsight(t *testing.T) {
 		t.Fatalf("the key was returned by GET: %s", resp)
 	}
 }
+
+// A query pack without a properties object is refused, as Azure refuses it;
+// with an empty one it is made.
+func TestLogAnalyticsQueryPackNeedsProperties(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/logs"
+	code, resp := do(t, a, http.MethodPut, rg, `{"location":"westus"}`)
+	expect(t, "resource group", code, resp, http.StatusCreated)
+	pack := rg + "/providers/Microsoft.OperationalInsights/queryPacks/ops"
+	code, resp = do(t, a, http.MethodPut, pack, `{"location":"westus","tags":{"team":"platform"}}`)
+	expect(t, "query pack without properties", code, resp, http.StatusBadRequest)
+	code, resp = do(t, a, http.MethodPut, pack, `{"location":"westus","properties":{}}`)
+	expect(t, "query pack with empty properties", code, resp, http.StatusCreated)
+}
