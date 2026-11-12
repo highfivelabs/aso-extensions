@@ -223,6 +223,12 @@ resources:
 - securityinsights.azure.hfl.dev_watchlists.yaml
 - securityinsights.azure.hfl.dev_watchlistswatchlistitems.yaml
 - sql.azure.hfl.dev_users.yaml
+- storage.azure.hfl.dev_storageaccountsencryptionscopes.yaml
+- storage.azure.hfl.dev_storageaccountsinventorypolicies.yaml
+- storage.azure.hfl.dev_storageaccountslocalusers.yaml
+- storage.azure.hfl.dev_storageaccountsobjectreplicationpolicies.yaml
+- storage.azure.hfl.dev_storageaccountsprivateendpointconnections.yaml
+- storage.azure.hfl.dev_storageaccountsstoragetaskassignments.yaml
 - web.azure.hfl.dev_certificates.yaml
 - web.azure.hfl.dev_siteshostnamebindings.yaml
 - web.azure.hfl.dev_sitesslots.yaml

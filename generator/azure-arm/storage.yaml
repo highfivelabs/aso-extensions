@@ -1,0 +1,42 @@
+# Azure Storage account children ASO does not export (Microsoft.Storage,
+# 2026-06-01, the version of ASO's StorageAccount hub at the pin): SFTP and
+# NFSv3 local users (the catalog's ask, docs/plan.md c11), encryption scopes,
+# blob inventory policies, object replication policies, private endpoint
+# connections and storage task assignments. Owned by ASO's StorageAccount.
+# Not built: a local user's password (made by the regeneratePassword action,
+# returned once: no desired state), container immutability policies (an
+# If-Match ETag on every write and delete), the 2026-06-01 newcomers
+# (connectors, data shares, advanced platform metrics, context caches).
+typeFilters:
+  - action: include
+    group: storage
+    version: v20260601
+    because: the version of ASO's StorageAccount hub (v20260601, its storage version)
+  - action: prune
+    group: storage
+    because: every other version is left alone
+groupModelConfiguration:
+  2026-06-01:
+    StorageAccounts_LocalUser:
+      $exportAs: StorageAccountsLocalUser
+      $supportedFrom: v0.1.0
+    StorageAccounts_EncryptionScope:
+      $exportAs: StorageAccountsEncryptionScope
+      $supportedFrom: v0.1.0
+    StorageAccounts_InventoryPolicy:
+      $exportAs: StorageAccountsInventoryPolicy
+      $supportedFrom: v0.1.0
+    StorageAccounts_ObjectReplicationPolicy:
+      $exportAs: StorageAccountsObjectReplicationPolicy
+      $supportedFrom: v0.1.0
+    StorageAccounts_PrivateEndpointConnection:
+      $exportAs: StorageAccountsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    StorageAccounts_StorageTaskAssignment:
+      $exportAs: StorageAccountsStorageTaskAssignment
+      $supportedFrom: v0.1.0
+    ObjectReplicationPolicyProperties:
+      SourceAccount:
+        $referenceType: simple # a name, or an ARM ID when cross-tenant replication is off (autolabel, reviewed)
+      DestinationAccount:
+        $referenceType: simple # a name, or an ARM ID when cross-tenant replication is off (autolabel, reviewed)

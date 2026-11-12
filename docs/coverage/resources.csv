@@ -2167,17 +2167,17 @@ Microsoft.Storage,Microsoft.Storage/storageAccounts/blobServices/containers,9,st
 Microsoft.Storage,Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies,3,,0,,0,3,false,spec_api=2026-09-01
 Microsoft.Storage,Microsoft.Storage/storageAccounts/connectors,11,,0,,0,11,false,spec_api=2026-09-01
 Microsoft.Storage,Microsoft.Storage/storageAccounts/dataShares,8,,0,,0,8,false,spec_api=2026-09-01
-Microsoft.Storage,Microsoft.Storage/storageAccounts/encryptionScopes,4,,0,,0,4,false,spec_api=2026-09-01
+Microsoft.Storage,Microsoft.Storage/storageAccounts/encryptionScopes,4,,0,storage.azure.hfl.dev/StorageAccountsEncryptionScope,4,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/fileServices,15,storage.azure.com/StorageAccountsFileService,15,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/fileServices/shares,14,storage.azure.com/StorageAccountsFileServicesShare,14,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
-Microsoft.Storage,Microsoft.Storage/storageAccounts/inventoryPolicies,16,,0,,0,16,false,spec_api=2026-09-01
-Microsoft.Storage,Microsoft.Storage/storageAccounts/localUsers,13,,0,,0,13,false,spec_api=2026-09-01
+Microsoft.Storage,Microsoft.Storage/storageAccounts/inventoryPolicies,16,,0,storage.azure.hfl.dev/StorageAccountsInventoryPolicy,16,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
+Microsoft.Storage,Microsoft.Storage/storageAccounts/localUsers,13,,0,storage.azure.hfl.dev/StorageAccountsLocalUser,13,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/managementPolicies,49,storage.azure.com/StorageAccountsManagementPolicy,49,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
-Microsoft.Storage,Microsoft.Storage/storageAccounts/objectReplicationPolicies,10,,0,,0,10,false,spec_api=2026-09-01
-Microsoft.Storage,Microsoft.Storage/storageAccounts/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-09-01
+Microsoft.Storage,Microsoft.Storage/storageAccounts/objectReplicationPolicies,10,,0,storage.azure.hfl.dev/StorageAccountsObjectReplicationPolicy,10,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
+Microsoft.Storage,Microsoft.Storage/storageAccounts/privateEndpointConnections,4,,0,storage.azure.hfl.dev/StorageAccountsPrivateEndpointConnection,3,1,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/queueServices,5,storage.azure.com/StorageAccountsQueueService,5,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/queueServices/queues,1,storage.azure.com/StorageAccountsQueueServicesQueue,1,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
-Microsoft.Storage,Microsoft.Storage/storageAccounts/storageTaskAssignments,13,,0,,0,13,false,spec_api=2026-09-01
+Microsoft.Storage,Microsoft.Storage/storageAccounts/storageTaskAssignments,13,,0,storage.azure.hfl.dev/StorageAccountsStorageTaskAssignment,12,1,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/tableServices,5,storage.azure.com/StorageAccountsTableService,5,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/tableServices/tables,4,storage.azure.com/StorageAccountsTableServicesTable,4,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
 Microsoft.Storage.Admin,Microsoft.Storage.Admin/locations/quotas,2,,0,,0,2,false,spec_api=2019-08-08; spec-preview-only
