@@ -62,6 +62,13 @@ func (a *ARM) checkKeyVault(id string, body map[string]any) (status int, code, m
 		if kty, _ := props["kty"].(string); kty == "" {
 			return http.StatusBadRequest, "KeyTypeMissing", "A key needs its kty.", nil
 		}
+	case vaultKey.MatchString(id):
+		if old != nil {
+			return 0, "", "", old
+		}
+		if kty, _ := props["kty"].(string); kty == "" {
+			return http.StatusBadRequest, "KeyTypeMissing", "A key needs its kty.", nil
+		}
 	case keyVaultConnection.MatchString(id):
 		if old == nil {
 			return http.StatusNotFound, "PrivateEndpointConnectionNotFound",
