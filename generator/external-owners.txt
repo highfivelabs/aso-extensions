@@ -14,3 +14,5 @@ containerservice/ManagedCluster
 containerservice/Fleet
 network/DnsZone
 network/PrivateDnsZone
+documentdb/DatabaseAccount
+documentdb/SqlDatabase
