@@ -34,6 +34,7 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/outoftree"
 
 	"github.com/highfivelabs/aso-extensions/pkg/controllers"
+	"github.com/highfivelabs/aso-extensions/pkg/slot"
 )
 
 // Options are what tests and test builds change; production uses the zero value.
@@ -57,6 +58,10 @@ type Options struct {
 	// EnableAzureCLI allows the Azure CLI credential in the global chain,
 	// as ASO's --enable-azure-cli-authentication.
 	EnableAzureCLI bool
+	// Slot turns the slot guard on (pkg/slot): every write to a resource
+	// that can carry tags is checked against, and claims it with, the
+	// hfl-dev-slot tag. Empty: no guard, as before.
+	Slot string
 }
 
 // Setup registers our kinds on mgr.
@@ -100,8 +105,22 @@ func Setup(ctx context.Context, mgr ctrl.Manager, cfg outoftree.ConfigValues, op
 	})); err != nil {
 		return nil, eris.Wrap(err, "error starting the expression evaluator")
 	}
+	// The slot guard sits under every Resource Manager and Key Vault
+	// request; with no slot it is nil and changes nothing.
+	guard := slot.New(opts.Slot)
+	armHTTPClient := opts.ARMHTTPClient
+	if guard != nil {
+		guarded := http.Client{}
+		if armHTTPClient != nil {
+			guarded = *armHTTPClient
+		}
+		guarded.Transport = guard.RoundTripper(guarded.Transport)
+		armHTTPClient = &guarded
+		opts.KeyVaultClientOptions.Transport = guard.Transporter(opts.KeyVaultClientOptions.Transport)
+		log.V(0).Info("slot guard on", "slot", opts.Slot, "tag", slot.Tag)
+	}
 	arm := controllers.ARM{
-		ConnectionFactory:   outoftree.NewARMConnectionFactory(credentialProvider, cfg.Cloud(), opts.ARMHTTPClient),
+		ConnectionFactory:   outoftree.NewARMConnectionFactory(credentialProvider, cfg.Cloud(), armHTTPClient),
 		ExpressionEvaluator: expressionEvaluator,
 	}
 
@@ -112,8 +131,11 @@ func Setup(ctx context.Context, mgr ctrl.Manager, cfg outoftree.ConfigValues, op
 	}
 	reconcilers.VaultSecret.ClientOptions = opts.KeyVaultClientOptions
 	reconcilers.VaultCertificate.ClientOptions = opts.KeyVaultClientOptions
-	if opts.ARMHTTPClient != nil {
-		reconcilers.ManagementLock.ClientOptions = azcore.ClientOptions{Transport: opts.ARMHTTPClient}
+	if armHTTPClient != nil {
+		reconcilers.ManagementLock.ClientOptions = azcore.ClientOptions{Transport: armHTTPClient}
+	}
+	for _, t := range types {
+		t.Reconciler = guard.Reconciler(t.Reconciler)
 	}
 	reconcilers.DirectoryRoleAssignment.Clients.Endpoint = opts.GraphEndpoint
 	reconcilers.DirectoryRoleAssignment.Clients.HTTPClient = opts.GraphHTTPClient

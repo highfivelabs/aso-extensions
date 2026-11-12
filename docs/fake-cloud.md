@@ -41,6 +41,15 @@ task operator-e2e   # the same fakes on kind, with the install from config/defau
 
 ## Where the fakes differ from Azure
 
+- Resource Manager's `systemData`: the fake writes `createdAt` when a
+  resource is made, keeps it on every later PUT, and sets
+  `lastModifiedAt` on each PUT; it does not write `createdBy`,
+  `createdByType` or their `lastModified` pairs, and real Azure omits
+  `systemData` for some resource types. The slot move test
+  (`test/slotmove`) reads `createdAt` to show a resource was adopted, not
+  made again; live, a resource type without `systemData` needs another
+  witness (its ID with a property Azure sets once, such as a GUID).
+
 - Microsoft Graph: only directory role assignments. Not modelled: the
   rights the caller needs (Privileged Role Administrator, or the
   application permission `RoleManagement.ReadWrite.Directory`), roles that

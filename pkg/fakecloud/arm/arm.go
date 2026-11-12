@@ -72,6 +72,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"time"
 )
 
 const locksType = "Microsoft.Authorization/locks"
@@ -113,6 +114,8 @@ type ARM struct {
 	sharedKeys map[string]string
 	// Log records every request: "METHOD path status".
 	Log []string
+	// Now is the clock systemData's times come from (time.Now when nil).
+	Now func() time.Time
 }
 
 // New returns an empty fake Resource Manager.
@@ -390,6 +393,7 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		if _, ok := a.resources[key]; !ok {
 			status = http.StatusCreated
 		}
+		a.setSystemData(key, body)
 		res := resource(body)
 		a.resources[key] = &res
 		if after != nil {
@@ -614,4 +618,24 @@ func writeJSON(w http.ResponseWriter, status int, v any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	_ = json.NewEncoder(w).Encode(v)
+}
+
+// setSystemData sets body's systemData as Resource Manager does: createdAt
+// when the resource is made, kept by every later PUT (whatever the body
+// says), and lastModifiedAt on each PUT.
+func (a *ARM) setSystemData(key string, body map[string]any) {
+	now := time.Now
+	if a.Now != nil {
+		now = a.Now
+	}
+	stamp := now().UTC().Format(time.RFC3339)
+	created := stamp
+	if old, ok := a.resources[key]; ok {
+		if sd, ok := (*old)["systemData"].(map[string]any); ok {
+			if c, ok := sd["createdAt"].(string); ok {
+				created = c
+			}
+		}
+	}
+	body["systemData"] = map[string]any{"createdAt": created, "lastModifiedAt": stamp}
 }
