@@ -15,6 +15,10 @@ ManagedEnvironmentsCertificateExtension: Object (0 properties)
 
 ManagedEnvironmentsDaprComponentExtension: Object (0 properties)
 
+ManagedEnvironmentsDaprSubscriptionExtension: Object (0 properties)
+
+ManagedEnvironmentsDotNetComponentExtension: Object (0 properties)
+
 ManagedEnvironmentsHttpRouteConfigExtension: Object (0 properties)
 
 ManagedEnvironmentsJavaComponentExtension: Object (0 properties)

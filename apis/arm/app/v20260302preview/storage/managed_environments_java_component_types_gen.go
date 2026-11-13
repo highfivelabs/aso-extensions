@@ -25,9 +25,9 @@ import (
 // +kubebuilder:printcolumn:name="Severity",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].severity"
 // +kubebuilder:printcolumn:name="Reason",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].reason"
 // +kubebuilder:printcolumn:name="Message",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].message"
-// Storage version of v20250101.ManagedEnvironmentsJavaComponent
+// Storage version of v20260302preview.ManagedEnvironmentsJavaComponent
 // Generator information:
-// - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/stable/2025-01-01/JavaComponents.json
+// - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/preview/2026-03-02-preview/openapi.json
 // - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}
 type ManagedEnvironmentsJavaComponent struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -78,9 +78,9 @@ func (component *ManagedEnvironmentsJavaComponent) AzureName() string {
 	return component.Name
 }
 
-// GetAPIVersion returns the ARM API version of the resource. This is always "2025-01-01"
+// GetAPIVersion returns the ARM API version of the resource. This is always "2026-03-02-preview"
 func (component ManagedEnvironmentsJavaComponent) GetAPIVersion() string {
-	return "2025-01-01"
+	return "2026-03-02-preview"
 }
 
 // GetResourceScope returns the scope of the resource
@@ -159,9 +159,9 @@ func (component *ManagedEnvironmentsJavaComponent) OriginalGVK() *schema.GroupVe
 }
 
 // +kubebuilder:object:root=true
-// Storage version of v20250101.ManagedEnvironmentsJavaComponent
+// Storage version of v20260302preview.ManagedEnvironmentsJavaComponent
 // Generator information:
-// - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/stable/2025-01-01/JavaComponents.json
+// - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/preview/2026-03-02-preview/openapi.json
 // - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}
 type ManagedEnvironmentsJavaComponentList struct {
 	metav1.TypeMeta `json:",inline"`
@@ -169,7 +169,7 @@ type ManagedEnvironmentsJavaComponentList struct {
 	Items           []ManagedEnvironmentsJavaComponent `json:"items"`
 }
 
-// Storage version of v20250101.ManagedEnvironmentsJavaComponent_Spec
+// Storage version of v20260302preview.ManagedEnvironmentsJavaComponent_Spec
 type ManagedEnvironmentsJavaComponent_Spec struct {
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
 	// doesn't have to be.
@@ -206,7 +206,7 @@ func (component *ManagedEnvironmentsJavaComponent_Spec) ConvertSpecTo(destinatio
 	return destination.ConvertSpecFrom(component)
 }
 
-// Storage version of v20250101.ManagedEnvironmentsJavaComponent_STATUS
+// Storage version of v20260302preview.ManagedEnvironmentsJavaComponent_STATUS
 type ManagedEnvironmentsJavaComponent_STATUS struct {
 	Conditions  []conditions.Condition          `json:"conditions,omitempty"`
 	Id          *string                         `json:"id,omitempty"`
@@ -237,23 +237,27 @@ func (component *ManagedEnvironmentsJavaComponent_STATUS) ConvertStatusTo(destin
 	return destination.ConvertStatusFrom(component)
 }
 
-// Storage version of v20250101.JavaComponentProperties
+// Storage version of v20260302preview.JavaComponentProperties
 type JavaComponentProperties struct {
-	PropertyBag       genruntime.PropertyBag      `json:"$propertyBag,omitempty"`
-	SpringBootAdmin   *SpringBootAdminComponent   `json:"springBootAdmin,omitempty"`
-	SpringCloudConfig *SpringCloudConfigComponent `json:"springCloudConfig,omitempty"`
-	SpringCloudEureka *SpringCloudEurekaComponent `json:"springCloudEureka,omitempty"`
+	Nacos              *NacosComponent              `json:"nacos,omitempty"`
+	PropertyBag        genruntime.PropertyBag       `json:"$propertyBag,omitempty"`
+	SpringBootAdmin    *SpringBootAdminComponent    `json:"springBootAdmin,omitempty"`
+	SpringCloudConfig  *SpringCloudConfigComponent  `json:"springCloudConfig,omitempty"`
+	SpringCloudEureka  *SpringCloudEurekaComponent  `json:"springCloudEureka,omitempty"`
+	SpringCloudGateway *SpringCloudGatewayComponent `json:"springCloudGateway,omitempty"`
 }
 
-// Storage version of v20250101.JavaComponentProperties_STATUS
+// Storage version of v20260302preview.JavaComponentProperties_STATUS
 type JavaComponentProperties_STATUS struct {
-	PropertyBag       genruntime.PropertyBag             `json:"$propertyBag,omitempty"`
-	SpringBootAdmin   *SpringBootAdminComponent_STATUS   `json:"springBootAdmin,omitempty"`
-	SpringCloudConfig *SpringCloudConfigComponent_STATUS `json:"springCloudConfig,omitempty"`
-	SpringCloudEureka *SpringCloudEurekaComponent_STATUS `json:"springCloudEureka,omitempty"`
+	Nacos              *NacosComponent_STATUS              `json:"nacos,omitempty"`
+	PropertyBag        genruntime.PropertyBag              `json:"$propertyBag,omitempty"`
+	SpringBootAdmin    *SpringBootAdminComponent_STATUS    `json:"springBootAdmin,omitempty"`
+	SpringCloudConfig  *SpringCloudConfigComponent_STATUS  `json:"springCloudConfig,omitempty"`
+	SpringCloudEureka  *SpringCloudEurekaComponent_STATUS  `json:"springCloudEureka,omitempty"`
+	SpringCloudGateway *SpringCloudGatewayComponent_STATUS `json:"springCloudGateway,omitempty"`
 }
 
-// Storage version of v20250101.ManagedEnvironmentsJavaComponentOperatorSpec
+// Storage version of v20260302preview.ManagedEnvironmentsJavaComponentOperatorSpec
 // Details for configuring operator behavior. Fields in this struct are interpreted by the operator directly rather than being passed to Azure
 type ManagedEnvironmentsJavaComponentOperatorSpec struct {
 	ConfigMapExpressions []*core.DestinationExpression `json:"configMapExpressions,omitempty"`
@@ -261,66 +265,108 @@ type ManagedEnvironmentsJavaComponentOperatorSpec struct {
 	SecretExpressions    []*core.DestinationExpression `json:"secretExpressions,omitempty"`
 }
 
-// Storage version of v20250101.SpringBootAdminComponent
+// Storage version of v20260302preview.NacosComponent
+type NacosComponent struct {
+	ComponentType  *string                              `json:"componentType,omitempty"`
+	Configurations []JavaComponentConfigurationProperty `json:"configurations,omitempty"`
+	PropertyBag    genruntime.PropertyBag               `json:"$propertyBag,omitempty"`
+	Scale          *JavaComponentPropertiesScale        `json:"scale,omitempty"`
+	ServiceBinds   []JavaComponentServiceBind           `json:"serviceBinds,omitempty"`
+}
+
+// Storage version of v20260302preview.NacosComponent_STATUS
+type NacosComponent_STATUS struct {
+	ComponentType     *string                                     `json:"componentType,omitempty"`
+	Configurations    []JavaComponentConfigurationProperty_STATUS `json:"configurations,omitempty"`
+	Ingress           *JavaComponentIngress_STATUS                `json:"ingress,omitempty"`
+	PropertyBag       genruntime.PropertyBag                      `json:"$propertyBag,omitempty"`
+	ProvisioningState *string                                     `json:"provisioningState,omitempty"`
+	Scale             *JavaComponentPropertiesScale_STATUS        `json:"scale,omitempty"`
+	ServiceBinds      []JavaComponentServiceBind_STATUS           `json:"serviceBinds,omitempty"`
+}
+
+// Storage version of v20260302preview.SpringBootAdminComponent
 type SpringBootAdminComponent struct {
 	ComponentType  *string                              `json:"componentType,omitempty"`
 	Configurations []JavaComponentConfigurationProperty `json:"configurations,omitempty"`
 	PropertyBag    genruntime.PropertyBag               `json:"$propertyBag,omitempty"`
-	Scale          *SpringBootAdminComponent_Scale      `json:"scale,omitempty"`
+	Scale          *JavaComponentPropertiesScale        `json:"scale,omitempty"`
 	ServiceBinds   []JavaComponentServiceBind           `json:"serviceBinds,omitempty"`
 }
 
-// Storage version of v20250101.SpringBootAdminComponent_STATUS
+// Storage version of v20260302preview.SpringBootAdminComponent_STATUS
 type SpringBootAdminComponent_STATUS struct {
 	ComponentType     *string                                     `json:"componentType,omitempty"`
 	Configurations    []JavaComponentConfigurationProperty_STATUS `json:"configurations,omitempty"`
 	Ingress           *JavaComponentIngress_STATUS                `json:"ingress,omitempty"`
 	PropertyBag       genruntime.PropertyBag                      `json:"$propertyBag,omitempty"`
 	ProvisioningState *string                                     `json:"provisioningState,omitempty"`
-	Scale             *SpringBootAdminComponent_Scale_STATUS      `json:"scale,omitempty"`
+	Scale             *JavaComponentPropertiesScale_STATUS        `json:"scale,omitempty"`
 	ServiceBinds      []JavaComponentServiceBind_STATUS           `json:"serviceBinds,omitempty"`
 }
 
-// Storage version of v20250101.SpringCloudConfigComponent
+// Storage version of v20260302preview.SpringCloudConfigComponent
 type SpringCloudConfigComponent struct {
 	ComponentType  *string                              `json:"componentType,omitempty"`
 	Configurations []JavaComponentConfigurationProperty `json:"configurations,omitempty"`
 	PropertyBag    genruntime.PropertyBag               `json:"$propertyBag,omitempty"`
-	Scale          *SpringCloudConfigComponent_Scale    `json:"scale,omitempty"`
+	Scale          *JavaComponentPropertiesScale        `json:"scale,omitempty"`
 	ServiceBinds   []JavaComponentServiceBind           `json:"serviceBinds,omitempty"`
 }
 
-// Storage version of v20250101.SpringCloudConfigComponent_STATUS
+// Storage version of v20260302preview.SpringCloudConfigComponent_STATUS
 type SpringCloudConfigComponent_STATUS struct {
 	ComponentType     *string                                     `json:"componentType,omitempty"`
 	Configurations    []JavaComponentConfigurationProperty_STATUS `json:"configurations,omitempty"`
 	PropertyBag       genruntime.PropertyBag                      `json:"$propertyBag,omitempty"`
 	ProvisioningState *string                                     `json:"provisioningState,omitempty"`
-	Scale             *SpringCloudConfigComponent_Scale_STATUS    `json:"scale,omitempty"`
+	Scale             *JavaComponentPropertiesScale_STATUS        `json:"scale,omitempty"`
 	ServiceBinds      []JavaComponentServiceBind_STATUS           `json:"serviceBinds,omitempty"`
 }
 
-// Storage version of v20250101.SpringCloudEurekaComponent
+// Storage version of v20260302preview.SpringCloudEurekaComponent
 type SpringCloudEurekaComponent struct {
 	ComponentType  *string                              `json:"componentType,omitempty"`
 	Configurations []JavaComponentConfigurationProperty `json:"configurations,omitempty"`
 	PropertyBag    genruntime.PropertyBag               `json:"$propertyBag,omitempty"`
-	Scale          *SpringCloudEurekaComponent_Scale    `json:"scale,omitempty"`
+	Scale          *JavaComponentPropertiesScale        `json:"scale,omitempty"`
 	ServiceBinds   []JavaComponentServiceBind           `json:"serviceBinds,omitempty"`
 }
 
-// Storage version of v20250101.SpringCloudEurekaComponent_STATUS
+// Storage version of v20260302preview.SpringCloudEurekaComponent_STATUS
 type SpringCloudEurekaComponent_STATUS struct {
 	ComponentType     *string                                     `json:"componentType,omitempty"`
 	Configurations    []JavaComponentConfigurationProperty_STATUS `json:"configurations,omitempty"`
 	Ingress           *JavaComponentIngress_STATUS                `json:"ingress,omitempty"`
 	PropertyBag       genruntime.PropertyBag                      `json:"$propertyBag,omitempty"`
 	ProvisioningState *string                                     `json:"provisioningState,omitempty"`
-	Scale             *SpringCloudEurekaComponent_Scale_STATUS    `json:"scale,omitempty"`
+	Scale             *JavaComponentPropertiesScale_STATUS        `json:"scale,omitempty"`
 	ServiceBinds      []JavaComponentServiceBind_STATUS           `json:"serviceBinds,omitempty"`
 }
 
-// Storage version of v20250101.JavaComponentConfigurationProperty
+// Storage version of v20260302preview.SpringCloudGatewayComponent
+type SpringCloudGatewayComponent struct {
+	ComponentType            *string                              `json:"componentType,omitempty"`
+	Configurations           []JavaComponentConfigurationProperty `json:"configurations,omitempty"`
+	PropertyBag              genruntime.PropertyBag               `json:"$propertyBag,omitempty"`
+	Scale                    *JavaComponentPropertiesScale        `json:"scale,omitempty"`
+	ServiceBinds             []JavaComponentServiceBind           `json:"serviceBinds,omitempty"`
+	SpringCloudGatewayRoutes []ScgRoute                           `json:"springCloudGatewayRoutes,omitempty"`
+}
+
+// Storage version of v20260302preview.SpringCloudGatewayComponent_STATUS
+type SpringCloudGatewayComponent_STATUS struct {
+	ComponentType            *string                                     `json:"componentType,omitempty"`
+	Configurations           []JavaComponentConfigurationProperty_STATUS `json:"configurations,omitempty"`
+	Ingress                  *JavaComponentIngress_STATUS                `json:"ingress,omitempty"`
+	PropertyBag              genruntime.PropertyBag                      `json:"$propertyBag,omitempty"`
+	ProvisioningState        *string                                     `json:"provisioningState,omitempty"`
+	Scale                    *JavaComponentPropertiesScale_STATUS        `json:"scale,omitempty"`
+	ServiceBinds             []JavaComponentServiceBind_STATUS           `json:"serviceBinds,omitempty"`
+	SpringCloudGatewayRoutes []ScgRoute_STATUS                           `json:"springCloudGatewayRoutes,omitempty"`
+}
+
+// Storage version of v20260302preview.JavaComponentConfigurationProperty
 // Configuration properties for a Java Component
 type JavaComponentConfigurationProperty struct {
 	PropertyBag  genruntime.PropertyBag `json:"$propertyBag,omitempty"`
@@ -328,7 +374,7 @@ type JavaComponentConfigurationProperty struct {
 	Value        *string                `json:"value,omitempty"`
 }
 
-// Storage version of v20250101.JavaComponentConfigurationProperty_STATUS
+// Storage version of v20260302preview.JavaComponentConfigurationProperty_STATUS
 // Configuration properties for a Java Component
 type JavaComponentConfigurationProperty_STATUS struct {
 	PropertyBag  genruntime.PropertyBag `json:"$propertyBag,omitempty"`
@@ -336,14 +382,30 @@ type JavaComponentConfigurationProperty_STATUS struct {
 	Value        *string                `json:"value,omitempty"`
 }
 
-// Storage version of v20250101.JavaComponentIngress_STATUS
+// Storage version of v20260302preview.JavaComponentIngress_STATUS
 // Container App Ingress configuration.
 type JavaComponentIngress_STATUS struct {
 	Fqdn        *string                `json:"fqdn,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
-// Storage version of v20250101.JavaComponentServiceBind
+// Storage version of v20260302preview.JavaComponentPropertiesScale
+// Java component scaling configurations
+type JavaComponentPropertiesScale struct {
+	MaxReplicas *int                   `json:"maxReplicas,omitempty"`
+	MinReplicas *int                   `json:"minReplicas,omitempty"`
+	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
+}
+
+// Storage version of v20260302preview.JavaComponentPropertiesScale_STATUS
+// Java component scaling configurations
+type JavaComponentPropertiesScale_STATUS struct {
+	MaxReplicas *int                   `json:"maxReplicas,omitempty"`
+	MinReplicas *int                   `json:"minReplicas,omitempty"`
+	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
+}
+
+// Storage version of v20260302preview.JavaComponentServiceBind
 // Configuration to bind a Java Component to another Java Component
 type JavaComponentServiceBind struct {
 	Name        *string                `json:"name,omitempty"`
@@ -353,7 +415,7 @@ type JavaComponentServiceBind struct {
 	ServiceReference *genruntime.ResourceReference `armReference:"ServiceId" json:"serviceReference,omitempty"`
 }
 
-// Storage version of v20250101.JavaComponentServiceBind_STATUS
+// Storage version of v20260302preview.JavaComponentServiceBind_STATUS
 // Configuration to bind a Java Component to another Java Component
 type JavaComponentServiceBind_STATUS struct {
 	Name        *string                `json:"name,omitempty"`
@@ -361,46 +423,26 @@ type JavaComponentServiceBind_STATUS struct {
 	ServiceId   *string                `json:"serviceId,omitempty"`
 }
 
-// Storage version of v20250101.SpringBootAdminComponent_Scale
-type SpringBootAdminComponent_Scale struct {
-	MaxReplicas *int                   `json:"maxReplicas,omitempty"`
-	MinReplicas *int                   `json:"minReplicas,omitempty"`
+// Storage version of v20260302preview.ScgRoute
+// Spring Cloud Gateway route definition
+type ScgRoute struct {
+	Filters     []string               `json:"filters,omitempty"`
+	Id          *string                `json:"id,omitempty"`
+	Order       *int                   `json:"order,omitempty"`
+	Predicates  []string               `json:"predicates,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
+	Uri         *string                `json:"uri,omitempty"`
 }
 
-// Storage version of v20250101.SpringBootAdminComponent_Scale_STATUS
-type SpringBootAdminComponent_Scale_STATUS struct {
-	MaxReplicas *int                   `json:"maxReplicas,omitempty"`
-	MinReplicas *int                   `json:"minReplicas,omitempty"`
+// Storage version of v20260302preview.ScgRoute_STATUS
+// Spring Cloud Gateway route definition
+type ScgRoute_STATUS struct {
+	Filters     []string               `json:"filters,omitempty"`
+	Id          *string                `json:"id,omitempty"`
+	Order       *int                   `json:"order,omitempty"`
+	Predicates  []string               `json:"predicates,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20250101.SpringCloudConfigComponent_Scale
-type SpringCloudConfigComponent_Scale struct {
-	MaxReplicas *int                   `json:"maxReplicas,omitempty"`
-	MinReplicas *int                   `json:"minReplicas,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20250101.SpringCloudConfigComponent_Scale_STATUS
-type SpringCloudConfigComponent_Scale_STATUS struct {
-	MaxReplicas *int                   `json:"maxReplicas,omitempty"`
-	MinReplicas *int                   `json:"minReplicas,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20250101.SpringCloudEurekaComponent_Scale
-type SpringCloudEurekaComponent_Scale struct {
-	MaxReplicas *int                   `json:"maxReplicas,omitempty"`
-	MinReplicas *int                   `json:"minReplicas,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20250101.SpringCloudEurekaComponent_Scale_STATUS
-type SpringCloudEurekaComponent_Scale_STATUS struct {
-	MaxReplicas *int                   `json:"maxReplicas,omitempty"`
-	MinReplicas *int                   `json:"minReplicas,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
+	Uri         *string                `json:"uri,omitempty"`
 }
 
 func init() {

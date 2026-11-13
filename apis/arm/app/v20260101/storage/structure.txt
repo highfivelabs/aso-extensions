@@ -463,6 +463,65 @@ ManagedEnvironmentsPrivateEndpointConnection: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+ManagedEnvironmentsStorage: Resource
+├── Owner: app/v20260101.ManagedEnvironment
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (3 properties)
+│   │   ├── AzureFile: *Object (6 properties)
+│   │   │   ├── AccessMode: *string
+│   │   │   ├── AccountKey: *genruntime.SecretReference
+│   │   │   ├── AccountKeyVaultProperties: *Object (3 properties)
+│   │   │   │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │   │   ├── KeyVaultUrl: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── AccountName: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── ShareName: *string
+│   │   ├── NfsAzureFile: *Object (4 properties)
+│   │   │   ├── AccessMode: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Server: *string
+│   │   │   └── ShareName: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (3 properties)
+    │   ├── AzureFile: *Object (5 properties)
+    │   │   ├── AccessMode: *string
+    │   │   ├── AccountKeyVaultProperties: *Object (3 properties)
+    │   │   │   ├── Identity: *string
+    │   │   │   ├── KeyVaultUrl: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── AccountName: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── ShareName: *string
+    │   ├── NfsAzureFile: *Object (4 properties)
+    │   │   ├── AccessMode: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Server: *string
+    │   │   └── ShareName: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 SessionPool: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (17 properties)
@@ -611,4 +670,6 @@ SessionPool: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     ├── Tags: map[string]string
     └── Type: *string
+
+augmentConversionForSystemData_STATUS: Interface
 

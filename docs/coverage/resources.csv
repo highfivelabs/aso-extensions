@@ -187,14 +187,14 @@ Microsoft.App,Microsoft.App/managedEnvironments,49,app.azure.com/ManagedEnvironm
 Microsoft.App,Microsoft.App/managedEnvironments/certificates,6,,0,app.azure.hfl.dev/ManagedEnvironmentsCertificate,6,0,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/daprComponents,13,,0,app.azure.hfl.dev/ManagedEnvironmentsDaprComponent,13,0,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/daprComponents/resiliencyPolicies,14,,0,,0,14,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/managedEnvironments/daprSubscriptions,11,,0,,0,11,false,spec_api=2025-02-02-preview; spec-preview-only
-Microsoft.App,Microsoft.App/managedEnvironments/dotNetComponents,5,,0,,0,5,false,spec_api=2026-07-01
+Microsoft.App,Microsoft.App/managedEnvironments/daprSubscriptions,11,,0,app.azure.hfl.dev/ManagedEnvironmentsDaprSubscription,11,0,false,spec_api=2025-02-02-preview; spec-preview-only; ours_api=2026-03-02-preview; ours-api-differs-from-spec
+Microsoft.App,Microsoft.App/managedEnvironments/dotNetComponents,5,,0,app.azure.hfl.dev/ManagedEnvironmentsDotNetComponent,5,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.App,Microsoft.App/managedEnvironments/httpRouteConfigs,12,,0,app.azure.hfl.dev/ManagedEnvironmentsHttpRouteConfig,12,0,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
-Microsoft.App,Microsoft.App/managedEnvironments/javaComponents,8,,0,app.azure.hfl.dev/ManagedEnvironmentsJavaComponent,7,1,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
+Microsoft.App,Microsoft.App/managedEnvironments/javaComponents,8,,0,app.azure.hfl.dev/ManagedEnvironmentsJavaComponent,7,1,false,spec_api=2026-07-01; ours_api=2026-03-02-preview; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/maintenanceConfigurations,3,,0,app.azure.hfl.dev/ManagedEnvironmentsMaintenanceConfiguration,3,0,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/managedCertificates,4,,0,app.azure.hfl.dev/ManagedEnvironmentsManagedCertificate,4,0,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/privateEndpointConnections,4,,0,app.azure.hfl.dev/ManagedEnvironmentsPrivateEndpointConnection,3,1,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
-Microsoft.App,Microsoft.App/managedEnvironments/storages,9,,0,app.azure.hfl.dev/ManagedEnvironmentsStorage,7,2,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
+Microsoft.App,Microsoft.App/managedEnvironments/storages,9,,0,app.azure.hfl.dev/ManagedEnvironmentsStorage,9,0,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/sandboxGroups,3,,0,,0,3,false,spec_api=2026-07-01
 Microsoft.App,Microsoft.App/sandboxGroups/vnetConnections,1,,0,,0,1,false,spec_api=2026-07-01
 Microsoft.App,Microsoft.App/sessionPools,46,,0,app.azure.hfl.dev/SessionPool,31,15,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec

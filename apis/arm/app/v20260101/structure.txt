@@ -523,6 +523,68 @@ ManagedEnvironmentsPrivateEndpointConnection: Resource
     │       └── "User"
     └── Type: *string
 
+ManagedEnvironmentsStorage: Resource
+├── Owner: ManagedEnvironment
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (2 properties)
+│       ├── AzureFile: *Object (5 properties)
+│       │   ├── AccessMode: *Enum (2 values)
+│       │   │   ├── "ReadOnly"
+│       │   │   └── "ReadWrite"
+│       │   ├── AccountKey: *genruntime.SecretReference
+│       │   ├── AccountKeyVaultProperties: *Object (2 properties)
+│       │   │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│       │   │   └── KeyVaultUrl: *string
+│       │   ├── AccountName: *string
+│       │   └── ShareName: *string
+│       └── NfsAzureFile: *Object (3 properties)
+│           ├── AccessMode: *Enum (2 values)
+│           │   ├── "ReadOnly"
+│           │   └── "ReadWrite"
+│           ├── Server: *string
+│           └── ShareName: *string
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (2 properties)
+    │   ├── AzureFile: *Object (4 properties)
+    │   │   ├── AccessMode: *Enum (2 values)
+    │   │   │   ├── "ReadOnly"
+    │   │   │   └── "ReadWrite"
+    │   │   ├── AccountKeyVaultProperties: *Object (2 properties)
+    │   │   │   ├── Identity: *string
+    │   │   │   └── KeyVaultUrl: *string
+    │   │   ├── AccountName: *string
+    │   │   └── ShareName: *string
+    │   └── NfsAzureFile: *Object (3 properties)
+    │       ├── AccessMode: *Enum (2 values)
+    │       │   ├── "ReadOnly"
+    │       │   └── "ReadWrite"
+    │       ├── Server: *string
+    │       └── ShareName: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 SessionPool: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (15 properties)

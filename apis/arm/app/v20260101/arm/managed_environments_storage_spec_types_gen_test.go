@@ -17,7 +17,7 @@ import (
 	"testing"
 )
 
-func Test_AzureFileProperties_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+func Test_ManagedEnvironmentStorageProperties_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
 	if testing.Short() {
@@ -29,13 +29,13 @@ func Test_AzureFileProperties_WhenSerializedToJson_DeserializesAsEqual(t *testin
 	parameters.MaxSize = 3
 	properties := gopter.NewProperties(parameters)
 	properties.Property(
-		"Round trip of AzureFileProperties via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForAzureFileProperties, AzureFilePropertiesGenerator()))
+		"Round trip of ManagedEnvironmentStorageProperties via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForManagedEnvironmentStorageProperties, ManagedEnvironmentStoragePropertiesGenerator()))
 	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
 }
 
-// RunJSONSerializationTestForAzureFileProperties runs a test to see if a specific instance of AzureFileProperties round trips to JSON and back losslessly
-func RunJSONSerializationTestForAzureFileProperties(subject AzureFileProperties) string {
+// RunJSONSerializationTestForManagedEnvironmentStorageProperties runs a test to see if a specific instance of ManagedEnvironmentStorageProperties round trips to JSON and back losslessly
+func RunJSONSerializationTestForManagedEnvironmentStorageProperties(subject ManagedEnvironmentStorageProperties) string {
 	// Serialize to JSON
 	bin, err := json.Marshal(subject)
 	if err != nil {
@@ -43,7 +43,7 @@ func RunJSONSerializationTestForAzureFileProperties(subject AzureFileProperties)
 	}
 
 	// Deserialize back into memory
-	var actual AzureFileProperties
+	var actual ManagedEnvironmentStorageProperties
 	err = json.Unmarshal(bin, &actual)
 	if err != nil {
 		return err.Error()
@@ -61,29 +61,27 @@ func RunJSONSerializationTestForAzureFileProperties(subject AzureFileProperties)
 	return ""
 }
 
-// Generator of AzureFileProperties instances for property testing - lazily instantiated by
-// AzureFilePropertiesGenerator()
-var azureFilePropertiesGenerator gopter.Gen
+// Generator of ManagedEnvironmentStorageProperties instances for property testing - lazily instantiated by
+// ManagedEnvironmentStoragePropertiesGenerator()
+var managedEnvironmentStoragePropertiesGenerator gopter.Gen
 
-// AzureFilePropertiesGenerator returns a generator of AzureFileProperties instances for property testing.
-func AzureFilePropertiesGenerator() gopter.Gen {
-	if azureFilePropertiesGenerator != nil {
-		return azureFilePropertiesGenerator
+// ManagedEnvironmentStoragePropertiesGenerator returns a generator of ManagedEnvironmentStorageProperties instances for property testing.
+func ManagedEnvironmentStoragePropertiesGenerator() gopter.Gen {
+	if managedEnvironmentStoragePropertiesGenerator != nil {
+		return managedEnvironmentStoragePropertiesGenerator
 	}
 
 	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForAzureFileProperties(generators)
-	azureFilePropertiesGenerator = gen.Struct(reflect.TypeOf(AzureFileProperties{}), generators)
+	AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties(generators)
+	managedEnvironmentStoragePropertiesGenerator = gen.Struct(reflect.TypeOf(ManagedEnvironmentStorageProperties{}), generators)
 
-	return azureFilePropertiesGenerator
+	return managedEnvironmentStoragePropertiesGenerator
 }
 
-// AddIndependentPropertyGeneratorsForAzureFileProperties is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForAzureFileProperties(gens map[string]gopter.Gen) {
-	gens["AccessMode"] = gen.PtrOf(gen.OneConstOf(AzureFileProperties_AccessMode_ReadOnly, AzureFileProperties_AccessMode_ReadWrite))
-	gens["AccountKey"] = gen.PtrOf(gen.AlphaString())
-	gens["AccountName"] = gen.PtrOf(gen.AlphaString())
-	gens["ShareName"] = gen.PtrOf(gen.AlphaString())
+// AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties is a factory method for creating gopter generators
+func AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties(gens map[string]gopter.Gen) {
+	gens["AzureFile"] = gen.PtrOf(AzureFilePropertiesGenerator())
+	gens["NfsAzureFile"] = gen.PtrOf(NfsAzureFilePropertiesGenerator())
 }
 
 func Test_ManagedEnvironmentsStorage_Spec_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -163,74 +161,7 @@ func AddIndependentPropertyGeneratorsForManagedEnvironmentsStorage_Spec(gens map
 
 // AddRelatedPropertyGeneratorsForManagedEnvironmentsStorage_Spec is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForManagedEnvironmentsStorage_Spec(gens map[string]gopter.Gen) {
-	gens["Properties"] = gen.PtrOf(ManagedEnvironments_Storage_Properties_SpecGenerator())
-}
-
-func Test_ManagedEnvironments_Storage_Properties_Spec_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MinSuccessfulTests = 80
-	parameters.MaxSize = 3
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip of ManagedEnvironments_Storage_Properties_Spec via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForManagedEnvironments_Storage_Properties_Spec, ManagedEnvironments_Storage_Properties_SpecGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
-}
-
-// RunJSONSerializationTestForManagedEnvironments_Storage_Properties_Spec runs a test to see if a specific instance of ManagedEnvironments_Storage_Properties_Spec round trips to JSON and back losslessly
-func RunJSONSerializationTestForManagedEnvironments_Storage_Properties_Spec(subject ManagedEnvironments_Storage_Properties_Spec) string {
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Deserialize back into memory
-	var actual ManagedEnvironments_Storage_Properties_Spec
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-// Generator of ManagedEnvironments_Storage_Properties_Spec instances for property testing - lazily instantiated by
-// ManagedEnvironments_Storage_Properties_SpecGenerator()
-var managedEnvironments_Storage_Properties_SpecGenerator gopter.Gen
-
-// ManagedEnvironments_Storage_Properties_SpecGenerator returns a generator of ManagedEnvironments_Storage_Properties_Spec instances for property testing.
-func ManagedEnvironments_Storage_Properties_SpecGenerator() gopter.Gen {
-	if managedEnvironments_Storage_Properties_SpecGenerator != nil {
-		return managedEnvironments_Storage_Properties_SpecGenerator
-	}
-
-	generators := make(map[string]gopter.Gen)
-	AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_Spec(generators)
-	managedEnvironments_Storage_Properties_SpecGenerator = gen.Struct(reflect.TypeOf(ManagedEnvironments_Storage_Properties_Spec{}), generators)
-
-	return managedEnvironments_Storage_Properties_SpecGenerator
-}
-
-// AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_Spec is a factory method for creating gopter generators
-func AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_Spec(gens map[string]gopter.Gen) {
-	gens["AzureFile"] = gen.PtrOf(AzureFilePropertiesGenerator())
-	gens["NfsAzureFile"] = gen.PtrOf(NfsAzureFilePropertiesGenerator())
+	gens["Properties"] = gen.PtrOf(ManagedEnvironmentStoragePropertiesGenerator())
 }
 
 func Test_NfsAzureFileProperties_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -296,7 +227,7 @@ func NfsAzureFilePropertiesGenerator() gopter.Gen {
 
 // AddIndependentPropertyGeneratorsForNfsAzureFileProperties is a factory method for creating gopter generators
 func AddIndependentPropertyGeneratorsForNfsAzureFileProperties(gens map[string]gopter.Gen) {
-	gens["AccessMode"] = gen.PtrOf(gen.OneConstOf(NfsAzureFileProperties_AccessMode_ReadOnly, NfsAzureFileProperties_AccessMode_ReadWrite))
+	gens["AccessMode"] = gen.PtrOf(gen.OneConstOf(AccessMode_ReadOnly, AccessMode_ReadWrite))
 	gens["Server"] = gen.PtrOf(gen.AlphaString())
 	gens["ShareName"] = gen.PtrOf(gen.AlphaString())
 }

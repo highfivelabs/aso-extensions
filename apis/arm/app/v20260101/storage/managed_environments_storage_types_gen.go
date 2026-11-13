@@ -9,7 +9,6 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
-	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101/storage"
 	"github.com/rotisserie/eris"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -26,9 +25,9 @@ import (
 // +kubebuilder:printcolumn:name="Severity",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].severity"
 // +kubebuilder:printcolumn:name="Reason",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].reason"
 // +kubebuilder:printcolumn:name="Message",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].message"
-// Storage version of v20250101.ManagedEnvironmentsStorage
+// Storage version of v20260101.ManagedEnvironmentsStorage
 // Generator information:
-// - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/stable/2025-01-01/ManagedEnvironmentsStorages.json
+// - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/stable/2026-01-01/openapi.json
 // - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}
 type ManagedEnvironmentsStorage struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -79,9 +78,9 @@ func (environmentsStorage *ManagedEnvironmentsStorage) AzureName() string {
 	return environmentsStorage.Name
 }
 
-// GetAPIVersion returns the ARM API version of the resource. This is always "2025-01-01"
+// GetAPIVersion returns the ARM API version of the resource. This is always "2026-01-01"
 func (environmentsStorage ManagedEnvironmentsStorage) GetAPIVersion() string {
-	return "2025-01-01"
+	return "2026-01-01"
 }
 
 // GetResourceScope returns the scope of the resource
@@ -160,9 +159,9 @@ func (environmentsStorage *ManagedEnvironmentsStorage) OriginalGVK() *schema.Gro
 }
 
 // +kubebuilder:object:root=true
-// Storage version of v20250101.ManagedEnvironmentsStorage
+// Storage version of v20260101.ManagedEnvironmentsStorage
 // Generator information:
-// - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/stable/2025-01-01/ManagedEnvironmentsStorages.json
+// - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/stable/2026-01-01/openapi.json
 // - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}
 type ManagedEnvironmentsStorageList struct {
 	metav1.TypeMeta `json:",inline"`
@@ -170,7 +169,7 @@ type ManagedEnvironmentsStorageList struct {
 	Items           []ManagedEnvironmentsStorage `json:"items"`
 }
 
-// Storage version of v20250101.ManagedEnvironmentsStorage_Spec
+// Storage version of v20260101.ManagedEnvironmentsStorage_Spec
 type ManagedEnvironmentsStorage_Spec struct {
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
 	// doesn't have to be.
@@ -182,9 +181,9 @@ type ManagedEnvironmentsStorage_Spec struct {
 	// Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
 	// controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
 	// reference to a app.azure.com/ManagedEnvironment resource
-	Owner       *genruntime.KnownResourceReference           `group:"app.azure.com" json:"owner,omitempty" kind:"ManagedEnvironment"`
-	Properties  *ManagedEnvironments_Storage_Properties_Spec `json:"properties,omitempty"`
-	PropertyBag genruntime.PropertyBag                       `json:"$propertyBag,omitempty"`
+	Owner       *genruntime.KnownResourceReference   `group:"app.azure.com" json:"owner,omitempty" kind:"ManagedEnvironment"`
+	Properties  *ManagedEnvironmentStorageProperties `json:"properties,omitempty"`
+	PropertyBag genruntime.PropertyBag               `json:"$propertyBag,omitempty"`
 }
 
 var _ genruntime.ConvertibleSpec = &ManagedEnvironmentsStorage_Spec{}
@@ -207,15 +206,15 @@ func (environmentsStorage *ManagedEnvironmentsStorage_Spec) ConvertSpecTo(destin
 	return destination.ConvertSpecFrom(environmentsStorage)
 }
 
-// Storage version of v20250101.ManagedEnvironmentsStorage_STATUS
+// Storage version of v20260101.ManagedEnvironmentsStorage_STATUS
 type ManagedEnvironmentsStorage_STATUS struct {
-	Conditions  []conditions.Condition                         `json:"conditions,omitempty"`
-	Id          *string                                        `json:"id,omitempty"`
-	Name        *string                                        `json:"name,omitempty"`
-	Properties  *ManagedEnvironments_Storage_Properties_STATUS `json:"properties,omitempty"`
-	PropertyBag genruntime.PropertyBag                         `json:"$propertyBag,omitempty"`
-	SystemData  *SystemData_STATUS                             `json:"systemData,omitempty"`
-	Type        *string                                        `json:"type,omitempty"`
+	Conditions  []conditions.Condition                      `json:"conditions,omitempty"`
+	Id          *string                                     `json:"id,omitempty"`
+	Name        *string                                     `json:"name,omitempty"`
+	Properties  *ManagedEnvironmentStorageProperties_STATUS `json:"properties,omitempty"`
+	PropertyBag genruntime.PropertyBag                      `json:"$propertyBag,omitempty"`
+	SystemData  *SystemData_STATUS                          `json:"systemData,omitempty"`
+	Type        *string                                     `json:"type,omitempty"`
 }
 
 var _ genruntime.ConvertibleStatus = &ManagedEnvironmentsStorage_STATUS{}
@@ -238,21 +237,7 @@ func (environmentsStorage *ManagedEnvironmentsStorage_STATUS) ConvertStatusTo(de
 	return destination.ConvertStatusFrom(environmentsStorage)
 }
 
-// Storage version of v20250101.ManagedEnvironments_Storage_Properties_Spec
-type ManagedEnvironments_Storage_Properties_Spec struct {
-	AzureFile    *AzureFileProperties    `json:"azureFile,omitempty"`
-	NfsAzureFile *NfsAzureFileProperties `json:"nfsAzureFile,omitempty"`
-	PropertyBag  genruntime.PropertyBag  `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20250101.ManagedEnvironments_Storage_Properties_STATUS
-type ManagedEnvironments_Storage_Properties_STATUS struct {
-	AzureFile    *AzureFileProperties_STATUS    `json:"azureFile,omitempty"`
-	NfsAzureFile *NfsAzureFileProperties_STATUS `json:"nfsAzureFile,omitempty"`
-	PropertyBag  genruntime.PropertyBag         `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20250101.ManagedEnvironmentsStorageOperatorSpec
+// Storage version of v20260101.ManagedEnvironmentsStorageOperatorSpec
 // Details for configuring operator behavior. Fields in this struct are interpreted by the operator directly rather than being passed to Azure
 type ManagedEnvironmentsStorageOperatorSpec struct {
 	ConfigMapExpressions []*core.DestinationExpression `json:"configMapExpressions,omitempty"`
@@ -260,218 +245,23 @@ type ManagedEnvironmentsStorageOperatorSpec struct {
 	SecretExpressions    []*core.DestinationExpression `json:"secretExpressions,omitempty"`
 }
 
-// Storage version of v20250101.AzureFileProperties
-// Azure File Properties.
-type AzureFileProperties struct {
-	AccessMode  *string                     `json:"accessMode,omitempty"`
-	AccountKey  *genruntime.SecretReference `json:"accountKey,omitempty"`
-	AccountName *string                     `json:"accountName,omitempty"`
-	PropertyBag genruntime.PropertyBag      `json:"$propertyBag,omitempty"`
-	ShareName   *string                     `json:"shareName,omitempty"`
+// Storage version of v20260101.ManagedEnvironmentStorageProperties
+// Storage properties
+type ManagedEnvironmentStorageProperties struct {
+	AzureFile    *AzureFileProperties    `json:"azureFile,omitempty"`
+	NfsAzureFile *NfsAzureFileProperties `json:"nfsAzureFile,omitempty"`
+	PropertyBag  genruntime.PropertyBag  `json:"$propertyBag,omitempty"`
 }
 
-// AssignProperties_From_AzureFileProperties populates our AzureFileProperties from the provided source AzureFileProperties
-func (properties *AzureFileProperties) AssignProperties_From_AzureFileProperties(source *storage.AzureFileProperties) error {
-	// Clone the existing property bag
-	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
-
-	// AccessMode
-	properties.AccessMode = genruntime.ClonePointerToString(source.AccessMode)
-
-	// AccountKey
-	if source.AccountKey != nil {
-		accountKey := source.AccountKey.Copy()
-		properties.AccountKey = &accountKey
-	} else {
-		properties.AccountKey = nil
-	}
-
-	// AccountKeyVaultProperties
-	if source.AccountKeyVaultProperties != nil {
-		propertyBag.Add("AccountKeyVaultProperties", *source.AccountKeyVaultProperties)
-	} else {
-		propertyBag.Remove("AccountKeyVaultProperties")
-	}
-
-	// AccountName
-	properties.AccountName = genruntime.ClonePointerToString(source.AccountName)
-
-	// ShareName
-	properties.ShareName = genruntime.ClonePointerToString(source.ShareName)
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		properties.PropertyBag = propertyBag
-	} else {
-		properties.PropertyBag = nil
-	}
-
-	// Invoke the augmentConversionForAzureFileProperties interface (if implemented) to customize the conversion
-	var propertiesAsAny any = properties
-	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForAzureFileProperties); ok {
-		err := augmentedProperties.AssignPropertiesFrom(source)
-		if err != nil {
-			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
-		}
-	}
-
-	// No error
-	return nil
+// Storage version of v20260101.ManagedEnvironmentStorageProperties_STATUS
+// Storage properties
+type ManagedEnvironmentStorageProperties_STATUS struct {
+	AzureFile    *AzureFileProperties_STATUS    `json:"azureFile,omitempty"`
+	NfsAzureFile *NfsAzureFileProperties_STATUS `json:"nfsAzureFile,omitempty"`
+	PropertyBag  genruntime.PropertyBag         `json:"$propertyBag,omitempty"`
 }
 
-// AssignProperties_To_AzureFileProperties populates the provided destination AzureFileProperties from our AzureFileProperties
-func (properties *AzureFileProperties) AssignProperties_To_AzureFileProperties(destination *storage.AzureFileProperties) error {
-	// Clone the existing property bag
-	propertyBag := genruntime.NewPropertyBag(properties.PropertyBag)
-
-	// AccessMode
-	destination.AccessMode = genruntime.ClonePointerToString(properties.AccessMode)
-
-	// AccountKey
-	if properties.AccountKey != nil {
-		accountKey := properties.AccountKey.Copy()
-		destination.AccountKey = &accountKey
-	} else {
-		destination.AccountKey = nil
-	}
-
-	// AccountKeyVaultProperties
-	if propertyBag.Contains("AccountKeyVaultProperties") {
-		var accountKeyVaultProperty storage.SecretKeyVaultProperties
-		err := propertyBag.Pull("AccountKeyVaultProperties", &accountKeyVaultProperty)
-		if err != nil {
-			return eris.Wrap(err, "pulling 'AccountKeyVaultProperties' from propertyBag")
-		}
-
-		destination.AccountKeyVaultProperties = &accountKeyVaultProperty
-	} else {
-		destination.AccountKeyVaultProperties = nil
-	}
-
-	// AccountName
-	destination.AccountName = genruntime.ClonePointerToString(properties.AccountName)
-
-	// ShareName
-	destination.ShareName = genruntime.ClonePointerToString(properties.ShareName)
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// Invoke the augmentConversionForAzureFileProperties interface (if implemented) to customize the conversion
-	var propertiesAsAny any = properties
-	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForAzureFileProperties); ok {
-		err := augmentedProperties.AssignPropertiesTo(destination)
-		if err != nil {
-			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
-		}
-	}
-
-	// No error
-	return nil
-}
-
-// Storage version of v20250101.AzureFileProperties_STATUS
-// Azure File Properties.
-type AzureFileProperties_STATUS struct {
-	AccessMode  *string                `json:"accessMode,omitempty"`
-	AccountName *string                `json:"accountName,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	ShareName   *string                `json:"shareName,omitempty"`
-}
-
-// AssignProperties_From_AzureFileProperties_STATUS populates our AzureFileProperties_STATUS from the provided source AzureFileProperties_STATUS
-func (properties *AzureFileProperties_STATUS) AssignProperties_From_AzureFileProperties_STATUS(source *storage.AzureFileProperties_STATUS) error {
-	// Clone the existing property bag
-	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
-
-	// AccessMode
-	properties.AccessMode = genruntime.ClonePointerToString(source.AccessMode)
-
-	// AccountKeyVaultProperties
-	if source.AccountKeyVaultProperties != nil {
-		propertyBag.Add("AccountKeyVaultProperties", *source.AccountKeyVaultProperties)
-	} else {
-		propertyBag.Remove("AccountKeyVaultProperties")
-	}
-
-	// AccountName
-	properties.AccountName = genruntime.ClonePointerToString(source.AccountName)
-
-	// ShareName
-	properties.ShareName = genruntime.ClonePointerToString(source.ShareName)
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		properties.PropertyBag = propertyBag
-	} else {
-		properties.PropertyBag = nil
-	}
-
-	// Invoke the augmentConversionForAzureFileProperties_STATUS interface (if implemented) to customize the conversion
-	var propertiesAsAny any = properties
-	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForAzureFileProperties_STATUS); ok {
-		err := augmentedProperties.AssignPropertiesFrom(source)
-		if err != nil {
-			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
-		}
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_To_AzureFileProperties_STATUS populates the provided destination AzureFileProperties_STATUS from our AzureFileProperties_STATUS
-func (properties *AzureFileProperties_STATUS) AssignProperties_To_AzureFileProperties_STATUS(destination *storage.AzureFileProperties_STATUS) error {
-	// Clone the existing property bag
-	propertyBag := genruntime.NewPropertyBag(properties.PropertyBag)
-
-	// AccessMode
-	destination.AccessMode = genruntime.ClonePointerToString(properties.AccessMode)
-
-	// AccountKeyVaultProperties
-	if propertyBag.Contains("AccountKeyVaultProperties") {
-		var accountKeyVaultProperty storage.SecretKeyVaultProperties_STATUS
-		err := propertyBag.Pull("AccountKeyVaultProperties", &accountKeyVaultProperty)
-		if err != nil {
-			return eris.Wrap(err, "pulling 'AccountKeyVaultProperties' from propertyBag")
-		}
-
-		destination.AccountKeyVaultProperties = &accountKeyVaultProperty
-	} else {
-		destination.AccountKeyVaultProperties = nil
-	}
-
-	// AccountName
-	destination.AccountName = genruntime.ClonePointerToString(properties.AccountName)
-
-	// ShareName
-	destination.ShareName = genruntime.ClonePointerToString(properties.ShareName)
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// Invoke the augmentConversionForAzureFileProperties_STATUS interface (if implemented) to customize the conversion
-	var propertiesAsAny any = properties
-	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForAzureFileProperties_STATUS); ok {
-		err := augmentedProperties.AssignPropertiesTo(destination)
-		if err != nil {
-			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
-		}
-	}
-
-	// No error
-	return nil
-}
-
-// Storage version of v20250101.NfsAzureFileProperties
+// Storage version of v20260101.NfsAzureFileProperties
 // NFS Azure File Properties.
 type NfsAzureFileProperties struct {
 	AccessMode  *string                `json:"accessMode,omitempty"`
@@ -480,23 +270,13 @@ type NfsAzureFileProperties struct {
 	ShareName   *string                `json:"shareName,omitempty"`
 }
 
-// Storage version of v20250101.NfsAzureFileProperties_STATUS
+// Storage version of v20260101.NfsAzureFileProperties_STATUS
 // NFS Azure File Properties.
 type NfsAzureFileProperties_STATUS struct {
 	AccessMode  *string                `json:"accessMode,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	Server      *string                `json:"server,omitempty"`
 	ShareName   *string                `json:"shareName,omitempty"`
-}
-
-type augmentConversionForAzureFileProperties interface {
-	AssignPropertiesFrom(src *storage.AzureFileProperties) error
-	AssignPropertiesTo(dst *storage.AzureFileProperties) error
-}
-
-type augmentConversionForAzureFileProperties_STATUS interface {
-	AssignPropertiesFrom(src *storage.AzureFileProperties_STATUS) error
-	AssignPropertiesTo(dst *storage.AzureFileProperties_STATUS) error
 }
 
 func init() {

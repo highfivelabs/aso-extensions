@@ -150,6 +150,73 @@ func AddIndependentPropertyGeneratorsForJavaComponentIngress_STATUS(gens map[str
 	gens["Fqdn"] = gen.PtrOf(gen.AlphaString())
 }
 
+func Test_JavaComponentPropertiesScale_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MinSuccessfulTests = 80
+	parameters.MaxSize = 3
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip of JavaComponentPropertiesScale_STATUS via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForJavaComponentPropertiesScale_STATUS, JavaComponentPropertiesScale_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
+}
+
+// RunJSONSerializationTestForJavaComponentPropertiesScale_STATUS runs a test to see if a specific instance of JavaComponentPropertiesScale_STATUS round trips to JSON and back losslessly
+func RunJSONSerializationTestForJavaComponentPropertiesScale_STATUS(subject JavaComponentPropertiesScale_STATUS) string {
+	// Serialize to JSON
+	bin, err := json.Marshal(subject)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Deserialize back into memory
+	var actual JavaComponentPropertiesScale_STATUS
+	err = json.Unmarshal(bin, &actual)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for outcome
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
+// Generator of JavaComponentPropertiesScale_STATUS instances for property testing - lazily instantiated by
+// JavaComponentPropertiesScale_STATUSGenerator()
+var javaComponentPropertiesScale_STATUSGenerator gopter.Gen
+
+// JavaComponentPropertiesScale_STATUSGenerator returns a generator of JavaComponentPropertiesScale_STATUS instances for property testing.
+func JavaComponentPropertiesScale_STATUSGenerator() gopter.Gen {
+	if javaComponentPropertiesScale_STATUSGenerator != nil {
+		return javaComponentPropertiesScale_STATUSGenerator
+	}
+
+	generators := make(map[string]gopter.Gen)
+	AddIndependentPropertyGeneratorsForJavaComponentPropertiesScale_STATUS(generators)
+	javaComponentPropertiesScale_STATUSGenerator = gen.Struct(reflect.TypeOf(JavaComponentPropertiesScale_STATUS{}), generators)
+
+	return javaComponentPropertiesScale_STATUSGenerator
+}
+
+// AddIndependentPropertyGeneratorsForJavaComponentPropertiesScale_STATUS is a factory method for creating gopter generators
+func AddIndependentPropertyGeneratorsForJavaComponentPropertiesScale_STATUS(gens map[string]gopter.Gen) {
+	gens["MaxReplicas"] = gen.PtrOf(gen.Int())
+	gens["MinReplicas"] = gen.PtrOf(gen.Int())
+}
+
 func Test_JavaComponentProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -220,6 +287,9 @@ func JavaComponentProperties_STATUSGenerator() gopter.Gen {
 
 // AddRelatedPropertyGeneratorsForJavaComponentProperties_STATUS is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForJavaComponentProperties_STATUS(gens map[string]gopter.Gen) {
+	gens["Nacos"] = NacosComponent_STATUSGenerator().Map(func(it NacosComponent_STATUS) *NacosComponent_STATUS {
+		return &it
+	}) // generate one case for OneOf type
 	gens["SpringBootAdmin"] = SpringBootAdminComponent_STATUSGenerator().Map(func(it SpringBootAdminComponent_STATUS) *SpringBootAdminComponent_STATUS {
 		return &it
 	}) // generate one case for OneOf type
@@ -227,6 +297,9 @@ func AddRelatedPropertyGeneratorsForJavaComponentProperties_STATUS(gens map[stri
 		return &it
 	}) // generate one case for OneOf type
 	gens["SpringCloudEureka"] = SpringCloudEurekaComponent_STATUSGenerator().Map(func(it SpringCloudEurekaComponent_STATUS) *SpringCloudEurekaComponent_STATUS {
+		return &it
+	}) // generate one case for OneOf type
+	gens["SpringCloudGateway"] = SpringCloudGatewayComponent_STATUSGenerator().Map(func(it SpringCloudGatewayComponent_STATUS) *SpringCloudGatewayComponent_STATUS {
 		return &it
 	}) // generate one case for OneOf type
 }
@@ -381,6 +454,164 @@ func AddRelatedPropertyGeneratorsForManagedEnvironmentsJavaComponent_STATUS(gens
 	gens["SystemData"] = gen.PtrOf(SystemData_STATUSGenerator())
 }
 
+func Test_NacosComponent_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MinSuccessfulTests = 80
+	parameters.MaxSize = 3
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip of NacosComponent_STATUS via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForNacosComponent_STATUS, NacosComponent_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
+}
+
+// RunJSONSerializationTestForNacosComponent_STATUS runs a test to see if a specific instance of NacosComponent_STATUS round trips to JSON and back losslessly
+func RunJSONSerializationTestForNacosComponent_STATUS(subject NacosComponent_STATUS) string {
+	// Serialize to JSON
+	bin, err := json.Marshal(subject)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Deserialize back into memory
+	var actual NacosComponent_STATUS
+	err = json.Unmarshal(bin, &actual)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for outcome
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
+// Generator of NacosComponent_STATUS instances for property testing - lazily instantiated by
+// NacosComponent_STATUSGenerator()
+var nacosComponent_STATUSGenerator gopter.Gen
+
+// NacosComponent_STATUSGenerator returns a generator of NacosComponent_STATUS instances for property testing.
+// We first initialize nacosComponent_STATUSGenerator with a simplified generator based on the
+// fields with primitive types then replacing it with a more complex one that also handles complex fields
+// to ensure any cycles in the object graph properly terminate.
+func NacosComponent_STATUSGenerator() gopter.Gen {
+	if nacosComponent_STATUSGenerator != nil {
+		return nacosComponent_STATUSGenerator
+	}
+
+	generators := make(map[string]gopter.Gen)
+	AddIndependentPropertyGeneratorsForNacosComponent_STATUS(generators)
+	nacosComponent_STATUSGenerator = gen.Struct(reflect.TypeOf(NacosComponent_STATUS{}), generators)
+
+	// The above call to gen.Struct() captures the map, so create a new one
+	generators = make(map[string]gopter.Gen)
+	AddIndependentPropertyGeneratorsForNacosComponent_STATUS(generators)
+	AddRelatedPropertyGeneratorsForNacosComponent_STATUS(generators)
+	nacosComponent_STATUSGenerator = gen.Struct(reflect.TypeOf(NacosComponent_STATUS{}), generators)
+
+	return nacosComponent_STATUSGenerator
+}
+
+// AddIndependentPropertyGeneratorsForNacosComponent_STATUS is a factory method for creating gopter generators
+func AddIndependentPropertyGeneratorsForNacosComponent_STATUS(gens map[string]gopter.Gen) {
+	gens["ComponentType"] = gen.OneConstOf(NacosComponent_ComponentType_STATUS_Nacos)
+	gens["ProvisioningState"] = gen.PtrOf(gen.OneConstOf(
+		JavaComponentProvisioningState_STATUS_Canceled,
+		JavaComponentProvisioningState_STATUS_Deleting,
+		JavaComponentProvisioningState_STATUS_Failed,
+		JavaComponentProvisioningState_STATUS_InProgress,
+		JavaComponentProvisioningState_STATUS_Succeeded))
+}
+
+// AddRelatedPropertyGeneratorsForNacosComponent_STATUS is a factory method for creating gopter generators
+func AddRelatedPropertyGeneratorsForNacosComponent_STATUS(gens map[string]gopter.Gen) {
+	gens["Configurations"] = gen.SliceOf(JavaComponentConfigurationProperty_STATUSGenerator())
+	gens["Ingress"] = gen.PtrOf(JavaComponentIngress_STATUSGenerator())
+	gens["Scale"] = gen.PtrOf(JavaComponentPropertiesScale_STATUSGenerator())
+	gens["ServiceBinds"] = gen.SliceOf(JavaComponentServiceBind_STATUSGenerator())
+}
+
+func Test_ScgRoute_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MinSuccessfulTests = 80
+	parameters.MaxSize = 3
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip of ScgRoute_STATUS via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForScgRoute_STATUS, ScgRoute_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
+}
+
+// RunJSONSerializationTestForScgRoute_STATUS runs a test to see if a specific instance of ScgRoute_STATUS round trips to JSON and back losslessly
+func RunJSONSerializationTestForScgRoute_STATUS(subject ScgRoute_STATUS) string {
+	// Serialize to JSON
+	bin, err := json.Marshal(subject)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Deserialize back into memory
+	var actual ScgRoute_STATUS
+	err = json.Unmarshal(bin, &actual)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for outcome
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
+// Generator of ScgRoute_STATUS instances for property testing - lazily instantiated by ScgRoute_STATUSGenerator()
+var scgRoute_STATUSGenerator gopter.Gen
+
+// ScgRoute_STATUSGenerator returns a generator of ScgRoute_STATUS instances for property testing.
+func ScgRoute_STATUSGenerator() gopter.Gen {
+	if scgRoute_STATUSGenerator != nil {
+		return scgRoute_STATUSGenerator
+	}
+
+	generators := make(map[string]gopter.Gen)
+	AddIndependentPropertyGeneratorsForScgRoute_STATUS(generators)
+	scgRoute_STATUSGenerator = gen.Struct(reflect.TypeOf(ScgRoute_STATUS{}), generators)
+
+	return scgRoute_STATUSGenerator
+}
+
+// AddIndependentPropertyGeneratorsForScgRoute_STATUS is a factory method for creating gopter generators
+func AddIndependentPropertyGeneratorsForScgRoute_STATUS(gens map[string]gopter.Gen) {
+	gens["Filters"] = gen.SliceOf(gen.AlphaString())
+	gens["Id"] = gen.PtrOf(gen.AlphaString())
+	gens["Order"] = gen.PtrOf(gen.Int())
+	gens["Predicates"] = gen.SliceOf(gen.AlphaString())
+	gens["Uri"] = gen.PtrOf(gen.AlphaString())
+}
+
 func Test_SpringBootAdminComponent_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -455,86 +686,19 @@ func SpringBootAdminComponent_STATUSGenerator() gopter.Gen {
 func AddIndependentPropertyGeneratorsForSpringBootAdminComponent_STATUS(gens map[string]gopter.Gen) {
 	gens["ComponentType"] = gen.OneConstOf(SpringBootAdminComponent_ComponentType_STATUS_SpringBootAdmin)
 	gens["ProvisioningState"] = gen.PtrOf(gen.OneConstOf(
-		SpringBootAdminComponent_ProvisioningState_STATUS_Canceled,
-		SpringBootAdminComponent_ProvisioningState_STATUS_Deleting,
-		SpringBootAdminComponent_ProvisioningState_STATUS_Failed,
-		SpringBootAdminComponent_ProvisioningState_STATUS_InProgress,
-		SpringBootAdminComponent_ProvisioningState_STATUS_Succeeded))
+		JavaComponentProvisioningState_STATUS_Canceled,
+		JavaComponentProvisioningState_STATUS_Deleting,
+		JavaComponentProvisioningState_STATUS_Failed,
+		JavaComponentProvisioningState_STATUS_InProgress,
+		JavaComponentProvisioningState_STATUS_Succeeded))
 }
 
 // AddRelatedPropertyGeneratorsForSpringBootAdminComponent_STATUS is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForSpringBootAdminComponent_STATUS(gens map[string]gopter.Gen) {
 	gens["Configurations"] = gen.SliceOf(JavaComponentConfigurationProperty_STATUSGenerator())
 	gens["Ingress"] = gen.PtrOf(JavaComponentIngress_STATUSGenerator())
-	gens["Scale"] = gen.PtrOf(SpringBootAdminComponent_Scale_STATUSGenerator())
+	gens["Scale"] = gen.PtrOf(JavaComponentPropertiesScale_STATUSGenerator())
 	gens["ServiceBinds"] = gen.SliceOf(JavaComponentServiceBind_STATUSGenerator())
-}
-
-func Test_SpringBootAdminComponent_Scale_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MinSuccessfulTests = 80
-	parameters.MaxSize = 3
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip of SpringBootAdminComponent_Scale_STATUS via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForSpringBootAdminComponent_Scale_STATUS, SpringBootAdminComponent_Scale_STATUSGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
-}
-
-// RunJSONSerializationTestForSpringBootAdminComponent_Scale_STATUS runs a test to see if a specific instance of SpringBootAdminComponent_Scale_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForSpringBootAdminComponent_Scale_STATUS(subject SpringBootAdminComponent_Scale_STATUS) string {
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Deserialize back into memory
-	var actual SpringBootAdminComponent_Scale_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-// Generator of SpringBootAdminComponent_Scale_STATUS instances for property testing - lazily instantiated by
-// SpringBootAdminComponent_Scale_STATUSGenerator()
-var springBootAdminComponent_Scale_STATUSGenerator gopter.Gen
-
-// SpringBootAdminComponent_Scale_STATUSGenerator returns a generator of SpringBootAdminComponent_Scale_STATUS instances for property testing.
-func SpringBootAdminComponent_Scale_STATUSGenerator() gopter.Gen {
-	if springBootAdminComponent_Scale_STATUSGenerator != nil {
-		return springBootAdminComponent_Scale_STATUSGenerator
-	}
-
-	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForSpringBootAdminComponent_Scale_STATUS(generators)
-	springBootAdminComponent_Scale_STATUSGenerator = gen.Struct(reflect.TypeOf(SpringBootAdminComponent_Scale_STATUS{}), generators)
-
-	return springBootAdminComponent_Scale_STATUSGenerator
-}
-
-// AddIndependentPropertyGeneratorsForSpringBootAdminComponent_Scale_STATUS is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForSpringBootAdminComponent_Scale_STATUS(gens map[string]gopter.Gen) {
-	gens["MaxReplicas"] = gen.PtrOf(gen.Int())
-	gens["MinReplicas"] = gen.PtrOf(gen.Int())
 }
 
 func Test_SpringCloudConfigComponent_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -611,85 +775,18 @@ func SpringCloudConfigComponent_STATUSGenerator() gopter.Gen {
 func AddIndependentPropertyGeneratorsForSpringCloudConfigComponent_STATUS(gens map[string]gopter.Gen) {
 	gens["ComponentType"] = gen.OneConstOf(SpringCloudConfigComponent_ComponentType_STATUS_SpringCloudConfig)
 	gens["ProvisioningState"] = gen.PtrOf(gen.OneConstOf(
-		SpringCloudConfigComponent_ProvisioningState_STATUS_Canceled,
-		SpringCloudConfigComponent_ProvisioningState_STATUS_Deleting,
-		SpringCloudConfigComponent_ProvisioningState_STATUS_Failed,
-		SpringCloudConfigComponent_ProvisioningState_STATUS_InProgress,
-		SpringCloudConfigComponent_ProvisioningState_STATUS_Succeeded))
+		JavaComponentProvisioningState_STATUS_Canceled,
+		JavaComponentProvisioningState_STATUS_Deleting,
+		JavaComponentProvisioningState_STATUS_Failed,
+		JavaComponentProvisioningState_STATUS_InProgress,
+		JavaComponentProvisioningState_STATUS_Succeeded))
 }
 
 // AddRelatedPropertyGeneratorsForSpringCloudConfigComponent_STATUS is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForSpringCloudConfigComponent_STATUS(gens map[string]gopter.Gen) {
 	gens["Configurations"] = gen.SliceOf(JavaComponentConfigurationProperty_STATUSGenerator())
-	gens["Scale"] = gen.PtrOf(SpringCloudConfigComponent_Scale_STATUSGenerator())
+	gens["Scale"] = gen.PtrOf(JavaComponentPropertiesScale_STATUSGenerator())
 	gens["ServiceBinds"] = gen.SliceOf(JavaComponentServiceBind_STATUSGenerator())
-}
-
-func Test_SpringCloudConfigComponent_Scale_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MinSuccessfulTests = 80
-	parameters.MaxSize = 3
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip of SpringCloudConfigComponent_Scale_STATUS via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForSpringCloudConfigComponent_Scale_STATUS, SpringCloudConfigComponent_Scale_STATUSGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
-}
-
-// RunJSONSerializationTestForSpringCloudConfigComponent_Scale_STATUS runs a test to see if a specific instance of SpringCloudConfigComponent_Scale_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForSpringCloudConfigComponent_Scale_STATUS(subject SpringCloudConfigComponent_Scale_STATUS) string {
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Deserialize back into memory
-	var actual SpringCloudConfigComponent_Scale_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-// Generator of SpringCloudConfigComponent_Scale_STATUS instances for property testing - lazily instantiated by
-// SpringCloudConfigComponent_Scale_STATUSGenerator()
-var springCloudConfigComponent_Scale_STATUSGenerator gopter.Gen
-
-// SpringCloudConfigComponent_Scale_STATUSGenerator returns a generator of SpringCloudConfigComponent_Scale_STATUS instances for property testing.
-func SpringCloudConfigComponent_Scale_STATUSGenerator() gopter.Gen {
-	if springCloudConfigComponent_Scale_STATUSGenerator != nil {
-		return springCloudConfigComponent_Scale_STATUSGenerator
-	}
-
-	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForSpringCloudConfigComponent_Scale_STATUS(generators)
-	springCloudConfigComponent_Scale_STATUSGenerator = gen.Struct(reflect.TypeOf(SpringCloudConfigComponent_Scale_STATUS{}), generators)
-
-	return springCloudConfigComponent_Scale_STATUSGenerator
-}
-
-// AddIndependentPropertyGeneratorsForSpringCloudConfigComponent_Scale_STATUS is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForSpringCloudConfigComponent_Scale_STATUS(gens map[string]gopter.Gen) {
-	gens["MaxReplicas"] = gen.PtrOf(gen.Int())
-	gens["MinReplicas"] = gen.PtrOf(gen.Int())
 }
 
 func Test_SpringCloudEurekaComponent_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -766,22 +863,22 @@ func SpringCloudEurekaComponent_STATUSGenerator() gopter.Gen {
 func AddIndependentPropertyGeneratorsForSpringCloudEurekaComponent_STATUS(gens map[string]gopter.Gen) {
 	gens["ComponentType"] = gen.OneConstOf(SpringCloudEurekaComponent_ComponentType_STATUS_SpringCloudEureka)
 	gens["ProvisioningState"] = gen.PtrOf(gen.OneConstOf(
-		SpringCloudEurekaComponent_ProvisioningState_STATUS_Canceled,
-		SpringCloudEurekaComponent_ProvisioningState_STATUS_Deleting,
-		SpringCloudEurekaComponent_ProvisioningState_STATUS_Failed,
-		SpringCloudEurekaComponent_ProvisioningState_STATUS_InProgress,
-		SpringCloudEurekaComponent_ProvisioningState_STATUS_Succeeded))
+		JavaComponentProvisioningState_STATUS_Canceled,
+		JavaComponentProvisioningState_STATUS_Deleting,
+		JavaComponentProvisioningState_STATUS_Failed,
+		JavaComponentProvisioningState_STATUS_InProgress,
+		JavaComponentProvisioningState_STATUS_Succeeded))
 }
 
 // AddRelatedPropertyGeneratorsForSpringCloudEurekaComponent_STATUS is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForSpringCloudEurekaComponent_STATUS(gens map[string]gopter.Gen) {
 	gens["Configurations"] = gen.SliceOf(JavaComponentConfigurationProperty_STATUSGenerator())
 	gens["Ingress"] = gen.PtrOf(JavaComponentIngress_STATUSGenerator())
-	gens["Scale"] = gen.PtrOf(SpringCloudEurekaComponent_Scale_STATUSGenerator())
+	gens["Scale"] = gen.PtrOf(JavaComponentPropertiesScale_STATUSGenerator())
 	gens["ServiceBinds"] = gen.SliceOf(JavaComponentServiceBind_STATUSGenerator())
 }
 
-func Test_SpringCloudEurekaComponent_Scale_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+func Test_SpringCloudGatewayComponent_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
 	if testing.Short() {
@@ -793,13 +890,13 @@ func Test_SpringCloudEurekaComponent_Scale_STATUS_WhenSerializedToJson_Deseriali
 	parameters.MaxSize = 3
 	properties := gopter.NewProperties(parameters)
 	properties.Property(
-		"Round trip of SpringCloudEurekaComponent_Scale_STATUS via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForSpringCloudEurekaComponent_Scale_STATUS, SpringCloudEurekaComponent_Scale_STATUSGenerator()))
+		"Round trip of SpringCloudGatewayComponent_STATUS via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForSpringCloudGatewayComponent_STATUS, SpringCloudGatewayComponent_STATUSGenerator()))
 	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
 }
 
-// RunJSONSerializationTestForSpringCloudEurekaComponent_Scale_STATUS runs a test to see if a specific instance of SpringCloudEurekaComponent_Scale_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForSpringCloudEurekaComponent_Scale_STATUS(subject SpringCloudEurekaComponent_Scale_STATUS) string {
+// RunJSONSerializationTestForSpringCloudGatewayComponent_STATUS runs a test to see if a specific instance of SpringCloudGatewayComponent_STATUS round trips to JSON and back losslessly
+func RunJSONSerializationTestForSpringCloudGatewayComponent_STATUS(subject SpringCloudGatewayComponent_STATUS) string {
 	// Serialize to JSON
 	bin, err := json.Marshal(subject)
 	if err != nil {
@@ -807,7 +904,7 @@ func RunJSONSerializationTestForSpringCloudEurekaComponent_Scale_STATUS(subject 
 	}
 
 	// Deserialize back into memory
-	var actual SpringCloudEurekaComponent_Scale_STATUS
+	var actual SpringCloudGatewayComponent_STATUS
 	err = json.Unmarshal(bin, &actual)
 	if err != nil {
 		return err.Error()
@@ -825,25 +922,48 @@ func RunJSONSerializationTestForSpringCloudEurekaComponent_Scale_STATUS(subject 
 	return ""
 }
 
-// Generator of SpringCloudEurekaComponent_Scale_STATUS instances for property testing - lazily instantiated by
-// SpringCloudEurekaComponent_Scale_STATUSGenerator()
-var springCloudEurekaComponent_Scale_STATUSGenerator gopter.Gen
+// Generator of SpringCloudGatewayComponent_STATUS instances for property testing - lazily instantiated by
+// SpringCloudGatewayComponent_STATUSGenerator()
+var springCloudGatewayComponent_STATUSGenerator gopter.Gen
 
-// SpringCloudEurekaComponent_Scale_STATUSGenerator returns a generator of SpringCloudEurekaComponent_Scale_STATUS instances for property testing.
-func SpringCloudEurekaComponent_Scale_STATUSGenerator() gopter.Gen {
-	if springCloudEurekaComponent_Scale_STATUSGenerator != nil {
-		return springCloudEurekaComponent_Scale_STATUSGenerator
+// SpringCloudGatewayComponent_STATUSGenerator returns a generator of SpringCloudGatewayComponent_STATUS instances for property testing.
+// We first initialize springCloudGatewayComponent_STATUSGenerator with a simplified generator based on the
+// fields with primitive types then replacing it with a more complex one that also handles complex fields
+// to ensure any cycles in the object graph properly terminate.
+func SpringCloudGatewayComponent_STATUSGenerator() gopter.Gen {
+	if springCloudGatewayComponent_STATUSGenerator != nil {
+		return springCloudGatewayComponent_STATUSGenerator
 	}
 
 	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForSpringCloudEurekaComponent_Scale_STATUS(generators)
-	springCloudEurekaComponent_Scale_STATUSGenerator = gen.Struct(reflect.TypeOf(SpringCloudEurekaComponent_Scale_STATUS{}), generators)
+	AddIndependentPropertyGeneratorsForSpringCloudGatewayComponent_STATUS(generators)
+	springCloudGatewayComponent_STATUSGenerator = gen.Struct(reflect.TypeOf(SpringCloudGatewayComponent_STATUS{}), generators)
 
-	return springCloudEurekaComponent_Scale_STATUSGenerator
+	// The above call to gen.Struct() captures the map, so create a new one
+	generators = make(map[string]gopter.Gen)
+	AddIndependentPropertyGeneratorsForSpringCloudGatewayComponent_STATUS(generators)
+	AddRelatedPropertyGeneratorsForSpringCloudGatewayComponent_STATUS(generators)
+	springCloudGatewayComponent_STATUSGenerator = gen.Struct(reflect.TypeOf(SpringCloudGatewayComponent_STATUS{}), generators)
+
+	return springCloudGatewayComponent_STATUSGenerator
 }
 
-// AddIndependentPropertyGeneratorsForSpringCloudEurekaComponent_Scale_STATUS is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForSpringCloudEurekaComponent_Scale_STATUS(gens map[string]gopter.Gen) {
-	gens["MaxReplicas"] = gen.PtrOf(gen.Int())
-	gens["MinReplicas"] = gen.PtrOf(gen.Int())
+// AddIndependentPropertyGeneratorsForSpringCloudGatewayComponent_STATUS is a factory method for creating gopter generators
+func AddIndependentPropertyGeneratorsForSpringCloudGatewayComponent_STATUS(gens map[string]gopter.Gen) {
+	gens["ComponentType"] = gen.OneConstOf(SpringCloudGatewayComponent_ComponentType_STATUS_SpringCloudGateway)
+	gens["ProvisioningState"] = gen.PtrOf(gen.OneConstOf(
+		JavaComponentProvisioningState_STATUS_Canceled,
+		JavaComponentProvisioningState_STATUS_Deleting,
+		JavaComponentProvisioningState_STATUS_Failed,
+		JavaComponentProvisioningState_STATUS_InProgress,
+		JavaComponentProvisioningState_STATUS_Succeeded))
+}
+
+// AddRelatedPropertyGeneratorsForSpringCloudGatewayComponent_STATUS is a factory method for creating gopter generators
+func AddRelatedPropertyGeneratorsForSpringCloudGatewayComponent_STATUS(gens map[string]gopter.Gen) {
+	gens["Configurations"] = gen.SliceOf(JavaComponentConfigurationProperty_STATUSGenerator())
+	gens["Ingress"] = gen.PtrOf(JavaComponentIngress_STATUSGenerator())
+	gens["Scale"] = gen.PtrOf(JavaComponentPropertiesScale_STATUSGenerator())
+	gens["ServiceBinds"] = gen.SliceOf(JavaComponentServiceBind_STATUSGenerator())
+	gens["SpringCloudGatewayRoutes"] = gen.SliceOf(ScgRoute_STATUSGenerator())
 }

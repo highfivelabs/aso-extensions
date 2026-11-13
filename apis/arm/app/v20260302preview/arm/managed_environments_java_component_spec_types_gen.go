@@ -17,9 +17,9 @@ type ManagedEnvironmentsJavaComponent_Spec struct {
 
 var _ genruntime.ARMResourceSpec = &ManagedEnvironmentsJavaComponent_Spec{}
 
-// GetAPIVersion returns the ARM API version of the resource. This is always "2025-01-01"
+// GetAPIVersion returns the ARM API version of the resource. This is always "2026-03-02-preview"
 func (component ManagedEnvironmentsJavaComponent_Spec) GetAPIVersion() string {
-	return "2025-01-01"
+	return "2026-03-02-preview"
 }
 
 // GetName returns the Name of the resource
@@ -33,6 +33,9 @@ func (component *ManagedEnvironmentsJavaComponent_Spec) GetType() string {
 }
 
 type JavaComponentProperties struct {
+	// Nacos: Mutually exclusive with all other properties
+	Nacos *NacosComponent `json:"nacos,omitempty"`
+
 	// SpringBootAdmin: Mutually exclusive with all other properties
 	SpringBootAdmin *SpringBootAdminComponent `json:"springBootAdmin,omitempty"`
 
@@ -41,10 +44,17 @@ type JavaComponentProperties struct {
 
 	// SpringCloudEureka: Mutually exclusive with all other properties
 	SpringCloudEureka *SpringCloudEurekaComponent `json:"springCloudEureka,omitempty"`
+
+	// SpringCloudGateway: Mutually exclusive with all other properties
+	SpringCloudGateway *SpringCloudGatewayComponent `json:"springCloudGateway,omitempty"`
 }
 
 // MarshalJSON defers JSON marshaling to the first non-nil property, because JavaComponentProperties represents a discriminated union (JSON OneOf)
 func (properties JavaComponentProperties) MarshalJSON() ([]byte, error) {
+	if properties.Nacos != nil {
+		return json.Marshal(properties.Nacos)
+	}
+
 	if properties.SpringBootAdmin != nil {
 		return json.Marshal(properties.SpringBootAdmin)
 	}
@@ -55,6 +65,10 @@ func (properties JavaComponentProperties) MarshalJSON() ([]byte, error) {
 
 	if properties.SpringCloudEureka != nil {
 		return json.Marshal(properties.SpringCloudEureka)
+	}
+
+	if properties.SpringCloudGateway != nil {
+		return json.Marshal(properties.SpringCloudGateway)
 	}
 
 	return nil, nil
@@ -68,6 +82,10 @@ func (properties *JavaComponentProperties) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	discriminator := rawJson["componentType"]
+	if discriminator == "Nacos" {
+		properties.Nacos = &NacosComponent{}
+		return json.Unmarshal(data, properties.Nacos)
+	}
 	if discriminator == "SpringBootAdmin" {
 		properties.SpringBootAdmin = &SpringBootAdminComponent{}
 		return json.Unmarshal(data, properties.SpringBootAdmin)
@@ -80,9 +98,27 @@ func (properties *JavaComponentProperties) UnmarshalJSON(data []byte) error {
 		properties.SpringCloudEureka = &SpringCloudEurekaComponent{}
 		return json.Unmarshal(data, properties.SpringCloudEureka)
 	}
+	if discriminator == "SpringCloudGateway" {
+		properties.SpringCloudGateway = &SpringCloudGatewayComponent{}
+		return json.Unmarshal(data, properties.SpringCloudGateway)
+	}
 
 	// No error
 	return nil
+}
+
+type NacosComponent struct {
+	// ComponentType: Type of the Java Component.
+	ComponentType NacosComponent_ComponentType `json:"componentType,omitempty"`
+
+	// Configurations: List of Java Components configuration properties
+	Configurations []JavaComponentConfigurationProperty `json:"configurations,omitempty"`
+
+	// Scale: Java component scaling configurations
+	Scale *JavaComponentPropertiesScale `json:"scale,omitempty"`
+
+	// ServiceBinds: List of Java Components that are bound to the Java component
+	ServiceBinds []JavaComponentServiceBind `json:"serviceBinds,omitempty"`
 }
 
 type SpringBootAdminComponent struct {
@@ -93,7 +129,7 @@ type SpringBootAdminComponent struct {
 	Configurations []JavaComponentConfigurationProperty `json:"configurations,omitempty"`
 
 	// Scale: Java component scaling configurations
-	Scale *SpringBootAdminComponent_Scale `json:"scale,omitempty"`
+	Scale *JavaComponentPropertiesScale `json:"scale,omitempty"`
 
 	// ServiceBinds: List of Java Components that are bound to the Java component
 	ServiceBinds []JavaComponentServiceBind `json:"serviceBinds,omitempty"`
@@ -107,7 +143,7 @@ type SpringCloudConfigComponent struct {
 	Configurations []JavaComponentConfigurationProperty `json:"configurations,omitempty"`
 
 	// Scale: Java component scaling configurations
-	Scale *SpringCloudConfigComponent_Scale `json:"scale,omitempty"`
+	Scale *JavaComponentPropertiesScale `json:"scale,omitempty"`
 
 	// ServiceBinds: List of Java Components that are bound to the Java component
 	ServiceBinds []JavaComponentServiceBind `json:"serviceBinds,omitempty"`
@@ -121,10 +157,27 @@ type SpringCloudEurekaComponent struct {
 	Configurations []JavaComponentConfigurationProperty `json:"configurations,omitempty"`
 
 	// Scale: Java component scaling configurations
-	Scale *SpringCloudEurekaComponent_Scale `json:"scale,omitempty"`
+	Scale *JavaComponentPropertiesScale `json:"scale,omitempty"`
 
 	// ServiceBinds: List of Java Components that are bound to the Java component
 	ServiceBinds []JavaComponentServiceBind `json:"serviceBinds,omitempty"`
+}
+
+type SpringCloudGatewayComponent struct {
+	// ComponentType: Type of the Java Component.
+	ComponentType SpringCloudGatewayComponent_ComponentType `json:"componentType,omitempty"`
+
+	// Configurations: List of Java Components configuration properties
+	Configurations []JavaComponentConfigurationProperty `json:"configurations,omitempty"`
+
+	// Scale: Java component scaling configurations
+	Scale *JavaComponentPropertiesScale `json:"scale,omitempty"`
+
+	// ServiceBinds: List of Java Components that are bound to the Java component
+	ServiceBinds []JavaComponentServiceBind `json:"serviceBinds,omitempty"`
+
+	// SpringCloudGatewayRoutes: Gateway route definition
+	SpringCloudGatewayRoutes []ScgRoute `json:"springCloudGatewayRoutes,omitempty"`
 }
 
 // Configuration properties for a Java Component
@@ -136,6 +189,15 @@ type JavaComponentConfigurationProperty struct {
 	Value *string `json:"value,omitempty"`
 }
 
+// Java component scaling configurations
+type JavaComponentPropertiesScale struct {
+	// MaxReplicas: Optional. Maximum number of Java component replicas
+	MaxReplicas *int `json:"maxReplicas,omitempty"`
+
+	// MinReplicas: Optional. Minimum number of Java component replicas. Defaults to 1 if not set
+	MinReplicas *int `json:"minReplicas,omitempty"`
+}
+
 // Configuration to bind a Java Component to another Java Component
 type JavaComponentServiceBind struct {
 	// Name: Name of the service bind
@@ -143,6 +205,34 @@ type JavaComponentServiceBind struct {
 
 	// ServiceId: Resource id of the target service
 	ServiceId *string `json:"serviceId,omitempty"`
+}
+
+// +kubebuilder:validation:Enum={"Nacos"}
+type NacosComponent_ComponentType string
+
+const NacosComponent_ComponentType_Nacos = NacosComponent_ComponentType("Nacos")
+
+// Mapping from string to NacosComponent_ComponentType
+var nacosComponent_ComponentType_Values = map[string]NacosComponent_ComponentType{
+	"nacos": NacosComponent_ComponentType_Nacos,
+}
+
+// Spring Cloud Gateway route definition
+type ScgRoute struct {
+	// Filters: Filters of the route
+	Filters []string `json:"filters,omitempty"`
+
+	// Id: Id of the route
+	Id *string `json:"id,omitempty"`
+
+	// Order: Order of the route
+	Order *int `json:"order,omitempty"`
+
+	// Predicates: Predicates of the route
+	Predicates []string `json:"predicates,omitempty"`
+
+	// Uri: Uri of the route
+	Uri *string `json:"uri,omitempty"`
 }
 
 // +kubebuilder:validation:Enum={"SpringBootAdmin"}
@@ -155,14 +245,6 @@ var springBootAdminComponent_ComponentType_Values = map[string]SpringBootAdminCo
 	"springbootadmin": SpringBootAdminComponent_ComponentType_SpringBootAdmin,
 }
 
-type SpringBootAdminComponent_Scale struct {
-	// MaxReplicas: Optional. Maximum number of Java component replicas
-	MaxReplicas *int `json:"maxReplicas,omitempty"`
-
-	// MinReplicas: Optional. Minimum number of Java component replicas. Defaults to 1 if not set
-	MinReplicas *int `json:"minReplicas,omitempty"`
-}
-
 // +kubebuilder:validation:Enum={"SpringCloudConfig"}
 type SpringCloudConfigComponent_ComponentType string
 
@@ -171,14 +253,6 @@ const SpringCloudConfigComponent_ComponentType_SpringCloudConfig = SpringCloudCo
 // Mapping from string to SpringCloudConfigComponent_ComponentType
 var springCloudConfigComponent_ComponentType_Values = map[string]SpringCloudConfigComponent_ComponentType{
 	"springcloudconfig": SpringCloudConfigComponent_ComponentType_SpringCloudConfig,
-}
-
-type SpringCloudConfigComponent_Scale struct {
-	// MaxReplicas: Optional. Maximum number of Java component replicas
-	MaxReplicas *int `json:"maxReplicas,omitempty"`
-
-	// MinReplicas: Optional. Minimum number of Java component replicas. Defaults to 1 if not set
-	MinReplicas *int `json:"minReplicas,omitempty"`
 }
 
 // +kubebuilder:validation:Enum={"SpringCloudEureka"}
@@ -191,10 +265,12 @@ var springCloudEurekaComponent_ComponentType_Values = map[string]SpringCloudEure
 	"springcloudeureka": SpringCloudEurekaComponent_ComponentType_SpringCloudEureka,
 }
 
-type SpringCloudEurekaComponent_Scale struct {
-	// MaxReplicas: Optional. Maximum number of Java component replicas
-	MaxReplicas *int `json:"maxReplicas,omitempty"`
+// +kubebuilder:validation:Enum={"SpringCloudGateway"}
+type SpringCloudGatewayComponent_ComponentType string
 
-	// MinReplicas: Optional. Minimum number of Java component replicas. Defaults to 1 if not set
-	MinReplicas *int `json:"minReplicas,omitempty"`
+const SpringCloudGatewayComponent_ComponentType_SpringCloudGateway = SpringCloudGatewayComponent_ComponentType("SpringCloudGateway")
+
+// Mapping from string to SpringCloudGatewayComponent_ComponentType
+var springCloudGatewayComponent_ComponentType_Values = map[string]SpringCloudGatewayComponent_ComponentType{
+	"springcloudgateway": SpringCloudGatewayComponent_ComponentType_SpringCloudGateway,
 }

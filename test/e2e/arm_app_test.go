@@ -16,6 +16,9 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 
 	appv1 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
+	app2026 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101"
+	app2026p "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260302preview"
+	app202607 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701"
 	authv1 "github.com/highfivelabs/aso-extensions/apis/authorization/v1"
 )
 
@@ -152,9 +155,11 @@ func TestManagedEnvironmentsDaprComponent(t *testing.T) {
 	}
 }
 
-// The environment's other children: a storage (an Azure Files share, its
-// key from a Secret), a certificate (its value and password from Secrets), a
-// managed certificate and a Java component.
+// The environment's other children: storages (an Azure Files share, its
+// key from a Secret, or from Key Vault), a certificate (its value and
+// password from Secrets), a managed certificate, Java components (Eureka,
+// and the Nacos and Spring Cloud Gateway types of 2026-03-02-preview), a
+// Dapr subscription and a .NET component.
 func TestManagedEnvironmentsChildren(t *testing.T) {
 	ctx := context.Background()
 	ns := namespace(t, "app-children")
@@ -165,14 +170,29 @@ func TestManagedEnvironmentsChildren(t *testing.T) {
 	secret(t, ns, "cert", map[string]string{"value": "cGZ4LWJ5dGVz", "password": "pfx-password-1"})
 
 	owner := &genruntime.KnownResourceReference{Name: "env"}
+	identityID := "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/files"
 	objs := []client.Object{
-		&appv1.ManagedEnvironmentsStorage{
+		&app2026.ManagedEnvironmentsStorage{
 			ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "files"},
-			Spec: appv1.ManagedEnvironmentsStorage_Spec{Owner: owner, Properties: &appv1.ManagedEnvironments_Storage_Properties_Spec{
-				AzureFile: &appv1.AzureFileProperties{
+			Spec: app2026.ManagedEnvironmentsStorage_Spec{Owner: owner, Properties: &app2026.ManagedEnvironmentStorageProperties{
+				AzureFile: &app2026.AzureFileProperties{
 					AccountName: ptr("appstorage"), ShareName: ptr("data"),
 					AccountKey: &genruntime.SecretReference{Name: "share", Key: "key"},
-					AccessMode: ptr(appv1.AzureFileProperties_AccessMode("ReadOnly")),
+					AccessMode: ptr(app2026.AccessMode("ReadOnly")),
+				}}},
+		},
+		// The account key from Key Vault instead (2026-01-01), read with a
+		// user-assigned identity named by ARM ID.
+		&app2026.ManagedEnvironmentsStorage{
+			ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "files-kv"},
+			Spec: app2026.ManagedEnvironmentsStorage_Spec{Owner: owner, Properties: &app2026.ManagedEnvironmentStorageProperties{
+				AzureFile: &app2026.AzureFileProperties{
+					AccountName: ptr("appstorage"), ShareName: ptr("data"),
+					AccountKeyVaultProperties: &app2026.SecretKeyVaultProperties{
+						KeyVaultUrl:       ptr("https://kv.vault.azure.net/secrets/share-key"),
+						IdentityReference: &genruntime.WellKnownResourceReference{ResourceReference: genruntime.ResourceReference{ARMID: identityID}},
+					},
+					AccessMode: ptr(app2026.AccessMode("ReadWrite")),
 				}}},
 		},
 		&appv1.ManagedEnvironmentsCertificate{
@@ -189,11 +209,43 @@ func TestManagedEnvironmentsChildren(t *testing.T) {
 				DomainControlValidation: ptr(appv1.ManagedEnvironments_ManagedCertificate_Properties_DomainControlValidation_Spec_CNAME),
 			}},
 		},
-		&appv1.ManagedEnvironmentsJavaComponent{
+		&app2026p.ManagedEnvironmentsJavaComponent{
 			ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "eureka"},
-			Spec: appv1.ManagedEnvironmentsJavaComponent_Spec{Owner: owner, Properties: &appv1.JavaComponentProperties{
-				SpringCloudEureka: &appv1.SpringCloudEurekaComponent{ComponentType: ptr(appv1.SpringCloudEurekaComponent_ComponentType("SpringCloudEureka"))},
+			Spec: app2026p.ManagedEnvironmentsJavaComponent_Spec{Owner: owner, Properties: &app2026p.JavaComponentProperties{
+				SpringCloudEureka: &app2026p.SpringCloudEurekaComponent{ComponentType: ptr(app2026p.SpringCloudEurekaComponent_ComponentType("SpringCloudEureka"))},
 			}},
+		},
+		// The types 2026-03-02-preview adds: Nacos, and a Spring Cloud
+		// Gateway with a route.
+		&app2026p.ManagedEnvironmentsJavaComponent{
+			ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "nacos"},
+			Spec: app2026p.ManagedEnvironmentsJavaComponent_Spec{Owner: owner, Properties: &app2026p.JavaComponentProperties{
+				Nacos: &app2026p.NacosComponent{ComponentType: ptr(app2026p.NacosComponent_ComponentType("Nacos"))},
+			}},
+		},
+		&app2026p.ManagedEnvironmentsJavaComponent{
+			ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "gateway"},
+			Spec: app2026p.ManagedEnvironmentsJavaComponent_Spec{Owner: owner, Properties: &app2026p.JavaComponentProperties{
+				SpringCloudGateway: &app2026p.SpringCloudGatewayComponent{
+					ComponentType: ptr(app2026p.SpringCloudGatewayComponent_ComponentType("SpringCloudGateway")),
+					SpringCloudGatewayRoutes: []app2026p.ScgRoute{{
+						Id: ptr("orders"), Uri: ptr("http://orders"), Predicates: []string{"Path=/orders/**"},
+					}},
+				},
+			}},
+		},
+		&app2026p.ManagedEnvironmentsDaprSubscription{
+			ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "orders"},
+			Spec: app2026p.ManagedEnvironmentsDaprSubscription_Spec{Owner: owner,
+				PubsubName: ptr("pubsub"), Topic: ptr("orders"), Scopes: []string{"orders-api"},
+				Routes: &app2026p.DaprSubscriptionRoutes{Default: ptr("/orders")},
+			},
+		},
+		&app202607.ManagedEnvironmentsDotNetComponent{
+			ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "dashboard"},
+			Spec: app202607.ManagedEnvironmentsDotNetComponent_Spec{Owner: owner,
+				ComponentType: ptr(app202607.DotNetComponentType_AspireDashboard),
+			},
 		},
 	}
 	for _, o := range objs {
@@ -231,6 +283,42 @@ func TestManagedEnvironmentsChildren(t *testing.T) {
 			}
 			return nil
 		},
+		envID + "/storages/files-kv": func(r map[string]any) error {
+			af, _ := properties(r)["azureFile"].(map[string]any)
+			kv, _ := af["accountKeyVaultProperties"].(map[string]any)
+			if kv["keyVaultUrl"] != "https://kv.vault.azure.net/secrets/share-key" || kv["identity"] != identityID || af["accountKey"] != nil {
+				return fmt.Errorf("azureFile: %v", af)
+			}
+			return nil
+		},
+		envID + "/javaComponents/nacos": func(r map[string]any) error {
+			if p := properties(r); p["componentType"] != "Nacos" {
+				return fmt.Errorf("properties: %v", p)
+			}
+			return nil
+		},
+		envID + "/javaComponents/gateway": func(r map[string]any) error {
+			p := properties(r)
+			routes, _ := p["springCloudGatewayRoutes"].([]any)
+			if p["componentType"] != "SpringCloudGateway" || len(routes) != 1 || routes[0].(map[string]any)["id"] != "orders" {
+				return fmt.Errorf("properties: %v", p)
+			}
+			return nil
+		},
+		envID + "/daprSubscriptions/orders": func(r map[string]any) error {
+			p := properties(r)
+			routes, _ := p["routes"].(map[string]any)
+			if p["pubsubName"] != "pubsub" || p["topic"] != "orders" || routes["default"] != "/orders" {
+				return fmt.Errorf("properties: %v", p)
+			}
+			return nil
+		},
+		envID + "/dotNetComponents/dashboard": func(r map[string]any) error {
+			if p := properties(r); p["componentType"] != "AspireDashboard" {
+				return fmt.Errorf("properties: %v", p)
+			}
+			return nil
+		},
 	} {
 		expectResource(t, id, check)
 	}
@@ -243,7 +331,8 @@ func TestManagedEnvironmentsChildren(t *testing.T) {
 	for _, o := range objs {
 		eventually(t, timeout, fmt.Sprintf("%T gone", o), gone(o))
 	}
-	for _, suffix := range []string{"/storages/files", "/certificates/tls", "/managedCertificates/orders", "/javaComponents/eureka"} {
+	for _, suffix := range []string{"/storages/files", "/storages/files-kv", "/certificates/tls", "/managedCertificates/orders", "/javaComponents/eureka",
+		"/javaComponents/nacos", "/javaComponents/gateway", "/daprSubscriptions/orders", "/dotNetComponents/dashboard"} {
 		if armFake.HasResource(envID + suffix) {
 			t.Fatalf("%s is still in Resource Manager", suffix)
 		}

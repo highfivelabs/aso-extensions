@@ -17,7 +17,7 @@ import (
 	"testing"
 )
 
-func Test_AzureFileProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+func Test_ManagedEnvironmentStorageProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
 	if testing.Short() {
@@ -29,13 +29,13 @@ func Test_AzureFileProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t 
 	parameters.MaxSize = 3
 	properties := gopter.NewProperties(parameters)
 	properties.Property(
-		"Round trip of AzureFileProperties_STATUS via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForAzureFileProperties_STATUS, AzureFileProperties_STATUSGenerator()))
+		"Round trip of ManagedEnvironmentStorageProperties_STATUS via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForManagedEnvironmentStorageProperties_STATUS, ManagedEnvironmentStorageProperties_STATUSGenerator()))
 	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
 }
 
-// RunJSONSerializationTestForAzureFileProperties_STATUS runs a test to see if a specific instance of AzureFileProperties_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForAzureFileProperties_STATUS(subject AzureFileProperties_STATUS) string {
+// RunJSONSerializationTestForManagedEnvironmentStorageProperties_STATUS runs a test to see if a specific instance of ManagedEnvironmentStorageProperties_STATUS round trips to JSON and back losslessly
+func RunJSONSerializationTestForManagedEnvironmentStorageProperties_STATUS(subject ManagedEnvironmentStorageProperties_STATUS) string {
 	// Serialize to JSON
 	bin, err := json.Marshal(subject)
 	if err != nil {
@@ -43,7 +43,7 @@ func RunJSONSerializationTestForAzureFileProperties_STATUS(subject AzureFileProp
 	}
 
 	// Deserialize back into memory
-	var actual AzureFileProperties_STATUS
+	var actual ManagedEnvironmentStorageProperties_STATUS
 	err = json.Unmarshal(bin, &actual)
 	if err != nil {
 		return err.Error()
@@ -61,28 +61,27 @@ func RunJSONSerializationTestForAzureFileProperties_STATUS(subject AzureFileProp
 	return ""
 }
 
-// Generator of AzureFileProperties_STATUS instances for property testing - lazily instantiated by
-// AzureFileProperties_STATUSGenerator()
-var azureFileProperties_STATUSGenerator gopter.Gen
+// Generator of ManagedEnvironmentStorageProperties_STATUS instances for property testing - lazily instantiated by
+// ManagedEnvironmentStorageProperties_STATUSGenerator()
+var managedEnvironmentStorageProperties_STATUSGenerator gopter.Gen
 
-// AzureFileProperties_STATUSGenerator returns a generator of AzureFileProperties_STATUS instances for property testing.
-func AzureFileProperties_STATUSGenerator() gopter.Gen {
-	if azureFileProperties_STATUSGenerator != nil {
-		return azureFileProperties_STATUSGenerator
+// ManagedEnvironmentStorageProperties_STATUSGenerator returns a generator of ManagedEnvironmentStorageProperties_STATUS instances for property testing.
+func ManagedEnvironmentStorageProperties_STATUSGenerator() gopter.Gen {
+	if managedEnvironmentStorageProperties_STATUSGenerator != nil {
+		return managedEnvironmentStorageProperties_STATUSGenerator
 	}
 
 	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForAzureFileProperties_STATUS(generators)
-	azureFileProperties_STATUSGenerator = gen.Struct(reflect.TypeOf(AzureFileProperties_STATUS{}), generators)
+	AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties_STATUS(generators)
+	managedEnvironmentStorageProperties_STATUSGenerator = gen.Struct(reflect.TypeOf(ManagedEnvironmentStorageProperties_STATUS{}), generators)
 
-	return azureFileProperties_STATUSGenerator
+	return managedEnvironmentStorageProperties_STATUSGenerator
 }
 
-// AddIndependentPropertyGeneratorsForAzureFileProperties_STATUS is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForAzureFileProperties_STATUS(gens map[string]gopter.Gen) {
-	gens["AccessMode"] = gen.PtrOf(gen.OneConstOf(AzureFileProperties_AccessMode_STATUS_ReadOnly, AzureFileProperties_AccessMode_STATUS_ReadWrite))
-	gens["AccountName"] = gen.PtrOf(gen.AlphaString())
-	gens["ShareName"] = gen.PtrOf(gen.AlphaString())
+// AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties_STATUS is a factory method for creating gopter generators
+func AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties_STATUS(gens map[string]gopter.Gen) {
+	gens["AzureFile"] = gen.PtrOf(AzureFileProperties_STATUSGenerator())
+	gens["NfsAzureFile"] = gen.PtrOf(NfsAzureFileProperties_STATUSGenerator())
 }
 
 func Test_ManagedEnvironmentsStorage_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -164,75 +163,8 @@ func AddIndependentPropertyGeneratorsForManagedEnvironmentsStorage_STATUS(gens m
 
 // AddRelatedPropertyGeneratorsForManagedEnvironmentsStorage_STATUS is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForManagedEnvironmentsStorage_STATUS(gens map[string]gopter.Gen) {
-	gens["Properties"] = gen.PtrOf(ManagedEnvironments_Storage_Properties_STATUSGenerator())
+	gens["Properties"] = gen.PtrOf(ManagedEnvironmentStorageProperties_STATUSGenerator())
 	gens["SystemData"] = gen.PtrOf(SystemData_STATUSGenerator())
-}
-
-func Test_ManagedEnvironments_Storage_Properties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MinSuccessfulTests = 80
-	parameters.MaxSize = 3
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip of ManagedEnvironments_Storage_Properties_STATUS via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForManagedEnvironments_Storage_Properties_STATUS, ManagedEnvironments_Storage_Properties_STATUSGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
-}
-
-// RunJSONSerializationTestForManagedEnvironments_Storage_Properties_STATUS runs a test to see if a specific instance of ManagedEnvironments_Storage_Properties_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForManagedEnvironments_Storage_Properties_STATUS(subject ManagedEnvironments_Storage_Properties_STATUS) string {
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Deserialize back into memory
-	var actual ManagedEnvironments_Storage_Properties_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-// Generator of ManagedEnvironments_Storage_Properties_STATUS instances for property testing - lazily instantiated by
-// ManagedEnvironments_Storage_Properties_STATUSGenerator()
-var managedEnvironments_Storage_Properties_STATUSGenerator gopter.Gen
-
-// ManagedEnvironments_Storage_Properties_STATUSGenerator returns a generator of ManagedEnvironments_Storage_Properties_STATUS instances for property testing.
-func ManagedEnvironments_Storage_Properties_STATUSGenerator() gopter.Gen {
-	if managedEnvironments_Storage_Properties_STATUSGenerator != nil {
-		return managedEnvironments_Storage_Properties_STATUSGenerator
-	}
-
-	generators := make(map[string]gopter.Gen)
-	AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_STATUS(generators)
-	managedEnvironments_Storage_Properties_STATUSGenerator = gen.Struct(reflect.TypeOf(ManagedEnvironments_Storage_Properties_STATUS{}), generators)
-
-	return managedEnvironments_Storage_Properties_STATUSGenerator
-}
-
-// AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_STATUS is a factory method for creating gopter generators
-func AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_STATUS(gens map[string]gopter.Gen) {
-	gens["AzureFile"] = gen.PtrOf(AzureFileProperties_STATUSGenerator())
-	gens["NfsAzureFile"] = gen.PtrOf(NfsAzureFileProperties_STATUSGenerator())
 }
 
 func Test_NfsAzureFileProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -298,7 +230,7 @@ func NfsAzureFileProperties_STATUSGenerator() gopter.Gen {
 
 // AddIndependentPropertyGeneratorsForNfsAzureFileProperties_STATUS is a factory method for creating gopter generators
 func AddIndependentPropertyGeneratorsForNfsAzureFileProperties_STATUS(gens map[string]gopter.Gen) {
-	gens["AccessMode"] = gen.PtrOf(gen.OneConstOf(NfsAzureFileProperties_AccessMode_STATUS_ReadOnly, NfsAzureFileProperties_AccessMode_STATUS_ReadWrite))
+	gens["AccessMode"] = gen.PtrOf(gen.OneConstOf(AccessMode_STATUS_ReadOnly, AccessMode_STATUS_ReadWrite))
 	gens["Server"] = gen.PtrOf(gen.AlphaString())
 	gens["ShareName"] = gen.PtrOf(gen.AlphaString())
 }

@@ -30,12 +30,12 @@ spec:
     - jsonPath: .status.conditions[?(@.type=='Ready')].message
       name: Message
       type: string
-    name: v20250101
+    name: v20260302preview
     schema:
       openAPIV3Schema:
         description: |-
           Generator information:
-          - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/stable/2025-01-01/JavaComponents.json
+          - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/preview/2026-03-02-preview/openapi.json
           - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}
         properties:
           apiVersion:
@@ -171,6 +171,79 @@ spec:
               properties:
                 description: 'Properties: Java Component resource specific properties'
                 properties:
+                  nacos:
+                    description: 'Nacos: Mutually exclusive with all other properties'
+                    properties:
+                      componentType:
+                        description: 'ComponentType: Type of the Java Component.'
+                        enum:
+                        - Nacos
+                        type: string
+                      configurations:
+                        description: 'Configurations: List of Java Components configuration
+                          properties'
+                        items:
+                          description: Configuration properties for a Java Component
+                          properties:
+                            propertyName:
+                              description: 'PropertyName: The name of the property'
+                              type: string
+                            value:
+                              description: 'Value: The value of the property'
+                              type: string
+                          type: object
+                        type: array
+                      scale:
+                        description: 'Scale: Java component scaling configurations'
+                        properties:
+                          maxReplicas:
+                            description: 'MaxReplicas: Optional. Maximum number of
+                              Java component replicas'
+                            type: integer
+                          minReplicas:
+                            description: 'MinReplicas: Optional. Minimum number of
+                              Java component replicas. Defaults to 1 if not set'
+                            type: integer
+                        type: object
+                      serviceBinds:
+                        description: 'ServiceBinds: List of Java Components that are
+                          bound to the Java component'
+                        items:
+                          description: Configuration to bind a Java Component to another
+                            Java Component
+                          properties:
+                            name:
+                              description: 'Name: Name of the service bind'
+                              type: string
+                            serviceReference:
+                              description: 'ServiceReference: Resource id of the target
+                                service'
+                              properties:
+                                armId:
+                                  description: |-
+                                    ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                    The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                    ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                                  pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                                  type: string
+                                group:
+                                  description: Group is the Kubernetes group of the
+                                    resource.
+                                  type: string
+                                kind:
+                                  description: Kind is the Kubernetes kind of the
+                                    resource.
+                                  type: string
+                                name:
+                                  description: Name is the Kubernetes name of the
+                                    resource.
+                                  type: string
+                              type: object
+                          type: object
+                        type: array
+                    required:
+                    - componentType
+                    type: object
                   springBootAdmin:
                     description: 'SpringBootAdmin: Mutually exclusive with all other
                       properties'
@@ -393,6 +466,109 @@ spec:
                     required:
                     - componentType
                     type: object
+                  springCloudGateway:
+                    description: 'SpringCloudGateway: Mutually exclusive with all
+                      other properties'
+                    properties:
+                      componentType:
+                        description: 'ComponentType: Type of the Java Component.'
+                        enum:
+                        - SpringCloudGateway
+                        type: string
+                      configurations:
+                        description: 'Configurations: List of Java Components configuration
+                          properties'
+                        items:
+                          description: Configuration properties for a Java Component
+                          properties:
+                            propertyName:
+                              description: 'PropertyName: The name of the property'
+                              type: string
+                            value:
+                              description: 'Value: The value of the property'
+                              type: string
+                          type: object
+                        type: array
+                      scale:
+                        description: 'Scale: Java component scaling configurations'
+                        properties:
+                          maxReplicas:
+                            description: 'MaxReplicas: Optional. Maximum number of
+                              Java component replicas'
+                            type: integer
+                          minReplicas:
+                            description: 'MinReplicas: Optional. Minimum number of
+                              Java component replicas. Defaults to 1 if not set'
+                            type: integer
+                        type: object
+                      serviceBinds:
+                        description: 'ServiceBinds: List of Java Components that are
+                          bound to the Java component'
+                        items:
+                          description: Configuration to bind a Java Component to another
+                            Java Component
+                          properties:
+                            name:
+                              description: 'Name: Name of the service bind'
+                              type: string
+                            serviceReference:
+                              description: 'ServiceReference: Resource id of the target
+                                service'
+                              properties:
+                                armId:
+                                  description: |-
+                                    ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                    The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                    ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                                  pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                                  type: string
+                                group:
+                                  description: Group is the Kubernetes group of the
+                                    resource.
+                                  type: string
+                                kind:
+                                  description: Kind is the Kubernetes kind of the
+                                    resource.
+                                  type: string
+                                name:
+                                  description: Name is the Kubernetes name of the
+                                    resource.
+                                  type: string
+                              type: object
+                          type: object
+                        type: array
+                      springCloudGatewayRoutes:
+                        description: 'SpringCloudGatewayRoutes: Gateway route definition'
+                        items:
+                          description: Spring Cloud Gateway route definition
+                          properties:
+                            filters:
+                              description: 'Filters: Filters of the route'
+                              items:
+                                type: string
+                              type: array
+                            id:
+                              description: 'Id: Id of the route'
+                              type: string
+                            order:
+                              description: 'Order: Order of the route'
+                              type: integer
+                            predicates:
+                              description: 'Predicates: Predicates of the route'
+                              items:
+                                type: string
+                              type: array
+                            uri:
+                              description: 'Uri: Uri of the route'
+                              type: string
+                          required:
+                          - id
+                          - uri
+                          type: object
+                        type: array
+                    required:
+                    - componentType
+                    type: object
                 type: object
             required:
             - owner
@@ -458,6 +634,65 @@ spec:
               properties:
                 description: 'Properties: Java Component resource specific properties'
                 properties:
+                  nacos:
+                    description: 'Nacos: Mutually exclusive with all other properties'
+                    properties:
+                      componentType:
+                        description: 'ComponentType: Type of the Java Component.'
+                        type: string
+                      configurations:
+                        description: 'Configurations: List of Java Components configuration
+                          properties'
+                        items:
+                          description: Configuration properties for a Java Component
+                          properties:
+                            propertyName:
+                              description: 'PropertyName: The name of the property'
+                              type: string
+                            value:
+                              description: 'Value: The value of the property'
+                              type: string
+                          type: object
+                        type: array
+                      ingress:
+                        description: 'Ingress: Java Component Ingress configurations.'
+                        properties:
+                          fqdn:
+                            description: 'Fqdn: Hostname of the Java Component endpoint'
+                            type: string
+                        type: object
+                      provisioningState:
+                        description: 'ProvisioningState: Provisioning state of the
+                          Java Component.'
+                        type: string
+                      scale:
+                        description: 'Scale: Java component scaling configurations'
+                        properties:
+                          maxReplicas:
+                            description: 'MaxReplicas: Optional. Maximum number of
+                              Java component replicas'
+                            type: integer
+                          minReplicas:
+                            description: 'MinReplicas: Optional. Minimum number of
+                              Java component replicas. Defaults to 1 if not set'
+                            type: integer
+                        type: object
+                      serviceBinds:
+                        description: 'ServiceBinds: List of Java Components that are
+                          bound to the Java component'
+                        items:
+                          description: Configuration to bind a Java Component to another
+                            Java Component
+                          properties:
+                            name:
+                              description: 'Name: Name of the service bind'
+                              type: string
+                            serviceId:
+                              description: 'ServiceId: Resource id of the target service'
+                              type: string
+                          type: object
+                        type: array
+                    type: object
                   springBootAdmin:
                     description: 'SpringBootAdmin: Mutually exclusive with all other
                       properties'
@@ -627,6 +862,92 @@ spec:
                               type: string
                             serviceId:
                               description: 'ServiceId: Resource id of the target service'
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  springCloudGateway:
+                    description: 'SpringCloudGateway: Mutually exclusive with all
+                      other properties'
+                    properties:
+                      componentType:
+                        description: 'ComponentType: Type of the Java Component.'
+                        type: string
+                      configurations:
+                        description: 'Configurations: List of Java Components configuration
+                          properties'
+                        items:
+                          description: Configuration properties for a Java Component
+                          properties:
+                            propertyName:
+                              description: 'PropertyName: The name of the property'
+                              type: string
+                            value:
+                              description: 'Value: The value of the property'
+                              type: string
+                          type: object
+                        type: array
+                      ingress:
+                        description: 'Ingress: Java Component Ingress configurations.'
+                        properties:
+                          fqdn:
+                            description: 'Fqdn: Hostname of the Java Component endpoint'
+                            type: string
+                        type: object
+                      provisioningState:
+                        description: 'ProvisioningState: Provisioning state of the
+                          Java Component.'
+                        type: string
+                      scale:
+                        description: 'Scale: Java component scaling configurations'
+                        properties:
+                          maxReplicas:
+                            description: 'MaxReplicas: Optional. Maximum number of
+                              Java component replicas'
+                            type: integer
+                          minReplicas:
+                            description: 'MinReplicas: Optional. Minimum number of
+                              Java component replicas. Defaults to 1 if not set'
+                            type: integer
+                        type: object
+                      serviceBinds:
+                        description: 'ServiceBinds: List of Java Components that are
+                          bound to the Java component'
+                        items:
+                          description: Configuration to bind a Java Component to another
+                            Java Component
+                          properties:
+                            name:
+                              description: 'Name: Name of the service bind'
+                              type: string
+                            serviceId:
+                              description: 'ServiceId: Resource id of the target service'
+                              type: string
+                          type: object
+                        type: array
+                      springCloudGatewayRoutes:
+                        description: 'SpringCloudGatewayRoutes: Gateway route definition'
+                        items:
+                          description: Spring Cloud Gateway route definition
+                          properties:
+                            filters:
+                              description: 'Filters: Filters of the route'
+                              items:
+                                type: string
+                              type: array
+                            id:
+                              description: 'Id: Id of the route'
+                              type: string
+                            order:
+                              description: 'Order: Order of the route'
+                              type: integer
+                            predicates:
+                              description: 'Predicates: Predicates of the route'
+                              items:
+                                type: string
+                              type: array
+                            uri:
+                              description: 'Uri: Uri of the route'
                               type: string
                           type: object
                         type: array

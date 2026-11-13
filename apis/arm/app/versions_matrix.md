@@ -1,208 +1,231 @@
-| Type Definitions in package "app"                                                | v20250101 | v20260101 |
-|----------------------------------------------------------------------------------|-----------|-----------|
-| APIVersion                                                                       | v20250101 | v20260101 |
-| AccessMode                                                                       |           | v20260101 |
-| AccessMode_STATUS                                                                |           | v20260101 |
-| AzureCredentials                                                                 |           | v20260101 |
-| AzureCredentials_STATUS                                                          |           | v20260101 |
-| AzureFileProperties                                                              | v20250101 | v20260101 |
-| AzureFileProperties_AccessMode                                                   | v20250101 |           |
-| AzureFileProperties_AccessMode_STATUS                                            | v20250101 |           |
-| AzureFileProperties_STATUS                                                       | v20250101 | v20260101 |
-| BindingType                                                                      |           | v20260101 |
-| BindingType_STATUS                                                               |           | v20260101 |
-| CertificateKeyVaultProperties                                                    | v20250101 | v20260101 |
-| CertificateKeyVaultProperties_STATUS                                             | v20250101 | v20260101 |
-| CertificateProperties                                                            |           | v20260101 |
-| CertificateProperties_STATUS                                                     |           | v20260101 |
-| CertificateProvisioningState_STATUS                                              |           | v20260101 |
-| ConnectedEnvironment                                                             |           | v20260101 |
-| ConnectedEnvironmentProperties                                                   |           | v20260101 |
-| ConnectedEnvironmentProperties_STATUS                                            |           | v20260101 |
-| ConnectedEnvironmentProvisioningState_STATUS                                     |           | v20260101 |
-| ConnectedEnvironmentStorageProperties                                            |           | v20260101 |
-| ConnectedEnvironmentStorageProperties_STATUS                                     |           | v20260101 |
-| ConnectedEnvironmentStorageProvisioningState_STATUS                              |           | v20260101 |
-| ConnectedEnvironment_STATUS                                                      |           | v20260101 |
-| ConnectedEnvironment_Spec                                                        |           | v20260101 |
-| ConnectedEnvironmentsCertificate                                                 |           | v20260101 |
-| ConnectedEnvironmentsCertificate_STATUS                                          |           | v20260101 |
-| ConnectedEnvironmentsCertificate_Spec                                            |           | v20260101 |
-| ConnectedEnvironmentsDaprComponent                                               |           | v20260101 |
-| ConnectedEnvironmentsDaprComponent_STATUS                                        |           | v20260101 |
-| ConnectedEnvironmentsDaprComponent_Spec                                          |           | v20260101 |
-| ConnectedEnvironmentsStorage                                                     |           | v20260101 |
-| ConnectedEnvironmentsStorage_STATUS                                              |           | v20260101 |
-| ConnectedEnvironmentsStorage_Spec                                                |           | v20260101 |
-| ContainerAppsSourceControl                                                       |           | v20260101 |
-| ContainerAppsSourceControl_STATUS                                                |           | v20260101 |
-| ContainerAppsSourceControl_Spec                                                  |           | v20260101 |
-| ContainerType                                                                    |           | v20260101 |
-| ContainerType_STATUS                                                             |           | v20260101 |
-| CustomContainerTemplate                                                          |           | v20260101 |
-| CustomContainerTemplate_STATUS                                                   |           | v20260101 |
-| CustomDomain                                                                     |           | v20260101 |
-| CustomDomainConfiguration                                                        |           | v20260101 |
-| CustomDomainConfiguration_STATUS                                                 |           | v20260101 |
-| CustomDomain_STATUS                                                              |           | v20260101 |
-| DaprComponentProperties                                                          |           | v20260101 |
-| DaprComponentProperties_STATUS                                                   |           | v20260101 |
-| DaprComponentProvisioningState_STATUS                                            |           | v20260101 |
-| DaprMetadata                                                                     | v20250101 | v20260101 |
-| DaprMetadata_STATUS                                                              | v20250101 | v20260101 |
-| DynamicPoolConfiguration                                                         |           | v20260101 |
-| DynamicPoolConfiguration_STATUS                                                  |           | v20260101 |
-| EnvironmentVar                                                                   |           | v20260101 |
-| EnvironmentVar_STATUS                                                            |           | v20260101 |
-| ExtendedLocation                                                                 |           | v20260101 |
-| ExtendedLocationTypes                                                            |           | v20260101 |
-| ExtendedLocationTypes_STATUS                                                     |           | v20260101 |
-| ExtendedLocation_STATUS                                                          |           | v20260101 |
-| GithubActionConfiguration                                                        |           | v20260101 |
-| GithubActionConfiguration_STATUS                                                 |           | v20260101 |
-| HttpRoute                                                                        |           | v20260101 |
-| HttpRouteAction                                                                  |           | v20260101 |
-| HttpRouteAction_STATUS                                                           |           | v20260101 |
-| HttpRouteConfigProperties                                                        |           | v20260101 |
-| HttpRouteConfigProperties_STATUS                                                 |           | v20260101 |
-| HttpRouteMatch                                                                   |           | v20260101 |
-| HttpRouteMatch_STATUS                                                            |           | v20260101 |
-| HttpRouteProvisioningErrors_STATUS                                               |           | v20260101 |
-| HttpRouteProvisioningState_STATUS                                                |           | v20260101 |
-| HttpRouteRule                                                                    |           | v20260101 |
-| HttpRouteRule_STATUS                                                             |           | v20260101 |
-| HttpRouteTarget                                                                  |           | v20260101 |
-| HttpRouteTarget_STATUS                                                           |           | v20260101 |
-| HttpRoute_STATUS                                                                 |           | v20260101 |
-| JavaComponentConfigurationProperty                                               | v20250101 |           |
-| JavaComponentConfigurationProperty_STATUS                                        | v20250101 |           |
-| JavaComponentIngress_STATUS                                                      | v20250101 |           |
-| JavaComponentProperties                                                          | v20250101 |           |
-| JavaComponentProperties_STATUS                                                   | v20250101 |           |
-| JavaComponentServiceBind                                                         | v20250101 |           |
-| JavaComponentServiceBind_STATUS                                                  | v20250101 |           |
-| LifecycleConfiguration                                                           |           | v20260101 |
-| LifecycleConfiguration_STATUS                                                    |           | v20260101 |
-| LifecycleType                                                                    |           | v20260101 |
-| LifecycleType_STATUS                                                             |           | v20260101 |
-| ManagedEnvironmentsCertificate                                                   | v20250101 |           |
-| ManagedEnvironmentsCertificate_STATUS                                            | v20250101 |           |
-| ManagedEnvironmentsCertificate_Spec                                              | v20250101 |           |
-| ManagedEnvironmentsDaprComponent                                                 | v20250101 |           |
-| ManagedEnvironmentsDaprComponent_STATUS                                          | v20250101 |           |
-| ManagedEnvironmentsDaprComponent_Spec                                            | v20250101 |           |
-| ManagedEnvironmentsHttpRouteConfig                                               |           | v20260101 |
-| ManagedEnvironmentsHttpRouteConfig_STATUS                                        |           | v20260101 |
-| ManagedEnvironmentsHttpRouteConfig_Spec                                          |           | v20260101 |
-| ManagedEnvironmentsJavaComponent                                                 | v20250101 |           |
-| ManagedEnvironmentsJavaComponent_STATUS                                          | v20250101 |           |
-| ManagedEnvironmentsJavaComponent_Spec                                            | v20250101 |           |
-| ManagedEnvironmentsMaintenanceConfiguration                                      |           | v20260101 |
-| ManagedEnvironmentsMaintenanceConfiguration_STATUS                               |           | v20260101 |
-| ManagedEnvironmentsMaintenanceConfiguration_Spec                                 |           | v20260101 |
-| ManagedEnvironmentsManagedCertificate                                            | v20250101 |           |
-| ManagedEnvironmentsManagedCertificate_STATUS                                     | v20250101 |           |
-| ManagedEnvironmentsManagedCertificate_Spec                                       | v20250101 |           |
-| ManagedEnvironmentsPrivateEndpointConnection                                     |           | v20260101 |
-| ManagedEnvironmentsPrivateEndpointConnection_STATUS                              |           | v20260101 |
-| ManagedEnvironmentsPrivateEndpointConnection_Spec                                |           | v20260101 |
-| ManagedEnvironmentsStorage                                                       | v20250101 |           |
-| ManagedEnvironmentsStorage_STATUS                                                | v20250101 |           |
-| ManagedEnvironmentsStorage_Spec                                                  | v20250101 |           |
-| ManagedEnvironments_Certificate_Properties_ProvisioningState_STATUS              | v20250101 |           |
-| ManagedEnvironments_Certificate_Properties_STATUS                                | v20250101 |           |
-| ManagedEnvironments_Certificate_Properties_Spec                                  | v20250101 |           |
-| ManagedEnvironments_DaprComponent_Properties_STATUS                              | v20250101 |           |
-| ManagedEnvironments_DaprComponent_Properties_Spec                                | v20250101 |           |
-| ManagedEnvironments_ManagedCertificate_Properties_DomainControlValidation_STATUS | v20250101 |           |
-| ManagedEnvironments_ManagedCertificate_Properties_DomainControlValidation_Spec   | v20250101 |           |
-| ManagedEnvironments_ManagedCertificate_Properties_ProvisioningState_STATUS       | v20250101 |           |
-| ManagedEnvironments_ManagedCertificate_Properties_STATUS                         | v20250101 |           |
-| ManagedEnvironments_ManagedCertificate_Properties_Spec                           | v20250101 |           |
-| ManagedEnvironments_Storage_Properties_STATUS                                    | v20250101 |           |
-| ManagedEnvironments_Storage_Properties_Spec                                      | v20250101 |           |
-| ManagedIdentitySetting                                                           |           | v20260101 |
-| ManagedIdentitySetting_Lifecycle                                                 |           | v20260101 |
-| ManagedIdentitySetting_Lifecycle_STATUS                                          |           | v20260101 |
-| ManagedIdentitySetting_STATUS                                                    |           | v20260101 |
-| ManagedServiceIdentity                                                           |           | v20260101 |
-| ManagedServiceIdentityType                                                       |           | v20260101 |
-| ManagedServiceIdentityType_STATUS                                                |           | v20260101 |
-| ManagedServiceIdentity_STATUS                                                    |           | v20260101 |
-| NfsAzureFileProperties                                                           | v20250101 |           |
-| NfsAzureFileProperties_AccessMode                                                | v20250101 |           |
-| NfsAzureFileProperties_AccessMode_STATUS                                         | v20250101 |           |
-| NfsAzureFileProperties_STATUS                                                    | v20250101 |           |
-| PoolManagementType                                                               |           | v20260101 |
-| PoolManagementType_STATUS                                                        |           | v20260101 |
-| PrivateEndpointConnectionProperties                                              |           | v20260101 |
-| PrivateEndpointConnectionProperties_STATUS                                       |           | v20260101 |
-| PrivateEndpointConnectionProvisioningState_STATUS                                |           | v20260101 |
-| PrivateEndpointServiceConnectionStatus                                           |           | v20260101 |
-| PrivateEndpointServiceConnectionStatus_STATUS                                    |           | v20260101 |
-| PrivateEndpoint_STATUS                                                           |           | v20260101 |
-| PrivateLinkServiceConnectionState                                                |           | v20260101 |
-| PrivateLinkServiceConnectionState_STATUS                                         |           | v20260101 |
-| RegistryInfo                                                                     |           | v20260101 |
-| RegistryInfo_STATUS                                                              |           | v20260101 |
-| ScaleConfiguration                                                               |           | v20260101 |
-| ScaleConfiguration_STATUS                                                        |           | v20260101 |
-| ScheduledEntries                                                                 |           | v20260101 |
-| ScheduledEntries_STATUS                                                          |           | v20260101 |
-| ScheduledEntry                                                                   |           | v20260101 |
-| ScheduledEntry_STATUS                                                            |           | v20260101 |
-| Secret                                                                           | v20250101 | v20260101 |
-| SecretKeyVaultProperties                                                         |           | v20260101 |
-| SecretKeyVaultProperties_STATUS                                                  |           | v20260101 |
-| Secret_STATUS                                                                    | v20250101 | v20260101 |
-| SessionContainer                                                                 |           | v20260101 |
-| SessionContainerResources                                                        |           | v20260101 |
-| SessionContainerResources_STATUS                                                 |           | v20260101 |
-| SessionContainer_STATUS                                                          |           | v20260101 |
-| SessionIngress                                                                   |           | v20260101 |
-| SessionIngress_STATUS                                                            |           | v20260101 |
-| SessionNetworkConfiguration                                                      |           | v20260101 |
-| SessionNetworkConfiguration_STATUS                                               |           | v20260101 |
-| SessionNetworkStatus                                                             |           | v20260101 |
-| SessionNetworkStatus_STATUS                                                      |           | v20260101 |
-| SessionPool                                                                      |           | v20260101 |
-| SessionPoolProperties                                                            |           | v20260101 |
-| SessionPoolProperties_STATUS                                                     |           | v20260101 |
-| SessionPoolProvisioningState_STATUS                                              |           | v20260101 |
-| SessionPoolSecret                                                                |           | v20260101 |
-| SessionPoolSecret_STATUS                                                         |           | v20260101 |
-| SessionPool_STATUS                                                               |           | v20260101 |
-| SessionPool_Spec                                                                 |           | v20260101 |
-| SessionRegistryCredentials                                                       |           | v20260101 |
-| SessionRegistryCredentials_STATUS                                                |           | v20260101 |
-| SourceControlOperationState_STATUS                                               |           | v20260101 |
-| SourceControlProperties                                                          |           | v20260101 |
-| SourceControlProperties_STATUS                                                   |           | v20260101 |
-| SpringBootAdminComponent                                                         | v20250101 |           |
-| SpringBootAdminComponent_ComponentType                                           | v20250101 |           |
-| SpringBootAdminComponent_ComponentType_STATUS                                    | v20250101 |           |
-| SpringBootAdminComponent_ProvisioningState_STATUS                                | v20250101 |           |
-| SpringBootAdminComponent_STATUS                                                  | v20250101 |           |
-| SpringBootAdminComponent_Scale                                                   | v20250101 |           |
-| SpringBootAdminComponent_Scale_STATUS                                            | v20250101 |           |
-| SpringCloudConfigComponent                                                       | v20250101 |           |
-| SpringCloudConfigComponent_ComponentType                                         | v20250101 |           |
-| SpringCloudConfigComponent_ComponentType_STATUS                                  | v20250101 |           |
-| SpringCloudConfigComponent_ProvisioningState_STATUS                              | v20250101 |           |
-| SpringCloudConfigComponent_STATUS                                                | v20250101 |           |
-| SpringCloudConfigComponent_Scale                                                 | v20250101 |           |
-| SpringCloudConfigComponent_Scale_STATUS                                          | v20250101 |           |
-| SpringCloudEurekaComponent                                                       | v20250101 |           |
-| SpringCloudEurekaComponent_ComponentType                                         | v20250101 |           |
-| SpringCloudEurekaComponent_ComponentType_STATUS                                  | v20250101 |           |
-| SpringCloudEurekaComponent_ProvisioningState_STATUS                              | v20250101 |           |
-| SpringCloudEurekaComponent_STATUS                                                | v20250101 |           |
-| SpringCloudEurekaComponent_Scale                                                 | v20250101 |           |
-| SpringCloudEurekaComponent_Scale_STATUS                                          | v20250101 |           |
-| SystemData_CreatedByType_STATUS                                                  | v20250101 | v20260101 |
-| SystemData_LastModifiedByType_STATUS                                             | v20250101 | v20260101 |
-| SystemData_STATUS                                                                | v20250101 | v20260101 |
-| UserAssignedIdentityDetails                                                      |           | v20260101 |
-| UserAssignedIdentity_STATUS                                                      |           | v20260101 |
-| WeekDay                                                                          |           | v20260101 |
-| WeekDay_STATUS                                                                   |           | v20260101 |
+| Type Definitions in package "app"                                                | v20250101 | v20260101 | v20260302preview | v20260701 |
+|----------------------------------------------------------------------------------|-----------|-----------|------------------|-----------|
+| APIVersion                                                                       | v20250101 | v20260101 | v20260302preview | v20260701 |
+| AccessMode                                                                       |           | v20260101 |                  |           |
+| AccessMode_STATUS                                                                |           | v20260101 |                  |           |
+| AzureCredentials                                                                 |           | v20260101 |                  |           |
+| AzureCredentials_STATUS                                                          |           | v20260101 |                  |           |
+| AzureFileProperties                                                              |           | v20260101 |                  |           |
+| AzureFileProperties_STATUS                                                       |           | v20260101 |                  |           |
+| BindingType                                                                      |           | v20260101 |                  |           |
+| BindingType_STATUS                                                               |           | v20260101 |                  |           |
+| CertificateKeyVaultProperties                                                    | v20250101 | v20260101 |                  |           |
+| CertificateKeyVaultProperties_STATUS                                             | v20250101 | v20260101 |                  |           |
+| CertificateProperties                                                            |           | v20260101 |                  |           |
+| CertificateProperties_STATUS                                                     |           | v20260101 |                  |           |
+| CertificateProvisioningState_STATUS                                              |           | v20260101 |                  |           |
+| ConnectedEnvironment                                                             |           | v20260101 |                  |           |
+| ConnectedEnvironmentProperties                                                   |           | v20260101 |                  |           |
+| ConnectedEnvironmentProperties_STATUS                                            |           | v20260101 |                  |           |
+| ConnectedEnvironmentProvisioningState_STATUS                                     |           | v20260101 |                  |           |
+| ConnectedEnvironmentStorageProperties                                            |           | v20260101 |                  |           |
+| ConnectedEnvironmentStorageProperties_STATUS                                     |           | v20260101 |                  |           |
+| ConnectedEnvironmentStorageProvisioningState_STATUS                              |           | v20260101 |                  |           |
+| ConnectedEnvironment_STATUS                                                      |           | v20260101 |                  |           |
+| ConnectedEnvironment_Spec                                                        |           | v20260101 |                  |           |
+| ConnectedEnvironmentsCertificate                                                 |           | v20260101 |                  |           |
+| ConnectedEnvironmentsCertificate_STATUS                                          |           | v20260101 |                  |           |
+| ConnectedEnvironmentsCertificate_Spec                                            |           | v20260101 |                  |           |
+| ConnectedEnvironmentsDaprComponent                                               |           | v20260101 |                  |           |
+| ConnectedEnvironmentsDaprComponent_STATUS                                        |           | v20260101 |                  |           |
+| ConnectedEnvironmentsDaprComponent_Spec                                          |           | v20260101 |                  |           |
+| ConnectedEnvironmentsStorage                                                     |           | v20260101 |                  |           |
+| ConnectedEnvironmentsStorage_STATUS                                              |           | v20260101 |                  |           |
+| ConnectedEnvironmentsStorage_Spec                                                |           | v20260101 |                  |           |
+| ContainerAppsSourceControl                                                       |           | v20260101 |                  |           |
+| ContainerAppsSourceControl_STATUS                                                |           | v20260101 |                  |           |
+| ContainerAppsSourceControl_Spec                                                  |           | v20260101 |                  |           |
+| ContainerType                                                                    |           | v20260101 |                  |           |
+| ContainerType_STATUS                                                             |           | v20260101 |                  |           |
+| CustomContainerTemplate                                                          |           | v20260101 |                  |           |
+| CustomContainerTemplate_STATUS                                                   |           | v20260101 |                  |           |
+| CustomDomain                                                                     |           | v20260101 |                  |           |
+| CustomDomainConfiguration                                                        |           | v20260101 |                  |           |
+| CustomDomainConfiguration_STATUS                                                 |           | v20260101 |                  |           |
+| CustomDomain_STATUS                                                              |           | v20260101 |                  |           |
+| DaprComponentProperties                                                          |           | v20260101 |                  |           |
+| DaprComponentProperties_STATUS                                                   |           | v20260101 |                  |           |
+| DaprComponentProvisioningState_STATUS                                            |           | v20260101 |                  |           |
+| DaprMetadata                                                                     | v20250101 | v20260101 |                  |           |
+| DaprMetadata_STATUS                                                              | v20250101 | v20260101 |                  |           |
+| DaprSubscriptionBulkSubscribeOptions                                             |           |           | v20260302preview |           |
+| DaprSubscriptionBulkSubscribeOptions_STATUS                                      |           |           | v20260302preview |           |
+| DaprSubscriptionProperties                                                       |           |           | v20260302preview |           |
+| DaprSubscriptionProperties_STATUS                                                |           |           | v20260302preview |           |
+| DaprSubscriptionRouteRule                                                        |           |           | v20260302preview |           |
+| DaprSubscriptionRouteRule_STATUS                                                 |           |           | v20260302preview |           |
+| DaprSubscriptionRoutes                                                           |           |           | v20260302preview |           |
+| DaprSubscriptionRoutes_STATUS                                                    |           |           | v20260302preview |           |
+| DotNetComponentConfigurationProperty                                             |           |           |                  | v20260701 |
+| DotNetComponentConfigurationProperty_STATUS                                      |           |           |                  | v20260701 |
+| DotNetComponentProperties                                                        |           |           |                  | v20260701 |
+| DotNetComponentProperties_STATUS                                                 |           |           |                  | v20260701 |
+| DotNetComponentProvisioningState_STATUS                                          |           |           |                  | v20260701 |
+| DotNetComponentServiceBind                                                       |           |           |                  | v20260701 |
+| DotNetComponentServiceBind_STATUS                                                |           |           |                  | v20260701 |
+| DotNetComponentType                                                              |           |           |                  | v20260701 |
+| DotNetComponentType_STATUS                                                       |           |           |                  | v20260701 |
+| DynamicPoolConfiguration                                                         |           | v20260101 |                  |           |
+| DynamicPoolConfiguration_STATUS                                                  |           | v20260101 |                  |           |
+| EnvironmentVar                                                                   |           | v20260101 |                  |           |
+| EnvironmentVar_STATUS                                                            |           | v20260101 |                  |           |
+| ExtendedLocation                                                                 |           | v20260101 |                  |           |
+| ExtendedLocationTypes                                                            |           | v20260101 |                  |           |
+| ExtendedLocationTypes_STATUS                                                     |           | v20260101 |                  |           |
+| ExtendedLocation_STATUS                                                          |           | v20260101 |                  |           |
+| GithubActionConfiguration                                                        |           | v20260101 |                  |           |
+| GithubActionConfiguration_STATUS                                                 |           | v20260101 |                  |           |
+| HttpRoute                                                                        |           | v20260101 |                  |           |
+| HttpRouteAction                                                                  |           | v20260101 |                  |           |
+| HttpRouteAction_STATUS                                                           |           | v20260101 |                  |           |
+| HttpRouteConfigProperties                                                        |           | v20260101 |                  |           |
+| HttpRouteConfigProperties_STATUS                                                 |           | v20260101 |                  |           |
+| HttpRouteMatch                                                                   |           | v20260101 |                  |           |
+| HttpRouteMatch_STATUS                                                            |           | v20260101 |                  |           |
+| HttpRouteProvisioningErrors_STATUS                                               |           | v20260101 |                  |           |
+| HttpRouteProvisioningState_STATUS                                                |           | v20260101 |                  |           |
+| HttpRouteRule                                                                    |           | v20260101 |                  |           |
+| HttpRouteRule_STATUS                                                             |           | v20260101 |                  |           |
+| HttpRouteTarget                                                                  |           | v20260101 |                  |           |
+| HttpRouteTarget_STATUS                                                           |           | v20260101 |                  |           |
+| HttpRoute_STATUS                                                                 |           | v20260101 |                  |           |
+| JavaComponentConfigurationProperty                                               |           |           | v20260302preview |           |
+| JavaComponentConfigurationProperty_STATUS                                        |           |           | v20260302preview |           |
+| JavaComponentIngress_STATUS                                                      |           |           | v20260302preview |           |
+| JavaComponentProperties                                                          |           |           | v20260302preview |           |
+| JavaComponentPropertiesScale                                                     |           |           | v20260302preview |           |
+| JavaComponentPropertiesScale_STATUS                                              |           |           | v20260302preview |           |
+| JavaComponentProperties_STATUS                                                   |           |           | v20260302preview |           |
+| JavaComponentProvisioningState_STATUS                                            |           |           | v20260302preview |           |
+| JavaComponentServiceBind                                                         |           |           | v20260302preview |           |
+| JavaComponentServiceBind_STATUS                                                  |           |           | v20260302preview |           |
+| LifecycleConfiguration                                                           |           | v20260101 |                  |           |
+| LifecycleConfiguration_STATUS                                                    |           | v20260101 |                  |           |
+| LifecycleType                                                                    |           | v20260101 |                  |           |
+| LifecycleType_STATUS                                                             |           | v20260101 |                  |           |
+| ManagedEnvironmentStorageProperties                                              |           | v20260101 |                  |           |
+| ManagedEnvironmentStorageProperties_STATUS                                       |           | v20260101 |                  |           |
+| ManagedEnvironmentsCertificate                                                   | v20250101 |           |                  |           |
+| ManagedEnvironmentsCertificate_STATUS                                            | v20250101 |           |                  |           |
+| ManagedEnvironmentsCertificate_Spec                                              | v20250101 |           |                  |           |
+| ManagedEnvironmentsDaprComponent                                                 | v20250101 |           |                  |           |
+| ManagedEnvironmentsDaprComponent_STATUS                                          | v20250101 |           |                  |           |
+| ManagedEnvironmentsDaprComponent_Spec                                            | v20250101 |           |                  |           |
+| ManagedEnvironmentsDaprSubscription                                              |           |           | v20260302preview |           |
+| ManagedEnvironmentsDaprSubscription_STATUS                                       |           |           | v20260302preview |           |
+| ManagedEnvironmentsDaprSubscription_Spec                                         |           |           | v20260302preview |           |
+| ManagedEnvironmentsDotNetComponent                                               |           |           |                  | v20260701 |
+| ManagedEnvironmentsDotNetComponent_STATUS                                        |           |           |                  | v20260701 |
+| ManagedEnvironmentsDotNetComponent_Spec                                          |           |           |                  | v20260701 |
+| ManagedEnvironmentsHttpRouteConfig                                               |           | v20260101 |                  |           |
+| ManagedEnvironmentsHttpRouteConfig_STATUS                                        |           | v20260101 |                  |           |
+| ManagedEnvironmentsHttpRouteConfig_Spec                                          |           | v20260101 |                  |           |
+| ManagedEnvironmentsJavaComponent                                                 |           |           | v20260302preview |           |
+| ManagedEnvironmentsJavaComponent_STATUS                                          |           |           | v20260302preview |           |
+| ManagedEnvironmentsJavaComponent_Spec                                            |           |           | v20260302preview |           |
+| ManagedEnvironmentsMaintenanceConfiguration                                      |           | v20260101 |                  |           |
+| ManagedEnvironmentsMaintenanceConfiguration_STATUS                               |           | v20260101 |                  |           |
+| ManagedEnvironmentsMaintenanceConfiguration_Spec                                 |           | v20260101 |                  |           |
+| ManagedEnvironmentsManagedCertificate                                            | v20250101 |           |                  |           |
+| ManagedEnvironmentsManagedCertificate_STATUS                                     | v20250101 |           |                  |           |
+| ManagedEnvironmentsManagedCertificate_Spec                                       | v20250101 |           |                  |           |
+| ManagedEnvironmentsPrivateEndpointConnection                                     |           | v20260101 |                  |           |
+| ManagedEnvironmentsPrivateEndpointConnection_STATUS                              |           | v20260101 |                  |           |
+| ManagedEnvironmentsPrivateEndpointConnection_Spec                                |           | v20260101 |                  |           |
+| ManagedEnvironmentsStorage                                                       |           | v20260101 |                  |           |
+| ManagedEnvironmentsStorage_STATUS                                                |           | v20260101 |                  |           |
+| ManagedEnvironmentsStorage_Spec                                                  |           | v20260101 |                  |           |
+| ManagedEnvironments_Certificate_Properties_ProvisioningState_STATUS              | v20250101 |           |                  |           |
+| ManagedEnvironments_Certificate_Properties_STATUS                                | v20250101 |           |                  |           |
+| ManagedEnvironments_Certificate_Properties_Spec                                  | v20250101 |           |                  |           |
+| ManagedEnvironments_DaprComponent_Properties_STATUS                              | v20250101 |           |                  |           |
+| ManagedEnvironments_DaprComponent_Properties_Spec                                | v20250101 |           |                  |           |
+| ManagedEnvironments_ManagedCertificate_Properties_DomainControlValidation_STATUS | v20250101 |           |                  |           |
+| ManagedEnvironments_ManagedCertificate_Properties_DomainControlValidation_Spec   | v20250101 |           |                  |           |
+| ManagedEnvironments_ManagedCertificate_Properties_ProvisioningState_STATUS       | v20250101 |           |                  |           |
+| ManagedEnvironments_ManagedCertificate_Properties_STATUS                         | v20250101 |           |                  |           |
+| ManagedEnvironments_ManagedCertificate_Properties_Spec                           | v20250101 |           |                  |           |
+| ManagedIdentitySetting                                                           |           | v20260101 |                  |           |
+| ManagedIdentitySetting_Lifecycle                                                 |           | v20260101 |                  |           |
+| ManagedIdentitySetting_Lifecycle_STATUS                                          |           | v20260101 |                  |           |
+| ManagedIdentitySetting_STATUS                                                    |           | v20260101 |                  |           |
+| ManagedServiceIdentity                                                           |           | v20260101 |                  |           |
+| ManagedServiceIdentityType                                                       |           | v20260101 |                  |           |
+| ManagedServiceIdentityType_STATUS                                                |           | v20260101 |                  |           |
+| ManagedServiceIdentity_STATUS                                                    |           | v20260101 |                  |           |
+| NacosComponent                                                                   |           |           | v20260302preview |           |
+| NacosComponent_ComponentType                                                     |           |           | v20260302preview |           |
+| NacosComponent_ComponentType_STATUS                                              |           |           | v20260302preview |           |
+| NacosComponent_STATUS                                                            |           |           | v20260302preview |           |
+| NfsAzureFileProperties                                                           |           | v20260101 |                  |           |
+| NfsAzureFileProperties_STATUS                                                    |           | v20260101 |                  |           |
+| PoolManagementType                                                               |           | v20260101 |                  |           |
+| PoolManagementType_STATUS                                                        |           | v20260101 |                  |           |
+| PrivateEndpointConnectionProperties                                              |           | v20260101 |                  |           |
+| PrivateEndpointConnectionProperties_STATUS                                       |           | v20260101 |                  |           |
+| PrivateEndpointConnectionProvisioningState_STATUS                                |           | v20260101 |                  |           |
+| PrivateEndpointServiceConnectionStatus                                           |           | v20260101 |                  |           |
+| PrivateEndpointServiceConnectionStatus_STATUS                                    |           | v20260101 |                  |           |
+| PrivateEndpoint_STATUS                                                           |           | v20260101 |                  |           |
+| PrivateLinkServiceConnectionState                                                |           | v20260101 |                  |           |
+| PrivateLinkServiceConnectionState_STATUS                                         |           | v20260101 |                  |           |
+| RegistryInfo                                                                     |           | v20260101 |                  |           |
+| RegistryInfo_STATUS                                                              |           | v20260101 |                  |           |
+| ScaleConfiguration                                                               |           | v20260101 |                  |           |
+| ScaleConfiguration_STATUS                                                        |           | v20260101 |                  |           |
+| ScgRoute                                                                         |           |           | v20260302preview |           |
+| ScgRoute_STATUS                                                                  |           |           | v20260302preview |           |
+| ScheduledEntries                                                                 |           | v20260101 |                  |           |
+| ScheduledEntries_STATUS                                                          |           | v20260101 |                  |           |
+| ScheduledEntry                                                                   |           | v20260101 |                  |           |
+| ScheduledEntry_STATUS                                                            |           | v20260101 |                  |           |
+| Secret                                                                           | v20250101 | v20260101 |                  |           |
+| SecretKeyVaultProperties                                                         |           | v20260101 |                  |           |
+| SecretKeyVaultProperties_STATUS                                                  |           | v20260101 |                  |           |
+| Secret_STATUS                                                                    | v20250101 | v20260101 |                  |           |
+| SessionContainer                                                                 |           | v20260101 |                  |           |
+| SessionContainerResources                                                        |           | v20260101 |                  |           |
+| SessionContainerResources_STATUS                                                 |           | v20260101 |                  |           |
+| SessionContainer_STATUS                                                          |           | v20260101 |                  |           |
+| SessionIngress                                                                   |           | v20260101 |                  |           |
+| SessionIngress_STATUS                                                            |           | v20260101 |                  |           |
+| SessionNetworkConfiguration                                                      |           | v20260101 |                  |           |
+| SessionNetworkConfiguration_STATUS                                               |           | v20260101 |                  |           |
+| SessionNetworkStatus                                                             |           | v20260101 |                  |           |
+| SessionNetworkStatus_STATUS                                                      |           | v20260101 |                  |           |
+| SessionPool                                                                      |           | v20260101 |                  |           |
+| SessionPoolProperties                                                            |           | v20260101 |                  |           |
+| SessionPoolProperties_STATUS                                                     |           | v20260101 |                  |           |
+| SessionPoolProvisioningState_STATUS                                              |           | v20260101 |                  |           |
+| SessionPoolSecret                                                                |           | v20260101 |                  |           |
+| SessionPoolSecret_STATUS                                                         |           | v20260101 |                  |           |
+| SessionPool_STATUS                                                               |           | v20260101 |                  |           |
+| SessionPool_Spec                                                                 |           | v20260101 |                  |           |
+| SessionRegistryCredentials                                                       |           | v20260101 |                  |           |
+| SessionRegistryCredentials_STATUS                                                |           | v20260101 |                  |           |
+| SourceControlOperationState_STATUS                                               |           | v20260101 |                  |           |
+| SourceControlProperties                                                          |           | v20260101 |                  |           |
+| SourceControlProperties_STATUS                                                   |           | v20260101 |                  |           |
+| SpringBootAdminComponent                                                         |           |           | v20260302preview |           |
+| SpringBootAdminComponent_ComponentType                                           |           |           | v20260302preview |           |
+| SpringBootAdminComponent_ComponentType_STATUS                                    |           |           | v20260302preview |           |
+| SpringBootAdminComponent_STATUS                                                  |           |           | v20260302preview |           |
+| SpringCloudConfigComponent                                                       |           |           | v20260302preview |           |
+| SpringCloudConfigComponent_ComponentType                                         |           |           | v20260302preview |           |
+| SpringCloudConfigComponent_ComponentType_STATUS                                  |           |           | v20260302preview |           |
+| SpringCloudConfigComponent_STATUS                                                |           |           | v20260302preview |           |
+| SpringCloudEurekaComponent                                                       |           |           | v20260302preview |           |
+| SpringCloudEurekaComponent_ComponentType                                         |           |           | v20260302preview |           |
+| SpringCloudEurekaComponent_ComponentType_STATUS                                  |           |           | v20260302preview |           |
+| SpringCloudEurekaComponent_STATUS                                                |           |           | v20260302preview |           |
+| SpringCloudGatewayComponent                                                      |           |           | v20260302preview |           |
+| SpringCloudGatewayComponent_ComponentType                                        |           |           | v20260302preview |           |
+| SpringCloudGatewayComponent_ComponentType_STATUS                                 |           |           | v20260302preview |           |
+| SpringCloudGatewayComponent_STATUS                                               |           |           | v20260302preview |           |
+| SystemData_CreatedByType_STATUS                                                  | v20250101 | v20260101 | v20260302preview | v20260701 |
+| SystemData_LastModifiedByType_STATUS                                             | v20250101 | v20260101 | v20260302preview | v20260701 |
+| SystemData_STATUS                                                                | v20250101 | v20260101 | v20260302preview | v20260701 |
+| UserAssignedIdentityDetails                                                      |           | v20260101 |                  |           |
+| UserAssignedIdentity_STATUS                                                      |           | v20260101 |                  |           |
+| WeekDay                                                                          |           | v20260101 |                  |           |
+| WeekDay_STATUS                                                                   |           | v20260101 |                  |           |
