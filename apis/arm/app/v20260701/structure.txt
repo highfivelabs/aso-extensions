@@ -4,6 +4,519 @@ github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701
 APIVersion: Enum (1 value)
 └── "2026-07-01"
 
+ContainerApp: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (15 properties)
+│   ├── AzureName: string
+│   ├── Configuration: *Object (9 properties)
+│   │   ├── ActiveRevisionsMode: *Enum (2 values)
+│   │   │   ├── "Multiple"
+│   │   │   └── "Single"
+│   │   ├── Dapr: *Object (10 properties)
+│   │   │   ├── AppHealth: *Object (5 properties)
+│   │   │   │   ├── Enabled: *bool
+│   │   │   │   ├── Path: *string
+│   │   │   │   ├── ProbeIntervalSeconds: Validated<*int> (1 rule)
+│   │   │   │   │   └── Rule 0: Minimum: 1
+│   │   │   │   ├── ProbeTimeoutMilliseconds: Validated<*int> (1 rule)
+│   │   │   │   │   └── Rule 0: Minimum: 1
+│   │   │   │   └── Threshold: Validated<*int> (1 rule)
+│   │   │   │       └── Rule 0: Minimum: 1
+│   │   │   ├── AppId: *string
+│   │   │   ├── AppPort: *int
+│   │   │   ├── AppProtocol: *Enum (2 values)
+│   │   │   │   ├── "grpc"
+│   │   │   │   └── "http"
+│   │   │   ├── EnableApiLogging: *bool
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── HttpMaxRequestSize: *int
+│   │   │   ├── HttpReadBufferSize: *int
+│   │   │   ├── LogLevel: *Enum (4 values)
+│   │   │   │   ├── "debug"
+│   │   │   │   ├── "error"
+│   │   │   │   ├── "info"
+│   │   │   │   └── "warn"
+│   │   │   └── MaxConcurrency: *int
+│   │   ├── IdentitySettings: Object (2 properties)[]
+│   │   │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │   └── Lifecycle: *Enum (4 values)
+│   │   │       ├── "All"
+│   │   │       ├── "Init"
+│   │   │       ├── "Main"
+│   │   │       └── "None"
+│   │   ├── Ingress: *Object (12 properties)
+│   │   │   ├── AdditionalPortMappings: Object (3 properties)[]
+│   │   │   │   ├── ExposedPort: *int
+│   │   │   │   ├── External: *bool
+│   │   │   │   └── TargetPort: *int
+│   │   │   ├── AllowInsecure: *bool
+│   │   │   ├── ClientCertificateMode: *Enum (3 values)
+│   │   │   │   ├── "accept"
+│   │   │   │   ├── "ignore"
+│   │   │   │   └── "require"
+│   │   │   ├── CorsPolicy: *Object (6 properties)
+│   │   │   │   ├── AllowCredentials: *bool
+│   │   │   │   ├── AllowedHeaders: string[]
+│   │   │   │   ├── AllowedMethods: string[]
+│   │   │   │   ├── AllowedOrigins: string[]
+│   │   │   │   ├── ExposeHeaders: string[]
+│   │   │   │   └── MaxAge: *int
+│   │   │   ├── CustomDomains: Object (3 properties)[]
+│   │   │   │   ├── BindingType: *Enum (3 values)
+│   │   │   │   │   ├── "Auto"
+│   │   │   │   │   ├── "Disabled"
+│   │   │   │   │   └── "SniEnabled"
+│   │   │   │   ├── CertificateReference: *genruntime.ResourceReference
+│   │   │   │   └── Name: *string
+│   │   │   ├── ExposedPort: *int
+│   │   │   ├── External: *bool
+│   │   │   ├── IpSecurityRestrictions: Object (4 properties)[]
+│   │   │   │   ├── Action: *Enum (2 values)
+│   │   │   │   │   ├── "Allow"
+│   │   │   │   │   └── "Deny"
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── IpAddressRange: *string
+│   │   │   │   └── Name: *string
+│   │   │   ├── StickySessions: *Object (1 property)
+│   │   │   │   └── Affinity: *Enum (2 values)
+│   │   │   │       ├── "none"
+│   │   │   │       └── "sticky"
+│   │   │   ├── TargetPort: *int
+│   │   │   ├── Traffic: Object (4 properties)[]
+│   │   │   │   ├── Label: *string
+│   │   │   │   ├── LatestRevision: *bool
+│   │   │   │   ├── RevisionName: *string
+│   │   │   │   └── Weight: *int
+│   │   │   └── Transport: *Enum (4 values)
+│   │   │       ├── "auto"
+│   │   │       ├── "http"
+│   │   │       ├── "http2"
+│   │   │       └── "tcp"
+│   │   ├── MaxInactiveRevisions: *int
+│   │   ├── Registries: Object (4 properties)[]
+│   │   │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │   ├── PasswordSecretRef: *string
+│   │   │   ├── Server: *string
+│   │   │   └── Username: *string
+│   │   ├── Runtime: *Object (1 property)
+│   │   │   └── Java: *Object (1 property)
+│   │   │       └── EnableMetrics: *bool
+│   │   ├── Secrets: Object (4 properties)[]
+│   │   │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │   ├── KeyVaultUrl: *string
+│   │   │   ├── Name: *string
+│   │   │   └── Value: *genruntime.SecretReference
+│   │   └── Service: *Object (1 property)
+│   │       └── Type: *string
+│   ├── EnvironmentReference: *genruntime.ResourceReference
+│   ├── ExtendedLocation: *Object (2 properties)
+│   │   ├── Name: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "CustomLocation"
+│   ├── Identity: *Object (2 properties)
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssigned,UserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Kind: *Enum (2 values)
+│   │   ├── "functionapp"
+│   │   └── "workflowapp"
+│   ├── Location: *string
+│   ├── ManagedByReference: *genruntime.ResourceReference
+│   ├── ManagedEnvironmentReference: *genruntime.ResourceReference
+│   ├── Networking: *Object (1 property)
+│   │   └── OutboundVnetSubnetReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Tags: map[string]string
+│   ├── Template: *Object (7 properties)
+│   │   ├── Containers: Object (8 properties)[]
+│   │   │   ├── Args: string[]
+│   │   │   ├── Command: string[]
+│   │   │   ├── Env: Object (3 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── SecretRef: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── Image: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── Probes: Object (9 properties)[]
+│   │   │   │   ├── FailureThreshold: *int
+│   │   │   │   ├── HttpGet: *Object (5 properties)
+│   │   │   │   │   ├── Host: *string
+│   │   │   │   │   ├── HttpHeaders: Object (2 properties)[]
+│   │   │   │   │   │   ├── Name: *string
+│   │   │   │   │   │   └── Value: *string
+│   │   │   │   │   ├── Path: *string
+│   │   │   │   │   ├── Port: *int
+│   │   │   │   │   └── Scheme: *Enum (2 values)
+│   │   │   │   │       ├── "HTTP"
+│   │   │   │   │       └── "HTTPS"
+│   │   │   │   ├── InitialDelaySeconds: *int
+│   │   │   │   ├── PeriodSeconds: *int
+│   │   │   │   ├── SuccessThreshold: *int
+│   │   │   │   ├── TcpSocket: *Object (2 properties)
+│   │   │   │   │   ├── Host: *string
+│   │   │   │   │   └── Port: *int
+│   │   │   │   ├── TerminationGracePeriodSeconds: *int
+│   │   │   │   ├── TimeoutSeconds: *int
+│   │   │   │   └── Type: *Enum (3 values)
+│   │   │   │       ├── "Liveness"
+│   │   │   │       ├── "Readiness"
+│   │   │   │       └── "Startup"
+│   │   │   ├── Resources: *Object (2 properties)
+│   │   │   │   ├── Cpu: *float64
+│   │   │   │   └── Memory: *string
+│   │   │   └── VolumeMounts: Object (3 properties)[]
+│   │   │       ├── MountPath: *string
+│   │   │       ├── SubPath: *string
+│   │   │       └── VolumeName: *string
+│   │   ├── InitContainers: Object (7 properties)[]
+│   │   │   ├── Args: string[]
+│   │   │   ├── Command: string[]
+│   │   │   ├── Env: Object (3 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── SecretRef: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── Image: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── Resources: *Object (2 properties)
+│   │   │   │   ├── Cpu: *float64
+│   │   │   │   └── Memory: *string
+│   │   │   └── VolumeMounts: Object (3 properties)[]
+│   │   │       ├── MountPath: *string
+│   │   │       ├── SubPath: *string
+│   │   │       └── VolumeName: *string
+│   │   ├── RevisionSuffix: *string
+│   │   ├── Scale: *Object (6 properties)
+│   │   │   ├── AllowScalingRuleOverride: *bool
+│   │   │   ├── CooldownPeriod: *int
+│   │   │   ├── MaxReplicas: *int
+│   │   │   ├── MinReplicas: *int
+│   │   │   ├── PollingInterval: *int
+│   │   │   └── Rules: Object (5 properties)[]
+│   │   │       ├── AzureQueue: *Object (5 properties)
+│   │   │       │   ├── AccountName: *string
+│   │   │       │   ├── Auth: Object (2 properties)[]
+│   │   │       │   │   ├── SecretRef: *string
+│   │   │       │   │   └── TriggerParameter: *string
+│   │   │       │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │       │   ├── QueueLength: *int
+│   │   │       │   └── QueueName: *string
+│   │   │       ├── Custom: *Object (4 properties)
+│   │   │       │   ├── Auth: Object (2 properties)[]
+│   │   │       │   │   ├── SecretRef: *string
+│   │   │       │   │   └── TriggerParameter: *string
+│   │   │       │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │       │   ├── Metadata: map[string]string
+│   │   │       │   └── Type: *string
+│   │   │       ├── Http: *Object (3 properties)
+│   │   │       │   ├── Auth: Object (2 properties)[]
+│   │   │       │   │   ├── SecretRef: *string
+│   │   │       │   │   └── TriggerParameter: *string
+│   │   │       │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │       │   └── Metadata: map[string]string
+│   │   │       ├── Name: *string
+│   │   │       └── Tcp: *Object (3 properties)
+│   │   │           ├── Auth: Object (2 properties)[]
+│   │   │           │   ├── SecretRef: *string
+│   │   │           │   └── TriggerParameter: *string
+│   │   │           ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │           └── Metadata: map[string]string
+│   │   ├── ServiceBinds: Object (2 properties)[]
+│   │   │   ├── Name: *string
+│   │   │   └── ServiceReference: *genruntime.ResourceReference
+│   │   ├── TerminationGracePeriodSeconds: *int
+│   │   └── Volumes: Object (5 properties)[]
+│   │       ├── MountOptions: *string
+│   │       ├── Name: *string
+│   │       ├── Secrets: Object (2 properties)[]
+│   │       │   ├── Path: *string
+│   │       │   └── SecretRef: *string
+│   │       ├── StorageName: *string
+│   │       └── StorageType: *Enum (4 values)
+│   │           ├── "AzureFile"
+│   │           ├── "EmptyDir"
+│   │           ├── "NfsAzureFile"
+│   │           └── "Secret"
+│   └── WorkloadProfileName: *string
+└── Status: Object (25 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Configuration: *Object (9 properties)
+    │   ├── ActiveRevisionsMode: *Enum (2 values)
+    │   │   ├── "Multiple"
+    │   │   └── "Single"
+    │   ├── Dapr: *Object (10 properties)
+    │   │   ├── AppHealth: *Object (5 properties)
+    │   │   │   ├── Enabled: *bool
+    │   │   │   ├── Path: *string
+    │   │   │   ├── ProbeIntervalSeconds: *int
+    │   │   │   ├── ProbeTimeoutMilliseconds: *int
+    │   │   │   └── Threshold: *int
+    │   │   ├── AppId: *string
+    │   │   ├── AppPort: *int
+    │   │   ├── AppProtocol: *Enum (2 values)
+    │   │   │   ├── "grpc"
+    │   │   │   └── "http"
+    │   │   ├── EnableApiLogging: *bool
+    │   │   ├── Enabled: *bool
+    │   │   ├── HttpMaxRequestSize: *int
+    │   │   ├── HttpReadBufferSize: *int
+    │   │   ├── LogLevel: *Enum (4 values)
+    │   │   │   ├── "debug"
+    │   │   │   ├── "error"
+    │   │   │   ├── "info"
+    │   │   │   └── "warn"
+    │   │   └── MaxConcurrency: *int
+    │   ├── IdentitySettings: Object (2 properties)[]
+    │   │   ├── Identity: *string
+    │   │   └── Lifecycle: *Enum (4 values)
+    │   │       ├── "All"
+    │   │       ├── "Init"
+    │   │       ├── "Main"
+    │   │       └── "None"
+    │   ├── Ingress: *Object (13 properties)
+    │   │   ├── AdditionalPortMappings: Object (3 properties)[]
+    │   │   │   ├── ExposedPort: *int
+    │   │   │   ├── External: *bool
+    │   │   │   └── TargetPort: *int
+    │   │   ├── AllowInsecure: *bool
+    │   │   ├── ClientCertificateMode: *Enum (3 values)
+    │   │   │   ├── "accept"
+    │   │   │   ├── "ignore"
+    │   │   │   └── "require"
+    │   │   ├── CorsPolicy: *Object (6 properties)
+    │   │   │   ├── AllowCredentials: *bool
+    │   │   │   ├── AllowedHeaders: string[]
+    │   │   │   ├── AllowedMethods: string[]
+    │   │   │   ├── AllowedOrigins: string[]
+    │   │   │   ├── ExposeHeaders: string[]
+    │   │   │   └── MaxAge: *int
+    │   │   ├── CustomDomains: Object (3 properties)[]
+    │   │   │   ├── BindingType: *Enum (3 values)
+    │   │   │   │   ├── "Auto"
+    │   │   │   │   ├── "Disabled"
+    │   │   │   │   └── "SniEnabled"
+    │   │   │   ├── CertificateId: *string
+    │   │   │   └── Name: *string
+    │   │   ├── ExposedPort: *int
+    │   │   ├── External: *bool
+    │   │   ├── Fqdn: *string
+    │   │   ├── IpSecurityRestrictions: Object (4 properties)[]
+    │   │   │   ├── Action: *Enum (2 values)
+    │   │   │   │   ├── "Allow"
+    │   │   │   │   └── "Deny"
+    │   │   │   ├── Description: *string
+    │   │   │   ├── IpAddressRange: *string
+    │   │   │   └── Name: *string
+    │   │   ├── StickySessions: *Object (1 property)
+    │   │   │   └── Affinity: *Enum (2 values)
+    │   │   │       ├── "none"
+    │   │   │       └── "sticky"
+    │   │   ├── TargetPort: *int
+    │   │   ├── Traffic: Object (4 properties)[]
+    │   │   │   ├── Label: *string
+    │   │   │   ├── LatestRevision: *bool
+    │   │   │   ├── RevisionName: *string
+    │   │   │   └── Weight: *int
+    │   │   └── Transport: *Enum (4 values)
+    │   │       ├── "auto"
+    │   │       ├── "http"
+    │   │       ├── "http2"
+    │   │       └── "tcp"
+    │   ├── MaxInactiveRevisions: *int
+    │   ├── Registries: Object (4 properties)[]
+    │   │   ├── Identity: *string
+    │   │   ├── PasswordSecretRef: *string
+    │   │   ├── Server: *string
+    │   │   └── Username: *string
+    │   ├── Runtime: *Object (1 property)
+    │   │   └── Java: *Object (1 property)
+    │   │       └── EnableMetrics: *bool
+    │   ├── Secrets: Object (3 properties)[]
+    │   │   ├── Identity: *string
+    │   │   ├── KeyVaultUrl: *string
+    │   │   └── Name: *string
+    │   └── Service: *Object (1 property)
+    │       └── Type: *string
+    ├── CustomDomainVerificationId: *string
+    ├── EnvironmentId: *string
+    ├── EventStreamEndpoint: *string
+    ├── ExtendedLocation: *Object (2 properties)
+    │   ├── Name: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "CustomLocation"
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssigned,UserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── Kind: *Enum (2 values)
+    │   ├── "functionapp"
+    │   └── "workflowapp"
+    ├── LatestReadyRevisionName: *string
+    ├── LatestRevisionFqdn: *string
+    ├── LatestRevisionName: *string
+    ├── Location: *string
+    ├── ManagedBy: *string
+    ├── ManagedEnvironmentId: *string
+    ├── Name: *string
+    ├── Networking: *Object (1 property)
+    │   └── OutboundVnetSubnetId: *string
+    ├── OutboundIpAddresses: string[]
+    ├── ProvisioningState: *Enum (5 values)
+    │   ├── "Canceled"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "InProgress"
+    │   └── "Succeeded"
+    ├── RunningStatus: *Enum (5 values)
+    │   ├── "Progressing"
+    │   ├── "Ready"
+    │   ├── "Running"
+    │   ├── "Stopped"
+    │   └── "Suspended"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Template: *Object (7 properties)
+    │   ├── Containers: Object (8 properties)[]
+    │   │   ├── Args: string[]
+    │   │   ├── Command: string[]
+    │   │   ├── Env: Object (3 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   ├── SecretRef: *string
+    │   │   │   └── Value: *string
+    │   │   ├── Image: *string
+    │   │   ├── Name: *string
+    │   │   ├── Probes: Object (9 properties)[]
+    │   │   │   ├── FailureThreshold: *int
+    │   │   │   ├── HttpGet: *Object (5 properties)
+    │   │   │   │   ├── Host: *string
+    │   │   │   │   ├── HttpHeaders: Object (2 properties)[]
+    │   │   │   │   │   ├── Name: *string
+    │   │   │   │   │   └── Value: *string
+    │   │   │   │   ├── Path: *string
+    │   │   │   │   ├── Port: *int
+    │   │   │   │   └── Scheme: *Enum (2 values)
+    │   │   │   │       ├── "HTTP"
+    │   │   │   │       └── "HTTPS"
+    │   │   │   ├── InitialDelaySeconds: *int
+    │   │   │   ├── PeriodSeconds: *int
+    │   │   │   ├── SuccessThreshold: *int
+    │   │   │   ├── TcpSocket: *Object (2 properties)
+    │   │   │   │   ├── Host: *string
+    │   │   │   │   └── Port: *int
+    │   │   │   ├── TerminationGracePeriodSeconds: *int
+    │   │   │   ├── TimeoutSeconds: *int
+    │   │   │   └── Type: *Enum (3 values)
+    │   │   │       ├── "Liveness"
+    │   │   │       ├── "Readiness"
+    │   │   │       └── "Startup"
+    │   │   ├── Resources: *Object (3 properties)
+    │   │   │   ├── Cpu: *float64
+    │   │   │   ├── EphemeralStorage: *string
+    │   │   │   └── Memory: *string
+    │   │   └── VolumeMounts: Object (3 properties)[]
+    │   │       ├── MountPath: *string
+    │   │       ├── SubPath: *string
+    │   │       └── VolumeName: *string
+    │   ├── InitContainers: Object (7 properties)[]
+    │   │   ├── Args: string[]
+    │   │   ├── Command: string[]
+    │   │   ├── Env: Object (3 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   ├── SecretRef: *string
+    │   │   │   └── Value: *string
+    │   │   ├── Image: *string
+    │   │   ├── Name: *string
+    │   │   ├── Resources: *Object (3 properties)
+    │   │   │   ├── Cpu: *float64
+    │   │   │   ├── EphemeralStorage: *string
+    │   │   │   └── Memory: *string
+    │   │   └── VolumeMounts: Object (3 properties)[]
+    │   │       ├── MountPath: *string
+    │   │       ├── SubPath: *string
+    │   │       └── VolumeName: *string
+    │   ├── RevisionSuffix: *string
+    │   ├── Scale: *Object (6 properties)
+    │   │   ├── AllowScalingRuleOverride: *bool
+    │   │   ├── CooldownPeriod: *int
+    │   │   ├── MaxReplicas: *int
+    │   │   ├── MinReplicas: *int
+    │   │   ├── PollingInterval: *int
+    │   │   └── Rules: Object (5 properties)[]
+    │   │       ├── AzureQueue: *Object (5 properties)
+    │   │       │   ├── AccountName: *string
+    │   │       │   ├── Auth: Object (2 properties)[]
+    │   │       │   │   ├── SecretRef: *string
+    │   │       │   │   └── TriggerParameter: *string
+    │   │       │   ├── Identity: *string
+    │   │       │   ├── QueueLength: *int
+    │   │       │   └── QueueName: *string
+    │   │       ├── Custom: *Object (4 properties)
+    │   │       │   ├── Auth: Object (2 properties)[]
+    │   │       │   │   ├── SecretRef: *string
+    │   │       │   │   └── TriggerParameter: *string
+    │   │       │   ├── Identity: *string
+    │   │       │   ├── Metadata: map[string]string
+    │   │       │   └── Type: *string
+    │   │       ├── Http: *Object (3 properties)
+    │   │       │   ├── Auth: Object (2 properties)[]
+    │   │       │   │   ├── SecretRef: *string
+    │   │       │   │   └── TriggerParameter: *string
+    │   │       │   ├── Identity: *string
+    │   │       │   └── Metadata: map[string]string
+    │   │       ├── Name: *string
+    │   │       └── Tcp: *Object (3 properties)
+    │   │           ├── Auth: Object (2 properties)[]
+    │   │           │   ├── SecretRef: *string
+    │   │           │   └── TriggerParameter: *string
+    │   │           ├── Identity: *string
+    │   │           └── Metadata: map[string]string
+    │   ├── ServiceBinds: Object (2 properties)[]
+    │   │   ├── Name: *string
+    │   │   └── ServiceId: *string
+    │   ├── TerminationGracePeriodSeconds: *int
+    │   └── Volumes: Object (5 properties)[]
+    │       ├── MountOptions: *string
+    │       ├── Name: *string
+    │       ├── Secrets: Object (2 properties)[]
+    │       │   ├── Path: *string
+    │       │   └── SecretRef: *string
+    │       ├── StorageName: *string
+    │       └── StorageType: *Enum (4 values)
+    │           ├── "AzureFile"
+    │           ├── "EmptyDir"
+    │           ├── "NfsAzureFile"
+    │           └── "Secret"
+    ├── Type: *string
+    └── WorkloadProfileName: *string
+
 ManagedEnvironmentsDotNetComponent: Resource
 ├── Owner: ManagedEnvironment
 ├── Spec: Object (6 properties)

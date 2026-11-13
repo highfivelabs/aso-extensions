@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701/storage"
 	"github.com/rotisserie/eris"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -275,6 +276,84 @@ type CustomDomain struct {
 	PropertyBag          genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
 }
 
+// AssignProperties_From_CustomDomain populates our CustomDomain from the provided source CustomDomain
+func (domain *CustomDomain) AssignProperties_From_CustomDomain(source *storage.CustomDomain) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// BindingType
+	domain.BindingType = genruntime.ClonePointerToString(source.BindingType)
+
+	// CertificateReference
+	if source.CertificateReference != nil {
+		certificateReference := source.CertificateReference.Copy()
+		domain.CertificateReference = &certificateReference
+	} else {
+		domain.CertificateReference = nil
+	}
+
+	// Name
+	domain.Name = genruntime.ClonePointerToString(source.Name)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		domain.PropertyBag = propertyBag
+	} else {
+		domain.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCustomDomain interface (if implemented) to customize the conversion
+	var domainAsAny any = domain
+	if augmentedDomain, ok := domainAsAny.(augmentConversionForCustomDomain); ok {
+		err := augmentedDomain.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_CustomDomain populates the provided destination CustomDomain from our CustomDomain
+func (domain *CustomDomain) AssignProperties_To_CustomDomain(destination *storage.CustomDomain) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(domain.PropertyBag)
+
+	// BindingType
+	destination.BindingType = genruntime.ClonePointerToString(domain.BindingType)
+
+	// CertificateReference
+	if domain.CertificateReference != nil {
+		certificateReference := domain.CertificateReference.Copy()
+		destination.CertificateReference = &certificateReference
+	} else {
+		destination.CertificateReference = nil
+	}
+
+	// Name
+	destination.Name = genruntime.ClonePointerToString(domain.Name)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCustomDomain interface (if implemented) to customize the conversion
+	var domainAsAny any = domain
+	if augmentedDomain, ok := domainAsAny.(augmentConversionForCustomDomain); ok {
+		err := augmentedDomain.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20260101.CustomDomain_STATUS
 // Custom Domain of a Container App
 type CustomDomain_STATUS struct {
@@ -282,6 +361,74 @@ type CustomDomain_STATUS struct {
 	CertificateId *string                `json:"certificateId,omitempty"`
 	Name          *string                `json:"name,omitempty"`
 	PropertyBag   genruntime.PropertyBag `json:"$propertyBag,omitempty"`
+}
+
+// AssignProperties_From_CustomDomain_STATUS populates our CustomDomain_STATUS from the provided source CustomDomain_STATUS
+func (domain *CustomDomain_STATUS) AssignProperties_From_CustomDomain_STATUS(source *storage.CustomDomain_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// BindingType
+	domain.BindingType = genruntime.ClonePointerToString(source.BindingType)
+
+	// CertificateId
+	domain.CertificateId = genruntime.ClonePointerToString(source.CertificateId)
+
+	// Name
+	domain.Name = genruntime.ClonePointerToString(source.Name)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		domain.PropertyBag = propertyBag
+	} else {
+		domain.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCustomDomain_STATUS interface (if implemented) to customize the conversion
+	var domainAsAny any = domain
+	if augmentedDomain, ok := domainAsAny.(augmentConversionForCustomDomain_STATUS); ok {
+		err := augmentedDomain.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_CustomDomain_STATUS populates the provided destination CustomDomain_STATUS from our CustomDomain_STATUS
+func (domain *CustomDomain_STATUS) AssignProperties_To_CustomDomain_STATUS(destination *storage.CustomDomain_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(domain.PropertyBag)
+
+	// BindingType
+	destination.BindingType = genruntime.ClonePointerToString(domain.BindingType)
+
+	// CertificateId
+	destination.CertificateId = genruntime.ClonePointerToString(domain.CertificateId)
+
+	// Name
+	destination.Name = genruntime.ClonePointerToString(domain.Name)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCustomDomain_STATUS interface (if implemented) to customize the conversion
+	var domainAsAny any = domain
+	if augmentedDomain, ok := domainAsAny.(augmentConversionForCustomDomain_STATUS); ok {
+		err := augmentedDomain.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
 }
 
 // Storage version of v20260101.HttpRouteProvisioningErrors_STATUS
@@ -308,6 +455,16 @@ type HttpRouteRule_STATUS struct {
 	PropertyBag genruntime.PropertyBag   `json:"$propertyBag,omitempty"`
 	Routes      []HttpRoute_STATUS       `json:"routes,omitempty"`
 	Targets     []HttpRouteTarget_STATUS `json:"targets,omitempty"`
+}
+
+type augmentConversionForCustomDomain interface {
+	AssignPropertiesFrom(src *storage.CustomDomain) error
+	AssignPropertiesTo(dst *storage.CustomDomain) error
+}
+
+type augmentConversionForCustomDomain_STATUS interface {
+	AssignPropertiesFrom(src *storage.CustomDomain_STATUS) error
+	AssignPropertiesTo(dst *storage.CustomDomain_STATUS) error
 }
 
 // Storage version of v20260101.HttpRoute

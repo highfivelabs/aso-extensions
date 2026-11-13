@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701/storage"
 	"github.com/kr/pretty"
 	"github.com/kylelemons/godebug/diff"
 	"github.com/leanovate/gopter"
@@ -460,6 +461,53 @@ func AddIndependentPropertyGeneratorsForDaprMetadata_STATUS(gens map[string]gopt
 	gens["Value"] = gen.PtrOf(gen.AlphaString())
 }
 
+func Test_Secret_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from Secret to Secret via AssignProperties_To_Secret & AssignProperties_From_Secret returns original",
+		prop.ForAll(RunPropertyAssignmentTestForSecret, SecretGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForSecret tests if a specific instance of Secret can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForSecret(subject Secret) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other storage.Secret
+	err := copied.AssignProperties_To_Secret(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual Secret
+	err = actual.AssignProperties_From_Secret(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
 func Test_Secret_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -524,6 +572,53 @@ func SecretGenerator() gopter.Gen {
 func AddIndependentPropertyGeneratorsForSecret(gens map[string]gopter.Gen) {
 	gens["KeyVaultUrl"] = gen.PtrOf(gen.AlphaString())
 	gens["Name"] = gen.PtrOf(gen.AlphaString())
+}
+
+func Test_Secret_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from Secret_STATUS to Secret_STATUS via AssignProperties_To_Secret_STATUS & AssignProperties_From_Secret_STATUS returns original",
+		prop.ForAll(RunPropertyAssignmentTestForSecret_STATUS, Secret_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForSecret_STATUS tests if a specific instance of Secret_STATUS can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForSecret_STATUS(subject Secret_STATUS) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other storage.Secret_STATUS
+	err := copied.AssignProperties_To_Secret_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual Secret_STATUS
+	err = actual.AssignProperties_From_Secret_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
 }
 
 func Test_Secret_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
