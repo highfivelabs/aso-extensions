@@ -1742,6 +1742,12 @@ summarised here:
    kind. Not done: a kind's API version is the builder's call. Nothing
    waits on it.
 
+   **Answered, 2026-11-13** (the builder: "Q10 yes, now"): (a), generate
+   `ManagementLock` as `authorization.azure.hfl.dev/v20200501` and drop the
+   hand-written `v1`, its reconciler and `pkg/armlocks`, now, while no
+   catalog chart depends on it. Existing `v1` objects are recreated after
+   `reconcile-policy: skip`, so the locks stay in Azure.
+
 11. **Our kinds beside ASO's, at a newer API version, under ASO's names?**
    (asked 2026-11-13, with c3d.) The catalog needs fields ASO's own kinds
    lack because ASO stops at an older API version (`ManagedEnvironment` and
