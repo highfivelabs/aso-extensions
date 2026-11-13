@@ -5,7 +5,10 @@
 // the install test on kind. Tests only; not in the manager's image. It
 // accepts fake Entra tokens (pkg/fakecloud/entra) for --audience whose
 // client and subject are listed with --trust, and starts with the
-// resources --resource names.
+// resources --resource names. It also answers as the data plane of every
+// vault it holds (https://<vault>.vault.azure.net, Key Vault keys; a test
+// cluster's DNS sends those names here, and its certificate must carry
+// them), accepting the same clients' tokens for https://vault.azure.net.
 package main
 
 import (
@@ -29,6 +32,7 @@ func main() {
 	cert := flag.String("cert", "/tls/tls.crt", "server certificate")
 	key := flag.String("key", "/tls/tls.key", "server key")
 	audience := flag.String("audience", "", "the Resource Manager audience tokens must be for")
+	tenant := flag.String("tenant", "", "the tenant ID written into identities and Key Vault's challenge (arm.DefaultTenant when empty)")
 	var trust, resources listFlag
 	flag.Var(&trust, "trust", "<client ID>=<subject> a token may carry; repeat")
 	flag.Var(&resources, "resource", "ARM IDs (comma-separated) of resources that exist at start; repeat")
@@ -48,6 +52,13 @@ func main() {
 		log.Printf("token client=%s sub=%s scope=%s accepted=%v", c.ClientID, c.Subject, c.Scope, ok)
 		return ok
 	})
+	a.Tenant = *tenant
+	a.AuthorizeVault = func(token string) bool {
+		c, err := entra.Parse(token)
+		ok := err == nil && c.Scope == "https://vault.azure.net/.default" && trusted[c.ClientID+"="+c.Subject]
+		log.Printf("vault token client=%s sub=%s scope=%s accepted=%v", c.ClientID, c.Subject, c.Scope, ok)
+		return ok
+	}
 	for _, list := range resources {
 		for _, id := range strings.Split(list, ",") {
 			if id = strings.TrimSpace(id); id != "" {

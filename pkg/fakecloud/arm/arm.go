@@ -61,6 +61,12 @@
 // Activity log profiles and workbook templates are checked too (insights.go:
 // one log profile per subscription, its destination, a template's galleries).
 //
+// Properties Azure computes (an address, a principal ID, a login server, a
+// vault's URI) are filled in, and children Azure makes with their parent (a
+// storage account's default services, a DNS zone's SOA record set) are made
+// (computed.go); Key Vault keys are served in the vault's data plane too
+// (vaultkeys.go).
+//
 // It accepts a request only when Authorize accepts its bearer token, so a
 // test decides which identity may use it.
 package arm
@@ -119,6 +125,19 @@ type ARM struct {
 	Log []string
 	// Now is the clock systemData's times come from (time.Now when nil).
 	Now func() time.Time
+	// Tenant is the tenant ID written into identities and Key Vault's
+	// challenge (DefaultTenant when empty; computed.go).
+	Tenant string
+	// VaultSuffix is the DNS suffix of vaults' data planes (vault.azure.net
+	// when empty): a request whose Host is under it is a data-plane request
+	// to that vault (vaultkeys.go).
+	VaultSuffix string
+	// AuthorizeVault decides whether a bearer token may use a vault's data
+	// plane; nil refuses every token.
+	AuthorizeVault func(token string) bool
+	// rotationPolicies holds keys' rotation policies (vaultkeys.go), by
+	// lower-case key ID.
+	rotationPolicies map[string]map[string]any
 }
 
 // New returns an empty fake Resource Manager.
@@ -202,6 +221,10 @@ func (a *ARM) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	rec := &recorder{ResponseWriter: w, status: http.StatusOK}
 	defer func() { a.Log = append(a.Log, r.Method+" "+r.URL.Path+" "+http.StatusText(rec.status)) }()
 
+	if vault := a.vaultOf(r); vault != "" {
+		a.serveVault(rec, r, vault)
+		return
+	}
 	auth := r.Header.Get("Authorization")
 	if !strings.HasPrefix(auth, "Bearer ") || a.Authorize == nil || !a.Authorize(strings.TrimPrefix(auth, "Bearer ")) {
 		writeError(rec, http.StatusUnauthorized, "InvalidAuthenticationToken", "fake resource manager: this identity may not use Resource Manager")
@@ -395,6 +418,7 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		}
 		props["provisioningState"] = "Succeeded"
 		body["properties"] = props
+		a.compute(id, body, props)
 		status = http.StatusOK
 		if _, ok := a.resources[key]; !ok {
 			status = http.StatusCreated
@@ -402,6 +426,7 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		a.setSystemData(key, body)
 		res := resource(body)
 		a.resources[key] = &res
+		a.makeChildren(id, body)
 		if after != nil {
 			after()
 		}
@@ -412,6 +437,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 	case http.MethodDelete:
 		if isScheduleRequest(id) {
 			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A schedule request cannot be deleted; undo it with another request (AdminRemove, SelfDeactivate).")
+			return
+		}
+		if vaultKey.MatchString(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A key vault key cannot be deleted through Resource Manager; delete it in the vault's data plane.")
 			return
 		}
 		if isManagedHSMKey(id) {

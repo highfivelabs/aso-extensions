@@ -24,7 +24,7 @@ run the real client code against them.
 | Azure Database for PostgreSQL | PostgreSQL 17 in Docker (tests) or a pod (kind), TLS on, with `azure_pg_admin`, a password administrator, Entra administrators whose password is the fake token of the identity that may sign in as them, and stand-ins for `pgaadauth_create_principal` and `pgaadauth_create_principal_with_oid` | `pkg/fakecloud/postgres` |
 | Microsoft Graph | directory role assignments (`/beta` and `/v1.0` `roleManagement/directory/roleAssignments`: create, get, list with a `$filter` on `principalId`, `roleDefinitionId` and `directoryScopeId`, delete; no update, as in Graph) over a directory of principals, administrative units and role definitions (four built-in roles by template ID, and any a test adds); refuses an unknown principal, role or administrative unit (404), a scope that is neither `/` nor an administrative unit, both or neither of `directoryScopeId` and `appScopeId` (400) and the same assignment twice (409); takes gzipped bodies, as the Graph SDK's default middleware sends them; requests carry a bearer token the test decides to accept | `pkg/fakecloud/graph`, `cmd/fakegraph` |
 | Azure SQL Database | a TDS 7.4 server over TLS (go-mssqldb runs unchanged against it) with the database users and fixed-role memberships ASO's statements change: sign-in with the SQL administrator's password, a contained user's password, or an access token that signs in as an Entra principal (the server's Entra administrator, or a user created `FROM EXTERNAL PROVIDER`); only an administrator changes users; only a token connection creates Entra users (33159), and only for a name in its directory (33130); names compare without case | `pkg/fakecloud/azuresql`, `cmd/fakesql` |
-| Resource Manager | a store of resources by ARM ID (PUT with the parent existing, GET, DELETE; the body is kept as sent with `id`, `name`, `type` and `provisioningState: Succeeded` added, no properties checked but the management group hierarchy's, Azure Policy's, Privileged Identity Management's, budgets', cost exports', site-to-site VPN's and ExpressRoute's (circuits, ports, gateways), Virtual WAN's (hubs, VPN gateways), Virtual Network Manager's and maintenance assignments' references and scopes; built-in role definitions listed by name; ASO's own ARM client, for the generated kinds, talks to it) and management locks (`Microsoft.Authorization/locks`, 2020-05-01, level, notes and owners kept as sent) at any scope that exists; a lock covers its scope and everything under it: `CanNotDelete` refuses deletes (and deleting a scope that holds a locked resource), `ReadOnly` also refuses writes, each with 409 `ScopeLocked`; locks themselves can always be changed; requests carry a bearer token the test decides to accept | `pkg/fakecloud/arm`, `cmd/fakearm` |
+| Resource Manager | a store of resources by ARM ID (PUT with the parent existing, GET, DELETE; the body is kept as sent with `id`, `name`, `type` and `provisioningState: Succeeded` added, no properties checked but the management group hierarchy's, Azure Policy's, Privileged Identity Management's, budgets', cost exports', site-to-site VPN's and ExpressRoute's (circuits, ports, gateways), Virtual WAN's (hubs, VPN gateways), Virtual Network Manager's and maintenance assignments' references and scopes; built-in role definitions listed by name; the properties Azure computes that clients read back (a vault's `vaultUri`, a key's `keyUri`, identities' principal, client and tenant IDs, a public IP's address and FQDN, a registry's login server, a workspace's `customerId`, record sets' FQDNs, a storage account's endpoints, an AKS cluster's FQDN, node resource group, kubelet identity and OIDC issuer), each derived from the resource's ID; the children Azure makes with a parent (a storage account's default blob, file, queue and table services, a DNS zone's SOA record set); Key Vault keys in the vault's data plane too (`https://<vault>.vault.azure.net`: get, update, delete, rotation policy), as stock ASO's `VaultKey` reads them; ASO's own ARM client, for the generated kinds, talks to it) and management locks (`Microsoft.Authorization/locks`, 2020-05-01, level, notes and owners kept as sent) at any scope that exists; a lock covers its scope and everything under it: `CanNotDelete` refuses deletes (and deleting a scope that holds a locked resource), `ReadOnly` also refuses writes, each with 409 `ScopeLocked`; locks themselves can always be changed; requests carry a bearer token the test decides to accept | `pkg/fakecloud/arm`, `cmd/fakearm` |
 | ASO | not run: its owner CRDs (generated from ASO's types at the pin) and `FlexibleServer`/`Vault`/`ResourceGroup` objects carrying the status, Ready condition and ARM ID annotation ASO would write | `config/test/aso-crds`, the tests |
 | TLS | a throwaway CA and server certificates; the manager trusts the CA through `SSL_CERT_FILE` on kind, through its client options in tests | `pkg/fakecloud/tlsutil` |
 
@@ -63,13 +63,29 @@ Entra kinds), `AZURE_SUBSCRIPTION_ID` and `AZURE_TENANT_ID` any GUIDs,
 `AZURE_CLIENT_ID` and `AZURE_CLIENT_SECRET` any values (a client secret's
 token carries `secret:<digest>` as its subject) or workload identity (the
 subject is the service account), and the `fake-cloud-ca` ConfigMap mounted
-in the controller with `SSL_CERT_FILE=/fake-cloud-ca/ca.crt`. `fakearm`
+in the controller with `SSL_CERT_FILE=/fake-cloud-ca/ca.crt`. For
+`VaultKey`, which reads its key in the vault's data plane, send every
+vault's name to `fakearm` too (`rewrite name regex (.+)\.vault\.azure\.net
+fakearm.fake-cloud.svc.cluster.local answer auto`; the fixtures' `fakearm`
+certificate carries `*.vault.azure.net`) and give `fakearm` ASO's tenant
+(`--tenant`): Key Vault's challenge names it, and azidentity refuses a
+token for another tenant. `fakearm`
 accepts a token whose client and subject are listed in its `--trust`
 (`fakevault-trust`): add `<client ID>=<subject>` there. Not done here:
 installing ASO itself in the install test (its chart and image are
 upstream's); the catalog's chart tests do that.
 
 ## Where the fakes differ from Azure
+
+- Resource Manager's computed properties (`pkg/fakecloud/arm/computed.go`):
+  each is derived from the resource's ID, so it is the same on every PUT
+  and in every run, and a value the body gives is kept. Azure allocates
+  some of them (a public IP's address, an identity's principal ID) and may
+  change or release them; a Basic SKU's dynamic address appears only once
+  it is attached, which the fake does not wait for. Key Vault keys
+  (`vaultkeys.go`) have one version each, no cryptographic operations, no
+  soft-deleted state to recover or purge, and a modulus that is not a real
+  key's; any accepted token may do anything (no access policies or RBAC).
 
 - App Service: a site's (and a slot's) default host name binding,
   `<site>.azurewebsites.net`, is made by Azure with the site and is never

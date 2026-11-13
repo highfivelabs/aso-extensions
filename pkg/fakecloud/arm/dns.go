@@ -24,8 +24,8 @@ import (
 //     (400 when missing, 404 when not there), and a virtual network is
 //     linked to at most one DNS security policy (400 for a second).
 //
-// Not modelled: a zone making its SOA record set itself (the tests add it
-// where Azure would have it), the SOA's host (Azure keeps its own name
+// A zone makes its SOA record set itself (computed.go). Not modelled: the
+// SOA's host (Azure keeps its own name
 // server whatever is sent), serial numbers moving, a domain list's domains
 // being well formed and its bulk upload (domainsUrl), queries being
 // answered, allowed, alerted or blocked, the limits on rules, lists and

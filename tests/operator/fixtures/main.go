@@ -30,8 +30,9 @@ func main() {
 	ca, err := tlsutil.NewCA()
 	must(err)
 	write(*out, "ca.crt", ca.CertPEM)
-	for name, host := range map[string]string{"postgres": "postgres.fake-cloud.svc", "fakevault": "fakevault.fake-cloud.svc", "fakearm": "fakearm.fake-cloud.svc", "fakegraph": "fakegraph.fake-cloud.svc", "fakesql": "fakesql.fake-cloud.svc"} {
-		c, k, err := ca.Server(host)
+	// fakearm answers as every vault's data plane too (*.vault.azure.net).
+	for name, hosts := range map[string][]string{"postgres": {"postgres.fake-cloud.svc"}, "fakevault": {"fakevault.fake-cloud.svc"}, "fakearm": {"fakearm.fake-cloud.svc", "*.vault.azure.net"}, "fakegraph": {"fakegraph.fake-cloud.svc"}, "fakesql": {"fakesql.fake-cloud.svc"}} {
+		c, k, err := ca.Server(hosts...)
 		must(err)
 		write(*out, name+".crt", c)
 		write(*out, name+".key", k)
