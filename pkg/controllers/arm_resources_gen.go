@@ -35,6 +35,8 @@ import (
 	compute_customizations "github.com/highfivelabs/aso-extensions/apis/arm/compute/customizations"
 	compute_v20220301 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301"
 	compute_v20220301s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301/storage"
+	compute_v20250401 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401"
+	compute_v20250401s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401/storage"
 	consumption_customizations "github.com/highfivelabs/aso-extensions/apis/arm/consumption/customizations"
 	consumption_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601"
 	consumption_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601/storage"
@@ -705,6 +707,25 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.CommitmentPlan)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.CommitmentPlansAccountAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
+	result = append(result, &registration.StorageType{
+		Obj: new(compute_v20250401.VirtualMachine),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.osProfile.adminPassword",
+				Func: indexComputeVirtualMachineAdminPassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.osProfile.adminPassword",
+					},
+					&compute_v20250401.VirtualMachineList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.StorageType{
 		Obj: new(containerregistry_v20190401.RegistriesTask),
@@ -892,6 +913,45 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersProfile)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersProfilesAccessRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.NetworkSecurityPerimetersResourceAssociation)})
+	result = append(result, &registration.StorageType{
+		Obj: new(network_v20260301.ApplicationGateway),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.authenticationCertificates.data",
+				Func: indexNetworkApplicationGatewayAuthenticationCertificatesData,
+			},
+			{
+				Key:  ".spec.sslCertificates.data",
+				Func: indexNetworkApplicationGatewaySslCertificatesData,
+			},
+			{
+				Key:  ".spec.sslCertificates.password",
+				Func: indexNetworkApplicationGatewaySslCertificatesPassword,
+			},
+			{
+				Key:  ".spec.trustedClientCertificates.data",
+				Func: indexNetworkApplicationGatewayTrustedClientCertificatesData,
+			},
+			{
+				Key:  ".spec.trustedRootCertificates.data",
+				Func: indexNetworkApplicationGatewayTrustedRootCertificatesData,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.authenticationCertificates.data",
+						".spec.sslCertificates.data",
+						".spec.sslCertificates.password",
+						".spec.trustedClientCertificates.data",
+						".spec.trustedRootCertificates.data",
+					},
+					&network_v20260301.ApplicationGatewayList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{
 		Obj: new(network_v20260301.ExpressRouteCircuit),
 		Indexes: []registration.Index{
@@ -1454,6 +1514,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.CommitmentPlansAccountAssociation)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301s.VirtualMachinesRunCommand)})
+	result = append(result, &registration.KnownType{Obj: new(compute_v20250401.VirtualMachine)})
+	result = append(result, &registration.KnownType{Obj: new(compute_v20250401s.VirtualMachine)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601s.Budget)})
 	result = append(result, &registration.KnownType{Obj: new(containerregistry_v20190401.RegistriesTask)})
@@ -1606,6 +1668,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20250501s.NetworkSecurityPerimetersResourceAssociation)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(network_v20260301.ApplicationGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuit)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsPeering)},
@@ -1653,6 +1716,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.VpnSite)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(network_v20260301s.ApplicationGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuit)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsPeering)},
@@ -1867,6 +1931,8 @@ func createScheme() *runtime.Scheme {
 	_ = cognitiveservices_v20250601s.AddToScheme(scheme)
 	_ = compute_v20220301.AddToScheme(scheme)
 	_ = compute_v20220301s.AddToScheme(scheme)
+	_ = compute_v20250401.AddToScheme(scheme)
+	_ = compute_v20250401s.AddToScheme(scheme)
 	_ = consumption_v20260601.AddToScheme(scheme)
 	_ = consumption_v20260601s.AddToScheme(scheme)
 	_ = containerregistry_v20190401.AddToScheme(scheme)
@@ -2020,6 +2086,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &cognitiveservices_customizations.AccountsRaiPolicyExtension{})
 	result = append(result, &cognitiveservices_customizations.CommitmentPlanExtension{})
 	result = append(result, &cognitiveservices_customizations.CommitmentPlansAccountAssociationExtension{})
+	result = append(result, &compute_customizations.VirtualMachineExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
 	result = append(result, &consumption_customizations.BudgetExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesConnectedRegistryExtension{})
@@ -2071,6 +2138,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &management_customizations.ManagementGroupsSettingExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSubscriptionExtension{})
 	result = append(result, &management_customizations.ServiceGroupExtension{})
+	result = append(result, &network_customizations.ApplicationGatewayExtension{})
 	result = append(result, &network_customizations.DnsResolverDomainListExtension{})
 	result = append(result, &network_customizations.DnsResolverPoliciesDnsSecurityRuleExtension{})
 	result = append(result, &network_customizations.DnsResolverPoliciesVirtualNetworkLinkExtension{})
@@ -3112,6 +3180,21 @@ func indexCognitiveservicesAccountsProjectsConnectionUsernamePasswordSecurityTok
 	return obj.Spec.Properties.UsernamePassword.Credentials.SecurityToken.Index()
 }
 
+// indexComputeVirtualMachineAdminPassword an index function for compute_v20250401.VirtualMachine .spec.osProfile.adminPassword
+func indexComputeVirtualMachineAdminPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*compute_v20250401.VirtualMachine)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.OsProfile == nil {
+		return nil
+	}
+	if obj.Spec.OsProfile.AdminPassword == nil {
+		return nil
+	}
+	return obj.Spec.OsProfile.AdminPassword.Index()
+}
+
 // indexContainerregistryRegistriesTaskDockerContextAccessToken an index function for containerregistry_v20190401.RegistriesTask .spec.step.docker.contextAccessToken
 func indexContainerregistryRegistriesTaskDockerContextAccessToken(rawObj client.Object) []string {
 	obj, ok := rawObj.(*containerregistry_v20190401.RegistriesTask)
@@ -3327,6 +3410,86 @@ func indexKubernetesconfigurationSourceControlConfigurationConfigurationProtecte
 		return nil
 	}
 	return obj.Spec.ConfigurationProtectedSettings.Index()
+}
+
+// indexNetworkApplicationGatewayAuthenticationCertificatesData an index function for network_v20260301.ApplicationGateway .spec.authenticationCertificates.data
+func indexNetworkApplicationGatewayAuthenticationCertificatesData(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.ApplicationGateway)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, authenticationCertificateItem := range obj.Spec.AuthenticationCertificates {
+		if authenticationCertificateItem.Data == nil {
+			continue
+		}
+		result = append(result, authenticationCertificateItem.Data.Index()...)
+	}
+	return result
+}
+
+// indexNetworkApplicationGatewaySslCertificatesData an index function for network_v20260301.ApplicationGateway .spec.sslCertificates.data
+func indexNetworkApplicationGatewaySslCertificatesData(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.ApplicationGateway)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, sslCertificateItem := range obj.Spec.SslCertificates {
+		if sslCertificateItem.Data == nil {
+			continue
+		}
+		result = append(result, sslCertificateItem.Data.Index()...)
+	}
+	return result
+}
+
+// indexNetworkApplicationGatewaySslCertificatesPassword an index function for network_v20260301.ApplicationGateway .spec.sslCertificates.password
+func indexNetworkApplicationGatewaySslCertificatesPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.ApplicationGateway)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, sslCertificateItem := range obj.Spec.SslCertificates {
+		if sslCertificateItem.Password == nil {
+			continue
+		}
+		result = append(result, sslCertificateItem.Password.Index()...)
+	}
+	return result
+}
+
+// indexNetworkApplicationGatewayTrustedClientCertificatesData an index function for network_v20260301.ApplicationGateway .spec.trustedClientCertificates.data
+func indexNetworkApplicationGatewayTrustedClientCertificatesData(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.ApplicationGateway)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, trustedClientCertificateItem := range obj.Spec.TrustedClientCertificates {
+		if trustedClientCertificateItem.Data == nil {
+			continue
+		}
+		result = append(result, trustedClientCertificateItem.Data.Index()...)
+	}
+	return result
+}
+
+// indexNetworkApplicationGatewayTrustedRootCertificatesData an index function for network_v20260301.ApplicationGateway .spec.trustedRootCertificates.data
+func indexNetworkApplicationGatewayTrustedRootCertificatesData(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.ApplicationGateway)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, trustedRootCertificateItem := range obj.Spec.TrustedRootCertificates {
+		if trustedRootCertificateItem.Data == nil {
+			continue
+		}
+		result = append(result, trustedRootCertificateItem.Data.Index()...)
+	}
+	return result
 }
 
 // indexNetworkExpressRouteCircuitActivationKey an index function for network_v20260301.ExpressRouteCircuit .spec.activationKey

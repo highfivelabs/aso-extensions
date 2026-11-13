@@ -82,3 +82,5 @@ VirtualMachinesRunCommand: Resource
     ├── TimeoutInSeconds: *int
     └── Type: *string
 
+augmentConversionForInstanceViewStatus_STATUS: Interface
+

@@ -69,27 +69,6 @@ type ExpressRoutePortPropertiesFormat_STATUS struct {
 	ResourceGuid *string `json:"resourceGuid,omitempty"`
 }
 
-// Identity for the resource.
-type ManagedServiceIdentity_STATUS struct {
-	// PrincipalId: The principal id of the system assigned identity. This property will only be provided for a system assigned
-	// identity.
-	PrincipalId *string `json:"principalId,omitempty"`
-
-	// TenantId: The tenant id of the system assigned identity. This property will only be provided for a system assigned
-	// identity.
-	TenantId *string `json:"tenantId,omitempty"`
-
-	// Type: The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly
-	// created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual
-	// machine.
-	Type *ResourceIdentityType_STATUS `json:"type,omitempty"`
-
-	// UserAssignedIdentities: The list of user identities associated with resource. The user identity dictionary key
-	// references will be ARM resource ids in the form:
-	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-	UserAssignedIdentities map[string]ManagedServiceIdentityUserAssignedIdentities_STATUS `json:"userAssignedIdentities,omitempty"`
-}
-
 // ExpressRouteLink child resource definition.
 type ExpressRouteLink_STATUS struct {
 	// Etag: A unique read-only string that changes whenever the resource is updated.
@@ -131,33 +110,6 @@ const (
 var expressRoutePortsEncapsulation_STATUS_Values = map[string]ExpressRoutePortsEncapsulation_STATUS{
 	"dot1q": ExpressRoutePortsEncapsulation_STATUS_Dot1Q,
 	"qinq":  ExpressRoutePortsEncapsulation_STATUS_QinQ,
-}
-
-type ManagedServiceIdentityUserAssignedIdentities_STATUS struct {
-	// ClientId: The client id of user assigned identity.
-	ClientId *string `json:"clientId,omitempty"`
-
-	// PrincipalId: The principal id of user assigned identity.
-	PrincipalId *string `json:"principalId,omitempty"`
-}
-
-// The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created
-// identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine.
-type ResourceIdentityType_STATUS string
-
-const (
-	ResourceIdentityType_STATUS_None                       = ResourceIdentityType_STATUS("None")
-	ResourceIdentityType_STATUS_SystemAssigned             = ResourceIdentityType_STATUS("SystemAssigned")
-	ResourceIdentityType_STATUS_SystemAssignedUserAssigned = ResourceIdentityType_STATUS("SystemAssigned, UserAssigned")
-	ResourceIdentityType_STATUS_UserAssigned               = ResourceIdentityType_STATUS("UserAssigned")
-)
-
-// Mapping from string to ResourceIdentityType_STATUS
-var resourceIdentityType_STATUS_Values = map[string]ResourceIdentityType_STATUS{
-	"none":                         ResourceIdentityType_STATUS_None,
-	"systemassigned":               ResourceIdentityType_STATUS_SystemAssigned,
-	"systemassigned, userassigned": ResourceIdentityType_STATUS_SystemAssignedUserAssigned,
-	"userassigned":                 ResourceIdentityType_STATUS_UserAssigned,
 }
 
 // Properties specific to ExpressRouteLink resources.

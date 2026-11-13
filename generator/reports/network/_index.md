@@ -10,6 +10,7 @@ no_list: true
 
 | Resource                                               | ARM Version | CRD Version | Supported From | Sample |
 |--------------------------------------------------------|-------------|-------------|----------------|--------|
+| ApplicationGateway                                     | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | DnsResolverDomainList                                  | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | DnsResolverPoliciesDnsSecurityRule                     | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | DnsResolverPoliciesVirtualNetworkLink                  | 2025-05-01  | v20250501   | v0.1.0         | -      |

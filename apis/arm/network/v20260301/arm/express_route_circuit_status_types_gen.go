@@ -159,28 +159,6 @@ var expressRouteCircuitSkuTier_STATUS_Values = map[string]ExpressRouteCircuitSku
 	"standard":   ExpressRouteCircuitSkuTier_STATUS_Standard,
 }
 
-// Provisioning states of a resource.
-type ProvisioningState_STATUS string
-
-const (
-	ProvisioningState_STATUS_Canceled  = ProvisioningState_STATUS("Canceled")
-	ProvisioningState_STATUS_Creating  = ProvisioningState_STATUS("Creating")
-	ProvisioningState_STATUS_Deleting  = ProvisioningState_STATUS("Deleting")
-	ProvisioningState_STATUS_Failed    = ProvisioningState_STATUS("Failed")
-	ProvisioningState_STATUS_Succeeded = ProvisioningState_STATUS("Succeeded")
-	ProvisioningState_STATUS_Updating  = ProvisioningState_STATUS("Updating")
-)
-
-// Mapping from string to ProvisioningState_STATUS
-var provisioningState_STATUS_Values = map[string]ProvisioningState_STATUS{
-	"canceled":  ProvisioningState_STATUS_Canceled,
-	"creating":  ProvisioningState_STATUS_Creating,
-	"deleting":  ProvisioningState_STATUS_Deleting,
-	"failed":    ProvisioningState_STATUS_Failed,
-	"succeeded": ProvisioningState_STATUS_Succeeded,
-	"updating":  ProvisioningState_STATUS_Updating,
-}
-
 // The resiliency level of the ExpressRoute circuit.
 type ResiliencyLevel_STATUS string
 
@@ -215,10 +193,4 @@ var serviceProviderProvisioningState_STATUS_Values = map[string]ServiceProviderP
 	"notprovisioned": ServiceProviderProvisioningState_STATUS_NotProvisioned,
 	"provisioned":    ServiceProviderProvisioningState_STATUS_Provisioned,
 	"provisioning":   ServiceProviderProvisioningState_STATUS_Provisioning,
-}
-
-// Reference to another subresource.
-type SubResource_STATUS struct {
-	// Id: Resource ID.
-	Id *string `json:"id,omitempty"`
 }

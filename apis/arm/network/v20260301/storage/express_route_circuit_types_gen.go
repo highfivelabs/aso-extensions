@@ -169,12 +169,6 @@ type ExpressRouteCircuitList struct {
 	Items           []ExpressRouteCircuit `json:"items"`
 }
 
-// Storage version of v20260301.APIVersion
-// +kubebuilder:validation:Enum={"2026-03-01"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2026-03-01")
-
 // Storage version of v20260301.ExpressRouteCircuit_Spec
 type ExpressRouteCircuit_Spec struct {
 	ActivationKey          *genruntime.SecretReference `json:"activationKey,omitempty"`
@@ -338,22 +332,6 @@ type ExpressRouteCircuitSku_STATUS struct {
 	Name        *string                `json:"name,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	Tier        *string                `json:"tier,omitempty"`
-}
-
-// Storage version of v20260301.SubResource
-// Reference to another subresource.
-type SubResource struct {
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-
-	// Reference: Resource ID.
-	Reference *genruntime.ResourceReference `armReference:"Id" json:"reference,omitempty"`
-}
-
-// Storage version of v20260301.SubResource_STATUS
-// Reference to another subresource.
-type SubResource_STATUS struct {
-	Id          *string                `json:"id,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
 // Storage version of v20260301.ExpressRouteCircuitOperatorSecrets
