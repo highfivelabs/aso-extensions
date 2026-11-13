@@ -47,6 +47,7 @@ patches:
   - {file: patches/azure-service-operator/0011-generator-rapid-oneof-related.patch, pin: azure-service-operator, upstream_candidate: "yes"}
   - {file: patches/azure-service-operator/0012-extension-resource-children.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
   - {file: patches/azure-service-operator/0013-generator-external-owner-kind.patch, pin: azure-service-operator, upstream_candidate: "no"}
+  - {file: patches/azure-service-operator/0015-generator-unused-arm-input.patch, pin: azure-service-operator, upstream_candidate: "yes"}
 
 # "What is copied, from where": here (our paths) and from (ASO's paths at
 # the pin, from the repository root, so under v2/; a directory ends in /).

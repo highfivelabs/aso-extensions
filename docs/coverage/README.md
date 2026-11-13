@@ -337,7 +337,7 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 2,905 (6.7%) in 230 further resources; uncovered 33,344 (76.9%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 2,907 (6.7%) in 231 further resources; uncovered 33,342 (76.9%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
@@ -448,6 +448,7 @@ Generated; these cannot drift from the data.
 | `hardwaresecuritymodules.azure.hfl.dev/CloudHsmCluster` | `Microsoft.HardwareSecurityModules/cloudHsmClusters` | ARM wire type of the generated kind (`apis/arm`) |
 | `hardwaresecuritymodules.azure.hfl.dev/CloudHsmClustersPrivateEndpointConnection` | `Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `hardwaresecuritymodules.azure.hfl.dev/DedicatedHsm` | `Microsoft.HardwareSecurityModules/dedicatedHSMs` | ARM wire type of the generated kind (`apis/arm`) |
+| `insights.azure.hfl.dev/ComponentsLinkedStorageAccount` | `Microsoft.Insights/components/linkedStorageAccounts` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/LogProfile` | `Microsoft.Insights/logprofiles` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScope` | `Microsoft.Insights/privateLinkScopes` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection` | `Microsoft.Insights/privateLinkScopes/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
@@ -464,6 +465,7 @@ Generated; these cannot drift from the data.
 | `kubernetesconfiguration.azure.hfl.dev/SourceControlConfiguration` | `Microsoft.KubernetesConfiguration/sourceControlConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
 | `maintenance.azure.hfl.dev/ConfigurationAssignment` | `Microsoft.Maintenance/configurationAssignments` | ARM wire type of the generated kind (`apis/arm`) |
 | `maintenance.azure.hfl.dev/MaintenanceConfiguration` | `Microsoft.Maintenance/maintenanceConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `managedidentity.azure.hfl.dev/UserAssignedIdentity` | `Microsoft.ManagedIdentity/userAssignedIdentities` | ARM wire type of the generated kind (`apis/arm`) |
 | `management.azure.hfl.dev/ManagementGroup` | `Microsoft.Management/managementGroups` | ARM wire type of the generated kind (`apis/arm`) |
 | `management.azure.hfl.dev/ManagementGroupsSetting` | `Microsoft.Management/managementGroups/settings` | ARM wire type of the generated kind (`apis/arm`) |
 | `management.azure.hfl.dev/ManagementGroupsSubscription` | `Microsoft.Management/managementGroups/subscriptions` | ARM wire type of the generated kind (`apis/arm`) |

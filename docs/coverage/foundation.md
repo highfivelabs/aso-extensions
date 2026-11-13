@@ -130,7 +130,7 @@ Generated: every resource of the two categories, by the order of the services in
 | application | 35 | 823 | 14,821 | 33.1% | 6.4% | 60.5% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 1.0% | 98.6% |
 
-### platform-foundation: 246 resources (59 with no kind, 74 partly covered, 113 covered)
+### platform-foundation: 246 resources (59 with no kind, 73 partly covered, 114 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -325,7 +325,7 @@ Generated: every resource of the two categories, by the order of the services in
 | 189 | `Microsoft.KeyVault/vaults` | covered | `keyvault/Vault` |  | 28 / 0 / 0 | resourceGroup | - | - | 4 |
 | 190 | `Microsoft.KeyVault/managedHSMs/keys` | covered |  | `keyvault/ManagedHSMsKey` | 0 / 15 / 0 | resourceGroup | - | - | 0 |
 | 191 | `Microsoft.KeyVault/managedHSMs` | covered |  | `keyvault/ManagedHSM` | 0 / 20 / 0 | resourceGroup | - | - | 0 |
-| 192 | `Microsoft.ManagedIdentity/userAssignedIdentities` | partial, 1 of 3 missing | `managedidentity/UserAssignedIdentity` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 3 |
+| 192 | `Microsoft.ManagedIdentity/userAssignedIdentities` | covered | `managedidentity/UserAssignedIdentity` | `managedidentity/UserAssignedIdentity` | 2 / 1 / 0 | resourceGroup | - | - | 3 |
 | 193 | `Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials` | covered | `managedidentity/FederatedIdentityCredential` |  | 3 / 0 / 0 | resourceGroup | - | - | 1 |
 | 194 | `Microsoft.OperationalInsights/workspaces/features/machineGroups` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
 | 195 | `Microsoft.OperationalInsights/workspaces/summaryLogs` | no kind |  |  | 0 / 0 / 11 | resourceGroup | generator | S (11) | 0 |
