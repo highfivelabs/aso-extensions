@@ -2306,9 +2306,9 @@ Microsoft.Web,Microsoft.Web/serverfarms/virtualNetworkConnections/gateways,3,,0,
 Microsoft.Web,Microsoft.Web/serverfarms/virtualNetworkConnections/routes,4,,0,,0,4,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites,244,web.azure.com/Site,244,,0,0,false,spec_api=2026-07-15; official_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/backups,15,,0,,0,15,false,spec_api=2015-08-01
-Microsoft.Web,Microsoft.Web/sites/basicPublishingCredentialsPolicies,2,,0,,0,2,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/basicPublishingCredentialsPolicies,2,,0,web.azure.hfl.dev/SitesBasicPublishingCredentialsPolicyFtp,2,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/certificates,11,,0,,0,11,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/config,302,,0,,0,302,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/config,302,,0,web.azure.hfl.dev/SitesConfigAuthSettingsV2,79,223,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/deployments,10,,0,,0,10,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/domainOwnershipIdentifiers,2,,0,,0,2,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/extensions,15,,0,,0,15,false,spec_api=2026-07-15
