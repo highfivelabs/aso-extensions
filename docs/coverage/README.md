@@ -337,7 +337,7 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 2,885 (6.7%) in 226 further resources; uncovered 33,364 (76.9%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 2,887 (6.7%) in 228 further resources; uncovered 33,362 (76.9%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
@@ -571,6 +571,8 @@ Generated; these cannot drift from the data.
 | `securityinsights.azure.hfl.dev/SecurityMLAnalyticsSetting` | `Microsoft.SecurityInsights/securityMLAnalyticsSettings` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/Watchlist` | `Microsoft.SecurityInsights/watchlists` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/WatchlistsWatchlistItem` | `Microsoft.SecurityInsights/watchlists/watchlistItems` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersDatabasesGeoBackupPolicy` | `Microsoft.Sql/servers/databases/geoBackupPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersSqlVulnerabilityAssessment` | `Microsoft.Sql/servers/sqlVulnerabilityAssessments` | ARM wire type of the generated kind (`apis/arm`) |
 | `sql.azure.hfl.dev/User` | `Microsoft.Sql/servers/databases/users` | outside the denominator, not in any percentage |
 | `storage.azure.hfl.dev/StorageAccountsEncryptionScope` | `Microsoft.Storage/storageAccounts/encryptionScopes` | ARM wire type of the generated kind (`apis/arm`) |
 | `storage.azure.hfl.dev/StorageAccountsInventoryPolicy` | `Microsoft.Storage/storageAccounts/inventoryPolicies` | ARM wire type of the generated kind (`apis/arm`) |

@@ -33,3 +33,4 @@ specification/cosmos-db
 specification/cognitiveservices
 specification/automation
 specification/storage
+specification/sql

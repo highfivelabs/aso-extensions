@@ -2109,7 +2109,7 @@ Microsoft.Sql,Microsoft.Sql/servers/databases/dataMaskingPolicies,2,,0,,0,2,fals
 Microsoft.Sql,Microsoft.Sql/servers/databases/dataMaskingPolicies/rules,11,,0,,0,11,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/extendedAuditingSettings,11,,0,,0,11,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/extensions,12,,0,,0,12,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/databases/geoBackupPolicies,1,,0,,0,1,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/geoBackupPolicies,1,,0,sql.azure.hfl.dev/ServersDatabasesGeoBackupPolicy,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/ledgerDigestUploads,1,,0,,0,1,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/maintenanceWindows,3,,0,,0,3,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/replicationLinks,1,,0,,0,1,false,spec_api=2025-01-01
@@ -2145,7 +2145,7 @@ Microsoft.Sql,Microsoft.Sql/servers/keys,2,sql.azure.com/ServersKey,2,,0,0,false
 Microsoft.Sql,Microsoft.Sql/servers/outboundFirewallRules,0,sql.azure.com/ServersOutboundFirewallRule,0,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/privateEndpointConnections,3,,0,,0,3,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/securityAlertPolicies,7,sql.azure.com/ServersSecurityAlertPolicy,7,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments,1,,0,,0,1,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments,1,,0,sql.azure.hfl.dev/ServersSqlVulnerabilityAssessment,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines,2,,0,,0,2,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines/rules,2,,0,,0,2,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/syncAgents,1,,0,,0,1,false,spec_api=2025-01-01
