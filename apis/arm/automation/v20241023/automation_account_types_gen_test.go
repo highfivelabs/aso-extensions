@@ -148,6 +148,95 @@ func AutomationAccountGenerator() *rapid.Generator[AutomationAccount] {
 	return automationAccountGenerator
 }
 
+// Test_AutomationAccountOperatorConfigMaps_WhenPropertiesConverted_RoundTripsWithoutLoss tests if a specific instance of AutomationAccountOperatorConfigMaps can be assigned to storage and back losslessly
+func Test_AutomationAccountOperatorConfigMaps_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	rapid.Check(t, func(t *rapid.T) {
+		subject := AutomationAccountOperatorConfigMapsGenerator().Draw(t, "subject")
+		// Copy subject to make sure assignment doesn't modify it
+		copied := subject.DeepCopy()
+
+		// Use AssignPropertiesTo() for the first stage of conversion
+		var other storage.AutomationAccountOperatorConfigMaps
+		err := copied.AssignProperties_To_AutomationAccountOperatorConfigMaps(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesTo: " + err.Error())
+		}
+
+		// Use AssignPropertiesFrom() to convert back to our original type
+		var actual AutomationAccountOperatorConfigMaps
+		err = actual.AssignProperties_From_AutomationAccountOperatorConfigMaps(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesFrom: " + err.Error())
+		}
+
+		// Check for a match
+		match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+		if !match {
+			actualFmt := pretty.Sprint(actual)
+			subjectFmt := pretty.Sprint(subject)
+			result := diff.Diff(subjectFmt, actualFmt)
+			t.Error(result)
+		}
+	})
+}
+
+func Test_AutomationAccountOperatorConfigMaps_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	rapid.Check(t, RunJSONSerializationTestForAutomationAccountOperatorConfigMaps)
+}
+
+// RunJSONSerializationTestForAutomationAccountOperatorConfigMaps runs a test to see if a specific instance of AutomationAccountOperatorConfigMaps round trips to JSON and back losslessly
+func RunJSONSerializationTestForAutomationAccountOperatorConfigMaps(t *rapid.T) {
+	subject := AutomationAccountOperatorConfigMapsGenerator().Draw(t, "subject")
+	// Serialize to JSON
+	bin, err := json.Marshal(subject)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Deserialize back into memory
+	var actual AutomationAccountOperatorConfigMaps
+	err = json.Unmarshal(bin, &actual)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check for outcome
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		t.Error(result)
+	}
+}
+
+// Generator of AutomationAccountOperatorConfigMaps instances for property testing - lazily instantiated by
+// AutomationAccountOperatorConfigMapsGenerator()
+var automationAccountOperatorConfigMapsGenerator *rapid.Generator[AutomationAccountOperatorConfigMaps]
+
+// AutomationAccountOperatorConfigMapsGenerator returns a generator of AutomationAccountOperatorConfigMaps instances for property testing.
+func AutomationAccountOperatorConfigMapsGenerator() *rapid.Generator[AutomationAccountOperatorConfigMaps] {
+	if automationAccountOperatorConfigMapsGenerator != nil {
+		return automationAccountOperatorConfigMapsGenerator
+	}
+
+	automationAccountOperatorConfigMapsGenerator = rapid.Just(AutomationAccountOperatorConfigMaps{})
+
+	return automationAccountOperatorConfigMapsGenerator
+}
+
 // Test_AutomationAccountOperatorSpec_WhenPropertiesConverted_RoundTripsWithoutLoss tests if a specific instance of AutomationAccountOperatorSpec can be assigned to storage and back losslessly
 func Test_AutomationAccountOperatorSpec_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
 	t.Parallel()
@@ -232,7 +321,13 @@ func AutomationAccountOperatorSpecGenerator() *rapid.Generator[AutomationAccount
 		return automationAccountOperatorSpecGenerator
 	}
 
-	automationAccountOperatorSpecGenerator = rapid.Just(AutomationAccountOperatorSpec{})
+	configMaps := rapid.Ptr(AutomationAccountOperatorConfigMapsGenerator(), true)
+
+	automationAccountOperatorSpecGenerator = rapid.Custom(func(t *rapid.T) AutomationAccountOperatorSpec {
+		var result AutomationAccountOperatorSpec
+		result.ConfigMaps = configMaps.Draw(t, "ConfigMaps")
+		return result
+	})
 
 	return automationAccountOperatorSpecGenerator
 }

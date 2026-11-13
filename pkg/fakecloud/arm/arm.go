@@ -242,6 +242,9 @@ func (a *ARM) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if a.serveRoleDefinitions(rec, r, path) {
 		return
 	}
+	if a.serveAgentRegistration(rec, r, path) {
+		return
+	}
 	if a.serveUnlockDelete(rec, r, path) {
 		return
 	}

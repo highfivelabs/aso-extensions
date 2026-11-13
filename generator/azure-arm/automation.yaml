@@ -24,6 +24,14 @@ groupModelConfiguration:
     AutomationAccount:
       $exportAs: AutomationAccount
       $supportedFrom: v0.1.0
+      # The DSC server endpoint (agentRegistrationInformation's endpoint,
+      # azurerm's dsc_server_endpoint) is not in the account's GET; a
+      # hand-written KubernetesConfigExporter reads it and writes the
+      # ConfigMap operatorSpec.configMaps.dscServerEndpoint names
+      # (generator/_extensions/automation), as ASO's PrivateEndpoint exports
+      # its primary NIC address.
+      $manualConfigs:
+        - DscServerEndpoint
     AutomationAccounts_Certificate:
       $exportAs: AutomationAccountsCertificate
       $supportedFrom: v0.1.0
