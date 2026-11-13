@@ -40,6 +40,8 @@ export ASO_GENERATOR_SUBSCRIPTION_EXTENSION=1
 export ASO_GENERATOR_MORE_EXTENSION_SCOPES=1
 export ASO_GENERATOR_RAPID_ONEOF_RELATED=1
 export ASO_GENERATOR_EXTENSION_CHILDREN=1
+# Fixed-name child resources (patch 0014; generator/fixed-names.txt).
+export ASO_GENERATOR_FIXED_NAMES="$(sed -e 's/#.*//' -e 's/[[:space:]]//g' generator/fixed-names.txt | grep . | paste -sd, -)"
 
 rm -rf apis/arm pkg/controllers/arm_resources_gen.go generator/reports
 mkdir -p generator/reports/fragments

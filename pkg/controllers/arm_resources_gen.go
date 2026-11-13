@@ -1353,6 +1353,39 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyFtp)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyScm)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesConfigAuthSettingsV2)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.SitesConfigLogs),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.applicationLogs.azureBlobStorage.sasUrl",
+				Func: indexWebSitesConfigLogsApplicationLogsAzureBlobStorageSasUrl,
+			},
+			{
+				Key:  ".spec.applicationLogs.azureTableStorage.sasUrl",
+				Func: indexWebSitesConfigLogsApplicationLogsAzureTableStorageSasUrl,
+			},
+			{
+				Key:  ".spec.httpLogs.azureBlobStorage.sasUrl",
+				Func: indexWebSitesConfigLogsHttpLogsAzureBlobStorageSasUrl,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.applicationLogs.azureBlobStorage.sasUrl",
+						".spec.applicationLogs.azureTableStorage.sasUrl",
+						".spec.httpLogs.azureBlobStorage.sasUrl",
+					},
+					&web_v20260715.SitesConfigLogsList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesConfigSlotConfigNames)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesHostNameBinding)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.SitesSlot),
@@ -1899,12 +1932,22 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyFtp)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyScm)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesConfigAuthSettingsV2)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesConfigLogs)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesConfigSlotConfigNames)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesHostNameBinding)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlot)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsHostNameBinding)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(web_v20260715s.Certificate)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesBasicPublishingCredentialsPolicyFtp)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesBasicPublishingCredentialsPolicyScm)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigAuthSettingsV2)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigLogs)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigSlotConfigNames)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesHostNameBinding)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlot)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsHostNameBinding)})
@@ -2261,6 +2304,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &storage_customizations.StorageAccountsPrivateEndpointConnectionExtension{})
 	result = append(result, &storage_customizations.StorageAccountsStorageTaskAssignmentExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
+	result = append(result, &web_customizations.SitesBasicPublishingCredentialsPolicyFtpExtension{})
+	result = append(result, &web_customizations.SitesBasicPublishingCredentialsPolicyScmExtension{})
+	result = append(result, &web_customizations.SitesConfigAuthSettingsV2Extension{})
+	result = append(result, &web_customizations.SitesConfigLogsExtension{})
+	result = append(result, &web_customizations.SitesConfigSlotConfigNamesExtension{})
 	result = append(result, &web_customizations.SitesHostNameBindingExtension{})
 	result = append(result, &web_customizations.SitesSlotExtension{})
 	result = append(result, &web_customizations.SitesSlotsHostNameBindingExtension{})
@@ -3900,6 +3948,60 @@ func indexWebCertificatePfxBlob(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.PfxBlob.Index()
+}
+
+// indexWebSitesConfigLogsApplicationLogsAzureBlobStorageSasUrl an index function for web_v20260715.SitesConfigLogs .spec.applicationLogs.azureBlobStorage.sasUrl
+func indexWebSitesConfigLogsApplicationLogsAzureBlobStorageSasUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesConfigLogs)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureBlobStorage == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureBlobStorage.SasUrl == nil {
+		return nil
+	}
+	return obj.Spec.ApplicationLogs.AzureBlobStorage.SasUrl.Index()
+}
+
+// indexWebSitesConfigLogsApplicationLogsAzureTableStorageSasUrl an index function for web_v20260715.SitesConfigLogs .spec.applicationLogs.azureTableStorage.sasUrl
+func indexWebSitesConfigLogsApplicationLogsAzureTableStorageSasUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesConfigLogs)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureTableStorage == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureTableStorage.SasUrl == nil {
+		return nil
+	}
+	return obj.Spec.ApplicationLogs.AzureTableStorage.SasUrl.Index()
+}
+
+// indexWebSitesConfigLogsHttpLogsAzureBlobStorageSasUrl an index function for web_v20260715.SitesConfigLogs .spec.httpLogs.azureBlobStorage.sasUrl
+func indexWebSitesConfigLogsHttpLogsAzureBlobStorageSasUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesConfigLogs)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.HttpLogs == nil {
+		return nil
+	}
+	if obj.Spec.HttpLogs.AzureBlobStorage == nil {
+		return nil
+	}
+	if obj.Spec.HttpLogs.AzureBlobStorage.SasUrl == nil {
+		return nil
+	}
+	return obj.Spec.HttpLogs.AzureBlobStorage.SasUrl.Index()
 }
 
 // indexWebSitesSlotAccessKey an index function for web_v20260715.SitesSlot .spec.siteConfig.azureStorageAccounts.accessKey

@@ -3,6 +3,16 @@ github.com/highfivelabs/aso-extensions/apis/arm/web/customizations
 ------------------------------------------------------------------
 CertificateExtension: Object (0 properties)
 
+SitesBasicPublishingCredentialsPolicyFtpExtension: Object (0 properties)
+
+SitesBasicPublishingCredentialsPolicyScmExtension: Object (0 properties)
+
+SitesConfigAuthSettingsV2Extension: Object (0 properties)
+
+SitesConfigLogsExtension: Object (0 properties)
+
+SitesConfigSlotConfigNamesExtension: Object (0 properties)
+
 SitesHostNameBindingExtension: Object (0 properties)
 
 SitesSlotExtension: Object (0 properties)
