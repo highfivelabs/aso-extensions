@@ -236,9 +236,13 @@ Everything is in `docs/plan.md` §2, "Generated ARM kinds". The short form:
    group, and the fake's initial resources in its `fakearm-resources` list.
 7. **Docs.** `docs/plan.md` §3 (c) row, §7 (proven), `README.md` table.
 
-What the generator does not give you: the fixed-name singleton resources
-(for example `sites/config/appsettings`) and anything the specs model as
-polymorphic; say so in the plan rather than hand-writing around it.
+What the generator does not give you: anything the specs model as
+polymorphic; say so in the plan rather than hand-writing around it. A
+fixed-name singleton (`sites/config/logs`, a path ending in a literal other
+than `default`, `current` or `web`) is generated since patch 0014 when it is
+listed in `generator/fixed-names.txt` and has a GET as well as a PUT (ASO's
+reconciler reads it back); one Azure cannot delete wants a `Deleter`
+extension that completes without a call (`site_config_extensions.go`).
 
 Facts learned the hard way:
 - CRDs have one version; the controller is registered on the API type; there

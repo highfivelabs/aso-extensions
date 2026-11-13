@@ -671,5 +671,29 @@ SessionPool: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+augmentConversionForCustomDomain: Interface
+
+augmentConversionForCustomDomain_STATUS: Interface
+
+augmentConversionForEnvironmentVar: Interface
+
+augmentConversionForEnvironmentVar_STATUS: Interface
+
+augmentConversionForExtendedLocation: Interface
+
+augmentConversionForExtendedLocation_STATUS: Interface
+
+augmentConversionForManagedServiceIdentity: Interface
+
+augmentConversionForManagedServiceIdentity_STATUS: Interface
+
+augmentConversionForSecret: Interface
+
+augmentConversionForSecret_STATUS: Interface
+
 augmentConversionForSystemData_STATUS: Interface
+
+augmentConversionForUserAssignedIdentityDetails: Interface
+
+augmentConversionForUserAssignedIdentity_STATUS: Interface
 

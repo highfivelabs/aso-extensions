@@ -4,6 +4,511 @@ github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701/storage
 APIVersion: Enum (1 value)
 └── "2026-07-01"
 
+ContainerApp: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (17 properties)
+│   ├── AzureName: string
+│   ├── Configuration: *Object (10 properties)
+│   │   ├── ActiveRevisionsMode: *string
+│   │   ├── Dapr: *Object (11 properties)
+│   │   │   ├── AppHealth: *Object (6 properties)
+│   │   │   │   ├── Enabled: *bool
+│   │   │   │   ├── Path: *string
+│   │   │   │   ├── ProbeIntervalSeconds: *int
+│   │   │   │   ├── ProbeTimeoutMilliseconds: *int
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Threshold: *int
+│   │   │   ├── AppId: *string
+│   │   │   ├── AppPort: *int
+│   │   │   ├── AppProtocol: *string
+│   │   │   ├── EnableApiLogging: *bool
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── HttpMaxRequestSize: *int
+│   │   │   ├── HttpReadBufferSize: *int
+│   │   │   ├── LogLevel: *string
+│   │   │   ├── MaxConcurrency: *int
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── IdentitySettings: Object (3 properties)[]
+│   │   │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │   ├── Lifecycle: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── Ingress: *Object (13 properties)
+│   │   │   ├── AdditionalPortMappings: Object (4 properties)[]
+│   │   │   │   ├── ExposedPort: *int
+│   │   │   │   ├── External: *bool
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── TargetPort: *int
+│   │   │   ├── AllowInsecure: *bool
+│   │   │   ├── ClientCertificateMode: *string
+│   │   │   ├── CorsPolicy: *Object (7 properties)
+│   │   │   │   ├── AllowCredentials: *bool
+│   │   │   │   ├── AllowedHeaders: string[]
+│   │   │   │   ├── AllowedMethods: string[]
+│   │   │   │   ├── AllowedOrigins: string[]
+│   │   │   │   ├── ExposeHeaders: string[]
+│   │   │   │   ├── MaxAge: *int
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── CustomDomains: Object (4 properties)[]
+│   │   │   │   ├── BindingType: *string
+│   │   │   │   ├── CertificateReference: *genruntime.ResourceReference
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ExposedPort: *int
+│   │   │   ├── External: *bool
+│   │   │   ├── IpSecurityRestrictions: Object (5 properties)[]
+│   │   │   │   ├── Action: *string
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── IpAddressRange: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── StickySessions: *Object (2 properties)
+│   │   │   │   ├── Affinity: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── TargetPort: *int
+│   │   │   ├── Traffic: Object (5 properties)[]
+│   │   │   │   ├── Label: *string
+│   │   │   │   ├── LatestRevision: *bool
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── RevisionName: *string
+│   │   │   │   └── Weight: *int
+│   │   │   └── Transport: *string
+│   │   ├── MaxInactiveRevisions: *int
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Registries: Object (5 properties)[]
+│   │   │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │   ├── PasswordSecretRef: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Server: *string
+│   │   │   └── Username: *string
+│   │   ├── Runtime: *Object (2 properties)
+│   │   │   ├── Java: *Object (2 properties)
+│   │   │   │   ├── EnableMetrics: *bool
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── Secrets: Object (5 properties)[]
+│   │   │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │   ├── KeyVaultUrl: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Value: *genruntime.SecretReference
+│   │   └── Service: *Object (2 properties)
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── Type: *string
+│   ├── EnvironmentReference: *genruntime.ResourceReference
+│   ├── ExtendedLocation: *Object (3 properties)
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Type: *string
+│   ├── Identity: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Type: *string
+│   │   └── UserAssignedIdentities: Object (2 properties)[]
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── ManagedByReference: *genruntime.ResourceReference
+│   ├── ManagedEnvironmentReference: *genruntime.ResourceReference
+│   ├── Networking: *Object (2 properties)
+│   │   ├── OutboundVnetSubnetReference: *genruntime.ResourceReference
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Tags: map[string]string
+│   ├── Template: *Object (8 properties)
+│   │   ├── Containers: Object (9 properties)[]
+│   │   │   ├── Args: string[]
+│   │   │   ├── Command: string[]
+│   │   │   ├── Env: Object (4 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretRef: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── Image: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── Probes: Object (10 properties)[]
+│   │   │   │   ├── FailureThreshold: *int
+│   │   │   │   ├── HttpGet: *Object (6 properties)
+│   │   │   │   │   ├── Host: *string
+│   │   │   │   │   ├── HttpHeaders: Object (3 properties)[]
+│   │   │   │   │   │   ├── Name: *string
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Value: *string
+│   │   │   │   │   ├── Path: *string
+│   │   │   │   │   ├── Port: *int
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Scheme: *string
+│   │   │   │   ├── InitialDelaySeconds: *int
+│   │   │   │   ├── PeriodSeconds: *int
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SuccessThreshold: *int
+│   │   │   │   ├── TcpSocket: *Object (3 properties)
+│   │   │   │   │   ├── Host: *string
+│   │   │   │   │   ├── Port: *int
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── TerminationGracePeriodSeconds: *int
+│   │   │   │   ├── TimeoutSeconds: *int
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Resources: *Object (3 properties)
+│   │   │   │   ├── Cpu: *float64
+│   │   │   │   ├── Memory: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── VolumeMounts: Object (4 properties)[]
+│   │   │       ├── MountPath: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── SubPath: *string
+│   │   │       └── VolumeName: *string
+│   │   ├── InitContainers: Object (8 properties)[]
+│   │   │   ├── Args: string[]
+│   │   │   ├── Command: string[]
+│   │   │   ├── Env: Object (4 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretRef: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── Image: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Resources: *Object (3 properties)
+│   │   │   │   ├── Cpu: *float64
+│   │   │   │   ├── Memory: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── VolumeMounts: Object (4 properties)[]
+│   │   │       ├── MountPath: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── SubPath: *string
+│   │   │       └── VolumeName: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RevisionSuffix: *string
+│   │   ├── Scale: *Object (7 properties)
+│   │   │   ├── AllowScalingRuleOverride: *bool
+│   │   │   ├── CooldownPeriod: *int
+│   │   │   ├── MaxReplicas: *int
+│   │   │   ├── MinReplicas: *int
+│   │   │   ├── PollingInterval: *int
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Rules: Object (6 properties)[]
+│   │   │       ├── AzureQueue: *Object (6 properties)
+│   │   │       │   ├── AccountName: *string
+│   │   │       │   ├── Auth: Object (3 properties)[]
+│   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │       │   │   ├── SecretRef: *string
+│   │   │       │   │   └── TriggerParameter: *string
+│   │   │       │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │       │   ├── QueueLength: *int
+│   │   │       │   └── QueueName: *string
+│   │   │       ├── Custom: *Object (5 properties)
+│   │   │       │   ├── Auth: Object (3 properties)[]
+│   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │       │   │   ├── SecretRef: *string
+│   │   │       │   │   └── TriggerParameter: *string
+│   │   │       │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │       │   ├── Metadata: map[string]string
+│   │   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │       │   └── Type: *string
+│   │   │       ├── Http: *Object (4 properties)
+│   │   │       │   ├── Auth: Object (3 properties)[]
+│   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │       │   │   ├── SecretRef: *string
+│   │   │       │   │   └── TriggerParameter: *string
+│   │   │       │   ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │       │   ├── Metadata: map[string]string
+│   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Tcp: *Object (4 properties)
+│   │   │           ├── Auth: Object (3 properties)[]
+│   │   │           │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │           │   ├── SecretRef: *string
+│   │   │           │   └── TriggerParameter: *string
+│   │   │           ├── IdentityReference: *genruntime.WellKnownResourceReference
+│   │   │           ├── Metadata: map[string]string
+│   │   │           └── PropertyBag: genruntime.PropertyBag
+│   │   ├── ServiceBinds: Object (3 properties)[]
+│   │   │   ├── Name: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── ServiceReference: *genruntime.ResourceReference
+│   │   ├── TerminationGracePeriodSeconds: *int
+│   │   └── Volumes: Object (6 properties)[]
+│   │       ├── MountOptions: *string
+│   │       ├── Name: *string
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── Secrets: Object (3 properties)[]
+│   │       │   ├── Path: *string
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   └── SecretRef: *string
+│   │       ├── StorageName: *string
+│   │       └── StorageType: *string
+│   └── WorkloadProfileName: *string
+└── Status: Object (26 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Configuration: *Object (10 properties)
+    │   ├── ActiveRevisionsMode: *string
+    │   ├── Dapr: *Object (11 properties)
+    │   │   ├── AppHealth: *Object (6 properties)
+    │   │   │   ├── Enabled: *bool
+    │   │   │   ├── Path: *string
+    │   │   │   ├── ProbeIntervalSeconds: *int
+    │   │   │   ├── ProbeTimeoutMilliseconds: *int
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Threshold: *int
+    │   │   ├── AppId: *string
+    │   │   ├── AppPort: *int
+    │   │   ├── AppProtocol: *string
+    │   │   ├── EnableApiLogging: *bool
+    │   │   ├── Enabled: *bool
+    │   │   ├── HttpMaxRequestSize: *int
+    │   │   ├── HttpReadBufferSize: *int
+    │   │   ├── LogLevel: *string
+    │   │   ├── MaxConcurrency: *int
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── IdentitySettings: Object (3 properties)[]
+    │   │   ├── Identity: *string
+    │   │   ├── Lifecycle: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── Ingress: *Object (14 properties)
+    │   │   ├── AdditionalPortMappings: Object (4 properties)[]
+    │   │   │   ├── ExposedPort: *int
+    │   │   │   ├── External: *bool
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── TargetPort: *int
+    │   │   ├── AllowInsecure: *bool
+    │   │   ├── ClientCertificateMode: *string
+    │   │   ├── CorsPolicy: *Object (7 properties)
+    │   │   │   ├── AllowCredentials: *bool
+    │   │   │   ├── AllowedHeaders: string[]
+    │   │   │   ├── AllowedMethods: string[]
+    │   │   │   ├── AllowedOrigins: string[]
+    │   │   │   ├── ExposeHeaders: string[]
+    │   │   │   ├── MaxAge: *int
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── CustomDomains: Object (4 properties)[]
+    │   │   │   ├── BindingType: *string
+    │   │   │   ├── CertificateId: *string
+    │   │   │   ├── Name: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ExposedPort: *int
+    │   │   ├── External: *bool
+    │   │   ├── Fqdn: *string
+    │   │   ├── IpSecurityRestrictions: Object (5 properties)[]
+    │   │   │   ├── Action: *string
+    │   │   │   ├── Description: *string
+    │   │   │   ├── IpAddressRange: *string
+    │   │   │   ├── Name: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── StickySessions: *Object (2 properties)
+    │   │   │   ├── Affinity: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── TargetPort: *int
+    │   │   ├── Traffic: Object (5 properties)[]
+    │   │   │   ├── Label: *string
+    │   │   │   ├── LatestRevision: *bool
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── RevisionName: *string
+    │   │   │   └── Weight: *int
+    │   │   └── Transport: *string
+    │   ├── MaxInactiveRevisions: *int
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Registries: Object (5 properties)[]
+    │   │   ├── Identity: *string
+    │   │   ├── PasswordSecretRef: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Server: *string
+    │   │   └── Username: *string
+    │   ├── Runtime: *Object (2 properties)
+    │   │   ├── Java: *Object (2 properties)
+    │   │   │   ├── EnableMetrics: *bool
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── Secrets: Object (4 properties)[]
+    │   │   ├── Identity: *string
+    │   │   ├── KeyVaultUrl: *string
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── Service: *Object (2 properties)
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── Type: *string
+    ├── CustomDomainVerificationId: *string
+    ├── EnvironmentId: *string
+    ├── EventStreamEndpoint: *string
+    ├── ExtendedLocation: *Object (3 properties)
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Type: *string
+    ├── Id: *string
+    ├── Identity: *Object (5 properties)
+    │   ├── PrincipalId: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── TenantId: *string
+    │   ├── Type: *string
+    │   └── UserAssignedIdentities: map[string]Object (3 properties)
+    │       ├── ClientId: *string
+    │       ├── PrincipalId: *string
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── Kind: *string
+    ├── LatestReadyRevisionName: *string
+    ├── LatestRevisionFqdn: *string
+    ├── LatestRevisionName: *string
+    ├── Location: *string
+    ├── ManagedBy: *string
+    ├── ManagedEnvironmentId: *string
+    ├── Name: *string
+    ├── Networking: *Object (2 properties)
+    │   ├── OutboundVnetSubnetId: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── OutboundIpAddresses: string[]
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RunningStatus: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Template: *Object (8 properties)
+    │   ├── Containers: Object (9 properties)[]
+    │   │   ├── Args: string[]
+    │   │   ├── Command: string[]
+    │   │   ├── Env: Object (4 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretRef: *string
+    │   │   │   └── Value: *string
+    │   │   ├── Image: *string
+    │   │   ├── Name: *string
+    │   │   ├── Probes: Object (10 properties)[]
+    │   │   │   ├── FailureThreshold: *int
+    │   │   │   ├── HttpGet: *Object (6 properties)
+    │   │   │   │   ├── Host: *string
+    │   │   │   │   ├── HttpHeaders: Object (3 properties)[]
+    │   │   │   │   │   ├── Name: *string
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   └── Value: *string
+    │   │   │   │   ├── Path: *string
+    │   │   │   │   ├── Port: *int
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── Scheme: *string
+    │   │   │   ├── InitialDelaySeconds: *int
+    │   │   │   ├── PeriodSeconds: *int
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SuccessThreshold: *int
+    │   │   │   ├── TcpSocket: *Object (3 properties)
+    │   │   │   │   ├── Host: *string
+    │   │   │   │   ├── Port: *int
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── TerminationGracePeriodSeconds: *int
+    │   │   │   ├── TimeoutSeconds: *int
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Resources: *Object (4 properties)
+    │   │   │   ├── Cpu: *float64
+    │   │   │   ├── EphemeralStorage: *string
+    │   │   │   ├── Memory: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   └── VolumeMounts: Object (4 properties)[]
+    │   │       ├── MountPath: *string
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       ├── SubPath: *string
+    │   │       └── VolumeName: *string
+    │   ├── InitContainers: Object (8 properties)[]
+    │   │   ├── Args: string[]
+    │   │   ├── Command: string[]
+    │   │   ├── Env: Object (4 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretRef: *string
+    │   │   │   └── Value: *string
+    │   │   ├── Image: *string
+    │   │   ├── Name: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Resources: *Object (4 properties)
+    │   │   │   ├── Cpu: *float64
+    │   │   │   ├── EphemeralStorage: *string
+    │   │   │   ├── Memory: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   └── VolumeMounts: Object (4 properties)[]
+    │   │       ├── MountPath: *string
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       ├── SubPath: *string
+    │   │       └── VolumeName: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RevisionSuffix: *string
+    │   ├── Scale: *Object (7 properties)
+    │   │   ├── AllowScalingRuleOverride: *bool
+    │   │   ├── CooldownPeriod: *int
+    │   │   ├── MaxReplicas: *int
+    │   │   ├── MinReplicas: *int
+    │   │   ├── PollingInterval: *int
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Rules: Object (6 properties)[]
+    │   │       ├── AzureQueue: *Object (6 properties)
+    │   │       │   ├── AccountName: *string
+    │   │       │   ├── Auth: Object (3 properties)[]
+    │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │       │   │   ├── SecretRef: *string
+    │   │       │   │   └── TriggerParameter: *string
+    │   │       │   ├── Identity: *string
+    │   │       │   ├── PropertyBag: genruntime.PropertyBag
+    │   │       │   ├── QueueLength: *int
+    │   │       │   └── QueueName: *string
+    │   │       ├── Custom: *Object (5 properties)
+    │   │       │   ├── Auth: Object (3 properties)[]
+    │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │       │   │   ├── SecretRef: *string
+    │   │       │   │   └── TriggerParameter: *string
+    │   │       │   ├── Identity: *string
+    │   │       │   ├── Metadata: map[string]string
+    │   │       │   ├── PropertyBag: genruntime.PropertyBag
+    │   │       │   └── Type: *string
+    │   │       ├── Http: *Object (4 properties)
+    │   │       │   ├── Auth: Object (3 properties)[]
+    │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │       │   │   ├── SecretRef: *string
+    │   │       │   │   └── TriggerParameter: *string
+    │   │       │   ├── Identity: *string
+    │   │       │   ├── Metadata: map[string]string
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       ├── Name: *string
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Tcp: *Object (4 properties)
+    │   │           ├── Auth: Object (3 properties)[]
+    │   │           │   ├── PropertyBag: genruntime.PropertyBag
+    │   │           │   ├── SecretRef: *string
+    │   │           │   └── TriggerParameter: *string
+    │   │           ├── Identity: *string
+    │   │           ├── Metadata: map[string]string
+    │   │           └── PropertyBag: genruntime.PropertyBag
+    │   ├── ServiceBinds: Object (3 properties)[]
+    │   │   ├── Name: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── ServiceId: *string
+    │   ├── TerminationGracePeriodSeconds: *int
+    │   └── Volumes: Object (6 properties)[]
+    │       ├── MountOptions: *string
+    │       ├── Name: *string
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── Secrets: Object (3 properties)[]
+    │       │   ├── Path: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── SecretRef: *string
+    │       ├── StorageName: *string
+    │       └── StorageType: *string
+    ├── Type: *string
+    └── WorkloadProfileName: *string
+
 ManagedEnvironmentsDotNetComponent: Resource
 ├── Owner: app/v20260701.ManagedEnvironment
 ├── Spec: Object (8 properties)

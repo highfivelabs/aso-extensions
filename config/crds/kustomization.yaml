@@ -6,7 +6,9 @@ resources:
 - app.azure.hfl.dev_connectedenvironmentscertificates.yaml
 - app.azure.hfl.dev_connectedenvironmentsdaprcomponents.yaml
 - app.azure.hfl.dev_connectedenvironmentsstorages.yaml
+- app.azure.hfl.dev_containerapps.yaml
 - app.azure.hfl.dev_containerappssourcecontrols.yaml
+- app.azure.hfl.dev_managedenvironments.yaml
 - app.azure.hfl.dev_managedenvironmentscertificates.yaml
 - app.azure.hfl.dev_managedenvironmentsdaprcomponents.yaml
 - app.azure.hfl.dev_managedenvironmentsdaprsubscriptions.yaml
@@ -236,6 +238,11 @@ resources:
 - storage.azure.hfl.dev_storageaccountsprivateendpointconnections.yaml
 - storage.azure.hfl.dev_storageaccountsstoragetaskassignments.yaml
 - web.azure.hfl.dev_certificates.yaml
+- web.azure.hfl.dev_sitesbasicpublishingcredentialspolicyftps.yaml
+- web.azure.hfl.dev_sitesbasicpublishingcredentialspolicyscms.yaml
+- web.azure.hfl.dev_sitesconfigauthsettingsv2s.yaml
+- web.azure.hfl.dev_sitesconfiglogs.yaml
+- web.azure.hfl.dev_sitesconfigslotconfignames.yaml
 - web.azure.hfl.dev_siteshostnamebindings.yaml
 - web.azure.hfl.dev_sitesslots.yaml
 - web.azure.hfl.dev_sitesslotshostnamebindings.yaml

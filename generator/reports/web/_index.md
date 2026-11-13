@@ -8,10 +8,15 @@ no_list: true
 
 ### Released
 
-| Resource                  | ARM Version | CRD Version | Supported From | Sample |
-|---------------------------|-------------|-------------|----------------|--------|
-| Certificate               | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesHostNameBinding      | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesSlot                 | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesSlotsHostNameBinding | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| Resource                                 | ARM Version | CRD Version | Supported From | Sample |
+|------------------------------------------|-------------|-------------|----------------|--------|
+| Certificate                              | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesBasicPublishingCredentialsPolicyFtp | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesBasicPublishingCredentialsPolicyScm | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesConfigAuthSettingsV2                | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesConfigLogs                          | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesConfigSlotConfigNames               | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesHostNameBinding                     | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlot                                | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsHostNameBinding                | 2026-07-15  | v20260715   | v0.1.0         | -      |
 
