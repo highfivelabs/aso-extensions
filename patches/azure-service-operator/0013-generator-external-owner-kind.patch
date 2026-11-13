@@ -1,0 +1,112 @@
+diff --git a/v2/tools/generator/internal/astmodel/external_owner_test.go b/v2/tools/generator/internal/astmodel/external_owner_test.go
+new file mode 100644
+index 00000000..2a96fb2f
+--- /dev/null
++++ b/v2/tools/generator/internal/astmodel/external_owner_test.go
+@@ -0,0 +1,35 @@
++/*
++ * Copyright (c) Microsoft Corporation.
++ * Licensed under the MIT license.
++ */
++
++package astmodel
++
++import (
++	"testing"
++
++	. "github.com/onsi/gomega"
++)
++
++// Modified by High Five Labs: an owner that ASO exports under another name
++// than its ARM name (Servers_Database, exported as ServersDatabase) is
++// named by ASO's group and kind when ASO_GENERATOR_EXTERNAL_OWNERS maps it.
++func TestExternalOwnerKind(t *testing.T) {
++	t.Setenv("ASO_GENERATOR_EXTERNAL_OWNERS", "sql/Server, sql/Servers_Database=ServersDatabase,documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase")
++	g := NewGomegaWithT(t)
++
++	cases := []struct {
++		group, arm, suffix, kind string
++	}{
++		{"sql", "Servers_Database", asoGroupSuffix, "ServersDatabase"},
++		{"sql", "Server", asoGroupSuffix, "Server"},
++		{"documentdb", "DatabaseAccounts_SqlDatabase", asoGroupSuffix, "SqlDatabase"},
++		// The exported name alone is not the ARM name the generator sees.
++		{"sql", "ServersDatabase", GroupSuffix, "ServersDatabase"},
++		{"sql", "Servers_Elsewhere", GroupSuffix, "Servers_Elsewhere"},
++	}
++	for _, c := range cases {
++		g.Expect(OwnerGroupSuffix(c.group, c.arm)).To(Equal(c.suffix), c.group+"/"+c.arm)
++		g.Expect(OwnerKind(c.group, c.arm)).To(Equal(c.kind), c.group+"/"+c.arm)
++	}
++}
+diff --git a/v2/tools/generator/internal/astmodel/package_reference.go b/v2/tools/generator/internal/astmodel/package_reference.go
+index c5c370c9..51dc7c58 100644
+--- a/v2/tools/generator/internal/astmodel/package_reference.go
++++ b/v2/tools/generator/internal/astmodel/package_reference.go
+@@ -36,15 +36,47 @@ func groupSuffixFromEnvironment() string {
+ // (comma separated "group/Kind"): ASO's own kinds, which stay in ASO's
+ // groups (Modified by High Five Labs).
+ func OwnerGroupSuffix(group string, kind string) string {
+-	for _, owner := range strings.Split(os.Getenv("ASO_GENERATOR_EXTERNAL_OWNERS"), ",") {
+-		if strings.EqualFold(strings.TrimSpace(owner), group+"/"+kind) {
+-			return asoGroupSuffix
+-		}
++	if _, ok := externalOwner(group, kind); ok {
++		return asoGroupSuffix
+ 	}
+ 
+ 	return GroupSuffix
+ }
+ 
++// OwnerKind is the kind an owner reference names. An owner reaches
++// createOwnerProperty by its ARM name (Servers_Database), which ASO's own
++// configuration exports under another name (ServersDatabase); an entry of
++// ASO_GENERATOR_EXTERNAL_OWNERS written "group/ARMName=Kind" gives that
++// name, so the reference names ASO's kind. Otherwise the kind is the ARM
++// name (Modified by High Five Labs).
++func OwnerKind(group string, kind string) string {
++	if exported, ok := externalOwner(group, kind); ok {
++		return exported
++	}
++
++	return kind
++}
++
++// externalOwner finds the entry of ASO_GENERATOR_EXTERNAL_OWNERS for an
++// owner ("group/Kind", or "group/ARMName=Kind") and returns the kind ASO
++// exports it as (Modified by High Five Labs).
++func externalOwner(group string, kind string) (string, bool) {
++	for _, entry := range strings.Split(os.Getenv("ASO_GENERATOR_EXTERNAL_OWNERS"), ",") {
++		name, exported, renamed := strings.Cut(strings.TrimSpace(entry), "=")
++		if !strings.EqualFold(strings.TrimSpace(name), group+"/"+kind) {
++			continue
++		}
++
++		if renamed {
++			return strings.TrimSpace(exported), true
++		}
++
++		return kind, true
++	}
++
++	return "", false
++}
++
+ type PackageReference interface {
+ 	// PackageName returns the package name of this reference
+ 	PackageName() string
+diff --git a/v2/tools/generator/internal/codegen/pipeline/add_arm_conversion_interface.go b/v2/tools/generator/internal/codegen/pipeline/add_arm_conversion_interface.go
+index 7f5ffdd5..6d367e45 100644
+--- a/v2/tools/generator/internal/codegen/pipeline/add_arm_conversion_interface.go
++++ b/v2/tools/generator/internal/codegen/pipeline/add_arm_conversion_interface.go
+@@ -260,8 +260,8 @@ func (c *armConversionApplier) addARMConversionInterface(
+ 
+ func (c *armConversionApplier) createOwnerProperty(ownerTypeName astmodel.InternalTypeName) *astmodel.PropertyDefinition {
+ 	grp := ownerTypeName.InternalPackageReference().Group()
+-	kind := ownerTypeName.Name()
+-	group := grp + astmodel.OwnerGroupSuffix(grp, kind)
++	group := grp + astmodel.OwnerGroupSuffix(grp, ownerTypeName.Name())
++	kind := astmodel.OwnerKind(grp, ownerTypeName.Name())
+ 
+ 	prop := astmodel.NewPropertyDefinition(
+ 		c.idFactory.CreatePropertyName(astmodel.OwnerProperty, astmodel.Exported),

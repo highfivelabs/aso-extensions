@@ -258,8 +258,8 @@ type ServersDatabasesGeoBackupPolicy_Spec struct {
 	// +kubebuilder:validation:Required
 	// Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
 	// controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
-	// reference to a sql.azure.hfl.dev/Servers_Database resource
-	Owner *genruntime.KnownResourceReference `group:"sql.azure.hfl.dev" json:"owner,omitempty" kind:"Servers_Database"`
+	// reference to a sql.azure.com/ServersDatabase resource
+	Owner *genruntime.KnownResourceReference `group:"sql.azure.com" json:"owner,omitempty" kind:"ServersDatabase"`
 
 	// +kubebuilder:validation:Required
 	// State: The state of the geo backup policy.

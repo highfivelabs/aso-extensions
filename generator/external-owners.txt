@@ -2,6 +2,11 @@
 # They stay in ASO's groups: the generated owner reference says
 # app.azure.com, not app.azure.hfl.dev, and the manager reads them as ASO's
 # types (pkg/controllers OwnerTypes).
+# The generator sees an owner by its ARM name. When ASO exports it under
+# another name, write "group/ARMName=Kind" (ASO's sql.yaml exports
+# Servers_Database as ServersDatabase): "sql/ServersDatabase" alone matches
+# nothing, and the reference then names our group and the ARM name, which
+# no controller serves (patches/azure-service-operator/0013).
 app/ManagedEnvironment
 app/ContainerApp
 resources/ResourceGroup
@@ -15,9 +20,9 @@ containerservice/Fleet
 network/DnsZone
 network/PrivateDnsZone
 documentdb/DatabaseAccount
-documentdb/SqlDatabase
+documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase
 cognitiveservices/Account
-cognitiveservices/Project
+cognitiveservices/Accounts_Project=Project
 storage/StorageAccount
 sql/Server
-sql/ServersDatabase
+sql/Servers_Database=ServersDatabase

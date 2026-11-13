@@ -262,8 +262,8 @@ type AccountsProjectsCapabilityHost_Spec struct {
 	// +kubebuilder:validation:Required
 	// Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
 	// controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
-	// reference to a cognitiveservices.azure.hfl.dev/Accounts_Project resource
-	Owner *genruntime.KnownResourceReference `group:"cognitiveservices.azure.hfl.dev" json:"owner,omitempty" kind:"Accounts_Project"`
+	// reference to a cognitiveservices.azure.com/Project resource
+	Owner *genruntime.KnownResourceReference `group:"cognitiveservices.azure.com" json:"owner,omitempty" kind:"Project"`
 
 	// +kubebuilder:validation:Required
 	// Properties: [Required] Additional attributes of the entity.

@@ -193,7 +193,11 @@ Everything is in `docs/plan.md` §2, "Generated ARM kinds". The short form:
    - A group must have a `groupModelConfiguration` entry for its version, or
      the generator does not load that version's specs at all.
 3. **Owners.** If a kind is owned by an ASO kind (an ASO `Site`, `Workspace`,
-   `ResourceGroup`), list it in `generator/external-owners.txt` (`group/Kind`),
+   `ResourceGroup`), list it in `generator/external-owners.txt` (`group/Kind`;
+   `group/ARMName=Kind` when ASO exports it under another name than its ARM
+   name, as `sql/Servers_Database=ServersDatabase`: the generator sees the
+   ARM name, and `pkg/controllers` `TestGeneratedOwnersAreKnown` fails on an
+   owner no controller serves),
    add its storage (hub) type to `controllers.OwnerTypes()` and the scheme in
    `pkg/controllers/controllers.go`, add `list`/`watch` for it in
    `config/rbac/role.yaml`, and add its CRD to the test CRDs in
