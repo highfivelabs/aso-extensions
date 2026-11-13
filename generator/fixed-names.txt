@@ -1,0 +1,13 @@
+# Child resources whose instances have fixed names, each generated as its own
+# resource of the parent path's ARM type (patches/azure-service-operator/0014,
+# ASO_GENERATOR_FIXED_NAMES). One "type/child/name" per line, as the path
+# after the provider namespace, without parameters: sites/config/logs is
+# .../Microsoft.Web/sites/{name}/config/logs, generated as Sites_Config_Log.
+# Only a name whose path has a GET and a PUT is listed: ASO's reconciler
+# reads the resource back after its PUT (sites/config/authsettings and
+# sites/config/backup are read with a POST, and are not listed).
+sites/config/authsettingsV2
+sites/config/logs
+sites/config/slotConfigNames
+sites/basicPublishingCredentialsPolicies/ftp
+sites/basicPublishingCredentialsPolicies/scm

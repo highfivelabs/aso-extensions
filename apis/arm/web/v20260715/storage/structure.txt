@@ -68,6 +68,552 @@ Certificate: Resource
     ├── Type: *string
     └── Valid: *bool
 
+SitesBasicPublishingCredentialsPolicyFtp: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (6 properties)
+│   ├── Allow: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Allow: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesBasicPublishingCredentialsPolicyScm: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (6 properties)
+│   ├── Allow: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Allow: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesConfigAuthSettingsV2: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (10 properties)
+│   ├── GlobalValidation: *Object (5 properties)
+│   │   ├── ExcludedPaths: string[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RedirectToProvider: *string
+│   │   ├── RequireAuthentication: *bool
+│   │   └── UnauthenticatedClientAction: *string
+│   ├── HttpSettings: *Object (4 properties)
+│   │   ├── ForwardProxy: *Object (4 properties)
+│   │   │   ├── Convention: *string
+│   │   │   ├── CustomHostHeaderName: *string
+│   │   │   ├── CustomProtoHeaderName: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RequireHttps: *bool
+│   │   └── Routes: *Object (2 properties)
+│   │       ├── ApiPrefix: *string
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── IdentityProviders: *Object (10 properties)
+│   │   ├── Apple: *Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Registration: *Object (3 properties)
+│   │   │       ├── ClientId: *string
+│   │   │       ├── ClientSecretSettingName: *string
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── AzureActiveDirectory: *Object (6 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── IsAutoProvisioned: *bool
+│   │   │   ├── Login: *Object (3 properties)
+│   │   │   │   ├── DisableWWWAuthenticate: *bool
+│   │   │   │   ├── LoginParameters: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Registration: *Object (7 properties)
+│   │   │   │   ├── ClientId: *string
+│   │   │   │   ├── ClientSecretCertificateIssuer: *string
+│   │   │   │   ├── ClientSecretCertificateSubjectAlternativeName: *string
+│   │   │   │   ├── ClientSecretCertificateThumbprint: *string
+│   │   │   │   ├── ClientSecretSettingName: *string
+│   │   │   │   ├── OpenIdIssuer: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Validation: *Object (4 properties)
+│   │   │       ├── AllowedAudiences: string[]
+│   │   │       ├── DefaultAuthorizationPolicy: *Object (3 properties)
+│   │   │       │   ├── AllowedApplications: string[]
+│   │   │       │   ├── AllowedPrincipals: *Object (3 properties)
+│   │   │       │   │   ├── Groups: string[]
+│   │   │       │   │   ├── Identities: string[]
+│   │   │       │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── JwtClaimChecks: *Object (3 properties)
+│   │   │       │   ├── AllowedClientApplications: string[]
+│   │   │       │   ├── AllowedGroups: string[]
+│   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── AzureStaticWebApps: *Object (3 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Registration: *Object (2 properties)
+│   │   │       ├── ClientId: *string
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── CustomOpenIdConnectProviders: map[string]Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (3 properties)
+│   │   │   │   ├── NameClaimType: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Registration: *Object (4 properties)
+│   │   │       ├── ClientCredential: *Object (3 properties)
+│   │   │       │   ├── ClientSecretSettingName: *string
+│   │   │       │   ├── Method: *string
+│   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── ClientId: *string
+│   │   │       ├── OpenIdConnectConfiguration: *Object (6 properties)
+│   │   │       │   ├── AuthorizationEndpoint: *string
+│   │   │       │   ├── CertificationUri: *string
+│   │   │       │   ├── Issuer: *string
+│   │   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │       │   ├── TokenEndpoint: *string
+│   │   │       │   └── WellKnownOpenIdConfiguration: *string
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── Facebook: *Object (5 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── GraphApiVersion: *string
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Registration: *Object (3 properties)
+│   │   │       ├── AppId: *string
+│   │   │       ├── AppSecretSettingName: *string
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── GitHub: *Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Registration: *Object (3 properties)
+│   │   │       ├── ClientId: *string
+│   │   │       ├── ClientSecretSettingName: *string
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── Google: *Object (5 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Registration: *Object (3 properties)
+│   │   │   │   ├── ClientId: *string
+│   │   │   │   ├── ClientSecretSettingName: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Validation: *Object (2 properties)
+│   │   │       ├── AllowedAudiences: string[]
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LegacyMicrosoftAccount: *Object (5 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Registration: *Object (3 properties)
+│   │   │   │   ├── ClientId: *string
+│   │   │   │   ├── ClientSecretSettingName: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Validation: *Object (2 properties)
+│   │   │       ├── AllowedAudiences: string[]
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Twitter: *Object (3 properties)
+│   │       ├── Enabled: *bool
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── Registration: *Object (3 properties)
+│   │           ├── ConsumerKey: *string
+│   │           ├── ConsumerSecretSettingName: *string
+│   │           └── PropertyBag: genruntime.PropertyBag
+│   ├── Kind: *string
+│   ├── Login: *Object (7 properties)
+│   │   ├── AllowedExternalRedirectUrls: string[]
+│   │   ├── CookieExpiration: *Object (3 properties)
+│   │   │   ├── Convention: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── TimeToExpiration: *string
+│   │   ├── Nonce: *Object (3 properties)
+│   │   │   ├── NonceExpirationInterval: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── ValidateNonce: *bool
+│   │   ├── PreserveUrlFragmentsForLogins: *bool
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Routes: *Object (2 properties)
+│   │   │   ├── LogoutEndpoint: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── TokenStore: *Object (5 properties)
+│   │       ├── AzureBlobStorage: *Object (2 properties)
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   └── SasUrlSettingName: *string
+│   │       ├── Enabled: *bool
+│   │       ├── FileSystem: *Object (2 properties)
+│   │       │   ├── Directory: *string
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── TokenRefreshExtensionHours: *float64
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Platform: *Object (4 properties)
+│   │   ├── ConfigFilePath: *string
+│   │   ├── Enabled: *bool
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── RuntimeVersion: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── GlobalValidation: *Object (5 properties)
+    │   ├── ExcludedPaths: string[]
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RedirectToProvider: *string
+    │   ├── RequireAuthentication: *bool
+    │   └── UnauthenticatedClientAction: *string
+    ├── HttpSettings: *Object (4 properties)
+    │   ├── ForwardProxy: *Object (4 properties)
+    │   │   ├── Convention: *string
+    │   │   ├── CustomHostHeaderName: *string
+    │   │   ├── CustomProtoHeaderName: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RequireHttps: *bool
+    │   └── Routes: *Object (2 properties)
+    │       ├── ApiPrefix: *string
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── IdentityProviders: *Object (10 properties)
+    │   ├── Apple: *Object (4 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Registration: *Object (3 properties)
+    │   │       ├── ClientId: *string
+    │   │       ├── ClientSecretSettingName: *string
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── AzureActiveDirectory: *Object (6 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── IsAutoProvisioned: *bool
+    │   │   ├── Login: *Object (3 properties)
+    │   │   │   ├── DisableWWWAuthenticate: *bool
+    │   │   │   ├── LoginParameters: string[]
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Registration: *Object (7 properties)
+    │   │   │   ├── ClientId: *string
+    │   │   │   ├── ClientSecretCertificateIssuer: *string
+    │   │   │   ├── ClientSecretCertificateSubjectAlternativeName: *string
+    │   │   │   ├── ClientSecretCertificateThumbprint: *string
+    │   │   │   ├── ClientSecretSettingName: *string
+    │   │   │   ├── OpenIdIssuer: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   └── Validation: *Object (4 properties)
+    │   │       ├── AllowedAudiences: string[]
+    │   │       ├── DefaultAuthorizationPolicy: *Object (3 properties)
+    │   │       │   ├── AllowedApplications: string[]
+    │   │       │   ├── AllowedPrincipals: *Object (3 properties)
+    │   │       │   │   ├── Groups: string[]
+    │   │       │   │   ├── Identities: string[]
+    │   │       │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       ├── JwtClaimChecks: *Object (3 properties)
+    │   │       │   ├── AllowedClientApplications: string[]
+    │   │       │   ├── AllowedGroups: string[]
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── AzureStaticWebApps: *Object (3 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Registration: *Object (2 properties)
+    │   │       ├── ClientId: *string
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── CustomOpenIdConnectProviders: map[string]Object (4 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (3 properties)
+    │   │   │   ├── NameClaimType: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Registration: *Object (4 properties)
+    │   │       ├── ClientCredential: *Object (3 properties)
+    │   │       │   ├── ClientSecretSettingName: *string
+    │   │       │   ├── Method: *string
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       ├── ClientId: *string
+    │   │       ├── OpenIdConnectConfiguration: *Object (6 properties)
+    │   │       │   ├── AuthorizationEndpoint: *string
+    │   │       │   ├── CertificationUri: *string
+    │   │       │   ├── Issuer: *string
+    │   │       │   ├── PropertyBag: genruntime.PropertyBag
+    │   │       │   ├── TokenEndpoint: *string
+    │   │       │   └── WellKnownOpenIdConfiguration: *string
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── Facebook: *Object (5 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── GraphApiVersion: *string
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Registration: *Object (3 properties)
+    │   │       ├── AppId: *string
+    │   │       ├── AppSecretSettingName: *string
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── GitHub: *Object (4 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Registration: *Object (3 properties)
+    │   │       ├── ClientId: *string
+    │   │       ├── ClientSecretSettingName: *string
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── Google: *Object (5 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Registration: *Object (3 properties)
+    │   │   │   ├── ClientId: *string
+    │   │   │   ├── ClientSecretSettingName: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   └── Validation: *Object (2 properties)
+    │   │       ├── AllowedAudiences: string[]
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── LegacyMicrosoftAccount: *Object (5 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Registration: *Object (3 properties)
+    │   │   │   ├── ClientId: *string
+    │   │   │   ├── ClientSecretSettingName: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   └── Validation: *Object (2 properties)
+    │   │       ├── AllowedAudiences: string[]
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Twitter: *Object (3 properties)
+    │       ├── Enabled: *bool
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── Registration: *Object (3 properties)
+    │           ├── ConsumerKey: *string
+    │           ├── ConsumerSecretSettingName: *string
+    │           └── PropertyBag: genruntime.PropertyBag
+    ├── Kind: *string
+    ├── Login: *Object (7 properties)
+    │   ├── AllowedExternalRedirectUrls: string[]
+    │   ├── CookieExpiration: *Object (3 properties)
+    │   │   ├── Convention: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── TimeToExpiration: *string
+    │   ├── Nonce: *Object (3 properties)
+    │   │   ├── NonceExpirationInterval: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── ValidateNonce: *bool
+    │   ├── PreserveUrlFragmentsForLogins: *bool
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Routes: *Object (2 properties)
+    │   │   ├── LogoutEndpoint: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── TokenStore: *Object (5 properties)
+    │       ├── AzureBlobStorage: *Object (2 properties)
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── SasUrlSettingName: *string
+    │       ├── Enabled: *bool
+    │       ├── FileSystem: *Object (2 properties)
+    │       │   ├── Directory: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── TokenRefreshExtensionHours: *float64
+    ├── Name: *string
+    ├── Platform: *Object (4 properties)
+    │   ├── ConfigFilePath: *string
+    │   ├── Enabled: *bool
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── RuntimeVersion: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesConfigLogs: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (9 properties)
+│   ├── ApplicationLogs: *Object (4 properties)
+│   │   ├── AzureBlobStorage: *Object (4 properties)
+│   │   │   ├── Level: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── RetentionInDays: *int
+│   │   │   └── SasUrl: *genruntime.SecretReference
+│   │   ├── AzureTableStorage: *Object (3 properties)
+│   │   │   ├── Level: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SasUrl: *genruntime.SecretReference
+│   │   ├── FileSystem: *Object (2 properties)
+│   │   │   ├── Level: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── DetailedErrorMessages: *Object (2 properties)
+│   │   ├── Enabled: *bool
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── FailedRequestsTracing: *Object (2 properties)
+│   │   ├── Enabled: *bool
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── HttpLogs: *Object (3 properties)
+│   │   ├── AzureBlobStorage: *Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── RetentionInDays: *int
+│   │   │   └── SasUrl: *genruntime.SecretReference
+│   │   ├── FileSystem: *Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── RetentionInDays: *int
+│   │   │   └── RetentionInMb: *int
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (11 properties)
+    ├── ApplicationLogs: *Object (4 properties)
+    │   ├── AzureBlobStorage: *Object (3 properties)
+    │   │   ├── Level: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── RetentionInDays: *int
+    │   ├── AzureTableStorage: *Object (2 properties)
+    │   │   ├── Level: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── FileSystem: *Object (2 properties)
+    │   │   ├── Level: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── DetailedErrorMessages: *Object (2 properties)
+    │   ├── Enabled: *bool
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── FailedRequestsTracing: *Object (2 properties)
+    │   ├── Enabled: *bool
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── HttpLogs: *Object (3 properties)
+    │   ├── AzureBlobStorage: *Object (3 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── RetentionInDays: *int
+    │   ├── FileSystem: *Object (4 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── RetentionInDays: *int
+    │   │   └── RetentionInMb: *int
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesConfigSlotConfigNames: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (8 properties)
+│   ├── AppSettingNames: string[]
+│   ├── AzureStorageConfigNames: string[]
+│   ├── ConnectionStringNames: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (10 properties)
+    ├── AppSettingNames: string[]
+    ├── AzureStorageConfigNames: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionStringNames: string[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 SitesHostNameBinding: Resource
 ├── Owner: web/v20260715.Site
 ├── Spec: Object (14 properties)

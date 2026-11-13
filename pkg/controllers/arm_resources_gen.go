@@ -9,6 +9,8 @@ import (
 	app_customizations "github.com/highfivelabs/aso-extensions/apis/arm/app/customizations"
 	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
+	app_v20251002p "github.com/highfivelabs/aso-extensions/apis/arm/app/v20251002preview"
+	app_v20251002ps "github.com/highfivelabs/aso-extensions/apis/arm/app/v20251002preview/storage"
 	app_v20260101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101"
 	app_v20260101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101/storage"
 	app_v20260302p "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260302preview"
@@ -204,6 +206,55 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(app_v20250101.ManagedEnvironmentsManagedCertificate)})
 	result = append(result, &registration.StorageType{
+		Obj: new(app_v20251002p.ManagedEnvironment),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.customDomainConfiguration.certificatePassword",
+				Func: indexAppManagedEnvironmentCertificatePassword,
+			},
+			{
+				Key:  ".spec.customDomainConfiguration.certificateValue",
+				Func: indexAppManagedEnvironmentCertificateValue,
+			},
+			{
+				Key:  ".spec.appInsightsConfiguration.connectionString",
+				Func: indexAppManagedEnvironmentConnectionString,
+			},
+			{
+				Key:  ".spec.daprAIConnectionString",
+				Func: indexAppManagedEnvironmentDaprAIConnectionString,
+			},
+			{
+				Key:  ".spec.daprAIInstrumentationKey",
+				Func: indexAppManagedEnvironmentDaprAIInstrumentationKey,
+			},
+			{
+				Key:  ".spec.openTelemetryConfiguration.destinationsConfiguration.dataDogConfiguration.key",
+				Func: indexAppManagedEnvironmentKey,
+			},
+			{
+				Key:  ".spec.appLogsConfiguration.logAnalyticsConfiguration.sharedKey",
+				Func: indexAppManagedEnvironmentSharedKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.appInsightsConfiguration.connectionString",
+						".spec.appLogsConfiguration.logAnalyticsConfiguration.sharedKey",
+						".spec.customDomainConfiguration.certificatePassword",
+						".spec.customDomainConfiguration.certificateValue",
+						".spec.daprAIConnectionString",
+						".spec.daprAIInstrumentationKey",
+						".spec.openTelemetryConfiguration.destinationsConfiguration.dataDogConfiguration.key",
+					},
+					&app_v20251002p.ManagedEnvironmentList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
 		Obj: new(app_v20260101.ConnectedEnvironment),
 		Indexes: []registration.Index{
 			{
@@ -376,6 +427,25 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(app_v20260302p.ManagedEnvironmentsDaprSubscription)})
 	result = append(result, &registration.StorageType{Obj: new(app_v20260302p.ManagedEnvironmentsJavaComponent)})
+	result = append(result, &registration.StorageType{
+		Obj: new(app_v20260701.ContainerApp),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.configuration.secrets.value",
+				Func: indexAppContainerAppValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.configuration.secrets.value",
+					},
+					&app_v20260701.ContainerAppList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.PrivateLinkAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.ResourceManagementPrivateLink)})
@@ -1290,6 +1360,39 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyFtp)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyScm)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesConfigAuthSettingsV2)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.SitesConfigLogs),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.applicationLogs.azureBlobStorage.sasUrl",
+				Func: indexWebSitesConfigLogsApplicationLogsAzureBlobStorageSasUrl,
+			},
+			{
+				Key:  ".spec.applicationLogs.azureTableStorage.sasUrl",
+				Func: indexWebSitesConfigLogsApplicationLogsAzureTableStorageSasUrl,
+			},
+			{
+				Key:  ".spec.httpLogs.azureBlobStorage.sasUrl",
+				Func: indexWebSitesConfigLogsHttpLogsAzureBlobStorageSasUrl,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.applicationLogs.azureBlobStorage.sasUrl",
+						".spec.applicationLogs.azureTableStorage.sasUrl",
+						".spec.httpLogs.azureBlobStorage.sasUrl",
+					},
+					&web_v20260715.SitesConfigLogsList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesConfigSlotConfigNames)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesHostNameBinding)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.SitesSlot),
@@ -1327,6 +1430,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsCertificate)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsDaprComponent)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsManagedCertificate)})
+	result = append(result, &registration.KnownType{Obj: new(app_v20251002p.ManagedEnvironment)})
+	result = append(result, &registration.KnownType{Obj: new(app_v20251002ps.ManagedEnvironment)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(app_v20260101.ConnectedEnvironment)},
@@ -1353,8 +1458,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20260101s.SessionPool)})
 	result = append(result, &registration.KnownType{Obj: new(app_v20260302p.ManagedEnvironmentsDaprSubscription)}, &registration.KnownType{Obj: new(app_v20260302p.ManagedEnvironmentsJavaComponent)})
 	result = append(result, &registration.KnownType{Obj: new(app_v20260302ps.ManagedEnvironmentsDaprSubscription)}, &registration.KnownType{Obj: new(app_v20260302ps.ManagedEnvironmentsJavaComponent)})
-	result = append(result, &registration.KnownType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
-	result = append(result, &registration.KnownType{Obj: new(app_v20260701s.ManagedEnvironmentsDotNetComponent)})
+	result = append(result, &registration.KnownType{Obj: new(app_v20260701.ContainerApp)}, &registration.KnownType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
+	result = append(result, &registration.KnownType{Obj: new(app_v20260701s.ContainerApp)}, &registration.KnownType{Obj: new(app_v20260701s.ManagedEnvironmentsDotNetComponent)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20200501.PrivateLinkAssociation)}, &registration.KnownType{Obj: new(authorization_v20200501.ResourceManagementPrivateLink)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20200501s.PrivateLinkAssociation)}, &registration.KnownType{Obj: new(authorization_v20200501s.ResourceManagementPrivateLink)})
 	result = append(
@@ -1838,12 +1943,22 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyFtp)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyScm)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesConfigAuthSettingsV2)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesConfigLogs)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesConfigSlotConfigNames)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesHostNameBinding)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlot)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsHostNameBinding)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(web_v20260715s.Certificate)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesBasicPublishingCredentialsPolicyFtp)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesBasicPublishingCredentialsPolicyScm)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigAuthSettingsV2)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigLogs)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigSlotConfigNames)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesHostNameBinding)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlot)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsHostNameBinding)})
@@ -1856,6 +1971,8 @@ func createScheme() *runtime.Scheme {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = app_v20250101.AddToScheme(scheme)
 	_ = app_v20250101s.AddToScheme(scheme)
+	_ = app_v20251002p.AddToScheme(scheme)
+	_ = app_v20251002ps.AddToScheme(scheme)
 	_ = app_v20260101.AddToScheme(scheme)
 	_ = app_v20260101s.AddToScheme(scheme)
 	_ = app_v20260302p.AddToScheme(scheme)
@@ -1978,7 +2095,9 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ConnectedEnvironmentsCertificateExtension{})
 	result = append(result, &app_customizations.ConnectedEnvironmentsDaprComponentExtension{})
 	result = append(result, &app_customizations.ConnectedEnvironmentsStorageExtension{})
+	result = append(result, &app_customizations.ContainerAppExtension{})
 	result = append(result, &app_customizations.ContainerAppsSourceControlExtension{})
+	result = append(result, &app_customizations.ManagedEnvironmentExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsCertificateExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsDaprComponentExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsDaprSubscriptionExtension{})
@@ -2202,6 +2321,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &storage_customizations.StorageAccountsPrivateEndpointConnectionExtension{})
 	result = append(result, &storage_customizations.StorageAccountsStorageTaskAssignmentExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
+	result = append(result, &web_customizations.SitesBasicPublishingCredentialsPolicyFtpExtension{})
+	result = append(result, &web_customizations.SitesBasicPublishingCredentialsPolicyScmExtension{})
+	result = append(result, &web_customizations.SitesConfigAuthSettingsV2Extension{})
+	result = append(result, &web_customizations.SitesConfigLogsExtension{})
+	result = append(result, &web_customizations.SitesConfigSlotConfigNamesExtension{})
 	result = append(result, &web_customizations.SitesHostNameBindingExtension{})
 	result = append(result, &web_customizations.SitesSlotExtension{})
 	result = append(result, &web_customizations.SitesSlotsHostNameBindingExtension{})
@@ -2314,6 +2438,25 @@ func indexAppConnectedEnvironmentsStorageAccountKey(rawObj client.Object) []stri
 	return obj.Spec.Properties.AzureFile.AccountKey.Index()
 }
 
+// indexAppContainerAppValue an index function for app_v20260701.ContainerApp .spec.configuration.secrets.value
+func indexAppContainerAppValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260701.ContainerApp)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Configuration == nil {
+		return nil
+	}
+	for _, secretItem := range obj.Spec.Configuration.Secrets {
+		if secretItem.Value == nil {
+			continue
+		}
+		result = append(result, secretItem.Value.Index()...)
+	}
+	return result
+}
+
 // indexAppContainerAppsSourceControlClientId an index function for app_v20260101.ContainerAppsSourceControl .spec.githubActionConfiguration.azureCredentials.clientId
 func indexAppContainerAppsSourceControlClientId(rawObj client.Object) []string {
 	obj, ok := rawObj.(*app_v20260101.ContainerAppsSourceControl)
@@ -2399,6 +2542,114 @@ func indexAppContainerAppsSourceControlTenantId(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.GithubActionConfiguration.AzureCredentials.TenantId.Index()
+}
+
+// indexAppManagedEnvironmentCertificatePassword an index function for app_v20251002p.ManagedEnvironment .spec.customDomainConfiguration.certificatePassword
+func indexAppManagedEnvironmentCertificatePassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20251002p.ManagedEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.CustomDomainConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.CustomDomainConfiguration.CertificatePassword == nil {
+		return nil
+	}
+	return obj.Spec.CustomDomainConfiguration.CertificatePassword.Index()
+}
+
+// indexAppManagedEnvironmentCertificateValue an index function for app_v20251002p.ManagedEnvironment .spec.customDomainConfiguration.certificateValue
+func indexAppManagedEnvironmentCertificateValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20251002p.ManagedEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.CustomDomainConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.CustomDomainConfiguration.CertificateValue == nil {
+		return nil
+	}
+	return obj.Spec.CustomDomainConfiguration.CertificateValue.Index()
+}
+
+// indexAppManagedEnvironmentConnectionString an index function for app_v20251002p.ManagedEnvironment .spec.appInsightsConfiguration.connectionString
+func indexAppManagedEnvironmentConnectionString(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20251002p.ManagedEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.AppInsightsConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.AppInsightsConfiguration.ConnectionString == nil {
+		return nil
+	}
+	return obj.Spec.AppInsightsConfiguration.ConnectionString.Index()
+}
+
+// indexAppManagedEnvironmentDaprAIConnectionString an index function for app_v20251002p.ManagedEnvironment .spec.daprAIConnectionString
+func indexAppManagedEnvironmentDaprAIConnectionString(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20251002p.ManagedEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DaprAIConnectionString == nil {
+		return nil
+	}
+	return obj.Spec.DaprAIConnectionString.Index()
+}
+
+// indexAppManagedEnvironmentDaprAIInstrumentationKey an index function for app_v20251002p.ManagedEnvironment .spec.daprAIInstrumentationKey
+func indexAppManagedEnvironmentDaprAIInstrumentationKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20251002p.ManagedEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DaprAIInstrumentationKey == nil {
+		return nil
+	}
+	return obj.Spec.DaprAIInstrumentationKey.Index()
+}
+
+// indexAppManagedEnvironmentKey an index function for app_v20251002p.ManagedEnvironment .spec.openTelemetryConfiguration.destinationsConfiguration.dataDogConfiguration.key
+func indexAppManagedEnvironmentKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20251002p.ManagedEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.OpenTelemetryConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.OpenTelemetryConfiguration.DestinationsConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.OpenTelemetryConfiguration.DestinationsConfiguration.DataDogConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.OpenTelemetryConfiguration.DestinationsConfiguration.DataDogConfiguration.Key == nil {
+		return nil
+	}
+	return obj.Spec.OpenTelemetryConfiguration.DestinationsConfiguration.DataDogConfiguration.Key.Index()
+}
+
+// indexAppManagedEnvironmentSharedKey an index function for app_v20251002p.ManagedEnvironment .spec.appLogsConfiguration.logAnalyticsConfiguration.sharedKey
+func indexAppManagedEnvironmentSharedKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20251002p.ManagedEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.AppLogsConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.AppLogsConfiguration.LogAnalyticsConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.AppLogsConfiguration.LogAnalyticsConfiguration.SharedKey == nil {
+		return nil
+	}
+	return obj.Spec.AppLogsConfiguration.LogAnalyticsConfiguration.SharedKey.Index()
 }
 
 // indexAppManagedEnvironmentsCertificatePassword an index function for app_v20250101.ManagedEnvironmentsCertificate .spec.properties.password
@@ -3714,6 +3965,60 @@ func indexWebCertificatePfxBlob(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.PfxBlob.Index()
+}
+
+// indexWebSitesConfigLogsApplicationLogsAzureBlobStorageSasUrl an index function for web_v20260715.SitesConfigLogs .spec.applicationLogs.azureBlobStorage.sasUrl
+func indexWebSitesConfigLogsApplicationLogsAzureBlobStorageSasUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesConfigLogs)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureBlobStorage == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureBlobStorage.SasUrl == nil {
+		return nil
+	}
+	return obj.Spec.ApplicationLogs.AzureBlobStorage.SasUrl.Index()
+}
+
+// indexWebSitesConfigLogsApplicationLogsAzureTableStorageSasUrl an index function for web_v20260715.SitesConfigLogs .spec.applicationLogs.azureTableStorage.sasUrl
+func indexWebSitesConfigLogsApplicationLogsAzureTableStorageSasUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesConfigLogs)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureTableStorage == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureTableStorage.SasUrl == nil {
+		return nil
+	}
+	return obj.Spec.ApplicationLogs.AzureTableStorage.SasUrl.Index()
+}
+
+// indexWebSitesConfigLogsHttpLogsAzureBlobStorageSasUrl an index function for web_v20260715.SitesConfigLogs .spec.httpLogs.azureBlobStorage.sasUrl
+func indexWebSitesConfigLogsHttpLogsAzureBlobStorageSasUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesConfigLogs)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.HttpLogs == nil {
+		return nil
+	}
+	if obj.Spec.HttpLogs.AzureBlobStorage == nil {
+		return nil
+	}
+	if obj.Spec.HttpLogs.AzureBlobStorage.SasUrl == nil {
+		return nil
+	}
+	return obj.Spec.HttpLogs.AzureBlobStorage.SasUrl.Index()
 }
 
 // indexWebSitesSlotAccessKey an index function for web_v20260715.SitesSlot .spec.siteConfig.azureStorageAccounts.accessKey

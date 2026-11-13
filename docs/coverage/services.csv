@@ -18,7 +18,7 @@ Microsoft.AlertsManagement,5,2,0,69,32,0,37,46.4,0.0,53.6
 Microsoft.AnalysisServices,1,0,0,18,0,0,18,0.0,0.0,100.0
 Microsoft.ApiCenter,8,0,0,45,0,0,45,0.0,0.0,100.0
 Microsoft.ApiManagement,112,26,0,1078,270,0,808,25.0,0.0,75.0
-Microsoft.App,30,4,16,616,312,157,147,50.6,25.5,23.9
+Microsoft.App,30,4,16,616,312,184,120,50.6,29.9,19.5
 Microsoft.AppComplianceAutomation,4,0,0,27,0,0,27,0.0,0.0,100.0
 Microsoft.AppConfiguration,5,4,0,27,24,0,3,88.9,0.0,11.1
 Microsoft.AppLink,2,0,0,16,0,0,16,0.0,0.0,100.0
@@ -263,7 +263,7 @@ Microsoft.VerifiedId,1,0,0,3,0,0,3,0.0,0.0,100.0
 Microsoft.VideoIndexer,2,0,0,18,0,0,18,0.0,0.0,100.0
 Microsoft.VirtualMachineImages,2,0,0,76,0,0,76,0.0,0.0,100.0
 Microsoft.VMwareCloudSimple,3,0,0,51,0,0,51,0.0,0.0,100.0
-Microsoft.Web,81,3,4,1932,313,273,1346,16.2,14.1,69.7
+Microsoft.Web,81,3,6,1932,313,354,1265,16.2,18.3,65.5
 Microsoft.WeightsAndBiases,1,0,0,23,0,0,23,0.0,0.0,100.0
 Microsoft.Widget,1,0,0,5,0,0,5,0.0,0.0,100.0
 Microsoft.WindowsESU,1,0,0,7,0,0,7,0.0,0.0,100.0

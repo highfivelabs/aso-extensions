@@ -14,7 +14,9 @@ title: Supported Resources
 | ConnectedEnvironmentsCertificate             | 2026-01-01         | v20260101        | v0.1.0         | -      |
 | ConnectedEnvironmentsDaprComponent           | 2026-01-01         | v20260101        | v0.1.0         | -      |
 | ConnectedEnvironmentsStorage                 | 2026-01-01         | v20260101        | v0.1.0         | -      |
+| ContainerApp                                 | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | ContainerAppsSourceControl                   | 2026-01-01         | v20260101        | v0.1.0         | -      |
+| ManagedEnvironment                           | 2025-10-02-preview | v20251002preview | v0.1.0         | -      |
 | ManagedEnvironmentsCertificate               | 2025-01-01         | v20250101        | v0.1.0         | -      |
 | ManagedEnvironmentsDaprComponent             | 2025-01-01         | v20250101        | v0.1.0         | -      |
 | ManagedEnvironmentsDaprSubscription          | 2026-03-02-preview | v20260302preview | v0.1.0         | -      |
@@ -496,10 +498,15 @@ title: Supported Resources
 
 ### Released
 
-| Resource                  | ARM Version | CRD Version | Supported From | Sample |
-|---------------------------|-------------|-------------|----------------|--------|
-| Certificate               | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesHostNameBinding      | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesSlot                 | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesSlotsHostNameBinding | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| Resource                                 | ARM Version | CRD Version | Supported From | Sample |
+|------------------------------------------|-------------|-------------|----------------|--------|
+| Certificate                              | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesBasicPublishingCredentialsPolicyFtp | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesBasicPublishingCredentialsPolicyScm | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesConfigAuthSettingsV2                | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesConfigLogs                          | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesConfigSlotConfigNames               | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesHostNameBinding                     | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlot                                | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsHostNameBinding                | 2026-07-15  | v20260715   | v0.1.0         | -      |
 

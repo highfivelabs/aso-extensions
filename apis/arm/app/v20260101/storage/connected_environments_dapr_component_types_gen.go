@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701/storage"
 	"github.com/rotisserie/eris"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -291,6 +292,100 @@ type Secret struct {
 	Value             *genruntime.SecretReference            `json:"value,omitempty"`
 }
 
+// AssignProperties_From_Secret populates our Secret from the provided source Secret
+func (secret *Secret) AssignProperties_From_Secret(source *storage.Secret) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// IdentityReference
+	if source.IdentityReference != nil {
+		identityReference := source.IdentityReference.Copy()
+		secret.IdentityReference = &identityReference
+	} else {
+		secret.IdentityReference = nil
+	}
+
+	// KeyVaultUrl
+	secret.KeyVaultUrl = genruntime.ClonePointerToString(source.KeyVaultUrl)
+
+	// Name
+	secret.Name = genruntime.ClonePointerToString(source.Name)
+
+	// Value
+	if source.Value != nil {
+		value := source.Value.Copy()
+		secret.Value = &value
+	} else {
+		secret.Value = nil
+	}
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		secret.PropertyBag = propertyBag
+	} else {
+		secret.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForSecret interface (if implemented) to customize the conversion
+	var secretAsAny any = secret
+	if augmentedSecret, ok := secretAsAny.(augmentConversionForSecret); ok {
+		err := augmentedSecret.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_Secret populates the provided destination Secret from our Secret
+func (secret *Secret) AssignProperties_To_Secret(destination *storage.Secret) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(secret.PropertyBag)
+
+	// IdentityReference
+	if secret.IdentityReference != nil {
+		identityReference := secret.IdentityReference.Copy()
+		destination.IdentityReference = &identityReference
+	} else {
+		destination.IdentityReference = nil
+	}
+
+	// KeyVaultUrl
+	destination.KeyVaultUrl = genruntime.ClonePointerToString(secret.KeyVaultUrl)
+
+	// Name
+	destination.Name = genruntime.ClonePointerToString(secret.Name)
+
+	// Value
+	if secret.Value != nil {
+		value := secret.Value.Copy()
+		destination.Value = &value
+	} else {
+		destination.Value = nil
+	}
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForSecret interface (if implemented) to customize the conversion
+	var secretAsAny any = secret
+	if augmentedSecret, ok := secretAsAny.(augmentConversionForSecret); ok {
+		err := augmentedSecret.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20260101.Secret_STATUS
 // Secret definition.
 type Secret_STATUS struct {
@@ -298,6 +393,84 @@ type Secret_STATUS struct {
 	KeyVaultUrl *string                `json:"keyVaultUrl,omitempty"`
 	Name        *string                `json:"name,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
+}
+
+// AssignProperties_From_Secret_STATUS populates our Secret_STATUS from the provided source Secret_STATUS
+func (secret *Secret_STATUS) AssignProperties_From_Secret_STATUS(source *storage.Secret_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// Identity
+	secret.Identity = genruntime.ClonePointerToString(source.Identity)
+
+	// KeyVaultUrl
+	secret.KeyVaultUrl = genruntime.ClonePointerToString(source.KeyVaultUrl)
+
+	// Name
+	secret.Name = genruntime.ClonePointerToString(source.Name)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		secret.PropertyBag = propertyBag
+	} else {
+		secret.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForSecret_STATUS interface (if implemented) to customize the conversion
+	var secretAsAny any = secret
+	if augmentedSecret, ok := secretAsAny.(augmentConversionForSecret_STATUS); ok {
+		err := augmentedSecret.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_Secret_STATUS populates the provided destination Secret_STATUS from our Secret_STATUS
+func (secret *Secret_STATUS) AssignProperties_To_Secret_STATUS(destination *storage.Secret_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(secret.PropertyBag)
+
+	// Identity
+	destination.Identity = genruntime.ClonePointerToString(secret.Identity)
+
+	// KeyVaultUrl
+	destination.KeyVaultUrl = genruntime.ClonePointerToString(secret.KeyVaultUrl)
+
+	// Name
+	destination.Name = genruntime.ClonePointerToString(secret.Name)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForSecret_STATUS interface (if implemented) to customize the conversion
+	var secretAsAny any = secret
+	if augmentedSecret, ok := secretAsAny.(augmentConversionForSecret_STATUS); ok {
+		err := augmentedSecret.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+type augmentConversionForSecret interface {
+	AssignPropertiesFrom(src *storage.Secret) error
+	AssignPropertiesTo(dst *storage.Secret) error
+}
+
+type augmentConversionForSecret_STATUS interface {
+	AssignPropertiesFrom(src *storage.Secret_STATUS) error
+	AssignPropertiesTo(dst *storage.Secret_STATUS) error
 }
 
 func init() {

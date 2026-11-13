@@ -169,12 +169,6 @@ type ManagedEnvironmentsDotNetComponentList struct {
 	Items           []ManagedEnvironmentsDotNetComponent `json:"items"`
 }
 
-// Storage version of v20260701.APIVersion
-// +kubebuilder:validation:Enum={"2026-07-01"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2026-07-01")
-
 // Storage version of v20260701.ManagedEnvironmentsDotNetComponent_Spec
 type ManagedEnvironmentsDotNetComponent_Spec struct {
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
@@ -288,18 +282,6 @@ type ManagedEnvironmentsDotNetComponentOperatorSpec struct {
 	ConfigMapExpressions []*core.DestinationExpression `json:"configMapExpressions,omitempty"`
 	PropertyBag          genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
 	SecretExpressions    []*core.DestinationExpression `json:"secretExpressions,omitempty"`
-}
-
-// Storage version of v20260701.SystemData_STATUS
-// Metadata pertaining to creation and last modification of the resource.
-type SystemData_STATUS struct {
-	CreatedAt          *string                `json:"createdAt,omitempty"`
-	CreatedBy          *string                `json:"createdBy,omitempty"`
-	CreatedByType      *string                `json:"createdByType,omitempty"`
-	LastModifiedAt     *string                `json:"lastModifiedAt,omitempty"`
-	LastModifiedBy     *string                `json:"lastModifiedBy,omitempty"`
-	LastModifiedByType *string                `json:"lastModifiedByType,omitempty"`
-	PropertyBag        genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
 func init() {
