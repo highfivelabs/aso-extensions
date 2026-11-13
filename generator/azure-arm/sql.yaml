@@ -1,0 +1,25 @@
+# Azure SQL children ASO does not export (Microsoft.Sql, 2025-01-01, the
+# newest stable and the version of ASO's own v20250101 Server and
+# ServersDatabase): a server's express vulnerability assessment
+# (sqlVulnerabilityAssessments/default; ASO's ServersVulnerabilityAssessment
+# is the classic, storage-backed one) and a database's geo-backup policy
+# (geoBackupPolicies/Default, which a DataWarehouse database turns off; ASO
+# leaves it out: "Not actually supported in ARM at the moment", its sql.yaml
+# at the pin). The catalog's avm-res-sql-server needs both (2026-11-13).
+# Owned by ASO's Server and ServersDatabase.
+typeFilters:
+  - action: include
+    group: sql
+    version: v20250101
+    because: the version of ASO's Server and ServersDatabase (v20250101)
+  - action: prune
+    group: sql
+    because: every other version is left alone
+groupModelConfiguration:
+  2025-01-01:
+    Servers_SqlVulnerabilityAssessment:
+      $exportAs: ServersSqlVulnerabilityAssessment
+      $supportedFrom: v0.1.0
+    Servers_Databases_GeoBackupPolicy:
+      $exportAs: ServersDatabasesGeoBackupPolicy
+      $supportedFrom: v0.1.0

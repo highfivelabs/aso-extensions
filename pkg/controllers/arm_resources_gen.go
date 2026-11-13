@@ -136,6 +136,9 @@ import (
 	securityinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/customizations"
 	securityinsights_v20250901 "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901"
 	securityinsights_v20250901s "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901/storage"
+	sql_customizations "github.com/highfivelabs/aso-extensions/apis/arm/sql/customizations"
+	sql_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/sql/v20250101"
+	sql_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/sql/v20250101/storage"
 	storage_customizations "github.com/highfivelabs/aso-extensions/apis/arm/storage/customizations"
 	storage_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/storage/v20260601"
 	storage_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/storage/v20260601/storage"
@@ -1248,6 +1251,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.SecurityMLAnalyticsSetting)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.Watchlist)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.WatchlistsWatchlistItem)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDatabasesGeoBackupPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsInventoryPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsLocalUser)})
@@ -1801,6 +1806,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.SecurityMLAnalyticsSetting)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.Watchlist)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.WatchlistsWatchlistItem)})
+	result = append(result, &registration.KnownType{Obj: new(sql_v20250101.ServersDatabasesGeoBackupPolicy)}, &registration.KnownType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
+	result = append(result, &registration.KnownType{Obj: new(sql_v20250101s.ServersDatabasesGeoBackupPolicy)}, &registration.KnownType{Obj: new(sql_v20250101s.ServersSqlVulnerabilityAssessment)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)},
@@ -1940,6 +1947,8 @@ func createScheme() *runtime.Scheme {
 	_ = security_v20260701s.AddToScheme(scheme)
 	_ = securityinsights_v20250901.AddToScheme(scheme)
 	_ = securityinsights_v20250901s.AddToScheme(scheme)
+	_ = sql_v20250101.AddToScheme(scheme)
+	_ = sql_v20250101s.AddToScheme(scheme)
 	_ = storage_v20260601.AddToScheme(scheme)
 	_ = storage_v20260601s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
@@ -2167,6 +2176,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &securityinsights_customizations.SecurityMLAnalyticsSettingExtension{})
 	result = append(result, &securityinsights_customizations.WatchlistExtension{})
 	result = append(result, &securityinsights_customizations.WatchlistsWatchlistItemExtension{})
+	result = append(result, &sql_customizations.ServersDatabasesGeoBackupPolicyExtension{})
+	result = append(result, &sql_customizations.ServersSqlVulnerabilityAssessmentExtension{})
 	result = append(result, &storage_customizations.StorageAccountsEncryptionScopeExtension{})
 	result = append(result, &storage_customizations.StorageAccountsInventoryPolicyExtension{})
 	result = append(result, &storage_customizations.StorageAccountsLocalUserExtension{})

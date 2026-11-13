@@ -224,6 +224,8 @@ resources:
 - securityinsights.azure.hfl.dev_securitymlanalyticssettings.yaml
 - securityinsights.azure.hfl.dev_watchlists.yaml
 - securityinsights.azure.hfl.dev_watchlistswatchlistitems.yaml
+- sql.azure.hfl.dev_serversdatabasesgeobackuppolicies.yaml
+- sql.azure.hfl.dev_serverssqlvulnerabilityassessments.yaml
 - sql.azure.hfl.dev_users.yaml
 - storage.azure.hfl.dev_storageaccountsencryptionscopes.yaml
 - storage.azure.hfl.dev_storageaccountsinventorypolicies.yaml

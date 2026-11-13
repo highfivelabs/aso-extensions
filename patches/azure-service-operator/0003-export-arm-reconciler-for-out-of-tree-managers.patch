@@ -100,10 +100,10 @@ index 0000000..d250d9b
 +}
 diff --git a/v2/pkg/outoftree/extensions.go b/v2/pkg/outoftree/extensions.go
 new file mode 100644
-index 0000000..a69a0a5
+index 0000000..480706a
 --- /dev/null
 +++ b/v2/pkg/outoftree/extensions.go
-@@ -0,0 +1,44 @@
+@@ -0,0 +1,48 @@
 +/*
 +Copyright (c) Microsoft Corporation.
 +Licensed under the MIT license.
@@ -113,8 +113,9 @@ index 0000000..a69a0a5
 +// a hand-written extension of an out-of-tree generated kind needs and ASO
 +// keeps in v2/internal/: the ARM client an ARMResourceModifier receives, the
 +// reflection helper ASO's role extensions set a property with, the UUID
-+// naming ASO's role webhooks default a name with, and the set a
-+// KubernetesSecretExporter receives.
++// naming ASO's role webhooks default a name with, the set a
++// KubernetesSecretExporter receives, and the ARM error an ErrorClassifier
++// receives.
 +
 +package outoftree
 +
@@ -128,6 +129,9 @@ index 0000000..a69a0a5
 +// GenericClient is ASO's ARM client, as extensions.ARMResourceModifier
 +// receives it.
 +type GenericClient = genericarmclient.GenericClient
++
++// CloudError is ASO's ARM error, as extensions.ErrorClassifier receives it.
++type CloudError = genericarmclient.CloudError
 +
 +// Set is ASO's set, as genruntime.KubernetesSecretExporter receives the
 +// names of the secrets its secret expressions need.
