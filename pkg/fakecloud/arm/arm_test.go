@@ -102,6 +102,35 @@ func TestManagementGroupHierarchy(t *testing.T) {
 	expect(t, "delete the empty group", code, body, http.StatusOK)
 }
 
+// The tenant root group is there from the start: a parent, a holder of
+// settings, never deleted.
+func TestTenantRootGroup(t *testing.T) {
+	a := New(func(string) bool { return true })
+	a.Tenant = "11111111-2222-3333-4444-555555555555"
+	root := mgPrefix + a.Tenant
+	code, body := do(t, a, http.MethodGet, root, "")
+	expect(t, "get the tenant root group", code, body, http.StatusOK)
+	if !strings.Contains(body, `"displayName":"Tenant Root Group"`) || !strings.Contains(body, `"type":"Microsoft.Management/managementGroups"`) {
+		t.Errorf("tenant root group: %s", body)
+	}
+	code, body = do(t, a, http.MethodPut, mgPrefix+"alz", group(root))
+	expect(t, "a group under the tenant root", code, body, http.StatusCreated)
+	code, body = do(t, a, http.MethodPut, root+"/settings/default", `{"properties":{"requireAuthorizationForGroupCreation":true}}`)
+	expect(t, "hierarchy settings on the tenant root", code, body, http.StatusCreated)
+	code, body = do(t, a, http.MethodPut, root, `{"properties":{"displayName":"Contoso"}}`)
+	expect(t, "rename the tenant root", code, body, http.StatusOK)
+	code, body = do(t, a, http.MethodDelete, root, "")
+	expect(t, "delete the tenant root", code, body, http.StatusBadRequest)
+	if !a.HasResource(root) {
+		t.Error("the tenant root group was deleted")
+	}
+
+	// Without a tenant set, the default tenant's root group.
+	b := New(func(string) bool { return true })
+	code, body = do(t, b, http.MethodGet, mgPrefix+DefaultTenant, "")
+	expect(t, "the default tenant's root group", code, body, http.StatusOK)
+}
+
 func TestSubscriptionPlacement(t *testing.T) {
 	a := New(func(string) bool { return true })
 	g1, g2 := mgPrefix+"one", mgPrefix+"two"
