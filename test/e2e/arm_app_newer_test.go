@@ -14,9 +14,9 @@ import (
 
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 
+	appenv "github.com/highfivelabs/aso-extensions/apis/arm/app/v20251002preview"
 	app2026 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101"
 	app202607 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701"
-	appenv "github.com/highfivelabs/aso-extensions/apis/arm/app/v20251002preview"
 )
 
 // Our ManagedEnvironment (2025-10-02-preview), beside ASO's (2025-01-01), for
