@@ -25,8 +25,16 @@ import (
 //     workspace's customerId, a DNS record set's fqdn, a DNS zone's
 //     nameServers, a storage account's primaryEndpoints, an AKS cluster's
 //     fqdn, azurePortalFQDN, nodeResourceGroup, currentKubernetesVersion,
-//     powerState, kubelet identity and OIDC issuer URL, and an Application
-//     Insights component's instrumentationKey, appId and connectionString;
+//     powerState, kubelet identity and OIDC issuer URL, an Application
+//     Insights component's instrumentationKey, appId and connectionString,
+//     an App Service site's or slot's defaultHostName, hostNames,
+//     enabledHostNames and customDomainVerificationId (one per
+//     subscription, as Azure's), an Azure SQL server's, a PostgreSQL or
+//     MySQL flexible server's fullyQualifiedDomainName, and a Cosmos DB
+//     account's documentEndpoint, its locations' id and documentEndpoint,
+//     and its readLocations and writeLocations (every location reads; the
+//     failover priority 0 location writes, or every one with
+//     enableMultipleWriteLocations);
 //   - children Azure makes with their parent: a storage account's default
 //     blob, file, queue and table services (only the blob service for
 //     BlockBlobStorage, only the file service for FileStorage), and a DNS
@@ -50,6 +58,10 @@ var (
 	storageAccount   = regexp.MustCompile(`(?i)/providers/microsoft\.storage/storageaccounts/[^/]+$`)
 	managedCluster   = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/([^/]+)/providers/microsoft\.containerservice/managedclusters/[^/]+$`)
 	insightsComponen = regexp.MustCompile(`(?i)/providers/microsoft\.insights/components/[^/]+$`)
+	webSite          = regexp.MustCompile(`(?i)^/subscriptions/([^/]+)/.*/providers/microsoft\.web/sites/([^/]+)(?:/slots/([^/]+))?$`)
+	sqlServer        = regexp.MustCompile(`(?i)/providers/microsoft\.sql/servers/[^/]+$`)
+	flexibleServer   = regexp.MustCompile(`(?i)/providers/microsoft\.dbfor(postgresql|mysql)/flexibleservers/[^/]+$`)
+	cosmosAccount    = regexp.MustCompile(`(?i)/providers/microsoft\.documentdb/databaseaccounts/[^/]+$`)
 )
 
 // DefaultTenant is the tenant ID the fake writes when it is not given one.
@@ -168,6 +180,65 @@ func (a *ARM) compute(id string, body, props map[string]any) {
 		setIfMissing(props, "instrumentationKey", key)
 		setIfMissing(props, "appId", derivedGUID(id, "app"))
 		setIfMissing(props, "connectionString", "InstrumentationKey="+key+";IngestionEndpoint=https://"+strings.ToLower(location)+"-0.in.applicationinsights.azure.com/")
+	case webSite.MatchString(id):
+		m := webSite.FindStringSubmatch(id)
+		host := strings.ToLower(m[2])
+		if m[3] != "" {
+			host += "-" + strings.ToLower(m[3])
+		}
+		setIfMissing(props, "defaultHostName", host+".azurewebsites.net")
+		setIfMissing(props, "hostNames", []any{host + ".azurewebsites.net"})
+		setIfMissing(props, "enabledHostNames", []any{host + ".azurewebsites.net", host + ".scm.azurewebsites.net"})
+		setIfMissing(props, "customDomainVerificationId",
+			strings.ToUpper(hex.EncodeToString(derived("/subscriptions/"+strings.ToLower(m[1])+"|domain-verification", 32))))
+	case sqlServer.MatchString(id):
+		setIfMissing(props, "fullyQualifiedDomainName", strings.ToLower(name)+".database.windows.net")
+	case flexibleServer.MatchString(id):
+		engine := "mysql"
+		if strings.EqualFold(flexibleServer.FindStringSubmatch(id)[1], "postgresql") {
+			engine = "postgres"
+		}
+		setIfMissing(props, "fullyQualifiedDomainName", strings.ToLower(name)+"."+engine+".database.azure.com")
+	case cosmosAccount.MatchString(id):
+		computeCosmosAccount(name, location, props)
+	}
+}
+
+// computeCosmosAccount fills a Cosmos DB account's endpoints: the account's
+// documentEndpoint, each location's id and documentEndpoint, and the read
+// and write locations Azure lists. With no locations given, the account is
+// in its own location, as Azure places it.
+func computeCosmosAccount(name, location string, props map[string]any) {
+	account := strings.ToLower(name)
+	setIfMissing(props, "documentEndpoint", "https://"+account+".documents.azure.com:443/")
+	locations, _ := props["locations"].([]any)
+	if len(locations) == 0 && location != "" {
+		locations = []any{map[string]any{"locationName": location, "failoverPriority": float64(0)}}
+		props["locations"] = locations
+	}
+	multiWrite := props["enableMultipleWriteLocations"] == true
+	var reads, writes []any
+	for _, l := range locations {
+		loc, ok := l.(map[string]any)
+		if !ok {
+			continue
+		}
+		region, _ := loc["locationName"].(string)
+		short := strings.ToLower(strings.ReplaceAll(region, " ", ""))
+		setIfMissing(loc, "id", account+"-"+short)
+		setIfMissing(loc, "documentEndpoint", "https://"+account+"-"+short+".documents.azure.com:443/")
+		loc["provisioningState"] = "Succeeded"
+		if _, ok := loc["isZoneRedundant"]; !ok {
+			loc["isZoneRedundant"] = false
+		}
+		reads = append(reads, maps.Clone(loc))
+		if p, _ := loc["failoverPriority"].(float64); p == 0 || multiWrite {
+			writes = append(writes, maps.Clone(loc))
+		}
+	}
+	if reads != nil {
+		props["readLocations"] = reads
+		props["writeLocations"] = writes
 	}
 }
 

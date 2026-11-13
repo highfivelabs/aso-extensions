@@ -19,7 +19,10 @@
 // created. Management groups (Microsoft.Management/managementGroups) form a
 // hierarchy: a group's properties.details.parent.id must name a group that
 // exists, a group cannot become its own descendant's child, and a group that
-// has child groups or subscriptions cannot be deleted. A subscription is in
+// has child groups or subscriptions cannot be deleted. The tenant root group
+// (/providers/Microsoft.Management/managementGroups/<tenant ID>, the Tenant
+// field) always exists, as in Azure: it can be a parent, hold settings
+// (…/settings/default) and be updated, and cannot be deleted. A subscription is in
 // one group at a time: putting it in a group (…/managementGroups/g/subscriptions/s)
 // takes it out of the group it was in. The error codes for those refusals are
 // this fake's, not Azure's.
@@ -235,6 +238,7 @@ func (a *ARM) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	path := strings.TrimSuffix(r.URL.Path, "/")
+	a.ensureTenantRootGroup()
 	if m := lockPath.FindStringSubmatch(path); m != nil {
 		a.serveLock(rec, r, m[1], m[2])
 		return
@@ -459,6 +463,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, http.StatusBadRequest, "BadRequest", "A zone's SOA record set cannot be deleted; it is deleted with its zone.")
 			return
 		}
+		if strings.EqualFold(id, a.tenantRootGroup()) {
+			writeError(w, http.StatusBadRequest, "TenantRootGroupCannotBeDeleted", "The tenant root group "+id+" cannot be deleted.")
+			return
+		}
 		if managementGroup.MatchString(id) {
 			if child := a.groupChild(key); child != "" {
 				writeError(w, http.StatusConflict, "ManagementGroupNotEmpty", "The management group "+id+" has a child, "+child+", and cannot be deleted.")
@@ -497,6 +505,28 @@ func (a *ARM) exists(scope string) bool {
 	}
 	_, ok := a.resources[strings.ToLower(scope)]
 	return ok
+}
+
+// tenantRootGroup is the ID of the tenant root management group, whose name
+// is the tenant's ID.
+func (a *ARM) tenantRootGroup() string {
+	return "/providers/Microsoft.Management/managementGroups/" + a.tenant()
+}
+
+// ensureTenantRootGroup puts the tenant root group in the store unless it is
+// there (Azure makes it with the tenant).
+func (a *ARM) ensureTenantRootGroup() {
+	id := a.tenantRootGroup()
+	k := strings.ToLower(id)
+	if _, ok := a.resources[k]; ok {
+		return
+	}
+	r := resource{"id": id, "name": a.tenant(), "type": typeOf(id), "properties": map[string]any{
+		"displayName": "Tenant Root Group", "tenantId": a.tenant(), "details": map[string]any{},
+		"provisioningState": "Succeeded",
+	}}
+	a.setSystemData(k, r)
+	a.resources[k] = &r
 }
 
 // groupParent is the ID of the parent group a management group's body names
