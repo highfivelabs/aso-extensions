@@ -910,6 +910,13 @@ for the same object. It runs in ASO's namespace (so it reads
 `aso-extensions-manager`, whose rights are our kinds, reading Secrets,
 ConfigMaps, Namespaces and the ASO owner kinds it resolves (list and
 watch: the FlexibleServer, Vault, ManagedEnvironment and ResourceGroup),
+writing ConfigMaps (`create` and `update`, what ASO's
+`controllerutil.CreateOrUpdate` of a kind's `operatorSpec.configMaps` and
+`configMapExpressions` uses; the ConfigMap is owned by the object and the
+garbage collector removes it, so no `delete`; ASO's own role has the same
+verbs and more, cluster-wide; added 2026-11-13, when the catalog's
+`avm-ptn-alz` found a policy assignment could not export its identity's
+principal),
 `get` on any ASO resource (a `ManagementLock`'s owner), events, and tokens
 for `aso-workload` only. It cannot change any ASO resource, nor list the
 rest. Sharing ASO's
@@ -930,7 +937,8 @@ kind.
 `config/secret-writer` is the opt-in that lets our manager write Secrets
 (`create`, `update`, `delete`; not `patch`, which ASO's
 `controllerutil.CreateOrUpdate` does not use), for the keys Azure makes that
-kinds export through `operatorSpec.secrets` (§8, question 9). It is a
+kinds export through `operatorSpec.secrets`, and for
+`operatorSpec.secretExpressions` (§8, question 9). It is a
 kustomize component (a ClusterRole and a ClusterRoleBinding, both
 `aso-extensions-secret-writer`, named in full because a component does not
 take the install's `namePrefix`), added to a user's overlay of

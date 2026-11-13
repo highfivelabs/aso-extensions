@@ -310,8 +310,14 @@ subjects:
 ```
 
 `config/share-aso-identity` needs no component: ASO's account writes Secrets
-already. Whether the default should grant this is open (`docs/plan.md` §8,
-question 9).
+already. The default stays unable to write Secrets (`docs/plan.md` §8,
+question 9, answered 2026-11-10); the component is also what a kind's
+`operatorSpec.secretExpressions` needs.
+
+ConfigMaps need no component: the default install lets the manager create
+and update them, so a kind's `operatorSpec.configMaps` and
+`configMapExpressions` (a policy assignment's identity principal, say) are
+written as ASO writes them, owned by the object.
 
 ## Developing it
 
