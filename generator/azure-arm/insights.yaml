@@ -19,6 +19,10 @@ typeFilters:
     group: insights
     version: v20201120
     because: the newest stable version of workbook templates
+  - action: include
+    group: insights
+    version: v20200301preview
+    because: the only version of an Application Insights component's linked storage account (the profiler's), componentLinkedStorageAccounts_API.json
 
 groupModelConfiguration:
   2016-03-01:
@@ -30,6 +34,13 @@ groupModelConfiguration:
         $referenceType: arm # the storage account the activity log is archived to
       ServiceBusRuleId:
         $referenceType: arm # an Event Hubs namespace's authorization rule the activity log streams to
+  2020-03-01-preview:
+    Components_LinkedStorageAccount:
+      $exportAs: ComponentsLinkedStorageAccount
+      $supportedFrom: v0.1.0
+    LinkedStorageAccountsProperties:
+      LinkedStorageAccount:
+        $referenceType: arm # the storage account's ARM ID
   2020-11-20:
     WorkbookTemplate:
       $exportAs: WorkbookTemplate

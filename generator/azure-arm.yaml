@@ -36,6 +36,7 @@ upgradableResourcesReport:
 
 imports:
   app: azure-arm/app.yaml
+  managedidentity: azure-arm/managedidentity.yaml
   web: azure-arm/web.yaml
   operationalinsights: azure-arm/operationalinsights.yaml
   insights: azure-arm/insights.yaml

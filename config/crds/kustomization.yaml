@@ -99,6 +99,7 @@ resources:
 - hardwaresecuritymodules.azure.hfl.dev_cloudhsmclusters.yaml
 - hardwaresecuritymodules.azure.hfl.dev_cloudhsmclustersprivateendpointconnections.yaml
 - hardwaresecuritymodules.azure.hfl.dev_dedicatedhsms.yaml
+- insights.azure.hfl.dev_componentslinkedstorageaccounts.yaml
 - insights.azure.hfl.dev_logprofiles.yaml
 - insights.azure.hfl.dev_privatelinkscopes.yaml
 - insights.azure.hfl.dev_privatelinkscopesprivateendpointconnections.yaml
@@ -115,6 +116,7 @@ resources:
 - kubernetesconfiguration.azure.hfl.dev_sourcecontrolconfigurations.yaml
 - maintenance.azure.hfl.dev_configurationassignments.yaml
 - maintenance.azure.hfl.dev_maintenanceconfigurations.yaml
+- managedidentity.azure.hfl.dev_userassignedidentities.yaml
 - management.azure.hfl.dev_managementgroups.yaml
 - management.azure.hfl.dev_managementgroupssettings.yaml
 - management.azure.hfl.dev_managementgroupssubscriptions.yaml

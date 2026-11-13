@@ -1,0 +1,19 @@
+# A user-assigned managed identity at 2024-11-30 beside ASO's (2023-01-31),
+# for isolationScope, which ASO's version lacks (the catalog's
+# avm-res-managedidentity-userassignedidentity, 2026-11-13; docs/plan.md c19).
+# Not $azureGeneratedSecrets or $generatedConfigs as ASO's has them: their
+# generated code needs ASO's internal packages. The client and principal IDs
+# are in the status, and operatorSpec.configMapExpressions exports them.
+typeFilters:
+  - action: include
+    group: managedidentity
+    version: v20241130
+    because: the newest stable version, the first with isolationScope
+  - action: prune
+    group: managedidentity
+    because: every other version is left alone
+groupModelConfiguration:
+  2024-11-30:
+    UserAssignedIdentity:
+      $exportAs: UserAssignedIdentity
+      $supportedFrom: v0.1.0

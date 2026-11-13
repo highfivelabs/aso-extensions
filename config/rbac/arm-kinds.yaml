@@ -22,6 +22,7 @@ rules:
   - keyvault.azure.hfl.dev
   - kubernetesconfiguration.azure.hfl.dev
   - maintenance.azure.hfl.dev
+  - managedidentity.azure.hfl.dev
   - management.azure.hfl.dev
   - network.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
@@ -54,6 +55,7 @@ rules:
   - keyvault.azure.hfl.dev
   - kubernetesconfiguration.azure.hfl.dev
   - maintenance.azure.hfl.dev
+  - managedidentity.azure.hfl.dev
   - management.azure.hfl.dev
   - network.azure.hfl.dev
   - operationalinsights.azure.hfl.dev

@@ -1,5 +1,5 @@
 # The manager's rights: our kinds; reading the ASO owners it resolves
-# (FlexibleServer, Vault, ManagedEnvironment, ResourceGroup, Site, Workspace, Registry, VirtualMachine, ManagedCluster, Fleet); reading Secrets and ConfigMaps (aso-credential,
+# (FlexibleServer, Vault, ManagedEnvironment, ResourceGroup, Site, Workspace, Registry, VirtualMachine, ManagedCluster, Fleet, Component); reading Secrets and ConfigMaps (aso-credential,
 # credential-from secrets, the values our kinds name; ASO's framework keeps
 # informers on both); writing ConfigMaps (a kind's operatorSpec.configMaps
 # and configMapExpressions, as ASO's manager writes them: create or update,
@@ -62,6 +62,9 @@ rules:
   verbs: ["get", "list", "watch"]
 - apiGroups: ["storage.azure.com"]
   resources: ["storageaccounts"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["insights.azure.com"]
+  resources: ["components"]
   verbs: ["get", "list", "watch"]
 - apiGroups: [""]
   resources: ["secrets", "configmaps", "namespaces"]
