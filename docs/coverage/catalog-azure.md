@@ -48,13 +48,15 @@ and their DNS zone groups through `var.resource_types` (ASO and ours, as
 above); and per module, the resource itself (a vault, a site, a storage
 account: ASO). The Container Apps environment's HTTP route configs and
 maintenance configurations are built here since 2026-11-12
-(`app.azure.hfl.dev/v20260101`, `docs/plan.md` c3b). Uncovered among them:
-the environment's **Dapr subscriptions and .NET components** (preview API
-versions only) and
-Application Insights **linked storage accounts**
-(`microsoft.insights/components/linkedStorageAccounts`); the App Service
-**config sections** (`sites/config/metadata`, the slot swap action), which
-the generator does not make (c4).
+(`app.azure.hfl.dev/v20260101`, `docs/plan.md` c3b), and since 2026-11-13
+the environment's Dapr subscriptions and .NET components (c3c), Application
+Insights linked storage accounts (`microsoft.insights/components/linkedStorageAccounts`,
+`insights.azure.hfl.dev` `ComponentsLinkedStorageAccount`, c21) and the App
+Service config sections `authsettingsV2`, `logs` and `slotConfigNames` with
+the ftp and scm publishing policies (`web.azure.hfl.dev`, c4b). Uncovered
+among them: the App Service **`config/metadata`** section and the slot swap
+action (`metadata` is PUT-only, read with a POST, as `authsettings` and
+`backup` are, open question 13).
 
 ## Actions
 
