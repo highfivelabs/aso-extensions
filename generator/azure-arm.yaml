@@ -63,6 +63,7 @@ imports:
   cognitiveservices: azure-arm/cognitiveservices.yaml
   automation: azure-arm/automation.yaml
   storage: azure-arm/storage.yaml
+  sql: azure-arm/sql.yaml
 
 # Filters are applied in document order; the earliest match wins (as in ASO's
 # azure-arm.yaml, from which these are taken).

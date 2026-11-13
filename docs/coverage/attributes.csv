@@ -38500,7 +38500,7 @@ Microsoft.Sql,Microsoft.Sql/servers/databases/extensions,properties.serviceObjec
 Microsoft.Sql,Microsoft.Sql/servers/databases/extensions,properties.storageKey,string,false,none,,
 Microsoft.Sql,Microsoft.Sql/servers/databases/extensions,properties.storageKeyType,string,false,none,,
 Microsoft.Sql,Microsoft.Sql/servers/databases/extensions,properties.storageUri,string,false,none,,
-Microsoft.Sql,Microsoft.Sql/servers/databases/geoBackupPolicies,properties.state,string,false,none,,
+Microsoft.Sql,Microsoft.Sql/servers/databases/geoBackupPolicies,properties.state,string,false,ours,,state
 Microsoft.Sql,Microsoft.Sql/servers/databases/ledgerDigestUploads,properties.digestStorageEndpoint,string,false,none,,
 Microsoft.Sql,Microsoft.Sql/servers/databases/maintenanceWindows,properties.timeRanges[].dayOfWeek,string,false,none,,
 Microsoft.Sql,Microsoft.Sql/servers/databases/maintenanceWindows,properties.timeRanges[].duration,string,false,none,,
@@ -38690,7 +38690,7 @@ Microsoft.Sql,Microsoft.Sql/servers/securityAlertPolicies,properties.retentionDa
 Microsoft.Sql,Microsoft.Sql/servers/securityAlertPolicies,properties.state,string,false,official,state,
 Microsoft.Sql,Microsoft.Sql/servers/securityAlertPolicies,properties.storageAccountAccessKey,string,false,official,storageAccountAccessKey,
 Microsoft.Sql,Microsoft.Sql/servers/securityAlertPolicies,properties.storageEndpoint,string,false,official,storageEndpoint,
-Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments,properties.state,string,false,none,,
+Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments,properties.state,string,false,ours,,state
 Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines,properties.latestScan,boolean,false,none,,
 Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines,properties.results{}[][],string,false,none,,
 Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines/rules,properties.latestScan,boolean,false,none,,

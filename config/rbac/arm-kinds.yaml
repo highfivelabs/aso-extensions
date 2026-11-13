@@ -32,6 +32,7 @@ rules:
   - resources.azure.hfl.dev
   - security.azure.hfl.dev
   - securityinsights.azure.hfl.dev
+  - sql.azure.hfl.dev
   - storage.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*"]
@@ -63,6 +64,7 @@ rules:
   - resources.azure.hfl.dev
   - security.azure.hfl.dev
   - securityinsights.azure.hfl.dev
+  - sql.azure.hfl.dev
   - storage.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*/status", "*/finalizers"]
