@@ -198,6 +198,40 @@ spec:
                       - value
                       type: object
                     type: array
+                  configMaps:
+                    description: 'ConfigMaps: configures where to place operator written
+                      ConfigMaps.'
+                    properties:
+                      dscServerEndpoint:
+                        description: |-
+                          DscServerEndpoint: indicates where the DscServerEndpoint config map should be placed. If omitted, no config map will be
+                          created.
+                        properties:
+                          annotations:
+                            additionalProperties:
+                              type: string
+                            description: Annotations is an optional set of annotations
+                              to apply to the ConfigMap.
+                            type: object
+                          key:
+                            description: Key is the key in the ConfigMap being referenced
+                            type: string
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: Labels is an optional set of labels to apply
+                              to the ConfigMap.
+                            type: object
+                          name:
+                            description: |-
+                              Name is the name of the Kubernetes ConfigMap to write to.
+                              The ConfigMap will be created in the same namespace as the resource.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        type: object
+                    type: object
                   secretExpressions:
                     description: 'SecretExpressions: configures where to place operator
                       written dynamic secrets (created with CEL expressions).'

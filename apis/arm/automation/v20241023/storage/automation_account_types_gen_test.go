@@ -71,6 +71,57 @@ func AutomationAccountGenerator() *rapid.Generator[AutomationAccount] {
 	return automationAccountGenerator
 }
 
+func Test_AutomationAccountOperatorConfigMaps_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	rapid.Check(t, RunJSONSerializationTestForAutomationAccountOperatorConfigMaps)
+}
+
+// RunJSONSerializationTestForAutomationAccountOperatorConfigMaps runs a test to see if a specific instance of AutomationAccountOperatorConfigMaps round trips to JSON and back losslessly
+func RunJSONSerializationTestForAutomationAccountOperatorConfigMaps(t *rapid.T) {
+	subject := AutomationAccountOperatorConfigMapsGenerator().Draw(t, "subject")
+	// Serialize to JSON
+	bin, err := json.Marshal(subject)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Deserialize back into memory
+	var actual AutomationAccountOperatorConfigMaps
+	err = json.Unmarshal(bin, &actual)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check for outcome
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		t.Error(result)
+	}
+}
+
+// Generator of AutomationAccountOperatorConfigMaps instances for property testing - lazily instantiated by
+// AutomationAccountOperatorConfigMapsGenerator()
+var automationAccountOperatorConfigMapsGenerator *rapid.Generator[AutomationAccountOperatorConfigMaps]
+
+// AutomationAccountOperatorConfigMapsGenerator returns a generator of AutomationAccountOperatorConfigMaps instances for property testing.
+func AutomationAccountOperatorConfigMapsGenerator() *rapid.Generator[AutomationAccountOperatorConfigMaps] {
+	if automationAccountOperatorConfigMapsGenerator != nil {
+		return automationAccountOperatorConfigMapsGenerator
+	}
+
+	automationAccountOperatorConfigMapsGenerator = rapid.Just(AutomationAccountOperatorConfigMaps{})
+
+	return automationAccountOperatorConfigMapsGenerator
+}
+
 func Test_AutomationAccountOperatorSpec_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -117,7 +168,13 @@ func AutomationAccountOperatorSpecGenerator() *rapid.Generator[AutomationAccount
 		return automationAccountOperatorSpecGenerator
 	}
 
-	automationAccountOperatorSpecGenerator = rapid.Just(AutomationAccountOperatorSpec{})
+	configMaps := rapid.Ptr(AutomationAccountOperatorConfigMapsGenerator(), true)
+
+	automationAccountOperatorSpecGenerator = rapid.Custom(func(t *rapid.T) AutomationAccountOperatorSpec {
+		var result AutomationAccountOperatorSpec
+		result.ConfigMaps = configMaps.Draw(t, "ConfigMaps")
+		return result
+	})
 
 	return automationAccountOperatorSpecGenerator
 }

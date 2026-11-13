@@ -1359,6 +1359,9 @@ type AutomationAccountOperatorSpec struct {
 	// ConfigMapExpressions: configures where to place operator written dynamic ConfigMaps (created with CEL expressions).
 	ConfigMapExpressions []*core.DestinationExpression `json:"configMapExpressions,omitempty"`
 
+	// ConfigMaps: configures where to place operator written ConfigMaps.
+	ConfigMaps *AutomationAccountOperatorConfigMaps `json:"configMaps,omitempty"`
+
 	// SecretExpressions: configures where to place operator written dynamic secrets (created with CEL expressions).
 	SecretExpressions []*core.DestinationExpression `json:"secretExpressions,omitempty"`
 }
@@ -1380,6 +1383,18 @@ func (operator *AutomationAccountOperatorSpec) AssignProperties_From_AutomationA
 		operator.ConfigMapExpressions = configMapExpressionList
 	} else {
 		operator.ConfigMapExpressions = nil
+	}
+
+	// ConfigMaps
+	if source.ConfigMaps != nil {
+		var configMap AutomationAccountOperatorConfigMaps
+		err := configMap.AssignProperties_From_AutomationAccountOperatorConfigMaps(source.ConfigMaps)
+		if err != nil {
+			return eris.Wrap(err, "calling AssignProperties_From_AutomationAccountOperatorConfigMaps() to populate field ConfigMaps")
+		}
+		operator.ConfigMaps = &configMap
+	} else {
+		operator.ConfigMaps = nil
 	}
 
 	// SecretExpressions
@@ -1421,6 +1436,18 @@ func (operator *AutomationAccountOperatorSpec) AssignProperties_To_AutomationAcc
 		destination.ConfigMapExpressions = configMapExpressionList
 	} else {
 		destination.ConfigMapExpressions = nil
+	}
+
+	// ConfigMaps
+	if operator.ConfigMaps != nil {
+		var configMap storage.AutomationAccountOperatorConfigMaps
+		err := operator.ConfigMaps.AssignProperties_To_AutomationAccountOperatorConfigMaps(&configMap)
+		if err != nil {
+			return eris.Wrap(err, "calling AssignProperties_To_AutomationAccountOperatorConfigMaps() to populate field ConfigMaps")
+		}
+		destination.ConfigMaps = &configMap
+	} else {
+		destination.ConfigMaps = nil
 	}
 
 	// SecretExpressions
@@ -2618,6 +2645,51 @@ func (data *SystemData_STATUS) AssignProperties_To_SystemData_STATUS(destination
 		destination.LastModifiedByType = &lastModifiedByType
 	} else {
 		destination.LastModifiedByType = nil
+	}
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// No error
+	return nil
+}
+
+type AutomationAccountOperatorConfigMaps struct {
+	// DscServerEndpoint: indicates where the DscServerEndpoint config map should be placed. If omitted, no config map will be
+	// created.
+	DscServerEndpoint *genruntime.ConfigMapDestination `json:"dscServerEndpoint,omitempty"`
+}
+
+// AssignProperties_From_AutomationAccountOperatorConfigMaps populates our AutomationAccountOperatorConfigMaps from the provided source AutomationAccountOperatorConfigMaps
+func (maps *AutomationAccountOperatorConfigMaps) AssignProperties_From_AutomationAccountOperatorConfigMaps(source *storage.AutomationAccountOperatorConfigMaps) error {
+
+	// DscServerEndpoint
+	if source.DscServerEndpoint != nil {
+		dscServerEndpoint := *source.DscServerEndpoint.DeepCopy()
+		maps.DscServerEndpoint = &dscServerEndpoint
+	} else {
+		maps.DscServerEndpoint = nil
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_AutomationAccountOperatorConfigMaps populates the provided destination AutomationAccountOperatorConfigMaps from our AutomationAccountOperatorConfigMaps
+func (maps *AutomationAccountOperatorConfigMaps) AssignProperties_To_AutomationAccountOperatorConfigMaps(destination *storage.AutomationAccountOperatorConfigMaps) error {
+	// Create a new property bag
+	propertyBag := genruntime.NewPropertyBag()
+
+	// DscServerEndpoint
+	if maps.DscServerEndpoint != nil {
+		dscServerEndpoint := *maps.DscServerEndpoint.DeepCopy()
+		destination.DscServerEndpoint = &dscServerEndpoint
+	} else {
+		destination.DscServerEndpoint = nil
 	}
 
 	// Update the property bag
