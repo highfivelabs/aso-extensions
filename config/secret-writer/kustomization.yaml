@@ -1,9 +1,10 @@
 # Opt-in: let the manager write the Secrets a kind's operatorSpec.secrets
 # names, for keys Azure makes (an ExpressRoute circuit's service key, a
-# circuit or port authorization's key, and other $azureGeneratedSecrets).
+# circuit or port authorization's key, and other $azureGeneratedSecrets),
+# and the Secrets a kind's operatorSpec.secretExpressions names.
 # Without it the default install may read Secrets and not create them, and
 # such an export fails with "forbidden" on the kind's Ready condition.
-# docs/plan.md §8, question 9 (recommended, awaiting the builder).
+# docs/plan.md §8, question 9 (answered 2026-11-10: opt-in).
 #
 # A component, added to an overlay of the install:
 #

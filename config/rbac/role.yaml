@@ -1,9 +1,13 @@
 # The manager's rights: our kinds; reading the ASO owners it resolves
 # (FlexibleServer, Vault, ManagedEnvironment, ResourceGroup, Site, Workspace, Registry, VirtualMachine, ManagedCluster, Fleet); reading Secrets and ConfigMaps (aso-credential,
 # credential-from secrets, the values our kinds name; ASO's framework keeps
-# informers on both); reading Namespaces (ASO's reconcile-policy annotation
-# on a namespace); events. Of ASO's, only get on its resources, for a
-# ManagementLock's owner (aso-owner-reader.yaml, generated).
+# informers on both); writing ConfigMaps (a kind's operatorSpec.configMaps
+# and configMapExpressions, as ASO's manager writes them: create or update,
+# owned by the object, removed by the garbage collector); reading Namespaces
+# (ASO's reconcile-policy annotation on a namespace); events. Of ASO's, only
+# get on its resources, for a ManagementLock's owner (aso-owner-reader.yaml,
+# generated). Writing Secrets is the opt-in config/secret-writer
+# (docs/plan.md §8, question 9).
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -62,6 +66,9 @@ rules:
 - apiGroups: [""]
   resources: ["secrets", "configmaps", "namespaces"]
   verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["create", "update"]
 - apiGroups: ["", "events.k8s.io"]
   resources: ["events"]
   verbs: ["create", "patch"]

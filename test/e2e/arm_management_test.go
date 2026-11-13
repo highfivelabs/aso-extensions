@@ -198,3 +198,56 @@ func TestManagementGroupParentMissing(t *testing.T) {
 		t.Fatal("the group was created under a parent that does not exist")
 	}
 }
+
+// A child group applied before its parent is in Resource Manager (a
+// hierarchy applied at once, as the catalog's avm-ptn-alz applies levels 0
+// to 6) is refused first, then retried at the usual pace and made once the
+// parent is there, not after ASO's very slow retry of an unknown 400 (the
+// sync period). The ManagementGroup's ErrorClassifier
+// (generator/_extensions/management).
+func TestManagementGroupParentLater(t *testing.T) {
+	ctx := context.Background()
+	ns := namespace(t, "mg-later")
+	strictCredential(t, ns, clientA)
+	trustNamespace(ns)
+	parentID := mgPrefix + ns + "-parent"
+
+	child := &management.ManagementGroup{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "child"},
+		Spec: management.ManagementGroup_Spec{
+			AzureName: ns + "-child",
+			Details: &management.CreateManagementGroupDetails{
+				Parent: &management.CreateParentGroupInfo{Reference: &genruntime.ResourceReference{ARMID: parentID}},
+			},
+		},
+	}
+	if err := k8s.Create(ctx, child); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the child refused while its parent is missing", notReadyWith(child, "parent management group"))
+
+	parent := &management.ManagementGroup{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "parent"},
+		Spec:       management.ManagementGroup_Spec{AzureName: ns + "-parent"},
+	}
+	if err := k8s.Create(ctx, parent); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "parent ManagementGroup Ready", ready(parent))
+	eventually(t, timeout, "the child Ready once its parent is there", ready(child))
+	expectResource(t, mgPrefix+ns+"-child", func(r map[string]any) error {
+		details, _ := properties(r)["details"].(map[string]any)
+		parentInfo, _ := details["parent"].(map[string]any)
+		if parentInfo["id"] != parentID {
+			return fmt.Errorf("parent of child: %v", r)
+		}
+		return nil
+	})
+
+	for _, o := range []client.Object{child, parent} {
+		if err := k8s.Delete(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+		eventually(t, 2*timeout, fmt.Sprintf("%T %s gone", o, o.GetName()), gone(o))
+	}
+}

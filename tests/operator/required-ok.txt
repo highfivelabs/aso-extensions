@@ -60,6 +60,7 @@ team-b TagSet refused
 the tags are deleted in Resource Manager
 team-a PolicyDefinition Ready
 team-a PolicyAssignment Ready
+team-a PolicyAssignment exported its identity's principal to a ConfigMap
 team-a PolicyAssignment at the management group Ready
 team-b PolicyDefinition refused
 the policy assignments and definition are deleted

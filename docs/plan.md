@@ -340,7 +340,8 @@ after the generator has written the package; `task check` regenerates and
 finds the copy unchanged. What such a file needs from ASO's `v2/internal`
 (the ARM client an `ARMResourceModifier` receives, `reflecthelpers.SetProperty`,
 `randextensions`) is exported by patch 0003 (`v2/pkg/outoftree/extensions.go`),
-as is ASO's `resolveBuiltInRoleDefinition`. The first ones are the PIM
+as is ASO's `resolveBuiltInRoleDefinition` and the ARM error an
+`ErrorClassifier` receives (`CloudError`). The first ones are the PIM
 requests' (foundation row 5). The ExpressRoute kinds (row 9) added two more
 sorts: an `ARMResourceModifier` that keeps a parent's child collections on its
 PUT (a circuit's peerings and authorizations; ASO's `RouteTable` code and its
@@ -910,6 +911,13 @@ for the same object. It runs in ASO's namespace (so it reads
 `aso-extensions-manager`, whose rights are our kinds, reading Secrets,
 ConfigMaps, Namespaces and the ASO owner kinds it resolves (list and
 watch: the FlexibleServer, Vault, ManagedEnvironment and ResourceGroup),
+writing ConfigMaps (`create` and `update`, what ASO's
+`controllerutil.CreateOrUpdate` of a kind's `operatorSpec.configMaps` and
+`configMapExpressions` uses; the ConfigMap is owned by the object and the
+garbage collector removes it, so no `delete`; ASO's own role has the same
+verbs and more, cluster-wide; added 2026-11-13, when the catalog's
+`avm-ptn-alz` found a policy assignment could not export its identity's
+principal),
 `get` on any ASO resource (a `ManagementLock`'s owner), events, and tokens
 for `aso-workload` only. It cannot change any ASO resource, nor list the
 rest. Sharing ASO's
@@ -930,7 +938,8 @@ kind.
 `config/secret-writer` is the opt-in that lets our manager write Secrets
 (`create`, `update`, `delete`; not `patch`, which ASO's
 `controllerutil.CreateOrUpdate` does not use), for the keys Azure makes that
-kinds export through `operatorSpec.secrets` (§8, question 9). It is a
+kinds export through `operatorSpec.secrets`, and for
+`operatorSpec.secretExpressions` (§8, question 9). It is a
 kustomize component (a ClusterRole and a ClusterRoleBinding, both
 `aso-extensions-secret-writer`, named in full because a component does not
 take the install's `namePrefix`), added to a user's overlay of
@@ -1174,7 +1183,13 @@ serialization and conversion tests):
   a group (both children of a tenant scope resource, owned by the group), a
   changed display name PUT again, and the deletes, children first; a group
   whose parent is not in Resource Manager is refused and the refusal reaches
-  its Ready condition. On kind, `ManagementGroup` and
+  its Ready condition, and is retried at ASO's usual pace, so a child applied
+  with its parent is made once the parent is (a hand-written
+  `ErrorClassifier`, `generator/_extensions/management`, added 2026-11-13
+  when the catalog's `avm-ptn-alz` found a child waiting the sync period:
+  ASO retries an unknown 400 only that slowly). Azure's own code for a
+  missing parent is not documented; the classifier matches a code or message
+  that says a parent is not found. On kind, `ManagementGroup` and
   `ManagementGroupsSubscription` are Ready for team-a and refused for team-b.
   The fake does not show: whether Azure accepts these names or parents (a
   group's name is a free string here), that creating one takes minutes
