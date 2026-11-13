@@ -234,6 +234,11 @@ resources:
 - storage.azure.hfl.dev_storageaccountsprivateendpointconnections.yaml
 - storage.azure.hfl.dev_storageaccountsstoragetaskassignments.yaml
 - web.azure.hfl.dev_certificates.yaml
+- web.azure.hfl.dev_sitesbasicpublishingcredentialspolicyftps.yaml
+- web.azure.hfl.dev_sitesbasicpublishingcredentialspolicyscms.yaml
+- web.azure.hfl.dev_sitesconfigauthsettingsv2s.yaml
+- web.azure.hfl.dev_sitesconfiglogs.yaml
+- web.azure.hfl.dev_sitesconfigslotconfignames.yaml
 - web.azure.hfl.dev_siteshostnamebindings.yaml
 - web.azure.hfl.dev_sitesslots.yaml
 - web.azure.hfl.dev_sitesslotshostnamebindings.yaml

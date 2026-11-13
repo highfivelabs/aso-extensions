@@ -1,0 +1,119 @@
+diff --git a/v2/tools/generator/internal/jsonast/fixed_names_test.go b/v2/tools/generator/internal/jsonast/fixed_names_test.go
+new file mode 100644
+index 00000000..dbbe6b5a
+--- /dev/null
++++ b/v2/tools/generator/internal/jsonast/fixed_names_test.go
+@@ -0,0 +1,48 @@
++/*
++ * Copyright (c) Microsoft Corporation.
++ * Licensed under the MIT license.
++ */
++
++package jsonast
++
++import (
++	"testing"
++
++	. "github.com/onsi/gomega"
++
++	"github.com/Azure/azure-service-operator/v2/tools/generator/internal/astmodel"
++)
++
++// Modified by High Five Labs: a fixed name listed in ASO_GENERATOR_FIXED_NAMES
++// (sites/config/logs) names its own resource of the parent path's ARM type;
++// one not listed is refused as before.
++func Test_inferNameFromURLPath_FixedNames(t *testing.T) {
++	t.Setenv("ASO_GENERATOR_FIXED_NAMES", "sites/config/logs, sites/basicPublishingCredentialsPolicies/ftp")
++	g := NewGomegaWithT(t)
++	extractor := &SwaggerTypeExtractor{idFactory: astmodel.NewIdentifierFactory()}
++	base := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/"
++
++	group, resource, name, err := extractor.inferNameFromURLPath(base + "config/logs")
++	g.Expect(err).ToNot(HaveOccurred())
++	g.Expect(group).To(Equal("Microsoft.Web"))
++	g.Expect(resource).To(Equal("sites/config"))
++	g.Expect(name).To(Equal("Sites_Config_Log"))
++
++	_, resource, name, err = extractor.inferNameFromURLPath(base + "basicPublishingCredentialsPolicies/FTP")
++	g.Expect(err).ToNot(HaveOccurred())
++	g.Expect(resource).To(Equal("sites/basicPublishingCredentialsPolicies"))
++	g.Expect(name).To(Equal("Sites_BasicPublishingCredentialsPolicies_FTP"))
++
++	_, _, _, err = extractor.inferNameFromURLPath(base + "config/backup")
++	g.Expect(err).To(MatchError(ContainSubstring("unexpected hard coded name")))
++
++	// A listed name in the middle of a path is not a fixed name.
++	_, _, _, err = extractor.inferNameFromURLPath(base + "config/logs/list")
++	g.Expect(err).To(HaveOccurred())
++
++	// config/web stays as it was.
++	_, resource, name, err = extractor.inferNameFromURLPath(base + "config/web")
++	g.Expect(err).ToNot(HaveOccurred())
++	g.Expect(resource).To(Equal("sites/config"))
++	g.Expect(name).To(Equal("Sites_Config"))
++}
+diff --git a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+index 9417dffb..54482512 100644
+--- a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
++++ b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+@@ -863,7 +863,8 @@ func (extractor *SwaggerTypeExtractor) inferNameFromURLPath(operationPath string
+ 
+ 	urlParts := strings.Split(subpath, "/")
+ 	expectingKind := true
+-	for _, urlPart := range urlParts {
++	fixedName := "" // Modified by High Five Labs: a fixed name listed in ASO_GENERATOR_FIXED_NAMES
++	for ix, urlPart := range urlParts {
+ 		if len(urlPart) == 0 {
+ 			// skip empty parts
+ 			continue
+@@ -882,6 +883,15 @@ func (extractor *SwaggerTypeExtractor) inferNameFromURLPath(operationPath string
+ 		} else {
+ 			// Expecting a parameter
+ 			if urlPart[0] != '{' && !hardCodedNames.Contains(strings.ToLower(urlPart)) {
++				// Modified by High Five Labs: the last segment may be one of the
++				// fixed names listed in ASO_GENERATOR_FIXED_NAMES, each its own
++				// resource of the same ARM type (sites/config/logs).
++				if ix == len(urlParts)-1 && isListedFixedName(strings.Join(nameParts, "/")+"/"+urlPart) {
++					fixedName = urlPart
++					expectingKind = true
++					continue
++				}
++
+ 				// We didn't expect this name to be hard-coded
+ 				return "", "", "", eris.Errorf("unexpected hard coded name %q in path %s", urlPart, operationPath)
+ 			}
+@@ -896,6 +906,13 @@ func (extractor *SwaggerTypeExtractor) inferNameFromURLPath(operationPath string
+ 
+ 	resource := strings.Join(nameParts, "/") // capture this before uppercasing/singularizing
+ 
++	// Modified by High Five Labs: a listed fixed name names the resource
++	// (Sites_Config_Logs); its ARM type stays the parent path's (sites/config),
++	// and the name is the literal (extractLastPathParam makes it an enum of one).
++	if fixedName != "" {
++		nameParts = append(nameParts, fixedName)
++	}
++
+ 	// Uppercase first letter in each part:
+ 	for ix := range nameParts {
+ 		nameParts[ix] = strings.ToUpper(nameParts[ix][0:1]) + nameParts[ix][1:]
+@@ -909,6 +926,20 @@ func (extractor *SwaggerTypeExtractor) inferNameFromURLPath(operationPath string
+ 	return group, resource, name, nil
+ }
+ 
++// isListedFixedName reports whether "type/child/name" (sites/config/logs) is
++// listed in ASO_GENERATOR_FIXED_NAMES (comma separated, case insensitive): a
++// child resource whose instances have fixed names, each generated as its own
++// resource (Modified by High Five Labs).
++func isListedFixedName(path string) bool {
++	for _, entry := range strings.Split(os.Getenv("ASO_GENERATOR_FIXED_NAMES"), ",") {
++		if entry = strings.TrimSpace(entry); entry != "" && strings.EqualFold(entry, path) {
++			return true
++		}
++	}
++
++	return false
++}
++
+ func nameFromRef(ref spec.Ref) string {
+ 	url := ref.GetURL()
+ 	if url == nil {

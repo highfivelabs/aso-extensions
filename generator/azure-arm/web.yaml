@@ -1,3 +1,10 @@
+typeTransformers:
+  - group: web
+    version: v20260715
+    name: AzureBlobStorageApplicationLogsConfig_STATUS;AzureBlobStorageHttpLogsConfig_STATUS;AzureTableStorageApplicationLogsConfig_STATUS
+    property: SasUrl
+    remove: true
+    because: a SAS URL carries its signature; the status never holds it
 typeFilters:
   - action: include
     group: web
@@ -20,6 +27,23 @@ groupModelConfiguration:
       $supportedFrom: v0.1.0
     Sites_Slots_HostNameBinding:
       $exportAs: SitesSlotsHostNameBinding
+      $supportedFrom: v0.1.0
+    # A site's fixed-name config sections and publishing policies, each its
+    # own kind (patch 0014, generator/fixed-names.txt; 2026-11-13).
+    Sites_Config_AuthsettingsV2:
+      $exportAs: SitesConfigAuthSettingsV2
+      $supportedFrom: v0.1.0
+    Sites_Config_Log:
+      $exportAs: SitesConfigLogs
+      $supportedFrom: v0.1.0
+    Sites_Config_SlotConfigName:
+      $exportAs: SitesConfigSlotConfigNames
+      $supportedFrom: v0.1.0
+    Sites_BasicPublishingCredentialsPolicies_Ftp:
+      $exportAs: SitesBasicPublishingCredentialsPolicyFtp
+      $supportedFrom: v0.1.0
+    Sites_BasicPublishingCredentialsPolicies_Scm:
+      $exportAs: SitesBasicPublishingCredentialsPolicyScm
       $supportedFrom: v0.1.0
     # Reference and resource labels, as ASO's web.yaml has them for 2026-07-15
     ApiManagementConfig:
@@ -54,3 +78,17 @@ groupModelConfiguration:
     CertificateProperties_STATUS:
       Password:
         $importSecretMode: never # a status never holds the password
+    OpenIdConnectConfig:
+      TokenEndpoint:
+        $importSecretMode: never # an OpenID Connect provider's token URL, not a secret (autolabel, reviewed)
+    # A log destination's SAS URL carries its signature: a Secret, never the
+    # spec; Azure returns it, so it is removed from the status too.
+    AzureBlobStorageApplicationLogsConfig:
+      SasUrl:
+        $importSecretMode: required
+    AzureBlobStorageHttpLogsConfig:
+      SasUrl:
+        $importSecretMode: required
+    AzureTableStorageApplicationLogsConfig:
+      SasUrl:
+        $importSecretMode: required
