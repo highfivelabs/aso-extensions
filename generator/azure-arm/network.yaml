@@ -74,6 +74,28 @@ groupModelConfiguration:
       Id:
         $referenceType: arm # a DNS security rule's domain lists, a policy link's virtual network
   2026-03-01:
+    # Our ApplicationGateway beside ASO's (2022-07-01), for
+    # entraJWTValidationConfigs (the catalog's avm-res-network-applicationgateway,
+    # 2026-11-13). ASO's 2022-07-01 marks its
+    # children $resourceEmbeddedInParent; 2026-03-01 (TypeSpec) does not
+    # make them resources, so only the secrets are labelled.
+    ApplicationGateway:
+      $exportAs: ApplicationGateway
+      $supportedFrom: v0.1.0
+    ApplicationGatewaySslCertificatePropertiesFormat:
+      Data:
+        $importSecretMode: required
+      Password:
+        $importSecretMode: required
+    ApplicationGatewayTrustedClientCertificatePropertiesFormat:
+      Data:
+        $importSecretMode: required
+    ApplicationGatewayTrustedRootCertificatePropertiesFormat:
+      Data:
+        $importSecretMode: required
+    ApplicationGatewayAuthenticationCertificatePropertiesFormat:
+      Data:
+        $importSecretMode: required
     Connection:
       $exportAs: VirtualNetworkGatewayConnection
       $supportedFrom: v0.1.0
@@ -378,6 +400,90 @@ groupModelConfiguration:
       AuthorizationKey:
         $importSecretMode: required # the key of an ExpressRoute circuit authorization, a credential (sharedKey is x-ms-secret in the spec already)
 
+    ApplicationGatewayRedirectConfiguration:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayRewriteRuleSet:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayListener:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewaySslProfile:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewaySslCertificate:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayBackendSettings:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayTrustedRootCertificate:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayIPConfiguration:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayAdvancedRoutingMap:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayPrivateLinkIpConfiguration:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayAuthenticationCertificate:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayBackendAddressPool:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayLoadDistributionTarget:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayAdvancedRoutingRule:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayPrivateLinkConfiguration:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayPathRule:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayBackendHttpSettings:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayLoadDistributionPolicy:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayFrontendIPConfiguration:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayProbe:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayUrlPathMap:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayAdvancedRoutingConditionSet:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayRequestRoutingRule:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayRoutingRule:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayEntraJWTValidationConfig:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayTrustedClientCertificate:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayHttpListener:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    ApplicationGatewayFrontendPort:
+      Id:
+        $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
 typeTransformers:
   - group: network
     version: v20180501

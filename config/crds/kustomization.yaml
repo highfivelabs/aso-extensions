@@ -66,6 +66,7 @@ resources:
 - cognitiveservices.azure.hfl.dev_accountsraipolicies.yaml
 - cognitiveservices.azure.hfl.dev_commitmentplans.yaml
 - cognitiveservices.azure.hfl.dev_commitmentplansaccountassociations.yaml
+- compute.azure.hfl.dev_virtualmachines.yaml
 - compute.azure.hfl.dev_virtualmachinesruncommands.yaml
 - consumption.azure.hfl.dev_budgets.yaml
 - containerregistry.azure.hfl.dev_registriesconnectedregistries.yaml
@@ -123,6 +124,7 @@ resources:
 - management.azure.hfl.dev_managementgroupssettings.yaml
 - management.azure.hfl.dev_managementgroupssubscriptions.yaml
 - management.azure.hfl.dev_servicegroups.yaml
+- network.azure.hfl.dev_applicationgateways.yaml
 - network.azure.hfl.dev_dnsresolverdomainlists.yaml
 - network.azure.hfl.dev_dnsresolverpolicies.yaml
 - network.azure.hfl.dev_dnsresolverpoliciesdnssecurityrules.yaml

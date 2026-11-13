@@ -31,6 +31,7 @@ The following resources have newer versions available in the Azure REST API spec
 
 |      | Resource                  | Available Stable | Supported Stable | Available Preview | Supported Preview |
 |------|---------------------------|------------------|------------------|-------------------|-------------------|
+|      | VirtualMachine            | 2026-04-01       | 2025-04-01       | -                 | -                 |
 | 💡    | VirtualMachinesRunCommand | **2026-04-01**   | 2022-03-01       | -                 | -                 |
 
 ## containerservice
