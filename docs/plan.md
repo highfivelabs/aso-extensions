@@ -340,7 +340,8 @@ after the generator has written the package; `task check` regenerates and
 finds the copy unchanged. What such a file needs from ASO's `v2/internal`
 (the ARM client an `ARMResourceModifier` receives, `reflecthelpers.SetProperty`,
 `randextensions`) is exported by patch 0003 (`v2/pkg/outoftree/extensions.go`),
-as is ASO's `resolveBuiltInRoleDefinition`. The first ones are the PIM
+as is ASO's `resolveBuiltInRoleDefinition` and the ARM error an
+`ErrorClassifier` receives (`CloudError`). The first ones are the PIM
 requests' (foundation row 5). The ExpressRoute kinds (row 9) added two more
 sorts: an `ARMResourceModifier` that keeps a parent's child collections on its
 PUT (a circuit's peerings and authorizations; ASO's `RouteTable` code and its
@@ -1181,7 +1182,13 @@ serialization and conversion tests):
   a group (both children of a tenant scope resource, owned by the group), a
   changed display name PUT again, and the deletes, children first; a group
   whose parent is not in Resource Manager is refused and the refusal reaches
-  its Ready condition. On kind, `ManagementGroup` and
+  its Ready condition, and is retried at ASO's usual pace, so a child applied
+  with its parent is made once the parent is (a hand-written
+  `ErrorClassifier`, `generator/_extensions/management`, added 2026-11-13
+  when the catalog's `avm-ptn-alz` found a child waiting the sync period:
+  ASO retries an unknown 400 only that slowly). Azure's own code for a
+  missing parent is not documented; the classifier matches a code or message
+  that says a parent is not found. On kind, `ManagementGroup` and
   `ManagementGroupsSubscription` are Ready for team-a and refused for team-b.
   The fake does not show: whether Azure accepts these names or parents (a
   group's name is a free string here), that creating one takes minutes
