@@ -205,6 +205,9 @@ can create serviceaccounts/aso-workload --subresource=token -n team-a || fail "c
 ! can create serviceaccounts/default --subresource=token -n team-a || fail "may request tokens for other service accounts"
 can get secrets -n team-a || fail "cannot read secrets"
 ! can create secrets -n team-a || fail "may create secrets"
+can create configmaps -n team-a || fail "cannot create configmaps (operatorSpec.configMapExpressions)"
+can update configmaps -n team-a || fail "cannot update configmaps (operatorSpec.configMapExpressions)"
+! can delete configmaps -n team-a || fail "may delete configmaps"
 ! can update flexibleservers.dbforpostgresql.azure.com -n team-a || fail "may change ASO's FlexibleServers"
 ! can create resourcegroups.resources.azure.com -n team-a || fail "may create ASO resources"
 ! can create mutatingwebhookconfigurations.admissionregistration.k8s.io || fail "may change webhooks"
@@ -223,7 +226,7 @@ can list storageaccounts.storage.azure.com -n team-a || fail "cannot read the ow
 # a storage kind that owns nothing of ours is still only read by name.
 ! can list storageaccountsblobservices.storage.azure.com -n team-a || fail "may list ASO resources it only needs to get"
 ! can update resourcegroups.resources.azure.com -n team-a || fail "may change ASO's ResourceGroups"
-pass "aso-workload tokens, read secrets and the ASO owners, get any ASO resource, our kinds; nothing of ASO's to change"
+pass "aso-workload tokens, read secrets and the ASO owners, get any ASO resource, our kinds, write configmaps; nothing of ASO's to change"
 
 # team <ns> <client>: a namespace with ASO's strict workload identity credential.
 team() {
@@ -999,6 +1002,11 @@ metadata: {name: require-team-tag, namespace: $1}
 spec:
   owner: {group: resources.azure.com, kind: ResourceGroup, name: rg}
   policyDefinitionReference: {group: authorization.azure.hfl.dev, kind: PolicyDefinition, name: require-team-tag}
+  location: westus
+  identity: {type: SystemAssigned}
+  operatorSpec:
+    configMapExpressions:
+    - {name: require-team-tag-identity, key: principalId, value: self.status.identity.principalId}
 ---
 apiVersion: authorization.azure.hfl.dev/v20260701
 kind: PolicyAssignment
@@ -1161,6 +1169,13 @@ wait_for 90 "team-a's PolicyAssignment Ready" ready policyassignments.authorizat
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Authorization/policyAssignments/require-team-tag 201" \
   || fail "the fake resource manager saw no policy assignment on team-a's resource group"
 pass "team-a PolicyAssignment Ready: at an ASO ResourceGroup, naming our PolicyDefinition by object (resolved to its ARM ID)"
+principal="$(kubectl -n team-a get policyassignments.authorization.azure.hfl.dev require-team-tag -o jsonpath='{.status.identity.principalId}')"
+[[ -n "${principal}" ]] || fail "team-a's PolicyAssignment has no identity principal in its status"
+wait_for 60 "team-a's PolicyAssignment principal exported to a ConfigMap" \
+  test "$(kubectl -n team-a get configmap require-team-tag-identity -o jsonpath='{.data.principalId}' 2>/dev/null)" == "${principal}"
+[[ "$(kubectl -n team-a get configmap require-team-tag-identity -o jsonpath='{.metadata.ownerReferences[0].kind}')" == "PolicyAssignment" ]] \
+  || fail "the exported ConfigMap is not owned by the PolicyAssignment"
+pass "team-a PolicyAssignment exported its identity's principal to a ConfigMap (operatorSpec.configMapExpressions, the manager's own ClusterRole)"
 wait_for 90 "team-a's PolicyAssignment at the management group Ready" ready policyassignments.authorization.azure.hfl.dev team-a allowed-locations
 logged fakearm "request PUT /providers/Microsoft.Management/managementGroups/team-a-platform/providers/Microsoft.Authorization/policyAssignments/allowed-locations 201" \
   || fail "the fake resource manager saw no policy assignment on team-a's management group"
