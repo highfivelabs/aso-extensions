@@ -195,12 +195,6 @@ var serviceProviderProvisioningState_Values = map[string]ServiceProviderProvisio
 	"provisioning":   ServiceProviderProvisioningState_Provisioning,
 }
 
-// Reference to another subresource.
-type SubResource struct {
-	// Id: Resource ID.
-	Id *string `json:"id,omitempty"`
-}
-
 // Properties of the express route circuit peering.
 type ExpressRouteCircuitPeeringPropertiesFormat_SubResourceEmbedded struct {
 	// AzureASN: The Azure ASN.

@@ -55,15 +55,6 @@ type ExpressRoutePortPropertiesFormat struct {
 	PeeringLocation *string `json:"peeringLocation,omitempty"`
 }
 
-// Identity for the resource.
-type ManagedServiceIdentity struct {
-	// Type: The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly
-	// created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual
-	// machine.
-	Type                   *ResourceIdentityType                  `json:"type,omitempty"`
-	UserAssignedIdentities map[string]UserAssignedIdentityDetails `json:"userAssignedIdentities,omitempty"`
-}
-
 // ExpressRouteLink child resource definition.
 type ExpressRouteLink struct {
 	// Id: Resource ID.
@@ -104,30 +95,6 @@ const (
 var expressRoutePortsEncapsulation_Values = map[string]ExpressRoutePortsEncapsulation{
 	"dot1q": ExpressRoutePortsEncapsulation_Dot1Q,
 	"qinq":  ExpressRoutePortsEncapsulation_QinQ,
-}
-
-// The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created
-// identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine.
-// +kubebuilder:validation:Enum={"None","SystemAssigned","SystemAssigned, UserAssigned","UserAssigned"}
-type ResourceIdentityType string
-
-const (
-	ResourceIdentityType_None                       = ResourceIdentityType("None")
-	ResourceIdentityType_SystemAssigned             = ResourceIdentityType("SystemAssigned")
-	ResourceIdentityType_SystemAssignedUserAssigned = ResourceIdentityType("SystemAssigned, UserAssigned")
-	ResourceIdentityType_UserAssigned               = ResourceIdentityType("UserAssigned")
-)
-
-// Mapping from string to ResourceIdentityType
-var resourceIdentityType_Values = map[string]ResourceIdentityType{
-	"none":                         ResourceIdentityType_None,
-	"systemassigned":               ResourceIdentityType_SystemAssigned,
-	"systemassigned, userassigned": ResourceIdentityType_SystemAssignedUserAssigned,
-	"userassigned":                 ResourceIdentityType_UserAssigned,
-}
-
-// Information about the user assigned identity for the resource
-type UserAssignedIdentityDetails struct {
 }
 
 // Properties specific to ExpressRouteLink resources.

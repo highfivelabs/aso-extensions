@@ -295,24 +295,6 @@ type ExpressRoutePortOperatorSpec struct {
 	SecretExpressions    []*core.DestinationExpression `json:"secretExpressions,omitempty"`
 }
 
-// Storage version of v20260301.ManagedServiceIdentity
-// Identity for the resource.
-type ManagedServiceIdentity struct {
-	PropertyBag            genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
-	Type                   *string                       `json:"type,omitempty"`
-	UserAssignedIdentities []UserAssignedIdentityDetails `json:"userAssignedIdentities,omitempty"`
-}
-
-// Storage version of v20260301.ManagedServiceIdentity_STATUS
-// Identity for the resource.
-type ManagedServiceIdentity_STATUS struct {
-	PrincipalId            *string                                                        `json:"principalId,omitempty"`
-	PropertyBag            genruntime.PropertyBag                                         `json:"$propertyBag,omitempty"`
-	TenantId               *string                                                        `json:"tenantId,omitempty"`
-	Type                   *string                                                        `json:"type,omitempty"`
-	UserAssignedIdentities map[string]ManagedServiceIdentityUserAssignedIdentities_STATUS `json:"userAssignedIdentities,omitempty"`
-}
-
 // Storage version of v20260301.ExpressRouteLinkMacSecConfig
 // ExpressRouteLink Mac Security Configuration.
 type ExpressRouteLinkMacSecConfig struct {
@@ -331,20 +313,6 @@ type ExpressRouteLinkMacSecConfig_STATUS struct {
 	CknSecretIdentifier *string                `json:"cknSecretIdentifier,omitempty"`
 	PropertyBag         genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	SciState            *string                `json:"sciState,omitempty"`
-}
-
-// Storage version of v20260301.ManagedServiceIdentityUserAssignedIdentities_STATUS
-type ManagedServiceIdentityUserAssignedIdentities_STATUS struct {
-	ClientId    *string                `json:"clientId,omitempty"`
-	PrincipalId *string                `json:"principalId,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20260301.UserAssignedIdentityDetails
-// Information about the user assigned identity for the resource
-type UserAssignedIdentityDetails struct {
-	PropertyBag genruntime.PropertyBag       `json:"$propertyBag,omitempty"`
-	Reference   genruntime.ResourceReference `armReference:"Reference" json:"reference,omitempty"`
 }
 
 func init() {

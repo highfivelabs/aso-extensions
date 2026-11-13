@@ -1,9 +1,22 @@
+typeTransformers:
+  - group: compute
+    version: v20250401
+    name: HardwareProfile
+    property: VmSize
+    target:
+      name: string
+      optional: true
+    because: as ASO's compute.yaml, the size enum is incomplete; a plain string takes every size
 typeFilters:
   - action: include
     group: compute
     version: v20220301
     because: the version of ASO's VirtualMachine (the newest it has), the owner of what we generate
-
+  - action: include
+    group: compute
+    version: v20250401
+    because: >-
+      our VirtualMachine beside ASO's (2022-03-01), for storageProfile.diskControllerType and patchSettings.automaticByPlatformSettings.bypassPlatformSafetyChecksOnUserSchedule (the catalog's avm-res-compute-virtualmachine, 2026-11-13); 2025-04-01 is the version of ASO's newest compute kinds
 groupModelConfiguration:
   2022-03-01:
     VirtualMachines_RunCommand:
@@ -15,3 +28,56 @@ groupModelConfiguration:
     VirtualMachineRunCommandProperties_STATUS:
       RunAsPassword:
         $importSecretMode: never
+  2025-04-01:
+    # Our VirtualMachine beside ASO's (2022-03-01), 2026-11-13. Labels as
+    # ASO's compute.yaml has them for its 2022-03-01 VirtualMachine.
+    VirtualMachine:
+      $exportAs: VirtualMachine
+      $supportedFrom: v0.1.0
+    ApiEntityReference:
+      Id:
+        $referenceType: arm
+    ImageReference:
+      $isResource: false
+      Version:
+        $referenceType: simple
+      Id:
+        $referenceType: arm # an ARM ID (autolabel, reviewed)
+    ImageReference_STATUS:
+      $isResource: false
+    ManagedDiskParameters:
+      $isResource: false
+      Id:
+        $referenceType: arm # an ARM ID (autolabel, reviewed)
+    ManagedDiskParameters_STATUS:
+      $isResource: false
+    NetworkInterfaceReference:
+      $isResource: false
+      Id:
+        $referenceType: arm # an ARM ID (autolabel, reviewed)
+    NetworkInterfaceReference_STATUS:
+      $isResource: false
+    NetworkProfile:
+      $isResource: false
+    NetworkProfile_STATUS:
+      $isResource: false
+    SshPublicKeySpec:
+      KeyData:
+        $importSecretMode: never
+    SshPublicKey_STATUS:
+      KeyData:
+        $importSecretMode: never
+    VMGalleryApplication:
+      PackageReferenceId:
+        $referenceType: arm
+    VirtualMachineExtension_STATUS:
+      $isResource: false
+    SubResource:
+      Id:
+        $referenceType: arm
+    EncryptionIdentity:
+      UserAssignedIdentityResourceId:
+        $referenceType: arm # an ARM ID (autolabel, reviewed)
+    HostEndpointSettings:
+      InVMAccessControlProfileReferenceId:
+        $referenceType: arm # a gallery inVMAccessControlProfile version's ARM ID (autolabel wrote simple)

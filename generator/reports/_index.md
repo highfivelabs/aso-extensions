@@ -109,6 +109,7 @@ title: Supported Resources
 
 | Resource                  | ARM Version | CRD Version | Supported From | Sample |
 |---------------------------|-------------|-------------|----------------|--------|
+| VirtualMachine            | 2025-04-01  | v20250401   | v0.1.0         | -      |
 | VirtualMachinesRunCommand | 2022-03-01  | v20220301   | v0.1.0         | -      |
 
 ## Consumption
@@ -288,6 +289,7 @@ title: Supported Resources
 
 | Resource                                               | ARM Version | CRD Version | Supported From | Sample |
 |--------------------------------------------------------|-------------|-------------|----------------|--------|
+| ApplicationGateway                                     | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | DnsResolverDomainList                                  | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | DnsResolverPoliciesDnsSecurityRule                     | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | DnsResolverPoliciesVirtualNetworkLink                  | 2025-05-01  | v20250501   | v0.1.0         | -      |
