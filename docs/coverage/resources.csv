@@ -648,7 +648,7 @@ Microsoft.Compute,Microsoft.Compute/restorePointCollections,4,,0,,0,4,false,spec
 Microsoft.Compute,Microsoft.Compute/restorePointCollections/restorePoints,43,,0,,0,43,false,spec_api=2026-04-01
 Microsoft.Compute,Microsoft.Compute/snapshots,55,compute.azure.com/Snapshot,52,,0,3,false,spec_api=2026-03-02; official_api=2024-03-02; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/sshPublicKeys,3,,0,,0,3,false,spec_api=2026-04-01
-Microsoft.Compute,Microsoft.Compute/virtualMachines,218,compute.azure.com/VirtualMachine,169,,0,49,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
+Microsoft.Compute,Microsoft.Compute/virtualMachines,218,compute.azure.com/VirtualMachine,169,compute.azure.hfl.dev/VirtualMachine,34,15,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec; ours_api=2025-04-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachines/diagnosticRunCommands,24,,0,,0,24,false,spec_api=2026-04-01
 Microsoft.Compute,Microsoft.Compute/virtualMachines/extensions,27,compute.azure.com/VirtualMachinesExtension,26,,0,1,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachines/runCommands,24,,0,compute.azure.hfl.dev/VirtualMachinesRunCommand,15,9,false,spec_api=2026-04-01; ours_api=2022-03-01; ours-api-differs-from-spec
@@ -1532,7 +1532,7 @@ Microsoft.NetApp,Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolume
 Microsoft.NetApp,Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules,5,,0,,0,5,false,spec_api=2026-08-01
 Microsoft.NetApp,Microsoft.NetApp/netAppAccounts/snapshotPolicies,20,,0,,0,20,false,spec_api=2026-08-01
 Microsoft.NetApp,Microsoft.NetApp/netAppAccounts/volumeGroups,75,,0,,0,75,false,spec_api=2026-08-01
-Microsoft.Network,Microsoft.Network/applicationGateways,266,network.azure.com/ApplicationGateway,188,,0,78,false,spec_api=2026-03-01; official_api=2022-07-01; official-api-differs-from-spec
+Microsoft.Network,Microsoft.Network/applicationGateways,266,network.azure.com/ApplicationGateway,188,network.azure.hfl.dev/ApplicationGateway,78,0,false,spec_api=2026-03-01; official_api=2022-07-01; official-api-differs-from-spec; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/applicationGateways/privateEndpointConnections,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies,57,network.azure.com/WebApplicationFirewallPolicy,45,,0,12,false,spec_api=2026-03-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/applicationSecurityGroups,3,network.azure.com/ApplicationSecurityGroup,2,,0,1,false,spec_api=2026-03-01; official_api=2024-01-01; official-api-differs-from-spec

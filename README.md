@@ -25,6 +25,7 @@ Not affiliated with or endorsed by Microsoft.
 | `insights.azure.hfl.dev/v20210901` `PrivateLinkScope`, `PrivateLinkScopesScopedResource`, `PrivateLinkScopesPrivateEndpointConnection`; `network.azure.hfl.dev/v20250501` `NetworkSecurityPerimeter`, `NetworkSecurityPerimetersProfile`, `NetworkSecurityPerimetersProfilesAccessRule`, `NetworkSecurityPerimetersResourceAssociation`, `NetworkSecurityPerimetersLink`, `NetworkSecurityPerimetersLoggingConfiguration` | an Azure Monitor private link scope with its scoped workspaces and endpoint connections, and a network security perimeter with its profiles, access rules, associations of PaaS resources, links and logging; ASO has none of them; owned by the resource group or by our parent kind; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `containerregistry.azure.hfl.dev/v20251101` `RegistriesToken`, `RegistriesScopeMap`, `RegistriesCredentialSet`, `RegistriesWebhook`, `RegistriesConnectedRegistry`, `RegistriesPrivateEndpointConnection`; `v20190401` `RegistriesTask` | the repository tokens, scope maps, credential sets (for cache rules), webhooks, connected registries, private endpoint connections and tasks (ACR builds and their triggers) of a container registry, which ASO's `Registry` has none of; owned by ASO's `Registry`; a webhook's URI and headers and a task's tokens and registry credentials come from Secrets; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `compute.azure.hfl.dev/v20220301` `VirtualMachinesRunCommand`; `devtestlab.azure.hfl.dev/v20180915` `Schedule`; `maintenance.azure.hfl.dev/v20230401` `MaintenanceConfiguration` | what a virtual machine needs beside the VM: a run command (script, parameters, run-as password from a Secret), the auto-shutdown schedule, and Azure Maintenance configurations; ASO's `VirtualMachine` has none of them; generated like the Container Apps kinds | ours; none at ASO's pin or in an open pull request (2026-11-09) |
+| `compute.azure.hfl.dev/v20250401` `VirtualMachine`; `network.azure.hfl.dev/v20260301` `ApplicationGateway` | a virtual machine and an application gateway beside ASO's (2022-03-01, 2022-07-01), for fields ASO's versions lack: the VM's disk controller type (`NVMe`, `SCSI`) and the platform patch schedule's `bypassPlatformSafetyChecksOnUserSchedule`; the gateway's Entra JWT validation configurations, which a routing rule names. Owned by ASO's `ResourceGroup`; the admin password and certificate data from Secrets. Generated | ours beside ASO's; ASO's pin, `main`, its release and its open pull requests stop at those versions (2026-11-13) |
 | `recoveryservices.azure.hfl.dev/v20260701` `Vault`, `VaultsBackupPolicy`, `VaultsBackupResourceGuardProxy`, `VaultsPrivateEndpointConnection` | an Azure Backup (Recovery Services) vault and its backup policies, resource guard proxies and private endpoint connections; ASO has no Recovery Services group; backup policies are owned by our vault; generated like the Container Apps kinds. Enabling backup for a VM (the protected item) is not a kind yet | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `management.azure.hfl.dev/v20230401` `ManagementGroup`, `ManagementGroupsSubscription`, `ManagementGroupsSetting` | Azure management groups: the group hierarchy (a group names its parent by object or ARM ID), a subscription's placement in a group, and the tenant's hierarchy settings. Tenant scope: no resource group and no subscription in the ARM ID (`/providers/Microsoft.Management/...`), so the namespace's identity needs rights at the tenant root or on the group. ASO has no management group kind ([#2249](https://github.com/Azure/azure-service-operator/issues/2249)); generated like the Container Apps kinds, with one generator patch for children of a tenant scope resource (`UPSTREAM.md`, 0005) | ours; none at ASO's pin or in an open pull request (2026-11-09) |
 | `resources.azure.hfl.dev/v20250401` `TagSet` | the tags of a subscription, resource group or any resource as one object (`Microsoft.Resources/tags/default`): an extension resource owned by an ASO resource or an ARM ID. A `TagSet` replaces all the tags of its scope, so use it on a subscription or on what ASO does not manage; on an ASO resource that carries its own `tags` the two would overwrite each other. ASO has no such kind | ours; none at ASO's pin or in an open pull request (2026-11-09) |
@@ -56,7 +57,7 @@ Not affiliated with or endorsed by Microsoft.
 <!-- coverage:start -->
 ![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)
 
-Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 6.7%; 76.9% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
+Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 7.0%; 76.6% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
 The purple bar is Terraform's `azurerm` provider beside them, an estimate: the share of the same attributes that a writable attribute of a mapped Terraform resource matches by the lenient rule (L2, 8.2% overall), with the strict rule (L1, 7.2%) as its tick; the method and its error are in the catalog's ["Method and error"](https://github.com/highfivelabs/catalog/blob/13064af34996c47f1a5498bb17aca16194c4574e/docs/terraform-leverage.md#method-and-error), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at catalog `13064af34996`. `azapi` is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema.
 
@@ -66,15 +67,15 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | platform-foundation | 18 | 246 | 43.2% | 30.2% | 26.6% | ~18.7% |
 | security-adjacent | 7 | 93 | 8.6% | 30.8% | 60.6% | ~11.1% |
-| application | 35 | 823 | 33.1% | 6.4% | 60.5% | ~11.3% |
+| application | 35 | 823 | 33.1% | 7.2% | 59.7% | ~11.3% |
 | other | 230 | 1,262 | 0.5% | 1.0% | 98.6% | ~3.9% |
 
 ![Coverage by tier](docs/coverage/bars/_tiers.svg)
 
 | Tier | Services | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 19.1% | 37.9% | ~13.8% |
-| 2 | 18 | 26.5% | 15.4% | 58.0% | ~8.2% |
+| 1 | 17 | 43.0% | 20.1% | 36.9% | ~13.8% |
+| 2 | 18 | 26.5% | 15.8% | 57.6% | ~8.2% |
 | 3 | 245 | 5.9% | 0.6% | 93.5% | ~6.6% |
 
 By service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), all services in [`services.csv`](docs/coverage/services.csv).
@@ -89,7 +90,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 100.0% | 0.0% | ~92.3% |
 | 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 37.0% | 63.0% | ~27.6% |
 | 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 6.3% | 21.2% | ~33.3% |
-| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 16.0% | 41.8% | ~9.0% |
+| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 17.4% | 40.3% | ~9.0% |
 | 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 45.8% | 14.0% | ~20.2% |
 | 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 0.0% | 16.7% | ~100.0% |
 | 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 61.5% | 22.1% | ~18.0% |
@@ -108,7 +109,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 2 | `Microsoft.Purview` | security-adjacent | ![Microsoft.Purview](docs/coverage/bars/Microsoft.Purview.svg) | 0.0% | 95.2% | 4.8% | ~19.0% |
 | 2 | `Microsoft.HardwareSecurityModules` | security-adjacent | ![Microsoft.HardwareSecurityModules](docs/coverage/bars/Microsoft.HardwareSecurityModules.svg) | 0.0% | 95.7% | 4.3% | ~30.4% |
 | 2 | `Microsoft.Storage` | application | ![Microsoft.Storage](docs/coverage/bars/Microsoft.Storage.svg) | 63.1% | 17.3% | 19.6% | ~7.1% |
-| 2 | `Microsoft.Compute` | application | ![Microsoft.Compute](docs/coverage/bars/Microsoft.Compute.svg) | 38.0% | 1.0% | 61.0% | ~12.8% |
+| 2 | `Microsoft.Compute` | application | ![Microsoft.Compute](docs/coverage/bars/Microsoft.Compute.svg) | 38.0% | 3.4% | 58.6% | ~12.8% |
 | 2 | `Microsoft.Web` | application | ![Microsoft.Web](docs/coverage/bars/Microsoft.Web.svg) | 16.2% | 14.1% | 69.7% | ~1.1% |
 | 2 | `Microsoft.App` | application | ![Microsoft.App](docs/coverage/bars/Microsoft.App.svg) | 50.6% | 25.5% | 23.9% | ~10.6% |
 | 2 | `Microsoft.Sql` | application | ![Microsoft.Sql](docs/coverage/bars/Microsoft.Sql.svg) | 44.5% | 0.4% | 55.1% | ~17.6% |
