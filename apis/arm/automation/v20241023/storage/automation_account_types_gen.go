@@ -268,9 +268,10 @@ func (account *AutomationAccount_STATUS) ConvertStatusTo(destination genruntime.
 // Storage version of v20241023.AutomationAccountOperatorSpec
 // Details for configuring operator behavior. Fields in this struct are interpreted by the operator directly rather than being passed to Azure
 type AutomationAccountOperatorSpec struct {
-	ConfigMapExpressions []*core.DestinationExpression `json:"configMapExpressions,omitempty"`
-	PropertyBag          genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
-	SecretExpressions    []*core.DestinationExpression `json:"secretExpressions,omitempty"`
+	ConfigMapExpressions []*core.DestinationExpression        `json:"configMapExpressions,omitempty"`
+	ConfigMaps           *AutomationAccountOperatorConfigMaps `json:"configMaps,omitempty"`
+	PropertyBag          genruntime.PropertyBag               `json:"$propertyBag,omitempty"`
+	SecretExpressions    []*core.DestinationExpression        `json:"secretExpressions,omitempty"`
 }
 
 // Storage version of v20241023.EncryptionProperties
@@ -344,6 +345,12 @@ type SystemData_STATUS struct {
 	LastModifiedBy     *string                `json:"lastModifiedBy,omitempty"`
 	LastModifiedByType *string                `json:"lastModifiedByType,omitempty"`
 	PropertyBag        genruntime.PropertyBag `json:"$propertyBag,omitempty"`
+}
+
+// Storage version of v20241023.AutomationAccountOperatorConfigMaps
+type AutomationAccountOperatorConfigMaps struct {
+	DscServerEndpoint *genruntime.ConfigMapDestination `json:"dscServerEndpoint,omitempty"`
+	PropertyBag       genruntime.PropertyBag           `json:"$propertyBag,omitempty"`
 }
 
 // Storage version of v20241023.EncryptionPropertiesIdentity

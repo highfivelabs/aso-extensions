@@ -175,6 +175,8 @@ func (a *ARM) compute(id string, body, props map[string]any) {
 		setIfMissing(props, "statusOfPrimary", "available")
 	case managedCluster.MatchString(id):
 		a.computeManagedCluster(id, location, props)
+	case automationAccount.MatchString(id):
+		computeAutomationAccount(id, location, props)
 	case insightsComponen.MatchString(id):
 		key := derivedGUID(id, "instrumentation")
 		setIfMissing(props, "instrumentationKey", key)
