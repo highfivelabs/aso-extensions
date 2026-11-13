@@ -154,6 +154,9 @@ func JavaComponentPropertiesGenerator() gopter.Gen {
 
 // AddRelatedPropertyGeneratorsForJavaComponentProperties is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForJavaComponentProperties(gens map[string]gopter.Gen) {
+	gens["Nacos"] = NacosComponentGenerator().Map(func(it NacosComponent) *NacosComponent {
+		return &it
+	}) // generate one case for OneOf type
 	gens["SpringBootAdmin"] = SpringBootAdminComponentGenerator().Map(func(it SpringBootAdminComponent) *SpringBootAdminComponent {
 		return &it
 	}) // generate one case for OneOf type
@@ -163,6 +166,76 @@ func AddRelatedPropertyGeneratorsForJavaComponentProperties(gens map[string]gopt
 	gens["SpringCloudEureka"] = SpringCloudEurekaComponentGenerator().Map(func(it SpringCloudEurekaComponent) *SpringCloudEurekaComponent {
 		return &it
 	}) // generate one case for OneOf type
+	gens["SpringCloudGateway"] = SpringCloudGatewayComponentGenerator().Map(func(it SpringCloudGatewayComponent) *SpringCloudGatewayComponent {
+		return &it
+	}) // generate one case for OneOf type
+}
+
+func Test_JavaComponentPropertiesScale_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MinSuccessfulTests = 100
+	parameters.MaxSize = 3
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip of JavaComponentPropertiesScale via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForJavaComponentPropertiesScale, JavaComponentPropertiesScaleGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
+}
+
+// RunJSONSerializationTestForJavaComponentPropertiesScale runs a test to see if a specific instance of JavaComponentPropertiesScale round trips to JSON and back losslessly
+func RunJSONSerializationTestForJavaComponentPropertiesScale(subject JavaComponentPropertiesScale) string {
+	// Serialize to JSON
+	bin, err := json.Marshal(subject)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Deserialize back into memory
+	var actual JavaComponentPropertiesScale
+	err = json.Unmarshal(bin, &actual)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for outcome
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
+// Generator of JavaComponentPropertiesScale instances for property testing - lazily instantiated by
+// JavaComponentPropertiesScaleGenerator()
+var javaComponentPropertiesScaleGenerator gopter.Gen
+
+// JavaComponentPropertiesScaleGenerator returns a generator of JavaComponentPropertiesScale instances for property testing.
+func JavaComponentPropertiesScaleGenerator() gopter.Gen {
+	if javaComponentPropertiesScaleGenerator != nil {
+		return javaComponentPropertiesScaleGenerator
+	}
+
+	generators := make(map[string]gopter.Gen)
+	AddIndependentPropertyGeneratorsForJavaComponentPropertiesScale(generators)
+	javaComponentPropertiesScaleGenerator = gen.Struct(reflect.TypeOf(JavaComponentPropertiesScale{}), generators)
+
+	return javaComponentPropertiesScaleGenerator
+}
+
+// AddIndependentPropertyGeneratorsForJavaComponentPropertiesScale is a factory method for creating gopter generators
+func AddIndependentPropertyGeneratorsForJavaComponentPropertiesScale(gens map[string]gopter.Gen) {
+	gens["MaxReplicas"] = gen.PtrOf(gen.Int())
+	gens["MinReplicas"] = gen.PtrOf(gen.Int())
 }
 
 func Test_JavaComponentServiceBind_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -312,6 +385,156 @@ func AddRelatedPropertyGeneratorsForManagedEnvironmentsJavaComponent_Spec(gens m
 	gens["Properties"] = gen.PtrOf(JavaComponentPropertiesGenerator())
 }
 
+func Test_NacosComponent_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MinSuccessfulTests = 100
+	parameters.MaxSize = 3
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip of NacosComponent via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForNacosComponent, NacosComponentGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
+}
+
+// RunJSONSerializationTestForNacosComponent runs a test to see if a specific instance of NacosComponent round trips to JSON and back losslessly
+func RunJSONSerializationTestForNacosComponent(subject NacosComponent) string {
+	// Serialize to JSON
+	bin, err := json.Marshal(subject)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Deserialize back into memory
+	var actual NacosComponent
+	err = json.Unmarshal(bin, &actual)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for outcome
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
+// Generator of NacosComponent instances for property testing - lazily instantiated by NacosComponentGenerator()
+var nacosComponentGenerator gopter.Gen
+
+// NacosComponentGenerator returns a generator of NacosComponent instances for property testing.
+// We first initialize nacosComponentGenerator with a simplified generator based on the
+// fields with primitive types then replacing it with a more complex one that also handles complex fields
+// to ensure any cycles in the object graph properly terminate.
+func NacosComponentGenerator() gopter.Gen {
+	if nacosComponentGenerator != nil {
+		return nacosComponentGenerator
+	}
+
+	generators := make(map[string]gopter.Gen)
+	AddIndependentPropertyGeneratorsForNacosComponent(generators)
+	nacosComponentGenerator = gen.Struct(reflect.TypeOf(NacosComponent{}), generators)
+
+	// The above call to gen.Struct() captures the map, so create a new one
+	generators = make(map[string]gopter.Gen)
+	AddIndependentPropertyGeneratorsForNacosComponent(generators)
+	AddRelatedPropertyGeneratorsForNacosComponent(generators)
+	nacosComponentGenerator = gen.Struct(reflect.TypeOf(NacosComponent{}), generators)
+
+	return nacosComponentGenerator
+}
+
+// AddIndependentPropertyGeneratorsForNacosComponent is a factory method for creating gopter generators
+func AddIndependentPropertyGeneratorsForNacosComponent(gens map[string]gopter.Gen) {
+	gens["ComponentType"] = gen.OneConstOf(NacosComponent_ComponentType_Nacos)
+}
+
+// AddRelatedPropertyGeneratorsForNacosComponent is a factory method for creating gopter generators
+func AddRelatedPropertyGeneratorsForNacosComponent(gens map[string]gopter.Gen) {
+	gens["Configurations"] = gen.SliceOf(JavaComponentConfigurationPropertyGenerator())
+	gens["Scale"] = gen.PtrOf(JavaComponentPropertiesScaleGenerator())
+	gens["ServiceBinds"] = gen.SliceOf(JavaComponentServiceBindGenerator())
+}
+
+func Test_ScgRoute_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MinSuccessfulTests = 100
+	parameters.MaxSize = 3
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip of ScgRoute via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForScgRoute, ScgRouteGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
+}
+
+// RunJSONSerializationTestForScgRoute runs a test to see if a specific instance of ScgRoute round trips to JSON and back losslessly
+func RunJSONSerializationTestForScgRoute(subject ScgRoute) string {
+	// Serialize to JSON
+	bin, err := json.Marshal(subject)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Deserialize back into memory
+	var actual ScgRoute
+	err = json.Unmarshal(bin, &actual)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for outcome
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
+// Generator of ScgRoute instances for property testing - lazily instantiated by ScgRouteGenerator()
+var scgRouteGenerator gopter.Gen
+
+// ScgRouteGenerator returns a generator of ScgRoute instances for property testing.
+func ScgRouteGenerator() gopter.Gen {
+	if scgRouteGenerator != nil {
+		return scgRouteGenerator
+	}
+
+	generators := make(map[string]gopter.Gen)
+	AddIndependentPropertyGeneratorsForScgRoute(generators)
+	scgRouteGenerator = gen.Struct(reflect.TypeOf(ScgRoute{}), generators)
+
+	return scgRouteGenerator
+}
+
+// AddIndependentPropertyGeneratorsForScgRoute is a factory method for creating gopter generators
+func AddIndependentPropertyGeneratorsForScgRoute(gens map[string]gopter.Gen) {
+	gens["Filters"] = gen.SliceOf(gen.AlphaString())
+	gens["Id"] = gen.PtrOf(gen.AlphaString())
+	gens["Order"] = gen.PtrOf(gen.Int())
+	gens["Predicates"] = gen.SliceOf(gen.AlphaString())
+	gens["Uri"] = gen.PtrOf(gen.AlphaString())
+}
+
 func Test_SpringBootAdminComponent_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -390,75 +613,8 @@ func AddIndependentPropertyGeneratorsForSpringBootAdminComponent(gens map[string
 // AddRelatedPropertyGeneratorsForSpringBootAdminComponent is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForSpringBootAdminComponent(gens map[string]gopter.Gen) {
 	gens["Configurations"] = gen.SliceOf(JavaComponentConfigurationPropertyGenerator())
-	gens["Scale"] = gen.PtrOf(SpringBootAdminComponent_ScaleGenerator())
+	gens["Scale"] = gen.PtrOf(JavaComponentPropertiesScaleGenerator())
 	gens["ServiceBinds"] = gen.SliceOf(JavaComponentServiceBindGenerator())
-}
-
-func Test_SpringBootAdminComponent_Scale_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MinSuccessfulTests = 100
-	parameters.MaxSize = 3
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip of SpringBootAdminComponent_Scale via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForSpringBootAdminComponent_Scale, SpringBootAdminComponent_ScaleGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
-}
-
-// RunJSONSerializationTestForSpringBootAdminComponent_Scale runs a test to see if a specific instance of SpringBootAdminComponent_Scale round trips to JSON and back losslessly
-func RunJSONSerializationTestForSpringBootAdminComponent_Scale(subject SpringBootAdminComponent_Scale) string {
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Deserialize back into memory
-	var actual SpringBootAdminComponent_Scale
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-// Generator of SpringBootAdminComponent_Scale instances for property testing - lazily instantiated by
-// SpringBootAdminComponent_ScaleGenerator()
-var springBootAdminComponent_ScaleGenerator gopter.Gen
-
-// SpringBootAdminComponent_ScaleGenerator returns a generator of SpringBootAdminComponent_Scale instances for property testing.
-func SpringBootAdminComponent_ScaleGenerator() gopter.Gen {
-	if springBootAdminComponent_ScaleGenerator != nil {
-		return springBootAdminComponent_ScaleGenerator
-	}
-
-	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForSpringBootAdminComponent_Scale(generators)
-	springBootAdminComponent_ScaleGenerator = gen.Struct(reflect.TypeOf(SpringBootAdminComponent_Scale{}), generators)
-
-	return springBootAdminComponent_ScaleGenerator
-}
-
-// AddIndependentPropertyGeneratorsForSpringBootAdminComponent_Scale is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForSpringBootAdminComponent_Scale(gens map[string]gopter.Gen) {
-	gens["MaxReplicas"] = gen.PtrOf(gen.Int())
-	gens["MinReplicas"] = gen.PtrOf(gen.Int())
 }
 
 func Test_SpringCloudConfigComponent_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -539,75 +695,8 @@ func AddIndependentPropertyGeneratorsForSpringCloudConfigComponent(gens map[stri
 // AddRelatedPropertyGeneratorsForSpringCloudConfigComponent is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForSpringCloudConfigComponent(gens map[string]gopter.Gen) {
 	gens["Configurations"] = gen.SliceOf(JavaComponentConfigurationPropertyGenerator())
-	gens["Scale"] = gen.PtrOf(SpringCloudConfigComponent_ScaleGenerator())
+	gens["Scale"] = gen.PtrOf(JavaComponentPropertiesScaleGenerator())
 	gens["ServiceBinds"] = gen.SliceOf(JavaComponentServiceBindGenerator())
-}
-
-func Test_SpringCloudConfigComponent_Scale_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MinSuccessfulTests = 100
-	parameters.MaxSize = 3
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip of SpringCloudConfigComponent_Scale via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForSpringCloudConfigComponent_Scale, SpringCloudConfigComponent_ScaleGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
-}
-
-// RunJSONSerializationTestForSpringCloudConfigComponent_Scale runs a test to see if a specific instance of SpringCloudConfigComponent_Scale round trips to JSON and back losslessly
-func RunJSONSerializationTestForSpringCloudConfigComponent_Scale(subject SpringCloudConfigComponent_Scale) string {
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Deserialize back into memory
-	var actual SpringCloudConfigComponent_Scale
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-// Generator of SpringCloudConfigComponent_Scale instances for property testing - lazily instantiated by
-// SpringCloudConfigComponent_ScaleGenerator()
-var springCloudConfigComponent_ScaleGenerator gopter.Gen
-
-// SpringCloudConfigComponent_ScaleGenerator returns a generator of SpringCloudConfigComponent_Scale instances for property testing.
-func SpringCloudConfigComponent_ScaleGenerator() gopter.Gen {
-	if springCloudConfigComponent_ScaleGenerator != nil {
-		return springCloudConfigComponent_ScaleGenerator
-	}
-
-	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForSpringCloudConfigComponent_Scale(generators)
-	springCloudConfigComponent_ScaleGenerator = gen.Struct(reflect.TypeOf(SpringCloudConfigComponent_Scale{}), generators)
-
-	return springCloudConfigComponent_ScaleGenerator
-}
-
-// AddIndependentPropertyGeneratorsForSpringCloudConfigComponent_Scale is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForSpringCloudConfigComponent_Scale(gens map[string]gopter.Gen) {
-	gens["MaxReplicas"] = gen.PtrOf(gen.Int())
-	gens["MinReplicas"] = gen.PtrOf(gen.Int())
 }
 
 func Test_SpringCloudEurekaComponent_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -688,11 +777,11 @@ func AddIndependentPropertyGeneratorsForSpringCloudEurekaComponent(gens map[stri
 // AddRelatedPropertyGeneratorsForSpringCloudEurekaComponent is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForSpringCloudEurekaComponent(gens map[string]gopter.Gen) {
 	gens["Configurations"] = gen.SliceOf(JavaComponentConfigurationPropertyGenerator())
-	gens["Scale"] = gen.PtrOf(SpringCloudEurekaComponent_ScaleGenerator())
+	gens["Scale"] = gen.PtrOf(JavaComponentPropertiesScaleGenerator())
 	gens["ServiceBinds"] = gen.SliceOf(JavaComponentServiceBindGenerator())
 }
 
-func Test_SpringCloudEurekaComponent_Scale_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+func Test_SpringCloudGatewayComponent_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
 	if testing.Short() {
@@ -704,13 +793,13 @@ func Test_SpringCloudEurekaComponent_Scale_WhenSerializedToJson_DeserializesAsEq
 	parameters.MaxSize = 3
 	properties := gopter.NewProperties(parameters)
 	properties.Property(
-		"Round trip of SpringCloudEurekaComponent_Scale via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForSpringCloudEurekaComponent_Scale, SpringCloudEurekaComponent_ScaleGenerator()))
+		"Round trip of SpringCloudGatewayComponent via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForSpringCloudGatewayComponent, SpringCloudGatewayComponentGenerator()))
 	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
 }
 
-// RunJSONSerializationTestForSpringCloudEurekaComponent_Scale runs a test to see if a specific instance of SpringCloudEurekaComponent_Scale round trips to JSON and back losslessly
-func RunJSONSerializationTestForSpringCloudEurekaComponent_Scale(subject SpringCloudEurekaComponent_Scale) string {
+// RunJSONSerializationTestForSpringCloudGatewayComponent runs a test to see if a specific instance of SpringCloudGatewayComponent round trips to JSON and back losslessly
+func RunJSONSerializationTestForSpringCloudGatewayComponent(subject SpringCloudGatewayComponent) string {
 	// Serialize to JSON
 	bin, err := json.Marshal(subject)
 	if err != nil {
@@ -718,7 +807,7 @@ func RunJSONSerializationTestForSpringCloudEurekaComponent_Scale(subject SpringC
 	}
 
 	// Deserialize back into memory
-	var actual SpringCloudEurekaComponent_Scale
+	var actual SpringCloudGatewayComponent
 	err = json.Unmarshal(bin, &actual)
 	if err != nil {
 		return err.Error()
@@ -736,25 +825,41 @@ func RunJSONSerializationTestForSpringCloudEurekaComponent_Scale(subject SpringC
 	return ""
 }
 
-// Generator of SpringCloudEurekaComponent_Scale instances for property testing - lazily instantiated by
-// SpringCloudEurekaComponent_ScaleGenerator()
-var springCloudEurekaComponent_ScaleGenerator gopter.Gen
+// Generator of SpringCloudGatewayComponent instances for property testing - lazily instantiated by
+// SpringCloudGatewayComponentGenerator()
+var springCloudGatewayComponentGenerator gopter.Gen
 
-// SpringCloudEurekaComponent_ScaleGenerator returns a generator of SpringCloudEurekaComponent_Scale instances for property testing.
-func SpringCloudEurekaComponent_ScaleGenerator() gopter.Gen {
-	if springCloudEurekaComponent_ScaleGenerator != nil {
-		return springCloudEurekaComponent_ScaleGenerator
+// SpringCloudGatewayComponentGenerator returns a generator of SpringCloudGatewayComponent instances for property testing.
+// We first initialize springCloudGatewayComponentGenerator with a simplified generator based on the
+// fields with primitive types then replacing it with a more complex one that also handles complex fields
+// to ensure any cycles in the object graph properly terminate.
+func SpringCloudGatewayComponentGenerator() gopter.Gen {
+	if springCloudGatewayComponentGenerator != nil {
+		return springCloudGatewayComponentGenerator
 	}
 
 	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForSpringCloudEurekaComponent_Scale(generators)
-	springCloudEurekaComponent_ScaleGenerator = gen.Struct(reflect.TypeOf(SpringCloudEurekaComponent_Scale{}), generators)
+	AddIndependentPropertyGeneratorsForSpringCloudGatewayComponent(generators)
+	springCloudGatewayComponentGenerator = gen.Struct(reflect.TypeOf(SpringCloudGatewayComponent{}), generators)
 
-	return springCloudEurekaComponent_ScaleGenerator
+	// The above call to gen.Struct() captures the map, so create a new one
+	generators = make(map[string]gopter.Gen)
+	AddIndependentPropertyGeneratorsForSpringCloudGatewayComponent(generators)
+	AddRelatedPropertyGeneratorsForSpringCloudGatewayComponent(generators)
+	springCloudGatewayComponentGenerator = gen.Struct(reflect.TypeOf(SpringCloudGatewayComponent{}), generators)
+
+	return springCloudGatewayComponentGenerator
 }
 
-// AddIndependentPropertyGeneratorsForSpringCloudEurekaComponent_Scale is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForSpringCloudEurekaComponent_Scale(gens map[string]gopter.Gen) {
-	gens["MaxReplicas"] = gen.PtrOf(gen.Int())
-	gens["MinReplicas"] = gen.PtrOf(gen.Int())
+// AddIndependentPropertyGeneratorsForSpringCloudGatewayComponent is a factory method for creating gopter generators
+func AddIndependentPropertyGeneratorsForSpringCloudGatewayComponent(gens map[string]gopter.Gen) {
+	gens["ComponentType"] = gen.OneConstOf(SpringCloudGatewayComponent_ComponentType_SpringCloudGateway)
+}
+
+// AddRelatedPropertyGeneratorsForSpringCloudGatewayComponent is a factory method for creating gopter generators
+func AddRelatedPropertyGeneratorsForSpringCloudGatewayComponent(gens map[string]gopter.Gen) {
+	gens["Configurations"] = gen.SliceOf(JavaComponentConfigurationPropertyGenerator())
+	gens["Scale"] = gen.PtrOf(JavaComponentPropertiesScaleGenerator())
+	gens["ServiceBinds"] = gen.SliceOf(JavaComponentServiceBindGenerator())
+	gens["SpringCloudGatewayRoutes"] = gen.SliceOf(ScgRouteGenerator())
 }

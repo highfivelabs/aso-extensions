@@ -30,12 +30,12 @@ spec:
     - jsonPath: .status.conditions[?(@.type=='Ready')].message
       name: Message
       type: string
-    name: v20250101
+    name: v20260101
     schema:
       openAPIV3Schema:
         description: |-
           Generator information:
-          - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/stable/2025-01-01/ManagedEnvironmentsStorages.json
+          - Generated from: /app/resource-manager/Microsoft.App/ContainerApps/stable/2026-01-01/openapi.json
           - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}
         properties:
           apiVersion:
@@ -195,6 +195,40 @@ spec:
                         - key
                         - name
                         type: object
+                      accountKeyVaultProperties:
+                        description: 'AccountKeyVaultProperties: Storage account key
+                          stored as an Azure Key Vault secret.'
+                        properties:
+                          identityReference:
+                            description: |-
+                              IdentityReference: Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a
+                              system-assigned identity.
+                            properties:
+                              armId:
+                                description: |-
+                                  ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                  The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                  ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                                pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                                type: string
+                              group:
+                                description: Group is the Kubernetes group of the
+                                  resource.
+                                type: string
+                              kind:
+                                description: Kind is the Kubernetes kind of the resource.
+                                type: string
+                              name:
+                                description: Name is the Kubernetes name of the resource.
+                                type: string
+                              wellKnownName:
+                                type: string
+                            type: object
+                          keyVaultUrl:
+                            description: 'KeyVaultUrl: URL pointing to the Azure Key
+                              Vault secret.'
+                            type: string
+                        type: object
                       accountName:
                         description: 'AccountName: Storage account name for azure
                           file.'
@@ -291,6 +325,20 @@ spec:
                       accessMode:
                         description: 'AccessMode: Access mode for storage'
                         type: string
+                      accountKeyVaultProperties:
+                        description: 'AccountKeyVaultProperties: Storage account key
+                          stored as an Azure Key Vault secret.'
+                        properties:
+                          identity:
+                            description: |-
+                              Identity: Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned
+                              identity.
+                            type: string
+                          keyVaultUrl:
+                            description: 'KeyVaultUrl: URL pointing to the Azure Key
+                              Vault secret.'
+                            type: string
+                        type: object
                       accountName:
                         description: 'AccountName: Storage account name for azure
                           file.'

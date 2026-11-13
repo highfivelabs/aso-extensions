@@ -22,6 +22,8 @@ import (
 	asoweb "github.com/Azure/azure-service-operator/v2/api/web/v20260715/storage"
 
 	appv1 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
+	app2026 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101"
+	app2026p "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260302preview"
 	acr "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101"
 	webv1 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715"
 )
@@ -168,13 +170,13 @@ func TestLiveContainerApps(t *testing.T) {
 		},
 		Secrets: []appv1.Secret{{Name: ptr("redis-password"), Value: &genruntime.SecretReference{Name: "app", Key: "redis"}}},
 	}
-	files := &appv1.ManagedEnvironmentsStorage{}
+	files := &app2026.ManagedEnvironmentsStorage{}
 	files.Namespace, files.Name = ns, "files"
-	files.Spec = appv1.ManagedEnvironmentsStorage_Spec{Owner: owner("env"), Properties: &appv1.ManagedEnvironments_Storage_Properties_Spec{
-		AzureFile: &appv1.AzureFileProperties{
+	files.Spec = app2026.ManagedEnvironmentsStorage_Spec{Owner: owner("env"), Properties: &app2026.ManagedEnvironmentStorageProperties{
+		AzureFile: &app2026.AzureFileProperties{
 			AccountName: ptr(storageName), ShareName: ptr("data"),
 			AccountKey: &genruntime.SecretReference{Name: "app", Key: "share"},
-			AccessMode: ptr(appv1.AzureFileProperties_AccessMode("ReadOnly")),
+			AccessMode: ptr(app2026.AccessMode("ReadOnly")),
 		},
 	}}
 	cert := &appv1.ManagedEnvironmentsCertificate{}
@@ -183,10 +185,10 @@ func TestLiveContainerApps(t *testing.T) {
 		Value:    &genruntime.SecretReference{Name: "app", Key: "pfx"},
 		Password: &genruntime.SecretReference{Name: "app", Key: "pfx-password"},
 	}}
-	eureka := &appv1.ManagedEnvironmentsJavaComponent{}
+	eureka := &app2026p.ManagedEnvironmentsJavaComponent{}
 	eureka.Namespace, eureka.Name = ns, "eureka"
-	eureka.Spec = appv1.ManagedEnvironmentsJavaComponent_Spec{Owner: owner("env"), Properties: &appv1.JavaComponentProperties{
-		SpringCloudEureka: &appv1.SpringCloudEurekaComponent{ComponentType: ptr(appv1.SpringCloudEurekaComponent_ComponentType_SpringCloudEureka)},
+	eureka.Spec = app2026p.ManagedEnvironmentsJavaComponent_Spec{Owner: owner("env"), Properties: &app2026p.JavaComponentProperties{
+		SpringCloudEureka: &app2026p.SpringCloudEurekaComponent{ComponentType: ptr(app2026p.SpringCloudEurekaComponent_ComponentType_SpringCloudEureka)},
 	}}
 	create(t, timeout, dapr, files, cert, eureka)
 

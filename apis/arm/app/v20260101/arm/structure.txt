@@ -476,6 +476,62 @@ ManagedEnvironmentsPrivateEndpointConnection_Spec: Object (2 properties)
             ├── "Pending"
             └── "Rejected"
 
+ManagedEnvironmentsStorage_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── AzureFile: *Object (4 properties)
+│   │   ├── AccessMode: *Enum (2 values)
+│   │   │   ├── "ReadOnly"
+│   │   │   └── "ReadWrite"
+│   │   ├── AccountKeyVaultProperties: *Object (2 properties)
+│   │   │   ├── Identity: *string
+│   │   │   └── KeyVaultUrl: *string
+│   │   ├── AccountName: *string
+│   │   └── ShareName: *string
+│   └── NfsAzureFile: *Object (3 properties)
+│       ├── AccessMode: *Enum (2 values)
+│       │   ├── "ReadOnly"
+│       │   └── "ReadWrite"
+│       ├── Server: *string
+│       └── ShareName: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ManagedEnvironmentsStorage_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── AzureFile: *Object (5 properties)
+    │   ├── AccessMode: *Enum (2 values)
+    │   │   ├── "ReadOnly"
+    │   │   └── "ReadWrite"
+    │   ├── AccountKey: *string
+    │   ├── AccountKeyVaultProperties: *Object (2 properties)
+    │   │   ├── Identity: *string
+    │   │   └── KeyVaultUrl: *string
+    │   ├── AccountName: *string
+    │   └── ShareName: *string
+    └── NfsAzureFile: *Object (3 properties)
+        ├── AccessMode: *Enum (2 values)
+        │   ├── "ReadOnly"
+        │   └── "ReadWrite"
+        ├── Server: *string
+        └── ShareName: *string
+
 SessionPool_STATUS: Object (8 properties)
 ├── Id: *string
 ├── Identity: *Object (4 properties)

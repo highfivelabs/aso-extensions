@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101/storage"
 	"github.com/kr/pretty"
 	"github.com/kylelemons/godebug/diff"
 	"github.com/leanovate/gopter"
@@ -18,54 +17,7 @@ import (
 	"testing"
 )
 
-func Test_AzureFileProperties_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MaxSize = 10
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip from AzureFileProperties to AzureFileProperties via AssignProperties_To_AzureFileProperties & AssignProperties_From_AzureFileProperties returns original",
-		prop.ForAll(RunPropertyAssignmentTestForAzureFileProperties, AzureFilePropertiesGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
-}
-
-// RunPropertyAssignmentTestForAzureFileProperties tests if a specific instance of AzureFileProperties can be assigned to storage and back losslessly
-func RunPropertyAssignmentTestForAzureFileProperties(subject AzureFileProperties) string {
-	// Copy subject to make sure assignment doesn't modify it
-	copied := subject.DeepCopy()
-
-	// Use AssignPropertiesTo() for the first stage of conversion
-	var other storage.AzureFileProperties
-	err := copied.AssignProperties_To_AzureFileProperties(&other)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Use AssignPropertiesFrom() to convert back to our original type
-	var actual AzureFileProperties
-	err = actual.AssignProperties_From_AzureFileProperties(&other)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for a match
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-func Test_AzureFileProperties_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+func Test_ManagedEnvironmentStorageProperties_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
 	if testing.Short() {
@@ -77,13 +29,13 @@ func Test_AzureFileProperties_WhenSerializedToJson_DeserializesAsEqual(t *testin
 	parameters.MaxSize = 3
 	properties := gopter.NewProperties(parameters)
 	properties.Property(
-		"Round trip of AzureFileProperties via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForAzureFileProperties, AzureFilePropertiesGenerator()))
+		"Round trip of ManagedEnvironmentStorageProperties via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForManagedEnvironmentStorageProperties, ManagedEnvironmentStoragePropertiesGenerator()))
 	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
 }
 
-// RunJSONSerializationTestForAzureFileProperties runs a test to see if a specific instance of AzureFileProperties round trips to JSON and back losslessly
-func RunJSONSerializationTestForAzureFileProperties(subject AzureFileProperties) string {
+// RunJSONSerializationTestForManagedEnvironmentStorageProperties runs a test to see if a specific instance of ManagedEnvironmentStorageProperties round trips to JSON and back losslessly
+func RunJSONSerializationTestForManagedEnvironmentStorageProperties(subject ManagedEnvironmentStorageProperties) string {
 	// Serialize to JSON
 	bin, err := json.Marshal(subject)
 	if err != nil {
@@ -91,7 +43,7 @@ func RunJSONSerializationTestForAzureFileProperties(subject AzureFileProperties)
 	}
 
 	// Deserialize back into memory
-	var actual AzureFileProperties
+	var actual ManagedEnvironmentStorageProperties
 	err = json.Unmarshal(bin, &actual)
 	if err != nil {
 		return err.Error()
@@ -109,78 +61,30 @@ func RunJSONSerializationTestForAzureFileProperties(subject AzureFileProperties)
 	return ""
 }
 
-// Generator of AzureFileProperties instances for property testing - lazily instantiated by
-// AzureFilePropertiesGenerator()
-var azureFilePropertiesGenerator gopter.Gen
+// Generator of ManagedEnvironmentStorageProperties instances for property testing - lazily instantiated by
+// ManagedEnvironmentStoragePropertiesGenerator()
+var managedEnvironmentStoragePropertiesGenerator gopter.Gen
 
-// AzureFilePropertiesGenerator returns a generator of AzureFileProperties instances for property testing.
-func AzureFilePropertiesGenerator() gopter.Gen {
-	if azureFilePropertiesGenerator != nil {
-		return azureFilePropertiesGenerator
+// ManagedEnvironmentStoragePropertiesGenerator returns a generator of ManagedEnvironmentStorageProperties instances for property testing.
+func ManagedEnvironmentStoragePropertiesGenerator() gopter.Gen {
+	if managedEnvironmentStoragePropertiesGenerator != nil {
+		return managedEnvironmentStoragePropertiesGenerator
 	}
 
 	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForAzureFileProperties(generators)
-	azureFilePropertiesGenerator = gen.Struct(reflect.TypeOf(AzureFileProperties{}), generators)
+	AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties(generators)
+	managedEnvironmentStoragePropertiesGenerator = gen.Struct(reflect.TypeOf(ManagedEnvironmentStorageProperties{}), generators)
 
-	return azureFilePropertiesGenerator
+	return managedEnvironmentStoragePropertiesGenerator
 }
 
-// AddIndependentPropertyGeneratorsForAzureFileProperties is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForAzureFileProperties(gens map[string]gopter.Gen) {
-	gens["AccessMode"] = gen.PtrOf(gen.AlphaString())
-	gens["AccountName"] = gen.PtrOf(gen.AlphaString())
-	gens["ShareName"] = gen.PtrOf(gen.AlphaString())
+// AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties is a factory method for creating gopter generators
+func AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties(gens map[string]gopter.Gen) {
+	gens["AzureFile"] = gen.PtrOf(AzureFilePropertiesGenerator())
+	gens["NfsAzureFile"] = gen.PtrOf(NfsAzureFilePropertiesGenerator())
 }
 
-func Test_AzureFileProperties_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MaxSize = 10
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip from AzureFileProperties_STATUS to AzureFileProperties_STATUS via AssignProperties_To_AzureFileProperties_STATUS & AssignProperties_From_AzureFileProperties_STATUS returns original",
-		prop.ForAll(RunPropertyAssignmentTestForAzureFileProperties_STATUS, AzureFileProperties_STATUSGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
-}
-
-// RunPropertyAssignmentTestForAzureFileProperties_STATUS tests if a specific instance of AzureFileProperties_STATUS can be assigned to storage and back losslessly
-func RunPropertyAssignmentTestForAzureFileProperties_STATUS(subject AzureFileProperties_STATUS) string {
-	// Copy subject to make sure assignment doesn't modify it
-	copied := subject.DeepCopy()
-
-	// Use AssignPropertiesTo() for the first stage of conversion
-	var other storage.AzureFileProperties_STATUS
-	err := copied.AssignProperties_To_AzureFileProperties_STATUS(&other)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Use AssignPropertiesFrom() to convert back to our original type
-	var actual AzureFileProperties_STATUS
-	err = actual.AssignProperties_From_AzureFileProperties_STATUS(&other)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for a match
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-func Test_AzureFileProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
+func Test_ManagedEnvironmentStorageProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
 	if testing.Short() {
@@ -192,13 +96,13 @@ func Test_AzureFileProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t 
 	parameters.MaxSize = 3
 	properties := gopter.NewProperties(parameters)
 	properties.Property(
-		"Round trip of AzureFileProperties_STATUS via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForAzureFileProperties_STATUS, AzureFileProperties_STATUSGenerator()))
+		"Round trip of ManagedEnvironmentStorageProperties_STATUS via JSON returns original",
+		prop.ForAll(RunJSONSerializationTestForManagedEnvironmentStorageProperties_STATUS, ManagedEnvironmentStorageProperties_STATUSGenerator()))
 	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
 }
 
-// RunJSONSerializationTestForAzureFileProperties_STATUS runs a test to see if a specific instance of AzureFileProperties_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForAzureFileProperties_STATUS(subject AzureFileProperties_STATUS) string {
+// RunJSONSerializationTestForManagedEnvironmentStorageProperties_STATUS runs a test to see if a specific instance of ManagedEnvironmentStorageProperties_STATUS round trips to JSON and back losslessly
+func RunJSONSerializationTestForManagedEnvironmentStorageProperties_STATUS(subject ManagedEnvironmentStorageProperties_STATUS) string {
 	// Serialize to JSON
 	bin, err := json.Marshal(subject)
 	if err != nil {
@@ -206,7 +110,7 @@ func RunJSONSerializationTestForAzureFileProperties_STATUS(subject AzureFileProp
 	}
 
 	// Deserialize back into memory
-	var actual AzureFileProperties_STATUS
+	var actual ManagedEnvironmentStorageProperties_STATUS
 	err = json.Unmarshal(bin, &actual)
 	if err != nil {
 		return err.Error()
@@ -224,28 +128,27 @@ func RunJSONSerializationTestForAzureFileProperties_STATUS(subject AzureFileProp
 	return ""
 }
 
-// Generator of AzureFileProperties_STATUS instances for property testing - lazily instantiated by
-// AzureFileProperties_STATUSGenerator()
-var azureFileProperties_STATUSGenerator gopter.Gen
+// Generator of ManagedEnvironmentStorageProperties_STATUS instances for property testing - lazily instantiated by
+// ManagedEnvironmentStorageProperties_STATUSGenerator()
+var managedEnvironmentStorageProperties_STATUSGenerator gopter.Gen
 
-// AzureFileProperties_STATUSGenerator returns a generator of AzureFileProperties_STATUS instances for property testing.
-func AzureFileProperties_STATUSGenerator() gopter.Gen {
-	if azureFileProperties_STATUSGenerator != nil {
-		return azureFileProperties_STATUSGenerator
+// ManagedEnvironmentStorageProperties_STATUSGenerator returns a generator of ManagedEnvironmentStorageProperties_STATUS instances for property testing.
+func ManagedEnvironmentStorageProperties_STATUSGenerator() gopter.Gen {
+	if managedEnvironmentStorageProperties_STATUSGenerator != nil {
+		return managedEnvironmentStorageProperties_STATUSGenerator
 	}
 
 	generators := make(map[string]gopter.Gen)
-	AddIndependentPropertyGeneratorsForAzureFileProperties_STATUS(generators)
-	azureFileProperties_STATUSGenerator = gen.Struct(reflect.TypeOf(AzureFileProperties_STATUS{}), generators)
+	AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties_STATUS(generators)
+	managedEnvironmentStorageProperties_STATUSGenerator = gen.Struct(reflect.TypeOf(ManagedEnvironmentStorageProperties_STATUS{}), generators)
 
-	return azureFileProperties_STATUSGenerator
+	return managedEnvironmentStorageProperties_STATUSGenerator
 }
 
-// AddIndependentPropertyGeneratorsForAzureFileProperties_STATUS is a factory method for creating gopter generators
-func AddIndependentPropertyGeneratorsForAzureFileProperties_STATUS(gens map[string]gopter.Gen) {
-	gens["AccessMode"] = gen.PtrOf(gen.AlphaString())
-	gens["AccountName"] = gen.PtrOf(gen.AlphaString())
-	gens["ShareName"] = gen.PtrOf(gen.AlphaString())
+// AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties_STATUS is a factory method for creating gopter generators
+func AddRelatedPropertyGeneratorsForManagedEnvironmentStorageProperties_STATUS(gens map[string]gopter.Gen) {
+	gens["AzureFile"] = gen.PtrOf(AzureFileProperties_STATUSGenerator())
+	gens["NfsAzureFile"] = gen.PtrOf(NfsAzureFileProperties_STATUSGenerator())
 }
 
 func Test_ManagedEnvironmentsStorage_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -454,7 +357,7 @@ func AddIndependentPropertyGeneratorsForManagedEnvironmentsStorage_STATUS(gens m
 
 // AddRelatedPropertyGeneratorsForManagedEnvironmentsStorage_STATUS is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForManagedEnvironmentsStorage_STATUS(gens map[string]gopter.Gen) {
-	gens["Properties"] = gen.PtrOf(ManagedEnvironments_Storage_Properties_STATUSGenerator())
+	gens["Properties"] = gen.PtrOf(ManagedEnvironmentStorageProperties_STATUSGenerator())
 	gens["SystemData"] = gen.PtrOf(SystemData_STATUSGenerator())
 }
 
@@ -537,141 +440,7 @@ func AddIndependentPropertyGeneratorsForManagedEnvironmentsStorage_Spec(gens map
 // AddRelatedPropertyGeneratorsForManagedEnvironmentsStorage_Spec is a factory method for creating gopter generators
 func AddRelatedPropertyGeneratorsForManagedEnvironmentsStorage_Spec(gens map[string]gopter.Gen) {
 	gens["OperatorSpec"] = gen.PtrOf(ManagedEnvironmentsStorageOperatorSpecGenerator())
-	gens["Properties"] = gen.PtrOf(ManagedEnvironments_Storage_Properties_SpecGenerator())
-}
-
-func Test_ManagedEnvironments_Storage_Properties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MinSuccessfulTests = 80
-	parameters.MaxSize = 3
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip of ManagedEnvironments_Storage_Properties_STATUS via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForManagedEnvironments_Storage_Properties_STATUS, ManagedEnvironments_Storage_Properties_STATUSGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
-}
-
-// RunJSONSerializationTestForManagedEnvironments_Storage_Properties_STATUS runs a test to see if a specific instance of ManagedEnvironments_Storage_Properties_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForManagedEnvironments_Storage_Properties_STATUS(subject ManagedEnvironments_Storage_Properties_STATUS) string {
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Deserialize back into memory
-	var actual ManagedEnvironments_Storage_Properties_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-// Generator of ManagedEnvironments_Storage_Properties_STATUS instances for property testing - lazily instantiated by
-// ManagedEnvironments_Storage_Properties_STATUSGenerator()
-var managedEnvironments_Storage_Properties_STATUSGenerator gopter.Gen
-
-// ManagedEnvironments_Storage_Properties_STATUSGenerator returns a generator of ManagedEnvironments_Storage_Properties_STATUS instances for property testing.
-func ManagedEnvironments_Storage_Properties_STATUSGenerator() gopter.Gen {
-	if managedEnvironments_Storage_Properties_STATUSGenerator != nil {
-		return managedEnvironments_Storage_Properties_STATUSGenerator
-	}
-
-	generators := make(map[string]gopter.Gen)
-	AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_STATUS(generators)
-	managedEnvironments_Storage_Properties_STATUSGenerator = gen.Struct(reflect.TypeOf(ManagedEnvironments_Storage_Properties_STATUS{}), generators)
-
-	return managedEnvironments_Storage_Properties_STATUSGenerator
-}
-
-// AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_STATUS is a factory method for creating gopter generators
-func AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_STATUS(gens map[string]gopter.Gen) {
-	gens["AzureFile"] = gen.PtrOf(AzureFileProperties_STATUSGenerator())
-	gens["NfsAzureFile"] = gen.PtrOf(NfsAzureFileProperties_STATUSGenerator())
-}
-
-func Test_ManagedEnvironments_Storage_Properties_Spec_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	parameters := gopter.DefaultTestParameters()
-	parameters.MinSuccessfulTests = 80
-	parameters.MaxSize = 3
-	properties := gopter.NewProperties(parameters)
-	properties.Property(
-		"Round trip of ManagedEnvironments_Storage_Properties_Spec via JSON returns original",
-		prop.ForAll(RunJSONSerializationTestForManagedEnvironments_Storage_Properties_Spec, ManagedEnvironments_Storage_Properties_SpecGenerator()))
-	properties.TestingRun(t, gopter.NewFormatedReporter(true, 240, os.Stdout))
-}
-
-// RunJSONSerializationTestForManagedEnvironments_Storage_Properties_Spec runs a test to see if a specific instance of ManagedEnvironments_Storage_Properties_Spec round trips to JSON and back losslessly
-func RunJSONSerializationTestForManagedEnvironments_Storage_Properties_Spec(subject ManagedEnvironments_Storage_Properties_Spec) string {
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Deserialize back into memory
-	var actual ManagedEnvironments_Storage_Properties_Spec
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		return err.Error()
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		return result
-	}
-
-	return ""
-}
-
-// Generator of ManagedEnvironments_Storage_Properties_Spec instances for property testing - lazily instantiated by
-// ManagedEnvironments_Storage_Properties_SpecGenerator()
-var managedEnvironments_Storage_Properties_SpecGenerator gopter.Gen
-
-// ManagedEnvironments_Storage_Properties_SpecGenerator returns a generator of ManagedEnvironments_Storage_Properties_Spec instances for property testing.
-func ManagedEnvironments_Storage_Properties_SpecGenerator() gopter.Gen {
-	if managedEnvironments_Storage_Properties_SpecGenerator != nil {
-		return managedEnvironments_Storage_Properties_SpecGenerator
-	}
-
-	generators := make(map[string]gopter.Gen)
-	AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_Spec(generators)
-	managedEnvironments_Storage_Properties_SpecGenerator = gen.Struct(reflect.TypeOf(ManagedEnvironments_Storage_Properties_Spec{}), generators)
-
-	return managedEnvironments_Storage_Properties_SpecGenerator
-}
-
-// AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_Spec is a factory method for creating gopter generators
-func AddRelatedPropertyGeneratorsForManagedEnvironments_Storage_Properties_Spec(gens map[string]gopter.Gen) {
-	gens["AzureFile"] = gen.PtrOf(AzureFilePropertiesGenerator())
-	gens["NfsAzureFile"] = gen.PtrOf(NfsAzureFilePropertiesGenerator())
+	gens["Properties"] = gen.PtrOf(ManagedEnvironmentStoragePropertiesGenerator())
 }
 
 func Test_NfsAzureFileProperties_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {

@@ -5,8 +5,8 @@ package customizations
 
 import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
-	v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
-	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
+	v20260101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101/storage"
 )
 
 type ManagedEnvironmentsStorageExtension struct {
@@ -15,6 +15,6 @@ type ManagedEnvironmentsStorageExtension struct {
 // GetExtendedResources Returns the KubernetesResource slice for Resource versions
 func (extension *ManagedEnvironmentsStorageExtension) GetExtendedResources() []genruntime.KubernetesResource {
 	return []genruntime.KubernetesResource{
-		&v20250101.ManagedEnvironmentsStorage{},
+		&v20260101.ManagedEnvironmentsStorage{},
 		&storage.ManagedEnvironmentsStorage{}}
 }

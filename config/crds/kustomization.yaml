@@ -9,6 +9,8 @@ resources:
 - app.azure.hfl.dev_containerappssourcecontrols.yaml
 - app.azure.hfl.dev_managedenvironmentscertificates.yaml
 - app.azure.hfl.dev_managedenvironmentsdaprcomponents.yaml
+- app.azure.hfl.dev_managedenvironmentsdaprsubscriptions.yaml
+- app.azure.hfl.dev_managedenvironmentsdotnetcomponents.yaml
 - app.azure.hfl.dev_managedenvironmentshttprouteconfigs.yaml
 - app.azure.hfl.dev_managedenvironmentsjavacomponents.yaml
 - app.azure.hfl.dev_managedenvironmentsmaintenanceconfigurations.yaml

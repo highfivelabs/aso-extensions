@@ -24,6 +24,9 @@ type ManagedEnvironmentsJavaComponent_STATUS struct {
 }
 
 type JavaComponentProperties_STATUS struct {
+	// Nacos: Mutually exclusive with all other properties
+	Nacos *NacosComponent_STATUS `json:"nacos,omitempty"`
+
 	// SpringBootAdmin: Mutually exclusive with all other properties
 	SpringBootAdmin *SpringBootAdminComponent_STATUS `json:"springBootAdmin,omitempty"`
 
@@ -32,10 +35,17 @@ type JavaComponentProperties_STATUS struct {
 
 	// SpringCloudEureka: Mutually exclusive with all other properties
 	SpringCloudEureka *SpringCloudEurekaComponent_STATUS `json:"springCloudEureka,omitempty"`
+
+	// SpringCloudGateway: Mutually exclusive with all other properties
+	SpringCloudGateway *SpringCloudGatewayComponent_STATUS `json:"springCloudGateway,omitempty"`
 }
 
 // MarshalJSON defers JSON marshaling to the first non-nil property, because JavaComponentProperties_STATUS represents a discriminated union (JSON OneOf)
 func (properties JavaComponentProperties_STATUS) MarshalJSON() ([]byte, error) {
+	if properties.Nacos != nil {
+		return json.Marshal(properties.Nacos)
+	}
+
 	if properties.SpringBootAdmin != nil {
 		return json.Marshal(properties.SpringBootAdmin)
 	}
@@ -46,6 +56,10 @@ func (properties JavaComponentProperties_STATUS) MarshalJSON() ([]byte, error) {
 
 	if properties.SpringCloudEureka != nil {
 		return json.Marshal(properties.SpringCloudEureka)
+	}
+
+	if properties.SpringCloudGateway != nil {
+		return json.Marshal(properties.SpringCloudGateway)
 	}
 
 	return nil, nil
@@ -59,6 +73,10 @@ func (properties *JavaComponentProperties_STATUS) UnmarshalJSON(data []byte) err
 		return err
 	}
 	discriminator := rawJson["componentType"]
+	if discriminator == "Nacos" {
+		properties.Nacos = &NacosComponent_STATUS{}
+		return json.Unmarshal(data, properties.Nacos)
+	}
 	if discriminator == "SpringBootAdmin" {
 		properties.SpringBootAdmin = &SpringBootAdminComponent_STATUS{}
 		return json.Unmarshal(data, properties.SpringBootAdmin)
@@ -71,9 +89,33 @@ func (properties *JavaComponentProperties_STATUS) UnmarshalJSON(data []byte) err
 		properties.SpringCloudEureka = &SpringCloudEurekaComponent_STATUS{}
 		return json.Unmarshal(data, properties.SpringCloudEureka)
 	}
+	if discriminator == "SpringCloudGateway" {
+		properties.SpringCloudGateway = &SpringCloudGatewayComponent_STATUS{}
+		return json.Unmarshal(data, properties.SpringCloudGateway)
+	}
 
 	// No error
 	return nil
+}
+
+type NacosComponent_STATUS struct {
+	// ComponentType: Type of the Java Component.
+	ComponentType NacosComponent_ComponentType_STATUS `json:"componentType,omitempty"`
+
+	// Configurations: List of Java Components configuration properties
+	Configurations []JavaComponentConfigurationProperty_STATUS `json:"configurations,omitempty"`
+
+	// Ingress: Java Component Ingress configurations.
+	Ingress *JavaComponentIngress_STATUS `json:"ingress,omitempty"`
+
+	// ProvisioningState: Provisioning state of the Java Component.
+	ProvisioningState *JavaComponentProvisioningState_STATUS `json:"provisioningState,omitempty"`
+
+	// Scale: Java component scaling configurations
+	Scale *JavaComponentPropertiesScale_STATUS `json:"scale,omitempty"`
+
+	// ServiceBinds: List of Java Components that are bound to the Java component
+	ServiceBinds []JavaComponentServiceBind_STATUS `json:"serviceBinds,omitempty"`
 }
 
 type SpringBootAdminComponent_STATUS struct {
@@ -87,10 +129,10 @@ type SpringBootAdminComponent_STATUS struct {
 	Ingress *JavaComponentIngress_STATUS `json:"ingress,omitempty"`
 
 	// ProvisioningState: Provisioning state of the Java Component.
-	ProvisioningState *SpringBootAdminComponent_ProvisioningState_STATUS `json:"provisioningState,omitempty"`
+	ProvisioningState *JavaComponentProvisioningState_STATUS `json:"provisioningState,omitempty"`
 
 	// Scale: Java component scaling configurations
-	Scale *SpringBootAdminComponent_Scale_STATUS `json:"scale,omitempty"`
+	Scale *JavaComponentPropertiesScale_STATUS `json:"scale,omitempty"`
 
 	// ServiceBinds: List of Java Components that are bound to the Java component
 	ServiceBinds []JavaComponentServiceBind_STATUS `json:"serviceBinds,omitempty"`
@@ -104,10 +146,10 @@ type SpringCloudConfigComponent_STATUS struct {
 	Configurations []JavaComponentConfigurationProperty_STATUS `json:"configurations,omitempty"`
 
 	// ProvisioningState: Provisioning state of the Java Component.
-	ProvisioningState *SpringCloudConfigComponent_ProvisioningState_STATUS `json:"provisioningState,omitempty"`
+	ProvisioningState *JavaComponentProvisioningState_STATUS `json:"provisioningState,omitempty"`
 
 	// Scale: Java component scaling configurations
-	Scale *SpringCloudConfigComponent_Scale_STATUS `json:"scale,omitempty"`
+	Scale *JavaComponentPropertiesScale_STATUS `json:"scale,omitempty"`
 
 	// ServiceBinds: List of Java Components that are bound to the Java component
 	ServiceBinds []JavaComponentServiceBind_STATUS `json:"serviceBinds,omitempty"`
@@ -124,13 +166,36 @@ type SpringCloudEurekaComponent_STATUS struct {
 	Ingress *JavaComponentIngress_STATUS `json:"ingress,omitempty"`
 
 	// ProvisioningState: Provisioning state of the Java Component.
-	ProvisioningState *SpringCloudEurekaComponent_ProvisioningState_STATUS `json:"provisioningState,omitempty"`
+	ProvisioningState *JavaComponentProvisioningState_STATUS `json:"provisioningState,omitempty"`
 
 	// Scale: Java component scaling configurations
-	Scale *SpringCloudEurekaComponent_Scale_STATUS `json:"scale,omitempty"`
+	Scale *JavaComponentPropertiesScale_STATUS `json:"scale,omitempty"`
 
 	// ServiceBinds: List of Java Components that are bound to the Java component
 	ServiceBinds []JavaComponentServiceBind_STATUS `json:"serviceBinds,omitempty"`
+}
+
+type SpringCloudGatewayComponent_STATUS struct {
+	// ComponentType: Type of the Java Component.
+	ComponentType SpringCloudGatewayComponent_ComponentType_STATUS `json:"componentType,omitempty"`
+
+	// Configurations: List of Java Components configuration properties
+	Configurations []JavaComponentConfigurationProperty_STATUS `json:"configurations,omitempty"`
+
+	// Ingress: Java Component Ingress configurations.
+	Ingress *JavaComponentIngress_STATUS `json:"ingress,omitempty"`
+
+	// ProvisioningState: Provisioning state of the Java Component.
+	ProvisioningState *JavaComponentProvisioningState_STATUS `json:"provisioningState,omitempty"`
+
+	// Scale: Java component scaling configurations
+	Scale *JavaComponentPropertiesScale_STATUS `json:"scale,omitempty"`
+
+	// ServiceBinds: List of Java Components that are bound to the Java component
+	ServiceBinds []JavaComponentServiceBind_STATUS `json:"serviceBinds,omitempty"`
+
+	// SpringCloudGatewayRoutes: Gateway route definition
+	SpringCloudGatewayRoutes []ScgRoute_STATUS `json:"springCloudGatewayRoutes,omitempty"`
 }
 
 // Configuration properties for a Java Component
@@ -148,6 +213,35 @@ type JavaComponentIngress_STATUS struct {
 	Fqdn *string `json:"fqdn,omitempty"`
 }
 
+// Java component scaling configurations
+type JavaComponentPropertiesScale_STATUS struct {
+	// MaxReplicas: Optional. Maximum number of Java component replicas
+	MaxReplicas *int `json:"maxReplicas,omitempty"`
+
+	// MinReplicas: Optional. Minimum number of Java component replicas. Defaults to 1 if not set
+	MinReplicas *int `json:"minReplicas,omitempty"`
+}
+
+// Provisioning state of the Java Component.
+type JavaComponentProvisioningState_STATUS string
+
+const (
+	JavaComponentProvisioningState_STATUS_Canceled   = JavaComponentProvisioningState_STATUS("Canceled")
+	JavaComponentProvisioningState_STATUS_Deleting   = JavaComponentProvisioningState_STATUS("Deleting")
+	JavaComponentProvisioningState_STATUS_Failed     = JavaComponentProvisioningState_STATUS("Failed")
+	JavaComponentProvisioningState_STATUS_InProgress = JavaComponentProvisioningState_STATUS("InProgress")
+	JavaComponentProvisioningState_STATUS_Succeeded  = JavaComponentProvisioningState_STATUS("Succeeded")
+)
+
+// Mapping from string to JavaComponentProvisioningState_STATUS
+var javaComponentProvisioningState_STATUS_Values = map[string]JavaComponentProvisioningState_STATUS{
+	"canceled":   JavaComponentProvisioningState_STATUS_Canceled,
+	"deleting":   JavaComponentProvisioningState_STATUS_Deleting,
+	"failed":     JavaComponentProvisioningState_STATUS_Failed,
+	"inprogress": JavaComponentProvisioningState_STATUS_InProgress,
+	"succeeded":  JavaComponentProvisioningState_STATUS_Succeeded,
+}
+
 // Configuration to bind a Java Component to another Java Component
 type JavaComponentServiceBind_STATUS struct {
 	// Name: Name of the service bind
@@ -155,6 +249,33 @@ type JavaComponentServiceBind_STATUS struct {
 
 	// ServiceId: Resource id of the target service
 	ServiceId *string `json:"serviceId,omitempty"`
+}
+
+type NacosComponent_ComponentType_STATUS string
+
+const NacosComponent_ComponentType_STATUS_Nacos = NacosComponent_ComponentType_STATUS("Nacos")
+
+// Mapping from string to NacosComponent_ComponentType_STATUS
+var nacosComponent_ComponentType_STATUS_Values = map[string]NacosComponent_ComponentType_STATUS{
+	"nacos": NacosComponent_ComponentType_STATUS_Nacos,
+}
+
+// Spring Cloud Gateway route definition
+type ScgRoute_STATUS struct {
+	// Filters: Filters of the route
+	Filters []string `json:"filters,omitempty"`
+
+	// Id: Id of the route
+	Id *string `json:"id,omitempty"`
+
+	// Order: Order of the route
+	Order *int `json:"order,omitempty"`
+
+	// Predicates: Predicates of the route
+	Predicates []string `json:"predicates,omitempty"`
+
+	// Uri: Uri of the route
+	Uri *string `json:"uri,omitempty"`
 }
 
 type SpringBootAdminComponent_ComponentType_STATUS string
@@ -166,33 +287,6 @@ var springBootAdminComponent_ComponentType_STATUS_Values = map[string]SpringBoot
 	"springbootadmin": SpringBootAdminComponent_ComponentType_STATUS_SpringBootAdmin,
 }
 
-type SpringBootAdminComponent_ProvisioningState_STATUS string
-
-const (
-	SpringBootAdminComponent_ProvisioningState_STATUS_Canceled   = SpringBootAdminComponent_ProvisioningState_STATUS("Canceled")
-	SpringBootAdminComponent_ProvisioningState_STATUS_Deleting   = SpringBootAdminComponent_ProvisioningState_STATUS("Deleting")
-	SpringBootAdminComponent_ProvisioningState_STATUS_Failed     = SpringBootAdminComponent_ProvisioningState_STATUS("Failed")
-	SpringBootAdminComponent_ProvisioningState_STATUS_InProgress = SpringBootAdminComponent_ProvisioningState_STATUS("InProgress")
-	SpringBootAdminComponent_ProvisioningState_STATUS_Succeeded  = SpringBootAdminComponent_ProvisioningState_STATUS("Succeeded")
-)
-
-// Mapping from string to SpringBootAdminComponent_ProvisioningState_STATUS
-var springBootAdminComponent_ProvisioningState_STATUS_Values = map[string]SpringBootAdminComponent_ProvisioningState_STATUS{
-	"canceled":   SpringBootAdminComponent_ProvisioningState_STATUS_Canceled,
-	"deleting":   SpringBootAdminComponent_ProvisioningState_STATUS_Deleting,
-	"failed":     SpringBootAdminComponent_ProvisioningState_STATUS_Failed,
-	"inprogress": SpringBootAdminComponent_ProvisioningState_STATUS_InProgress,
-	"succeeded":  SpringBootAdminComponent_ProvisioningState_STATUS_Succeeded,
-}
-
-type SpringBootAdminComponent_Scale_STATUS struct {
-	// MaxReplicas: Optional. Maximum number of Java component replicas
-	MaxReplicas *int `json:"maxReplicas,omitempty"`
-
-	// MinReplicas: Optional. Minimum number of Java component replicas. Defaults to 1 if not set
-	MinReplicas *int `json:"minReplicas,omitempty"`
-}
-
 type SpringCloudConfigComponent_ComponentType_STATUS string
 
 const SpringCloudConfigComponent_ComponentType_STATUS_SpringCloudConfig = SpringCloudConfigComponent_ComponentType_STATUS("SpringCloudConfig")
@@ -200,33 +294,6 @@ const SpringCloudConfigComponent_ComponentType_STATUS_SpringCloudConfig = Spring
 // Mapping from string to SpringCloudConfigComponent_ComponentType_STATUS
 var springCloudConfigComponent_ComponentType_STATUS_Values = map[string]SpringCloudConfigComponent_ComponentType_STATUS{
 	"springcloudconfig": SpringCloudConfigComponent_ComponentType_STATUS_SpringCloudConfig,
-}
-
-type SpringCloudConfigComponent_ProvisioningState_STATUS string
-
-const (
-	SpringCloudConfigComponent_ProvisioningState_STATUS_Canceled   = SpringCloudConfigComponent_ProvisioningState_STATUS("Canceled")
-	SpringCloudConfigComponent_ProvisioningState_STATUS_Deleting   = SpringCloudConfigComponent_ProvisioningState_STATUS("Deleting")
-	SpringCloudConfigComponent_ProvisioningState_STATUS_Failed     = SpringCloudConfigComponent_ProvisioningState_STATUS("Failed")
-	SpringCloudConfigComponent_ProvisioningState_STATUS_InProgress = SpringCloudConfigComponent_ProvisioningState_STATUS("InProgress")
-	SpringCloudConfigComponent_ProvisioningState_STATUS_Succeeded  = SpringCloudConfigComponent_ProvisioningState_STATUS("Succeeded")
-)
-
-// Mapping from string to SpringCloudConfigComponent_ProvisioningState_STATUS
-var springCloudConfigComponent_ProvisioningState_STATUS_Values = map[string]SpringCloudConfigComponent_ProvisioningState_STATUS{
-	"canceled":   SpringCloudConfigComponent_ProvisioningState_STATUS_Canceled,
-	"deleting":   SpringCloudConfigComponent_ProvisioningState_STATUS_Deleting,
-	"failed":     SpringCloudConfigComponent_ProvisioningState_STATUS_Failed,
-	"inprogress": SpringCloudConfigComponent_ProvisioningState_STATUS_InProgress,
-	"succeeded":  SpringCloudConfigComponent_ProvisioningState_STATUS_Succeeded,
-}
-
-type SpringCloudConfigComponent_Scale_STATUS struct {
-	// MaxReplicas: Optional. Maximum number of Java component replicas
-	MaxReplicas *int `json:"maxReplicas,omitempty"`
-
-	// MinReplicas: Optional. Minimum number of Java component replicas. Defaults to 1 if not set
-	MinReplicas *int `json:"minReplicas,omitempty"`
 }
 
 type SpringCloudEurekaComponent_ComponentType_STATUS string
@@ -238,29 +305,11 @@ var springCloudEurekaComponent_ComponentType_STATUS_Values = map[string]SpringCl
 	"springcloudeureka": SpringCloudEurekaComponent_ComponentType_STATUS_SpringCloudEureka,
 }
 
-type SpringCloudEurekaComponent_ProvisioningState_STATUS string
+type SpringCloudGatewayComponent_ComponentType_STATUS string
 
-const (
-	SpringCloudEurekaComponent_ProvisioningState_STATUS_Canceled   = SpringCloudEurekaComponent_ProvisioningState_STATUS("Canceled")
-	SpringCloudEurekaComponent_ProvisioningState_STATUS_Deleting   = SpringCloudEurekaComponent_ProvisioningState_STATUS("Deleting")
-	SpringCloudEurekaComponent_ProvisioningState_STATUS_Failed     = SpringCloudEurekaComponent_ProvisioningState_STATUS("Failed")
-	SpringCloudEurekaComponent_ProvisioningState_STATUS_InProgress = SpringCloudEurekaComponent_ProvisioningState_STATUS("InProgress")
-	SpringCloudEurekaComponent_ProvisioningState_STATUS_Succeeded  = SpringCloudEurekaComponent_ProvisioningState_STATUS("Succeeded")
-)
+const SpringCloudGatewayComponent_ComponentType_STATUS_SpringCloudGateway = SpringCloudGatewayComponent_ComponentType_STATUS("SpringCloudGateway")
 
-// Mapping from string to SpringCloudEurekaComponent_ProvisioningState_STATUS
-var springCloudEurekaComponent_ProvisioningState_STATUS_Values = map[string]SpringCloudEurekaComponent_ProvisioningState_STATUS{
-	"canceled":   SpringCloudEurekaComponent_ProvisioningState_STATUS_Canceled,
-	"deleting":   SpringCloudEurekaComponent_ProvisioningState_STATUS_Deleting,
-	"failed":     SpringCloudEurekaComponent_ProvisioningState_STATUS_Failed,
-	"inprogress": SpringCloudEurekaComponent_ProvisioningState_STATUS_InProgress,
-	"succeeded":  SpringCloudEurekaComponent_ProvisioningState_STATUS_Succeeded,
-}
-
-type SpringCloudEurekaComponent_Scale_STATUS struct {
-	// MaxReplicas: Optional. Maximum number of Java component replicas
-	MaxReplicas *int `json:"maxReplicas,omitempty"`
-
-	// MinReplicas: Optional. Minimum number of Java component replicas. Defaults to 1 if not set
-	MinReplicas *int `json:"minReplicas,omitempty"`
+// Mapping from string to SpringCloudGatewayComponent_ComponentType_STATUS
+var springCloudGatewayComponent_ComponentType_STATUS_Values = map[string]SpringCloudGatewayComponent_ComponentType_STATUS{
+	"springcloudgateway": SpringCloudGatewayComponent_ComponentType_STATUS_SpringCloudGateway,
 }

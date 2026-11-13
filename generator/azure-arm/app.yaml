@@ -1,14 +1,14 @@
 typeTransformers:
-  # As ASO's app.yaml: 2026-01-01 imports ManagedServiceIdentity from two
+  # As ASO's app.yaml: 2026-01-01 (and 2026-03-02-preview, with its Builder) imports ManagedServiceIdentity from two
   # versions of common-types; take v6's.
-  - name: ContainerApp_Spec;ManagedEnvironment_Spec;Job_Spec;SessionPool_Spec;ConnectedEnvironment_Spec
+  - name: ContainerApp_Spec;ManagedEnvironment_Spec;Job_Spec;SessionPool_Spec;ConnectedEnvironment_Spec;Builder_Spec
     property: Identity
     target:
       name: ManagedServiceIdentity
       version: v6
       optional: true
     because: Multiple incompatible versions of ManagedServiceIdentity are being imported from different versions of common
-  - name: ContainerApp_STATUS;ManagedEnvironment_STATUS;Job_STATUS;SessionPool_STATUS;ConnectedEnvironment_STATUS
+  - name: ContainerApp_STATUS;ManagedEnvironment_STATUS;Job_STATUS;SessionPool_STATUS;ConnectedEnvironment_STATUS;Builder_STATUS
     property: Identity
     target:
       name: ManagedServiceIdentity_STATUS
@@ -25,6 +25,15 @@ typeFilters:
     version: v20260101
     because: >-
       the newest stable version, for the kinds 2025-01-01 lacks (connected environments and their children, an environment's HTTP route configs, maintenance configurations and private endpoint connections, a container app's source controls, session pools); ASO's owners stay at 2025-01-01, the versions need not match
+  - action: include
+    group: app
+    version: v20260302preview
+    because: >-
+      the newest preview, for what no stable version has: Dapr subscriptions, and Java components of the Nacos and Spring Cloud Gateway types (the catalog's avm-res-app-managedenvironment, 2026-11-13)
+  - action: include
+    group: app
+    version: v20260701
+    because: the newest stable version, the first stable one with .NET components
   - action: prune
     group: app
     because: every other version is left alone
@@ -33,17 +42,11 @@ groupModelConfiguration:
     ManagedEnvironments_DaprComponent:
       $exportAs: ManagedEnvironmentsDaprComponent
       $supportedFrom: v0.1.0
-    ManagedEnvironments_Storage:
-      $exportAs: ManagedEnvironmentsStorage
-      $supportedFrom: v0.1.0
     ManagedEnvironments_Certificate:
       $exportAs: ManagedEnvironmentsCertificate
       $supportedFrom: v0.1.0
     ManagedEnvironments_ManagedCertificate:
       $exportAs: ManagedEnvironmentsManagedCertificate
-      $supportedFrom: v0.1.0
-    ManagedEnvironments_JavaComponent:
-      $exportAs: ManagedEnvironmentsJavaComponent
       $supportedFrom: v0.1.0
     Secret:
       Identity:
@@ -55,6 +58,11 @@ groupModelConfiguration:
       ValidationToken:
         $importSecretMode: never # a DNS TXT record's value, not a secret
   2026-01-01:
+    # Moved from 2025-01-01 (2026-11-13): an Azure Files share's account key
+    # from Key Vault (azureFile.accountKeyVaultProperties).
+    ManagedEnvironments_Storage:
+      $exportAs: ManagedEnvironmentsStorage
+      $supportedFrom: v0.1.0
     ConnectedEnvironment:
       $exportAs: ConnectedEnvironment
       $supportedFrom: v0.1.0
@@ -102,3 +110,19 @@ groupModelConfiguration:
     Secret:
       Identity:
         $referenceType: arm+wellknown # permits `system` to use a system-assigned identity (autolabel wrote simple)
+  2026-03-02-preview:
+    # Moved from 2025-01-01 (2026-11-13): the Nacos and Spring Cloud Gateway
+    # component types, and ingress on the types that have it.
+    ManagedEnvironments_JavaComponent:
+      $exportAs: ManagedEnvironmentsJavaComponent
+      $supportedFrom: v0.1.0
+    ManagedEnvironments_DaprSubscription:
+      $exportAs: ManagedEnvironmentsDaprSubscription
+      $supportedFrom: v0.1.0
+    ScgRoute:
+      Id:
+        $referenceType: simple # a Spring Cloud Gateway route's own identifier, not an ARM ID (autolabel wrote arm)
+  2026-07-01:
+    ManagedEnvironments_DotNetComponent:
+      $exportAs: ManagedEnvironmentsDotNetComponent
+      $supportedFrom: v0.1.0

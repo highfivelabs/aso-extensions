@@ -11,6 +11,10 @@ import (
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
 	app_v20260101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101"
 	app_v20260101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101/storage"
+	app_v20260302p "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260302preview"
+	app_v20260302ps "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260302preview/storage"
+	app_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701"
+	app_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701/storage"
 	authorization_customizations "github.com/highfivelabs/aso-extensions/apis/arm/authorization/customizations"
 	authorization_v20200501 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501"
 	authorization_v20200501s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501/storage"
@@ -193,27 +197,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
-	result = append(result, &registration.StorageType{Obj: new(app_v20250101.ManagedEnvironmentsJavaComponent)})
 	result = append(result, &registration.StorageType{Obj: new(app_v20250101.ManagedEnvironmentsManagedCertificate)})
-	result = append(result, &registration.StorageType{
-		Obj: new(app_v20250101.ManagedEnvironmentsStorage),
-		Indexes: []registration.Index{
-			{
-				Key:  ".spec.properties.azureFile.accountKey",
-				Func: indexAppManagedEnvironmentsStorageAccountKey,
-			},
-		},
-		Watches: []registration.Watch{
-			{
-				Type: &v1.Secret{},
-				MakeEventHandler: watchSecretsFactory(
-					[]string{
-						".spec.properties.azureFile.accountKey",
-					},
-					&app_v20250101.ManagedEnvironmentsStorageList{}),
-			},
-		},
-	})
 	result = append(result, &registration.StorageType{
 		Obj: new(app_v20260101.ConnectedEnvironment),
 		Indexes: []registration.Index{
@@ -348,6 +332,25 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(app_v20260101.ManagedEnvironmentsMaintenanceConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(app_v20260101.ManagedEnvironmentsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{
+		Obj: new(app_v20260101.ManagedEnvironmentsStorage),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.azureFile.accountKey",
+				Func: indexAppManagedEnvironmentsStorageAccountKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.azureFile.accountKey",
+					},
+					&app_v20260101.ManagedEnvironmentsStorageList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
 		Obj: new(app_v20260101.SessionPool),
 		Indexes: []registration.Index{
 			{
@@ -366,6 +369,9 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(app_v20260302p.ManagedEnvironmentsDaprSubscription)})
+	result = append(result, &registration.StorageType{Obj: new(app_v20260302p.ManagedEnvironmentsJavaComponent)})
+	result = append(result, &registration.StorageType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.PrivateLinkAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.ResourceManagementPrivateLink)})
 	result = append(result, &registration.StorageType{
@@ -1308,16 +1314,12 @@ func getKnownTypes() []*registration.KnownType {
 		result,
 		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsCertificate)},
 		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsDaprComponent)},
-		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsJavaComponent)},
-		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsManagedCertificate)},
-		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsStorage)})
+		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsManagedCertificate)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsCertificate)},
 		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsDaprComponent)},
-		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsJavaComponent)},
-		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsManagedCertificate)},
-		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsStorage)})
+		&registration.KnownType{Obj: new(app_v20250101s.ManagedEnvironmentsManagedCertificate)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(app_v20260101.ConnectedEnvironment)},
@@ -1328,6 +1330,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20260101.ManagedEnvironmentsHttpRouteConfig)},
 		&registration.KnownType{Obj: new(app_v20260101.ManagedEnvironmentsMaintenanceConfiguration)},
 		&registration.KnownType{Obj: new(app_v20260101.ManagedEnvironmentsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(app_v20260101.ManagedEnvironmentsStorage)},
 		&registration.KnownType{Obj: new(app_v20260101.SessionPool)})
 	result = append(
 		result,
@@ -1339,7 +1342,12 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20260101s.ManagedEnvironmentsHttpRouteConfig)},
 		&registration.KnownType{Obj: new(app_v20260101s.ManagedEnvironmentsMaintenanceConfiguration)},
 		&registration.KnownType{Obj: new(app_v20260101s.ManagedEnvironmentsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(app_v20260101s.ManagedEnvironmentsStorage)},
 		&registration.KnownType{Obj: new(app_v20260101s.SessionPool)})
+	result = append(result, &registration.KnownType{Obj: new(app_v20260302p.ManagedEnvironmentsDaprSubscription)}, &registration.KnownType{Obj: new(app_v20260302p.ManagedEnvironmentsJavaComponent)})
+	result = append(result, &registration.KnownType{Obj: new(app_v20260302ps.ManagedEnvironmentsDaprSubscription)}, &registration.KnownType{Obj: new(app_v20260302ps.ManagedEnvironmentsJavaComponent)})
+	result = append(result, &registration.KnownType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
+	result = append(result, &registration.KnownType{Obj: new(app_v20260701s.ManagedEnvironmentsDotNetComponent)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20200501.PrivateLinkAssociation)}, &registration.KnownType{Obj: new(authorization_v20200501.ResourceManagementPrivateLink)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20200501s.PrivateLinkAssociation)}, &registration.KnownType{Obj: new(authorization_v20200501s.ResourceManagementPrivateLink)})
 	result = append(
@@ -1839,6 +1847,10 @@ func createScheme() *runtime.Scheme {
 	_ = app_v20250101s.AddToScheme(scheme)
 	_ = app_v20260101.AddToScheme(scheme)
 	_ = app_v20260101s.AddToScheme(scheme)
+	_ = app_v20260302p.AddToScheme(scheme)
+	_ = app_v20260302ps.AddToScheme(scheme)
+	_ = app_v20260701.AddToScheme(scheme)
+	_ = app_v20260701s.AddToScheme(scheme)
 	_ = authorization_v20200501.AddToScheme(scheme)
 	_ = authorization_v20200501s.AddToScheme(scheme)
 	_ = authorization_v20201001.AddToScheme(scheme)
@@ -1954,6 +1966,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ContainerAppsSourceControlExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsCertificateExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsDaprComponentExtension{})
+	result = append(result, &app_customizations.ManagedEnvironmentsDaprSubscriptionExtension{})
+	result = append(result, &app_customizations.ManagedEnvironmentsDotNetComponentExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsHttpRouteConfigExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsJavaComponentExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsMaintenanceConfigurationExtension{})
@@ -2416,9 +2430,9 @@ func indexAppManagedEnvironmentsDaprComponentValue(rawObj client.Object) []strin
 	return result
 }
 
-// indexAppManagedEnvironmentsStorageAccountKey an index function for app_v20250101.ManagedEnvironmentsStorage .spec.properties.azureFile.accountKey
+// indexAppManagedEnvironmentsStorageAccountKey an index function for app_v20260101.ManagedEnvironmentsStorage .spec.properties.azureFile.accountKey
 func indexAppManagedEnvironmentsStorageAccountKey(rawObj client.Object) []string {
-	obj, ok := rawObj.(*app_v20250101.ManagedEnvironmentsStorage)
+	obj, ok := rawObj.(*app_v20260101.ManagedEnvironmentsStorage)
 	if !ok {
 		return nil
 	}
