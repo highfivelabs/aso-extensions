@@ -1,0 +1,44 @@
+diff --git a/v2/tools/generator/internal/armconversion/convert_from_arm_function_builder.go b/v2/tools/generator/internal/armconversion/convert_from_arm_function_builder.go
+index 32e57dbe..0ab0149f 100644
+--- a/v2/tools/generator/internal/armconversion/convert_from_arm_function_builder.go
++++ b/v2/tools/generator/internal/armconversion/convert_from_arm_function_builder.go
+@@ -137,6 +137,16 @@ func (builder *convertFromARMBuilder) functionBodyStatements() ([]dst.Stmt, erro
+ 	// using the typedInput variable
+ 	hasConversions := len(removeEmptyStatements(conversionStmts)) > 0
+ 
++	// Modified by High Five Labs: the owner's assignment is a statement that
++	// does not read the input; a resource whose only other property is a
++	// reference (not read back from ARM) and whose name is fixed
++	// (Components_LinkedStorageAccount, ServiceProfiler) declared typedInput
++	// and never used it, which does not compile. Count only statements that
++	// read it.
++	if hasConversions && !usesIdent(conversionStmts, builder.typedInputIdent) {
++		hasConversions = false
++	}
++
+ 	assertStmts := builder.assertInputTypeIsARM(hasConversions)
+ 
+ 	return astbuilder.Statements(
+@@ -731,3 +741,22 @@ func (builder *convertFromARMBuilder) convertComplexTypeNameProperty(
+ 
+ 	return results, nil
+ }
++
++// usesIdent reports whether any of the statements refers to the identifier
++// name (Modified by High Five Labs).
++func usesIdent(stmts []dst.Stmt, name string) bool {
++	found := false
++	for _, stmt := range stmts {
++		dst.Inspect(stmt, func(n dst.Node) bool {
++			if id, ok := n.(*dst.Ident); ok && id.Name == name {
++				found = true
++			}
++			return !found
++		})
++		if found {
++			return true
++		}
++	}
++
++	return false
++}

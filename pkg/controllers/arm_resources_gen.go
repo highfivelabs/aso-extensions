@@ -65,6 +65,8 @@ import (
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
 	insights_v20160301 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301"
 	insights_v20160301s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301/storage"
+	insights_v20200301p "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20200301preview"
+	insights_v20200301ps "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20200301preview/storage"
 	insights_v20201120 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20201120"
 	insights_v20201120s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20201120/storage"
 	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
@@ -80,6 +82,9 @@ import (
 	maintenance_customizations "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/customizations"
 	maintenance_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401"
 	maintenance_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401/storage"
+	managedidentity_customizations "github.com/highfivelabs/aso-extensions/apis/arm/managedidentity/customizations"
+	managedidentity_v20241130 "github.com/highfivelabs/aso-extensions/apis/arm/managedidentity/v20241130"
+	managedidentity_v20241130s "github.com/highfivelabs/aso-extensions/apis/arm/managedidentity/v20241130/storage"
 	management_customizations "github.com/highfivelabs/aso-extensions/apis/arm/management/customizations"
 	management_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/management/v20230401"
 	management_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/management/v20230401/storage"
@@ -897,6 +902,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20160301.LogProfile)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20200301p.ComponentsLinkedStorageAccount)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20201120.WorkbookTemplate)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
@@ -946,6 +952,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.ConfigurationAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(managedidentity_v20241130.UserAssignedIdentity)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroup)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroupsSetting)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroupsSubscription)})
@@ -1639,6 +1646,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331s.DedicatedHsm)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20160301.LogProfile)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20160301s.LogProfile)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20200301p.ComponentsLinkedStorageAccount)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20200301ps.ComponentsLinkedStorageAccount)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20201120.WorkbookTemplate)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20201120s.WorkbookTemplate)})
 	result = append(
@@ -1669,6 +1678,8 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101ps.PrivateLinkScope)}, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101ps.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401s.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401s.MaintenanceConfiguration)})
+	result = append(result, &registration.KnownType{Obj: new(managedidentity_v20241130.UserAssignedIdentity)})
+	result = append(result, &registration.KnownType{Obj: new(managedidentity_v20241130s.UserAssignedIdentity)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(management_v20230401.ManagementGroup)},
@@ -2004,6 +2015,8 @@ func createScheme() *runtime.Scheme {
 	_ = hardwaresecuritymodules_v20250331s.AddToScheme(scheme)
 	_ = insights_v20160301.AddToScheme(scheme)
 	_ = insights_v20160301s.AddToScheme(scheme)
+	_ = insights_v20200301p.AddToScheme(scheme)
+	_ = insights_v20200301ps.AddToScheme(scheme)
 	_ = insights_v20201120.AddToScheme(scheme)
 	_ = insights_v20201120s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
@@ -2016,6 +2029,8 @@ func createScheme() *runtime.Scheme {
 	_ = kubernetesconfiguration_v20241101ps.AddToScheme(scheme)
 	_ = maintenance_v20230401.AddToScheme(scheme)
 	_ = maintenance_v20230401s.AddToScheme(scheme)
+	_ = managedidentity_v20241130.AddToScheme(scheme)
+	_ = managedidentity_v20241130s.AddToScheme(scheme)
 	_ = management_v20230401.AddToScheme(scheme)
 	_ = management_v20230401s.AddToScheme(scheme)
 	_ = management_v20260801.AddToScheme(scheme)
@@ -2172,6 +2187,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClusterExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.DedicatedHsmExtension{})
+	result = append(result, &insights_customizations.ComponentsLinkedStorageAccountExtension{})
 	result = append(result, &insights_customizations.LogProfileExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
@@ -2186,6 +2202,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &kubernetesconfiguration_customizations.SourceControlConfigurationExtension{})
 	result = append(result, &maintenance_customizations.ConfigurationAssignmentExtension{})
 	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})
+	result = append(result, &managedidentity_customizations.UserAssignedIdentityExtension{})
 	result = append(result, &management_customizations.ManagementGroupExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSettingExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSubscriptionExtension{})
