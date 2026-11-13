@@ -4,21 +4,22 @@ The following resources have newer versions available in the Azure REST API spec
 
 ## app
 
-|      | Resource                                     | Available Stable | Supported Stable | Available Preview  | Supported Preview |
-|------|----------------------------------------------|------------------|------------------|--------------------|-------------------|
-|      | ConnectedEnvironment                         | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                 |
-|      | ConnectedEnvironmentsCertificate             | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                 |
-|      | ConnectedEnvironmentsDaprComponent           | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                 |
-|      | ConnectedEnvironmentsStorage                 | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                 |
-|      | ContainerAppsSourceControl                   | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                 |
-| 💡    | ManagedEnvironmentsCertificate               | **2026-07-01**   | 2025-01-01       | 2026-03-02-preview | -                 |
-| 💡    | ManagedEnvironmentsDaprComponent             | **2026-07-01**   | 2025-01-01       | 2026-03-02-preview | -                 |
-|      | ManagedEnvironmentsHttpRouteConfig           | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                 |
-|      | ManagedEnvironmentsMaintenanceConfiguration  | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                 |
-| 💡    | ManagedEnvironmentsManagedCertificate        | **2026-07-01**   | 2025-01-01       | 2026-03-02-preview | -                 |
-|      | ManagedEnvironmentsPrivateEndpointConnection | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                 |
-|      | ManagedEnvironmentsStorage                   | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                 |
-|      | SessionPool                                  | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                 |
+|      | Resource                                     | Available Stable | Supported Stable | Available Preview  | Supported Preview  |
+|------|----------------------------------------------|------------------|------------------|--------------------|--------------------|
+|      | ConnectedEnvironment                         | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                  |
+|      | ConnectedEnvironmentsCertificate             | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                  |
+|      | ConnectedEnvironmentsDaprComponent           | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                  |
+|      | ConnectedEnvironmentsStorage                 | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                  |
+|      | ContainerAppsSourceControl                   | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                  |
+|      | ManagedEnvironment                           | 2026-07-01       | -                | 2026-03-02-preview | 2025-10-02-preview |
+| 💡    | ManagedEnvironmentsCertificate               | **2026-07-01**   | 2025-01-01       | 2026-03-02-preview | -                  |
+| 💡    | ManagedEnvironmentsDaprComponent             | **2026-07-01**   | 2025-01-01       | 2026-03-02-preview | -                  |
+|      | ManagedEnvironmentsHttpRouteConfig           | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                  |
+|      | ManagedEnvironmentsMaintenanceConfiguration  | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                  |
+| 💡    | ManagedEnvironmentsManagedCertificate        | **2026-07-01**   | 2025-01-01       | 2026-03-02-preview | -                  |
+|      | ManagedEnvironmentsPrivateEndpointConnection | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                  |
+|      | ManagedEnvironmentsStorage                   | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                  |
+|      | SessionPool                                  | 2026-07-01       | 2026-01-01       | 2026-03-02-preview | -                  |
 
 ## authorization
 
