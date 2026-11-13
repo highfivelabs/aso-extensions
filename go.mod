@@ -21,6 +21,7 @@ require (
 	github.com/microsoftgraph/msgraph-beta-sdk-go v0.166.0
 	github.com/microsoftgraph/msgraph-sdk-go-core v1.4.1
 	github.com/onsi/gomega v1.44.0
+	github.com/prometheus/client_golang v1.25.0
 	github.com/rotisserie/eris v0.5.4
 	go.yaml.in/yaml/v3 v3.0.5
 	golang.org/x/exp v0.0.0-20260410095643-746e56fc9e2f
@@ -86,7 +87,6 @@ require (
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
-	github.com/prometheus/client_golang v1.25.0 // indirect
 	github.com/prometheus/client_model v0.6.3 // indirect
 	github.com/prometheus/common v0.72.0 // indirect
 	github.com/prometheus/procfs v0.22.0 // indirect

@@ -9,7 +9,11 @@ ConnectedEnvironmentsDaprComponentExtension: Object (0 properties)
 
 ConnectedEnvironmentsStorageExtension: Object (0 properties)
 
+ContainerAppExtension: Object (0 properties)
+
 ContainerAppsSourceControlExtension: Object (0 properties)
+
+ManagedEnvironmentExtension: Object (0 properties)
 
 ManagedEnvironmentsCertificateExtension: Object (0 properties)
 

@@ -6,7 +6,9 @@ resources:
 - app.azure.hfl.dev_connectedenvironmentscertificates.yaml
 - app.azure.hfl.dev_connectedenvironmentsdaprcomponents.yaml
 - app.azure.hfl.dev_connectedenvironmentsstorages.yaml
+- app.azure.hfl.dev_containerapps.yaml
 - app.azure.hfl.dev_containerappssourcecontrols.yaml
+- app.azure.hfl.dev_managedenvironments.yaml
 - app.azure.hfl.dev_managedenvironmentscertificates.yaml
 - app.azure.hfl.dev_managedenvironmentsdaprcomponents.yaml
 - app.azure.hfl.dev_managedenvironmentsdaprsubscriptions.yaml
