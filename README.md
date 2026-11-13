@@ -61,7 +61,7 @@ Not affiliated with or endorsed by Microsoft.
 <!-- coverage:start -->
 ![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)
 
-Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 7.0%; 76.6% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
+Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 7.2%; 76.4% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
 The purple bar is Terraform's `azurerm` provider beside them, an estimate: the share of the same attributes that a writable attribute of a mapped Terraform resource matches by the lenient rule (L2, 8.2% overall), with the strict rule (L1, 7.2%) as its tick; the method and its error are in the catalog's ["Method and error"](https://github.com/highfivelabs/catalog/blob/13064af34996c47f1a5498bb17aca16194c4574e/docs/terraform-leverage.md#method-and-error), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at catalog `13064af34996`. `azapi` is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema.
 
@@ -71,7 +71,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | platform-foundation | 18 | 246 | 43.2% | 30.2% | 26.6% | ~18.7% |
 | security-adjacent | 7 | 93 | 8.6% | 30.8% | 60.6% | ~11.1% |
-| application | 35 | 823 | 33.1% | 7.2% | 59.7% | ~11.3% |
+| application | 35 | 823 | 33.1% | 7.9% | 59.0% | ~11.3% |
 | other | 230 | 1,262 | 0.5% | 1.0% | 98.6% | ~3.9% |
 
 ![Coverage by tier](docs/coverage/bars/_tiers.svg)
@@ -79,7 +79,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 | Tier | Services | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | 1 | 17 | 43.0% | 20.1% | 36.9% | ~13.8% |
-| 2 | 18 | 26.5% | 15.8% | 57.6% | ~8.2% |
+| 2 | 18 | 26.5% | 17.2% | 56.3% | ~8.2% |
 | 3 | 245 | 5.9% | 0.6% | 93.5% | ~6.6% |
 
 By service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), all services in [`services.csv`](docs/coverage/services.csv).
@@ -93,7 +93,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.Resources` | platform-foundation | ![Microsoft.Resources](docs/coverage/bars/Microsoft.Resources.svg) | 2.1% | 34.7% | 63.2% | ~12.5% |
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 100.0% | 0.0% | ~92.3% |
 | 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 37.0% | 63.0% | ~27.6% |
-| 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 6.3% | 21.2% | ~33.3% |
+| 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 6.5% | 21.0% | ~33.3% |
 | 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 17.4% | 40.3% | ~9.0% |
 | 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 45.8% | 14.0% | ~20.2% |
 | 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 16.7% | 0.0% | ~100.0% |
@@ -114,8 +114,8 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 2 | `Microsoft.HardwareSecurityModules` | security-adjacent | ![Microsoft.HardwareSecurityModules](docs/coverage/bars/Microsoft.HardwareSecurityModules.svg) | 0.0% | 95.7% | 4.3% | ~30.4% |
 | 2 | `Microsoft.Storage` | application | ![Microsoft.Storage](docs/coverage/bars/Microsoft.Storage.svg) | 63.1% | 17.3% | 19.6% | ~7.1% |
 | 2 | `Microsoft.Compute` | application | ![Microsoft.Compute](docs/coverage/bars/Microsoft.Compute.svg) | 38.0% | 3.4% | 58.6% | ~12.8% |
-| 2 | `Microsoft.Web` | application | ![Microsoft.Web](docs/coverage/bars/Microsoft.Web.svg) | 16.2% | 14.1% | 69.7% | ~1.1% |
-| 2 | `Microsoft.App` | application | ![Microsoft.App](docs/coverage/bars/Microsoft.App.svg) | 50.6% | 25.5% | 23.9% | ~10.6% |
+| 2 | `Microsoft.Web` | application | ![Microsoft.Web](docs/coverage/bars/Microsoft.Web.svg) | 16.2% | 18.3% | 65.5% | ~1.1% |
+| 2 | `Microsoft.App` | application | ![Microsoft.App](docs/coverage/bars/Microsoft.App.svg) | 50.6% | 29.9% | 19.5% | ~10.6% |
 | 2 | `Microsoft.Sql` | application | ![Microsoft.Sql](docs/coverage/bars/Microsoft.Sql.svg) | 44.5% | 0.4% | 55.1% | ~17.6% |
 | 2 | `Microsoft.DocumentDB` | application | ![Microsoft.DocumentDB](docs/coverage/bars/Microsoft.DocumentDB.svg) | 45.1% | 20.8% | 34.1% | ~4.2% |
 | 2 | `Microsoft.DBforPostgreSQL` | application | ![Microsoft.DBforPostgreSQL](docs/coverage/bars/Microsoft.DBforPostgreSQL.svg) | 41.5% | 0.0% | 58.5% | ~8.3% |
