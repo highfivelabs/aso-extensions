@@ -95,6 +95,62 @@ func TestComputedProperties(t *testing.T) {
 				t.Errorf("issuerURL %v", s)
 			}
 		}},
+		{"/providers/Microsoft.Web/sites/My-App", `{"location":"eastus2"}`, func(t *testing.T, p map[string]any, _ string) {
+			if p["defaultHostName"] != "my-app.azurewebsites.net" {
+				t.Errorf("defaultHostName %v", p["defaultHostName"])
+			}
+			if s, _ := p["customDomainVerificationId"].(string); len(s) != 64 || s != strings.ToUpper(s) {
+				t.Errorf("customDomainVerificationId %v", p["customDomainVerificationId"])
+			}
+			if h, _ := p["enabledHostNames"].([]any); len(h) != 2 || h[1] != "my-app.scm.azurewebsites.net" {
+				t.Errorf("enabledHostNames %v", p["enabledHostNames"])
+			}
+		}},
+		{"/providers/Microsoft.Web/sites/my-app/slots/Staging", `{"location":"eastus2"}`, func(t *testing.T, p map[string]any, _ string) {
+			if p["defaultHostName"] != "my-app-staging.azurewebsites.net" {
+				t.Errorf("slot defaultHostName %v", p["defaultHostName"])
+			}
+		}},
+		{"/providers/Microsoft.Sql/servers/Sql1", `{"location":"eastus2","properties":{"version":"12.0"}}`, func(t *testing.T, p map[string]any, _ string) {
+			if p["fullyQualifiedDomainName"] != "sql1.database.windows.net" {
+				t.Errorf("fullyQualifiedDomainName %v", p["fullyQualifiedDomainName"])
+			}
+		}},
+		{"/providers/Microsoft.DBforPostgreSQL/flexibleServers/pg1", `{"location":"eastus2"}`, func(t *testing.T, p map[string]any, _ string) {
+			if p["fullyQualifiedDomainName"] != "pg1.postgres.database.azure.com" {
+				t.Errorf("fullyQualifiedDomainName %v", p["fullyQualifiedDomainName"])
+			}
+		}},
+		{"/providers/Microsoft.DBforMySQL/flexibleServers/my1", `{"location":"eastus2"}`, func(t *testing.T, p map[string]any, _ string) {
+			if p["fullyQualifiedDomainName"] != "my1.mysql.database.azure.com" {
+				t.Errorf("fullyQualifiedDomainName %v", p["fullyQualifiedDomainName"])
+			}
+		}},
+		{"/providers/Microsoft.DocumentDB/databaseAccounts/Cosmos1", `{"location":"eastus2","properties":{"locations":[{"locationName":"East US 2","failoverPriority":0},{"locationName":"westus","failoverPriority":1}]}}`, func(t *testing.T, p map[string]any, _ string) {
+			if p["documentEndpoint"] != "https://cosmos1.documents.azure.com:443/" {
+				t.Errorf("documentEndpoint %v", p["documentEndpoint"])
+			}
+			locs, _ := p["locations"].([]any)
+			if len(locs) != 2 || asMap(locs[0])["id"] != "cosmos1-eastus2" || asMap(locs[1])["documentEndpoint"] != "https://cosmos1-westus.documents.azure.com:443/" {
+				t.Errorf("locations %v", p["locations"])
+			}
+			reads, _ := p["readLocations"].([]any)
+			writes, _ := p["writeLocations"].([]any)
+			if len(reads) != 2 || len(writes) != 1 || asMap(writes[0])["documentEndpoint"] != "https://cosmos1-eastus2.documents.azure.com:443/" {
+				t.Errorf("readLocations %v, writeLocations %v", reads, writes)
+			}
+		}},
+		{"/providers/Microsoft.DocumentDB/databaseAccounts/multi", `{"location":"eastus2","properties":{"enableMultipleWriteLocations":true,"locations":[{"locationName":"eastus2","failoverPriority":0},{"locationName":"westus","failoverPriority":1}]}}`, func(t *testing.T, p map[string]any, _ string) {
+			if writes, _ := p["writeLocations"].([]any); len(writes) != 2 {
+				t.Errorf("multi-region writes: writeLocations %v", writes)
+			}
+		}},
+		{"/providers/Microsoft.DocumentDB/databaseAccounts/one", `{"location":"westus"}`, func(t *testing.T, p map[string]any, _ string) {
+			locs, _ := p["locations"].([]any)
+			if len(locs) != 1 || asMap(locs[0])["id"] != "one-westus" {
+				t.Errorf("an account with no locations is in its own: %v", p["locations"])
+			}
+		}},
 	}
 	for _, c := range cases {
 		id := computedRG + c.id
