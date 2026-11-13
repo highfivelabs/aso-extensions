@@ -222,6 +222,7 @@ can list fleets.containerservice.azure.com -n team-a || fail "cannot read the ow
 can list serversdatabases.sql.azure.com -n team-a || fail "cannot read the owner of the Azure SQL User"
 ! can update servers.sql.azure.com -n team-a || fail "may change ASO's SQL servers"
 can list storageaccounts.storage.azure.com -n team-a || fail "cannot read the owner of the generated storage kinds"
+can list components.insights.azure.com -n team-a || fail "cannot read the owner of the generated Application Insights kinds"
 # ASO's StorageAccount is an owner since the storage kinds (list and watch);
 # a storage kind that owns nothing of ours is still only read by name.
 ! can list storageaccountsblobservices.storage.azure.com -n team-a || fail "may list ASO resources it only needs to get"

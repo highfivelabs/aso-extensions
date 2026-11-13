@@ -34,3 +34,4 @@ specification/cognitiveservices
 specification/automation
 specification/storage
 specification/sql
+specification/msi

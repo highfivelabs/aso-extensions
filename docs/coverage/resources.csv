@@ -1237,7 +1237,7 @@ Microsoft.Insights,Microsoft.Insights/components,18,insights.azure.com/Component
 Microsoft.Insights,Microsoft.Insights/components/analyticsItems,3,,0,,0,3,false,spec_api=2015-05-01
 Microsoft.Insights,Microsoft.Insights/components/exportconfiguration,9,,0,,0,9,false,spec_api=2015-05-01
 Microsoft.Insights,Microsoft.Insights/components/favorites,7,,0,,0,7,false,spec_api=2015-05-01
-Microsoft.Insights,Microsoft.Insights/components/linkedStorageAccounts,1,,0,,0,1,false,spec_api=2020-03-01-preview; spec-preview-only
+Microsoft.Insights,Microsoft.Insights/components/linkedStorageAccounts,1,,0,insights.azure.hfl.dev/ComponentsLinkedStorageAccount,1,0,false,spec_api=2020-03-01-preview; spec-preview-only; ours_api=2020-03-01-preview
 Microsoft.Insights,Microsoft.Insights/components/myanalyticsItems,3,,0,,0,3,false,spec_api=2015-05-01
 Microsoft.Insights,Microsoft.Insights/components/pricingPlans,5,insights.azure.com/PricingPlan,5,,0,0,false,spec_api=2017-10-01; official_api=2017-10-01
 Microsoft.Insights,Microsoft.Insights/components/ProactiveDetectionConfigs,12,,0,,0,12,false,spec_api=2015-05-01
@@ -1418,7 +1418,7 @@ Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/s
 Microsoft.Maintenance,Microsoft.Maintenance/applyUpdates,0,,0,,0,0,false,spec_api=2023-04-01
 Microsoft.Maintenance,Microsoft.Maintenance/configurationAssignments,9,,0,maintenance.azure.hfl.dev/ConfigurationAssignment,9,0,false,spec_api=2023-04-01; ours_api=2023-04-01
 Microsoft.Maintenance,Microsoft.Maintenance/maintenanceConfigurations,19,,0,maintenance.azure.hfl.dev/MaintenanceConfiguration,19,0,false,spec_api=2023-04-01; ours_api=2023-04-01
-Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities,3,managedidentity.azure.com/UserAssignedIdentity,2,,0,1,false,spec_api=2024-11-30; official_api=2023-01-31; official-api-differs-from-spec
+Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities,3,managedidentity.azure.com/UserAssignedIdentity,2,managedidentity.azure.hfl.dev/UserAssignedIdentity,1,0,false,spec_api=2024-11-30; official_api=2023-01-31; official-api-differs-from-spec; ours_api=2024-11-30
 Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials,3,managedidentity.azure.com/FederatedIdentityCredential,3,,0,0,false,spec_api=2024-11-30; official_api=2023-01-31; official-api-differs-from-spec
 Microsoft.ManagedNetwork,Microsoft.ManagedNetwork/managedNetworks,6,,0,,0,6,false,spec_api=2019-06-01-preview; spec-preview-only
 Microsoft.ManagedNetwork,Microsoft.ManagedNetwork/managedNetworks/managedNetworkGroups,6,,0,,0,6,false,spec_api=2019-06-01-preview; spec-preview-only

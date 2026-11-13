@@ -22,3 +22,4 @@ resources:
 - cognitiveservices.azure.com_accounts.yaml
 - cognitiveservices.azure.com_projects.yaml
 - storage.azure.com_storageaccounts.yaml
+- insights.azure.com_components.yaml

@@ -24,5 +24,6 @@ documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase
 cognitiveservices/Account
 cognitiveservices/Accounts_Project=Project
 storage/StorageAccount
+insights/Component
 sql/Server
 sql/Servers_Database=ServersDatabase

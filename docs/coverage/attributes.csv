@@ -20611,7 +20611,7 @@ Microsoft.Insights,Microsoft.Insights/components/favorites,IsGeneratedFromTempla
 Microsoft.Insights,Microsoft.Insights/components/favorites,SourceType,string,false,none,,
 Microsoft.Insights,Microsoft.Insights/components/favorites,Tags[],string,false,none,,
 Microsoft.Insights,Microsoft.Insights/components/favorites,Version,string,false,none,,
-Microsoft.Insights,Microsoft.Insights/components/linkedStorageAccounts,properties.linkedStorageAccount,string,false,none,,
+Microsoft.Insights,Microsoft.Insights/components/linkedStorageAccounts,properties.linkedStorageAccount,string,false,ours,,linkedStorageAccountReference
 Microsoft.Insights,Microsoft.Insights/components/myanalyticsItems,Content,string,false,none,,
 Microsoft.Insights,Microsoft.Insights/components/myanalyticsItems,Properties.functionAlias,string,false,none,,
 Microsoft.Insights,Microsoft.Insights/components/myanalyticsItems,Scope,string,false,none,,
@@ -24461,9 +24461,9 @@ Microsoft.Maintenance,Microsoft.Maintenance/maintenanceConfigurations,properties
 Microsoft.Maintenance,Microsoft.Maintenance/maintenanceConfigurations,properties.namespace,string,false,ours,,namespace
 Microsoft.Maintenance,Microsoft.Maintenance/maintenanceConfigurations,properties.visibility,string,false,ours,,visibility
 Microsoft.Maintenance,Microsoft.Maintenance/maintenanceConfigurations,tags{},string,false,ours,,tags{}
-Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities,location,string,true,official,location,
-Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities,properties.isolationScope,string,false,none,,
-Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities,tags{},string,false,official,tags{},
+Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities,location,string,true,both,location,location
+Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities,properties.isolationScope,string,false,ours,,isolationScope
+Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities,tags{},string,false,both,tags{},tags{}
 Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials,properties.audiences[],string,false,official,audiences[],
 Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials,properties.issuer,string,false,official,issuer,
 Microsoft.ManagedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials,properties.subject,string,false,official,subject,
