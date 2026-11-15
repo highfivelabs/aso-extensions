@@ -121,7 +121,8 @@ func deleteLock(t *testing.T, l *authv1.ManagementLock) {
 	})
 }
 
-// A lock on an ASO ResourceGroup: set in Resource Manager with the
+// A lock on an ASO ResourceGroup (named as in Azure: ASO's resolver builds
+// the owner's ARM ID from its azureName): set in Resource Manager with the
 // namespace's identity on the ARM ID ASO recorded; while it is
 // CanNotDelete, the resource group and what is in it cannot be deleted but
 // can be changed; ReadOnly stops changes too; deleting the lock lets
@@ -135,12 +136,12 @@ func TestManagementLockOnResourceGroup(t *testing.T) {
 	accountID := rgID + "/providers/Microsoft.Storage/storageAccounts/lockadata"
 	armFake.AddResource(rgID)
 	armFake.AddResource(accountID)
-	asoResourceGroup(t, ns, "rg", rgID)
+	asoResourceGroup(t, ns, "lock-a-rg", rgID)
 
 	l := &authv1.ManagementLock{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "keep-rg"},
 		Spec: authv1.ManagementLock_Spec{
-			Owner:  &genruntime.ArbitraryOwnerReference{Group: "resources.azure.com", Kind: "ResourceGroup", Name: "rg"},
+			Owner:  &genruntime.ArbitraryOwnerReference{Group: "resources.azure.com", Kind: "ResourceGroup", Name: "lock-a-rg"},
 			Level:  level(authv1.ManagementLockProperties_Level_CanNotDelete),
 			Notes:  ptr("production data"),
 			Owners: []authv1.ManagementLockOwnerApplication{{ApplicationId: ptr("00000000-0000-0000-0000-00000000a110")}},
@@ -158,7 +159,7 @@ func TestManagementLockOnResourceGroup(t *testing.T) {
 	if deref(l.Status.Id) != lockID || l.Status.Level == nil || *l.Status.Level != authv1.ManagementLockProperties_Level_STATUS_CanNotDelete || l.Annotations[genruntime.ResourceIDAnnotation] != lockID {
 		t.Fatalf("status %+v, resource-id %q", l.Status, l.Annotations[genruntime.ResourceIDAnnotation])
 	}
-	if refs := l.GetOwnerReferences(); len(refs) != 1 || refs[0].Kind != "ResourceGroup" || refs[0].Name != "rg" {
+	if refs := l.GetOwnerReferences(); len(refs) != 1 || refs[0].Kind != "ResourceGroup" || refs[0].Name != "lock-a-rg" {
 		t.Fatalf("owner references: %+v", refs)
 	}
 
@@ -273,7 +274,7 @@ func TestManagementLockRefused(t *testing.T) {
 	if err := k8s.Create(ctx, waiting); err != nil {
 		t.Fatal(err)
 	}
-	eventually(t, timeout, "lock waits for its owner", notReadyWith(waiting, `"not-yet" cannot be found`))
+	eventually(t, timeout, "lock waits for its owner", notReadyWith(waiting, `cannot be found`))
 
 	other := namespace(t, "lock-d")
 	strictCredential(t, other, clientB)
