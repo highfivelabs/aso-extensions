@@ -20,6 +20,7 @@ package web
 
 import (
 	"context"
+	"regexp"
 	"sort"
 	"strings"
 
@@ -193,8 +194,16 @@ func (r *SiteConfigReconciler) sectionID(ctx context.Context, s section) (string
 	return strings.TrimSuffix(appID, "/") + "/config/" + s.AzureName(), nil
 }
 
+// appIDPattern matches a site's or a slot's ARM ID with nothing in its segments
+// that could change the request's path or query (?, #, %, ..), as the CRD's
+// rule on armId does: the ID is put into the request URL as it is.
+var appIDPattern = regexp.MustCompile(`(?i)^/subscriptions/[-0-9a-f]+/resourceGroups/[-._()a-z0-9]+/providers/Microsoft\.Web/sites/[-a-z0-9]+(/slots/[-a-z0-9]+)?$`)
+
 // isApp is whether id is a site's or a slot's ARM ID.
 func isApp(id string) bool {
+	if !appIDPattern.MatchString(id) || strings.Contains(id, "..") {
+		return false
+	}
 	parts := strings.Split(strings.Trim(id, "/"), "/")
 	// subscriptions/s/resourceGroups/g/providers/Microsoft.Web/sites/n[/slots/x]
 	if len(parts) != 8 && len(parts) != 10 {
@@ -233,7 +242,7 @@ func (v values) value(name string, plain *string, secret *genruntime.SecretRefer
 	if err != nil || template == nil || plain != nil {
 		return out, err
 	}
-	return strings.Replace(*template, "$(value)", out, 1), nil
+	return strings.ReplaceAll(*template, "$(value)", out), nil
 }
 
 func (v values) referenced(name string, plain *string, secret *genruntime.SecretReference, configMap *genruntime.ConfigMapReference) (string, error) {

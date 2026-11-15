@@ -20,8 +20,9 @@ const (
 // web.azure.com Site (the default when kind is empty), this repository's
 // web.azure.hfl.dev SitesSlot (a deployment slot), or either by its ARM ID.
 // +kubebuilder:validation:XValidation:rule="has(self.name) != has(self.armId)",message="set exactly one of name and armId"
+// +kubebuilder:validation:XValidation:rule="!has(self.group) || has(self.kind)",message="a group needs its kind (Site or SitesSlot)"
 // +kubebuilder:validation:XValidation:rule="!has(self.kind) || (self.kind == 'Site' && (!has(self.group) || self.group == 'web.azure.com')) || (self.kind == 'SitesSlot' && has(self.group) && self.group == 'web.azure.hfl.dev')",message="the owner is a web.azure.com Site or a web.azure.hfl.dev SitesSlot"
-// +kubebuilder:validation:XValidation:rule="!has(self.armId) || self.armId.matches('(?i)^/subscriptions/[^/]+/resourceGroups/[^/]+/providers/Microsoft[.]Web/sites/[^/]+(/slots/[^/]+)?$')",message="armId is the ID of a Microsoft.Web site or of one of its slots"
+// +kubebuilder:validation:XValidation:rule="!has(self.armId) || self.armId.matches('(?i)^/subscriptions/[-0-9a-f]+/resourceGroups/[-._()a-z0-9]+/providers/Microsoft[.]Web/sites/[-a-z0-9]+(/slots/[-a-z0-9]+)?$')",message="armId is the ID of a Microsoft.Web site or of one of its slots"
 type SiteOwnerReference struct {
 	// Name is the name of the Site or SitesSlot object, in this namespace.
 	// +kubebuilder:validation:MaxLength=253

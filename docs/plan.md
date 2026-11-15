@@ -569,8 +569,11 @@ to a kind whose values can be Secret references).
   `genruntime.Reconciler` (`pkg/reconcilers/web`), as `VaultSecret` is:
   ASO's annotations, conditions, claim and credential, and a small Resource
   Manager client (`pkg/webconfig`) for the PUT and the POST, with the
-  credential's cloud configuration and the manager's ARM transport (so the
-  slot guard and the tests' fake apply).
+  credential's cloud configuration and the manager's ARM transport (the
+  tests' fake applies). The slot guard does not cover them: it guards a
+  kind whose spec has `tags` and reads the holder's tag with a GET, and the
+  sections have neither, so two slots could both write one app's settings
+  during a move.
 - **API version.** The ARM version of ASO's `Site` and of the group's
   generated kinds, `v20260715`, as §8 Q14 settled for a hand-built ARM
   kind; the Go package is `apis/web/v20260715` (outside `apis/arm`, which

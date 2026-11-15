@@ -117,7 +117,7 @@ type ConnectionString struct {
 	ValueFromConfig *genruntime.ConfigMapReference `json:"valueFromConfig,omitempty"`
 
 	// Template, with valueFromSecret or valueFromConfig, is text holding
-	// $(value) where the referenced value goes, for a value that is only
+	// $(value) where the referenced value goes (each occurrence), for a value that is only
 	// partly secret: a storage connection string around an access key,
 	// "DefaultEndpointsProtocol=https;AccountName=st1;AccountKey=$(value)".
 	// +kubebuilder:validation:MaxLength=8192

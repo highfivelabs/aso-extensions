@@ -96,6 +96,8 @@ spec:
                 x-kubernetes-validations:
                 - message: set exactly one of name and armId
                   rule: has(self.name) != has(self.armId)
+                - message: a group needs its kind (Site or SitesSlot)
+                  rule: '!has(self.group) || has(self.kind)'
                 - message: the owner is a web.azure.com Site or a web.azure.hfl.dev
                     SitesSlot
                   rule: '!has(self.kind) || (self.kind == ''Site'' && (!has(self.group)
@@ -103,7 +105,7 @@ spec:
                     && has(self.group) && self.group == ''web.azure.hfl.dev'')'
                 - message: armId is the ID of a Microsoft.Web site or of one of its
                     slots
-                  rule: '!has(self.armId) || self.armId.matches(''(?i)^/subscriptions/[^/]+/resourceGroups/[^/]+/providers/Microsoft[.]Web/sites/[^/]+(/slots/[^/]+)?$'')'
+                  rule: '!has(self.armId) || self.armId.matches(''(?i)^/subscriptions/[-0-9a-f]+/resourceGroups/[-._()a-z0-9]+/providers/Microsoft[.]Web/sites/[-a-z0-9]+(/slots/[-a-z0-9]+)?$'')'
               settings:
                 description: |-
                   Settings are the app's settings, the whole set. An empty list removes
@@ -120,7 +122,7 @@ spec:
                     template:
                       description: |-
                         Template, with valueFromSecret or valueFromConfig, is text holding
-                        $(value) where the referenced value goes, for a value that is only
+                        $(value) where the referenced value goes (each occurrence), for a value that is only
                         partly secret: a storage connection string around an access key,
                         "DefaultEndpointsProtocol=https;AccountName=st1;AccountKey=$(value)".
                       maxLength: 8192
