@@ -551,6 +551,59 @@ request #5104, fix it up and ship it.
   `VaultSecret`, with the certificate operations added (REST 7.5). PFX
   import is not built: cert-manager and most in-cluster issuers write PEM.
 
+### App settings and connection strings
+
+`web.azure.hfl.dev/v20260715` `SitesConfigAppSettings` and
+`SitesConfigConnectionStrings` (c4c; RECWEB (builder, 2026-11-15): "yes"
+to a kind whose values can be Secret references).
+
+- **Why by hand.** `sites/config/appsettings` and `.../connectionstrings`
+  (and the same under `sites/slots`) have a PUT and a `POST .../list` and
+  nothing else: no GET, no DELETE (2026-07-15 spec). ASO's generic ARM
+  reconciler reads every resource back with a GET after its PUT (its
+  `getStatus` needs GET or HEAD), so a generated kind would never become
+  Ready (§8 Q13 says the same of `backup`), and the generator cannot make a
+  map whose values are each a Secret reference. Patching ASO's reconciler
+  to read with a POST would be a framework change for two resources. So
+  they are hand-written kinds on ASO's generic reconciler with their own
+  `genruntime.Reconciler` (`pkg/reconcilers/web`), as `VaultSecret` is:
+  ASO's annotations, conditions, claim and credential, and a small Resource
+  Manager client (`pkg/webconfig`) for the PUT and the POST, with the
+  credential's cloud configuration and the manager's ARM transport (so the
+  slot guard and the tests' fake apply).
+- **API version.** The ARM version of ASO's `Site` and of the group's
+  generated kinds, `v20260715`, as §8 Q14 settled for a hand-built ARM
+  kind; the Go package is `apis/web/v20260715` (outside `apis/arm`, which
+  the generator rewrites), registering into the same group version.
+- **Shape.** `owner` is a `Site` (by name, the default), our `SitesSlot`
+  (`group: web.azure.hfl.dev, kind: SitesSlot`) or either by `armId`; the
+  CRD refuses any other kind. `settings` (`connectionStrings`) is a list
+  keyed by name; each item is exactly one of `value`, `valueFromSecret`
+  (ASO's `SecretReference`) and `valueFromConfig` (ASO's
+  `ConfigMapReference`, for a value another object exports, such as an ASO
+  `Component`'s connection string), checked by CEL; a connection string
+  also carries its `type`, the spec's enum. The status holds the section's
+  ARM ID and the names (and types) Azure lists, never a value; values are
+  never logged.
+- **The whole set.** Each reconcile lists the section and PUTs the desired
+  set only when it differs; a PUT replaces every setting, so a setting
+  added elsewhere (the portal, a deployment tool) is removed at the next
+  reconcile, as Terraform's `app_settings` does. A change to a named Secret
+  or ConfigMap reconciles again (indexes and watches, as `VaultSecret`'s).
+- **Two writers.** ASO's `Site` (and our `SitesSlot`) carry
+  `siteConfig.appSettings` and `siteConfig.connectionStrings` in plain
+  text; Azure writes them to the same sections. ASO sends them only when
+  they are set, so a user picks one writer per app: these kinds, with the
+  two `siteConfig` fields left out. Two objects of one kind on one app
+  fight the same way. Neither is detected.
+- **Delete.** Azure has no DELETE for the sections, which live as long as
+  the app; deleting the object makes no call and leaves the last values
+  (the generated config sections' `Deleter`,
+  `site_config_extensions.go`). To clear them, set an empty list first.
+- **Not built:** a slot's sticky names are `SitesConfigSlotConfigNames`
+  (c4b); static sites' app settings (`staticSites/.../config/appsettings`)
+  and `azurestorageaccounts`, `pushsettings`, `metadata` are left out.
+
 ### ManagementLock
 
 - `owner` is ASO's `ArbitraryOwnerReference`, as ASO's own extension
@@ -751,6 +804,7 @@ rechecks upstream again when it is built.
 | c3 | Container Apps environment children (Dapr components, storages, certificates, managed certificates, ...) | not at the pin, no pull request | **built**, generated: `ManagedEnvironmentsDaprComponent`, `Storage`, `Certificate`, `ManagedCertificate`, `JavaComponent` (`app.azure.hfl.dev`, API 2025-01-01). Not built: Dapr subscriptions, HTTP route configs, .NET components and maintenance configurations exist only in preview API versions, which the filters prune |
 | c4 | App Service site children (slots, hostname bindings, certificates, config sections, publishing policies) | not at the pin, no pull request | **built**, generated (`web.azure.hfl.dev`, API 2026-07-15, ASO's own `Site` version): `SitesSlot`, `SitesHostNameBinding`, `SitesSlotsHostNameBinding` (a custom domain on the app and on a slot), `Certificate` (a PFX and its password from Secrets, owned by the resource group). Not built: the generator does not produce the fixed-name config sections (`appsettings`, `connectionstrings`, `authsettingsV2`, `logs`, `backup`, `metadata`) or the `ftp`/`scm` publishing policies as resources (it produced only `config/web`, which duplicates the inline `siteConfig` of ASO's `Site`, so two controllers would fight over it); ASO's `Site` and our `SitesSlot` carry app settings and connection strings inline. Slot children other than host name bindings (config, certificates, containers) are left out |
 | c4b | App Service config sections and publishing policies (c4's "not built"; the catalog's `avm-res-web-site`: `auth_settings_v2`, `logs`, `sticky_settings`, `ftp_publish_basic_authentication_enabled`, `scm_publish_basic_authentication_enabled`, and `auth_settings`, `backup`) | rechecked 2026-11-13, read-only: ASO's `web` group at the pin, on `main` and in v2.22.0 exports `Site`, `ServerFarm` and `SitesSourcecontrol`; no open pull request or issue adds a config section or publishing policy | **built**, generated: `web.azure.hfl.dev/v20260715` `SitesConfigAuthSettingsV2`, `SitesConfigLogs`, `SitesConfigSlotConfigNames`, `SitesBasicPublishingCredentialsPolicyFtp`, `SitesBasicPublishingCredentialsPolicyScm`, owned by ASO's `Site`. **Generator patch 0014** (`ASO_GENERATOR_FIXED_NAMES`, `generator/fixed-names.txt`): the generator took a path's literal last segment for a resource only when it was `default`, `current` or `web` (so only `config/web` came out, c4); a listed literal now makes its own resource of the parent's ARM type, its name fixed to the literal. A log destination's SAS URL is a Secret reference (`$importSecretMode: required`) and removed from the status. Azure has no DELETE for any of them (they live as long as the site): a hand-written `Deleter` (`generator/_extensions/web/customizations/site_config_extensions.go`, as the SOA record's) completes the delete without a call and leaves the last values in Azure. **Not built: `authsettings` (v1) and `backup`**: each has a PUT and no GET (they are read with `POST .../list`), and ASO's reconciler reads a resource back with a GET after its PUT; a hand-written extension that reads them with the POST would do it (open question 13). `appsettings`, `connectionstrings`, `metadata`, `azurestorageaccounts` and `pushsettings` are left out too (PUT-only; ASO's `Site` carries the first three inline in `siteConfig`), as are a slot's sections. Proven: `TestSiteConfigSections` and the conformance test |
+| c4c | App Service app settings and connection strings with Secret references (c4b's "left out"; the catalog's `avm-res-web-site`: `application_insights_connection_string`, `application_insights_key`, `storage_account_access_key`, `slot_sensitive_app_settings`, `connection_strings`, the Logic App settings that carry the storage key; catalog PR #213) | rechecked 2026-11-15, read-only: ASO v2.22.0 is the latest release; `main` (`60fdf3e9`, 11 commits past the pin) changes only `property-changes.md` files under `api/web`; no open pull request or issue adds app settings, connection strings or Secret references for them; ASO's `Site` takes both in plain text in `siteConfig` | **built**, by hand (RECWEB (builder, 2026-11-15)): `web.azure.hfl.dev/v20260715` `SitesConfigAppSettings`, `SitesConfigConnectionStrings`, owned by ASO's `Site` or our `SitesSlot`, each value plain or from a Secret or ConfigMap, the whole set PUT and read back with `POST .../list` (no GET: a generated kind would never be Ready, §8 Q13); deleting leaves the values (no DELETE). §2 "App settings and connection strings". Proven: `TestSiteAppSettingsAndConnectionStrings`, `TestWebConfigSections` (the fake), the operator e2e. Not built: `backup` (§8 Q13, built when a chart needs it: `avm-res-web-site`'s `backup` is such a chart, next), static sites' app settings |
 | c5 | Log Analytics children (tables, data exports, linked services, linked storage, query packs, solutions) | not at the pin, no pull request (rechecked 2026-11-09: v2.22.0 still the latest release, `main` three documentation commits past the pin, no open pull request or issue for any of them; ASO exports only `Workspace`, whose newest version is 2025-07-01) | **built**, generated (`operationalinsights.azure.hfl.dev`, API 2025-07-01, ASO's own `Workspace` version): `WorkspacesTable` (plan, retention, schema, restored logs and search results), `WorkspacesSavedSearch`, `WorkspacesLinkedService` (an Automation account or a cluster), `WorkspacesLinkedStorageAccount`, `WorkspacesDataExport` (added with c10), `QueryPack` (owned by the resource group) and `QueryPacksQuery` (owned by our pack). Data exports (`WorkspacesDataExport`) were first left out because ASO's generator flattens one level only (the spec nests `destination` and `metaData` inside `properties`) and were added with patch 0004 (see the c10 row). Not built: **solutions** (`Microsoft.OperationsManagement`, a 2015 preview API), because its `SolutionProperties` lacks `type: object` and the generator drops it as an empty type, leaving no `workspaceResourceId`; **data sources** (the generator names the receiver `source` and the storage conversions do not compile; they configure the retired Log Analytics agent), **storage insight configs** (legacy), **summary logs**, **clusters** (dedicated clusters, a capacity commitment, not an application need) and **network security perimeter configurations** (read-only). A linked storage account's name is one of five values; the generator keeps such an enum in the storage version, which then imports the API version (a cycle), so `azureName` is a plain string there and Azure refuses a wrong one |
 | c6 | Azure Monitor private link scope and scoped resources; network security perimeter associations | not at the pin, no pull request (rechecked 2026-11-09: v2.22.0 still the latest release, `main` three documentation commits past the pin, no open pull request; ASO's `insights` and `network` groups export neither) | **built**, generated: `insights.azure.hfl.dev/v20210901` `PrivateLinkScope`, `PrivateLinkScopesScopedResource` (a workspace, component or endpoint scoped into it, an ARM reference) and `PrivateLinkScopesPrivateEndpointConnection` (approving or rejecting a connection); `network.azure.hfl.dev/v20250501` `NetworkSecurityPerimeter`, `NetworkSecurityPerimetersProfile`, `...ProfilesAccessRule`, `...ResourceAssociation` (a PaaS resource and a profile, both ARM references, in `Learning`, `Enforced` or `Audit`), `...Link` and `...LoggingConfiguration`. An association needs a perimeter and a profile, which ASO does not have either, so the whole family is built (owners: the resource group, then our kinds). Version choices: 2021-09-01 is the newest stable private link scope API; the perimeter is at 2025-05-01 and not 2025-03-01 (ASO's network version), because at 2025-03-01 the generator drops every writable property of these kinds from the spec side (a perimeter without `location`, an association without `profile`) and nothing says why. Not built: the Log Analytics workspace's own perimeter configurations (`workspaces/networkSecurityPerimeterConfigurations`, read-only, in c5's skip list) |
 | c7 | Key Vault keys | `VaultKey` merged in ASO (#5564), next release | skip: wait for ASO's release |
@@ -1100,6 +1154,20 @@ serialization and conversion tests):
   a change is PUT again; deleting the objects leaves every section in the
   fake, as Azure keeps them with the site. The fake does not refuse a
   section under a site that does not exist, nor check a SAS URL;
+- App Service app settings and connection strings, by hand (c4c): under
+  ASO's `Site` (a stand-in), a set of three settings (plain, from a Secret,
+  from a ConfigMap) and two connection strings (from a Secret, plain) are
+  PUT with the namespace's identity and read back with `POST .../list`;
+  the status names them (with the connection strings' types) and holds no
+  value; a change to the Secret is PUT again; a setting taken out of the
+  list goes from Azure; a setting with two values is refused by the CRD; a
+  slot's settings (owner our `SitesSlot`) wait for a missing Secret and are
+  PUT once it exists; deleting the objects leaves the last values. The fake
+  refuses a GET and a DELETE of a section, a section of an app that does
+  not exist, and an unknown connection string type. Not shown: what Azure
+  does with a `Site` PUT that carries `siteConfig.appSettings` beside these
+  kinds (the fake keeps the site's body apart), and whether a real GET of
+  a section is refused as the spec implies (not run live);
 - an Application Insights component's linked storage account (c21), owned
   by ASO's `Component` (a stand-in), is PUT at the fixed name
   `ServiceProfiler` with the storage account's ARM ID and deleted, the

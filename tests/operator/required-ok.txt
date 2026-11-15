@@ -14,6 +14,8 @@ PostgreSQL holds the Entra role app-identity
 team-a VaultCertificate Ready
 team-a DaprComponent Ready
 team-a SitesSlot Ready
+team-a SitesConfigAppSettings and SitesConfigConnectionStrings Ready
+deleting team-a's config sections leaves them on the app
 team-a WorkspacesTable Ready
 team-a NetworkSecurityPerimeter Ready
 team-a RegistriesScopeMap Ready

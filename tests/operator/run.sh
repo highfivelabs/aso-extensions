@@ -185,7 +185,7 @@ pass "fake Entra answers a stock azidentity client as login.microsoftonline.com:
 step "the install, with the manager built -tags fakecloud"
 kubectl kustomize tests/operator/overlay > "${OUT}/install.yaml"
 GOFLAGS=-tags=fakecloud ko_apply "${OUT}/install.yaml"
-for crd in users.dbforpostgresql.azure.hfl.dev users.sql.azure.hfl.dev directoryroleassignments.entra.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev managementgroups.management.azure.hfl.dev tagsets.resources.azure.hfl.dev; do
+for crd in users.dbforpostgresql.azure.hfl.dev users.sql.azure.hfl.dev directoryroleassignments.entra.azure.hfl.dev vaultsecrets.keyvault.azure.hfl.dev vaultcertificates.keyvault.azure.hfl.dev managementlocks.authorization.azure.hfl.dev managedenvironmentsdaprcomponents.app.azure.hfl.dev sitesslots.web.azure.hfl.dev sitesconfigappsettings.web.azure.hfl.dev sitesconfigconnectionstrings.web.azure.hfl.dev workspacestables.operationalinsights.azure.hfl.dev networksecurityperimeters.network.azure.hfl.dev registriesscopemaps.containerregistry.azure.hfl.dev virtualmachinesruncommands.compute.azure.hfl.dev vaults.recoveryservices.azure.hfl.dev managementgroups.management.azure.hfl.dev tagsets.resources.azure.hfl.dev; do
   kubectl wait --for=condition=Established "crd/${crd}" --timeout=60s >/dev/null
 done
 pass "CRDs installed and established"
@@ -1126,6 +1126,44 @@ wait_for 90 "team-a's SitesSlot Ready" ready sitesslots.web.azure.hfl.dev team-a
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site/slots/staging 201" \
   || fail "the fake resource manager saw no slot created on team-a's app"
 pass "team-a SitesSlot Ready: a deployment slot of ASO's Site, generated, PUT by ASO's ARM reconciler"
+kubectl -n team-a create secret generic app-settings --from-literal=ai='InstrumentationKey=team-a-ai-secret' \
+  --from-literal=db='Server=tcp:db;Password=team-a-db-secret' --dry-run=client -o yaml | kubectl apply -f - >/dev/null
+kubectl apply -f - >/dev/null <<EOF
+apiVersion: web.azure.hfl.dev/v20260715
+kind: SitesConfigAppSettings
+metadata: {name: settings, namespace: team-a}
+spec:
+  owner: {name: site}
+  settings:
+  - {name: APPLICATIONINSIGHTS_CONNECTION_STRING, valueFromSecret: {name: app-settings, key: ai}}
+  - {name: PLAIN, value: one}
+---
+apiVersion: web.azure.hfl.dev/v20260715
+kind: SitesConfigConnectionStrings
+metadata: {name: strings, namespace: team-a}
+spec:
+  owner: {name: site}
+  connectionStrings:
+  - {name: db, type: SQLAzure, valueFromSecret: {name: app-settings, key: db}}
+EOF
+wait_for 90 "team-a's SitesConfigAppSettings Ready" ready sitesconfigappsettings.web.azure.hfl.dev team-a settings
+wait_for 90 "team-a's SitesConfigConnectionStrings Ready" ready sitesconfigconnectionstrings.web.azure.hfl.dev team-a strings
+for section in appsettings connectionstrings; do
+  logged fakearm "request POST /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site/config/${section}/list 200" \
+    || fail "the fake resource manager saw no list of team-a's ${section}"
+  logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site/config/${section} 200" \
+    || fail "the fake resource manager saw no PUT of team-a's ${section}"
+done
+web_status="$(kubectl -n team-a get sitesconfigappsettings.web.azure.hfl.dev settings -o jsonpath='{.status}') $(kubectl -n team-a get sitesconfigconnectionstrings.web.azure.hfl.dev strings -o jsonpath='{.status}')"
+[[ "${web_status}" != *team-a-ai-secret* && "${web_status}" != *team-a-db-secret* ]] || fail "a config section's status holds a Secret's value"
+[[ "$(kubectl -n team-a get sitesconfigappsettings.web.azure.hfl.dev settings -o jsonpath='{.status.names}')" == '["APPLICATIONINSIGHTS_CONNECTION_STRING","PLAIN"]' ]] \
+  || fail "team-a's app settings status does not name the two settings"
+pass "team-a SitesConfigAppSettings and SitesConfigConnectionStrings Ready: values from a Secret PUT on ASO's Site and read back with POST .../list, none in the status"
+kubectl -n team-a delete sitesconfigappsettings.web.azure.hfl.dev settings --timeout=120s >/dev/null
+kubectl -n team-a delete sitesconfigconnectionstrings.web.azure.hfl.dev strings --timeout=120s >/dev/null
+! logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Web/sites/team-a-site/config/" \
+  || fail "deleting a config section sent a DELETE; Azure has none"
+pass "deleting team-a's config sections leaves them on the app (no DELETE sent)"
 wait_for 90 "team-a's WorkspacesTable Ready" ready workspacestables.operationalinsights.azure.hfl.dev team-a appevents
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.OperationalInsights/workspaces/team-a-law/tables/AppEvents_CL 201" \
   || fail "the fake resource manager saw no table created in team-a's workspace"
