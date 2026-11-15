@@ -89,6 +89,7 @@ type SitesConfigConnectionStringsSpec struct {
 
 // ConnectionString is one connection string.
 // +kubebuilder:validation:XValidation:rule="[has(self.value), has(self.valueFromSecret), has(self.valueFromConfig)].filter(x, x).size() == 1",message="set exactly one of value, valueFromSecret and valueFromConfig"
+// +kubebuilder:validation:XValidation:rule="!has(self.template) || ((has(self.valueFromSecret) || has(self.valueFromConfig)) && self.template.contains('$(value)'))",message="template takes valueFromSecret or valueFromConfig and holds $(value) where the referenced value goes"
 type ConnectionString struct {
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:MinLength=1
@@ -112,6 +113,12 @@ type ConnectionString struct {
 	// ValueFromConfig reads the connection string from a key of a
 	// Kubernetes ConfigMap in this namespace.
 	ValueFromConfig *genruntime.ConfigMapReference `json:"valueFromConfig,omitempty"`
+
+	// Template, with valueFromSecret or valueFromConfig, is text holding
+	// $(value) where the referenced value goes, for a value that is only
+	// partly secret: a storage connection string around an access key,
+	// "DefaultEndpointsProtocol=https;AccountName=st1;AccountKey=$(value)".
+	Template *string `json:"template,omitempty"`
 }
 
 // OriginalVersion returns the original API version used to create the resource.

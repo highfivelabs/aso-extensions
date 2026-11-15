@@ -226,8 +226,17 @@ func (r *SiteConfigReconciler) values(ctx context.Context, s section) (values, e
 	return values{secrets: secrets, configMaps: configMaps}, nil
 }
 
-// value is one setting's value: plain, from a Secret or from a ConfigMap.
-func (v values) value(name string, plain *string, secret *genruntime.SecretReference, configMap *genruntime.ConfigMapReference) (string, error) {
+// value is one setting's value: plain, or from a Secret or a ConfigMap and
+// put into its template when it has one.
+func (v values) value(name string, plain *string, secret *genruntime.SecretReference, configMap *genruntime.ConfigMapReference, template *string) (string, error) {
+	out, err := v.referenced(name, plain, secret, configMap)
+	if err != nil || template == nil || plain != nil {
+		return out, err
+	}
+	return strings.Replace(*template, "$(value)", out, 1), nil
+}
+
+func (v values) referenced(name string, plain *string, secret *genruntime.SecretReference, configMap *genruntime.ConfigMapReference) (string, error) {
 	switch {
 	case plain != nil:
 		return *plain, nil

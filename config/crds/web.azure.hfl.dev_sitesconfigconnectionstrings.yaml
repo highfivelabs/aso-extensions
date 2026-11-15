@@ -74,6 +74,13 @@ spec:
                       description: Name is the connection string's name.
                       minLength: 1
                       type: string
+                    template:
+                      description: |-
+                        Template, with valueFromSecret or valueFromConfig, is text holding
+                        $(value) where the referenced value goes, for a value that is only
+                        partly secret: a storage connection string around an access key,
+                        "DefaultEndpointsProtocol=https;AccountName=st1;AccountKey=$(value)".
+                      type: string
                     type:
                       description: Type is the kind of database or service the connection
                         string is for.
@@ -140,6 +147,10 @@ spec:
                   - message: set exactly one of value, valueFromSecret and valueFromConfig
                     rule: '[has(self.value), has(self.valueFromSecret), has(self.valueFromConfig)].filter(x,
                       x).size() == 1'
+                  - message: template takes valueFromSecret or valueFromConfig and
+                      holds $(value) where the referenced value goes
+                    rule: '!has(self.template) || ((has(self.valueFromSecret) || has(self.valueFromConfig))
+                      && self.template.contains(''$(value)''))'
                 type: array
                 x-kubernetes-list-map-keys:
                 - name

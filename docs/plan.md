@@ -581,7 +581,11 @@ to a kind whose values can be Secret references).
   keyed by name; each item is exactly one of `value`, `valueFromSecret`
   (ASO's `SecretReference`) and `valueFromConfig` (ASO's
   `ConfigMapReference`, for a value another object exports, such as an ASO
-  `Component`'s connection string), checked by CEL; a connection string
+  `Component`'s connection string), checked by CEL; a referenced value may
+  have a `template`, text holding `$(value)` where it goes (Kubernetes'
+  `$(VAR)` syntax), for a value only partly secret: the storage connection
+  string AVM's web-site module writes around an access key
+  (`AzureWebJobsStorage`, a Logic App's content share); a connection string
   also carries its `type`, the spec's enum. The status holds the section's
   ARM ID and the names (and types) Azure lists, never a value; values are
   never logged.

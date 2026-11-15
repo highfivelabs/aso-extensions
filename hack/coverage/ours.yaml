@@ -48,6 +48,7 @@ kinds:
       settings[].valueFromSecret.key: properties{}
       settings[].valueFromConfig.name: properties{}
       settings[].valueFromConfig.key: properties{}
+      settings[].template: properties{}
   - crd: config/crds/web.azure.hfl.dev_sitesconfigconnectionstrings.yaml
     armType: Microsoft.Web/sites/config
     api: "2026-07-15"
@@ -61,3 +62,4 @@ kinds:
       connectionStrings[].valueFromSecret.key: properties{}.value
       connectionStrings[].valueFromConfig.name: properties{}.value
       connectionStrings[].valueFromConfig.key: properties{}.value
+      connectionStrings[].template: properties{}.value

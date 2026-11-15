@@ -25,7 +25,7 @@ func (s appSettings) setID(id string) { s.Status.Id = id }
 func (s appSettings) apply(ctx context.Context, log logr.Logger, c *webconfig.Client, id string, v values) error {
 	desired := make(map[string]string, len(s.Spec.Settings))
 	for _, setting := range s.Spec.Settings {
-		value, err := v.value(setting.Name, setting.Value, setting.ValueFromSecret, setting.ValueFromConfig)
+		value, err := v.value(setting.Name, setting.Value, setting.ValueFromSecret, setting.ValueFromConfig, setting.Template)
 		if err != nil {
 			return err
 		}
@@ -65,7 +65,7 @@ func (s connectionStrings) setID(id string) { s.Status.Id = id }
 func (s connectionStrings) apply(ctx context.Context, log logr.Logger, c *webconfig.Client, id string, v values) error {
 	desired := make(map[string]webconfig.ConnectionString, len(s.Spec.ConnectionStrings))
 	for _, cs := range s.Spec.ConnectionStrings {
-		value, err := v.value(cs.Name, cs.Value, cs.ValueFromSecret, cs.ValueFromConfig)
+		value, err := v.value(cs.Name, cs.Value, cs.ValueFromSecret, cs.ValueFromConfig, cs.Template)
 		if err != nil {
 			return err
 		}

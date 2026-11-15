@@ -22,7 +22,8 @@ import (
 
 // A site's app settings and connection strings (hand-written kinds, PUT and
 // POST .../list through Resource Manager), each value plain, from a Secret
-// or from a ConfigMap: the whole set PUT under ASO's Site with the
+// or from a ConfigMap (one Secret's key put into a template, a storage
+// connection string around its access key): the whole set PUT under ASO's Site with the
 // namespace's identity, no value in the status, a Secret's change sent
 // again, a setting removed from the list removed in Azure, a missing Secret
 // reported and then picked up, a deployment slot (our SitesSlot) as the
@@ -36,7 +37,8 @@ func TestSiteAppSettingsAndConnectionStrings(t *testing.T) {
 	siteID, rgID := appService(t, ns)
 	aiSecret := "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://x/;secret-1"
 	dbSecret := "Server=tcp:db.database.windows.net;Password=db-password-1"
-	secret(t, ns, "app", map[string]string{"ai": aiSecret, "db": dbSecret})
+	secret(t, ns, "app", map[string]string{"ai": aiSecret, "db": dbSecret, "storagekey": "c3RvcmFnZS1rZXktMQ=="})
+	storage := "DefaultEndpointsProtocol=https;AccountName=st1;AccountKey=c3RvcmFnZS1rZXktMQ=="
 	if err := k8s.Create(ctx, &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "app-config"},
 		Data:       map[string]string{"region": "westus"},
@@ -52,6 +54,10 @@ func TestSiteAppSettingsAndConnectionStrings(t *testing.T) {
 				{Name: "PLAIN", Value: ptr("one")},
 				{Name: "APPLICATIONINSIGHTS_CONNECTION_STRING", ValueFromSecret: &genruntime.SecretReference{Name: "app", Key: "ai"}},
 				{Name: "REGION", ValueFromConfig: &genruntime.ConfigMapReference{Name: "app-config", Key: "region"}},
+				{
+					Name: "AzureWebJobsStorage", ValueFromSecret: &genruntime.SecretReference{Name: "app", Key: "storagekey"},
+					Template: ptr("DefaultEndpointsProtocol=https;AccountName=st1;AccountKey=$(value)"),
+				},
 			},
 		},
 	}
@@ -78,6 +84,7 @@ func TestSiteAppSettingsAndConnectionStrings(t *testing.T) {
 	strsID := siteID + "/config/connectionstrings"
 	expectProperties(t, settingsID, map[string]any{
 		"PLAIN": "one", "APPLICATIONINSIGHTS_CONNECTION_STRING": aiSecret, "REGION": "westus",
+		"AzureWebJobsStorage": storage,
 	})
 	expectProperties(t, strsID, map[string]any{
 		"db":    map[string]any{"value": dbSecret, "type": "SQLAzure"},
@@ -88,7 +95,7 @@ func TestSiteAppSettingsAndConnectionStrings(t *testing.T) {
 	if err := k8s.Get(ctx, client.ObjectKeyFromObject(settings), settings); err != nil {
 		t.Fatal(err)
 	}
-	if settings.Status.Id != settingsID || !reflect.DeepEqual(settings.Status.Names, []string{"APPLICATIONINSIGHTS_CONNECTION_STRING", "PLAIN", "REGION"}) {
+	if settings.Status.Id != settingsID || !reflect.DeepEqual(settings.Status.Names, []string{"APPLICATIONINSIGHTS_CONNECTION_STRING", "AzureWebJobsStorage", "PLAIN", "REGION"}) {
 		t.Fatalf("status: %+v", settings.Status)
 	}
 	if err := k8s.Get(ctx, client.ObjectKeyFromObject(strs), strs); err != nil {
@@ -98,7 +105,7 @@ func TestSiteAppSettingsAndConnectionStrings(t *testing.T) {
 		t.Fatalf("status: %+v", strs.Status)
 	}
 	for _, s := range []any{settings.Status, strs.Status} {
-		if b, err := json.Marshal(s); err != nil || contains(string(b), "secret-1") || contains(string(b), "db-password-1") || contains(string(b), "6380") {
+		if b, err := json.Marshal(s); err != nil || contains(string(b), "secret-1") || contains(string(b), "db-password-1") || contains(string(b), "6380") || contains(string(b), "c3RvcmFnZS1rZXktMQ") {
 			t.Fatalf("status holds a value: %s %v", b, err)
 		}
 	}
@@ -114,6 +121,7 @@ func TestSiteAppSettingsAndConnectionStrings(t *testing.T) {
 	}
 	expectProperties(t, settingsID, map[string]any{
 		"PLAIN": "one", "APPLICATIONINSIGHTS_CONNECTION_STRING": "InstrumentationKey=rotated", "REGION": "westus",
+		"AzureWebJobsStorage": storage,
 	})
 
 	// The list is the whole set: a setting taken out of it goes in Azure.
@@ -126,6 +134,7 @@ func TestSiteAppSettingsAndConnectionStrings(t *testing.T) {
 	}
 	expectProperties(t, settingsID, map[string]any{
 		"APPLICATIONINSIGHTS_CONNECTION_STRING": "InstrumentationKey=rotated", "REGION": "westus",
+		"AzureWebJobsStorage": storage,
 	})
 
 	// A value is exactly one of value, valueFromSecret and valueFromConfig.
@@ -138,6 +147,10 @@ func TestSiteAppSettingsAndConnectionStrings(t *testing.T) {
 	}
 	if err := k8s.Create(ctx, bad); err == nil || !contains(err.Error(), "exactly one of value") {
 		t.Fatalf("a setting with two values: %v", err)
+	}
+	bad.Spec.Settings = []webv1.AppSetting{{Name: "T", Value: ptr("x"), Template: ptr("a=$(value)")}}
+	if err := k8s.Create(ctx, bad); err == nil || !contains(err.Error(), "template takes valueFromSecret") {
+		t.Fatalf("a template on a plain value: %v", err)
 	}
 
 	// A deployment slot (our SitesSlot) owns its own settings; a Secret that
@@ -186,6 +199,7 @@ func TestSiteAppSettingsAndConnectionStrings(t *testing.T) {
 	}
 	expectProperties(t, settingsID, map[string]any{
 		"APPLICATIONINSIGHTS_CONNECTION_STRING": "InstrumentationKey=rotated", "REGION": "westus",
+		"AzureWebJobsStorage": storage,
 	})
 	expectProperties(t, slotSettingsID, map[string]any{"SLOT_KEY": "slot-secret-1"})
 	if !armFake.HasResource(strsID) {
