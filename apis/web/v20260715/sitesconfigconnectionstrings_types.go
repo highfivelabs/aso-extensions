@@ -84,6 +84,7 @@ type SitesConfigConnectionStringsSpec struct {
 	// empty list removes every connection string.
 	// +listType=map
 	// +listMapKey=name
+	// +kubebuilder:validation:MaxItems=1000
 	ConnectionStrings []ConnectionString `json:"connectionStrings,omitempty"`
 }
 
@@ -93,6 +94,7 @@ type SitesConfigConnectionStringsSpec struct {
 type ConnectionString struct {
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:MinLength=1
+	// +kubebuilder:validation:MaxLength=1024
 	// Name is the connection string's name.
 	Name string `json:"name"`
 
@@ -118,6 +120,7 @@ type ConnectionString struct {
 	// $(value) where the referenced value goes, for a value that is only
 	// partly secret: a storage connection string around an access key,
 	// "DefaultEndpointsProtocol=https;AccountName=st1;AccountKey=$(value)".
+	// +kubebuilder:validation:MaxLength=8192
 	Template *string `json:"template,omitempty"`
 }
 

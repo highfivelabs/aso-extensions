@@ -24,16 +24,20 @@ const (
 // +kubebuilder:validation:XValidation:rule="!has(self.armId) || self.armId.matches('(?i)^/subscriptions/[^/]+/resourceGroups/[^/]+/providers/Microsoft[.]Web/sites/[^/]+(/slots/[^/]+)?$')",message="armId is the ID of a Microsoft.Web site or of one of its slots"
 type SiteOwnerReference struct {
 	// Name is the name of the Site or SitesSlot object, in this namespace.
+	// +kubebuilder:validation:MaxLength=253
 	Name string `json:"name,omitempty"`
 
 	// Group is the owner's API group: web.azure.com (the default) for a
 	// Site, web.azure.hfl.dev for a SitesSlot.
+	// +kubebuilder:validation:MaxLength=253
 	Group string `json:"group,omitempty"`
 
 	// Kind is the owner's kind: Site (the default) or SitesSlot.
+	// +kubebuilder:validation:MaxLength=63
 	Kind string `json:"kind,omitempty"`
 
 	// ARMID is the ARM ID of a site or slot that is not in Kubernetes.
+	// +kubebuilder:validation:MaxLength=1024
 	ARMID string `json:"armId,omitempty"`
 }
 

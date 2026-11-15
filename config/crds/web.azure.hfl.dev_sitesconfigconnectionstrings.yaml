@@ -72,6 +72,7 @@ spec:
                   properties:
                     name:
                       description: Name is the connection string's name.
+                      maxLength: 1024
                       minLength: 1
                       type: string
                     template:
@@ -80,6 +81,7 @@ spec:
                         $(value) where the referenced value goes, for a value that is only
                         partly secret: a storage connection string around an access key,
                         "DefaultEndpointsProtocol=https;AccountName=st1;AccountKey=$(value)".
+                      maxLength: 8192
                       type: string
                     type:
                       description: Type is the kind of database or service the connection
@@ -151,6 +153,7 @@ spec:
                       holds $(value) where the referenced value goes
                     rule: '!has(self.template) || ((has(self.valueFromSecret) || has(self.valueFromConfig))
                       && self.template.contains(''$(value)''))'
+                maxItems: 1000
                 type: array
                 x-kubernetes-list-map-keys:
                 - name
@@ -164,19 +167,23 @@ spec:
                   armId:
                     description: ARMID is the ARM ID of a site or slot that is not
                       in Kubernetes.
+                    maxLength: 1024
                     type: string
                   group:
                     description: |-
                       Group is the owner's API group: web.azure.com (the default) for a
                       Site, web.azure.hfl.dev for a SitesSlot.
+                    maxLength: 253
                     type: string
                   kind:
                     description: 'Kind is the owner''s kind: Site (the default) or
                       SitesSlot.'
+                    maxLength: 63
                     type: string
                   name:
                     description: Name is the name of the Site or SitesSlot object,
                       in this namespace.
+                    maxLength: 253
                     type: string
                 type: object
                 x-kubernetes-validations:

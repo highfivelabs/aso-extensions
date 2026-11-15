@@ -82,6 +82,7 @@ type SitesConfigAppSettingsSpec struct {
 	// every setting.
 	// +listType=map
 	// +listMapKey=name
+	// +kubebuilder:validation:MaxItems=1000
 	Settings []AppSetting `json:"settings,omitempty"`
 }
 
@@ -91,6 +92,7 @@ type SitesConfigAppSettingsSpec struct {
 type AppSetting struct {
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:MinLength=1
+	// +kubebuilder:validation:MaxLength=1024
 	// Name is the setting's name, as the app reads it from its environment.
 	Name string `json:"name"`
 
@@ -112,6 +114,7 @@ type AppSetting struct {
 	// $(value) where the referenced value goes, for a value that is only
 	// partly secret: a storage connection string around an access key,
 	// "DefaultEndpointsProtocol=https;AccountName=st1;AccountKey=$(value)".
+	// +kubebuilder:validation:MaxLength=8192
 	Template *string `json:"template,omitempty"`
 }
 
