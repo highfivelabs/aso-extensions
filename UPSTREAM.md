@@ -71,12 +71,10 @@ New files of ours (no ASO source): `pkg/util/postgresql/aad.go`,
 no schema or default privileges; written the way `privileges.go` follows
 ASO's MySQL `ReconcileUserDatabasePrivileges`);
 `pkg/reconcilers/postgresql/database_privileges.go`, `ownership.go`; `apis/keyvault/v1/`; `pkg/keyvault/`;
-`pkg/reconcilers/keyvault/`; `apis/authorization/v1/`; `pkg/armlocks/`;
-`pkg/reconcilers/authorization/` (ManagementLock: no ASO source, as ASO
-has no lock; its claiming follows ASO's `ARMOwnedResourceReconcilerCommon`
-and its subscription check is ASO's `checkSubscription`, both rewritten
-for an unstructured owner, and it uses ASO's exported
-`genruntime.ArbitraryOwnerReference` and `CheckARMIDMatchesSubscription`);
+`pkg/reconcilers/keyvault/` (the hand-written `ManagementLock`,
+`apis/authorization/v1/`, `pkg/armlocks/` and `pkg/reconcilers/authorization/`,
+were removed on 2026-11-15: the kind is generated now, as
+`authorization.azure.hfl.dev/v20200501`);
 `pkg/fakecloud/` (`pkg/fakecloud/azuresql`, a TDS server, among them); `cmd/`; `test/`; `tests/`. Generated from ASO at the pin
 by `hack/generate.sh`: `config/test/aso-crds/` (test owner CRDs, now with
 `ResourceGroup`) and `config/rbac/aso-owner-reader.yaml` (ASO's API

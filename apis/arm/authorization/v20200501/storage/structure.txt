@@ -4,6 +4,41 @@ github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501/storage
 APIVersion: Enum (1 value)
 └── "2020-05-01"
 
+ManagementLock: Resource
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Level: *string
+│   ├── Notes: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   ├── Owners: Object (2 properties)[]
+│   │   ├── ApplicationId: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Level: *string
+    ├── Name: *string
+    ├── Notes: *string
+    ├── Owners: Object (2 properties)[]
+    │   ├── ApplicationId: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 PrivateLinkAssociation: Resource
 ├── Spec: Object (6 properties)
 │   ├── AzureName: string
@@ -53,4 +88,6 @@ ResourceManagementPrivateLink: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     ├── PropertyBag: genruntime.PropertyBag
     └── Type: *string
+
+augmentConversionForSystemData_STATUS: Interface
 

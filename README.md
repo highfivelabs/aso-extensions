@@ -54,7 +54,7 @@ Not affiliated with or endorsed by Microsoft.
 | `app.azure.hfl.dev/v20260101` `ManagedEnvironmentsStorage`; `v20260302preview` `ManagedEnvironmentsJavaComponent`, `ManagedEnvironmentsDaprSubscription`; `v20260701` `ManagedEnvironmentsDotNetComponent` | more children of a Container Apps environment: an Azure Files or NFS storage (its account key from a Secret or from Key Vault, `accountKeyVaultProperties`; moved from 2025-01-01 on 2026-11-13), a Java component of any type (Spring Boot Admin, Spring Cloud Config, Eureka, Gateway with its routes, Nacos; moved from 2025-01-01, whose types stop at three; an ingress FQDN in the status), a Dapr pub/sub subscription (preview only) and a .NET component (the Aspire dashboard). Owned by ASO's `ManagedEnvironment`; generated | ours; none at ASO's pin, in a release, in `main` or in an open pull request (2026-11-13) |
 | `app.azure.hfl.dev/v20251002preview` `ManagedEnvironment`; `v20260701` `ContainerApp` | a Container Apps environment and a container app beside ASO's (2025-01-01), for the fields ASO's version lacks: the environment's Application Insights and OpenTelemetry settings (the connection string and a Datadog key from Secrets), ingress settings, public network access, availability zones and disk encryption with a Key Vault key (2025-10-02-preview is the one version with all of them); the app's `kind` (`functionapp`, `workflowapp`). Owned by ASO's `ResourceGroup`; our environment's children, whose owner kind is ASO's environment, name ours by `owner.armId`. Generated | ours beside ASO's; ASO's pin, `main`, its release and its open pull requests stop at 2025-01-01 (2026-11-13) |
 | `storage.azure.hfl.dev/v20260601` `StorageAccountsLocalUser`, `StorageAccountsEncryptionScope`, `StorageAccountsInventoryPolicy`, `StorageAccountsObjectReplicationPolicy`, `StorageAccountsPrivateEndpointConnection`, `StorageAccountsStorageTaskAssignment` | what a storage account needs beside ASO's `StorageAccount` and its services: SFTP and NFSv3 local users (their password is Azure's, made by an action: not a field), encryption scopes, blob inventory and object replication policies, private endpoint connections and storage task assignments. Owned by ASO's `StorageAccount`; generated at 2026-06-01, the account's version | ours; none at ASO's pin, in a release, in `main` or in an open pull request (2026-11-12) |
-| `authorization.azure.hfl.dev/v1` `ManagementLock` | a management lock (`Microsoft.Authorization/locks`, `CanNotDelete` or `ReadOnly`, with notes and its owners' application IDs) on a subscription, resource group or resource, owned by any ASO resource or an ARM ID; the first plain ARM kind here (`docs/plan.md`, section 1) | ours; ASO issue [#3756](https://github.com/Azure/azure-service-operator/issues/3756), open, needs a design for the lock's four scopes |
+| `authorization.azure.hfl.dev/v20200501` `ManagementLock` | a management lock (`Microsoft.Authorization/locks`, `CanNotDelete` or `ReadOnly`, with notes and its owners' application IDs) on a subscription, resource group or resource, owned by an ASO resource the manager reads (`controllers.OwnerTypes()`), one of ours, or an ARM ID; generated since 2026-11-15 (it was the hand-written `v1`, the first plain ARM kind here; `docs/plan.md`, section 2, "ManagementLock") | ours; ASO issue [#3756](https://github.com/Azure/azure-service-operator/issues/3756), open, needs a design for the lock's four scopes |
 
 ## Coverage
 
@@ -228,12 +228,12 @@ spec:
   privateKey: {name: orders-tls, key: tls.key}
   deleteMode: delete
 ---
-apiVersion: authorization.azure.hfl.dev/v1
+apiVersion: authorization.azure.hfl.dev/v20200501
 kind: ManagementLock
 metadata:
   name: keep-orders           # the lock's name, or set spec.azureName
 spec:
-  owner:                      # any ASO resource here, or {armId: /subscriptions/...}
+  owner:                      # an ASO resource the manager reads, or {armId: /subscriptions/...}
     group: resources.azure.com
     kind: ResourceGroup
     name: orders-rg
@@ -421,7 +421,6 @@ success.** A new commit on the branch needs its own run.
 | `config/fake-cloud/`, `config/test/` | tests only: the fake cloud on kind, ASO's owner CRDs |
 | `pkg/reconcilers/<service>/` | each kind's reconciler |
 | `pkg/keyvault/` | the Key Vault data plane client (secrets and certificates) |
-| `pkg/armlocks/` | the Resource Manager client for management locks |
 | `pkg/util/postgresql/` | PostgreSQL helpers (copied from ASO and extended) |
 | `pkg/controllers/`, `pkg/manager/` | registration on ASO's generic reconciler (`arm_resources_gen.go` is generated); wiring as ASO's manager |
 | `pkg/fakecloud/` | tests only: fake Entra, fake Key Vault, the flexible-server stand-in |

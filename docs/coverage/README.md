@@ -369,7 +369,7 @@ Generated; these cannot drift from the data.
 | `app.azure.hfl.dev/ManagedEnvironmentsPrivateEndpointConnection` | `Microsoft.App/managedEnvironments/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ManagedEnvironmentsStorage` | `Microsoft.App/managedEnvironments/storages` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/SessionPool` | `Microsoft.App/sessionPools` | ARM wire type of the generated kind (`apis/arm`) |
-| `authorization.azure.hfl.dev/ManagementLock` | `Microsoft.Authorization/locks` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
+| `authorization.azure.hfl.dev/ManagementLock` | `Microsoft.Authorization/locks` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/PolicyAssignment` | `Microsoft.Authorization/policyAssignments` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/PolicyDefinition` | `Microsoft.Authorization/policyDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/PolicyDefinitionsVersion` | `Microsoft.Authorization/policyDefinitions/versions` | ARM wire type of the generated kind (`apis/arm`) |

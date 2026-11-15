@@ -4,15 +4,6 @@
 # Every spec property of a listed CRD must be mapped or ignored, so adding a
 # field to a kind makes hack/coverage/run.sh fail until the field is placed.
 kinds:
-  - crd: config/crds/authorization.azure.hfl.dev_managementlocks.yaml
-    armType: Microsoft.Authorization/locks
-    api: "2020-05-01"
-    ignore: [owner, azureName]
-    # CRD spec path -> the lock's ARM attribute
-    map:
-      level: properties.level
-      notes: properties.notes
-      owners[].applicationId: properties.owners[].applicationId
   - crd: config/crds/dbforpostgresql.azure.hfl.dev_users.yaml
     outside: Microsoft.DBforPostgreSQL/flexibleServers/users
     note: "a database role, not an ARM resource; extends ASO's PostgreSQL User"

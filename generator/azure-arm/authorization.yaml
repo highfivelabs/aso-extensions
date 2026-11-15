@@ -10,7 +10,7 @@ typeFilters:
   - action: include
     group: authorization
     version: v20200501
-    because: Resource Manager private links and their management group associations (the only version)
+    because: Resource Manager private links and their management group associations (the only version), and management locks (ManagementLock; docs/plan.md §8 Q10, answered 2026-11-13 and 2026-11-15)
   - action: include
     group: authorization
     version: v20241201preview
@@ -21,7 +21,7 @@ typeFilters:
     because: Privileged Identity Management (role eligibility and assignment schedule requests, role management policy assignments); the version ASO PR #5638 generates its RoleEligibilityScheduleRequest from
   - action: prune
     group: authorization
-    because: every other version is left alone (locks are the hand-written ManagementLock)
+    because: every other version is left alone
 groupModelConfiguration:
   # Privileged Identity Management. RoleEligibilityScheduleRequest is copied
   # from ASO PR #5638 (head 5d0e686e) as it is, but for $supportedFrom (our
@@ -109,6 +109,19 @@ groupModelConfiguration:
       PolicyAssignmentId:
         $referenceType: arm # the assignment exempted from
   2020-05-01:
+    # Microsoft.Authorization/locks at any scope (a subscription, a resource
+    # group or a resource): an extension resource with an arbitrary owner
+    # (patch 0006), as the policy kinds. It replaced the hand-written
+    # authorization.azure.hfl.dev/v1 ManagementLock (docs/plan.md §8 Q10).
+    Lock:
+      $exportAs: ManagementLock
+      $supportedFrom: v0.1.0
+    # Renamed: a type ending in "Owner" takes the receiver "owner", which
+    # PopulateFromARM's owner parameter then shadows (it did not compile).
+    ManagementLockOwner:
+      $renameTo: ManagementLockOwnerApplication
+    ManagementLockOwner_STATUS:
+      $renameTo: ManagementLockOwnerApplication_STATUS
     PrivateLinkAssociation:
       $exportAs: PrivateLinkAssociation
       $supportedFrom: v0.1.0

@@ -17,6 +17,15 @@
 | ExternalEvaluationEnforcementSettings_STATUS                                 |           |           |                  |                  | v20260701 |
 | Identity                                                                     |           |           |                  |                  | v20260701 |
 | Identity_STATUS                                                              |           |           |                  |                  | v20260701 |
+| ManagementLock                                                               | v20200501 |           |                  |                  |           |
+| ManagementLockOwnerApplication                                               | v20200501 |           |                  |                  |           |
+| ManagementLockOwnerApplication_STATUS                                        | v20200501 |           |                  |                  |           |
+| ManagementLockProperties                                                     | v20200501 |           |                  |                  |           |
+| ManagementLockProperties_Level                                               | v20200501 |           |                  |                  |           |
+| ManagementLockProperties_Level_STATUS                                        | v20200501 |           |                  |                  |           |
+| ManagementLockProperties_STATUS                                              | v20200501 |           |                  |                  |           |
+| ManagementLock_STATUS                                                        | v20200501 |           |                  |                  |           |
+| ManagementLock_Spec                                                          | v20200501 |           |                  |                  |           |
 | NonComplianceMessage                                                         |           |           |                  |                  | v20260701 |
 | NonComplianceMessage_STATUS                                                  |           |           |                  |                  | v20260701 |
 | Override                                                                     |           |           |                  |                  | v20260701 |
@@ -142,8 +151,8 @@
 | Selector_STATUS                                                              |           |           |                  | v20260101preview | v20260701 |
 | SelfServeExemptionSettings                                                   |           |           |                  |                  | v20260701 |
 | SelfServeExemptionSettings_STATUS                                            |           |           |                  |                  | v20260701 |
-| SystemData_CreatedByType_STATUS                                              |           |           | v20241201preview | v20260101preview | v20260701 |
-| SystemData_LastModifiedByType_STATUS                                         |           |           | v20241201preview | v20260101preview | v20260701 |
-| SystemData_STATUS                                                            |           |           | v20241201preview | v20260101preview | v20260701 |
+| SystemData_CreatedByType_STATUS                                              | v20200501 |           | v20241201preview | v20260101preview | v20260701 |
+| SystemData_LastModifiedByType_STATUS                                         | v20200501 |           | v20241201preview | v20260101preview | v20260701 |
+| SystemData_STATUS                                                            | v20200501 |           | v20241201preview | v20260101preview | v20260701 |
 | UserAssignedIdentitiesValue_STATUS                                           |           |           |                  |                  | v20260701 |
 | UserAssignedIdentityDetails                                                  |           |           |                  |                  | v20260701 |

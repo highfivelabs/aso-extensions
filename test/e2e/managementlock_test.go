@@ -20,7 +20,7 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/outoftree"
 
-	authv1 "github.com/highfivelabs/aso-extensions/apis/authorization/v1"
+	authv1 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501"
 	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/arm"
 	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/entra"
 )
@@ -102,6 +102,10 @@ func expectLock(t *testing.T, id string, want arm.LockProperties) {
 	})
 }
 
+func level(l authv1.ManagementLockProperties_Level) *authv1.ManagementLockProperties_Level {
+	return &l
+}
+
 func deleteLock(t *testing.T, l *authv1.ManagementLock) {
 	t.Helper()
 	ctx := context.Background()
@@ -135,11 +139,11 @@ func TestManagementLockOnResourceGroup(t *testing.T) {
 
 	l := &authv1.ManagementLock{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "keep-rg"},
-		Spec: authv1.ManagementLockSpec{
+		Spec: authv1.ManagementLock_Spec{
 			Owner:  &genruntime.ArbitraryOwnerReference{Group: "resources.azure.com", Kind: "ResourceGroup", Name: "rg"},
-			Level:  "CanNotDelete",
-			Notes:  "production data",
-			Owners: []authv1.LockOwner{{ApplicationId: "00000000-0000-0000-0000-00000000a110"}},
+			Level:  level(authv1.ManagementLockProperties_Level_CanNotDelete),
+			Notes:  ptr("production data"),
+			Owners: []authv1.ManagementLockOwnerApplication{{ApplicationId: ptr("00000000-0000-0000-0000-00000000a110")}},
 		},
 	}
 	if err := k8s.Create(ctx, l); err != nil {
@@ -148,10 +152,10 @@ func TestManagementLockOnResourceGroup(t *testing.T) {
 	eventually(t, timeout, "ManagementLock Ready", ready(l))
 	lockID := rgID + "/providers/Microsoft.Authorization/locks/keep-rg"
 	expectLock(t, lockID, arm.LockProperties{Level: "CanNotDelete", Notes: "production data", Owners: []arm.LockOwner{{ApplicationID: "00000000-0000-0000-0000-00000000a110"}}})
-	if len(l.Status.Owners) != 1 || l.Status.Owners[0].ApplicationId != "00000000-0000-0000-0000-00000000a110" {
+	if len(l.Status.Owners) != 1 || deref(l.Status.Owners[0].ApplicationId) != "00000000-0000-0000-0000-00000000a110" {
 		t.Fatalf("status.owners: %+v", l.Status.Owners)
 	}
-	if l.Status.Id != lockID || l.Status.Scope != rgID || l.Status.Level != "CanNotDelete" || l.Annotations[genruntime.ResourceIDAnnotation] != lockID {
+	if deref(l.Status.Id) != lockID || l.Status.Level == nil || *l.Status.Level != authv1.ManagementLockProperties_Level_STATUS_CanNotDelete || l.Annotations[genruntime.ResourceIDAnnotation] != lockID {
 		t.Fatalf("status %+v, resource-id %q", l.Status, l.Annotations[genruntime.ResourceIDAnnotation])
 	}
 	if refs := l.GetOwnerReferences(); len(refs) != 1 || refs[0].Kind != "ResourceGroup" || refs[0].Name != "rg" {
@@ -175,8 +179,8 @@ func TestManagementLockOnResourceGroup(t *testing.T) {
 		}
 	}
 	update(func(l *authv1.ManagementLock) {
-		l.Spec.Level = "ReadOnly"
-		l.Spec.Notes = "frozen"
+		l.Spec.Level = level(authv1.ManagementLockProperties_Level_ReadOnly)
+		l.Spec.Notes = ptr("frozen")
 		l.Spec.Owners = nil
 	})
 	eventually(t, timeout, "ManagementLock Ready as ReadOnly", ready(l))
@@ -207,10 +211,10 @@ func TestManagementLockByARMID(t *testing.T) {
 
 	onResource := &authv1.ManagementLock{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "keep-vault"},
-		Spec: authv1.ManagementLockSpec{
+		Spec: authv1.ManagementLock_Spec{
 			AzureName: "keep the vault",
 			Owner:     &genruntime.ArbitraryOwnerReference{ARMID: vaultID},
-			Level:     "CanNotDelete",
+			Level:     level(authv1.ManagementLockProperties_Level_CanNotDelete),
 		},
 	}
 	if err := k8s.Create(ctx, onResource); err != nil {
@@ -224,9 +228,9 @@ func TestManagementLockByARMID(t *testing.T) {
 
 	onSubscription := &authv1.ManagementLock{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "keep-subscription"},
-		Spec: authv1.ManagementLockSpec{
+		Spec: authv1.ManagementLock_Spec{
 			Owner: &genruntime.ArbitraryOwnerReference{ARMID: subscription},
-			Level: "CanNotDelete",
+			Level: level(authv1.ManagementLockProperties_Level_CanNotDelete),
 		},
 	}
 	if err := k8s.Create(ctx, onSubscription); err != nil {
@@ -239,9 +243,9 @@ func TestManagementLockByARMID(t *testing.T) {
 
 	elsewhere := &authv1.ManagementLock{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "elsewhere"},
-		Spec: authv1.ManagementLockSpec{
+		Spec: authv1.ManagementLock_Spec{
 			Owner: &genruntime.ArbitraryOwnerReference{ARMID: "/subscriptions/00000000-0000-0000-0000-0000000000f2/resourceGroups/other"},
-			Level: "CanNotDelete",
+			Level: level(authv1.ManagementLockProperties_Level_CanNotDelete),
 		},
 	}
 	if err := k8s.Create(ctx, elsewhere); err != nil {
@@ -252,8 +256,8 @@ func TestManagementLockByARMID(t *testing.T) {
 
 // An owner that does not exist yet holds the lock back (ASO's
 // WaitingForOwner); an identity Resource Manager does not trust is
-// refused; the CRD refuses an owner that is neither or both of an ARM ID
-// and a named resource, and a level that is not a lock level.
+// refused; the CRD refuses a level that is not a lock level and a lock
+// with no owner.
 func TestManagementLockRefused(t *testing.T) {
 	ctx := context.Background()
 	ns := namespace(t, "lock-c")
@@ -261,9 +265,9 @@ func TestManagementLockRefused(t *testing.T) {
 	trustNamespace(ns)
 	waiting := &authv1.ManagementLock{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "waiting"},
-		Spec: authv1.ManagementLockSpec{
+		Spec: authv1.ManagementLock_Spec{
 			Owner: &genruntime.ArbitraryOwnerReference{Group: "resources.azure.com", Kind: "ResourceGroup", Name: "not-yet"},
-			Level: "CanNotDelete",
+			Level: level(authv1.ManagementLockProperties_Level_CanNotDelete),
 		},
 	}
 	if err := k8s.Create(ctx, waiting); err != nil {
@@ -275,9 +279,9 @@ func TestManagementLockRefused(t *testing.T) {
 	strictCredential(t, other, clientB)
 	untrusted := &authv1.ManagementLock{
 		ObjectMeta: metav1.ObjectMeta{Namespace: other, Name: "untrusted"},
-		Spec: authv1.ManagementLockSpec{
+		Spec: authv1.ManagementLock_Spec{
 			Owner: &genruntime.ArbitraryOwnerReference{ARMID: "/subscriptions/" + subID},
-			Level: "CanNotDelete",
+			Level: level(authv1.ManagementLockProperties_Level_CanNotDelete),
 		},
 	}
 	if err := k8s.Create(ctx, untrusted); err != nil {
@@ -286,18 +290,16 @@ func TestManagementLockRefused(t *testing.T) {
 	eventually(t, timeout, "untrusted identity refused", notReadyWith(untrusted, "401"))
 
 	for _, c := range []struct {
-		owner genruntime.ArbitraryOwnerReference
-		level string
+		owner *genruntime.ArbitraryOwnerReference
+		level authv1.ManagementLockProperties_Level
 		want  string
 	}{
-		{genruntime.ArbitraryOwnerReference{}, "CanNotDelete", "owner names either an ARM ID"},
-		{genruntime.ArbitraryOwnerReference{ARMID: "/subscriptions/" + subID, Name: "rg", Group: "resources.azure.com", Kind: "ResourceGroup"}, "CanNotDelete", "owner names either an ARM ID"},
-		{genruntime.ArbitraryOwnerReference{Name: "rg"}, "CanNotDelete", "needs its group and kind"},
-		{genruntime.ArbitraryOwnerReference{ARMID: "/subscriptions/" + subID}, "NoDelete", "Unsupported value"},
+		{nil, authv1.ManagementLockProperties_Level_CanNotDelete, "spec.owner: Required value"},
+		{&genruntime.ArbitraryOwnerReference{ARMID: "/subscriptions/" + subID}, "NoDelete", "Unsupported value"},
 	} {
 		l := &authv1.ManagementLock{
 			ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "invalid"},
-			Spec:       authv1.ManagementLockSpec{Owner: &c.owner, Level: c.level},
+			Spec:       authv1.ManagementLock_Spec{Owner: c.owner, Level: level(c.level)},
 		}
 		if err := k8s.Create(ctx, l); err == nil || !strings.Contains(err.Error(), c.want) {
 			t.Fatalf("owner %+v level %s: want a refusal with %q, got %v", c.owner, c.level, c.want, err)

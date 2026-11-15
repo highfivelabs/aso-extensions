@@ -978,7 +978,7 @@ spec:
   properties:
     tags: {team: $1, managed-by: aso-extensions}
 ---
-apiVersion: authorization.azure.hfl.dev/v1
+apiVersion: authorization.azure.hfl.dev/v20200501
 kind: ManagementLock
 metadata: {name: keep-rg, namespace: $1}
 spec:
