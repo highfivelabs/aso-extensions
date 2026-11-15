@@ -67,11 +67,13 @@ import (
 	postgresqlv1 "github.com/highfivelabs/aso-extensions/apis/dbforpostgresql/v1"
 	entrav1 "github.com/highfivelabs/aso-extensions/apis/entra/v1"
 	keyvaultv1 "github.com/highfivelabs/aso-extensions/apis/keyvault/v1"
+	recoveryservicesv20260701 "github.com/highfivelabs/aso-extensions/apis/recoveryservices/v20260701"
 	sqlv1 "github.com/highfivelabs/aso-extensions/apis/sql/v1"
 	sqlreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/azuresql"
 	entrareconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/entra"
 	kvreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/keyvault"
 	pgreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/postgresql"
+	rsreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/recoveryservices"
 	"github.com/highfivelabs/aso-extensions/pkg/slot"
 )
 
@@ -85,6 +87,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = keyvaultv1.AddToScheme(scheme)
 	_ = sqlv1.AddToScheme(scheme)
 	_ = entrav1.AddToScheme(scheme)
+	_ = recoveryservicesv20260701.AddToScheme(scheme)
 	_ = asopostgresql.AddToScheme(scheme)
 	_ = asokeyvault.AddToScheme(scheme)
 	_ = asoapp.AddToScheme(scheme)
@@ -168,6 +171,9 @@ type Reconcilers struct {
 	AzureSQLUser     *sqlreconciler.AzureSQLUserReconciler
 	// DirectoryRoleAssignment reaches Microsoft Graph through its Clients.
 	DirectoryRoleAssignment *entrareconciler.DirectoryRoleAssignmentReconciler
+	// VaultsProtectedItem reaches Resource Manager through the generated
+	// kinds' ARM connection factory.
+	VaultsProtectedItem *rsreconciler.VaultsProtectedItemReconciler
 }
 
 // ARM is what the generated ARM kinds are reconciled with: ASO's generic ARM
@@ -195,6 +201,7 @@ func StorageTypes(
 		VaultCertificate:        kvreconciler.NewVaultCertificateReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
 		AzureSQLUser:            sqlreconciler.NewAzureSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
 		DirectoryRoleAssignment: entrareconciler.NewDirectoryRoleAssignmentReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
+		VaultsProtectedItem:     rsreconciler.NewVaultsProtectedItemReconciler(kubeClient, resolver, positiveConditions, arm.ConnectionFactory),
 	}
 	generated, err := generatedStorageTypes(scheme, kubeClient, resolver, positiveConditions, arm, cfg)
 	if err != nil {
@@ -254,6 +261,12 @@ func StorageTypes(
 			Obj:        &entrav1.DirectoryRoleAssignment{},
 			Name:       "hfl_entra_directoryroleassignment",
 			Reconciler: rs.DirectoryRoleAssignment,
+			Predicate:  standardPredicate(),
+		},
+		{
+			Obj:        &recoveryservicesv20260701.VaultsProtectedItem{},
+			Name:       "hfl_recoveryservices_vaultsprotecteditem",
+			Reconciler: rs.VaultsProtectedItem,
 			Predicate:  standardPredicate(),
 		},
 	}...), rs, nil

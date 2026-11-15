@@ -26,3 +26,16 @@ kinds:
     api: "7.5"
     note: "the vault's data plane (certificates); ARM has no such resource"
     ignore: [owner, azureName]
+  - crd: config/crds/recoveryservices.azure.hfl.dev_vaultsprotecteditems.yaml
+    armType: Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems
+    api: "2026-07-01"
+    note: "by hand: the fabric segment (backupFabrics/Azure) is no resource, so ASO's generator cannot own it (c24; ASOQ Q14); virtual machines only so far"
+    # containerName and azureName name the item in its ID.
+    ignore: [owner, azureName, containerName, sourceResourceReference.group, sourceResourceReference.kind, sourceResourceReference.name, policyReference.group, policyReference.kind, policyReference.name]
+    # CRD spec path -> the protected item's ARM attribute (AzureIaaSComputeVMProtectedItem)
+    map:
+      sourceResourceReference.armId: properties.sourceResourceId
+      policyReference.armId: properties.policyId
+      protectionState: properties.protectionState
+      diskExclusionProperties.diskLunList[]: properties.extendedProperties.diskExclusionProperties.diskLunList[]
+      diskExclusionProperties.isInclusionList: properties.extendedProperties.diskExclusionProperties.isInclusionList

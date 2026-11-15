@@ -34756,8 +34756,8 @@ Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/prote
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.extendedInfo.oldestRecoveryPoint,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.extendedInfo.policyState,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.extendedInfo.recoveryPointCount,integer,false,none,,
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.extendedProperties.diskExclusionProperties.diskLunList[],integer,false,none,,
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.extendedProperties.diskExclusionProperties.isInclusionList,boolean,false,none,,
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.extendedProperties.diskExclusionProperties.diskLunList[],integer,false,ours,,spec.diskExclusionProperties.diskLunList[]
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.extendedProperties.diskExclusionProperties.isInclusionList,boolean,false,ours,,spec.diskExclusionProperties.isInclusionList
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.extendedProperties.linuxVmApplicationName,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.fabricName,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.friendlyName,string,false,none,,
@@ -34780,7 +34780,7 @@ Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/prote
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.parentName,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.parentProtectedItem,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.parentType,string,false,none,,
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.policyId,string,false,none,,
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.policyId,string,false,ours,,spec.policyReference.armId
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.policyName,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.policyState,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.protectedItemDataSourceId,string,false,none,,
@@ -34788,13 +34788,13 @@ Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/prote
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.protectedItemId,integer,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.protectedItemType,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.protectionLevel,string,false,none,,
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.protectionState,string,false,none,,
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.protectionState,string,false,ours,,spec.protectionState
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.protectionStatus,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.resourceGuardOperationRequests[],string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.serverName,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.softDeleteRetentionPeriodInDays,integer,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.sourceAssociations{},string,false,none,,
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.sourceResourceId,string,false,none,,
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.sourceResourceId,string,false,ours,,spec.sourceResourceReference.armId
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.sourceSideScanInfo.sourceSideScanStatus,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,properties.sourceSideScanInfo.sourceSideScanSummary,string,false,none,,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,tags{},string,false,none,,

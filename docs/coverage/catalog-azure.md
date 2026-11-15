@@ -18,9 +18,9 @@ route table) is covered when the owning kind carries the attribute.
 | Class | Types |
 | --- | ---: |
 | ASO has it | 94 |
-| this repository has it | 29 |
+| this repository has it | 30 |
 | built here for the catalog (2026-11-12) | 5 |
-| neither | 5 |
+| neither | 4 |
 | generic azapi resource | 3 |
 | total | 136 |
 
@@ -171,7 +171,7 @@ PUT resource and a candidate).
 | `azapi_update_resource:Microsoft.CognitiveServices/accounts` | 1 | ASO has it | cognitiveservices Account |
 | `azapi_resource:Microsoft.Subscription/aliases` | 1 | ASO has it | subscription Alias |
 | `azapi_resource:Microsoft.SecurityInsights/onboardingStates` | 1 | this repository has it | securityinsights.azure.hfl.dev OnboardingState |
-| `azapi_resource:Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems` | 1 | neither | Recovery Services protected item (backup for a VM): its path has a fixed backupFabrics/Azure segment the generator cannot own through; a hand-written candidate (docs/handoff.md h1.2); not built |
+| `azapi_resource:Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems` | 1 | ours | `recoveryservices.azure.hfl.dev` `VaultsProtectedItem` (by hand: the fabric segment is no resource; c24, ASOQ Q14, 2026-11-15) |
 | `azapi_resource:Microsoft.OperationalInsights/workspaces/tables` | 1 | this repository has it | WorkspacesTable |
 | `azapi_resource:Microsoft.OperationalInsights/workspaces/dataExports` | 1 | this repository has it | operationalinsights.azure.hfl.dev WorkspacesDataExport |
 | `azapi_resource:Microsoft.OperationalInsights/queryPacks/queries` | 1 | this repository has it | operationalinsights.azure.hfl.dev QueryPacksQuery |

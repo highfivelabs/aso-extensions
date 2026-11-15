@@ -75,6 +75,12 @@ ASO's MySQL `ReconcileUserDatabasePrivileges`);
 `apis/authorization/v1/`, `pkg/armlocks/` and `pkg/reconcilers/authorization/`,
 were removed on 2026-11-15: the kind is generated now, as
 `authorization.azure.hfl.dev/v20200501`);
+`apis/recoveryservices/v20260701/` and `pkg/reconcilers/recoveryservices/`
+(VaultsProtectedItem: no ASO source, as ASO has no Recovery Services group;
+its claim is ASO's `ClaimResource`, its requests go through ASO's
+`GenericClient` and connection factory, its subscription check is ASO's
+`checkSubscription`, rewritten, and a pending operation is kept in ASO's
+poller annotations);
 `pkg/fakecloud/` (`pkg/fakecloud/azuresql`, a TDS server, among them); `cmd/`; `test/`; `tests/`. Generated from ASO at the pin
 by `hack/generate.sh`: `config/test/aso-crds/` (test owner CRDs, now with
 `ResourceGroup`) and `config/rbac/aso-owner-reader.yaml` (ASO's API
