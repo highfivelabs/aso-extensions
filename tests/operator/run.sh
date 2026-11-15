@@ -1188,6 +1188,33 @@ wait_for 90 "team-a's Vault Ready" ready vaults.recoveryservices.azure.hfl.dev t
 logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.RecoveryServices/vaults/team-a-backups 201" \
   || fail "the fake resource manager saw no Recovery Services vault created in team-a's resource group"
 pass "team-a Vault (Recovery Services) Ready: generated, owned by ASO's ResourceGroup, PUT by ASO's ARM reconciler"
+kubectl apply -f - <<EOF
+apiVersion: recoveryservices.azure.hfl.dev/v20260701
+kind: VaultsBackupPolicy
+metadata: {name: daily, namespace: team-a}
+spec:
+  azureName: daily-vm
+  owner: {name: backups}
+  properties:
+    azureIaasVM:
+      backupManagementType: AzureIaasVM
+      schedulePolicy:
+        simpleSchedulePolicy: {schedulePolicyType: SimpleSchedulePolicy, scheduleRunFrequency: Daily, scheduleRunTimes: ["2026-01-01T02:00:00Z"]}
+---
+apiVersion: recoveryservices.azure.hfl.dev/v20260701
+kind: VaultsProtectedItem
+metadata: {name: vm-backup, namespace: team-a}
+spec:
+  owner: {name: backups}
+  sourceResourceReference: {group: compute.azure.com, kind: VirtualMachine, name: vm}
+  policyReference: {group: recoveryservices.azure.hfl.dev, kind: VaultsBackupPolicy, name: daily}
+EOF
+wait_for 120 "team-a's VaultsProtectedItem Ready" ready vaultsprotecteditems.recoveryservices.azure.hfl.dev team-a vm-backup
+logged fakearm "request POST /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.RecoveryServices/vaults/team-a-backups/backupFabrics/Azure/refreshContainers 202" \
+  || fail "the fake resource manager saw no container refresh in team-a's vault"
+logged fakearm "request PUT /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.RecoveryServices/vaults/team-a-backups/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;team-a-rg;teamavm/protectedItems/vm;iaasvmcontainerv2;team-a-rg;teamavm 202" \
+  || fail "the fake resource manager saw no protected item for team-a's VM"
+pass "team-a VaultsProtectedItem Ready: backup turned on for ASO's VirtualMachine, hand-written (the fabric is no resource), containers refreshed, a long-running PUT followed"
 wait_for 90 "team-a's ManagementGroup Ready" ready managementgroups.management.azure.hfl.dev team-a platform
 logged fakearm "request PUT /providers/Microsoft.Management/managementGroups/team-a-platform 201" \
   || fail "the fake resource manager saw no management group created at the tenant root"
@@ -1583,6 +1610,11 @@ kubectl -n team-a delete maintenanceconfigurations.maintenance.azure.hfl.dev pat
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.Compute/virtualMachines/teamavm/providers/Microsoft.Maintenance/configurationAssignments/patching 200" \
   || fail "the fake resource manager saw no delete of the maintenance assignment"
 pass "the maintenance assignment and its configuration are deleted in Resource Manager"
+kubectl -n team-a delete vaultsprotecteditems.recoveryservices.azure.hfl.dev vm-backup --timeout=120s
+logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.RecoveryServices/vaults/team-a-backups/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;team-a-rg;teamavm/protectedItems/vm;iaasvmcontainerv2;team-a-rg;teamavm 202" \
+  || fail "the fake resource manager saw no delete of the protected item"
+pass "the protected item is deleted in Resource Manager (a long-running DELETE), before its vault"
+kubectl -n team-a delete vaultsbackuppolicies.recoveryservices.azure.hfl.dev daily --timeout=120s
 kubectl -n team-a delete vaults.recoveryservices.azure.hfl.dev backups --timeout=120s
 logged fakearm "request DELETE /subscriptions/${SUB}/resourceGroups/team-a-rg/providers/Microsoft.RecoveryServices/vaults/team-a-backups 200" \
   || fail "the fake resource manager saw no delete of the vault"

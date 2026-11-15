@@ -133,7 +133,7 @@ func oursKinds(root string) ([]*Kind, error) {
 			}
 			w.add2(attr, "spec."+l)
 		}
-		out = append(out, &Kind{Group: h.Group, Kind: h.Kind, Version: "v1", API: h.API, ARMType: h.ARMType,
+		out = append(out, &Kind{Group: h.Group, Kind: h.Kind, Version: h.Version, Hand: true, API: h.API, ARMType: h.ARMType,
 			Wire: w, FromPR: h.FromUpstreamPR, Outside: h.Outside, Note: h.Note})
 	}
 	// Every CRD must be explained: generated, or listed in ours.yaml.

@@ -1839,7 +1839,7 @@ Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupconfig,11,,0,
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupEncryptionConfigs,8,,0,,0,8,false,spec_api=2026-10-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/backupProtectionIntent,11,,0,,0,11,false,spec_api=2026-10-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers,42,,0,,0,42,false,spec_api=2026-10-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,57,,0,,0,57,false,spec_api=2026-10-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,57,,0,recoveryservices.azure.hfl.dev/VaultsProtectedItem,5,52,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupPolicies,140,,0,recoveryservices.azure.hfl.dev/VaultsBackupPolicy,137,3,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupResourceGuardProxies,8,,0,recoveryservices.azure.hfl.dev/VaultsBackupResourceGuardProxy,8,0,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupstorageconfig,9,,0,,0,9,false,spec_api=2026-10-01

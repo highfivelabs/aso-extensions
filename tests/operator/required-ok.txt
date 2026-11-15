@@ -23,6 +23,8 @@ team-a VirtualMachinesRunCommand Ready
 team-a ConfigurationAssignment Ready
 the maintenance assignment and its configuration are deleted
 team-a Vault (Recovery Services) Ready
+team-a VaultsProtectedItem Ready
+the protected item is deleted in Resource Manager
 team-a ManagementLock Ready
 the fake resource manager holds a lock on team-a-rg
 team-b User refused

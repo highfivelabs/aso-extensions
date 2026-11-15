@@ -651,6 +651,80 @@ to a kind whose values can be Secret references).
   propagation (kubectl's default) the owner waits until the lock is
   deleted. That is the point of a lock.
 
+### VaultsProtectedItem
+
+`recoveryservices.azure.hfl.dev/v20260701` `VaultsProtectedItem`: backup
+turned on for a virtual machine (c24; ASOQ Q14, builder, 2026-11-15, "as
+recommended": by hand, in the generated Recovery Services kinds' group and
+version, so it reads like them).
+
+- **Why by hand.** The ARM ID is
+  `.../vaults/{v}/backupFabrics/Azure/protectionContainers/{c}/protectedItems/{i}`.
+  `backupFabrics/Azure` is a fixed segment, no resource, so ASO's generator
+  makes the resource group the owner and the object cannot name its ARM ID
+  (handoff, "a path with a fixed non-resource segment"). The kind's own
+  `Claim` builds the ID instead.
+- **On ASO's framework.** A hand-written `genruntime.Reconciler` on ASO's
+  generic reconciler, as `VaultSecret` is: ASO's `ClaimResource` (waits for
+  a Ready vault, sets the owner reference), ASO's resolver for the
+  references, ASO's ARM client and connection factory (the generated kinds'
+  own, so the credential is the one ASO picks for the object and every
+  request goes through the same HTTP client), ASO's subscription check, and
+  ASO's poller annotations (`serviceoperator.azure.com/poller-resume-token`
+  and `-id`) for a pending operation. ASO's generic ARM reconciler itself
+  was not usable: it computes the ID from the owner chain on every PUT.
+- **Spec.** `owner`: our `Vault` (or a vault's ARM ID).
+  `sourceResourceReference`: the VM, ASO's `compute.azure.com` or our
+  `compute.azure.hfl.dev` `VirtualMachine` by group, kind and name, or an
+  ARM ID. `policyReference`: our `VaultsBackupPolicy` or an ARM ID,
+  required unless `protectionState` is `ProtectionStopped` (a CEL rule).
+  `protectionState`: `Protected` (by default), `BackupsSuspended` or
+  `ProtectionStopped` (stop and keep the data). `diskExclusionProperties`:
+  `diskLunList` and `isInclusionList` (which data disks; managed only when
+  given). `containerName` and `azureName` (the item): derived from the VM
+  when empty, `iaasvmcontainer;iaasvmcontainerv2;<rg>;<vm>` and
+  `vm;iaasvmcontainerv2;<rg>;<vm>`, written into the spec at the claim (as
+  the PIM kinds record a GUID name), so they never move; both are
+  immutable, as are `owner` and `sourceResourceReference` (CEL rules). A
+  source that is not a `Microsoft.Compute/virtualMachines` is refused at
+  the claim.
+- **What Azure does on PUT** (the 2026-07-01 spec, `bms.json`, and its
+  examples; Azure's REST guide "Back up an Azure VM using REST API"):
+  `ProtectedItems_CreateOrUpdate` is long-running (202 with
+  `Azure-AsyncOperation` `.../operationsStatus/{id}` and `Location`
+  `.../operationResults/{id}`); the guide's first step is discovery,
+  `POST .../backupFabrics/Azure/refreshContainers` (long-running, 202 and a
+  `Location`), after which the VM's protection container
+  (`IaasVMContainer;iaasvmcontainerv2;<rg>;<vm>`) is there to protect it in;
+  Azure registers that container itself (`ProtectionContainers_Register` is
+  for storage accounts and workloads, not VMs). So the reconciler refreshes
+  once before an item's first PUT, follows the refresh, then PUTs
+  `properties.protectedItemType: Microsoft.Compute/virtualMachines`,
+  `sourceResourceId`, `policyId`, `protectionState` (when given) and
+  `extendedProperties.diskExclusionProperties`. A change PUTs again; the
+  item is compared with what Azure reports first (a state left out is met
+  by `Protected`, `IRPending` before the first backup, or
+  `ProtectionError`, which a PUT would not mend).
+  The catalog's source, Azure Verified Module
+  `avm-res-compute-virtualmachine` v0.21.0 (`main.backup.tf`), PUTs the
+  same names and body (API 2024-10-01) with no refresh, so Azure takes a
+  PUT without one at least for a machine it already knows; the refresh
+  costs one long-running call and covers a machine made moments before.
+- **Delete.** `ProtectedItems_Delete` (202, followed through the vault's
+  `backupOperations`) stops protection and deletes the backup data, from
+  the ARM ID recorded at the claim, so it works with the vault object
+  gone; with the vault's soft delete on (Azure's default) the data stays
+  soft-deleted for the retention days (14 by default) and the vault cannot
+  be deleted until then: a chart that deletes a vault with its items waits
+  on Azure (to keep the data, `reconcile-policy: detach-on-delete`, or
+  `protectionState: ProtectionStopped` first).
+- **Not built.** Other item types (Azure file shares,
+  `AzureFileShareProtectedItem`, go on this kind later, with the storage
+  account's container registered by `ProtectionContainers_Register`; SQL
+  and SAP HANA in a VM), on-demand backups and restores (actions, not
+  resources), the protection intent (auto-protection of workloads), and a
+  VM's `Microsoft.ClassicCompute` items.
+
 ### Moving resources between slots
 
 Hosted Bundt runs its infra clusters as *slots* (current, previous), each
@@ -860,7 +934,7 @@ rechecks upstream again when it is built.
 | c21 | Application Insights linked storage accounts (catalog `avm-res-insights-component`'s `linked_storage_account`; catalog-azure.md listed it uncovered) | rechecked 2026-11-13, read-only: ASO's `insights` group exports `Component` (2020-02-02), web tests and pricing plans, no linked storage account, at the pin, on `main` and in v2.22.0; no open pull request adds it | **built**, generated: `insights.azure.hfl.dev/v20200301preview` `ComponentsLinkedStorageAccount` (`componentLinkedStorageAccounts_API.json`, the only version), owned by ASO's `Component` (a new external owner: `external-owners.txt`, `controllers.OwnerTypes()`, `config/rbac/role.yaml`, the test CRDs, the operator e2e's footprint). The name is the one-value enum `ServiceProfiler`, so it is fixed; `linkedStorageAccount` is a reference (`$referenceType: arm`). Its generated `PopulateFromARM` declared `typedInput` and did not use it (the owner was its only assignment): **generator patch 0015** declares it only when a statement reads it; nothing generated before changes. Proven: `TestComponentsLinkedStorageAccount`, the conformance test. Hand-written code: none |
 | c22 | A user-assigned identity's `isolationScope` (catalog `avm-res-managedidentity-userassignedidentity`; ASO's `UserAssignedIdentity` is at 2023-01-31) | rechecked 2026-11-13, read-only: ASO's `managedidentity` group exports `UserAssignedIdentity` at 2018-11-30 and 2023-01-31 only (pin, `main`, v2.22.0); no open pull request moves it | **built**, generated, beside ASO's under ASO's name (open question 11, as c3d): `managedidentity.azure.hfl.dev/v20241130` `UserAssignedIdentity`, owned by ASO's `ResourceGroup`; new spec service `specification/msi`. Without ASO's `$azureGeneratedSecrets` and `$generatedConfigs` (their code is ASO's internal packages): the client, principal and tenant IDs are in the status, and `operatorSpec.configMapExpressions` exports them. Federated credentials stay ASO's (`FederatedIdentityCredential`, owned by ASO's identity; under ours by `owner.armId`). Proven: `TestUserAssignedIdentityIsolationScope`, the conformance test. Hand-written code: none |
 | c23 | A virtual machine's `storageProfile.diskControllerType` and `patchSettings.automaticByPlatformSettings.bypassPlatformSafetyChecksOnUserSchedule`, and an application gateway's `entraJWTValidationConfigs` (catalog `avm-res-compute-virtualmachine` and `avm-res-network-applicationgateway`; c18's stale versions, for these fields) | rechecked 2026-11-13, read-only: ASO exports `VirtualMachine` at 2020-12-01 and 2022-03-01 and `ApplicationGateway` at 2022-07-01, at the pin, on `main` and in v2.22.0; no open pull request moves them | **built**, generated, beside ASO's under ASO's names (open question 11, as c3d): `compute.azure.hfl.dev/v20250401` `VirtualMachine` (2025-04-01, the version of ASO's newest compute kinds; the size a plain string, as ASO's; labels as ASO's 2022-03-01, plus the ones the generator asked for, reviewed) and `network.azure.hfl.dev/v20260301` `ApplicationGateway` (the newest stable network version, already ours for other kinds). In 2026-03-01 (TypeSpec) a gateway's children are no resources, so ASO's `$resourceEmbeddedInParent` labels are not needed; each child's own `id` is a reference (a rule names its listener, pool, settings or JWT configuration by the ID Azure gives it). The admin password, a certificate's data and password are Secret references. Not carried over from ASO's: its VM extensions as their own kind stay ASO's (`VirtualMachinesExtension`, under ours by `owner.armId`). Proven: `TestVirtualMachineNewerFields`, `TestApplicationGatewayEntraJWTValidation`, the conformance test. Hand-written code: none |
-| c24 | Recovery Services protected items (`vaults/backupFabrics/protectionContainers/protectedItems`: backup turned on for a VM; catalog `avm-res-compute-virtualmachine`'s `azure_backup_configurations`; h1.2) | rechecked 2026-11-13, read-only: ASO has no `recoveryservices` group at the pin, on `main`, in v2.22.0 or in an open pull request | **not built: open question 14.** The path's fixed `backupFabrics/Azure` segment is no resource, so ASO's owner chain cannot build the ID (handoff, "a path with a fixed non-resource segment"), and the container and item names are derived (`iaasvmcontainerv2;<rg>;<vm>`, `vm;iaasvmcontainerv2;<rg>;<vm>`) |
+| c24 | Recovery Services protected items (`vaults/backupFabrics/protectionContainers/protectedItems`: backup turned on for a VM; catalog `avm-res-compute-virtualmachine`'s `azure_backup_configurations`; h1.2) | rechecked 2026-11-13 and again 2026-11-15, read-only: ASO has no `recoveryservices` group at the pin, on `main` (`60fdf3e9`), in v2.22.0 (the latest release; an `experimental` pre-release of 2026-11-13 aside) or in an open pull request; ASO's `dataprotection` group is Backup vaults (`Microsoft.DataProtection`), which do not back up VMs; open issues #1187 (database backup) and #4455 (a storage account container in a vault) are not this | **built by hand** (ASOQ Q14, builder, 2026-11-15, "as recommended"): `recoveryservices.azure.hfl.dev/v20260701` `VaultsProtectedItem` (`apis/recoveryservices/v20260701`, `pkg/reconcilers/recoveryservices`; section 2, "VaultsProtectedItem"), beside the generated Recovery Services kinds in the same group and version and on the same backup API (2026-07-01). The fixed `backupFabrics/Azure` segment is no resource, so ASO's owner chain cannot build the ID (handoff, "a path with a fixed non-resource segment"); the kind's reconciler builds it from our `Vault`'s ARM ID and the container and item names, derived from the VM when not given (`iaasvmcontainer;iaasvmcontainerv2;<rg>;<vm>`, `vm;iaasvmcontainerv2;<rg>;<vm>`: the spec's examples and Azure's tools put the `iaasvmcontainer;` prefix on the container; the question's sketch had left it off). Virtual machines only; file shares (`AzureFileShareProtectedItem`) later on the same kind. The protection container and protection intent stay unbuilt (a VM's container is registered by Azure with the item) |
 
 App Configuration key-values are already in ASO (`appconfiguration`
 `KeyValue`), so they are not a gap.
@@ -1600,6 +1674,24 @@ serialization and conversion tests):
   longer retention is PUT again; they are deleted policy first. A protection
   container was tried and refused by the owner chain (above), which is why it
   is not a kind;
+- Recovery Services protected items, by hand (c24; ASOQ Q14, builder,
+  2026-11-15; `TestVaultsProtectedItem`, `TestProtectedItems` in the fake):
+  a `VaultsProtectedItem` of ASO's `VirtualMachine` in our `Vault` with our
+  `VaultsBackupPolicy`, created with them at once, waits for them, names
+  its container and item from the VM (written to the spec), refreshes the
+  vault's containers before its first PUT (the fake refuses a VM the vault
+  has not discovered), follows the long-running refresh and PUT through
+  ASO's poller annotations, becomes Ready with Azure's state (`IRPending`)
+  in status; a change of disks (`diskExclusionProperties`) and of state
+  (`ProtectionStopped`) is PUT again; deleting it follows the long-running
+  DELETE and removes the item and the VM's container, before the vault
+  (which the fake refuses to delete while it holds an item); a source that
+  is not a VM is refused at the claim (`TestVaultsProtectedItemRefusesOtherSources`).
+  On kind (`tests/operator/run.sh`), team-a's item is PUT by the manager in
+  its own pod with team-a's identity. Not proven (no live run: it needs a
+  VM, which costs): that Azure accepts the PUT as sent, how long it takes,
+  whether a PUT without the refresh fails, soft delete, and the rights
+  Azure checks (docs/fake-cloud.md);
 - management locks: a lock on an ASO `ResourceGroup` is set in the fake
   Resource Manager on the ARM ID ASO recorded, with the namespace's
   `aso-workload` identity, and the `ResourceGroup` becomes its Kubernetes
