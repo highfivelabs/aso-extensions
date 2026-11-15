@@ -81,7 +81,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 | Tier | Services | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | 1 | 17 | 43.0% | 20.1% | 36.9% | ~13.8% |
-| 2 | 18 | 26.5% | 17.2% | 56.2% | ~8.2% |
+| 2 | 18 | 26.5% | 17.3% | 56.2% | ~8.2% |
 | 3 | 245 | 5.9% | 0.6% | 93.5% | ~6.6% |
 
 By service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), all services in [`services.csv`](docs/coverage/services.csv).
