@@ -337,7 +337,7 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 3,127 (7.2%) in 233 further resources; uncovered 33,122 (76.4%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 3,130 (7.2%) in 233 further resources; uncovered 33,119 (76.4%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
@@ -590,7 +590,9 @@ Generated; these cannot drift from the data.
 | `storage.azure.hfl.dev/StorageAccountsStorageTaskAssignment` | `Microsoft.Storage/storageAccounts/storageTaskAssignments` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/Certificate` | `Microsoft.Web/certificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesBasicPublishingCredentialsPolicyFtp` | `Microsoft.Web/sites/basicPublishingCredentialsPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesConfigAppSettings` | `Microsoft.Web/sites/config` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
 | `web.azure.hfl.dev/SitesConfigAuthSettingsV2` | `Microsoft.Web/sites/config` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesConfigConnectionStrings` | `Microsoft.Web/sites/config` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
 | `web.azure.hfl.dev/SitesHostNameBinding` | `Microsoft.Web/sites/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlot` | `Microsoft.Web/sites/slots` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsHostNameBinding` | `Microsoft.Web/sites/slots/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |

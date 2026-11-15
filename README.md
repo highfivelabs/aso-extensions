@@ -115,7 +115,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 2 | `Microsoft.HardwareSecurityModules` | security-adjacent | ![Microsoft.HardwareSecurityModules](docs/coverage/bars/Microsoft.HardwareSecurityModules.svg) | 0.0% | 95.7% | 4.3% | ~30.4% |
 | 2 | `Microsoft.Storage` | application | ![Microsoft.Storage](docs/coverage/bars/Microsoft.Storage.svg) | 63.1% | 17.3% | 19.6% | ~7.1% |
 | 2 | `Microsoft.Compute` | application | ![Microsoft.Compute](docs/coverage/bars/Microsoft.Compute.svg) | 38.0% | 3.4% | 58.6% | ~12.8% |
-| 2 | `Microsoft.Web` | application | ![Microsoft.Web](docs/coverage/bars/Microsoft.Web.svg) | 16.2% | 18.3% | 65.5% | ~1.1% |
+| 2 | `Microsoft.Web` | application | ![Microsoft.Web](docs/coverage/bars/Microsoft.Web.svg) | 16.2% | 18.5% | 65.3% | ~1.1% |
 | 2 | `Microsoft.App` | application | ![Microsoft.App](docs/coverage/bars/Microsoft.App.svg) | 50.6% | 29.9% | 19.5% | ~10.6% |
 | 2 | `Microsoft.Sql` | application | ![Microsoft.Sql](docs/coverage/bars/Microsoft.Sql.svg) | 44.5% | 0.4% | 55.1% | ~17.6% |
 | 2 | `Microsoft.DocumentDB` | application | ![Microsoft.DocumentDB](docs/coverage/bars/Microsoft.DocumentDB.svg) | 45.1% | 20.8% | 34.1% | ~4.2% |

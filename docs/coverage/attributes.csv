@@ -41243,14 +41243,14 @@ Microsoft.Web,Microsoft.Web/sites/config,properties.websiteTimeZone,string,false
 Microsoft.Web,Microsoft.Web/sites/config,properties.webSocketsEnabled,boolean,false,none,,
 Microsoft.Web,Microsoft.Web/sites/config,properties.windowsFxVersion,string,false,none,,
 Microsoft.Web,Microsoft.Web/sites/config,properties.xManagedServiceIdentityId,integer,false,none,,
-Microsoft.Web,Microsoft.Web/sites/config,properties{},string,false,none,,
+Microsoft.Web,Microsoft.Web/sites/config,properties{},string,false,ours,,spec.settings[].name
 Microsoft.Web,Microsoft.Web/sites/config,properties{}.accessKey,string,false,none,,
 Microsoft.Web,Microsoft.Web/sites/config,properties{}.accountName,string,false,none,,
 Microsoft.Web,Microsoft.Web/sites/config,properties{}.mountPath,string,false,none,,
 Microsoft.Web,Microsoft.Web/sites/config,properties{}.protocol,string,false,none,,
 Microsoft.Web,Microsoft.Web/sites/config,properties{}.shareName,string,false,none,,
-Microsoft.Web,Microsoft.Web/sites/config,properties{}.type,string,false,none,,
-Microsoft.Web,Microsoft.Web/sites/config,properties{}.value,string,false,none,,
+Microsoft.Web,Microsoft.Web/sites/config,properties{}.type,string,false,ours,,spec.connectionStrings[].type
+Microsoft.Web,Microsoft.Web/sites/config,properties{}.value,string,false,ours,,spec.connectionStrings[].value
 Microsoft.Web,Microsoft.Web/sites/deployments,kind,string,false,none,,
 Microsoft.Web,Microsoft.Web/sites/deployments,properties.active,boolean,false,none,,
 Microsoft.Web,Microsoft.Web/sites/deployments,properties.author,string,false,none,,
