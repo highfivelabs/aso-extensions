@@ -360,7 +360,9 @@ func (r *VaultsProtectedItemReconciler) CreateOrUpdate(
 	if pollerID, token, pending := pollerOf(item); pending {
 		done, wait, err := resume(ctx, client, pollerID, token)
 		if err != nil {
-			clearPoller(item)
+			if terminal(err) {
+				clearPoller(item)
+			}
 			return ctrl.Result{}, classify(err, "following the "+pollerID+" operation")
 		}
 		if !done {
@@ -530,22 +532,32 @@ func (r *VaultsProtectedItemReconciler) Delete(ctx context.Context, log logr.Log
 	if err != nil {
 		return ctrl.Result{}, err
 	}
-	if pollerID, token, pending := pollerOf(item); pending && pollerID == pollerDelete {
+	// A pending operation first: a delete is followed to its end; a refresh
+	// or a PUT still running is followed until it ends too, since Azure
+	// refuses a DELETE while an operation on the item runs.
+	if pollerID, token, pending := pollerOf(item); pending {
 		done, wait, err := resume(ctx, client, pollerID, token)
 		if err != nil {
-			clearPoller(item)
-			if isNotFound(err) {
+			if terminal(err) {
+				clearPoller(item)
+			}
+			if pollerID == pollerDelete && isNotFound(err) {
 				return ctrl.Result{}, nil
 			}
-			return ctrl.Result{}, classify(err, "following the delete")
+			if pollerID == pollerDelete || !terminal(err) {
+				return ctrl.Result{}, classify(err, "following the "+pollerID+" operation")
+			}
+			// A refresh or PUT that failed leaves nothing running: delete.
+		} else {
+			if !done {
+				return ctrl.Result{RequeueAfter: wait}, nil
+			}
+			clearPoller(item)
+			if pollerID == pollerDelete {
+				return ctrl.Result{}, nil
+			}
 		}
-		if !done {
-			return ctrl.Result{RequeueAfter: wait}, nil
-		}
-		clearPoller(item)
-		return ctrl.Result{}, nil
 	}
-	clearPoller(item) // a create or refresh still pending is moot now
 	log.V(0).Info("Deleting the protected item", "id", id)
 	resp, err := client.BeginDeleteByID(ctx, id, rsv.APIVersion)
 	if err != nil {
@@ -576,23 +588,50 @@ func (r *VaultsProtectedItemReconciler) UpdateStatus(ctx context.Context, _ logr
 	return r.readStatus(ctx, client, item, id)
 }
 
+// terminal is whether following an operation failed for good (Azure
+// answered with the operation's failure or a refusal), so the pending
+// operation is forgotten; a transport error, a throttle (429) or a server
+// error (5xx) keeps it, to be followed again.
+func terminal(err error) bool {
+	var re *azcore.ResponseError
+	if !errors.As(err, &re) {
+		return false
+	}
+	return re.StatusCode < 500 && re.StatusCode != http.StatusTooManyRequests
+}
+
 func isNotFound(err error) bool {
 	var re *azcore.ResponseError
 	return errors.As(err, &re) && re.StatusCode == http.StatusNotFound
 }
 
+// retryableCodes are ARM error codes that a later attempt may get past, as
+// ASO's error classification (internal/reconcilers/arm) treats them: an
+// operation already running, a conflict, a right not granted yet.
+var retryableCodes = []string{"Conflict", "AnotherOperationInProgress", "OperationInProgress", "AuthorizationFailed", "ScopeLocked", "InProgress", "RetryableError"}
+
 // classify puts an ARM error on the Ready condition as ASO's reconciler
-// would: a refusal of the request (400, 403, 409) is an error that waits for
-// a change; a missing reference (404) and anything else are retried.
+// would: a bad request (400) whose code is not one a later attempt may get
+// past is an error that waits for a change of the spec; a missing
+// reference (404), a conflict or refusal that may pass (409, 403, an
+// operation in progress, a lock) and anything else are warnings, retried.
 func classify(err error, what string) error {
 	wrapped := eris.Wrap(err, what)
 	var re *azcore.ResponseError
 	if errors.As(err, &re) {
-		switch re.StatusCode {
-		case http.StatusBadRequest, http.StatusForbidden, http.StatusConflict:
-			return conditions.NewReadyConditionImpactingError(wrapped, conditions.ConditionSeverityError, conditions.ReasonFailed)
-		case http.StatusNotFound:
+		retryable := false
+		for _, c := range retryableCodes {
+			if strings.Contains(strings.ToLower(re.ErrorCode), strings.ToLower(c)) {
+				retryable = true
+			}
+		}
+		switch {
+		case re.StatusCode == http.StatusNotFound:
 			return conditions.NewReadyConditionImpactingError(wrapped, conditions.ConditionSeverityWarning, conditions.ReasonAzureResourceNotFound)
+		case re.StatusCode == http.StatusBadRequest && !retryable:
+			return conditions.NewReadyConditionImpactingError(wrapped, conditions.ConditionSeverityError, conditions.ReasonFailed)
+		case re.StatusCode < 500:
+			return conditions.NewReadyConditionImpactingError(wrapped, conditions.ConditionSeverityWarning, conditions.ReasonFailed)
 		}
 	}
 	var notFound *core.ReferenceNotFound
