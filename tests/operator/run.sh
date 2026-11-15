@@ -1397,7 +1397,7 @@ wait_for 90 "team-b's Budget refused" bash -c "[[ \"\$(kubectl get budgets.consu
 pass "team-b Budget refused: $(message budgets.consumption.azure.hfl.dev team-b monthly | cut -c1-120)..."
 wait_for 90 "team-b's RoleEligibilityScheduleRequest refused" bash -c "[[ \"\$(kubectl get roleeligibilityschedulerequests.authorization.azure.hfl.dev -n team-b eligible-reader -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Resource Manager'* ]]"
 pass "team-b RoleEligibilityScheduleRequest refused: $(message roleeligibilityschedulerequests.authorization.azure.hfl.dev team-b eligible-reader | cut -c1-120)..."
-wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'401'* ]]"
+wait_for 90 "team-b's ManagementLock refused" bash -c "[[ \"\$(kubectl get managementlocks.authorization.azure.hfl.dev -n team-b keep-rg -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'may not use Resource Manager'* ]]"
 pass "team-b ManagementLock refused: $(message managementlocks.authorization.azure.hfl.dev team-b keep-rg | cut -c1-120)..."
 wait_for 90 "team-b's DirectoryRoleAssignment refused" bash -c "[[ \"\$(kubectl get directoryroleassignments.entra.azure.hfl.dev -n team-b global-reader -o jsonpath='{.status.conditions[?(@.type==\"Ready\")].message}')\" == *'this identity may not use Microsoft Graph'* ]]"
 pass "team-b DirectoryRoleAssignment refused: $(message directoryroleassignments.entra.azure.hfl.dev team-b global-reader | cut -c1-120)..."

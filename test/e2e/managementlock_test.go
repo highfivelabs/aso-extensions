@@ -288,7 +288,7 @@ func TestManagementLockRefused(t *testing.T) {
 	if err := k8s.Create(ctx, untrusted); err != nil {
 		t.Fatal(err)
 	}
-	eventually(t, timeout, "untrusted identity refused", notReadyWith(untrusted, "401"))
+	eventually(t, timeout, "untrusted identity refused", notReadyWith(untrusted, "may not use Resource Manager"))
 
 	for _, c := range []struct {
 		owner *genruntime.ArbitraryOwnerReference
