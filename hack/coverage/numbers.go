@@ -103,7 +103,7 @@ func numbersBlock(src *sources, st *specStats, dc *DocsCheck, res map[string]*Re
 		res := k.ARMType
 		if k.Outside != "" {
 			res, how = k.Outside, "outside the denominator, not in any percentage"
-		} else if k.Version == "v1" {
+		} else if k.Hand {
 			how = "by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute)"
 		}
 		p("| `%s` | `%s` | %s |\n", k.name(), res, how)
