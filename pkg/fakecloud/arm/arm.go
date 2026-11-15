@@ -124,6 +124,13 @@ type ARM struct {
 	// unlocked holds the resource guard proxies an unlockDelete has opened
 	// for their next DELETE (backup.go).
 	unlocked map[string]bool
+	// backupOps are the backup operations in progress, by operation ID,
+	// with the polls left before each is done; opSeq numbers them; and
+	// discovered holds, by lower-case vault ID, the virtual machines a
+	// vault's last container refresh saw (protecteditems.go).
+	backupOps  map[string]int
+	opSeq      int
+	discovered map[string]map[string]bool
 	// Log records every request: "METHOD path status".
 	Log []string
 	// Now is the clock systemData's times come from (time.Now when nil).
@@ -250,6 +257,9 @@ func (a *ARM) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if a.serveUnlockDelete(rec, r, path) {
+		return
+	}
+	if a.serveBackup(rec, r, path) {
 		return
 	}
 	a.serveResource(rec, r, path)

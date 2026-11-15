@@ -202,6 +202,7 @@ resources:
 - recoveryservices.azure.hfl.dev_vaultsbackuppolicies.yaml
 - recoveryservices.azure.hfl.dev_vaultsbackupresourceguardproxies.yaml
 - recoveryservices.azure.hfl.dev_vaultsprivateendpointconnections.yaml
+- recoveryservices.azure.hfl.dev_vaultsprotecteditems.yaml
 - resources.azure.hfl.dev_deploymentscripts.yaml
 - resources.azure.hfl.dev_deploymentstacks.yaml
 - resources.azure.hfl.dev_tagsets.yaml

@@ -20,6 +20,8 @@ type Kind struct {
 	FromPR      string
 	Outside     string // a resource the specs do not have
 	Note        string
+	// Hand is a kind written by hand (hack/coverage/ours.yaml).
+	Hand bool
 }
 
 func (k *Kind) name() string { return k.Group + "/" + k.Kind }

@@ -115,7 +115,10 @@ func crdLeaves(c *crd) []string {
 type oursHand struct {
 	oursKind
 	Group, Kind string
-	Leaves      []string // CRD spec paths, minus the ignored ones
+	// Version is the CRD's (one) version: v1, or an ARM API version for a
+	// hand-written ARM kind beside generated ones (VaultsProtectedItem).
+	Version string
+	Leaves  []string // CRD spec paths, minus the ignored ones
 }
 
 func readOurs(root string, ignoredCRDs map[string]bool) ([]*oursHand, error) {
@@ -133,7 +136,7 @@ func readOurs(root string, ignoredCRDs map[string]bool) ([]*oursHand, error) {
 		if err != nil {
 			return nil, err
 		}
-		h := &oursHand{oursKind: k, Group: c.Spec.Group, Kind: c.Spec.Names.Kind}
+		h := &oursHand{oursKind: k, Group: c.Spec.Group, Kind: c.Spec.Names.Kind, Version: c.Spec.Versions[0].Name}
 		ign := map[string]bool{}
 		for _, i := range k.Ignore {
 			ign[i] = true

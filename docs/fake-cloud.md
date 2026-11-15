@@ -144,11 +144,42 @@ upstream's); the catalog's chart tests do that.
   and whether an Entra administrator's membership in it carries INHERIT and
   SET as the fake's does (created `IN ROLE azure_pg_admin`).
 - Resource Manager does not model long-running operations (every PUT and
-  DELETE finishes in the response), provisioning that takes time or fails,
+  DELETE finishes in the response; virtual machine backup, below, is the
+  exception), provisioning that takes time or fails,
   names ARM refuses, conflicts between a child and its parent's state, or
   the properties of any resource type: a Dapr component the real service
   would reject for a bad `componentType` is accepted. The generated kinds
   are proven to send what the specs describe, not that Azure accepts it.
+- Recovery Services backup of a virtual machine (`VaultsProtectedItem`,
+  `pkg/fakecloud/arm/protecteditems.go`; ASOQ Q14, builder, 2026-11-15),
+  after the 2026-07-01 backup spec (`bms.json` and its examples
+  `ConfigureProtection.json`, `StopProtection.json`, `ProtectedItem_Delete.json`,
+  `RefreshContainers.json`) and Azure's REST guide for backing up a VM.
+  What the fake shows: `backupFabrics/Azure` exists under every vault and
+  is no resource; a container refresh (`POST .../refreshContainers`, 202
+  and a `Location` that answers 202 once, then 204) makes the vault see the
+  subscription's machines, and a PUT for a machine it has not seen is
+  refused with 404; the container and item names must be the machine's
+  (`iaasvmcontainer;iaasvmcontainerv2;<rg>;<vm>`, `vm;iaasvmcontainerv2;<rg>;<vm>`);
+  the policy must be a backup policy of the same vault (required unless
+  `protectionState` is `ProtectionStopped`); a machine protected by another
+  vault is refused; Azure registers the machine's container itself, so the
+  fake does; the PUT and the DELETE are long-running (202 with an
+  `Azure-AsyncOperation` that answers `InProgress` once, then `Succeeded`);
+  the item reads `IRPending` until a first backup; the container goes with
+  the machine's last item; and a vault that holds an item cannot be
+  deleted. What it cannot show: backups themselves (no recovery points, no
+  `lastBackupTime`, the state never leaves `IRPending`), soft delete (Azure
+  keeps a deleted item's data soft-deleted for the vault's retention days,
+  14 by default, and the vault cannot be deleted until it is purged or
+  expires), whether Azure really refuses a PUT without the refresh (the
+  REST guide makes it the first step; the reconciler always refreshes
+  before an item's first PUT, so either way works), the rights Azure needs
+  (Backup Contributor on the vault, Virtual Machine Contributor on the
+  machine), that the vault must be in the machine's region, item types
+  other than virtual machines (file shares, SQL and SAP HANA in a VM), how
+  long Azure takes (minutes), and Azure's exact error codes for these
+  refusals (the codes are the fake's).
 - Management groups (`Microsoft.Management/managementGroups`, `.../subscriptions/<id>`,
   `.../settings/default`) are stored like any resource, plus a hierarchy: the
   tenant root (`/`) is always a valid parent; a group's `properties.details.parent.id`
