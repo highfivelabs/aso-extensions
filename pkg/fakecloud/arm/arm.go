@@ -167,22 +167,38 @@ func (a *ARM) AddResource(id string) {
 }
 
 // Resource returns the stored resource with the given ARM ID, as JSON, for
-// tests.
+// tests. A lock, kept apart from the other resources, is returned as Azure
+// shows it (id, name, type, properties).
 func (a *ARM) Resource(id string) (map[string]any, bool) {
 	a.mu.Lock()
 	defer a.mu.Unlock()
-	r, ok := a.resources[strings.ToLower(id)]
+	if r, ok := a.resources[strings.ToLower(id)]; ok {
+		return *r, true
+	}
+	l, ok := a.locks[strings.ToLower(id)]
 	if !ok {
 		return nil, false
 	}
-	return *r, true
+	b, err := json.Marshal(l)
+	if err != nil {
+		return nil, false
+	}
+	var m map[string]any
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, false
+	}
+	return m, true
 }
 
-// HasResource is whether the store holds the resource, for tests.
+// HasResource is whether the store holds the resource (a lock among them),
+// for tests.
 func (a *ARM) HasResource(id string) bool {
 	a.mu.Lock()
 	defer a.mu.Unlock()
-	_, ok := a.resources[strings.ToLower(id)]
+	if _, ok := a.resources[strings.ToLower(id)]; ok {
+		return true
+	}
+	_, ok := a.locks[strings.ToLower(id)]
 	return ok
 }
 

@@ -39,8 +39,10 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
+	asocache "github.com/Azure/azure-service-operator/v2/api/cache/v20241101/storage"
 	asocognitive "github.com/Azure/azure-service-operator/v2/api/cognitiveservices/v20250601/storage"
 	asocompute "github.com/Azure/azure-service-operator/v2/api/compute/v20220301/storage"
+	asodisk "github.com/Azure/azure-service-operator/v2/api/compute/v20240302/storage"
 	asoregistry "github.com/Azure/azure-service-operator/v2/api/containerregistry/v20251101/storage"
 	asofleet "github.com/Azure/azure-service-operator/v2/api/containerservice/v1api20250301/storage"
 	asoaks "github.com/Azure/azure-service-operator/v2/api/containerservice/v20260501/storage"
@@ -49,7 +51,9 @@ import (
 	asoinsights "github.com/Azure/azure-service-operator/v2/api/insights/v1api20200202/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
 	asodns "github.com/Azure/azure-service-operator/v2/api/network/v1api20180501/storage"
+	asodnsresolver "github.com/Azure/azure-service-operator/v2/api/network/v1api20220701/storage"
 	asoprivatedns "github.com/Azure/azure-service-operator/v2/api/network/v1api20240601/storage"
+	asonetwork "github.com/Azure/azure-service-operator/v2/api/network/v20250301/storage"
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
 	asosql "github.com/Azure/azure-service-operator/v2/api/sql/v20250101/storage"
@@ -60,14 +64,12 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/registration"
 	"github.com/Azure/azure-service-operator/v2/pkg/outoftree"
 
-	authorizationv1 "github.com/highfivelabs/aso-extensions/apis/authorization/v1"
 	postgresqlv1 "github.com/highfivelabs/aso-extensions/apis/dbforpostgresql/v1"
 	entrav1 "github.com/highfivelabs/aso-extensions/apis/entra/v1"
 	keyvaultv1 "github.com/highfivelabs/aso-extensions/apis/keyvault/v1"
 	recoveryservicesv20260701 "github.com/highfivelabs/aso-extensions/apis/recoveryservices/v20260701"
 	sqlv1 "github.com/highfivelabs/aso-extensions/apis/sql/v1"
 	webv1 "github.com/highfivelabs/aso-extensions/apis/web/v20260715"
-	authreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/authorization"
 	sqlreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/azuresql"
 	entrareconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/entra"
 	kvreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/keyvault"
@@ -79,14 +81,12 @@ import (
 
 // CreateScheme holds our kinds (the generated ARM kinds, from
 // arm_resources_gen.go, among them), the ASO owner kinds they resolve
-// (storage versions only), and Kubernetes' own. A ManagementLock's owner,
-// any ASO kind, is read as an unstructured object instead.
+// (storage versions only), and Kubernetes' own.
 func CreateScheme() *runtime.Scheme {
 	scheme := createScheme()
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = postgresqlv1.AddToScheme(scheme)
 	_ = keyvaultv1.AddToScheme(scheme)
-	_ = authorizationv1.AddToScheme(scheme)
 	_ = sqlv1.AddToScheme(scheme)
 	_ = entrav1.AddToScheme(scheme)
 	_ = webv1.AddToScheme(scheme)
@@ -108,6 +108,10 @@ func CreateScheme() *runtime.Scheme {
 	_ = asocognitive.AddToScheme(scheme)
 	_ = asostorage.AddToScheme(scheme)
 	_ = asoinsights.AddToScheme(scheme)
+	_ = asonetwork.AddToScheme(scheme)
+	_ = asodnsresolver.AddToScheme(scheme)
+	_ = asocache.AddToScheme(scheme)
+	_ = asodisk.AddToScheme(scheme)
 	return scheme
 }
 
@@ -136,6 +140,29 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asocognitive.Project{}, Name: "aso_cognitiveservices_project"},
 		{Obj: &asostorage.StorageAccount{}, Name: "aso_storage_storageaccount"},
 		{Obj: &asoinsights.Component{}, Name: "aso_insights_component"},
+		// The owners of the catalog's ManagementLocks (the Azure Verified
+		// Modules' lock on each resource) beyond the kinds above: a generated
+		// extension resource resolves an owner by group and kind only when the
+		// kind is here (docs/plan.md, ManagementLock); any other is named by
+		// armId.
+		{Obj: &asonetwork.AzureFirewall{}, Name: "aso_network_azurefirewall"},
+		{Obj: &asonetwork.BastionHost{}, Name: "aso_network_bastionhost"},
+		{Obj: &asonetwork.DdosProtectionPlan{}, Name: "aso_network_ddosprotectionplan"},
+		{Obj: &asonetwork.FirewallPolicy{}, Name: "aso_network_firewallpolicy"},
+		{Obj: &asonetwork.LoadBalancer{}, Name: "aso_network_loadbalancer"},
+		{Obj: &asonetwork.NatGateway{}, Name: "aso_network_natgateway"},
+		{Obj: &asonetwork.NetworkInterface{}, Name: "aso_network_networkinterface"},
+		{Obj: &asonetwork.NetworkSecurityGroup{}, Name: "aso_network_networksecuritygroup"},
+		{Obj: &asonetwork.PrivateEndpoint{}, Name: "aso_network_privateendpoint"},
+		{Obj: &asonetwork.PublicIPAddress{}, Name: "aso_network_publicipaddress"},
+		{Obj: &asonetwork.RouteTable{}, Name: "aso_network_routetable"},
+		{Obj: &asonetwork.VirtualNetwork{}, Name: "aso_network_virtualnetwork"},
+		{Obj: &asodnsresolver.DnsResolver{}, Name: "aso_network_dnsresolver"},
+		{Obj: &asodnsresolver.DnsForwardingRuleset{}, Name: "aso_network_dnsforwardingruleset"},
+		{Obj: &asoweb.ServerFarm{}, Name: "aso_web_serverfarm"},
+		{Obj: &asosql.ServersElasticPool{}, Name: "aso_sql_serverselasticpool"},
+		{Obj: &asodisk.Disk{}, Name: "aso_compute_disk"},
+		{Obj: &asocache.Redis{}, Name: "aso_cache_redis"},
 	}
 }
 
@@ -144,7 +171,6 @@ type Reconcilers struct {
 	PostgreSQLUser   *pgreconciler.PostgreSQLUserReconciler
 	VaultSecret      *kvreconciler.VaultSecretReconciler
 	VaultCertificate *kvreconciler.VaultCertificateReconciler
-	ManagementLock   *authreconciler.ManagementLockReconciler
 	AzureSQLUser     *sqlreconciler.AzureSQLUserReconciler
 	// DirectoryRoleAssignment reaches Microsoft Graph through its Clients.
 	DirectoryRoleAssignment *entrareconciler.DirectoryRoleAssignmentReconciler
@@ -179,7 +205,6 @@ func StorageTypes(
 		PostgreSQLUser:          pgreconciler.NewPostgreSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
 		VaultSecret:             kvreconciler.NewVaultSecretReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
 		VaultCertificate:        kvreconciler.NewVaultCertificateReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
-		ManagementLock:          authreconciler.NewManagementLockReconciler(kubeClient, positiveConditions, credentialProvider, cfg),
 		AzureSQLUser:            sqlreconciler.NewAzureSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
 		DirectoryRoleAssignment: entrareconciler.NewDirectoryRoleAssignmentReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
 		SiteConfig:              webreconciler.NewSiteConfigReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
@@ -226,12 +251,6 @@ func StorageTypes(
 			Watches: []registration.Watch{
 				{Type: &corev1.Secret{}, MakeEventHandler: watchSecretsFactory([]string{".spec.certificate", ".spec.privateKey"}, &keyvaultv1.VaultCertificateList{})},
 			},
-		},
-		{
-			Obj:        &authorizationv1.ManagementLock{},
-			Name:       "hfl_authorization_managementlock",
-			Reconciler: rs.ManagementLock,
-			Predicate:  standardPredicate(),
 		},
 		{
 			Obj:        &sqlv1.User{},

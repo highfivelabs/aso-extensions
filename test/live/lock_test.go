@@ -13,7 +13,7 @@ import (
 
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 
-	authorizationv1 "github.com/highfivelabs/aso-extensions/apis/authorization/v1"
+	authorizationv1 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501"
 )
 
 const lockAPI = "2020-05-01"
@@ -38,9 +38,11 @@ func TestLiveManagementLock(t *testing.T) {
 
 	lock := &authorizationv1.ManagementLock{}
 	lock.Namespace, lock.Name = ns, "live"
-	lock.Spec = authorizationv1.ManagementLockSpec{
+	canNotDelete := authorizationv1.ManagementLockProperties_Level_CanNotDelete
+	notes := "live run " + runID
+	lock.Spec = authorizationv1.ManagementLock_Spec{
 		Owner: &genruntime.ArbitraryOwnerReference{ARMID: groupID},
-		Level: "CanNotDelete", Notes: "live run " + runID,
+		Level: &canNotDelete, Notes: &notes,
 	}
 	create(t, timeout, lock)
 	expectResource(t, lockID, lockAPI, func(r map[string]any) error {
@@ -49,7 +51,10 @@ func TestLiveManagementLock(t *testing.T) {
 		}
 		return nil
 	})
-	update(t, lock, func(l *authorizationv1.ManagementLock) { l.Spec.Notes = "changed" })
+	update(t, lock, func(l *authorizationv1.ManagementLock) {
+		changed := "changed"
+		l.Spec.Notes = &changed
+	})
 	eventually(t, timeout, "ManagementLock Ready after the change", ready(lock))
 	expectResource(t, lockID, lockAPI, func(r map[string]any) error {
 		if properties(r)["notes"] != "changed" {

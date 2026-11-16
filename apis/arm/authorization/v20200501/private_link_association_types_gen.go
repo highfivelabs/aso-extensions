@@ -248,11 +248,6 @@ type PrivateLinkAssociationList struct {
 	Items           []PrivateLinkAssociation `json:"items"`
 }
 
-// +kubebuilder:validation:Enum={"2020-05-01"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2020-05-01")
-
 type PrivateLinkAssociation_Spec struct {
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
 	// doesn't have to be.

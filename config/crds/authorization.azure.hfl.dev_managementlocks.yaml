@@ -11,7 +11,6 @@ spec:
     categories:
     - azure
     - authorization
-    - hfl
     kind: ManagementLock
     listKind: ManagementLockList
     plural: managementlocks
@@ -19,9 +18,6 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .spec.level
-      name: Level
-      type: string
     - jsonPath: .status.conditions[?(@.type=='Ready')].status
       name: Ready
       type: string
@@ -34,18 +30,13 @@ spec:
     - jsonPath: .status.conditions[?(@.type=='Ready')].message
       name: Message
       type: string
-    name: v1
+    name: v20200501
     schema:
       openAPIV3Schema:
         description: |-
-          ManagementLock is an Azure management lock (Microsoft.Authorization/locks)
-          on a subscription, a resource group or a resource: CanNotDelete stops the
-          owner and everything under it from being deleted, ReadOnly also stops
-          them being changed, whoever asks, until the lock is removed. The owner is
-          any ASO resource in the same namespace, or an ARM ID, as ASO's own
-          extension resources (RoleAssignment) take; the credential is the one ASO
-          uses for this object (per-resource, the namespace's aso-credential, or
-          global).
+          Generator information:
+          - Generated from: /resources/resource-manager/Microsoft.Authorization/locks/stable/2020-05-01/locks.json
+          - ARM URI: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
         properties:
           apiVersion:
             description: |-
@@ -68,32 +59,119 @@ spec:
             properties:
               azureName:
                 description: |-
-                  AzureName is the lock's name (up to 260 characters, none of
-                  < > % & : \ ? / # or control characters). Defaults to the object's
-                  name.
-                maxLength: 260
-                pattern: ^[^<>%&:\\?/#\x00-\x1f]+$
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
                 type: string
               level:
                 description: |-
-                  Level is CanNotDelete (authorized users can read and change the
-                  resource but not delete it) or ReadOnly (they can only read it). A
-                  lock applies to everything under its scope. ReadOnly also stops ASO
-                  itself from updating the owner and its children until it is removed.
+                  Level: The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized
+                  users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a
+                  resource, but they can't modify or delete it.
                 enum:
                 - CanNotDelete
+                - NotSpecified
                 - ReadOnly
                 type: string
               notes:
-                description: Notes about the lock, up to 512 characters.
-                maxLength: 512
+                description: 'Notes: Notes about the lock. Maximum of 512 characters.'
                 type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
               owner:
                 description: |-
-                  Owner is what the lock is on: an ASO resource in this namespace by
-                  group, kind and name (its ARM ID is read from the resource once ASO
-                  has provisioned it, and it must be Ready), or an ARM ID: a
-                  subscription (/subscriptions/<id>), a resource group or a resource.
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
+                  extension resource, which means that any other Azure resource can be its owner.
                 properties:
                   armId:
                     description: Ownership across namespaces is not supported.
@@ -110,16 +188,13 @@ spec:
                     type: string
                 type: object
               owners:
-                description: |-
-                  Owners of the lock, by application ID (Azure's properties.owners).
-                  Azure keeps the list with the lock; it grants nothing and does not
-                  change who may remove the lock.
+                description: 'Owners: The owners of the lock.'
                 items:
-                  description: LockOwner is an owner of a lock.
+                  description: Lock owner properties.
                   properties:
                     applicationId:
-                      description: ApplicationId is the application ID of the lock
-                        owner.
+                      description: 'ApplicationId: The application ID of the lock
+                        owner.'
                       type: string
                   type: object
                 type: array
@@ -127,16 +202,6 @@ spec:
             - level
             - owner
             type: object
-            x-kubernetes-validations:
-            - message: azureName is immutable
-              rule: '!has(oldSelf.azureName) || self.azureName == oldSelf.azureName'
-            - message: owner is immutable
-              rule: self.owner == oldSelf.owner
-            - message: owner names either an ARM ID (armId) or an ASO resource (group,
-                kind and name)
-              rule: has(self.owner.armId) != has(self.owner.name)
-            - message: an owner by name needs its group and kind
-              rule: '!has(self.owner.name) || (has(self.owner.group) && has(self.owner.kind))'
           status:
             properties:
               conditions:
@@ -188,25 +253,60 @@ spec:
                   type: object
                 type: array
               id:
-                description: Id is the lock's ARM ID.
+                description: 'Id: The resource ID of the lock.'
                 type: string
               level:
-                description: Level, Notes and Owners as Azure holds them.
+                description: |-
+                  Level: The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized
+                  users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a
+                  resource, but they can't modify or delete it.
+                type: string
+              name:
+                description: 'Name: The name of the lock.'
                 type: string
               notes:
+                description: 'Notes: Notes about the lock. Maximum of 512 characters.'
                 type: string
               owners:
+                description: 'Owners: The owners of the lock.'
                 items:
-                  description: LockOwner is an owner of a lock.
+                  description: Lock owner properties.
                   properties:
                     applicationId:
-                      description: ApplicationId is the application ID of the lock
-                        owner.
+                      description: 'ApplicationId: The application ID of the lock
+                        owner.'
                       type: string
                   type: object
                 type: array
-              scope:
-                description: Scope is the ARM ID of what the lock is on.
+              systemData:
+                description: 'SystemData: Metadata pertaining to creation and last
+                  modification of the resource.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              type:
+                description: 'Type: The resource type of the lock - Microsoft.Authorization/locks.'
                 type: string
             type: object
         type: object

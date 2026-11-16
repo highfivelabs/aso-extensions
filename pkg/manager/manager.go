@@ -10,8 +10,7 @@ Licensed under the MIT license.
 // strict or relaxed workload identity), the same generic reconciler and
 // controller options. There is no CRD management and no webhook. The ARM
 // kinds ASO's generator wrote are reconciled by ASO's own generic ARM
-// reconciler, over the same connection factory; ManagementLock, hand-written,
-// has its own small Resource Manager client.
+// reconciler, over the same connection factory.
 
 // Package manager wires our kinds into a controller-runtime manager the way
 // ASO's own manager wires its kinds.
@@ -19,12 +18,14 @@ package manager
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/benbjohnson/clock"
 	"github.com/go-logr/logr"
 	"github.com/rotisserie/eris"
+	apimeta "k8s.io/apimachinery/pkg/api/meta"
 	ctrl "sigs.k8s.io/controller-runtime"
 
 	"sigs.k8s.io/controller-runtime/pkg/cache"
@@ -132,7 +133,6 @@ func Setup(ctx context.Context, mgr ctrl.Manager, cfg outoftree.ConfigValues, op
 	reconcilers.VaultSecret.ClientOptions = opts.KeyVaultClientOptions
 	reconcilers.VaultCertificate.ClientOptions = opts.KeyVaultClientOptions
 	if armHTTPClient != nil {
-		reconcilers.ManagementLock.ClientOptions = azcore.ClientOptions{Transport: armHTTPClient}
 		reconcilers.SiteConfig.ClientOptions = azcore.ClientOptions{Transport: armHTTPClient}
 	}
 	for _, t := range types {
@@ -140,16 +140,22 @@ func Setup(ctx context.Context, mgr ctrl.Manager, cfg outoftree.ConfigValues, op
 	}
 	reconcilers.DirectoryRoleAssignment.Clients.Endpoint = opts.GraphEndpoint
 	reconcilers.DirectoryRoleAssignment.Clients.HTTPClient = opts.GraphHTTPClient
-	reconcilers.ManagementLock.OwnerReader = mgr.GetAPIReader()
-	reconcilers.ManagementLock.Mapper = mgr.GetRESTMapper()
 	if err := resolver.IndexStorageTypes(mgr.GetScheme(), append(controllers.OwnerTypes(), types...)); err != nil {
 		return nil, eris.Wrap(err, "failed to index storage types")
 	}
 
 	// The owners are read from the cache, which (as in ASO) fails on a type
 	// without an informer; ASO's informers are its controllers', ours are these.
+	// An owner kind whose CRD ASO's install left out (its crdPattern) is
+	// skipped: nothing can name it as an owner until it is installed and the
+	// manager restarted, and an object that does is refused on its Ready
+	// condition rather than the whole manager failing to start.
 	for _, owner := range controllers.OwnerTypes() {
 		if _, err := mgr.GetCache().GetInformer(ctx, owner.Obj, cache.BlockUntilSynced(false)); err != nil {
+			if apimeta.IsNoMatchError(err) {
+				log.V(0).Info("owner kind not installed; not watched", "type", fmt.Sprintf("%T", owner.Obj))
+				continue
+			}
 			return nil, eris.Wrapf(err, "failed to start informer for %T", owner.Obj)
 		}
 	}

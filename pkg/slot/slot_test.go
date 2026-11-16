@@ -22,9 +22,9 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
 
+	authorizationv1 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501"
 	ipgroups "github.com/highfivelabs/aso-extensions/apis/arm/network/v20260301/storage"
 	querypacks "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701/storage"
-	authorizationv1 "github.com/highfivelabs/aso-extensions/apis/authorization/v1"
 	"github.com/highfivelabs/aso-extensions/pkg/fakecloud/arm"
 )
 

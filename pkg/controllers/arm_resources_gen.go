@@ -449,6 +449,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
+	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.ManagementLock)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.PrivateLinkAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.ResourceManagementPrivateLink)})
 	result = append(result, &registration.StorageType{
@@ -1520,8 +1521,16 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(app_v20260302ps.ManagedEnvironmentsDaprSubscription)}, &registration.KnownType{Obj: new(app_v20260302ps.ManagedEnvironmentsJavaComponent)})
 	result = append(result, &registration.KnownType{Obj: new(app_v20260701.ContainerApp)}, &registration.KnownType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
 	result = append(result, &registration.KnownType{Obj: new(app_v20260701s.ContainerApp)}, &registration.KnownType{Obj: new(app_v20260701s.ManagedEnvironmentsDotNetComponent)})
-	result = append(result, &registration.KnownType{Obj: new(authorization_v20200501.PrivateLinkAssociation)}, &registration.KnownType{Obj: new(authorization_v20200501.ResourceManagementPrivateLink)})
-	result = append(result, &registration.KnownType{Obj: new(authorization_v20200501s.PrivateLinkAssociation)}, &registration.KnownType{Obj: new(authorization_v20200501s.ResourceManagementPrivateLink)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(authorization_v20200501.ManagementLock)},
+		&registration.KnownType{Obj: new(authorization_v20200501.PrivateLinkAssociation)},
+		&registration.KnownType{Obj: new(authorization_v20200501.ResourceManagementPrivateLink)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(authorization_v20200501s.ManagementLock)},
+		&registration.KnownType{Obj: new(authorization_v20200501s.PrivateLinkAssociation)},
+		&registration.KnownType{Obj: new(authorization_v20200501s.ResourceManagementPrivateLink)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(authorization_v20201001.RoleAssignmentScheduleRequest)},
@@ -2175,6 +2184,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ManagedEnvironmentsPrivateEndpointConnectionExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
 	result = append(result, &app_customizations.SessionPoolExtension{})
+	result = append(result, &authorization_customizations.ManagementLockExtension{})
 	result = append(result, &authorization_customizations.PolicyAssignmentExtension{})
 	result = append(result, &authorization_customizations.PolicyDefinitionExtension{})
 	result = append(result, &authorization_customizations.PolicyDefinitionsVersionExtension{})

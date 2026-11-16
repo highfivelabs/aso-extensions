@@ -5,8 +5,9 @@ Status, 2026-11-09: the repository has four kinds,
 Microsoft Entra principals, per-database privileges, schema and default
 privileges, and database ownership),
 `keyvault.azure.hfl.dev/v1` `VaultSecret` and `VaultCertificate`, and
-`authorization.azure.hfl.dev/v1` `ManagementLock`, the first plain ARM
-kind (section 1: ARM resources are in scope). All pass their end-to-end tests against a fake
+`ManagementLock`, the first plain ARM kind (section 1: ARM resources are
+in scope; hand-written as `authorization.azure.hfl.dev/v1` until
+2026-11-15, generated as `v20200501` since). All pass their end-to-end tests against a fake
 cloud, and the install runs on kind (section 7). It has no
 remote, no published image and no release. This document says how Azure
 Service Operator is built, how a kind is built here, which gaps come next,
@@ -613,43 +614,51 @@ to a kind whose values can be Secret references).
 
 ### ManagementLock
 
-- `owner` is ASO's `ArbitraryOwnerReference`, as ASO's own extension
-  resource `RoleAssignment` takes: an ASO resource in the same namespace
-  by group, kind and name, or an ARM ID (a subscription, a resource group
-  or a resource). A named owner must be Ready and carry the ARM ID ASO
-  writes on what it provisions (`serviceoperator.azure.com/resource-id`);
-  until then the lock waits with ASO's `WaitingForOwner`. The owner becomes
-  the lock's Kubernetes owner, as ASO's `ClaimResource` does.
-- The owner is read by name as an unstructured object from the API server,
-  so any ASO kind can own a lock without the manager carrying ASO's Go
-  types or an informer per kind. That needs `get` (only; no list or watch)
-  on every ASO API group: a generated ClusterRole,
-  `config/rbac/aso-owner-reader.yaml`, lists ASO's groups at the pin
-  (`entra.azure.com` aside).
-- `level` is `CanNotDelete` or `ReadOnly`, `notes` up to 512 characters,
-  `owners` a list of application IDs (Azure's `properties.owners`, a legacy
-  list kept with the lock that grants nothing; added 2026-11-09, foundation
-  row 7, so every attribute of the lock is covered; ASO issue #3756 is still
-  open with no pull request, rechecked that day); the lock's name is `azureName` or the object's name. Changes are a PUT
-  when Azure's lock differs. Deleting the object deletes the lock, from
-  the ARM ID recorded when it was claimed, so it works with the owner
-  gone; a lock or scope Azure no longer has is deleted already. The status
-  reports level, notes and owners as Azure returns them.
-- The credential is the one ASO picks for the object; ASO's subscription
-  check refuses a scope in another subscription than the credential's.
-  Resource Manager's endpoint and audience are ASO's settings
-  (`AZURE_RESOURCE_MANAGER_ENDPOINT`, `..._AUDIENCE`), or the credential's
-  own cloud.
-- A small Resource Manager client (`pkg/armlocks`, API 2020-05-01) over
-  azcore's pipeline, as the Key Vault client. ASO's own ARM client is
-  internal and built for generated kinds.
-- What a lock means for ASO: a `CanNotDelete` lock on what ASO manages
-  makes ASO's delete of it fail with `ScopeLocked`, which ASO retries
-  slowly until the lock goes; `ReadOnly` also stops ASO's updates. Because
-  the owner is the lock's Kubernetes owner, deleting the owner with
-  foreground propagation removes the lock first; with background
-  propagation (kubectl's default) the owner waits until the lock is
-  deleted. That is the point of a lock.
+Generated since 2026-11-15 (section 8 Q10, answered 2026-11-13 and again
+2026-11-15 as EXTQ-ASO-Q10-1): `authorization.azure.hfl.dev/v20200501`
+`ManagementLock`, from `Microsoft.Authorization/locks` 2020-05-01
+(`specification/resources`), `$exportAs: ManagementLock` in
+`generator/azure-arm/authorization.yaml`. The spec defines a lock at four
+scopes, so patch 0006 makes it an extension resource
+(`/{scope}/providers/Microsoft.Authorization/locks/{lockName}`) reconciled by
+ASO's generic reconciler. The hand-written `authorization.azure.hfl.dev/v1`
+kind, its reconciler (`pkg/reconcilers/authorization`) and its Resource
+Manager client (`pkg/armlocks`) are removed. Nothing was deployed, so no
+`v1` object was migrated; the catalog's `aso.lock` helper moved to
+`v20200501` in the same window, after this repository.
+
+- The spec keeps the `v1` fields and names: `azureName`, `owner` (ASO's
+  `ArbitraryOwnerReference`: an object by group, kind and name, or an ARM
+  ID), `level`, `notes`, `owners` (application IDs; ASO issue #3756 is still
+  open). The status is Azure's lock as read back (`id`, `level`, `notes`,
+  `owners`, `systemData`); `v1`'s `status.scope` is gone (the owner's ARM ID
+  is in the lock's `id`).
+- **Owners by name** are resolved by ASO's resolver, which knows only the
+  kinds the manager registers: our own kinds and the ASO kinds in
+  `controllers.OwnerTypes()`. `v1` read any ASO kind as an unstructured
+  object; to keep the catalog's charts working, the ASO kinds their locks
+  name were added to `OwnerTypes()` (network: `AzureFirewall`,
+  `BastionHost`, `DdosProtectionPlan`, `FirewallPolicy`, `LoadBalancer`,
+  `NatGateway`, `NetworkInterface`, `NetworkSecurityGroup`,
+  `PrivateEndpoint`, `PublicIPAddress`, `RouteTable`, `VirtualNetwork`,
+  `DnsResolver`, `DnsForwardingRuleset`; web `ServerFarm`; sql
+  `ServersElasticPool`; compute `Disk`; cache `Redis`), with `list` and
+  `watch` in `config/rbac/role.yaml` and their test CRDs. Any other ASO
+  kind is named by `armId`. An owner kind whose CRD ASO's install left out
+  (its `crdPattern`) is skipped at start (logged) instead of stopping the
+  manager.
+- Lost against `v1`, all admission checks the generator does not write:
+  `azureName`'s pattern and length, `notes`' 512 characters (Azure refuses
+  both), and `level` now also accepts Azure's `NotSpecified`. The CRD still
+  requires `owner` and `level`.
+- Unchanged: the credential is the one ASO picks for the object, and ASO's
+  subscription check refuses a scope in another subscription. A
+  `CanNotDelete` lock on what ASO manages makes ASO's delete of it fail with
+  `ScopeLocked`, retried until the lock goes; `ReadOnly` also stops ASO's
+  updates. The owner is the lock's Kubernetes owner.
+- Proven: `TestManagementLockOnResourceGroup`, `TestManagementLockByARMID`,
+  `TestManagementLockRefused`, `TestManagedEnvironmentsDaprComponent` (a lock blocking a delete),
+  the conformance test, and the operator e2e (`team-a`'s lock).
 
 ### VaultsProtectedItem
 
@@ -964,6 +973,33 @@ Reported from the catalog's Azure charts (catalog `docs/azure.md` section
 8). Each is in ASO's kind, not ours; what this repository can do is noted.
 Upstream issues are not filed from here (CLAUDE.md, "Never"); the drafts are
 for the builder.
+
+**Intentional overlap (the builder, 2026-11-15, UPBUG).** The builder files
+the upstream issues (not urgent) and our extensions cover these gaps as
+*intentional overlap*: where a kind of ours can carry what ASO's lacks, we
+build it beside ASO's under ASO's name in our group (as section 8 Q11 does
+for newer API versions), recommend ours for the case, and retire it when an
+ASO release fixes the gap, the upstream issue being the trigger. Rules for
+each overlapping kind:
+- Its row here and its `docs/plan.md` section 3 row link the upstream issue
+  it overlaps and say when it is retired (the release that closes the
+  issue).
+- A user picks one of the two kinds for each Azure resource; two
+  controllers on one resource fight. The README says which one we recommend
+  and warns against pointing both at one resource.
+- On retirement, a migration note: set `serviceoperator.azure.com/reconcile-policy: skip`
+  on ours, create ASO's adopting the same resource, delete ours.
+
+The upstream issue links below are **placeholders** until the builder files
+them (`ISSUE-TBD`); replace each with the issue's URL then.
+
+| Gap | Upstream issue (placeholder) | Overlap of ours |
+| --- | --- | --- |
+| Storage `signedIdentifiers[].id` generated as an ARM reference | Azure/azure-service-operator#ISSUE-TBD (storage: `signedIdentifiers[].id`) | possible: our own `storage.azure.hfl.dev` `StorageAccountsTableServicesTable` and `StorageAccountsFileServicesShare` with the label `$referenceType: simple`; not built yet (built when a chart needs a stored access policy) |
+| Peering `syncRemoteAddressSpace` | Azure/azure-service-operator#ISSUE-TBD (network: peering cannot request `syncRemoteAddressSpace`) | possible only with a hand-written extension that adds the query parameter to the PUT (a generated kind sends none); not built yet |
+| `StorageAccount` Smart access tier | none to file: ASO's `main` already has it; the next release carries it | none needed: wait for the release |
+| `VaultKey` release policy `immutable` | none to file: not in ARM | a data-plane key kind beside `VaultSecret` (not an overlap of ASO's ARM kind); not built |
+| A storage account's static website, a vault's certificate contacts | none to file: data plane | hand-written data-plane kinds, as `VaultSecret`; not built |
 
 | Gap | At the pin (read-only) | What we can do |
 | --- | --- | --- |
@@ -1771,6 +1807,12 @@ drop until the users they grant to are deleted).
 
 ## 8. Open questions
 
+**The answers of 2026-11-15** (the builder, on the Open decisions page),
+recorded at each question below, verbatim:
+- ASOQ (Q4, Q11 to Q14): "ASOQ: as recommended (Q11 (a) keep ASO's names in our group, retire each when ASO ships the version; Q12 keep ASO's specs commit until a needed field is past it; Q13 build `backup` by hand when a chart needs it, leave authsettings v1; Q14 hand-built `VaultsProtectedItem` at v20260701. Q4: none written.)"
+- EXTQ-ASO-Q10-1 (Q10, after the catalog came to use locks): "EXTQ-ASO-Q10-1: as recommended ((a) Go ahead: generate authorization.azure.hfl.dev/v20200501 ManagementLock in aso-extensions and, in the same window, switch the catalog's aso.lock helper (37 copies of _aso.tpl) and goldens to v20200501, merging aso-extensions first. Nothing is deployed yet, so no live v1 objects need migrating.)"
+- UPBUG (the field gaps of ASO's own kinds, section 3): "UPBUG: i will file both, non-urgent but you should create linear tasks due monday eve that contains the bug text or even a gh command to create them. dont surface until then. Cover the S3 and ASO gaps in krm-extensions as intentional overlap, linked to the upstream issues."
+
 **The answers of 2026-11-10**, recorded at each question below and
 summarised here:
 - Q5 (Azure SQL Entra users, a1): copy ASO pull request #5104, fix it up
@@ -1810,6 +1852,10 @@ summarised here:
    Secrets (credentials and values). ASO's `AZURE_TARGET_NAMESPACES`
    narrows its cache and ours alike; is that enough, or should the install
    default to it?
+
+   **Still open, 2026-11-15.** ASOQ's answer was "as recommended", and the
+   recommendation for Q4 was "none written": the install is unchanged (no
+   default `AZURE_TARGET_NAMESPACES`). It waits for the builder.
 5. **Azure SQL Entra users (a1)**: copy PR #5104 here with a test that
    cannot run the real `FROM EXTERNAL PROVIDER` statement, or wait for
    upstream?
@@ -1915,6 +1961,14 @@ summarised here:
    catalog chart depends on it. Existing `v1` objects are recreated after
    `reconcile-policy: skip`, so the locks stay in Azure.
 
+   **Asked again and answered, 2026-11-15** (EXTQ-ASO-Q10-1, after the
+   catalog had come to use the `v1` kind in 37 charts since 2026-11-12):
+   (a), go ahead, in step with the catalog; this repository first. Nothing
+   is deployed, so no `v1` object is migrated. **Done**: `ManagementLock`
+   is generated as `authorization.azure.hfl.dev/v20200501` (section 2,
+   "ManagementLock"); the hand-written `v1`, its reconciler and
+   `pkg/armlocks` are gone; the catalog's `aso.lock` helper follows.
+
 11. **Our kinds beside ASO's, at a newer API version, under ASO's names?**
    (asked 2026-11-13, with c3d.) The catalog needs fields ASO's own kinds
    lack because ASO stops at an older API version (`ManagedEnvironment` and
@@ -1933,6 +1987,9 @@ summarised here:
    carries the version, as §4 says for every kind of ours. Nothing waits on
    it but the decision; the later rows of item 3 (VM, application gateway,
    identity) follow whatever is chosen.
+
+   **Answered, 2026-11-15** (ASOQ): (a), ASO's names in our group (as
+   built), each retired when an ASO release carries its version.
 12. **A newer specs commit?** The generator reads `azure-rest-api-specs` at
    the commit ASO pins (`a2de2d1a`, `UPSTREAM.md`). A field newer than it
    cannot be generated: a container app identity's lifecycle `Retain` is in
@@ -1941,6 +1998,10 @@ summarised here:
    own for the generator, recorded in `UPSTREAM.md`, regenerating every
    kind (a large, mechanical diff). Recommended: (a) until a field the
    catalog needs is only past it, then (b) in a pull request of its own.
+
+   **Answered, 2026-11-15** (ASOQ): keep ASO's specs commit until a field
+   a chart needs is only past it; then a newer commit of our own, in a pull
+   request of its own.
 13. **A site's `authsettings` (v1) and `backup`?** (asked 2026-11-13, c4b.)
    Both have a PUT and no GET; they are read with `POST .../list`. ASO's
    reconciler reads every resource back with a GET after its PUT, so a
@@ -1951,6 +2012,9 @@ summarised here:
    DELETE. The catalog's `auth_settings` is the deprecated v1 form of
    `auth_settings_v2`, which is built. Recommended: build `backup` by hand
    when a chart needs it; leave `authsettings` v1 (charts use v2).
+
+   **Answered, 2026-11-15** (ASOQ): build `backup` by hand when a chart
+   needs it; leave `authsettings` v1 unbuilt (charts use v2).
 14. **Recovery Services protected items by hand?** (asked 2026-11-13, c24.)
    Backup for a VM is `vaults/{v}/backupFabrics/Azure/protectionContainers/{c}/protectedItems/{i}`.
    ASO's generator cannot own through the fixed `backupFabrics/Azure`
@@ -1967,3 +2031,6 @@ summarised here:
    `v20260701` `VaultsProtectedItem`, so it reads like the generated
    Recovery Services kinds; file shares (`AzureFileShareProtectedItem`)
    later on the same kind.
+
+   **Answered, 2026-11-15** (ASOQ): hand-built `VaultsProtectedItem` at
+   `v20260701`.

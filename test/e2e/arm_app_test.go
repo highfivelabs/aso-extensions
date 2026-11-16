@@ -19,10 +19,19 @@ import (
 	app2026 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260101"
 	app2026p "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260302preview"
 	app202607 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701"
-	authv1 "github.com/highfivelabs/aso-extensions/apis/authorization/v1"
+	authv1 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501"
 )
 
 func ptr[T any](v T) *T { return &v }
+
+// deref is a pointer's value, or the zero value for nil.
+func deref[T any](p *T) T {
+	var zero T
+	if p == nil {
+		return zero
+	}
+	return *p
+}
 
 // appEnvironment makes the ASO footprint the children of a Container Apps
 // environment hang from: a resource group and an environment ASO has
@@ -126,9 +135,9 @@ func TestManagedEnvironmentsDaprComponent(t *testing.T) {
 	// once the lock is removed.
 	lock := &authv1.ManagementLock{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "keep"},
-		Spec: authv1.ManagementLockSpec{
+		Spec: authv1.ManagementLock_Spec{
 			Owner: &genruntime.ArbitraryOwnerReference{ARMID: "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"},
-			Level: "CanNotDelete",
+			Level: level(authv1.ManagementLockProperties_Level_CanNotDelete),
 		},
 	}
 	if err := k8s.Create(ctx, lock); err != nil {
