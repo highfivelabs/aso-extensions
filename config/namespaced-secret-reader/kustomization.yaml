@@ -1,0 +1,26 @@
+# Opt-in, for an install that sets ASO's AZURE_TARGET_NAMESPACES: the
+# manager reads Secrets only in the namespaces it watches, not in every
+# namespace. It drops the install's ClusterRoleBinding of
+# aso-extensions-secret-reader; bind that ClusterRole with a RoleBinding in
+# each namespace AZURE_TARGET_NAMESPACES names (README.md, "Reading
+# Secrets"). Without such a RoleBinding the manager cannot start its Secret
+# informer in that namespace, and the objects there are not reconciled.
+#
+# Whatever the binding, the manager reads a Secret only in the namespace of
+# the object it reconciles (docs/plan.md §8, question 4).
+#
+#   apiVersion: kustomize.config.k8s.io/v1beta1
+#   kind: Kustomization
+#   resources:
+#   - github.com/highfivelabs/aso-extensions/config/default
+#   components:
+#   - github.com/highfivelabs/aso-extensions/config/namespaced-secret-reader
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patches:
+- patch: |-
+    $patch: delete
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: aso-extensions-secret-reader
