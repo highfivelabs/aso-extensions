@@ -320,8 +320,8 @@ spec:
           message: spec.azureName cannot be changed or removed once set; delete the
             object and create it again
           reason: FieldValueForbidden
-          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || oldSelf.spec.azureName
-            == '''' || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
             == oldSelf.spec.azureName)'
     served: true
     storage: true

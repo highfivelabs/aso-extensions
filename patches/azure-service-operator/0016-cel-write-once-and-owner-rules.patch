@@ -64,7 +64,7 @@ index 0000000..2ea235f
 +	g.Expect(both[0]).To(ContainSubstring("self.spec.owner == oldSelf.spec.owner"))
 +	g.Expect(both[0]).To(ContainSubstring(`fieldPath=".spec.owner"`))
 +	g.Expect(both[1]).To(ContainSubstring("self.spec.azureName == oldSelf.spec.azureName"))
-+	g.Expect(both[1]).To(ContainSubstring("oldSelf.spec.azureName == ''"))
++	g.Expect(both[1]).To(ContainSubstring("size(oldSelf.spec.azureName) == 0"))
 +
 +	ownerOnly := CELValidationAnnotations(true, false)
 +	g.Expect(ownerOnly).To(HaveLen(1))
@@ -120,7 +120,7 @@ index 48ba625..2709c7f 100644
 +	}
 +	if hasAzureName {
 +		result = append(result,
-+			`// +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || oldSelf.spec.azureName == '' || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName == oldSelf.spec.azureName)",message="spec.azureName cannot be changed or removed once set; delete the object and create it again",fieldPath=".spec.azureName",reason=FieldValueForbidden`)
++			`// +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName) == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName == oldSelf.spec.azureName)",message="spec.azureName cannot be changed or removed once set; delete the object and create it again",fieldPath=".spec.azureName",reason=FieldValueForbidden`)
 +	}
 +	return result
 +}
