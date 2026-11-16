@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package keyvault is a small client for the Key Vault secrets data plane
 // (REST API 7.5): set, get, update attributes, delete, and the soft-delete

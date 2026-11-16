@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 # The production manager must not contain the fake cloud: no --fake-cloud
 # flag and no pkg/fakecloud. Only a build with -tags fakecloud (the test
 # image, tests/operator/run.sh) has them.

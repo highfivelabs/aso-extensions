@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Kept in generator/_extensions and copied into apis/arm by
 // hack/generate-arm.sh, which deletes apis/arm on every run.

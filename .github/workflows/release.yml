@@ -1,5 +1,5 @@
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # On a v* tag: build the manager image with ko (as README.md's install and
 # tests/operator do) for linux/amd64 and linux/arm64, push it to the

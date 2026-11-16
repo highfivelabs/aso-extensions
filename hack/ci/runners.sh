@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # Where ci.yml's heavy jobs run (GitHub only: a local run, task ci, runs
 # them on one offload VM). Reads the plan and the repository variables

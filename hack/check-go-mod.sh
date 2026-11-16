@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 # We build against Azure Service Operator's framework, so every module both
 # go.mod files require must be at the version ASO's go.mod pins: a newer
 # one here would move ASO's code onto versions it is not tested with. Fail

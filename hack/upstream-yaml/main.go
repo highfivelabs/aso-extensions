@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Command upstream-yaml checks upstream.yaml on its own (pins, pull
 // requests, patches, copied files; that the patch files and copied paths

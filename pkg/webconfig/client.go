@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package webconfig is a small Resource Manager client for an App Service
 // app's app settings and connection strings (Microsoft.Web

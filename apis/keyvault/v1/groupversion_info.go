@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package v1 contains API Schema definitions for Key Vault data plane objects
 // that Azure Service Operator does not manage.

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # Tests `hack/upstream.sh --check` on a small repository standing in for the
 # upstream checkout, with two patches that change the same file (as 0005 and

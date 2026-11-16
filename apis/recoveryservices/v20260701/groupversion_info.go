@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package v20260701 contains the Recovery Services kinds written by hand:
 // the backup items ASO's generator cannot own (docs/plan.md §3 c24). They

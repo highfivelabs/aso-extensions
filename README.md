@@ -449,5 +449,8 @@ success.** A new commit on the branch needs its own run.
 
 ## Licence
 
-MIT (`LICENSE`), the same as ASO. Files copied from ASO keep Microsoft's
-copyright and licence header and say how they were changed; see `NOTICE`.
+Apache-2.0 (`LICENSE`), like the other extension repositories (decided
+2026-11-16, `docs/plan.md` §8 Q1). Files copied from ASO, and the code
+ASO's generator writes, stay under ASO's MIT licence
+(`LICENSE-azure-service-operator`): they keep Microsoft's copyright and
+licence header and say how they were changed; see `NOTICE`.

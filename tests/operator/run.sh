@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # The install on kind with the fake cloud: our CRDs install, our manager
 # runs in Azure Service Operator's namespace under its own narrow service

@@ -1,5 +1,5 @@
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # The whole suite on main, once a day (decided 2026-11-10): task check
 # and task operator-e2e, one after the other on one offload Spot VM (no

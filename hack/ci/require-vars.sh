@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 #   hack/ci/require-vars.sh NAME...   fail, naming each, unless every
 #                                     NAME is set and not empty

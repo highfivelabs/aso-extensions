@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # Tests hack/operator-e2e.sh with scripts that pass by doing nothing, and one
 # that does not. Needs no cluster.

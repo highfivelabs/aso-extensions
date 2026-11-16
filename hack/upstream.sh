@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 # Fetch Azure Service Operator at the commit pinned in UPSTREAM.md into
 # third_party/azure-service-operator, then apply our patch series from
 # patches/azure-service-operator/ in order.

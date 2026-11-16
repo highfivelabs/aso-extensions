@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # Run the kind test (tests/operator/run.sh) and refuse to pass unless it
 # really ran. tests/operator/run.sh was once truncated to zero bytes and

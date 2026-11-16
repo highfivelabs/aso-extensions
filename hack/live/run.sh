@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # Run the live tests (test/live, -tags live) against the real Azure
 # subscription AZURE_SUBSCRIPTION_ID (hack/live/azure.env), from an offload VM whose service

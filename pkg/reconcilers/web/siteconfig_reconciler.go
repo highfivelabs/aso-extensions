@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package web reconciles SitesConfigAppSettings and
 // SitesConfigConnectionStrings: an App Service app's (or slot's) app settings

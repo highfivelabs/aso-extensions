@@ -1,5 +1,5 @@
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # Go from go.mod, and the command-line tools the tasks call at the pins in
 # hack/ci/tools.sh (task ci:tools runs the same script).

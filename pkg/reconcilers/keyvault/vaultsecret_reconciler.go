@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package keyvault reconciles VaultSecret: a Key Vault secret whose value
 // comes from a Kubernetes Secret. It runs on ASO's generic reconciler, so

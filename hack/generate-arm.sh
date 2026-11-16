@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 # Run ASO's generator (patched, patches/azure-service-operator/) over the
 # ARM specs with generator/azure-arm.yaml: Go types, ARM wire types, storage
 # versions and conversions, extension points and the registration file for

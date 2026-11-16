@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # nightly.yml's report job: on a failed nightly run, open the issue
 # labelled ci-nightly, or comment on the open one.
