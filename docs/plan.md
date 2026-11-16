@@ -868,8 +868,8 @@ rechecked 2026-11-08, see below):
 
 | # | What | Why an app needs it | Move |
 | --- | --- | --- | --- |
-| b1 | PostgreSQL user bound to an Entra principal | an app's managed identity signs in to its database without a password; ASO's MySQL user can, its PostgreSQL user cannot | **built**; offer upstream |
-| b2 | PostgreSQL privileges per database | an app's user needs `CONNECT`/`CREATE` on its own database | **built**; ASO issue #4694 is open and its maintainers say they still want it; offered upstream as [ASO PR #5844](https://github.com/Azure/azure-service-operator/pull/5844): draft, awaiting CLA (2026-11-16) |
+| b1 | PostgreSQL user bound to an Entra principal | an app's managed identity signs in to its database without a password; ASO's MySQL user can, its PostgreSQL user cannot | **built**; offered upstream as [ASO PR #5845](https://github.com/Azure/azure-service-operator/pull/5845) (closes #1399), opened for review 2026-11-16 |
+| b2 | PostgreSQL privileges per database | an app's user needs `CONNECT`/`CREATE` on its own database | **built**; ASO issue #4694 is open and its maintainers say they still want it; offered upstream as [ASO PR #5844](https://github.com/Azure/azure-service-operator/pull/5844): CLA signed, ready for review (2026-11-16) |
 | b3 | Key Vault secrets from Kubernetes Secrets | apps on Azure read configuration from Key Vault; ASO declined to create secrets (#1894) | **built**; a lasting gap |
 | b4 | PostgreSQL schema privileges and default privileges | since PostgreSQL 15 only the database owner may create in `public`; an app needs `USAGE`/`CREATE` on a schema and default privileges on new tables | **built** (`schemaPrivileges`, `defaultPrivileges` on the same `User`); a1 was skipped because it waits on open question 5 |
 | b5 | PostgreSQL database ownership | migrations need the app to own its database | **built** (`ownedDatabases`, `reassignOwnedTo` on the same `User`), after open question 8 was answered |
@@ -1847,8 +1847,15 @@ summarised here:
    upstream only? Recommended: both, ours until the release.
 
    **b2 offered, 2026-11-16.** [ASO PR #5844](https://github.com/Azure/azure-service-operator/pull/5844)
-   (from the builder's fork, closes #4694): draft, awaiting CLA (2026-11-16).
-   Ours stays until a release ships it.
+   (from the builder's fork, closes #4694). The builder signed Microsoft's
+   CLA on it (ASOSIGN, 2026-11-16, "done"): `license/cla` is green, and the
+   pull request is out of draft, ready for review (2026-11-16).
+   **b1 offered, 2026-11-16.** [ASO PR #5845](https://github.com/Azure/azure-service-operator/pull/5845)
+   (from the builder's fork, branch `feat/postgresql-user-entra`, closes
+   #1399, whose maintainers still want it): `spec.aadUser` on ASO's own
+   PostgreSQL `User`, the MySQL `User`'s shape, with the webhook's checks
+   where ours has CEL. It is independent of #5844; whichever merges second
+   is rebased. Ours stay until a release ships them.
 3. **Relaxed workload identity**: the default install needs one extra
    federated credential per managed identity. Keep the narrow account as
    the default (recommended), or default to sharing ASO's?
