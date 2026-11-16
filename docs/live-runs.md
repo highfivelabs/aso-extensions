@@ -110,8 +110,8 @@ on a group cannot do, so every kind whose provider is unregistered fails
 with `MissingSubscriptionRegistration`. Registered on 2026-11-10:
 Authorization, Compute, Consumption, CostManagement, ManagedIdentity,
 Network, Resources, Storage (and some not used here); on 2026-11-11 also
-CostManagementExports; by 2026-11-12 every provider in the table below
-(`task live-providers`). The tests still call `requireProvider`, so a
+CostManagementExports; by 2026-11-16 every provider in the table below
+(`task live-providers`, including `Microsoft.DocumentDB`). The tests still call `requireProvider`, so a
 provider unregistered later skips again rather than fails. The kinds (and
 live tests) that need each:
 
@@ -126,7 +126,7 @@ live tests) that need each:
 | `Microsoft.Maintenance` | `MaintenanceConfiguration`, `ConfigurationAssignment` | `TestLiveMaintenanceAndShutdown` |
 | `Microsoft.DevTestLab` | `Schedule` | `TestLiveMaintenanceAndShutdown` |
 | `Microsoft.KeyVault` | `VaultSecret`, `VaultCertificate` (data plane, on a vault) | `TestLiveKeyVault` |
-| `Microsoft.DocumentDB` (**NotRegistered**, 2026-11-12, run `ax1218083181`) | the Cosmos DB children (`documentdb.azure.hfl.dev`) | `TestLiveCosmosGremlin` (skips, naming the provider; the builder: `az provider register --namespace Microsoft.DocumentDB --subscription "$AZURE_SUBSCRIPTION_ID"`) |
+| `Microsoft.DocumentDB` | the Cosmos DB children (`documentdb.azure.hfl.dev`) | `TestLiveCosmosGremlin` |
 | `Microsoft.DBforPostgreSQL`, `Microsoft.Sql` | PostgreSQL `User`, Azure SQL `User` (data plane, on a server) | `TestLivePostgresUser`, `TestLiveSqlUser` |
 | `Microsoft.PolicyInsights` | `PolicyRemediation`, `PolicyAttestation` (they also need a policy assignment, below) | none: they need a policy assignment (below) |
 | `Microsoft.Automation` | none of ours: the Automation account `WorkspacesLinkedService` links to | the `LinkedService` step of `TestLiveWorkspaceChildren` |
@@ -291,6 +291,9 @@ Found 2026-11-12 (runs `ax120809d931`, `ax120853723a`, `ax1210377aa0`):
   environment (`MaxNumberOfGlobalEnvironmentsInSubExceeded`, run
   `ax12165076f0`), so a waiting one is deleted, and gone, before the next
   region is tried, and the fixture's delete may take 30 minutes or more.
+- `RegistriesCredentialSet` validates that its Key Vault secret URI host
+  resolves in DNS (`UriHostNotFound`); `TestLiveContainerRegistry` now creates
+  a Key Vault fixture (`accessPolicies: []`) in `test/live/apps_test.go`.
 
 ## Ledger
 
@@ -315,3 +318,7 @@ Found 2026-11-12 (runs `ax120809d931`, `ax120853723a`, `ax1210377aa0`):
 | 2026-11-12 | `ax12172992bc` | `7b50314`+ | `TestLiveContainerApps` | PASS of every step (`ManagedEnvironmentsDaprComponent`, `ManagedEnvironmentsStorage`, `ManagedEnvironmentsCertificate`, `ManagedEnvironmentsJavaComponent`, on an environment in centralus); FAIL: the fixture's delete outlasted 15 minutes | the environment's cleanup now waits 45 minutes; the sweep removed it |
 | 2026-11-12 | `ax1218083181` | `9029eda`+ | `TestLiveContainerApps`, `TestLiveAutomation`, `TestLiveManagementLock`, `TestLiveCosmosGremlin` (new) | PASS: `TestLiveContainerApps` (centralus; the first pass on real Azure), `AutomationAccount`, `AutomationAccountsRunbook`, `AutomationAccountsVariable`, `AutomationAccountsSchedule` (`TestLiveAutomation`, 53s); SKIP: `ManagementLock` (`Microsoft.Authorization/locks/write`), `TestLiveCosmosGremlin` (`Microsoft.DocumentDB` NotRegistered) | the group empty afterwards |
 | 2026-11-13 | `ax132221bb8d` | `847a26a`+ | `TestLiveUserAssignedIdentityIsolationScope` (new) | PASS (23s): our `UserAssignedIdentity` (2024-11-30, `docs/plan.md` c22) made with `isolationScope: Regional`, its principal and client IDs in the status, changed to `None`, deleted | Azure takes both values in the live region, as the fake does; the group empty afterwards |
+| 2026-11-16 | `ax161835c086` | `81d8926` | `TestLiveSlotMove`, `TestLiveUserAssignedIdentityIsolationScope`, `TestLiveTemplateSpec`, `TestLiveKeyVault`, `TestLiveAutomation`, `TestLiveWebSlotAndCertificate`, `TestLiveMaintenanceAndShutdown`, `TestLiveManagementLock`, `TestLiveResourceManagementPrivateLink` | PASS: all 7 runnable tests (`WebSlotAndCertificate` S1 in westus3, `MaintenanceAndShutdown` `Standard_D2als_v6`); SKIP: `ManagementLock`, `ResourceManagementPrivateLink` (Contributor) | all 7 passing cleanly; the group empty afterwards |
+| 2026-11-16 | `ax161856b1a3` | `81d8926` | `TestLiveQueryPack`, `TestLiveWorkspaceChildren`, `TestLiveMonitorPrivateLinkScope`, `TestLiveContainerRegistry`, `TestLiveContainerApps`, `TestLiveRecoveryServices` | PASS: `QueryPack`, `WorkspaceChildren` (`LinkedService` PASS, `LinkedStorageAccount` SKIP), `MonitorPrivateLinkScope`, `RecoveryServices`, `ContainerApps` (westus3 after centralus timed out); FAIL: `ContainerRegistry` (`UriHostNotFound` on Key Vault URI) | `RegistriesCredentialSet` requires a resolvable Key Vault host; the group empty afterwards |
+| 2026-11-16 | `ax1620167567` | `81d8926` | `TestLiveSqlUser`, `TestLivePostgresUser`, `TestLiveCosmosGremlin` | PASS: `SqlUser` (centralus), `PostgresUser` (B1ms in centralus), `CosmosGremlin` (eastus2) | first live pass of `TestLiveCosmosGremlin` (`Microsoft.DocumentDB` now Registered); the group empty afterwards |
+| 2026-11-16 | `ax1620450a82` | `81d8926`+ | `TestLiveContainerRegistry` | PASS (117.37s) | fixed `TestLiveContainerRegistry` in `test/live/apps_test.go` to create a Key Vault fixture (`accessPolicies: []`); the group empty afterwards |

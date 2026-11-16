@@ -9,6 +9,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 	"reflect"
 	"strings"
 	"testing"
@@ -103,9 +104,20 @@ func TestLiveContainerRegistry(t *testing.T) {
 		return nil
 	})
 
-	// The credential set's secrets are named, not read, when it is made: the
-	// registry reads them (with the set's identity) only when it pulls.
-	vaultURI := "https://" + strings.ReplaceAll(azName("kv"), "-", "") + ".vault.azure.net/secrets/"
+	// Azure validates that the Key Vault host resolves in DNS when creating a
+	// credential set, so create a Key Vault fixture (soft-deleted afterwards).
+	kvName := strings.ReplaceAll(azName("acrkv"), "-", "")
+	kvID := rgID() + "/providers/Microsoft.KeyVault/vaults/" + kvName
+	tenant := os.Getenv("AZURE_TENANT_ID")
+	fixture(t, kvID, "2023-07-01", map[string]any{
+		"location": location,
+		"properties": map[string]any{
+			"tenantId": tenant, "sku": map[string]any{"family": "A", "name": "standard"},
+			"enableRbacAuthorization": false, "enableSoftDelete": true, "softDeleteRetentionInDays": 7,
+			"publicNetworkAccess": "Enabled", "accessPolicies": []any{},
+		},
+	})
+	vaultURI := "https://" + kvName + ".vault.azure.net/secrets/"
 	cs := &acr.RegistriesCredentialSet{}
 	cs.Namespace, cs.Name = ns, "ghcr"
 	cs.Spec = acr.RegistriesCredentialSet_Spec{
