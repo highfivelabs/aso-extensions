@@ -26,6 +26,34 @@ kinds:
     api: "7.5"
     note: "the vault's data plane (certificates); ARM has no such resource"
     ignore: [owner, azureName]
+  - crd: config/crds/web.azure.hfl.dev_sitesconfigappsettings.yaml
+    armType: Microsoft.Web/sites/config
+    api: "2026-07-15"
+    note: "appsettings (c4c): PUT and POST .../list, no GET; each value plain or from a Secret or ConfigMap"
+    ignore: [owner]
+    # CRD spec path -> the section's ARM attribute (a map of names to values)
+    map:
+      settings[].name: properties{}
+      settings[].value: properties{}
+      settings[].valueFromSecret.name: properties{}
+      settings[].valueFromSecret.key: properties{}
+      settings[].valueFromConfig.name: properties{}
+      settings[].valueFromConfig.key: properties{}
+      settings[].template: properties{}
+  - crd: config/crds/web.azure.hfl.dev_sitesconfigconnectionstrings.yaml
+    armType: Microsoft.Web/sites/config
+    api: "2026-07-15"
+    note: "connectionstrings (c4c): PUT and POST .../list, no GET; each value plain or from a Secret or ConfigMap"
+    ignore: [owner]
+    map:
+      connectionStrings[].name: properties{}
+      connectionStrings[].type: properties{}.type
+      connectionStrings[].value: properties{}.value
+      connectionStrings[].valueFromSecret.name: properties{}.value
+      connectionStrings[].valueFromSecret.key: properties{}.value
+      connectionStrings[].valueFromConfig.name: properties{}.value
+      connectionStrings[].valueFromConfig.key: properties{}.value
+      connectionStrings[].template: properties{}.value
   - crd: config/crds/recoveryservices.azure.hfl.dev_vaultsprotecteditems.yaml
     armType: Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems
     api: "2026-07-01"

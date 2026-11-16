@@ -132,6 +132,9 @@ func Setup(ctx context.Context, mgr ctrl.Manager, cfg outoftree.ConfigValues, op
 	}
 	reconcilers.VaultSecret.ClientOptions = opts.KeyVaultClientOptions
 	reconcilers.VaultCertificate.ClientOptions = opts.KeyVaultClientOptions
+	if armHTTPClient != nil {
+		reconcilers.SiteConfig.ClientOptions = azcore.ClientOptions{Transport: armHTTPClient}
+	}
 	for _, t := range types {
 		t.Reconciler = guard.Reconciler(t.Reconciler)
 	}

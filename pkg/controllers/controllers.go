@@ -69,11 +69,13 @@ import (
 	keyvaultv1 "github.com/highfivelabs/aso-extensions/apis/keyvault/v1"
 	recoveryservicesv20260701 "github.com/highfivelabs/aso-extensions/apis/recoveryservices/v20260701"
 	sqlv1 "github.com/highfivelabs/aso-extensions/apis/sql/v1"
+	webv1 "github.com/highfivelabs/aso-extensions/apis/web/v20260715"
 	sqlreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/azuresql"
 	entrareconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/entra"
 	kvreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/keyvault"
 	pgreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/postgresql"
 	rsreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/recoveryservices"
+	webreconciler "github.com/highfivelabs/aso-extensions/pkg/reconcilers/web"
 	"github.com/highfivelabs/aso-extensions/pkg/slot"
 )
 
@@ -87,6 +89,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = keyvaultv1.AddToScheme(scheme)
 	_ = sqlv1.AddToScheme(scheme)
 	_ = entrav1.AddToScheme(scheme)
+	_ = webv1.AddToScheme(scheme)
 	_ = recoveryservicesv20260701.AddToScheme(scheme)
 	_ = asopostgresql.AddToScheme(scheme)
 	_ = asokeyvault.AddToScheme(scheme)
@@ -171,6 +174,9 @@ type Reconcilers struct {
 	AzureSQLUser     *sqlreconciler.AzureSQLUserReconciler
 	// DirectoryRoleAssignment reaches Microsoft Graph through its Clients.
 	DirectoryRoleAssignment *entrareconciler.DirectoryRoleAssignmentReconciler
+	// SiteConfig reconciles SitesConfigAppSettings and
+	// SitesConfigConnectionStrings through Resource Manager.
+	SiteConfig *webreconciler.SiteConfigReconciler
 	// VaultsProtectedItem reaches Resource Manager through the generated
 	// kinds' ARM connection factory.
 	VaultsProtectedItem *rsreconciler.VaultsProtectedItemReconciler
@@ -201,6 +207,7 @@ func StorageTypes(
 		VaultCertificate:        kvreconciler.NewVaultCertificateReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
 		AzureSQLUser:            sqlreconciler.NewAzureSQLUserReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
 		DirectoryRoleAssignment: entrareconciler.NewDirectoryRoleAssignmentReconciler(kubeClient, resolver, positiveConditions, credentialProvider),
+		SiteConfig:              webreconciler.NewSiteConfigReconciler(kubeClient, resolver, positiveConditions, credentialProvider, cfg),
 		VaultsProtectedItem:     rsreconciler.NewVaultsProtectedItemReconciler(kubeClient, resolver, positiveConditions, arm.ConnectionFactory),
 	}
 	generated, err := generatedStorageTypes(scheme, kubeClient, resolver, positiveConditions, arm, cfg)
@@ -262,6 +269,34 @@ func StorageTypes(
 			Name:       "hfl_entra_directoryroleassignment",
 			Reconciler: rs.DirectoryRoleAssignment,
 			Predicate:  standardPredicate(),
+		},
+		{
+			Obj:        &webv1.SitesConfigAppSettings{},
+			Name:       "hfl_web_sitesconfigappsettings",
+			Reconciler: rs.SiteConfig,
+			Predicate:  standardPredicate(),
+			Indexes: []registration.Index{
+				{Key: ".spec.settings.valueFromSecret", Func: indexAppSettingsSecrets},
+				{Key: ".spec.settings.valueFromConfig", Func: indexAppSettingsConfigMaps},
+			},
+			Watches: []registration.Watch{
+				{Type: &corev1.Secret{}, MakeEventHandler: watchSecretsFactory([]string{".spec.settings.valueFromSecret"}, &webv1.SitesConfigAppSettingsList{})},
+				{Type: &corev1.ConfigMap{}, MakeEventHandler: watchConfigMapsFactory([]string{".spec.settings.valueFromConfig"}, &webv1.SitesConfigAppSettingsList{})},
+			},
+		},
+		{
+			Obj:        &webv1.SitesConfigConnectionStrings{},
+			Name:       "hfl_web_sitesconfigconnectionstrings",
+			Reconciler: rs.SiteConfig,
+			Predicate:  standardPredicate(),
+			Indexes: []registration.Index{
+				{Key: ".spec.connectionStrings.valueFromSecret", Func: indexConnectionStringsSecrets},
+				{Key: ".spec.connectionStrings.valueFromConfig", Func: indexConnectionStringsConfigMaps},
+			},
+			Watches: []registration.Watch{
+				{Type: &corev1.Secret{}, MakeEventHandler: watchSecretsFactory([]string{".spec.connectionStrings.valueFromSecret"}, &webv1.SitesConfigConnectionStringsList{})},
+				{Type: &corev1.ConfigMap{}, MakeEventHandler: watchConfigMapsFactory([]string{".spec.connectionStrings.valueFromConfig"}, &webv1.SitesConfigConnectionStringsList{})},
+			},
 		},
 		{
 			Obj:        &recoveryservicesv20260701.VaultsProtectedItem{},
@@ -385,6 +420,65 @@ func indexVaultCertificatePrivateKey(rawObj client.Object) []string {
 		return nil
 	}
 	return []string{obj.Spec.PrivateKey.Name}
+}
+
+// indexAppSettingsSecrets and the three below index the Secrets and
+// ConfigMaps an App Service config section reads, so a change to one
+// reconciles the section again.
+func indexAppSettingsSecrets(rawObj client.Object) []string {
+	obj, ok := rawObj.(*webv1.SitesConfigAppSettings)
+	if !ok {
+		return nil
+	}
+	var out []string
+	for _, s := range obj.Spec.Settings {
+		if s.ValueFromSecret != nil {
+			out = append(out, s.ValueFromSecret.Name)
+		}
+	}
+	return out
+}
+
+func indexAppSettingsConfigMaps(rawObj client.Object) []string {
+	obj, ok := rawObj.(*webv1.SitesConfigAppSettings)
+	if !ok {
+		return nil
+	}
+	var out []string
+	for _, s := range obj.Spec.Settings {
+		if s.ValueFromConfig != nil {
+			out = append(out, s.ValueFromConfig.Name)
+		}
+	}
+	return out
+}
+
+func indexConnectionStringsSecrets(rawObj client.Object) []string {
+	obj, ok := rawObj.(*webv1.SitesConfigConnectionStrings)
+	if !ok {
+		return nil
+	}
+	var out []string
+	for _, s := range obj.Spec.ConnectionStrings {
+		if s.ValueFromSecret != nil {
+			out = append(out, s.ValueFromSecret.Name)
+		}
+	}
+	return out
+}
+
+func indexConnectionStringsConfigMaps(rawObj client.Object) []string {
+	obj, ok := rawObj.(*webv1.SitesConfigConnectionStrings)
+	if !ok {
+		return nil
+	}
+	var out []string
+	for _, s := range obj.Spec.ConnectionStrings {
+		if s.ValueFromConfig != nil {
+			out = append(out, s.ValueFromConfig.Name)
+		}
+	}
+	return out
 }
 
 // watchSecretsFactory is ASO's: enqueue the objects whose indexed fields
