@@ -297,6 +297,41 @@ skip` on the old slot, the object on the new slot with
 Kinds without tags are not guarded. See docs/plan.md, "Moving resources
 between slots"; `task test:slot-move` runs the move against the fakes.
 
+### Reading Secrets
+
+The manager reads a Secret only in the namespace of the object it
+reconciles: the namespace's `aso-credential`, a
+`serviceoperator.azure.com/credential-from` Secret (a name with a `/` in it
+is refused) and the Secrets a kind's values name (a reference has no
+namespace field). `test/e2e/secret_namespace_test.go` proves it
+(`docs/plan.md` §8, question 4, answered 2026-11-16).
+
+Its right to read them is a ClusterRole of its own,
+`aso-extensions-secret-reader` (`get`, `list`, `watch`), which the default
+install binds in every namespace, as ASO does: ASO's framework keeps an
+informer on Secrets in every namespace the manager watches. If ASO's
+`AZURE_TARGET_NAMESPACES` limits those namespaces, add the
+`config/namespaced-secret-reader` component, which drops the
+ClusterRoleBinding, and bind the ClusterRole in each of those namespaces:
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- github.com/highfivelabs/aso-extensions/config/default
+components:
+- github.com/highfivelabs/aso-extensions/config/namespaced-secret-reader
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: aso-extensions-secret-reader, namespace: team-a}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: aso-extensions-secret-reader}
+subjects:
+- {kind: ServiceAccount, name: aso-extensions-manager, namespace: azureserviceoperator-system}
+```
+
+(the RoleBinding as its own file in the overlay's `resources`).
+
 ### Writing Secrets
 
 Some kinds export keys Azure makes (an ExpressRoute circuit's service key, a
@@ -449,5 +484,8 @@ success.** A new commit on the branch needs its own run.
 
 ## Licence
 
-MIT (`LICENSE`), the same as ASO. Files copied from ASO keep Microsoft's
-copyright and licence header and say how they were changed; see `NOTICE`.
+Apache-2.0 (`LICENSE`), like the other extension repositories (decided
+2026-11-16, `docs/plan.md` §8 Q1). Files copied from ASO, and the code
+ASO's generator writes, stay under ASO's MIT licence
+(`LICENSE-azure-service-operator`): they keep Microsoft's copyright and
+licence header and say how they were changed; see `NOTICE`.

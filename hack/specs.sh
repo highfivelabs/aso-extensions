@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 # Fetch the Azure REST API specs ASO's generator reads, at the commit ASO's
 # own submodule pins (the "Specs commit" row of UPSTREAM.md), into
 # .cache/azure-rest-api-specs: a blob-less, depth-1 fetch with a sparse

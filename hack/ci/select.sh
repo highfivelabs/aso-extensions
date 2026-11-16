@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # What a pull request must run, from the paths it changes (decided
 # 2026-11-10: the whole suite nightly, otherwise only what changed).

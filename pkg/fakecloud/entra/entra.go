@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package entra is a fake Microsoft Entra ID token service, for tests and
 // test builds only. It is an http.RoundTripper, so azidentity's real

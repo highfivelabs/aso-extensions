@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // fixtures writes what the install test on kind needs and the shell cannot
 // make: a CA and server certificates for the fake cloud's services, and the

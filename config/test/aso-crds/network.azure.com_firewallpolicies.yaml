@@ -525,6 +525,9 @@ spec:
                     description: This is the name of the Kubernetes resource to reference.
                     type: string
                 type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
               sku:
                 description: |-
                   Storage version of v20250301.FirewallPolicySku

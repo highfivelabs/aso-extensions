@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package graph is a fake Microsoft Graph, for tests and test builds only:
 // Microsoft Entra directory role assignments

@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // fakevault serves the fake Key Vault data plane (pkg/fakecloud/keyvault)
 // over TLS, for the install test on kind. Tests only; not in the manager's

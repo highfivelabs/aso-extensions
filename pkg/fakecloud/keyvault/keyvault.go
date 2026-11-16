@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package keyvault is a fake Azure Key Vault data plane (REST API 7.5), for
 // tests and test builds only. Secrets: set, get (latest or a version),

@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package v20260715 contains the App Service kinds written by hand in
 // web.azure.hfl.dev, at the Microsoft.Web API version of ASO's Site and of

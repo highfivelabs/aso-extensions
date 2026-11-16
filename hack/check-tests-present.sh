@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # `go test` passes when a test file is emptied or deleted: the tests are
 # simply not there. Fail if the end-to-end tests (test/e2e) have fewer than

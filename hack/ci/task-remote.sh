@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # Fill this checkout's cache of remote Taskfiles (.task/remote; the factory
 # include in Taskfile.yml) one process at a time:

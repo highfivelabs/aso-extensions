@@ -1,0 +1,126 @@
+diff --git a/v2/pkg/genruntime/resource_reference.go b/v2/pkg/genruntime/resource_reference.go
+index 3fe6066..8786fb8 100644
+--- a/v2/pkg/genruntime/resource_reference.go
++++ b/v2/pkg/genruntime/resource_reference.go
+@@ -20,6 +20,12 @@ import (
+ 
+ // KnownResourceReference is a resource reference to a known type.
+ // +kubebuilder:object:generate=true
++//
++// Modified by High Five Labs: the CEL rule below is the check ASO's webhooks
++// make on an owner (ValidateOwner: name or armId, exactly one), for managers
++// without webhooks. (Not on ResourceReference: a rule on a type used inside
++// unbounded lists exceeds the CEL cost budget of the larger CRDs.)
++// +kubebuilder:validation:XValidation:rule="has(self.name) != has(self.armId)",message="set exactly one of name and armId"
+ type KnownResourceReference struct {
+ 	// TODO: In practice this type is used only for Owner fields and so might more appropriately have been called OwnerReference
+ 	// TODO: but changing to that would be a breaking change so avoiding it.
+@@ -72,6 +78,11 @@ func (ref *KubernetesOwnerReference) AsResourceReference(group string, kind stri
+ // TODO: This type and ResourceReference are almost exactly the same now...
+ // ArbitraryOwnerReference is an owner reference to an unknown type.
+ // +kubebuilder:object:generate=true
++//
++// Modified by High Five Labs: the CEL rule below is the check ASO's webhooks
++// make on an owner (ResourceReference.Validate on the owner), for managers
++// without webhooks.
++// +kubebuilder:validation:XValidation:rule="has(self.armId) ? !(has(self.group) || has(self.kind) || has(self.name)) : (has(self.group) && has(self.kind) && has(self.name))",message="set armId alone, or group, kind and name together"
+ type ArbitraryOwnerReference struct {
+ 	// This is the name of the Kubernetes resource to reference.
+ 	Name string `json:"name,omitempty"`
+diff --git a/v2/tools/generator/internal/interfaces/cel_validations_test.go b/v2/tools/generator/internal/interfaces/cel_validations_test.go
+new file mode 100644
+index 0000000..2ea235f
+--- /dev/null
++++ b/v2/tools/generator/internal/interfaces/cel_validations_test.go
+@@ -0,0 +1,41 @@
++/*
++ * Copyright (c) Microsoft Corporation.
++ * Licensed under the MIT license.
++ */
++
++package interfaces
++
++import (
++	"strings"
++	"testing"
++
++	. "github.com/onsi/gomega"
++)
++
++// Modified by High Five Labs: the CEL markers ASO_GENERATOR_CEL_VALIDATIONS
++// adds, one per write-once property the spec has.
++func Test_CELValidationAnnotations(t *testing.T) {
++	t.Parallel()
++	g := NewGomegaWithT(t)
++
++	g.Expect(CELValidationAnnotations(false, false)).To(BeEmpty())
++
++	both := CELValidationAnnotations(true, true)
++	g.Expect(both).To(HaveLen(2))
++	for _, a := range both {
++		g.Expect(a).To(HavePrefix("// +kubebuilder:validation:XValidation:rule="))
++		g.Expect(strings.Count(a, `"`) % 2).To(Equal(0))
++	}
++	g.Expect(both[0]).To(ContainSubstring("self.spec.owner == oldSelf.spec.owner"))
++	g.Expect(both[0]).To(ContainSubstring(`fieldPath=".spec.owner"`))
++	g.Expect(both[1]).To(ContainSubstring("self.spec.azureName == oldSelf.spec.azureName"))
++	g.Expect(both[1]).To(ContainSubstring("size(oldSelf.spec.azureName) == 0"))
++
++	ownerOnly := CELValidationAnnotations(true, false)
++	g.Expect(ownerOnly).To(HaveLen(1))
++	g.Expect(ownerOnly[0]).To(ContainSubstring("spec.owner"))
++
++	nameOnly := CELValidationAnnotations(false, true)
++	g.Expect(nameOnly).To(HaveLen(1))
++	g.Expect(nameOnly[0]).To(ContainSubstring("spec.azureName"))
++}
+diff --git a/v2/tools/generator/internal/interfaces/kubernetes_resource_interface.go b/v2/tools/generator/internal/interfaces/kubernetes_resource_interface.go
+index 48ba625..2709c7f 100644
+--- a/v2/tools/generator/internal/interfaces/kubernetes_resource_interface.go
++++ b/v2/tools/generator/internal/interfaces/kubernetes_resource_interface.go
+@@ -169,6 +169,21 @@ func AddKubernetesResourceInterfaceImpls(
+ 		specDef = updated
+ 	}
+ 
++	if os.Getenv("ASO_GENERATOR_CEL_VALIDATIONS") != "" {
++		// Modified by High Five Labs: with no webhooks, the API server checks
++		// what ASO's validating webhook checks on update
++		// (genruntime.ValidateWriteOnceProperties), as CEL rules on the
++		// resource.
++		if rt, ok := astmodel.AsResourceType(updatedResource.Type()); ok {
++			ownerProperty := idFactory.CreatePropertyName(astmodel.OwnerProperty, astmodel.Exported)
++			_, hasOwner := resolved.SpecType.Property(ownerProperty)
++			for _, annotation := range CELValidationAnnotations(hasOwner, !nameFns.removeAzureNameProperty) {
++				rt = rt.WithAnnotation(annotation)
++			}
++			updatedResource = updatedResource.WithType(rt)
++		}
++	}
++
+ 	result := astmodel.MakeTypeDefinitionSetFromDefinitions(
+ 		updatedResource,
+ 		specDef,
+@@ -775,3 +790,23 @@ func getStringAzureNameWithAnnotationFallbackFunction(
+ 	fn.AddReturns("string")
+ 	return fn.DefineFunc(), nil
+ }
++
++// CELValidationAnnotations returns the kubebuilder markers of the CEL rules a
++// resource gets for ASO_GENERATOR_CEL_VALIDATIONS (Modified by High Five
++// Labs): spec.owner cannot change once set, and spec.azureName cannot change
++// once set to a non-empty value (ASO lets an empty one be set, as its webhook
++// does, #4306). Unlike ASO's webhook, both hold from the first update, not
++// only after the resource was created in Azure: CEL cannot read the
++// annotation that records that.
++func CELValidationAnnotations(hasOwner bool, hasAzureName bool) []string {
++	var result []string
++	if hasOwner {
++		result = append(result,
++			`// +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec) && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)",message="spec.owner cannot be changed or removed; delete the object and create it again",fieldPath=".spec.owner",reason=FieldValueForbidden`)
++	}
++	if hasAzureName {
++		result = append(result,
++			`// +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName) == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName == oldSelf.spec.azureName)",message="spec.azureName cannot be changed or removed once set; delete the object and create it again",fieldPath=".spec.azureName",reason=FieldValueForbidden`)
++	}
++	return result
++}

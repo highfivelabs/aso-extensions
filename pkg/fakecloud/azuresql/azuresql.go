@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package azuresql is a fake Azure SQL Database server for the Azure SQL
 // User kind, for tests and test builds only. It speaks TDS 7.4 over TLS

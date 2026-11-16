@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
-# Every Go file carries a licence header: ours (an SPDX line) or, for a
+# SPDX-License-Identifier: Apache-2.0
+# Every Go file carries a licence header: ours (an Apache-2.0 SPDX line) or, for a
 # file copied from Azure Service Operator, Microsoft's MIT header plus a
 # "Modified by High Five Labs" note. Generated deepcopy files carry ours;
 # the files ASO's generator writes carry the generator's.
@@ -11,7 +11,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 bad=0
 while IFS= read -r f; do
   head="$(head -12 "${f}")"
-  if grep -q "SPDX-License-Identifier: MIT" <<<"${head}"; then
+  if grep -q "SPDX-License-Identifier: Apache-2.0" <<<"${head}"; then
     continue
   fi
   # Written by ASO's generator (patched by patches/, run by

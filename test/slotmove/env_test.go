@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // The slot move (docs/plan.md, "Moving resources between slots"): two
 // managers, wired as cmd/manager wires them, each the controller of one slot

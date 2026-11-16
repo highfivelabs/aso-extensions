@@ -167,6 +167,9 @@ spec:
                     description: This is the name of the Kubernetes resource to reference.
                     type: string
                 type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
               requireAuthorizationForGroupCreation:
                 description: |-
                   RequireAuthorizationForGroupCreation: Indicates whether RBAC access is required upon group creation under the root
@@ -284,6 +287,13 @@ spec:
                 type: string
             type: object
         type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
     served: true
     storage: true
     subresources:

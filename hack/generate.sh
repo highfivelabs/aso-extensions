@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 # Generate deepcopy and CRDs from apis/ the way Azure Service Operator's
 # Taskfile does for its own (controller:generate-crds): controller-gen
 # v0.19.0, object and crd with crdVersions=v1,allowDangerousTypes=true.

@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package recoveryservices reconciles VaultsProtectedItem: backup turned on
 // for an Azure virtual machine in a Recovery Services vault

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # The command-line tools the tasks and CI call, at pinned versions, as
 # release binaries into one directory (default bin/ci; CI_TOOLS_DIR):

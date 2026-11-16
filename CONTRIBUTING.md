@@ -8,7 +8,8 @@ step with Azure Service Operator (ASO).
 Every commit carries a `Signed-off-by:` line (`git commit -s`), stating the
 [Developer Certificate of Origin](https://developercertificate.org/): you
 wrote the change, or have the right to submit it under this repository's
-MIT licence.
+Apache-2.0 licence (a change to a file copied from ASO stays under that
+file's MIT licence).
 
 ## The copy-upstream rule
 

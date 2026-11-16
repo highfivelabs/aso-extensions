@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // fakesql serves the fake Azure SQL Database server (pkg/fakecloud/azuresql)
 // over TDS with TLS, for the install test on kind. Tests only; not in the

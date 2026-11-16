@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // The reconciler of a DirectoryRoleAssignment, on the base reconciler of
 // Azure Service Operator pull request #5821 (reconciler_base.go) and shaped

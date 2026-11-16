@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # The merge gate while GitHub Actions is off (decided 2026-11-11: run the
 # workflows' jobs locally or on a VM before a commit; the workflows stay,

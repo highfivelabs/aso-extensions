@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package postgres makes a PostgreSQL server look enough like Azure
 // Database for PostgreSQL flexible server for the User kind: the

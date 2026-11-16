@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # task ci:remote-test: N checkouts with no remote-Taskfile cache (temporary
 # worktrees of HEAD) fill it at the same moment through

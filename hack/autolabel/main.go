@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Command autolabel reads a log of ASO's generator and writes the labels it
 // asks for into generator/azure-arm/<group>.yaml, so one generator run on a

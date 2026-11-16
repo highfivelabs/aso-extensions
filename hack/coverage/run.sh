@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 # The coverage dashboard (docs/coverage/README.md): how much of the Azure
 # Resource Manager API Azure Service Operator's CRDs cover, and how much more
 # ours do.

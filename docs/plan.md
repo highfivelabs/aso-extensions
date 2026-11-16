@@ -135,7 +135,20 @@ The exception that made it possible is superseded by the rule above.
   is CEL rules in the CRDs (exactly one of `localUser` and `aadUser`,
   immutable names and owners), and the one default (`azureName` is
   `metadata.name`) is computed in code. No webhook server or certificate
-  to install. The generated ARM kinds lose ASO's webhook validations (below).
+  to install. The generated ARM kinds lost ASO's webhook validations;
+  patch 0016 (`ASO_GENERATOR_CEL_VALIDATIONS`, 2026-11-16, §8 ASOOPEN)
+  puts the main ones back as CEL rules: `spec.owner` cannot change, a set
+  `spec.azureName` cannot change, and an owner reference takes `name` or
+  `armId` (`armId` alone, or `group`, `kind` and `name`, for an extension's
+  owner). A rule on ASO's `ResourceReference` (the references inside a
+  spec) is not added: one on a type used inside unbounded lists exceeds the
+  CEL cost budget of the larger CRDs (the application gateway's total,
+  measured with the API server's own estimate), so a malformed reference
+  there is refused at reconcile, on the Ready condition. Unlike the
+  webhook, the write-once rules hold before the resource exists in Azure
+  (CEL cannot read the annotation that records it): a wrong owner is fixed
+  by deleting the object and creating it again.
+  `test/e2e/cel_validation_test.go` proves them.
 - **Dependencies at ASO's versions.** `hack/check-go-mod.sh` fails if any
   module both `go.mod` files require differs from ASO's.
 
@@ -1807,6 +1820,11 @@ drop until the users they grant to are deleted).
 
 ## 8. Open questions
 
+**The answers of 2026-11-16** (the builder, on the Open decisions page,
+ASOOPEN: Q1 to Q4 and the webhook-less validation of
+`docs/handoff.md`), recorded at each question below, verbatim:
+- ASOOPEN (Q1 to Q4, CEL rules): "as recommended (Licence Apache-2.0, like the other extension repos (switch the LICENSE before publishing). Offer b1 and b2 upstream and keep ours until ASO releases them. Keep the narrow workload identity as the default. Add CEL rules for reference format and immutable owner and azureName by a generator patch. Read Secrets only in the object's namespace.)"
+
 **The answers of 2026-11-15** (the builder, on the Open decisions page),
 recorded at each question below, verbatim:
 - ASOQ (Q4, Q11 to Q14): "ASOQ: as recommended (Q11 (a) keep ASO's names in our group, retire each when ASO ships the version; Q12 keep ASO's specs commit until a needed field is past it; Q13 build `backup` by hand when a chart needs it, leave authsettings v1; Q14 hand-built `VaultsProtectedItem` at v20260701. Q4: none written.)"
@@ -1841,10 +1859,20 @@ summarised here:
 1. **Licence**: MIT, following ASO's licence, is the orchestrator's reading
    of the direction given. Apache-2.0 (the GCP sibling's licence) is
    the alternative; switch before publishing if wanted.
+
+   **Answered, 2026-11-16** (ASOOPEN): Apache-2.0, like the other extension
+   repositories. **Done**: `LICENSE` is the Apache License 2.0 text of
+   `ack-extensions` and `config-connector-extensions`; every SPDX line of
+   ours says Apache-2.0 and `hack/check-spdx.sh` requires it; files copied
+   from ASO and the code its generator writes keep Microsoft's MIT header,
+   with ASO's licence text in `LICENSE-azure-service-operator` (`NOTICE`).
 2. **Upstream first?** b1 and b2 extend ASO's own PostgreSQL user the way
    its MySQL user works, and ASO's maintainers say they want b2 (#4694).
    Offer both upstream and keep ours until a release ships them, or
    upstream only? Recommended: both, ours until the release.
+
+   **Answered, 2026-11-16** (ASOOPEN): offer b1 and b2 upstream and keep
+   ours until ASO releases them.
 
    **b2 offered, 2026-11-16.** [ASO PR #5844](https://github.com/Azure/azure-service-operator/pull/5844)
    (from the builder's fork, closes #4694). The builder signed Microsoft's
@@ -1859,6 +1887,13 @@ summarised here:
 3. **Relaxed workload identity**: the default install needs one extra
    federated credential per managed identity. Keep the narrow account as
    the default (recommended), or default to sharing ASO's?
+
+   **Answered, 2026-11-16** (ASOOPEN): keep the narrow workload identity as
+   the default. As built: `config/default` runs the manager as
+   `aso-extensions-manager` (`config/manager/manager.yaml`), sharing ASO's
+   account is the opt-in `config/share-aso-identity` (section 6, "This
+   manager"), and `tests/operator/run.sh` checks that the running pods use
+   our account. Nothing changed.
 4. **Reading Secrets cluster-wide**: like ASO, the manager reads all
    Secrets (credentials and values). ASO's `AZURE_TARGET_NAMESPACES`
    narrows its cache and ours alike; is that enough, or should the install
@@ -1867,6 +1902,21 @@ summarised here:
    **Still open, 2026-11-15.** ASOQ's answer was "as recommended", and the
    recommendation for Q4 was "none written": the install is unchanged (no
    default `AZURE_TARGET_NAMESPACES`). It waits for the builder.
+
+   **Answered, 2026-11-16** (ASOOPEN): read Secrets only in the object's
+   namespace. **Done**: every read already was (the namespace's
+   `aso-credential`, a `credential-from` Secret, whose name may not contain
+   `/`, and the Secrets a value names, a reference with no namespace field);
+   `test/e2e/secret_namespace_test.go` now proves it (a Secret of the same
+   name in another namespace is never used; `credential-from` naming
+   another namespace is refused). The right to read is its own ClusterRole,
+   `aso-extensions-secret-reader` (`config/rbac/secret-reader.yaml`), bound
+   in every namespace by default because ASO's framework keeps an informer
+   on Secrets in each namespace the manager watches; an install that sets
+   `AZURE_TARGET_NAMESPACES` adds `config/namespaced-secret-reader`, which
+   drops that binding, and binds the role per namespace (README.md,
+   "Reading Secrets"). `AZURE_TARGET_NAMESPACES` is still not set by
+   default: it is ASO's setting, shared with ASO's own manager.
 5. **Azure SQL Entra users (a1)**: copy PR #5104 here with a test that
    cannot run the real `FROM EXTERNAL PROVIDER` statement, or wait for
    upstream?

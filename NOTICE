@@ -1,9 +1,12 @@
 aso-extensions
-Copyright (c) 2026 High Five Labs. Licensed under the MIT License (LICENSE).
+Copyright 2026 High Five Labs
+
+Licensed under the Apache License, Version 2.0 (LICENSE).
 
 This product includes software from Azure Service Operator v2
 (https://github.com/Azure/azure-service-operator), Copyright (c) Microsoft
-Corporation, licensed under the MIT License.
+Corporation, licensed under the MIT License; its licence text is in
+LICENSE-azure-service-operator. Those files stay under the MIT License.
 
 Files copied from Azure Service Operator keep Microsoft's copyright and
 licence header and carry a "Modified by High Five Labs" note naming the

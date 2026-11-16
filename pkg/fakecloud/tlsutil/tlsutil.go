@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package tlsutil makes a throwaway CA and server certificates for the fake
 // cloud. Tests and test builds only.

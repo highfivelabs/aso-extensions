@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 # Run ASO's generator (hack/generate-arm.sh) until it passes, writing the
 # reference labels it asks for between runs (hack/autolabel), at most
 # ITERATIONS times (default 8); then hack/generate.sh. One offload run does

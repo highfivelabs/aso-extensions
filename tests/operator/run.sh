@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # The install on kind with the fake cloud: our CRDs install, our manager
 # runs in Azure Service Operator's namespace under its own narrow service
@@ -228,6 +228,17 @@ can list components.insights.azure.com -n team-a || fail "cannot read the owner 
 ! can list storageaccountsblobservices.storage.azure.com -n team-a || fail "may list ASO resources it only needs to get"
 ! can update resourcegroups.resources.azure.com -n team-a || fail "may change ASO's ResourceGroups"
 pass "aso-workload tokens, read secrets and the ASO owners, get any ASO resource, our kinds, write configmaps; nothing of ASO's to change"
+
+# Reading Secrets is its own ClusterRole (config/rbac/secret-reader.yaml),
+# bound in every namespace by default; config/namespaced-secret-reader drops
+# that binding for installs that bind it per namespace (docs/plan.md §8 Q4).
+step "config/namespaced-secret-reader: Secret reads not bound cluster-wide"
+kubectl kustomize tests/operator/overlay-namespaced-secret-reader > "${OUT}/install-namespaced-secret-reader.yaml"
+crb_secret_reader() { grep -A2 '^kind: ClusterRoleBinding$' "$1" | grep -q '^  name: aso-extensions-secret-reader$'; }
+crb_secret_reader "${OUT}/install.yaml" || fail "the default install does not bind aso-extensions-secret-reader cluster-wide"
+! crb_secret_reader "${OUT}/install-namespaced-secret-reader.yaml" || fail "config/namespaced-secret-reader keeps the ClusterRoleBinding"
+grep -A2 '^kind: ClusterRole$' "${OUT}/install-namespaced-secret-reader.yaml" | grep -q '^  name: aso-extensions-secret-reader$' || fail "config/namespaced-secret-reader drops the ClusterRole a RoleBinding needs"
+pass "config/namespaced-secret-reader keeps the ClusterRole and drops its ClusterRoleBinding"
 
 # team <ns> <client>: a namespace with ASO's strict workload identity credential.
 team() {

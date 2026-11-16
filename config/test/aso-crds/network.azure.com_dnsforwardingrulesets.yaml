@@ -218,6 +218,9 @@ spec:
                     description: This is the name of the Kubernetes resource to reference.
                     type: string
                 type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
               tags:
                 additionalProperties:
                   type: string

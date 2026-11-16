@@ -1,5 +1,5 @@
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # Start an offload Spot VM in the GCP_PROJECT that registers itself as a
 # just-in-time GitHub Actions runner for one job (runs-on: the label), and

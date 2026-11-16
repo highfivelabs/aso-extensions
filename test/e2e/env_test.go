@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // End-to-end tests: a real kube-apiserver (envtest) with our CRDs and the
 // ASO owner CRDs, the manager wired exactly as cmd/manager wires it (ASO's

@@ -1,0 +1,9 @@
+# Tests only: the test install (../overlay) with Secret reads bound per
+# namespace (config/namespaced-secret-reader), as a user with
+# AZURE_TARGET_NAMESPACES turns it on.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../overlay
+components:
+- ../../../config/namespaced-secret-reader

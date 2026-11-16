@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // DirectoryRoleAssignment is Microsoft Graph's unifiedRoleAssignment
 // (POST /roleManagement/directory/roleAssignments), shaped as Azure Service

@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // fakearm serves the fake Resource Manager (pkg/fakecloud/arm) over TLS, for
 // the install test on kind. Tests only; not in the manager's image. It

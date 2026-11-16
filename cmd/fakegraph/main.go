@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Command fakegraph serves the fake Microsoft Graph (pkg/fakecloud/graph)
 // over TLS, for the kind tests: directory role assignments. It accepts the

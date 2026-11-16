@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // The controller manager: our kinds on Azure Service Operator's generic
 // reconciler, with ASO's credentials. It reads the same AZURE_* settings as

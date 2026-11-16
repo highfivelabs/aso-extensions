@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package slot is the slot guard (docs/plan.md, "Moving resources between
 // slots"). Hosted Bundt runs one version of every provider per infra

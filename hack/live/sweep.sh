@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # List or delete what is in the live-test resource group (never the group
 # itself), with the run's federated credentials (credentials.sh; run.sh

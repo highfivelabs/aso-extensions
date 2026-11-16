@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Command coverage measures how much of the Azure Resource Manager API this
 // repository's CRDs and Azure Service Operator's cover. See docs/coverage/README.md.

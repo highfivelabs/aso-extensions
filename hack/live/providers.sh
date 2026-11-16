@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # Print the registration state of every resource provider in the live-test
 # subscription (hack/live/azure.env), with the run's federated credentials,

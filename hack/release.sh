@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # task release TAG=v0.1.0 (release.yml's images job): build the manager
 # image with ko for linux/amd64 and linux/arm64, push it to KO_DOCKER_REPO

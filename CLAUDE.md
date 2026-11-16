@@ -2,7 +2,7 @@
 
 This repository is **aso-extensions**: Kubernetes kinds and controllers for Azure
 that Azure Service Operator v2 (`github.com/Azure/azure-service-operator`) does not have yet, built from upstream's own code and run
-as an operator beside it. API groups are `<service>.azure.hfl.dev`. Licence MIT.
+as an operator beside it. API groups are `<service>.azure.hfl.dev`. Licence Apache-2.0 (files copied from ASO keep its MIT licence).
 It is maintained by High Five Labs for Bundt, which deploys with it; Bundt
 itself lives in its own repository and is never changed from here.
 

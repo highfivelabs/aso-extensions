@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // fakeentra serves the fake Microsoft Entra ID token service
 // (pkg/fakecloud/entra) over TLS, so stock Azure Service Operator, which

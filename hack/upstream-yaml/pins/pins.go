@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package pins reads an extension repository's upstream.yaml, the
 // machine-readable form of its UPSTREAM.md (pins, pull requests, patches,

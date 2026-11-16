@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # GitHub's runner only (ci.yml's check job): the pinned upstream checkout,
 # its Go module graph and build cache need more room than the runner

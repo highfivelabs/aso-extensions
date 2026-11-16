@@ -21,6 +21,7 @@ import (
 // +kubebuilder:resource:categories={azure,management}
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
+// +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName) == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName == oldSelf.spec.azureName)",message="spec.azureName cannot be changed or removed once set; delete the object and create it again",fieldPath=".spec.azureName",reason=FieldValueForbidden
 // +kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="Severity",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].severity"
 // +kubebuilder:printcolumn:name="Reason",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].reason"

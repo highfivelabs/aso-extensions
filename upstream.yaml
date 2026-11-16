@@ -1,5 +1,5 @@
 # Copyright 2026 High Five Labs
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 #
 # UPSTREAM.md's tables, machine-readable: the pins, the patch series and the
 # copied files. UPSTREAM.md stays the prose and the record people read; this
@@ -49,6 +49,7 @@ patches:
   - {file: patches/azure-service-operator/0013-generator-external-owner-kind.patch, pin: azure-service-operator, upstream_candidate: "no"}
   - {file: patches/azure-service-operator/0014-generator-fixed-names.patch, pin: azure-service-operator, upstream_candidate: "no"}
   - {file: patches/azure-service-operator/0015-generator-unused-arm-input.patch, pin: azure-service-operator, upstream_candidate: "yes"}
+  - {file: patches/azure-service-operator/0016-cel-write-once-and-owner-rules.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
 
 # "What is copied, from where": here (our paths) and from (ASO's paths at
 # the pin, from the repository root, so under v2/; a directory ends in /).

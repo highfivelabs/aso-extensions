@@ -1,5 +1,5 @@
 // Copyright 2026 High Five Labs
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package arm is a fake Azure Resource Manager, for tests and test builds
 // only: a store of resources by ARM ID (PUT, GET, DELETE of any resource
