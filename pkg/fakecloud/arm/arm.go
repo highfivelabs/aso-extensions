@@ -61,6 +61,9 @@
 // scopes are checked too (kubernetesconfiguration.go: the cluster, protected
 // settings kept but not returned).
 //
+// An App Service app's app settings and connection strings are served as
+// Azure serves them: PUT and POST .../list only (web.go).
+//
 // Activity log profiles and workbook templates are checked too (insights.go:
 // one log profile per subscription, its destination, a template's galleries).
 //
@@ -257,6 +260,9 @@ func (a *ARM) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if a.serveUnlockDelete(rec, r, path) {
+		return
+	}
+	if a.serveWebConfig(rec, r, path) {
 		return
 	}
 	if a.serveBackup(rec, r, path) {

@@ -98,6 +98,16 @@ upstream's); the catalog's chart tests do that.
   `<site>.azurewebsites.net`, is made by Azure with the site and is never
   deleted on its own; the fake deletes it on a DELETE. Found live, run
   `ax12160408f5` (`docs/live-runs.md`).
+- App Service app settings and connection strings (`web.go`): PUT replaces
+  the set and `POST .../list` reads it; a GET or DELETE of a section is
+  refused with 405, which is the fake's reading of the 2026-07-15 spec (it
+  has neither), not checked live. A connection string's type is checked
+  against the spec's enum. Not modelled: a `Site` or slot PUT whose
+  `siteConfig.appSettings` or `siteConfig.connectionStrings` Azure writes to
+  the same sections (the fake keeps the site's body apart, so two writers
+  never show as fighting); Key Vault references in values
+  (`@Microsoft.KeyVault(...)`), which Azure resolves and the fake keeps as
+  text; locks on a section (a `ReadOnly` lock refuses the POST in Azure).
 
 - Resource Manager's `systemData`: the fake writes `createdAt` when a
   resource is made, keeps it on every later PUT, and sets

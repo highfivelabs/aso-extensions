@@ -1,0 +1,282 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: sitesconfigconnectionstrings.web.azure.hfl.dev
+spec:
+  group: web.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - web
+    - hfl
+    kind: SitesConfigConnectionStrings
+    listKind: SitesConfigConnectionStringsList
+    plural: sitesconfigconnectionstrings
+    singular: sitesconfigconnectionstrings
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260715
+    schema:
+      openAPIV3Schema:
+        description: |-
+          SitesConfigConnectionStrings is the whole set of a web app's (or
+          deployment slot's) connection strings, Microsoft.Web
+          sites/config/connectionstrings, each with its type and a value given in
+          plain text or read from a key of a Kubernetes Secret or ConfigMap. The set
+          is authoritative, as SitesConfigAppSettings's is: leave
+          siteConfig.connectionStrings out of ASO's Site and give one
+          SitesConfigConnectionStrings per site or slot. Deleting the object leaves
+          the last connection strings on the app (Azure has no DELETE for them).
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              connectionStrings:
+                description: |-
+                  ConnectionStrings are the app's connection strings, the whole set. An
+                  empty list removes every connection string.
+                items:
+                  description: ConnectionString is one connection string.
+                  properties:
+                    name:
+                      description: Name is the connection string's name.
+                      maxLength: 1024
+                      minLength: 1
+                      type: string
+                    template:
+                      description: |-
+                        Template, with valueFromSecret or valueFromConfig, is text holding
+                        $(value) where the referenced value goes (each occurrence), for a value that is only
+                        partly secret: a storage connection string around an access key,
+                        "DefaultEndpointsProtocol=https;AccountName=st1;AccountKey=$(value)".
+                      maxLength: 8192
+                      type: string
+                    type:
+                      description: Type is the kind of database or service the connection
+                        string is for.
+                      enum:
+                      - MySql
+                      - SQLServer
+                      - SQLAzure
+                      - Custom
+                      - NotificationHub
+                      - ServiceBus
+                      - EventHub
+                      - ApiHub
+                      - DocDb
+                      - RedisCache
+                      - PostgreSQL
+                      type: string
+                    value:
+                      description: |-
+                        Value is the connection string in plain text. Use valueFromSecret
+                        when it holds a password or a key.
+                      type: string
+                    valueFromConfig:
+                      description: |-
+                        ValueFromConfig reads the connection string from a key of a
+                        Kubernetes ConfigMap in this namespace.
+                      properties:
+                        key:
+                          description: Key is the key in the Kubernetes configmap
+                            being referenced
+                          type: string
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap being referenced.
+                            The configmap must be in the same namespace as the resource
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
+                    valueFromSecret:
+                      description: |-
+                        ValueFromSecret reads the connection string from a key of a
+                        Kubernetes Secret in this namespace. A change to the Secret is sent
+                        to Azure. The value never appears in the status.
+                      properties:
+                        key:
+                          description: Key is the key in the Kubernetes secret being
+                            referenced
+                          type: string
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes secret being referenced.
+                            The secret must be in the same namespace as the resource
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
+                  required:
+                  - name
+                  - type
+                  type: object
+                  x-kubernetes-validations:
+                  - message: set exactly one of value, valueFromSecret and valueFromConfig
+                    rule: '[has(self.value), has(self.valueFromSecret), has(self.valueFromConfig)].filter(x,
+                      x).size() == 1'
+                  - message: template takes valueFromSecret or valueFromConfig and
+                      holds $(value) where the referenced value goes
+                    rule: '!has(self.template) || ((has(self.valueFromSecret) || has(self.valueFromConfig))
+                      && self.template.contains(''$(value)''))'
+                maxItems: 1000
+                type: array
+                x-kubernetes-list-map-keys:
+                - name
+                x-kubernetes-list-type: map
+              owner:
+                description: |-
+                  Owner is the app the connection strings belong to: a web.azure.com
+                  Site (by name, the default), a web.azure.hfl.dev SitesSlot (name,
+                  group and kind), or either by armId.
+                properties:
+                  armId:
+                    description: ARMID is the ARM ID of a site or slot that is not
+                      in Kubernetes.
+                    maxLength: 1024
+                    type: string
+                  group:
+                    description: |-
+                      Group is the owner's API group: web.azure.com (the default) for a
+                      Site, web.azure.hfl.dev for a SitesSlot.
+                    maxLength: 253
+                    type: string
+                  kind:
+                    description: 'Kind is the owner''s kind: Site (the default) or
+                      SitesSlot.'
+                    maxLength: 63
+                    type: string
+                  name:
+                    description: Name is the name of the Site or SitesSlot object,
+                      in this namespace.
+                    maxLength: 253
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+                - message: a group needs its kind (Site or SitesSlot)
+                  rule: '!has(self.group) || has(self.kind)'
+                - message: the owner is a web.azure.com Site or a web.azure.hfl.dev
+                    SitesSlot
+                  rule: '!has(self.kind) || (self.kind == ''Site'' && (!has(self.group)
+                    || self.group == ''web.azure.com'')) || (self.kind == ''SitesSlot''
+                    && has(self.group) && self.group == ''web.azure.hfl.dev'')'
+                - message: armId is the ID of a Microsoft.Web site or of one of its
+                    slots
+                  rule: '!has(self.armId) || self.armId.matches(''(?i)^/subscriptions/[-0-9a-f]+/resourceGroups/[-._()a-z0-9]+/providers/Microsoft[.]Web/sites/[-a-z0-9]+(/slots/[-a-z0-9]+)?$'')'
+            required:
+            - owner
+            type: object
+            x-kubernetes-validations:
+            - message: owner is immutable
+              rule: self.owner == oldSelf.owner
+          status:
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              connectionStrings:
+                description: |-
+                  ConnectionStrings are the names and types of the connection strings
+                  the app has, read from Azure after the last write, sorted by name.
+                  Values are never shown.
+                items:
+                  description: |-
+                    ConnectionStringStatus is a connection string's name and type, without
+                    its value.
+                  properties:
+                    name:
+                      type: string
+                    type:
+                      type: string
+                  type: object
+                type: array
+              id:
+                description: Id is the section's ARM ID (.../config/connectionstrings).
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
