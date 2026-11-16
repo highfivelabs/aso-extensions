@@ -246,8 +246,8 @@ extension that completes without a call (`site_config_extensions.go`).
 
 Facts learned the hard way:
 - CRDs have one version; the controller is registered on the API type; there
-  are no webhooks (so no admission validation beyond the CRD schema, and
-  `AzureName()` falls back to `metadata.name`). `docs/plan.md` §2 lists the
+  are no webhooks (so no admission validation beyond the CRD schema and
+  patch 0016's CEL rules, and `AzureName()` falls back to `metadata.name`). `docs/plan.md` §2 lists the
   assumption to revisit before the repository goes public.
 - `hack/generate.sh` sets `LC_ALL=C`: the order of the CRD kustomization's list
   must not depend on the machine (the laptop and the Ubuntu machine differ).
@@ -611,13 +611,18 @@ kinds over a conversion webhook, avoiding a second API version; Azure SQL
 Entra users (copy #5104 and ship it); Entra directory roles (build unless ASO
 has them); keep `User` and `Export`; the opt-in Secret writer confirmed; the
 shortened network manager names approved; do not wait for upstream releases.
-Still open:
-1. Open questions 1 to 4 of §8: licence (MIT vs Apache-2.0), offering b1
-   and b2 upstream, relaxed workload identity as the default, reading Secrets
-   cluster-wide.
-2. **Webhook-less validation**: generated kinds lack ASO's checks (reference
-   format, immutable `owner` and `azureName`). If wanted, add CEL rules by a
-   generator patch; not done.
+Answered 2026-11-16 (ASOOPEN, `docs/plan.md` §8 Q1 to Q4), the builder's
+words: "as recommended (Licence Apache-2.0, like the other extension repos (switch the LICENSE before publishing). Offer b1 and b2 upstream and keep ours until ASO releases them. Keep the narrow workload identity as the default. Add CEL rules for reference format and immutable owner and azureName by a generator patch. Read Secrets only in the object's namespace.)"
+Done: the licence is Apache-2.0 (ASO's files keep MIT,
+`LICENSE-azure-service-operator`); b1 and b2 go upstream (b2 is ASO PR
+#5844) and ours stay until a release; the narrow identity stays the default
+(unchanged); patch 0016 adds the CEL rules (immutable `owner` and
+`azureName`, the owner reference's form; not on `ResourceReference`, which
+exceeds the CEL cost budget, `docs/plan.md` §2); Secrets are read only in
+the object's namespace (`test/e2e/secret_namespace_test.go`), and the read
+right is its own role, which `config/namespaced-secret-reader` lets an
+install bind per namespace. Linear HFL-627 is closed with a pointer here.
+Still open: none of §8 Q1 to Q4.
 
 ## Where to look
 

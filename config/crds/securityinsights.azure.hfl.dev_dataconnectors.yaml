@@ -559,6 +559,10 @@ spec:
                     description: This is the name of the Kubernetes resource to reference.
                     type: string
                 type: object
+                x-kubernetes-validations:
+                - message: set armId alone, or group, kind and name together
+                  rule: 'has(self.armId) ? !(has(self.group) || has(self.kind) ||
+                    has(self.name)) : (has(self.group) && has(self.kind) && has(self.name))'
               premiumMicrosoftDefenderForThreatIntelligence:
                 description: 'PremiumMicrosoftDefenderForThreatIntelligence: Mutually
                   exclusive with all other properties'
@@ -2582,6 +2586,20 @@ spec:
                 type: object
             type: object
         type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || oldSelf.spec.azureName
+            == '''' || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
     served: true
     storage: true
     subresources:

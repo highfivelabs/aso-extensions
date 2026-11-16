@@ -40,6 +40,9 @@ export ASO_GENERATOR_SUBSCRIPTION_EXTENSION=1
 export ASO_GENERATOR_MORE_EXTENSION_SCOPES=1
 export ASO_GENERATOR_RAPID_ONEOF_RELATED=1
 export ASO_GENERATOR_EXTENSION_CHILDREN=1
+# CEL rules for what ASO's webhooks would check on update (patch 0016):
+# spec.owner and a set spec.azureName cannot change.
+export ASO_GENERATOR_CEL_VALIDATIONS=1
 # Fixed-name child resources (patch 0014; generator/fixed-names.txt).
 export ASO_GENERATOR_FIXED_NAMES="$(sed -e 's/#.*//' -e 's/[[:space:]]//g' generator/fixed-names.txt | grep . | paste -sd, -)"
 

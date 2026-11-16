@@ -22,6 +22,7 @@ import (
 // +kubebuilder:resource:categories={azure,resources}
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
+// +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec) && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)",message="spec.owner cannot be changed or removed; delete the object and create it again",fieldPath=".spec.owner",reason=FieldValueForbidden
 // +kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="Severity",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].severity"
 // +kubebuilder:printcolumn:name="Reason",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].reason"
