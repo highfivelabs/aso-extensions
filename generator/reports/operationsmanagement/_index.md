@@ -8,7 +8,9 @@ no_list: true
 
 ### Released
 
-| Resource | ARM Version        | CRD Version      | Supported From | Sample |
-|----------|--------------------|------------------|----------------|--------|
-| Solution | 2015-11-01-preview | v20151101preview | v0.1.0         | -      |
+| Resource                | ARM Version        | CRD Version      | Supported From | Sample |
+|-------------------------|--------------------|------------------|----------------|--------|
+| ManagementAssociation   | 2015-11-01-preview | v20151101preview | v0.1.0         | -      |
+| ManagementConfiguration | 2015-11-01-preview | v20151101preview | v0.1.0         | -      |
+| Solution                | 2015-11-01-preview | v20151101preview | v0.1.0         | -      |
 

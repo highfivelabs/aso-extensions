@@ -251,11 +251,6 @@ type SolutionList struct {
 	Items           []Solution `json:"items"`
 }
 
-// +kubebuilder:validation:Enum={"2015-11-01-preview"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2015-11-01-preview")
-
 type Solution_Spec struct {
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
 	// doesn't have to be.

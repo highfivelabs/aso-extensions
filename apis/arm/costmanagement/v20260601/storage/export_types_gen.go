@@ -170,12 +170,6 @@ type ExportList struct {
 	Items           []Export `json:"items"`
 }
 
-// Storage version of v20260601.APIVersion
-// +kubebuilder:validation:Enum={"2026-06-01"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2026-06-01")
-
 // Storage version of v20260601.Export_Spec
 type Export_Spec struct {
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
@@ -358,18 +352,6 @@ type SystemAssignedServiceIdentity_STATUS struct {
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	TenantId    *string                `json:"tenantId,omitempty"`
 	Type        *string                `json:"type,omitempty"`
-}
-
-// Storage version of v20260601.SystemData_STATUS
-// Metadata pertaining to creation and last modification of the resource.
-type SystemData_STATUS struct {
-	CreatedAt          *string                `json:"createdAt,omitempty"`
-	CreatedBy          *string                `json:"createdBy,omitempty"`
-	CreatedByType      *string                `json:"createdByType,omitempty"`
-	LastModifiedAt     *string                `json:"lastModifiedAt,omitempty"`
-	LastModifiedBy     *string                `json:"lastModifiedBy,omitempty"`
-	LastModifiedByType *string                `json:"lastModifiedByType,omitempty"`
-	PropertyBag        genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
 // Storage version of v20260601.ExportDataset

@@ -4,6 +4,70 @@ github.com/highfivelabs/aso-extensions/apis/arm/operationsmanagement/v20151101pr
 APIVersion: Enum (1 value)
 └── "2015-11-01-preview"
 
+ManagementAssociation: Resource
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   ├── Properties: *Object (2 properties)
+│   │   ├── ApplicationId: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (2 properties)
+    │   ├── ApplicationId: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+ManagementConfiguration: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (5 properties)
+│   │   ├── ApplicationId: *string
+│   │   ├── Parameters: Object (3 properties)[]
+│   │   │   ├── Name: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Value: *string
+│   │   ├── ParentResourceType: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Template: map[string]v1.JSON
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (6 properties)
+    │   ├── ApplicationId: *string
+    │   ├── Parameters: Object (3 properties)[]
+    │   │   ├── Name: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Value: *string
+    │   ├── ParentResourceType: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisioningState: *string
+    │   └── Template: map[string]v1.JSON
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 Solution: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (9 properties)

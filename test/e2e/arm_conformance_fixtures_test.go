@@ -219,6 +219,34 @@ func init() {
 	f["SecurityConnectorsDevOpsAzureDevOpsOrg"] = conformanceFixture{annotations: detach, stays: true}
 	f["SecurityConnectorsDevOpsAzureDevOpsProject"] = conformanceFixture{annotations: detach, stays: true}
 	f["SecurityConnectorsDevOpsAzureDevOpsRepo"] = conformanceFixture{annotations: detach, stays: true}
+	// Foundation batch 2: kinds with required fields or specific owners.
+	f["DeploymentSafeguard"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"level": "Warn"}
+	}}
+	f["ManagementAssociation"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"applicationId": c.add(c.in("Microsoft.Compute/virtualMachines/vm"))}}
+	}}
+	f["Budget"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{
+			"category":   "Cost",
+			"amount":     100.0,
+			"timeGrain":  "Monthly",
+			"timePeriod": map[string]any{"startDate": "2026-01-01T00:00:00Z"},
+		}
+	}}
+	f["MyWorkbook"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"displayName": "Conformance", "category": "workbook", "serializedData": "{}"}
+	}}
+	f["GuestDiagnosticSettingsAssociation"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"guestDiagnosticSettingsName": "default"}
+	}}
+	f["TenantActionGroup"] = conformanceFixture{
+		owner: func(c *conformanceContext) string {
+			return c.add("/providers/Microsoft.Management/managementGroups/conformance-mg")
+		},
+		spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"location": "Global", "enabled": true, "groupShortName": "conf"}
+		}}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}

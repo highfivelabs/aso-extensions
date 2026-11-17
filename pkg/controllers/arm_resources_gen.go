@@ -51,6 +51,8 @@ import (
 	containerregistry_v20251101 "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101"
 	containerregistry_v20251101s "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20251101/storage"
 	containerservice_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/customizations"
+	containerservice_v20250701 "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20250701"
+	containerservice_v20250701s "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20250701/storage"
 	containerservice_v20260501 "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260501"
 	containerservice_v20260501s "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260501/storage"
 	containerservice_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/containerservice/v20260601"
@@ -70,12 +72,18 @@ import (
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
 	insights_v20160301 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301"
 	insights_v20160301s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301/storage"
+	insights_v20180601p "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20180601preview"
+	insights_v20180601ps "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20180601preview/storage"
 	insights_v20200301p "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20200301preview"
 	insights_v20200301ps "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20200301preview/storage"
 	insights_v20201120 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20201120"
 	insights_v20201120s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20201120/storage"
+	insights_v20210308 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210308"
+	insights_v20210308s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210308/storage"
 	insights_v20210901 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901"
 	insights_v20210901s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20210901/storage"
+	insights_v20230301p "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20230301preview"
+	insights_v20230301ps "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20230301preview/storage"
 	keyvault_customizations "github.com/highfivelabs/aso-extensions/apis/arm/keyvault/customizations"
 	keyvault_v20260515 "github.com/highfivelabs/aso-extensions/apis/arm/keyvault/v20260515"
 	keyvault_v20260515s "github.com/highfivelabs/aso-extensions/apis/arm/keyvault/v20260515/storage"
@@ -889,10 +897,12 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(containerservice_v20250701.DeploymentSafeguard)})
 	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.ManagedClustersManagedNamespace)})
 	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.ManagedClustersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260501.Snapshot)})
 	result = append(result, &registration.StorageType{Obj: new(containerservice_v20260601.FleetsManagedNamespace)})
+	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.Budget)})
 	result = append(result, &registration.StorageType{
 		Obj: new(costmanagement_v20260601.Export),
 		Indexes: []registration.Index{
@@ -932,11 +942,15 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20160301.LogProfile)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20180601p.GuestDiagnosticSetting)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20180601p.GuestDiagnosticSettingsAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20200301p.ComponentsLinkedStorageAccount)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20201120.WorkbookTemplate)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20210308.MyWorkbook)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20210901.PrivateLinkScopesScopedResource)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20230301p.TenantActionGroup)})
 	result = append(result, &registration.StorageType{
 		Obj: new(keyvault_v20260515.ManagedHSM),
 		Indexes: []registration.Index{
@@ -1272,6 +1286,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesTable)})
+	result = append(result, &registration.StorageType{Obj: new(operationsmanagement_v20151101p.ManagementAssociation)})
+	result = append(result, &registration.StorageType{Obj: new(operationsmanagement_v20151101p.ManagementConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(operationsmanagement_v20151101p.Solution)})
 	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyAttestation)})
 	result = append(result, &registration.StorageType{Obj: new(policyinsights_v20241001.PolicyRemediation)})
@@ -1710,6 +1726,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesScopeMap)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesToken)},
 		&registration.KnownType{Obj: new(containerregistry_v20251101s.RegistriesWebhook)})
+	result = append(result, &registration.KnownType{Obj: new(containerservice_v20250701.DeploymentSafeguard)})
+	result = append(result, &registration.KnownType{Obj: new(containerservice_v20250701s.DeploymentSafeguard)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(containerservice_v20260501.ManagedClustersManagedNamespace)},
@@ -1722,8 +1740,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(containerservice_v20260501s.Snapshot)})
 	result = append(result, &registration.KnownType{Obj: new(containerservice_v20260601.FleetsManagedNamespace)})
 	result = append(result, &registration.KnownType{Obj: new(containerservice_v20260601s.FleetsManagedNamespace)})
-	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601.Export)}, &registration.KnownType{Obj: new(costmanagement_v20260601.ScheduledAction)})
-	result = append(result, &registration.KnownType{Obj: new(costmanagement_v20260601s.Export)}, &registration.KnownType{Obj: new(costmanagement_v20260601s.ScheduledAction)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(costmanagement_v20260601.Budget)},
+		&registration.KnownType{Obj: new(costmanagement_v20260601.Export)},
+		&registration.KnownType{Obj: new(costmanagement_v20260601.ScheduledAction)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(costmanagement_v20260601s.Budget)},
+		&registration.KnownType{Obj: new(costmanagement_v20260601s.Export)},
+		&registration.KnownType{Obj: new(costmanagement_v20260601s.ScheduledAction)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
 	result = append(
@@ -1770,10 +1796,14 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331s.DedicatedHsm)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20160301.LogProfile)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20160301s.LogProfile)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20180601p.GuestDiagnosticSetting)}, &registration.KnownType{Obj: new(insights_v20180601p.GuestDiagnosticSettingsAssociation)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20180601ps.GuestDiagnosticSetting)}, &registration.KnownType{Obj: new(insights_v20180601ps.GuestDiagnosticSettingsAssociation)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20200301p.ComponentsLinkedStorageAccount)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20200301ps.ComponentsLinkedStorageAccount)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20201120.WorkbookTemplate)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20201120s.WorkbookTemplate)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20210308.MyWorkbook)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20210308s.MyWorkbook)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(insights_v20210901.PrivateLinkScope)},
@@ -1784,6 +1814,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScope)},
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(insights_v20210901s.PrivateLinkScopesScopedResource)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20230301p.TenantActionGroup)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20230301ps.TenantActionGroup)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(keyvault_v20260515.ManagedHSM)},
@@ -1968,8 +2000,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesSavedSearch)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesStorageInsightConfig)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesTable)})
-	result = append(result, &registration.KnownType{Obj: new(operationsmanagement_v20151101p.Solution)})
-	result = append(result, &registration.KnownType{Obj: new(operationsmanagement_v20151101ps.Solution)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(operationsmanagement_v20151101p.ManagementAssociation)},
+		&registration.KnownType{Obj: new(operationsmanagement_v20151101p.ManagementConfiguration)},
+		&registration.KnownType{Obj: new(operationsmanagement_v20151101p.Solution)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(operationsmanagement_v20151101ps.ManagementAssociation)},
+		&registration.KnownType{Obj: new(operationsmanagement_v20151101ps.ManagementConfiguration)},
+		&registration.KnownType{Obj: new(operationsmanagement_v20151101ps.Solution)})
 	result = append(result, &registration.KnownType{Obj: new(policyinsights_v20241001.PolicyAttestation)}, &registration.KnownType{Obj: new(policyinsights_v20241001.PolicyRemediation)})
 	result = append(result, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyAttestation)}, &registration.KnownType{Obj: new(policyinsights_v20241001s.PolicyRemediation)})
 	result = append(
@@ -2149,6 +2189,8 @@ func createScheme() *runtime.Scheme {
 	_ = containerregistry_v20190401s.AddToScheme(scheme)
 	_ = containerregistry_v20251101.AddToScheme(scheme)
 	_ = containerregistry_v20251101s.AddToScheme(scheme)
+	_ = containerservice_v20250701.AddToScheme(scheme)
+	_ = containerservice_v20250701s.AddToScheme(scheme)
 	_ = containerservice_v20260501.AddToScheme(scheme)
 	_ = containerservice_v20260501s.AddToScheme(scheme)
 	_ = containerservice_v20260601.AddToScheme(scheme)
@@ -2163,12 +2205,18 @@ func createScheme() *runtime.Scheme {
 	_ = hardwaresecuritymodules_v20250331s.AddToScheme(scheme)
 	_ = insights_v20160301.AddToScheme(scheme)
 	_ = insights_v20160301s.AddToScheme(scheme)
+	_ = insights_v20180601p.AddToScheme(scheme)
+	_ = insights_v20180601ps.AddToScheme(scheme)
 	_ = insights_v20200301p.AddToScheme(scheme)
 	_ = insights_v20200301ps.AddToScheme(scheme)
 	_ = insights_v20201120.AddToScheme(scheme)
 	_ = insights_v20201120s.AddToScheme(scheme)
+	_ = insights_v20210308.AddToScheme(scheme)
+	_ = insights_v20210308s.AddToScheme(scheme)
 	_ = insights_v20210901.AddToScheme(scheme)
 	_ = insights_v20210901s.AddToScheme(scheme)
+	_ = insights_v20230301p.AddToScheme(scheme)
+	_ = insights_v20230301ps.AddToScheme(scheme)
 	_ = keyvault_v20260515.AddToScheme(scheme)
 	_ = keyvault_v20260515s.AddToScheme(scheme)
 	_ = kubernetesconfiguration_v20230501.AddToScheme(scheme)
@@ -2318,10 +2366,12 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &containerregistry_customizations.RegistriesTaskExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesTokenExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesWebhookExtension{})
+	result = append(result, &containerservice_customizations.DeploymentSafeguardExtension{})
 	result = append(result, &containerservice_customizations.FleetsManagedNamespaceExtension{})
 	result = append(result, &containerservice_customizations.ManagedClustersManagedNamespaceExtension{})
 	result = append(result, &containerservice_customizations.ManagedClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &containerservice_customizations.SnapshotExtension{})
+	result = append(result, &costmanagement_customizations.BudgetExtension{})
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &costmanagement_customizations.ScheduledActionExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
@@ -2343,10 +2393,14 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.DedicatedHsmExtension{})
 	result = append(result, &insights_customizations.ComponentsLinkedStorageAccountExtension{})
+	result = append(result, &insights_customizations.GuestDiagnosticSettingExtension{})
+	result = append(result, &insights_customizations.GuestDiagnosticSettingsAssociationExtension{})
 	result = append(result, &insights_customizations.LogProfileExtension{})
+	result = append(result, &insights_customizations.MyWorkbookExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &insights_customizations.PrivateLinkScopesScopedResourceExtension{})
+	result = append(result, &insights_customizations.TenantActionGroupExtension{})
 	result = append(result, &insights_customizations.WorkbookTemplateExtension{})
 	result = append(result, &keyvault_customizations.ManagedHSMExtension{})
 	result = append(result, &keyvault_customizations.ManagedHSMsKeyExtension{})
@@ -2432,6 +2486,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &operationalinsights_customizations.WorkspacesSavedSearchExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesStorageInsightConfigExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesTableExtension{})
+	result = append(result, &operationsmanagement_customizations.ManagementAssociationExtension{})
+	result = append(result, &operationsmanagement_customizations.ManagementConfigurationExtension{})
 	result = append(result, &operationsmanagement_customizations.SolutionExtension{})
 	result = append(result, &policyinsights_customizations.PolicyAttestationExtension{})
 	result = append(result, &policyinsights_customizations.PolicyRemediationExtension{})

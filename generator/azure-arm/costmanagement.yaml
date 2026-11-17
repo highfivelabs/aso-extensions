@@ -20,6 +20,12 @@ typeFilters:
 
 groupModelConfiguration:
   2026-06-01:
+    Budget:
+      $exportAs: Budget
+      $supportedFrom: v0.1.0
+    Notification:
+      ContactGroups:
+        $referenceType: arm # action group ARM IDs to notify when threshold is exceeded
     Export:
       $exportAs: Export
       $supportedFrom: v0.1.0

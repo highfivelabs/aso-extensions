@@ -24,3 +24,17 @@ groupModelConfiguration:
         $referenceType: arm
     SolutionProperties_STATUS:
       $resourceEmbeddedInParent: Solution
+    ManagementAssociation:
+      $exportAs: ManagementAssociation
+      $supportedFrom: v0.1.0
+    ManagementAssociationProperties:
+      $resourceEmbeddedInParent: ManagementAssociation
+    ManagementAssociationProperties_STATUS:
+      $resourceEmbeddedInParent: ManagementAssociation
+    ManagementConfiguration:
+      $exportAs: ManagementConfiguration
+      $supportedFrom: v0.1.0
+    ManagementConfigurationProperties:
+      $resourceEmbeddedInParent: ManagementConfiguration
+    ManagementConfigurationProperties_STATUS:
+      $resourceEmbeddedInParent: ManagementConfiguration
