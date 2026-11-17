@@ -160,7 +160,7 @@ func TestVirtualHubRouteMapAndConnectionPolicy(t *testing.T) {
 			Owner:         &genruntime.KnownResourceReference{Name: "rg"},
 			Location:      ptr("westus"),
 			AddressPrefix: ptr("10.200.0.0/24"),
-			VirtualWan:    &network.SubResource{Reference: &genruntime.ResourceReference{Name: "wan"}},
+			VirtualWan:    &network.SubResource{Reference: ours("VirtualWan", "wan")},
 		},
 	}
 	routeMap := &network.VirtualHubsRouteMap{

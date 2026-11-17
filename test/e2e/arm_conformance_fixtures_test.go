@@ -262,7 +262,7 @@ func init() {
 				"destinationIps":   []any{"10.1.0.0/24"},
 				"sourcePorts":      []any{"0-65535"},
 				"destinationPorts": []any{"443"},
-				"protocols":        []any{"Tcp"},
+				"protocols":        []any{"TCP"},
 			},
 		}}
 	}}
