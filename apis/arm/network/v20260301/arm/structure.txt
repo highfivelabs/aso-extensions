@@ -1459,6 +1459,141 @@ ApplicationGateway_Spec: Object (6 properties)
 ├── Tags: map[string]string
 └── Zones: string[]
 
+DdosCustomPolicy_STATUS: Object (7 properties)
+├── Etag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (6 properties)
+│   ├── DetectionRules: Object (5 properties)[]
+│   │   ├── Etag: *string
+│   │   ├── Id: *string
+│   │   ├── Name: *string
+│   │   ├── Properties: *Object (3 properties)
+│   │   │   ├── DetectionMode: *Enum (1 value)
+│   │   │   │   └── "TrafficThreshold"
+│   │   │   ├── ProvisioningState: *Enum (6 values)
+│   │   │   │   ├── "Canceled"
+│   │   │   │   ├── "Creating"
+│   │   │   │   ├── "Deleting"
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Succeeded"
+│   │   │   │   └── "Updating"
+│   │   │   └── TrafficDetectionRule: *Object (2 properties)
+│   │   │       ├── PacketsPerSecond: *int
+│   │   │       └── TrafficType: *Enum (3 values)
+│   │   │           ├── "Tcp"
+│   │   │           ├── "TcpSyn"
+│   │   │           └── "Udp"
+│   │   └── Type: *string
+│   ├── FrontEndIpConfiguration: Object (1 property)[]
+│   │   └── Id: *string
+│   ├── MitigationRules: Object (5 properties)[]
+│   │   ├── Etag: *string
+│   │   ├── Id: *string
+│   │   ├── Name: *string
+│   │   ├── Properties: *Object (5 properties)
+│   │   │   ├── ProvisioningState: *Enum (6 values)
+│   │   │   │   ├── "Canceled"
+│   │   │   │   ├── "Creating"
+│   │   │   │   ├── "Deleting"
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Succeeded"
+│   │   │   │   └── "Updating"
+│   │   │   ├── SourcePolicyOverrides: Object (2 properties)[]
+│   │   │   │   ├── Conditions: *Object (2 properties)
+│   │   │   │   │   ├── GeoMatches: Object (2 properties)[]
+│   │   │   │   │   │   ├── Continent: *Enum (7 values)
+│   │   │   │   │   │   │   ├── "Africa"
+│   │   │   │   │   │   │   ├── "Antarctica"
+│   │   │   │   │   │   │   ├── "Asia"
+│   │   │   │   │   │   │   ├── "Europe"
+│   │   │   │   │   │   │   ├── "NorthAmerica"
+│   │   │   │   │   │   │   ├── "Oceania"
+│   │   │   │   │   │   │   └── "SouthAmerica"
+│   │   │   │   │   │   └── CountryCode: *string
+│   │   │   │   │   └── IpPrefixes: string[]
+│   │   │   │   └── PolicyAction: *Object (1 property)
+│   │   │   │       └── ActionType: *Enum (2 values)
+│   │   │   │           ├── "Deny"
+│   │   │   │           └── "Permit"
+│   │   │   ├── TcpDefaultMitigations: *Object (2 properties)
+│   │   │   │   ├── PerSourceConnectionRateLimiting: *Object (1 property)
+│   │   │   │   │   └── ConnectionsPerSecond: *int
+│   │   │   │   └── PerSourceRateLimiting: *Object (1 property)
+│   │   │   │       └── PacketsPerSecond: *int
+│   │   │   ├── TrafficScope: *Enum (2 values)
+│   │   │   │   ├── "Tcp"
+│   │   │   │   └── "Udp"
+│   │   │   └── UdpDefaultMitigations: *Object (1 property)
+│   │   │       └── PerSourceRateLimiting: *Object (1 property)
+│   │   │           └── PacketsPerSecond: *int
+│   │   └── Type: *string
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   ├── PublicIPAddresses: Object (1 property)[]
+│   │   └── Id: *string
+│   └── ResourceGuid: *string
+├── Tags: map[string]string
+└── Type: *string
+
+DdosCustomPolicy_Spec: Object (4 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (3 properties)
+│   ├── DetectionRules: Object (3 properties)[]
+│   │   ├── Id: *string
+│   │   ├── Name: *string
+│   │   └── Properties: *Object (2 properties)
+│   │       ├── DetectionMode: *Enum (1 value)
+│   │       │   └── "TrafficThreshold"
+│   │       └── TrafficDetectionRule: *Object (2 properties)
+│   │           ├── PacketsPerSecond: *int
+│   │           └── TrafficType: *Enum (3 values)
+│   │               ├── "Tcp"
+│   │               ├── "TcpSyn"
+│   │               └── "Udp"
+│   ├── FrontEndIpConfiguration: Object (1 property)[]
+│   │   └── Id: *string
+│   └── MitigationRules: Object (3 properties)[]
+│       ├── Id: *string
+│       ├── Name: *string
+│       └── Properties: *Object (4 properties)
+│           ├── SourcePolicyOverrides: Object (2 properties)[]
+│           │   ├── Conditions: *Object (2 properties)
+│           │   │   ├── GeoMatches: Object (2 properties)[]
+│           │   │   │   ├── Continent: *Enum (7 values)
+│           │   │   │   │   ├── "Africa"
+│           │   │   │   │   ├── "Antarctica"
+│           │   │   │   │   ├── "Asia"
+│           │   │   │   │   ├── "Europe"
+│           │   │   │   │   ├── "NorthAmerica"
+│           │   │   │   │   ├── "Oceania"
+│           │   │   │   │   └── "SouthAmerica"
+│           │   │   │   └── CountryCode: *string
+│           │   │   └── IpPrefixes: string[]
+│           │   └── PolicyAction: *Object (1 property)
+│           │       └── ActionType: *Enum (2 values)
+│           │           ├── "Deny"
+│           │           └── "Permit"
+│           ├── TcpDefaultMitigations: *Object (2 properties)
+│           │   ├── PerSourceConnectionRateLimiting: *Object (1 property)
+│           │   │   └── ConnectionsPerSecond: *int
+│           │   └── PerSourceRateLimiting: *Object (1 property)
+│           │       └── PacketsPerSecond: *int
+│           ├── TrafficScope: *Enum (2 values)
+│           │   ├── "Tcp"
+│           │   └── "Udp"
+│           └── UdpDefaultMitigations: *Object (1 property)
+│               └── PerSourceRateLimiting: *Object (1 property)
+│                   └── PacketsPerSecond: *int
+└── Tags: map[string]string
+
 ExpressRouteCircuit_STATUS: Object (8 properties)
 ├── Etag: *string
 ├── Id: *string
@@ -3427,6 +3562,45 @@ RouteFiltersRouteFilterRule_Spec: Object (3 properties)
     ├── Communities: string[]
     └── RouteFilterRuleType: *Enum (1 value)
         └── "Community"
+
+SecurityPartnerProvider_STATUS: Object (7 properties)
+├── Etag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── ConnectionStatus: *Enum (4 values)
+│   │   ├── "Connected"
+│   │   ├── "NotConnected"
+│   │   ├── "PartiallyConnected"
+│   │   └── "Unknown"
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   ├── SecurityProviderName: *Enum (3 values)
+│   │   ├── "Checkpoint"
+│   │   ├── "IBoss"
+│   │   └── "ZScaler"
+│   └── VirtualHub: *Object (1 property)
+│       └── Id: *string
+├── Tags: map[string]string
+└── Type: *string
+
+SecurityPartnerProvider_Spec: Object (4 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (2 properties)
+│   ├── SecurityProviderName: *Enum (3 values)
+│   │   ├── "Checkpoint"
+│   │   ├── "IBoss"
+│   │   └── "ZScaler"
+│   └── VirtualHub: *Object (1 property)
+│       └── Id: *string
+└── Tags: map[string]string
 
 ServiceEndpointPoliciesServiceEndpointPolicyDefinition_STATUS: Object (5 properties)
 ├── Etag: *string

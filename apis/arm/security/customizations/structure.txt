@@ -13,6 +13,16 @@ DefenderForStorageSettingExtension: Object (0 properties)
 
 PricingExtension: Object (0 properties)
 
+SecurityConnectorExtension: Object (0 properties)
+
+SecurityConnectorsDevOpsAzureDevOpsOrgExtension: Object (0 properties)
+
+SecurityConnectorsDevOpsAzureDevOpsProjectExtension: Object (0 properties)
+
+SecurityConnectorsDevOpsAzureDevOpsRepoExtension: Object (0 properties)
+
+SecurityConnectorsDevOpsConfigurationExtension: Object (0 properties)
+
 SecurityContactExtension: Object (0 properties)
 
 SecurityStandardExtension: Object (0 properties)

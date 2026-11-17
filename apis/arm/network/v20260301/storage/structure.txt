@@ -1134,6 +1134,128 @@ ApplicationGateway: Resource
     │   └── RuleSetVersion: *string
     └── Zones: string[]
 
+DdosCustomPolicy: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── DetectionRules: Object (5 properties)[]
+│   │   ├── DetectionMode: *string
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Reference: *genruntime.ResourceReference
+│   │   └── TrafficDetectionRule: *Object (3 properties)
+│   │       ├── PacketsPerSecond: *int
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── TrafficType: *string
+│   ├── FrontEndIpConfiguration: Object (2 properties)[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── MitigationRules: Object (4 properties)[]
+│   │   ├── Name: *string
+│   │   ├── Properties: *Object (5 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── SourcePolicyOverrides: Object (3 properties)[]
+│   │   │   │   ├── Conditions: *Object (3 properties)
+│   │   │   │   │   ├── GeoMatches: Object (3 properties)[]
+│   │   │   │   │   │   ├── Continent: *string
+│   │   │   │   │   │   ├── CountryCode: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── IpPrefixes: string[]
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── PolicyAction: *Object (2 properties)
+│   │   │   │   │   ├── ActionType: *string
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── TcpDefaultMitigations: *Object (3 properties)
+│   │   │   │   ├── PerSourceConnectionRateLimiting: *Object (2 properties)
+│   │   │   │   │   ├── ConnectionsPerSecond: *int
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── PerSourceRateLimiting: *Object (2 properties)
+│   │   │   │   │   ├── PacketsPerSecond: *int
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── TrafficScope: *string
+│   │   │   └── UdpDefaultMitigations: *Object (2 properties)
+│   │   │       ├── PerSourceRateLimiting: *Object (2 properties)
+│   │   │       │   ├── PacketsPerSecond: *int
+│   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (14 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DetectionRules: Object (8 properties)[]
+    │   ├── DetectionMode: *string
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisioningState: *string
+    │   ├── TrafficDetectionRule: *Object (3 properties)
+    │   │   ├── PacketsPerSecond: *int
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── TrafficType: *string
+    │   └── Type: *string
+    ├── Etag: *string
+    ├── FrontEndIpConfiguration: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Location: *string
+    ├── MitigationRules: Object (6 properties)[]
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── Properties: *Object (6 properties)
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ProvisioningState: *string
+    │   │   ├── SourcePolicyOverrides: Object (3 properties)[]
+    │   │   │   ├── Conditions: *Object (3 properties)
+    │   │   │   │   ├── GeoMatches: Object (3 properties)[]
+    │   │   │   │   │   ├── Continent: *string
+    │   │   │   │   │   ├── CountryCode: *string
+    │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── IpPrefixes: string[]
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── PolicyAction: *Object (2 properties)
+    │   │   │   │   ├── ActionType: *string
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── TcpDefaultMitigations: *Object (3 properties)
+    │   │   │   ├── PerSourceConnectionRateLimiting: *Object (2 properties)
+    │   │   │   │   ├── ConnectionsPerSecond: *int
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── PerSourceRateLimiting: *Object (2 properties)
+    │   │   │   │   ├── PacketsPerSecond: *int
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── TrafficScope: *string
+    │   │   └── UdpDefaultMitigations: *Object (2 properties)
+    │   │       ├── PerSourceRateLimiting: *Object (2 properties)
+    │   │       │   ├── PacketsPerSecond: *int
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Type: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── PublicIPAddresses: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── ResourceGuid: *string
+    ├── Tags: map[string]string
+    └── Type: *string
+
 ExpressRouteCircuit: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (22 properties)
@@ -2741,6 +2863,39 @@ RouteFiltersRouteFilterRule: Resource
     ├── PropertyBag: genruntime.PropertyBag
     ├── ProvisioningState: *string
     └── RouteFilterRuleType: *string
+
+SecurityPartnerProvider: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── SecurityProviderName: *string
+│   ├── Tags: map[string]string
+│   └── VirtualHub: *Object (2 properties)
+│       ├── PropertyBag: genruntime.PropertyBag
+│       └── Reference: *genruntime.ResourceReference
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionStatus: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SecurityProviderName: *string
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── VirtualHub: *Object (2 properties)
+        ├── Id: *string
+        └── PropertyBag: genruntime.PropertyBag
 
 ServiceEndpointPoliciesServiceEndpointPolicyDefinition: Resource
 ├── Owner: network/v20260301.ServiceEndpointPolicy

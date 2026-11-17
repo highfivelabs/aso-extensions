@@ -9,12 +9,20 @@
 typeFilters:
   - action: include
     group: security
+    version: v20260801preview
+    because: security connectors, the newest preview version (preview only)
+  - action: include
+    group: security
     version: v20260701
     because: Defender plans (pricings), the newest stable version
   - action: include
     group: security
     version: v20250601
     because: Defender for Storage settings, the version open ASO PR #5783 generates
+  - action: include
+    group: security
+    version: v20250301
+    because: security connector DevOps configuration and Azure DevOps orgs, projects and repos, the newest stable version
   - action: include
     group: security
     version: v20240801
@@ -65,6 +73,202 @@ typeTransformers:
       optional: true
     because: The Swagger omits type integer; a non-negative byte limit.
 groupModelConfiguration:
+  2026-08-01-preview:
+    SecurityConnector:
+      $exportAs: SecurityConnector
+      $supportedFrom: v0.1.0
+    SecurityConnectorProperties:
+      HierarchyIdentifier:
+        $referenceType: simple
+    ArcAutoProvisioningConfiguration:
+      PrivateLinkScope:
+        $referenceType: simple
+    AccessTokenAuthentication:
+      AccessToken:
+        $importSecretMode: required
+    # Types ending in K8S produce an invalid Go receiver name "8S" (starts with a digit).
+    DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S:
+      $exportAs: DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryKubernetes
+    DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S_STATUS:
+      $exportAs: DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryKubernetes_STATUS
+    DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S:
+      $exportAs: DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryKubernetes
+    DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S_STATUS:
+      $exportAs: DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryKubernetes_STATUS
+    DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S:
+      $exportAs: DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryKubernetes
+    DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S_STATUS:
+      $exportAs: DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryKubernetes_STATUS
+    DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S:
+      $exportAs: DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryKubernetes
+    DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S_STATUS:
+      $exportAs: DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryKubernetes_STATUS
+    # EnvironmentData, AwsOrganizationalData, GcpOrganizationalData have receiver "data", which collides with UnmarshalJSON(data []byte).
+    EnvironmentData:
+      $exportAs: SecurityEnvironment
+    EnvironmentData_STATUS:
+      $exportAs: SecurityEnvironment_STATUS
+    AwsOrganizationalData:
+      $exportAs: AwsOrganizationalInfo
+    AwsOrganizationalData_STATUS:
+      $exportAs: AwsOrganizationalInfo_STATUS
+    GcpOrganizationalData:
+      $exportAs: GcpOrganizationalInfo
+    GcpOrganizationalData_STATUS:
+      $exportAs: GcpOrganizationalInfo_STATUS
+    # Lowercase Swagger names produce unexported Go types, which controller-gen skips for DeepCopyInto.
+    cspmMonitorAwsOffering:
+      $exportAs: CspmMonitorAwsOffering
+    cspmMonitorAwsOffering_STATUS:
+      $exportAs: CspmMonitorAwsOffering_STATUS
+    cspmMonitorAzureDevOpsOffering:
+      $exportAs: CspmMonitorAzureDevOpsOffering
+    cspmMonitorAzureDevOpsOffering_STATUS:
+      $exportAs: CspmMonitorAzureDevOpsOffering_STATUS
+    cspmMonitorDockerHubOffering:
+      $exportAs: CspmMonitorDockerHubOffering
+    cspmMonitorDockerHubOffering_STATUS:
+      $exportAs: CspmMonitorDockerHubOffering_STATUS
+    cspmMonitorGcpOffering:
+      $exportAs: CspmMonitorGcpOffering
+    cspmMonitorGcpOffering_STATUS:
+      $exportAs: CspmMonitorGcpOffering_STATUS
+    cspmMonitorGithubOffering:
+      $exportAs: CspmMonitorGithubOffering
+    cspmMonitorGithubOffering_STATUS:
+      $exportAs: CspmMonitorGithubOffering_STATUS
+    cspmMonitorGitLabOffering:
+      $exportAs: CspmMonitorGitLabOffering
+    cspmMonitorGitLabOffering_STATUS:
+      $exportAs: CspmMonitorGitLabOffering_STATUS
+    cspmMonitorJFrogOffering:
+      $exportAs: CspmMonitorJFrogOffering
+    cspmMonitorJFrogOffering_STATUS:
+      $exportAs: CspmMonitorJFrogOffering_STATUS
+    defenderCspmAwsOffering:
+      $exportAs: DefenderCspmAwsOffering
+    defenderCspmAwsOffering_STATUS:
+      $exportAs: DefenderCspmAwsOffering_STATUS
+    defenderCspmDockerHubOffering:
+      $exportAs: DefenderCspmDockerHubOffering
+    defenderCspmDockerHubOffering_STATUS:
+      $exportAs: DefenderCspmDockerHubOffering_STATUS
+    defenderCspmGcpOffering:
+      $exportAs: DefenderCspmGcpOffering
+    defenderCspmGcpOffering_STATUS:
+      $exportAs: DefenderCspmGcpOffering_STATUS
+    defenderCspmJFrogOffering:
+      $exportAs: DefenderCspmJFrogOffering
+    defenderCspmJFrogOffering_STATUS:
+      $exportAs: DefenderCspmJFrogOffering_STATUS
+    defenderFoDatabasesAwsOffering:
+      $exportAs: DefenderFoDatabasesAwsOffering
+    defenderFoDatabasesAwsOffering_STATUS:
+      $exportAs: DefenderFoDatabasesAwsOffering_STATUS
+    defenderForContainersAwsOffering:
+      $exportAs: DefenderForContainersAwsOffering
+    defenderForContainersAwsOffering_STATUS:
+      $exportAs: DefenderForContainersAwsOffering_STATUS
+    defenderForContainersDockerHubOffering:
+      $exportAs: DefenderForContainersDockerHubOffering
+    defenderForContainersDockerHubOffering_STATUS:
+      $exportAs: DefenderForContainersDockerHubOffering_STATUS
+    defenderForContainersGcpOffering:
+      $exportAs: DefenderForContainersGcpOffering
+    defenderForContainersGcpOffering_STATUS:
+      $exportAs: DefenderForContainersGcpOffering_STATUS
+    defenderForContainersJFrogOffering:
+      $exportAs: DefenderForContainersJFrogOffering
+    defenderForContainersJFrogOffering_STATUS:
+      $exportAs: DefenderForContainersJFrogOffering_STATUS
+    defenderForDatabasesGcpOffering:
+      $exportAs: DefenderForDatabasesGcpOffering
+    defenderForDatabasesGcpOffering_STATUS:
+      $exportAs: DefenderForDatabasesGcpOffering_STATUS
+    defenderForServersAwsOffering:
+      $exportAs: DefenderForServersAwsOffering
+    defenderForServersAwsOffering_STATUS:
+      $exportAs: DefenderForServersAwsOffering_STATUS
+    defenderForServersGcpOffering:
+      $exportAs: DefenderForServersGcpOffering
+    defenderForServersGcpOffering_STATUS:
+      $exportAs: DefenderForServersGcpOffering_STATUS
+    cspmMonitorAwsOffering_OfferingType:
+      $exportAs: CspmMonitorAwsOffering_OfferingType
+    cspmMonitorAwsOffering_OfferingType_STATUS:
+      $exportAs: CspmMonitorAwsOffering_OfferingType_STATUS
+    cspmMonitorAzureDevOpsOffering_OfferingType:
+      $exportAs: CspmMonitorAzureDevOpsOffering_OfferingType
+    cspmMonitorAzureDevOpsOffering_OfferingType_STATUS:
+      $exportAs: CspmMonitorAzureDevOpsOffering_OfferingType_STATUS
+    cspmMonitorDockerHubOffering_OfferingType:
+      $exportAs: CspmMonitorDockerHubOffering_OfferingType
+    cspmMonitorDockerHubOffering_OfferingType_STATUS:
+      $exportAs: CspmMonitorDockerHubOffering_OfferingType_STATUS
+    cspmMonitorGcpOffering_OfferingType:
+      $exportAs: CspmMonitorGcpOffering_OfferingType
+    cspmMonitorGcpOffering_OfferingType_STATUS:
+      $exportAs: CspmMonitorGcpOffering_OfferingType_STATUS
+    cspmMonitorGithubOffering_OfferingType:
+      $exportAs: CspmMonitorGithubOffering_OfferingType
+    cspmMonitorGithubOffering_OfferingType_STATUS:
+      $exportAs: CspmMonitorGithubOffering_OfferingType_STATUS
+    cspmMonitorGitLabOffering_OfferingType:
+      $exportAs: CspmMonitorGitLabOffering_OfferingType
+    cspmMonitorGitLabOffering_OfferingType_STATUS:
+      $exportAs: CspmMonitorGitLabOffering_OfferingType_STATUS
+    cspmMonitorJFrogOffering_OfferingType:
+      $exportAs: CspmMonitorJFrogOffering_OfferingType
+    cspmMonitorJFrogOffering_OfferingType_STATUS:
+      $exportAs: CspmMonitorJFrogOffering_OfferingType_STATUS
+    defenderCspmAwsOffering_OfferingType:
+      $exportAs: DefenderCspmAwsOffering_OfferingType
+    defenderCspmAwsOffering_OfferingType_STATUS:
+      $exportAs: DefenderCspmAwsOffering_OfferingType_STATUS
+    defenderCspmDockerHubOffering_OfferingType:
+      $exportAs: DefenderCspmDockerHubOffering_OfferingType
+    defenderCspmDockerHubOffering_OfferingType_STATUS:
+      $exportAs: DefenderCspmDockerHubOffering_OfferingType_STATUS
+    defenderCspmGcpOffering_OfferingType:
+      $exportAs: DefenderCspmGcpOffering_OfferingType
+    defenderCspmGcpOffering_OfferingType_STATUS:
+      $exportAs: DefenderCspmGcpOffering_OfferingType_STATUS
+    defenderCspmJFrogOffering_OfferingType:
+      $exportAs: DefenderCspmJFrogOffering_OfferingType
+    defenderCspmJFrogOffering_OfferingType_STATUS:
+      $exportAs: DefenderCspmJFrogOffering_OfferingType_STATUS
+    defenderFoDatabasesAwsOffering_OfferingType:
+      $exportAs: DefenderFoDatabasesAwsOffering_OfferingType
+    defenderFoDatabasesAwsOffering_OfferingType_STATUS:
+      $exportAs: DefenderFoDatabasesAwsOffering_OfferingType_STATUS
+    defenderForContainersAwsOffering_OfferingType:
+      $exportAs: DefenderForContainersAwsOffering_OfferingType
+    defenderForContainersAwsOffering_OfferingType_STATUS:
+      $exportAs: DefenderForContainersAwsOffering_OfferingType_STATUS
+    defenderForContainersDockerHubOffering_OfferingType:
+      $exportAs: DefenderForContainersDockerHubOffering_OfferingType
+    defenderForContainersDockerHubOffering_OfferingType_STATUS:
+      $exportAs: DefenderForContainersDockerHubOffering_OfferingType_STATUS
+    defenderForContainersGcpOffering_OfferingType:
+      $exportAs: DefenderForContainersGcpOffering_OfferingType
+    defenderForContainersGcpOffering_OfferingType_STATUS:
+      $exportAs: DefenderForContainersGcpOffering_OfferingType_STATUS
+    defenderForContainersJFrogOffering_OfferingType:
+      $exportAs: DefenderForContainersJFrogOffering_OfferingType
+    defenderForContainersJFrogOffering_OfferingType_STATUS:
+      $exportAs: DefenderForContainersJFrogOffering_OfferingType_STATUS
+    defenderForDatabasesGcpOffering_OfferingType:
+      $exportAs: DefenderForDatabasesGcpOffering_OfferingType
+    defenderForDatabasesGcpOffering_OfferingType_STATUS:
+      $exportAs: DefenderForDatabasesGcpOffering_OfferingType_STATUS
+    defenderForServersAwsOffering_OfferingType:
+      $exportAs: DefenderForServersAwsOffering_OfferingType
+    defenderForServersAwsOffering_OfferingType_STATUS:
+      $exportAs: DefenderForServersAwsOffering_OfferingType_STATUS
+    defenderForServersGcpOffering_OfferingType:
+      $exportAs: DefenderForServersGcpOffering_OfferingType
+    defenderForServersGcpOffering_OfferingType_STATUS:
+      $exportAs: DefenderForServersGcpOffering_OfferingType_STATUS
   2026-07-01:
     Pricing:
       $exportAs: Pricing
@@ -82,6 +286,19 @@ groupModelConfiguration:
     MalwareScanningProperties:
       ScanResultsEventGridTopicResourceId:
         $referenceType: arm
+  2025-03-01:
+    SecurityConnectors_Devop:
+      $exportAs: SecurityConnectorsDevOpsConfiguration
+      $supportedFrom: v0.1.0
+    SecurityConnectors_Devops_AzureDevOpsOrg:
+      $exportAs: SecurityConnectorsDevOpsAzureDevOpsOrg
+      $supportedFrom: v0.1.0
+    SecurityConnectors_Devops_AzureDevOpsOrgs_Project:
+      $exportAs: SecurityConnectorsDevOpsAzureDevOpsProject
+      $supportedFrom: v0.1.0
+    SecurityConnectors_Devops_AzureDevOpsOrgs_Projects_Repo:
+      $exportAs: SecurityConnectorsDevOpsAzureDevOpsRepo
+      $supportedFrom: v0.1.0
   2024-08-01:
     SecurityStandard:
       $exportAs: SecurityStandard

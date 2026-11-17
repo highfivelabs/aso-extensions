@@ -102,6 +102,13 @@ groupModelConfiguration:
     LocalNetworkGateway:
       $exportAs: LocalNetworkGateway
       $supportedFrom: v0.1.0
+    # Foundation row 24: DDoS custom policies and security partner providers.
+    DdosCustomPolicy:
+      $exportAs: DdosCustomPolicy
+      $supportedFrom: v0.1.0
+    SecurityPartnerProvider:
+      $exportAs: SecurityPartnerProvider
+      $supportedFrom: v0.1.0
     # Foundation row 12: IP groups (Azure Firewall rules name them), route
     # filters (which BGP communities a circuit's Microsoft peering takes) and
     # service endpoint policies (which storage accounts a subnet's service
@@ -484,6 +491,12 @@ groupModelConfiguration:
     ApplicationGatewayFrontendPort:
       Id:
         $referenceType: arm # the child\'s own ID, which Azure computes from its name; a rule names a listener, pool or settings by it (autolabel, reviewed)
+    DdosMitigationRule:
+      Id:
+        $referenceType: arm # autolabel: review
+    DdosDetectionRule:
+      Id:
+        $referenceType: arm # autolabel: review
 typeTransformers:
   - group: network
     version: v20180501

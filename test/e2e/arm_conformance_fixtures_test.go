@@ -214,6 +214,11 @@ func init() {
 		return map[string]any{"access": "Allow", "routeFilterRuleType": "Community", "communities": []any{"12076:5010"}}
 	}}
 	f["ServiceEndpointPoliciesServiceEndpointPolicyDefinition"] = conformanceFixture{coveredBy: "TestNetworkFilters"}
+	// Security connector Azure DevOps children have no DELETE operation in Azure:
+	// detach on delete so the conformance test does not expect removal.
+	f["SecurityConnectorsDevOpsAzureDevOpsOrg"] = conformanceFixture{annotations: detach, stays: true}
+	f["SecurityConnectorsDevOpsAzureDevOpsProject"] = conformanceFixture{annotations: detach, stays: true}
+	f["SecurityConnectorsDevOpsAzureDevOpsRepo"] = conformanceFixture{annotations: detach, stays: true}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}

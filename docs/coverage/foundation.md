@@ -107,15 +107,14 @@ in the ARM specs (it is created by Azure Blueprints and managed applications).
 | 20 | `SecurityPricing`, `SecurityContact`, `SecurityAutoProvisioningSetting`, `SecuritySetting`, `SecurityWorkspaceSetting`, `AdvancedThreatProtectionSetting` (group `security`) | `pricings` (8, the Defender plans per subscription), `securityContacts` (8), `autoProvisioningSettings` (1), `settings` (2), `workspaceSettings` (2), `advancedThreatProtectionSettings` (1); spec `security/.../Security/stable/2026-07-01/pricings.json`, `preview/2023-12-01-preview` (contacts) | none / none | all; the builder's "Defender for Cloud settings and pricings, security contacts" | none found | 0 | **built 2026-11-11**, generated: `security.azure.hfl.dev` `Pricing` (v20260701), `SecurityContact` (v20231201preview), `AutoProvisioningSetting`, `WorkspaceSetting` (v20170801preview), `Setting` (v20220501, polymorphic: `dataExport` or `alertSync`), `AdvancedThreatProtectionSetting` (v20190101), `ServerVulnerabilityAssessmentsSetting` (v20230501); extension resources owned by a subscription's ARM ID (or any resource), by generator patch 0010 | S (22) |
 | 21 | `PolicyAttestation` | `Microsoft.PolicyInsights/attestations` (10, several scopes) | none / none | all | none found | 0 | **built 2026-11-09** with row 4: `policyinsights.azure.hfl.dev/v20241001` `PolicyAttestation`, extension resource (patch 0006) | S |
 | 22 | Sentinel: `SentinelOnboardingState`, `SentinelSetting`, `AlertRule`, `AutomationRule`, `DataConnector`, `Watchlist` (+ items) first | `Microsoft.SecurityInsights/*`: 32 resources, 393 attributes; spec `securityinsights/.../SecurityInsights/stable/2025-09-01` | none / none | all | none found | 0 | **built 2026-11-11**, generated: `securityinsights.azure.hfl.dev/v20250901` `OnboardingState`, `AlertRule` (Fusion, Microsoft security incident creation, scheduled), `AlertRulesAction`, `AutomationRule`, `DataConnector` (eleven connector kinds), `DataConnectorDefinition`, `ContentPackage`, `ContentTemplate`, `SecurityMLAnalyticsSetting`, `Watchlist`, `WatchlistsWatchlistItem`; extension resources on a workspace, their children by generator patch 0012. Not built: incidents, bookmarks, threat intelligence, source controls (operational data) | L (393), start with 6 kinds of about 50 |
-| 23 | `SecurityStandard`, `StandardAssignment`, `SecurityAutomation`, `SecurityConnector` (+ devops children) | `securityStandards` (6), `standardAssignments` (13), `automations` (20), `securityConnectors` (78) with 4 devops child types (33) | none / none | all | none found | 0 | **part built 2026-11-11**, generated: `security.azure.hfl.dev` `SecurityStandard`, `StandardAssignment`, `CustomRecommendation` (v20240801), `Automation` (v20231201preview, in a resource group; actions name a Logic App, an Event Hub or a workspace by reference). Not built: security connectors and their DevOps children (next) | M |
-| 24 | `PurviewAccount`, `HsmCloudHsmCluster`, `HsmDedicatedHsm`, `NetworkDdosCustomPolicy`, `NetworkSecurityPartnerProvider`, `CdnWebApplicationFirewallPolicy` | `Purview/accounts` (9), `HardwareSecurityModules/cloudHsmClusters` (9) and `dedicatedHSMs`, `Network/ddosCustomPolicies` (16), `securityPartnerProviders` (4), `Cdn/cdnWebApplicationFirewallPolicies` | none / none | all | none found | 0 | **part built 2026-11-11**, generated: `purview.azure.hfl.dev/v20211201` `Account`, `AccountsKafkaConfiguration`, `AccountsPrivateEndpointConnection`; `hardwaresecuritymodules.azure.hfl.dev/v20250331` `CloudHsmCluster`, `CloudHsmClustersPrivateEndpointConnection`, `DedicatedHsm`. Not built: DDoS custom policies and security partner providers (network, after #50), the CDN WAF policy | S each |
+| 23 | `SecurityStandard`, `StandardAssignment`, `SecurityAutomation`, `SecurityConnector` (+ devops children) | `securityStandards` (6), `standardAssignments` (13), `automations` (20), `securityConnectors` (78) with 4 devops child types (33) | none / none | all | none found | 0 | **built 2026-11-11, 2026-11-17**, generated: `security.azure.hfl.dev` `SecurityStandard`, `StandardAssignment`, `CustomRecommendation` (v20240801), `Automation` (v20231201preview, in a resource group; actions name a Logic App, an Event Hub or a workspace by reference), `SecurityConnector` (v20260801preview), `SecurityConnectorsDevOpsConfiguration`, `SecurityConnectorsDevOpsAzureDevOpsOrg`, `SecurityConnectorsDevOpsAzureDevOpsProject`, `SecurityConnectorsDevOpsAzureDevOpsRepo` (v20250301; org/project/repo have no ARM DELETE) | M |
+| 24 | `PurviewAccount`, `HsmCloudHsmCluster`, `HsmDedicatedHsm`, `NetworkDdosCustomPolicy`, `NetworkSecurityPartnerProvider`, `CdnWebApplicationFirewallPolicy` | `Purview/accounts` (9), `HardwareSecurityModules/cloudHsmClusters` (9) and `dedicatedHSMs`, `Network/ddosCustomPolicies` (16), `securityPartnerProviders` (4), `Cdn/cdnWebApplicationFirewallPolicies` | none / none | all | none found | 0 | **built 2026-11-11, 2026-11-17**, generated: `purview.azure.hfl.dev/v20211201` `Account`, `AccountsKafkaConfiguration`, `AccountsPrivateEndpointConnection`; `hardwaresecuritymodules.azure.hfl.dev/v20250331` `CloudHsmCluster`, `CloudHsmClustersPrivateEndpointConnection`, `DedicatedHsm`; `network.azure.hfl.dev/v20260301` `DdosCustomPolicy`, `SecurityPartnerProvider`; `cdn.azure.hfl.dev/v20261001` `CdnWebApplicationFirewallPolicy` | S each |
 
 Covered already in this category: ASO has the WAF policies of Application Gateway
 and Front Door (`network/WebApplicationFirewallPolicy`,
 `network.frontdoor/WebApplicationFirewallPolicy`) and `network/DdosProtectionPlan`;
-we have the network security perimeter and its five child kinds. Not covered:
-the Azure CDN WAF policy (`Microsoft.Cdn/cdnWebApplicationFirewallPolicies`) and
-its `securityPolicies` association, to be generated with row 24.
+we have the network security perimeter and its five child kinds and the Azure CDN
+WAF policy (`cdn/CdnWebApplicationFirewallPolicy`).
 
 ## The inventory
 
@@ -126,7 +125,7 @@ Generated: every resource of the two categories, by the order of the services in
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | platform-foundation | 18 | 246 | 4,675 | 43.2% | 30.2% | 26.6% |
-| security-adjacent | 7 | 93 | 1,049 | 8.6% | 30.8% | 60.6% |
+| security-adjacent | 7 | 93 | 1,049 | 8.6% | 47.0% | 44.4% |
 | application | 35 | 823 | 14,821 | 33.1% | 8.0% | 59.0% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 1.0% | 98.6% |
 
@@ -381,22 +380,22 @@ Generated: every resource of the two categories, by the order of the services in
 | 245 | `Microsoft.ContainerRegistry/registries/privateEndpointConnections` | covered |  | `containerregistry/RegistriesPrivateEndpointConnection` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 246 | `Microsoft.Billing/billingAccounts/billingSubscriptionAliases` | no kind |  |  | 0 / 0 / 17 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (17) | 0 |
 
-### security-adjacent: 93 resources (53 with no kind, 18 partly covered, 22 covered)
+### security-adjacent: 93 resources (45 with no kind, 18 partly covered, 30 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
 | 1 | `Microsoft.PolicyInsights/attestations` | partial, 1 of 10 missing |  | `policyinsights/PolicyAttestation` | 0 / 9 / 1 | extension,resourceGroup,subscription | extend: newer API version or property config | S (1) | 0 |
-| 2 | `Microsoft.Network/securityPartnerProviders` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 3 | `Microsoft.Network/ddosCustomPolicies` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
-| 4 | `Microsoft.Network/ddosProtectionPlans` | partial, 1 of 3 missing | `network/DdosProtectionPlan` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 1 |
-| 5 | `Microsoft.Network/networkSecurityPerimeters/profiles` | partial, 1 of 1 missing |  | `network/NetworkSecurityPerimetersProfile` | 0 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 6 | `Microsoft.Network/networkSecurityPerimeters` | partial, 1 of 3 missing |  | `network/NetworkSecurityPerimeter` | 0 / 2 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 7 | `Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies` | partial, 12 of 57 missing | `network/WebApplicationFirewallPolicy` |  | 45 / 0 / 12 | resourceGroup | extend: ASO's API version is older than the spec's | S (12) | 0 |
-| 8 | `Microsoft.Network/FrontDoorWebApplicationFirewallPolicies` | partial, 18 of 57 missing | `network.frontdoor/WebApplicationFirewallPolicy` |  | 39 / 0 / 18 | resourceGroup | extend: ASO's API version is older than the spec's | S (18) | 0 |
-| 9 | `Microsoft.Network/networkSecurityPerimeters/resourceAssociations` | covered |  | `network/NetworkSecurityPerimetersResourceAssociation` | 0 / 3 / 0 | resourceGroup | - | - | 2 |
-| 10 | `Microsoft.Network/networkSecurityPerimeters/loggingConfigurations` | covered |  | `network/NetworkSecurityPerimetersLoggingConfiguration` | 0 / 2 / 0 | resourceGroup | - | - | 0 |
-| 11 | `Microsoft.Network/networkSecurityPerimeters/links` | covered |  | `network/NetworkSecurityPerimetersLink` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
-| 12 | `Microsoft.Network/networkSecurityPerimeters/profiles/accessRules` | covered |  | `network/NetworkSecurityPerimetersProfilesAccessRule` | 0 / 7 / 0 | resourceGroup | - | - | 0 |
+| 2 | `Microsoft.Network/ddosProtectionPlans` | partial, 1 of 3 missing | `network/DdosProtectionPlan` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 1 |
+| 3 | `Microsoft.Network/networkSecurityPerimeters/profiles` | partial, 1 of 1 missing |  | `network/NetworkSecurityPerimetersProfile` | 0 / 0 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 4 | `Microsoft.Network/networkSecurityPerimeters` | partial, 1 of 3 missing |  | `network/NetworkSecurityPerimeter` | 0 / 2 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 5 | `Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies` | partial, 12 of 57 missing | `network/WebApplicationFirewallPolicy` |  | 45 / 0 / 12 | resourceGroup | extend: ASO's API version is older than the spec's | S (12) | 0 |
+| 6 | `Microsoft.Network/FrontDoorWebApplicationFirewallPolicies` | partial, 18 of 57 missing | `network.frontdoor/WebApplicationFirewallPolicy` |  | 39 / 0 / 18 | resourceGroup | extend: ASO's API version is older than the spec's | S (18) | 0 |
+| 7 | `Microsoft.Network/networkSecurityPerimeters/resourceAssociations` | covered |  | `network/NetworkSecurityPerimetersResourceAssociation` | 0 / 3 / 0 | resourceGroup | - | - | 2 |
+| 8 | `Microsoft.Network/networkSecurityPerimeters/loggingConfigurations` | covered |  | `network/NetworkSecurityPerimetersLoggingConfiguration` | 0 / 2 / 0 | resourceGroup | - | - | 0 |
+| 9 | `Microsoft.Network/networkSecurityPerimeters/links` | covered |  | `network/NetworkSecurityPerimetersLink` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
+| 10 | `Microsoft.Network/securityPartnerProviders` | covered |  | `network/SecurityPartnerProvider` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
+| 11 | `Microsoft.Network/networkSecurityPerimeters/profiles/accessRules` | covered |  | `network/NetworkSecurityPerimetersProfilesAccessRule` | 0 / 7 / 0 | resourceGroup | - | - | 0 |
+| 12 | `Microsoft.Network/ddosCustomPolicies` | covered |  | `network/DdosCustomPolicy` | 0 / 16 / 0 | resourceGroup | - | - | 0 |
 | 13 | `Microsoft.Security/apiCollections` | no kind |  |  | 0 / 0 / 0 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (0) | 0 |
 | 14 | `Microsoft.Security/pricings/securityOperators` | no kind |  |  | 0 / 0 / 0 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (0) | 0 |
 | 15 | `Microsoft.Security/serverVulnerabilityAssessments` | no kind |  |  | 0 / 0 / 0 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (0) | 0 |
@@ -410,34 +409,34 @@ Generated: every resource of the two categories, by the order of the services in
 | 23 | `Microsoft.Security/privateLinks/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
 | 24 | `Microsoft.Security/serviceEntitlements` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
 | 25 | `Microsoft.Security/alertsSuppressionRules` | no kind |  |  | 0 / 0 / 7 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (7) | 0 |
-| 26 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs` | no kind |  |  | 0 / 0 / 7 | resourceGroup | generator | S (7) | 0 |
-| 27 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
-| 28 | `Microsoft.Security/batchPricings` | no kind |  |  | 0 / 0 / 9 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (9) | 0 |
-| 29 | `Microsoft.Security/securityConnectors/devops` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 30 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects/repos` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 31 | `Microsoft.Security/standards` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 32 | `Microsoft.Security/assessments/governanceAssignments` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
-| 33 | `Microsoft.Security/assignments` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
-| 34 | `Microsoft.Security/deviceSecurityGroups` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
-| 35 | `Microsoft.Security/informationProtectionPolicies` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
-| 36 | `Microsoft.Security/governanceRules` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
-| 37 | `Microsoft.Security/iotSecuritySolutions` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
-| 38 | `Microsoft.Security/assessmentMetadata` | no kind |  |  | 0 / 0 / 18 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (18) | 0 |
-| 39 | `Microsoft.Security/locations/jitNetworkAccessPolicies` | no kind |  |  | 0 / 0 / 19 | resourceGroup | generator | S (19) | 0 |
-| 40 | `Microsoft.Security/assessments` | no kind |  |  | 0 / 0 / 36 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (36) | 0 |
-| 41 | `Microsoft.Security/securityConnectors` | no kind |  |  | 0 / 0 / 78 | resourceGroup | generator | M (78) | 0 |
-| 42 | `Microsoft.Security/settings` | partial, 2 of 2 missing |  | `security/Setting` | 0 / 0 / 2 | subscription | extend: newer API version or property config | S (2) | 0 |
-| 43 | `Microsoft.Security/securityStandards` | partial, 1 of 6 missing |  | `security/SecurityStandard` | 0 / 5 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
-| 44 | `Microsoft.Security/standardAssignments` | partial, 1 of 13 missing |  | `security/StandardAssignment` | 0 / 12 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
-| 45 | `Microsoft.Security/advancedThreatProtectionSettings` | covered |  | `security/AdvancedThreatProtectionSetting` | 0 / 1 / 0 | extension | - | - | 0 |
-| 46 | `Microsoft.Security/autoProvisioningSettings` | covered |  | `security/AutoProvisioningSetting` | 0 / 1 / 0 | subscription | - | - | 0 |
-| 47 | `Microsoft.Security/serverVulnerabilityAssessmentsSettings` | covered |  | `security/ServerVulnerabilityAssessmentsSetting` | 0 / 2 / 0 | subscription | - | - | 0 |
-| 48 | `Microsoft.Security/workspaceSettings` | covered |  | `security/WorkspaceSetting` | 0 / 2 / 0 | subscription | - | - | 0 |
-| 49 | `Microsoft.Security/customRecommendations` | covered |  | `security/CustomRecommendation` | 0 / 7 / 0 | extension | - | - | 0 |
-| 50 | `Microsoft.Security/pricings` | covered |  | `security/Pricing` | 0 / 8 / 0 | extension | - | - | 0 |
-| 51 | `Microsoft.Security/securityContacts` | covered |  | `security/SecurityContact` | 0 / 8 / 0 | subscription | - | - | 0 |
-| 52 | `Microsoft.Security/defenderForStorageSettings` | covered |  | `security/DefenderForStorageSetting` | 0 / 10 / 0 | extension | - | - | 0 |
-| 53 | `Microsoft.Security/automations` | covered |  | `security/Automation` | 0 / 20 / 0 | resourceGroup | - | - | 0 |
+| 26 | `Microsoft.Security/batchPricings` | no kind |  |  | 0 / 0 / 9 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (9) | 0 |
+| 27 | `Microsoft.Security/standards` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
+| 28 | `Microsoft.Security/assessments/governanceAssignments` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
+| 29 | `Microsoft.Security/assignments` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
+| 30 | `Microsoft.Security/deviceSecurityGroups` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
+| 31 | `Microsoft.Security/informationProtectionPolicies` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
+| 32 | `Microsoft.Security/governanceRules` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
+| 33 | `Microsoft.Security/iotSecuritySolutions` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
+| 34 | `Microsoft.Security/assessmentMetadata` | no kind |  |  | 0 / 0 / 18 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (18) | 0 |
+| 35 | `Microsoft.Security/locations/jitNetworkAccessPolicies` | no kind |  |  | 0 / 0 / 19 | resourceGroup | generator | S (19) | 0 |
+| 36 | `Microsoft.Security/assessments` | no kind |  |  | 0 / 0 / 36 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (36) | 0 |
+| 37 | `Microsoft.Security/settings` | partial, 2 of 2 missing |  | `security/Setting` | 0 / 0 / 2 | subscription | extend: newer API version or property config | S (2) | 0 |
+| 38 | `Microsoft.Security/securityStandards` | partial, 1 of 6 missing |  | `security/SecurityStandard` | 0 / 5 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 39 | `Microsoft.Security/standardAssignments` | partial, 1 of 13 missing |  | `security/StandardAssignment` | 0 / 12 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 40 | `Microsoft.Security/advancedThreatProtectionSettings` | covered |  | `security/AdvancedThreatProtectionSetting` | 0 / 1 / 0 | extension | - | - | 0 |
+| 41 | `Microsoft.Security/autoProvisioningSettings` | covered |  | `security/AutoProvisioningSetting` | 0 / 1 / 0 | subscription | - | - | 0 |
+| 42 | `Microsoft.Security/serverVulnerabilityAssessmentsSettings` | covered |  | `security/ServerVulnerabilityAssessmentsSetting` | 0 / 2 / 0 | subscription | - | - | 0 |
+| 43 | `Microsoft.Security/workspaceSettings` | covered |  | `security/WorkspaceSetting` | 0 / 2 / 0 | subscription | - | - | 0 |
+| 44 | `Microsoft.Security/customRecommendations` | covered |  | `security/CustomRecommendation` | 0 / 7 / 0 | extension | - | - | 0 |
+| 45 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs` | covered |  | `security/SecurityConnectorsDevOpsAzureDevOpsOrg` | 0 / 7 / 0 | resourceGroup | - | - | 0 |
+| 46 | `Microsoft.Security/pricings` | covered |  | `security/Pricing` | 0 / 8 / 0 | extension | - | - | 0 |
+| 47 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects` | covered |  | `security/SecurityConnectorsDevOpsAzureDevOpsProject` | 0 / 8 / 0 | resourceGroup | - | - | 0 |
+| 48 | `Microsoft.Security/securityContacts` | covered |  | `security/SecurityContact` | 0 / 8 / 0 | subscription | - | - | 0 |
+| 49 | `Microsoft.Security/securityConnectors/devops` | covered |  | `security/SecurityConnectorsDevOpsConfiguration` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
+| 50 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects/repos` | covered |  | `security/SecurityConnectorsDevOpsAzureDevOpsRepo` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
+| 51 | `Microsoft.Security/defenderForStorageSettings` | covered |  | `security/DefenderForStorageSetting` | 0 / 10 / 0 | extension | - | - | 0 |
+| 52 | `Microsoft.Security/automations` | covered |  | `security/Automation` | 0 / 20 / 0 | resourceGroup | - | - | 0 |
+| 53 | `Microsoft.Security/securityConnectors` | covered |  | `security/SecurityConnector` | 0 / 78 / 0 | resourceGroup | - | - | 0 |
 | 54 | `Microsoft.SecurityInsights/cases/comments` | no kind |  |  | 0 / 0 / 1 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (1) | 0 |
 | 55 | `Microsoft.SecurityInsights/workspaceManagerConfigurations` | no kind |  |  | 0 / 0 / 1 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (1) | 0 |
 | 56 | `Microsoft.SecurityInsights/hunts/comments` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
@@ -476,6 +475,6 @@ Generated: every resource of the two categories, by the order of the services in
 | 89 | `Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections` | partial, 1 of 5 missing |  | `hardwaresecuritymodules/CloudHsmClustersPrivateEndpointConnection` | 0 / 4 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
 | 90 | `Microsoft.HardwareSecurityModules/cloudHsmClusters` | covered |  | `hardwaresecuritymodules/CloudHsmCluster` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
 | 91 | `Microsoft.HardwareSecurityModules/dedicatedHSMs` | covered |  | `hardwaresecuritymodules/DedicatedHsm` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
-| 92 | `Microsoft.Cdn/cdnWebApplicationFirewallPolicies` | no kind |  |  | 0 / 0 / 39 | resourceGroup | generator | M (39) | 0 |
-| 93 | `Microsoft.Cdn/profiles/securityPolicies` | partial, 2 of 6 missing | `cdn/SecurityPolicy` |  | 4 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 0 |
+| 92 | `Microsoft.Cdn/profiles/securityPolicies` | partial, 2 of 6 missing | `cdn/SecurityPolicy` |  | 4 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 0 |
+| 93 | `Microsoft.Cdn/cdnWebApplicationFirewallPolicies` | covered |  | `cdn/CdnWebApplicationFirewallPolicy` | 0 / 39 / 0 | resourceGroup | - | - | 0 |
 <!-- foundation:end -->

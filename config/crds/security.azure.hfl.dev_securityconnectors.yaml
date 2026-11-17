@@ -1,0 +1,3083 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: securityconnectors.security.azure.hfl.dev
+spec:
+  group: security.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - security
+    kind: SecurityConnector
+    listKind: SecurityConnectorList
+    plural: securityconnectors
+    singular: securityconnector
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260801preview
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /security/resource-manager/Microsoft.Security/Security/preview/2026-08-01-preview/securityConnectors.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              environmentData:
+                description: 'EnvironmentData: The security connector environment
+                  data.'
+                properties:
+                  awsAccount:
+                    description: 'AwsAccount: Mutually exclusive with all other properties'
+                    properties:
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        enum:
+                        - AwsAccount
+                        type: string
+                      organizationalData:
+                        description: 'OrganizationalData: The AWS account''s organizational
+                          data'
+                        properties:
+                          member:
+                            description: 'Member: Mutually exclusive with all other
+                              properties'
+                            properties:
+                              organizationMembershipType:
+                                description: 'OrganizationMembershipType: The multi
+                                  cloud account''s membership type in the organization'
+                                enum:
+                                - Member
+                                type: string
+                              parentHierarchyId:
+                                description: |-
+                                  ParentHierarchyId: If the multi cloud account is not of membership type organization, this will be the ID of the
+                                  account's parent
+                                type: string
+                            required:
+                            - organizationMembershipType
+                            type: object
+                          organization:
+                            description: 'Organization: Mutually exclusive with all
+                              other properties'
+                            properties:
+                              excludedAccountIds:
+                                description: |-
+                                  ExcludedAccountIds: If the multi cloud account is of membership type organization, list of accounts excluded from
+                                  offering
+                                items:
+                                  type: string
+                                type: array
+                              organizationMembershipType:
+                                description: 'OrganizationMembershipType: The multi
+                                  cloud account''s membership type in the organization'
+                                enum:
+                                - Organization
+                                type: string
+                              stacksetName:
+                                description: |-
+                                  StacksetName: If the multi cloud account is of membership type organization, this will be the name of the onboarding
+                                  stackset
+                                type: string
+                            required:
+                            - organizationMembershipType
+                            type: object
+                        type: object
+                      regions:
+                        description: 'Regions: list of regions to scan'
+                        items:
+                          type: string
+                        type: array
+                      scanInterval:
+                        description: 'ScanInterval: Scan interval in hours (value
+                          should be between 1-hour to 24-hours)'
+                        type: integer
+                    required:
+                    - environmentType
+                    type: object
+                  azureDevOpsScope:
+                    description: 'AzureDevOpsScope: Mutually exclusive with all other
+                      properties'
+                    properties:
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        enum:
+                        - AzureDevOpsScope
+                        type: string
+                    required:
+                    - environmentType
+                    type: object
+                  dockerHubOrganization:
+                    description: 'DockerHubOrganization: Mutually exclusive with all
+                      other properties'
+                    properties:
+                      authentication:
+                        description: 'Authentication: The Docker Hub organization
+                          authentication details'
+                        properties:
+                          accessToken:
+                            description: 'AccessToken: Mutually exclusive with all
+                              other properties'
+                            properties:
+                              accessToken:
+                                description: 'AccessToken: The access token that will
+                                  be used while authenticating with the onboarded
+                                  environment'
+                                properties:
+                                  key:
+                                    description: Key is the key in the Kubernetes
+                                      secret being referenced
+                                    type: string
+                                  name:
+                                    description: |-
+                                      Name is the name of the Kubernetes secret being referenced.
+                                      The secret must be in the same namespace as the resource
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                type: object
+                              authenticationType:
+                                description: 'AuthenticationType: The authentication
+                                  type'
+                                enum:
+                                - AccessToken
+                                type: string
+                              username:
+                                description: 'Username: The user name that will be
+                                  used while authenticating with the onboarded environment'
+                                type: string
+                            required:
+                            - authenticationType
+                            type: object
+                        type: object
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        enum:
+                        - DockerHubOrganization
+                        type: string
+                      scanInterval:
+                        description: 'ScanInterval: Scan interval in hours (value
+                          should be between 1-hour to 24-hours)'
+                        type: integer
+                    required:
+                    - environmentType
+                    type: object
+                  gcpProject:
+                    description: 'GcpProject: Mutually exclusive with all other properties'
+                    properties:
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        enum:
+                        - GcpProject
+                        type: string
+                      organizationalData:
+                        description: 'OrganizationalData: The Gcp project''s organizational
+                          data'
+                        properties:
+                          member:
+                            description: 'Member: Mutually exclusive with all other
+                              properties'
+                            properties:
+                              managementProjectNumber:
+                                description: 'ManagementProjectNumber: The GCP management
+                                  project number from organizational onboarding'
+                                type: string
+                              organizationMembershipType:
+                                description: 'OrganizationMembershipType: The multi
+                                  cloud account''s membership type in the organization'
+                                enum:
+                                - Member
+                                type: string
+                              parentHierarchyId:
+                                description: |-
+                                  ParentHierarchyId: If the multi cloud account is not of membership type organization, this will be the ID of the
+                                  project's parent
+                                type: string
+                            required:
+                            - organizationMembershipType
+                            type: object
+                          organization:
+                            description: 'Organization: Mutually exclusive with all
+                              other properties'
+                            properties:
+                              excludedProjectNumbers:
+                                description: |-
+                                  ExcludedProjectNumbers: If the multi cloud account is of membership type organization, list of accounts excluded from
+                                  offering
+                                items:
+                                  type: string
+                                type: array
+                              organizationMembershipType:
+                                description: 'OrganizationMembershipType: The multi
+                                  cloud account''s membership type in the organization'
+                                enum:
+                                - Organization
+                                type: string
+                              serviceAccountEmailAddress:
+                                description: |-
+                                  ServiceAccountEmailAddress: The service account email address which represents the organization level permissions
+                                  container.
+                                type: string
+                              workloadIdentityProviderId:
+                                description: |-
+                                  WorkloadIdentityProviderId: The GCP workload identity provider id which represents the permissions required to auto
+                                  provision security connectors
+                                type: string
+                            required:
+                            - organizationMembershipType
+                            type: object
+                        type: object
+                      projectDetails:
+                        description: 'ProjectDetails: The Gcp project''s details'
+                        properties:
+                          projectId:
+                            description: 'ProjectId: The GCP Project id'
+                            type: string
+                          projectNumber:
+                            description: 'ProjectNumber: The unique GCP Project number'
+                            type: string
+                        type: object
+                      scanInterval:
+                        description: 'ScanInterval: Scan interval in hours (value
+                          should be between 1-hour to 24-hours)'
+                        type: integer
+                    required:
+                    - environmentType
+                    type: object
+                  githubScope:
+                    description: 'GithubScope: Mutually exclusive with all other properties'
+                    properties:
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        enum:
+                        - GithubScope
+                        type: string
+                    required:
+                    - environmentType
+                    type: object
+                  gitlabScope:
+                    description: 'GitlabScope: Mutually exclusive with all other properties'
+                    properties:
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        enum:
+                        - GitlabScope
+                        type: string
+                    required:
+                    - environmentType
+                    type: object
+                  jFrogArtifactory:
+                    description: 'JFrogArtifactory: Mutually exclusive with all other
+                      properties'
+                    properties:
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        enum:
+                        - JFrogArtifactory
+                        type: string
+                      scanInterval:
+                        description: 'ScanInterval: Scan interval in hours (value
+                          should be between 1-hour to 24-hours)'
+                        maximum: 24
+                        minimum: 1
+                        type: integer
+                    required:
+                    - environmentType
+                    type: object
+                type: object
+              environmentName:
+                description: 'EnvironmentName: The multi cloud resource''s cloud name.'
+                enum:
+                - AWS
+                - Azure
+                - AzureDevOps
+                - DockerHub
+                - GCP
+                - GitLab
+                - Github
+                - JFrog
+                type: string
+              etag:
+                description: 'Etag: Entity tag is used for comparing two or more entities
+                  from the same requested resource.'
+                type: string
+              hierarchyIdentifier:
+                description: |-
+                  HierarchyIdentifier: The multi cloud resource identifier (account id in case of AWS connector, project number in case of
+                  GCP connector).
+                type: string
+              kind:
+                description: 'Kind: Kind of the resource'
+                type: string
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              offerings:
+                description: 'Offerings: A collection of offerings for the security
+                  connector.'
+                items:
+                  description: The security offering details
+                  properties:
+                    cspmMonitorAws:
+                      description: 'CspmMonitorAws: Mutually exclusive with all other
+                        properties'
+                      properties:
+                        nativeCloudConnection:
+                          description: 'NativeCloudConnection: The native cloud connection
+                            configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - CspmMonitorAws
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    cspmMonitorAzureDevOps:
+                      description: 'CspmMonitorAzureDevOps: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - CspmMonitorAzureDevOps
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    cspmMonitorDockerHub:
+                      description: 'CspmMonitorDockerHub: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - CspmMonitorDockerHub
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    cspmMonitorGcp:
+                      description: 'CspmMonitorGcp: Mutually exclusive with all other
+                        properties'
+                      properties:
+                        nativeCloudConnection:
+                          description: 'NativeCloudConnection: The native cloud connection
+                            configuration'
+                          properties:
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this offering'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The GCP workload
+                                identity provider id for the offering'
+                              type: string
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - CspmMonitorGcp
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    cspmMonitorGitLab:
+                      description: 'CspmMonitorGitLab: Mutually exclusive with all
+                        other properties'
+                      properties:
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - CspmMonitorGitLab
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    cspmMonitorGithub:
+                      description: 'CspmMonitorGithub: Mutually exclusive with all
+                        other properties'
+                      properties:
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - CspmMonitorGithub
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    cspmMonitorJFrog:
+                      description: 'CspmMonitorJFrog: Mutually exclusive with all
+                        other properties'
+                      properties:
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - CspmMonitorJFrog
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    defenderCspmAws:
+                      description: 'DefenderCspmAws: Mutually exclusive with all other
+                        properties'
+                      properties:
+                        agentlessServerlessPosture:
+                          description: 'AgentlessServerlessPosture: The Microsoft
+                            Defender agentless serverless posture configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is agentless serverless posture
+                                enabled'
+                              type: boolean
+                          type: object
+                        ciem:
+                          description: 'Ciem: Defenders CSPM Permissions Management
+                            offering configurations'
+                          properties:
+                            ciemOidc:
+                              description: 'CiemOidc: AWS Defender CSPM Permissions
+                                Management OIDC (open id connect) connection configurations'
+                              properties:
+                                azureActiveDirectoryAppName:
+                                  description: 'AzureActiveDirectoryAppName: the azure
+                                    active directory app name used of authenticating
+                                    against AWS'
+                                  type: string
+                                cloudRoleArn:
+                                  description: 'CloudRoleArn: The cloud role ARN in
+                                    AWS for Permissions Management used for oidc connection'
+                                  type: string
+                              type: object
+                            cloudTrailAuditLogIngestion:
+                              description: 'CloudTrailAuditLogIngestion: The CloudTrail
+                                audit log ingestion configuration'
+                              properties:
+                                cloudTrailResourceSets:
+                                  description: 'CloudTrailResourceSets: The existing
+                                    CloudTrail resource sets. Required when provisioningType
+                                    is BringYourOwn.'
+                                  items:
+                                    description: A resource set describing existing
+                                      AWS CloudTrail audit log resources
+                                    properties:
+                                      kmsKeyArn:
+                                        description: 'KmsKeyArn: The KMS key ARN used
+                                          for CloudTrail log encryption'
+                                        type: string
+                                      resourceRegion:
+                                        description: 'ResourceRegion: The AWS region
+                                          of the resources in this set'
+                                        type: string
+                                      s3BucketArn:
+                                        description: 'S3BucketArn: The S3 bucket ARN
+                                          in which the CloudTrail logs are stored'
+                                        type: string
+                                      sqsQueueArn:
+                                        description: 'SqsQueueArn: The SQS queue ARN
+                                          used for CloudTrail log notifications'
+                                        type: string
+                                    type: object
+                                  type: array
+                                deploymentRegion:
+                                  description: |-
+                                    DeploymentRegion: The AWS region in which the CloudTrail resources are provisioned. Required when
+                                    provisioningType is ManualProvisioning or AutoProvisioning.
+                                  type: string
+                                provisioningType:
+                                  description: 'ProvisioningType: The provisioning
+                                    type for the CloudTrail resources'
+                                  enum:
+                                  - AutoProvisioning
+                                  - BringYourOwn
+                                  - ManualProvisioning
+                                  type: string
+                                resourceNamePrefix:
+                                  description: 'ResourceNamePrefix: The resource name
+                                    prefix used when provisioning the CloudTrail resources'
+                                  type: string
+                              type: object
+                            logCollectionOidc:
+                              description: 'LogCollectionOidc: The AWS log collection
+                                OIDC (open id connect) connection configuration'
+                              properties:
+                                cloudRoleArn:
+                                  description: 'CloudRoleArn: The cloud role ARN in
+                                    AWS used for the log collection oidc connection'
+                                  type: string
+                              type: object
+                          type: object
+                        dataSensitivityDiscovery:
+                          description: 'DataSensitivityDiscovery: The Microsoft Defender
+                            Data Sensitivity discovery configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender Data Sensitivity
+                                discovery enabled'
+                              type: boolean
+                          type: object
+                        databasesDspm:
+                          description: 'DatabasesDspm: The databases DSPM configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is databases DSPM protection
+                                enabled'
+                              type: boolean
+                          type: object
+                        mdcContainersAgentlessDiscoveryK8s:
+                          description: 'MdcContainersAgentlessDiscoveryK8S: The Microsoft
+                            Defender container agentless discovery K8s configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                agentless discovery K8s enabled'
+                              type: boolean
+                          type: object
+                        mdcContainersImageAssessment:
+                          description: 'MdcContainersImageAssessment: The Microsoft
+                            Defender container image assessment configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                image assessment enabled'
+                              type: boolean
+                            securityFindingsEnabled:
+                              description: 'SecurityFindingsEnabled: Is security findings
+                                enabled for container image assessment'
+                              type: boolean
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderCspmAws
+                          type: string
+                        serverlessContainers:
+                          description: 'ServerlessContainers: The Microsoft Defender
+                            serverless containers configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is serverless containers scanning
+                                enabled'
+                              type: boolean
+                          type: object
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for CSPM
+                            offering VM scanning configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  enum:
+                                  - Default
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      required:
+                      - offeringType
+                      type: object
+                    defenderCspmDockerHub:
+                      description: 'DefenderCspmDockerHub: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderCspmDockerHub
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    defenderCspmGcp:
+                      description: 'DefenderCspmGcp: Mutually exclusive with all other
+                        properties'
+                      properties:
+                        ciem:
+                          description: 'Ciem: The GCP Defender CSPM Permissions Management
+                            configurations'
+                          properties:
+                            ciemOidc:
+                              description: 'CiemOidc: The GCP Permissions Management
+                                OIDC (open id connect) connection configuration'
+                              properties:
+                                serviceAccountEmailAddress:
+                                  description: 'ServiceAccountEmailAddress: The service
+                                    account email address in GCP for this feature'
+                                  type: string
+                                workloadIdentityProviderId:
+                                  description: 'WorkloadIdentityProviderId: The GCP
+                                    workload identity provider id for this feature'
+                                  type: string
+                              type: object
+                            gcpAuditLogIngestion:
+                              description: 'GcpAuditLogIngestion: The GCP audit log
+                                ingestion configuration'
+                              properties:
+                                provisioningType:
+                                  description: 'ProvisioningType: The provisioning
+                                    type for the GCP logging resources'
+                                  enum:
+                                  - AutoProvisioning
+                                  - BringYourOwn
+                                  - ManualProvisioning
+                                  type: string
+                                resourceNamePrefix:
+                                  description: |-
+                                    ResourceNamePrefix: The resource name prefix used when provisioning the GCP logging resources. Required when
+                                    provisioningType is ManualProvisioning or AutoProvisioning.
+                                  type: string
+                                resourceSets:
+                                  description: 'ResourceSets: The existing GCP logging
+                                    resource sets. Required when provisioningType
+                                    is BringYourOwn.'
+                                  items:
+                                    description: A resource set describing existing
+                                      GCP logging resources
+                                    properties:
+                                      pubSubSubscriptionName:
+                                        description: 'PubSubSubscriptionName: The
+                                          Pub/Sub subscription name in which the GCP
+                                          logs are stored'
+                                        type: string
+                                    type: object
+                                  type: array
+                              type: object
+                            logCollectionOidc:
+                              description: 'LogCollectionOidc: The GCP log collection
+                                OIDC (open id connect) connection configuration'
+                              properties:
+                                serviceAccountEmailAddress:
+                                  description: 'ServiceAccountEmailAddress: The service
+                                    account email address in GCP for this feature'
+                                  type: string
+                                workloadIdentityProviderId:
+                                  description: 'WorkloadIdentityProviderId: The GCP
+                                    workload identity provider id for this feature'
+                                  type: string
+                              type: object
+                          type: object
+                        ciemDiscovery:
+                          description: 'CiemDiscovery: GCP Defenders CSPM Permissions
+                            Management OIDC (Open ID connect) connection configurations'
+                          properties:
+                            azureActiveDirectoryAppName:
+                              description: |-
+                                AzureActiveDirectoryAppName: the azure active directory app name used of authenticating against GCP workload identity
+                                federation
+                              type: string
+                            enableAuditLogIngestion:
+                              description: 'EnableAuditLogIngestion: Is audit log
+                                ingestion enabled for the Permissions Management offering'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for Permissions Management
+                                offering'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The GCP workload
+                                identity provider id for Permissions Management offering'
+                              type: string
+                          type: object
+                        dataSensitivityDiscovery:
+                          description: 'DataSensitivityDiscovery: The Microsoft Defender
+                            Data Sensitivity discovery configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender Data Sensitivity
+                                discovery enabled'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        mdcContainersAgentlessDiscoveryK8s:
+                          description: 'MdcContainersAgentlessDiscoveryK8S: The Microsoft
+                            Defender Container agentless discovery configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                agentless discovery enabled'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        mdcContainersImageAssessment:
+                          description: 'MdcContainersImageAssessment: The Microsoft
+                            Defender Container image assessment configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                image assessment enabled'
+                              type: boolean
+                            securityFindingsEnabled:
+                              description: 'SecurityFindingsEnabled: Is security findings
+                                enabled for container image assessment'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderCspmGcp
+                          type: string
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for CSPM
+                            VM scanning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  enum:
+                                  - Default
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      required:
+                      - offeringType
+                      type: object
+                    defenderCspmJFrog:
+                      description: 'DefenderCspmJFrog: Mutually exclusive with all
+                        other properties'
+                      properties:
+                        mdcContainersImageAssessment:
+                          description: 'MdcContainersImageAssessment: The Microsoft
+                            Defender Container image assessment configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                image assessment enabled'
+                              type: boolean
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderCspmJFrog
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    defenderForContainersAws:
+                      description: 'DefenderForContainersAws: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        cloudWatchToKinesis:
+                          description: 'CloudWatchToKinesis: The cloudwatch to kinesis
+                            connection configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                used by CloudWatch to transfer data into Kinesis'
+                              type: string
+                          type: object
+                        containerAntiMalwareEnabled:
+                          description: 'ContainerAntiMalwareEnabled: Is defender anti-malware
+                            enabled'
+                          type: boolean
+                        dataCollectionExternalId:
+                          description: 'DataCollectionExternalId: The externalId used
+                            by the data reader to prevent the confused deputy attack'
+                          type: string
+                        enableAuditLogsAutoProvisioning:
+                          description: 'EnableAuditLogsAutoProvisioning: Is audit
+                            logs data collection enabled'
+                          type: boolean
+                        enableDefenderAgentAutoProvisioning:
+                          description: 'EnableDefenderAgentAutoProvisioning: Is Microsoft
+                            Defender for Cloud Kubernetes agent auto provisioning
+                            enabled'
+                          type: boolean
+                        enablePolicyAgentAutoProvisioning:
+                          description: 'EnablePolicyAgentAutoProvisioning: Is Policy
+                            Kubernetes agent auto provisioning enabled'
+                          type: boolean
+                        installationMethod:
+                          description: 'InstallationMethod: The installation method
+                            for the Defender for Containers agent.'
+                          enum:
+                          - Arc
+                          - Helm
+                          type: string
+                        kinesisToS3:
+                          description: 'KinesisToS3: The kinesis to s3 connection
+                            configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                used by Kinesis to transfer data into S3'
+                              type: string
+                          type: object
+                        kubeAuditRetentionTime:
+                          description: 'KubeAuditRetentionTime: The retention time
+                            in days of kube audit logs set on the CloudWatch log group'
+                          type: integer
+                        kubernetesDataCollection:
+                          description: 'KubernetesDataCollection: The kubernetes data
+                            collection connection configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature used for reading data'
+                              type: string
+                          type: object
+                        kubernetesService:
+                          description: 'KubernetesService: The kubernetes service
+                            connection configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature used for provisioning resources'
+                              type: string
+                          type: object
+                        mdcContainersAgentlessDiscoveryK8s:
+                          description: 'MdcContainersAgentlessDiscoveryK8S: The Microsoft
+                            Defender container agentless discovery K8s configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                agentless discovery K8s enabled'
+                              type: boolean
+                          type: object
+                        mdcContainersImageAssessment:
+                          description: 'MdcContainersImageAssessment: The Microsoft
+                            Defender container image assessment configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                image assessment enabled'
+                              type: boolean
+                            securityFindingsEnabled:
+                              description: 'SecurityFindingsEnabled: Is security findings
+                                enabled for container image assessment'
+                              type: boolean
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderForContainersAws
+                          type: string
+                        securityGatingEnabled:
+                          description: 'SecurityGatingEnabled: Is security gating
+                            enabled'
+                          type: boolean
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for Container
+                            K8s VM host scanning configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  enum:
+                                  - Default
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      required:
+                      - offeringType
+                      type: object
+                    defenderForContainersDockerHub:
+                      description: 'DefenderForContainersDockerHub: Mutually exclusive
+                        with all other properties'
+                      properties:
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderForContainersDockerHub
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    defenderForContainersGcp:
+                      description: 'DefenderForContainersGcp: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        containerAntiMalwareEnabled:
+                          description: 'ContainerAntiMalwareEnabled: Is defender anti-malware
+                            enabled'
+                          type: boolean
+                        dataPipelineNativeCloudConnection:
+                          description: 'DataPipelineNativeCloudConnection: The native
+                            cloud connection configuration'
+                          properties:
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The data collection
+                                service account email address in GCP for this offering'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The data collection
+                                GCP workload identity provider id for this offering'
+                              type: string
+                          type: object
+                        enableAuditLogsAutoProvisioning:
+                          description: 'EnableAuditLogsAutoProvisioning: Is audit
+                            logs data collection enabled'
+                          type: boolean
+                        enableDefenderAgentAutoProvisioning:
+                          description: 'EnableDefenderAgentAutoProvisioning: Is Microsoft
+                            Defender for Cloud Kubernetes agent auto provisioning
+                            enabled'
+                          type: boolean
+                        enablePolicyAgentAutoProvisioning:
+                          description: 'EnablePolicyAgentAutoProvisioning: Is Policy
+                            Kubernetes agent auto provisioning enabled'
+                          type: boolean
+                        installationMethod:
+                          description: 'InstallationMethod: The installation method
+                            for the Defender for Containers agent.'
+                          enum:
+                          - Arc
+                          - Helm
+                          type: string
+                        mdcContainersAgentlessDiscoveryK8s:
+                          description: 'MdcContainersAgentlessDiscoveryK8S: The Microsoft
+                            Defender Container agentless discovery configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                agentless discovery enabled'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        mdcContainersImageAssessment:
+                          description: 'MdcContainersImageAssessment: The Microsoft
+                            Defender Container image assessment configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                image assessment enabled'
+                              type: boolean
+                            securityFindingsEnabled:
+                              description: 'SecurityFindingsEnabled: Is security findings
+                                enabled for container image assessment'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        nativeCloudConnection:
+                          description: 'NativeCloudConnection: The native cloud connection
+                            configuration'
+                          properties:
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this offering'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The GCP workload
+                                identity provider id for this offering'
+                              type: string
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderForContainersGcp
+                          type: string
+                        securityGatingEnabled:
+                          description: 'SecurityGatingEnabled: Is security gating
+                            enabled'
+                          type: boolean
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for Container
+                            K8s VM host scanning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  enum:
+                                  - Default
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      required:
+                      - offeringType
+                      type: object
+                    defenderForContainersJFrog:
+                      description: 'DefenderForContainersJFrog: Mutually exclusive
+                        with all other properties'
+                      properties:
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderForContainersJFrog
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    defenderForDatabasesAws:
+                      description: 'DefenderForDatabasesAws: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        arcAutoProvisioning:
+                          description: 'ArcAutoProvisioning: The ARC autoprovisioning
+                            configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            configuration:
+                              description: 'Configuration: Configuration for servers
+                                Arc auto provisioning for a given environment'
+                              properties:
+                                privateLinkScope:
+                                  description: 'PrivateLinkScope: Optional Arc private
+                                    link scope resource id to link the Arc agent'
+                                  type: string
+                                proxy:
+                                  description: 'Proxy: Optional HTTP proxy endpoint
+                                    to use for the Arc agent'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is arc auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        databasesDspm:
+                          description: 'DatabasesDspm: The databases data security
+                            posture management (DSPM) configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is databases data security posture
+                                management (DSPM) protection enabled'
+                              type: boolean
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderForDatabasesAws
+                          type: string
+                        rds:
+                          description: 'Rds: The RDS configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is RDS protection enabled'
+                              type: boolean
+                          type: object
+                      required:
+                      - offeringType
+                      type: object
+                    defenderForDatabasesGcp:
+                      description: 'DefenderForDatabasesGcp: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        arcAutoProvisioning:
+                          description: 'ArcAutoProvisioning: The ARC autoprovisioning
+                            configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: Configuration for servers
+                                Arc auto provisioning for a given environment'
+                              properties:
+                                privateLinkScope:
+                                  description: 'PrivateLinkScope: Optional Arc private
+                                    link scope resource id to link the Arc agent'
+                                  type: string
+                                proxy:
+                                  description: 'Proxy: Optional HTTP proxy endpoint
+                                    to use for the Arc agent'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is arc auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        defenderForDatabasesArcAutoProvisioning:
+                          description: 'DefenderForDatabasesArcAutoProvisioning: The
+                            native cloud connection configuration'
+                          properties:
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this offering'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The GCP workload
+                                identity provider id for this offering'
+                              type: string
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderForDatabasesGcp
+                          type: string
+                      required:
+                      - offeringType
+                      type: object
+                    defenderForServersAws:
+                      description: 'DefenderForServersAws: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        arcAutoProvisioning:
+                          description: 'ArcAutoProvisioning: The ARC autoprovisioning
+                            configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            configuration:
+                              description: 'Configuration: Configuration for servers
+                                Arc auto provisioning for a given environment'
+                              properties:
+                                privateLinkScope:
+                                  description: 'PrivateLinkScope: Optional Arc private
+                                    link scope resource id to link the Arc agent'
+                                  type: string
+                                proxy:
+                                  description: 'Proxy: Optional HTTP proxy endpoint
+                                    to use for the Arc agent'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is arc auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        defenderForServers:
+                          description: 'DefenderForServers: The Defender for servers
+                            connection configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                          type: object
+                        mdeAutoProvisioning:
+                          description: 'MdeAutoProvisioning: The Microsoft Defender
+                            for Endpoint autoprovisioning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: configuration for Microsoft
+                                Defender for Endpoint autoprovisioning'
+                              x-kubernetes-preserve-unknown-fields: true
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender for Endpoint
+                                auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderForServersAws
+                          type: string
+                        subPlan:
+                          description: 'SubPlan: configuration for the servers offering
+                            subPlan'
+                          properties:
+                            type:
+                              description: 'Type: The available sub plans'
+                              enum:
+                              - P1
+                              - P2
+                              type: string
+                          type: object
+                        vaAutoProvisioning:
+                          description: 'VaAutoProvisioning: The Vulnerability Assessment
+                            autoprovisioning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: configuration for Vulnerability
+                                Assessment autoprovisioning'
+                              properties:
+                                type:
+                                  description: 'Type: The Vulnerability Assessment
+                                    solution to be provisioned. Can be either ''TVM''
+                                    or ''Qualys'''
+                                  enum:
+                                  - Qualys
+                                  - TVM
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is Vulnerability Assessment auto
+                                provisioning enabled'
+                              type: boolean
+                          type: object
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for Server
+                            VM scanning configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  enum:
+                                  - Default
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      required:
+                      - offeringType
+                      type: object
+                    defenderForServersGcp:
+                      description: 'DefenderForServersGcp: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        arcAutoProvisioning:
+                          description: 'ArcAutoProvisioning: The ARC autoprovisioning
+                            configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: Configuration for servers
+                                Arc auto provisioning for a given environment'
+                              properties:
+                                privateLinkScope:
+                                  description: 'PrivateLinkScope: Optional Arc private
+                                    link scope resource id to link the Arc agent'
+                                  type: string
+                                proxy:
+                                  description: 'Proxy: Optional HTTP proxy endpoint
+                                    to use for the Arc agent'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is arc auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        defenderForServers:
+                          description: 'DefenderForServers: The Defender for servers
+                            connection configuration'
+                          properties:
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        mdeAutoProvisioning:
+                          description: 'MdeAutoProvisioning: The Microsoft Defender
+                            for Endpoint autoprovisioning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: configuration for Microsoft
+                                Defender for Endpoint autoprovisioning'
+                              x-kubernetes-preserve-unknown-fields: true
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender for Endpoint
+                                auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          enum:
+                          - DefenderForServersGcp
+                          type: string
+                        subPlan:
+                          description: 'SubPlan: configuration for the servers offering
+                            subPlan'
+                          properties:
+                            type:
+                              description: 'Type: The available sub plans'
+                              enum:
+                              - P1
+                              - P2
+                              type: string
+                          type: object
+                        vaAutoProvisioning:
+                          description: 'VaAutoProvisioning: The Vulnerability Assessment
+                            autoprovisioning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: configuration for Vulnerability
+                                Assessment autoprovisioning'
+                              properties:
+                                type:
+                                  description: 'Type: The Vulnerability Assessment
+                                    solution to be provisioned. Can be either ''TVM''
+                                    or ''Qualys'''
+                                  enum:
+                                  - Qualys
+                                  - TVM
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is Vulnerability Assessment auto
+                                provisioning enabled'
+                              type: boolean
+                          type: object
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for Server
+                            VM scanning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  enum:
+                                  - Default
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      required:
+                      - offeringType
+                      type: object
+                  type: object
+                type: array
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a resources.azure.com/ResourceGroup resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+            required:
+            - owner
+            type: object
+          status:
+            description: The security connector resource.
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              environmentData:
+                description: 'EnvironmentData: The security connector environment
+                  data.'
+                properties:
+                  awsAccount:
+                    description: 'AwsAccount: Mutually exclusive with all other properties'
+                    properties:
+                      accountName:
+                        description: 'AccountName: The AWS account name'
+                        type: string
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        type: string
+                      organizationalData:
+                        description: 'OrganizationalData: The AWS account''s organizational
+                          data'
+                        properties:
+                          member:
+                            description: 'Member: Mutually exclusive with all other
+                              properties'
+                            properties:
+                              organizationMembershipType:
+                                description: 'OrganizationMembershipType: The multi
+                                  cloud account''s membership type in the organization'
+                                type: string
+                              parentHierarchyId:
+                                description: |-
+                                  ParentHierarchyId: If the multi cloud account is not of membership type organization, this will be the ID of the
+                                  account's parent
+                                type: string
+                            type: object
+                          organization:
+                            description: 'Organization: Mutually exclusive with all
+                              other properties'
+                            properties:
+                              excludedAccountIds:
+                                description: |-
+                                  ExcludedAccountIds: If the multi cloud account is of membership type organization, list of accounts excluded from
+                                  offering
+                                items:
+                                  type: string
+                                type: array
+                              organizationMembershipType:
+                                description: 'OrganizationMembershipType: The multi
+                                  cloud account''s membership type in the organization'
+                                type: string
+                              stacksetName:
+                                description: |-
+                                  StacksetName: If the multi cloud account is of membership type organization, this will be the name of the onboarding
+                                  stackset
+                                type: string
+                            type: object
+                        type: object
+                      regions:
+                        description: 'Regions: list of regions to scan'
+                        items:
+                          type: string
+                        type: array
+                      scanInterval:
+                        description: 'ScanInterval: Scan interval in hours (value
+                          should be between 1-hour to 24-hours)'
+                        type: integer
+                    type: object
+                  azureDevOpsScope:
+                    description: 'AzureDevOpsScope: Mutually exclusive with all other
+                      properties'
+                    properties:
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        type: string
+                    type: object
+                  dockerHubOrganization:
+                    description: 'DockerHubOrganization: Mutually exclusive with all
+                      other properties'
+                    properties:
+                      authentication:
+                        description: 'Authentication: The Docker Hub organization
+                          authentication details'
+                        properties:
+                          accessToken:
+                            description: 'AccessToken: Mutually exclusive with all
+                              other properties'
+                            properties:
+                              authenticationType:
+                                description: 'AuthenticationType: The authentication
+                                  type'
+                                type: string
+                              username:
+                                description: 'Username: The user name that will be
+                                  used while authenticating with the onboarded environment'
+                                type: string
+                            type: object
+                        type: object
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        type: string
+                      scanInterval:
+                        description: 'ScanInterval: Scan interval in hours (value
+                          should be between 1-hour to 24-hours)'
+                        type: integer
+                    type: object
+                  gcpProject:
+                    description: 'GcpProject: Mutually exclusive with all other properties'
+                    properties:
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        type: string
+                      organizationalData:
+                        description: 'OrganizationalData: The Gcp project''s organizational
+                          data'
+                        properties:
+                          member:
+                            description: 'Member: Mutually exclusive with all other
+                              properties'
+                            properties:
+                              managementProjectNumber:
+                                description: 'ManagementProjectNumber: The GCP management
+                                  project number from organizational onboarding'
+                                type: string
+                              organizationMembershipType:
+                                description: 'OrganizationMembershipType: The multi
+                                  cloud account''s membership type in the organization'
+                                type: string
+                              parentHierarchyId:
+                                description: |-
+                                  ParentHierarchyId: If the multi cloud account is not of membership type organization, this will be the ID of the
+                                  project's parent
+                                type: string
+                            type: object
+                          organization:
+                            description: 'Organization: Mutually exclusive with all
+                              other properties'
+                            properties:
+                              excludedProjectNumbers:
+                                description: |-
+                                  ExcludedProjectNumbers: If the multi cloud account is of membership type organization, list of accounts excluded from
+                                  offering
+                                items:
+                                  type: string
+                                type: array
+                              organizationMembershipType:
+                                description: 'OrganizationMembershipType: The multi
+                                  cloud account''s membership type in the organization'
+                                type: string
+                              organizationName:
+                                description: 'OrganizationName: GCP organization name'
+                                type: string
+                              serviceAccountEmailAddress:
+                                description: |-
+                                  ServiceAccountEmailAddress: The service account email address which represents the organization level permissions
+                                  container.
+                                type: string
+                              workloadIdentityProviderId:
+                                description: |-
+                                  WorkloadIdentityProviderId: The GCP workload identity provider id which represents the permissions required to auto
+                                  provision security connectors
+                                type: string
+                            type: object
+                        type: object
+                      projectDetails:
+                        description: 'ProjectDetails: The Gcp project''s details'
+                        properties:
+                          projectId:
+                            description: 'ProjectId: The GCP Project id'
+                            type: string
+                          projectName:
+                            description: 'ProjectName: GCP project name'
+                            type: string
+                          projectNumber:
+                            description: 'ProjectNumber: The unique GCP Project number'
+                            type: string
+                          workloadIdentityPoolId:
+                            description: 'WorkloadIdentityPoolId: The GCP workload
+                              identity federation pool id'
+                            type: string
+                        type: object
+                      scanInterval:
+                        description: 'ScanInterval: Scan interval in hours (value
+                          should be between 1-hour to 24-hours)'
+                        type: integer
+                    type: object
+                  githubScope:
+                    description: 'GithubScope: Mutually exclusive with all other properties'
+                    properties:
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        type: string
+                    type: object
+                  gitlabScope:
+                    description: 'GitlabScope: Mutually exclusive with all other properties'
+                    properties:
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        type: string
+                    type: object
+                  jFrogArtifactory:
+                    description: 'JFrogArtifactory: Mutually exclusive with all other
+                      properties'
+                    properties:
+                      environmentType:
+                        description: 'EnvironmentType: The type of the environment
+                          data.'
+                        type: string
+                      scanInterval:
+                        description: 'ScanInterval: Scan interval in hours (value
+                          should be between 1-hour to 24-hours)'
+                        type: integer
+                    type: object
+                type: object
+              environmentName:
+                description: 'EnvironmentName: The multi cloud resource''s cloud name.'
+                type: string
+              etag:
+                description: 'Etag: Entity tag is used for comparing two or more entities
+                  from the same requested resource.'
+                type: string
+              hierarchyIdentifier:
+                description: |-
+                  HierarchyIdentifier: The multi cloud resource identifier (account id in case of AWS connector, project number in case of
+                  GCP connector).
+                type: string
+              hierarchyIdentifierTrialEndDate:
+                description: |-
+                  HierarchyIdentifierTrialEndDate: The date on which the trial period will end, if applicable. Trial period exists for 30
+                  days after upgrading to payed offerings.
+                type: string
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. E.g.
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                type: string
+              kind:
+                description: 'Kind: Kind of the resource'
+                type: string
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              offerings:
+                description: 'Offerings: A collection of offerings for the security
+                  connector.'
+                items:
+                  description: The security offering details
+                  properties:
+                    cspmMonitorAws:
+                      description: 'CspmMonitorAws: Mutually exclusive with all other
+                        properties'
+                      properties:
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        nativeCloudConnection:
+                          description: 'NativeCloudConnection: The native cloud connection
+                            configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    cspmMonitorAzureDevOps:
+                      description: 'CspmMonitorAzureDevOps: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    cspmMonitorDockerHub:
+                      description: 'CspmMonitorDockerHub: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    cspmMonitorGcp:
+                      description: 'CspmMonitorGcp: Mutually exclusive with all other
+                        properties'
+                      properties:
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        nativeCloudConnection:
+                          description: 'NativeCloudConnection: The native cloud connection
+                            configuration'
+                          properties:
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this offering'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The GCP workload
+                                identity provider id for the offering'
+                              type: string
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    cspmMonitorGitLab:
+                      description: 'CspmMonitorGitLab: Mutually exclusive with all
+                        other properties'
+                      properties:
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    cspmMonitorGithub:
+                      description: 'CspmMonitorGithub: Mutually exclusive with all
+                        other properties'
+                      properties:
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    cspmMonitorJFrog:
+                      description: 'CspmMonitorJFrog: Mutually exclusive with all
+                        other properties'
+                      properties:
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    defenderCspmAws:
+                      description: 'DefenderCspmAws: Mutually exclusive with all other
+                        properties'
+                      properties:
+                        agentlessServerlessPosture:
+                          description: 'AgentlessServerlessPosture: The Microsoft
+                            Defender agentless serverless posture configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is agentless serverless posture
+                                enabled'
+                              type: boolean
+                          type: object
+                        ciem:
+                          description: 'Ciem: Defenders CSPM Permissions Management
+                            offering configurations'
+                          properties:
+                            ciemOidc:
+                              description: 'CiemOidc: AWS Defender CSPM Permissions
+                                Management OIDC (open id connect) connection configurations'
+                              properties:
+                                azureActiveDirectoryAppName:
+                                  description: 'AzureActiveDirectoryAppName: the azure
+                                    active directory app name used of authenticating
+                                    against AWS'
+                                  type: string
+                                cloudRoleArn:
+                                  description: 'CloudRoleArn: The cloud role ARN in
+                                    AWS for Permissions Management used for oidc connection'
+                                  type: string
+                              type: object
+                            cloudTrailAuditLogIngestion:
+                              description: 'CloudTrailAuditLogIngestion: The CloudTrail
+                                audit log ingestion configuration'
+                              properties:
+                                cloudTrailResourceSets:
+                                  description: 'CloudTrailResourceSets: The existing
+                                    CloudTrail resource sets. Required when provisioningType
+                                    is BringYourOwn.'
+                                  items:
+                                    description: A resource set describing existing
+                                      AWS CloudTrail audit log resources
+                                    properties:
+                                      kmsKeyArn:
+                                        description: 'KmsKeyArn: The KMS key ARN used
+                                          for CloudTrail log encryption'
+                                        type: string
+                                      resourceRegion:
+                                        description: 'ResourceRegion: The AWS region
+                                          of the resources in this set'
+                                        type: string
+                                      s3BucketArn:
+                                        description: 'S3BucketArn: The S3 bucket ARN
+                                          in which the CloudTrail logs are stored'
+                                        type: string
+                                      sqsQueueArn:
+                                        description: 'SqsQueueArn: The SQS queue ARN
+                                          used for CloudTrail log notifications'
+                                        type: string
+                                    type: object
+                                  type: array
+                                deploymentRegion:
+                                  description: |-
+                                    DeploymentRegion: The AWS region in which the CloudTrail resources are provisioned. Required when
+                                    provisioningType is ManualProvisioning or AutoProvisioning.
+                                  type: string
+                                provisioningType:
+                                  description: 'ProvisioningType: The provisioning
+                                    type for the CloudTrail resources'
+                                  type: string
+                                resourceNamePrefix:
+                                  description: 'ResourceNamePrefix: The resource name
+                                    prefix used when provisioning the CloudTrail resources'
+                                  type: string
+                              type: object
+                            logCollectionOidc:
+                              description: 'LogCollectionOidc: The AWS log collection
+                                OIDC (open id connect) connection configuration'
+                              properties:
+                                cloudRoleArn:
+                                  description: 'CloudRoleArn: The cloud role ARN in
+                                    AWS used for the log collection oidc connection'
+                                  type: string
+                              type: object
+                          type: object
+                        dataSensitivityDiscovery:
+                          description: 'DataSensitivityDiscovery: The Microsoft Defender
+                            Data Sensitivity discovery configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender Data Sensitivity
+                                discovery enabled'
+                              type: boolean
+                          type: object
+                        databasesDspm:
+                          description: 'DatabasesDspm: The databases DSPM configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is databases DSPM protection
+                                enabled'
+                              type: boolean
+                          type: object
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        mdcContainersAgentlessDiscoveryK8s:
+                          description: 'MdcContainersAgentlessDiscoveryK8S: The Microsoft
+                            Defender container agentless discovery K8s configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                agentless discovery K8s enabled'
+                              type: boolean
+                          type: object
+                        mdcContainersImageAssessment:
+                          description: 'MdcContainersImageAssessment: The Microsoft
+                            Defender container image assessment configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                image assessment enabled'
+                              type: boolean
+                            securityFindingsEnabled:
+                              description: 'SecurityFindingsEnabled: Is security findings
+                                enabled for container image assessment'
+                              type: boolean
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                        serverlessContainers:
+                          description: 'ServerlessContainers: The Microsoft Defender
+                            serverless containers configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is serverless containers scanning
+                                enabled'
+                              type: boolean
+                          type: object
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for CSPM
+                            offering VM scanning configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      type: object
+                    defenderCspmDockerHub:
+                      description: 'DefenderCspmDockerHub: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    defenderCspmGcp:
+                      description: 'DefenderCspmGcp: Mutually exclusive with all other
+                        properties'
+                      properties:
+                        ciem:
+                          description: 'Ciem: The GCP Defender CSPM Permissions Management
+                            configurations'
+                          properties:
+                            ciemOidc:
+                              description: 'CiemOidc: The GCP Permissions Management
+                                OIDC (open id connect) connection configuration'
+                              properties:
+                                serviceAccountEmailAddress:
+                                  description: 'ServiceAccountEmailAddress: The service
+                                    account email address in GCP for this feature'
+                                  type: string
+                                workloadIdentityProviderId:
+                                  description: 'WorkloadIdentityProviderId: The GCP
+                                    workload identity provider id for this feature'
+                                  type: string
+                              type: object
+                            gcpAuditLogIngestion:
+                              description: 'GcpAuditLogIngestion: The GCP audit log
+                                ingestion configuration'
+                              properties:
+                                provisioningType:
+                                  description: 'ProvisioningType: The provisioning
+                                    type for the GCP logging resources'
+                                  type: string
+                                resourceNamePrefix:
+                                  description: |-
+                                    ResourceNamePrefix: The resource name prefix used when provisioning the GCP logging resources. Required when
+                                    provisioningType is ManualProvisioning or AutoProvisioning.
+                                  type: string
+                                resourceSets:
+                                  description: 'ResourceSets: The existing GCP logging
+                                    resource sets. Required when provisioningType
+                                    is BringYourOwn.'
+                                  items:
+                                    description: A resource set describing existing
+                                      GCP logging resources
+                                    properties:
+                                      pubSubSubscriptionName:
+                                        description: 'PubSubSubscriptionName: The
+                                          Pub/Sub subscription name in which the GCP
+                                          logs are stored'
+                                        type: string
+                                    type: object
+                                  type: array
+                              type: object
+                            logCollectionOidc:
+                              description: 'LogCollectionOidc: The GCP log collection
+                                OIDC (open id connect) connection configuration'
+                              properties:
+                                serviceAccountEmailAddress:
+                                  description: 'ServiceAccountEmailAddress: The service
+                                    account email address in GCP for this feature'
+                                  type: string
+                                workloadIdentityProviderId:
+                                  description: 'WorkloadIdentityProviderId: The GCP
+                                    workload identity provider id for this feature'
+                                  type: string
+                              type: object
+                          type: object
+                        ciemDiscovery:
+                          description: 'CiemDiscovery: GCP Defenders CSPM Permissions
+                            Management OIDC (Open ID connect) connection configurations'
+                          properties:
+                            azureActiveDirectoryAppName:
+                              description: |-
+                                AzureActiveDirectoryAppName: the azure active directory app name used of authenticating against GCP workload identity
+                                federation
+                              type: string
+                            enableAuditLogIngestion:
+                              description: 'EnableAuditLogIngestion: Is audit log
+                                ingestion enabled for the Permissions Management offering'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for Permissions Management
+                                offering'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The GCP workload
+                                identity provider id for Permissions Management offering'
+                              type: string
+                          type: object
+                        dataSensitivityDiscovery:
+                          description: 'DataSensitivityDiscovery: The Microsoft Defender
+                            Data Sensitivity discovery configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender Data Sensitivity
+                                discovery enabled'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        mdcContainersAgentlessDiscoveryK8s:
+                          description: 'MdcContainersAgentlessDiscoveryK8S: The Microsoft
+                            Defender Container agentless discovery configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                agentless discovery enabled'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        mdcContainersImageAssessment:
+                          description: 'MdcContainersImageAssessment: The Microsoft
+                            Defender Container image assessment configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                image assessment enabled'
+                              type: boolean
+                            securityFindingsEnabled:
+                              description: 'SecurityFindingsEnabled: Is security findings
+                                enabled for container image assessment'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for CSPM
+                            VM scanning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      type: object
+                    defenderCspmJFrog:
+                      description: 'DefenderCspmJFrog: Mutually exclusive with all
+                        other properties'
+                      properties:
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        mdcContainersImageAssessment:
+                          description: 'MdcContainersImageAssessment: The Microsoft
+                            Defender Container image assessment configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                image assessment enabled'
+                              type: boolean
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    defenderForContainersAws:
+                      description: 'DefenderForContainersAws: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        cloudWatchToKinesis:
+                          description: 'CloudWatchToKinesis: The cloudwatch to kinesis
+                            connection configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                used by CloudWatch to transfer data into Kinesis'
+                              type: string
+                          type: object
+                        containerAntiMalwareEnabled:
+                          description: 'ContainerAntiMalwareEnabled: Is defender anti-malware
+                            enabled'
+                          type: boolean
+                        dataCollectionExternalId:
+                          description: 'DataCollectionExternalId: The externalId used
+                            by the data reader to prevent the confused deputy attack'
+                          type: string
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        enableAuditLogsAutoProvisioning:
+                          description: 'EnableAuditLogsAutoProvisioning: Is audit
+                            logs data collection enabled'
+                          type: boolean
+                        enableDefenderAgentAutoProvisioning:
+                          description: 'EnableDefenderAgentAutoProvisioning: Is Microsoft
+                            Defender for Cloud Kubernetes agent auto provisioning
+                            enabled'
+                          type: boolean
+                        enablePolicyAgentAutoProvisioning:
+                          description: 'EnablePolicyAgentAutoProvisioning: Is Policy
+                            Kubernetes agent auto provisioning enabled'
+                          type: boolean
+                        installationMethod:
+                          description: 'InstallationMethod: The installation method
+                            for the Defender for Containers agent.'
+                          type: string
+                        kinesisToS3:
+                          description: 'KinesisToS3: The kinesis to s3 connection
+                            configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                used by Kinesis to transfer data into S3'
+                              type: string
+                          type: object
+                        kubeAuditRetentionTime:
+                          description: 'KubeAuditRetentionTime: The retention time
+                            in days of kube audit logs set on the CloudWatch log group'
+                          type: integer
+                        kubernetesDataCollection:
+                          description: 'KubernetesDataCollection: The kubernetes data
+                            collection connection configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature used for reading data'
+                              type: string
+                          type: object
+                        kubernetesService:
+                          description: 'KubernetesService: The kubernetes service
+                            connection configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature used for provisioning resources'
+                              type: string
+                          type: object
+                        mdcContainersAgentlessDiscoveryK8s:
+                          description: 'MdcContainersAgentlessDiscoveryK8S: The Microsoft
+                            Defender container agentless discovery K8s configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                agentless discovery K8s enabled'
+                              type: boolean
+                          type: object
+                        mdcContainersImageAssessment:
+                          description: 'MdcContainersImageAssessment: The Microsoft
+                            Defender container image assessment configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                image assessment enabled'
+                              type: boolean
+                            securityFindingsEnabled:
+                              description: 'SecurityFindingsEnabled: Is security findings
+                                enabled for container image assessment'
+                              type: boolean
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                        securityGatingEnabled:
+                          description: 'SecurityGatingEnabled: Is security gating
+                            enabled'
+                          type: boolean
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for Container
+                            K8s VM host scanning configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      type: object
+                    defenderForContainersDockerHub:
+                      description: 'DefenderForContainersDockerHub: Mutually exclusive
+                        with all other properties'
+                      properties:
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    defenderForContainersGcp:
+                      description: 'DefenderForContainersGcp: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        containerAntiMalwareEnabled:
+                          description: 'ContainerAntiMalwareEnabled: Is defender anti-malware
+                            enabled'
+                          type: boolean
+                        dataPipelineNativeCloudConnection:
+                          description: 'DataPipelineNativeCloudConnection: The native
+                            cloud connection configuration'
+                          properties:
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The data collection
+                                service account email address in GCP for this offering'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The data collection
+                                GCP workload identity provider id for this offering'
+                              type: string
+                          type: object
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        enableAuditLogsAutoProvisioning:
+                          description: 'EnableAuditLogsAutoProvisioning: Is audit
+                            logs data collection enabled'
+                          type: boolean
+                        enableDefenderAgentAutoProvisioning:
+                          description: 'EnableDefenderAgentAutoProvisioning: Is Microsoft
+                            Defender for Cloud Kubernetes agent auto provisioning
+                            enabled'
+                          type: boolean
+                        enablePolicyAgentAutoProvisioning:
+                          description: 'EnablePolicyAgentAutoProvisioning: Is Policy
+                            Kubernetes agent auto provisioning enabled'
+                          type: boolean
+                        installationMethod:
+                          description: 'InstallationMethod: The installation method
+                            for the Defender for Containers agent.'
+                          type: string
+                        mdcContainersAgentlessDiscoveryK8s:
+                          description: 'MdcContainersAgentlessDiscoveryK8S: The Microsoft
+                            Defender Container agentless discovery configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                agentless discovery enabled'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        mdcContainersImageAssessment:
+                          description: 'MdcContainersImageAssessment: The Microsoft
+                            Defender Container image assessment configuration'
+                          properties:
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender container
+                                image assessment enabled'
+                              type: boolean
+                            securityFindingsEnabled:
+                              description: 'SecurityFindingsEnabled: Is security findings
+                                enabled for container image assessment'
+                              type: boolean
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        nativeCloudConnection:
+                          description: 'NativeCloudConnection: The native cloud connection
+                            configuration'
+                          properties:
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this offering'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The GCP workload
+                                identity provider id for this offering'
+                              type: string
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                        securityGatingEnabled:
+                          description: 'SecurityGatingEnabled: Is security gating
+                            enabled'
+                          type: boolean
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for Container
+                            K8s VM host scanning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      type: object
+                    defenderForContainersJFrog:
+                      description: 'DefenderForContainersJFrog: Mutually exclusive
+                        with all other properties'
+                      properties:
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    defenderForDatabasesAws:
+                      description: 'DefenderForDatabasesAws: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        arcAutoProvisioning:
+                          description: 'ArcAutoProvisioning: The ARC autoprovisioning
+                            configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            configuration:
+                              description: 'Configuration: Configuration for servers
+                                Arc auto provisioning for a given environment'
+                              properties:
+                                privateLinkScope:
+                                  description: 'PrivateLinkScope: Optional Arc private
+                                    link scope resource id to link the Arc agent'
+                                  type: string
+                                proxy:
+                                  description: 'Proxy: Optional HTTP proxy endpoint
+                                    to use for the Arc agent'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is arc auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        databasesDspm:
+                          description: 'DatabasesDspm: The databases data security
+                            posture management (DSPM) configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is databases data security posture
+                                management (DSPM) protection enabled'
+                              type: boolean
+                          type: object
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                        rds:
+                          description: 'Rds: The RDS configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            enabled:
+                              description: 'Enabled: Is RDS protection enabled'
+                              type: boolean
+                          type: object
+                      type: object
+                    defenderForDatabasesGcp:
+                      description: 'DefenderForDatabasesGcp: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        arcAutoProvisioning:
+                          description: 'ArcAutoProvisioning: The ARC autoprovisioning
+                            configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: Configuration for servers
+                                Arc auto provisioning for a given environment'
+                              properties:
+                                privateLinkScope:
+                                  description: 'PrivateLinkScope: Optional Arc private
+                                    link scope resource id to link the Arc agent'
+                                  type: string
+                                proxy:
+                                  description: 'Proxy: Optional HTTP proxy endpoint
+                                    to use for the Arc agent'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is arc auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        defenderForDatabasesArcAutoProvisioning:
+                          description: 'DefenderForDatabasesArcAutoProvisioning: The
+                            native cloud connection configuration'
+                          properties:
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this offering'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The GCP workload
+                                identity provider id for this offering'
+                              type: string
+                          type: object
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                      type: object
+                    defenderForServersAws:
+                      description: 'DefenderForServersAws: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        arcAutoProvisioning:
+                          description: 'ArcAutoProvisioning: The ARC autoprovisioning
+                            configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            configuration:
+                              description: 'Configuration: Configuration for servers
+                                Arc auto provisioning for a given environment'
+                              properties:
+                                privateLinkScope:
+                                  description: 'PrivateLinkScope: Optional Arc private
+                                    link scope resource id to link the Arc agent'
+                                  type: string
+                                proxy:
+                                  description: 'Proxy: Optional HTTP proxy endpoint
+                                    to use for the Arc agent'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is arc auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        defenderForServers:
+                          description: 'DefenderForServers: The Defender for servers
+                            connection configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                          type: object
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        mdeAutoProvisioning:
+                          description: 'MdeAutoProvisioning: The Microsoft Defender
+                            for Endpoint autoprovisioning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: configuration for Microsoft
+                                Defender for Endpoint autoprovisioning'
+                              x-kubernetes-preserve-unknown-fields: true
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender for Endpoint
+                                auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                        subPlan:
+                          description: 'SubPlan: configuration for the servers offering
+                            subPlan'
+                          properties:
+                            type:
+                              description: 'Type: The available sub plans'
+                              type: string
+                          type: object
+                        vaAutoProvisioning:
+                          description: 'VaAutoProvisioning: The Vulnerability Assessment
+                            autoprovisioning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: configuration for Vulnerability
+                                Assessment autoprovisioning'
+                              properties:
+                                type:
+                                  description: 'Type: The Vulnerability Assessment
+                                    solution to be provisioned. Can be either ''TVM''
+                                    or ''Qualys'''
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is Vulnerability Assessment auto
+                                provisioning enabled'
+                              type: boolean
+                          type: object
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for Server
+                            VM scanning configuration'
+                          properties:
+                            cloudRoleArn:
+                              description: 'CloudRoleArn: The cloud role ARN in AWS
+                                for this feature'
+                              type: string
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      type: object
+                    defenderForServersGcp:
+                      description: 'DefenderForServersGcp: Mutually exclusive with
+                        all other properties'
+                      properties:
+                        arcAutoProvisioning:
+                          description: 'ArcAutoProvisioning: The ARC autoprovisioning
+                            configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: Configuration for servers
+                                Arc auto provisioning for a given environment'
+                              properties:
+                                privateLinkScope:
+                                  description: 'PrivateLinkScope: Optional Arc private
+                                    link scope resource id to link the Arc agent'
+                                  type: string
+                                proxy:
+                                  description: 'Proxy: Optional HTTP proxy endpoint
+                                    to use for the Arc agent'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is arc auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        defenderForServers:
+                          description: 'DefenderForServers: The Defender for servers
+                            connection configuration'
+                          properties:
+                            serviceAccountEmailAddress:
+                              description: 'ServiceAccountEmailAddress: The service
+                                account email address in GCP for this feature'
+                              type: string
+                            workloadIdentityProviderId:
+                              description: 'WorkloadIdentityProviderId: The workload
+                                identity provider id in GCP for this feature'
+                              type: string
+                          type: object
+                        description:
+                          description: 'Description: The offering description.'
+                          type: string
+                        mdeAutoProvisioning:
+                          description: 'MdeAutoProvisioning: The Microsoft Defender
+                            for Endpoint autoprovisioning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: configuration for Microsoft
+                                Defender for Endpoint autoprovisioning'
+                              x-kubernetes-preserve-unknown-fields: true
+                            enabled:
+                              description: 'Enabled: Is Microsoft Defender for Endpoint
+                                auto provisioning enabled'
+                              type: boolean
+                          type: object
+                        offeringType:
+                          description: 'OfferingType: The type of the security offering.'
+                          type: string
+                        subPlan:
+                          description: 'SubPlan: configuration for the servers offering
+                            subPlan'
+                          properties:
+                            type:
+                              description: 'Type: The available sub plans'
+                              type: string
+                          type: object
+                        vaAutoProvisioning:
+                          description: 'VaAutoProvisioning: The Vulnerability Assessment
+                            autoprovisioning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: configuration for Vulnerability
+                                Assessment autoprovisioning'
+                              properties:
+                                type:
+                                  description: 'Type: The Vulnerability Assessment
+                                    solution to be provisioned. Can be either ''TVM''
+                                    or ''Qualys'''
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is Vulnerability Assessment auto
+                                provisioning enabled'
+                              type: boolean
+                          type: object
+                        vmScanners:
+                          description: 'VmScanners: The Microsoft Defender for Server
+                            VM scanning configuration'
+                          properties:
+                            configuration:
+                              description: 'Configuration: Configuration for VM scanning'
+                              properties:
+                                exclusionTags:
+                                  additionalProperties:
+                                    type: string
+                                  description: 'ExclusionTags: Tags that indicates
+                                    that a resource should not be scanned'
+                                  type: object
+                                scanningMode:
+                                  description: 'ScanningMode: The scanning mode for
+                                    the VM scan.'
+                                  type: string
+                              type: object
+                            enabled:
+                              description: 'Enabled: Is VM scanning enabled'
+                              type: boolean
+                          type: object
+                      type: object
+                  type: object
+                type: array
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -65,6 +65,7 @@ imports:
   automation: azure-arm/automation.yaml
   storage: azure-arm/storage.yaml
   sql: azure-arm/sql.yaml
+  cdn: azure-arm/cdn.yaml
 
 # Filters are applied in document order; the earliest match wins (as in ASO's
 # azure-arm.yaml, from which these are taken).

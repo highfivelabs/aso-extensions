@@ -9,7 +9,7 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
-	storage "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260701/storage"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250301/storage"
 	"github.com/rotisserie/eris"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
