@@ -247,6 +247,30 @@ func init() {
 		spec: func(c *conformanceContext) map[string]any {
 			return map[string]any{"location": "Global", "enabled": true, "groupShortName": "conf"}
 		}}
+	// Foundation batch 3: NetworkManager IPAM/Verifier kinds with required fields.
+	f["NetworkManagersIpamPool"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"addressPrefixes": []any{"10.0.0.0/16"}}}
+	}}
+	f["NetworkManagersReachabilityAnalysisIntent"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		src := c.add(c.in("Microsoft.Network/virtualNetworks/src-vnet"))
+		dst := c.add(c.in("Microsoft.Network/virtualNetworks/dst-vnet"))
+		return map[string]any{"properties": map[string]any{
+			"sourceResourceReference":      armRef(src),
+			"destinationResourceReference": armRef(dst),
+			"ipTraffic": map[string]any{
+				"sourceIps":        []any{"10.0.0.0/24"},
+				"destinationIps":   []any{"10.1.0.0/24"},
+				"sourcePorts":      []any{"0-65535"},
+				"destinationPorts": []any{"443"},
+				"protocols":        []any{"Tcp"},
+			},
+		}}
+	}}
+	f["NetworkManagersReachabilityAnalysisRun"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{
+			"intentReference": armRef(c.add(c.in("Microsoft.Network/networkManagers/nm/verifierWorkspaces/vw/reachabilityAnalysisIntents/intent"))),
+		}}
+	}}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}

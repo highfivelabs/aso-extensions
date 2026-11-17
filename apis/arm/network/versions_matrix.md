@@ -11,6 +11,8 @@
 | AccessRuleDirection                                                                                    |           |           | v20250501 |           |
 | AccessRuleDirection_STATUS                                                                             |           |           | v20250501 |           |
 | Access_STATUS                                                                                          |           |           |           | v20260301 |
+| Action                                                                                                 |           |           |           | v20260301 |
+| Action_STATUS                                                                                          |           |           |           | v20260301 |
 | AddressPrefixItem                                                                                      |           |           |           | v20260301 |
 | AddressPrefixItem_STATUS                                                                               |           |           |           | v20260301 |
 | AddressPrefixType                                                                                      |           |           |           | v20260301 |
@@ -250,6 +252,8 @@
 | ConfigurationType_STATUS                                                                               |           |           |           | v20260301 |
 | ConnectionAuthenticationType                                                                           |           |           |           | v20260301 |
 | ConnectionAuthenticationType_STATUS                                                                    |           |           |           | v20260301 |
+| ConnectionPolicyProperties                                                                             |           |           |           | v20260301 |
+| ConnectionPolicyProperties_STATUS                                                                      |           |           |           | v20260301 |
 | ConnectivityConfigurationProperties                                                                    |           |           |           | v20260301 |
 | ConnectivityConfigurationPropertiesConnectivityCapabilities                                            |           |           |           | v20260301 |
 | ConnectivityConfigurationPropertiesConnectivityCapabilities_ConnectedGroupAddressOverlap               |           |           |           | v20260301 |
@@ -264,6 +268,8 @@
 | ConnectivityGroupItem_STATUS                                                                           |           |           |           | v20260301 |
 | ConnectivityTopology                                                                                   |           |           |           | v20260301 |
 | ConnectivityTopology_STATUS                                                                            |           |           |           | v20260301 |
+| Criterion                                                                                              |           |           |           | v20260301 |
+| Criterion_STATUS                                                                                       |           |           |           | v20260301 |
 | CrossTenantScopes_STATUS                                                                               |           |           |           | v20260301 |
 | DdosContinent                                                                                          |           |           |           | v20260301 |
 | DdosContinent_STATUS                                                                                   |           |           |           | v20260301 |
@@ -438,6 +444,11 @@
 | ExpressRoutePortsBillingType_STATUS                                                                    |           |           |           | v20260301 |
 | ExpressRoutePortsEncapsulation                                                                         |           |           |           | v20260301 |
 | ExpressRoutePortsEncapsulation_STATUS                                                                  |           |           |           | v20260301 |
+| FirewallPoliciesKubeSelectorGroup                                                                      |           |           |           | v20260301 |
+| FirewallPoliciesKubeSelectorGroup_STATUS                                                               |           |           |           | v20260301 |
+| FirewallPoliciesKubeSelectorGroup_Spec                                                                 |           |           |           | v20260301 |
+| FirewallPolicyKubeSelectorGroupProperties                                                              |           |           |           | v20260301 |
+| FirewallPolicyKubeSelectorGroupProperties_STATUS                                                       |           |           |           | v20260301 |
 | GatewayCustomBgpIpAddressIpConfiguration                                                               |           |           |           | v20260301 |
 | GatewayCustomBgpIpAddressIpConfiguration_STATUS                                                        |           |           |           | v20260301 |
 | GroupConnectivity                                                                                      |           |           |           | v20260301 |
@@ -463,19 +474,25 @@
 | IPAllocationMethod_STATUS                                                                              |           |           |           | v20260301 |
 | IPConfigurationBgpPeeringAddress                                                                       |           |           |           | v20260301 |
 | IPConfigurationBgpPeeringAddress_STATUS                                                                |           |           |           | v20260301 |
+| IPTraffic                                                                                              |           |           |           | v20260301 |
+| IPTraffic_STATUS                                                                                       |           |           |           | v20260301 |
 | IkeEncryption                                                                                          |           |           |           | v20260301 |
 | IkeEncryption_STATUS                                                                                   |           |           |           | v20260301 |
 | IkeIntegrity                                                                                           |           |           |           | v20260301 |
 | IkeIntegrity_STATUS                                                                                    |           |           |           | v20260301 |
+| IntentContent_STATUS                                                                                   |           |           |           | v20260301 |
 | IpGroup                                                                                                |           |           |           | v20260301 |
 | IpGroupPropertiesFormat                                                                                |           |           |           | v20260301 |
 | IpGroupPropertiesFormat_STATUS                                                                         |           |           |           | v20260301 |
 | IpGroup_STATUS                                                                                         |           |           |           | v20260301 |
 | IpGroup_Spec                                                                                           |           |           |           | v20260301 |
+| IpType_STATUS                                                                                          |           |           |           | v20260301 |
 | IpamPoolPrefixAllocation                                                                               |           |           |           | v20260301 |
 | IpamPoolPrefixAllocationPool                                                                           |           |           |           | v20260301 |
 | IpamPoolPrefixAllocationPool_STATUS                                                                    |           |           |           | v20260301 |
 | IpamPoolPrefixAllocation_STATUS                                                                        |           |           |           | v20260301 |
+| IpamPoolProperties                                                                                     |           |           |           | v20260301 |
+| IpamPoolProperties_STATUS                                                                              |           |           |           | v20260301 |
 | IpsecEncryption                                                                                        |           |           |           | v20260301 |
 | IpsecEncryption_STATUS                                                                                 |           |           |           | v20260301 |
 | IpsecIntegrity                                                                                         |           |           |           | v20260301 |
@@ -488,6 +505,12 @@
 | Ipv6ExpressRouteCircuitPeeringConfig_STATUS                                                            |           |           |           | v20260301 |
 | IsGlobal                                                                                               |           |           |           | v20260301 |
 | IsGlobal_STATUS                                                                                        |           |           |           | v20260301 |
+| KubeLabelSelector                                                                                      |           |           |           | v20260301 |
+| KubeLabelSelector_STATUS                                                                               |           |           |           | v20260301 |
+| LabelSelectorExpression                                                                                |           |           |           | v20260301 |
+| LabelSelectorExpression_STATUS                                                                         |           |           |           | v20260301 |
+| LabelSelectorOperator                                                                                  |           |           |           | v20260301 |
+| LabelSelectorOperator_STATUS                                                                           |           |           |           | v20260301 |
 | LocalNetworkGateway                                                                                    |           |           |           | v20260301 |
 | LocalNetworkGatewayPropertiesFormat                                                                    |           |           |           | v20260301 |
 | LocalNetworkGatewayPropertiesFormat_STATUS                                                             |           |           |           | v20260301 |
@@ -531,12 +554,24 @@
 | NetworkManagersConnectivityConfiguration                                                               |           |           |           | v20260301 |
 | NetworkManagersConnectivityConfiguration_STATUS                                                        |           |           |           | v20260301 |
 | NetworkManagersConnectivityConfiguration_Spec                                                          |           |           |           | v20260301 |
+| NetworkManagersIpamPool                                                                                |           |           |           | v20260301 |
+| NetworkManagersIpamPool_STATUS                                                                         |           |           |           | v20260301 |
+| NetworkManagersIpamPool_Spec                                                                           |           |           |           | v20260301 |
+| NetworkManagersIpamPoolsStaticCidr                                                                     |           |           |           | v20260301 |
+| NetworkManagersIpamPoolsStaticCidr_STATUS                                                              |           |           |           | v20260301 |
+| NetworkManagersIpamPoolsStaticCidr_Spec                                                                |           |           |           | v20260301 |
 | NetworkManagersNetworkGroup                                                                            |           |           |           | v20260301 |
 | NetworkManagersNetworkGroup_STATUS                                                                     |           |           |           | v20260301 |
 | NetworkManagersNetworkGroup_Spec                                                                       |           |           |           | v20260301 |
 | NetworkManagersNetworkGroupsStaticMember                                                               |           |           |           | v20260301 |
 | NetworkManagersNetworkGroupsStaticMember_STATUS                                                        |           |           |           | v20260301 |
 | NetworkManagersNetworkGroupsStaticMember_Spec                                                          |           |           |           | v20260301 |
+| NetworkManagersReachabilityAnalysisIntent                                                              |           |           |           | v20260301 |
+| NetworkManagersReachabilityAnalysisIntent_STATUS                                                       |           |           |           | v20260301 |
+| NetworkManagersReachabilityAnalysisIntent_Spec                                                         |           |           |           | v20260301 |
+| NetworkManagersReachabilityAnalysisRun                                                                 |           |           |           | v20260301 |
+| NetworkManagersReachabilityAnalysisRun_STATUS                                                          |           |           |           | v20260301 |
+| NetworkManagersReachabilityAnalysisRun_Spec                                                            |           |           |           | v20260301 |
 | NetworkManagersRoutingConfiguration                                                                    |           |           |           | v20260301 |
 | NetworkManagersRoutingConfiguration_STATUS                                                             |           |           |           | v20260301 |
 | NetworkManagersRoutingConfiguration_Spec                                                               |           |           |           | v20260301 |
@@ -567,6 +602,11 @@
 | NetworkManagersSecurityUserRuleCollection_Spec                                                         |           |           |           | v20260301 |
 | NetworkManagersSecurityUserRule_STATUS                                                                 |           |           |           | v20260301 |
 | NetworkManagersSecurityUserRule_Spec                                                                   |           |           |           | v20260301 |
+| NetworkManagersVerifierWorkspace                                                                       |           |           |           | v20260301 |
+| NetworkManagersVerifierWorkspace_STATUS                                                                |           |           |           | v20260301 |
+| NetworkManagersVerifierWorkspace_Spec                                                                  |           |           |           | v20260301 |
+| NetworkProtocol                                                                                        |           |           |           | v20260301 |
+| NetworkProtocol_STATUS                                                                                 |           |           |           | v20260301 |
 | NetworkSecurityPerimeter                                                                               |           |           | v20250501 |           |
 | NetworkSecurityPerimeterProperties_STATUS                                                              |           |           | v20250501 |           |
 | NetworkSecurityPerimeterSubResource                                                                    |           |           | v20250501 |           |
@@ -588,6 +628,8 @@
 | NetworkSecurityPerimetersResourceAssociation                                                           |           |           | v20250501 |           |
 | NetworkSecurityPerimetersResourceAssociation_STATUS                                                    |           |           | v20250501 |           |
 | NetworkSecurityPerimetersResourceAssociation_Spec                                                      |           |           | v20250501 |           |
+| NextStep                                                                                               |           |           |           | v20260301 |
+| NextStep_STATUS                                                                                        |           |           |           | v20260301 |
 | NsRecord                                                                                               | v20180501 |           |           |           |
 | NsRecord_STATUS                                                                                        | v20180501 |           |           |           |
 | NspAccessRuleProperties                                                                                |           |           | v20250501 |           |
@@ -620,6 +662,8 @@
 | P2sVpnGateway                                                                                          |           |           |           | v20260301 |
 | P2sVpnGateway_STATUS                                                                                   |           |           |           | v20260301 |
 | P2sVpnGateway_Spec                                                                                     |           |           |           | v20260301 |
+| Parameter                                                                                              |           |           |           | v20260301 |
+| Parameter_STATUS                                                                                       |           |           |           | v20260301 |
 | PeerExpressRouteCircuitConnection_STATUS                                                               |           |           |           | v20260301 |
 | PerimeterBasedAccessRule_STATUS                                                                        |           |           | v20250501 |           |
 | PfsGroup                                                                                               |           |           |           | v20260301 |
@@ -638,6 +682,10 @@
 | PublicIPAddress_STATUS_VirtualHubs_IpConfiguration_SubResourceEmbedded                                 |           |           |           | v20260301 |
 | RadiusServer                                                                                           |           |           |           | v20260301 |
 | RadiusServer_STATUS                                                                                    |           |           |           | v20260301 |
+| ReachabilityAnalysisIntentProperties                                                                   |           |           |           | v20260301 |
+| ReachabilityAnalysisIntentProperties_STATUS                                                            |           |           |           | v20260301 |
+| ReachabilityAnalysisRunProperties                                                                      |           |           |           | v20260301 |
+| ReachabilityAnalysisRunProperties_STATUS                                                               |           |           |           | v20260301 |
 | RecordSetProperties                                                                                    | v20180501 | v20240601 |           |           |
 | RecordSetProperties_STATUS                                                                             | v20180501 | v20240601 |           |           |
 | ResiliencyLevel_STATUS                                                                                 |           |           |           | v20260301 |
@@ -657,6 +705,14 @@
 | RouteFiltersRouteFilterRule                                                                            |           |           |           | v20260301 |
 | RouteFiltersRouteFilterRule_STATUS                                                                     |           |           |           | v20260301 |
 | RouteFiltersRouteFilterRule_Spec                                                                       |           |           |           | v20260301 |
+| RouteMapActionType                                                                                     |           |           |           | v20260301 |
+| RouteMapActionType_STATUS                                                                              |           |           |           | v20260301 |
+| RouteMapMatchCondition                                                                                 |           |           |           | v20260301 |
+| RouteMapMatchCondition_STATUS                                                                          |           |           |           | v20260301 |
+| RouteMapProperties                                                                                     |           |           |           | v20260301 |
+| RouteMapProperties_STATUS                                                                              |           |           |           | v20260301 |
+| RouteMapRule                                                                                           |           |           |           | v20260301 |
+| RouteMapRule_STATUS                                                                                    |           |           |           | v20260301 |
 | RoutingConfiguration                                                                                   |           |           |           | v20260301 |
 | RoutingConfiguration_STATUS                                                                            |           |           |           | v20260301 |
 | RoutingIntentProperties                                                                                |           |           |           | v20260301 |
@@ -721,6 +777,8 @@
 | SoaRecord_STATUS                                                                                       | v20180501 | v20240601 |           |           |
 | SrvRecord                                                                                              | v20180501 | v20240601 |           |           |
 | SrvRecord_STATUS                                                                                       | v20180501 | v20240601 |           |           |
+| StaticCidrProperties                                                                                   |           |           |           | v20260301 |
+| StaticCidrProperties_STATUS                                                                            |           |           |           | v20260301 |
 | StaticMemberProperties                                                                                 |           |           |           | v20260301 |
 | StaticMemberProperties_STATUS                                                                          |           |           |           | v20260301 |
 | StaticRoute                                                                                            |           |           |           | v20260301 |
@@ -747,6 +805,8 @@
 | UseHubGateway                                                                                          |           |           |           | v20260301 |
 | UseHubGateway_STATUS                                                                                   |           |           |           | v20260301 |
 | UserAssignedIdentityDetails                                                                            |           |           |           | v20260301 |
+| VerifierWorkspaceProperties                                                                            |           |           |           | v20260301 |
+| VerifierWorkspaceProperties_STATUS                                                                     |           |           |           | v20260301 |
 | VirtualHub                                                                                             |           |           |           | v20260301 |
 | VirtualHubId                                                                                           |           |           |           | v20260301 |
 | VirtualHubId_STATUS                                                                                    |           |           |           | v20260301 |
@@ -767,6 +827,9 @@
 | VirtualHubsBgpConnection                                                                               |           |           |           | v20260301 |
 | VirtualHubsBgpConnection_STATUS                                                                        |           |           |           | v20260301 |
 | VirtualHubsBgpConnection_Spec                                                                          |           |           |           | v20260301 |
+| VirtualHubsConnectionPolicy                                                                            |           |           |           | v20260301 |
+| VirtualHubsConnectionPolicy_STATUS                                                                     |           |           |           | v20260301 |
+| VirtualHubsConnectionPolicy_Spec                                                                       |           |           |           | v20260301 |
 | VirtualHubsHubRouteTable                                                                               |           |           |           | v20260301 |
 | VirtualHubsHubRouteTable_STATUS                                                                        |           |           |           | v20260301 |
 | VirtualHubsHubRouteTable_Spec                                                                          |           |           |           | v20260301 |
@@ -776,6 +839,9 @@
 | VirtualHubsIpConfiguration                                                                             |           |           |           | v20260301 |
 | VirtualHubsIpConfiguration_STATUS                                                                      |           |           |           | v20260301 |
 | VirtualHubsIpConfiguration_Spec                                                                        |           |           |           | v20260301 |
+| VirtualHubsRouteMap                                                                                    |           |           |           | v20260301 |
+| VirtualHubsRouteMap_STATUS                                                                             |           |           |           | v20260301 |
+| VirtualHubsRouteMap_Spec                                                                               |           |           |           | v20260301 |
 | VirtualHubsRouteTable                                                                                  |           |           |           | v20260301 |
 | VirtualHubsRouteTable_STATUS                                                                           |           |           |           | v20260301 |
 | VirtualHubsRouteTable_Spec                                                                             |           |           |           | v20260301 |
@@ -798,8 +864,18 @@
 | VirtualNetworkGatewayConnection_Spec                                                                   |           |           |           | v20260301 |
 | VirtualNetworkGatewaySpec                                                                              |           |           |           | v20260301 |
 | VirtualNetworkGateway_STATUS_Connection_SubResourceEmbedded                                            |           |           |           | v20260301 |
+| VirtualRouter                                                                                          |           |           |           | v20260301 |
 | VirtualRouterAutoScaleConfiguration                                                                    |           |           |           | v20260301 |
 | VirtualRouterAutoScaleConfiguration_STATUS                                                             |           |           |           | v20260301 |
+| VirtualRouterPeeringProperties                                                                         |           |           |           | v20260301 |
+| VirtualRouterPeeringProperties_STATUS                                                                  |           |           |           | v20260301 |
+| VirtualRouterPropertiesFormat                                                                          |           |           |           | v20260301 |
+| VirtualRouterPropertiesFormat_STATUS                                                                   |           |           |           | v20260301 |
+| VirtualRouter_STATUS                                                                                   |           |           |           | v20260301 |
+| VirtualRouter_Spec                                                                                     |           |           |           | v20260301 |
+| VirtualRoutersPeering                                                                                  |           |           |           | v20260301 |
+| VirtualRoutersPeering_STATUS                                                                           |           |           |           | v20260301 |
+| VirtualRoutersPeering_Spec                                                                             |           |           |           | v20260301 |
 | VirtualWan                                                                                             |           |           |           | v20260301 |
 | VirtualWanProperties                                                                                   |           |           |           | v20260301 |
 | VirtualWanProperties_STATUS                                                                            |           |           |           | v20260301 |

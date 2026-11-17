@@ -18,6 +18,7 @@ keyvault/Vault
 containerservice/ManagedCluster
 containerservice/Fleet
 network/DnsZone
+network/FirewallPolicy
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase
