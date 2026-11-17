@@ -283,6 +283,44 @@ groupModelConfiguration:
     NetworkManagers_Commit:
       $exportAs: NetworkManagersCommit
       $supportedFrom: v0.1.0
+    NetworkManagers_IpamPool:
+      $exportAs: NetworkManagersIpamPool
+      $supportedFrom: v0.1.0
+    NetworkManagers_IpamPools_StaticCidr:
+      $exportAs: NetworkManagersIpamPoolsStaticCidr
+      $supportedFrom: v0.1.0
+    NetworkManagers_VerifierWorkspace:
+      $exportAs: NetworkManagersVerifierWorkspace
+      $supportedFrom: v0.1.0
+    NetworkManagers_VerifierWorkspaces_ReachabilityAnalysisIntent:
+      $exportAs: NetworkManagersReachabilityAnalysisIntent # shorter than the generator's name (a kind plus List must fit in 63 characters)
+      $supportedFrom: v0.1.0
+    NetworkManagers_VerifierWorkspaces_ReachabilityAnalysisRun:
+      $exportAs: NetworkManagersReachabilityAnalysisRun
+      $supportedFrom: v0.1.0
+    ReachabilityAnalysisRunProperties:
+      IntentId:
+        $referenceType: arm
+    VirtualHubs_RouteMap:
+      $exportAs: VirtualHubsRouteMap
+      $supportedFrom: v0.1.0
+    RouteMapProperties:
+      AssociatedInboundConnections:
+        $referenceType: arm
+      AssociatedOutboundConnections:
+        $referenceType: arm
+    VirtualHubs_ConnectionPolicy:
+      $exportAs: VirtualHubsConnectionPolicy
+      $supportedFrom: v0.1.0
+    VirtualRouter:
+      $exportAs: VirtualRouter
+      $supportedFrom: v0.1.0
+    VirtualRouters_Peering:
+      $exportAs: VirtualRoutersPeering
+      $supportedFrom: v0.1.0
+    FirewallPolicies_KubeSelectorGroup:
+      $exportAs: FirewallPoliciesKubeSelectorGroup
+      $supportedFrom: v0.1.0
     NetworkManagerRoutingGroupItem:
       NetworkGroupId:
         $referenceType: arm # the network group a routing rule collection applies to
@@ -568,7 +606,7 @@ typeTransformers:
     because: a key; exported to a Secret, not shown in the status
   - group: network
     version: v20260301
-    name: ExpressRouteCircuits_Authorization_Spec;ExpressRouteCircuits_Peering_Spec;ExpressRouteCircuits_Peerings_Connection_Spec;ExpressRoutePorts_Authorization_Spec;ExpressRouteGateways_ExpressRouteConnection_Spec;VirtualHubs_HubVirtualNetworkConnection_Spec;VirtualHubs_RouteTable_Spec;VirtualHubs_BgpConnection_Spec;VirtualHubs_RoutingIntent_Spec;VirtualHubs_HubRouteTable_Spec;VirtualHubs_IpConfiguration_Spec;VpnGateways_VpnConnection_Spec;VpnGateways_NatRule_Spec
+    name: ExpressRouteCircuits_Authorization_Spec;ExpressRouteCircuits_Peering_Spec;ExpressRouteCircuits_Peerings_Connection_Spec;ExpressRoutePorts_Authorization_Spec;ExpressRouteGateways_ExpressRouteConnection_Spec;VirtualHubs_HubVirtualNetworkConnection_Spec;VirtualHubs_RouteTable_Spec;VirtualHubs_BgpConnection_Spec;VirtualHubs_RoutingIntent_Spec;VirtualHubs_HubRouteTable_Spec;VirtualHubs_IpConfiguration_Spec;VpnGateways_VpnConnection_Spec;VpnGateways_NatRule_Spec;VirtualRouters_Peering_Spec;FirewallPolicies_KubeSelectorGroup_Spec
     property: Id
     remove: true
     because: a child resource's own ARM ID (the spec's SubResource), which Azure sets; ASO's subnets and routes have none in their spec either

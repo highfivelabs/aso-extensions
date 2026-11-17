@@ -2226,6 +2226,71 @@ ExpressRoutePortsAuthorization: Resource
     │   └── "Updating"
     └── Type: *string
 
+FirewallPoliciesKubeSelectorGroup: Resource
+├── Owner: FirewallPolicy
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[a-zA-Z0-9]([a-zA-Z0-9-._]{0,78}[a-zA-Z0-9_])?$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (2 properties)
+│       ├── NamespaceSelector: *Object (2 properties)
+│       │   ├── MatchExpressions: Object (3 properties)[]
+│       │   │   ├── Key: *string
+│       │   │   ├── Operator: *Enum (4 values)
+│       │   │   │   ├── "DoesNotExist"
+│       │   │   │   ├── "Exists"
+│       │   │   │   ├── "In"
+│       │   │   │   └── "NotIn"
+│       │   │   └── Values: string[]
+│       │   └── MatchLabels: map[string]string
+│       └── PodSelector: *Object (2 properties)
+│           ├── MatchExpressions: Object (3 properties)[]
+│           │   ├── Key: *string
+│           │   ├── Operator: *Enum (4 values)
+│           │   │   ├── "DoesNotExist"
+│           │   │   ├── "Exists"
+│           │   │   ├── "In"
+│           │   │   └── "NotIn"
+│           │   └── Values: string[]
+│           └── MatchLabels: map[string]string
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (3 properties)
+    │   ├── NamespaceSelector: *Object (2 properties)
+    │   │   ├── MatchExpressions: Object (3 properties)[]
+    │   │   │   ├── Key: *string
+    │   │   │   ├── Operator: *Enum (4 values)
+    │   │   │   │   ├── "DoesNotExist"
+    │   │   │   │   ├── "Exists"
+    │   │   │   │   ├── "In"
+    │   │   │   │   └── "NotIn"
+    │   │   │   └── Values: string[]
+    │   │   └── MatchLabels: map[string]string
+    │   ├── PodSelector: *Object (2 properties)
+    │   │   ├── MatchExpressions: Object (3 properties)[]
+    │   │   │   ├── Key: *string
+    │   │   │   ├── Operator: *Enum (4 values)
+    │   │   │   │   ├── "DoesNotExist"
+    │   │   │   │   ├── "Exists"
+    │   │   │   │   ├── "In"
+    │   │   │   │   └── "NotIn"
+    │   │   │   └── Values: string[]
+    │   │   └── MatchLabels: map[string]string
+    │   └── ProvisioningState: *Enum (6 values)
+    │       ├── "Canceled"
+    │       ├── "Creating"
+    │       ├── "Deleting"
+    │       ├── "Failed"
+    │       ├── "Succeeded"
+    │       └── "Updating"
+    └── Type: *string
+
 IpGroup: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (6 properties)
@@ -2586,6 +2651,111 @@ NetworkManagersConnectivityConfiguration: Resource
     │       └── "User"
     └── Type: *string
 
+NetworkManagersIpamPool: Resource
+├── Owner: NetworkManager
+├── Spec: Object (6 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[0-9a-zA-Z]([0-9a-zA-Z_.-]{0,62}[0-9a-zA-Z_])?$"
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (6 properties)
+│   │   ├── AddressPrefixes: string[]
+│   │   ├── Description: *string
+│   │   ├── DisplayName: *string
+│   │   ├── MaxAllocationSize: *string
+│   │   ├── MinAllocationSize: *string
+│   │   └── ParentPoolName: *string
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (8 properties)
+    │   ├── AddressPrefixes: string[]
+    │   ├── Description: *string
+    │   ├── DisplayName: *string
+    │   ├── IpAddressType: Enum (2 values)[]
+    │   │   ├── "IPv4"
+    │   │   └── "IPv6"
+    │   ├── MaxAllocationSize: *string
+    │   ├── MinAllocationSize: *string
+    │   ├── ParentPoolName: *string
+    │   └── ProvisioningState: *Enum (6 values)
+    │       ├── "Canceled"
+    │       ├── "Creating"
+    │       ├── "Deleting"
+    │       ├── "Failed"
+    │       ├── "Succeeded"
+    │       └── "Updating"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+NetworkManagersIpamPoolsStaticCidr: Resource
+├── Owner: NetworkManagersIpamPool
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[0-9a-zA-Z]([0-9a-zA-Z_.-]{0,62}[0-9a-zA-Z_])?$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (3 properties)
+│       ├── AddressPrefixes: string[]
+│       ├── Description: *string
+│       └── NumberOfIPAddressesToAllocate: *string
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (5 properties)
+    │   ├── AddressPrefixes: string[]
+    │   ├── Description: *string
+    │   ├── NumberOfIPAddressesToAllocate: *string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   └── TotalNumberOfIPAddresses: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 NetworkManagersNetworkGroup: Resource
 ├── Owner: NetworkManager
 ├── Spec: Object (5 properties)
@@ -2655,6 +2825,130 @@ NetworkManagersNetworkGroupsStaticMember: Resource
     │   └── "Updating"
     ├── Region: *string
     ├── ResourceId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+NetworkManagersReachabilityAnalysisIntent: Resource
+├── Owner: NetworkManagersVerifierWorkspace
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[0-9a-zA-Z]([0-9a-zA-Z_.-]{0,62}[0-9a-zA-Z_])?$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (4 properties)
+│       ├── Description: *string
+│       ├── DestinationResourceReference: *genruntime.ResourceReference
+│       ├── IpTraffic: *Object (5 properties)
+│       │   ├── DestinationIps: string[]
+│       │   ├── DestinationPorts: string[]
+│       │   ├── Protocols: Enum (4 values)[]
+│       │   │   ├── "Any"
+│       │   │   ├── "ICMP"
+│       │   │   ├── "TCP"
+│       │   │   └── "UDP"
+│       │   ├── SourceIps: string[]
+│       │   └── SourcePorts: string[]
+│       └── SourceResourceReference: *genruntime.ResourceReference
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (5 properties)
+    │   ├── Description: *string
+    │   ├── DestinationResourceId: *string
+    │   ├── IpTraffic: *Object (5 properties)
+    │   │   ├── DestinationIps: string[]
+    │   │   ├── DestinationPorts: string[]
+    │   │   ├── Protocols: Enum (4 values)[]
+    │   │   │   ├── "Any"
+    │   │   │   ├── "ICMP"
+    │   │   │   ├── "TCP"
+    │   │   │   └── "UDP"
+    │   │   ├── SourceIps: string[]
+    │   │   └── SourcePorts: string[]
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   └── SourceResourceId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+NetworkManagersReachabilityAnalysisRun: Resource
+├── Owner: NetworkManagersVerifierWorkspace
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[0-9a-zA-Z]([0-9a-zA-Z_.-]{0,62}[0-9a-zA-Z_])?$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (2 properties)
+│       ├── Description: *string
+│       └── IntentReference: *genruntime.ResourceReference
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (6 properties)
+    │   ├── AnalysisResult: *string
+    │   ├── Description: *string
+    │   ├── ErrorMessage: *string
+    │   ├── IntentContent: *Object (4 properties)
+    │   │   ├── Description: *string
+    │   │   ├── DestinationResourceId: *string
+    │   │   ├── IpTraffic: *Object (5 properties)
+    │   │   │   ├── DestinationIps: string[]
+    │   │   │   ├── DestinationPorts: string[]
+    │   │   │   ├── Protocols: Enum (4 values)[]
+    │   │   │   │   ├── "Any"
+    │   │   │   │   ├── "ICMP"
+    │   │   │   │   ├── "TCP"
+    │   │   │   │   └── "UDP"
+    │   │   │   ├── SourceIps: string[]
+    │   │   │   └── SourcePorts: string[]
+    │   │   └── SourceResourceId: *string
+    │   ├── IntentId: *string
+    │   └── ProvisioningState: *Enum (6 values)
+    │       ├── "Canceled"
+    │       ├── "Creating"
+    │       ├── "Deleting"
+    │       ├── "Failed"
+    │       ├── "Succeeded"
+    │       └── "Updating"
     ├── SystemData: *Object (6 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string
@@ -3322,6 +3616,52 @@ NetworkManagersSecurityUserRuleCollection: Resource
     │       └── "User"
     └── Type: *string
 
+NetworkManagersVerifierWorkspace: Resource
+├── Owner: NetworkManager
+├── Spec: Object (6 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[0-9a-zA-Z]([0-9a-zA-Z_.-]{0,62}[0-9a-zA-Z_])?$"
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (1 property)
+│   │   └── Description: *string
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (2 properties)
+    │   ├── Description: *string
+    │   └── ProvisioningState: *Enum (6 values)
+    │       ├── "Canceled"
+    │       ├── "Creating"
+    │       ├── "Deleting"
+    │       ├── "Failed"
+    │       ├── "Succeeded"
+    │       └── "Updating"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
 P2sVpnGateway: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (11 properties)
@@ -3858,6 +4198,77 @@ VirtualHubsBgpConnection: Resource
     │               └── "Equal"
     └── Type: *string
 
+VirtualHubsConnectionPolicy: Resource
+├── Owner: VirtualHub
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (2 properties)
+│       ├── EnableInternetSecurity: *bool
+│       └── RoutingConfiguration: *Object (5 properties)
+│           ├── AssociatedRouteTable: *Object (1 property)
+│           │   └── Reference: *genruntime.ResourceReference
+│           ├── InboundRouteMap: *Object (1 property)
+│           │   └── Reference: *genruntime.ResourceReference
+│           ├── OutboundRouteMap: *Object (1 property)
+│           │   └── Reference: *genruntime.ResourceReference
+│           ├── PropagatedRouteTables: *Object (2 properties)
+│           │   ├── Ids: Object (1 property)[]
+│           │   │   └── Reference: *genruntime.ResourceReference
+│           │   └── Labels: string[]
+│           └── VnetRoutes: *Object (2 properties)
+│               ├── StaticRoutes: Object (3 properties)[]
+│               │   ├── AddressPrefixes: string[]
+│               │   ├── Name: *string
+│               │   └── NextHopIpAddress: *string
+│               └── StaticRoutesConfig: *Object (2 properties)
+│                   ├── PropagateStaticRoutes: *bool
+│                   └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+│                       ├── "Contains"
+│                       └── "Equal"
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (4 properties)
+    │   ├── AssociatedConnections: string[]
+    │   ├── EnableInternetSecurity: *bool
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   └── RoutingConfiguration: *Object (5 properties)
+    │       ├── AssociatedRouteTable: *Object (1 property)
+    │       │   └── Id: *string
+    │       ├── InboundRouteMap: *Object (1 property)
+    │       │   └── Id: *string
+    │       ├── OutboundRouteMap: *Object (1 property)
+    │       │   └── Id: *string
+    │       ├── PropagatedRouteTables: *Object (2 properties)
+    │       │   ├── Ids: Object (1 property)[]
+    │       │   │   └── Id: *string
+    │       │   └── Labels: string[]
+    │       └── VnetRoutes: *Object (3 properties)
+    │           ├── BgpConnections: Object (1 property)[]
+    │           │   └── Id: *string
+    │           ├── StaticRoutes: Object (3 properties)[]
+    │           │   ├── AddressPrefixes: string[]
+    │           │   ├── Name: *string
+    │           │   └── NextHopIpAddress: *string
+    │           └── StaticRoutesConfig: *Object (2 properties)
+    │               ├── PropagateStaticRoutes: *bool
+    │               └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+    │                   ├── "Contains"
+    │                   └── "Equal"
+    └── Type: *string
+
 VirtualHubsHubRouteTable: Resource
 ├── Owner: VirtualHub
 ├── Spec: Object (5 properties)
@@ -4013,6 +4424,86 @@ VirtualHubsIpConfiguration: Resource
     │   └── Id: *string
     ├── Subnet: *Object (1 property)
     │   └── Id: *string
+    └── Type: *string
+
+VirtualHubsRouteMap: Resource
+├── Owner: VirtualHub
+├── Spec: Object (6 properties)
+│   ├── AssociatedInboundConnectionsReferences: genruntime.ResourceReference[]
+│   ├── AssociatedOutboundConnectionsReferences: genruntime.ResourceReference[]
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Rules: Object (4 properties)[]
+│       ├── Actions: Object (2 properties)[]
+│       │   ├── Parameters: Object (3 properties)[]
+│       │   │   ├── AsPath: string[]
+│       │   │   ├── Community: string[]
+│       │   │   └── RoutePrefix: string[]
+│       │   └── Type: *Enum (5 values)
+│       │       ├── "Add"
+│       │       ├── "Drop"
+│       │       ├── "Remove"
+│       │       ├── "Replace"
+│       │       └── "Unknown"
+│       ├── MatchCriteria: Object (4 properties)[]
+│       │   ├── AsPath: string[]
+│       │   ├── Community: string[]
+│       │   ├── MatchCondition: *Enum (5 values)
+│       │   │   ├── "Contains"
+│       │   │   ├── "Equals"
+│       │   │   ├── "NotContains"
+│       │   │   ├── "NotEquals"
+│       │   │   └── "Unknown"
+│       │   └── RoutePrefix: string[]
+│       ├── Name: *string
+│       └── NextStepIfMatched: *Enum (3 values)
+│           ├── "Continue"
+│           ├── "Terminate"
+│           └── "Unknown"
+└── Status: Object (9 properties)
+    ├── AssociatedInboundConnections: string[]
+    ├── AssociatedOutboundConnections: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── Rules: Object (4 properties)[]
+    │   ├── Actions: Object (2 properties)[]
+    │   │   ├── Parameters: Object (3 properties)[]
+    │   │   │   ├── AsPath: string[]
+    │   │   │   ├── Community: string[]
+    │   │   │   └── RoutePrefix: string[]
+    │   │   └── Type: *Enum (5 values)
+    │   │       ├── "Add"
+    │   │       ├── "Drop"
+    │   │       ├── "Remove"
+    │   │       ├── "Replace"
+    │   │       └── "Unknown"
+    │   ├── MatchCriteria: Object (4 properties)[]
+    │   │   ├── AsPath: string[]
+    │   │   ├── Community: string[]
+    │   │   ├── MatchCondition: *Enum (5 values)
+    │   │   │   ├── "Contains"
+    │   │   │   ├── "Equals"
+    │   │   │   ├── "NotContains"
+    │   │   │   ├── "NotEquals"
+    │   │   │   └── "Unknown"
+    │   │   └── RoutePrefix: string[]
+    │   ├── Name: *string
+    │   └── NextStepIfMatched: *Enum (3 values)
+    │       ├── "Continue"
+    │       ├── "Terminate"
+    │       └── "Unknown"
     └── Type: *string
 
 VirtualHubsRouteTable: Resource
@@ -4370,6 +4861,72 @@ VirtualNetworkGatewayConnection: Resource
     │   └── Id: *string
     └── VirtualNetworkGateway2: *Object (1 property)
         └── Id: *string
+
+VirtualRouter: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── HostedGateway: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── HostedSubnet: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Tags: map[string]string
+│   ├── VirtualRouterAsn: *uint32
+│   └── VirtualRouterIps: string[]
+└── Status: Object (13 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── HostedGateway: *Object (1 property)
+    │   └── Id: *string
+    ├── HostedSubnet: *Object (1 property)
+    │   └── Id: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Peerings: Object (1 property)[]
+    │   └── Id: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualRouterAsn: *uint32
+    └── VirtualRouterIps: string[]
+
+VirtualRoutersPeering: Resource
+├── Owner: VirtualRouter
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PeerAsn: *uint32
+│   └── PeerIp: *string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PeerAsn: *uint32
+    ├── PeerIp: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    └── Type: *string
 
 VirtualWan: Resource
 ├── Owner: resources/vv20191001.ResourceGroup

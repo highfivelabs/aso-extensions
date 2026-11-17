@@ -2311,6 +2311,64 @@ ExpressRoutePortsAuthorization_STATUS: Object (5 properties)
 ExpressRoutePortsAuthorization_Spec: Object (1 property)
 └── Name: string
 
+FirewallPoliciesKubeSelectorGroup_STATUS: Object (5 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (3 properties)
+│   ├── NamespaceSelector: *Object (2 properties)
+│   │   ├── MatchExpressions: Object (3 properties)[]
+│   │   │   ├── Key: *string
+│   │   │   ├── Operator: *Enum (4 values)
+│   │   │   │   ├── "DoesNotExist"
+│   │   │   │   ├── "Exists"
+│   │   │   │   ├── "In"
+│   │   │   │   └── "NotIn"
+│   │   │   └── Values: string[]
+│   │   └── MatchLabels: map[string]string
+│   ├── PodSelector: *Object (2 properties)
+│   │   ├── MatchExpressions: Object (3 properties)[]
+│   │   │   ├── Key: *string
+│   │   │   ├── Operator: *Enum (4 values)
+│   │   │   │   ├── "DoesNotExist"
+│   │   │   │   ├── "Exists"
+│   │   │   │   ├── "In"
+│   │   │   │   └── "NotIn"
+│   │   │   └── Values: string[]
+│   │   └── MatchLabels: map[string]string
+│   └── ProvisioningState: *Enum (6 values)
+│       ├── "Canceled"
+│       ├── "Creating"
+│       ├── "Deleting"
+│       ├── "Failed"
+│       ├── "Succeeded"
+│       └── "Updating"
+└── Type: *string
+
+FirewallPoliciesKubeSelectorGroup_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── NamespaceSelector: *Object (2 properties)
+    │   ├── MatchExpressions: Object (3 properties)[]
+    │   │   ├── Key: *string
+    │   │   ├── Operator: *Enum (4 values)
+    │   │   │   ├── "DoesNotExist"
+    │   │   │   ├── "Exists"
+    │   │   │   ├── "In"
+    │   │   │   └── "NotIn"
+    │   │   └── Values: string[]
+    │   └── MatchLabels: map[string]string
+    └── PodSelector: *Object (2 properties)
+        ├── MatchExpressions: Object (3 properties)[]
+        │   ├── Key: *string
+        │   ├── Operator: *Enum (4 values)
+        │   │   ├── "DoesNotExist"
+        │   │   ├── "Exists"
+        │   │   ├── "In"
+        │   │   └── "NotIn"
+        │   └── Values: string[]
+        └── MatchLabels: map[string]string
+
 IpGroup_STATUS: Object (7 properties)
 ├── Etag: *string
 ├── Id: *string
@@ -2646,6 +2704,97 @@ NetworkManagersConnectivityConfiguration_Spec: Object (2 properties)
         ├── "False"
         └── "True"
 
+NetworkManagersIpamPool_STATUS: Object (8 properties)
+├── Etag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── AddressPrefixes: string[]
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── IpAddressType: Enum (2 values)[]
+│   │   ├── "IPv4"
+│   │   └── "IPv6"
+│   ├── MaxAllocationSize: *string
+│   ├── MinAllocationSize: *string
+│   ├── ParentPoolName: *string
+│   └── ProvisioningState: *Enum (6 values)
+│       ├── "Canceled"
+│       ├── "Creating"
+│       ├── "Deleting"
+│       ├── "Failed"
+│       ├── "Succeeded"
+│       └── "Updating"
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+├── Tags: map[string]string
+└── Type: *string
+
+NetworkManagersIpamPool_Spec: Object (4 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (6 properties)
+│   ├── AddressPrefixes: string[]
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── MaxAllocationSize: *string
+│   ├── MinAllocationSize: *string
+│   └── ParentPoolName: *string
+└── Tags: map[string]string
+
+NetworkManagersIpamPoolsStaticCidr_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (5 properties)
+│   ├── AddressPrefixes: string[]
+│   ├── Description: *string
+│   ├── NumberOfIPAddressesToAllocate: *string
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   └── TotalNumberOfIPAddresses: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+NetworkManagersIpamPoolsStaticCidr_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (3 properties)
+    ├── AddressPrefixes: string[]
+    ├── Description: *string
+    └── NumberOfIPAddressesToAllocate: *string
+
 NetworkManagersNetworkGroup_STATUS: Object (6 properties)
 ├── Etag: *string
 ├── Id: *string
@@ -2723,6 +2872,116 @@ NetworkManagersNetworkGroupsStaticMember_Spec: Object (2 properties)
 ├── Name: string
 └── Properties: *Object (1 property)
     └── ResourceId: *string
+
+NetworkManagersReachabilityAnalysisIntent_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (5 properties)
+│   ├── Description: *string
+│   ├── DestinationResourceId: *string
+│   ├── IpTraffic: *Object (5 properties)
+│   │   ├── DestinationIps: string[]
+│   │   ├── DestinationPorts: string[]
+│   │   ├── Protocols: Enum (4 values)[]
+│   │   │   ├── "Any"
+│   │   │   ├── "ICMP"
+│   │   │   ├── "TCP"
+│   │   │   └── "UDP"
+│   │   ├── SourceIps: string[]
+│   │   └── SourcePorts: string[]
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   └── SourceResourceId: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+NetworkManagersReachabilityAnalysisIntent_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (4 properties)
+    ├── Description: *string
+    ├── DestinationResourceId: *string
+    ├── IpTraffic: *Object (5 properties)
+    │   ├── DestinationIps: string[]
+    │   ├── DestinationPorts: string[]
+    │   ├── Protocols: Enum (4 values)[]
+    │   │   ├── "Any"
+    │   │   ├── "ICMP"
+    │   │   ├── "TCP"
+    │   │   └── "UDP"
+    │   ├── SourceIps: string[]
+    │   └── SourcePorts: string[]
+    └── SourceResourceId: *string
+
+NetworkManagersReachabilityAnalysisRun_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (6 properties)
+│   ├── AnalysisResult: *string
+│   ├── Description: *string
+│   ├── ErrorMessage: *string
+│   ├── IntentContent: *Object (4 properties)
+│   │   ├── Description: *string
+│   │   ├── DestinationResourceId: *string
+│   │   ├── IpTraffic: *Object (5 properties)
+│   │   │   ├── DestinationIps: string[]
+│   │   │   ├── DestinationPorts: string[]
+│   │   │   ├── Protocols: Enum (4 values)[]
+│   │   │   │   ├── "Any"
+│   │   │   │   ├── "ICMP"
+│   │   │   │   ├── "TCP"
+│   │   │   │   └── "UDP"
+│   │   │   ├── SourceIps: string[]
+│   │   │   └── SourcePorts: string[]
+│   │   └── SourceResourceId: *string
+│   ├── IntentId: *string
+│   └── ProvisioningState: *Enum (6 values)
+│       ├── "Canceled"
+│       ├── "Creating"
+│       ├── "Deleting"
+│       ├── "Failed"
+│       ├── "Succeeded"
+│       └── "Updating"
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+NetworkManagersReachabilityAnalysisRun_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── Description: *string
+    └── IntentId: *string
 
 NetworkManagersRoutingConfiguration_STATUS: Object (6 properties)
 ├── Etag: *string
@@ -3332,6 +3591,45 @@ NetworkManagersSecurityUserRule_Spec: Object (2 properties)
             ├── "NetworkGroup"
             └── "ServiceTag"
 
+NetworkManagersVerifierWorkspace_STATUS: Object (8 properties)
+├── Etag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── Description: *string
+│   └── ProvisioningState: *Enum (6 values)
+│       ├── "Canceled"
+│       ├── "Creating"
+│       ├── "Deleting"
+│       ├── "Failed"
+│       ├── "Succeeded"
+│       └── "Updating"
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+├── Tags: map[string]string
+└── Type: *string
+
+NetworkManagersVerifierWorkspace_Spec: Object (4 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (1 property)
+│   └── Description: *string
+└── Tags: map[string]string
+
 P2sVpnGateway_STATUS: Object (7 properties)
 ├── Etag: *string
 ├── Id: *string
@@ -3870,6 +4168,71 @@ VirtualHubsBgpConnection_Spec: Object (2 properties)
                     ├── "Contains"
                     └── "Equal"
 
+VirtualHubsConnectionPolicy_STATUS: Object (5 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── AssociatedConnections: string[]
+│   ├── EnableInternetSecurity: *bool
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   └── RoutingConfiguration: *Object (5 properties)
+│       ├── AssociatedRouteTable: *Object (1 property)
+│       │   └── Id: *string
+│       ├── InboundRouteMap: *Object (1 property)
+│       │   └── Id: *string
+│       ├── OutboundRouteMap: *Object (1 property)
+│       │   └── Id: *string
+│       ├── PropagatedRouteTables: *Object (2 properties)
+│       │   ├── Ids: Object (1 property)[]
+│       │   │   └── Id: *string
+│       │   └── Labels: string[]
+│       └── VnetRoutes: *Object (3 properties)
+│           ├── BgpConnections: Object (1 property)[]
+│           │   └── Id: *string
+│           ├── StaticRoutes: Object (3 properties)[]
+│           │   ├── AddressPrefixes: string[]
+│           │   ├── Name: *string
+│           │   └── NextHopIpAddress: *string
+│           └── StaticRoutesConfig: *Object (2 properties)
+│               ├── PropagateStaticRoutes: *bool
+│               └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+│                   ├── "Contains"
+│                   └── "Equal"
+└── Type: *string
+
+VirtualHubsConnectionPolicy_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── EnableInternetSecurity: *bool
+    └── RoutingConfiguration: *Object (5 properties)
+        ├── AssociatedRouteTable: *Object (1 property)
+        │   └── Id: *string
+        ├── InboundRouteMap: *Object (1 property)
+        │   └── Id: *string
+        ├── OutboundRouteMap: *Object (1 property)
+        │   └── Id: *string
+        ├── PropagatedRouteTables: *Object (2 properties)
+        │   ├── Ids: Object (1 property)[]
+        │   │   └── Id: *string
+        │   └── Labels: string[]
+        └── VnetRoutes: *Object (2 properties)
+            ├── StaticRoutes: Object (3 properties)[]
+            │   ├── AddressPrefixes: string[]
+            │   ├── Name: *string
+            │   └── NextHopIpAddress: *string
+            └── StaticRoutesConfig: *Object (2 properties)
+                ├── PropagateStaticRoutes: *bool
+                └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+                    ├── "Contains"
+                    └── "Equal"
+
 VirtualHubsHubRouteTable_STATUS: Object (5 properties)
 ├── Etag: *string
 ├── Id: *string
@@ -4014,6 +4377,82 @@ VirtualHubsIpConfiguration_Spec: Object (2 properties)
     │   └── Id: *string
     └── Subnet: *Object (1 property)
         └── Id: *string
+
+VirtualHubsRouteMap_STATUS: Object (5 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── AssociatedInboundConnections: string[]
+│   ├── AssociatedOutboundConnections: string[]
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   └── Rules: Object (4 properties)[]
+│       ├── Actions: Object (2 properties)[]
+│       │   ├── Parameters: Object (3 properties)[]
+│       │   │   ├── AsPath: string[]
+│       │   │   ├── Community: string[]
+│       │   │   └── RoutePrefix: string[]
+│       │   └── Type: *Enum (5 values)
+│       │       ├── "Add"
+│       │       ├── "Drop"
+│       │       ├── "Remove"
+│       │       ├── "Replace"
+│       │       └── "Unknown"
+│       ├── MatchCriteria: Object (4 properties)[]
+│       │   ├── AsPath: string[]
+│       │   ├── Community: string[]
+│       │   ├── MatchCondition: *Enum (5 values)
+│       │   │   ├── "Contains"
+│       │   │   ├── "Equals"
+│       │   │   ├── "NotContains"
+│       │   │   ├── "NotEquals"
+│       │   │   └── "Unknown"
+│       │   └── RoutePrefix: string[]
+│       ├── Name: *string
+│       └── NextStepIfMatched: *Enum (3 values)
+│           ├── "Continue"
+│           ├── "Terminate"
+│           └── "Unknown"
+└── Type: *string
+
+VirtualHubsRouteMap_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (3 properties)
+    ├── AssociatedInboundConnections: string[]
+    ├── AssociatedOutboundConnections: string[]
+    └── Rules: Object (4 properties)[]
+        ├── Actions: Object (2 properties)[]
+        │   ├── Parameters: Object (3 properties)[]
+        │   │   ├── AsPath: string[]
+        │   │   ├── Community: string[]
+        │   │   └── RoutePrefix: string[]
+        │   └── Type: *Enum (5 values)
+        │       ├── "Add"
+        │       ├── "Drop"
+        │       ├── "Remove"
+        │       ├── "Replace"
+        │       └── "Unknown"
+        ├── MatchCriteria: Object (4 properties)[]
+        │   ├── AsPath: string[]
+        │   ├── Community: string[]
+        │   ├── MatchCondition: *Enum (5 values)
+        │   │   ├── "Contains"
+        │   │   ├── "Equals"
+        │   │   ├── "NotContains"
+        │   │   ├── "NotEquals"
+        │   │   └── "Unknown"
+        │   └── RoutePrefix: string[]
+        ├── Name: *string
+        └── NextStepIfMatched: *Enum (3 values)
+            ├── "Continue"
+            ├── "Terminate"
+            └── "Unknown"
 
 VirtualHubsRouteTable_STATUS: Object (4 properties)
 ├── Etag: *string
@@ -4357,6 +4796,64 @@ VirtualNetworkGatewayConnection_Spec: Object (4 properties)
 │   └── VirtualNetworkGateway2: *Object (1 property)
 │       └── Id: *string
 └── Tags: map[string]string
+
+VirtualRouter_STATUS: Object (7 properties)
+├── Etag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (6 properties)
+│   ├── HostedGateway: *Object (1 property)
+│   │   └── Id: *string
+│   ├── HostedSubnet: *Object (1 property)
+│   │   └── Id: *string
+│   ├── Peerings: Object (1 property)[]
+│   │   └── Id: *string
+│   ├── ProvisioningState: *Enum (6 values)
+│   │   ├── "Canceled"
+│   │   ├── "Creating"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   ├── VirtualRouterAsn: *uint32
+│   └── VirtualRouterIps: string[]
+├── Tags: map[string]string
+└── Type: *string
+
+VirtualRouter_Spec: Object (4 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (4 properties)
+│   ├── HostedGateway: *Object (1 property)
+│   │   └── Id: *string
+│   ├── HostedSubnet: *Object (1 property)
+│   │   └── Id: *string
+│   ├── VirtualRouterAsn: *uint32
+│   └── VirtualRouterIps: string[]
+└── Tags: map[string]string
+
+VirtualRoutersPeering_STATUS: Object (5 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (3 properties)
+│   ├── PeerAsn: *uint32
+│   ├── PeerIp: *string
+│   └── ProvisioningState: *Enum (6 values)
+│       ├── "Canceled"
+│       ├── "Creating"
+│       ├── "Deleting"
+│       ├── "Failed"
+│       ├── "Succeeded"
+│       └── "Updating"
+└── Type: *string
+
+VirtualRoutersPeering_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── PeerAsn: *uint32
+    └── PeerIp: *string
 
 VirtualWan_STATUS: Object (7 properties)
 ├── Etag: *string

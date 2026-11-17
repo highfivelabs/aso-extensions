@@ -1581,7 +1581,7 @@ Microsoft.Network,Microsoft.Network/ExpressRoutePorts,15,,0,network.azure.hfl.de
 Microsoft.Network,Microsoft.Network/expressRoutePorts/authorizations,1,,0,network.azure.hfl.dev/ExpressRoutePortsAuthorization,0,1,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies,41,network.azure.com/FirewallPolicy,41,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/firewallPolicies/firewallPolicyDrafts,36,,0,,0,36,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/firewallPolicies/kubeSelectorGroups,8,,0,,0,8,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/firewallPolicies/kubeSelectorGroups,8,,0,network.azure.hfl.dev/FirewallPoliciesKubeSelectorGroup,8,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies/ruleCollectionGroups,30,network.azure.com/FirewallPoliciesRuleCollectionGroup,27,,0,3,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/firewallPolicies/ruleCollectionGroups/ruleCollectionGroupDrafts,30,,0,,0,30,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies/signatureOverrides,1,,0,,0,1,false,spec_api=2026-03-01
@@ -1606,8 +1606,8 @@ Microsoft.Network,Microsoft.Network/networkManagerConnections,2,,0,network.azure
 Microsoft.Network,Microsoft.Network/networkManagers,6,,0,network.azure.hfl.dev/NetworkManager,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/commits,5,,0,network.azure.hfl.dev/NetworkManagersCommit,5,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/connectivityConfigurations,13,,0,network.azure.hfl.dev/NetworkManagersConnectivityConfiguration,13,0,false,spec_api=2026-03-01; ours_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/ipamPools,8,,0,,0,8,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/ipamPools/staticCidrs,3,,0,,0,3,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/ipamPools,8,,0,network.azure.hfl.dev/NetworkManagersIpamPool,8,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/ipamPools/staticCidrs,3,,0,network.azure.hfl.dev/NetworkManagersIpamPoolsStaticCidr,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/networkGroups,2,,0,network.azure.hfl.dev/NetworkManagersNetworkGroup,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/networkGroups/staticMembers,1,,0,network.azure.hfl.dev/NetworkManagersNetworkGroupsStaticMember,1,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/routingConfigurations,2,,0,network.azure.hfl.dev/NetworkManagersRoutingConfiguration,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
@@ -1620,9 +1620,9 @@ Microsoft.Network,Microsoft.Network/networkManagers/securityAdminConfigurations/
 Microsoft.Network,Microsoft.Network/networkManagers/securityUserConfigurations,1,,0,network.azure.hfl.dev/NetworkManagersSecurityUserConfiguration,1,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections,2,,0,network.azure.hfl.dev/NetworkManagersSecurityUserRuleCollection,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections/rules,9,,0,network.azure.hfl.dev/NetworkManagersSecurityUserRule,9,0,false,spec_api=2026-03-01; ours_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces,3,,0,,0,3,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisIntents,8,,0,,0,8,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisRuns,2,,0,,0,2,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces,3,,0,network.azure.hfl.dev/NetworkManagersVerifierWorkspace,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisIntents,8,,0,network.azure.hfl.dev/NetworkManagersReachabilityAnalysisIntent,8,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisRuns,2,,0,network.azure.hfl.dev/NetworkManagersReachabilityAnalysisRun,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkProfiles,78,,0,,0,78,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkSecurityGroups,26,network.azure.com/NetworkSecurityGroup,3,,0,23,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkSecurityGroups/securityRules,21,network.azure.com/NetworkSecurityGroupsSecurityRule,21,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
@@ -1679,11 +1679,11 @@ Microsoft.Network,Microsoft.Network/trafficmanagerprofiles/NestedEndpoints,17,ne
 Microsoft.Network,Microsoft.Network/trafficManagerUserMetricsKeys,0,,0,,0,0,false,spec_api=2026-09-01
 Microsoft.Network,Microsoft.Network/virtualHubs,28,,0,network.azure.hfl.dev/VirtualHub,21,7,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualHubs/bgpConnections,13,,0,network.azure.hfl.dev/VirtualHubsBgpConnection,13,0,false,spec_api=2026-03-01; ours_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualHubs/connectionPolicies,11,,0,,0,11,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualHubs/connectionPolicies,11,,0,network.azure.hfl.dev/VirtualHubsConnectionPolicy,11,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualHubs/hubRouteTables,6,,0,network.azure.hfl.dev/VirtualHubsHubRouteTable,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualHubs/hubVirtualNetworkConnections,16,,0,network.azure.hfl.dev/VirtualHubsHubVirtualNetworkConnection,16,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualHubs/ipConfigurations,113,,0,network.azure.hfl.dev/VirtualHubsIpConfiguration,113,0,false,spec_api=2026-03-01; ours_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualHubs/routeMaps,12,,0,,0,12,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualHubs/routeMaps,12,,0,network.azure.hfl.dev/VirtualHubsRouteMap,12,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualHubs/routeTables,5,,0,network.azure.hfl.dev/VirtualHubsRouteTable,5,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualHubs/routingIntent,3,,0,network.azure.hfl.dev/VirtualHubsRoutingIntent,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualNetworkAppliances,76,,0,,0,76,false,spec_api=2026-03-01
@@ -1694,8 +1694,8 @@ Microsoft.Network,Microsoft.Network/virtualNetworks,118,network.azure.com/Virtua
 Microsoft.Network,Microsoft.Network/virtualNetworks/subnets,69,network.azure.com/VirtualNetworksSubnet,66,,0,3,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/virtualNetworks/virtualNetworkPeerings,25,network.azure.com/VirtualNetworksVirtualNetworkPeering,25,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/virtualNetworkTaps,280,,0,,0,280,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualRouters,6,,0,,0,6,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/virtualRouters/peerings,2,,0,,0,2,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualRouters,6,,0,network.azure.hfl.dev/VirtualRouter,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualRouters/peerings,2,,0,network.azure.hfl.dev/VirtualRoutersPeering,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualWans,6,,0,network.azure.hfl.dev/VirtualWan,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/vpnGateways,78,,0,network.azure.hfl.dev/VpnGateway,11,67,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/vpnGateways/natRules,7,,0,network.azure.hfl.dev/VpnGatewaysNatRule,7,0,false,spec_api=2026-03-01; ours_api=2026-03-01

@@ -1138,14 +1138,19 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePort)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.FirewallPoliciesKubeSelectorGroup)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.IpGroup)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManager)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagerConnection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersCommit)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersConnectivityConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersIpamPool)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersIpamPoolsStaticCidr)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersNetworkGroup)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersNetworkGroupsStaticMember)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersReachabilityAnalysisIntent)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersReachabilityAnalysisRun)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersRoutingConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersRoutingRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersRoutingRuleCollection)})
@@ -1156,6 +1161,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRuleCollection)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersVerifierWorkspace)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.P2sVpnGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFilter)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)})
@@ -1164,9 +1170,11 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ServiceEndpointPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHub)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsBgpConnection)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsConnectionPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsHubRouteTable)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsHubVirtualNetworkConnection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsIpConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsRouteMap)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsRouteTable)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHubsRoutingIntent)})
 	result = append(result, &registration.StorageType{
@@ -1193,6 +1201,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualRouter)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualRoutersPeering)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualWan)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VpnGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VpnGatewaysNatRule)})
@@ -1888,14 +1898,19 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteGatewaysExpressRouteConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301.FirewallPoliciesKubeSelectorGroup)},
 		&registration.KnownType{Obj: new(network_v20260301.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagerConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersCommit)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersConnectivityConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersIpamPool)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersIpamPoolsStaticCidr)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersNetworkGroup)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersNetworkGroupsStaticMember)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersReachabilityAnalysisIntent)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersReachabilityAnalysisRun)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersRoutingConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersRoutingRule)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersRoutingRuleCollection)},
@@ -1906,6 +1921,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserRule)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserRuleCollection)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersVerifierWorkspace)},
 		&registration.KnownType{Obj: new(network_v20260301.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.RouteFilter)},
 		&registration.KnownType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)},
@@ -1914,12 +1930,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.ServiceEndpointPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHub)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsBgpConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsConnectionPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsHubRouteTable)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsHubVirtualNetworkConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsIpConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsRouteMap)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsRouteTable)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsRoutingIntent)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualNetworkGatewayConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualRouter)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualRoutersPeering)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualWan)},
 		&registration.KnownType{Obj: new(network_v20260301.VpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.VpnGatewaysNatRule)},
@@ -1938,14 +1958,19 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteGatewaysExpressRouteConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePortsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301s.FirewallPoliciesKubeSelectorGroup)},
 		&registration.KnownType{Obj: new(network_v20260301s.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagerConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersCommit)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersConnectivityConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersIpamPool)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersIpamPoolsStaticCidr)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersNetworkGroup)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersNetworkGroupsStaticMember)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersReachabilityAnalysisIntent)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersReachabilityAnalysisRun)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersRoutingConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersRoutingRule)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersRoutingRuleCollection)},
@@ -1956,6 +1981,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserRule)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserRuleCollection)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersVerifierWorkspace)},
 		&registration.KnownType{Obj: new(network_v20260301s.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.RouteFilter)},
 		&registration.KnownType{Obj: new(network_v20260301s.RouteFiltersRouteFilterRule)},
@@ -1964,12 +1990,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.ServiceEndpointPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHub)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsBgpConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsConnectionPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsHubRouteTable)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsHubVirtualNetworkConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsIpConfiguration)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsRouteMap)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsRouteTable)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsRoutingIntent)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualNetworkGatewayConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualRouter)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualRoutersPeering)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualWan)},
 		&registration.KnownType{Obj: new(network_v20260301s.VpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.VpnGatewaysNatRule)},
@@ -2431,14 +2461,19 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.ExpressRouteGatewaysExpressRouteConnectionExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortsAuthorizationExtension{})
+	result = append(result, &network_customizations.FirewallPoliciesKubeSelectorGroupExtension{})
 	result = append(result, &network_customizations.IpGroupExtension{})
 	result = append(result, &network_customizations.LocalNetworkGatewayExtension{})
 	result = append(result, &network_customizations.NetworkManagerConnectionExtension{})
 	result = append(result, &network_customizations.NetworkManagerExtension{})
 	result = append(result, &network_customizations.NetworkManagersCommitExtension{})
 	result = append(result, &network_customizations.NetworkManagersConnectivityConfigurationExtension{})
+	result = append(result, &network_customizations.NetworkManagersIpamPoolExtension{})
+	result = append(result, &network_customizations.NetworkManagersIpamPoolsStaticCidrExtension{})
 	result = append(result, &network_customizations.NetworkManagersNetworkGroupExtension{})
 	result = append(result, &network_customizations.NetworkManagersNetworkGroupsStaticMemberExtension{})
+	result = append(result, &network_customizations.NetworkManagersReachabilityAnalysisIntentExtension{})
+	result = append(result, &network_customizations.NetworkManagersReachabilityAnalysisRunExtension{})
 	result = append(result, &network_customizations.NetworkManagersRoutingConfigurationExtension{})
 	result = append(result, &network_customizations.NetworkManagersRoutingRuleCollectionExtension{})
 	result = append(result, &network_customizations.NetworkManagersRoutingRuleExtension{})
@@ -2449,6 +2484,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.NetworkManagersSecurityUserConfigurationExtension{})
 	result = append(result, &network_customizations.NetworkManagersSecurityUserRuleCollectionExtension{})
 	result = append(result, &network_customizations.NetworkManagersSecurityUserRuleExtension{})
+	result = append(result, &network_customizations.NetworkManagersVerifierWorkspaceExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimeterExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersLinkExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersLoggingConfigurationExtension{})
@@ -2464,12 +2500,16 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.ServiceEndpointPolicyExtension{})
 	result = append(result, &network_customizations.VirtualHubExtension{})
 	result = append(result, &network_customizations.VirtualHubsBgpConnectionExtension{})
+	result = append(result, &network_customizations.VirtualHubsConnectionPolicyExtension{})
 	result = append(result, &network_customizations.VirtualHubsHubRouteTableExtension{})
 	result = append(result, &network_customizations.VirtualHubsHubVirtualNetworkConnectionExtension{})
 	result = append(result, &network_customizations.VirtualHubsIpConfigurationExtension{})
+	result = append(result, &network_customizations.VirtualHubsRouteMapExtension{})
 	result = append(result, &network_customizations.VirtualHubsRouteTableExtension{})
 	result = append(result, &network_customizations.VirtualHubsRoutingIntentExtension{})
 	result = append(result, &network_customizations.VirtualNetworkGatewayConnectionExtension{})
+	result = append(result, &network_customizations.VirtualRouterExtension{})
+	result = append(result, &network_customizations.VirtualRoutersPeeringExtension{})
 	result = append(result, &network_customizations.VirtualWanExtension{})
 	result = append(result, &network_customizations.VpnGatewayExtension{})
 	result = append(result, &network_customizations.VpnGatewaysNatRuleExtension{})
