@@ -53,6 +53,7 @@ resources:
 - automation.azure.hfl.dev_automationaccountsvariables.yaml
 - automation.azure.hfl.dev_automationaccountswatchers.yaml
 - automation.azure.hfl.dev_automationaccountswebhooks.yaml
+- cdn.azure.hfl.dev_cdnwebapplicationfirewallpolicies.yaml
 - cognitiveservices.azure.hfl.dev_accountscapabilityhosts.yaml
 - cognitiveservices.azure.hfl.dev_accountscommitmentplans.yaml
 - cognitiveservices.azure.hfl.dev_accountsconnections.yaml
@@ -125,6 +126,7 @@ resources:
 - management.azure.hfl.dev_managementgroupssubscriptions.yaml
 - management.azure.hfl.dev_servicegroups.yaml
 - network.azure.hfl.dev_applicationgateways.yaml
+- network.azure.hfl.dev_ddoscustompolicies.yaml
 - network.azure.hfl.dev_dnsresolverdomainlists.yaml
 - network.azure.hfl.dev_dnsresolverpolicies.yaml
 - network.azure.hfl.dev_dnsresolverpoliciesdnssecurityrules.yaml
@@ -166,6 +168,7 @@ resources:
 - network.azure.hfl.dev_privatednszonessoarecords.yaml
 - network.azure.hfl.dev_routefilters.yaml
 - network.azure.hfl.dev_routefiltersroutefilterrules.yaml
+- network.azure.hfl.dev_securitypartnerproviders.yaml
 - network.azure.hfl.dev_serviceendpointpolicies.yaml
 - network.azure.hfl.dev_serviceendpointpoliciesserviceendpointpolicydefinitions.yaml
 - network.azure.hfl.dev_virtualhubs.yaml
@@ -214,6 +217,11 @@ resources:
 - security.azure.hfl.dev_customrecommendations.yaml
 - security.azure.hfl.dev_defenderforstoragesettings.yaml
 - security.azure.hfl.dev_pricings.yaml
+- security.azure.hfl.dev_securityconnectors.yaml
+- security.azure.hfl.dev_securityconnectorsdevopsazuredevopsorgs.yaml
+- security.azure.hfl.dev_securityconnectorsdevopsazuredevopsprojects.yaml
+- security.azure.hfl.dev_securityconnectorsdevopsazuredevopsrepoes.yaml
+- security.azure.hfl.dev_securityconnectorsdevopsconfigurations.yaml
 - security.azure.hfl.dev_securitycontacts.yaml
 - security.azure.hfl.dev_securitystandards.yaml
 - security.azure.hfl.dev_servervulnerabilityassessmentssettings.yaml

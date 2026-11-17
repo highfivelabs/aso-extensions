@@ -3,6 +3,8 @@ github.com/highfivelabs/aso-extensions/apis/arm/network/customizations
 ----------------------------------------------------------------------
 ApplicationGatewayExtension: Object (0 properties)
 
+DdosCustomPolicyExtension: Object (0 properties)
+
 DnsResolverDomainListExtension: Object (0 properties)
 
 DnsResolverPoliciesDnsSecurityRuleExtension: Object (0 properties)
@@ -84,6 +86,8 @@ PrivateDnsZonesSOARecordExtension: Object (0 properties)
 RouteFilterExtension: Object (0 properties)
 
 RouteFiltersRouteFilterRuleExtension: Object (0 properties)
+
+SecurityPartnerProviderExtension: Object (0 properties)
 
 ServiceEndpointPoliciesServiceEndpointPolicyDefinitionExtension: Object (0 properties)
 

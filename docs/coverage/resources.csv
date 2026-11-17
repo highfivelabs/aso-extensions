@@ -555,7 +555,7 @@ Microsoft.Cache,Microsoft.Cache/redisEnterprise/migrations,5,,0,,0,5,false,spec_
 Microsoft.Cache,Microsoft.Cache/redisEnterprise/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-09-01
 Microsoft.Capacity,Microsoft.Capacity/reservationOrders,18,,0,,0,18,false,spec_api=2022-11-01
 Microsoft.Capacity,Microsoft.Capacity/resourceProviders/locations/serviceLimits,5,,0,,0,5,false,spec_api=2020-10-25
-Microsoft.Cdn,Microsoft.Cdn/cdnWebApplicationFirewallPolicies,39,,0,,0,39,false,spec_api=2026-10-01
+Microsoft.Cdn,Microsoft.Cdn/cdnWebApplicationFirewallPolicies,39,,0,cdn.azure.hfl.dev/CdnWebApplicationFirewallPolicy,39,0,false,spec_api=2026-10-01; ours_api=2026-10-01
 Microsoft.Cdn,Microsoft.Cdn/edgeActions,5,,0,,0,5,false,spec_api=2026-10-01
 Microsoft.Cdn,Microsoft.Cdn/edgeActions/executionFilters,5,,0,,0,5,false,spec_api=2026-10-01
 Microsoft.Cdn,Microsoft.Cdn/edgeActions/versions,4,,0,,0,4,false,spec_api=2026-10-01
@@ -1543,7 +1543,7 @@ Microsoft.Network,Microsoft.Network/bastionHosts,26,network.azure.com/BastionHos
 Microsoft.Network,Microsoft.Network/cloudServiceSlots,1,,0,,0,1,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/connections,242,,0,network.azure.hfl.dev/VirtualNetworkGatewayConnection,242,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/customIpPrefixes,15,,0,,0,15,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/ddosCustomPolicies,16,,0,,0,16,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/ddosCustomPolicies,16,,0,network.azure.hfl.dev/DdosCustomPolicy,16,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/ddosProtectionPlans,3,network.azure.com/DdosProtectionPlan,2,,0,1,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/dnsForwardingRulesets,3,network.azure.com/DnsForwardingRuleset,3,,0,0,false,spec_api=2025-05-01; official_api=2022-07-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/dnsForwardingRulesets/forwardingRules,5,network.azure.com/DnsForwardingRuleSetsForwardingRule,5,,0,0,false,spec_api=2025-05-01; official_api=2022-07-01; official-api-differs-from-spec
@@ -1666,7 +1666,7 @@ Microsoft.Network,Microsoft.Network/routeFilters,8,,0,network.azure.hfl.dev/Rout
 Microsoft.Network,Microsoft.Network/routeFilters/routeFilterRules,4,,0,network.azure.hfl.dev/RouteFiltersRouteFilterRule,4,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/routeTables,10,network.azure.com/RouteTable,3,,0,7,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/routeTables/routes,4,network.azure.com/RouteTablesRoute,3,,0,1,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/securityPartnerProviders,4,,0,,0,4,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/securityPartnerProviders,4,,0,network.azure.hfl.dev/SecurityPartnerProvider,4,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/serviceEndpointPolicies,9,,0,network.azure.hfl.dev/ServiceEndpointPolicy,4,5,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/serviceEndpointPolicies/serviceEndpointPolicyDefinitions,3,,0,network.azure.hfl.dev/ServiceEndpointPoliciesServiceEndpointPolicyDefinition,3,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/serviceGateways,270,,0,,0,270,false,spec_api=2026-03-01
@@ -1933,11 +1933,11 @@ Microsoft.Security,Microsoft.Security/pricings,8,,0,security.azure.hfl.dev/Prici
 Microsoft.Security,Microsoft.Security/pricings/securityOperators,0,,0,,0,0,false,spec_api=2023-01-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/privateLinks,3,,0,,0,3,false,spec_api=2026-01-01
 Microsoft.Security,Microsoft.Security/privateLinks/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-01-01
-Microsoft.Security,Microsoft.Security/securityConnectors,78,,0,,0,78,false,spec_api=2026-08-01-preview; spec-preview-only
-Microsoft.Security,Microsoft.Security/securityConnectors/devops,9,,0,,0,9,false,spec_api=2025-03-01
-Microsoft.Security,Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs,7,,0,,0,7,false,spec_api=2025-03-01
-Microsoft.Security,Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects,8,,0,,0,8,false,spec_api=2025-03-01
-Microsoft.Security,Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects/repos,9,,0,,0,9,false,spec_api=2025-03-01
+Microsoft.Security,Microsoft.Security/securityConnectors,78,,0,security.azure.hfl.dev/SecurityConnector,78,0,false,spec_api=2026-08-01-preview; spec-preview-only; ours_api=2026-08-01-preview
+Microsoft.Security,Microsoft.Security/securityConnectors/devops,9,,0,security.azure.hfl.dev/SecurityConnectorsDevOpsConfiguration,9,0,false,spec_api=2025-03-01; ours_api=2025-03-01
+Microsoft.Security,Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs,7,,0,security.azure.hfl.dev/SecurityConnectorsDevOpsAzureDevOpsOrg,7,0,false,spec_api=2025-03-01; ours_api=2025-03-01
+Microsoft.Security,Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects,8,,0,security.azure.hfl.dev/SecurityConnectorsDevOpsAzureDevOpsProject,8,0,false,spec_api=2025-03-01; ours_api=2025-03-01
+Microsoft.Security,Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects/repos,9,,0,security.azure.hfl.dev/SecurityConnectorsDevOpsAzureDevOpsRepo,9,0,false,spec_api=2025-03-01; ours_api=2025-03-01
 Microsoft.Security,Microsoft.Security/securityContacts,8,,0,security.azure.hfl.dev/SecurityContact,8,0,false,spec_api=2023-12-01-preview; spec-preview-only; ours_api=2023-12-01-preview
 Microsoft.Security,Microsoft.Security/securityStandards,6,,0,security.azure.hfl.dev/SecurityStandard,5,1,false,spec_api=2024-08-01; ours_api=2024-08-01
 Microsoft.Security,Microsoft.Security/sensitivitySettings,3,,0,,0,3,false,spec_api=2023-02-15-preview; spec-preview-only

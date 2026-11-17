@@ -1,0 +1,21 @@
+# Azure CDN Web Application Firewall policies (Microsoft.Cdn, 2026-10-01,
+# the newest stable): foundation row 24 of docs/coverage/foundation.md.
+# In a resource group.
+typeFilters:
+  - action: prune
+    group: cdn
+    version: v20261001
+    name: "*EdgeAction*"
+    because: DeliveryRule EdgeAction fails stage 3 allOf merge (enum vs Validated(string)) and is unrelated to WAF policies
+  - action: include
+    group: cdn
+    version: v20261001
+    because: the newest stable version (CDN Web Application Firewall policies)
+  - action: prune
+    group: cdn
+    because: every other version is left alone
+groupModelConfiguration:
+  2026-10-01:
+    CdnWebApplicationFirewallPolicy:
+      $exportAs: CdnWebApplicationFirewallPolicy
+      $supportedFrom: v0.1.0

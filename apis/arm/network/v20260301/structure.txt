@@ -1440,6 +1440,144 @@ ApplicationGateway: Resource
     │   └── RuleSetVersion: *string
     └── Zones: string[]
 
+DdosCustomPolicy: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── DetectionRules: Object (4 properties)[]
+│   │   ├── DetectionMode: *Enum (1 value)
+│   │   │   └── "TrafficThreshold"
+│   │   ├── Name: *string
+│   │   ├── Reference: *genruntime.ResourceReference
+│   │   └── TrafficDetectionRule: *Object (2 properties)
+│   │       ├── PacketsPerSecond: *int
+│   │       └── TrafficType: *Enum (3 values)
+│   │           ├── "Tcp"
+│   │           ├── "TcpSyn"
+│   │           └── "Udp"
+│   ├── FrontEndIpConfiguration: Object (1 property)[]
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── MitigationRules: Object (3 properties)[]
+│   │   ├── Name: *string
+│   │   ├── Properties: *Object (4 properties)
+│   │   │   ├── SourcePolicyOverrides: Object (2 properties)[]
+│   │   │   │   ├── Conditions: *Object (2 properties)
+│   │   │   │   │   ├── GeoMatches: Object (2 properties)[]
+│   │   │   │   │   │   ├── Continent: *Enum (7 values)
+│   │   │   │   │   │   │   ├── "Africa"
+│   │   │   │   │   │   │   ├── "Antarctica"
+│   │   │   │   │   │   │   ├── "Asia"
+│   │   │   │   │   │   │   ├── "Europe"
+│   │   │   │   │   │   │   ├── "NorthAmerica"
+│   │   │   │   │   │   │   ├── "Oceania"
+│   │   │   │   │   │   │   └── "SouthAmerica"
+│   │   │   │   │   │   └── CountryCode: Validated<*string> (1 rule)
+│   │   │   │   │   │       └── Rule 0: Pattern: "^[A-Z]{2}$"
+│   │   │   │   │   └── IpPrefixes: string[]
+│   │   │   │   └── PolicyAction: *Object (1 property)
+│   │   │   │       └── ActionType: *Enum (2 values)
+│   │   │   │           ├── "Deny"
+│   │   │   │           └── "Permit"
+│   │   │   ├── TcpDefaultMitigations: *Object (2 properties)
+│   │   │   │   ├── PerSourceConnectionRateLimiting: *Object (1 property)
+│   │   │   │   │   └── ConnectionsPerSecond: *int
+│   │   │   │   └── PerSourceRateLimiting: *Object (1 property)
+│   │   │   │       └── PacketsPerSecond: *int
+│   │   │   ├── TrafficScope: *Enum (2 values)
+│   │   │   │   ├── "Tcp"
+│   │   │   │   └── "Udp"
+│   │   │   └── UdpDefaultMitigations: *Object (1 property)
+│   │   │       └── PerSourceRateLimiting: *Object (1 property)
+│   │   │           └── PacketsPerSecond: *int
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (13 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DetectionRules: Object (7 properties)[]
+    │   ├── DetectionMode: *Enum (1 value)
+    │   │   └── "TrafficThreshold"
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   ├── TrafficDetectionRule: *Object (2 properties)
+    │   │   ├── PacketsPerSecond: *int
+    │   │   └── TrafficType: *Enum (3 values)
+    │   │       ├── "Tcp"
+    │   │       ├── "TcpSyn"
+    │   │       └── "Udp"
+    │   └── Type: *string
+    ├── Etag: *string
+    ├── FrontEndIpConfiguration: Object (1 property)[]
+    │   └── Id: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── MitigationRules: Object (5 properties)[]
+    │   ├── Etag: *string
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── Properties: *Object (5 properties)
+    │   │   ├── ProvisioningState: *Enum (6 values)
+    │   │   │   ├── "Canceled"
+    │   │   │   ├── "Creating"
+    │   │   │   ├── "Deleting"
+    │   │   │   ├── "Failed"
+    │   │   │   ├── "Succeeded"
+    │   │   │   └── "Updating"
+    │   │   ├── SourcePolicyOverrides: Object (2 properties)[]
+    │   │   │   ├── Conditions: *Object (2 properties)
+    │   │   │   │   ├── GeoMatches: Object (2 properties)[]
+    │   │   │   │   │   ├── Continent: *Enum (7 values)
+    │   │   │   │   │   │   ├── "Africa"
+    │   │   │   │   │   │   ├── "Antarctica"
+    │   │   │   │   │   │   ├── "Asia"
+    │   │   │   │   │   │   ├── "Europe"
+    │   │   │   │   │   │   ├── "NorthAmerica"
+    │   │   │   │   │   │   ├── "Oceania"
+    │   │   │   │   │   │   └── "SouthAmerica"
+    │   │   │   │   │   └── CountryCode: *string
+    │   │   │   │   └── IpPrefixes: string[]
+    │   │   │   └── PolicyAction: *Object (1 property)
+    │   │   │       └── ActionType: *Enum (2 values)
+    │   │   │           ├── "Deny"
+    │   │   │           └── "Permit"
+    │   │   ├── TcpDefaultMitigations: *Object (2 properties)
+    │   │   │   ├── PerSourceConnectionRateLimiting: *Object (1 property)
+    │   │   │   │   └── ConnectionsPerSecond: *int
+    │   │   │   └── PerSourceRateLimiting: *Object (1 property)
+    │   │   │       └── PacketsPerSecond: *int
+    │   │   ├── TrafficScope: *Enum (2 values)
+    │   │   │   ├── "Tcp"
+    │   │   │   └── "Udp"
+    │   │   └── UdpDefaultMitigations: *Object (1 property)
+    │   │       └── PerSourceRateLimiting: *Object (1 property)
+    │   │           └── PacketsPerSecond: *int
+    │   └── Type: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── PublicIPAddresses: Object (1 property)[]
+    │   └── Id: *string
+    ├── ResourceGuid: *string
+    ├── Tags: map[string]string
+    └── Type: *string
+
 ExpressRouteCircuit: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (20 properties)
@@ -3409,6 +3547,49 @@ RouteFiltersRouteFilterRule: Resource
     │   └── "Updating"
     └── RouteFilterRuleType: *Enum (1 value)
         └── "Community"
+
+SecurityPartnerProvider: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── SecurityProviderName: *Enum (3 values)
+│   │   ├── "Checkpoint"
+│   │   ├── "IBoss"
+│   │   └── "ZScaler"
+│   ├── Tags: map[string]string
+│   └── VirtualHub: *Object (1 property)
+│       └── Reference: *genruntime.ResourceReference
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionStatus: *Enum (4 values)
+    │   ├── "Connected"
+    │   ├── "NotConnected"
+    │   ├── "PartiallyConnected"
+    │   └── "Unknown"
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── SecurityProviderName: *Enum (3 values)
+    │   ├── "Checkpoint"
+    │   ├── "IBoss"
+    │   └── "ZScaler"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── VirtualHub: *Object (1 property)
+        └── Id: *string
 
 ServiceEndpointPoliciesServiceEndpointPolicyDefinition: Resource
 ├── Owner: ServiceEndpointPolicy

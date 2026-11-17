@@ -31,6 +31,9 @@ import (
 	automation_customizations "github.com/highfivelabs/aso-extensions/apis/arm/automation/customizations"
 	automation_v20241023 "github.com/highfivelabs/aso-extensions/apis/arm/automation/v20241023"
 	automation_v20241023s "github.com/highfivelabs/aso-extensions/apis/arm/automation/v20241023/storage"
+	cdn_customizations "github.com/highfivelabs/aso-extensions/apis/arm/cdn/customizations"
+	cdn_v20261001 "github.com/highfivelabs/aso-extensions/apis/arm/cdn/v20261001"
+	cdn_v20261001s "github.com/highfivelabs/aso-extensions/apis/arm/cdn/v20261001/storage"
 	cognitiveservices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/customizations"
 	cognitiveservices_v20250601 "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20250601"
 	cognitiveservices_v20250601s "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20250601/storage"
@@ -138,10 +141,14 @@ import (
 	security_v20231201ps "github.com/highfivelabs/aso-extensions/apis/arm/security/v20231201preview/storage"
 	security_v20240801 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20240801"
 	security_v20240801s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20240801/storage"
+	security_v20250301 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250301"
+	security_v20250301s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250301/storage"
 	security_v20250601 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250601"
 	security_v20250601s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250601/storage"
 	security_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260701"
 	security_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260701/storage"
+	security_v20260801p "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260801preview"
+	security_v20260801ps "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260801preview/storage"
 	securityinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/customizations"
 	securityinsights_v20250901 "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901"
 	securityinsights_v20250901s "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901/storage"
@@ -613,6 +620,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(cdn_v20261001.CdnWebApplicationFirewallPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsCapabilityHost)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsCommitmentPlan)})
 	result = append(result, &registration.StorageType{
@@ -1030,6 +1038,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.DdosCustomPolicy)})
 	result = append(result, &registration.StorageType{
 		Obj: new(network_v20260301.ExpressRouteCircuit),
 		Indexes: []registration.Index{
@@ -1136,6 +1145,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.P2sVpnGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFilter)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.SecurityPartnerProvider)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ServiceEndpointPoliciesServiceEndpointPolicyDefinition)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ServiceEndpointPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualHub)})
@@ -1320,8 +1330,49 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(security_v20240801.CustomRecommendation)})
 	result = append(result, &registration.StorageType{Obj: new(security_v20240801.SecurityStandard)})
 	result = append(result, &registration.StorageType{Obj: new(security_v20240801.StandardAssignment)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20250301.SecurityConnectorsDevOpsAzureDevOpsOrg)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20250301.SecurityConnectorsDevOpsAzureDevOpsProject)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20250301.SecurityConnectorsDevOpsAzureDevOpsRepo)})
+	result = append(result, &registration.StorageType{
+		Obj: new(security_v20250301.SecurityConnectorsDevOpsConfiguration),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.authorization.code",
+				Func: indexSecuritySecurityConnectorsDevOpsConfigurationCode,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.authorization.code",
+					},
+					&security_v20250301.SecurityConnectorsDevOpsConfigurationList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(security_v20250601.DefenderForStorageSetting)})
 	result = append(result, &registration.StorageType{Obj: new(security_v20260701.Pricing)})
+	result = append(result, &registration.StorageType{
+		Obj: new(security_v20260801p.SecurityConnector),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.environmentData.dockerHubOrganization.authentication.accessToken.accessToken",
+				Func: indexSecuritySecurityConnectorAccessToken,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.environmentData.dockerHubOrganization.authentication.accessToken.accessToken",
+					},
+					&security_v20260801p.SecurityConnectorList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.AlertRule)})
 	result = append(result, &registration.StorageType{
 		Obj: new(securityinsights_v20250901.AlertRulesAction),
@@ -1603,6 +1654,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsVariable)},
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsWatcher)},
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsWebhook)})
+	result = append(result, &registration.KnownType{Obj: new(cdn_v20261001.CdnWebApplicationFirewallPolicy)})
+	result = append(result, &registration.KnownType{Obj: new(cdn_v20261001s.CdnWebApplicationFirewallPolicy)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(cognitiveservices_v20250601.AccountsCapabilityHost)},
@@ -1794,6 +1847,7 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(network_v20260301.ApplicationGateway)},
+		&registration.KnownType{Obj: new(network_v20260301.DdosCustomPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuit)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsPeering)},
@@ -1823,6 +1877,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.RouteFilter)},
 		&registration.KnownType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)},
+		&registration.KnownType{Obj: new(network_v20260301.SecurityPartnerProvider)},
 		&registration.KnownType{Obj: new(network_v20260301.ServiceEndpointPoliciesServiceEndpointPolicyDefinition)},
 		&registration.KnownType{Obj: new(network_v20260301.ServiceEndpointPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHub)},
@@ -1842,6 +1897,7 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(network_v20260301s.ApplicationGateway)},
+		&registration.KnownType{Obj: new(network_v20260301s.DdosCustomPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuit)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsPeering)},
@@ -1871,6 +1927,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.RouteFilter)},
 		&registration.KnownType{Obj: new(network_v20260301s.RouteFiltersRouteFilterRule)},
+		&registration.KnownType{Obj: new(network_v20260301s.SecurityPartnerProvider)},
 		&registration.KnownType{Obj: new(network_v20260301s.ServiceEndpointPoliciesServiceEndpointPolicyDefinition)},
 		&registration.KnownType{Obj: new(network_v20260301s.ServiceEndpointPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHub)},
@@ -1965,10 +2022,24 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(security_v20240801s.CustomRecommendation)},
 		&registration.KnownType{Obj: new(security_v20240801s.SecurityStandard)},
 		&registration.KnownType{Obj: new(security_v20240801s.StandardAssignment)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(security_v20250301.SecurityConnectorsDevOpsAzureDevOpsOrg)},
+		&registration.KnownType{Obj: new(security_v20250301.SecurityConnectorsDevOpsAzureDevOpsProject)},
+		&registration.KnownType{Obj: new(security_v20250301.SecurityConnectorsDevOpsAzureDevOpsRepo)},
+		&registration.KnownType{Obj: new(security_v20250301.SecurityConnectorsDevOpsConfiguration)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(security_v20250301s.SecurityConnectorsDevOpsAzureDevOpsOrg)},
+		&registration.KnownType{Obj: new(security_v20250301s.SecurityConnectorsDevOpsAzureDevOpsProject)},
+		&registration.KnownType{Obj: new(security_v20250301s.SecurityConnectorsDevOpsAzureDevOpsRepo)},
+		&registration.KnownType{Obj: new(security_v20250301s.SecurityConnectorsDevOpsConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20250601.DefenderForStorageSetting)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20250601s.DefenderForStorageSetting)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20260701.Pricing)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20260701s.Pricing)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20260801p.SecurityConnector)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20260801ps.SecurityConnector)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(securityinsights_v20250901.AlertRule)},
@@ -2064,6 +2135,8 @@ func createScheme() *runtime.Scheme {
 	_ = authorization_v20260701s.AddToScheme(scheme)
 	_ = automation_v20241023.AddToScheme(scheme)
 	_ = automation_v20241023s.AddToScheme(scheme)
+	_ = cdn_v20261001.AddToScheme(scheme)
+	_ = cdn_v20261001s.AddToScheme(scheme)
 	_ = cognitiveservices_v20250601.AddToScheme(scheme)
 	_ = cognitiveservices_v20250601s.AddToScheme(scheme)
 	_ = compute_v20220301.AddToScheme(scheme)
@@ -2148,10 +2221,14 @@ func createScheme() *runtime.Scheme {
 	_ = security_v20231201ps.AddToScheme(scheme)
 	_ = security_v20240801.AddToScheme(scheme)
 	_ = security_v20240801s.AddToScheme(scheme)
+	_ = security_v20250301.AddToScheme(scheme)
+	_ = security_v20250301s.AddToScheme(scheme)
 	_ = security_v20250601.AddToScheme(scheme)
 	_ = security_v20250601s.AddToScheme(scheme)
 	_ = security_v20260701.AddToScheme(scheme)
 	_ = security_v20260701s.AddToScheme(scheme)
+	_ = security_v20260801p.AddToScheme(scheme)
+	_ = security_v20260801ps.AddToScheme(scheme)
 	_ = securityinsights_v20250901.AddToScheme(scheme)
 	_ = securityinsights_v20250901s.AddToScheme(scheme)
 	_ = sql_v20250101.AddToScheme(scheme)
@@ -2217,6 +2294,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &automation_customizations.AutomationAccountsVariableExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsWatcherExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsWebhookExtension{})
+	result = append(result, &cdn_customizations.CdnWebApplicationFirewallPolicyExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsCapabilityHostExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsCommitmentPlanExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsConnectionExtension{})
@@ -2285,6 +2363,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &management_customizations.ManagementGroupsSubscriptionExtension{})
 	result = append(result, &management_customizations.ServiceGroupExtension{})
 	result = append(result, &network_customizations.ApplicationGatewayExtension{})
+	result = append(result, &network_customizations.DdosCustomPolicyExtension{})
 	result = append(result, &network_customizations.DnsResolverDomainListExtension{})
 	result = append(result, &network_customizations.DnsResolverPoliciesDnsSecurityRuleExtension{})
 	result = append(result, &network_customizations.DnsResolverPoliciesVirtualNetworkLinkExtension{})
@@ -2326,6 +2405,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.PrivateDnsZonesSOARecordExtension{})
 	result = append(result, &network_customizations.RouteFilterExtension{})
 	result = append(result, &network_customizations.RouteFiltersRouteFilterRuleExtension{})
+	result = append(result, &network_customizations.SecurityPartnerProviderExtension{})
 	result = append(result, &network_customizations.ServiceEndpointPoliciesServiceEndpointPolicyDefinitionExtension{})
 	result = append(result, &network_customizations.ServiceEndpointPolicyExtension{})
 	result = append(result, &network_customizations.VirtualHubExtension{})
@@ -2373,6 +2453,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &security_customizations.CustomRecommendationExtension{})
 	result = append(result, &security_customizations.DefenderForStorageSettingExtension{})
 	result = append(result, &security_customizations.PricingExtension{})
+	result = append(result, &security_customizations.SecurityConnectorExtension{})
+	result = append(result, &security_customizations.SecurityConnectorsDevOpsAzureDevOpsOrgExtension{})
+	result = append(result, &security_customizations.SecurityConnectorsDevOpsAzureDevOpsProjectExtension{})
+	result = append(result, &security_customizations.SecurityConnectorsDevOpsAzureDevOpsRepoExtension{})
+	result = append(result, &security_customizations.SecurityConnectorsDevOpsConfigurationExtension{})
 	result = append(result, &security_customizations.SecurityContactExtension{})
 	result = append(result, &security_customizations.SecurityStandardExtension{})
 	result = append(result, &security_customizations.ServerVulnerabilityAssessmentsSettingExtension{})
@@ -3997,6 +4082,48 @@ func indexResourcesDeploymentScriptAzurePowerShellStorageAccountKey(rawObj clien
 		return nil
 	}
 	return obj.Spec.AzurePowerShell.StorageAccountSettings.StorageAccountKey.Index()
+}
+
+// indexSecuritySecurityConnectorAccessToken an index function for security_v20260801p.SecurityConnector .spec.environmentData.dockerHubOrganization.authentication.accessToken.accessToken
+func indexSecuritySecurityConnectorAccessToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*security_v20260801p.SecurityConnector)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.EnvironmentData == nil {
+		return nil
+	}
+	if obj.Spec.EnvironmentData.DockerHubOrganization == nil {
+		return nil
+	}
+	if obj.Spec.EnvironmentData.DockerHubOrganization.Authentication == nil {
+		return nil
+	}
+	if obj.Spec.EnvironmentData.DockerHubOrganization.Authentication.AccessToken == nil {
+		return nil
+	}
+	if obj.Spec.EnvironmentData.DockerHubOrganization.Authentication.AccessToken.AccessToken == nil {
+		return nil
+	}
+	return obj.Spec.EnvironmentData.DockerHubOrganization.Authentication.AccessToken.AccessToken.Index()
+}
+
+// indexSecuritySecurityConnectorsDevOpsConfigurationCode an index function for security_v20250301.SecurityConnectorsDevOpsConfiguration .spec.properties.authorization.code
+func indexSecuritySecurityConnectorsDevOpsConfigurationCode(rawObj client.Object) []string {
+	obj, ok := rawObj.(*security_v20250301.SecurityConnectorsDevOpsConfiguration)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Authorization == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Authorization.Code == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Authorization.Code.Index()
 }
 
 // indexSecurityinsightsAlertRulesActionTriggerUri an index function for securityinsights_v20250901.AlertRulesAction .spec.triggerUri

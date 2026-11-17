@@ -11,6 +11,7 @@ no_list: true
 | Resource                                               | ARM Version | CRD Version | Supported From | Sample |
 |--------------------------------------------------------|-------------|-------------|----------------|--------|
 | ApplicationGateway                                     | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| DdosCustomPolicy                                       | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | DnsResolverDomainList                                  | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | DnsResolverPoliciesDnsSecurityRule                     | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | DnsResolverPoliciesVirtualNetworkLink                  | 2025-05-01  | v20250501   | v0.1.0         | -      |
@@ -52,6 +53,7 @@ no_list: true
 | PrivateDnsZonesSOARecord                               | 2024-06-01  | v20240601   | v0.1.0         | -      |
 | RouteFilter                                            | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | RouteFiltersRouteFilterRule                            | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| SecurityPartnerProvider                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ServiceEndpointPoliciesServiceEndpointPolicyDefinition | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ServiceEndpointPolicy                                  | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualHub                                             | 2026-03-01  | v20260301   | v0.1.0         | -      |
