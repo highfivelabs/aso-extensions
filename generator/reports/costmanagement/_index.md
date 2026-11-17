@@ -10,6 +10,7 @@ no_list: true
 
 | Resource        | ARM Version | CRD Version | Supported From | Sample |
 |-----------------|-------------|-------------|----------------|--------|
+| Budget          | 2026-06-01  | v20260601   | v0.1.0         | -      |
 | Export          | 2026-06-01  | v20260601   | v0.1.0         | -      |
 | ScheduledAction | 2026-06-01  | v20260601   | v0.1.0         | -      |
 

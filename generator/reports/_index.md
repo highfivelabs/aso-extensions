@@ -157,6 +157,7 @@ title: Supported Resources
 
 | Resource                                 | ARM Version | CRD Version | Supported From | Sample |
 |------------------------------------------|-------------|-------------|----------------|--------|
+| DeploymentSafeguard                      | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | FleetsManagedNamespace                   | 2026-06-01  | v20260601   | v0.1.0         | -      |
 | ManagedClustersManagedNamespace          | 2026-05-01  | v20260501   | v0.1.0         | -      |
 | ManagedClustersPrivateEndpointConnection | 2026-05-01  | v20260501   | v0.1.0         | -      |
@@ -170,6 +171,7 @@ title: Supported Resources
 
 | Resource        | ARM Version | CRD Version | Supported From | Sample |
 |-----------------|-------------|-------------|----------------|--------|
+| Budget          | 2026-06-01  | v20260601   | v0.1.0         | -      |
 | Export          | 2026-06-01  | v20260601   | v0.1.0         | -      |
 | ScheduledAction | 2026-06-01  | v20260601   | v0.1.0         | -      |
 
@@ -227,10 +229,14 @@ title: Supported Resources
 | Resource                                   | ARM Version        | CRD Version      | Supported From | Sample |
 |--------------------------------------------|--------------------|------------------|----------------|--------|
 | ComponentsLinkedStorageAccount             | 2020-03-01-preview | v20200301preview | v0.1.0         | -      |
+| GuestDiagnosticSetting                     | 2018-06-01-preview | v20180601preview | v0.1.0         | -      |
+| GuestDiagnosticSettingsAssociation         | 2018-06-01-preview | v20180601preview | v0.1.0         | -      |
 | LogProfile                                 | 2016-03-01         | v20160301        | v0.1.0         | -      |
+| MyWorkbook                                 | 2021-03-08         | v20210308        | v0.1.0         | -      |
 | PrivateLinkScope                           | 2021-09-01         | v20210901        | v0.1.0         | -      |
 | PrivateLinkScopesPrivateEndpointConnection | 2021-09-01         | v20210901        | v0.1.0         | -      |
 | PrivateLinkScopesScopedResource            | 2021-09-01         | v20210901        | v0.1.0         | -      |
+| TenantActionGroup                          | 2023-03-01-preview | v20230301preview | v0.1.0         | -      |
 | WorkbookTemplate                           | 2020-11-20         | v20201120        | v0.1.0         | -      |
 
 ## KeyVault
@@ -386,9 +392,11 @@ title: Supported Resources
 
 ### Released
 
-| Resource | ARM Version        | CRD Version      | Supported From | Sample |
-|----------|--------------------|------------------|----------------|--------|
-| Solution | 2015-11-01-preview | v20151101preview | v0.1.0         | -      |
+| Resource                | ARM Version        | CRD Version      | Supported From | Sample |
+|-------------------------|--------------------|------------------|----------------|--------|
+| ManagementAssociation   | 2015-11-01-preview | v20151101preview | v0.1.0         | -      |
+| ManagementConfiguration | 2015-11-01-preview | v20151101preview | v0.1.0         | -      |
+| Solution                | 2015-11-01-preview | v20151101preview | v0.1.0         | -      |
 
 ## PolicyInsights
 

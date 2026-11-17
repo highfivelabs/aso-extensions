@@ -10,6 +10,7 @@ no_list: true
 
 | Resource                                 | ARM Version | CRD Version | Supported From | Sample |
 |------------------------------------------|-------------|-------------|----------------|--------|
+| DeploymentSafeguard                      | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | FleetsManagedNamespace                   | 2026-06-01  | v20260601   | v0.1.0         | -      |
 | ManagedClustersManagedNamespace          | 2026-05-01  | v20260501   | v0.1.0         | -      |
 | ManagedClustersPrivateEndpointConnection | 2026-05-01  | v20260501   | v0.1.0         | -      |

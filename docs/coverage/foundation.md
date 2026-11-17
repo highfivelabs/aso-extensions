@@ -124,12 +124,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 30.2% | 26.6% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 32.1% | 24.7% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 47.0% | 44.4% |
 | application | 35 | 823 | 14,821 | 33.1% | 8.0% | 59.0% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 1.0% | 98.6% |
 
-### platform-foundation: 246 resources (59 with no kind, 73 partly covered, 114 covered)
+### platform-foundation: 246 resources (51 with no kind, 74 partly covered, 121 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -169,28 +169,28 @@ Generated: every resource of the two categories, by the order of the services in
 | 34 | `Microsoft.CostManagement/settings` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
 | 35 | `Microsoft.CostManagement/markupRules` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |
 | 36 | `Microsoft.CostManagement/costAllocationRules` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
-| 37 | `Microsoft.CostManagement/budgets` | no kind |  |  | 0 / 0 / 27 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (27) | 0 |
-| 38 | `Microsoft.CostManagement/views` | no kind |  |  | 0 / 0 / 34 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | M (34) | 0 |
-| 39 | `Microsoft.CostManagement/exports` | partial, 1 of 28 missing |  | `costmanagement/Export` | 0 / 27 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
-| 40 | `Microsoft.CostManagement/scheduledActions` | covered |  | `costmanagement/ScheduledAction` | 0 / 20 / 0 | extension,tenant | - | - | 0 |
-| 41 | `Microsoft.Insights/guestDiagnosticSettingsAssociation` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 42 | `Microsoft.Insights/myWorkbooks` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
-| 43 | `Microsoft.Insights/guestDiagnosticSettings` | no kind |  |  | 0 / 0 / 15 | resourceGroup | generator | S (15) | 0 |
-| 44 | `Microsoft.Insights/tenantActionGroups` | no kind |  |  | 0 / 0 / 22 | managementGroup | generator, arbitrary owner (several scopes, patch 0006) | S (22) | 0 |
-| 45 | `Microsoft.Insights/diagnosticSettings` | partial, 2 of 14 missing | `insights/DiagnosticSetting` |  | 12 / 0 / 2 | extension | extend: ASO's API version is older than the spec's | S (2) | 23 |
-| 46 | `Microsoft.Insights/dataCollectionEndpoints` | partial, 4 of 16 missing | `insights/DataCollectionEndpoint` |  | 12 / 0 / 4 | resourceGroup | extend: newer API version or property config | S (4) | 1 |
-| 47 | `Microsoft.Insights/metricAlerts` | partial, 9 of 41 missing | `insights/MetricAlert` |  | 32 / 0 / 9 | resourceGroup | extend: ASO's API version is older than the spec's | S (9) | 1 |
-| 48 | `Microsoft.Insights/privateLinkScopes/privateEndpointConnections` | partial, 1 of 4 missing |  | `insights/PrivateLinkScopesPrivateEndpointConnection` | 0 / 3 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
-| 49 | `Microsoft.Insights/workbooks` | partial, 2 of 14 missing | `insights/Workbook` |  | 12 / 0 / 2 | resourceGroup | extend: newer API version or property config | S (2) | 0 |
-| 50 | `Microsoft.Insights/activityLogAlerts` | partial, 2 of 15 missing | `insights/ActivityLogAlert` |  | 13 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 0 |
-| 51 | `Microsoft.Insights/scheduledQueryRules` | partial, 9 of 39 missing | `insights/ScheduledQueryRule` |  | 30 / 0 / 9 | resourceGroup | extend: ASO's API version is older than the spec's | S (9) | 0 |
-| 52 | `Microsoft.Insights/privateLinkScopes/scopedResources` | covered |  | `insights/PrivateLinkScopesScopedResource` | 0 / 1 / 0 | resourceGroup | - | - | 2 |
-| 53 | `Microsoft.Insights/privateLinkScopes` | covered |  | `insights/PrivateLinkScope` | 0 / 7 / 0 | resourceGroup | - | - | 2 |
-| 54 | `Microsoft.Insights/dataCollectionRuleAssociations` | covered | `insights/DataCollectionRuleAssociation` |  | 3 / 0 / 0 | extension | - | - | 1 |
-| 55 | `Microsoft.Insights/actionGroups` | covered | `insights/ActionGroup` |  | 52 / 0 / 0 | resourceGroup | - | - | 1 |
-| 56 | `Microsoft.Insights/dataCollectionRules` | covered | `insights/DataCollectionRule` |  | 140 / 0 / 0 | resourceGroup | - | - | 1 |
-| 57 | `Microsoft.Insights/logprofiles` | covered |  | `insights/LogProfile` | 0 / 8 / 0 | subscription | - | - | 0 |
-| 58 | `Microsoft.Insights/workbooktemplates` | covered |  | `insights/WorkbookTemplate` | 0 / 16 / 0 | resourceGroup | - | - | 0 |
+| 37 | `Microsoft.CostManagement/views` | no kind |  |  | 0 / 0 / 34 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | M (34) | 0 |
+| 38 | `Microsoft.CostManagement/exports` | partial, 1 of 28 missing |  | `costmanagement/Export` | 0 / 27 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 39 | `Microsoft.CostManagement/scheduledActions` | covered |  | `costmanagement/ScheduledAction` | 0 / 20 / 0 | extension,tenant | - | - | 0 |
+| 40 | `Microsoft.CostManagement/budgets` | covered |  | `costmanagement/Budget` | 0 / 27 / 0 | extension | - | - | 0 |
+| 41 | `Microsoft.Insights/diagnosticSettings` | partial, 2 of 14 missing | `insights/DiagnosticSetting` |  | 12 / 0 / 2 | extension | extend: ASO's API version is older than the spec's | S (2) | 23 |
+| 42 | `Microsoft.Insights/dataCollectionEndpoints` | partial, 4 of 16 missing | `insights/DataCollectionEndpoint` |  | 12 / 0 / 4 | resourceGroup | extend: newer API version or property config | S (4) | 1 |
+| 43 | `Microsoft.Insights/metricAlerts` | partial, 9 of 41 missing | `insights/MetricAlert` |  | 32 / 0 / 9 | resourceGroup | extend: ASO's API version is older than the spec's | S (9) | 1 |
+| 44 | `Microsoft.Insights/privateLinkScopes/privateEndpointConnections` | partial, 1 of 4 missing |  | `insights/PrivateLinkScopesPrivateEndpointConnection` | 0 / 3 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 45 | `Microsoft.Insights/myWorkbooks` | partial, 2 of 13 missing |  | `insights/MyWorkbook` | 0 / 11 / 2 | resourceGroup | extend: newer API version or property config | S (2) | 0 |
+| 46 | `Microsoft.Insights/workbooks` | partial, 2 of 14 missing | `insights/Workbook` |  | 12 / 0 / 2 | resourceGroup | extend: newer API version or property config | S (2) | 0 |
+| 47 | `Microsoft.Insights/activityLogAlerts` | partial, 2 of 15 missing | `insights/ActivityLogAlert` |  | 13 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 0 |
+| 48 | `Microsoft.Insights/scheduledQueryRules` | partial, 9 of 39 missing | `insights/ScheduledQueryRule` |  | 30 / 0 / 9 | resourceGroup | extend: ASO's API version is older than the spec's | S (9) | 0 |
+| 49 | `Microsoft.Insights/privateLinkScopes/scopedResources` | covered |  | `insights/PrivateLinkScopesScopedResource` | 0 / 1 / 0 | resourceGroup | - | - | 2 |
+| 50 | `Microsoft.Insights/privateLinkScopes` | covered |  | `insights/PrivateLinkScope` | 0 / 7 / 0 | resourceGroup | - | - | 2 |
+| 51 | `Microsoft.Insights/dataCollectionRuleAssociations` | covered | `insights/DataCollectionRuleAssociation` |  | 3 / 0 / 0 | extension | - | - | 1 |
+| 52 | `Microsoft.Insights/actionGroups` | covered | `insights/ActionGroup` |  | 52 / 0 / 0 | resourceGroup | - | - | 1 |
+| 53 | `Microsoft.Insights/dataCollectionRules` | covered | `insights/DataCollectionRule` |  | 140 / 0 / 0 | resourceGroup | - | - | 1 |
+| 54 | `Microsoft.Insights/guestDiagnosticSettingsAssociation` | covered |  | `insights/GuestDiagnosticSettingsAssociation` | 0 / 3 / 0 | extension | - | - | 0 |
+| 55 | `Microsoft.Insights/logprofiles` | covered |  | `insights/LogProfile` | 0 / 8 / 0 | subscription | - | - | 0 |
+| 56 | `Microsoft.Insights/guestDiagnosticSettings` | covered |  | `insights/GuestDiagnosticSetting` | 0 / 15 / 0 | resourceGroup | - | - | 0 |
+| 57 | `Microsoft.Insights/workbooktemplates` | covered |  | `insights/WorkbookTemplate` | 0 / 16 / 0 | resourceGroup | - | - | 0 |
+| 58 | `Microsoft.Insights/tenantActionGroups` | covered |  | `insights/TenantActionGroup` | 0 / 22 / 0 | managementGroup | - | - | 0 |
 | 59 | `Microsoft.Insights/autoscalesettings` | covered | `insights/AutoscaleSetting` |  | 44 / 0 / 0 | resourceGroup | - | - | 0 |
 | 60 | `Microsoft.Network/applicationSecurityGroups/addressPrefixSets` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
 | 61 | `Microsoft.Network/expressRouteLags/authorizations` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
@@ -339,26 +339,26 @@ Generated: every resource of the two categories, by the order of the services in
 | 204 | `Microsoft.OperationalInsights/workspaces/storageInsightConfigs` | covered |  | `operationalinsights/WorkspacesStorageInsightConfig` | 0 / 6 / 0 | resourceGroup | - | - | 0 |
 | 205 | `Microsoft.OperationalInsights/queryPacks/queries` | covered |  | `operationalinsights/QueryPacksQuery` | 0 / 8 / 0 | resourceGroup | - | - | 0 |
 | 206 | `Microsoft.OperationalInsights/workspaces/savedSearches` | covered |  | `operationalinsights/WorkspacesSavedSearch` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
-| 207 | `Microsoft.OperationsManagement/ManagementAssociations` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 208 | `Microsoft.OperationsManagement/ManagementConfigurations` | no kind |  |  | 0 / 0 / 6 | resourceGroup | generator | S (6) | 0 |
-| 209 | `Microsoft.OperationsManagement/solutions` | covered |  | `operationsmanagement/Solution` | 0 / 9 / 0 | resourceGroup | - | - | 1 |
+| 207 | `Microsoft.OperationsManagement/solutions` | covered |  | `operationsmanagement/Solution` | 0 / 9 / 0 | resourceGroup | - | - | 1 |
+| 208 | `Microsoft.OperationsManagement/ManagementAssociations` | covered |  | `operationsmanagement/ManagementAssociation` | 0 / 2 / 0 | extension | - | - | 0 |
+| 209 | `Microsoft.OperationsManagement/ManagementConfigurations` | covered |  | `operationsmanagement/ManagementConfiguration` | 0 / 6 / 0 | resourceGroup | - | - | 0 |
 | 210 | `Microsoft.Monitor/accounts/metricsContainers` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
 | 211 | `Microsoft.Monitor/observabilityAgents` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
 | 212 | `Microsoft.Monitor/accounts/issues` | no kind |  |  | 0 / 0 / 12 | resourceGroup | generator | S (12) | 0 |
 | 213 | `Microsoft.Monitor/pipelineGroups` | no kind |  |  | 0 / 0 / 52 | resourceGroup | generator | M (52) | 0 |
 | 214 | `Microsoft.Monitor/slis` | no kind |  |  | 0 / 0 / 58 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (58) | 0 |
 | 215 | `Microsoft.Monitor/accounts` | partial, 3 of 6 missing | `monitor/Account` |  | 3 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 0 |
-| 216 | `Microsoft.ContainerService/deploymentSafeguards` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 217 | `Microsoft.ContainerService/managedClusters/agentPools` | partial, 3 of 126 missing | `containerservice/ManagedClustersAgentPool` |  | 123 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 1 |
-| 218 | `Microsoft.ContainerService/managedClusters` | partial, 21 of 330 missing | `containerservice/ManagedCluster` |  | 309 / 0 / 21 | resourceGroup | extend: ASO's API version is older than the spec's | S (21) | 1 |
-| 219 | `Microsoft.ContainerService/fleets/members` | partial, 1 of 3 missing | `containerservice/FleetsMember` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 0 |
-| 220 | `Microsoft.ContainerService/fleets/autoUpgradeProfiles` | partial, 3 of 7 missing | `containerservice/FleetsAutoUpgradeProfile` |  | 4 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 0 |
-| 221 | `Microsoft.ContainerService/fleets/updateStrategies` | partial, 10 of 13 missing | `containerservice/FleetsUpdateStrategy` |  | 3 / 0 / 10 | resourceGroup | extend: ASO's API version is older than the spec's | S (10) | 0 |
-| 222 | `Microsoft.ContainerService/fleets/updateRuns` | partial, 11 of 18 missing | `containerservice/FleetsUpdateRun` |  | 7 / 0 / 11 | resourceGroup | extend: ASO's API version is older than the spec's | S (11) | 0 |
-| 223 | `Microsoft.ContainerService/managedClusters/managedNamespaces` | covered |  | `containerservice/ManagedClustersManagedNamespace` | 0 / 12 / 0 | resourceGroup | - | - | 1 |
-| 224 | `Microsoft.ContainerService/managedClusters/maintenanceConfigurations` | covered | `containerservice/MaintenanceConfiguration` |  | 18 / 0 / 0 | resourceGroup | - | - | 1 |
-| 225 | `Microsoft.ContainerService/managedClusters/identityBindings` | covered | `containerservice/IdentityBinding` |  | 1 / 0 / 0 | resourceGroup | - | - | 0 |
-| 226 | `Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings` | covered | `containerservice/TrustedAccessRoleBinding` |  | 2 / 0 / 0 | resourceGroup | - | - | 0 |
+| 216 | `Microsoft.ContainerService/managedClusters/agentPools` | partial, 3 of 126 missing | `containerservice/ManagedClustersAgentPool` |  | 123 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 1 |
+| 217 | `Microsoft.ContainerService/managedClusters` | partial, 21 of 330 missing | `containerservice/ManagedCluster` |  | 309 / 0 / 21 | resourceGroup | extend: ASO's API version is older than the spec's | S (21) | 1 |
+| 218 | `Microsoft.ContainerService/fleets/members` | partial, 1 of 3 missing | `containerservice/FleetsMember` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 0 |
+| 219 | `Microsoft.ContainerService/fleets/autoUpgradeProfiles` | partial, 3 of 7 missing | `containerservice/FleetsAutoUpgradeProfile` |  | 4 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 0 |
+| 220 | `Microsoft.ContainerService/fleets/updateStrategies` | partial, 10 of 13 missing | `containerservice/FleetsUpdateStrategy` |  | 3 / 0 / 10 | resourceGroup | extend: ASO's API version is older than the spec's | S (10) | 0 |
+| 221 | `Microsoft.ContainerService/fleets/updateRuns` | partial, 11 of 18 missing | `containerservice/FleetsUpdateRun` |  | 7 / 0 / 11 | resourceGroup | extend: ASO's API version is older than the spec's | S (11) | 0 |
+| 222 | `Microsoft.ContainerService/managedClusters/managedNamespaces` | covered |  | `containerservice/ManagedClustersManagedNamespace` | 0 / 12 / 0 | resourceGroup | - | - | 1 |
+| 223 | `Microsoft.ContainerService/managedClusters/maintenanceConfigurations` | covered | `containerservice/MaintenanceConfiguration` |  | 18 / 0 / 0 | resourceGroup | - | - | 1 |
+| 224 | `Microsoft.ContainerService/managedClusters/identityBindings` | covered | `containerservice/IdentityBinding` |  | 1 / 0 / 0 | resourceGroup | - | - | 0 |
+| 225 | `Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings` | covered | `containerservice/TrustedAccessRoleBinding` |  | 2 / 0 / 0 | resourceGroup | - | - | 0 |
+| 226 | `Microsoft.ContainerService/deploymentSafeguards` | covered |  | `containerservice/DeploymentSafeguard` | 0 / 3 / 0 | extension | - | - | 0 |
 | 227 | `Microsoft.ContainerService/managedClusters/privateEndpointConnections` | covered |  | `containerservice/ManagedClustersPrivateEndpointConnection` | 0 / 3 / 0 | resourceGroup | - | - | 0 |
 | 228 | `Microsoft.ContainerService/snapshots` | covered |  | `containerservice/Snapshot` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 229 | `Microsoft.ContainerService/fleets` | covered | `containerservice/Fleet` |  | 10 / 0 / 0 | resourceGroup | - | - | 0 |

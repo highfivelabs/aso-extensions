@@ -9,6 +9,10 @@ typeFilters:
     because: >-
       the first stable fleet API with managed namespaces (ASO's Fleet is at
       2025-03-01, which has none)
+  - action: include
+    group: containerservice
+    version: v20250701
+    because: AKS deployment safeguards (Microsoft.ContainerService/deploymentSafeguards)
   - action: prune
     group: containerservice
     because: every other version is left alone
@@ -33,4 +37,8 @@ groupModelConfiguration:
   2026-06-01:
     Fleets_ManagedNamespace:
       $exportAs: FleetsManagedNamespace
+      $supportedFrom: v0.1.0
+  2025-07-01:
+    DeploymentSafeguard:
+      $exportAs: DeploymentSafeguard
       $supportedFrom: v0.1.0

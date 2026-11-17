@@ -23,6 +23,18 @@ typeFilters:
     group: insights
     version: v20200301preview
     because: the only version of an Application Insights component's linked storage account (the profiler's), componentLinkedStorageAccounts_API.json
+  - action: include
+    group: insights
+    version: v20210308
+    because: the newest stable version of myWorkbooks
+  - action: include
+    group: insights
+    version: v20180601preview
+    because: the only version of guestDiagnosticSettings and guestDiagnosticSettingsAssociation
+  - action: include
+    group: insights
+    version: v20230301preview
+    because: the only version of tenantActionGroups
 
 groupModelConfiguration:
   2016-03-01:
@@ -58,3 +70,24 @@ groupModelConfiguration:
     ScopedResourceProperties:
       LinkedResourceId:
         $referenceType: arm # a Log Analytics workspace, an Application Insights component or a data collection endpoint
+  2018-06-01-preview:
+    GuestDiagnosticSetting:
+      $exportAs: GuestDiagnosticSetting
+      $supportedFrom: v0.1.0
+    GuestDiagnosticSettingsAssociation:
+      $exportAs: GuestDiagnosticSettingsAssociation
+      $supportedFrom: v0.1.0
+    EtwProviderConfiguration:
+      Id:
+        $referenceType: simple # ETW provider GUID/name, not an ARM resource ID
+  2021-03-08:
+    MyWorkbook:
+      $exportAs: MyWorkbook
+      $supportedFrom: v0.1.0
+    MyWorkbookProperties:
+      SourceId:
+        $referenceType: arm # optional source resource ARM ID
+  2023-03-01-preview:
+    TenantActionGroup:
+      $exportAs: TenantActionGroup
+      $supportedFrom: v0.1.0

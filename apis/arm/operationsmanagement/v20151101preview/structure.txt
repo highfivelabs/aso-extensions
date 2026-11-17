@@ -4,6 +4,56 @@ github.com/highfivelabs/aso-extensions/apis/arm/operationsmanagement/v20151101pr
 APIVersion: Enum (1 value)
 └── "2015-11-01-preview"
 
+ManagementAssociation: Resource
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   └── Properties: *Object (1 property)
+│       └── ApplicationId: *string
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (1 property)
+    │   └── ApplicationId: *string
+    └── Type: *string
+
+ManagementConfiguration: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (4 properties)
+│       ├── ApplicationId: *string
+│       ├── Parameters: Object (2 properties)[]
+│       │   ├── Name: *string
+│       │   └── Value: *string
+│       ├── ParentResourceType: *string
+│       └── Template: map[string]v1.JSON
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (5 properties)
+    │   ├── ApplicationId: *string
+    │   ├── Parameters: Object (2 properties)[]
+    │   │   ├── Name: *string
+    │   │   └── Value: *string
+    │   ├── ParentResourceType: *string
+    │   ├── ProvisioningState: *string
+    │   └── Template: map[string]v1.JSON
+    └── Type: *string
+
 Solution: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (7 properties)

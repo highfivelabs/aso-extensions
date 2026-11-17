@@ -11,9 +11,13 @@ no_list: true
 | Resource                                   | ARM Version        | CRD Version      | Supported From | Sample |
 |--------------------------------------------|--------------------|------------------|----------------|--------|
 | ComponentsLinkedStorageAccount             | 2020-03-01-preview | v20200301preview | v0.1.0         | -      |
+| GuestDiagnosticSetting                     | 2018-06-01-preview | v20180601preview | v0.1.0         | -      |
+| GuestDiagnosticSettingsAssociation         | 2018-06-01-preview | v20180601preview | v0.1.0         | -      |
 | LogProfile                                 | 2016-03-01         | v20160301        | v0.1.0         | -      |
+| MyWorkbook                                 | 2021-03-08         | v20210308        | v0.1.0         | -      |
 | PrivateLinkScope                           | 2021-09-01         | v20210901        | v0.1.0         | -      |
 | PrivateLinkScopesPrivateEndpointConnection | 2021-09-01         | v20210901        | v0.1.0         | -      |
 | PrivateLinkScopesScopedResource            | 2021-09-01         | v20210901        | v0.1.0         | -      |
+| TenantActionGroup                          | 2023-03-01-preview | v20230301preview | v0.1.0         | -      |
 | WorkbookTemplate                           | 2020-11-20         | v20201120        | v0.1.0         | -      |
 

@@ -717,7 +717,7 @@ Microsoft.ContainerService,Microsoft.ContainerService/aiManagers/modelSources,5,
 Microsoft.ContainerService,Microsoft.ContainerService/aiManagers/namespaces,2,,0,,0,2,false,spec_api=2026-09-02-preview; spec-preview-only
 Microsoft.ContainerService,Microsoft.ContainerService/aiManagers/namespaces/modelDeployments,8,,0,,0,8,false,spec_api=2026-09-02-preview; spec-preview-only
 Microsoft.ContainerService,Microsoft.ContainerService/containerServices,31,,0,,0,31,false,spec_api=2017-07-01
-Microsoft.ContainerService,Microsoft.ContainerService/deploymentSafeguards,3,,0,,0,3,false,spec_api=2025-07-01
+Microsoft.ContainerService,Microsoft.ContainerService/deploymentSafeguards,3,,0,containerservice.azure.hfl.dev/DeploymentSafeguard,3,0,false,spec_api=2025-07-01; ours_api=2025-07-01
 Microsoft.ContainerService,Microsoft.ContainerService/fleets,10,containerservice.azure.com/Fleet,10,,0,0,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/fleets/autoUpgradeProfiles,7,containerservice.azure.com/FleetsAutoUpgradeProfile,4,,0,3,false,spec_api=2026-06-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.ContainerService,Microsoft.ContainerService/fleets/managedNamespaces,26,,0,containerservice.azure.hfl.dev/FleetsManagedNamespace,26,0,false,spec_api=2026-06-01; ours_api=2026-06-01
@@ -739,7 +739,7 @@ Microsoft.ContainerStorage,Microsoft.ContainerStorage/pools,21,,0,,0,21,false,sp
 Microsoft.ContainerStorage,Microsoft.ContainerStorage/pools/snapshots,1,,0,,0,1,false,spec_api=2023-07-01-preview; spec-preview-only
 Microsoft.ContainerStorage,Microsoft.ContainerStorage/pools/volumes,2,,0,,0,2,false,spec_api=2023-07-01-preview; spec-preview-only
 Microsoft.Contoso,Microsoft.Contoso/employees,5,,0,,0,5,false,spec_api=2021-11-01
-Microsoft.CostManagement,Microsoft.CostManagement/budgets,27,,0,,0,27,false,spec_api=2026-06-01
+Microsoft.CostManagement,Microsoft.CostManagement/budgets,27,,0,costmanagement.azure.hfl.dev/Budget,27,0,false,spec_api=2026-06-01; ours_api=2026-06-01
 Microsoft.CostManagement,Microsoft.CostManagement/costAllocationRules,10,,0,,0,10,false,spec_api=2026-06-01
 Microsoft.CostManagement,Microsoft.CostManagement/exports,28,,0,costmanagement.azure.hfl.dev/Export,27,1,false,spec_api=2026-06-01; ours_api=2026-06-01
 Microsoft.CostManagement,Microsoft.CostManagement/markupRules,6,,0,,0,6,false,spec_api=2026-06-01
@@ -1245,16 +1245,16 @@ Microsoft.Insights,Microsoft.Insights/dataCollectionEndpoints,16,insights.azure.
 Microsoft.Insights,Microsoft.Insights/dataCollectionRuleAssociations,3,insights.azure.com/DataCollectionRuleAssociation,3,,0,0,false,spec_api=2024-03-11; official_api=2024-03-11
 Microsoft.Insights,Microsoft.Insights/dataCollectionRules,140,insights.azure.com/DataCollectionRule,140,,0,0,false,spec_api=2024-03-11; official_api=2024-03-11
 Microsoft.Insights,Microsoft.Insights/diagnosticSettings,14,insights.azure.com/DiagnosticSetting,12,,0,2,false,spec_api=2016-09-01; official_api=2021-05-01-preview; official-api-differs-from-spec
-Microsoft.Insights,Microsoft.Insights/guestDiagnosticSettings,15,,0,,0,15,false,spec_api=2018-06-01-preview; spec-preview-only
-Microsoft.Insights,Microsoft.Insights/guestDiagnosticSettingsAssociation,3,,0,,0,3,false,spec_api=2018-06-01-preview; spec-preview-only
+Microsoft.Insights,Microsoft.Insights/guestDiagnosticSettings,15,,0,insights.azure.hfl.dev/GuestDiagnosticSetting,15,0,false,spec_api=2018-06-01-preview; spec-preview-only; ours_api=2018-06-01-preview
+Microsoft.Insights,Microsoft.Insights/guestDiagnosticSettingsAssociation,3,,0,insights.azure.hfl.dev/GuestDiagnosticSettingsAssociation,3,0,false,spec_api=2018-06-01-preview; spec-preview-only; ours_api=2018-06-01-preview
 Microsoft.Insights,Microsoft.Insights/logprofiles,8,,0,insights.azure.hfl.dev/LogProfile,8,0,false,spec_api=2016-03-01; ours_api=2016-03-01
 Microsoft.Insights,Microsoft.Insights/metricAlerts,41,insights.azure.com/MetricAlert,32,,0,9,false,spec_api=2026-01-01; official_api=2018-03-01; official-api-differs-from-spec
-Microsoft.Insights,Microsoft.Insights/myWorkbooks,13,,0,,0,13,false,spec_api=2021-03-08
+Microsoft.Insights,Microsoft.Insights/myWorkbooks,13,,0,insights.azure.hfl.dev/MyWorkbook,11,2,false,spec_api=2021-03-08; ours_api=2021-03-08
 Microsoft.Insights,Microsoft.Insights/privateLinkScopes,7,,0,insights.azure.hfl.dev/PrivateLinkScope,7,0,false,spec_api=2021-09-01; ours_api=2021-09-01
 Microsoft.Insights,Microsoft.Insights/privateLinkScopes/privateEndpointConnections,4,,0,insights.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection,3,1,false,spec_api=2021-09-01; ours_api=2021-09-01
 Microsoft.Insights,Microsoft.Insights/privateLinkScopes/scopedResources,1,,0,insights.azure.hfl.dev/PrivateLinkScopesScopedResource,1,0,false,spec_api=2021-09-01; ours_api=2021-09-01
 Microsoft.Insights,Microsoft.Insights/scheduledQueryRules,39,insights.azure.com/ScheduledQueryRule,30,,0,9,false,spec_api=2026-03-01; official_api=2022-06-15; official-api-differs-from-spec
-Microsoft.Insights,Microsoft.Insights/tenantActionGroups,22,,0,,0,22,false,spec_api=2023-05-01-preview; spec-preview-only
+Microsoft.Insights,Microsoft.Insights/tenantActionGroups,22,,0,insights.azure.hfl.dev/TenantActionGroup,22,0,false,spec_api=2023-05-01-preview; spec-preview-only; ours_api=2023-03-01-preview; ours-api-differs-from-spec
 Microsoft.Insights,Microsoft.Insights/webtests,27,insights.azure.com/Webtest,27,,0,0,false,spec_api=2022-06-15; official_api=2022-06-15
 Microsoft.Insights,Microsoft.Insights/workbooks,14,insights.azure.com/Workbook,12,,0,2,false,spec_api=2023-06-01; official_api=2023-06-01
 Microsoft.Insights,Microsoft.Insights/workbooktemplates,16,,0,insights.azure.hfl.dev/WorkbookTemplate,16,0,false,spec_api=2020-11-20; ours_api=2020-11-20
@@ -1764,8 +1764,8 @@ Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/savedSear
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/storageInsightConfigs,6,,0,operationalinsights.azure.hfl.dev/WorkspacesStorageInsightConfig,6,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/summaryLogs,11,,0,,0,11,false,spec_api=2026-03-01
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/tables,20,,0,operationalinsights.azure.hfl.dev/WorkspacesTable,19,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
-Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementAssociations,2,,0,,0,2,false,spec_api=2015-11-01-preview; spec-preview-only
-Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementConfigurations,6,,0,,0,6,false,spec_api=2015-11-01-preview; spec-preview-only
+Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementAssociations,2,,0,operationsmanagement.azure.hfl.dev/ManagementAssociation,2,0,false,spec_api=2015-11-01-preview; spec-preview-only; ours_api=2015-11-01-preview
+Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementConfigurations,6,,0,operationsmanagement.azure.hfl.dev/ManagementConfiguration,6,0,false,spec_api=2015-11-01-preview; spec-preview-only; ours_api=2015-11-01-preview
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/solutions,9,,0,operationsmanagement.azure.hfl.dev/Solution,9,0,false,spec_api=2015-11-01-preview; spec-preview-only; ours_api=2015-11-01-preview
 Microsoft.Orbital,Microsoft.Orbital/contactProfiles,26,,0,,0,26,false,spec_api=2022-11-01
 Microsoft.Orbital,Microsoft.Orbital/edgeSites,3,,0,,0,3,false,spec_api=2024-03-01
