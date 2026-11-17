@@ -146,6 +146,7 @@ func TestRow24DdosPartnerCdnWaf(t *testing.T) {
 		Spec: cdn.CdnWebApplicationFirewallPolicy_Spec{
 			Owner:    &genruntime.KnownResourceReference{Name: "rg"},
 			Location: ptr("Global"),
+			Sku:      &cdn.Sku{Name: ptr(cdn.SkuName_Standard_Microsoft)},
 			Tags:     map[string]string{"team": "sec"},
 		},
 	}
