@@ -144,6 +144,8 @@ resources:
 - network.azure.hfl.dev_expressroutecircuitspeeringsconnections.yaml
 - network.azure.hfl.dev_expressroutegateways.yaml
 - network.azure.hfl.dev_expressroutegatewaysexpressrouteconnections.yaml
+- network.azure.hfl.dev_expressroutelags.yaml
+- network.azure.hfl.dev_expressroutelagsauthorizations.yaml
 - network.azure.hfl.dev_expressrouteports.yaml
 - network.azure.hfl.dev_expressrouteportsauthorizations.yaml
 - network.azure.hfl.dev_firewallpolicieskubeselectorgroups.yaml

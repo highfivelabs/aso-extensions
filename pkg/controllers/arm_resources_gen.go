@@ -1136,6 +1136,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRouteLag)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRouteLagsAuthorization)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePort)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.FirewallPoliciesKubeSelectorGroup)})
@@ -1896,6 +1898,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsPeeringsConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteGatewaysExpressRouteConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteLag)},
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteLagsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301.FirewallPoliciesKubeSelectorGroup)},
@@ -1956,6 +1960,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsPeeringsConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteGatewaysExpressRouteConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteLag)},
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteLagsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301s.FirewallPoliciesKubeSelectorGroup)},
@@ -2459,6 +2465,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.ExpressRouteCircuitsPeeringsConnectionExtension{})
 	result = append(result, &network_customizations.ExpressRouteGatewayExtension{})
 	result = append(result, &network_customizations.ExpressRouteGatewaysExpressRouteConnectionExtension{})
+	result = append(result, &network_customizations.ExpressRouteLagExtension{})
+	result = append(result, &network_customizations.ExpressRouteLagsAuthorizationExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortsAuthorizationExtension{})
 	result = append(result, &network_customizations.FirewallPoliciesKubeSelectorGroupExtension{})
