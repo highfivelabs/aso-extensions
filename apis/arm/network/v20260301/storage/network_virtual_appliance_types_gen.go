@@ -180,7 +180,7 @@ type NetworkVirtualAppliance_Spec struct {
 	// doesn't have to be.
 	AzureName                   string                                                 `json:"azureName,omitempty"`
 	BootStrapConfigurationBlobs []string                                               `json:"bootStrapConfigurationBlobs,omitempty"`
-	CloudInitConfiguration      *string                                                `json:"cloudInitConfiguration,omitempty"`
+	CloudInitConfiguration      *genruntime.SecretReference                            `json:"cloudInitConfiguration,omitempty"`
 	CloudInitConfigurationBlobs []string                                               `json:"cloudInitConfigurationBlobs,omitempty"`
 	Delegation                  *DelegationProperties                                  `json:"delegation,omitempty"`
 	Identity                    *ManagedServiceIdentity                                `json:"identity,omitempty"`
@@ -232,7 +232,6 @@ type NetworkVirtualAppliance_STATUS struct {
 	AddressPrefix               *string                                                       `json:"addressPrefix,omitempty"`
 	AddressPrefixV6             *string                                                       `json:"addressPrefixV6,omitempty"`
 	BootStrapConfigurationBlobs []string                                                      `json:"bootStrapConfigurationBlobs,omitempty"`
-	CloudInitConfiguration      *string                                                       `json:"cloudInitConfiguration,omitempty"`
 	CloudInitConfigurationBlobs []string                                                      `json:"cloudInitConfigurationBlobs,omitempty"`
 	Conditions                  []conditions.Condition                                        `json:"conditions,omitempty"`
 	Delegation                  *DelegationProperties_STATUS                                  `json:"delegation,omitempty"`

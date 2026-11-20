@@ -337,6 +337,9 @@ groupModelConfiguration:
     NetworkVirtualAppliances_InboundSecurityRule:
       $exportAs: NetworkVirtualAppliancesInboundSecurityRule # no DELETE in the spec: detach-on-delete, as a managed HSM key
       $supportedFrom: v0.1.0
+    NetworkVirtualAppliancePropertiesFormat:
+      CloudInitConfiguration:
+        $importSecretMode: required # vendor cloud-init carries admin passwords, licence and registration tokens: a Secret reference (review of PR #104)
     NetworkManagerRoutingGroupItem:
       NetworkGroupId:
         $referenceType: arm # the network group a routing rule collection applies to
@@ -590,6 +593,12 @@ typeTransformers:
   # generator/_extensions/network/customizations), not kept in the spec,
   # which could only send a key Azure ignores, or the status, which anyone
   # who may read the object reads.
+  - group: network
+    version: v20260301
+    name: NetworkVirtualAppliancePropertiesFormat_STATUS
+    property: CloudInitConfiguration
+    remove: true
+    because: cloud-init may carry credentials; it comes from a Secret and is not shown in the status
   - group: network
     version: v20260301
     name: ExpressRouteCircuitPropertiesFormat

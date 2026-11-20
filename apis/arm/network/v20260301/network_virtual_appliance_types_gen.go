@@ -270,7 +270,7 @@ type NetworkVirtualAppliance_Spec struct {
 	BootStrapConfigurationBlobs []string `json:"bootStrapConfigurationBlobs,omitempty"`
 
 	// CloudInitConfiguration: CloudInitConfiguration string in plain text.
-	CloudInitConfiguration *string `json:"cloudInitConfiguration,omitempty"`
+	CloudInitConfiguration *genruntime.SecretReference `json:"cloudInitConfiguration,omitempty"`
 
 	// CloudInitConfigurationBlobs: CloudInitConfigurationBlob storage URLs.
 	CloudInitConfigurationBlobs []string `json:"cloudInitConfigurationBlobs,omitempty"`
@@ -380,7 +380,11 @@ func (appliance *NetworkVirtualAppliance_Spec) ConvertToARM(resolved genruntime.
 		result.Properties.BootStrapConfigurationBlobs = append(result.Properties.BootStrapConfigurationBlobs, item)
 	}
 	if appliance.CloudInitConfiguration != nil {
-		cloudInitConfiguration := *appliance.CloudInitConfiguration
+		cloudInitConfigurationSecret, err := resolved.ResolvedSecrets.Lookup(*appliance.CloudInitConfiguration)
+		if err != nil {
+			return nil, eris.Wrap(err, "looking up secret for property CloudInitConfiguration")
+		}
+		cloudInitConfiguration := cloudInitConfigurationSecret
 		result.Properties.CloudInitConfiguration = &cloudInitConfiguration
 	}
 	for _, item := range appliance.CloudInitConfigurationBlobs {
@@ -497,14 +501,7 @@ func (appliance *NetworkVirtualAppliance_Spec) PopulateFromARM(owner genruntime.
 		}
 	}
 
-	// Set property "CloudInitConfiguration":
-	// copying flattened property:
-	if typedInput.Properties != nil {
-		if typedInput.Properties.CloudInitConfiguration != nil {
-			cloudInitConfiguration := *typedInput.Properties.CloudInitConfiguration
-			appliance.CloudInitConfiguration = &cloudInitConfiguration
-		}
-	}
+	// no assignment for property "CloudInitConfiguration"
 
 	// Set property "CloudInitConfigurationBlobs":
 	// copying flattened property:
@@ -738,7 +735,12 @@ func (appliance *NetworkVirtualAppliance_Spec) AssignProperties_From_NetworkVirt
 	appliance.BootStrapConfigurationBlobs = genruntime.CloneSliceOfString(source.BootStrapConfigurationBlobs)
 
 	// CloudInitConfiguration
-	appliance.CloudInitConfiguration = genruntime.ClonePointerToString(source.CloudInitConfiguration)
+	if source.CloudInitConfiguration != nil {
+		cloudInitConfiguration := source.CloudInitConfiguration.Copy()
+		appliance.CloudInitConfiguration = &cloudInitConfiguration
+	} else {
+		appliance.CloudInitConfiguration = nil
+	}
 
 	// CloudInitConfigurationBlobs
 	appliance.CloudInitConfigurationBlobs = genruntime.CloneSliceOfString(source.CloudInitConfigurationBlobs)
@@ -915,7 +917,12 @@ func (appliance *NetworkVirtualAppliance_Spec) AssignProperties_To_NetworkVirtua
 	destination.BootStrapConfigurationBlobs = genruntime.CloneSliceOfString(appliance.BootStrapConfigurationBlobs)
 
 	// CloudInitConfiguration
-	destination.CloudInitConfiguration = genruntime.ClonePointerToString(appliance.CloudInitConfiguration)
+	if appliance.CloudInitConfiguration != nil {
+		cloudInitConfiguration := appliance.CloudInitConfiguration.Copy()
+		destination.CloudInitConfiguration = &cloudInitConfiguration
+	} else {
+		destination.CloudInitConfiguration = nil
+	}
 
 	// CloudInitConfigurationBlobs
 	destination.CloudInitConfigurationBlobs = genruntime.CloneSliceOfString(appliance.CloudInitConfigurationBlobs)
@@ -1097,9 +1104,6 @@ func (appliance *NetworkVirtualAppliance_Spec) Initialize_From_NetworkVirtualApp
 	// BootStrapConfigurationBlobs
 	appliance.BootStrapConfigurationBlobs = genruntime.CloneSliceOfString(source.BootStrapConfigurationBlobs)
 
-	// CloudInitConfiguration
-	appliance.CloudInitConfiguration = genruntime.ClonePointerToString(source.CloudInitConfiguration)
-
 	// CloudInitConfigurationBlobs
 	appliance.CloudInitConfigurationBlobs = genruntime.CloneSliceOfString(source.CloudInitConfigurationBlobs)
 
@@ -1245,9 +1249,6 @@ type NetworkVirtualAppliance_STATUS struct {
 
 	// BootStrapConfigurationBlobs: BootStrapConfigurationBlobs storage URLs.
 	BootStrapConfigurationBlobs []string `json:"bootStrapConfigurationBlobs,omitempty"`
-
-	// CloudInitConfiguration: CloudInitConfiguration string in plain text.
-	CloudInitConfiguration *string `json:"cloudInitConfiguration,omitempty"`
 
 	// CloudInitConfigurationBlobs: CloudInitConfigurationBlob storage URLs.
 	CloudInitConfigurationBlobs []string `json:"cloudInitConfigurationBlobs,omitempty"`
@@ -1443,15 +1444,6 @@ func (appliance *NetworkVirtualAppliance_STATUS) PopulateFromARM(owner genruntim
 	if typedInput.Properties != nil {
 		for _, item := range typedInput.Properties.BootStrapConfigurationBlobs {
 			appliance.BootStrapConfigurationBlobs = append(appliance.BootStrapConfigurationBlobs, item)
-		}
-	}
-
-	// Set property "CloudInitConfiguration":
-	// copying flattened property:
-	if typedInput.Properties != nil {
-		if typedInput.Properties.CloudInitConfiguration != nil {
-			cloudInitConfiguration := *typedInput.Properties.CloudInitConfiguration
-			appliance.CloudInitConfiguration = &cloudInitConfiguration
 		}
 	}
 
@@ -1775,9 +1767,6 @@ func (appliance *NetworkVirtualAppliance_STATUS) AssignProperties_From_NetworkVi
 	// BootStrapConfigurationBlobs
 	appliance.BootStrapConfigurationBlobs = genruntime.CloneSliceOfString(source.BootStrapConfigurationBlobs)
 
-	// CloudInitConfiguration
-	appliance.CloudInitConfiguration = genruntime.ClonePointerToString(source.CloudInitConfiguration)
-
 	// CloudInitConfigurationBlobs
 	appliance.CloudInitConfigurationBlobs = genruntime.CloneSliceOfString(source.CloudInitConfigurationBlobs)
 
@@ -2055,9 +2044,6 @@ func (appliance *NetworkVirtualAppliance_STATUS) AssignProperties_To_NetworkVirt
 
 	// BootStrapConfigurationBlobs
 	destination.BootStrapConfigurationBlobs = genruntime.CloneSliceOfString(appliance.BootStrapConfigurationBlobs)
-
-	// CloudInitConfiguration
-	destination.CloudInitConfiguration = genruntime.ClonePointerToString(appliance.CloudInitConfiguration)
 
 	// CloudInitConfigurationBlobs
 	destination.CloudInitConfigurationBlobs = genruntime.CloneSliceOfString(appliance.CloudInitConfigurationBlobs)

@@ -366,7 +366,6 @@ func AddIndependentPropertyGeneratorsForNetworkVirtualAppliancePropertiesFormat_
 	gens["AddressPrefix"] = gen.PtrOf(gen.AlphaString())
 	gens["AddressPrefixV6"] = gen.PtrOf(gen.AlphaString())
 	gens["BootStrapConfigurationBlobs"] = gen.SliceOf(gen.AlphaString())
-	gens["CloudInitConfiguration"] = gen.PtrOf(gen.AlphaString())
 	gens["CloudInitConfigurationBlobs"] = gen.SliceOf(gen.AlphaString())
 	gens["DeploymentType"] = gen.PtrOf(gen.AlphaString())
 	gens["PrivateIpAddress"] = gen.PtrOf(gen.AlphaString())

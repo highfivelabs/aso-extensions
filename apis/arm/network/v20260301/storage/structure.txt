@@ -2931,7 +2931,7 @@ NetworkVirtualAppliance: Resource
 │   ├── AddressFamily: string[]
 │   ├── AzureName: string
 │   ├── BootStrapConfigurationBlobs: string[]
-│   ├── CloudInitConfiguration: *string
+│   ├── CloudInitConfiguration: *genruntime.SecretReference
 │   ├── CloudInitConfigurationBlobs: string[]
 │   ├── Delegation: *Object (2 properties)
 │   │   ├── PropertyBag: genruntime.PropertyBag
@@ -2984,7 +2984,7 @@ NetworkVirtualAppliance: Resource
 │   └── VirtualHub: *Object (2 properties)
 │       ├── PropertyBag: genruntime.PropertyBag
 │       └── Reference: *genruntime.ResourceReference
-└── Status: Object (34 properties)
+└── Status: Object (33 properties)
     ├── AdditionalNics: Object (3 properties)[]
     │   ├── HasPublicIp: *bool
     │   ├── Name: *string
@@ -2993,7 +2993,6 @@ NetworkVirtualAppliance: Resource
     ├── AddressPrefix: *string
     ├── AddressPrefixV6: *string
     ├── BootStrapConfigurationBlobs: string[]
-    ├── CloudInitConfiguration: *string
     ├── CloudInitConfigurationBlobs: string[]
     ├── Conditions: conditions.Condition[]
     ├── Delegation: *Object (3 properties)

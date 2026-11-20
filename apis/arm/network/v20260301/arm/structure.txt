@@ -3646,7 +3646,7 @@ NetworkVirtualAppliance_STATUS: Object (8 properties)
 │       └── PrincipalId: *string
 ├── Location: *string
 ├── Name: *string
-├── Properties: *Object (25 properties)
+├── Properties: *Object (24 properties)
 │   ├── AdditionalNics: Object (2 properties)[]
 │   │   ├── HasPublicIp: *bool
 │   │   └── Name: *string
@@ -3656,7 +3656,6 @@ NetworkVirtualAppliance_STATUS: Object (8 properties)
 │   ├── AddressPrefix: *string
 │   ├── AddressPrefixV6: *string
 │   ├── BootStrapConfigurationBlobs: string[]
-│   ├── CloudInitConfiguration: *string
 │   ├── CloudInitConfigurationBlobs: string[]
 │   ├── Delegation: *Object (2 properties)
 │   │   ├── ProvisioningState: *Enum (6 values)

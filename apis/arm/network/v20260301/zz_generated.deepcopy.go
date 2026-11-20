@@ -16847,11 +16847,6 @@ func (in *NetworkVirtualAppliance_STATUS) DeepCopyInto(out *NetworkVirtualApplia
 		*out = make([]string, len(*in))
 		copy(*out, *in)
 	}
-	if in.CloudInitConfiguration != nil {
-		in, out := &in.CloudInitConfiguration, &out.CloudInitConfiguration
-		*out = new(string)
-		**out = **in
-	}
 	if in.CloudInitConfigurationBlobs != nil {
 		in, out := &in.CloudInitConfigurationBlobs, &out.CloudInitConfigurationBlobs
 		*out = make([]string, len(*in))
@@ -17037,7 +17032,7 @@ func (in *NetworkVirtualAppliance_Spec) DeepCopyInto(out *NetworkVirtualApplianc
 	}
 	if in.CloudInitConfiguration != nil {
 		in, out := &in.CloudInitConfiguration, &out.CloudInitConfiguration
-		*out = new(string)
+		*out = new(genruntime.SecretReference)
 		**out = **in
 	}
 	if in.CloudInitConfigurationBlobs != nil {

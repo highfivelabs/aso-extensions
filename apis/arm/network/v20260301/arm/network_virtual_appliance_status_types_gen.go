@@ -50,9 +50,6 @@ type NetworkVirtualAppliancePropertiesFormat_STATUS struct {
 	// BootStrapConfigurationBlobs: BootStrapConfigurationBlobs storage URLs.
 	BootStrapConfigurationBlobs []string `json:"bootStrapConfigurationBlobs,omitempty"`
 
-	// CloudInitConfiguration: CloudInitConfiguration string in plain text.
-	CloudInitConfiguration *string `json:"cloudInitConfiguration,omitempty"`
-
 	// CloudInitConfigurationBlobs: CloudInitConfigurationBlob storage URLs.
 	CloudInitConfigurationBlobs []string `json:"cloudInitConfigurationBlobs,omitempty"`
 

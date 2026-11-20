@@ -1162,7 +1162,25 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRuleCollection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersVerifierWorkspace)})
-	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliance)})
+	result = append(result, &registration.StorageType{
+		Obj: new(network_v20260301.NetworkVirtualAppliance),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.cloudInitConfiguration",
+				Func: indexNetworkNetworkVirtualApplianceCloudInitConfiguration,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.cloudInitConfiguration",
+					},
+					&network_v20260301.NetworkVirtualApplianceList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesConnection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesInboundSecurityRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesVirtualApplianceSite)})
@@ -4025,6 +4043,18 @@ func indexNetworkExpressRouteGatewaysExpressRouteConnectionAuthorizationKey(rawO
 		return nil
 	}
 	return obj.Spec.AuthorizationKey.Index()
+}
+
+// indexNetworkNetworkVirtualApplianceCloudInitConfiguration an index function for network_v20260301.NetworkVirtualAppliance .spec.cloudInitConfiguration
+func indexNetworkNetworkVirtualApplianceCloudInitConfiguration(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.NetworkVirtualAppliance)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.CloudInitConfiguration == nil {
+		return nil
+	}
+	return obj.Spec.CloudInitConfiguration.Index()
 }
 
 // indexNetworkVirtualNetworkGatewayConnectionAuthorizationKey an index function for network_v20260301.VirtualNetworkGatewayConnection .spec.authorizationKey

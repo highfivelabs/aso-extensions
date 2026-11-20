@@ -100,7 +100,19 @@ spec:
               cloudInitConfiguration:
                 description: 'CloudInitConfiguration: CloudInitConfiguration string
                   in plain text.'
-                type: string
+                properties:
+                  key:
+                    description: Key is the key in the Kubernetes secret being referenced
+                    type: string
+                  name:
+                    description: |-
+                      Name is the name of the Kubernetes secret being referenced.
+                      The secret must be in the same namespace as the resource
+                    type: string
+                required:
+                - key
+                - name
+                type: object
               cloudInitConfigurationBlobs:
                 description: 'CloudInitConfigurationBlobs: CloudInitConfigurationBlob
                   storage URLs.'
@@ -494,10 +506,6 @@ spec:
                 items:
                   type: string
                 type: array
-              cloudInitConfiguration:
-                description: 'CloudInitConfiguration: CloudInitConfiguration string
-                  in plain text.'
-                type: string
               cloudInitConfigurationBlobs:
                 description: 'CloudInitConfigurationBlobs: CloudInitConfigurationBlob
                   storage URLs.'
