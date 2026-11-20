@@ -1136,6 +1136,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRouteLag)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRouteLagsAuthorization)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePort)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.FirewallPoliciesFirewallPolicyDraft)})
@@ -1164,6 +1166,28 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRuleCollection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersVerifierWorkspace)})
+	result = append(result, &registration.StorageType{
+		Obj: new(network_v20260301.NetworkVirtualAppliance),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.cloudInitConfiguration",
+				Func: indexNetworkNetworkVirtualApplianceCloudInitConfiguration,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.cloudInitConfiguration",
+					},
+					&network_v20260301.NetworkVirtualApplianceList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesConnection)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesInboundSecurityRule)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesVirtualApplianceSite)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.P2sVpnGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFilter)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)})
@@ -1898,6 +1922,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsPeeringsConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteGatewaysExpressRouteConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteLag)},
+		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteLagsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301.FirewallPoliciesFirewallPolicyDraft)},
@@ -1926,6 +1952,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserRule)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserRuleCollection)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersVerifierWorkspace)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkVirtualAppliance)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkVirtualAppliancesConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkVirtualAppliancesInboundSecurityRule)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkVirtualAppliancesVirtualApplianceSite)},
 		&registration.KnownType{Obj: new(network_v20260301.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.RouteFilter)},
 		&registration.KnownType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)},
@@ -1960,6 +1990,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsPeeringsConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteGatewaysExpressRouteConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteLag)},
+		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteLagsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301s.FirewallPoliciesFirewallPolicyDraft)},
@@ -1988,6 +2020,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserRule)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserRuleCollection)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersVerifierWorkspace)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkVirtualAppliance)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkVirtualAppliancesConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkVirtualAppliancesInboundSecurityRule)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkVirtualAppliancesVirtualApplianceSite)},
 		&registration.KnownType{Obj: new(network_v20260301s.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.RouteFilter)},
 		&registration.KnownType{Obj: new(network_v20260301s.RouteFiltersRouteFilterRule)},
@@ -2465,6 +2501,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.ExpressRouteCircuitsPeeringsConnectionExtension{})
 	result = append(result, &network_customizations.ExpressRouteGatewayExtension{})
 	result = append(result, &network_customizations.ExpressRouteGatewaysExpressRouteConnectionExtension{})
+	result = append(result, &network_customizations.ExpressRouteLagExtension{})
+	result = append(result, &network_customizations.ExpressRouteLagsAuthorizationExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortsAuthorizationExtension{})
 	result = append(result, &network_customizations.FirewallPoliciesFirewallPolicyDraftExtension{})
@@ -2499,6 +2537,10 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfileExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfilesAccessRuleExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersResourceAssociationExtension{})
+	result = append(result, &network_customizations.NetworkVirtualApplianceExtension{})
+	result = append(result, &network_customizations.NetworkVirtualAppliancesConnectionExtension{})
+	result = append(result, &network_customizations.NetworkVirtualAppliancesInboundSecurityRuleExtension{})
+	result = append(result, &network_customizations.NetworkVirtualAppliancesVirtualApplianceSiteExtension{})
 	result = append(result, &network_customizations.P2sVpnGatewayExtension{})
 	result = append(result, &network_customizations.PrivateDnsZonesSOARecordExtension{})
 	result = append(result, &network_customizations.RouteFilterExtension{})
@@ -4017,6 +4059,18 @@ func indexNetworkExpressRouteGatewaysExpressRouteConnectionAuthorizationKey(rawO
 		return nil
 	}
 	return obj.Spec.AuthorizationKey.Index()
+}
+
+// indexNetworkNetworkVirtualApplianceCloudInitConfiguration an index function for network_v20260301.NetworkVirtualAppliance .spec.cloudInitConfiguration
+func indexNetworkNetworkVirtualApplianceCloudInitConfiguration(rawObj client.Object) []string {
+	obj, ok := rawObj.(*network_v20260301.NetworkVirtualAppliance)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.CloudInitConfiguration == nil {
+		return nil
+	}
+	return obj.Spec.CloudInitConfiguration.Index()
 }
 
 // indexNetworkVirtualNetworkGatewayConnectionAuthorizationKey an index function for network_v20260301.VirtualNetworkGatewayConnection .spec.authorizationKey

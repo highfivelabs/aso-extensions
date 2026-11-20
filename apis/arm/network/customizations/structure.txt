@@ -27,6 +27,10 @@ ExpressRouteGatewayExtension: Object (0 properties)
 
 ExpressRouteGatewaysExpressRouteConnectionExtension: Object (0 properties)
 
+ExpressRouteLagExtension: Object (0 properties)
+
+ExpressRouteLagsAuthorizationExtension: Object (0 properties)
+
 ExpressRoutePortExtension: Object (0 properties)
 
 ExpressRoutePortsAuthorizationExtension: Object (0 properties)
@@ -94,6 +98,14 @@ NetworkSecurityPerimetersProfileExtension: Object (0 properties)
 NetworkSecurityPerimetersProfilesAccessRuleExtension: Object (0 properties)
 
 NetworkSecurityPerimetersResourceAssociationExtension: Object (0 properties)
+
+NetworkVirtualApplianceExtension: Object (0 properties)
+
+NetworkVirtualAppliancesConnectionExtension: Object (0 properties)
+
+NetworkVirtualAppliancesInboundSecurityRuleExtension: Object (0 properties)
+
+NetworkVirtualAppliancesVirtualApplianceSiteExtension: Object (0 properties)
 
 P2sVpnGatewayExtension: Object (0 properties)
 

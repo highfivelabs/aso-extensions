@@ -47,6 +47,10 @@ import (
 //     peer's), which is then in use; a key in use by another circuit or
 //     connection is refused the same way (400);
 //   - a port gives its peeringLocation and bandwidthInGbps (400);
+//   - an ExpressRoute Direct link aggregation group (expressRouteLags)
+//     gives its peeringLocation and bandwidthInGbps (400); its
+//     authorizations are child resources only (the LAG's own list is not
+//     rendered, and a LAG PUT leaves them as they are), each Available;
 //   - a gateway names a virtual hub that exists (virtualHub, 400 when
 //     missing, 404 when not there), and a hub has one ExpressRoute gateway
 //     (400 for a second); its autoScaleConfiguration's bounds, when given,
@@ -75,6 +79,8 @@ var (
 	erPeering          = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressroutecircuits/[^/]+/peerings/[^/]+$`)
 	erGlobalReach      = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressroutecircuits/[^/]+/peerings/[^/]+/connections/[^/]+$`)
 	erPort             = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressrouteports/[^/]+$`)
+	erLag              = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressroutelags/[^/]+$`)
+	erLagAuthorization = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressroutelags/[^/]+/authorizations/[^/]+$`)
 	erGateway          = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressroutegateways/[^/]+$`)
 	erGatewayConn      = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.network/expressroutegateways/[^/]+/expressrouteconnections/[^/]+$`)
 	erSubscriptionPart = regexp.MustCompile(`(?i)^/subscriptions/([^/]+)/`)
@@ -197,6 +203,18 @@ func (a *ARM) checkExpressRoute(id string, body map[string]any) (status int, cod
 		}
 		if _, ok := props["bandwidthInGbps"]; !ok {
 			return http.StatusBadRequest, "ExpressRoutePortIncomplete", "An ExpressRoute port needs its bandwidthInGbps.", nil
+		}
+	case erLag.MatchString(id):
+		if l, _ := props["peeringLocation"].(string); l == "" {
+			return http.StatusBadRequest, "ExpressRouteLagIncomplete", "An ExpressRoute LAG needs its peeringLocation.", nil
+		}
+		if _, ok := props["bandwidthInGbps"]; !ok {
+			return http.StatusBadRequest, "ExpressRouteLagIncomplete", "An ExpressRoute LAG needs its bandwidthInGbps.", nil
+		}
+	case erLagAuthorization.MatchString(id):
+		props["authorizationUseStatus"] = "Available"
+		if s, ok := old["authorizationUseStatus"]; ok {
+			props["authorizationUseStatus"] = s
 		}
 	case erGateway.MatchString(id):
 		hub := refID(props, "virtualHub")
