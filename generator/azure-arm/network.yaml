@@ -338,6 +338,20 @@ groupModelConfiguration:
     FirewallPolicies_KubeSelectorGroup:
       $exportAs: FirewallPoliciesKubeSelectorGroup
       $supportedFrom: v0.1.0
+    # A firewall policy's draft (firewallPolicyDrafts/default: changes staged
+    # before they are deployed to the policy) and its IDPS signature
+    # overrides (signatureOverrides/default; no DELETE in the spec:
+    # detach-on-delete). Both singletons named default, owned by ASO's
+    # FirewallPolicy.
+    FirewallPolicies_FirewallPolicyDraft:
+      $exportAs: FirewallPoliciesFirewallPolicyDraft
+      $supportedFrom: v0.1.0
+    FirewallPolicies_SignatureOverride:
+      $exportAs: FirewallPoliciesSignatureOverride
+      $supportedFrom: v0.1.0
+    FirewallPolicyIntrusionDetectionSignatureSpecification:
+      Id:
+        $referenceType: simple # an IDPS signature's ID (a number), not an ARM ID; as ASO's network.yaml labels it
     # Network virtual appliances (a third-party firewall or SD-WAN appliance,
     # in a Virtual WAN hub or a virtual network) and their children. The
     # appliance's PUT lists its sites, connections and inbound security rules

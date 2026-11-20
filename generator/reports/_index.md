@@ -323,7 +323,9 @@ title: Supported Resources
 | ExpressRouteLagsAuthorization                          | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ExpressRoutePort                                       | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ExpressRoutePortsAuthorization                         | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| FirewallPoliciesFirewallPolicyDraft                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | FirewallPoliciesKubeSelectorGroup                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| FirewallPoliciesSignatureOverride                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | IpGroup                                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | LocalNetworkGateway                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManager                                         | 2026-03-01  | v20260301   | v0.1.0         | -      |

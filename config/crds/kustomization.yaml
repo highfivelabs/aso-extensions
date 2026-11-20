@@ -148,7 +148,9 @@ resources:
 - network.azure.hfl.dev_expressroutelagsauthorizations.yaml
 - network.azure.hfl.dev_expressrouteports.yaml
 - network.azure.hfl.dev_expressrouteportsauthorizations.yaml
+- network.azure.hfl.dev_firewallpoliciesfirewallpolicydrafts.yaml
 - network.azure.hfl.dev_firewallpolicieskubeselectorgroups.yaml
+- network.azure.hfl.dev_firewallpoliciessignatureoverrides.yaml
 - network.azure.hfl.dev_ipgroups.yaml
 - network.azure.hfl.dev_localnetworkgateways.yaml
 - network.azure.hfl.dev_networkmanagerconnections.yaml
