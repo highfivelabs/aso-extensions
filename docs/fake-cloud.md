@@ -307,7 +307,13 @@ upstream's); the catalog's chart tests do that.
   Global Reach connection to another subscription's circuit and an
   ExpressRoute gateway connection to one redeem an authorization key of
   that port or circuit (400 when missing, not its own or in use by
-  another), which is then `InUse`. Not modelled: a provider provisioning a
+  another), which is then `InUse`. An ExpressRoute Direct LAG
+  (`expressRouteLags`, with `authorizations`) gives its `peeringLocation`
+  and `bandwidthInGbps`; its authorizations are child resources only, and a
+  LAG PUT leaves them as they are. Not known: whether Azure deletes a LAG's
+  authorizations on a PUT that omits the list (our `ExpressRouteLag` cannot
+  send it: the spec gives an authorization no writable field), and what
+  redeems one (no circuit field names a LAG). Not modelled: a provider provisioning a
   circuit, BGP sessions, ARP and route tables, the SKU and bandwidth rules,
   Microsoft peering's prefix validation and route filters, MACsec,
   deleting an authorization in use, the hours a real circuit takes, and the

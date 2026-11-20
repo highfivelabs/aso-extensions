@@ -319,6 +319,8 @@ title: Supported Resources
 | ExpressRouteCircuitsPeeringsConnection                 | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ExpressRouteGateway                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ExpressRouteGatewaysExpressRouteConnection             | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteLag                                        | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ExpressRouteLagsAuthorization                          | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ExpressRoutePort                                       | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | ExpressRoutePortsAuthorization                         | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | FirewallPoliciesKubeSelectorGroup                      | 2026-03-01  | v20260301   | v0.1.0         | -      |

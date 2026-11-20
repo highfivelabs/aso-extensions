@@ -164,6 +164,23 @@ groupModelConfiguration:
       $supportedFrom: v0.1.0
       $azureGeneratedSecrets:
         - AuthorizationKey # made by Azure; a circuit on the port in another subscription redeems it
+    # ExpressRoute Direct link aggregation groups (LAGs) and their
+    # authorizations. Unlike a circuit's, a LAG authorization has no field a
+    # client can write (even its name is read-only in the parent's list), so
+    # the generator drops the list from the LAG's spec and a LAG's PUT never
+    # carries it: no extension.
+    ExpressRouteLag:
+      $exportAs: ExpressRouteLag
+      $supportedFrom: v0.1.0
+    ExpressRouteLags_Authorization:
+      $exportAs: ExpressRouteLagsAuthorization
+      $supportedFrom: v0.1.0
+    ExpressRouteLagLink:
+      Id:
+        $referenceType: simple # a LAG link's own ID, which Azure sets; not a reference to another resource
+    ExpressRouteLagMember:
+      Id:
+        $referenceType: simple # a link member's own ID, which Azure sets
     ExpressRouteGateway:
       $exportAs: ExpressRouteGateway
       $supportedFrom: v0.1.0

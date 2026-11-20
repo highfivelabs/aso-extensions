@@ -271,6 +271,11 @@ func init() {
 			"intentReference": armRef(c.add(c.in("Microsoft.Network/networkManagers/nm/verifierWorkspaces/vw/reachabilityAnalysisIntents/intent"))),
 		}}
 	}}
+	// An ExpressRoute Direct LAG gives its peering location and bandwidth
+	// (the fake's rule, as for a port).
+	f["ExpressRouteLag"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"location": "westus", "properties": map[string]any{"peeringLocation": "Equinix-Silicon-Valley", "bandwidthInGbps": 100}}
+	}}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}

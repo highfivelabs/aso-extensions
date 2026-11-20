@@ -1,0 +1,660 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: expressroutelags.network.azure.hfl.dev
+spec:
+  group: network.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - network
+    kind: ExpressRouteLag
+    listKind: ExpressRouteLagList
+    plural: expressroutelags
+    singular: expressroutelag
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260301
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/expressRoute.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                maxLength: 80
+                minLength: 1
+                pattern: ^[a-zA-Z0-9][a-zA-Z0-9._-]*$
+                type: string
+              identity:
+                description: 'Identity: The identity of ExpressRouteLag, if configured.'
+                properties:
+                  type:
+                    description: |-
+                      Type: The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly
+                      created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual
+                      machine.
+                    enum:
+                    - None
+                    - SystemAssigned
+                    - SystemAssigned, UserAssigned
+                    - UserAssigned
+                    type: string
+                  userAssignedIdentities:
+                    description: |-
+                      UserAssignedIdentities: The list of user identities associated with resource. The user identity dictionary key
+                      references will be ARM resource ids in the form:
+                      '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+                    items:
+                      description: Information about the user assigned identity for
+                        the resource
+                      properties:
+                        reference:
+                          description: ResourceReference represents a resource reference,
+                            either to a Kubernetes resource or directly to an Azure
+                            resource via ARMID
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                type: object
+              location:
+                description: 'Location: Resource location.'
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a resources.azure.com/ResourceGroup resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+              properties:
+                description: 'Properties: ExpressRouteLag properties.'
+                properties:
+                  bandwidthInGbps:
+                    description: 'BandwidthInGbps: Bandwidth of procured LAG in Gbps.'
+                    type: integer
+                  billingType:
+                    description: 'BillingType: The billing type of the ExpressRouteLag
+                      resource.'
+                    enum:
+                    - MeteredData
+                    - UnlimitedData
+                    type: string
+                  encapsulation:
+                    description: 'Encapsulation: Encapsulation method on LAG.'
+                    enum:
+                    - Dot1Q
+                    - QinQ
+                    type: string
+                  lacpTimer:
+                    description: 'LacpTimer: LACP timer configuration.'
+                    enum:
+                    - Fast
+                    - Slow
+                    type: string
+                  links:
+                    description: 'Links: The set of links of the ExpressRouteLag resource.'
+                    items:
+                      description: ExpressRouteLagLink child resource definition.
+                      properties:
+                        id:
+                          description: 'Id: Resource ID.'
+                          type: string
+                        properties:
+                          description: 'Properties: ExpressRouteLagLink properties.'
+                          properties:
+                            adminState:
+                              description: 'AdminState: Administrative state of the
+                                link.'
+                              enum:
+                              - Disabled
+                              - Enabled
+                              type: string
+                            macSecConfig:
+                              description: 'MacSecConfig: MacSec configuration.'
+                              properties:
+                                cakSecretIdentifier:
+                                  description: 'CakSecretIdentifier: Keyvault Secret
+                                    Identifier URL containing Mac security CAK key.'
+                                  type: string
+                                cipher:
+                                  description: 'Cipher: Mac security cipher.'
+                                  enum:
+                                  - GcmAes128
+                                  - GcmAes256
+                                  - GcmAesXpn128
+                                  - GcmAesXpn256
+                                  type: string
+                                cknSecretIdentifier:
+                                  description: 'CknSecretIdentifier: Keyvault Secret
+                                    Identifier URL containing Mac security CKN key.'
+                                  type: string
+                                sciState:
+                                  description: 'SciState: Sci mode enabled/disabled.'
+                                  enum:
+                                  - Disabled
+                                  - Enabled
+                                  type: string
+                              type: object
+                            members:
+                              description: 'Members: The set of members of the ExpressRouteLagLink
+                                resource.'
+                              items:
+                                description: ExpressRouteLagMember child resource
+                                  definition.
+                                properties:
+                                  id:
+                                    description: 'Id: Resource ID.'
+                                    type: string
+                                  properties:
+                                    description: 'Properties: ExpressRouteLagMember
+                                      properties.'
+                                    properties:
+                                      adminState:
+                                        description: 'AdminState: Administrative state
+                                          of the member port.'
+                                        enum:
+                                        - Disabled
+                                        - Enabled
+                                        type: string
+                                    type: object
+                                type: object
+                              type: array
+                          type: object
+                      type: object
+                    type: array
+                  minimumActivePortsRequired:
+                    description: 'MinimumActivePortsRequired: Minimum number of active
+                      ports required for LAG.'
+                    minimum: 1
+                    type: integer
+                  numberOfPorts:
+                    description: 'NumberOfPorts: Number of ports in the LAG.'
+                    minimum: 1
+                    type: integer
+                  peeringLocation:
+                    description: 'PeeringLocation: The name of the peering location
+                      that the ExpressRouteLag is mapped to physically.'
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+            required:
+            - owner
+            type: object
+          status:
+            description: ExpressRouteLag resource definition.
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              etag:
+                description: 'Etag: A unique read-only string that changes whenever
+                  the resource is updated.'
+                type: string
+              id:
+                description: 'Id: The unique identifier of the resource.'
+                type: string
+              identity:
+                description: 'Identity: The identity of ExpressRouteLag, if configured.'
+                properties:
+                  principalId:
+                    description: |-
+                      PrincipalId: The principal id of the system assigned identity. This property will only be provided for a system assigned
+                      identity.
+                    type: string
+                  tenantId:
+                    description: |-
+                      TenantId: The tenant id of the system assigned identity. This property will only be provided for a system assigned
+                      identity.
+                    type: string
+                  type:
+                    description: |-
+                      Type: The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly
+                      created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual
+                      machine.
+                    type: string
+                  userAssignedIdentities:
+                    additionalProperties:
+                      properties:
+                        clientId:
+                          description: 'ClientId: The client id of user assigned identity.'
+                          type: string
+                        principalId:
+                          description: 'PrincipalId: The principal id of user assigned
+                            identity.'
+                          type: string
+                      type: object
+                    description: |-
+                      UserAssignedIdentities: The list of user identities associated with resource. The user identity dictionary key
+                      references will be ARM resource ids in the form:
+                      '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+                    type: object
+                type: object
+              location:
+                description: 'Location: Resource location.'
+                type: string
+              name:
+                description: 'Name: Resource name.'
+                type: string
+              properties:
+                description: 'Properties: ExpressRouteLag properties.'
+                properties:
+                  allocationDate:
+                    description: 'AllocationDate: The date and time when the ExpressRouteLag
+                      was allocated.'
+                    type: string
+                  authorizations:
+                    description: 'Authorizations: The set of authorizations of the
+                      ExpressRouteLag resource.'
+                    items:
+                      description: ExpressRouteLag Authorization resource definition.
+                      properties:
+                        id:
+                          description: 'Id: Resource ID.'
+                          type: string
+                      type: object
+                    type: array
+                  bandwidthInGbps:
+                    description: 'BandwidthInGbps: Bandwidth of procured LAG in Gbps.'
+                    type: integer
+                  billingType:
+                    description: 'BillingType: The billing type of the ExpressRouteLag
+                      resource.'
+                    type: string
+                  circuits:
+                    description: 'Circuits: Reference the ExpressRoute circuit(s)
+                      that are provisioned on this ExpressRouteLag resource.'
+                    items:
+                      description: Reference to another subresource.
+                      properties:
+                        id:
+                          description: 'Id: Resource ID.'
+                          type: string
+                      type: object
+                    type: array
+                  encapsulation:
+                    description: 'Encapsulation: Encapsulation method on LAG.'
+                    type: string
+                  etherType:
+                    description: 'EtherType: Ether type of the LAG.'
+                    type: string
+                  lacpTimer:
+                    description: 'LacpTimer: LACP timer configuration.'
+                    type: string
+                  links:
+                    description: 'Links: The set of links of the ExpressRouteLag resource.'
+                    items:
+                      description: ExpressRouteLagLink child resource definition.
+                      properties:
+                        etag:
+                          description: 'Etag: A unique read-only string that changes
+                            whenever the resource is updated.'
+                          type: string
+                        id:
+                          description: 'Id: The unique identifier of the resource.'
+                          type: string
+                        name:
+                          description: 'Name: Name of child link resource that is
+                            unique among child link resources of the parent.'
+                          type: string
+                        properties:
+                          description: 'Properties: ExpressRouteLagLink properties.'
+                          properties:
+                            adminState:
+                              description: 'AdminState: Administrative state of the
+                                link.'
+                              type: string
+                            interfaceName:
+                              description: 'InterfaceName: Name of Azure router interface.'
+                              type: string
+                            macSecConfig:
+                              description: 'MacSecConfig: MacSec configuration.'
+                              properties:
+                                cakSecretIdentifier:
+                                  description: 'CakSecretIdentifier: Keyvault Secret
+                                    Identifier URL containing Mac security CAK key.'
+                                  type: string
+                                cipher:
+                                  description: 'Cipher: Mac security cipher.'
+                                  type: string
+                                cknSecretIdentifier:
+                                  description: 'CknSecretIdentifier: Keyvault Secret
+                                    Identifier URL containing Mac security CKN key.'
+                                  type: string
+                                sciState:
+                                  description: 'SciState: Sci mode enabled/disabled.'
+                                  type: string
+                              type: object
+                            members:
+                              description: 'Members: The set of members of the ExpressRouteLagLink
+                                resource.'
+                              items:
+                                description: ExpressRouteLagMember child resource
+                                  definition.
+                                properties:
+                                  etag:
+                                    description: 'Etag: A unique read-only string
+                                      that changes whenever the resource is updated.'
+                                    type: string
+                                  id:
+                                    description: 'Id: The unique identifier of the
+                                      resource.'
+                                    type: string
+                                  name:
+                                    description: 'Name: Name of child member resource
+                                      that is unique among child member resources
+                                      of the parent.'
+                                    type: string
+                                  properties:
+                                    description: 'Properties: ExpressRouteLagMember
+                                      properties.'
+                                    properties:
+                                      adminState:
+                                        description: 'AdminState: Administrative state
+                                          of the member port.'
+                                        type: string
+                                      coloLocation:
+                                        description: 'ColoLocation: Cololocation for
+                                          ExpressRoute member.'
+                                        type: string
+                                      connectorType:
+                                        description: 'ConnectorType: Physical fiber
+                                          port type.'
+                                        type: string
+                                      interfaceName:
+                                        description: 'InterfaceName: Name of Azure
+                                          router interface.'
+                                        type: string
+                                      patchPanelId:
+                                        description: 'PatchPanelId: Mapping between
+                                          physical port to patch panel port.'
+                                        type: string
+                                      provisioningState:
+                                        description: 'ProvisioningState: The provisioning
+                                          state of the express route LAG member resource.'
+                                        type: string
+                                      rackId:
+                                        description: 'RackId: Mapping of physical
+                                          patch panel to rack.'
+                                        type: string
+                                    type: object
+                                  type:
+                                    description: 'Type: The type of the resource.'
+                                    type: string
+                                type: object
+                              type: array
+                            provisioningState:
+                              description: 'ProvisioningState: The provisioning state
+                                of the express route LAG link resource.'
+                              type: string
+                            routerName:
+                              description: 'RouterName: Name of Azure router associated
+                                with link.'
+                              type: string
+                          type: object
+                        type:
+                          description: 'Type: The type of the resource.'
+                          type: string
+                      type: object
+                    type: array
+                  minimumActivePortsRequired:
+                    description: 'MinimumActivePortsRequired: Minimum number of active
+                      ports required for LAG.'
+                    type: integer
+                  mtu:
+                    description: 'Mtu: Maximum transmission unit of the LAG.'
+                    type: string
+                  numberOfPorts:
+                    description: 'NumberOfPorts: Number of ports in the LAG.'
+                    type: integer
+                  peeringLocation:
+                    description: 'PeeringLocation: The name of the peering location
+                      that the ExpressRouteLag is mapped to physically.'
+                    type: string
+                  provisionedBandwidthInGbps:
+                    description: 'ProvisionedBandwidthInGbps: Aggregate Gbps of associated
+                      circuit bandwidths.'
+                    type: number
+                  provisioningState:
+                    description: 'ProvisioningState: The provisioning state of the
+                      express route LAG resource.'
+                    type: string
+                  resourceGuid:
+                    description: 'ResourceGuid: The resource GUID property of the
+                      express route LAG resource.'
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              type:
+                description: 'Type: The type of the resource.'
+                type: string
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}
