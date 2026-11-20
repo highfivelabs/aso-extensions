@@ -1138,7 +1138,9 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePort)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.FirewallPoliciesFirewallPolicyDraft)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.FirewallPoliciesKubeSelectorGroup)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.FirewallPoliciesSignatureOverride)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.IpGroup)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManager)})
@@ -1898,7 +1900,9 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteGatewaysExpressRouteConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301.FirewallPoliciesFirewallPolicyDraft)},
 		&registration.KnownType{Obj: new(network_v20260301.FirewallPoliciesKubeSelectorGroup)},
+		&registration.KnownType{Obj: new(network_v20260301.FirewallPoliciesSignatureOverride)},
 		&registration.KnownType{Obj: new(network_v20260301.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManager)},
@@ -1958,7 +1962,9 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteGatewaysExpressRouteConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePort)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePortsAuthorization)},
+		&registration.KnownType{Obj: new(network_v20260301s.FirewallPoliciesFirewallPolicyDraft)},
 		&registration.KnownType{Obj: new(network_v20260301s.FirewallPoliciesKubeSelectorGroup)},
+		&registration.KnownType{Obj: new(network_v20260301s.FirewallPoliciesSignatureOverride)},
 		&registration.KnownType{Obj: new(network_v20260301s.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManager)},
@@ -2461,7 +2467,9 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.ExpressRouteGatewaysExpressRouteConnectionExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortExtension{})
 	result = append(result, &network_customizations.ExpressRoutePortsAuthorizationExtension{})
+	result = append(result, &network_customizations.FirewallPoliciesFirewallPolicyDraftExtension{})
 	result = append(result, &network_customizations.FirewallPoliciesKubeSelectorGroupExtension{})
+	result = append(result, &network_customizations.FirewallPoliciesSignatureOverrideExtension{})
 	result = append(result, &network_customizations.IpGroupExtension{})
 	result = append(result, &network_customizations.LocalNetworkGatewayExtension{})
 	result = append(result, &network_customizations.NetworkManagerConnectionExtension{})

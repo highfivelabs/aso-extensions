@@ -2311,6 +2311,156 @@ ExpressRoutePortsAuthorization_STATUS: Object (5 properties)
 ExpressRoutePortsAuthorization_Spec: Object (1 property)
 └── Name: string
 
+FirewallPoliciesFirewallPolicyDraft_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (9 properties)
+│   ├── BasePolicy: *Object (1 property)
+│   │   └── Id: *string
+│   ├── DnsSettings: *Object (3 properties)
+│   │   ├── EnableProxy: *bool
+│   │   ├── RequireProxyForNetworkRules: *bool
+│   │   └── Servers: string[]
+│   ├── ExplicitProxy: *Object (6 properties)
+│   │   ├── EnableExplicitProxy: *bool
+│   │   ├── EnablePacFile: *bool
+│   │   ├── HttpPort: *int
+│   │   ├── HttpsPort: *int
+│   │   ├── PacFile: *string
+│   │   └── PacFilePort: *int
+│   ├── Insights: *Object (3 properties)
+│   │   ├── IsEnabled: *bool
+│   │   ├── LogAnalyticsResources: *Object (2 properties)
+│   │   │   ├── DefaultWorkspaceId: *Object (1 property)
+│   │   │   │   └── Id: *string
+│   │   │   └── Workspaces: Object (2 properties)[]
+│   │   │       ├── Region: *string
+│   │   │       └── WorkspaceId: *Object (1 property)
+│   │   │           └── Id: *string
+│   │   └── RetentionDays: *int
+│   ├── IntrusionDetection: *Object (3 properties)
+│   │   ├── Configuration: *Object (3 properties)
+│   │   │   ├── BypassTrafficSettings: Object (8 properties)[]
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── DestinationAddresses: string[]
+│   │   │   │   ├── DestinationIpGroups: string[]
+│   │   │   │   ├── DestinationPorts: string[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── Protocol: *Enum (4 values)
+│   │   │   │   │   ├── "ANY"
+│   │   │   │   │   ├── "ICMP"
+│   │   │   │   │   ├── "TCP"
+│   │   │   │   │   └── "UDP"
+│   │   │   │   ├── SourceAddresses: string[]
+│   │   │   │   └── SourceIpGroups: string[]
+│   │   │   ├── PrivateRanges: string[]
+│   │   │   └── SignatureOverrides: Object (2 properties)[]
+│   │   │       ├── Id: *string
+│   │   │       └── Mode: *Enum (3 values)
+│   │   │           ├── "Alert"
+│   │   │           ├── "Deny"
+│   │   │           └── "Off"
+│   │   ├── Mode: *Enum (3 values)
+│   │   │   ├── "Alert"
+│   │   │   ├── "Deny"
+│   │   │   └── "Off"
+│   │   └── Profile: *Enum (4 values)
+│   │       ├── "Core"
+│   │       ├── "Emerging"
+│   │       ├── "Extended"
+│   │       └── "Off"
+│   ├── Snat: *Object (2 properties)
+│   │   ├── AutoLearnPrivateRanges: *Enum (2 values)
+│   │   │   ├── "Disabled"
+│   │   │   └── "Enabled"
+│   │   └── PrivateRanges: string[]
+│   ├── Sql: *Object (1 property)
+│   │   └── AllowSqlRedirect: *bool
+│   ├── ThreatIntelMode: *Enum (3 values)
+│   │   ├── "Alert"
+│   │   ├── "Deny"
+│   │   └── "Off"
+│   └── ThreatIntelWhitelist: *Object (2 properties)
+│       ├── Fqdns: string[]
+│       └── IpAddresses: string[]
+├── Tags: map[string]string
+└── Type: *string
+
+FirewallPoliciesFirewallPolicyDraft_Spec: Object (4 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (9 properties)
+│   ├── BasePolicy: *Object (1 property)
+│   │   └── Id: *string
+│   ├── DnsSettings: *Object (3 properties)
+│   │   ├── EnableProxy: *bool
+│   │   ├── RequireProxyForNetworkRules: *bool
+│   │   └── Servers: string[]
+│   ├── ExplicitProxy: *Object (6 properties)
+│   │   ├── EnableExplicitProxy: *bool
+│   │   ├── EnablePacFile: *bool
+│   │   ├── HttpPort: *int
+│   │   ├── HttpsPort: *int
+│   │   ├── PacFile: *string
+│   │   └── PacFilePort: *int
+│   ├── Insights: *Object (3 properties)
+│   │   ├── IsEnabled: *bool
+│   │   ├── LogAnalyticsResources: *Object (2 properties)
+│   │   │   ├── DefaultWorkspaceId: *Object (1 property)
+│   │   │   │   └── Id: *string
+│   │   │   └── Workspaces: Object (2 properties)[]
+│   │   │       ├── Region: *string
+│   │   │       └── WorkspaceId: *Object (1 property)
+│   │   │           └── Id: *string
+│   │   └── RetentionDays: *int
+│   ├── IntrusionDetection: *Object (3 properties)
+│   │   ├── Configuration: *Object (3 properties)
+│   │   │   ├── BypassTrafficSettings: Object (8 properties)[]
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── DestinationAddresses: string[]
+│   │   │   │   ├── DestinationIpGroups: string[]
+│   │   │   │   ├── DestinationPorts: string[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── Protocol: *Enum (4 values)
+│   │   │   │   │   ├── "ANY"
+│   │   │   │   │   ├── "ICMP"
+│   │   │   │   │   ├── "TCP"
+│   │   │   │   │   └── "UDP"
+│   │   │   │   ├── SourceAddresses: string[]
+│   │   │   │   └── SourceIpGroups: string[]
+│   │   │   ├── PrivateRanges: string[]
+│   │   │   └── SignatureOverrides: Object (2 properties)[]
+│   │   │       ├── Id: *string
+│   │   │       └── Mode: *Enum (3 values)
+│   │   │           ├── "Alert"
+│   │   │           ├── "Deny"
+│   │   │           └── "Off"
+│   │   ├── Mode: *Enum (3 values)
+│   │   │   ├── "Alert"
+│   │   │   ├── "Deny"
+│   │   │   └── "Off"
+│   │   └── Profile: *Enum (4 values)
+│   │       ├── "Core"
+│   │       ├── "Emerging"
+│   │       ├── "Extended"
+│   │       └── "Off"
+│   ├── Snat: *Object (2 properties)
+│   │   ├── AutoLearnPrivateRanges: *Enum (2 values)
+│   │   │   ├── "Disabled"
+│   │   │   └── "Enabled"
+│   │   └── PrivateRanges: string[]
+│   ├── Sql: *Object (1 property)
+│   │   └── AllowSqlRedirect: *bool
+│   ├── ThreatIntelMode: *Enum (3 values)
+│   │   ├── "Alert"
+│   │   ├── "Deny"
+│   │   └── "Off"
+│   └── ThreatIntelWhitelist: *Object (2 properties)
+│       ├── Fqdns: string[]
+│       └── IpAddresses: string[]
+└── Tags: map[string]string
+
 FirewallPoliciesKubeSelectorGroup_STATUS: Object (5 properties)
 ├── Etag: *string
 ├── Id: *string
@@ -2368,6 +2518,19 @@ FirewallPoliciesKubeSelectorGroup_Spec: Object (2 properties)
         │   │   └── "NotIn"
         │   └── Values: string[]
         └── MatchLabels: map[string]string
+
+FirewallPoliciesSignatureOverride_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── Signatures: map[string]string
+└── Type: *string
+
+FirewallPoliciesSignatureOverride_Spec: Object (3 properties)
+├── Name: string
+├── Properties: *Object (1 property)
+│   └── Signatures: map[string]string
+└── Type: *string
 
 IpGroup_STATUS: Object (7 properties)
 ├── Etag: *string

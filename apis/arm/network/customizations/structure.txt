@@ -31,7 +31,11 @@ ExpressRoutePortExtension: Object (0 properties)
 
 ExpressRoutePortsAuthorizationExtension: Object (0 properties)
 
+FirewallPoliciesFirewallPolicyDraftExtension: Object (0 properties)
+
 FirewallPoliciesKubeSelectorGroupExtension: Object (0 properties)
+
+FirewallPoliciesSignatureOverrideExtension: Object (0 properties)
 
 IpGroupExtension: Object (0 properties)
 

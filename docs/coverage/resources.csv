@@ -1580,11 +1580,11 @@ Microsoft.Network,Microsoft.Network/expressRouteLags/authorizations,1,,0,,0,1,fa
 Microsoft.Network,Microsoft.Network/ExpressRoutePorts,15,,0,network.azure.hfl.dev/ExpressRoutePort,15,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/expressRoutePorts/authorizations,1,,0,network.azure.hfl.dev/ExpressRoutePortsAuthorization,0,1,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies,41,network.azure.com/FirewallPolicy,41,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/firewallPolicies/firewallPolicyDrafts,36,,0,,0,36,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/firewallPolicies/firewallPolicyDrafts,36,,0,network.azure.hfl.dev/FirewallPoliciesFirewallPolicyDraft,36,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies/kubeSelectorGroups,8,,0,network.azure.hfl.dev/FirewallPoliciesKubeSelectorGroup,8,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies/ruleCollectionGroups,30,network.azure.com/FirewallPoliciesRuleCollectionGroup,27,,0,3,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/firewallPolicies/ruleCollectionGroups/ruleCollectionGroupDrafts,30,,0,,0,30,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/firewallPolicies/signatureOverrides,1,,0,,0,1,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/firewallPolicies/signatureOverrides,1,,0,network.azure.hfl.dev/FirewallPoliciesSignatureOverride,1,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firstPartyServiceTags,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/frontDoors,61,,0,,0,61,false,spec_api=2026-04-01
 Microsoft.Network,Microsoft.Network/frontDoors/rulesEngines,29,,0,,0,29,false,spec_api=2026-04-01
