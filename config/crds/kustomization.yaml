@@ -176,6 +176,10 @@ resources:
 - network.azure.hfl.dev_networksecurityperimetersprofiles.yaml
 - network.azure.hfl.dev_networksecurityperimetersprofilesaccessrules.yaml
 - network.azure.hfl.dev_networksecurityperimetersresourceassociations.yaml
+- network.azure.hfl.dev_networkvirtualappliances.yaml
+- network.azure.hfl.dev_networkvirtualappliancesconnections.yaml
+- network.azure.hfl.dev_networkvirtualappliancesinboundsecurityrules.yaml
+- network.azure.hfl.dev_networkvirtualappliancesvirtualappliancesites.yaml
 - network.azure.hfl.dev_p2svpngateways.yaml
 - network.azure.hfl.dev_privatednszonessoarecords.yaml
 - network.azure.hfl.dev_routefilters.yaml

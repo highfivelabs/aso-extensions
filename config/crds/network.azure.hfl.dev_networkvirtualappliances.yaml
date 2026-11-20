@@ -1,0 +1,874 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: networkvirtualappliances.network.azure.hfl.dev
+spec:
+  group: network.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - network
+    kind: NetworkVirtualAppliance
+    listKind: NetworkVirtualApplianceList
+    plural: networkvirtualappliances
+    singular: networkvirtualappliance
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260301
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/virtualNetwork.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              additionalNics:
+                description: |-
+                  AdditionalNics: Details required for Additional Network Interface. This property is not compatible with the NVA deployed
+                  in VNets.
+                items:
+                  description: Network Virtual Appliance Additional NIC properties.
+                  properties:
+                    hasPublicIp:
+                      description: 'HasPublicIp: Flag (true or false) for Intent for
+                        Public Ip on additional nic'
+                      type: boolean
+                    name:
+                      description: 'Name: Name of additional nic'
+                      type: string
+                  type: object
+                type: array
+              addressFamily:
+                description: |-
+                  AddressFamily: The address families to deploy the NVA in. ["IPv4", "IPv6"] deploys a dual-stack NVA (the vHub/VNet must
+                  also be dual-stack). ["IPv4"], an empty array, or omitting the field deploys an IPv4-only NVA. The value "IPv6" may only
+                  appear in combination with "IPv4"; standalone ["IPv6"] is reserved for future use and is rejected by the service today.
+                items:
+                  description: IP address version.
+                  enum:
+                  - IPv4
+                  - IPv6
+                  type: string
+                maxItems: 2
+                type: array
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              bootStrapConfigurationBlobs:
+                description: 'BootStrapConfigurationBlobs: BootStrapConfigurationBlobs
+                  storage URLs.'
+                items:
+                  type: string
+                type: array
+              cloudInitConfiguration:
+                description: 'CloudInitConfiguration: CloudInitConfiguration string
+                  in plain text.'
+                type: string
+              cloudInitConfigurationBlobs:
+                description: 'CloudInitConfigurationBlobs: CloudInitConfigurationBlob
+                  storage URLs.'
+                items:
+                  type: string
+                type: array
+              delegation:
+                description: 'Delegation: The delegation for the Virtual Appliance.
+                  Only appliable for SaaS NVA.'
+                properties:
+                  serviceName:
+                    description: 'ServiceName: The service name to which the NVA is
+                      delegated.'
+                    type: string
+                type: object
+              identity:
+                description: 'Identity: The service principal that has read access
+                  to cloud-init and config blob.'
+                properties:
+                  type:
+                    description: |-
+                      Type: The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly
+                      created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual
+                      machine.
+                    enum:
+                    - None
+                    - SystemAssigned
+                    - SystemAssigned, UserAssigned
+                    - UserAssigned
+                    type: string
+                  userAssignedIdentities:
+                    description: |-
+                      UserAssignedIdentities: The list of user identities associated with resource. The user identity dictionary key
+                      references will be ARM resource ids in the form:
+                      '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+                    items:
+                      description: Information about the user assigned identity for
+                        the resource
+                      properties:
+                        reference:
+                          description: ResourceReference represents a resource reference,
+                            either to a Kubernetes resource or directly to an Azure
+                            resource via ARMID
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                type: object
+              internetIngressPublicIps:
+                description: 'InternetIngressPublicIps: List of Resource Uri of Public
+                  IPs for Internet Ingress Scenario.'
+                items:
+                  description: Resource Uri of Public Ip for Standard Load Balancer
+                    Frontend End.
+                  properties:
+                    reference:
+                      description: 'Reference: Resource Uri of Public Ip'
+                      properties:
+                        armId:
+                          description: |-
+                            ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                            The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                            ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                          pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                          type: string
+                        group:
+                          description: Group is the Kubernetes group of the resource.
+                          type: string
+                        kind:
+                          description: Kind is the Kubernetes kind of the resource.
+                          type: string
+                        name:
+                          description: Name is the Kubernetes name of the resource.
+                          type: string
+                      type: object
+                  type: object
+                type: array
+              location:
+                description: 'Location: Resource location.'
+                type: string
+              networkProfile:
+                description: 'NetworkProfile: Network Profile containing configurations
+                  for Public and Private NIC.'
+                properties:
+                  networkInterfaceConfigurations:
+                    items:
+                      description: Represents a single NIC configuration.
+                      properties:
+                        properties:
+                          description: 'Properties: Represents a single NIC configuration
+                            properties.'
+                          properties:
+                            ipConfigurations:
+                              items:
+                                description: Represents a single IP configuration.
+                                properties:
+                                  name:
+                                    description: |-
+                                      Name: For hub NVAs, primary IP configs must be named 'privatenicipconfig' and 'publicnicipconfig', with non-primary
+                                      configs using these prefixes; no naming restrictions apply for NVAs in VNets. Maximum 80 character are allowed.
+                                    type: string
+                                  properties:
+                                    description: 'Properties: Represents a single
+                                      IP configuration properties.'
+                                    properties:
+                                      primary:
+                                        description: 'Primary: Whether or not this
+                                          is primary IP configuration of the NIC.'
+                                        type: boolean
+                                    type: object
+                                type: object
+                              type: array
+                          type: object
+                        type:
+                          description: 'Type: NIC type. This should be either PublicNic
+                            or PrivateNic.'
+                          enum:
+                          - PrivateNic
+                          - PublicNic
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              nvaInterfaceConfigurations:
+                description: 'NvaInterfaceConfigurations: The NVA in VNet interface
+                  configurations'
+                items:
+                  description: Specifies input parameters required NVA in VNet interface
+                    configuration.
+                  properties:
+                    name:
+                      description: 'Name: Specifies the name of the interface. Maximum
+                        length is 70 characters.'
+                      maxLength: 70
+                      type: string
+                    subnet:
+                      description: 'Subnet: A subnet resource id where the NIC will
+                        be deployed. Each subnet resource uri should be unique.'
+                      properties:
+                        reference:
+                          description: 'Reference: Resource Uri of Subnet'
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                          type: object
+                      type: object
+                    type:
+                      description: |-
+                        Type: Specifies the NIC types for the NVA interface configuration. Allowed values: PrivateNic, PublicNic,
+                        AdditionalPrivateNic, AdditionalPublicNic. Only the combination of PrivateNic and PublicNic is currently supported.
+                      items:
+                        enum:
+                        - AdditionalPrivateNic
+                        - AdditionalPublicNic
+                        - PrivateNic
+                        - PublicNic
+                        type: string
+                      type: array
+                  type: object
+                maxItems: 3
+                type: array
+              nvaSku:
+                description: 'NvaSku: Network Virtual Appliance SKU.'
+                properties:
+                  bundledScaleUnit:
+                    description: 'BundledScaleUnit: Virtual Appliance Scale Unit.'
+                    type: string
+                  marketPlaceVersion:
+                    description: 'MarketPlaceVersion: Virtual Appliance Version.'
+                    type: string
+                  vendor:
+                    description: 'Vendor: Virtual Appliance Vendor.'
+                    type: string
+                type: object
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a resources.azure.com/ResourceGroup resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+              sshPublicKey:
+                description: 'SshPublicKey: Public key for SSH login.'
+                type: string
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              virtualApplianceAsn:
+                description: 'VirtualApplianceAsn: VirtualAppliance ASN. Microsoft
+                  private, public and IANA reserved ASN are not supported.'
+                format: int32
+                type: integer
+              virtualHub:
+                description: 'VirtualHub: The Virtual Hub where Network Virtual Appliance
+                  is being deployed.'
+                properties:
+                  reference:
+                    description: 'Reference: Resource ID.'
+                    properties:
+                      armId:
+                        description: |-
+                          ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                          The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                          ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                        pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                        type: string
+                      group:
+                        description: Group is the Kubernetes group of the resource.
+                        type: string
+                      kind:
+                        description: Kind is the Kubernetes kind of the resource.
+                        type: string
+                      name:
+                        description: Name is the Kubernetes name of the resource.
+                        type: string
+                    type: object
+                type: object
+            required:
+            - owner
+            type: object
+          status:
+            description: NetworkVirtualAppliance Resource.
+            properties:
+              additionalNics:
+                description: |-
+                  AdditionalNics: Details required for Additional Network Interface. This property is not compatible with the NVA deployed
+                  in VNets.
+                items:
+                  description: Network Virtual Appliance Additional NIC properties.
+                  properties:
+                    hasPublicIp:
+                      description: 'HasPublicIp: Flag (true or false) for Intent for
+                        Public Ip on additional nic'
+                      type: boolean
+                    name:
+                      description: 'Name: Name of additional nic'
+                      type: string
+                  type: object
+                type: array
+              addressFamily:
+                description: |-
+                  AddressFamily: The address families to deploy the NVA in. ["IPv4", "IPv6"] deploys a dual-stack NVA (the vHub/VNet must
+                  also be dual-stack). ["IPv4"], an empty array, or omitting the field deploys an IPv4-only NVA. The value "IPv6" may only
+                  appear in combination with "IPv4"; standalone ["IPv6"] is reserved for future use and is rejected by the service today.
+                items:
+                  description: IP address version.
+                  type: string
+                type: array
+              addressPrefix:
+                description: 'AddressPrefix: Address Prefix.'
+                type: string
+              addressPrefixV6:
+                description: 'AddressPrefixV6: Address Prefix for Dual-Stack NVAs.'
+                type: string
+              bootStrapConfigurationBlobs:
+                description: 'BootStrapConfigurationBlobs: BootStrapConfigurationBlobs
+                  storage URLs.'
+                items:
+                  type: string
+                type: array
+              cloudInitConfiguration:
+                description: 'CloudInitConfiguration: CloudInitConfiguration string
+                  in plain text.'
+                type: string
+              cloudInitConfigurationBlobs:
+                description: 'CloudInitConfigurationBlobs: CloudInitConfigurationBlob
+                  storage URLs.'
+                items:
+                  type: string
+                type: array
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              delegation:
+                description: 'Delegation: The delegation for the Virtual Appliance.
+                  Only appliable for SaaS NVA.'
+                properties:
+                  provisioningState:
+                    description: 'ProvisioningState: Provisioning states of a resource.'
+                    type: string
+                  serviceName:
+                    description: 'ServiceName: The service name to which the NVA is
+                      delegated.'
+                    type: string
+                type: object
+              deploymentType:
+                description: 'DeploymentType: The deployment type. PartnerManaged
+                  for the SaaS NVA'
+                type: string
+              etag:
+                description: 'Etag: A unique read-only string that changes whenever
+                  the resource is updated.'
+                type: string
+              id:
+                description: 'Id: Resource ID.'
+                type: string
+              identity:
+                description: 'Identity: The service principal that has read access
+                  to cloud-init and config blob.'
+                properties:
+                  principalId:
+                    description: |-
+                      PrincipalId: The principal id of the system assigned identity. This property will only be provided for a system assigned
+                      identity.
+                    type: string
+                  tenantId:
+                    description: |-
+                      TenantId: The tenant id of the system assigned identity. This property will only be provided for a system assigned
+                      identity.
+                    type: string
+                  type:
+                    description: |-
+                      Type: The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly
+                      created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual
+                      machine.
+                    type: string
+                  userAssignedIdentities:
+                    additionalProperties:
+                      properties:
+                        clientId:
+                          description: 'ClientId: The client id of user assigned identity.'
+                          type: string
+                        principalId:
+                          description: 'PrincipalId: The principal id of user assigned
+                            identity.'
+                          type: string
+                      type: object
+                    description: |-
+                      UserAssignedIdentities: The list of user identities associated with resource. The user identity dictionary key
+                      references will be ARM resource ids in the form:
+                      '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+                    type: object
+                type: object
+              inboundSecurityRules:
+                description: 'InboundSecurityRules: List of references to InboundSecurityRules.'
+                items:
+                  description: Reference to another subresource.
+                  properties:
+                    id:
+                      description: 'Id: Resource ID.'
+                      type: string
+                  type: object
+                type: array
+              internetIngressPublicIps:
+                description: 'InternetIngressPublicIps: List of Resource Uri of Public
+                  IPs for Internet Ingress Scenario.'
+                items:
+                  description: Resource Uri of Public Ip for Standard Load Balancer
+                    Frontend End.
+                  properties:
+                    id:
+                      description: 'Id: Resource Uri of Public Ip'
+                      type: string
+                  type: object
+                type: array
+              location:
+                description: 'Location: Resource location.'
+                type: string
+              migrationStatus:
+                description: 'MigrationStatus: The migration status of the Network
+                  Virtual Appliance.'
+                properties:
+                  migrationPhase:
+                    description: 'MigrationPhase: The current phase of the migration
+                      workflow (for example, Prepare, Execute, Commit, or Abort).'
+                    type: string
+                  migrationPhaseStatus:
+                    description: 'MigrationPhaseStatus: The detailed status of the
+                      current migration phase.'
+                    type: string
+                  migrationType:
+                    description: 'MigrationType: The type of migration workflow currently
+                      in progress or last performed.'
+                    type: string
+                type: object
+              name:
+                description: 'Name: Resource name.'
+                type: string
+              networkProfile:
+                description: 'NetworkProfile: Network Profile containing configurations
+                  for Public and Private NIC.'
+                properties:
+                  networkInterfaceConfigurations:
+                    items:
+                      description: Represents a single NIC configuration.
+                      properties:
+                        properties:
+                          description: 'Properties: Represents a single NIC configuration
+                            properties.'
+                          properties:
+                            ipConfigurations:
+                              items:
+                                description: Represents a single IP configuration.
+                                properties:
+                                  name:
+                                    description: |-
+                                      Name: For hub NVAs, primary IP configs must be named 'privatenicipconfig' and 'publicnicipconfig', with non-primary
+                                      configs using these prefixes; no naming restrictions apply for NVAs in VNets. Maximum 80 character are allowed.
+                                    type: string
+                                  properties:
+                                    description: 'Properties: Represents a single
+                                      IP configuration properties.'
+                                    properties:
+                                      primary:
+                                        description: 'Primary: Whether or not this
+                                          is primary IP configuration of the NIC.'
+                                        type: boolean
+                                    type: object
+                                type: object
+                              type: array
+                          type: object
+                        type:
+                          description: 'Type: NIC type. This should be either PublicNic
+                            or PrivateNic.'
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              nvaInterfaceConfigurations:
+                description: 'NvaInterfaceConfigurations: The NVA in VNet interface
+                  configurations'
+                items:
+                  description: Specifies input parameters required NVA in VNet interface
+                    configuration.
+                  properties:
+                    name:
+                      description: 'Name: Specifies the name of the interface. Maximum
+                        length is 70 characters.'
+                      maxLength: 70
+                      type: string
+                    subnet:
+                      description: 'Subnet: A subnet resource id where the NIC will
+                        be deployed. Each subnet resource uri should be unique.'
+                      properties:
+                        id:
+                          description: 'Id: Resource Uri of Subnet'
+                          type: string
+                      type: object
+                    type:
+                      description: |-
+                        Type: Specifies the NIC types for the NVA interface configuration. Allowed values: PrivateNic, PublicNic,
+                        AdditionalPrivateNic, AdditionalPublicNic. Only the combination of PrivateNic and PublicNic is currently supported.
+                      items:
+                        enum:
+                        - AdditionalPrivateNic
+                        - AdditionalPublicNic
+                        - PrivateNic
+                        - PublicNic
+                        type: string
+                      type: array
+                  type: object
+                type: array
+              nvaSku:
+                description: 'NvaSku: Network Virtual Appliance SKU.'
+                properties:
+                  bundledScaleUnit:
+                    description: 'BundledScaleUnit: Virtual Appliance Scale Unit.'
+                    type: string
+                  marketPlaceVersion:
+                    description: 'MarketPlaceVersion: Virtual Appliance Version.'
+                    type: string
+                  vendor:
+                    description: 'Vendor: Virtual Appliance Vendor.'
+                    type: string
+                type: object
+              partnerManagedResource:
+                description: 'PartnerManagedResource: The delegation for the Virtual
+                  Appliance'
+                properties:
+                  id:
+                    description: 'Id: The partner managed resource id.'
+                    type: string
+                  internalLoadBalancerId:
+                    description: 'InternalLoadBalancerId: The partner managed ILB
+                      resource id'
+                    type: string
+                  standardLoadBalancerId:
+                    description: 'StandardLoadBalancerId: The partner managed SLB
+                      resource id'
+                    type: string
+                type: object
+              privateIpAddress:
+                description: |-
+                  PrivateIpAddress: A Internal Load Balancer's HA port frontend IP address. Can be used to set routes & UDR to load
+                  balance traffic between NVA instances
+                type: string
+              privateIpAddressV6:
+                description: |-
+                  PrivateIpAddressV6: An Internal Load Balancer's HA port frontend IPv6 address. Can be used to set routes & UDR to load
+                  balance traffic between NVA instances. This field appears in dual-stack NVAs.
+                type: string
+              provisioningState:
+                description: 'ProvisioningState: The provisioning state of the resource.'
+                type: string
+              sshPublicKey:
+                description: 'SshPublicKey: Public key for SSH login.'
+                type: string
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              type:
+                description: 'Type: Resource type.'
+                type: string
+              virtualApplianceAsn:
+                description: 'VirtualApplianceAsn: VirtualAppliance ASN. Microsoft
+                  private, public and IANA reserved ASN are not supported.'
+                format: int32
+                type: integer
+              virtualApplianceConnections:
+                description: 'VirtualApplianceConnections: List of references to VirtualApplianceConnections.'
+                items:
+                  description: Reference to another subresource.
+                  properties:
+                    id:
+                      description: 'Id: Resource ID.'
+                      type: string
+                  type: object
+                type: array
+              virtualApplianceNics:
+                description: 'VirtualApplianceNics: List of Virtual Appliance Network
+                  Interfaces.'
+                items:
+                  description: Network Virtual Appliance NIC properties.
+                  properties:
+                    instanceName:
+                      description: 'InstanceName: Instance on which nic is attached.'
+                      type: string
+                    name:
+                      description: 'Name: NIC name.'
+                      type: string
+                    nicType:
+                      description: |-
+                        NicType: NIC type - PublicNic, PrivateNic, or AdditionalNic; AdditionalPrivateNic and AdditionalPublicNic are only
+                        supported for NVAs deployed in VNets.
+                      type: string
+                    privateIpAddress:
+                      description: 'PrivateIpAddress: Private IP address.'
+                      type: string
+                    privateIpAddressV6:
+                      description: |-
+                        PrivateIpAddressV6: Private IPv6 address. Populated for dual-stack NVAs, including on additional-NIC configurations when
+                        the NVA is dual-stack.
+                      type: string
+                    publicIpAddress:
+                      description: 'PublicIpAddress: Public IP address.'
+                      type: string
+                    publicIpAddressV6:
+                      description: |-
+                        PublicIpAddressV6: Public IPv6 address. Populated for dual-stack NVAs, including on additional-NIC configurations when
+                        the NVA is dual-stack.
+                      type: string
+                  type: object
+                type: array
+              virtualApplianceSites:
+                description: 'VirtualApplianceSites: List of references to VirtualApplianceSite.'
+                items:
+                  description: Reference to another subresource.
+                  properties:
+                    id:
+                      description: 'Id: Resource ID.'
+                      type: string
+                  type: object
+                type: array
+              virtualHub:
+                description: 'VirtualHub: The Virtual Hub where Network Virtual Appliance
+                  is being deployed.'
+                properties:
+                  id:
+                    description: 'Id: Resource ID.'
+                    type: string
+                type: object
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

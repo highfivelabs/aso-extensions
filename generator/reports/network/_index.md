@@ -55,6 +55,10 @@ no_list: true
 | NetworkSecurityPerimetersProfile                       | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersProfilesAccessRule            | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | NetworkSecurityPerimetersResourceAssociation           | 2025-05-01  | v20250501   | v0.1.0         | -      |
+| NetworkVirtualAppliance                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkVirtualAppliancesConnection                     | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkVirtualAppliancesInboundSecurityRule            | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkVirtualAppliancesVirtualApplianceSite           | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | P2sVpnGateway                                          | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | PrivateDnsZonesSOARecord                               | 2024-06-01  | v20240601   | v0.1.0         | -      |
 | RouteFilter                                            | 2026-03-01  | v20260301   | v0.1.0         | -      |

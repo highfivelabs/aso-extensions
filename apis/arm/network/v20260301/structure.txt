@@ -3662,6 +3662,330 @@ NetworkManagersVerifierWorkspace: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+NetworkVirtualAppliance: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (19 properties)
+│   ├── AdditionalNics: Object (2 properties)[]
+│   │   ├── HasPublicIp: *bool
+│   │   └── Name: *string
+│   ├── AddressFamily: Validated<Enum (2 values)[]> (1 rule)
+│   │   ├── "IPv4"
+│   │   ├── "IPv6"
+│   │   └── Rule 0: MaxItems: 2
+│   ├── AzureName: string
+│   ├── BootStrapConfigurationBlobs: string[]
+│   ├── CloudInitConfiguration: *string
+│   ├── CloudInitConfigurationBlobs: string[]
+│   ├── Delegation: *Object (1 property)
+│   │   └── ServiceName: *string
+│   ├── Identity: *Object (2 properties)
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssigned, UserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── InternetIngressPublicIps: Object (1 property)[]
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── NetworkProfile: *Object (1 property)
+│   │   └── NetworkInterfaceConfigurations: Object (2 properties)[]
+│   │       ├── Properties: *Object (1 property)
+│   │       │   └── IpConfigurations: Object (2 properties)[]
+│   │       │       ├── Name: *string
+│   │       │       └── Properties: *Object (1 property)
+│   │       │           └── Primary: *bool
+│   │       └── Type: *Enum (2 values)
+│   │           ├── "PrivateNic"
+│   │           └── "PublicNic"
+│   ├── NvaInterfaceConfigurations: Validated<Object (3 properties)[]> (1 rule)
+│   │   ├── Name: Validated<*string> (1 rule)
+│   │   │   └── Rule 0: MaxLength: 70
+│   │   ├── Subnet: *Object (1 property)
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── Type: Enum (4 values)[]
+│   │   │   ├── "AdditionalPrivateNic"
+│   │   │   ├── "AdditionalPublicNic"
+│   │   │   ├── "PrivateNic"
+│   │   │   └── "PublicNic"
+│   │   └── Rule 0: MaxItems: 3
+│   ├── NvaSku: *Object (3 properties)
+│   │   ├── BundledScaleUnit: *string
+│   │   ├── MarketPlaceVersion: *string
+│   │   └── Vendor: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── SshPublicKey: *string
+│   ├── Tags: map[string]string
+│   ├── VirtualApplianceAsn: *uint32
+│   └── VirtualHub: *Object (1 property)
+│       └── Reference: *genruntime.ResourceReference
+└── Status: Object (33 properties)
+    ├── AdditionalNics: Object (2 properties)[]
+    │   ├── HasPublicIp: *bool
+    │   └── Name: *string
+    ├── AddressFamily: Enum (2 values)[]
+    │   ├── "IPv4"
+    │   └── "IPv6"
+    ├── AddressPrefix: *string
+    ├── AddressPrefixV6: *string
+    ├── BootStrapConfigurationBlobs: string[]
+    ├── CloudInitConfiguration: *string
+    ├── CloudInitConfigurationBlobs: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── Delegation: *Object (2 properties)
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   └── ServiceName: *string
+    ├── DeploymentType: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssigned, UserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── InboundSecurityRules: Object (1 property)[]
+    │   └── Id: *string
+    ├── InternetIngressPublicIps: Object (1 property)[]
+    │   └── Id: *string
+    ├── Location: *string
+    ├── MigrationStatus: *Object (3 properties)
+    │   ├── MigrationPhase: *string
+    │   ├── MigrationPhaseStatus: *string
+    │   └── MigrationType: *Enum (2 values)
+    │       ├── "MigrateToNewILBArchitecture"
+    │       └── "MigrateToNewOSVersion"
+    ├── Name: *string
+    ├── NetworkProfile: *Object (1 property)
+    │   └── NetworkInterfaceConfigurations: Object (2 properties)[]
+    │       ├── Properties: *Object (1 property)
+    │       │   └── IpConfigurations: Object (2 properties)[]
+    │       │       ├── Name: *string
+    │       │       └── Properties: *Object (1 property)
+    │       │           └── Primary: *bool
+    │       └── Type: *Enum (2 values)
+    │           ├── "PrivateNic"
+    │           └── "PublicNic"
+    ├── NvaInterfaceConfigurations: Object (3 properties)[]
+    │   ├── Name: Validated<*string> (1 rule)
+    │   │   └── Rule 0: MaxLength: 70
+    │   ├── Subnet: *Object (1 property)
+    │   │   └── Id: *string
+    │   └── Type: Enum (4 values)[]
+    │       ├── "AdditionalPrivateNic"
+    │       ├── "AdditionalPublicNic"
+    │       ├── "PrivateNic"
+    │       └── "PublicNic"
+    ├── NvaSku: *Object (3 properties)
+    │   ├── BundledScaleUnit: *string
+    │   ├── MarketPlaceVersion: *string
+    │   └── Vendor: *string
+    ├── PartnerManagedResource: *Object (3 properties)
+    │   ├── Id: *string
+    │   ├── InternalLoadBalancerId: *string
+    │   └── StandardLoadBalancerId: *string
+    ├── PrivateIpAddress: *string
+    ├── PrivateIpAddressV6: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── SshPublicKey: *string
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualApplianceAsn: *uint32
+    ├── VirtualApplianceConnections: Object (1 property)[]
+    │   └── Id: *string
+    ├── VirtualApplianceNics: Object (7 properties)[]
+    │   ├── InstanceName: *string
+    │   ├── Name: *string
+    │   ├── NicType: *Enum (3 values)
+    │   │   ├── "AdditionalNic"
+    │   │   ├── "PrivateNic"
+    │   │   └── "PublicNic"
+    │   ├── PrivateIpAddress: *string
+    │   ├── PrivateIpAddressV6: *string
+    │   ├── PublicIpAddress: *string
+    │   └── PublicIpAddressV6: *string
+    ├── VirtualApplianceSites: Object (1 property)[]
+    │   └── Id: *string
+    └── VirtualHub: *Object (1 property)
+        └── Id: *string
+
+NetworkVirtualAppliancesConnection: Resource
+├── Owner: NetworkVirtualAppliance
+├── Spec: Object (9 properties)
+│   ├── Asn: *uint32
+│   ├── AzureName: string
+│   ├── BgpPeerAddress: string[]
+│   ├── EnableInternetSecurity: *bool
+│   ├── Name: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── RoutingConfiguration: *Object (5 properties)
+│   │   ├── AssociatedRouteTable: *Object (1 property)
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── InboundRouteMap: *Object (1 property)
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── OutboundRouteMap: *Object (1 property)
+│   │   │   └── Reference: *genruntime.ResourceReference
+│   │   ├── PropagatedRouteTables: *Object (2 properties)
+│   │   │   ├── Ids: Object (1 property)[]
+│   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │   │   └── Labels: string[]
+│   │   └── VnetRoutes: *Object (2 properties)
+│   │       ├── StaticRoutes: Object (3 properties)[]
+│   │       │   ├── AddressPrefixes: string[]
+│   │       │   ├── Name: *string
+│   │       │   └── NextHopIpAddress: *string
+│   │       └── StaticRoutesConfig: *Object (2 properties)
+│   │           ├── PropagateStaticRoutes: *bool
+│   │           └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+│   │               ├── "Contains"
+│   │               └── "Equal"
+│   └── TunnelIdentifier: *uint32
+└── Status: Object (10 properties)
+    ├── Asn: *uint32
+    ├── BgpPeerAddress: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── EnableInternetSecurity: *bool
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertiesName: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── RoutingConfiguration: *Object (5 properties)
+    │   ├── AssociatedRouteTable: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── InboundRouteMap: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── OutboundRouteMap: *Object (1 property)
+    │   │   └── Id: *string
+    │   ├── PropagatedRouteTables: *Object (2 properties)
+    │   │   ├── Ids: Object (1 property)[]
+    │   │   │   └── Id: *string
+    │   │   └── Labels: string[]
+    │   └── VnetRoutes: *Object (3 properties)
+    │       ├── BgpConnections: Object (1 property)[]
+    │       │   └── Id: *string
+    │       ├── StaticRoutes: Object (3 properties)[]
+    │       │   ├── AddressPrefixes: string[]
+    │       │   ├── Name: *string
+    │       │   └── NextHopIpAddress: *string
+    │       └── StaticRoutesConfig: *Object (2 properties)
+    │           ├── PropagateStaticRoutes: *bool
+    │           └── VnetLocalRouteOverrideCriteria: *Enum (2 values)
+    │               ├── "Contains"
+    │               └── "Equal"
+    └── TunnelIdentifier: *uint32
+
+NetworkVirtualAppliancesInboundSecurityRule: Resource
+├── Owner: NetworkVirtualAppliance
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── RuleType: *Enum (2 values)
+│   │   ├── "AutoExpire"
+│   │   └── "Permanent"
+│   └── Rules: Object (6 properties)[]
+│       ├── AppliesOn: string[]
+│       ├── DestinationPortRange: Validated<*int> (2 rules)
+│       │   ├── Rule 0: Maximum: 65535
+│       │   └── Rule 1: Minimum: 0
+│       ├── DestinationPortRanges: string[]
+│       ├── Name: *string
+│       ├── Protocol: *Enum (2 values)
+│       │   ├── "TCP"
+│       │   └── "UDP"
+│       └── SourceAddressPrefix: *string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── RuleType: *Enum (2 values)
+    │   ├── "AutoExpire"
+    │   └── "Permanent"
+    ├── Rules: Object (6 properties)[]
+    │   ├── AppliesOn: string[]
+    │   ├── DestinationPortRange: *int
+    │   ├── DestinationPortRanges: string[]
+    │   ├── Name: *string
+    │   ├── Protocol: *Enum (2 values)
+    │   │   ├── "TCP"
+    │   │   └── "UDP"
+    │   └── SourceAddressPrefix: *string
+    └── Type: *string
+
+NetworkVirtualAppliancesVirtualApplianceSite: Resource
+├── Owner: NetworkVirtualAppliance
+├── Spec: Object (5 properties)
+│   ├── AddressPrefix: *string
+│   ├── AzureName: string
+│   ├── O365Policy: *Object (1 property)
+│   │   └── BreakOutCategories: *Object (3 properties)
+│   │       ├── Allow: *bool
+│   │       ├── Default: *bool
+│   │       └── Optimize: *bool
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (8 properties)
+    ├── AddressPrefix: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── O365Policy: *Object (1 property)
+    │   └── BreakOutCategories: *Object (3 properties)
+    │       ├── Allow: *bool
+    │       ├── Default: *bool
+    │       └── Optimize: *bool
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    └── Type: *string
+
 P2sVpnGateway: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (11 properties)

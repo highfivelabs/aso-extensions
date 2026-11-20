@@ -1162,6 +1162,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersSecurityUserRuleCollection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersVerifierWorkspace)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliance)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesConnection)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesInboundSecurityRule)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesVirtualApplianceSite)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.P2sVpnGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFilter)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)})
@@ -1922,6 +1926,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserRule)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersSecurityUserRuleCollection)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersVerifierWorkspace)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkVirtualAppliance)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkVirtualAppliancesConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkVirtualAppliancesInboundSecurityRule)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkVirtualAppliancesVirtualApplianceSite)},
 		&registration.KnownType{Obj: new(network_v20260301.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.RouteFilter)},
 		&registration.KnownType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)},
@@ -1982,6 +1990,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserRule)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersSecurityUserRuleCollection)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersVerifierWorkspace)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkVirtualAppliance)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkVirtualAppliancesConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkVirtualAppliancesInboundSecurityRule)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkVirtualAppliancesVirtualApplianceSite)},
 		&registration.KnownType{Obj: new(network_v20260301s.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.RouteFilter)},
 		&registration.KnownType{Obj: new(network_v20260301s.RouteFiltersRouteFilterRule)},
@@ -2491,6 +2503,10 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfileExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersProfilesAccessRuleExtension{})
 	result = append(result, &network_customizations.NetworkSecurityPerimetersResourceAssociationExtension{})
+	result = append(result, &network_customizations.NetworkVirtualApplianceExtension{})
+	result = append(result, &network_customizations.NetworkVirtualAppliancesConnectionExtension{})
+	result = append(result, &network_customizations.NetworkVirtualAppliancesInboundSecurityRuleExtension{})
+	result = append(result, &network_customizations.NetworkVirtualAppliancesVirtualApplianceSiteExtension{})
 	result = append(result, &network_customizations.P2sVpnGatewayExtension{})
 	result = append(result, &network_customizations.PrivateDnsZonesSOARecordExtension{})
 	result = append(result, &network_customizations.RouteFilterExtension{})

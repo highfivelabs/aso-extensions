@@ -91,6 +91,14 @@ NetworkSecurityPerimetersProfilesAccessRuleExtension: Object (0 properties)
 
 NetworkSecurityPerimetersResourceAssociationExtension: Object (0 properties)
 
+NetworkVirtualApplianceExtension: Object (0 properties)
+
+NetworkVirtualAppliancesConnectionExtension: Object (0 properties)
+
+NetworkVirtualAppliancesInboundSecurityRuleExtension: Object (0 properties)
+
+NetworkVirtualAppliancesVirtualApplianceSiteExtension: Object (0 properties)
+
 P2sVpnGatewayExtension: Object (0 properties)
 
 PrivateDnsZonesSOARecordExtension: Object (0 properties)
