@@ -1632,10 +1632,10 @@ Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/loggingConfigurati
 Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/profiles,1,,0,network.azure.hfl.dev/NetworkSecurityPerimetersProfile,0,1,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/profiles/accessRules,7,,0,network.azure.hfl.dev/NetworkSecurityPerimetersProfilesAccessRule,7,0,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkSecurityPerimeters/resourceAssociations,3,,0,network.azure.hfl.dev/NetworkSecurityPerimetersResourceAssociation,3,0,false,spec_api=2026-03-01; ours_api=2025-05-01; ours-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/networkVirtualAppliances,25,,0,,0,25,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkVirtualAppliances/inboundSecurityRules,7,,0,,0,7,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkVirtualAppliances/networkVirtualApplianceConnections,15,,0,,0,15,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkVirtualAppliances/virtualApplianceSites,4,,0,,0,4,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkVirtualAppliances,25,,0,network.azure.hfl.dev/NetworkVirtualAppliance,24,1,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkVirtualAppliances/inboundSecurityRules,7,,0,network.azure.hfl.dev/NetworkVirtualAppliancesInboundSecurityRule,7,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkVirtualAppliances/networkVirtualApplianceConnections,15,,0,network.azure.hfl.dev/NetworkVirtualAppliancesConnection,15,0,false,spec_api=2026-03-01; ours_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkVirtualAppliances/virtualApplianceSites,4,,0,network.azure.hfl.dev/NetworkVirtualAppliancesVirtualApplianceSite,4,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkWatchers,3,network.azure.com/NetworkWatcher,2,,0,1,false,spec_api=2026-03-01; official_api=2024-10-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkWatchers/connectionAnalyzers,23,,0,,0,23,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkWatchers/connectionMonitors,46,,0,,0,46,false,spec_api=2026-03-01
