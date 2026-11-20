@@ -1729,6 +1729,149 @@ ExpressRouteGatewaysExpressRouteConnection: Resource
     │           └── VnetLocalRouteOverrideCriteria: *string
     └── RoutingWeight: *int
 
+ExpressRouteLag: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Identity: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Type: *string
+│   │   └── UserAssignedIdentities: Object (2 properties)[]
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (9 properties)
+│   │   ├── BandwidthInGbps: *int
+│   │   ├── BillingType: *string
+│   │   ├── Encapsulation: *string
+│   │   ├── LacpTimer: *string
+│   │   ├── Links: Object (3 properties)[]
+│   │   │   ├── Id: *string
+│   │   │   ├── Properties: *Object (4 properties)
+│   │   │   │   ├── AdminState: *string
+│   │   │   │   ├── MacSecConfig: *Object (5 properties)
+│   │   │   │   │   ├── CakSecretIdentifier: *string
+│   │   │   │   │   ├── Cipher: *string
+│   │   │   │   │   ├── CknSecretIdentifier: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── SciState: *string
+│   │   │   │   ├── Members: Object (3 properties)[]
+│   │   │   │   │   ├── Id: *string
+│   │   │   │   │   ├── Properties: *Object (2 properties)
+│   │   │   │   │   │   ├── AdminState: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── MinimumActivePortsRequired: *int
+│   │   ├── NumberOfPorts: *int
+│   │   ├── PeeringLocation: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Identity: *Object (5 properties)
+    │   ├── PrincipalId: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── TenantId: *string
+    │   ├── Type: *string
+    │   └── UserAssignedIdentities: map[string]Object (3 properties)
+    │       ├── ClientId: *string
+    │       ├── PrincipalId: *string
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (17 properties)
+    │   ├── AllocationDate: *string
+    │   ├── Authorizations: Object (2 properties)[]
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── BandwidthInGbps: *int
+    │   ├── BillingType: *string
+    │   ├── Circuits: Object (2 properties)[]
+    │   │   ├── Id: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── Encapsulation: *string
+    │   ├── EtherType: *string
+    │   ├── LacpTimer: *string
+    │   ├── Links: Object (6 properties)[]
+    │   │   ├── Etag: *string
+    │   │   ├── Id: *string
+    │   │   ├── Name: *string
+    │   │   ├── Properties: *Object (7 properties)
+    │   │   │   ├── AdminState: *string
+    │   │   │   ├── InterfaceName: *string
+    │   │   │   ├── MacSecConfig: *Object (5 properties)
+    │   │   │   │   ├── CakSecretIdentifier: *string
+    │   │   │   │   ├── Cipher: *string
+    │   │   │   │   ├── CknSecretIdentifier: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── SciState: *string
+    │   │   │   ├── Members: Object (6 properties)[]
+    │   │   │   │   ├── Etag: *string
+    │   │   │   │   ├── Id: *string
+    │   │   │   │   ├── Name: *string
+    │   │   │   │   ├── Properties: *Object (8 properties)
+    │   │   │   │   │   ├── AdminState: *string
+    │   │   │   │   │   ├── ColoLocation: *string
+    │   │   │   │   │   ├── ConnectorType: *string
+    │   │   │   │   │   ├── InterfaceName: *string
+    │   │   │   │   │   ├── PatchPanelId: *string
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   ├── ProvisioningState: *string
+    │   │   │   │   │   └── RackId: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ProvisioningState: *string
+    │   │   │   └── RouterName: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── MinimumActivePortsRequired: *int
+    │   ├── Mtu: *string
+    │   ├── NumberOfPorts: *int
+    │   ├── PeeringLocation: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisionedBandwidthInGbps: *float64
+    │   ├── ProvisioningState: *string
+    │   └── ResourceGuid: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
+ExpressRouteLagsAuthorization: Resource
+├── Owner: network/v20260301.ExpressRouteLag
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (4 properties)
+    │   ├── AuthorizationUseStatus: *string
+    │   ├── CircuitResourceUri: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── ProvisioningState: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 ExpressRoutePort: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (13 properties)

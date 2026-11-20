@@ -71,7 +71,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 
 | Category | Services | Resources | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 43.2% | 34.5% | 22.3% | ~18.7% |
+| platform-foundation | 18 | 246 | 43.2% | 34.9% | 21.9% | ~18.7% |
 | security-adjacent | 7 | 93 | 8.6% | 47.0% | 44.4% | ~11.1% |
 | application | 35 | 823 | 33.1% | 8.0% | 59.0% | ~11.3% |
 | other | 230 | 1,262 | 0.5% | 1.0% | 98.6% | ~3.9% |
@@ -80,7 +80,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 
 | Tier | Services | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| 1 | 17 | 43.0% | 23.0% | 34.1% | ~13.8% |
+| 1 | 17 | 43.0% | 23.2% | 33.9% | ~13.8% |
 | 2 | 18 | 26.5% | 18.6% | 54.8% | ~8.2% |
 | 3 | 245 | 5.9% | 0.8% | 93.4% | ~6.6% |
 
@@ -96,7 +96,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 1 | `Microsoft.Consumption` | platform-foundation | ![Microsoft.Consumption](docs/coverage/bars/Microsoft.Consumption.svg) | 0.0% | 100.0% | 0.0% | ~92.3% |
 | 1 | `Microsoft.CostManagement` | platform-foundation | ![Microsoft.CostManagement](docs/coverage/bars/Microsoft.CostManagement.svg) | 0.0% | 58.3% | 41.7% | ~27.6% |
 | 1 | `Microsoft.Insights` | platform-foundation | ![Microsoft.Insights](docs/coverage/bars/Microsoft.Insights.svg) | 72.5% | 15.8% | 11.8% | ~33.3% |
-| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 19.9% | 37.8% | ~9.0% |
+| 1 | `Microsoft.Network` | platform-foundation | ![Microsoft.Network](docs/coverage/bars/Microsoft.Network.svg) | 42.2% | 20.3% | 37.5% | ~9.0% |
 | 1 | `Microsoft.KeyVault` | platform-foundation | ![Microsoft.KeyVault](docs/coverage/bars/Microsoft.KeyVault.svg) | 40.2% | 45.8% | 14.0% | ~20.2% |
 | 1 | `Microsoft.ManagedIdentity` | platform-foundation | ![Microsoft.ManagedIdentity](docs/coverage/bars/Microsoft.ManagedIdentity.svg) | 83.3% | 16.7% | 0.0% | ~100.0% |
 | 1 | `Microsoft.OperationalInsights` | platform-foundation | ![Microsoft.OperationalInsights](docs/coverage/bars/Microsoft.OperationalInsights.svg) | 16.4% | 61.5% | 22.1% | ~18.0% |

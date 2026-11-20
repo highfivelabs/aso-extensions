@@ -27,6 +27,10 @@ ExpressRouteGatewayExtension: Object (0 properties)
 
 ExpressRouteGatewaysExpressRouteConnectionExtension: Object (0 properties)
 
+ExpressRouteLagExtension: Object (0 properties)
+
+ExpressRouteLagsAuthorizationExtension: Object (0 properties)
+
 ExpressRoutePortExtension: Object (0 properties)
 
 ExpressRoutePortsAuthorizationExtension: Object (0 properties)

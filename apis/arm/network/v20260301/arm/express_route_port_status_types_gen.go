@@ -142,20 +142,6 @@ type ExpressRouteLinkPropertiesFormat_STATUS struct {
 	RouterName *string `json:"routerName,omitempty"`
 }
 
-// Administrative state of the physical port.
-type ExpressRouteLinkAdminState_STATUS string
-
-const (
-	ExpressRouteLinkAdminState_STATUS_Disabled = ExpressRouteLinkAdminState_STATUS("Disabled")
-	ExpressRouteLinkAdminState_STATUS_Enabled  = ExpressRouteLinkAdminState_STATUS("Enabled")
-)
-
-// Mapping from string to ExpressRouteLinkAdminState_STATUS
-var expressRouteLinkAdminState_STATUS_Values = map[string]ExpressRouteLinkAdminState_STATUS{
-	"disabled": ExpressRouteLinkAdminState_STATUS_Disabled,
-	"enabled":  ExpressRouteLinkAdminState_STATUS_Enabled,
-}
-
 // Physical fiber port type.
 type ExpressRouteLinkConnectorType_STATUS string
 
@@ -168,51 +154,4 @@ const (
 var expressRouteLinkConnectorType_STATUS_Values = map[string]ExpressRouteLinkConnectorType_STATUS{
 	"lc": ExpressRouteLinkConnectorType_STATUS_LC,
 	"sc": ExpressRouteLinkConnectorType_STATUS_SC,
-}
-
-// ExpressRouteLink Mac Security Configuration.
-type ExpressRouteLinkMacSecConfig_STATUS struct {
-	// CakSecretIdentifier: Keyvault Secret Identifier URL containing Mac security CAK key.
-	CakSecretIdentifier *string `json:"cakSecretIdentifier,omitempty"`
-
-	// Cipher: Mac security cipher.
-	Cipher *ExpressRouteLinkMacSecCipher_STATUS `json:"cipher,omitempty"`
-
-	// CknSecretIdentifier: Keyvault Secret Identifier URL containing Mac security CKN key.
-	CknSecretIdentifier *string `json:"cknSecretIdentifier,omitempty"`
-
-	// SciState: Sci mode enabled/disabled.
-	SciState *ExpressRouteLinkMacSecSciState_STATUS `json:"sciState,omitempty"`
-}
-
-// Mac security cipher.
-type ExpressRouteLinkMacSecCipher_STATUS string
-
-const (
-	ExpressRouteLinkMacSecCipher_STATUS_GcmAes128    = ExpressRouteLinkMacSecCipher_STATUS("GcmAes128")
-	ExpressRouteLinkMacSecCipher_STATUS_GcmAes256    = ExpressRouteLinkMacSecCipher_STATUS("GcmAes256")
-	ExpressRouteLinkMacSecCipher_STATUS_GcmAesXpn128 = ExpressRouteLinkMacSecCipher_STATUS("GcmAesXpn128")
-	ExpressRouteLinkMacSecCipher_STATUS_GcmAesXpn256 = ExpressRouteLinkMacSecCipher_STATUS("GcmAesXpn256")
-)
-
-// Mapping from string to ExpressRouteLinkMacSecCipher_STATUS
-var expressRouteLinkMacSecCipher_STATUS_Values = map[string]ExpressRouteLinkMacSecCipher_STATUS{
-	"gcmaes128":    ExpressRouteLinkMacSecCipher_STATUS_GcmAes128,
-	"gcmaes256":    ExpressRouteLinkMacSecCipher_STATUS_GcmAes256,
-	"gcmaesxpn128": ExpressRouteLinkMacSecCipher_STATUS_GcmAesXpn128,
-	"gcmaesxpn256": ExpressRouteLinkMacSecCipher_STATUS_GcmAesXpn256,
-}
-
-// Sci mode enabled/disabled.
-type ExpressRouteLinkMacSecSciState_STATUS string
-
-const (
-	ExpressRouteLinkMacSecSciState_STATUS_Disabled = ExpressRouteLinkMacSecSciState_STATUS("Disabled")
-	ExpressRouteLinkMacSecSciState_STATUS_Enabled  = ExpressRouteLinkMacSecSciState_STATUS("Enabled")
-)
-
-// Mapping from string to ExpressRouteLinkMacSecSciState_STATUS
-var expressRouteLinkMacSecSciState_STATUS_Values = map[string]ExpressRouteLinkMacSecSciState_STATUS{
-	"disabled": ExpressRouteLinkMacSecSciState_STATUS_Disabled,
-	"enabled":  ExpressRouteLinkMacSecSciState_STATUS_Enabled,
 }
