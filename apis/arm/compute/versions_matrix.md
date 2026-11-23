@@ -1,255 +1,449 @@
-| Type Definitions in package "compute"                          | v20220301 | v20250401 |
-|----------------------------------------------------------------|-----------|-----------|
-| APIVersion                                                     | v20220301 | v20250401 |
-| AdditionalCapabilities                                         |           | v20250401 |
-| AdditionalCapabilities_STATUS                                  |           | v20250401 |
-| AdditionalUnattendContent                                      |           | v20250401 |
-| AdditionalUnattendContent_STATUS                               |           | v20250401 |
-| AllInstancesDown                                               |           | v20250401 |
-| AllInstancesDown_STATUS                                        |           | v20250401 |
-| ApiEntityReference                                             |           | v20250401 |
-| ApiEntityReference_STATUS                                      |           | v20250401 |
-| ApiErrorBase_STATUS                                            |           | v20250401 |
-| ApiError_STATUS                                                |           | v20250401 |
-| ApplicationProfile                                             |           | v20250401 |
-| ApplicationProfile_STATUS                                      |           | v20250401 |
-| AvailablePatchSummary_STATUS                                   |           | v20250401 |
-| BillingProfile                                                 |           | v20250401 |
-| BillingProfile_STATUS                                          |           | v20250401 |
-| BootDiagnostics                                                |           | v20250401 |
-| BootDiagnosticsInstanceView_STATUS                             |           | v20250401 |
-| BootDiagnostics_STATUS                                         |           | v20250401 |
-| CachingTypes                                                   |           | v20250401 |
-| CachingTypes_STATUS                                            |           | v20250401 |
-| CapacityReservationProfile                                     |           | v20250401 |
-| CapacityReservationProfile_STATUS                              |           | v20250401 |
-| CommonOperatingSystemTypes                                     |           | v20250401 |
-| CommonOperatingSystemTypes_STATUS                              |           | v20250401 |
-| CommonResourceIdentityType                                     |           | v20250401 |
-| CommonResourceIdentityType_STATUS                              |           | v20250401 |
-| CommonUserAssignedIdentitiesValue_STATUS                       |           | v20250401 |
-| ComponentNames                                                 |           | v20250401 |
-| ComponentNames_STATUS                                          |           | v20250401 |
-| DataDisk                                                       |           | v20250401 |
-| DataDisk_STATUS                                                |           | v20250401 |
-| DeleteOptions                                                  |           | v20250401 |
-| DeleteOptions_STATUS                                           |           | v20250401 |
-| DiagnosticsProfile                                             |           | v20250401 |
-| DiagnosticsProfile_STATUS                                      |           | v20250401 |
-| DiffDiskOptions                                                |           | v20250401 |
-| DiffDiskOptions_STATUS                                         |           | v20250401 |
-| DiffDiskPlacement                                              |           | v20250401 |
-| DiffDiskPlacement_STATUS                                       |           | v20250401 |
-| DiffDiskSettings                                               |           | v20250401 |
-| DiffDiskSettings_STATUS                                        |           | v20250401 |
-| DiskControllerTypes                                            |           | v20250401 |
-| DiskControllerTypes_STATUS                                     |           | v20250401 |
-| DiskCreateOptionTypes                                          |           | v20250401 |
-| DiskCreateOptionTypes_STATUS                                   |           | v20250401 |
-| DiskDeleteOptionTypes                                          |           | v20250401 |
-| DiskDeleteOptionTypes_STATUS                                   |           | v20250401 |
-| DiskDetachOptionTypes                                          |           | v20250401 |
-| DiskDetachOptionTypes_STATUS                                   |           | v20250401 |
-| DiskEncryptionSettings                                         |           | v20250401 |
-| DiskEncryptionSettings_STATUS                                  |           | v20250401 |
-| DiskInstanceView_STATUS                                        |           | v20250401 |
-| DomainNameLabelScopeTypes                                      |           | v20250401 |
-| DomainNameLabelScopeTypes_STATUS                               |           | v20250401 |
-| EncryptionIdentity                                             |           | v20250401 |
-| EncryptionIdentity_STATUS                                      |           | v20250401 |
-| EventGridAndResourceGraph                                      |           | v20250401 |
-| EventGridAndResourceGraph_STATUS                               |           | v20250401 |
-| ExtendedLocation                                               |           | v20250401 |
-| ExtendedLocationType                                           |           | v20250401 |
-| ExtendedLocationType_STATUS                                    |           | v20250401 |
-| ExtendedLocation_STATUS                                        |           | v20250401 |
-| HardwareProfile                                                |           | v20250401 |
-| HardwareProfile_STATUS                                         |           | v20250401 |
-| HostEndpointSettings                                           |           | v20250401 |
-| HostEndpointSettings_STATUS                                    |           | v20250401 |
-| HyperVGenerationType_STATUS                                    |           | v20250401 |
-| IPVersions                                                     |           | v20250401 |
-| IPVersions_STATUS                                              |           | v20250401 |
-| ImageReference                                                 |           | v20250401 |
-| ImageReference_STATUS                                          |           | v20250401 |
-| InnerError_STATUS                                              |           | v20250401 |
-| InstanceViewStatus_Level_STATUS                                | v20220301 |           |
-| InstanceViewStatus_STATUS                                      | v20220301 | v20250401 |
-| KeyVaultKeyReference                                           |           | v20250401 |
-| KeyVaultKeyReference_STATUS                                    |           | v20250401 |
-| KeyVaultSecretReference                                        |           | v20250401 |
-| KeyVaultSecretReference_STATUS                                 |           | v20250401 |
-| LastPatchInstallationSummary_STATUS                            |           | v20250401 |
-| LinuxConfiguration                                             |           | v20250401 |
-| LinuxConfiguration_STATUS                                      |           | v20250401 |
-| LinuxPatchAssessmentMode                                       |           | v20250401 |
-| LinuxPatchAssessmentMode_STATUS                                |           | v20250401 |
-| LinuxPatchSettings                                             |           | v20250401 |
-| LinuxPatchSettings_STATUS                                      |           | v20250401 |
-| LinuxVMGuestPatchAutomaticByPlatformRebootSetting              |           | v20250401 |
-| LinuxVMGuestPatchAutomaticByPlatformRebootSetting_STATUS       |           | v20250401 |
-| LinuxVMGuestPatchAutomaticByPlatformSettings                   |           | v20250401 |
-| LinuxVMGuestPatchAutomaticByPlatformSettings_STATUS            |           | v20250401 |
-| LinuxVMGuestPatchMode                                          |           | v20250401 |
-| LinuxVMGuestPatchMode_STATUS                                   |           | v20250401 |
-| MaintenanceOperationResultCodeTypes_STATUS                     |           | v20250401 |
-| MaintenanceRedeployStatus_STATUS                               |           | v20250401 |
-| ManagedDiskParameters                                          |           | v20250401 |
-| ManagedDiskParameters_STATUS                                   |           | v20250401 |
-| Mode                                                           |           | v20250401 |
-| Mode_STATUS                                                    |           | v20250401 |
-| Modes                                                          |           | v20250401 |
-| Modes_STATUS                                                   |           | v20250401 |
-| NetworkApiVersion                                              |           | v20250401 |
-| NetworkApiVersion_STATUS                                       |           | v20250401 |
-| NetworkInterfaceAuxiliaryMode                                  |           | v20250401 |
-| NetworkInterfaceAuxiliaryMode_STATUS                           |           | v20250401 |
-| NetworkInterfaceAuxiliarySku                                   |           | v20250401 |
-| NetworkInterfaceAuxiliarySku_STATUS                            |           | v20250401 |
-| NetworkInterfaceReference                                      |           | v20250401 |
-| NetworkInterfaceReferenceProperties                            |           | v20250401 |
-| NetworkInterfaceReferenceProperties_STATUS                     |           | v20250401 |
-| NetworkInterfaceReference_STATUS                               |           | v20250401 |
-| NetworkProfile                                                 |           | v20250401 |
-| NetworkProfile_STATUS                                          |           | v20250401 |
-| OSDisk                                                         |           | v20250401 |
-| OSDisk_STATUS                                                  |           | v20250401 |
-| OSImageNotificationProfile                                     |           | v20250401 |
-| OSImageNotificationProfile_STATUS                              |           | v20250401 |
-| OSProfile                                                      |           | v20250401 |
-| OSProfile_STATUS                                               |           | v20250401 |
-| PassNames                                                      |           | v20250401 |
-| PassNames_STATUS                                               |           | v20250401 |
-| PatchOperationStatus_STATUS                                    |           | v20250401 |
-| PatchSettings                                                  |           | v20250401 |
-| PatchSettings_STATUS                                           |           | v20250401 |
-| Placement                                                      |           | v20250401 |
-| Placement_STATUS                                               |           | v20250401 |
-| Plan                                                           |           | v20250401 |
-| Plan_STATUS                                                    |           | v20250401 |
-| ProtocolTypes                                                  |           | v20250401 |
-| ProtocolTypes_STATUS                                           |           | v20250401 |
-| ProxyAgentSettings                                             |           | v20250401 |
-| ProxyAgentSettings_STATUS                                      |           | v20250401 |
-| PublicIPAddressSku                                             |           | v20250401 |
-| PublicIPAddressSkuName                                         |           | v20250401 |
-| PublicIPAddressSkuName_STATUS                                  |           | v20250401 |
-| PublicIPAddressSkuTier                                         |           | v20250401 |
-| PublicIPAddressSkuTier_STATUS                                  |           | v20250401 |
-| PublicIPAddressSku_STATUS                                      |           | v20250401 |
-| PublicIPAllocationMethod                                       |           | v20250401 |
-| PublicIPAllocationMethod_STATUS                                |           | v20250401 |
-| RunCommandInputParameter                                       | v20220301 |           |
-| RunCommandInputParameter_STATUS                                | v20220301 |           |
-| ScheduledEventsAdditionalPublishingTargets                     |           | v20250401 |
-| ScheduledEventsAdditionalPublishingTargets_STATUS              |           | v20250401 |
-| ScheduledEventsPolicy                                          |           | v20250401 |
-| ScheduledEventsPolicy_STATUS                                   |           | v20250401 |
-| ScheduledEventsProfile                                         |           | v20250401 |
-| ScheduledEventsProfile_STATUS                                  |           | v20250401 |
-| SecurityEncryptionTypes                                        |           | v20250401 |
-| SecurityEncryptionTypes_STATUS                                 |           | v20250401 |
-| SecurityProfile                                                |           | v20250401 |
-| SecurityProfile_STATUS                                         |           | v20250401 |
-| SecurityTypes                                                  |           | v20250401 |
-| SecurityTypes_STATUS                                           |           | v20250401 |
-| SettingNames                                                   |           | v20250401 |
-| SettingNames_STATUS                                            |           | v20250401 |
-| SshConfiguration                                               |           | v20250401 |
-| SshConfiguration_STATUS                                        |           | v20250401 |
-| SshPublicKeySpec                                               |           | v20250401 |
-| SshPublicKey_STATUS                                            |           | v20250401 |
-| StatusLevelTypes_STATUS                                        |           | v20250401 |
-| StorageAccountTypes                                            |           | v20250401 |
-| StorageAccountTypes_STATUS                                     |           | v20250401 |
-| StorageProfile                                                 |           | v20250401 |
-| StorageProfile_STATUS                                          |           | v20250401 |
-| SubResource                                                    |           | v20250401 |
-| SubResource_STATUS                                             |           | v20250401 |
-| SystemData_CreatedByType_STATUS                                |           | v20250401 |
-| SystemData_LastModifiedByType_STATUS                           |           | v20250401 |
-| SystemData_STATUS                                              |           | v20250401 |
-| TerminateNotificationProfile                                   |           | v20250401 |
-| TerminateNotificationProfile_STATUS                            |           | v20250401 |
-| UefiSettings                                                   |           | v20250401 |
-| UefiSettings_STATUS                                            |           | v20250401 |
-| UserAssignedIdentityDetails                                    |           | v20250401 |
-| UserInitiatedReboot                                            |           | v20250401 |
-| UserInitiatedReboot_STATUS                                     |           | v20250401 |
-| UserInitiatedRedeploy                                          |           | v20250401 |
-| UserInitiatedRedeploy_STATUS                                   |           | v20250401 |
-| VMDiskSecurityProfile                                          |           | v20250401 |
-| VMDiskSecurityProfile_STATUS                                   |           | v20250401 |
-| VMGalleryApplication                                           |           | v20250401 |
-| VMGalleryApplication_STATUS                                    |           | v20250401 |
-| VMSizeProperties                                               |           | v20250401 |
-| VMSizeProperties_STATUS                                        |           | v20250401 |
-| VaultCertificate                                               |           | v20250401 |
-| VaultCertificate_STATUS                                        |           | v20250401 |
-| VaultSecretGroup                                               |           | v20250401 |
-| VaultSecretGroup_STATUS                                        |           | v20250401 |
-| VirtualHardDisk                                                |           | v20250401 |
-| VirtualHardDisk_STATUS                                         |           | v20250401 |
-| VirtualMachine                                                 |           | v20250401 |
-| VirtualMachineAgentInstanceView_STATUS                         |           | v20250401 |
-| VirtualMachineEvictionPolicyTypes                              |           | v20250401 |
-| VirtualMachineEvictionPolicyTypes_STATUS                       |           | v20250401 |
-| VirtualMachineExtensionHandlerInstanceView_STATUS              |           | v20250401 |
-| VirtualMachineExtensionInstanceView_STATUS                     |           | v20250401 |
-| VirtualMachineExtensionProperties_STATUS                       |           | v20250401 |
-| VirtualMachineExtension_STATUS                                 |           | v20250401 |
-| VirtualMachineHealthStatus_STATUS                              |           | v20250401 |
-| VirtualMachineIdentity                                         |           | v20250401 |
-| VirtualMachineIdentity_STATUS                                  |           | v20250401 |
-| VirtualMachineInstanceView_STATUS                              |           | v20250401 |
-| VirtualMachineIpTag                                            |           | v20250401 |
-| VirtualMachineIpTag_STATUS                                     |           | v20250401 |
-| VirtualMachineNetworkInterfaceConfiguration                    |           | v20250401 |
-| VirtualMachineNetworkInterfaceConfigurationProperties          |           | v20250401 |
-| VirtualMachineNetworkInterfaceConfigurationProperties_STATUS   |           | v20250401 |
-| VirtualMachineNetworkInterfaceConfiguration_STATUS             |           | v20250401 |
-| VirtualMachineNetworkInterfaceDnsSettingsConfiguration         |           | v20250401 |
-| VirtualMachineNetworkInterfaceDnsSettingsConfiguration_STATUS  |           | v20250401 |
-| VirtualMachineNetworkInterfaceIPConfiguration                  |           | v20250401 |
-| VirtualMachineNetworkInterfaceIPConfigurationProperties        |           | v20250401 |
-| VirtualMachineNetworkInterfaceIPConfigurationProperties_STATUS |           | v20250401 |
-| VirtualMachineNetworkInterfaceIPConfiguration_STATUS           |           | v20250401 |
-| VirtualMachinePatchStatus_STATUS                               |           | v20250401 |
-| VirtualMachinePriorityTypes                                    |           | v20250401 |
-| VirtualMachinePriorityTypes_STATUS                             |           | v20250401 |
-| VirtualMachineProperties                                       |           | v20250401 |
-| VirtualMachineProperties_STATUS                                |           | v20250401 |
-| VirtualMachinePublicIPAddressConfiguration                     |           | v20250401 |
-| VirtualMachinePublicIPAddressConfigurationProperties           |           | v20250401 |
-| VirtualMachinePublicIPAddressConfigurationProperties_STATUS    |           | v20250401 |
-| VirtualMachinePublicIPAddressConfiguration_STATUS              |           | v20250401 |
-| VirtualMachinePublicIPAddressDnsSettingsConfiguration          |           | v20250401 |
-| VirtualMachinePublicIPAddressDnsSettingsConfiguration_STATUS   |           | v20250401 |
-| VirtualMachineRunCommandInstanceView_ExecutionState_STATUS     | v20220301 |           |
-| VirtualMachineRunCommandInstanceView_STATUS                    | v20220301 |           |
-| VirtualMachineRunCommandProperties                             | v20220301 |           |
-| VirtualMachineRunCommandProperties_STATUS                      | v20220301 |           |
-| VirtualMachineRunCommandScriptSource                           | v20220301 |           |
-| VirtualMachineRunCommandScriptSource_STATUS                    | v20220301 |           |
-| VirtualMachineSizeTypes_STATUS                                 |           | v20250401 |
-| VirtualMachine_STATUS                                          |           | v20250401 |
-| VirtualMachine_Spec                                            |           | v20250401 |
-| VirtualMachinesRunCommand                                      | v20220301 |           |
-| VirtualMachinesRunCommand_STATUS                               | v20220301 |           |
-| VirtualMachinesRunCommand_Spec                                 | v20220301 |           |
-| WinRMConfiguration                                             |           | v20250401 |
-| WinRMConfiguration_STATUS                                      |           | v20250401 |
-| WinRMListener                                                  |           | v20250401 |
-| WinRMListener_STATUS                                           |           | v20250401 |
-| WindowsConfiguration                                           |           | v20250401 |
-| WindowsConfiguration_STATUS                                    |           | v20250401 |
-| WindowsPatchAssessmentMode                                     |           | v20250401 |
-| WindowsPatchAssessmentMode_STATUS                              |           | v20250401 |
-| WindowsVMGuestPatchAutomaticByPlatformRebootSetting            |           | v20250401 |
-| WindowsVMGuestPatchAutomaticByPlatformRebootSetting_STATUS     |           | v20250401 |
-| WindowsVMGuestPatchAutomaticByPlatformSettings                 |           | v20250401 |
-| WindowsVMGuestPatchAutomaticByPlatformSettings_STATUS          |           | v20250401 |
-| WindowsVMGuestPatchMode                                        |           | v20250401 |
-| WindowsVMGuestPatchMode_STATUS                                 |           | v20250401 |
-| ZonePlacementPolicyType                                        |           | v20250401 |
-| ZonePlacementPolicyType_STATUS                                 |           | v20250401 |
+| Type Definitions in package "compute"                          | v20220301 | v20250401 | v20260303 |
+|----------------------------------------------------------------|-----------|-----------|-----------|
+| APIVersion                                                     | v20220301 | v20250401 | v20260303 |
+| AdditionalCapabilities                                         |           | v20250401 |           |
+| AdditionalCapabilities_STATUS                                  |           | v20250401 |           |
+| AdditionalReplicaSet                                           |           |           | v20260303 |
+| AdditionalReplicaSet_STATUS                                    |           |           | v20260303 |
+| AdditionalUnattendContent                                      |           | v20250401 |           |
+| AdditionalUnattendContent_STATUS                               |           | v20250401 |           |
+| AggregatedReplicationState_STATUS                              |           |           | v20260303 |
+| AllInstancesDown                                               |           | v20250401 |           |
+| AllInstancesDown_STATUS                                        |           | v20250401 |           |
+| ApiEntityReference                                             |           | v20250401 |           |
+| ApiEntityReference_STATUS                                      |           | v20250401 |           |
+| ApiErrorBase_STATUS                                            |           | v20250401 |           |
+| ApiError_STATUS                                                |           | v20250401 |           |
+| ApplicationProfile                                             |           | v20250401 |           |
+| ApplicationProfile_STATUS                                      |           | v20250401 |           |
+| AvailablePatchSummary_STATUS                                   |           | v20250401 |           |
+| BillingProfile                                                 |           | v20250401 |           |
+| BillingProfile_STATUS                                          |           | v20250401 |           |
+| BootDiagnostics                                                |           | v20250401 |           |
+| BootDiagnosticsInstanceView_STATUS                             |           | v20250401 |           |
+| BootDiagnostics_STATUS                                         |           | v20250401 |           |
+| CachingTypes                                                   |           | v20250401 |           |
+| CachingTypes_STATUS                                            |           | v20250401 |           |
+| CapacityReservationProfile                                     |           | v20250401 |           |
+| CapacityReservationProfile_STATUS                              |           | v20250401 |           |
+| CommonArchitecture                                             |           |           | v20260303 |
+| CommonArchitecture_STATUS                                      |           |           | v20260303 |
+| CommonHyperVGeneration                                         |           |           | v20260303 |
+| CommonHyperVGeneration_STATUS                                  |           |           | v20260303 |
+| CommonOperatingSystemStateTypes                                |           |           | v20260303 |
+| CommonOperatingSystemStateTypes_STATUS                         |           |           | v20260303 |
+| CommonOperatingSystemTypes                                     |           | v20250401 | v20260303 |
+| CommonOperatingSystemTypes_STATUS                              |           | v20250401 | v20260303 |
+| CommonResourceIdentityType                                     |           | v20250401 | v20260303 |
+| CommonResourceIdentityType_STATUS                              |           | v20250401 | v20260303 |
+| CommonUserAssignedIdentitiesValue_STATUS                       |           | v20250401 | v20260303 |
+| CommunityGalleryInfo                                           |           |           | v20260303 |
+| CommunityGalleryInfo_STATUS                                    |           |           | v20260303 |
+| ComponentNames                                                 |           | v20250401 |           |
+| ComponentNames_STATUS                                          |           | v20250401 |           |
+| ConfidentialVMEncryptionType                                   |           |           | v20260303 |
+| ConfidentialVMEncryptionType_STATUS                            |           |           | v20260303 |
+| DataDisk                                                       |           | v20250401 |           |
+| DataDiskImageEncryption                                        |           |           | v20260303 |
+| DataDiskImageEncryption_STATUS                                 |           |           | v20260303 |
+| DataDiskImageSecurityProfile                                   |           |           | v20260303 |
+| DataDiskImageSecurityProfile_STATUS                            |           |           | v20260303 |
+| DataDisk_STATUS                                                |           | v20250401 |           |
+| DedicatedHostAllocatableVM_STATUS                              |           | v20250401 |           |
+| DedicatedHostAvailableCapacity_STATUS                          |           | v20250401 |           |
+| DedicatedHostGroupInstanceView_STATUS                          |           | v20250401 |           |
+| DedicatedHostGroupProperties                                   |           | v20250401 |           |
+| DedicatedHostGroupPropertiesAdditionalCapabilities             |           | v20250401 |           |
+| DedicatedHostGroupPropertiesAdditionalCapabilities_STATUS      |           | v20250401 |           |
+| DedicatedHostGroupProperties_STATUS                            |           | v20250401 |           |
+| DedicatedHostInstanceViewWithName_STATUS                       |           | v20250401 |           |
+| DedicatedHostInstanceView_STATUS                               |           | v20250401 |           |
+| DedicatedHostLicenseTypes                                      |           | v20250401 |           |
+| DedicatedHostLicenseTypes_STATUS                               |           | v20250401 |           |
+| DedicatedHostProperties                                        |           | v20250401 |           |
+| DedicatedHostProperties_STATUS                                 |           | v20250401 |           |
+| DeleteOptions                                                  |           | v20250401 |           |
+| DeleteOptions_STATUS                                           |           | v20250401 |           |
+| DiagnosticsProfile                                             |           | v20250401 |           |
+| DiagnosticsProfile_STATUS                                      |           | v20250401 |           |
+| DiffDiskOptions                                                |           | v20250401 |           |
+| DiffDiskOptions_STATUS                                         |           | v20250401 |           |
+| DiffDiskPlacement                                              |           | v20250401 |           |
+| DiffDiskPlacement_STATUS                                       |           | v20250401 |           |
+| DiffDiskSettings                                               |           | v20250401 |           |
+| DiffDiskSettings_STATUS                                        |           | v20250401 |           |
+| Disallowed                                                     |           |           | v20260303 |
+| Disallowed_STATUS                                              |           |           | v20260303 |
+| DiskControllerTypes                                            |           | v20250401 |           |
+| DiskControllerTypes_STATUS                                     |           | v20250401 |           |
+| DiskCreateOptionTypes                                          |           | v20250401 |           |
+| DiskCreateOptionTypes_STATUS                                   |           | v20250401 |           |
+| DiskDeleteOptionTypes                                          |           | v20250401 |           |
+| DiskDeleteOptionTypes_STATUS                                   |           | v20250401 |           |
+| DiskDetachOptionTypes                                          |           | v20250401 |           |
+| DiskDetachOptionTypes_STATUS                                   |           | v20250401 |           |
+| DiskEncryptionSettings                                         |           | v20250401 |           |
+| DiskEncryptionSettings_STATUS                                  |           | v20250401 |           |
+| DiskInstanceView_STATUS                                        |           | v20250401 |           |
+| DomainNameLabelScopeTypes                                      |           | v20250401 |           |
+| DomainNameLabelScopeTypes_STATUS                               |           | v20250401 |           |
+| EdgeZoneStorageAccountType                                     |           |           | v20260303 |
+| EdgeZoneStorageAccountType_STATUS                              |           |           | v20260303 |
+| EncryptionIdentity                                             |           | v20250401 |           |
+| EncryptionIdentity_STATUS                                      |           | v20250401 |           |
+| EncryptionImages                                               |           |           | v20260303 |
+| EncryptionImages_STATUS                                        |           |           | v20260303 |
+| EventGridAndResourceGraph                                      |           | v20250401 |           |
+| EventGridAndResourceGraph_STATUS                               |           | v20250401 |           |
+| ExecutedValidation_STATUS                                      |           |           | v20260303 |
+| ExtendedLocation                                               |           | v20250401 |           |
+| ExtendedLocationType                                           |           | v20250401 |           |
+| ExtendedLocationType_STATUS                                    |           | v20250401 |           |
+| ExtendedLocation_STATUS                                        |           | v20250401 |           |
+| GalleriesApplication                                           |           |           | v20260303 |
+| GalleriesApplication_STATUS                                    |           |           | v20260303 |
+| GalleriesApplication_Spec                                      |           |           | v20260303 |
+| GalleriesApplicationsVersion                                   |           |           | v20260303 |
+| GalleriesApplicationsVersion_STATUS                            |           |           | v20260303 |
+| GalleriesApplicationsVersion_Spec                              |           |           | v20260303 |
+| GalleriesImage                                                 |           |           | v20260303 |
+| GalleriesImage_STATUS                                          |           |           | v20260303 |
+| GalleriesImage_Spec                                            |           |           | v20260303 |
+| GalleriesImagesVersion                                         |           |           | v20260303 |
+| GalleriesImagesVersion_STATUS                                  |           |           | v20260303 |
+| GalleriesImagesVersion_Spec                                    |           |           | v20260303 |
+| Gallery                                                        |           |           | v20260303 |
+| GalleryApplicationCustomAction                                 |           |           | v20260303 |
+| GalleryApplicationCustomActionParameter                        |           |           | v20260303 |
+| GalleryApplicationCustomActionParameterType                    |           |           | v20260303 |
+| GalleryApplicationCustomActionParameterType_STATUS             |           |           | v20260303 |
+| GalleryApplicationCustomActionParameter_STATUS                 |           |           | v20260303 |
+| GalleryApplicationCustomAction_STATUS                          |           |           | v20260303 |
+| GalleryApplicationProperties                                   |           |           | v20260303 |
+| GalleryApplicationProperties_STATUS                            |           |           | v20260303 |
+| GalleryApplicationScriptRebootBehavior                         |           |           | v20260303 |
+| GalleryApplicationScriptRebootBehavior_STATUS                  |           |           | v20260303 |
+| GalleryApplicationVersionProperties                            |           |           | v20260303 |
+| GalleryApplicationVersionProperties_STATUS                     |           |           | v20260303 |
+| GalleryApplicationVersionPublishingProfile                     |           |           | v20260303 |
+| GalleryApplicationVersionPublishingProfile_STATUS              |           |           | v20260303 |
+| GalleryArtifactPublishingProfileBase                           |           |           | v20260303 |
+| GalleryArtifactPublishingProfileBase_STATUS                    |           |           | v20260303 |
+| GalleryArtifactSafetyProfileBase                               |           |           | v20260303 |
+| GalleryArtifactSafetyProfileBase_STATUS                        |           |           | v20260303 |
+| GalleryArtifactVersionFullSource                               |           |           | v20260303 |
+| GalleryArtifactVersionFullSource_STATUS                        |           |           | v20260303 |
+| GalleryDataDiskImage                                           |           |           | v20260303 |
+| GalleryDataDiskImage_STATUS                                    |           |           | v20260303 |
+| GalleryDiskImage                                               |           |           | v20260303 |
+| GalleryDiskImageSource                                         |           |           | v20260303 |
+| GalleryDiskImageSource_STATUS                                  |           |           | v20260303 |
+| GalleryDiskImage_STATUS                                        |           |           | v20260303 |
+| GalleryExtendedLocation                                        |           |           | v20260303 |
+| GalleryExtendedLocationType                                    |           |           | v20260303 |
+| GalleryExtendedLocationType_STATUS                             |           |           | v20260303 |
+| GalleryExtendedLocation_STATUS                                 |           |           | v20260303 |
+| GalleryIdentifier_STATUS                                       |           |           | v20260303 |
+| GalleryIdentity                                                |           |           | v20260303 |
+| GalleryIdentity_STATUS                                         |           |           | v20260303 |
+| GalleryImageFeature                                            |           |           | v20260303 |
+| GalleryImageFeature_STATUS                                     |           |           | v20260303 |
+| GalleryImageIdentifier                                         |           |           | v20260303 |
+| GalleryImageIdentifier_STATUS                                  |           |           | v20260303 |
+| GalleryImageProperties                                         |           |           | v20260303 |
+| GalleryImageProperties_STATUS                                  |           |           | v20260303 |
+| GalleryImageVersionProperties                                  |           |           | v20260303 |
+| GalleryImageVersionProperties_STATUS                           |           |           | v20260303 |
+| GalleryImageVersionSafetyProfile                               |           |           | v20260303 |
+| GalleryImageVersionSafetyProfile_STATUS                        |           |           | v20260303 |
+| GalleryImageVersionStorageProfile                              |           |           | v20260303 |
+| GalleryImageVersionStorageProfile_STATUS                       |           |           | v20260303 |
+| GalleryImageVersionUefiSettings                                |           |           | v20260303 |
+| GalleryImageVersionUefiSettings_STATUS                         |           |           | v20260303 |
+| GalleryProperties                                              |           |           | v20260303 |
+| GalleryProperties_STATUS                                       |           |           | v20260303 |
+| GalleryProvisioningState_STATUS                                |           |           | v20260303 |
+| GallerySharingPermissionTypes                                  |           |           | v20260303 |
+| GallerySharingPermissionTypes_STATUS                           |           |           | v20260303 |
+| GalleryTargetExtendedLocation                                  |           |           | v20260303 |
+| GalleryTargetExtendedLocation_STATUS                           |           |           | v20260303 |
+| Gallery_STATUS                                                 |           |           | v20260303 |
+| Gallery_Spec                                                   |           |           | v20260303 |
+| HardwareProfile                                                |           | v20250401 |           |
+| HardwareProfile_STATUS                                         |           | v20250401 |           |
+| HostCaching                                                    |           |           | v20260303 |
+| HostCaching_STATUS                                             |           |           | v20260303 |
+| HostEndpointSettings                                           |           | v20250401 |           |
+| HostEndpointSettings_STATUS                                    |           | v20250401 |           |
+| HostGroup                                                      |           | v20250401 |           |
+| HostGroup_STATUS                                               |           | v20250401 |           |
+| HostGroup_Spec                                                 |           | v20250401 |           |
+| HostGroupsHost                                                 |           | v20250401 |           |
+| HostGroupsHost_STATUS                                          |           | v20250401 |           |
+| HostGroupsHost_Spec                                            |           | v20250401 |           |
+| HyperVGenerationType_STATUS                                    |           | v20250401 |           |
+| IPVersions                                                     |           | v20250401 |           |
+| IPVersions_STATUS                                              |           | v20250401 |           |
+| ImageMetadataProfile_STATUS                                    |           |           | v20260303 |
+| ImagePurchasePlan                                              |           |           | v20260303 |
+| ImagePurchasePlan_STATUS                                       |           |           | v20260303 |
+| ImageReference                                                 |           | v20250401 |           |
+| ImageReference_STATUS                                          |           | v20250401 |           |
+| ImageVersionSecurityProfile                                    |           |           | v20260303 |
+| ImageVersionSecurityProfile_STATUS                             |           |           | v20260303 |
+| InnerError_STATUS                                              |           | v20250401 |           |
+| InstanceViewStatus                                             |           | v20250401 |           |
+| InstanceViewStatus_Level_STATUS                                | v20220301 |           |           |
+| InstanceViewStatus_STATUS                                      | v20220301 | v20250401 |           |
+| KeyVaultKeyReference                                           |           | v20250401 |           |
+| KeyVaultKeyReference_STATUS                                    |           | v20250401 |           |
+| KeyVaultSecretReference                                        |           | v20250401 |           |
+| KeyVaultSecretReference_STATUS                                 |           | v20250401 |           |
+| LastPatchInstallationSummary_STATUS                            |           | v20250401 |           |
+| LinuxConfiguration                                             |           | v20250401 |           |
+| LinuxConfiguration_STATUS                                      |           | v20250401 |           |
+| LinuxPatchAssessmentMode                                       |           | v20250401 |           |
+| LinuxPatchAssessmentMode_STATUS                                |           | v20250401 |           |
+| LinuxPatchSettings                                             |           | v20250401 |           |
+| LinuxPatchSettings_STATUS                                      |           | v20250401 |           |
+| LinuxVMGuestPatchAutomaticByPlatformRebootSetting              |           | v20250401 |           |
+| LinuxVMGuestPatchAutomaticByPlatformRebootSetting_STATUS       |           | v20250401 |           |
+| LinuxVMGuestPatchAutomaticByPlatformSettings                   |           | v20250401 |           |
+| LinuxVMGuestPatchAutomaticByPlatformSettings_STATUS            |           | v20250401 |           |
+| LinuxVMGuestPatchMode                                          |           | v20250401 |           |
+| LinuxVMGuestPatchMode_STATUS                                   |           | v20250401 |           |
+| MaintenanceOperationResultCodeTypes_STATUS                     |           | v20250401 |           |
+| MaintenanceRedeployStatus_STATUS                               |           | v20250401 |           |
+| ManagedDiskParameters                                          |           | v20250401 |           |
+| ManagedDiskParameters_STATUS                                   |           | v20250401 |           |
+| MetadataKeyValue_STATUS                                        |           |           | v20260303 |
+| MetadataType_STATUS                                            |           |           | v20260303 |
+| Mode                                                           |           | v20250401 |           |
+| Mode_STATUS                                                    |           | v20250401 |           |
+| Modes                                                          |           | v20250401 |           |
+| Modes_STATUS                                                   |           | v20250401 |           |
+| NetworkApiVersion                                              |           | v20250401 |           |
+| NetworkApiVersion_STATUS                                       |           | v20250401 |           |
+| NetworkInterfaceAuxiliaryMode                                  |           | v20250401 |           |
+| NetworkInterfaceAuxiliaryMode_STATUS                           |           | v20250401 |           |
+| NetworkInterfaceAuxiliarySku                                   |           | v20250401 |           |
+| NetworkInterfaceAuxiliarySku_STATUS                            |           | v20250401 |           |
+| NetworkInterfaceReference                                      |           | v20250401 |           |
+| NetworkInterfaceReferenceProperties                            |           | v20250401 |           |
+| NetworkInterfaceReferenceProperties_STATUS                     |           | v20250401 |           |
+| NetworkInterfaceReference_STATUS                               |           | v20250401 |           |
+| NetworkProfile                                                 |           | v20250401 |           |
+| NetworkProfile_STATUS                                          |           | v20250401 |           |
+| OSDisk                                                         |           | v20250401 |           |
+| OSDiskImageEncryption                                          |           |           | v20260303 |
+| OSDiskImageEncryption_STATUS                                   |           |           | v20260303 |
+| OSDiskImageSecurityProfile                                     |           |           | v20260303 |
+| OSDiskImageSecurityProfile_STATUS                              |           |           | v20260303 |
+| OSDisk_STATUS                                                  |           | v20250401 |           |
+| OSImageNotificationProfile                                     |           | v20250401 |           |
+| OSImageNotificationProfile_STATUS                              |           | v20250401 |           |
+| OSProfile                                                      |           | v20250401 |           |
+| OSProfile_STATUS                                               |           | v20250401 |           |
+| PassNames                                                      |           | v20250401 |           |
+| PassNames_STATUS                                               |           | v20250401 |           |
+| PatchOperationStatus_STATUS                                    |           | v20250401 |           |
+| PatchSettings                                                  |           | v20250401 |           |
+| PatchSettings_STATUS                                           |           | v20250401 |           |
+| Placement                                                      |           | v20250401 |           |
+| Placement_STATUS                                               |           | v20250401 |           |
+| Plan                                                           |           | v20250401 |           |
+| Plan_STATUS                                                    |           | v20250401 |           |
+| PlatformAttribute_STATUS                                       |           |           | v20260303 |
+| PolicyViolationCategory_STATUS                                 |           |           | v20260303 |
+| PolicyViolation_STATUS                                         |           |           | v20260303 |
+| ProtocolTypes                                                  |           | v20250401 |           |
+| ProtocolTypes_STATUS                                           |           | v20250401 |           |
+| ProximityPlacementGroup                                        |           | v20250401 |           |
+| ProximityPlacementGroupProperties                              |           | v20250401 |           |
+| ProximityPlacementGroupPropertiesIntent                        |           | v20250401 |           |
+| ProximityPlacementGroupPropertiesIntent_STATUS                 |           | v20250401 |           |
+| ProximityPlacementGroupProperties_STATUS                       |           | v20250401 |           |
+| ProximityPlacementGroupType                                    |           | v20250401 |           |
+| ProximityPlacementGroupType_STATUS                             |           | v20250401 |           |
+| ProximityPlacementGroup_STATUS                                 |           | v20250401 |           |
+| ProximityPlacementGroup_Spec                                   |           | v20250401 |           |
+| ProxyAgentSettings                                             |           | v20250401 |           |
+| ProxyAgentSettings_STATUS                                      |           | v20250401 |           |
+| PublicIPAddressSku                                             |           | v20250401 |           |
+| PublicIPAddressSkuName                                         |           | v20250401 |           |
+| PublicIPAddressSkuName_STATUS                                  |           | v20250401 |           |
+| PublicIPAddressSkuTier                                         |           | v20250401 |           |
+| PublicIPAddressSkuTier_STATUS                                  |           | v20250401 |           |
+| PublicIPAddressSku_STATUS                                      |           | v20250401 |           |
+| PublicIPAllocationMethod                                       |           | v20250401 |           |
+| PublicIPAllocationMethod_STATUS                                |           | v20250401 |           |
+| RecommendedMachineConfiguration                                |           |           | v20260303 |
+| RecommendedMachineConfiguration_STATUS                         |           |           | v20260303 |
+| RegionalReplicationStatus_STATUS                               |           |           | v20260303 |
+| RegionalSharingStatus_STATUS                                   |           |           | v20260303 |
+| ReplicationMode                                                |           |           | v20260303 |
+| ReplicationMode_STATUS                                         |           |           | v20260303 |
+| ReplicationState_STATUS                                        |           |           | v20260303 |
+| ReplicationStatus_STATUS                                       |           |           | v20260303 |
+| ResourceRange                                                  |           |           | v20260303 |
+| ResourceRange_STATUS                                           |           |           | v20260303 |
+| RunCommandInputParameter                                       | v20220301 |           |           |
+| RunCommandInputParameter_STATUS                                | v20220301 |           |           |
+| ScheduledEventsAdditionalPublishingTargets                     |           | v20250401 |           |
+| ScheduledEventsAdditionalPublishingTargets_STATUS              |           | v20250401 |           |
+| ScheduledEventsPolicy                                          |           | v20250401 |           |
+| ScheduledEventsPolicy_STATUS                                   |           | v20250401 |           |
+| ScheduledEventsProfile                                         |           | v20250401 |           |
+| ScheduledEventsProfile_STATUS                                  |           | v20250401 |           |
+| SecretsProvisioningComponent                                   |           |           | v20260303 |
+| SecretsProvisioningComponentName                               |           |           | v20260303 |
+| SecretsProvisioningComponentName_STATUS                        |           |           | v20260303 |
+| SecretsProvisioningComponent_STATUS                            |           |           | v20260303 |
+| SecretsProvisioningSettings                                    |           |           | v20260303 |
+| SecretsProvisioningSettings_STATUS                             |           |           | v20260303 |
+| SecurityEncryptionTypes                                        |           | v20250401 |           |
+| SecurityEncryptionTypes_STATUS                                 |           | v20250401 |           |
+| SecurityProfile                                                |           | v20250401 |           |
+| SecurityProfile_STATUS                                         |           | v20250401 |           |
+| SecurityTypes                                                  |           | v20250401 |           |
+| SecurityTypes_STATUS                                           |           | v20250401 |           |
+| SettingNames                                                   |           | v20250401 |           |
+| SettingNames_STATUS                                            |           | v20250401 |           |
+| SharingProfile                                                 |           |           | v20260303 |
+| SharingProfileGroupTypes_STATUS                                |           |           | v20260303 |
+| SharingProfileGroup_STATUS                                     |           |           | v20260303 |
+| SharingProfile_STATUS                                          |           |           | v20260303 |
+| SharingState_STATUS                                            |           |           | v20260303 |
+| SharingStatus_STATUS                                           |           |           | v20260303 |
+| Sku                                                            |           | v20250401 |           |
+| Sku_STATUS                                                     |           | v20250401 |           |
+| SoftDeletePolicy                                               |           |           | v20260303 |
+| SoftDeletePolicy_STATUS                                        |           |           | v20260303 |
+| SshConfiguration                                               |           | v20250401 |           |
+| SshConfiguration_STATUS                                        |           | v20250401 |           |
+| SshPublicKey                                                   |           | v20250401 |           |
+| SshPublicKeyResourceProperties                                 |           | v20250401 |           |
+| SshPublicKeyResourceProperties_STATUS                          |           | v20250401 |           |
+| SshPublicKeyResource_STATUS                                    |           | v20250401 |           |
+| SshPublicKeySpec                                               |           | v20250401 |           |
+| SshPublicKey_STATUS                                            |           | v20250401 |           |
+| SshPublicKey_Spec                                              |           | v20250401 |           |
+| StatusLevelTypes                                               |           | v20250401 |           |
+| StatusLevelTypes_STATUS                                        |           | v20250401 |           |
+| StorageAccountStrategy                                         |           |           | v20260303 |
+| StorageAccountStrategy_STATUS                                  |           |           | v20260303 |
+| StorageAccountType                                             |           |           | v20260303 |
+| StorageAccountType_STATUS                                      |           |           | v20260303 |
+| StorageAccountTypes                                            |           | v20250401 |           |
+| StorageAccountTypes_STATUS                                     |           | v20250401 |           |
+| StorageProfile                                                 |           | v20250401 |           |
+| StorageProfile_STATUS                                          |           | v20250401 |           |
+| SubResource                                                    |           | v20250401 |           |
+| SubResourceReadOnly_STATUS                                     |           | v20250401 |           |
+| SubResourceWithColocationStatus_STATUS                         |           | v20250401 |           |
+| SubResource_STATUS                                             |           | v20250401 |           |
+| SystemData_CreatedByType_STATUS                                |           | v20250401 | v20260303 |
+| SystemData_LastModifiedByType_STATUS                           |           | v20250401 | v20260303 |
+| SystemData_STATUS                                              |           | v20250401 | v20260303 |
+| TargetRegion                                                   |           |           | v20260303 |
+| TargetRegion_STATUS                                            |           |           | v20260303 |
+| TerminateNotificationProfile                                   |           | v20250401 |           |
+| TerminateNotificationProfile_STATUS                            |           | v20250401 |           |
+| UefiKey                                                        |           |           | v20260303 |
+| UefiKeySignatures                                              |           |           | v20260303 |
+| UefiKeySignatures_STATUS                                       |           |           | v20260303 |
+| UefiKeyType                                                    |           |           | v20260303 |
+| UefiKeyType_STATUS                                             |           |           | v20260303 |
+| UefiKey_STATUS                                                 |           |           | v20260303 |
+| UefiSettings                                                   |           | v20250401 |           |
+| UefiSettings_STATUS                                            |           | v20250401 |           |
+| UefiSignatureTemplateName                                      |           |           | v20260303 |
+| UefiSignatureTemplateName_STATUS                               |           |           | v20260303 |
+| UserArtifactManage                                             |           |           | v20260303 |
+| UserArtifactManage_STATUS                                      |           |           | v20260303 |
+| UserArtifactSettings                                           |           |           | v20260303 |
+| UserArtifactSettings_STATUS                                    |           |           | v20260303 |
+| UserArtifactSource                                             |           |           | v20260303 |
+| UserArtifactSource_STATUS                                      |           |           | v20260303 |
+| UserAssignedIdentityDetails                                    |           | v20250401 | v20260303 |
+| UserInitiatedReboot                                            |           | v20250401 |           |
+| UserInitiatedReboot_STATUS                                     |           | v20250401 |           |
+| UserInitiatedRedeploy                                          |           | v20250401 |           |
+| UserInitiatedRedeploy_STATUS                                   |           | v20250401 |           |
+| VMDiskSecurityProfile                                          |           | v20250401 |           |
+| VMDiskSecurityProfile_STATUS                                   |           | v20250401 |           |
+| VMGalleryApplication                                           |           | v20250401 |           |
+| VMGalleryApplication_STATUS                                    |           | v20250401 |           |
+| VMSizeProperties                                               |           | v20250401 |           |
+| VMSizeProperties_STATUS                                        |           | v20250401 |           |
+| ValidationStatus_STATUS                                        |           |           | v20260303 |
+| ValidationsProfile_STATUS                                      |           |           | v20260303 |
+| VaultCertificate                                               |           | v20250401 |           |
+| VaultCertificate_STATUS                                        |           | v20250401 |           |
+| VaultSecretGroup                                               |           | v20250401 |           |
+| VaultSecretGroup_STATUS                                        |           | v20250401 |           |
+| VirtualHardDisk                                                |           | v20250401 |           |
+| VirtualHardDisk_STATUS                                         |           | v20250401 |           |
+| VirtualMachine                                                 |           | v20250401 |           |
+| VirtualMachineAgentInstanceView_STATUS                         |           | v20250401 |           |
+| VirtualMachineEvictionPolicyTypes                              |           | v20250401 |           |
+| VirtualMachineEvictionPolicyTypes_STATUS                       |           | v20250401 |           |
+| VirtualMachineExtensionHandlerInstanceView_STATUS              |           | v20250401 |           |
+| VirtualMachineExtensionInstanceView_STATUS                     |           | v20250401 |           |
+| VirtualMachineExtensionProperties_STATUS                       |           | v20250401 |           |
+| VirtualMachineExtension_STATUS                                 |           | v20250401 |           |
+| VirtualMachineHealthStatus_STATUS                              |           | v20250401 |           |
+| VirtualMachineIdentity                                         |           | v20250401 |           |
+| VirtualMachineIdentity_STATUS                                  |           | v20250401 |           |
+| VirtualMachineInstanceView_STATUS                              |           | v20250401 |           |
+| VirtualMachineIpTag                                            |           | v20250401 |           |
+| VirtualMachineIpTag_STATUS                                     |           | v20250401 |           |
+| VirtualMachineNetworkInterfaceConfiguration                    |           | v20250401 |           |
+| VirtualMachineNetworkInterfaceConfigurationProperties          |           | v20250401 |           |
+| VirtualMachineNetworkInterfaceConfigurationProperties_STATUS   |           | v20250401 |           |
+| VirtualMachineNetworkInterfaceConfiguration_STATUS             |           | v20250401 |           |
+| VirtualMachineNetworkInterfaceDnsSettingsConfiguration         |           | v20250401 |           |
+| VirtualMachineNetworkInterfaceDnsSettingsConfiguration_STATUS  |           | v20250401 |           |
+| VirtualMachineNetworkInterfaceIPConfiguration                  |           | v20250401 |           |
+| VirtualMachineNetworkInterfaceIPConfigurationProperties        |           | v20250401 |           |
+| VirtualMachineNetworkInterfaceIPConfigurationProperties_STATUS |           | v20250401 |           |
+| VirtualMachineNetworkInterfaceIPConfiguration_STATUS           |           | v20250401 |           |
+| VirtualMachinePatchStatus_STATUS                               |           | v20250401 |           |
+| VirtualMachinePriorityTypes                                    |           | v20250401 |           |
+| VirtualMachinePriorityTypes_STATUS                             |           | v20250401 |           |
+| VirtualMachineProperties                                       |           | v20250401 |           |
+| VirtualMachineProperties_STATUS                                |           | v20250401 |           |
+| VirtualMachinePublicIPAddressConfiguration                     |           | v20250401 |           |
+| VirtualMachinePublicIPAddressConfigurationProperties           |           | v20250401 |           |
+| VirtualMachinePublicIPAddressConfigurationProperties_STATUS    |           | v20250401 |           |
+| VirtualMachinePublicIPAddressConfiguration_STATUS              |           | v20250401 |           |
+| VirtualMachinePublicIPAddressDnsSettingsConfiguration          |           | v20250401 |           |
+| VirtualMachinePublicIPAddressDnsSettingsConfiguration_STATUS   |           | v20250401 |           |
+| VirtualMachineRunCommandInstanceView_ExecutionState_STATUS     | v20220301 |           |           |
+| VirtualMachineRunCommandInstanceView_STATUS                    | v20220301 |           |           |
+| VirtualMachineRunCommandProperties                             | v20220301 |           |           |
+| VirtualMachineRunCommandProperties_STATUS                      | v20220301 |           |           |
+| VirtualMachineRunCommandScriptSource                           | v20220301 |           |           |
+| VirtualMachineRunCommandScriptSource_STATUS                    | v20220301 |           |           |
+| VirtualMachineSizeTypes_STATUS                                 |           | v20250401 |           |
+| VirtualMachine_STATUS                                          |           | v20250401 |           |
+| VirtualMachine_Spec                                            |           | v20250401 |           |
+| VirtualMachinesRunCommand                                      | v20220301 |           |           |
+| VirtualMachinesRunCommand_STATUS                               | v20220301 |           |           |
+| VirtualMachinesRunCommand_Spec                                 | v20220301 |           |           |
+| WinRMConfiguration                                             |           | v20250401 |           |
+| WinRMConfiguration_STATUS                                      |           | v20250401 |           |
+| WinRMListener                                                  |           | v20250401 |           |
+| WinRMListener_STATUS                                           |           | v20250401 |           |
+| WindowsConfiguration                                           |           | v20250401 |           |
+| WindowsConfiguration_STATUS                                    |           | v20250401 |           |
+| WindowsPatchAssessmentMode                                     |           | v20250401 |           |
+| WindowsPatchAssessmentMode_STATUS                              |           | v20250401 |           |
+| WindowsVMGuestPatchAutomaticByPlatformRebootSetting            |           | v20250401 |           |
+| WindowsVMGuestPatchAutomaticByPlatformRebootSetting_STATUS     |           | v20250401 |           |
+| WindowsVMGuestPatchAutomaticByPlatformSettings                 |           | v20250401 |           |
+| WindowsVMGuestPatchAutomaticByPlatformSettings_STATUS          |           | v20250401 |           |
+| WindowsVMGuestPatchMode                                        |           | v20250401 |           |
+| WindowsVMGuestPatchMode_STATUS                                 |           | v20250401 |           |
+| ZonePlacementPolicyType                                        |           | v20250401 |           |
+| ZonePlacementPolicyType_STATUS                                 |           | v20250401 |           |

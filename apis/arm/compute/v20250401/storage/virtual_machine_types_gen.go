@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260303/storage"
 	"github.com/rotisserie/eris"
 	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -171,12 +172,6 @@ type VirtualMachineList struct {
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []VirtualMachine `json:"items"`
 }
-
-// Storage version of v20250401.APIVersion
-// +kubebuilder:validation:Enum={"2025-04-01"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2025-04-01")
 
 // Storage version of v20250401.VirtualMachine_Spec
 type VirtualMachine_Spec struct {
@@ -604,18 +599,6 @@ type SubResource_STATUS struct {
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
-// Storage version of v20250401.SystemData_STATUS
-// Metadata pertaining to creation and last modification of the resource.
-type SystemData_STATUS struct {
-	CreatedAt          *string                `json:"createdAt,omitempty"`
-	CreatedBy          *string                `json:"createdBy,omitempty"`
-	CreatedByType      *string                `json:"createdByType,omitempty"`
-	LastModifiedAt     *string                `json:"lastModifiedAt,omitempty"`
-	LastModifiedBy     *string                `json:"lastModifiedBy,omitempty"`
-	LastModifiedByType *string                `json:"lastModifiedByType,omitempty"`
-	PropertyBag        genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
 // Storage version of v20250401.VirtualMachineExtension_STATUS
 // Describes a Virtual Machine Extension.
 type VirtualMachineExtension_STATUS struct {
@@ -740,6 +723,68 @@ type CommonUserAssignedIdentitiesValue_STATUS struct {
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
+// AssignProperties_From_CommonUserAssignedIdentitiesValue_STATUS populates our CommonUserAssignedIdentitiesValue_STATUS from the provided source CommonUserAssignedIdentitiesValue_STATUS
+func (value *CommonUserAssignedIdentitiesValue_STATUS) AssignProperties_From_CommonUserAssignedIdentitiesValue_STATUS(source *storage.CommonUserAssignedIdentitiesValue_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// ClientId
+	value.ClientId = genruntime.ClonePointerToString(source.ClientId)
+
+	// PrincipalId
+	value.PrincipalId = genruntime.ClonePointerToString(source.PrincipalId)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		value.PropertyBag = propertyBag
+	} else {
+		value.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCommonUserAssignedIdentitiesValue_STATUS interface (if implemented) to customize the conversion
+	var valueAsAny any = value
+	if augmentedValue, ok := valueAsAny.(augmentConversionForCommonUserAssignedIdentitiesValue_STATUS); ok {
+		err := augmentedValue.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_CommonUserAssignedIdentitiesValue_STATUS populates the provided destination CommonUserAssignedIdentitiesValue_STATUS from our CommonUserAssignedIdentitiesValue_STATUS
+func (value *CommonUserAssignedIdentitiesValue_STATUS) AssignProperties_To_CommonUserAssignedIdentitiesValue_STATUS(destination *storage.CommonUserAssignedIdentitiesValue_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(value.PropertyBag)
+
+	// ClientId
+	destination.ClientId = genruntime.ClonePointerToString(value.ClientId)
+
+	// PrincipalId
+	destination.PrincipalId = genruntime.ClonePointerToString(value.PrincipalId)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCommonUserAssignedIdentitiesValue_STATUS interface (if implemented) to customize the conversion
+	var valueAsAny any = value
+	if augmentedValue, ok := valueAsAny.(augmentConversionForCommonUserAssignedIdentitiesValue_STATUS); ok {
+		err := augmentedValue.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20250401.DataDisk
 // Describes a data disk.
 type DataDisk struct {
@@ -840,17 +885,6 @@ type ImageReference_STATUS struct {
 	SharedGalleryImageId    *string                `json:"sharedGalleryImageId,omitempty"`
 	Sku                     *string                `json:"sku,omitempty"`
 	Version                 *string                `json:"version,omitempty"`
-}
-
-// Storage version of v20250401.InstanceViewStatus_STATUS
-// Instance view status.
-type InstanceViewStatus_STATUS struct {
-	Code          *string                `json:"code,omitempty"`
-	DisplayStatus *string                `json:"displayStatus,omitempty"`
-	Level         *string                `json:"level,omitempty"`
-	Message       *string                `json:"message,omitempty"`
-	PropertyBag   genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Time          *string                `json:"time,omitempty"`
 }
 
 // Storage version of v20250401.KeyVaultSecretReference_STATUS
@@ -1045,6 +1079,62 @@ type UefiSettings_STATUS struct {
 type UserAssignedIdentityDetails struct {
 	PropertyBag genruntime.PropertyBag       `json:"$propertyBag,omitempty"`
 	Reference   genruntime.ResourceReference `armReference:"Reference" json:"reference,omitempty"`
+}
+
+// AssignProperties_From_UserAssignedIdentityDetails populates our UserAssignedIdentityDetails from the provided source UserAssignedIdentityDetails
+func (details *UserAssignedIdentityDetails) AssignProperties_From_UserAssignedIdentityDetails(source *storage.UserAssignedIdentityDetails) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// Reference
+	details.Reference = source.Reference.Copy()
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		details.PropertyBag = propertyBag
+	} else {
+		details.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForUserAssignedIdentityDetails interface (if implemented) to customize the conversion
+	var detailsAsAny any = details
+	if augmentedDetails, ok := detailsAsAny.(augmentConversionForUserAssignedIdentityDetails); ok {
+		err := augmentedDetails.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_UserAssignedIdentityDetails populates the provided destination UserAssignedIdentityDetails from our UserAssignedIdentityDetails
+func (details *UserAssignedIdentityDetails) AssignProperties_To_UserAssignedIdentityDetails(destination *storage.UserAssignedIdentityDetails) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(details.PropertyBag)
+
+	// Reference
+	destination.Reference = details.Reference.Copy()
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForUserAssignedIdentityDetails interface (if implemented) to customize the conversion
+	var detailsAsAny any = details
+	if augmentedDetails, ok := detailsAsAny.(augmentConversionForUserAssignedIdentityDetails); ok {
+		err := augmentedDetails.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
 }
 
 // Storage version of v20250401.UserInitiatedReboot
@@ -1272,6 +1362,16 @@ type ApiEntityReference struct {
 type ApiEntityReference_STATUS struct {
 	Id          *string                `json:"id,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
+}
+
+type augmentConversionForCommonUserAssignedIdentitiesValue_STATUS interface {
+	AssignPropertiesFrom(src *storage.CommonUserAssignedIdentitiesValue_STATUS) error
+	AssignPropertiesTo(dst *storage.CommonUserAssignedIdentitiesValue_STATUS) error
+}
+
+type augmentConversionForUserAssignedIdentityDetails interface {
+	AssignPropertiesFrom(src *storage.UserAssignedIdentityDetails) error
+	AssignPropertiesTo(dst *storage.UserAssignedIdentityDetails) error
 }
 
 // Storage version of v20250401.AvailablePatchSummary_STATUS

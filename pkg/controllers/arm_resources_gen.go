@@ -44,6 +44,8 @@ import (
 	compute_v20220301s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301/storage"
 	compute_v20250401 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401"
 	compute_v20250401s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401/storage"
+	compute_v20260303 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260303"
+	compute_v20260303s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260303/storage"
 	consumption_customizations "github.com/highfivelabs/aso-extensions/apis/arm/consumption/customizations"
 	consumption_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601"
 	consumption_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601/storage"
@@ -821,6 +823,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.CommitmentPlan)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.CommitmentPlansAccountAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.HostGroup)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.HostGroupsHost)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.ProximityPlacementGroup)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.SshPublicKey)})
 	result = append(result, &registration.StorageType{
 		Obj: new(compute_v20250401.VirtualMachine),
 		Indexes: []registration.Index{
@@ -840,6 +846,11 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesApplication)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesApplicationsVersion)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesImage)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesImagesVersion)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.Gallery)})
 	result = append(result, &registration.StorageType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.StorageType{
 		Obj: new(containerregistry_v20190401.RegistriesTask),
@@ -1942,8 +1953,34 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.CommitmentPlansAccountAssociation)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301s.VirtualMachinesRunCommand)})
-	result = append(result, &registration.KnownType{Obj: new(compute_v20250401.VirtualMachine)})
-	result = append(result, &registration.KnownType{Obj: new(compute_v20250401s.VirtualMachine)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(compute_v20250401.HostGroup)},
+		&registration.KnownType{Obj: new(compute_v20250401.HostGroupsHost)},
+		&registration.KnownType{Obj: new(compute_v20250401.ProximityPlacementGroup)},
+		&registration.KnownType{Obj: new(compute_v20250401.SshPublicKey)},
+		&registration.KnownType{Obj: new(compute_v20250401.VirtualMachine)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(compute_v20250401s.HostGroup)},
+		&registration.KnownType{Obj: new(compute_v20250401s.HostGroupsHost)},
+		&registration.KnownType{Obj: new(compute_v20250401s.ProximityPlacementGroup)},
+		&registration.KnownType{Obj: new(compute_v20250401s.SshPublicKey)},
+		&registration.KnownType{Obj: new(compute_v20250401s.VirtualMachine)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(compute_v20260303.GalleriesApplication)},
+		&registration.KnownType{Obj: new(compute_v20260303.GalleriesApplicationsVersion)},
+		&registration.KnownType{Obj: new(compute_v20260303.GalleriesImage)},
+		&registration.KnownType{Obj: new(compute_v20260303.GalleriesImagesVersion)},
+		&registration.KnownType{Obj: new(compute_v20260303.Gallery)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesApplication)},
+		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesApplicationsVersion)},
+		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesImage)},
+		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesImagesVersion)},
+		&registration.KnownType{Obj: new(compute_v20260303s.Gallery)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601s.Budget)})
 	result = append(result, &registration.KnownType{Obj: new(containerregistry_v20190401.RegistriesTask)})
@@ -2519,6 +2556,8 @@ func createScheme() *runtime.Scheme {
 	_ = compute_v20220301s.AddToScheme(scheme)
 	_ = compute_v20250401.AddToScheme(scheme)
 	_ = compute_v20250401s.AddToScheme(scheme)
+	_ = compute_v20260303.AddToScheme(scheme)
+	_ = compute_v20260303s.AddToScheme(scheme)
 	_ = consumption_v20260601.AddToScheme(scheme)
 	_ = consumption_v20260601s.AddToScheme(scheme)
 	_ = containerregistry_v20190401.AddToScheme(scheme)
@@ -2711,6 +2750,15 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &cognitiveservices_customizations.AccountsRaiPolicyExtension{})
 	result = append(result, &cognitiveservices_customizations.CommitmentPlanExtension{})
 	result = append(result, &cognitiveservices_customizations.CommitmentPlansAccountAssociationExtension{})
+	result = append(result, &compute_customizations.GalleriesApplicationExtension{})
+	result = append(result, &compute_customizations.GalleriesApplicationsVersionExtension{})
+	result = append(result, &compute_customizations.GalleriesImageExtension{})
+	result = append(result, &compute_customizations.GalleriesImagesVersionExtension{})
+	result = append(result, &compute_customizations.GalleryExtension{})
+	result = append(result, &compute_customizations.HostGroupExtension{})
+	result = append(result, &compute_customizations.HostGroupsHostExtension{})
+	result = append(result, &compute_customizations.ProximityPlacementGroupExtension{})
+	result = append(result, &compute_customizations.SshPublicKeyExtension{})
 	result = append(result, &compute_customizations.VirtualMachineExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
 	result = append(result, &consumption_customizations.BudgetExtension{})

@@ -288,6 +288,18 @@ func init() {
 			},
 		}
 	}
+	// Gallery versions are named MajorVersion.MinorVersion.Patch; an image
+	// version names a source that exists, an application version its
+	// package's blob; a host group has 1 to 3 fault domains (gallery.go).
+	f["GalleriesImagesVersion"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "1.0.0", "storageProfile": map[string]any{"source": map[string]any{"reference": armRef(c.add(c.in("Microsoft.Compute/images/base")))}}}
+	}}
+	f["GalleriesApplicationsVersion"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "1.0.0", "publishingProfile": map[string]any{"source": map[string]any{"mediaLink": "https://example.blob.core.windows.net/pkgs/agent.zip"}}}
+	}}
+	f["HostGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"platformFaultDomainCount": int64(1)}
+	}}
 	f["WorkspacesSummaryLog"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"ruleDefinition": map[string]any{"query": "AppRequests | summarize count() by bin(TimeGenerated, 1h)", "binSize": int64(60), "destinationTable": "Hourly_CL"}}
 	}}

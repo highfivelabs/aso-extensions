@@ -530,6 +530,14 @@ upstream's); the catalog's chart tests do that.
   in the same account (400) that exists (404), scoped to the account or a
   path under it (400). Not modelled: built-in definitions, the data plane
   enforcing anything, the principal existing, and the error codes.
+- Azure Compute Gallery and dedicated hosts (`Microsoft.Compute/galleries`
+  and children, 2026-03-03; `hostGroups`, 2025-04-01;
+  `pkg/fakecloud/arm/gallery.go`): a gallery's name has letters, digits,
+  dots and underscores only; a version's name is `X.Y.Z`; an image version
+  names a source that exists (404) and an application version its package's
+  `mediaLink`; a host group has 1 to 3 fault domains (400 each). Not
+  modelled: replication to regions (a version is ready at once), OS state
+  and generation matching, host SKU availability, quota, and the error codes.
 - Log Analytics summary rules (`workspaces/summaryLogs`, 2025-07-01;
   `pkg/fakecloud/arm/loganalytics.go`): a rule's definition gives a query
   and a bin size of 20, 30, 60, 120, 180, 360, 720 or 1440 minutes (400).

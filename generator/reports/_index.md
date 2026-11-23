@@ -121,10 +121,19 @@ title: Supported Resources
 
 ### Released
 
-| Resource                  | ARM Version | CRD Version | Supported From | Sample |
-|---------------------------|-------------|-------------|----------------|--------|
-| VirtualMachine            | 2025-04-01  | v20250401   | v0.1.0         | -      |
-| VirtualMachinesRunCommand | 2022-03-01  | v20220301   | v0.1.0         | -      |
+| Resource                     | ARM Version | CRD Version | Supported From | Sample |
+|------------------------------|-------------|-------------|----------------|--------|
+| GalleriesApplication         | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| GalleriesApplicationsVersion | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| GalleriesImage               | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| GalleriesImagesVersion       | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| Gallery                      | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| HostGroup                    | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| HostGroupsHost               | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| ProximityPlacementGroup      | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| SshPublicKey                 | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| VirtualMachine               | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| VirtualMachinesRunCommand    | 2022-03-01  | v20220301   | v0.1.0         | -      |
 
 ## Consumption
 

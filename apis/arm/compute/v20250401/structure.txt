@@ -4,6 +4,274 @@ github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401
 APIVersion: Enum (1 value)
 └── "2025-04-01"
 
+HostGroup: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (9 properties)
+│   ├── AdditionalCapabilities: *Object (1 property)
+│   │   └── UltraSSDEnabled: *bool
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PlatformFaultDomainCount: Validated<*int> (1 rule)
+│   │   └── Rule 0: Minimum: 1
+│   ├── SupportAutomaticPlacement: *bool
+│   ├── Tags: map[string]string
+│   └── Zones: string[]
+└── Status: Object (13 properties)
+    ├── AdditionalCapabilities: *Object (1 property)
+    │   └── UltraSSDEnabled: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Hosts: Object (1 property)[]
+    │   └── Id: *string
+    ├── Id: *string
+    ├── InstanceView: *Object (1 property)
+    │   └── Hosts: Object (4 properties)[]
+    │       ├── AssetId: *string
+    │       ├── AvailableCapacity: *Object (1 property)
+    │       │   └── AllocatableVMs: Object (2 properties)[]
+    │       │       ├── Count: *float64
+    │       │       └── VmSize: *string
+    │       ├── Name: *string
+    │       └── Statuses: Object (5 properties)[]
+    │           ├── Code: *string
+    │           ├── DisplayStatus: *string
+    │           ├── Level: *Enum (3 values)
+    │           │   ├── "Error"
+    │           │   ├── "Info"
+    │           │   └── "Warning"
+    │           ├── Message: *string
+    │           └── Time: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PlatformFaultDomainCount: *int
+    ├── SupportAutomaticPlacement: *bool
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── Zones: string[]
+
+HostGroupsHost: Resource
+├── Owner: HostGroup
+├── Spec: Object (9 properties)
+│   ├── AutoReplaceOnFailure: *bool
+│   ├── AzureName: string
+│   ├── LicenseType: *Enum (3 values)
+│   │   ├── "None"
+│   │   ├── "Windows_Server_Hybrid"
+│   │   └── "Windows_Server_Perpetual"
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PlatformFaultDomain: *int
+│   ├── Sku: *Object (3 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Name: *string
+│   │   └── Tier: *string
+│   └── Tags: map[string]string
+└── Status: Object (17 properties)
+    ├── AutoReplaceOnFailure: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── HostId: *string
+    ├── Id: *string
+    ├── InstanceView: *Object (3 properties)
+    │   ├── AssetId: *string
+    │   ├── AvailableCapacity: *Object (1 property)
+    │   │   └── AllocatableVMs: Object (2 properties)[]
+    │   │       ├── Count: *float64
+    │   │       └── VmSize: *string
+    │   └── Statuses: Object (5 properties)[]
+    │       ├── Code: *string
+    │       ├── DisplayStatus: *string
+    │       ├── Level: *Enum (3 values)
+    │       │   ├── "Error"
+    │       │   ├── "Info"
+    │       │   └── "Warning"
+    │       ├── Message: *string
+    │       └── Time: *string
+    ├── LicenseType: *Enum (3 values)
+    │   ├── "None"
+    │   ├── "Windows_Server_Hybrid"
+    │   └── "Windows_Server_Perpetual"
+    ├── Location: *string
+    ├── Name: *string
+    ├── PlatformFaultDomain: *int
+    ├── ProvisioningState: *string
+    ├── ProvisioningTime: *string
+    ├── Sku: *Object (3 properties)
+    │   ├── Capacity: *int
+    │   ├── Name: *string
+    │   └── Tier: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── TimeCreated: *string
+    ├── Type: *string
+    └── VirtualMachines: Object (1 property)[]
+        └── Id: *string
+
+ProximityPlacementGroup: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── ColocationStatus: *Object (5 properties)
+│   │   ├── Code: *string
+│   │   ├── DisplayStatus: *string
+│   │   ├── Level: *Enum (3 values)
+│   │   │   ├── "Error"
+│   │   │   ├── "Info"
+│   │   │   └── "Warning"
+│   │   ├── Message: *string
+│   │   └── Time: *string
+│   ├── Intent: *Object (1 property)
+│   │   └── VmSizes: string[]
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── ProximityPlacementGroupType: *Enum (2 values)
+│   │   ├── "Standard"
+│   │   └── "Ultra"
+│   ├── Tags: map[string]string
+│   └── Zones: string[]
+└── Status: Object (14 properties)
+    ├── AvailabilitySets: Object (2 properties)[]
+    │   ├── ColocationStatus: *Object (5 properties)
+    │   │   ├── Code: *string
+    │   │   ├── DisplayStatus: *string
+    │   │   ├── Level: *Enum (3 values)
+    │   │   │   ├── "Error"
+    │   │   │   ├── "Info"
+    │   │   │   └── "Warning"
+    │   │   ├── Message: *string
+    │   │   └── Time: *string
+    │   └── Id: *string
+    ├── ColocationStatus: *Object (5 properties)
+    │   ├── Code: *string
+    │   ├── DisplayStatus: *string
+    │   ├── Level: *Enum (3 values)
+    │   │   ├── "Error"
+    │   │   ├── "Info"
+    │   │   └── "Warning"
+    │   ├── Message: *string
+    │   └── Time: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Intent: *Object (1 property)
+    │   └── VmSizes: string[]
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProximityPlacementGroupType: *Enum (2 values)
+    │   ├── "Standard"
+    │   └── "Ultra"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualMachineScaleSets: Object (2 properties)[]
+    │   ├── ColocationStatus: *Object (5 properties)
+    │   │   ├── Code: *string
+    │   │   ├── DisplayStatus: *string
+    │   │   ├── Level: *Enum (3 values)
+    │   │   │   ├── "Error"
+    │   │   │   ├── "Info"
+    │   │   │   └── "Warning"
+    │   │   ├── Message: *string
+    │   │   └── Time: *string
+    │   └── Id: *string
+    ├── VirtualMachines: Object (2 properties)[]
+    │   ├── ColocationStatus: *Object (5 properties)
+    │   │   ├── Code: *string
+    │   │   ├── DisplayStatus: *string
+    │   │   ├── Level: *Enum (3 values)
+    │   │   │   ├── "Error"
+    │   │   │   ├── "Info"
+    │   │   │   └── "Warning"
+    │   │   ├── Message: *string
+    │   │   └── Time: *string
+    │   └── Id: *string
+    └── Zones: string[]
+
+SshPublicKey: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PublicKey: *string
+│   └── Tags: map[string]string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PublicKey: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
 VirtualMachine: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (33 properties)

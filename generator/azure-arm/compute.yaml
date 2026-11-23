@@ -17,7 +17,44 @@ typeFilters:
     version: v20250401
     because: >-
       our VirtualMachine beside ASO's (2022-03-01), for storageProfile.diskControllerType and patchSettings.automaticByPlatformSettings.bypassPlatformSafetyChecksOnUserSchedule (the catalog's avm-res-compute-virtualmachine, 2026-11-13); 2025-04-01 is the version of ASO's newest compute kinds
+  - action: include
+    group: compute
+    version: v20260303
+    because: Azure Compute Gallery (galleries, image definitions and versions, VM applications and versions), the newest stable GalleryRP version
 groupModelConfiguration:
+  # Azure Compute Gallery, which ASO has none of (2026-11-23).
+  2026-03-03:
+    Gallery:
+      $exportAs: Gallery
+      $supportedFrom: v0.1.0
+    Galleries_Image:
+      $exportAs: GalleriesImage
+      $supportedFrom: v0.1.0
+    Galleries_Images_Version:
+      $exportAs: GalleriesImagesVersion
+      $supportedFrom: v0.1.0
+    Galleries_Application:
+      $exportAs: GalleriesApplication
+      $supportedFrom: v0.1.0
+    Galleries_Applications_Version:
+      $exportAs: GalleriesApplicationsVersion
+      $supportedFrom: v0.1.0
+    GalleryDiskImageSource:
+      Id:
+        $referenceType: arm # the source disk or snapshot (autolabel, reviewed)
+    DataDiskImageEncryption:
+      DiskEncryptionSetId:
+        $referenceType: arm # a disk encryption set: ASO's DiskEncryptionSet or an ARM ID (autolabel wrote simple; reviewed)
+    OSDiskImageEncryption:
+      DiskEncryptionSetId:
+        $referenceType: arm # a disk encryption set: ASO's DiskEncryptionSet or an ARM ID (autolabel wrote simple; reviewed)
+    GalleryArtifactVersionFullSource:
+      VirtualMachineId:
+        $referenceType: arm # the source virtual machine (autolabel wrote simple; reviewed)
+      Id:
+        $referenceType: arm # the source managed image or gallery image version (autolabel, reviewed)
+      CommunityGalleryImageId:
+        $referenceType: simple # a community gallery image's path, not an ARM ID (autolabel, reviewed)
   2022-03-01:
     VirtualMachines_RunCommand:
       $exportAs: VirtualMachinesRunCommand
@@ -33,6 +70,21 @@ groupModelConfiguration:
     # ASO's compute.yaml has them for its 2022-03-01 VirtualMachine.
     VirtualMachine:
       $exportAs: VirtualMachine
+      $supportedFrom: v0.1.0
+    # SSH public keys kept as resources, proximity placement groups and
+    # dedicated host groups with their hosts (2026-11-23), at the version of
+    # our VirtualMachine.
+    SshPublicKey:
+      $exportAs: SshPublicKey
+      $supportedFrom: v0.1.0
+    ProximityPlacementGroup:
+      $exportAs: ProximityPlacementGroup
+      $supportedFrom: v0.1.0
+    HostGroup:
+      $exportAs: HostGroup
+      $supportedFrom: v0.1.0
+    HostGroups_Host:
+      $exportAs: HostGroupsHost
       $supportedFrom: v0.1.0
     ApiEntityReference:
       Id:

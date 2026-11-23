@@ -4,6 +4,255 @@ github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401/storage
 APIVersion: Enum (1 value)
 └── "2025-04-01"
 
+HostGroup: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (11 properties)
+│   ├── AdditionalCapabilities: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── UltraSSDEnabled: *bool
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PlatformFaultDomainCount: *int
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── SupportAutomaticPlacement: *bool
+│   ├── Tags: map[string]string
+│   └── Zones: string[]
+└── Status: Object (14 properties)
+    ├── AdditionalCapabilities: *Object (2 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── UltraSSDEnabled: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Hosts: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── InstanceView: *Object (2 properties)
+    │   ├── Hosts: Object (5 properties)[]
+    │   │   ├── AssetId: *string
+    │   │   ├── AvailableCapacity: *Object (2 properties)
+    │   │   │   ├── AllocatableVMs: Object (3 properties)[]
+    │   │   │   │   ├── Count: *float64
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── VmSize: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Name: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Statuses: Object (6 properties)[]
+    │   │       ├── Code: *string
+    │   │       ├── DisplayStatus: *string
+    │   │       ├── Level: *string
+    │   │       ├── Message: *string
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Time: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Location: *string
+    ├── Name: *string
+    ├── PlatformFaultDomainCount: *int
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SupportAutomaticPlacement: *bool
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── Zones: string[]
+
+HostGroupsHost: Resource
+├── Owner: compute/v20250401.HostGroup
+├── Spec: Object (11 properties)
+│   ├── AutoReplaceOnFailure: *bool
+│   ├── AzureName: string
+│   ├── LicenseType: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PlatformFaultDomain: *int
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Sku: *Object (4 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Tier: *string
+│   └── Tags: map[string]string
+└── Status: Object (18 properties)
+    ├── AutoReplaceOnFailure: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── HostId: *string
+    ├── Id: *string
+    ├── InstanceView: *Object (4 properties)
+    │   ├── AssetId: *string
+    │   ├── AvailableCapacity: *Object (2 properties)
+    │   │   ├── AllocatableVMs: Object (3 properties)[]
+    │   │   │   ├── Count: *float64
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── VmSize: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Statuses: Object (6 properties)[]
+    │       ├── Code: *string
+    │       ├── DisplayStatus: *string
+    │       ├── Level: *string
+    │       ├── Message: *string
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── Time: *string
+    ├── LicenseType: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PlatformFaultDomain: *int
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ProvisioningTime: *string
+    ├── Sku: *Object (4 properties)
+    │   ├── Capacity: *int
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Tier: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── TimeCreated: *string
+    ├── Type: *string
+    └── VirtualMachines: Object (2 properties)[]
+        ├── Id: *string
+        └── PropertyBag: genruntime.PropertyBag
+
+ProximityPlacementGroup: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── ColocationStatus: *Object (6 properties)
+│   │   ├── Code: *string
+│   │   ├── DisplayStatus: *string
+│   │   ├── Level: *string
+│   │   ├── Message: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Time: *string
+│   ├── Intent: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── VmSizes: string[]
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── ProximityPlacementGroupType: *string
+│   ├── Tags: map[string]string
+│   └── Zones: string[]
+└── Status: Object (15 properties)
+    ├── AvailabilitySets: Object (3 properties)[]
+    │   ├── ColocationStatus: *Object (6 properties)
+    │   │   ├── Code: *string
+    │   │   ├── DisplayStatus: *string
+    │   │   ├── Level: *string
+    │   │   ├── Message: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Time: *string
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── ColocationStatus: *Object (6 properties)
+    │   ├── Code: *string
+    │   ├── DisplayStatus: *string
+    │   ├── Level: *string
+    │   ├── Message: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Time: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Intent: *Object (2 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── VmSizes: string[]
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProximityPlacementGroupType: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── VirtualMachineScaleSets: Object (3 properties)[]
+    │   ├── ColocationStatus: *Object (6 properties)
+    │   │   ├── Code: *string
+    │   │   ├── DisplayStatus: *string
+    │   │   ├── Level: *string
+    │   │   ├── Message: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Time: *string
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── VirtualMachines: Object (3 properties)[]
+    │   ├── ColocationStatus: *Object (6 properties)
+    │   │   ├── Code: *string
+    │   │   ├── DisplayStatus: *string
+    │   │   ├── Level: *string
+    │   │   ├── Message: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Time: *string
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Zones: string[]
+
+SshPublicKey: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── PublicKey: *string
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── PublicKey: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
 VirtualMachine: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (35 properties)
@@ -977,4 +1226,10 @@ VirtualMachine: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     ├── VmId: *string
     └── Zones: string[]
+
+augmentConversionForCommonUserAssignedIdentitiesValue_STATUS: Interface
+
+augmentConversionForSystemData_STATUS: Interface
+
+augmentConversionForUserAssignedIdentityDetails: Interface
 

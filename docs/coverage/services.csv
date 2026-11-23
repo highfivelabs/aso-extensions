@@ -58,7 +58,7 @@ Microsoft.CodeSigning,2,0,0,10,0,0,10,0.0,0.0,100.0
 Microsoft.CognitiveServices,26,3,13,338,81,102,155,24.0,30.2,45.9
 Microsoft.Communication,7,4,0,25,15,0,10,60.0,0.0,40.0
 Microsoft.Community,1,0,0,22,0,0,22,0.0,0.0,100.0
-Microsoft.Compute,41,12,1,1458,554,49,855,38.0,3.4,58.6
+Microsoft.Compute,41,12,10,1458,554,244,660,38.0,16.7,45.3
 Microsoft.Compute.Admin,4,0,0,27,0,0,27,0.0,0.0,100.0
 Microsoft.ComputeBulkActions,1,0,0,218,0,0,218,0.0,0.0,100.0
 Microsoft.ComputeLimit,5,0,0,5,0,0,5,0.0,0.0,100.0
