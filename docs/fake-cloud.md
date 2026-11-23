@@ -633,6 +633,16 @@ upstream's); the catalog's chart tests do that.
   one, 400); an agent's subnet and AzureVNet sandbox egress come together
   (400). Not modelled: sandboxes running, the agent acting, its connectors
   reaching their data sources, and the error codes.
+- Recovery Services vault settings (`vaults/*/backupconfig/vaultconfig`,
+  `backupstorageconfig/vaultstorageconfig`,
+  `backupEncryptionConfigs/backupResourceEncryptionConfig`, 2026-07-01;
+  `pkg/fakecloud/arm/vaultsettings.go`): soft delete set AlwaysON stays on
+  and its retention is 14 to 180 days (400); the storage redundancy cannot
+  change once the vault holds a protected item (400); customer-managed
+  encryption names its key and cannot go back to Microsoft-managed keys
+  (400). Not modelled: enhanced security and multi-user authorization,
+  cross-region restore taking effect, the key being reachable, and the
+  error codes.
 - Microsoft Foundry managed networks and outbound rules
   (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
   `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`

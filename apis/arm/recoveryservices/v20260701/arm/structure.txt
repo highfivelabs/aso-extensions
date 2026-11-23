@@ -327,6 +327,164 @@ Vault_Spec: Object (7 properties)
 │   └── Tier: *string
 └── Tags: map[string]string
 
+VaultsBackupConfig_STATUS: Object (8 properties)
+├── ETag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── EnhancedSecurityState: *Enum (3 values)
+│   │   ├── "Disabled"
+│   │   ├── "Enabled"
+│   │   └── "Invalid"
+│   ├── IsSoftDeleteFeatureStateEditable: *bool
+│   ├── ResourceGuardOperationRequests: string[]
+│   ├── SoftDeleteFeatureState: *Enum (4 values)
+│   │   ├── "AlwaysON"
+│   │   ├── "Disabled"
+│   │   ├── "Enabled"
+│   │   └── "Invalid"
+│   ├── SoftDeleteRetentionPeriodInDays: *int
+│   ├── StorageModelType: *Enum (5 values)
+│   │   ├── "GeoRedundant"
+│   │   ├── "Invalid"
+│   │   ├── "LocallyRedundant"
+│   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   └── "ZoneRedundant"
+│   ├── StorageType: *Enum (5 values)
+│   │   ├── "GeoRedundant"
+│   │   ├── "Invalid"
+│   │   ├── "LocallyRedundant"
+│   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   └── "ZoneRedundant"
+│   └── StorageTypeState: *Enum (3 values)
+│       ├── "Invalid"
+│       ├── "Locked"
+│       └── "Unlocked"
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+├── Tags: map[string]string
+└── Type: *string
+
+VaultsBackupConfig_Spec: Object (5 properties)
+├── ETag: *string
+├── Location: *string
+├── Name: string
+├── Properties: *Object (8 properties)
+│   ├── EnhancedSecurityState: *Enum (3 values)
+│   │   ├── "Disabled"
+│   │   ├── "Enabled"
+│   │   └── "Invalid"
+│   ├── IsSoftDeleteFeatureStateEditable: *bool
+│   ├── ResourceGuardOperationRequests: string[]
+│   ├── SoftDeleteFeatureState: *Enum (4 values)
+│   │   ├── "AlwaysON"
+│   │   ├── "Disabled"
+│   │   ├── "Enabled"
+│   │   └── "Invalid"
+│   ├── SoftDeleteRetentionPeriodInDays: *int
+│   ├── StorageModelType: *Enum (5 values)
+│   │   ├── "GeoRedundant"
+│   │   ├── "Invalid"
+│   │   ├── "LocallyRedundant"
+│   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   └── "ZoneRedundant"
+│   ├── StorageType: *Enum (5 values)
+│   │   ├── "GeoRedundant"
+│   │   ├── "Invalid"
+│   │   ├── "LocallyRedundant"
+│   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   └── "ZoneRedundant"
+│   └── StorageTypeState: *Enum (3 values)
+│       ├── "Invalid"
+│       ├── "Locked"
+│       └── "Unlocked"
+└── Tags: map[string]string
+
+VaultsBackupEncryptionConfig_STATUS: Object (8 properties)
+├── ETag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (7 properties)
+│   ├── EncryptionAtRestType: *Enum (3 values)
+│   │   ├── "CustomerManaged"
+│   │   ├── "Invalid"
+│   │   └── "MicrosoftManaged"
+│   ├── InfrastructureEncryptionState: *Enum (3 values)
+│   │   ├── "Disabled"
+│   │   ├── "Enabled"
+│   │   └── "Invalid"
+│   ├── KeyUri: *string
+│   ├── LastUpdateStatus: *Enum (8 values)
+│   │   ├── "Failed"
+│   │   ├── "FirstInitialization"
+│   │   ├── "Initialized"
+│   │   ├── "Invalid"
+│   │   ├── "NotEnabled"
+│   │   ├── "PartiallyFailed"
+│   │   ├── "PartiallySucceeded"
+│   │   └── "Succeeded"
+│   ├── SubscriptionId: *string
+│   ├── UseSystemAssignedIdentity: *bool
+│   └── UserAssignedIdentity: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+├── Tags: map[string]string
+└── Type: *string
+
+VaultsBackupEncryptionConfig_Spec: Object (5 properties)
+├── ETag: *string
+├── Location: *string
+├── Name: string
+├── Properties: *Object (5 properties)
+│   ├── EncryptionAtRestType: *Enum (3 values)
+│   │   ├── "CustomerManaged"
+│   │   ├── "Invalid"
+│   │   └── "MicrosoftManaged"
+│   ├── InfrastructureEncryptionState: *Enum (3 values)
+│   │   ├── "Disabled"
+│   │   ├── "Enabled"
+│   │   └── "Invalid"
+│   ├── KeyUri: *string
+│   ├── LastUpdateStatus: *Enum (8 values)
+│   │   ├── "Failed"
+│   │   ├── "FirstInitialization"
+│   │   ├── "Initialized"
+│   │   ├── "Invalid"
+│   │   ├── "NotEnabled"
+│   │   ├── "PartiallyFailed"
+│   │   ├── "PartiallySucceeded"
+│   │   └── "Succeeded"
+│   └── SubscriptionId: *string
+└── Tags: map[string]string
+
 VaultsBackupPolicy_STATUS: Object (8 properties)
 ├── ETag: *string
 ├── Id: *string
@@ -3013,6 +3171,87 @@ VaultsBackupResourceGuardProxy_Spec: Object (5 properties)
 │   │   ├── DefaultResourceRequest: *string
 │   │   └── VaultCriticalOperation: *string
 │   └── ResourceGuardResourceId: *string
+└── Tags: map[string]string
+
+VaultsBackupStorageConfig_STATUS: Object (8 properties)
+├── ETag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (6 properties)
+│   ├── CrossRegionRestoreFlag: *bool
+│   ├── DedupState: *Enum (3 values)
+│   │   ├── "Disabled"
+│   │   ├── "Enabled"
+│   │   └── "Invalid"
+│   ├── StorageModelType: *Enum (5 values)
+│   │   ├── "GeoRedundant"
+│   │   ├── "Invalid"
+│   │   ├── "LocallyRedundant"
+│   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   └── "ZoneRedundant"
+│   ├── StorageType: *Enum (5 values)
+│   │   ├── "GeoRedundant"
+│   │   ├── "Invalid"
+│   │   ├── "LocallyRedundant"
+│   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   └── "ZoneRedundant"
+│   ├── StorageTypeState: *Enum (3 values)
+│   │   ├── "Invalid"
+│   │   ├── "Locked"
+│   │   └── "Unlocked"
+│   └── XcoolState: *Enum (3 values)
+│       ├── "Disabled"
+│       ├── "Enabled"
+│       └── "Invalid"
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+├── Tags: map[string]string
+└── Type: *string
+
+VaultsBackupStorageConfig_Spec: Object (5 properties)
+├── ETag: *string
+├── Location: *string
+├── Name: string
+├── Properties: *Object (6 properties)
+│   ├── CrossRegionRestoreFlag: *bool
+│   ├── DedupState: *Enum (3 values)
+│   │   ├── "Disabled"
+│   │   ├── "Enabled"
+│   │   └── "Invalid"
+│   ├── StorageModelType: *Enum (5 values)
+│   │   ├── "GeoRedundant"
+│   │   ├── "Invalid"
+│   │   ├── "LocallyRedundant"
+│   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   └── "ZoneRedundant"
+│   ├── StorageType: *Enum (5 values)
+│   │   ├── "GeoRedundant"
+│   │   ├── "Invalid"
+│   │   ├── "LocallyRedundant"
+│   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   └── "ZoneRedundant"
+│   ├── StorageTypeState: *Enum (3 values)
+│   │   ├── "Invalid"
+│   │   ├── "Locked"
+│   │   └── "Unlocked"
+│   └── XcoolState: *Enum (3 values)
+│       ├── "Disabled"
+│       ├── "Enabled"
+│       └── "Invalid"
 └── Tags: map[string]string
 
 VaultsPrivateEndpointConnection_STATUS: Object (8 properties)

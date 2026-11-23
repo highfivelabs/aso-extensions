@@ -373,13 +373,14 @@ ledger has a row for it.
 | 2026-11-23 | `TestLiveCosmosFleet` | `Fleet`, `FleetsFleetspace` | none: a fleet and a fleetspace with no throughput pool (free); skips unless `Microsoft.DocumentDB` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveCosmosFleet"` |
 | 2026-11-23 | `TestLiveStorageDataShare` | `StorageAccountsDataShare` | a StorageV2 account (storage cents); the share is read-only to the live identity itself | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveStorageDataShare"` |
 | 2026-11-23 | `TestLiveSandboxGroup` | `SandboxGroup` | none: a sandbox group with no environment linked (free: no sandbox runs); skips unless `Microsoft.App` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSandboxGroup"` |
+| 2026-11-23 | `TestLiveVaultSettings` | `VaultsBackupStorageConfig`, `VaultsBackupConfig` (and `Vault`) | none: an empty vault (free while it protects nothing); soft delete left Enabled, not AlwaysON; skips unless `Microsoft.RecoveryServices` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveVaultSettings"` |
 
 All of them in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
 TESTS="TestLiveAddressPrefixSet TestLiveRuleCollectionGroupDraft
 TestLiveConnectionMonitor TestLiveSummaryRule TestLiveSentinelWorkspace
 TestLiveSiteContainers TestLiveSqlServerExtras TestLiveRestorePoints
 TestLiveCosmosPostgres TestLiveCosmosFleet TestLiveStorageDataShare
-TestLiveSandboxGroup"`.
+TestLiveSandboxGroup TestLiveVaultSettings"`.
 
 Written for the subscription (above, "The subscription roles"); each skips
 until the builder assigns the roles of `hack/live/roles/`:

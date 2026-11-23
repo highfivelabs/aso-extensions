@@ -11,7 +11,10 @@ no_list: true
 | Resource                        | ARM Version | CRD Version | Supported From | Sample |
 |---------------------------------|-------------|-------------|----------------|--------|
 | Vault                           | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsBackupConfig              | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsBackupEncryptionConfig    | 2026-07-01  | v20260701   | v0.1.0         | -      |
 | VaultsBackupPolicy              | 2026-07-01  | v20260701   | v0.1.0         | -      |
 | VaultsBackupResourceGuardProxy  | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsBackupStorageConfig       | 2026-07-01  | v20260701   | v0.1.0         | -      |
 | VaultsPrivateEndpointConnection | 2026-07-01  | v20260701   | v0.1.0         | -      |
 

@@ -101,8 +101,11 @@ The following resources have newer versions available in the Azure REST API spec
 
 |  | Resource                        | Available Stable | Supported Stable | Available Preview | Supported Preview |
 |--|---------------------------------|------------------|------------------|-------------------|-------------------|
+|  | VaultsBackupConfig              | 2026-10-01       | 2026-07-01       | -                 | -                 |
+|  | VaultsBackupEncryptionConfig    | 2026-10-01       | 2026-07-01       | -                 | -                 |
 |  | VaultsBackupPolicy              | 2026-10-01       | 2026-07-01       | -                 | -                 |
 |  | VaultsBackupResourceGuardProxy  | 2026-10-01       | 2026-07-01       | -                 | -                 |
+|  | VaultsBackupStorageConfig       | 2026-10-01       | 2026-07-01       | -                 | -                 |
 |  | VaultsPrivateEndpointConnection | 2026-10-01       | 2026-07-01       | -                 | -                 |
 
 ## storage

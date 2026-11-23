@@ -19,3 +19,6 @@ sites/slots/basicPublishingCredentialsPolicies/scm
 sites/slots/privateAccess/virtualNetworks
 hostingEnvironments/configurations/networking
 hostingEnvironments/configurations/customdnssuffix
+vaults/backupconfig/vaultconfig
+vaults/backupstorageconfig/vaultstorageconfig
+vaults/backupEncryptionConfigs/backupResourceEncryptionConfig

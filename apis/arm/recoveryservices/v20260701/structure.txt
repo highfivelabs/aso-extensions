@@ -339,6 +339,174 @@ Vault: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+VaultsBackupConfig: Resource
+├── Owner: Vault
+├── Spec: Object (6 properties)
+│   ├── ETag: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (8 properties)
+│   │   ├── EnhancedSecurityState: *Enum (3 values)
+│   │   │   ├── "Disabled"
+│   │   │   ├── "Enabled"
+│   │   │   └── "Invalid"
+│   │   ├── IsSoftDeleteFeatureStateEditable: *bool
+│   │   ├── ResourceGuardOperationRequests: string[]
+│   │   ├── SoftDeleteFeatureState: *Enum (4 values)
+│   │   │   ├── "AlwaysON"
+│   │   │   ├── "Disabled"
+│   │   │   ├── "Enabled"
+│   │   │   └── "Invalid"
+│   │   ├── SoftDeleteRetentionPeriodInDays: *int
+│   │   ├── StorageModelType: *Enum (5 values)
+│   │   │   ├── "GeoRedundant"
+│   │   │   ├── "Invalid"
+│   │   │   ├── "LocallyRedundant"
+│   │   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   │   └── "ZoneRedundant"
+│   │   ├── StorageType: *Enum (5 values)
+│   │   │   ├── "GeoRedundant"
+│   │   │   ├── "Invalid"
+│   │   │   ├── "LocallyRedundant"
+│   │   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   │   └── "ZoneRedundant"
+│   │   └── StorageTypeState: *Enum (3 values)
+│   │       ├── "Invalid"
+│   │       ├── "Locked"
+│   │       └── "Unlocked"
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ETag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (8 properties)
+    │   ├── EnhancedSecurityState: *Enum (3 values)
+    │   │   ├── "Disabled"
+    │   │   ├── "Enabled"
+    │   │   └── "Invalid"
+    │   ├── IsSoftDeleteFeatureStateEditable: *bool
+    │   ├── ResourceGuardOperationRequests: string[]
+    │   ├── SoftDeleteFeatureState: *Enum (4 values)
+    │   │   ├── "AlwaysON"
+    │   │   ├── "Disabled"
+    │   │   ├── "Enabled"
+    │   │   └── "Invalid"
+    │   ├── SoftDeleteRetentionPeriodInDays: *int
+    │   ├── StorageModelType: *Enum (5 values)
+    │   │   ├── "GeoRedundant"
+    │   │   ├── "Invalid"
+    │   │   ├── "LocallyRedundant"
+    │   │   ├── "ReadAccessGeoZoneRedundant"
+    │   │   └── "ZoneRedundant"
+    │   ├── StorageType: *Enum (5 values)
+    │   │   ├── "GeoRedundant"
+    │   │   ├── "Invalid"
+    │   │   ├── "LocallyRedundant"
+    │   │   ├── "ReadAccessGeoZoneRedundant"
+    │   │   └── "ZoneRedundant"
+    │   └── StorageTypeState: *Enum (3 values)
+    │       ├── "Invalid"
+    │       ├── "Locked"
+    │       └── "Unlocked"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+VaultsBackupEncryptionConfig: Resource
+├── Owner: Vault
+├── Spec: Object (6 properties)
+│   ├── ETag: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (5 properties)
+│   │   ├── EncryptionAtRestType: *Enum (3 values)
+│   │   │   ├── "CustomerManaged"
+│   │   │   ├── "Invalid"
+│   │   │   └── "MicrosoftManaged"
+│   │   ├── InfrastructureEncryptionState: *Enum (3 values)
+│   │   │   ├── "Disabled"
+│   │   │   ├── "Enabled"
+│   │   │   └── "Invalid"
+│   │   ├── KeyUri: *string
+│   │   ├── LastUpdateStatus: *Enum (8 values)
+│   │   │   ├── "Failed"
+│   │   │   ├── "FirstInitialization"
+│   │   │   ├── "Initialized"
+│   │   │   ├── "Invalid"
+│   │   │   ├── "NotEnabled"
+│   │   │   ├── "PartiallyFailed"
+│   │   │   ├── "PartiallySucceeded"
+│   │   │   └── "Succeeded"
+│   │   └── SubscriptionId: *string
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ETag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (7 properties)
+    │   ├── EncryptionAtRestType: *Enum (3 values)
+    │   │   ├── "CustomerManaged"
+    │   │   ├── "Invalid"
+    │   │   └── "MicrosoftManaged"
+    │   ├── InfrastructureEncryptionState: *Enum (3 values)
+    │   │   ├── "Disabled"
+    │   │   ├── "Enabled"
+    │   │   └── "Invalid"
+    │   ├── KeyUri: *string
+    │   ├── LastUpdateStatus: *Enum (8 values)
+    │   │   ├── "Failed"
+    │   │   ├── "FirstInitialization"
+    │   │   ├── "Initialized"
+    │   │   ├── "Invalid"
+    │   │   ├── "NotEnabled"
+    │   │   ├── "PartiallyFailed"
+    │   │   ├── "PartiallySucceeded"
+    │   │   └── "Succeeded"
+    │   ├── SubscriptionId: *string
+    │   ├── UseSystemAssignedIdentity: *bool
+    │   └── UserAssignedIdentity: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
 VaultsBackupPolicy: Resource
 ├── Owner: Vault
 ├── Spec: Object (7 properties)
@@ -3021,6 +3189,92 @@ VaultsBackupResourceGuardProxy: Resource
     │   │   ├── DefaultResourceRequest: *string
     │   │   └── VaultCriticalOperation: *string
     │   └── ResourceGuardResourceId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+VaultsBackupStorageConfig: Resource
+├── Owner: Vault
+├── Spec: Object (6 properties)
+│   ├── ETag: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (6 properties)
+│   │   ├── CrossRegionRestoreFlag: *bool
+│   │   ├── DedupState: *Enum (3 values)
+│   │   │   ├── "Disabled"
+│   │   │   ├── "Enabled"
+│   │   │   └── "Invalid"
+│   │   ├── StorageModelType: *Enum (5 values)
+│   │   │   ├── "GeoRedundant"
+│   │   │   ├── "Invalid"
+│   │   │   ├── "LocallyRedundant"
+│   │   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   │   └── "ZoneRedundant"
+│   │   ├── StorageType: *Enum (5 values)
+│   │   │   ├── "GeoRedundant"
+│   │   │   ├── "Invalid"
+│   │   │   ├── "LocallyRedundant"
+│   │   │   ├── "ReadAccessGeoZoneRedundant"
+│   │   │   └── "ZoneRedundant"
+│   │   ├── StorageTypeState: *Enum (3 values)
+│   │   │   ├── "Invalid"
+│   │   │   ├── "Locked"
+│   │   │   └── "Unlocked"
+│   │   └── XcoolState: *Enum (3 values)
+│   │       ├── "Disabled"
+│   │       ├── "Enabled"
+│   │       └── "Invalid"
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ETag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (6 properties)
+    │   ├── CrossRegionRestoreFlag: *bool
+    │   ├── DedupState: *Enum (3 values)
+    │   │   ├── "Disabled"
+    │   │   ├── "Enabled"
+    │   │   └── "Invalid"
+    │   ├── StorageModelType: *Enum (5 values)
+    │   │   ├── "GeoRedundant"
+    │   │   ├── "Invalid"
+    │   │   ├── "LocallyRedundant"
+    │   │   ├── "ReadAccessGeoZoneRedundant"
+    │   │   └── "ZoneRedundant"
+    │   ├── StorageType: *Enum (5 values)
+    │   │   ├── "GeoRedundant"
+    │   │   ├── "Invalid"
+    │   │   ├── "LocallyRedundant"
+    │   │   ├── "ReadAccessGeoZoneRedundant"
+    │   │   └── "ZoneRedundant"
+    │   ├── StorageTypeState: *Enum (3 values)
+    │   │   ├── "Invalid"
+    │   │   ├── "Locked"
+    │   │   └── "Unlocked"
+    │   └── XcoolState: *Enum (3 values)
+    │       ├── "Disabled"
+    │       ├── "Enabled"
+    │       └── "Invalid"
     ├── SystemData: *Object (6 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string

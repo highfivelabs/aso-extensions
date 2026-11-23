@@ -438,7 +438,7 @@ var vaultPrivateEndpointState_STATUS_Values = map[string]VaultPrivateEndpointSta
 // Customer Managed Key details of the resource.
 type VaultPropertiesEncryption_STATUS struct {
 	// InfrastructureEncryption: Enabling/Disabling the Double Encryption state
-	InfrastructureEncryption *InfrastructureEncryptionState_STATUS `json:"infrastructureEncryption,omitempty"`
+	InfrastructureEncryption *OpenapiInfrastructureEncryptionState_STATUS `json:"infrastructureEncryption,omitempty"`
 
 	// KekIdentity: The details of the identity used for CMK
 	KekIdentity *CmkKekIdentity_STATUS `json:"kekIdentity,omitempty"`
@@ -547,20 +547,6 @@ type ImmutabilitySettings_STATUS struct {
 	State         *ImmutabilityState_STATUS         `json:"state,omitempty"`
 }
 
-// Enabling/Disabling the Double Encryption state
-type InfrastructureEncryptionState_STATUS string
-
-const (
-	InfrastructureEncryptionState_STATUS_Disabled = InfrastructureEncryptionState_STATUS("Disabled")
-	InfrastructureEncryptionState_STATUS_Enabled  = InfrastructureEncryptionState_STATUS("Enabled")
-)
-
-// Mapping from string to InfrastructureEncryptionState_STATUS
-var infrastructureEncryptionState_STATUS_Values = map[string]InfrastructureEncryptionState_STATUS{
-	"disabled": InfrastructureEncryptionState_STATUS_Disabled,
-	"enabled":  InfrastructureEncryptionState_STATUS_Enabled,
-}
-
 // MUA Settings of vault
 type MultiUserAuthorization_STATUS string
 
@@ -575,6 +561,20 @@ var multiUserAuthorization_STATUS_Values = map[string]MultiUserAuthorization_STA
 	"disabled": MultiUserAuthorization_STATUS_Disabled,
 	"enabled":  MultiUserAuthorization_STATUS_Enabled,
 	"invalid":  MultiUserAuthorization_STATUS_Invalid,
+}
+
+// Enabling/Disabling the Double Encryption state
+type OpenapiInfrastructureEncryptionState_STATUS string
+
+const (
+	OpenapiInfrastructureEncryptionState_STATUS_Disabled = OpenapiInfrastructureEncryptionState_STATUS("Disabled")
+	OpenapiInfrastructureEncryptionState_STATUS_Enabled  = OpenapiInfrastructureEncryptionState_STATUS("Enabled")
+)
+
+// Mapping from string to OpenapiInfrastructureEncryptionState_STATUS
+var openapiInfrastructureEncryptionState_STATUS_Values = map[string]OpenapiInfrastructureEncryptionState_STATUS{
+	"disabled": OpenapiInfrastructureEncryptionState_STATUS_Disabled,
+	"enabled":  OpenapiInfrastructureEncryptionState_STATUS_Enabled,
 }
 
 // Private Endpoint Connection Response Properties.
@@ -594,7 +594,7 @@ type OpenapiPrivateEndpointConnection_STATUS struct {
 
 // Soft delete Settings of vault
 type SoftDeleteSettings_STATUS struct {
-	EnhancedSecurityState *EnhancedSecurityState_STATUS `json:"enhancedSecurityState,omitempty"`
+	EnhancedSecurityState *OpenapiEnhancedSecurityState_STATUS `json:"enhancedSecurityState,omitempty"`
 
 	// SoftDeleteRetentionPeriodInDays: Soft delete retention period in days
 	SoftDeleteRetentionPeriodInDays *int                    `json:"softDeleteRetentionPeriodInDays,omitempty"`
@@ -710,23 +710,6 @@ var crossSubscriptionRestoreState_STATUS_Values = map[string]CrossSubscriptionRe
 	"permanentlydisabled": CrossSubscriptionRestoreState_STATUS_PermanentlyDisabled,
 }
 
-type EnhancedSecurityState_STATUS string
-
-const (
-	EnhancedSecurityState_STATUS_AlwaysON = EnhancedSecurityState_STATUS("AlwaysON")
-	EnhancedSecurityState_STATUS_Disabled = EnhancedSecurityState_STATUS("Disabled")
-	EnhancedSecurityState_STATUS_Enabled  = EnhancedSecurityState_STATUS("Enabled")
-	EnhancedSecurityState_STATUS_Invalid  = EnhancedSecurityState_STATUS("Invalid")
-)
-
-// Mapping from string to EnhancedSecurityState_STATUS
-var enhancedSecurityState_STATUS_Values = map[string]EnhancedSecurityState_STATUS{
-	"alwayson": EnhancedSecurityState_STATUS_AlwaysON,
-	"disabled": EnhancedSecurityState_STATUS_Disabled,
-	"enabled":  EnhancedSecurityState_STATUS_Enabled,
-	"invalid":  EnhancedSecurityState_STATUS_Invalid,
-}
-
 // Immutability configuration of vault.
 type ImmutabilityConfiguration_STATUS struct {
 	// DurationInDays: Duration in days. Required when type is TimeBased, omitted when AsPerPolicy.
@@ -750,6 +733,23 @@ var immutabilityState_STATUS_Values = map[string]ImmutabilityState_STATUS{
 	"disabled": ImmutabilityState_STATUS_Disabled,
 	"locked":   ImmutabilityState_STATUS_Locked,
 	"unlocked": ImmutabilityState_STATUS_Unlocked,
+}
+
+type OpenapiEnhancedSecurityState_STATUS string
+
+const (
+	OpenapiEnhancedSecurityState_STATUS_AlwaysON = OpenapiEnhancedSecurityState_STATUS("AlwaysON")
+	OpenapiEnhancedSecurityState_STATUS_Disabled = OpenapiEnhancedSecurityState_STATUS("Disabled")
+	OpenapiEnhancedSecurityState_STATUS_Enabled  = OpenapiEnhancedSecurityState_STATUS("Enabled")
+	OpenapiEnhancedSecurityState_STATUS_Invalid  = OpenapiEnhancedSecurityState_STATUS("Invalid")
+)
+
+// Mapping from string to OpenapiEnhancedSecurityState_STATUS
+var openapiEnhancedSecurityState_STATUS_Values = map[string]OpenapiEnhancedSecurityState_STATUS{
+	"alwayson": OpenapiEnhancedSecurityState_STATUS_AlwaysON,
+	"disabled": OpenapiEnhancedSecurityState_STATUS_Disabled,
+	"enabled":  OpenapiEnhancedSecurityState_STATUS_Enabled,
+	"invalid":  OpenapiEnhancedSecurityState_STATUS_Invalid,
 }
 
 // The Private Endpoint network resource that is linked to the Private Endpoint connection.

@@ -1186,7 +1186,7 @@ func SoftDeleteSettings_STATUSGenerator() *rapid.Generator[SoftDeleteSettings_ST
 		return softDeleteSettings_STATUSGenerator
 	}
 
-	enhancedSecurityState := rapid.Ptr(rapid.SampledFrom([]EnhancedSecurityState_STATUS{EnhancedSecurityState_STATUS_AlwaysON, EnhancedSecurityState_STATUS_Disabled, EnhancedSecurityState_STATUS_Enabled, EnhancedSecurityState_STATUS_Invalid}), true)
+	enhancedSecurityState := rapid.Ptr(rapid.SampledFrom([]OpenapiEnhancedSecurityState_STATUS{OpenapiEnhancedSecurityState_STATUS_AlwaysON, OpenapiEnhancedSecurityState_STATUS_Disabled, OpenapiEnhancedSecurityState_STATUS_Enabled, OpenapiEnhancedSecurityState_STATUS_Invalid}), true)
 	softDeleteRetentionPeriodInDays := rapid.Ptr(rapid.Int(), true)
 	softDeleteState := rapid.Ptr(rapid.SampledFrom([]SoftDeleteState_STATUS{SoftDeleteState_STATUS_AlwaysON, SoftDeleteState_STATUS_Disabled, SoftDeleteState_STATUS_Enabled, SoftDeleteState_STATUS_Invalid}), true)
 
@@ -1494,7 +1494,7 @@ func VaultPropertiesEncryption_STATUSGenerator() *rapid.Generator[VaultPropertie
 		return vaultPropertiesEncryption_STATUSGenerator
 	}
 
-	infrastructureEncryption := rapid.Ptr(rapid.SampledFrom([]InfrastructureEncryptionState_STATUS{InfrastructureEncryptionState_STATUS_Disabled, InfrastructureEncryptionState_STATUS_Enabled}), true)
+	infrastructureEncryption := rapid.Ptr(rapid.SampledFrom([]OpenapiInfrastructureEncryptionState_STATUS{OpenapiInfrastructureEncryptionState_STATUS_Disabled, OpenapiInfrastructureEncryptionState_STATUS_Enabled}), true)
 	kekIdentity := rapid.Ptr(CmkKekIdentity_STATUSGenerator(), true)
 	keyVaultProperties := rapid.Ptr(CmkKeyVaultProperties_STATUSGenerator(), true)
 

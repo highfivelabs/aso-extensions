@@ -231,6 +231,104 @@ Vault: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+VaultsBackupConfig: Resource
+├── Owner: recoveryservices/v20260701.Vault
+├── Spec: Object (8 properties)
+│   ├── ETag: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (9 properties)
+│   │   ├── EnhancedSecurityState: *string
+│   │   ├── IsSoftDeleteFeatureStateEditable: *bool
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── ResourceGuardOperationRequests: string[]
+│   │   ├── SoftDeleteFeatureState: *string
+│   │   ├── SoftDeleteRetentionPeriodInDays: *int
+│   │   ├── StorageModelType: *string
+│   │   ├── StorageType: *string
+│   │   └── StorageTypeState: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ETag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (9 properties)
+    │   ├── EnhancedSecurityState: *string
+    │   ├── IsSoftDeleteFeatureStateEditable: *bool
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ResourceGuardOperationRequests: string[]
+    │   ├── SoftDeleteFeatureState: *string
+    │   ├── SoftDeleteRetentionPeriodInDays: *int
+    │   ├── StorageModelType: *string
+    │   ├── StorageType: *string
+    │   └── StorageTypeState: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
+VaultsBackupEncryptionConfig: Resource
+├── Owner: recoveryservices/v20260701.Vault
+├── Spec: Object (8 properties)
+│   ├── ETag: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (6 properties)
+│   │   ├── EncryptionAtRestType: *string
+│   │   ├── InfrastructureEncryptionState: *string
+│   │   ├── KeyUri: *string
+│   │   ├── LastUpdateStatus: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SubscriptionId: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ETag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (8 properties)
+    │   ├── EncryptionAtRestType: *string
+    │   ├── InfrastructureEncryptionState: *string
+    │   ├── KeyUri: *string
+    │   ├── LastUpdateStatus: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── SubscriptionId: *string
+    │   ├── UseSystemAssignedIdentity: *bool
+    │   └── UserAssignedIdentity: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
 VaultsBackupPolicy: Resource
 ├── Owner: recoveryservices/v20260701.Vault
 ├── Spec: Object (9 properties)
@@ -1765,6 +1863,53 @@ VaultsBackupResourceGuardProxy: Resource
     │   │   ├── PropertyBag: genruntime.PropertyBag
     │   │   └── VaultCriticalOperation: *string
     │   └── ResourceGuardResourceId: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
+VaultsBackupStorageConfig: Resource
+├── Owner: recoveryservices/v20260701.Vault
+├── Spec: Object (8 properties)
+│   ├── ETag: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (7 properties)
+│   │   ├── CrossRegionRestoreFlag: *bool
+│   │   ├── DedupState: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── StorageModelType: *string
+│   │   ├── StorageType: *string
+│   │   ├── StorageTypeState: *string
+│   │   └── XcoolState: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ETag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (7 properties)
+    │   ├── CrossRegionRestoreFlag: *bool
+    │   ├── DedupState: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── StorageModelType: *string
+    │   ├── StorageType: *string
+    │   ├── StorageTypeState: *string
+    │   └── XcoolState: *string
     ├── PropertyBag: genruntime.PropertyBag
     ├── SystemData: *Object (7 properties)
     │   ├── CreatedAt: *string

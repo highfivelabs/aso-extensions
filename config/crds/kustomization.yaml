@@ -288,8 +288,11 @@ resources:
 - purview.azure.hfl.dev_accountskafkaconfigurations.yaml
 - purview.azure.hfl.dev_accountsprivateendpointconnections.yaml
 - recoveryservices.azure.hfl.dev_vaults.yaml
+- recoveryservices.azure.hfl.dev_vaultsbackupconfigs.yaml
+- recoveryservices.azure.hfl.dev_vaultsbackupencryptionconfigs.yaml
 - recoveryservices.azure.hfl.dev_vaultsbackuppolicies.yaml
 - recoveryservices.azure.hfl.dev_vaultsbackupresourceguardproxies.yaml
+- recoveryservices.azure.hfl.dev_vaultsbackupstorageconfigs.yaml
 - recoveryservices.azure.hfl.dev_vaultsprivateendpointconnections.yaml
 - recoveryservices.azure.hfl.dev_vaultsprotecteditems.yaml
 - resources.azure.hfl.dev_deploymentscripts.yaml

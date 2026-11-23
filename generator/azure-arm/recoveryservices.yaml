@@ -18,6 +18,19 @@ groupModelConfiguration:
     Vaults_PrivateEndpointConnection:
       $exportAs: VaultsPrivateEndpointConnection
       $supportedFrom: v0.1.0
+    # A vault's settings singletons (docs/plan.md f50), fixed-name children
+    # (generator/fixed-names.txt, patch 0014) with no DELETE. Not the vault's
+    # extended information (the legacy agent registration's integrity and
+    # encryption keys, which the spec does not mark secret).
+    Vaults_Backupconfig_Vaultconfig:
+      $exportAs: VaultsBackupConfig
+      $supportedFrom: v0.1.0
+    Vaults_Backupstorageconfig_Vaultstorageconfig:
+      $exportAs: VaultsBackupStorageConfig
+      $supportedFrom: v0.1.0
+    Vaults_BackupEncryptionConfigs_BackupResourceEncryptionConfig:
+      $exportAs: VaultsBackupEncryptionConfig
+      $supportedFrom: v0.1.0
     CmkKekIdentity:
       UserAssignedIdentity:
         $referenceType: arm # the identity that reads the customer-managed key

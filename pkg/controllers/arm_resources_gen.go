@@ -1607,8 +1607,11 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(purview_v20211201.AccountsKafkaConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(purview_v20211201.AccountsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.Vault)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupConfig)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupEncryptionConfig)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupStorageConfig)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(resources_v20220201.TemplateSpec)})
 	result = append(result, &registration.StorageType{Obj: new(resources_v20220201.TemplateSpecsVersion)})
@@ -3043,14 +3046,20 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.Vault)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupConfig)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupEncryptionConfig)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupPolicy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupStorageConfig)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsPrivateEndpointConnection)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.Vault)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupConfig)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupEncryptionConfig)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupPolicy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupResourceGuardProxy)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupStorageConfig)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(resources_v20220201.TemplateSpec)}, &registration.KnownType{Obj: new(resources_v20220201.TemplateSpecsVersion)})
 	result = append(result, &registration.KnownType{Obj: new(resources_v20220201s.TemplateSpec)}, &registration.KnownType{Obj: new(resources_v20220201s.TemplateSpecsVersion)})
@@ -3819,8 +3828,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &purview_customizations.AccountsKafkaConfigurationExtension{})
 	result = append(result, &purview_customizations.AccountsPrivateEndpointConnectionExtension{})
 	result = append(result, &recoveryservices_customizations.VaultExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsBackupConfigExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsBackupEncryptionConfigExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsBackupPolicyExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsBackupResourceGuardProxyExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsBackupStorageConfigExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsPrivateEndpointConnectionExtension{})
 	result = append(result, &resources_customizations.DeploymentScriptExtension{})
 	result = append(result, &resources_customizations.DeploymentStackExtension{})

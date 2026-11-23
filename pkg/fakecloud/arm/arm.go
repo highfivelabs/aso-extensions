@@ -64,7 +64,9 @@
 // and blob access points (storagenewcomers.go: source types kept, what a
 // new share needs), Container Apps sandbox groups and SRE agents
 // (appextras.go: a group's environment link kept, what they name exists, a
-// subnet with AzureVNet egress), budgets
+// subnet with AzureVNet egress), Recovery Services vault settings
+// (vaultsettings.go: soft delete always on, redundancy locked by protected
+// items, customer-managed keys kept), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -540,6 +542,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkAppExtras(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkVaultSettings(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

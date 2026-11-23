@@ -3,9 +3,15 @@ github.com/highfivelabs/aso-extensions/apis/arm/recoveryservices/customizations
 -------------------------------------------------------------------------------
 VaultExtension: Object (0 properties)
 
+VaultsBackupConfigExtension: Object (0 properties)
+
+VaultsBackupEncryptionConfigExtension: Object (0 properties)
+
 VaultsBackupPolicyExtension: Object (0 properties)
 
 VaultsBackupResourceGuardProxyExtension: Object (0 properties)
+
+VaultsBackupStorageConfigExtension: Object (0 properties)
 
 VaultsPrivateEndpointConnectionExtension: Object (0 properties)
 
