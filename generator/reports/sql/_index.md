@@ -8,16 +8,38 @@ no_list: true
 
 ### Released
 
-| Resource                          | ARM Version | CRD Version | Supported From | Sample |
-|-----------------------------------|-------------|-------------|----------------|--------|
-| ServersDatabasesGeoBackupPolicy   | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ServersDnsAlias                   | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ServersJobAgent                   | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ServersJobAgentsCredential        | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ServersJobAgentsJob               | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ServersJobAgentsJobsStep          | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ServersJobAgentsPrivateEndpoint   | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ServersJobAgentsTargetGroup       | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ServersPrivateEndpointConnection  | 2025-01-01  | v20250101   | v0.1.0         | -      |
-| ServersSqlVulnerabilityAssessment | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| Resource                                                 | ARM Version | CRD Version | Supported From | Sample |
+|----------------------------------------------------------|-------------|-------------|----------------|--------|
+| InstancePool                                             | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesAdministrator                            | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesAdvancedThreatProtectionSetting          | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesAzureADOnlyAuthentication                | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesDatabasesAdvancedThreatProtectionSetting | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesDatabasesBackupLongTermRetentionPolicy   | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesDatabasesBackupShortTermRetentionPolicy  | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesDatabasesLedgerDigestUpload              | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesDatabasesSecurityAlertPolicy             | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesDatabasesVulnerabilityAssessment         | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesDistributedAvailabilityGroup             | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesDnsAlias                                 | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesDtc                                      | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesEncryptionProtector                      | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesKey                                      | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesPrivateEndpointConnection                | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesSecurityAlertPolicy                      | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesServerConfigurationOption                | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesServerTrustCertificate                   | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesSqlAgent                                 | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesStartStopSchedule                        | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ManagedInstancesVulnerabilityAssessment                  | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersDatabasesGeoBackupPolicy                          | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersDnsAlias                                          | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgent                                          | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgentsCredential                               | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgentsJob                                      | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgentsJobsStep                                 | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgentsPrivateEndpoint                          | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgentsTargetGroup                              | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersPrivateEndpointConnection                         | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersSqlVulnerabilityAssessment                        | 2025-01-01  | v20250101   | v0.1.0         | -      |
 

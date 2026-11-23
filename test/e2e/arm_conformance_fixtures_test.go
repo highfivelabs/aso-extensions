@@ -342,6 +342,25 @@ func init() {
 		return map[string]any{"databaseReference": armRef(c.add(c.owner + "/databases/jobs"))}
 	}}
 	f["ServersJobAgentsCredential"] = conformanceFixture{coveredBy: "TestSQLElasticJobs"}
+	// SQL Managed Instance children (sqlmanagedinstance.go): a Key Vault key
+	// gives its URI, the protector is service-managed here (one naming a key
+	// is TestSQLManagedInstanceChildren's), an assessment gives its
+	// container and a SAS, a pool names a subnet the fake holds.
+	f["ManagedInstancesPrivateEndpointConnection"] = pec
+	f["ManagedInstancesKey"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "vault_key_0123456789abcdef", "serverKeyType": "AzureKeyVault", "uri": "https://vault.vault.azure.net/keys/key/0123456789abcdef"}
+	}}
+	f["ManagedInstancesEncryptionProtector"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"serverKeyType": "ServiceManaged"}
+	}}
+	assessment := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"storageContainerPath": "https://st.blob.core.windows.net/va/", "storageContainerSasKey": map[string]any{"name": "conformance", "key": "value"}}
+	}}
+	f["ManagedInstancesVulnerabilityAssessment"] = assessment
+	f["ManagedInstancesDatabasesVulnerabilityAssessment"] = assessment
+	f["InstancePool"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"subnetReference": armRef(c.add(c.in("Microsoft.Network/virtualNetworks/pool"), c.in("Microsoft.Network/virtualNetworks/pool/subnets/pool")))}
+	}}
 	f["ServersJobAgentsJobsStep"] = conformanceFixture{coveredBy: "TestSQLElasticJobs"}
 	f["WorkspacesSummaryLog"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"ruleDefinition": map[string]any{"query": "AppRequests | summarize count() by bin(TimeGenerated, 1h)", "binSize": int64(60), "destinationTable": "Hourly_CL"}}

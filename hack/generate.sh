@@ -120,6 +120,8 @@ cp "${out}/dbforpostgresql.azure.com_flexibleservers.yaml" "${out}/keyvault.azur
   "${out}/network.azure.com_dnsforwardingrulesets.yaml" \
   "${out}/web.azure.com_serverfarms.yaml" \
   "${out}/sql.azure.com_serverselasticpools.yaml" \
+  "${out}/sql.azure.com_managedinstances.yaml" \
+  "${out}/sql.azure.com_managedinstancesdatabases.yaml" \
   "${out}/compute.azure.com_disks.yaml" \
   "${out}/compute.azure.com_diskaccesses.yaml" \
   "${out}/cache.azure.com_redis.yaml" \
@@ -171,6 +173,8 @@ cp "${out}/dbforpostgresql.azure.com_flexibleservers.yaml" "${out}/keyvault.azur
   echo "- network.azure.com_dnsforwardingrulesets.yaml"
   echo "- web.azure.com_serverfarms.yaml"
   echo "- sql.azure.com_serverselasticpools.yaml"
+  echo "- sql.azure.com_managedinstances.yaml"
+  echo "- sql.azure.com_managedinstancesdatabases.yaml"
   echo "- compute.azure.com_disks.yaml"
   echo "- compute.azure.com_diskaccesses.yaml"
   echo "- cache.azure.com_redis.yaml"

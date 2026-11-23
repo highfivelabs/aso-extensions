@@ -567,13 +567,24 @@ upstream's); the catalog's chart tests do that.
 - The private endpoint connections of an Azure SQL server, a container
   app, a disk access, an Azure Cache for Redis cache, a Redis Enterprise
   cluster, an App Configuration store, a PostgreSQL flexible server, a
-  MongoDB vCore cluster, an App Service app or slot, a static web app and an
-  App Service Environment (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
+  MongoDB vCore cluster, an App Service app or slot, a static web app, an
+  App Service Environment and a SQL managed instance (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
   a private endpoint makes a connection, so a PUT for one that does not
   exist is 404 and a PUT changes one that does (approve, reject). Not
   modelled: the private endpoint (a test adds the connection to the fake as
   one would), the states Azure allows a move between (a rejected connection
   cannot be approved again), and the error codes (the fake's own).
+- Azure SQL Managed Instance children and instance pools
+  (`Microsoft.Sql/managedInstances/*`, `instancePools`, 2025-01-01;
+  `pkg/fakecloud/arm/sqlmanagedinstance.go`): a Key Vault key gives its URI
+  (400); a Key Vault encryption protector names a key of its instance that
+  exists (404); a vulnerability assessment, the instance's or a database's,
+  gives its container and a key or SAS (400); Entra-only authentication is
+  turned on only after a Microsoft Entra administrator (400); a pool's
+  subnet exists (404); a private endpoint makes the instance's connections.
+  Not modelled: Key Vault being read, scans, schedules stopping the
+  instance, the SQL Server end of a distributed availability group, DTC
+  and SQL Agent, pool capacity, and the error codes.
 - Azure SQL Elastic Jobs (`Microsoft.Sql/servers/jobAgents/*`,
   2025-01-01; `pkg/fakecloud/arm/sqljobs.go`): a job agent names a job
   database that exists (404); a credential has a username and a password

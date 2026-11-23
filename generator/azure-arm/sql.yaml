@@ -7,6 +7,19 @@
 # leaves it out: "Not actually supported in ARM at the moment", its sql.yaml
 # at the pin). The catalog's avm-res-sql-server needs both (2026-11-13).
 # Owned by ASO's Server and ServersDatabase.
+typeTransformers:
+  - group: sql
+    version: v20250101
+    name: SecurityAlertPolicyProperties_STATUS;SecurityAlertsPolicyProperties_STATUS
+    property: StorageAccountAccessKey
+    remove: true
+    because: a storage account key; the status never holds it (docs/plan.md f42)
+  - group: sql
+    version: v20250101
+    name: DatabaseVulnerabilityAssessmentProperties_STATUS;ManagedInstanceVulnerabilityAssessmentProperties_STATUS
+    property: StorageAccountAccessKey;StorageContainerSasKey
+    remove: true
+    because: a storage account key or SAS; the status never holds it (docs/plan.md f42)
 typeFilters:
   - action: include
     group: sql
@@ -53,6 +66,76 @@ groupModelConfiguration:
     Servers_DnsAlias:
       $exportAs: ServersDnsAlias
       $supportedFrom: v0.1.0
+    # SQL Managed Instance children (docs/plan.md f42, 2026-11-23), owned by
+    # ASO's ManagedInstance and ManagedInstancesDatabase (v2.22.0), which
+    # export the instance, its databases, their TDE and failover groups only;
+    # and instance pools, in a resource group.
+    ManagedInstances_Administrator:
+      $exportAs: ManagedInstancesAdministrator
+      $supportedFrom: v0.1.0
+    ManagedInstances_AzureADOnlyAuthentication:
+      $exportAs: ManagedInstancesAzureADOnlyAuthentication
+      $supportedFrom: v0.1.0
+    ManagedInstances_EncryptionProtector:
+      $exportAs: ManagedInstancesEncryptionProtector
+      $supportedFrom: v0.1.0
+    ManagedInstances_Key:
+      $exportAs: ManagedInstancesKey
+      $supportedFrom: v0.1.0
+    ManagedInstances_SecurityAlertPolicy:
+      $exportAs: ManagedInstancesSecurityAlertPolicy
+      $supportedFrom: v0.1.0
+    ManagedInstances_VulnerabilityAssessment:
+      $exportAs: ManagedInstancesVulnerabilityAssessment
+      $supportedFrom: v0.1.0
+    ManagedInstances_AdvancedThreatProtectionSetting:
+      $exportAs: ManagedInstancesAdvancedThreatProtectionSetting
+      $supportedFrom: v0.1.0
+    ManagedInstances_PrivateEndpointConnection:
+      $exportAs: ManagedInstancesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    ManagedInstances_DnsAlias:
+      $exportAs: ManagedInstancesDnsAlias
+      $supportedFrom: v0.1.0
+    ManagedInstances_ServerTrustCertificate:
+      $exportAs: ManagedInstancesServerTrustCertificate
+      $supportedFrom: v0.1.0
+    ManagedInstances_StartStopSchedule:
+      $exportAs: ManagedInstancesStartStopSchedule
+      $supportedFrom: v0.1.0
+    ManagedInstances_Dtc:
+      $exportAs: ManagedInstancesDtc
+      $supportedFrom: v0.1.0
+    ManagedInstances_ServerConfigurationOption:
+      $exportAs: ManagedInstancesServerConfigurationOption
+      $supportedFrom: v0.1.0
+    ManagedInstances_SqlAgent:
+      $exportAs: ManagedInstancesSqlAgent
+      $supportedFrom: v0.1.0
+    ManagedInstances_DistributedAvailabilityGroup:
+      $exportAs: ManagedInstancesDistributedAvailabilityGroup
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_BackupShortTermRetentionPolicy:
+      $exportAs: ManagedInstancesDatabasesBackupShortTermRetentionPolicy
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_BackupLongTermRetentionPolicy:
+      $exportAs: ManagedInstancesDatabasesBackupLongTermRetentionPolicy
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_SecurityAlertPolicy:
+      $exportAs: ManagedInstancesDatabasesSecurityAlertPolicy
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_VulnerabilityAssessment:
+      $exportAs: ManagedInstancesDatabasesVulnerabilityAssessment
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_AdvancedThreatProtectionSetting:
+      $exportAs: ManagedInstancesDatabasesAdvancedThreatProtectionSetting
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_LedgerDigestUpload:
+      $exportAs: ManagedInstancesDatabasesLedgerDigestUpload
+      $supportedFrom: v0.1.0
+    InstancePool:
+      $exportAs: InstancePool
+      $supportedFrom: v0.1.0
     PrivateEndpointProperty:
       Id:
         $referenceType: arm # the private endpoint's ARM ID (autolabel, reviewed)
@@ -70,3 +153,37 @@ groupModelConfiguration:
     JobCredentialProperties:
       Password:
         $importSecretMode: required # the credential's password, from a Secret (autolabel, reviewed)
+    ManagedInstancePrivateEndpointProperty:
+      Id:
+        $referenceType: arm # the private endpoint's ARM ID (autolabel, reviewed)
+    InstancePoolProperties:
+      SubnetId:
+        $referenceType: arm # the subnet the pool is in (autolabel wrote simple; reviewed)
+    # Labels for the Managed Instance children, as ASO's sql.yaml has them
+    # for the server's: keys and SAS tokens from Secrets, an administrator's
+    # SID and tenant optionally from a ConfigMap.
+    SecurityAlertPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    SecurityAlertsPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    DatabaseVulnerabilityAssessmentProperties:
+      StorageContainerPath:
+        $importConfigMapMode: optional
+      StorageAccountAccessKey:
+        $importSecretMode: required
+      StorageContainerSasKey:
+        $importSecretMode: required
+    ManagedInstanceVulnerabilityAssessmentProperties:
+      StorageContainerPath:
+        $importConfigMapMode: optional
+      StorageAccountAccessKey:
+        $importSecretMode: required
+      StorageContainerSasKey:
+        $importSecretMode: required
+    ManagedInstanceAdministratorProperties:
+      Sid:
+        $importConfigMapMode: optional
+      TenantId:
+        $importConfigMapMode: optional

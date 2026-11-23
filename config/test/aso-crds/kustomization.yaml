@@ -42,6 +42,8 @@ resources:
 - network.azure.com_dnsforwardingrulesets.yaml
 - web.azure.com_serverfarms.yaml
 - sql.azure.com_serverselasticpools.yaml
+- sql.azure.com_managedinstances.yaml
+- sql.azure.com_managedinstancesdatabases.yaml
 - compute.azure.com_disks.yaml
 - compute.azure.com_diskaccesses.yaml
 - cache.azure.com_redis.yaml

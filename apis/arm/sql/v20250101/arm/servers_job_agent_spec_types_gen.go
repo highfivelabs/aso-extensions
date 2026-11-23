@@ -56,24 +56,6 @@ type JobAgentProperties struct {
 	DatabaseId *string `json:"databaseId,omitempty"`
 }
 
-// An ARM Resource SKU.
-type Sku struct {
-	// Capacity: Capacity of the particular SKU.
-	Capacity *int `json:"capacity,omitempty"`
-
-	// Family: If the service has different generations of hardware, for the same SKU, then that can be captured here.
-	Family *string `json:"family,omitempty"`
-
-	// Name: The name of the SKU, typically, a letter + Number code, e.g. P3.
-	Name *string `json:"name,omitempty"`
-
-	// Size: Size of the particular SKU
-	Size *string `json:"size,omitempty"`
-
-	// Tier: The tier or edition of the particular SKU, e.g. Basic, Premium.
-	Tier *string `json:"tier,omitempty"`
-}
-
 // The job agent identity type
 // +kubebuilder:validation:Enum={"None","SystemAssigned","SystemAssignedUserAssigned","UserAssigned"}
 type JobAgentIdentityType string

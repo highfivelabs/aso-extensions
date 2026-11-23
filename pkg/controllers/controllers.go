@@ -172,6 +172,8 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asodnsresolver.DnsForwardingRuleset{}, Name: "aso_network_dnsforwardingruleset"},
 		{Obj: &asoweb.ServerFarm{}, Name: "aso_web_serverfarm"},
 		{Obj: &asosql.ServersElasticPool{}, Name: "aso_sql_serverselasticpool"},
+		{Obj: &asosql.ManagedInstance{}, Name: "aso_sql_managedinstance"},
+		{Obj: &asosql.ManagedInstancesDatabase{}, Name: "aso_sql_managedinstancesdatabase"},
 		{Obj: &asodisk.Disk{}, Name: "aso_compute_disk"},
 		{Obj: &asodisk.DiskAccess{}, Name: "aso_compute_diskaccess"},
 		{Obj: &asocache.Redis{}, Name: "aso_cache_redis"},

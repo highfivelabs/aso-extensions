@@ -50,7 +50,9 @@
 // or slot's sidecar containers and private access (sitechildren.go: one main
 // container, the networks named exist), App Service Environments
 // (hostingenvironments.go: the network named exists, a custom DNS suffix
-// with its certificate), budgets
+// with its certificate), SQL Managed Instance children and instance pools
+// (sqlmanagedinstance.go: keys and the protector naming one, assessments'
+// storage, Entra-only authentication after an Entra admin), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -498,6 +500,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkHostingEnvironments(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSQLManagedInstance(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

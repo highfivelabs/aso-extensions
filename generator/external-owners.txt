@@ -37,3 +37,5 @@ appconfiguration/ConfigurationStore
 dbforpostgresql/FlexibleServer
 documentdb/MongoCluster
 sql/Servers_Database=ServersDatabase
+sql/ManagedInstance
+sql/ManagedInstances_Database=ManagedInstancesDatabase

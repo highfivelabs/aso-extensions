@@ -2058,36 +2058,36 @@ Microsoft.Solutions,Microsoft.Solutions/jitRequests,8,,0,,0,8,false,spec_api=202
 Microsoft.Sovereign,Microsoft.Sovereign/landingZoneAccounts,5,,0,,0,5,false,spec_api=2025-02-27-preview; spec-preview-only
 Microsoft.Sovereign,Microsoft.Sovereign/landingZoneAccounts/landingZoneConfigurations,43,,0,,0,43,false,spec_api=2025-02-27-preview; spec-preview-only
 Microsoft.Sovereign,Microsoft.Sovereign/landingZoneAccounts/landingZoneRegistrations,4,,0,,0,4,false,spec_api=2025-02-27-preview; spec-preview-only
-Microsoft.Sql,Microsoft.Sql/instancePools,11,,0,,0,11,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/instancePools,11,,0,sql.azure.hfl.dev/InstancePool,11,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/locations/instanceFailoverGroups,7,sql.azure.com/InstanceFailoverGroup,7,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/locations/serverTrustGroups,2,,0,,0,2,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances,46,sql.azure.com/ManagedInstance,46,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/administrators,4,,0,,0,4,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/advancedThreatProtectionSettings,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/azureADOnlyAuthentications,1,,0,,0,1,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/administrators,4,,0,sql.azure.hfl.dev/ManagedInstancesAdministrator,4,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/advancedThreatProtectionSettings,1,,0,sql.azure.hfl.dev/ManagedInstancesAdvancedThreatProtectionSetting,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/azureADOnlyAuthentications,1,,0,sql.azure.hfl.dev/ManagedInstancesAzureADOnlyAuthentication,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances/databases,19,sql.azure.com/ManagedInstancesDatabase,19,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies,5,,0,,0,5,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/ledgerDigestUploads,1,,0,,0,1,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings,1,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesAdvancedThreatProtectionSetting,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies,5,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesBackupLongTermRetentionPolicy,5,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies,1,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesBackupShortTermRetentionPolicy,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/ledgerDigestUploads,1,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesLedgerDigestUpload,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances/databases/schemas/tables/columns/sensitivityLabels,6,,0,,0,6,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/securityAlertPolicies,7,,0,,0,7,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/securityAlertPolicies,7,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesSecurityAlertPolicy,7,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances/databases/transparentDataEncryption,1,sql.azure.com/ManagedInstancesDatabasesTransparentDataEncryption,1,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/vulnerabilityAssessments,6,,0,,0,6,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/vulnerabilityAssessments,6,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesVulnerabilityAssessment,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances/databases/vulnerabilityAssessments/rules/baselines,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/distributedAvailabilityGroups,8,,0,,0,8,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/dnsAliases,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/dtc,9,,0,,0,9,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/encryptionProtector,3,,0,,0,3,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/keys,2,,0,,0,2,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/privateEndpointConnections,3,,0,,0,3,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/distributedAvailabilityGroups,8,,0,sql.azure.hfl.dev/ManagedInstancesDistributedAvailabilityGroup,8,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/dnsAliases,1,,0,sql.azure.hfl.dev/ManagedInstancesDnsAlias,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/dtc,9,,0,sql.azure.hfl.dev/ManagedInstancesDtc,9,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/encryptionProtector,3,,0,sql.azure.hfl.dev/ManagedInstancesEncryptionProtector,3,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/keys,2,,0,sql.azure.hfl.dev/ManagedInstancesKey,2,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/privateEndpointConnections,3,,0,sql.azure.hfl.dev/ManagedInstancesPrivateEndpointConnection,3,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/securityAlertPolicies,7,,0,,0,7,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/serverConfigurationOptions,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/serverTrustCertificates,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/sqlAgent,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/startStopSchedules,6,,0,,0,6,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/vulnerabilityAssessments,6,,0,,0,6,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/securityAlertPolicies,7,,0,sql.azure.hfl.dev/ManagedInstancesSecurityAlertPolicy,7,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/serverConfigurationOptions,1,,0,sql.azure.hfl.dev/ManagedInstancesServerConfigurationOption,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/serverTrustCertificates,1,,0,sql.azure.hfl.dev/ManagedInstancesServerTrustCertificate,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/sqlAgent,1,,0,sql.azure.hfl.dev/ManagedInstancesSqlAgent,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/startStopSchedules,6,,0,sql.azure.hfl.dev/ManagedInstancesStartStopSchedule,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/vulnerabilityAssessments,6,,0,sql.azure.hfl.dev/ManagedInstancesVulnerabilityAssessment,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers,22,sql.azure.com/Server,22,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/administrators,4,sql.azure.com/ServersAdministrator,4,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/advancedThreatProtectionSettings,1,sql.azure.com/ServersAdvancedThreatProtectionSetting,1,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01

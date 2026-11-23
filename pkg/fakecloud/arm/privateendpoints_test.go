@@ -28,6 +28,7 @@ func TestPrivateEndpointConnections(t *testing.T) {
 		rg + "/providers/Microsoft.Web/sites/web/slots/staging",
 		rg + "/providers/Microsoft.Web/staticSites/static",
 		rg + "/providers/Microsoft.Web/hostingEnvironments/ase",
+		rg + "/providers/Microsoft.Sql/managedInstances/mi",
 	} {
 		a.AddResource(parent)
 		conn := parent + "/privateEndpointConnections/pe-1"
