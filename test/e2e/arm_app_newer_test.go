@@ -10,7 +10,6 @@ import (
 	"testing"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 
@@ -113,11 +112,9 @@ func TestManagedEnvironmentNewerFields(t *testing.T) {
 	}
 
 	// A change is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(env), env); err != nil {
-		t.Fatal(err)
-	}
-	env.Spec.PublicNetworkAccess = ptr(appenv.PublicNetworkAccess("Enabled"))
-	if err := k8s.Update(ctx, env); err != nil {
+	if err := change(t, env, func(env *appenv.ManagedEnvironment) {
+		env.Spec.PublicNetworkAccess = ptr(appenv.PublicNetworkAccess("Enabled"))
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, envID, func(r map[string]any) error {

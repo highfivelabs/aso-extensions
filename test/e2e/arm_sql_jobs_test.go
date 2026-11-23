@@ -148,11 +148,9 @@ func TestSQLElasticJobs(t *testing.T) {
 	}
 
 	// A change of the step's script is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(step), step); err != nil {
-		t.Fatal(err)
-	}
-	step.Spec.Action.Value = ptr("UPDATE STATISTICS dbo.orders")
-	if err := k8s.Update(ctx, step); err != nil {
+	if err := change(t, step, func(step *sql.ServersJobAgentsJobsStep) {
+		step.Spec.Action.Value = ptr("UPDATE STATISTICS dbo.orders")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, stepID, func(r map[string]any) error {

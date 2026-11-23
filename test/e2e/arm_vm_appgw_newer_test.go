@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 
@@ -89,11 +88,9 @@ func TestVirtualMachineNewerFields(t *testing.T) {
 		return nil
 	})
 
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(vm), vm); err != nil {
-		t.Fatal(err)
-	}
-	vm.Spec.StorageProfile.DiskControllerType = ptr(compute2025.DiskControllerTypes("SCSI"))
-	if err := k8s.Update(ctx, vm); err != nil {
+	if err := change(t, vm, func(vm *compute2025.VirtualMachine) {
+		vm.Spec.StorageProfile.DiskControllerType = ptr(compute2025.DiskControllerTypes("SCSI"))
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, id, func(r map[string]any) error {

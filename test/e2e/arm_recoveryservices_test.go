@@ -107,11 +107,9 @@ func TestRecoveryServicesVaultAndPolicy(t *testing.T) {
 	})
 
 	// A longer retention is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(policy), policy); err != nil {
-		t.Fatal(err)
-	}
-	policy.Spec.Properties.AzureIaasVM.RetentionPolicy.LongTerm.DailySchedule.RetentionDuration.Count = ptr(60)
-	if err := k8s.Update(ctx, policy); err != nil {
+	if err := change(t, policy, func(policy *rs.VaultsBackupPolicy) {
+		policy.Spec.Properties.AzureIaasVM.RetentionPolicy.LongTerm.DailySchedule.RetentionDuration.Count = ptr(60)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, policyID, func(r map[string]any) error {

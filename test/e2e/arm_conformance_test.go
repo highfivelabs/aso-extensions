@@ -272,10 +272,11 @@ func conformance(t *testing.T, gvk schema.GroupVersionKind, meta genruntime.ARMM
 	}
 
 	if hasTagMap(specSchema) && !fix.keeps {
-		if err := unstructured.SetNestedField(obj.Object, map[string]any{"conformance": "2"}, "spec", "tags"); err != nil {
-			t.Fatal(err)
-		}
-		if err := k8s.Update(ctx, obj); err != nil {
+		if err := change(t, obj, func(obj *unstructured.Unstructured) {
+			if err := unstructured.SetNestedField(obj.Object, map[string]any{"conformance": "2"}, "spec", "tags"); err != nil {
+				t.Fatal(err)
+			}
+		}); err != nil {
 			t.Fatal(err)
 		}
 		expectResource(t, id, func(r map[string]any) error {

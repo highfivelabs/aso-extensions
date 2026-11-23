@@ -112,11 +112,9 @@ func TestNetworkFilters(t *testing.T) {
 		}
 		return nil
 	})
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(rf), rf); err != nil {
-		t.Fatal(err)
-	}
-	rf.Spec.Tags = map[string]string{"team": "network"}
-	if err := k8s.Update(ctx, rf); err != nil {
+	if err := change(t, rf, func(rf *network.RouteFilter) {
+		rf.Spec.Tags = map[string]string{"team": "network"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, rfID, func(r map[string]any) error {
@@ -162,11 +160,9 @@ func TestNetworkFilters(t *testing.T) {
 		}
 		return nil
 	})
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(sep), sep); err != nil {
-		t.Fatal(err)
-	}
-	sep.Spec.Tags = map[string]string{"team": "network"}
-	if err := k8s.Update(ctx, sep); err != nil {
+	if err := change(t, sep, func(sep *network.ServiceEndpointPolicy) {
+		sep.Spec.Tags = map[string]string{"team": "network"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, sepID, func(r map[string]any) error {

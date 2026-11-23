@@ -142,8 +142,9 @@ func TestPostgreSQLLocalUserDatabasePrivileges(t *testing.T) {
 	})
 
 	// Exactly the new list: ALL on app, nothing on other.
-	user.Spec.DatabasePrivileges = map[string][]pgv1.DatabasePrivilege{"app": privs(pgv1.DatabasePrivilegeAll)}
-	if err := k8s.Update(ctx, user); err != nil {
+	if err := change(t, user, func(user *pgv1.User) {
+		user.Spec.DatabasePrivileges = map[string][]pgv1.DatabasePrivilege{"app": privs(pgv1.DatabasePrivilegeAll)}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "User Ready after change", ready(user))
@@ -153,8 +154,9 @@ func TestPostgreSQLLocalUserDatabasePrivileges(t *testing.T) {
 	if _, err := pgSuper.Exec(`GRANT CONNECT ON DATABASE other TO "app-user"`); err != nil {
 		t.Fatal(err)
 	}
-	user.Spec.Roles = []string{"app_readers", "app_writers"}
-	if err := k8s.Update(ctx, user); err != nil {
+	if err := change(t, user, func(user *pgv1.User) {
+		user.Spec.Roles = []string{"app_readers", "app_writers"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "User Ready after roles change", ready(user))

@@ -137,11 +137,9 @@ func TestVirtualMachineExtras(t *testing.T) {
 	})
 
 	// A change to the schedule is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(shutdown), shutdown); err != nil {
-		t.Fatal(err)
-	}
-	shutdown.Spec.DailyRecurrence = &devtestlab.DayDetails{Time: ptr("2000")}
-	if err := k8s.Update(ctx, shutdown); err != nil {
+	if err := change(t, shutdown, func(shutdown *devtestlab.Schedule) {
+		shutdown.Spec.DailyRecurrence = &devtestlab.DayDetails{Time: ptr("2000")}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, shutdownID, func(r map[string]any) error {

@@ -247,11 +247,7 @@ func TestPrivateEndpointConnections(t *testing.T) {
 		}
 	}
 	for _, s := range steps {
-		if err := k8s.Get(ctx, client.ObjectKeyFromObject(s.made), s.made); err != nil {
-			t.Fatal(err)
-		}
-		s.decide("Rejected")
-		if err := k8s.Update(ctx, s.made); err != nil {
+		if err := change(t, s.made, func(conditioned) { s.decide("Rejected") }); err != nil {
 			t.Fatal(err)
 		}
 		wantStatus(s.parentID+"/privateEndpointConnections/pe-1", "Rejected")

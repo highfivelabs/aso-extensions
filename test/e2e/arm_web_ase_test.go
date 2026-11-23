@@ -115,11 +115,9 @@ func TestAppServiceEnvironment(t *testing.T) {
 	})
 
 	// A change is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(networking), networking); err != nil {
-		t.Fatal(err)
-	}
-	networking.Spec.FtpEnabled = ptr(true)
-	if err := k8s.Update(ctx, networking); err != nil {
+	if err := change(t, networking, func(networking *webv1.HostingEnvironmentsConfigurationNetworking) {
+		networking.Spec.FtpEnabled = ptr(true)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, aseID+"/configurations/networking", func(r map[string]any) error {
@@ -130,11 +128,9 @@ func TestAppServiceEnvironment(t *testing.T) {
 	})
 
 	// A custom DNS suffix without its certificate is refused.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(dns), dns); err != nil {
-		t.Fatal(err)
-	}
-	dns.Spec.CertificateUrl = nil
-	if err := k8s.Update(ctx, dns); err != nil {
+	if err := change(t, dns, func(dns *webv1.HostingEnvironmentsConfigurationCustomDnsSuffix) {
+		dns.Spec.CertificateUrl = nil
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "a suffix without its certificate refused", notReadyWith(dns, "needs its certificate"))

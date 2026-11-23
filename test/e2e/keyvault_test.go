@@ -79,24 +79,20 @@ func TestVaultSecretLifecycle(t *testing.T) {
 	}
 
 	// A new value in the Kubernetes Secret is a new version.
-	var k8sSecret corev1.Secret
-	if err := k8s.Get(ctx, client.ObjectKey{Namespace: ns, Name: "db"}, &k8sSecret); err != nil {
-		t.Fatal(err)
-	}
-	k8sSecret.Data["url"] = []byte("postgres://two")
-	if err := k8s.Update(ctx, &k8sSecret); err != nil {
+	k8sSecret := &corev1.Secret{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "db"}}
+	if err := change(t, k8sSecret, func(k8sSecret *corev1.Secret) {
+		k8sSecret.Data["url"] = []byte("postgres://two")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	vaultValue(t, "db-url", "postgres://two", 2)
 
 	// Attributes and tags change the current version, not a new one.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(vs), vs); err != nil {
-		t.Fatal(err)
-	}
-	disabled := false
-	vs.Spec.Enabled = &disabled
-	vs.Spec.Tags = map[string]string{"app": "two"}
-	if err := k8s.Update(ctx, vs); err != nil {
+	if err := change(t, vs, func(vs *kvv1.VaultSecret) {
+		disabled := false
+		vs.Spec.Enabled = &disabled
+		vs.Spec.Tags = map[string]string{"app": "two"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "disabled in the vault", func() error {
@@ -136,8 +132,9 @@ func TestVaultSecretLifecycle(t *testing.T) {
 	eventually(t, timeout, "conflict reported", notReadyWith(again, "set createMode to recover, createOrRecover or purgeThenCreate"))
 
 	// createOrRecover: recovered, then set to the current value (a new version).
-	again.Spec.CreateMode = strPtr("createOrRecover")
-	if err := k8s.Update(ctx, again); err != nil {
+	if err := change(t, again, func(again *kvv1.VaultSecret) {
+		again.Spec.CreateMode = strPtr("createOrRecover")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "recovered and Ready", ready(again))

@@ -161,11 +161,9 @@ func TestWorkspaceChildren(t *testing.T) {
 
 	// A change to the table is PUT again; a status read back from Azure fills
 	// the Kubernetes object.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(table), table); err != nil {
-		t.Fatal(err)
-	}
-	table.Spec.RetentionInDays = ptr(90)
-	if err := k8s.Update(ctx, table); err != nil {
+	if err := change(t, table, func(table *oi.WorkspacesTable) {
+		table.Spec.RetentionInDays = ptr(90)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, tableID, func(r map[string]any) error {

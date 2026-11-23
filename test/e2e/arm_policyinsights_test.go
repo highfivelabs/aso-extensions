@@ -219,11 +219,9 @@ func TestPolicyRemediationAndAttestation(t *testing.T) {
 	wantAttestation("Compliant")
 
 	// A change is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(attestation), attestation); err != nil {
-		t.Fatal(err)
-	}
-	attestation.Spec.ComplianceState = ptr(insights.ComplianceState_NonCompliant)
-	if err := k8s.Update(ctx, attestation); err != nil {
+	if err := change(t, attestation, func(attestation *insights.PolicyAttestation) {
+		attestation.Spec.ComplianceState = ptr(insights.ComplianceState_NonCompliant)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	wantAttestation("NonCompliant")

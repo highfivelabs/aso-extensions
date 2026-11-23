@@ -97,11 +97,9 @@ func TestNetworkWatcherAndAddressPrefixSets(t *testing.T) {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "the refusal on the monitor's Ready condition", notReadyWith(monitor, "elsewhere"))
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(monitor), monitor); err != nil {
-		t.Fatal(err)
-	}
-	monitor.Spec.TestGroups[0].Sources = []string{"probe"}
-	if err := k8s.Update(ctx, monitor); err != nil {
+	if err := change(t, monitor, func(monitor *network.NetworkWatchersConnectionMonitor) {
+		monitor.Spec.TestGroups[0].Sources = []string{"probe"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "monitor Ready", ready(monitor))

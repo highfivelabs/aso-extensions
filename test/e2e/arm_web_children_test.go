@@ -168,8 +168,9 @@ func TestWebSiteAndSlotChildren(t *testing.T) {
 	}
 
 	// A new image is PUT again.
-	mainContainer.Spec.Image = ptr("contoso.azurecr.io/shop:1.1")
-	if err := k8s.Update(ctx, mainContainer); err != nil {
+	if err := change(t, mainContainer, func(mainContainer *webv1.SitesSitecontainer) {
+		mainContainer.Spec.Image = ptr("contoso.azurecr.io/shop:1.1")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, siteID+"/sitecontainers/main", func(r map[string]any) error {

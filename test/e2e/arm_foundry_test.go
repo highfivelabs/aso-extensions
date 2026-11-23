@@ -166,11 +166,9 @@ func TestFoundryNetworkAndAgents(t *testing.T) {
 	})
 
 	// A change is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(app), app); err != nil {
-		t.Fatal(err)
-	}
-	app.Spec.Properties.DisplayName = ptr("IT help desk")
-	if err := k8s.Update(ctx, app); err != nil {
+	if err := change(t, app, func(app *foundry.AccountsProjectsApplication) {
+		app.Spec.Properties.DisplayName = ptr("IT help desk")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, projectID+"/applications/helpdesk", func(r map[string]any) error {
@@ -181,11 +179,9 @@ func TestFoundryNetworkAndAgents(t *testing.T) {
 	})
 
 	// Back to V1 is refused.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(network), network); err != nil {
-		t.Fatal(err)
-	}
-	network.Spec.Properties.ManagedNetwork.ManagedNetworkKind = ptr(foundry.ManagedNetworkKind_V1)
-	if err := k8s.Update(ctx, network); err != nil {
+	if err := change(t, network, func(network *foundry.AccountsManagedNetwork) {
+		network.Spec.Properties.ManagedNetwork.ManagedNetworkKind = ptr(foundry.ManagedNetworkKind_V1)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "a move back to V1 refused", notReadyWith(network, "cannot switch back to V1"))

@@ -109,14 +109,9 @@ func expectIn(t *testing.T, what string, read func() (map[string][]string, error
 
 func schemaPrivs(p ...pgv1.SchemaPrivilege) []pgv1.SchemaPrivilege { return p }
 
-func update(t *testing.T, user *pgv1.User, change func(*pgv1.User)) {
+func update(t *testing.T, user *pgv1.User, mutate func(*pgv1.User)) {
 	t.Helper()
-	ctx := context.Background()
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(user), user); err != nil {
-		t.Fatal(err)
-	}
-	change(user)
-	if err := k8s.Update(ctx, user); err != nil {
+	if err := change(t, user, mutate); err != nil {
 		t.Fatal(err)
 	}
 }

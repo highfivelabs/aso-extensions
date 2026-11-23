@@ -133,11 +133,9 @@ func TestDNSZoneSOARecords(t *testing.T) {
 		return nil
 	})
 
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(soa), soa); err != nil {
-		t.Fatal(err)
-	}
-	soa.Spec.SOARecord.RefreshTime = ptr(7200)
-	if err := k8s.Update(ctx, soa); err != nil {
+	if err := change(t, soa, func(soa *dns.DnsZonesSOARecord) {
+		soa.Spec.SOARecord.RefreshTime = ptr(7200)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, soaID, func(r map[string]any) error {

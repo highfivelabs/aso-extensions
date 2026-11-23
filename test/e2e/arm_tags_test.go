@@ -73,11 +73,9 @@ func TestTagSets(t *testing.T) {
 	}
 
 	// A change is a PUT of the whole set: the dropped tag is gone.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(subTags), subTags); err != nil {
-		t.Fatal(err)
-	}
-	subTags.Spec.Properties.Tags = map[string]string{"cost-center": "platform-2"}
-	if err := k8s.Update(ctx, subTags); err != nil {
+	if err := change(t, subTags, func(subTags *resources.TagSet) {
+		subTags.Spec.Properties.Tags = map[string]string{"cost-center": "platform-2"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, subTagsID, wantTags(subTagsID, map[string]string{"cost-center": "platform-2"}))

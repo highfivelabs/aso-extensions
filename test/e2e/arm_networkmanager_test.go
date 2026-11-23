@@ -163,11 +163,9 @@ func TestNetworkManager(t *testing.T) {
 	})
 
 	// The manager changed: PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(nm), nm); err != nil {
-		t.Fatal(err)
-	}
-	nm.Spec.Tags = map[string]string{"team": "network"}
-	if err := k8s.Update(ctx, nm); err != nil {
+	if err := change(t, nm, func(nm *network.NetworkManager) {
+		nm.Spec.Tags = map[string]string{"team": "network"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, nmID, func(r map[string]any) error {

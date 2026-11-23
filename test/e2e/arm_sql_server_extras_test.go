@@ -161,11 +161,9 @@ func TestSQLServerAuditingAndWorkloads(t *testing.T) {
 	}
 
 	// A change is PUT again; a minimum above the cap is refused.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(group), group); err != nil {
-		t.Fatal(err)
-	}
-	group.Spec.MaxResourcePercent = ptr(80)
-	if err := k8s.Update(ctx, group); err != nil {
+	if err := change(t, group, func(group *sql.ServersDatabasesWorkloadGroup) {
+		group.Spec.MaxResourcePercent = ptr(80)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, dbID+"/workloadGroups/etl", func(r map[string]any) error {

@@ -91,11 +91,9 @@ func TestLogProfileAndWorkbookTemplate(t *testing.T) {
 		}
 		return nil
 	})
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(profile), profile); err != nil {
-		t.Fatal(err)
-	}
-	profile.Spec.RetentionPolicy.Days = ptr(365)
-	if err := k8s.Update(ctx, profile); err != nil {
+	if err := change(t, profile, func(profile *lp.LogProfile) {
+		profile.Spec.RetentionPolicy.Days = ptr(365)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, profileID, func(r map[string]any) error {

@@ -88,8 +88,9 @@ func TestSourceControlConfigurationAndPrivateLinkScope(t *testing.T) {
 	if status, _ := json.Marshal(config.Status); strings.Contains(string(status), "c3NoLWtleQ==") {
 		t.Fatalf("the protected setting is in the status: %s", status)
 	}
-	config.Spec.RepositoryUrl = ptr("git@github.com:contoso/cluster-config-v2.git")
-	if err := k8s.Update(ctx, config); err != nil {
+	if err := change(t, config, func(config *kc.SourceControlConfiguration) {
+		config.Spec.RepositoryUrl = ptr("git@github.com:contoso/cluster-config-v2.git")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, configID, func(r map[string]any) error {

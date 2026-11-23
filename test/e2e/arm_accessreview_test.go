@@ -86,11 +86,9 @@ func TestAccessReviewsAndSubscriptionPolicy(t *testing.T) {
 		return nil
 	})
 	// A change is PUT under the same, recorded name.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(quarterly), quarterly); err != nil {
-		t.Fatal(err)
-	}
-	quarterly.Spec.InstanceDurationInDays = ptr(7)
-	if err := k8s.Update(ctx, quarterly); err != nil {
+	if err := change(t, quarterly, func(quarterly *authorization.AccessReviewScheduleDefinition) {
+		quarterly.Spec.InstanceDurationInDays = ptr(7)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, definitionID, func(r map[string]any) error {

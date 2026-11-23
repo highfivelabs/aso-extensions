@@ -111,12 +111,10 @@ func TestSiteAppSettingsAndConnectionStrings(t *testing.T) {
 	}
 
 	// A change to the Secret is sent again.
-	s := &corev1.Secret{}
-	if err := k8s.Get(ctx, client.ObjectKey{Namespace: ns, Name: "app"}, s); err != nil {
-		t.Fatal(err)
-	}
-	s.Data["ai"] = []byte("InstrumentationKey=rotated")
-	if err := k8s.Update(ctx, s); err != nil {
+	s := &corev1.Secret{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "app"}}
+	if err := change(t, s, func(s *corev1.Secret) {
+		s.Data["ai"] = []byte("InstrumentationKey=rotated")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectProperties(t, settingsID, map[string]any{
@@ -125,11 +123,9 @@ func TestSiteAppSettingsAndConnectionStrings(t *testing.T) {
 	})
 
 	// The list is the whole set: a setting taken out of it goes in Azure.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(settings), settings); err != nil {
-		t.Fatal(err)
-	}
-	settings.Spec.Settings = settings.Spec.Settings[1:]
-	if err := k8s.Update(ctx, settings); err != nil {
+	if err := change(t, settings, func(settings *webv1.SitesConfigAppSettings) {
+		settings.Spec.Settings = settings.Spec.Settings[1:]
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectProperties(t, settingsID, map[string]any{

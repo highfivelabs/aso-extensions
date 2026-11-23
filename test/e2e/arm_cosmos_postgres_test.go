@@ -142,8 +142,9 @@ func TestCosmosDBForPostgreSQL(t *testing.T) {
 	}
 
 	// A change is PUT again.
-	cluster.Spec.CoordinatorVCores = ptr(4)
-	if err := k8s.Update(ctx, cluster); err != nil {
+	if err := change(t, cluster, func(cluster *citus.ServerGroupsv2) {
+		cluster.Spec.CoordinatorVCores = ptr(4)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, clusterID, func(r map[string]any) error {
@@ -154,11 +155,9 @@ func TestCosmosDBForPostgreSQL(t *testing.T) {
 	})
 
 	// A firewall rule needs IPv4 addresses; a cluster cannot have one node.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(office), office); err != nil {
-		t.Fatal(err)
-	}
-	office.Spec.EndIpAddress = ptr("2001:db8::1")
-	if err := k8s.Update(ctx, office); err == nil || !strings.Contains(err.Error(), "spec.endIpAddress") {
+	if err := change(t, office, func(office *citus.ServerGroupsv2FirewallRule) {
+		office.Spec.EndIpAddress = ptr("2001:db8::1")
+	}); err == nil || !strings.Contains(err.Error(), "spec.endIpAddress") {
 		t.Fatalf("an IPv6 address: the CRD's pattern should refuse it, got %v", err)
 	}
 	if err := change(t, cluster, func(cluster *citus.ServerGroupsv2) {

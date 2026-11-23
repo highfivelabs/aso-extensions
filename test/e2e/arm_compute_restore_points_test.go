@@ -106,11 +106,9 @@ func TestComputeRestorePointsAndGalleryScripts(t *testing.T) {
 	})
 
 	// A change is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(script), script); err != nil {
-		t.Fatal(err)
-	}
-	script.Spec.Properties.Description = ptr("CIS level 2 hardening")
-	if err := k8s.Update(ctx, script); err != nil {
+	if err := change(t, script, func(script *gallery.GalleriesScript) {
+		script.Spec.Properties.Description = ptr("CIS level 2 hardening")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, rgID+"/providers/Microsoft.Compute/galleries/"+gal.Spec.AzureName+"/scripts/harden", func(r map[string]any) error {

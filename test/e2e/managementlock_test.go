@@ -169,13 +169,9 @@ func TestManagementLockOnResourceGroup(t *testing.T) {
 	expectARM(t, ns, http.MethodPut, accountID, http.StatusOK, "")
 
 	// ReadOnly: changes are refused too.
-	update := func(change func(*authv1.ManagementLock)) {
+	update := func(mutate func(*authv1.ManagementLock)) {
 		t.Helper()
-		if err := k8s.Get(ctx, client.ObjectKeyFromObject(l), l); err != nil {
-			t.Fatal(err)
-		}
-		change(l)
-		if err := k8s.Update(ctx, l); err != nil {
+		if err := change(t, l, mutate); err != nil {
 			t.Fatal(err)
 		}
 	}
