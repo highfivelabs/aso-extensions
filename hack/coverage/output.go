@@ -159,7 +159,7 @@ func readmeSection(svcs []*SvcRow, tiers []*TierRow, cats []*CategoryRow, prio P
 	if tf != nil {
 		fmt.Fprintf(&b, "The purple bar is Terraform's `%s` provider beside them, an estimate: the share of the same attributes that a writable attribute of a mapped Terraform resource matches "+
 			"by the lenient rule (L2, %s%% overall), with the strict rule (L1, %s%%) as its tick; the method and its error are in the catalog's "+
-			"[\"Method and error\"](%s), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at catalog `%s`. "+
+			"[\"Method and error\"](%s), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at krm-packages `%s`. "+
 			"`azapi` is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema.\n\n",
 			tf.Provider, pct(tf.All.l2, tf.All.total), pct(tf.All.l1, tf.All.total), tf.doc(), short(tf.Commit))
 	}

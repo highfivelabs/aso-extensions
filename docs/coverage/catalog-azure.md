@@ -1,7 +1,7 @@
 # The catalog's Azure resource types
 
-Classified 2026-11-12 from the catalog repository's
-`docs/coverage/resource-types.csv` on `origin/main` (`highfivelabs/catalog`,
+Classified 2026-11-12 from the krm-packages repository's
+`docs/coverage/resource-types.csv` on `origin/main` (`highfivelabs/krm-packages`,
 the Terraform modules its Azure charts will be built from), where every Azure
 row was still class `unclassified`: the Azure charts are not started there.
 `catalog-azure.csv` beside this file is the same table as data. The catalog's

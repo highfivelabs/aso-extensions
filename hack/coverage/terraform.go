@@ -25,7 +25,7 @@ import (
 const (
 	colTerraform  = "#7b42bc"
 	colTerraformL = "#1f2328" // the L1 tick
-	terraformDoc  = "https://github.com/highfivelabs/catalog/blob/%s/docs/terraform-leverage.md#method-and-error"
+	terraformDoc  = "https://github.com/highfivelabs/krm-packages/blob/%s/docs/terraform-leverage.md#method-and-error"
 	azapiNote     = "azapi is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema."
 )
 
@@ -37,7 +37,7 @@ type terraformSource struct {
 	Fetched    string `yaml:"fetched"`
 	Provider   string `yaml:"provider"`
 	Files      []struct {
-		From   string `yaml:"from"`   // the path in the catalog repository
+		From   string `yaml:"from"`   // the path in the krm-packages repository
 		Path   string `yaml:"path"`   // the vendored copy, relative to this repository's root
 		SHA256 string `yaml:"sha256"` // of the vendored copy
 	} `yaml:"files"`
