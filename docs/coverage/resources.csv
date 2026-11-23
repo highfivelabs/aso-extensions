@@ -1914,8 +1914,8 @@ Microsoft.Security,Microsoft.Security/advancedThreatProtectionSettings,1,,0,secu
 Microsoft.Security,Microsoft.Security/alertsSuppressionRules,7,,0,security.azure.hfl.dev/AlertsSuppressionRule,6,1,false,spec_api=2019-01-01-preview; spec-preview-only; ours_api=2019-01-01-preview
 Microsoft.Security,Microsoft.Security/apiCollections,0,,0,,0,0,false,spec_api=2023-11-15
 Microsoft.Security,Microsoft.Security/applications,4,,0,,0,4,false,spec_api=2022-07-01-preview; spec-preview-only
-Microsoft.Security,Microsoft.Security/assessmentMetadata,18,,0,,0,18,false,spec_api=2025-05-04
-Microsoft.Security,Microsoft.Security/assessments,36,,0,,0,36,false,spec_api=2025-05-04
+Microsoft.Security,Microsoft.Security/assessmentMetadata,18,,0,security.azure.hfl.dev/AssessmentMetadata,18,0,false,spec_api=2025-05-04; ours_api=2025-05-04
+Microsoft.Security,Microsoft.Security/assessments,36,,0,security.azure.hfl.dev/Assessment,36,0,false,spec_api=2025-05-04; ours_api=2025-05-04
 Microsoft.Security,Microsoft.Security/assessments/governanceAssignments,10,,0,,0,10,false,spec_api=2022-01-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/assignments,13,,0,,0,13,false,spec_api=2021-08-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/automations,20,,0,security.azure.hfl.dev/Automation,20,0,false,spec_api=2023-12-01-preview; spec-preview-only; ours_api=2023-12-01-preview
@@ -1931,8 +1931,8 @@ Microsoft.Security,Microsoft.Security/iotSecuritySolutions,16,,0,,0,16,false,spe
 Microsoft.Security,Microsoft.Security/locations/jitNetworkAccessPolicies,19,,0,,0,19,false,spec_api=2020-01-01
 Microsoft.Security,Microsoft.Security/pricings,8,,0,security.azure.hfl.dev/Pricing,8,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.Security,Microsoft.Security/pricings/securityOperators,0,,0,,0,0,false,spec_api=2023-01-01-preview; spec-preview-only
-Microsoft.Security,Microsoft.Security/privateLinks,3,,0,,0,3,false,spec_api=2026-01-01
-Microsoft.Security,Microsoft.Security/privateLinks/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-01-01
+Microsoft.Security,Microsoft.Security/privateLinks,3,,0,security.azure.hfl.dev/PrivateLink,3,0,false,spec_api=2026-01-01; ours_api=2026-01-01
+Microsoft.Security,Microsoft.Security/privateLinks/privateEndpointConnections,4,,0,security.azure.hfl.dev/PrivateLinksPrivateEndpointConnection,3,1,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.Security,Microsoft.Security/securityConnectors,78,,0,security.azure.hfl.dev/SecurityConnector,78,0,false,spec_api=2026-08-01-preview; spec-preview-only; ours_api=2026-08-01-preview
 Microsoft.Security,Microsoft.Security/securityConnectors/devops,9,,0,security.azure.hfl.dev/SecurityConnectorsDevOpsConfiguration,9,0,false,spec_api=2025-03-01; ours_api=2025-03-01
 Microsoft.Security,Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs,7,,0,security.azure.hfl.dev/SecurityConnectorsDevOpsAzureDevOpsOrg,7,0,false,spec_api=2025-03-01; ours_api=2025-03-01
@@ -1946,8 +1946,8 @@ Microsoft.Security,Microsoft.Security/serverVulnerabilityAssessmentsSettings,2,,
 Microsoft.Security,Microsoft.Security/serviceEntitlements,4,,0,,0,4,false,spec_api=2026-09-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/serviceEntitlementSettings,3,,0,,0,3,false,spec_api=2026-09-16-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/settings,2,,0,security.azure.hfl.dev/Setting,0,2,false,spec_api=2022-05-01; ours_api=2022-05-01
-Microsoft.Security,Microsoft.Security/sqlVulnerabilityAssessments,1,,0,,0,1,false,spec_api=2026-04-01-preview; spec-preview-only
-Microsoft.Security,Microsoft.Security/sqlVulnerabilityAssessments/baselineRules,2,,0,,0,2,false,spec_api=2026-04-01-preview; spec-preview-only
+Microsoft.Security,Microsoft.Security/sqlVulnerabilityAssessments,1,,0,security.azure.hfl.dev/SqlVulnerabilityAssessment,1,0,false,spec_api=2026-04-01-preview; spec-preview-only; ours_api=2026-04-01-preview
+Microsoft.Security,Microsoft.Security/sqlVulnerabilityAssessments/baselineRules,2,,0,security.azure.hfl.dev/SqlVulnerabilityAssessmentsBaselineRule,2,0,false,spec_api=2026-04-01-preview; spec-preview-only; ours_api=2026-04-01-preview
 Microsoft.Security,Microsoft.Security/standardAssignments,13,,0,security.azure.hfl.dev/StandardAssignment,12,1,false,spec_api=2024-08-01; ours_api=2024-08-01
 Microsoft.Security,Microsoft.Security/standards,9,,0,,0,9,false,spec_api=2021-08-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/workspaceSettings,2,,0,security.azure.hfl.dev/WorkspaceSetting,2,0,false,spec_api=2017-08-01-preview; spec-preview-only; ours_api=2017-08-01-preview

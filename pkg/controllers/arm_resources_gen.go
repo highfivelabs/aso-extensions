@@ -157,8 +157,14 @@ import (
 	security_v20240801s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20240801/storage"
 	security_v20250301 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250301"
 	security_v20250301s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250301/storage"
+	security_v20250504 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250504"
+	security_v20250504s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250504/storage"
 	security_v20250601 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250601"
 	security_v20250601s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20250601/storage"
+	security_v20260101 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260101"
+	security_v20260101s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260101/storage"
+	security_v20260401p "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260401preview"
+	security_v20260401ps "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260401preview/storage"
 	security_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260701"
 	security_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260701/storage"
 	security_v20260801p "github.com/highfivelabs/aso-extensions/apis/arm/security/v20260801preview"
@@ -1425,7 +1431,54 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{
+		Obj: new(security_v20250504.Assessment),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.metadata.partnerData.secret",
+				Func: indexSecurityAssessmentPartnerDataSecret,
+			},
+			{
+				Key:  ".spec.partnersData.secret",
+				Func: indexSecurityAssessmentPartnersDataSecret,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.metadata.partnerData.secret",
+						".spec.partnersData.secret",
+					},
+					&security_v20250504.AssessmentList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(security_v20250504.AssessmentMetadata),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.partnerData.secret",
+				Func: indexSecurityAssessmentMetadataSecret,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.partnerData.secret",
+					},
+					&security_v20250504.AssessmentMetadataList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(security_v20250601.DefenderForStorageSetting)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20260101.PrivateLink)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20260101.PrivateLinksPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20260401p.SqlVulnerabilityAssessment)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20260401p.SqlVulnerabilityAssessmentsBaselineRule)})
 	result = append(result, &registration.StorageType{Obj: new(security_v20260701.Pricing)})
 	result = append(result, &registration.StorageType{
 		Obj: new(security_v20260801p.SecurityConnector),
@@ -2227,8 +2280,14 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(security_v20250301s.SecurityConnectorsDevOpsAzureDevOpsProject)},
 		&registration.KnownType{Obj: new(security_v20250301s.SecurityConnectorsDevOpsAzureDevOpsRepo)},
 		&registration.KnownType{Obj: new(security_v20250301s.SecurityConnectorsDevOpsConfiguration)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20250504.Assessment)}, &registration.KnownType{Obj: new(security_v20250504.AssessmentMetadata)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20250504s.Assessment)}, &registration.KnownType{Obj: new(security_v20250504s.AssessmentMetadata)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20250601.DefenderForStorageSetting)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20250601s.DefenderForStorageSetting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20260101.PrivateLink)}, &registration.KnownType{Obj: new(security_v20260101.PrivateLinksPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20260101s.PrivateLink)}, &registration.KnownType{Obj: new(security_v20260101s.PrivateLinksPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20260401p.SqlVulnerabilityAssessment)}, &registration.KnownType{Obj: new(security_v20260401p.SqlVulnerabilityAssessmentsBaselineRule)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20260401ps.SqlVulnerabilityAssessment)}, &registration.KnownType{Obj: new(security_v20260401ps.SqlVulnerabilityAssessmentsBaselineRule)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20260701.Pricing)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20260701s.Pricing)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20260801p.SecurityConnector)})
@@ -2450,8 +2509,14 @@ func createScheme() *runtime.Scheme {
 	_ = security_v20240801s.AddToScheme(scheme)
 	_ = security_v20250301.AddToScheme(scheme)
 	_ = security_v20250301s.AddToScheme(scheme)
+	_ = security_v20250504.AddToScheme(scheme)
+	_ = security_v20250504s.AddToScheme(scheme)
 	_ = security_v20250601.AddToScheme(scheme)
 	_ = security_v20250601s.AddToScheme(scheme)
+	_ = security_v20260101.AddToScheme(scheme)
+	_ = security_v20260101s.AddToScheme(scheme)
+	_ = security_v20260401p.AddToScheme(scheme)
+	_ = security_v20260401ps.AddToScheme(scheme)
 	_ = security_v20260701.AddToScheme(scheme)
 	_ = security_v20260701s.AddToScheme(scheme)
 	_ = security_v20260801p.AddToScheme(scheme)
@@ -2714,12 +2779,16 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &resources_customizations.TemplateSpecsVersionExtension{})
 	result = append(result, &security_customizations.AdvancedThreatProtectionSettingExtension{})
 	result = append(result, &security_customizations.AlertsSuppressionRuleExtension{})
+	result = append(result, &security_customizations.AssessmentExtension{})
+	result = append(result, &security_customizations.AssessmentMetadataExtension{})
 	result = append(result, &security_customizations.AutoProvisioningSettingExtension{})
 	result = append(result, &security_customizations.AutomationExtension{})
 	result = append(result, &security_customizations.CustomRecommendationExtension{})
 	result = append(result, &security_customizations.DefenderForStorageSettingExtension{})
 	result = append(result, &security_customizations.GovernanceRuleExtension{})
 	result = append(result, &security_customizations.PricingExtension{})
+	result = append(result, &security_customizations.PrivateLinkExtension{})
+	result = append(result, &security_customizations.PrivateLinksPrivateEndpointConnectionExtension{})
 	result = append(result, &security_customizations.SecurityConnectorExtension{})
 	result = append(result, &security_customizations.SecurityConnectorsDevOpsAzureDevOpsOrgExtension{})
 	result = append(result, &security_customizations.SecurityConnectorsDevOpsAzureDevOpsProjectExtension{})
@@ -2729,6 +2798,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &security_customizations.SecurityStandardExtension{})
 	result = append(result, &security_customizations.ServerVulnerabilityAssessmentsSettingExtension{})
 	result = append(result, &security_customizations.SettingExtension{})
+	result = append(result, &security_customizations.SqlVulnerabilityAssessmentExtension{})
+	result = append(result, &security_customizations.SqlVulnerabilityAssessmentsBaselineRuleExtension{})
 	result = append(result, &security_customizations.StandardAssignmentExtension{})
 	result = append(result, &security_customizations.WorkspaceSettingExtension{})
 	result = append(result, &securityinsights_customizations.AlertRuleExtension{})
@@ -4369,6 +4440,54 @@ func indexResourcesDeploymentScriptAzurePowerShellStorageAccountKey(rawObj clien
 		return nil
 	}
 	return obj.Spec.AzurePowerShell.StorageAccountSettings.StorageAccountKey.Index()
+}
+
+// indexSecurityAssessmentMetadataSecret an index function for security_v20250504.AssessmentMetadata .spec.partnerData.secret
+func indexSecurityAssessmentMetadataSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*security_v20250504.AssessmentMetadata)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PartnerData == nil {
+		return nil
+	}
+	if obj.Spec.PartnerData.Secret == nil {
+		return nil
+	}
+	return obj.Spec.PartnerData.Secret.Index()
+}
+
+// indexSecurityAssessmentPartnerDataSecret an index function for security_v20250504.Assessment .spec.metadata.partnerData.secret
+func indexSecurityAssessmentPartnerDataSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*security_v20250504.Assessment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Metadata == nil {
+		return nil
+	}
+	if obj.Spec.Metadata.PartnerData == nil {
+		return nil
+	}
+	if obj.Spec.Metadata.PartnerData.Secret == nil {
+		return nil
+	}
+	return obj.Spec.Metadata.PartnerData.Secret.Index()
+}
+
+// indexSecurityAssessmentPartnersDataSecret an index function for security_v20250504.Assessment .spec.partnersData.secret
+func indexSecurityAssessmentPartnersDataSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*security_v20250504.Assessment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PartnersData == nil {
+		return nil
+	}
+	if obj.Spec.PartnersData.Secret == nil {
+		return nil
+	}
+	return obj.Spec.PartnersData.Secret.Index()
 }
 
 // indexSecuritySecurityConnectorAccessToken an index function for security_v20260801p.SecurityConnector .spec.environmentData.dockerHubOrganization.authentication.accessToken.accessToken

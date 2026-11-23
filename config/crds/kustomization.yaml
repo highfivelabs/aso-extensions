@@ -247,12 +247,16 @@ resources:
 - resources.azure.hfl.dev_templatespecsversions.yaml
 - security.azure.hfl.dev_advancedthreatprotectionsettings.yaml
 - security.azure.hfl.dev_alertssuppressionrules.yaml
+- security.azure.hfl.dev_assessmentmetadata.yaml
+- security.azure.hfl.dev_assessments.yaml
 - security.azure.hfl.dev_automations.yaml
 - security.azure.hfl.dev_autoprovisioningsettings.yaml
 - security.azure.hfl.dev_customrecommendations.yaml
 - security.azure.hfl.dev_defenderforstoragesettings.yaml
 - security.azure.hfl.dev_governancerules.yaml
 - security.azure.hfl.dev_pricings.yaml
+- security.azure.hfl.dev_privatelinks.yaml
+- security.azure.hfl.dev_privatelinksprivateendpointconnections.yaml
 - security.azure.hfl.dev_securityconnectors.yaml
 - security.azure.hfl.dev_securityconnectorsdevopsazuredevopsorgs.yaml
 - security.azure.hfl.dev_securityconnectorsdevopsazuredevopsprojects.yaml
@@ -262,6 +266,8 @@ resources:
 - security.azure.hfl.dev_securitystandards.yaml
 - security.azure.hfl.dev_servervulnerabilityassessmentssettings.yaml
 - security.azure.hfl.dev_settings.yaml
+- security.azure.hfl.dev_sqlvulnerabilityassessments.yaml
+- security.azure.hfl.dev_sqlvulnerabilityassessmentsbaselinerules.yaml
 - security.azure.hfl.dev_standardassignments.yaml
 - security.azure.hfl.dev_workspacesettings.yaml
 - securityinsights.azure.hfl.dev_alertrules.yaml

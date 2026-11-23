@@ -258,6 +258,20 @@ func init() {
 			return map[string]any{"targetResourceName": "g1", "items": []any{map[string]any{"resourceReference": armRef(c.ref)}}}
 		},
 	}
+	// A custom assessment is named after assessment metadata in the
+	// resource's subscription, which the fake checks exists (assessments.go).
+	f["Assessment"] = conformanceFixture{
+		setup: func(c *conformanceContext) {
+			c.add("/subscriptions/" + subID + "/providers/Microsoft.Security/assessmentMetadata/" + conformanceAssessmentKey)
+		},
+		spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"azureName": conformanceAssessmentKey, "resourceDetails": map[string]any{"azure": map[string]any{"source": "Azure"}}}
+		},
+	}
+	// A private endpoint makes the connection; a PUT only changes it.
+	f["PrivateLinksPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
 	f["WorkspacesSummaryLog"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"ruleDefinition": map[string]any{"query": "AppRequests | summarize count() by bin(TimeGenerated, 1h)", "binSize": int64(60), "destinationTable": "Hourly_CL"}}
 	}}
@@ -322,3 +336,7 @@ func init() {
 		conformanceFixtures[k] = v
 	}
 }
+
+// conformanceAssessmentKey is the assessment metadata a conformance
+// Assessment reports on.
+const conformanceAssessmentKey = "3b5c7a1e-0d2f-4c3b-9a8e-6f1e2d3c4b5a"

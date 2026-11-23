@@ -125,7 +125,7 @@ Generated: every resource of the two categories, by the order of the services in
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | platform-foundation | 18 | 246 | 4,675 | 43.2% | 38.2% | 18.6% |
-| security-adjacent | 7 | 93 | 1,049 | 8.6% | 54.3% | 37.1% |
+| security-adjacent | 7 | 93 | 1,049 | 8.6% | 60.3% | 31.1% |
 | application | 35 | 823 | 14,821 | 33.1% | 8.0% | 59.0% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 1.0% | 98.6% |
 
@@ -380,7 +380,7 @@ Generated: every resource of the two categories, by the order of the services in
 | 245 | `Microsoft.ContainerRegistry/registries/privateEndpointConnections` | covered |  | `containerregistry/RegistriesPrivateEndpointConnection` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 246 | `Microsoft.Billing/billingAccounts/billingSubscriptionAliases` | no kind |  |  | 0 / 0 / 17 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (17) | 0 |
 
-### security-adjacent: 93 resources (36 with no kind, 22 partly covered, 35 covered)
+### security-adjacent: 93 resources (30 with no kind, 23 partly covered, 40 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -399,43 +399,43 @@ Generated: every resource of the two categories, by the order of the services in
 | 13 | `Microsoft.Security/apiCollections` | no kind |  |  | 0 / 0 / 0 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (0) | 0 |
 | 14 | `Microsoft.Security/pricings/securityOperators` | no kind |  |  | 0 / 0 / 0 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (0) | 0 |
 | 15 | `Microsoft.Security/serverVulnerabilityAssessments` | no kind |  |  | 0 / 0 / 0 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (0) | 0 |
-| 16 | `Microsoft.Security/sqlVulnerabilityAssessments` | no kind |  |  | 0 / 0 / 1 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (1) | 0 |
-| 17 | `Microsoft.Security/dataScanners` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 18 | `Microsoft.Security/sqlVulnerabilityAssessments/baselineRules` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 19 | `Microsoft.Security/privateLinks` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 20 | `Microsoft.Security/sensitivitySettings` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
-| 21 | `Microsoft.Security/serviceEntitlementSettings` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
-| 22 | `Microsoft.Security/applications` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
-| 23 | `Microsoft.Security/privateLinks/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 24 | `Microsoft.Security/serviceEntitlements` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 25 | `Microsoft.Security/batchPricings` | no kind |  |  | 0 / 0 / 9 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (9) | 0 |
-| 26 | `Microsoft.Security/standards` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 27 | `Microsoft.Security/assessments/governanceAssignments` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
-| 28 | `Microsoft.Security/assignments` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
-| 29 | `Microsoft.Security/deviceSecurityGroups` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
-| 30 | `Microsoft.Security/informationProtectionPolicies` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
-| 31 | `Microsoft.Security/iotSecuritySolutions` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
-| 32 | `Microsoft.Security/assessmentMetadata` | no kind |  |  | 0 / 0 / 18 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (18) | 0 |
-| 33 | `Microsoft.Security/locations/jitNetworkAccessPolicies` | no kind |  |  | 0 / 0 / 19 | resourceGroup | generator | S (19) | 0 |
-| 34 | `Microsoft.Security/assessments` | no kind |  |  | 0 / 0 / 36 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (36) | 0 |
-| 35 | `Microsoft.Security/settings` | partial, 2 of 2 missing |  | `security/Setting` | 0 / 0 / 2 | subscription | extend: newer API version or property config | S (2) | 0 |
-| 36 | `Microsoft.Security/securityStandards` | partial, 1 of 6 missing |  | `security/SecurityStandard` | 0 / 5 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
-| 37 | `Microsoft.Security/alertsSuppressionRules` | partial, 1 of 7 missing |  | `security/AlertsSuppressionRule` | 0 / 6 / 1 | subscription | extend: newer API version or property config | S (1) | 0 |
-| 38 | `Microsoft.Security/standardAssignments` | partial, 1 of 13 missing |  | `security/StandardAssignment` | 0 / 12 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
-| 39 | `Microsoft.Security/governanceRules` | partial, 1 of 16 missing |  | `security/GovernanceRule` | 0 / 15 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
-| 40 | `Microsoft.Security/advancedThreatProtectionSettings` | covered |  | `security/AdvancedThreatProtectionSetting` | 0 / 1 / 0 | extension | - | - | 0 |
-| 41 | `Microsoft.Security/autoProvisioningSettings` | covered |  | `security/AutoProvisioningSetting` | 0 / 1 / 0 | subscription | - | - | 0 |
-| 42 | `Microsoft.Security/serverVulnerabilityAssessmentsSettings` | covered |  | `security/ServerVulnerabilityAssessmentsSetting` | 0 / 2 / 0 | subscription | - | - | 0 |
-| 43 | `Microsoft.Security/workspaceSettings` | covered |  | `security/WorkspaceSetting` | 0 / 2 / 0 | subscription | - | - | 0 |
-| 44 | `Microsoft.Security/customRecommendations` | covered |  | `security/CustomRecommendation` | 0 / 7 / 0 | extension | - | - | 0 |
-| 45 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs` | covered |  | `security/SecurityConnectorsDevOpsAzureDevOpsOrg` | 0 / 7 / 0 | resourceGroup | - | - | 0 |
-| 46 | `Microsoft.Security/pricings` | covered |  | `security/Pricing` | 0 / 8 / 0 | extension | - | - | 0 |
-| 47 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects` | covered |  | `security/SecurityConnectorsDevOpsAzureDevOpsProject` | 0 / 8 / 0 | resourceGroup | - | - | 0 |
-| 48 | `Microsoft.Security/securityContacts` | covered |  | `security/SecurityContact` | 0 / 8 / 0 | subscription | - | - | 0 |
-| 49 | `Microsoft.Security/securityConnectors/devops` | covered |  | `security/SecurityConnectorsDevOpsConfiguration` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
-| 50 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects/repos` | covered |  | `security/SecurityConnectorsDevOpsAzureDevOpsRepo` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
-| 51 | `Microsoft.Security/defenderForStorageSettings` | covered |  | `security/DefenderForStorageSetting` | 0 / 10 / 0 | extension | - | - | 0 |
-| 52 | `Microsoft.Security/automations` | covered |  | `security/Automation` | 0 / 20 / 0 | resourceGroup | - | - | 0 |
+| 16 | `Microsoft.Security/dataScanners` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
+| 17 | `Microsoft.Security/sensitivitySettings` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
+| 18 | `Microsoft.Security/serviceEntitlementSettings` | no kind |  |  | 0 / 0 / 3 | resourceGroup | generator | S (3) | 0 |
+| 19 | `Microsoft.Security/applications` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
+| 20 | `Microsoft.Security/serviceEntitlements` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
+| 21 | `Microsoft.Security/batchPricings` | no kind |  |  | 0 / 0 / 9 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (9) | 0 |
+| 22 | `Microsoft.Security/standards` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
+| 23 | `Microsoft.Security/assessments/governanceAssignments` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
+| 24 | `Microsoft.Security/assignments` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
+| 25 | `Microsoft.Security/deviceSecurityGroups` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
+| 26 | `Microsoft.Security/informationProtectionPolicies` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
+| 27 | `Microsoft.Security/iotSecuritySolutions` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
+| 28 | `Microsoft.Security/locations/jitNetworkAccessPolicies` | no kind |  |  | 0 / 0 / 19 | resourceGroup | generator | S (19) | 0 |
+| 29 | `Microsoft.Security/settings` | partial, 2 of 2 missing |  | `security/Setting` | 0 / 0 / 2 | subscription | extend: newer API version or property config | S (2) | 0 |
+| 30 | `Microsoft.Security/privateLinks/privateEndpointConnections` | partial, 1 of 4 missing |  | `security/PrivateLinksPrivateEndpointConnection` | 0 / 3 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
+| 31 | `Microsoft.Security/securityStandards` | partial, 1 of 6 missing |  | `security/SecurityStandard` | 0 / 5 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 32 | `Microsoft.Security/alertsSuppressionRules` | partial, 1 of 7 missing |  | `security/AlertsSuppressionRule` | 0 / 6 / 1 | subscription | extend: newer API version or property config | S (1) | 0 |
+| 33 | `Microsoft.Security/standardAssignments` | partial, 1 of 13 missing |  | `security/StandardAssignment` | 0 / 12 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 34 | `Microsoft.Security/governanceRules` | partial, 1 of 16 missing |  | `security/GovernanceRule` | 0 / 15 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 35 | `Microsoft.Security/advancedThreatProtectionSettings` | covered |  | `security/AdvancedThreatProtectionSetting` | 0 / 1 / 0 | extension | - | - | 0 |
+| 36 | `Microsoft.Security/autoProvisioningSettings` | covered |  | `security/AutoProvisioningSetting` | 0 / 1 / 0 | subscription | - | - | 0 |
+| 37 | `Microsoft.Security/sqlVulnerabilityAssessments` | covered |  | `security/SqlVulnerabilityAssessment` | 0 / 1 / 0 | extension | - | - | 0 |
+| 38 | `Microsoft.Security/serverVulnerabilityAssessmentsSettings` | covered |  | `security/ServerVulnerabilityAssessmentsSetting` | 0 / 2 / 0 | subscription | - | - | 0 |
+| 39 | `Microsoft.Security/sqlVulnerabilityAssessments/baselineRules` | covered |  | `security/SqlVulnerabilityAssessmentsBaselineRule` | 0 / 2 / 0 | extension | - | - | 0 |
+| 40 | `Microsoft.Security/workspaceSettings` | covered |  | `security/WorkspaceSetting` | 0 / 2 / 0 | subscription | - | - | 0 |
+| 41 | `Microsoft.Security/privateLinks` | covered |  | `security/PrivateLink` | 0 / 3 / 0 | resourceGroup | - | - | 0 |
+| 42 | `Microsoft.Security/customRecommendations` | covered |  | `security/CustomRecommendation` | 0 / 7 / 0 | extension | - | - | 0 |
+| 43 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs` | covered |  | `security/SecurityConnectorsDevOpsAzureDevOpsOrg` | 0 / 7 / 0 | resourceGroup | - | - | 0 |
+| 44 | `Microsoft.Security/pricings` | covered |  | `security/Pricing` | 0 / 8 / 0 | extension | - | - | 0 |
+| 45 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects` | covered |  | `security/SecurityConnectorsDevOpsAzureDevOpsProject` | 0 / 8 / 0 | resourceGroup | - | - | 0 |
+| 46 | `Microsoft.Security/securityContacts` | covered |  | `security/SecurityContact` | 0 / 8 / 0 | subscription | - | - | 0 |
+| 47 | `Microsoft.Security/securityConnectors/devops` | covered |  | `security/SecurityConnectorsDevOpsConfiguration` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
+| 48 | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects/repos` | covered |  | `security/SecurityConnectorsDevOpsAzureDevOpsRepo` | 0 / 9 / 0 | resourceGroup | - | - | 0 |
+| 49 | `Microsoft.Security/defenderForStorageSettings` | covered |  | `security/DefenderForStorageSetting` | 0 / 10 / 0 | extension | - | - | 0 |
+| 50 | `Microsoft.Security/assessmentMetadata` | covered |  | `security/AssessmentMetadata` | 0 / 18 / 0 | subscription | - | - | 0 |
+| 51 | `Microsoft.Security/automations` | covered |  | `security/Automation` | 0 / 20 / 0 | resourceGroup | - | - | 0 |
+| 52 | `Microsoft.Security/assessments` | covered |  | `security/Assessment` | 0 / 36 / 0 | extension | - | - | 0 |
 | 53 | `Microsoft.Security/securityConnectors` | covered |  | `security/SecurityConnector` | 0 / 78 / 0 | resourceGroup | - | - | 0 |
 | 54 | `Microsoft.SecurityInsights/cases/comments` | no kind |  |  | 0 / 0 / 1 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (1) | 0 |
 | 55 | `Microsoft.SecurityInsights/hunts/comments` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |

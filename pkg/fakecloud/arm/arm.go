@@ -39,7 +39,9 @@
 // test configurations, CIDR prefixes), Defender for Cloud governance rules
 // (governance.go: GUID keys, one priority per scope), Sentinel settings and
 // the workspace manager (sentinel.go: settings named by kind, members,
-// groups and assignments that name what exists), budgets
+// groups and assignments that name what exists), Defender custom
+// assessments (assessments.go: GUID metadata keys, an assessment named after
+// metadata that exists), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -455,6 +457,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkSentinel(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkAssessments(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

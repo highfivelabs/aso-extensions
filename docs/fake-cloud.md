@@ -516,6 +516,14 @@ upstream's); the catalog's chart tests do that.
   (`alertsSuppressionRules`, 2019-01-01-preview) are kept as sent: no alert
   is suppressed, and an expiry date in the past is not refused (Azure's rule
   depends on the day).
+- Defender for Cloud custom assessments (`Microsoft.Security/assessmentMetadata`,
+  `assessments`, 2025-05-04; `pkg/fakecloud/arm/assessments.go`): a
+  metadata's key (its name) is a GUID (400); an assessment is named after
+  metadata that exists in its resource's subscription (404; the fake has no
+  built-in assessments) and gives a status code (400). Not modelled: built-in
+  metadata, the secure score, an assessment showing or expiring, and the
+  error codes. Defender private links and SQL vulnerability assessment
+  settings and baseline rules are kept as sent (no scan runs).
 - Log Analytics summary rules (`workspaces/summaryLogs`, 2025-07-01;
   `pkg/fakecloud/arm/loganalytics.go`): a rule's definition gives a query
   and a bin size of 20, 30, 60, 120, 180, 360, 720 or 1440 minutes (400).
