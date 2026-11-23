@@ -124,12 +124,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 38.2% | 18.6% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 39.3% | 17.5% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 60.3% | 31.1% |
 | application | 35 | 823 | 14,821 | 33.1% | 21.3% | 45.6% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 1.0% | 98.6% |
 
-### platform-foundation: 246 resources (24 with no kind, 81 partly covered, 141 covered)
+### platform-foundation: 246 resources (23 with no kind, 81 partly covered, 142 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -345,9 +345,9 @@ Generated: every resource of the two categories, by the order of the services in
 | 210 | `Microsoft.Monitor/accounts/metricsContainers` | no kind |  |  | 0 / 0 / 1 | resourceGroup | generator | S (1) | 0 |
 | 211 | `Microsoft.Monitor/observabilityAgents` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
 | 212 | `Microsoft.Monitor/accounts/issues` | no kind |  |  | 0 / 0 / 12 | resourceGroup | generator | S (12) | 0 |
-| 213 | `Microsoft.Monitor/pipelineGroups` | no kind |  |  | 0 / 0 / 52 | resourceGroup | generator | M (52) | 0 |
-| 214 | `Microsoft.Monitor/slis` | no kind |  |  | 0 / 0 / 58 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (58) | 0 |
-| 215 | `Microsoft.Monitor/accounts` | partial, 3 of 6 missing | `monitor/Account` |  | 3 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 0 |
+| 213 | `Microsoft.Monitor/slis` | no kind |  |  | 0 / 0 / 58 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (58) | 0 |
+| 214 | `Microsoft.Monitor/accounts` | partial, 3 of 6 missing | `monitor/Account` |  | 3 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 0 |
+| 215 | `Microsoft.Monitor/pipelineGroups` | covered |  | `monitor/PipelineGroup` | 0 / 52 / 0 | resourceGroup | - | - | 0 |
 | 216 | `Microsoft.ContainerService/managedClusters/agentPools` | partial, 3 of 126 missing | `containerservice/ManagedClustersAgentPool` |  | 123 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 1 |
 | 217 | `Microsoft.ContainerService/managedClusters` | partial, 21 of 330 missing | `containerservice/ManagedCluster` |  | 309 / 0 / 21 | resourceGroup | extend: ASO's API version is older than the spec's | S (21) | 1 |
 | 218 | `Microsoft.ContainerService/fleets/members` | partial, 1 of 3 missing | `containerservice/FleetsMember` |  | 2 / 0 / 1 | resourceGroup | extend: ASO's API version is older than the spec's | S (1) | 0 |

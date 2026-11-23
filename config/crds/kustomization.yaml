@@ -204,6 +204,7 @@ resources:
 - management.azure.hfl.dev_managementgroupssettings.yaml
 - management.azure.hfl.dev_managementgroupssubscriptions.yaml
 - management.azure.hfl.dev_servicegroups.yaml
+- monitor.azure.hfl.dev_pipelinegroups.yaml
 - network.azure.hfl.dev_applicationgateways.yaml
 - network.azure.hfl.dev_applicationsecuritygroupsaddressprefixsets.yaml
 - network.azure.hfl.dev_ddoscustompolicies.yaml

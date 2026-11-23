@@ -28,6 +28,7 @@ rules:
   - maintenance.azure.hfl.dev
   - managedidentity.azure.hfl.dev
   - management.azure.hfl.dev
+  - monitor.azure.hfl.dev
   - network.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
   - operationsmanagement.azure.hfl.dev
@@ -66,6 +67,7 @@ rules:
   - maintenance.azure.hfl.dev
   - managedidentity.azure.hfl.dev
   - management.azure.hfl.dev
+  - monitor.azure.hfl.dev
   - network.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
   - operationsmanagement.azure.hfl.dev

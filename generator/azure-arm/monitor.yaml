@@ -1,0 +1,21 @@
+# Azure Monitor pipeline groups (Microsoft.Monitor, specification/monitoringservice,
+# 2026-04-01, the newest and only stable version; docs/plan.md f54): the Azure
+# Monitor pipeline at the edge, on an Azure Arc-enabled Kubernetes cluster's
+# custom location, that receives syslog and OTLP, transforms and batches,
+# and exports to an Azure Monitor workspace or Log Analytics through a data
+# collection rule. In a resource group. ASO's monitor group exports Account
+# (2023-04-03) only; the workspace's metrics containers and issues are left
+# out (docs/plan.md f54 says why).
+typeFilters:
+  - action: include
+    group: monitor
+    version: v20260401
+    because: the newest stable version of the pipeline groups
+  - action: prune
+    group: monitor
+    because: every other version is left alone (ASO has the Azure Monitor workspace)
+groupModelConfiguration:
+  2026-04-01:
+    PipelineGroup:
+      $exportAs: PipelineGroup
+      $supportedFrom: v0.1.0

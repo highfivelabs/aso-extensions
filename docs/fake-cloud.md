@@ -680,6 +680,13 @@ upstream's); the catalog's chart tests do that.
   Not modelled: certificates read or issued, the VPN package, basic
   authentication taking effect, deployments, the Arc cluster, AI gateways,
   and the error codes.
+- Azure Monitor pipeline groups (`Microsoft.Monitor/pipelineGroups`,
+  2026-04-01; `pkg/fakecloud/arm/monitorpipeline.go`): a group runs on a
+  custom location (400) that exists (404); its receivers, processors and
+  exporters have unique names and a receiver or exporter carries its type's
+  settings (400); its pipelines name only what it declares (400). Not
+  modelled: the pipeline running, data reaching the data collection rule,
+  persistence, TLS certificates, and the error codes.
 - Microsoft Foundry managed networks and outbound rules
   (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
   `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`

@@ -1515,7 +1515,7 @@ Microsoft.Monitor,Microsoft.Monitor/accounts,6,monitor.azure.com/Account,3,,0,3,
 Microsoft.Monitor,Microsoft.Monitor/accounts/issues,12,,0,,0,12,false,spec_api=2025-10-03
 Microsoft.Monitor,Microsoft.Monitor/accounts/metricsContainers,1,,0,,0,1,false,spec_api=2025-10-03
 Microsoft.Monitor,Microsoft.Monitor/observabilityAgents,9,,0,,0,9,false,spec_api=2026-05-01-preview; spec-preview-only
-Microsoft.Monitor,Microsoft.Monitor/pipelineGroups,52,,0,,0,52,false,spec_api=2026-04-01
+Microsoft.Monitor,Microsoft.Monitor/pipelineGroups,52,,0,monitor.azure.hfl.dev/PipelineGroup,52,0,false,spec_api=2026-04-01; ours_api=2026-04-01
 Microsoft.Monitor,Microsoft.Monitor/slis,58,,0,,0,58,false,spec_api=2025-03-01-preview; spec-preview-only
 Microsoft.MySQLDiscovery,Microsoft.MySQLDiscovery/MySQLSites,7,,0,,0,7,false,spec_api=2024-09-30-preview; spec-preview-only
 Microsoft.MySQLDiscovery,Microsoft.MySQLDiscovery/MySQLSites/MySQLServers,21,,0,,0,21,false,spec_api=2024-09-30-preview; spec-preview-only

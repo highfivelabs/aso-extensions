@@ -130,6 +130,9 @@ import (
 	management_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/management/v20230401/storage"
 	management_v20260801 "github.com/highfivelabs/aso-extensions/apis/arm/management/v20260801"
 	management_v20260801s "github.com/highfivelabs/aso-extensions/apis/arm/management/v20260801/storage"
+	monitor_customizations "github.com/highfivelabs/aso-extensions/apis/arm/monitor/customizations"
+	monitor_v20260401 "github.com/highfivelabs/aso-extensions/apis/arm/monitor/v20260401"
+	monitor_v20260401s "github.com/highfivelabs/aso-extensions/apis/arm/monitor/v20260401/storage"
 	network_customizations "github.com/highfivelabs/aso-extensions/apis/arm/network/customizations"
 	network_v20180501 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20180501"
 	network_v20180501s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20180501/storage"
@@ -1372,6 +1375,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroupsSetting)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20230401.ManagementGroupsSubscription)})
 	result = append(result, &registration.StorageType{Obj: new(management_v20260801.ServiceGroup)})
+	result = append(result, &registration.StorageType{Obj: new(monitor_v20260401.PipelineGroup)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20180501.DnsZonesSOARecord)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20240601.PrivateDnsZonesSOARecord)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20250501.DnsResolverDomainList)})
@@ -3088,6 +3092,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(management_v20230401s.ManagementGroupsSubscription)})
 	result = append(result, &registration.KnownType{Obj: new(management_v20260801.ServiceGroup)})
 	result = append(result, &registration.KnownType{Obj: new(management_v20260801s.ServiceGroup)})
+	result = append(result, &registration.KnownType{Obj: new(monitor_v20260401.PipelineGroup)})
+	result = append(result, &registration.KnownType{Obj: new(monitor_v20260401s.PipelineGroup)})
 	result = append(result, &registration.KnownType{Obj: new(network_v20180501.DnsZonesSOARecord)})
 	result = append(result, &registration.KnownType{Obj: new(network_v20180501s.DnsZonesSOARecord)})
 	result = append(result, &registration.KnownType{Obj: new(network_v20240601.PrivateDnsZonesSOARecord)})
@@ -3775,6 +3781,8 @@ func createScheme() *runtime.Scheme {
 	_ = management_v20230401s.AddToScheme(scheme)
 	_ = management_v20260801.AddToScheme(scheme)
 	_ = management_v20260801s.AddToScheme(scheme)
+	_ = monitor_v20260401.AddToScheme(scheme)
+	_ = monitor_v20260401s.AddToScheme(scheme)
 	_ = network_v20180501.AddToScheme(scheme)
 	_ = network_v20180501s.AddToScheme(scheme)
 	_ = network_v20240601.AddToScheme(scheme)
@@ -4049,6 +4057,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &management_customizations.ManagementGroupsSettingExtension{})
 	result = append(result, &management_customizations.ManagementGroupsSubscriptionExtension{})
 	result = append(result, &management_customizations.ServiceGroupExtension{})
+	result = append(result, &monitor_customizations.PipelineGroupExtension{})
 	result = append(result, &network_customizations.ApplicationGatewayExtension{})
 	result = append(result, &network_customizations.ApplicationSecurityGroupsAddressPrefixSetExtension{})
 	result = append(result, &network_customizations.DdosCustomPolicyExtension{})

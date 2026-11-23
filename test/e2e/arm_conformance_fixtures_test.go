@@ -543,6 +543,9 @@ func init() {
 	f["KubeEnvironment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"extendedLocation": map[string]any{"name": c.add(c.in("Microsoft.ExtendedLocation/customLocations/arc"))}}
 	}}
+	// Azure Monitor pipeline groups run on a custom location and their
+	// pipelines name what they declare (monitorpipeline.go).
+	f["PipelineGroup"] = conformanceFixture{coveredBy: "TestMonitorPipelineGroup"}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}

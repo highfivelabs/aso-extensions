@@ -4,6 +4,7 @@ specification/app
 specification/web
 specification/operationalinsights
 specification/monitor
+specification/monitoringservice
 specification/network
 specification/dns
 specification/privatedns
