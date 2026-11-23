@@ -30,24 +30,3 @@ func (connection *SitesPrivateEndpointConnection_Spec) GetName() string {
 func (connection *SitesPrivateEndpointConnection_Spec) GetType() string {
 	return "Microsoft.Web/sites/privateEndpointConnections"
 }
-
-// RemotePrivateEndpointConnectionARMResource resource specific properties
-type RemotePrivateEndpointConnectionARMResourceProperties struct {
-	// IpAddresses: Private IPAddresses mapped to the remote private endpoint
-	IpAddresses []string `json:"ipAddresses,omitempty"`
-
-	// PrivateLinkServiceConnectionState: The state of a private link connection
-	PrivateLinkServiceConnectionState *PrivateLinkConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
-}
-
-// The state of a private link connection
-type PrivateLinkConnectionState struct {
-	// ActionsRequired: ActionsRequired for a private link connection
-	ActionsRequired *string `json:"actionsRequired,omitempty"`
-
-	// Description: Description of a private link connection
-	Description *string `json:"description,omitempty"`
-
-	// Status: Status of a private link connection
-	Status *string `json:"status,omitempty"`
-}

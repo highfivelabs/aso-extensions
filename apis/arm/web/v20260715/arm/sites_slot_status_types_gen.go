@@ -1106,15 +1106,6 @@ type McpSettings_STATUS struct {
 	Servers []McpServerConfig_STATUS `json:"servers,omitempty"`
 }
 
-// Name value pair.
-type NameValuePair_STATUS struct {
-	// Name: Pair name.
-	Name *string `json:"name,omitempty"`
-
-	// Value: Pair value.
-	Value *string `json:"value,omitempty"`
-}
-
 // Push settings for the App.
 type PushSettings_STATUS struct {
 	// Id: Resource Id.

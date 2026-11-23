@@ -331,6 +331,10 @@ resources:
 - storage.azure.hfl.dev_storageaccountsstoragetaskassignments.yaml
 - subscription.azure.hfl.dev_subscriptiontenantpolicies.yaml
 - web.azure.hfl.dev_certificates.yaml
+- web.azure.hfl.dev_hostingenvironments.yaml
+- web.azure.hfl.dev_hostingenvironmentsconfigurationcustomdnssuffixes.yaml
+- web.azure.hfl.dev_hostingenvironmentsconfigurationnetworkings.yaml
+- web.azure.hfl.dev_hostingenvironmentsprivateendpointconnections.yaml
 - web.azure.hfl.dev_sitesbasicpublishingcredentialspolicyftps.yaml
 - web.azure.hfl.dev_sitesbasicpublishingcredentialspolicyscms.yaml
 - web.azure.hfl.dev_sitesconfigappsettings.yaml

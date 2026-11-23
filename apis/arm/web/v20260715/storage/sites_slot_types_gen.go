@@ -1025,22 +1025,6 @@ type McpSettings_STATUS struct {
 	Servers     []McpServerConfig_STATUS `json:"servers,omitempty"`
 }
 
-// Storage version of v20260715.NameValuePair
-// Name value pair.
-type NameValuePair struct {
-	Name        *string                `json:"name,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Value       *string                `json:"value,omitempty"`
-}
-
-// Storage version of v20260715.NameValuePair_STATUS
-// Name value pair.
-type NameValuePair_STATUS struct {
-	Name        *string                `json:"name,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Value       *string                `json:"value,omitempty"`
-}
-
 // Storage version of v20260715.PushSettings
 // Push settings for the App.
 type PushSettings struct {

@@ -17,3 +17,5 @@ sites/slots/config/logs
 sites/slots/basicPublishingCredentialsPolicies/ftp
 sites/slots/basicPublishingCredentialsPolicies/scm
 sites/slots/privateAccess/virtualNetworks
+hostingEnvironments/configurations/networking
+hostingEnvironments/configurations/customdnssuffix

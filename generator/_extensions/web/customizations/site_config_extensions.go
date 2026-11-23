@@ -31,13 +31,15 @@ var (
 	_ extensions.Deleter = &SitesSlotsBasicPublishingCredentialsPolicyScmExtension{}
 	_ extensions.Deleter = &SitesPrivateAccessExtension{}
 	_ extensions.Deleter = &SitesSlotsPrivateAccessExtension{}
+	_ extensions.Deleter = &HostingEnvironmentsConfigurationNetworkingExtension{}
 )
 
 // A site's config sections (authsettingsV2, logs, slotConfigNames), its
 // publishing credentials policies (ftp, scm) and its private access settings
 // (privateAccess/virtualNetworks), and a slot's of each (docs/plan.md f40),
-// exist as long as the site or slot does: Azure makes them with it, has no
-// DELETE for them, and deletes them with it. Deleting the Kubernetes object
+// exist as long as the site or slot does, and an App Service Environment's
+// networking configuration as long as the environment (f41): Azure makes
+// them with it, has no DELETE for them, and deletes them with it. Deleting the Kubernetes object
 // stops managing the section; the values last PUT stay until the site goes (as a zone's SOA record set is left,
 // network's soa_record_extensions.go).
 
@@ -151,8 +153,18 @@ func (extension *SitesSlotsPrivateAccessExtension) Delete(
 	return leaveWithSite(log, obj)
 }
 
+func (extension *HostingEnvironmentsConfigurationNetworkingExtension) Delete(
+	ctx context.Context, log logr.Logger, resolver *outoftree.Resolver, armClient *outoftree.GenericClient,
+	obj genruntime.ARMMetaObject, next extensions.DeleteFunc,
+) (extensions.DeleteResult, error) {
+	if _, ok := obj.(*v20260715.HostingEnvironmentsConfigurationNetworking); !ok {
+		return extensions.DeleteResult{}, eris.Errorf("cannot run on unknown resource type %T", obj)
+	}
+	return leaveWithSite(log, obj)
+}
+
 func leaveWithSite(log logr.Logger, obj genruntime.ARMMetaObject) (extensions.DeleteResult, error) {
 	id, _ := genruntime.GetResourceID(obj)
-	log.V(1).Info("Leaving the site's section in Azure: it is deleted with the site", "id", id)
+	log.V(1).Info("Leaving the section in Azure: it is deleted with its site, slot or environment", "id", id)
 	return extensions.DeleteCompleted(), nil
 }

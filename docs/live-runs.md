@@ -393,6 +393,9 @@ group kinds (`ManagementGroup`, `ManagementGroupsSubscription`,
 `ManagementGroupsSetting`, `ServiceGroup`): fake-only by the answer to Q15;
 PIM, policy remediations and attestations (above, "Left out on purpose").
 Sentinel's `SourceControl` needs a real repository and a credential for it.
+The App Service Environment kinds (`HostingEnvironment` and its
+configurations and connections, `docs/plan.md` f41): an environment takes one
+to two hours to make and bills an Isolated v2 instance while it exists.
 
 ## Ledger
 

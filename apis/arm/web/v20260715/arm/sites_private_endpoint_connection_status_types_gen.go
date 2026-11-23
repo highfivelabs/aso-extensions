@@ -23,33 +23,3 @@ type SitesPrivateEndpointConnection_STATUS struct {
 	// Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
-
-// RemotePrivateEndpointConnectionARMResource resource specific properties
-type RemotePrivateEndpointConnectionARMResourceProperties_STATUS struct {
-	// IpAddresses: Private IPAddresses mapped to the remote private endpoint
-	IpAddresses []string `json:"ipAddresses,omitempty"`
-
-	// PrivateEndpoint: PrivateEndpoint of a remote private endpoint connection
-	PrivateEndpoint *ArmIdWrapper_STATUS `json:"privateEndpoint,omitempty"`
-
-	// PrivateLinkServiceConnectionState: The state of a private link connection
-	PrivateLinkServiceConnectionState *PrivateLinkConnectionState_STATUS `json:"privateLinkServiceConnectionState,omitempty"`
-	ProvisioningState                 *string                            `json:"provisioningState,omitempty"`
-}
-
-// A wrapper for an ARM resource id
-type ArmIdWrapper_STATUS struct {
-	Id *string `json:"id,omitempty"`
-}
-
-// The state of a private link connection
-type PrivateLinkConnectionState_STATUS struct {
-	// ActionsRequired: ActionsRequired for a private link connection
-	ActionsRequired *string `json:"actionsRequired,omitempty"`
-
-	// Description: Description of a private link connection
-	Description *string `json:"description,omitempty"`
-
-	// Status: Status of a private link connection
-	Status *string `json:"status,omitempty"`
-}

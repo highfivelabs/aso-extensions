@@ -2293,10 +2293,10 @@ Microsoft.Web,Microsoft.Web/connections,26,,0,,0,26,false,spec_api=2016-06-01
 Microsoft.Web,Microsoft.Web/containerApps,50,,0,,0,50,false,spec_api=2023-12-01
 Microsoft.Web,Microsoft.Web/csrs,10,,0,,0,10,false,spec_api=2015-08-01
 Microsoft.Web,Microsoft.Web/customApis,29,,0,,0,29,false,spec_api=2016-06-01
-Microsoft.Web,Microsoft.Web/hostingEnvironments,25,,0,,0,25,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/hostingEnvironments/configurations,8,,0,,0,8,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/hostingEnvironments,25,,0,web.azure.hfl.dev/HostingEnvironment,16,9,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/hostingEnvironments/configurations,8,,0,web.azure.hfl.dev/HostingEnvironmentsConfigurationCustomDnsSuffix,4,4,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/hostingEnvironments/multiRolePools,19,,0,,0,19,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/hostingEnvironments/privateEndpointConnections,6,,0,,0,6,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/hostingEnvironments/privateEndpointConnections,6,,0,web.azure.hfl.dev/HostingEnvironmentsPrivateEndpointConnection,5,1,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/hostingEnvironments/workerPools,19,,0,,0,19,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/kubeEnvironments,24,,0,,0,24,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/managedHostingEnvironments,69,,0,,0,69,false,spec_api=2015-08-01

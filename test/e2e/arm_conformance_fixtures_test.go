@@ -315,6 +315,12 @@ func init() {
 	pec := conformanceFixture{setup: func(c *conformanceContext) { c.add(c.owner + "/privateEndpointConnections/conformance") }}
 	f["SitesPrivateEndpointConnection"] = pec
 	f["SitesSlotsPrivateEndpointConnection"] = pec
+	f["HostingEnvironmentsPrivateEndpointConnection"] = pec
+	// An App Service Environment names a network the fake holds
+	// (hostingenvironments.go).
+	f["HostingEnvironment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"virtualNetwork": map[string]any{"reference": armRef(c.add(c.in("Microsoft.Network/virtualNetworks/ase")))}}
+	}}
 	// A slot's network connection names a network the fake holds, as an
 	// app's does (sitechildren.go).
 	f["SitesSlotsVirtualNetworkConnection"] = f["SitesVirtualNetworkConnection"]

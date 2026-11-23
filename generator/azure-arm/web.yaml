@@ -154,6 +154,22 @@ groupModelConfiguration:
     Sites_Slots_Hybridconnection:
       $exportAs: SitesSlotsHybridConnection
       $supportedFrom: v0.1.0
+    # App Service Environment v3 (docs/plan.md f41, 2026-11-23): the
+    # environment, its networking and custom DNS suffix configurations
+    # (fixed names) and its private endpoint connections. Not its multi-role
+    # and worker pools, which only the retired v1 and v2 environments use.
+    HostingEnvironment:
+      $exportAs: HostingEnvironment
+      $supportedFrom: v0.1.0
+    HostingEnvironments_Configurations_Networking:
+      $exportAs: HostingEnvironmentsConfigurationNetworking
+      $supportedFrom: v0.1.0
+    HostingEnvironments_Configurations_Customdnssuffix:
+      $exportAs: HostingEnvironmentsConfigurationCustomDnsSuffix
+      $supportedFrom: v0.1.0
+    HostingEnvironments_PrivateEndpointConnection:
+      $exportAs: HostingEnvironmentsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
     SiteContainerProperties:
       PasswordSecret:
         $importSecretMode: required # the registry password of a sidecar's image: from a Secret
@@ -234,3 +250,6 @@ groupModelConfiguration:
     PrivateAccessVirtualNetwork:
       ResourceId:
         $referenceType: arm # the virtual network's ARM ID (autolabel, reviewed)
+    VirtualNetworkProfile:
+      Id:
+        $referenceType: arm # the virtual network, or the subnet, the environment is injected into (autolabel, reviewed)

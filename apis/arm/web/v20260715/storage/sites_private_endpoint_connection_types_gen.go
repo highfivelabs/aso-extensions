@@ -245,31 +245,6 @@ func (connection *SitesPrivateEndpointConnection_STATUS) ConvertStatusTo(destina
 	return destination.ConvertStatusFrom(connection)
 }
 
-// Storage version of v20260715.ArmIdWrapper_STATUS
-// A wrapper for an ARM resource id
-type ArmIdWrapper_STATUS struct {
-	Id          *string                `json:"id,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20260715.PrivateLinkConnectionState
-// The state of a private link connection
-type PrivateLinkConnectionState struct {
-	ActionsRequired *string                `json:"actionsRequired,omitempty"`
-	Description     *string                `json:"description,omitempty"`
-	PropertyBag     genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Status          *string                `json:"status,omitempty"`
-}
-
-// Storage version of v20260715.PrivateLinkConnectionState_STATUS
-// The state of a private link connection
-type PrivateLinkConnectionState_STATUS struct {
-	ActionsRequired *string                `json:"actionsRequired,omitempty"`
-	Description     *string                `json:"description,omitempty"`
-	PropertyBag     genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Status          *string                `json:"status,omitempty"`
-}
-
 // Storage version of v20260715.SitesPrivateEndpointConnectionOperatorSpec
 // Details for configuring operator behavior. Fields in this struct are interpreted by the operator directly rather than being passed to Azure
 type SitesPrivateEndpointConnectionOperatorSpec struct {

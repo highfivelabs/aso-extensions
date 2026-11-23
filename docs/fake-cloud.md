@@ -556,10 +556,19 @@ upstream's); the catalog's chart tests do that.
   credentials, the Linux `sitecontainers` mode a sidecar app needs,
   functions being deployed or run, premier add-ons being bought, and the
   error codes.
+- App Service Environment v3 (`Microsoft.Web/hostingEnvironments` and its
+  `configurations/customdnssuffix`, 2026-07-15;
+  `pkg/fakecloud/arm/hostingenvironments.go`): an environment names a
+  network that exists (400 when it names none, 404); a custom DNS suffix
+  comes with its Key Vault certificate URL, and the other way round (400).
+  Not modelled: the subnet's delegation and size, the hours an environment
+  takes, the certificate being read, the addresses Azure assigns, and the
+  error codes.
 - The private endpoint connections of an Azure SQL server, a container
   app, a disk access, an Azure Cache for Redis cache, a Redis Enterprise
   cluster, an App Configuration store, a PostgreSQL flexible server, a
-  MongoDB vCore cluster, an App Service app or slot and a static web app (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
+  MongoDB vCore cluster, an App Service app or slot, a static web app and an
+  App Service Environment (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
   a private endpoint makes a connection, so a PUT for one that does not
   exist is 404 and a PUT changes one that does (approve, reject). Not
   modelled: the private endpoint (a test adds the connection to the fake as

@@ -1775,6 +1775,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.HostingEnvironment)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.HostingEnvironmentsConfigurationCustomDnsSuffix)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.HostingEnvironmentsConfigurationNetworking)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.HostingEnvironmentsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyFtp)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyScm)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesConfigAuthSettingsV2)})
@@ -2762,6 +2766,10 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
+		&registration.KnownType{Obj: new(web_v20260715.HostingEnvironment)},
+		&registration.KnownType{Obj: new(web_v20260715.HostingEnvironmentsConfigurationCustomDnsSuffix)},
+		&registration.KnownType{Obj: new(web_v20260715.HostingEnvironmentsConfigurationNetworking)},
+		&registration.KnownType{Obj: new(web_v20260715.HostingEnvironmentsPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyFtp)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyScm)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesConfigAuthSettingsV2)},
@@ -2801,6 +2809,10 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(web_v20260715s.Certificate)},
+		&registration.KnownType{Obj: new(web_v20260715s.HostingEnvironment)},
+		&registration.KnownType{Obj: new(web_v20260715s.HostingEnvironmentsConfigurationCustomDnsSuffix)},
+		&registration.KnownType{Obj: new(web_v20260715s.HostingEnvironmentsConfigurationNetworking)},
+		&registration.KnownType{Obj: new(web_v20260715s.HostingEnvironmentsPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesBasicPublishingCredentialsPolicyFtp)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesBasicPublishingCredentialsPolicyScm)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigAuthSettingsV2)},
@@ -3337,6 +3349,10 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &storage_customizations.StorageAccountsStorageTaskAssignmentExtension{})
 	result = append(result, &subscription_customizations.SubscriptionTenantPolicyExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
+	result = append(result, &web_customizations.HostingEnvironmentExtension{})
+	result = append(result, &web_customizations.HostingEnvironmentsConfigurationCustomDnsSuffixExtension{})
+	result = append(result, &web_customizations.HostingEnvironmentsConfigurationNetworkingExtension{})
+	result = append(result, &web_customizations.HostingEnvironmentsPrivateEndpointConnectionExtension{})
 	result = append(result, &web_customizations.SitesBasicPublishingCredentialsPolicyFtpExtension{})
 	result = append(result, &web_customizations.SitesBasicPublishingCredentialsPolicyScmExtension{})
 	result = append(result, &web_customizations.SitesConfigAuthSettingsV2Extension{})
