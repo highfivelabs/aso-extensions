@@ -93,7 +93,7 @@ Microsoft.DataReplication,8,0,0,99,0,0,99,0.0,0.0,100.0
 Microsoft.DataShare,8,0,0,35,0,0,35,0.0,0.0,100.0
 Microsoft.DBforMariaDB,8,0,0,40,0,0,40,0.0,0.0,100.0
 Microsoft.DBforMySQL,18,5,0,111,56,0,55,50.5,0.0,49.5
-Microsoft.DBforPostgreSQL,18,8,1,135,56,3,76,41.5,2.2,56.3
+Microsoft.DBforPostgreSQL,18,8,7,135,56,35,44,41.5,25.9,32.6
 Microsoft.DelegatedNetwork,3,0,0,16,0,0,16,0.0,0.0,100.0
 Microsoft.DependencyMap,2,0,0,7,0,0,7,0.0,0.0,100.0
 Microsoft.Deployment.Admin,2,0,0,3,0,0,3,0.0,0.0,100.0

@@ -888,12 +888,12 @@ Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/migrations,2
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/privateEndpointConnections,4,,0,dbforpostgresql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection,3,1,false,spec_api=2026-10-01; ours_api=2025-08-01; ours-api-differs-from-spec
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/users,22,,0,dbforpostgresql.azure.hfl.dev/User,22,0,false,"outside-denominator; a database role, not an ARM resource; extends ASO's PostgreSQL User"
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints,2,dbforpostgresql.azure.com/FlexibleServersVirtualEndpoint,2,,0,0,false,spec_api=2026-10-01; official_api=2025-08-01; official-api-differs-from-spec
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2,24,,0,,0,24,false,spec_api=2022-11-08
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/coordinatorConfigurations,1,,0,,0,1,false,spec_api=2022-11-08
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/firewallRules,2,,0,,0,2,false,spec_api=2022-11-08
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/nodeConfigurations,1,,0,,0,1,false,spec_api=2022-11-08
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/privateEndpointConnections,4,,0,,0,4,false,spec_api=2022-11-08
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/roles,1,,0,,0,1,false,spec_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2,24,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2,24,0,false,spec_api=2022-11-08; ours_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/coordinatorConfigurations,1,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2CoordinatorConfiguration,1,0,false,spec_api=2022-11-08; ours_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/firewallRules,2,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2FirewallRule,2,0,false,spec_api=2022-11-08; ours_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/nodeConfigurations,1,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2NodeConfiguration,1,0,false,spec_api=2022-11-08; ours_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/privateEndpointConnections,4,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2PrivateEndpointConnection,3,1,false,spec_api=2022-11-08; ours_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/roles,1,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2Role,1,0,false,spec_api=2022-11-08; ours_api=2022-11-08
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/servers/keys,2,,0,,0,2,false,spec_api=2020-01-01
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/servers/securityAlertPolicies,7,,0,,0,7,false,spec_api=2017-12-01
 Microsoft.DelegatedNetwork,Microsoft.DelegatedNetwork/controller,2,,0,,0,2,false,spec_api=2021-03-15

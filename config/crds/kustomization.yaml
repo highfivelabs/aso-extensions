@@ -118,6 +118,12 @@ resources:
 - costmanagement.azure.hfl.dev_scheduledactions.yaml
 - costmanagement.azure.hfl.dev_settings.yaml
 - dbforpostgresql.azure.hfl.dev_flexibleserversprivateendpointconnections.yaml
+- dbforpostgresql.azure.hfl.dev_servergroupsv2coordinatorconfigurations.yaml
+- dbforpostgresql.azure.hfl.dev_servergroupsv2firewallrules.yaml
+- dbforpostgresql.azure.hfl.dev_servergroupsv2nodeconfigurations.yaml
+- dbforpostgresql.azure.hfl.dev_servergroupsv2privateendpointconnections.yaml
+- dbforpostgresql.azure.hfl.dev_servergroupsv2roles.yaml
+- dbforpostgresql.azure.hfl.dev_servergroupsv2s.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
 - devtestlab.azure.hfl.dev_schedules.yaml
 - documentdb.azure.hfl.dev_databaseaccountscassandrakeyspaces.yaml

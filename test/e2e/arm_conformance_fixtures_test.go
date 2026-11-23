@@ -319,6 +319,26 @@ func init() {
 	f["SitesPrivateEndpointConnection"] = pec
 	f["SitesSlotsPrivateEndpointConnection"] = pec
 	f["HostingEnvironmentsPrivateEndpointConnection"] = pec
+	// Azure Cosmos DB for PostgreSQL (cosmospostgres.go): a new cluster
+	// has its password, coordinator and node count; a firewall rule IPv4
+	// addresses; a role a password; a configuration a value.
+	secret := map[string]any{"name": "conformance", "key": "value"}
+	f["ServerGroupsv2"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"administratorLoginPassword": secret, "coordinatorServerEdition": "GeneralPurpose",
+			"coordinatorStorageQuotaInMb": int64(131072), "coordinatorVCores": int64(2), "nodeCount": int64(0)}
+	}}
+	f["ServerGroupsv2FirewallRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"startIpAddress": "10.0.0.1", "endIpAddress": "10.0.0.2"}
+	}}
+	f["ServerGroupsv2Role"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"password": secret}
+	}}
+	pgConfig := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"value": "on"}
+	}}
+	f["ServerGroupsv2CoordinatorConfiguration"] = pgConfig
+	f["ServerGroupsv2NodeConfiguration"] = pgConfig
+	f["ServerGroupsv2PrivateEndpointConnection"] = pec
 	// An account's managed network is named default (foundry.go).
 	f["AccountsManagedNetwork"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"azureName": "default"}

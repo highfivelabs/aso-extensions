@@ -77,6 +77,8 @@ import (
 	costmanagement_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601"
 	costmanagement_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601/storage"
 	dbforpostgresql_customizations "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/customizations"
+	dbforpostgresql_v20221108 "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/v20221108"
+	dbforpostgresql_v20221108s "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/v20221108/storage"
 	dbforpostgresql_v20250801 "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/v20250801"
 	dbforpostgresql_v20250801s "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/v20250801/storage"
 	devtestlab_customizations "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/customizations"
@@ -1016,6 +1018,48 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.ScheduledAction)})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.Setting)})
+	result = append(result, &registration.StorageType{
+		Obj: new(dbforpostgresql_v20221108.ServerGroupsv2),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.administratorLoginPassword",
+				Func: indexDbforpostgresqlServerGroupsv2AdministratorLoginPassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.administratorLoginPassword",
+					},
+					&dbforpostgresql_v20221108.ServerGroupsv2List{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(dbforpostgresql_v20221108.ServerGroupsv2CoordinatorConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(dbforpostgresql_v20221108.ServerGroupsv2FirewallRule)})
+	result = append(result, &registration.StorageType{Obj: new(dbforpostgresql_v20221108.ServerGroupsv2NodeConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(dbforpostgresql_v20221108.ServerGroupsv2PrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{
+		Obj: new(dbforpostgresql_v20221108.ServerGroupsv2Role),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.password",
+				Func: indexDbforpostgresqlServerGroupsv2RolePassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.password",
+					},
+					&dbforpostgresql_v20221108.ServerGroupsv2RoleList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(dbforpostgresql_v20250801.FlexibleServersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Schedule)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240701.MongoClustersPrivateEndpointConnection)})
@@ -2517,6 +2561,22 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Export)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.ScheduledAction)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Setting)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108.ServerGroupsv2)},
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108.ServerGroupsv2CoordinatorConfiguration)},
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108.ServerGroupsv2FirewallRule)},
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108.ServerGroupsv2NodeConfiguration)},
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108.ServerGroupsv2PrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108.ServerGroupsv2Role)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108s.ServerGroupsv2)},
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108s.ServerGroupsv2CoordinatorConfiguration)},
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108s.ServerGroupsv2FirewallRule)},
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108s.ServerGroupsv2NodeConfiguration)},
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108s.ServerGroupsv2PrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(dbforpostgresql_v20221108s.ServerGroupsv2Role)})
 	result = append(result, &registration.KnownType{Obj: new(dbforpostgresql_v20250801.FlexibleServersPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(dbforpostgresql_v20250801s.FlexibleServersPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
@@ -3222,6 +3282,8 @@ func createScheme() *runtime.Scheme {
 	_ = containerservice_v20260601s.AddToScheme(scheme)
 	_ = costmanagement_v20260601.AddToScheme(scheme)
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
+	_ = dbforpostgresql_v20221108.AddToScheme(scheme)
+	_ = dbforpostgresql_v20221108s.AddToScheme(scheme)
 	_ = dbforpostgresql_v20250801.AddToScheme(scheme)
 	_ = dbforpostgresql_v20250801s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
@@ -3452,6 +3514,12 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &costmanagement_customizations.ScheduledActionExtension{})
 	result = append(result, &costmanagement_customizations.SettingExtension{})
 	result = append(result, &dbforpostgresql_customizations.FlexibleServersPrivateEndpointConnectionExtension{})
+	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2CoordinatorConfigurationExtension{})
+	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2Extension{})
+	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2FirewallRuleExtension{})
+	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2NodeConfigurationExtension{})
+	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2PrivateEndpointConnectionExtension{})
+	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2RoleExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspaceExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspacesTableExtension{})
@@ -5057,6 +5125,30 @@ func indexCostmanagementExportSasToken(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.DeliveryInfo.Destination.SasToken.Index()
+}
+
+// indexDbforpostgresqlServerGroupsv2AdministratorLoginPassword an index function for dbforpostgresql_v20221108.ServerGroupsv2 .spec.administratorLoginPassword
+func indexDbforpostgresqlServerGroupsv2AdministratorLoginPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*dbforpostgresql_v20221108.ServerGroupsv2)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.AdministratorLoginPassword == nil {
+		return nil
+	}
+	return obj.Spec.AdministratorLoginPassword.Index()
+}
+
+// indexDbforpostgresqlServerGroupsv2RolePassword an index function for dbforpostgresql_v20221108.ServerGroupsv2Role .spec.password
+func indexDbforpostgresqlServerGroupsv2RolePassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*dbforpostgresql_v20221108.ServerGroupsv2Role)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Password == nil {
+		return nil
+	}
+	return obj.Spec.Password.Index()
 }
 
 // indexDocumentdbDatabaseAccountsCassandraRoleAssignmentPrincipalIdFromConfig an index function for documentdb_v20260315.DatabaseAccountsCassandraRoleAssignment .spec.principalIdFromConfig

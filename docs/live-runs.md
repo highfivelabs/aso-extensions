@@ -369,11 +369,13 @@ ledger has a row for it.
 | 2026-11-23 | `TestLiveSiteContainers` | `SitesSitecontainer` | a Linux App Service plan, Basic B1 (about $0.02 an hour; the first region it is allowed in), and an app in `sitecontainers` mode | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSiteContainers"` |
 | 2026-11-23 | `TestLiveSqlServerExtras` | `ServersDevOpsAuditingSetting`, `ServersDatabasesDataMaskingPolicy`, `ServersSqlVulnerabilityAssessment` | an Azure SQL server (free, public access off) and a Basic database (about $0.007 an hour) in the first region that takes them | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSqlServerExtras"` |
 | 2026-11-23 | `TestLiveRestorePoints` | `RestorePointCollection`, `RestorePointCollectionsRestorePoint`, `Gallery`, `GalleriesScript`, `GalleriesInVMAccessControlProfile` | a small Linux VM (about $0.03 an hour) and its restore point's disk snapshot (a fraction of a cent); the gallery definitions are free | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveRestorePoints"` |
+| 2026-11-23 | `TestLiveCosmosPostgres` | `ServerGroupsv2`, `ServerGroupsv2FirewallRule`, `ServerGroupsv2Role`, `ServerGroupsv2CoordinatorConfiguration` | none: the cluster is the kind under test, one Burstable node (1 vCore, 32 GiB; a few cents an hour, about 15 minutes to make and to delete); skips unless `Microsoft.DBforPostgreSQL` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveCosmosPostgres"` |
 
 All of them in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
 TESTS="TestLiveAddressPrefixSet TestLiveRuleCollectionGroupDraft
 TestLiveConnectionMonitor TestLiveSummaryRule TestLiveSentinelWorkspace
-TestLiveSiteContainers TestLiveSqlServerExtras TestLiveRestorePoints"`.
+TestLiveSiteContainers TestLiveSqlServerExtras TestLiveRestorePoints
+TestLiveCosmosPostgres"`.
 
 Written for the subscription (above, "The subscription roles"); each skips
 until the builder assigns the roles of `hack/live/roles/`:

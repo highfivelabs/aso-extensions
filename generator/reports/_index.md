@@ -234,6 +234,12 @@ title: Supported Resources
 | Resource                                 | ARM Version | CRD Version | Supported From | Sample |
 |------------------------------------------|-------------|-------------|----------------|--------|
 | FlexibleServersPrivateEndpointConnection | 2025-08-01  | v20250801   | v0.1.0         | -      |
+| ServerGroupsv2                           | 2022-11-08  | v20221108   | v0.1.0         | -      |
+| ServerGroupsv2CoordinatorConfiguration   | 2022-11-08  | v20221108   | v0.1.0         | -      |
+| ServerGroupsv2FirewallRule               | 2022-11-08  | v20221108   | v0.1.0         | -      |
+| ServerGroupsv2NodeConfiguration          | 2022-11-08  | v20221108   | v0.1.0         | -      |
+| ServerGroupsv2PrivateEndpointConnection  | 2022-11-08  | v20221108   | v0.1.0         | -      |
+| ServerGroupsv2Role                       | 2022-11-08  | v20221108   | v0.1.0         | -      |
 
 ## DevTestLab
 

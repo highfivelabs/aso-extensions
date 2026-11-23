@@ -41,4 +41,5 @@ specification/redis
 specification/redisenterprise
 specification/appconfiguration
 specification/postgresql
+specification/postgresqlhsc
 specification/mongocluster

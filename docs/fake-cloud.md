@@ -597,6 +597,17 @@ upstream's); the catalog's chart tests do that.
   needing a dedicated SQL pool, masking being applied, maintenance windows
   being kept, ledger digests being uploaded, baselines matching scans, and
   the error codes.
+- Azure Cosmos DB for PostgreSQL clusters
+  (`Microsoft.DBforPostgreSQL/serverGroupsv2/*`, 2022-11-08;
+  `pkg/fakecloud/arm/cosmospostgres.go`): a new cluster that is no replica
+  or restore has an administrator password, a coordinator edition, storage
+  and vCores and a node count (400); a node count is never 1 (400); a
+  replica's or restore's source cluster exists (404); a firewall rule has
+  IPv4 addresses (400; the CRD's pattern refuses others first); a role has
+  a password and a configuration a value (400); a private endpoint makes a
+  connection (`privateendpoints.go`). Not modelled: the servers a cluster
+  makes, its state, high availability, replicas kept in step, a
+  configuration's name being a server parameter, and the error codes.
 - Microsoft Foundry managed networks and outbound rules
   (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
   `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`
