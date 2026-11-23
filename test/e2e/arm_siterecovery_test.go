@@ -127,14 +127,18 @@ func TestSiteRecovery(t *testing.T) {
 			SendToOwners: ptr("DoNotSend"), CustomEmailAddresses: []string{"dr@example.com"}, Locale: ptr("en-US"),
 		}},
 	}
-	objs := []conditioned{vault, west, east, src, dst, policy, mapping, item, plan, alerts}
-	for _, o := range objs {
-		if err := k8s.Create(ctx, o); err != nil {
-			t.Fatal(err)
+	// The replicated item needs the container mapping, and the plan the
+	// item: each is made once what it needs is Ready, so neither waits on
+	// ASO's retry backoff after a refusal (too slow under the full suite).
+	for _, phase := range [][]conditioned{{vault, west, east, src, dst, policy, mapping, alerts}, {item}, {plan}} {
+		for _, o := range phase {
+			if err := k8s.Create(ctx, o); err != nil {
+				t.Fatal(err)
+			}
 		}
-	}
-	for _, o := range objs {
-		eventually(t, timeout, o.GetName()+" Ready", ready(o))
+		for _, o := range phase {
+			eventually(t, timeout, o.GetName()+" Ready", ready(o))
+		}
 	}
 
 	vaultID := rgID + "/providers/Microsoft.RecoveryServices/vaults/dr"
