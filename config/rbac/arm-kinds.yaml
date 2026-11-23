@@ -36,6 +36,7 @@ rules:
   - securityinsights.azure.hfl.dev
   - sql.azure.hfl.dev
   - storage.azure.hfl.dev
+  - subscription.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
@@ -70,6 +71,7 @@ rules:
   - securityinsights.azure.hfl.dev
   - sql.azure.hfl.dev
   - storage.azure.hfl.dev
+  - subscription.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*/status", "*/finalizers"]
   verbs: ["get", "update", "patch"]

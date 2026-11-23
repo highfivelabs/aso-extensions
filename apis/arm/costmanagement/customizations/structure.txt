@@ -7,3 +7,5 @@ ExportExtension: Object (0 properties)
 
 ScheduledActionExtension: Object (0 properties)
 
+SettingExtension: Object (0 properties)
+

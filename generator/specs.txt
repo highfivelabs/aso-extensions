@@ -36,3 +36,4 @@ specification/storage
 specification/sql
 specification/msi
 specification/cdn
+specification/subscription

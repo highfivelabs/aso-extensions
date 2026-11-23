@@ -20,6 +20,9 @@ resources:
 - app.azure.hfl.dev_managedenvironmentsprivateendpointconnections.yaml
 - app.azure.hfl.dev_managedenvironmentsstorages.yaml
 - app.azure.hfl.dev_sessionpools.yaml
+- authorization.azure.hfl.dev_accessreviewhistorydefinitions.yaml
+- authorization.azure.hfl.dev_accessreviewscheduledefinitions.yaml
+- authorization.azure.hfl.dev_accessreviewschedulesettings.yaml
 - authorization.azure.hfl.dev_managementlocks.yaml
 - authorization.azure.hfl.dev_policyassignments.yaml
 - authorization.azure.hfl.dev_policydefinitions.yaml
@@ -85,6 +88,7 @@ resources:
 - costmanagement.azure.hfl.dev_budgets.yaml
 - costmanagement.azure.hfl.dev_exports.yaml
 - costmanagement.azure.hfl.dev_scheduledactions.yaml
+- costmanagement.azure.hfl.dev_settings.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
 - devtestlab.azure.hfl.dev_schedules.yaml
 - documentdb.azure.hfl.dev_databaseaccountscassandrakeyspaces.yaml
@@ -274,6 +278,7 @@ resources:
 - storage.azure.hfl.dev_storageaccountsobjectreplicationpolicies.yaml
 - storage.azure.hfl.dev_storageaccountsprivateendpointconnections.yaml
 - storage.azure.hfl.dev_storageaccountsstoragetaskassignments.yaml
+- subscription.azure.hfl.dev_subscriptiontenantpolicies.yaml
 - web.azure.hfl.dev_certificates.yaml
 - web.azure.hfl.dev_sitesbasicpublishingcredentialspolicyftps.yaml
 - web.azure.hfl.dev_sitesbasicpublishingcredentialspolicyscms.yaml

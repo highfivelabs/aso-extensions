@@ -24,7 +24,7 @@ Microsoft.AppConfiguration,5,4,0,27,24,0,3,88.9,0.0,11.1
 Microsoft.AppLink,2,0,0,16,0,0,16,0.0,0.0,100.0
 Microsoft.AppPlatform,27,0,0,276,0,0,276,0.0,0.0,100.0
 Microsoft.Attestation,2,0,0,25,0,0,25,0.0,0.0,100.0
-Microsoft.Authorization,22,2,13,254,15,166,73,5.9,65.4,28.7
+Microsoft.Authorization,22,2,16,254,15,194,45,5.9,76.4,17.7
 Microsoft.Automanage,3,0,0,7,0,0,7,0.0,0.0,100.0
 Microsoft.Automation,28,0,20,207,0,168,39,0.0,81.2,18.8
 Microsoft.AVS,20,0,0,144,0,0,144,0.0,0.0,100.0
@@ -73,7 +73,7 @@ Microsoft.ContainerRegistry.Admin,2,0,0,3,0,0,3,0.0,0.0,100.0
 Microsoft.ContainerService,24,10,5,682,479,48,155,70.2,7.0,22.7
 Microsoft.ContainerStorage,3,0,0,24,0,0,24,0.0,0.0,100.0
 Microsoft.Contoso,1,0,0,5,0,0,5,0.0,0.0,100.0
-Microsoft.CostManagement,7,0,3,127,0,74,53,0.0,58.3,41.7
+Microsoft.CostManagement,7,0,4,127,0,76,51,0.0,59.8,40.2
 Microsoft.CustomerInsights,13,0,0,231,0,0,231,0.0,0.0,100.0
 Microsoft.CustomProviders,2,0,0,11,0,0,11,0.0,0.0,100.0
 Microsoft.Dashboard,5,0,0,50,0,0,50,0.0,0.0,100.0
@@ -252,7 +252,7 @@ Microsoft.StorageMover,6,0,0,65,0,0,65,0.0,0.0,100.0
 Microsoft.StoragePool,2,0,0,18,0,0,18,0.0,0.0,100.0
 Microsoft.StorageSync,6,0,0,38,0,0,38,0.0,0.0,100.0
 Microsoft.StreamAnalytics,7,0,0,122,0,0,122,0.0,0.0,100.0
-Microsoft.Subscription,3,1,0,15,9,0,6,60.0,0.0,40.0
+Microsoft.Subscription,3,1,1,15,9,3,3,60.0,20.0,20.0
 Microsoft.Subscriptions.Admin,7,0,0,40,0,0,40,0.0,0.0,100.0
 Microsoft.Support,4,0,0,37,0,0,37,0.0,0.0,100.0
 Microsoft.Synapse,38,2,0,297,64,0,233,21.5,0.0,78.5

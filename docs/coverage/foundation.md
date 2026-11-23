@@ -124,12 +124,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 35.7% | 21.1% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 36.4% | 20.4% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 47.0% | 44.4% |
 | application | 35 | 823 | 14,821 | 33.1% | 8.0% | 59.0% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 1.0% | 98.6% |
 
-### platform-foundation: 246 resources (33 with no kind, 77 partly covered, 136 covered)
+### platform-foundation: 246 resources (28 with no kind, 80 partly covered, 138 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -137,19 +137,19 @@ Generated: every resource of the two categories, by the order of the services in
 | 2 | `Microsoft.Management/managementGroups/subscriptions` | covered |  | `management/ManagementGroupsSubscription` | 0 / 0 / 0 | tenant | - | - | 1 |
 | 3 | `Microsoft.Management/managementGroups/settings` | covered |  | `management/ManagementGroupsSetting` | 0 / 2 / 0 | tenant | - | - | 0 |
 | 4 | `Microsoft.Management/serviceGroups` | covered |  | `management/ServiceGroup` | 0 / 5 / 0 | tenant | - | - | 0 |
-| 5 | `Microsoft.Subscription/policies` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
-| 6 | `Microsoft.Subscription/subscriptionDefinitions` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
-| 7 | `Microsoft.Subscription/aliases` | covered | `subscription/Alias` |  | 9 / 0 / 0 | tenant | - | - | 1 |
+| 5 | `Microsoft.Subscription/subscriptionDefinitions` | no kind |  |  | 0 / 0 / 3 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (3) | 0 |
+| 6 | `Microsoft.Subscription/aliases` | covered | `subscription/Alias` |  | 9 / 0 / 0 | tenant | - | - | 1 |
+| 7 | `Microsoft.Subscription/policies` | covered |  | `subscription/SubscriptionTenantPolicy` | 0 / 3 / 0 | tenant | - | - | 0 |
 | 8 | `Microsoft.Authorization/privilegedResourceFavorites` | no kind |  |  | 0 / 0 / 1 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (1) | 0 |
 | 9 | `Microsoft.Authorization/variables/values` | no kind |  |  | 0 / 0 / 2 | managementGroup,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (2) | 0 |
 | 10 | `Microsoft.Authorization/roleAssignmentApprovals/stages` | no kind |  |  | 0 / 0 / 3 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | S (3) | 0 |
 | 11 | `Microsoft.Authorization/accessReviewScheduleDefinitions/instances` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
-| 12 | `Microsoft.Authorization/accessReviewScheduleSettings` | no kind |  |  | 0 / 0 / 15 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (15) | 0 |
-| 13 | `Microsoft.Authorization/accessReviewHistoryDefinitions` | no kind |  |  | 0 / 0 / 20 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (20) | 0 |
-| 14 | `Microsoft.Authorization/accessReviewScheduleDefinitions` | no kind |  |  | 0 / 0 / 24 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (24) | 0 |
-| 15 | `Microsoft.Authorization/policydefinitions` | partial, 1 of 22 missing |  | `authorization/PolicyDefinition` | 0 / 21 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
-| 16 | `Microsoft.Authorization/policySetDefinitions` | partial, 1 of 25 missing |  | `authorization/PolicySetDefinition` | 0 / 24 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
-| 17 | `Microsoft.Authorization/policyDefinitions/versions` | partial, 1 of 21 missing |  | `authorization/PolicyDefinitionsVersion` | 0 / 20 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 0 |
+| 12 | `Microsoft.Authorization/policydefinitions` | partial, 1 of 22 missing |  | `authorization/PolicyDefinition` | 0 / 21 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
+| 13 | `Microsoft.Authorization/policySetDefinitions` | partial, 1 of 25 missing |  | `authorization/PolicySetDefinition` | 0 / 24 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 1 |
+| 14 | `Microsoft.Authorization/accessReviewScheduleSettings` | partial, 6 of 15 missing |  | `authorization/AccessReviewScheduleSetting` | 0 / 9 / 6 | extension,subscription | extend: newer API version or property config | S (6) | 0 |
+| 15 | `Microsoft.Authorization/accessReviewHistoryDefinitions` | partial, 6 of 20 missing |  | `authorization/AccessReviewHistoryDefinition` | 0 / 14 / 6 | extension,subscription | extend: newer API version or property config | S (6) | 0 |
+| 16 | `Microsoft.Authorization/policyDefinitions/versions` | partial, 1 of 21 missing |  | `authorization/PolicyDefinitionsVersion` | 0 / 20 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 0 |
+| 17 | `Microsoft.Authorization/accessReviewScheduleDefinitions` | partial, 19 of 24 missing |  | `authorization/AccessReviewScheduleDefinition` | 0 / 5 / 19 | extension,subscription | extend: newer API version or property config | S (19) | 0 |
 | 18 | `Microsoft.Authorization/policySetDefinitions/versions` | partial, 1 of 24 missing |  | `authorization/PolicySetDefinitionsVersion` | 0 / 23 / 1 | managementGroup,subscription | extend: newer API version or property config | S (1) | 0 |
 | 19 | `Microsoft.Authorization/roleAssignments` | covered | `authorization/RoleAssignment` |  | 7 / 0 / 0 | extension | - | - | 33 |
 | 20 | `Microsoft.Authorization/locks` | covered |  | `authorization/ManagementLock` | 0 / 3 / 0 | extension,resourceGroup,subscription | - | - | 31 |
@@ -166,11 +166,11 @@ Generated: every resource of the two categories, by the order of the services in
 | 31 | `Microsoft.Resources/resourceGroups` | partial, 1 of 4 missing | `resources/ResourceGroup` |  | 3 / 0 / 1 | subscription | extend: ASO's API version is older than the spec's | S (1) | 2 |
 | 32 | `Microsoft.Resources/tags` | covered |  | `resources/TagSet` | 0 / 1 / 0 | extension | - | - | 1 |
 | 33 | `Microsoft.Consumption/budgets` | covered |  | `consumption/Budget` | 0 / 26 / 0 | extension | - | - | 1 |
-| 34 | `Microsoft.CostManagement/settings` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 35 | `Microsoft.CostManagement/markupRules` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |
-| 36 | `Microsoft.CostManagement/costAllocationRules` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
-| 37 | `Microsoft.CostManagement/views` | no kind |  |  | 0 / 0 / 34 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | M (34) | 0 |
-| 38 | `Microsoft.CostManagement/exports` | partial, 1 of 28 missing |  | `costmanagement/Export` | 0 / 27 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 34 | `Microsoft.CostManagement/markupRules` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |
+| 35 | `Microsoft.CostManagement/costAllocationRules` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
+| 36 | `Microsoft.CostManagement/views` | no kind |  |  | 0 / 0 / 34 | extension,tenant | generator, arbitrary owner (several scopes, patch 0006) | M (34) | 0 |
+| 37 | `Microsoft.CostManagement/exports` | partial, 1 of 28 missing |  | `costmanagement/Export` | 0 / 27 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 38 | `Microsoft.CostManagement/settings` | covered |  | `costmanagement/Setting` | 0 / 2 / 0 | extension | - | - | 0 |
 | 39 | `Microsoft.CostManagement/scheduledActions` | covered |  | `costmanagement/ScheduledAction` | 0 / 20 / 0 | extension,tenant | - | - | 0 |
 | 40 | `Microsoft.CostManagement/budgets` | covered |  | `costmanagement/Budget` | 0 / 27 / 0 | extension | - | - | 0 |
 | 41 | `Microsoft.Insights/diagnosticSettings` | partial, 2 of 14 missing | `insights/DiagnosticSetting` |  | 12 / 0 / 2 | extension | extend: ASO's API version is older than the spec's | S (2) | 23 |

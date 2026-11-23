@@ -532,3 +532,39 @@ ScheduledAction: Resource
     ├── Type: *string
     └── ViewId: *string
 
+Setting: Resource
+├── Spec: Object (4 properties)
+│   ├── Kind: *Enum (1 value)
+│   │   └── "taginheritance"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   └── Properties: *Object (1 property)
+│       └── PreferContainerTags: *bool
+└── Status: Object (3 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Name: *string
+    └── Taginheritance: *Object (5 properties)
+        ├── Id: *string
+        ├── Kind: *Enum (1 value)
+        │   └── "taginheritance"
+        ├── Properties: *Object (1 property)
+        │   └── PreferContainerTags: *bool
+        ├── SystemData: *Object (6 properties)
+        │   ├── CreatedAt: *string
+        │   ├── CreatedBy: *string
+        │   ├── CreatedByType: *Enum (4 values)
+        │   │   ├── "Application"
+        │   │   ├── "Key"
+        │   │   ├── "ManagedIdentity"
+        │   │   └── "User"
+        │   ├── LastModifiedAt: *string
+        │   ├── LastModifiedBy: *string
+        │   └── LastModifiedByType: *Enum (4 values)
+        │       ├── "Application"
+        │       ├── "Key"
+        │       ├── "ManagedIdentity"
+        │       └── "User"
+        └── Type: *string
+

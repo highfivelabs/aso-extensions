@@ -31,7 +31,10 @@
 // checked for where they are kept and what they name (policy.go); so are
 // policy remediations and attestations (policyinsights.go), and role
 // definitions and Privileged Identity Management requests (pim.go: built-in
-// roles listed by name, schedule requests that cannot be deleted), budgets
+// roles listed by name, schedule requests that cannot be deleted), access
+// reviews and the tenant's subscription policy (accessreview.go: flat PUT
+// bodies kept as properties, GUID names, singletons that cannot be
+// deleted), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -373,6 +376,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := checkFlatBody(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		if status, code, msg := a.checkCost(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
@@ -484,6 +491,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		}
 		if isManagedHSMKey(id) {
 			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A managed HSM key cannot be deleted through Resource Manager; delete it in the HSM's data plane.")
+			return
+		}
+		if undeletableSingleton(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "Access review settings and the subscription policy cannot be deleted; change them with another PUT.")
 			return
 		}
 		if _, ok := a.resources[key]; !ok {

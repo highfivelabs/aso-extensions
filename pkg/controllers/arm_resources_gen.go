@@ -22,6 +22,8 @@ import (
 	authorization_v20200501s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501/storage"
 	authorization_v20201001 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20201001"
 	authorization_v20201001s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20201001/storage"
+	authorization_v20211201p "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20211201preview"
+	authorization_v20211201ps "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20211201preview/storage"
 	authorization_v20241201p "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20241201preview"
 	authorization_v20241201ps "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20241201preview/storage"
 	authorization_v20260101p "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20260101preview"
@@ -166,6 +168,9 @@ import (
 	storage_customizations "github.com/highfivelabs/aso-extensions/apis/arm/storage/customizations"
 	storage_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/storage/v20260601"
 	storage_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/storage/v20260601/storage"
+	subscription_customizations "github.com/highfivelabs/aso-extensions/apis/arm/subscription/customizations"
+	subscription_v20211001 "github.com/highfivelabs/aso-extensions/apis/arm/subscription/v20211001"
+	subscription_v20211001s "github.com/highfivelabs/aso-extensions/apis/arm/subscription/v20211001/storage"
 	web_customizations "github.com/highfivelabs/aso-extensions/apis/arm/web/customizations"
 	web_v20260715 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715"
 	web_v20260715s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715/storage"
@@ -506,6 +511,9 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20201001.RoleManagementPolicyAssignment)})
+	result = append(result, &registration.StorageType{Obj: new(authorization_v20211201p.AccessReviewHistoryDefinition)})
+	result = append(result, &registration.StorageType{Obj: new(authorization_v20211201p.AccessReviewScheduleDefinition)})
+	result = append(result, &registration.StorageType{Obj: new(authorization_v20211201p.AccessReviewScheduleSetting)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20241201p.PolicyVariable)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260101p.PolicyExemption)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20260701.PolicyAssignment)})
@@ -923,6 +931,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.ScheduledAction)})
+	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.Setting)})
 	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Schedule)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspace)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspacesTable)})
@@ -1500,6 +1509,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsObjectReplicationPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsStorageTaskAssignment)})
+	result = append(result, &registration.StorageType{Obj: new(subscription_v20211001.SubscriptionTenantPolicy)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.Certificate),
 		Indexes: []registration.Index{
@@ -1644,6 +1654,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(authorization_v20201001s.RoleAssignmentScheduleRequest)},
 		&registration.KnownType{Obj: new(authorization_v20201001s.RoleEligibilityScheduleRequest)},
 		&registration.KnownType{Obj: new(authorization_v20201001s.RoleManagementPolicyAssignment)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(authorization_v20211201p.AccessReviewHistoryDefinition)},
+		&registration.KnownType{Obj: new(authorization_v20211201p.AccessReviewScheduleDefinition)},
+		&registration.KnownType{Obj: new(authorization_v20211201p.AccessReviewScheduleSetting)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(authorization_v20211201ps.AccessReviewHistoryDefinition)},
+		&registration.KnownType{Obj: new(authorization_v20211201ps.AccessReviewScheduleDefinition)},
+		&registration.KnownType{Obj: new(authorization_v20211201ps.AccessReviewScheduleSetting)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20241201p.PolicyVariable)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20241201ps.PolicyVariable)})
 	result = append(result, &registration.KnownType{Obj: new(authorization_v20260101p.PolicyExemption)})
@@ -1780,12 +1800,14 @@ func getKnownTypes() []*registration.KnownType {
 		result,
 		&registration.KnownType{Obj: new(costmanagement_v20260601.Budget)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601.Export)},
-		&registration.KnownType{Obj: new(costmanagement_v20260601.ScheduledAction)})
+		&registration.KnownType{Obj: new(costmanagement_v20260601.ScheduledAction)},
+		&registration.KnownType{Obj: new(costmanagement_v20260601.Setting)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Budget)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Export)},
-		&registration.KnownType{Obj: new(costmanagement_v20260601s.ScheduledAction)})
+		&registration.KnownType{Obj: new(costmanagement_v20260601s.ScheduledAction)},
+		&registration.KnownType{Obj: new(costmanagement_v20260601s.Setting)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
 	result = append(
@@ -2196,6 +2218,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsObjectReplicationPolicy)},
 		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsStorageTaskAssignment)})
+	result = append(result, &registration.KnownType{Obj: new(subscription_v20211001.SubscriptionTenantPolicy)})
+	result = append(result, &registration.KnownType{Obj: new(subscription_v20211001s.SubscriptionTenantPolicy)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
@@ -2239,6 +2263,8 @@ func createScheme() *runtime.Scheme {
 	_ = authorization_v20200501s.AddToScheme(scheme)
 	_ = authorization_v20201001.AddToScheme(scheme)
 	_ = authorization_v20201001s.AddToScheme(scheme)
+	_ = authorization_v20211201p.AddToScheme(scheme)
+	_ = authorization_v20211201ps.AddToScheme(scheme)
 	_ = authorization_v20241201p.AddToScheme(scheme)
 	_ = authorization_v20241201ps.AddToScheme(scheme)
 	_ = authorization_v20260101p.AddToScheme(scheme)
@@ -2355,6 +2381,8 @@ func createScheme() *runtime.Scheme {
 	_ = sql_v20250101s.AddToScheme(scheme)
 	_ = storage_v20260601.AddToScheme(scheme)
 	_ = storage_v20260601s.AddToScheme(scheme)
+	_ = subscription_v20211001.AddToScheme(scheme)
+	_ = subscription_v20211001s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
 	_ = web_v20260715s.AddToScheme(scheme)
 	return scheme
@@ -2381,6 +2409,9 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ManagedEnvironmentsPrivateEndpointConnectionExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
 	result = append(result, &app_customizations.SessionPoolExtension{})
+	result = append(result, &authorization_customizations.AccessReviewHistoryDefinitionExtension{})
+	result = append(result, &authorization_customizations.AccessReviewScheduleDefinitionExtension{})
+	result = append(result, &authorization_customizations.AccessReviewScheduleSettingExtension{})
 	result = append(result, &authorization_customizations.ManagementLockExtension{})
 	result = append(result, &authorization_customizations.PolicyAssignmentExtension{})
 	result = append(result, &authorization_customizations.PolicyDefinitionExtension{})
@@ -2446,6 +2477,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &costmanagement_customizations.BudgetExtension{})
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &costmanagement_customizations.ScheduledActionExtension{})
+	result = append(result, &costmanagement_customizations.SettingExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspaceExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspacesTableExtension{})
@@ -2629,6 +2661,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &storage_customizations.StorageAccountsObjectReplicationPolicyExtension{})
 	result = append(result, &storage_customizations.StorageAccountsPrivateEndpointConnectionExtension{})
 	result = append(result, &storage_customizations.StorageAccountsStorageTaskAssignmentExtension{})
+	result = append(result, &subscription_customizations.SubscriptionTenantPolicyExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
 	result = append(result, &web_customizations.SitesBasicPublishingCredentialsPolicyFtpExtension{})
 	result = append(result, &web_customizations.SitesBasicPublishingCredentialsPolicyScmExtension{})

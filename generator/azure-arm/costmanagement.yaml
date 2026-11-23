@@ -32,6 +32,18 @@ groupModelConfiguration:
     ScheduledAction:
       $exportAs: ScheduledAction
       $supportedFrom: v0.1.0
+    # Cost Management settings at a scope (/{scope}/...: an extension
+    # resource, owner a subscription or billing scope by ARM ID): tag
+    # inheritance, polymorphic by kind.
+    Setting:
+      $exportAs: Setting
+      $supportedFrom: v0.1.0
+    # Polymorphic (kind): the one leaf, tag inheritance, is embedded, as
+    # security.yaml's Setting does.
+    TagInheritanceSetting:
+      $resourceEmbeddedInParent: Setting
+    TagInheritanceSetting_STATUS:
+      $resourceEmbeddedInParent: Setting
     ExportDeliveryDestination:
       ResourceId:
         $referenceType: arm # the storage account the export writes to: ASO's StorageAccount, or an ARM ID

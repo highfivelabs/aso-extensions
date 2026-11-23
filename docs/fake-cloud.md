@@ -257,6 +257,25 @@ upstream's); the catalog's chart tests do that.
   policies themselves (a test stores the ones it names), and the error codes
   (the fake's own; what Azure answers to a DELETE of a request is not known
   here).
+- Access reviews (`Microsoft.Authorization/accessReviewScheduleDefinitions`,
+  `accessReviewHistoryDefinitions`, `accessReviewScheduleSettings`, API
+  2021-12-01-preview) and the tenant's subscription policy
+  (`Microsoft.Subscription/policies/default`, 2021-10-01;
+  `pkg/fakecloud/arm/accessreview.go`), from the specs: the PUT body of each is
+  the resource's properties themselves, which a GET returns under
+  `properties` (the fake keeps them so); a schedule or history definition's
+  name is a GUID (400; the API's examples and the portal make GUIDs, Azure's
+  refusal of another name is not known here); default settings are named
+  `default`, and the subscription policy is the tenant's alone, at
+  `/providers/Microsoft.Subscription/policies/default`, with exempted
+  principals as object IDs (400 each); neither singleton can be deleted (405,
+  no DELETE in the specs). Not modelled: an access review running
+  (instances, decisions, reviewers notified, a history report made; the
+  fake fills no instance or status), which scopes and principals Azure
+  accepts, Entra ID P2 licensing, the subscription policy being enforced on
+  subscriptions moving between tenants, who may write it (a global
+  administrator or an exempted principal), and the error codes (the fake's
+  own).
 - Budgets and cost exports (`Microsoft.Consumption/budgets`,
   `Microsoft.CostManagement/exports`; `pkg/fakecloud/arm/cost.go`), each rule
   from the spec's descriptions: either is kept at a subscription, resource
@@ -270,7 +289,9 @@ upstream's); the catalog's chart tests do that.
   neither); a `Custom` timeframe needs a `timePeriod`, periods end after they
   start, and a managed identity needs a location (400); the SAS token is kept
   and returned obfuscated, and a system-assigned identity gets a principal
-  and tenant ID. Not modelled: spend and notifications, an export running
+  and tenant ID. A Cost Management setting (`settings/{type}`) is tag
+  inheritance, its name and `kind` both `taginheritance` (400). Not
+  modelled: tags actually being inherited onto cost data, spend and notifications, an export running
   (no run history or next run time), the rules that depend on the day (a
   budget's start at most a year ahead, a recurrence starting in the future),
   the storage subscription's registration with
