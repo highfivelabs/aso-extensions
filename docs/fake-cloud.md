@@ -617,6 +617,14 @@ upstream's); the catalog's chart tests do that.
   provider (400). Not modelled: throughput being pooled, regions matching,
   an account in one fleetspace only, the principal existing, roles being
   granted in the cluster, and the error codes.
+- Storage connectors, data shares and blob access points
+  (`Microsoft.Storage/storageAccounts/*/{connectors,dataShares,blobAccessPointConfigurations}/*`,
+  2026-06-01 and 2026-09-01; `pkg/fakecloud/arm/storagenewcomers.go`): a
+  connector's and an access point's source type cannot change (400); a new
+  data share has its access policies and assets (400). Not modelled: the
+  connection test, data being shared or read through a connector or an
+  access point, capacity metrics being emitted, context caches caching, and
+  the error codes.
 - Microsoft Foundry managed networks and outbound rules
   (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
   `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`

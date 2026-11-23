@@ -60,7 +60,9 @@
 // a new cluster needs, its node count, a replica's source, firewall rule
 // addresses, role passwords), Cosmos DB fleets and MongoDB vCore cluster
 // users (cosmosfleet.go: a fleetspace's pool, the account a fleetspace
-// account names, a user's Entra object ID), budgets
+// account names, a user's Entra object ID), storage connectors, data shares
+// and blob access points (storagenewcomers.go: source types kept, what a
+// new share needs), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -528,6 +530,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkCosmosFleet(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkStorageNewcomers(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

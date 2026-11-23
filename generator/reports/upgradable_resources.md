@@ -105,3 +105,19 @@ The following resources have newer versions available in the Azure REST API spec
 |  | VaultsBackupResourceGuardProxy  | 2026-10-01       | 2026-07-01       | -                 | -                 |
 |  | VaultsPrivateEndpointConnection | 2026-10-01       | 2026-07-01       | -                 | -                 |
 
+## storage
+
+|  | Resource                                 | Available Stable | Supported Stable | Available Preview | Supported Preview |
+|--|------------------------------------------|------------------|------------------|-------------------|-------------------|
+|  | ContextCache                             | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | ContextCachesContextCacheContainer       | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsAdvancedPlatformMetric    | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsConnector                 | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsDataShare                 | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsEncryptionScope           | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsInventoryPolicy           | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsLocalUser                 | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsObjectReplicationPolicy   | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsPrivateEndpointConnection | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsStorageTaskAssignment     | 2026-09-01       | 2026-06-01       | -                 | -                 |
+

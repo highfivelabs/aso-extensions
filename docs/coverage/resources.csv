@@ -2157,16 +2157,16 @@ Microsoft.SqlVirtualMachine,Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/
 Microsoft.SqlVirtualMachine,Microsoft.SqlVirtualMachine/sqlVirtualMachines,85,,0,,0,85,false,spec_api=2023-10-01
 Microsoft.StandbyPool,Microsoft.StandbyPool/standbyContainerGroupPools,9,,0,,0,9,false,spec_api=2026-04-01
 Microsoft.StandbyPool,Microsoft.StandbyPool/standbyVirtualMachinePools,11,,0,,0,11,false,spec_api=2026-04-01
-Microsoft.Storage,Microsoft.Storage/contextCaches,12,,0,,0,12,false,spec_api=2026-09-01
-Microsoft.Storage,Microsoft.Storage/contextCaches/contextCacheContainers,4,,0,,0,4,false,spec_api=2026-09-01
+Microsoft.Storage,Microsoft.Storage/contextCaches,12,,0,storage.azure.hfl.dev/ContextCache,11,1,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
+Microsoft.Storage,Microsoft.Storage/contextCaches/contextCacheContainers,4,,0,storage.azure.hfl.dev/ContextCachesContextCacheContainer,4,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts,89,storage.azure.com/StorageAccount,86,,0,3,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
-Microsoft.Storage,Microsoft.Storage/storageAccounts/advancedPlatformMetrics,3,,0,,0,3,false,spec_api=2026-09-01
-Microsoft.Storage,Microsoft.Storage/storageAccounts/blobAccessPointConfigurations,18,,0,,0,18,false,spec_api=2026-09-01
+Microsoft.Storage,Microsoft.Storage/storageAccounts/advancedPlatformMetrics,3,,0,storage.azure.hfl.dev/StorageAccountsAdvancedPlatformMetric,3,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
+Microsoft.Storage,Microsoft.Storage/storageAccounts/blobAccessPointConfigurations,18,,0,storage.azure.hfl.dev/StorageAccountsBlobAccessPointConfiguration,18,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.Storage,Microsoft.Storage/storageAccounts/blobServices,26,storage.azure.com/StorageAccountsBlobService,26,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/blobServices/containers,9,storage.azure.com/StorageAccountsBlobServicesContainer,7,,0,2,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies,3,,0,,0,3,false,spec_api=2026-09-01
-Microsoft.Storage,Microsoft.Storage/storageAccounts/connectors,11,,0,,0,11,false,spec_api=2026-09-01
-Microsoft.Storage,Microsoft.Storage/storageAccounts/dataShares,8,,0,,0,8,false,spec_api=2026-09-01
+Microsoft.Storage,Microsoft.Storage/storageAccounts/connectors,11,,0,storage.azure.hfl.dev/StorageAccountsConnector,11,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
+Microsoft.Storage,Microsoft.Storage/storageAccounts/dataShares,8,,0,storage.azure.hfl.dev/StorageAccountsDataShare,8,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/encryptionScopes,4,,0,storage.azure.hfl.dev/StorageAccountsEncryptionScope,4,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/fileServices,15,storage.azure.com/StorageAccountsFileService,15,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/fileServices/shares,14,storage.azure.com/StorageAccountsFileServicesShare,14,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec

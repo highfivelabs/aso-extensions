@@ -1,99 +1,239 @@
-| Type Definitions in package "storage"                       | v20260601 |
-|-------------------------------------------------------------|-----------|
-| APIVersion                                                  | v20260601 |
-| BlobInventoryCreationTime                                   | v20260601 |
-| BlobInventoryCreationTime_STATUS                            | v20260601 |
-| BlobInventoryPolicyDefinition                               | v20260601 |
-| BlobInventoryPolicyDefinition_STATUS                        | v20260601 |
-| BlobInventoryPolicyFilter                                   | v20260601 |
-| BlobInventoryPolicyFilter_STATUS                            | v20260601 |
-| BlobInventoryPolicyProperties                               | v20260601 |
-| BlobInventoryPolicyProperties_STATUS                        | v20260601 |
-| BlobInventoryPolicyRule                                     | v20260601 |
-| BlobInventoryPolicyRule_STATUS                              | v20260601 |
-| BlobInventoryPolicySchema                                   | v20260601 |
-| BlobInventoryPolicySchema_STATUS                            | v20260601 |
-| EncryptionScopeKeyVaultProperties                           | v20260601 |
-| EncryptionScopeKeyVaultProperties_STATUS                    | v20260601 |
-| EncryptionScopeProperties                                   | v20260601 |
-| EncryptionScopeProperties_STATUS                            | v20260601 |
-| EncryptionScopeSource                                       | v20260601 |
-| EncryptionScopeSource_STATUS                                | v20260601 |
-| EncryptionScopeState                                        | v20260601 |
-| EncryptionScopeState_STATUS                                 | v20260601 |
-| ExecutionTarget                                             | v20260601 |
-| ExecutionTarget_STATUS                                      | v20260601 |
-| ExecutionTrigger                                            | v20260601 |
-| ExecutionTrigger_STATUS                                     | v20260601 |
-| Format                                                      | v20260601 |
-| Format_STATUS                                               | v20260601 |
-| IntervalUnit                                                | v20260601 |
-| IntervalUnit_STATUS                                         | v20260601 |
-| InventoryRuleType                                           | v20260601 |
-| InventoryRuleType_STATUS                                    | v20260601 |
-| LocalUserProperties                                         | v20260601 |
-| LocalUserProperties_STATUS                                  | v20260601 |
-| ObjectReplicationPolicyFilter                               | v20260601 |
-| ObjectReplicationPolicyFilter_STATUS                        | v20260601 |
-| ObjectReplicationPolicyProperties                           | v20260601 |
-| ObjectReplicationPolicyPropertiesMetrics                    | v20260601 |
-| ObjectReplicationPolicyPropertiesMetrics_STATUS             | v20260601 |
-| ObjectReplicationPolicyPropertiesPriorityReplication        | v20260601 |
-| ObjectReplicationPolicyPropertiesPriorityReplication_STATUS | v20260601 |
-| ObjectReplicationPolicyPropertiesTagsReplication            | v20260601 |
-| ObjectReplicationPolicyPropertiesTagsReplication_STATUS     | v20260601 |
-| ObjectReplicationPolicyProperties_STATUS                    | v20260601 |
-| ObjectReplicationPolicyRule                                 | v20260601 |
-| ObjectReplicationPolicyRule_STATUS                          | v20260601 |
-| ObjectType                                                  | v20260601 |
-| ObjectType_STATUS                                           | v20260601 |
-| PermissionScope                                             | v20260601 |
-| PermissionScope_STATUS                                      | v20260601 |
-| PrivateEndpointConnectionProperties                         | v20260601 |
-| PrivateEndpointConnectionProperties_STATUS                  | v20260601 |
-| PrivateEndpointConnectionProvisioningState_STATUS           | v20260601 |
-| PrivateEndpointServiceConnectionStatus                      | v20260601 |
-| PrivateEndpointServiceConnectionStatus_STATUS               | v20260601 |
-| PrivateEndpoint_STATUS                                      | v20260601 |
-| PrivateLinkServiceConnectionState                           | v20260601 |
-| PrivateLinkServiceConnectionState_STATUS                    | v20260601 |
-| RunResult_STATUS                                            | v20260601 |
-| RunStatusEnum_STATUS                                        | v20260601 |
-| Schedule                                                    | v20260601 |
-| Schedule_STATUS                                             | v20260601 |
-| SshPublicKey                                                | v20260601 |
-| SshPublicKey_STATUS                                         | v20260601 |
-| StorageAccountsEncryptionScope                              | v20260601 |
-| StorageAccountsEncryptionScope_STATUS                       | v20260601 |
-| StorageAccountsEncryptionScope_Spec                         | v20260601 |
-| StorageAccountsInventoryPolicy                              | v20260601 |
-| StorageAccountsInventoryPolicy_STATUS                       | v20260601 |
-| StorageAccountsInventoryPolicy_Spec                         | v20260601 |
-| StorageAccountsLocalUser                                    | v20260601 |
-| StorageAccountsLocalUser_STATUS                             | v20260601 |
-| StorageAccountsLocalUser_Spec                               | v20260601 |
-| StorageAccountsObjectReplicationPolicy                      | v20260601 |
-| StorageAccountsObjectReplicationPolicy_STATUS               | v20260601 |
-| StorageAccountsObjectReplicationPolicy_Spec                 | v20260601 |
-| StorageAccountsPrivateEndpointConnection                    | v20260601 |
-| StorageAccountsPrivateEndpointConnection_STATUS             | v20260601 |
-| StorageAccountsPrivateEndpointConnection_Spec               | v20260601 |
-| StorageAccountsStorageTaskAssignment                        | v20260601 |
-| StorageAccountsStorageTaskAssignment_STATUS                 | v20260601 |
-| StorageAccountsStorageTaskAssignment_Spec                   | v20260601 |
-| StorageAccounts_InventoryPolicy_Name_Spec                   | v20260601 |
-| StorageTaskAssignmentExecutionContext                       | v20260601 |
-| StorageTaskAssignmentExecutionContext_STATUS                | v20260601 |
-| StorageTaskAssignmentProperties                             | v20260601 |
-| StorageTaskAssignmentProperties_STATUS                      | v20260601 |
-| StorageTaskAssignmentProvisioningState_STATUS               | v20260601 |
-| StorageTaskAssignmentReport                                 | v20260601 |
-| StorageTaskAssignmentReport_STATUS                          | v20260601 |
-| StorageTaskReportProperties_STATUS                          | v20260601 |
-| SystemData_CreatedByType_STATUS                             | v20260601 |
-| SystemData_LastModifiedByType_STATUS                        | v20260601 |
-| SystemData_STATUS                                           | v20260601 |
-| TriggerParameters                                           | v20260601 |
-| TriggerParameters_STATUS                                    | v20260601 |
-| TriggerType                                                 | v20260601 |
-| TriggerType_STATUS                                          | v20260601 |
+| Type Definitions in package "storage"                                | v20260601 | v20260901 |
+|----------------------------------------------------------------------|-----------|-----------|
+| APIVersion                                                           | v20260601 | v20260901 |
+| AdvancedPlatformMetricsFilterType                                    | v20260601 |           |
+| AdvancedPlatformMetricsFilterType_STATUS                             | v20260601 |           |
+| AdvancedPlatformMetricsRuleConfig                                    | v20260601 |           |
+| AdvancedPlatformMetricsRuleConfig_STATUS                             | v20260601 |           |
+| AdvancedPlatformMetricsRuleProperties                                | v20260601 |           |
+| AdvancedPlatformMetricsRuleProperties_STATUS                         | v20260601 |           |
+| AdvancedPlatformMetricsRuleType_STATUS                               | v20260601 |           |
+| AiProvider                                                           | v20260601 |           |
+| AiProvider_STATUS                                                    | v20260601 |           |
+| AzureCoreUuid                                                        | v20260601 |           |
+| AzureResourceManagerCommonTypesCustomerManagedKeyEncryption          | v20260601 |           |
+| AzureResourceManagerCommonTypesCustomerManagedKeyEncryption_STATUS   | v20260601 |           |
+| AzureResourceManagerCommonTypesEncryption                            | v20260601 |           |
+| AzureResourceManagerCommonTypesEncryption_STATUS                     | v20260601 |           |
+| AzureResourceManagerCommonTypesInfrastructureEncryption              | v20260601 |           |
+| AzureResourceManagerCommonTypesInfrastructureEncryption_STATUS       | v20260601 |           |
+| AzureResourceManagerCommonTypesKeyEncryptionKeyIdentity              | v20260601 |           |
+| AzureResourceManagerCommonTypesKeyEncryptionKeyIdentityType          | v20260601 |           |
+| AzureResourceManagerCommonTypesKeyEncryptionKeyIdentityType_STATUS   | v20260601 |           |
+| AzureResourceManagerCommonTypesKeyEncryptionKeyIdentity_STATUS       | v20260601 |           |
+| AzureResourceManagerResourceProvisioningState_STATUS                 |           | v20260901 |
+| BlobAccessPointAccessKeyAuthProperties                               |           | v20260901 |
+| BlobAccessPointAccessKeyAuthProperties_STATUS                        |           | v20260901 |
+| BlobAccessPointAzureNetAppFilesSourceProperties                      |           | v20260901 |
+| BlobAccessPointAzureNetAppFilesSourceProperties_STATUS               |           | v20260901 |
+| BlobAccessPointAzureNetAppFilesSourceProperties_SourceType           |           | v20260901 |
+| BlobAccessPointAzureNetAppFilesSourceProperties_SourceType_STATUS    |           | v20260901 |
+| BlobAccessPointCommvaultSourceProperties                             |           | v20260901 |
+| BlobAccessPointCommvaultSourceProperties_STATUS                      |           | v20260901 |
+| BlobAccessPointCommvaultSourceProperties_SourceType                  |           | v20260901 |
+| BlobAccessPointCommvaultSourceProperties_SourceType_STATUS           |           | v20260901 |
+| BlobAccessPointConfigurationProperties                               |           | v20260901 |
+| BlobAccessPointConfigurationProperties_STATUS                        |           | v20260901 |
+| BlobAccessPointConfigurationState                                    |           | v20260901 |
+| BlobAccessPointConfigurationState_STATUS                             |           | v20260901 |
+| BlobAccessPointConnectionProperties                                  |           | v20260901 |
+| BlobAccessPointConnectionProperties_STATUS                           |           | v20260901 |
+| BlobAccessPointConnectionTestStatus_STATUS                           |           | v20260901 |
+| BlobAccessPointDellOneFsSourceProperties                             |           | v20260901 |
+| BlobAccessPointDellOneFsSourceProperties_STATUS                      |           | v20260901 |
+| BlobAccessPointDellOneFsSourceProperties_SourceType                  |           | v20260901 |
+| BlobAccessPointDellOneFsSourceProperties_SourceType_STATUS           |           | v20260901 |
+| BlobAccessPointEndpointConnectionProperties                          |           | v20260901 |
+| BlobAccessPointEndpointConnectionProperties_ConnectionType           |           | v20260901 |
+| BlobAccessPointEndpointConnectionProperties_ConnectionType_STATUS    |           | v20260901 |
+| BlobAccessPointEndpointConnectionProperties_STATUS                   |           | v20260901 |
+| BlobAccessPointGenericS3SourceProperties                             |           | v20260901 |
+| BlobAccessPointGenericS3SourceProperties_STATUS                      |           | v20260901 |
+| BlobAccessPointGenericS3SourceProperties_SourceType                  |           | v20260901 |
+| BlobAccessPointGenericS3SourceProperties_SourceType_STATUS           |           | v20260901 |
+| BlobAccessPointNasuniSourceProperties                                |           | v20260901 |
+| BlobAccessPointNasuniSourceProperties_STATUS                         |           | v20260901 |
+| BlobAccessPointNasuniSourceProperties_SourceType                     |           | v20260901 |
+| BlobAccessPointNasuniSourceProperties_SourceType_STATUS              |           | v20260901 |
+| BlobAccessPointNetAppOntapSourceProperties                           |           | v20260901 |
+| BlobAccessPointNetAppOntapSourceProperties_STATUS                    |           | v20260901 |
+| BlobAccessPointNetAppOntapSourceProperties_SourceType                |           | v20260901 |
+| BlobAccessPointNetAppOntapSourceProperties_SourceType_STATUS         |           | v20260901 |
+| BlobAccessPointPrivateLinkConnectionProperties                       |           | v20260901 |
+| BlobAccessPointPrivateLinkConnectionProperties_ConnectionType        |           | v20260901 |
+| BlobAccessPointPrivateLinkConnectionProperties_ConnectionType_STATUS |           | v20260901 |
+| BlobAccessPointPrivateLinkConnectionProperties_STATUS                |           | v20260901 |
+| BlobAccessPointPrivateLinkIdType                                     |           | v20260901 |
+| BlobAccessPointPrivateLinkIdType_STATUS                              |           | v20260901 |
+| BlobAccessPointQumuloSourceProperties                                |           | v20260901 |
+| BlobAccessPointQumuloSourceProperties_STATUS                         |           | v20260901 |
+| BlobAccessPointQumuloSourceProperties_SourceType                     |           | v20260901 |
+| BlobAccessPointQumuloSourceProperties_SourceType_STATUS              |           | v20260901 |
+| BlobAccessPointRemoteAuthProperties                                  |           | v20260901 |
+| BlobAccessPointRemoteAuthProperties_STATUS                           |           | v20260901 |
+| BlobAccessPointRemoteAuthType                                        |           | v20260901 |
+| BlobAccessPointRemoteAuthType_STATUS                                 |           | v20260901 |
+| BlobAccessPointSourceProperties                                      |           | v20260901 |
+| BlobAccessPointSourceProperties_STATUS                               |           | v20260901 |
+| BlobAccessPointTlsVerification                                       |           | v20260901 |
+| BlobAccessPointTlsVerification_STATUS                                |           | v20260901 |
+| BlobInventoryCreationTime                                            | v20260601 |           |
+| BlobInventoryCreationTime_STATUS                                     | v20260601 |           |
+| BlobInventoryPolicyDefinition                                        | v20260601 |           |
+| BlobInventoryPolicyDefinition_STATUS                                 | v20260601 |           |
+| BlobInventoryPolicyFilter                                            | v20260601 |           |
+| BlobInventoryPolicyFilter_STATUS                                     | v20260601 |           |
+| BlobInventoryPolicyProperties                                        | v20260601 |           |
+| BlobInventoryPolicyProperties_STATUS                                 | v20260601 |           |
+| BlobInventoryPolicyRule                                              | v20260601 |           |
+| BlobInventoryPolicyRule_STATUS                                       | v20260601 |           |
+| BlobInventoryPolicySchema                                            | v20260601 |           |
+| BlobInventoryPolicySchema_STATUS                                     | v20260601 |           |
+| ContextCache                                                         | v20260601 |           |
+| ContextCacheAccountKind                                              | v20260601 |           |
+| ContextCacheAccountKind_STATUS                                       | v20260601 |           |
+| ContextCacheContainerProperties                                      | v20260601 |           |
+| ContextCacheContainerProperties_STATUS                               | v20260601 |           |
+| ContextCacheProperties                                               | v20260601 |           |
+| ContextCacheProperties_STATUS                                        | v20260601 |           |
+| ContextCacheProvisioningState_STATUS                                 | v20260601 |           |
+| ContextCache_STATUS                                                  | v20260601 |           |
+| ContextCache_Spec                                                    | v20260601 |           |
+| ContextCachesContextCacheContainer                                   | v20260601 |           |
+| ContextCachesContextCacheContainer_STATUS                            | v20260601 |           |
+| ContextCachesContextCacheContainer_Spec                              | v20260601 |           |
+| DataShareConnection                                                  | v20260601 |           |
+| DataShareConnection_STATUS                                           | v20260601 |           |
+| DataShareSource                                                      | v20260601 |           |
+| DataShareSource_STATUS                                               | v20260601 |           |
+| EncryptionScopeKeyVaultProperties                                    | v20260601 |           |
+| EncryptionScopeKeyVaultProperties_STATUS                             | v20260601 |           |
+| EncryptionScopeProperties                                            | v20260601 |           |
+| EncryptionScopeProperties_STATUS                                     | v20260601 |           |
+| EncryptionScopeSource                                                | v20260601 |           |
+| EncryptionScopeSource_STATUS                                         | v20260601 |           |
+| EncryptionScopeState                                                 | v20260601 |           |
+| EncryptionScopeState_STATUS                                          | v20260601 |           |
+| ExecutionTarget                                                      | v20260601 |           |
+| ExecutionTarget_STATUS                                               | v20260601 |           |
+| ExecutionTrigger                                                     | v20260601 |           |
+| ExecutionTrigger_STATUS                                              | v20260601 |           |
+| Format                                                               | v20260601 |           |
+| Format_STATUS                                                        | v20260601 |           |
+| IntervalUnit                                                         | v20260601 |           |
+| IntervalUnit_STATUS                                                  | v20260601 |           |
+| InventoryRuleType                                                    | v20260601 |           |
+| InventoryRuleType_STATUS                                             | v20260601 |           |
+| LocalUserProperties                                                  | v20260601 |           |
+| LocalUserProperties_STATUS                                           | v20260601 |           |
+| ManagedIdentityAuthProperties                                        | v20260601 |           |
+| ManagedIdentityAuthProperties_STATUS                                 | v20260601 |           |
+| MetricsEmitted_STATUS                                                | v20260601 |           |
+| NativeDataSharingProvisioningState_STATUS                            | v20260601 |           |
+| ObjectReplicationPolicyFilter                                        | v20260601 |           |
+| ObjectReplicationPolicyFilter_STATUS                                 | v20260601 |           |
+| ObjectReplicationPolicyProperties                                    | v20260601 |           |
+| ObjectReplicationPolicyPropertiesMetrics                             | v20260601 |           |
+| ObjectReplicationPolicyPropertiesMetrics_STATUS                      | v20260601 |           |
+| ObjectReplicationPolicyPropertiesPriorityReplication                 | v20260601 |           |
+| ObjectReplicationPolicyPropertiesPriorityReplication_STATUS          | v20260601 |           |
+| ObjectReplicationPolicyPropertiesTagsReplication                     | v20260601 |           |
+| ObjectReplicationPolicyPropertiesTagsReplication_STATUS              | v20260601 |           |
+| ObjectReplicationPolicyProperties_STATUS                             | v20260601 |           |
+| ObjectReplicationPolicyRule                                          | v20260601 |           |
+| ObjectReplicationPolicyRule_STATUS                                   | v20260601 |           |
+| ObjectType                                                           | v20260601 |           |
+| ObjectType_STATUS                                                    | v20260601 |           |
+| PermissionScope                                                      | v20260601 |           |
+| PermissionScope_STATUS                                               | v20260601 |           |
+| PrivateEndpointConnectionProperties                                  | v20260601 |           |
+| PrivateEndpointConnectionProperties_STATUS                           | v20260601 |           |
+| PrivateEndpointConnectionProvisioningState_STATUS                    | v20260601 |           |
+| PrivateEndpointServiceConnectionStatus                               | v20260601 |           |
+| PrivateEndpointServiceConnectionStatus_STATUS                        | v20260601 |           |
+| PrivateEndpoint_STATUS                                               | v20260601 |           |
+| PrivateLinkServiceConnectionState                                    | v20260601 |           |
+| PrivateLinkServiceConnectionState_STATUS                             | v20260601 |           |
+| RunResult_STATUS                                                     | v20260601 |           |
+| RunStatusEnum_STATUS                                                 | v20260601 |           |
+| Schedule                                                             | v20260601 |           |
+| Schedule_STATUS                                                      | v20260601 |           |
+| SshPublicKey                                                         | v20260601 |           |
+| SshPublicKey_STATUS                                                  | v20260601 |           |
+| StorageAccountsAdvancedPlatformMetric                                | v20260601 |           |
+| StorageAccountsAdvancedPlatformMetric_STATUS                         | v20260601 |           |
+| StorageAccountsAdvancedPlatformMetric_Spec                           | v20260601 |           |
+| StorageAccountsBlobAccessPointConfiguration                          |           | v20260901 |
+| StorageAccountsBlobAccessPointConfiguration_STATUS                   |           | v20260901 |
+| StorageAccountsBlobAccessPointConfiguration_Spec                     |           | v20260901 |
+| StorageAccountsConnector                                             | v20260601 |           |
+| StorageAccountsConnector_STATUS                                      | v20260601 |           |
+| StorageAccountsConnector_Spec                                        | v20260601 |           |
+| StorageAccountsDataShare                                             | v20260601 |           |
+| StorageAccountsDataShare_STATUS                                      | v20260601 |           |
+| StorageAccountsDataShare_Spec                                        | v20260601 |           |
+| StorageAccountsEncryptionScope                                       | v20260601 |           |
+| StorageAccountsEncryptionScope_STATUS                                | v20260601 |           |
+| StorageAccountsEncryptionScope_Spec                                  | v20260601 |           |
+| StorageAccountsInventoryPolicy                                       | v20260601 |           |
+| StorageAccountsInventoryPolicy_STATUS                                | v20260601 |           |
+| StorageAccountsInventoryPolicy_Spec                                  | v20260601 |           |
+| StorageAccountsLocalUser                                             | v20260601 |           |
+| StorageAccountsLocalUser_STATUS                                      | v20260601 |           |
+| StorageAccountsLocalUser_Spec                                        | v20260601 |           |
+| StorageAccountsObjectReplicationPolicy                               | v20260601 |           |
+| StorageAccountsObjectReplicationPolicy_STATUS                        | v20260601 |           |
+| StorageAccountsObjectReplicationPolicy_Spec                          | v20260601 |           |
+| StorageAccountsPrivateEndpointConnection                             | v20260601 |           |
+| StorageAccountsPrivateEndpointConnection_STATUS                      | v20260601 |           |
+| StorageAccountsPrivateEndpointConnection_Spec                        | v20260601 |           |
+| StorageAccountsStorageTaskAssignment                                 | v20260601 |           |
+| StorageAccountsStorageTaskAssignment_STATUS                          | v20260601 |           |
+| StorageAccountsStorageTaskAssignment_Spec                            | v20260601 |           |
+| StorageAccounts_AdvancedPlatformMetric_Name_Spec                     | v20260601 |           |
+| StorageAccounts_InventoryPolicy_Name_Spec                            | v20260601 |           |
+| StorageConnectorAuthProperties                                       | v20260601 |           |
+| StorageConnectorAuthProperties_STATUS                                | v20260601 |           |
+| StorageConnectorAuthType                                             | v20260601 |           |
+| StorageConnectorAuthType_STATUS                                      | v20260601 |           |
+| StorageConnectorConnection                                           | v20260601 |           |
+| StorageConnectorConnectionType                                       | v20260601 |           |
+| StorageConnectorConnectionType_STATUS                                | v20260601 |           |
+| StorageConnectorConnection_STATUS                                    | v20260601 |           |
+| StorageConnectorDataSourceType                                       | v20260601 |           |
+| StorageConnectorDataSourceType_STATUS                                | v20260601 |           |
+| StorageConnectorProperties                                           | v20260601 |           |
+| StorageConnectorProperties_STATUS                                    | v20260601 |           |
+| StorageConnectorProperties_State                                     | v20260601 |           |
+| StorageConnectorProperties_State_STATUS                              | v20260601 |           |
+| StorageConnectorSource                                               | v20260601 |           |
+| StorageConnectorSourceType                                           | v20260601 |           |
+| StorageConnectorSourceType_STATUS                                    | v20260601 |           |
+| StorageConnectorSource_STATUS                                        | v20260601 |           |
+| StorageDataShareAccessPolicy                                         | v20260601 |           |
+| StorageDataShareAccessPolicyPermission                               | v20260601 |           |
+| StorageDataShareAccessPolicyPermission_STATUS                        | v20260601 |           |
+| StorageDataShareAccessPolicy_STATUS                                  | v20260601 |           |
+| StorageDataShareAsset                                                | v20260601 |           |
+| StorageDataShareAsset_STATUS                                         | v20260601 |           |
+| StorageDataShareProperties                                           | v20260601 |           |
+| StorageDataShareProperties_STATUS                                    | v20260601 |           |
+| StorageTaskAssignmentExecutionContext                                | v20260601 |           |
+| StorageTaskAssignmentExecutionContext_STATUS                         | v20260601 |           |
+| StorageTaskAssignmentProperties                                      | v20260601 |           |
+| StorageTaskAssignmentProperties_STATUS                               | v20260601 |           |
+| StorageTaskAssignmentProvisioningState_STATUS                        | v20260601 |           |
+| StorageTaskAssignmentReport                                          | v20260601 |           |
+| StorageTaskAssignmentReport_STATUS                                   | v20260601 |           |
+| StorageTaskReportProperties_STATUS                                   | v20260601 |           |
+| SystemAssignedServiceIdentity                                        | v20260601 |           |
+| SystemAssignedServiceIdentityType                                    | v20260601 |           |
+| SystemAssignedServiceIdentityType_STATUS                             | v20260601 |           |
+| SystemAssignedServiceIdentity_STATUS                                 | v20260601 |           |
+| SystemData_CreatedByType_STATUS                                      | v20260601 | v20260901 |
+| SystemData_LastModifiedByType_STATUS                                 | v20260601 | v20260901 |
+| SystemData_STATUS                                                    | v20260601 | v20260901 |
+| TriggerParameters                                                    | v20260601 |           |
+| TriggerParameters_STATUS                                             | v20260601 |           |
+| TriggerType                                                          | v20260601 |           |
+| TriggerType_STATUS                                                   | v20260601 |           |

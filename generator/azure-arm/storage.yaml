@@ -5,18 +5,39 @@
 # connections and storage task assignments. Owned by ASO's StorageAccount.
 # Not built: a local user's password (made by the regeneratePassword action,
 # returned once: no desired state), container immutability policies (an
-# If-Match ETag on every write and delete), the 2026-06-01 newcomers
-# (connectors, data shares, advanced platform metrics, context caches).
+# If-Match ETag on every write and delete). The 2026-06-01 newcomers
+# (connectors, data shares, advanced platform metrics, context caches and
+# their containers) and 2026-09-01's blob access point configurations were
+# added later (docs/plan.md f48).
 typeFilters:
   - action: include
     group: storage
     version: v20260601
     because: the version of ASO's StorageAccount hub (v20260601, its storage version)
+  - action: include
+    group: storage
+    version: v20260901
+    because: blob access point configurations, new in 2026-09-01, the newest stable version (docs/plan.md f48)
   - action: prune
     group: storage
     because: every other version is left alone
 groupModelConfiguration:
   2026-06-01:
+    StorageAccounts_Connector:
+      $exportAs: StorageAccountsConnector
+      $supportedFrom: v0.1.0
+    StorageAccounts_DataShare:
+      $exportAs: StorageAccountsDataShare
+      $supportedFrom: v0.1.0
+    StorageAccounts_AdvancedPlatformMetric:
+      $exportAs: StorageAccountsAdvancedPlatformMetric
+      $supportedFrom: v0.1.0
+    ContextCache:
+      $exportAs: ContextCache
+      $supportedFrom: v0.1.0
+    ContextCaches_ContextCacheContainer:
+      $exportAs: ContextCachesContextCacheContainer
+      $supportedFrom: v0.1.0
     StorageAccounts_LocalUser:
       $exportAs: StorageAccountsLocalUser
       $supportedFrom: v0.1.0
@@ -40,3 +61,10 @@ groupModelConfiguration:
         $referenceType: simple # a name, or an ARM ID when cross-tenant replication is off (autolabel, reviewed)
       DestinationAccount:
         $referenceType: simple # a name, or an ARM ID when cross-tenant replication is off (autolabel, reviewed)
+    ManagedIdentityAuthProperties:
+      IdentityResourceId:
+        $referenceType: arm # the user-assigned identity a connector authenticates as (autolabel, reviewed)
+  2026-09-01:
+    StorageAccounts_BlobAccessPointConfiguration:
+      $exportAs: StorageAccountsBlobAccessPointConfiguration
+      $supportedFrom: v0.1.0

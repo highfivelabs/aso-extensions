@@ -205,6 +205,8 @@ import (
 	storage_customizations "github.com/highfivelabs/aso-extensions/apis/arm/storage/customizations"
 	storage_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/storage/v20260601"
 	storage_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/storage/v20260601/storage"
+	storage_v20260901 "github.com/highfivelabs/aso-extensions/apis/arm/storage/v20260901"
+	storage_v20260901s "github.com/highfivelabs/aso-extensions/apis/arm/storage/v20260901/storage"
 	subscription_customizations "github.com/highfivelabs/aso-extensions/apis/arm/subscription/customizations"
 	subscription_v20211001 "github.com/highfivelabs/aso-extensions/apis/arm/subscription/v20211001"
 	subscription_v20211001s "github.com/highfivelabs/aso-extensions/apis/arm/subscription/v20211001/storage"
@@ -2010,12 +2012,66 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessmentsBaseline)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessmentsBaselinesRule)})
+	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.ContextCache)})
+	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.ContextCachesContextCacheContainer)})
+	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsAdvancedPlatformMetric)})
+	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsConnector)})
+	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsDataShare)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsInventoryPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsLocalUser)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsObjectReplicationPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsStorageTaskAssignment)})
+	result = append(result, &registration.StorageType{
+		Obj: new(storage_v20260901.StorageAccountsBlobAccessPointConfiguration),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.source.azureNetAppFiles.auth.accessKey.secretAccessKey",
+				Func: indexStorageStorageAccountsBlobAccessPointConfigurationAzureNetAppFilesSecretAccessKey,
+			},
+			{
+				Key:  ".spec.properties.source.commvault.auth.accessKey.secretAccessKey",
+				Func: indexStorageStorageAccountsBlobAccessPointConfigurationCommvaultSecretAccessKey,
+			},
+			{
+				Key:  ".spec.properties.source.dellOneFs.auth.accessKey.secretAccessKey",
+				Func: indexStorageStorageAccountsBlobAccessPointConfigurationDellOneFsSecretAccessKey,
+			},
+			{
+				Key:  ".spec.properties.source.nasuni.auth.accessKey.secretAccessKey",
+				Func: indexStorageStorageAccountsBlobAccessPointConfigurationNasuniSecretAccessKey,
+			},
+			{
+				Key:  ".spec.properties.source.netAppOntap.auth.accessKey.secretAccessKey",
+				Func: indexStorageStorageAccountsBlobAccessPointConfigurationNetAppOntapSecretAccessKey,
+			},
+			{
+				Key:  ".spec.properties.source.qumulo.auth.accessKey.secretAccessKey",
+				Func: indexStorageStorageAccountsBlobAccessPointConfigurationQumuloSecretAccessKey,
+			},
+			{
+				Key:  ".spec.properties.source.s3Compatible.auth.accessKey.secretAccessKey",
+				Func: indexStorageStorageAccountsBlobAccessPointConfigurationS3CompatibleSecretAccessKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.source.azureNetAppFiles.auth.accessKey.secretAccessKey",
+						".spec.properties.source.commvault.auth.accessKey.secretAccessKey",
+						".spec.properties.source.dellOneFs.auth.accessKey.secretAccessKey",
+						".spec.properties.source.nasuni.auth.accessKey.secretAccessKey",
+						".spec.properties.source.netAppOntap.auth.accessKey.secretAccessKey",
+						".spec.properties.source.qumulo.auth.accessKey.secretAccessKey",
+						".spec.properties.source.s3Compatible.auth.accessKey.secretAccessKey",
+					},
+					&storage_v20260901.StorageAccountsBlobAccessPointConfigurationList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(subscription_v20211001.SubscriptionTenantPolicy)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.Certificate),
@@ -3129,6 +3185,11 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(sql_v20250101s.ServersSqlVulnerabilityAssessmentsBaselinesRule)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(storage_v20260601.ContextCache)},
+		&registration.KnownType{Obj: new(storage_v20260601.ContextCachesContextCacheContainer)},
+		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsAdvancedPlatformMetric)},
+		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsConnector)},
+		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsDataShare)},
 		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)},
 		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsInventoryPolicy)},
 		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsLocalUser)},
@@ -3137,12 +3198,19 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsStorageTaskAssignment)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(storage_v20260601s.ContextCache)},
+		&registration.KnownType{Obj: new(storage_v20260601s.ContextCachesContextCacheContainer)},
+		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsAdvancedPlatformMetric)},
+		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsConnector)},
+		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsDataShare)},
 		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsEncryptionScope)},
 		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsInventoryPolicy)},
 		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsLocalUser)},
 		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsObjectReplicationPolicy)},
 		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(storage_v20260601s.StorageAccountsStorageTaskAssignment)})
+	result = append(result, &registration.KnownType{Obj: new(storage_v20260901.StorageAccountsBlobAccessPointConfiguration)})
+	result = append(result, &registration.KnownType{Obj: new(storage_v20260901s.StorageAccountsBlobAccessPointConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(subscription_v20211001.SubscriptionTenantPolicy)})
 	result = append(result, &registration.KnownType{Obj: new(subscription_v20211001s.SubscriptionTenantPolicy)})
 	result = append(
@@ -3404,6 +3472,8 @@ func createScheme() *runtime.Scheme {
 	_ = sql_v20250101s.AddToScheme(scheme)
 	_ = storage_v20260601.AddToScheme(scheme)
 	_ = storage_v20260601s.AddToScheme(scheme)
+	_ = storage_v20260901.AddToScheme(scheme)
+	_ = storage_v20260901s.AddToScheme(scheme)
 	_ = subscription_v20211001.AddToScheme(scheme)
 	_ = subscription_v20211001s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
@@ -3783,6 +3853,12 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &sql_customizations.ServersSqlVulnerabilityAssessmentExtension{})
 	result = append(result, &sql_customizations.ServersSqlVulnerabilityAssessmentsBaselineExtension{})
 	result = append(result, &sql_customizations.ServersSqlVulnerabilityAssessmentsBaselinesRuleExtension{})
+	result = append(result, &storage_customizations.ContextCacheExtension{})
+	result = append(result, &storage_customizations.ContextCachesContextCacheContainerExtension{})
+	result = append(result, &storage_customizations.StorageAccountsAdvancedPlatformMetricExtension{})
+	result = append(result, &storage_customizations.StorageAccountsBlobAccessPointConfigurationExtension{})
+	result = append(result, &storage_customizations.StorageAccountsConnectorExtension{})
+	result = append(result, &storage_customizations.StorageAccountsDataShareExtension{})
 	result = append(result, &storage_customizations.StorageAccountsEncryptionScopeExtension{})
 	result = append(result, &storage_customizations.StorageAccountsInventoryPolicyExtension{})
 	result = append(result, &storage_customizations.StorageAccountsLocalUserExtension{})
@@ -5961,6 +6037,195 @@ func indexSqlServersJobAgentsCredentialPassword(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.Password.Index()
+}
+
+// indexStorageStorageAccountsBlobAccessPointConfigurationAzureNetAppFilesSecretAccessKey an index function for storage_v20260901.StorageAccountsBlobAccessPointConfiguration .spec.properties.source.azureNetAppFiles.auth.accessKey.secretAccessKey
+func indexStorageStorageAccountsBlobAccessPointConfigurationAzureNetAppFilesSecretAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*storage_v20260901.StorageAccountsBlobAccessPointConfiguration)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.AzureNetAppFiles == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.AzureNetAppFiles.Auth == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.AzureNetAppFiles.Auth.AccessKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.AzureNetAppFiles.Auth.AccessKey.SecretAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Source.AzureNetAppFiles.Auth.AccessKey.SecretAccessKey.Index()
+}
+
+// indexStorageStorageAccountsBlobAccessPointConfigurationCommvaultSecretAccessKey an index function for storage_v20260901.StorageAccountsBlobAccessPointConfiguration .spec.properties.source.commvault.auth.accessKey.secretAccessKey
+func indexStorageStorageAccountsBlobAccessPointConfigurationCommvaultSecretAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*storage_v20260901.StorageAccountsBlobAccessPointConfiguration)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Commvault == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Commvault.Auth == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Commvault.Auth.AccessKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Commvault.Auth.AccessKey.SecretAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Source.Commvault.Auth.AccessKey.SecretAccessKey.Index()
+}
+
+// indexStorageStorageAccountsBlobAccessPointConfigurationDellOneFsSecretAccessKey an index function for storage_v20260901.StorageAccountsBlobAccessPointConfiguration .spec.properties.source.dellOneFs.auth.accessKey.secretAccessKey
+func indexStorageStorageAccountsBlobAccessPointConfigurationDellOneFsSecretAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*storage_v20260901.StorageAccountsBlobAccessPointConfiguration)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.DellOneFs == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.DellOneFs.Auth == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.DellOneFs.Auth.AccessKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.DellOneFs.Auth.AccessKey.SecretAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Source.DellOneFs.Auth.AccessKey.SecretAccessKey.Index()
+}
+
+// indexStorageStorageAccountsBlobAccessPointConfigurationNasuniSecretAccessKey an index function for storage_v20260901.StorageAccountsBlobAccessPointConfiguration .spec.properties.source.nasuni.auth.accessKey.secretAccessKey
+func indexStorageStorageAccountsBlobAccessPointConfigurationNasuniSecretAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*storage_v20260901.StorageAccountsBlobAccessPointConfiguration)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Nasuni == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Nasuni.Auth == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Nasuni.Auth.AccessKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Nasuni.Auth.AccessKey.SecretAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Source.Nasuni.Auth.AccessKey.SecretAccessKey.Index()
+}
+
+// indexStorageStorageAccountsBlobAccessPointConfigurationNetAppOntapSecretAccessKey an index function for storage_v20260901.StorageAccountsBlobAccessPointConfiguration .spec.properties.source.netAppOntap.auth.accessKey.secretAccessKey
+func indexStorageStorageAccountsBlobAccessPointConfigurationNetAppOntapSecretAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*storage_v20260901.StorageAccountsBlobAccessPointConfiguration)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.NetAppOntap == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.NetAppOntap.Auth == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.NetAppOntap.Auth.AccessKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.NetAppOntap.Auth.AccessKey.SecretAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Source.NetAppOntap.Auth.AccessKey.SecretAccessKey.Index()
+}
+
+// indexStorageStorageAccountsBlobAccessPointConfigurationQumuloSecretAccessKey an index function for storage_v20260901.StorageAccountsBlobAccessPointConfiguration .spec.properties.source.qumulo.auth.accessKey.secretAccessKey
+func indexStorageStorageAccountsBlobAccessPointConfigurationQumuloSecretAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*storage_v20260901.StorageAccountsBlobAccessPointConfiguration)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Qumulo == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Qumulo.Auth == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Qumulo.Auth.AccessKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.Qumulo.Auth.AccessKey.SecretAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Source.Qumulo.Auth.AccessKey.SecretAccessKey.Index()
+}
+
+// indexStorageStorageAccountsBlobAccessPointConfigurationS3CompatibleSecretAccessKey an index function for storage_v20260901.StorageAccountsBlobAccessPointConfiguration .spec.properties.source.s3Compatible.auth.accessKey.secretAccessKey
+func indexStorageStorageAccountsBlobAccessPointConfigurationS3CompatibleSecretAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*storage_v20260901.StorageAccountsBlobAccessPointConfiguration)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.S3Compatible == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.S3Compatible.Auth == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.S3Compatible.Auth.AccessKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Source.S3Compatible.Auth.AccessKey.SecretAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Source.S3Compatible.Auth.AccessKey.SecretAccessKey.Index()
 }
 
 // indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password

@@ -377,6 +377,12 @@ resources:
 - sql.azure.hfl.dev_serverssqlvulnerabilityassessmentsbaselines.yaml
 - sql.azure.hfl.dev_serverssqlvulnerabilityassessmentsbaselinesrules.yaml
 - sql.azure.hfl.dev_users.yaml
+- storage.azure.hfl.dev_contextcaches.yaml
+- storage.azure.hfl.dev_contextcachescontextcachecontainers.yaml
+- storage.azure.hfl.dev_storageaccountsadvancedplatformmetrics.yaml
+- storage.azure.hfl.dev_storageaccountsblobaccesspointconfigurations.yaml
+- storage.azure.hfl.dev_storageaccountsconnectors.yaml
+- storage.azure.hfl.dev_storageaccountsdatashares.yaml
 - storage.azure.hfl.dev_storageaccountsencryptionscopes.yaml
 - storage.azure.hfl.dev_storageaccountsinventorypolicies.yaml
 - storage.azure.hfl.dev_storageaccountslocalusers.yaml

@@ -352,6 +352,22 @@ func init() {
 				"properties": map[string]any{"principalType": "servicePrincipal"}}},
 			"roles": []any{map[string]any{"db": "admin", "role": "root"}}}}
 	}}
+	// A storage connector and a blob access point configuration are one
+	// of several source types: an empty choice cannot be sent.
+	f["StorageAccountsConnector"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"dataSourceType": "Azure_DataShare", "source": map[string]any{"dataShare": map[string]any{
+			"type":           "DataShare",
+			"connection":     map[string]any{"dataShare": map[string]any{"type": "DataShare", "dataShareUri": "azds://westus:share-1:00000000-0000-0000-0000-000000000001"}},
+			"authProperties": map[string]any{"managedIdentity": map[string]any{"type": "ManagedIdentity", "identityResourceReference": armRef(c.ref)}},
+		}}}}
+	}}
+	f["StorageAccountsBlobAccessPointConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"source": map[string]any{"s3Compatible": map[string]any{
+			"sourceType": "S3Compatible",
+			"connection": map[string]any{"endpoint": map[string]any{"connectionType": "Endpoint", "endpoint": "https://nas.example.com"}},
+			"auth":       map[string]any{"accessKey": map[string]any{"authType": "AccessKey", "accessKeyId": "conformance", "secretAccessKey": secret}},
+		}}}}
+	}}
 	// An account's managed network is named default (foundry.go).
 	f["AccountsManagedNetwork"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"azureName": "default"}

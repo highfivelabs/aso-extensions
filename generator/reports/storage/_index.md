@@ -8,12 +8,18 @@ no_list: true
 
 ### Released
 
-| Resource                                 | ARM Version | CRD Version | Supported From | Sample |
-|------------------------------------------|-------------|-------------|----------------|--------|
-| StorageAccountsEncryptionScope           | 2026-06-01  | v20260601   | v0.1.0         | -      |
-| StorageAccountsInventoryPolicy           | 2026-06-01  | v20260601   | v0.1.0         | -      |
-| StorageAccountsLocalUser                 | 2026-06-01  | v20260601   | v0.1.0         | -      |
-| StorageAccountsObjectReplicationPolicy   | 2026-06-01  | v20260601   | v0.1.0         | -      |
-| StorageAccountsPrivateEndpointConnection | 2026-06-01  | v20260601   | v0.1.0         | -      |
-| StorageAccountsStorageTaskAssignment     | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| Resource                                    | ARM Version | CRD Version | Supported From | Sample |
+|---------------------------------------------|-------------|-------------|----------------|--------|
+| ContextCache                                | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| ContextCachesContextCacheContainer          | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| StorageAccountsAdvancedPlatformMetric       | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| StorageAccountsBlobAccessPointConfiguration | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| StorageAccountsConnector                    | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| StorageAccountsDataShare                    | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| StorageAccountsEncryptionScope              | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| StorageAccountsInventoryPolicy              | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| StorageAccountsLocalUser                    | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| StorageAccountsObjectReplicationPolicy      | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| StorageAccountsPrivateEndpointConnection    | 2026-06-01  | v20260601   | v0.1.0         | -      |
+| StorageAccountsStorageTaskAssignment        | 2026-06-01  | v20260601   | v0.1.0         | -      |
 
