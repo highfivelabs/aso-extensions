@@ -325,6 +325,14 @@ func init() {
 	f["ConfigurationStoresPrivateEndpointConnection"] = pec
 	f["FlexibleServersPrivateEndpointConnection"] = pec
 	f["MongoClustersPrivateEndpointConnection"] = pec
+	// Elastic Jobs: an agent names its job database, which the fake checks
+	// exists; a credential needs a username and password, and a step its
+	// target group in its own agent (sqljobs.go).
+	f["ServersJobAgent"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"databaseReference": armRef(c.add(c.owner + "/databases/jobs"))}
+	}}
+	f["ServersJobAgentsCredential"] = conformanceFixture{coveredBy: "TestSQLElasticJobs"}
+	f["ServersJobAgentsJobsStep"] = conformanceFixture{coveredBy: "TestSQLElasticJobs"}
 	f["WorkspacesSummaryLog"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"ruleDefinition": map[string]any{"query": "AppRequests | summarize count() by bin(TimeGenerated, 1h)", "binSize": int64(60), "destinationTable": "Hourly_CL"}}
 	}}

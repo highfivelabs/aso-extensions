@@ -1717,6 +1717,31 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.WorkspaceManagerGroup)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.WorkspaceManagerMember)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDatabasesGeoBackupPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDnsAlias)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersJobAgent)})
+	result = append(result, &registration.StorageType{
+		Obj: new(sql_v20250101.ServersJobAgentsCredential),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.password",
+				Func: indexSqlServersJobAgentsCredentialPassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.password",
+					},
+					&sql_v20250101.ServersJobAgentsCredentialList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersJobAgentsJob)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersJobAgentsJobsStep)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersJobAgentsPrivateEndpoint)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersJobAgentsTargetGroup)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)})
@@ -2591,11 +2616,25 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(sql_v20250101.ServersDatabasesGeoBackupPolicy)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersDnsAlias)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersJobAgent)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersJobAgentsCredential)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersJobAgentsJob)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersJobAgentsJobsStep)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersJobAgentsPrivateEndpoint)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersJobAgentsTargetGroup)},
 		&registration.KnownType{Obj: new(sql_v20250101.ServersPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(sql_v20250101s.ServersDatabasesGeoBackupPolicy)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersDnsAlias)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersJobAgent)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersJobAgentsCredential)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersJobAgentsJob)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersJobAgentsJobsStep)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersJobAgentsPrivateEndpoint)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersJobAgentsTargetGroup)},
 		&registration.KnownType{Obj: new(sql_v20250101s.ServersPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(sql_v20250101s.ServersSqlVulnerabilityAssessment)})
 	result = append(
@@ -3143,6 +3182,13 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &securityinsights_customizations.WorkspaceManagerGroupExtension{})
 	result = append(result, &securityinsights_customizations.WorkspaceManagerMemberExtension{})
 	result = append(result, &sql_customizations.ServersDatabasesGeoBackupPolicyExtension{})
+	result = append(result, &sql_customizations.ServersDnsAliasExtension{})
+	result = append(result, &sql_customizations.ServersJobAgentExtension{})
+	result = append(result, &sql_customizations.ServersJobAgentsCredentialExtension{})
+	result = append(result, &sql_customizations.ServersJobAgentsJobExtension{})
+	result = append(result, &sql_customizations.ServersJobAgentsJobsStepExtension{})
+	result = append(result, &sql_customizations.ServersJobAgentsPrivateEndpointExtension{})
+	result = append(result, &sql_customizations.ServersJobAgentsTargetGroupExtension{})
 	result = append(result, &sql_customizations.ServersPrivateEndpointConnectionExtension{})
 	result = append(result, &sql_customizations.ServersSqlVulnerabilityAssessmentExtension{})
 	result = append(result, &storage_customizations.StorageAccountsEncryptionScopeExtension{})
@@ -5074,6 +5120,18 @@ func indexSecurityinsightsSourceControlToken(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.RepositoryAccess.Token.Index()
+}
+
+// indexSqlServersJobAgentsCredentialPassword an index function for sql_v20250101.ServersJobAgentsCredential .spec.password
+func indexSqlServersJobAgentsCredentialPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*sql_v20250101.ServersJobAgentsCredential)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Password == nil {
+		return nil
+	}
+	return obj.Spec.Password.Index()
 }
 
 // indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password

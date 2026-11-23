@@ -34,6 +34,316 @@ ServersDatabasesGeoBackupPolicy: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+ServersDnsAlias: Resource
+├── Owner: sql/v20250101.Server
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (7 properties)
+    ├── AzureDnsRecord: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+ServersJobAgent: Resource
+├── Owner: sql/v20250101.Server
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── DatabaseReference: *genruntime.ResourceReference
+│   ├── Identity: *Object (4 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── TenantId: *string
+│   │   ├── Type: *string
+│   │   └── UserAssignedIdentities: Object (2 properties)[]
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Sku: *Object (6 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Family: *string
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Size: *string
+│   │   └── Tier: *string
+│   └── Tags: map[string]string
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DatabaseId: *string
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── TenantId: *string
+    │   ├── Type: *string
+    │   └── UserAssignedIdentities: map[string]Object (3 properties)
+    │       ├── ClientId: *string
+    │       ├── PrincipalId: *string
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Sku: *Object (6 properties)
+    │   ├── Capacity: *int
+    │   ├── Family: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Size: *string
+    │   └── Tier: *string
+    ├── State: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
+ServersJobAgentsCredential: Resource
+├── Owner: sql/v20250101.ServersJobAgent
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Username: *string
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── Username: *string
+
+ServersJobAgentsJob: Resource
+├── Owner: sql/v20250101.ServersJobAgent
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Schedule: *Object (6 properties)
+│       ├── Enabled: *bool
+│       ├── EndTime: *string
+│       ├── Interval: *string
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── StartTime: *string
+│       └── Type: *string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Schedule: *Object (6 properties)
+    │   ├── Enabled: *bool
+    │   ├── EndTime: *string
+    │   ├── Interval: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── StartTime: *string
+    │   └── Type: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── Version: *int
+
+ServersJobAgentsJobsStep: Resource
+├── Owner: sql/v20250101.ServersJobAgentsJob
+├── Spec: Object (11 properties)
+│   ├── Action: *Object (4 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Source: *string
+│   │   ├── Type: *string
+│   │   └── Value: *string
+│   ├── AzureName: string
+│   ├── CredentialReference: *genruntime.ResourceReference
+│   ├── ExecutionOptions: *Object (6 properties)
+│   │   ├── InitialRetryIntervalSeconds: *int
+│   │   ├── MaximumRetryIntervalSeconds: *int
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RetryAttempts: *int
+│   │   ├── RetryIntervalBackoffMultiplier: *float64
+│   │   └── TimeoutSeconds: *int
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Output: *Object (9 properties)
+│   │   ├── CredentialReference: *genruntime.ResourceReference
+│   │   ├── DatabaseName: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── ResourceGroupName: *string
+│   │   ├── SchemaName: *string
+│   │   ├── ServerName: *string
+│   │   ├── SubscriptionId: *string
+│   │   ├── TableName: *string
+│   │   └── Type: *string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── StepId: *int
+│   └── TargetGroupReference: *genruntime.ResourceReference
+└── Status: Object (12 properties)
+    ├── Action: *Object (4 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Source: *string
+    │   ├── Type: *string
+    │   └── Value: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Credential: *string
+    ├── ExecutionOptions: *Object (6 properties)
+    │   ├── InitialRetryIntervalSeconds: *int
+    │   ├── MaximumRetryIntervalSeconds: *int
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RetryAttempts: *int
+    │   ├── RetryIntervalBackoffMultiplier: *float64
+    │   └── TimeoutSeconds: *int
+    ├── Id: *string
+    ├── Name: *string
+    ├── Output: *Object (9 properties)
+    │   ├── Credential: *string
+    │   ├── DatabaseName: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ResourceGroupName: *string
+    │   ├── SchemaName: *string
+    │   ├── ServerName: *string
+    │   ├── SubscriptionId: *string
+    │   ├── TableName: *string
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── StepId: *int
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── TargetGroup: *string
+    └── Type: *string
+
+ServersJobAgentsPrivateEndpoint: Resource
+├── Owner: sql/v20250101.ServersJobAgent
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── TargetServerAzureResourceReference: *genruntime.ResourceReference
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PrivateEndpointId: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── TargetServerAzureResourceId: *string
+    └── Type: *string
+
+ServersJobAgentsTargetGroup: Resource
+├── Owner: sql/v20250101.ServersJobAgent
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Members: Object (8 properties)[]
+│   │   ├── DatabaseName: *string
+│   │   ├── ElasticPoolName: *string
+│   │   ├── MembershipType: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RefreshCredentialReference: *genruntime.ResourceReference
+│   │   ├── ServerName: *string
+│   │   ├── ShardMapName: *string
+│   │   └── Type: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Members: Object (8 properties)[]
+    │   ├── DatabaseName: *string
+    │   ├── ElasticPoolName: *string
+    │   ├── MembershipType: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RefreshCredential: *string
+    │   ├── ServerName: *string
+    │   ├── ShardMapName: *string
+    │   └── Type: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 ServersPrivateEndpointConnection: Resource
 ├── Owner: sql/v20250101.Server
 ├── Spec: Object (7 properties)

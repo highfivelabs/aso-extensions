@@ -2127,20 +2127,20 @@ Microsoft.Sql,Microsoft.Sql/servers/databases/workloadGroups,6,,0,,0,6,false,spe
 Microsoft.Sql,Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers,6,,0,,0,6,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/devOpsAuditingSettings,6,,0,,0,6,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/disasterRecoveryConfiguration,0,,0,,0,0,false,spec_api=2014-04-01
-Microsoft.Sql,Microsoft.Sql/servers/dnsAliases,0,,0,,0,0,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/dnsAliases,0,,0,sql.azure.hfl.dev/ServersDnsAlias,0,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/elasticPools,19,sql.azure.com/ServersElasticPool,19,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/encryptionProtector,3,sql.azure.com/ServersEncryptionProtector,3,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/extendedAuditingSettings,12,,0,,0,12,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/failoverGroups,8,sql.azure.com/ServersFailoverGroup,8,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/firewallRules,2,sql.azure.com/ServersFirewallRule,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/ipv6FirewallRules,2,sql.azure.com/ServersIPV6FirewallRule,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents,11,,0,,0,11,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents/credentials,2,,0,,0,2,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents/jobs,6,,0,,0,6,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents,11,,0,sql.azure.hfl.dev/ServersJobAgent,11,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents/credentials,2,,0,sql.azure.hfl.dev/ServersJobAgentsCredential,2,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents/jobs,6,,0,sql.azure.hfl.dev/ServersJobAgentsJob,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/jobAgents/jobs/executions,0,,0,,0,0,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents/jobs/steps,19,,0,,0,19,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents/privateEndpoints,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents/targetGroups,7,,0,,0,7,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents/jobs/steps,19,,0,sql.azure.hfl.dev/ServersJobAgentsJobsStep,19,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents/privateEndpoints,1,,0,sql.azure.hfl.dev/ServersJobAgentsPrivateEndpoint,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents/targetGroups,7,,0,sql.azure.hfl.dev/ServersJobAgentsTargetGroup,7,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/keys,2,sql.azure.com/ServersKey,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/outboundFirewallRules,0,sql.azure.com/ServersOutboundFirewallRule,0,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/privateEndpointConnections,3,,0,sql.azure.hfl.dev/ServersPrivateEndpointConnection,3,0,false,spec_api=2025-01-01; ours_api=2025-01-01

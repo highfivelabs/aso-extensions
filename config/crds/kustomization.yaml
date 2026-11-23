@@ -313,6 +313,13 @@ resources:
 - securityinsights.azure.hfl.dev_workspacemanagergroups.yaml
 - securityinsights.azure.hfl.dev_workspacemanagermembers.yaml
 - sql.azure.hfl.dev_serversdatabasesgeobackuppolicies.yaml
+- sql.azure.hfl.dev_serversdnsaliases.yaml
+- sql.azure.hfl.dev_serversjobagents.yaml
+- sql.azure.hfl.dev_serversjobagentscredentials.yaml
+- sql.azure.hfl.dev_serversjobagentsjobs.yaml
+- sql.azure.hfl.dev_serversjobagentsjobssteps.yaml
+- sql.azure.hfl.dev_serversjobagentsprivateendpoints.yaml
+- sql.azure.hfl.dev_serversjobagentstargetgroups.yaml
 - sql.azure.hfl.dev_serversprivateendpointconnections.yaml
 - sql.azure.hfl.dev_serverssqlvulnerabilityassessments.yaml
 - sql.azure.hfl.dev_users.yaml

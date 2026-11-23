@@ -41,6 +41,360 @@ ServersDatabasesGeoBackupPolicy: Resource
     │       └── "User"
     └── Type: *string
 
+ServersDnsAlias: Resource
+├── Owner: Server
+├── Spec: Object (3 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (6 properties)
+    ├── AzureDnsRecord: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+ServersJobAgent: Resource
+├── Owner: Server
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── DatabaseReference: *genruntime.ResourceReference
+│   ├── Identity: *Object (3 properties)
+│   │   ├── TenantId: *Validated<string> (1 rule)
+│   │   │   └── Rule 0: Pattern: "^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$"
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssignedUserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Sku: *Object (5 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Family: *string
+│   │   ├── Name: *string
+│   │   ├── Size: *string
+│   │   └── Tier: *string
+│   └── Tags: map[string]string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DatabaseId: *string
+    ├── Id: *string
+    ├── Identity: *Object (3 properties)
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssignedUserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Sku: *Object (5 properties)
+    │   ├── Capacity: *int
+    │   ├── Family: *string
+    │   ├── Name: *string
+    │   ├── Size: *string
+    │   └── Tier: *string
+    ├── State: *Enum (5 values)
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Disabled"
+    │   ├── "Ready"
+    │   └── "Updating"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+ServersJobAgentsCredential: Resource
+├── Owner: ServersJobAgent
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   └── Username: *string
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    └── Username: *string
+
+ServersJobAgentsJob: Resource
+├── Owner: ServersJobAgent
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Schedule: *Object (5 properties)
+│       ├── Enabled: *bool
+│       ├── EndTime: *string
+│       ├── Interval: *string
+│       ├── StartTime: *string
+│       └── Type: *Enum (2 values)
+│           ├── "Once"
+│           └── "Recurring"
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Schedule: *Object (5 properties)
+    │   ├── Enabled: *bool
+    │   ├── EndTime: *string
+    │   ├── Interval: *string
+    │   ├── StartTime: *string
+    │   └── Type: *Enum (2 values)
+    │       ├── "Once"
+    │       └── "Recurring"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    └── Version: *int
+
+ServersJobAgentsJobsStep: Resource
+├── Owner: ServersJobAgentsJob
+├── Spec: Object (9 properties)
+│   ├── Action: *Object (3 properties)
+│   │   ├── Source: *Enum (1 value)
+│   │   │   └── "Inline"
+│   │   ├── Type: *Enum (1 value)
+│   │   │   └── "TSql"
+│   │   └── Value: *string
+│   ├── AzureName: string
+│   ├── CredentialReference: *genruntime.ResourceReference
+│   ├── ExecutionOptions: *Object (5 properties)
+│   │   ├── InitialRetryIntervalSeconds: *int
+│   │   ├── MaximumRetryIntervalSeconds: *int
+│   │   ├── RetryAttempts: *int
+│   │   ├── RetryIntervalBackoffMultiplier: *float64
+│   │   └── TimeoutSeconds: *int
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Output: *Object (8 properties)
+│   │   ├── CredentialReference: *genruntime.ResourceReference
+│   │   ├── DatabaseName: *string
+│   │   ├── ResourceGroupName: *string
+│   │   ├── SchemaName: *string
+│   │   ├── ServerName: *string
+│   │   ├── SubscriptionId: *Validated<string> (1 rule)
+│   │   │   └── Rule 0: Pattern: "^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$"
+│   │   ├── TableName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "SqlDatabase"
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── StepId: *int
+│   └── TargetGroupReference: *genruntime.ResourceReference
+└── Status: Object (11 properties)
+    ├── Action: *Object (3 properties)
+    │   ├── Source: *Enum (1 value)
+    │   │   └── "Inline"
+    │   ├── Type: *Enum (1 value)
+    │   │   └── "TSql"
+    │   └── Value: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Credential: *string
+    ├── ExecutionOptions: *Object (5 properties)
+    │   ├── InitialRetryIntervalSeconds: *int
+    │   ├── MaximumRetryIntervalSeconds: *int
+    │   ├── RetryAttempts: *int
+    │   ├── RetryIntervalBackoffMultiplier: *float64
+    │   └── TimeoutSeconds: *int
+    ├── Id: *string
+    ├── Name: *string
+    ├── Output: *Object (8 properties)
+    │   ├── Credential: *string
+    │   ├── DatabaseName: *string
+    │   ├── ResourceGroupName: *string
+    │   ├── SchemaName: *string
+    │   ├── ServerName: *string
+    │   ├── SubscriptionId: *string
+    │   ├── TableName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "SqlDatabase"
+    ├── StepId: *int
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── TargetGroup: *string
+    └── Type: *string
+
+ServersJobAgentsPrivateEndpoint: Resource
+├── Owner: ServersJobAgent
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── TargetServerAzureResourceReference: *genruntime.ResourceReference
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PrivateEndpointId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── TargetServerAzureResourceId: *string
+    └── Type: *string
+
+ServersJobAgentsTargetGroup: Resource
+├── Owner: ServersJobAgent
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── Members: Object (7 properties)[]
+│   │   ├── DatabaseName: *string
+│   │   ├── ElasticPoolName: *string
+│   │   ├── MembershipType: *Enum (2 values)
+│   │   │   ├── "Exclude"
+│   │   │   └── "Include"
+│   │   ├── RefreshCredentialReference: *genruntime.ResourceReference
+│   │   ├── ServerName: *string
+│   │   ├── ShardMapName: *string
+│   │   └── Type: *Enum (5 values)
+│   │       ├── "SqlDatabase"
+│   │       ├── "SqlElasticPool"
+│   │       ├── "SqlServer"
+│   │       ├── "SqlShardMap"
+│   │       └── "TargetGroup"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Members: Object (7 properties)[]
+    │   ├── DatabaseName: *string
+    │   ├── ElasticPoolName: *string
+    │   ├── MembershipType: *Enum (2 values)
+    │   │   ├── "Exclude"
+    │   │   └── "Include"
+    │   ├── RefreshCredential: *string
+    │   ├── ServerName: *string
+    │   ├── ShardMapName: *string
+    │   └── Type: *Enum (5 values)
+    │       ├── "SqlDatabase"
+    │       ├── "SqlElasticPool"
+    │       ├── "SqlServer"
+    │       ├── "SqlShardMap"
+    │       └── "TargetGroup"
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 ServersPrivateEndpointConnection: Resource
 ├── Owner: Server
 ├── Spec: Object (5 properties)

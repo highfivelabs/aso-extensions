@@ -35,6 +35,328 @@ ServersDatabasesGeoBackupPolicy_Spec: Object (2 properties)
         ├── "Disabled"
         └── "Enabled"
 
+ServersDnsAlias_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── AzureDnsRecord: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersDnsAlias_Spec: Object (1 property)
+└── Name: string
+
+ServersJobAgent_STATUS: Object (9 properties)
+├── Id: *string
+├── Identity: *Object (3 properties)
+│   ├── TenantId: *string
+│   ├── Type: *Enum (4 values)
+│   │   ├── "None"
+│   │   ├── "SystemAssigned"
+│   │   ├── "SystemAssignedUserAssigned"
+│   │   └── "UserAssigned"
+│   └── UserAssignedIdentities: map[string]Object (2 properties)
+│       ├── ClientId: *string
+│       └── PrincipalId: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── DatabaseId: *string
+│   └── State: *Enum (5 values)
+│       ├── "Creating"
+│       ├── "Deleting"
+│       ├── "Disabled"
+│       ├── "Ready"
+│       └── "Updating"
+├── Sku: *Object (5 properties)
+│   ├── Capacity: *int
+│   ├── Family: *string
+│   ├── Name: *string
+│   ├── Size: *string
+│   └── Tier: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+├── Tags: map[string]string
+└── Type: *string
+
+ServersJobAgent_Spec: Object (6 properties)
+├── Identity: *Object (3 properties)
+│   ├── TenantId: *string
+│   ├── Type: *Enum (4 values)
+│   │   ├── "None"
+│   │   ├── "SystemAssigned"
+│   │   ├── "SystemAssignedUserAssigned"
+│   │   └── "UserAssigned"
+│   └── UserAssignedIdentities: map[string]Object (0 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (1 property)
+│   └── DatabaseId: *string
+├── Sku: *Object (5 properties)
+│   ├── Capacity: *int
+│   ├── Family: *string
+│   ├── Name: *string
+│   ├── Size: *string
+│   └── Tier: *string
+└── Tags: map[string]string
+
+ServersJobAgentsCredential_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── Username: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersJobAgentsCredential_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── Password: *string
+    └── Username: *string
+
+ServersJobAgentsJob_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (3 properties)
+│   ├── Description: *string
+│   ├── Schedule: *Object (5 properties)
+│   │   ├── Enabled: *bool
+│   │   ├── EndTime: *string
+│   │   ├── Interval: *string
+│   │   ├── StartTime: *string
+│   │   └── Type: *Enum (2 values)
+│   │       ├── "Once"
+│   │       └── "Recurring"
+│   └── Version: *int
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersJobAgentsJob_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── Description: *string
+    └── Schedule: *Object (5 properties)
+        ├── Enabled: *bool
+        ├── EndTime: *string
+        ├── Interval: *string
+        ├── StartTime: *string
+        └── Type: *Enum (2 values)
+            ├── "Once"
+            └── "Recurring"
+
+ServersJobAgentsJobsStep_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (6 properties)
+│   ├── Action: *Object (3 properties)
+│   │   ├── Source: *Enum (1 value)
+│   │   │   └── "Inline"
+│   │   ├── Type: *Enum (1 value)
+│   │   │   └── "TSql"
+│   │   └── Value: *string
+│   ├── Credential: *string
+│   ├── ExecutionOptions: *Object (5 properties)
+│   │   ├── InitialRetryIntervalSeconds: *int
+│   │   ├── MaximumRetryIntervalSeconds: *int
+│   │   ├── RetryAttempts: *int
+│   │   ├── RetryIntervalBackoffMultiplier: *float64
+│   │   └── TimeoutSeconds: *int
+│   ├── Output: *Object (8 properties)
+│   │   ├── Credential: *string
+│   │   ├── DatabaseName: *string
+│   │   ├── ResourceGroupName: *string
+│   │   ├── SchemaName: *string
+│   │   ├── ServerName: *string
+│   │   ├── SubscriptionId: *string
+│   │   ├── TableName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "SqlDatabase"
+│   ├── StepId: *int
+│   └── TargetGroup: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersJobAgentsJobsStep_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (6 properties)
+    ├── Action: *Object (3 properties)
+    │   ├── Source: *Enum (1 value)
+    │   │   └── "Inline"
+    │   ├── Type: *Enum (1 value)
+    │   │   └── "TSql"
+    │   └── Value: *string
+    ├── Credential: *string
+    ├── ExecutionOptions: *Object (5 properties)
+    │   ├── InitialRetryIntervalSeconds: *int
+    │   ├── MaximumRetryIntervalSeconds: *int
+    │   ├── RetryAttempts: *int
+    │   ├── RetryIntervalBackoffMultiplier: *float64
+    │   └── TimeoutSeconds: *int
+    ├── Output: *Object (8 properties)
+    │   ├── Credential: *string
+    │   ├── DatabaseName: *string
+    │   ├── ResourceGroupName: *string
+    │   ├── SchemaName: *string
+    │   ├── ServerName: *string
+    │   ├── SubscriptionId: *string
+    │   ├── TableName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "SqlDatabase"
+    ├── StepId: *int
+    └── TargetGroup: *string
+
+ServersJobAgentsPrivateEndpoint_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── PrivateEndpointId: *string
+│   └── TargetServerAzureResourceId: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersJobAgentsPrivateEndpoint_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── TargetServerAzureResourceId: *string
+
+ServersJobAgentsTargetGroup_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── Members: Object (7 properties)[]
+│       ├── DatabaseName: *string
+│       ├── ElasticPoolName: *string
+│       ├── MembershipType: *Enum (2 values)
+│       │   ├── "Exclude"
+│       │   └── "Include"
+│       ├── RefreshCredential: *string
+│       ├── ServerName: *string
+│       ├── ShardMapName: *string
+│       └── Type: *Enum (5 values)
+│           ├── "SqlDatabase"
+│           ├── "SqlElasticPool"
+│           ├── "SqlServer"
+│           ├── "SqlShardMap"
+│           └── "TargetGroup"
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersJobAgentsTargetGroup_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── Members: Object (7 properties)[]
+        ├── DatabaseName: *string
+        ├── ElasticPoolName: *string
+        ├── MembershipType: *Enum (2 values)
+        │   ├── "Exclude"
+        │   └── "Include"
+        ├── RefreshCredential: *string
+        ├── ServerName: *string
+        ├── ShardMapName: *string
+        └── Type: *Enum (5 values)
+            ├── "SqlDatabase"
+            ├── "SqlElasticPool"
+            ├── "SqlServer"
+            ├── "SqlShardMap"
+            └── "TargetGroup"
+
 ServersPrivateEndpointConnection_STATUS: Object (5 properties)
 ├── Id: *string
 ├── Name: *string

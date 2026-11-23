@@ -555,6 +555,13 @@ upstream's); the catalog's chart tests do that.
   modelled: the private endpoint (a test adds the connection to the fake as
   one would), the states Azure allows a move between (a rejected connection
   cannot be approved again), and the error codes (the fake's own).
+- Azure SQL Elastic Jobs (`Microsoft.Sql/servers/jobAgents/*`,
+  2025-01-01; `pkg/fakecloud/arm/sqljobs.go`): a job agent names a job
+  database that exists (404); a credential has a username and a password
+  (400); a job step names a target group, and any credential, that exist
+  (404) in its own job agent (400). Not modelled: jobs running (schedules,
+  executions, outputs), target group members being resolved, the job
+  database's schema, SKUs and managed identities, and the error codes.
 - Log Analytics summary rules (`workspaces/summaryLogs`, 2025-07-01;
   `pkg/fakecloud/arm/loganalytics.go`): a rule's definition gives a query
   and a bin size of 20, 30, 60, 120, 180, 360, 720 or 1440 minutes (400).

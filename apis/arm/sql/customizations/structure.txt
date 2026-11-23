@@ -3,6 +3,20 @@ github.com/highfivelabs/aso-extensions/apis/arm/sql/customizations
 ------------------------------------------------------------------
 ServersDatabasesGeoBackupPolicyExtension: Object (0 properties)
 
+ServersDnsAliasExtension: Object (0 properties)
+
+ServersJobAgentExtension: Object (0 properties)
+
+ServersJobAgentsCredentialExtension: Object (0 properties)
+
+ServersJobAgentsJobExtension: Object (0 properties)
+
+ServersJobAgentsJobsStepExtension: Object (0 properties)
+
+ServersJobAgentsPrivateEndpointExtension: Object (0 properties)
+
+ServersJobAgentsTargetGroupExtension: Object (0 properties)
+
 ServersPrivateEndpointConnectionExtension: Object (0 properties)
 
 ServersSqlVulnerabilityAssessmentExtension: Object (0 properties)

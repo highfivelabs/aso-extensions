@@ -595,6 +595,13 @@ title: Supported Resources
 | Resource                          | ARM Version | CRD Version | Supported From | Sample |
 |-----------------------------------|-------------|-------------|----------------|--------|
 | ServersDatabasesGeoBackupPolicy   | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersDnsAlias                   | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgent                   | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgentsCredential        | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgentsJob               | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgentsJobsStep          | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgentsPrivateEndpoint   | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersJobAgentsTargetGroup       | 2025-01-01  | v20250101   | v0.1.0         | -      |
 | ServersPrivateEndpointConnection  | 2025-01-01  | v20250101   | v0.1.0         | -      |
 | ServersSqlVulnerabilityAssessment | 2025-01-01  | v20250101   | v0.1.0         | -      |
 

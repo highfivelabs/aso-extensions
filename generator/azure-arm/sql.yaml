@@ -28,6 +28,45 @@ groupModelConfiguration:
     Servers_PrivateEndpointConnection:
       $exportAs: ServersPrivateEndpointConnection
       $supportedFrom: v0.1.0
+    # Elastic Jobs (docs/plan.md f39): a job agent on a server (its job
+    # database a ServersDatabase by reference), its credentials (the
+    # password a Secret), jobs and their steps, target groups and the
+    # private endpoints it reaches targets through. A server's DNS alias.
+    Servers_JobAgent:
+      $exportAs: ServersJobAgent
+      $supportedFrom: v0.1.0
+    Servers_JobAgents_Credential:
+      $exportAs: ServersJobAgentsCredential
+      $supportedFrom: v0.1.0
+    Servers_JobAgents_Job:
+      $exportAs: ServersJobAgentsJob
+      $supportedFrom: v0.1.0
+    Servers_JobAgents_Jobs_Step:
+      $exportAs: ServersJobAgentsJobsStep
+      $supportedFrom: v0.1.0
+    Servers_JobAgents_TargetGroup:
+      $exportAs: ServersJobAgentsTargetGroup
+      $supportedFrom: v0.1.0
+    Servers_JobAgents_PrivateEndpoint:
+      $exportAs: ServersJobAgentsPrivateEndpoint
+      $supportedFrom: v0.1.0
+    Servers_DnsAlias:
+      $exportAs: ServersDnsAlias
+      $supportedFrom: v0.1.0
     PrivateEndpointProperty:
       Id:
         $referenceType: arm # the private endpoint's ARM ID (autolabel, reviewed)
+    JobStepOutput:
+      Credential:
+        $referenceType: arm # the credential's ARM ID, our ServersJobAgentsCredential (autolabel wrote simple)
+    JobStepProperties:
+      TargetGroup:
+        $referenceType: arm # the target group's ARM ID, our ServersJobAgentsTargetGroup (autolabel wrote simple)
+      Credential:
+        $referenceType: arm # the credential's ARM ID, our ServersJobAgentsCredential (autolabel wrote simple)
+    JobTarget:
+      RefreshCredential:
+        $referenceType: arm # the credential's ARM ID, our ServersJobAgentsCredential (autolabel wrote simple)
+    JobCredentialProperties:
+      Password:
+        $importSecretMode: required # the credential's password, from a Secret (autolabel, reviewed)
