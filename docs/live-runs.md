@@ -295,6 +295,31 @@ Found 2026-11-12 (runs `ax120809d931`, `ax120853723a`, `ax1210377aa0`):
   resolves in DNS (`UriHostNotFound`); `TestLiveContainerRegistry` now creates
   a Key Vault fixture (`accessPolicies: []`) in `test/live/apps_test.go`.
 
+## Pending: written, not yet run
+
+Live tests written without a run (an agent cannot reach Azure; each runs
+from an offload VM as "Running one" shows). A kind leaves this list when the
+ledger has a row for it.
+
+| Written | Test | Kinds | Fixtures (cost) | Command |
+| --- | --- | --- | --- | --- |
+| 2026-11-23 | `TestLiveAddressPrefixSet` | `ApplicationSecurityGroupsAddressPrefixSet` | an application security group (free) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveAddressPrefixSet"` |
+| 2026-11-23 | `TestLiveRuleCollectionGroupDraft` | `FirewallPoliciesRuleCollectionGroupDraft` | a Standard firewall policy and a rule collection group (free while no firewall uses the policy) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveRuleCollectionGroupDraft"` |
+| 2026-11-23 | `TestLiveConnectionMonitor` | `NetworkWatchersConnectionMonitor` | a network watcher in the live group, a virtual network, a workspace (free); skips with `NetworkWatcherCountLimitReached` when the subscription's watcher for the region is elsewhere (usually `NetworkWatcherRG`, which the identity may not touch) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveConnectionMonitor"` |
+| 2026-11-23 | `TestLiveSummaryRule` | `WorkspacesSummaryLog` | a workspace (free, nothing ingested) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSummaryRule"` |
+| 2026-11-23 | `TestLiveSentinelWorkspace` | Sentinel `Setting` (EyesOn), `ContentMetadata`, `WorkspaceManagerConfiguration`, `WorkspaceManagerMember`, `WorkspaceManagerGroup`, `WorkspaceManagerAssignment` | two workspaces onboarded to Sentinel and a disabled scheduled analytics rule (free with nothing ingested); skips unless `Microsoft.SecurityInsights` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSentinelWorkspace"` |
+
+All five in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
+TESTS="TestLiveAddressPrefixSet TestLiveRuleCollectionGroupDraft
+TestLiveConnectionMonitor TestLiveSummaryRule TestLiveSentinelWorkspace"`.
+
+Not written, for want of a scope the identity has (Contributor on the live
+group only; `docs/plan.md` §8, the question of 2026-11-23): the tenant's
+`SubscriptionTenantPolicy`, the access review kinds, the Cost Management
+`Setting`, `AlertsSuppressionRule` and `GovernanceRule`, all kept at a
+subscription or above. Sentinel's `SourceControl` needs a real repository and
+a credential for it.
+
 ## Ledger
 
 | Date | Run | Commit | Tests | Result | Found |

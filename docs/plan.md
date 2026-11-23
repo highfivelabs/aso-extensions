@@ -2103,3 +2103,24 @@ summarised here:
 
    **Answered, 2026-11-15** (ASOQ): hand-built `VaultsProtectedItem` at
    `v20260701`.
+15. **Live runs for kinds kept at a subscription or above?** (asked
+   2026-11-23, f28 and f31.) The live identity is Contributor on the
+   resource group `aso-extensions-live-tests` only (`docs/live-runs.md`), so
+   no live test can exercise `SubscriptionTenantPolicy` (the tenant's
+   `Microsoft.Subscription/policies/default`: a tenant-wide setting a global
+   administrator writes), the access review kinds, the Cost Management
+   `Setting`, `AlertsSuppressionRule` or `GovernanceRule` (a subscription or
+   wider scope), nor the existing subscription and management group kinds
+   (policy, PIM, Defender plans, management groups). Options: (a) leave them
+   fake-only and say so per kind in the README; (b) grant the live identity
+   a narrow custom role at the sandbox subscription for the actions these
+   kinds need (`Microsoft.Authorization/accessReview*`,
+   `Microsoft.Security/alertsSuppressionRules/*`,
+   `Microsoft.Security/governanceRules/*`,
+   `Microsoft.CostManagement/settings/*`), with `hack/live/targets.txt`
+   naming the subscription for those tests only and every test deleting or
+   restoring what it changed; (c) a second, empty sandbox subscription for
+   subscription-scope tests. The tenant policy should stay fake-only under
+   any option: it changes the whole tenant, and its writer is a global
+   administrator. Recommended: (b) for the subscription-scope kinds, (a) for
+   the tenant policy and management groups.
