@@ -8,19 +8,27 @@ no_list: true
 
 ### Released
 
-| Resource                              | ARM Version | CRD Version | Supported From | Sample |
-|---------------------------------------|-------------|-------------|----------------|--------|
-| AccountsCapabilityHost                | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| AccountsCommitmentPlan                | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| AccountsConnection                    | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| AccountsDefenderForAISetting          | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| AccountsEncryptionScope               | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| AccountsPrivateEndpointConnection     | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| AccountsProjectsCapabilityHost        | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| AccountsProjectsConnection            | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| AccountsRaiBlocklist                  | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| AccountsRaiBlocklistsRaiBlocklistItem | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| AccountsRaiPolicy                     | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| CommitmentPlan                        | 2025-06-01  | v20250601   | v0.1.0         | -      |
-| CommitmentPlansAccountAssociation     | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| Resource                                    | ARM Version | CRD Version | Supported From | Sample |
+|---------------------------------------------|-------------|-------------|----------------|--------|
+| AccountsCapabilityHost                      | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| AccountsCommitmentPlan                      | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| AccountsConnection                          | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| AccountsDefenderForAISetting                | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| AccountsEncryptionScope                     | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| AccountsManagedNetwork                      | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| AccountsManagedNetworksOutboundRule         | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| AccountsPrivateEndpointConnection           | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| AccountsProjectsApplication                 | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| AccountsProjectsApplicationsAgentDeployment | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| AccountsProjectsCapabilityHost              | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| AccountsProjectsConnection                  | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| AccountsRaiBlocklist                        | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| AccountsRaiBlocklistsRaiBlocklistItem       | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| AccountsRaiPolicy                           | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| AccountsRaiToolLabel                        | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| AccountsRaiTopic                            | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| CommitmentPlan                              | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| CommitmentPlansAccountAssociation           | 2025-06-01  | v20250601   | v0.1.0         | -      |
+| RaiExternalSafetyProvider                   | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| RaiPolicy                                   | 2026-09-01  | v20260901   | v0.1.0         | -      |
 

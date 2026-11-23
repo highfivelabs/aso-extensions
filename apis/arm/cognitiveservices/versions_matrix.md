@@ -1,182 +1,345 @@
-| Type Definitions in package "cognitiveservices"              | v20250601 |
-|--------------------------------------------------------------|-----------|
-| AADAuthTypeConnectionProperties                              | v20250601 |
-| AADAuthTypeConnectionProperties_AuthType                     | v20250601 |
-| AADAuthTypeConnectionProperties_AuthType_STATUS              | v20250601 |
-| AADAuthTypeConnectionProperties_STATUS                       | v20250601 |
-| APIVersion                                                   | v20250601 |
-| AccessKeyAuthTypeConnectionProperties                        | v20250601 |
-| AccessKeyAuthTypeConnectionProperties_AuthType               | v20250601 |
-| AccessKeyAuthTypeConnectionProperties_AuthType_STATUS        | v20250601 |
-| AccessKeyAuthTypeConnectionProperties_STATUS                 | v20250601 |
-| AccountKeyAuthTypeConnectionProperties                       | v20250601 |
-| AccountKeyAuthTypeConnectionProperties_AuthType              | v20250601 |
-| AccountKeyAuthTypeConnectionProperties_AuthType_STATUS       | v20250601 |
-| AccountKeyAuthTypeConnectionProperties_STATUS                | v20250601 |
-| AccountsCapabilityHost                                       | v20250601 |
-| AccountsCapabilityHost_STATUS                                | v20250601 |
-| AccountsCapabilityHost_Spec                                  | v20250601 |
-| AccountsCommitmentPlan                                       | v20250601 |
-| AccountsCommitmentPlan_STATUS                                | v20250601 |
-| AccountsCommitmentPlan_Spec                                  | v20250601 |
-| AccountsConnection                                           | v20250601 |
-| AccountsConnection_STATUS                                    | v20250601 |
-| AccountsConnection_Spec                                      | v20250601 |
-| AccountsDefenderForAISetting                                 | v20250601 |
-| AccountsDefenderForAISetting_STATUS                          | v20250601 |
-| AccountsDefenderForAISetting_Spec                            | v20250601 |
-| AccountsEncryptionScope                                      | v20250601 |
-| AccountsEncryptionScope_STATUS                               | v20250601 |
-| AccountsEncryptionScope_Spec                                 | v20250601 |
-| AccountsPrivateEndpointConnection                            | v20250601 |
-| AccountsPrivateEndpointConnection_STATUS                     | v20250601 |
-| AccountsPrivateEndpointConnection_Spec                       | v20250601 |
-| AccountsProjectsCapabilityHost                               | v20250601 |
-| AccountsProjectsCapabilityHost_STATUS                        | v20250601 |
-| AccountsProjectsCapabilityHost_Spec                          | v20250601 |
-| AccountsProjectsConnection                                   | v20250601 |
-| AccountsProjectsConnection_STATUS                            | v20250601 |
-| AccountsProjectsConnection_Spec                              | v20250601 |
-| AccountsRaiBlocklist                                         | v20250601 |
-| AccountsRaiBlocklist_STATUS                                  | v20250601 |
-| AccountsRaiBlocklist_Spec                                    | v20250601 |
-| AccountsRaiBlocklistsRaiBlocklistItem                        | v20250601 |
-| AccountsRaiBlocklistsRaiBlocklistItem_STATUS                 | v20250601 |
-| AccountsRaiBlocklistsRaiBlocklistItem_Spec                   | v20250601 |
-| AccountsRaiPolicy                                            | v20250601 |
-| AccountsRaiPolicy_STATUS                                     | v20250601 |
-| AccountsRaiPolicy_Spec                                       | v20250601 |
-| ApiKeyAuthConnectionProperties                               | v20250601 |
-| ApiKeyAuthConnectionProperties_AuthType                      | v20250601 |
-| ApiKeyAuthConnectionProperties_AuthType_STATUS               | v20250601 |
-| ApiKeyAuthConnectionProperties_STATUS                        | v20250601 |
-| CapabilityHost                                               | v20250601 |
-| CapabilityHostKind                                           | v20250601 |
-| CapabilityHostKind_STATUS                                    | v20250601 |
-| CapabilityHostProvisioningState_STATUS                       | v20250601 |
-| CapabilityHost_STATUS                                        | v20250601 |
-| CommitmentPeriod                                             | v20250601 |
-| CommitmentPeriod_STATUS                                      | v20250601 |
-| CommitmentPlan                                               | v20250601 |
-| CommitmentPlanAccountAssociationProperties                   | v20250601 |
-| CommitmentPlanAccountAssociationProperties_STATUS            | v20250601 |
-| CommitmentPlanProperties                                     | v20250601 |
-| CommitmentPlanProperties_ProvisioningState_STATUS            | v20250601 |
-| CommitmentPlanProperties_STATUS                              | v20250601 |
-| CommitmentPlan_STATUS                                        | v20250601 |
-| CommitmentPlan_Spec                                          | v20250601 |
-| CommitmentPlansAccountAssociation                            | v20250601 |
-| CommitmentPlansAccountAssociation_STATUS                     | v20250601 |
-| CommitmentPlansAccountAssociation_Spec                       | v20250601 |
-| CommitmentQuota_STATUS                                       | v20250601 |
-| ConnectionAccessKey                                          | v20250601 |
-| ConnectionAccessKey_STATUS                                   | v20250601 |
-| ConnectionAccountKey                                         | v20250601 |
-| ConnectionAccountKey_STATUS                                  | v20250601 |
-| ConnectionApiKey                                             | v20250601 |
-| ConnectionApiKey_STATUS                                      | v20250601 |
-| ConnectionCategory                                           | v20250601 |
-| ConnectionCategory_STATUS                                    | v20250601 |
-| ConnectionGroup_STATUS                                       | v20250601 |
-| ConnectionManagedIdentity                                    | v20250601 |
-| ConnectionManagedIdentity_STATUS                             | v20250601 |
-| ConnectionOAuth2                                             | v20250601 |
-| ConnectionOAuth2_STATUS                                      | v20250601 |
-| ConnectionPersonalAccessToken                                | v20250601 |
-| ConnectionPersonalAccessToken_STATUS                         | v20250601 |
-| ConnectionPropertiesV2                                       | v20250601 |
-| ConnectionPropertiesV2_STATUS                                | v20250601 |
-| ConnectionServicePrincipal                                   | v20250601 |
-| ConnectionServicePrincipal_STATUS                            | v20250601 |
-| ConnectionSharedAccessSignature                              | v20250601 |
-| ConnectionSharedAccessSignature_STATUS                       | v20250601 |
-| ConnectionUsernamePassword                                   | v20250601 |
-| ConnectionUsernamePassword_STATUS                            | v20250601 |
-| CustomBlocklistConfig                                        | v20250601 |
-| CustomBlocklistConfig_STATUS                                 | v20250601 |
-| CustomKeys                                                   | v20250601 |
-| CustomKeysConnectionProperties                               | v20250601 |
-| CustomKeysConnectionProperties_AuthType                      | v20250601 |
-| CustomKeysConnectionProperties_AuthType_STATUS               | v20250601 |
-| CustomKeysConnectionProperties_STATUS                        | v20250601 |
-| CustomKeys_STATUS                                            | v20250601 |
-| DefenderForAISettingProperties                               | v20250601 |
-| DefenderForAISettingProperties_STATUS                        | v20250601 |
-| DefenderForAISettingProperties_State                         | v20250601 |
-| DefenderForAISettingProperties_State_STATUS                  | v20250601 |
-| EncryptionScopeProperties                                    | v20250601 |
-| EncryptionScopeProperties_KeySource                          | v20250601 |
-| EncryptionScopeProperties_KeySource_STATUS                   | v20250601 |
-| EncryptionScopeProperties_ProvisioningState_STATUS           | v20250601 |
-| EncryptionScopeProperties_STATUS                             | v20250601 |
-| EncryptionScopeProperties_State                              | v20250601 |
-| EncryptionScopeProperties_State_STATUS                       | v20250601 |
-| HostingModel                                                 | v20250601 |
-| HostingModel_STATUS                                          | v20250601 |
-| KeyVaultProperties                                           | v20250601 |
-| KeyVaultProperties_STATUS                                    | v20250601 |
-| ManagedIdentityAuthTypeConnectionProperties                  | v20250601 |
-| ManagedIdentityAuthTypeConnectionProperties_AuthType         | v20250601 |
-| ManagedIdentityAuthTypeConnectionProperties_AuthType_STATUS  | v20250601 |
-| ManagedIdentityAuthTypeConnectionProperties_STATUS           | v20250601 |
-| ManagedPERequirement                                         | v20250601 |
-| ManagedPERequirement_STATUS                                  | v20250601 |
-| ManagedPEStatus                                              | v20250601 |
-| ManagedPEStatus_STATUS                                       | v20250601 |
-| NoneAuthTypeConnectionProperties                             | v20250601 |
-| NoneAuthTypeConnectionProperties_AuthType                    | v20250601 |
-| NoneAuthTypeConnectionProperties_AuthType_STATUS             | v20250601 |
-| NoneAuthTypeConnectionProperties_STATUS                      | v20250601 |
-| OAuth2AuthTypeConnectionProperties                           | v20250601 |
-| OAuth2AuthTypeConnectionProperties_AuthType                  | v20250601 |
-| OAuth2AuthTypeConnectionProperties_AuthType_STATUS           | v20250601 |
-| OAuth2AuthTypeConnectionProperties_STATUS                    | v20250601 |
-| PATAuthTypeConnectionProperties                              | v20250601 |
-| PATAuthTypeConnectionProperties_AuthType                     | v20250601 |
-| PATAuthTypeConnectionProperties_AuthType_STATUS              | v20250601 |
-| PATAuthTypeConnectionProperties_STATUS                       | v20250601 |
-| PrivateEndpointConnectionProperties                          | v20250601 |
-| PrivateEndpointConnectionProperties_STATUS                   | v20250601 |
-| PrivateEndpointConnectionProvisioningState                   | v20250601 |
-| PrivateEndpointConnectionProvisioningState_STATUS            | v20250601 |
-| PrivateEndpointServiceConnectionStatus                       | v20250601 |
-| PrivateEndpointServiceConnectionStatus_STATUS                | v20250601 |
-| PrivateEndpoint_STATUS                                       | v20250601 |
-| PrivateLinkServiceConnectionState                            | v20250601 |
-| PrivateLinkServiceConnectionState_STATUS                     | v20250601 |
-| ProjectCapabilityHost                                        | v20250601 |
-| ProjectCapabilityHost_STATUS                                 | v20250601 |
-| RaiBlocklistItemProperties                                   | v20250601 |
-| RaiBlocklistItemProperties_STATUS                            | v20250601 |
-| RaiBlocklistProperties                                       | v20250601 |
-| RaiBlocklistProperties_STATUS                                | v20250601 |
-| RaiPolicyContentFilter                                       | v20250601 |
-| RaiPolicyContentFilter_STATUS                                | v20250601 |
-| RaiPolicyContentFilter_SeverityThreshold                     | v20250601 |
-| RaiPolicyContentFilter_SeverityThreshold_STATUS              | v20250601 |
-| RaiPolicyContentSource                                       | v20250601 |
-| RaiPolicyContentSource_STATUS                                | v20250601 |
-| RaiPolicyProperties                                          | v20250601 |
-| RaiPolicyProperties_Mode                                     | v20250601 |
-| RaiPolicyProperties_Mode_STATUS                              | v20250601 |
-| RaiPolicyProperties_STATUS                                   | v20250601 |
-| RaiPolicyProperties_Type_STATUS                              | v20250601 |
-| SASAuthTypeConnectionProperties                              | v20250601 |
-| SASAuthTypeConnectionProperties_AuthType                     | v20250601 |
-| SASAuthTypeConnectionProperties_AuthType_STATUS              | v20250601 |
-| SASAuthTypeConnectionProperties_STATUS                       | v20250601 |
-| ServicePrincipalAuthTypeConnectionProperties                 | v20250601 |
-| ServicePrincipalAuthTypeConnectionProperties_AuthType        | v20250601 |
-| ServicePrincipalAuthTypeConnectionProperties_AuthType_STATUS | v20250601 |
-| ServicePrincipalAuthTypeConnectionProperties_STATUS          | v20250601 |
-| Sku                                                          | v20250601 |
-| Sku_STATUS                                                   | v20250601 |
-| Sku_Tier                                                     | v20250601 |
-| Sku_Tier_STATUS                                              | v20250601 |
-| SystemData_CreatedByType_STATUS                              | v20250601 |
-| SystemData_LastModifiedByType_STATUS                         | v20250601 |
-| SystemData_STATUS                                            | v20250601 |
-| UsernamePasswordAuthTypeConnectionProperties                 | v20250601 |
-| UsernamePasswordAuthTypeConnectionProperties_AuthType        | v20250601 |
-| UsernamePasswordAuthTypeConnectionProperties_AuthType_STATUS | v20250601 |
-| UsernamePasswordAuthTypeConnectionProperties_STATUS          | v20250601 |
+| Type Definitions in package "cognitiveservices"              | v20250601 | v20260901 |
+|--------------------------------------------------------------|-----------|-----------|
+| AADAuthTypeConnectionProperties                              | v20250601 |           |
+| AADAuthTypeConnectionProperties_AuthType                     | v20250601 |           |
+| AADAuthTypeConnectionProperties_AuthType_STATUS              | v20250601 |           |
+| AADAuthTypeConnectionProperties_STATUS                       | v20250601 |           |
+| APIVersion                                                   | v20250601 | v20260901 |
+| AccessKeyAuthTypeConnectionProperties                        | v20250601 |           |
+| AccessKeyAuthTypeConnectionProperties_AuthType               | v20250601 |           |
+| AccessKeyAuthTypeConnectionProperties_AuthType_STATUS        | v20250601 |           |
+| AccessKeyAuthTypeConnectionProperties_STATUS                 | v20250601 |           |
+| AccountKeyAuthTypeConnectionProperties                       | v20250601 |           |
+| AccountKeyAuthTypeConnectionProperties_AuthType              | v20250601 |           |
+| AccountKeyAuthTypeConnectionProperties_AuthType_STATUS       | v20250601 |           |
+| AccountKeyAuthTypeConnectionProperties_STATUS                | v20250601 |           |
+| AccountsCapabilityHost                                       | v20250601 |           |
+| AccountsCapabilityHost_STATUS                                | v20250601 |           |
+| AccountsCapabilityHost_Spec                                  | v20250601 |           |
+| AccountsCommitmentPlan                                       | v20250601 |           |
+| AccountsCommitmentPlan_STATUS                                | v20250601 |           |
+| AccountsCommitmentPlan_Spec                                  | v20250601 |           |
+| AccountsConnection                                           | v20250601 |           |
+| AccountsConnection_STATUS                                    | v20250601 |           |
+| AccountsConnection_Spec                                      | v20250601 |           |
+| AccountsDefenderForAISetting                                 | v20250601 |           |
+| AccountsDefenderForAISetting_STATUS                          | v20250601 |           |
+| AccountsDefenderForAISetting_Spec                            | v20250601 |           |
+| AccountsEncryptionScope                                      | v20250601 |           |
+| AccountsEncryptionScope_STATUS                               | v20250601 |           |
+| AccountsEncryptionScope_Spec                                 | v20250601 |           |
+| AccountsManagedNetwork                                       |           | v20260901 |
+| AccountsManagedNetwork_STATUS                                |           | v20260901 |
+| AccountsManagedNetwork_Spec                                  |           | v20260901 |
+| AccountsManagedNetworksOutboundRule                          |           | v20260901 |
+| AccountsManagedNetworksOutboundRule_STATUS                   |           | v20260901 |
+| AccountsManagedNetworksOutboundRule_Spec                     |           | v20260901 |
+| AccountsPrivateEndpointConnection                            | v20250601 |           |
+| AccountsPrivateEndpointConnection_STATUS                     | v20250601 |           |
+| AccountsPrivateEndpointConnection_Spec                       | v20250601 |           |
+| AccountsProjectsApplication                                  |           | v20260901 |
+| AccountsProjectsApplication_STATUS                           |           | v20260901 |
+| AccountsProjectsApplication_Spec                             |           | v20260901 |
+| AccountsProjectsApplicationsAgentDeployment                  |           | v20260901 |
+| AccountsProjectsApplicationsAgentDeployment_STATUS           |           | v20260901 |
+| AccountsProjectsApplicationsAgentDeployment_Spec             |           | v20260901 |
+| AccountsProjectsCapabilityHost                               | v20250601 |           |
+| AccountsProjectsCapabilityHost_STATUS                        | v20250601 |           |
+| AccountsProjectsCapabilityHost_Spec                          | v20250601 |           |
+| AccountsProjectsConnection                                   | v20250601 |           |
+| AccountsProjectsConnection_STATUS                            | v20250601 |           |
+| AccountsProjectsConnection_Spec                              | v20250601 |           |
+| AccountsRaiBlocklist                                         | v20250601 |           |
+| AccountsRaiBlocklist_STATUS                                  | v20250601 |           |
+| AccountsRaiBlocklist_Spec                                    | v20250601 |           |
+| AccountsRaiBlocklistsRaiBlocklistItem                        | v20250601 |           |
+| AccountsRaiBlocklistsRaiBlocklistItem_STATUS                 | v20250601 |           |
+| AccountsRaiBlocklistsRaiBlocklistItem_Spec                   | v20250601 |           |
+| AccountsRaiPolicy                                            | v20250601 |           |
+| AccountsRaiPolicy_STATUS                                     | v20250601 |           |
+| AccountsRaiPolicy_Spec                                       | v20250601 |           |
+| AccountsRaiToolLabel                                         |           | v20260901 |
+| AccountsRaiToolLabel_STATUS                                  |           | v20260901 |
+| AccountsRaiToolLabel_Spec                                    |           | v20260901 |
+| AccountsRaiTopic                                             |           | v20260901 |
+| AccountsRaiTopic_STATUS                                      |           | v20260901 |
+| AccountsRaiTopic_Spec                                        |           | v20260901 |
+| AgentDeploymentProperties                                    |           | v20260901 |
+| AgentDeploymentProperties_STATUS                             |           | v20260901 |
+| AgentDeploymentProvisioningState_STATUS                      |           | v20260901 |
+| AgentDeploymentState                                         |           | v20260901 |
+| AgentDeploymentState_STATUS                                  |           | v20260901 |
+| AgentProtocol                                                |           | v20260901 |
+| AgentProtocolVersion                                         |           | v20260901 |
+| AgentProtocolVersion_STATUS                                  |           | v20260901 |
+| AgentProtocol_STATUS                                         |           | v20260901 |
+| AgentReferenceProperties                                     |           | v20260901 |
+| AgentReferenceProperties_STATUS                              |           | v20260901 |
+| AgenticApplicationProperties                                 |           | v20260901 |
+| AgenticApplicationProperties_STATUS                          |           | v20260901 |
+| AgenticApplicationProvisioningState_STATUS                   |           | v20260901 |
+| ApiKeyAuthConnectionProperties                               | v20250601 |           |
+| ApiKeyAuthConnectionProperties_AuthType                      | v20250601 |           |
+| ApiKeyAuthConnectionProperties_AuthType_STATUS               | v20250601 |           |
+| ApiKeyAuthConnectionProperties_STATUS                        | v20250601 |           |
+| ApplicationAuthorizationPolicy                               |           | v20260901 |
+| ApplicationAuthorizationPolicy_STATUS                        |           | v20260901 |
+| ApplicationTrafficRoutingPolicy                              |           | v20260901 |
+| ApplicationTrafficRoutingPolicy_STATUS                       |           | v20260901 |
+| AssignedIdentity                                             |           | v20260901 |
+| AssignedIdentity_STATUS                                      |           | v20260901 |
+| CapabilityHost                                               | v20250601 |           |
+| CapabilityHostKind                                           | v20250601 |           |
+| CapabilityHostKind_STATUS                                    | v20250601 |           |
+| CapabilityHostProvisioningState_STATUS                       | v20250601 |           |
+| CapabilityHost_STATUS                                        | v20250601 |           |
+| ChannelsBuiltInAuthorizationPolicy                           |           | v20260901 |
+| ChannelsBuiltInAuthorizationPolicy_STATUS                    |           | v20260901 |
+| ChannelsBuiltInAuthorizationPolicy_Type                      |           | v20260901 |
+| ChannelsBuiltInAuthorizationPolicy_Type_STATUS               |           | v20260901 |
+| CommitmentPeriod                                             | v20250601 |           |
+| CommitmentPeriod_STATUS                                      | v20250601 |           |
+| CommitmentPlan                                               | v20250601 |           |
+| CommitmentPlanAccountAssociationProperties                   | v20250601 |           |
+| CommitmentPlanAccountAssociationProperties_STATUS            | v20250601 |           |
+| CommitmentPlanProperties                                     | v20250601 |           |
+| CommitmentPlanProperties_ProvisioningState_STATUS            | v20250601 |           |
+| CommitmentPlanProperties_STATUS                              | v20250601 |           |
+| CommitmentPlan_STATUS                                        | v20250601 |           |
+| CommitmentPlan_Spec                                          | v20250601 |           |
+| CommitmentPlansAccountAssociation                            | v20250601 |           |
+| CommitmentPlansAccountAssociation_STATUS                     | v20250601 |           |
+| CommitmentPlansAccountAssociation_Spec                       | v20250601 |           |
+| CommitmentQuota_STATUS                                       | v20250601 |           |
+| ConnectionAccessKey                                          | v20250601 |           |
+| ConnectionAccessKey_STATUS                                   | v20250601 |           |
+| ConnectionAccountKey                                         | v20250601 |           |
+| ConnectionAccountKey_STATUS                                  | v20250601 |           |
+| ConnectionApiKey                                             | v20250601 |           |
+| ConnectionApiKey_STATUS                                      | v20250601 |           |
+| ConnectionCategory                                           | v20250601 |           |
+| ConnectionCategory_STATUS                                    | v20250601 |           |
+| ConnectionGroup_STATUS                                       | v20250601 |           |
+| ConnectionManagedIdentity                                    | v20250601 |           |
+| ConnectionManagedIdentity_STATUS                             | v20250601 |           |
+| ConnectionOAuth2                                             | v20250601 |           |
+| ConnectionOAuth2_STATUS                                      | v20250601 |           |
+| ConnectionPersonalAccessToken                                | v20250601 |           |
+| ConnectionPersonalAccessToken_STATUS                         | v20250601 |           |
+| ConnectionPropertiesV2                                       | v20250601 |           |
+| ConnectionPropertiesV2_STATUS                                | v20250601 |           |
+| ConnectionServicePrincipal                                   | v20250601 |           |
+| ConnectionServicePrincipal_STATUS                            | v20250601 |           |
+| ConnectionSharedAccessSignature                              | v20250601 |           |
+| ConnectionSharedAccessSignature_STATUS                       | v20250601 |           |
+| ConnectionUsernamePassword                                   | v20250601 |           |
+| ConnectionUsernamePassword_STATUS                            | v20250601 |           |
+| ContentLevel                                                 |           | v20260901 |
+| ContentLevel_STATUS                                          |           | v20260901 |
+| CustomBlocklistConfig                                        | v20250601 | v20260901 |
+| CustomBlocklistConfig_STATUS                                 | v20250601 | v20260901 |
+| CustomKeys                                                   | v20250601 |           |
+| CustomKeysConnectionProperties                               | v20250601 |           |
+| CustomKeysConnectionProperties_AuthType                      | v20250601 |           |
+| CustomKeysConnectionProperties_AuthType_STATUS               | v20250601 |           |
+| CustomKeysConnectionProperties_STATUS                        | v20250601 |           |
+| CustomKeys_STATUS                                            | v20250601 |           |
+| DefenderForAISettingProperties                               | v20250601 |           |
+| DefenderForAISettingProperties_STATUS                        | v20250601 |           |
+| DefenderForAISettingProperties_State                         | v20250601 |           |
+| DefenderForAISettingProperties_State_STATUS                  | v20250601 |           |
+| EncryptionScopeProperties                                    | v20250601 |           |
+| EncryptionScopeProperties_KeySource                          | v20250601 |           |
+| EncryptionScopeProperties_KeySource_STATUS                   | v20250601 |           |
+| EncryptionScopeProperties_ProvisioningState_STATUS           | v20250601 |           |
+| EncryptionScopeProperties_STATUS                             | v20250601 |           |
+| EncryptionScopeProperties_State                              | v20250601 |           |
+| EncryptionScopeProperties_State_STATUS                       | v20250601 |           |
+| FirewallSku                                                  |           | v20260901 |
+| FirewallSku_STATUS                                           |           | v20260901 |
+| FqdnOutboundRule                                             |           | v20260901 |
+| FqdnOutboundRule_STATUS                                      |           | v20260901 |
+| FqdnOutboundRule_Type                                        |           | v20260901 |
+| FqdnOutboundRule_Type_STATUS                                 |           | v20260901 |
+| HostedAgentDeployment                                        |           | v20260901 |
+| HostedAgentDeployment_DeploymentType                         |           | v20260901 |
+| HostedAgentDeployment_DeploymentType_STATUS                  |           | v20260901 |
+| HostedAgentDeployment_STATUS                                 |           | v20260901 |
+| HostingModel                                                 | v20250601 |           |
+| HostingModel_STATUS                                          | v20250601 |           |
+| IdentityKind                                                 |           | v20260901 |
+| IdentityKind_STATUS                                          |           | v20260901 |
+| IdentityManagementType                                       |           | v20260901 |
+| IdentityManagementType_STATUS                                |           | v20260901 |
+| IdentityProvisioningState_STATUS                             |           | v20260901 |
+| IsolationMode                                                |           | v20260901 |
+| IsolationMode_STATUS                                         |           | v20260901 |
+| KeyVaultProperties                                           | v20250601 |           |
+| KeyVaultProperties_STATUS                                    | v20250601 |           |
+| ManagedAgentDeployment                                       |           | v20260901 |
+| ManagedAgentDeployment_DeploymentType                        |           | v20260901 |
+| ManagedAgentDeployment_DeploymentType_STATUS                 |           | v20260901 |
+| ManagedAgentDeployment_STATUS                                |           | v20260901 |
+| ManagedIdentityAuthTypeConnectionProperties                  | v20250601 |           |
+| ManagedIdentityAuthTypeConnectionProperties_AuthType         | v20250601 |           |
+| ManagedIdentityAuthTypeConnectionProperties_AuthType_STATUS  | v20250601 |           |
+| ManagedIdentityAuthTypeConnectionProperties_STATUS           | v20250601 |           |
+| ManagedNetworkKind                                           |           | v20260901 |
+| ManagedNetworkKind_STATUS                                    |           | v20260901 |
+| ManagedNetworkProvisionStatus                                |           | v20260901 |
+| ManagedNetworkProvisionStatus_STATUS                         |           | v20260901 |
+| ManagedNetworkProvisioningState_STATUS                       |           | v20260901 |
+| ManagedNetworkSettingsEx                                     |           | v20260901 |
+| ManagedNetworkSettingsEx_STATUS                              |           | v20260901 |
+| ManagedNetworkSettingsProperties                             |           | v20260901 |
+| ManagedNetworkSettingsProperties_STATUS                      |           | v20260901 |
+| ManagedNetworkStatus                                         |           | v20260901 |
+| ManagedNetworkStatus_STATUS                                  |           | v20260901 |
+| ManagedPERequirement                                         | v20250601 |           |
+| ManagedPERequirement_STATUS                                  | v20250601 |           |
+| ManagedPEStatus                                              | v20250601 |           |
+| ManagedPEStatus_STATUS                                       | v20250601 |           |
+| NoneAuthTypeConnectionProperties                             | v20250601 |           |
+| NoneAuthTypeConnectionProperties_AuthType                    | v20250601 |           |
+| NoneAuthTypeConnectionProperties_AuthType_STATUS             | v20250601 |           |
+| NoneAuthTypeConnectionProperties_STATUS                      | v20250601 |           |
+| OAuth2AuthTypeConnectionProperties                           | v20250601 |           |
+| OAuth2AuthTypeConnectionProperties_AuthType                  | v20250601 |           |
+| OAuth2AuthTypeConnectionProperties_AuthType_STATUS           | v20250601 |           |
+| OAuth2AuthTypeConnectionProperties_STATUS                    | v20250601 |           |
+| OrganizationSharedBuiltInAuthorizationPolicy                 |           | v20260901 |
+| OrganizationSharedBuiltInAuthorizationPolicy_STATUS          |           | v20260901 |
+| OrganizationSharedBuiltInAuthorizationPolicy_Type            |           | v20260901 |
+| OrganizationSharedBuiltInAuthorizationPolicy_Type_STATUS     |           | v20260901 |
+| OutboundRule                                                 |           | v20260901 |
+| OutboundRule_STATUS                                          |           | v20260901 |
+| PATAuthTypeConnectionProperties                              | v20250601 |           |
+| PATAuthTypeConnectionProperties_AuthType                     | v20250601 |           |
+| PATAuthTypeConnectionProperties_AuthType_STATUS              | v20250601 |           |
+| PATAuthTypeConnectionProperties_STATUS                       | v20250601 |           |
+| PrivateEndpointConnectionProperties                          | v20250601 |           |
+| PrivateEndpointConnectionProperties_STATUS                   | v20250601 |           |
+| PrivateEndpointConnectionProvisioningState                   | v20250601 |           |
+| PrivateEndpointConnectionProvisioningState_STATUS            | v20250601 |           |
+| PrivateEndpointOutboundRule                                  |           | v20260901 |
+| PrivateEndpointOutboundRuleDestination                       |           | v20260901 |
+| PrivateEndpointOutboundRuleDestination_STATUS                |           | v20260901 |
+| PrivateEndpointOutboundRule_STATUS                           |           | v20260901 |
+| PrivateEndpointOutboundRule_Type                             |           | v20260901 |
+| PrivateEndpointOutboundRule_Type_STATUS                      |           | v20260901 |
+| PrivateEndpointServiceConnectionStatus                       | v20250601 |           |
+| PrivateEndpointServiceConnectionStatus_STATUS                | v20250601 |           |
+| PrivateEndpoint_STATUS                                       | v20250601 |           |
+| PrivateLinkServiceConnectionState                            | v20250601 |           |
+| PrivateLinkServiceConnectionState_STATUS                     | v20250601 |           |
+| ProjectCapabilityHost                                        | v20250601 |           |
+| ProjectCapabilityHost_STATUS                                 | v20250601 |           |
+| RaiActionType                                                |           | v20260901 |
+| RaiActionType_STATUS                                         |           | v20260901 |
+| RaiBlocklistItemProperties                                   | v20250601 |           |
+| RaiBlocklistItemProperties_STATUS                            | v20250601 |           |
+| RaiBlocklistProperties                                       | v20250601 |           |
+| RaiBlocklistProperties_STATUS                                | v20250601 |           |
+| RaiEgressDefaultAction                                       |           | v20260901 |
+| RaiEgressDefaultAction_STATUS                                |           | v20260901 |
+| RaiEgressHeaderOperation                                     |           | v20260901 |
+| RaiEgressHeaderOperation_STATUS                              |           | v20260901 |
+| RaiEgressHeaderTransform                                     |           | v20260901 |
+| RaiEgressHeaderTransform_STATUS                              |           | v20260901 |
+| RaiEgressHeaderValueRef                                      |           | v20260901 |
+| RaiEgressHeaderValueRef_STATUS                               |           | v20260901 |
+| RaiEgressManagedIdentityRef                                  |           | v20260901 |
+| RaiEgressManagedIdentityRef_STATUS                           |           | v20260901 |
+| RaiEgressMode                                                |           | v20260901 |
+| RaiEgressMode_STATUS                                         |           | v20260901 |
+| RaiEgressPolicyConfig                                        |           | v20260901 |
+| RaiEgressPolicyConfig_STATUS                                 |           | v20260901 |
+| RaiEgressRewriteTarget                                       |           | v20260901 |
+| RaiEgressRewriteTarget_STATUS                                |           | v20260901 |
+| RaiEgressRule                                                |           | v20260901 |
+| RaiEgressRuleAction                                          |           | v20260901 |
+| RaiEgressRuleActionType                                      |           | v20260901 |
+| RaiEgressRuleActionType_STATUS                               |           | v20260901 |
+| RaiEgressRuleAction_STATUS                                   |           | v20260901 |
+| RaiEgressRuleMatch                                           |           | v20260901 |
+| RaiEgressRuleMatch_STATUS                                    |           | v20260901 |
+| RaiEgressRuleType                                            |           | v20260901 |
+| RaiEgressRuleType_STATUS                                     |           | v20260901 |
+| RaiEgressRule_STATUS                                         |           | v20260901 |
+| RaiEgressScheme                                              |           | v20260901 |
+| RaiEgressScheme_STATUS                                       |           | v20260901 |
+| RaiEgressSecretRef                                           |           | v20260901 |
+| RaiEgressSecretRef_STATUS                                    |           | v20260901 |
+| RaiExternalSafetyProvider                                    |           | v20260901 |
+| RaiExternalSafetyProviderSchemaProperties                    |           | v20260901 |
+| RaiExternalSafetyProviderSchemaProperties_STATUS             |           | v20260901 |
+| RaiExternalSafetyProvider_STATUS                             |           | v20260901 |
+| RaiExternalSafetyProvider_Spec                               |           | v20260901 |
+| RaiPolicy                                                    |           | v20260901 |
+| RaiPolicyContentFilter                                       | v20250601 | v20260901 |
+| RaiPolicyContentFilter_STATUS                                | v20250601 | v20260901 |
+| RaiPolicyContentFilter_SeverityThreshold                     | v20250601 |           |
+| RaiPolicyContentFilter_SeverityThreshold_STATUS              | v20250601 |           |
+| RaiPolicyContentSource                                       | v20250601 | v20260901 |
+| RaiPolicyContentSource_STATUS                                | v20250601 | v20260901 |
+| RaiPolicyMode                                                |           | v20260901 |
+| RaiPolicyMode_STATUS                                         |           | v20260901 |
+| RaiPolicyProperties                                          | v20250601 | v20260901 |
+| RaiPolicyProperties_Mode                                     | v20250601 |           |
+| RaiPolicyProperties_Mode_STATUS                              | v20250601 |           |
+| RaiPolicyProperties_STATUS                                   | v20250601 | v20260901 |
+| RaiPolicyProperties_Type_STATUS                              | v20250601 |           |
+| RaiPolicyType_STATUS                                         |           | v20260901 |
+| RaiPolicy_STATUS                                             |           | v20260901 |
+| RaiPolicy_Spec                                               |           | v20260901 |
+| RaiToolLabelProperties                                       |           | v20260901 |
+| RaiToolLabelPropertiesAccountScope                           |           | v20260901 |
+| RaiToolLabelPropertiesAccountScope_STATUS                    |           | v20260901 |
+| RaiToolLabelPropertiesProjectScopesItem                      |           | v20260901 |
+| RaiToolLabelPropertiesProjectScopesItem_STATUS               |           | v20260901 |
+| RaiToolLabelProperties_STATUS                                |           | v20260901 |
+| RaiTopicProperties                                           |           | v20260901 |
+| RaiTopicProperties_STATUS                                    |           | v20260901 |
+| RoleBasedBuiltInAuthorizationPolicy                          |           | v20260901 |
+| RoleBasedBuiltInAuthorizationPolicy_STATUS                   |           | v20260901 |
+| RoleBasedBuiltInAuthorizationPolicy_Type                     |           | v20260901 |
+| RoleBasedBuiltInAuthorizationPolicy_Type_STATUS              |           | v20260901 |
+| RuleAction                                                   |           | v20260901 |
+| RuleAction_STATUS                                            |           | v20260901 |
+| RuleCategory                                                 |           | v20260901 |
+| RuleCategory_STATUS                                          |           | v20260901 |
+| RuleStatus                                                   |           | v20260901 |
+| RuleStatus_STATUS                                            |           | v20260901 |
+| SASAuthTypeConnectionProperties                              | v20250601 |           |
+| SASAuthTypeConnectionProperties_AuthType                     | v20250601 |           |
+| SASAuthTypeConnectionProperties_AuthType_STATUS              | v20250601 |           |
+| SASAuthTypeConnectionProperties_STATUS                       | v20250601 |           |
+| SafetyProviderConfig                                         |           | v20260901 |
+| SafetyProviderConfig_STATUS                                  |           | v20260901 |
+| ServicePrincipalAuthTypeConnectionProperties                 | v20250601 |           |
+| ServicePrincipalAuthTypeConnectionProperties_AuthType        | v20250601 |           |
+| ServicePrincipalAuthTypeConnectionProperties_AuthType_STATUS | v20250601 |           |
+| ServicePrincipalAuthTypeConnectionProperties_STATUS          | v20250601 |           |
+| ServiceTagOutboundRule                                       |           | v20260901 |
+| ServiceTagOutboundRuleDestination                            |           | v20260901 |
+| ServiceTagOutboundRuleDestination_STATUS                     |           | v20260901 |
+| ServiceTagOutboundRule_STATUS                                |           | v20260901 |
+| ServiceTagOutboundRule_Type                                  |           | v20260901 |
+| ServiceTagOutboundRule_Type_STATUS                           |           | v20260901 |
+| Sku                                                          | v20250601 |           |
+| Sku_STATUS                                                   | v20250601 |           |
+| Sku_Tier                                                     | v20250601 |           |
+| Sku_Tier_STATUS                                              | v20250601 |           |
+| SystemData_CreatedByType_STATUS                              | v20250601 | v20260901 |
+| SystemData_LastModifiedByType_STATUS                         | v20250601 | v20260901 |
+| SystemData_STATUS                                            | v20250601 | v20260901 |
+| TrafficRoutingProtocol                                       |           | v20260901 |
+| TrafficRoutingProtocol_STATUS                                |           | v20260901 |
+| TrafficRoutingRule                                           |           | v20260901 |
+| TrafficRoutingRule_STATUS                                    |           | v20260901 |
+| UsernamePasswordAuthTypeConnectionProperties                 | v20250601 |           |
+| UsernamePasswordAuthTypeConnectionProperties_AuthType        | v20250601 |           |
+| UsernamePasswordAuthTypeConnectionProperties_AuthType_STATUS | v20250601 |           |
+| UsernamePasswordAuthTypeConnectionProperties_STATUS          | v20250601 |           |
+| VersionedAgentReference                                      |           | v20260901 |
+| VersionedAgentReference_STATUS                               |           | v20260901 |

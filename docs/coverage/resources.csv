@@ -594,25 +594,25 @@ Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/connections,13,
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/defenderForAISettings,2,,0,cognitiveservices.azure.hfl.dev/AccountsDefenderForAISetting,2,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/deployments,31,cognitiveservices.azure.com/Deployment,20,,0,11,false,spec_api=2026-09-01; official_api=2025-06-01; official-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/encryptionScopes,7,,0,cognitiveservices.azure.hfl.dev/AccountsEncryptionScope,7,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/managedNetworks,9,,0,,0,9,false,spec_api=2026-09-01
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/managedNetworks/outboundRules,5,,0,,0,5,false,spec_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/managedNetworks,9,,0,cognitiveservices.azure.hfl.dev/AccountsManagedNetwork,9,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/managedNetworks/outboundRules,5,,0,cognitiveservices.azure.hfl.dev/AccountsManagedNetworksOutboundRule,5,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/privateEndpointConnections,6,,0,cognitiveservices.azure.hfl.dev/AccountsPrivateEndpointConnection,5,1,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects,6,cognitiveservices.azure.com/Project,6,,0,0,false,spec_api=2026-09-01; official_api=2025-06-01; official-api-differs-from-spec
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/applications,24,,0,,0,24,false,spec_api=2026-09-01
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/applications/agentDeployments,13,,0,,0,13,false,spec_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/applications,24,,0,cognitiveservices.azure.hfl.dev/AccountsProjectsApplication,24,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/applications/agentDeployments,13,,0,cognitiveservices.azure.hfl.dev/AccountsProjectsApplicationsAgentDeployment,13,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/capabilityHosts,4,,0,cognitiveservices.azure.hfl.dev/AccountsProjectsCapabilityHost,4,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/connections,13,,0,cognitiveservices.azure.hfl.dev/AccountsProjectsConnection,13,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raiBlocklists,2,,0,cognitiveservices.azure.hfl.dev/AccountsRaiBlocklist,2,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raiBlocklists/raiBlocklistItems,3,,0,cognitiveservices.azure.hfl.dev/AccountsRaiBlocklistsRaiBlocklistItem,3,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raiPolicies,35,,0,cognitiveservices.azure.hfl.dev/AccountsRaiPolicy,11,24,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raiToolLabels,5,,0,,0,5,false,spec_api=2026-09-01
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raitopics,9,,0,,0,9,false,spec_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raiToolLabels,5,,0,cognitiveservices.azure.hfl.dev/AccountsRaiToolLabel,5,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raitopics,9,,0,cognitiveservices.azure.hfl.dev/AccountsRaiTopic,9,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/testRaiExternalSafetyProvider,7,,0,,0,7,false,spec_api=2026-09-01
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/commitmentPlans,16,,0,cognitiveservices.azure.hfl.dev/CommitmentPlan,16,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/commitmentPlans/accountAssociations,2,,0,cognitiveservices.azure.hfl.dev/CommitmentPlansAccountAssociation,2,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/quotaTiers,1,,0,,0,1,false,spec_api=2026-09-01
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/raiExternalSafetyProviders,7,,0,,0,7,false,spec_api=2026-09-01
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/raiPolicy,35,,0,,0,35,false,spec_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/raiExternalSafetyProviders,7,,0,cognitiveservices.azure.hfl.dev/RaiExternalSafetyProvider,7,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/raiPolicy,35,,0,cognitiveservices.azure.hfl.dev/RaiPolicy,35,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.Communication,Microsoft.Communication/communicationServices,8,communication.azure.com/CommunicationService,6,,0,2,false,spec_api=2026-03-18; official_api=2023-04-01; official-api-differs-from-spec
 Microsoft.Communication,Microsoft.Communication/communicationServices/smtpUsernames,3,,0,,0,3,false,spec_api=2026-03-18
 Microsoft.Communication,Microsoft.Communication/emailServices,3,communication.azure.com/EmailService,3,,0,0,false,spec_api=2026-03-18; official_api=2023-04-01; official-api-differs-from-spec

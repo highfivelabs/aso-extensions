@@ -399,6 +399,9 @@ configurations and connections, `docs/plan.md` f41): an environment takes one
 to two hours to make and bills an Isolated v2 instance while it exists.
 The SQL Managed Instance children and `InstancePool` (`docs/plan.md` f42): an
 instance takes hours to make and bills by the vCore-hour.
+The Foundry kinds of `docs/plan.md` f44: FQDN rules provision a billed Azure
+Firewall, agent applications need agents made in Foundry's data plane, and a
+RAI topic trains from a sample blob.
 
 ## Ledger
 

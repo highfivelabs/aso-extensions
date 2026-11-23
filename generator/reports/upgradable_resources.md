@@ -27,6 +27,24 @@ The following resources have newer versions available in the Azure REST API spec
 |------|----------------|------------------|------------------|------------------------|--------------------|
 | 💡    | PolicyVariable | -                | -                | **2026-01-01-preview** | 2024-12-01-preview |
 
+## cognitiveservices
+
+|      | Resource                              | Available Stable | Supported Stable | Available Preview | Supported Preview |
+|------|---------------------------------------|------------------|------------------|-------------------|-------------------|
+| 💡    | AccountsCapabilityHost                | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsCommitmentPlan                | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsConnection                    | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsDefenderForAISetting          | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsEncryptionScope               | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsPrivateEndpointConnection     | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsProjectsCapabilityHost        | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsProjectsConnection            | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsRaiBlocklist                  | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsRaiBlocklistsRaiBlocklistItem | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsRaiPolicy                     | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | CommitmentPlan                        | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | CommitmentPlansAccountAssociation     | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+
 ## compute
 
 |      | Resource                  | Available Stable | Supported Stable | Available Preview | Supported Preview |

@@ -594,6 +594,13 @@ upstream's); the catalog's chart tests do that.
   needing a dedicated SQL pool, masking being applied, maintenance windows
   being kept, ledger digests being uploaded, baselines matching scans, and
   the error codes.
+- Microsoft Foundry managed networks and outbound rules
+  (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
+  `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`
+  (400) and does not go back from V2 to V1 (400); a private endpoint rule's
+  target exists (404). Not modelled: the network being provisioned (its
+  firewall and endpoints), agents running, RAI topics training, tool labels
+  being applied, and the error codes.
 - Azure SQL Elastic Jobs (`Microsoft.Sql/servers/jobAgents/*`,
   2025-01-01; `pkg/fakecloud/arm/sqljobs.go`): a job agent names a job
   database that exists (404); a credential has a username and a password

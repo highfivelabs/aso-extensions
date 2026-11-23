@@ -316,6 +316,18 @@ func init() {
 	f["SitesPrivateEndpointConnection"] = pec
 	f["SitesSlotsPrivateEndpointConnection"] = pec
 	f["HostingEnvironmentsPrivateEndpointConnection"] = pec
+	// An account's managed network is named default (foundry.go).
+	f["AccountsManagedNetwork"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "default"}
+	}}
+	// An outbound rule and an agent deployment are one of several types:
+	// an empty choice cannot be sent.
+	f["AccountsManagedNetworksOutboundRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"fqdn": map[string]any{"type": "FQDN", "destination": "pypi.org"}}}
+	}}
+	f["AccountsProjectsApplicationsAgentDeployment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"managed": map[string]any{"deploymentType": "Managed"}}}
+	}}
 	// An App Service Environment names a network the fake holds
 	// (hostingenvironments.go).
 	f["HostingEnvironment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

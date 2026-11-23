@@ -47,6 +47,8 @@ import (
 	cognitiveservices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/customizations"
 	cognitiveservices_v20250601 "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20250601"
 	cognitiveservices_v20250601s "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20250601/storage"
+	cognitiveservices_v20260901 "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20260901"
+	cognitiveservices_v20260901s "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20260901/storage"
 	compute_customizations "github.com/highfivelabs/aso-extensions/apis/arm/compute/customizations"
 	compute_v20220301 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301"
 	compute_v20220301s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301/storage"
@@ -841,6 +843,37 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsRaiPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.CommitmentPlan)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.CommitmentPlansAccountAssociation)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20260901.AccountsManagedNetwork)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20260901.AccountsManagedNetworksOutboundRule)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20260901.AccountsProjectsApplication)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20260901.AccountsProjectsApplicationsAgentDeployment)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20260901.AccountsRaiToolLabel)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20260901.AccountsRaiTopic)})
+	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20260901.RaiExternalSafetyProvider)})
+	result = append(result, &registration.StorageType{
+		Obj: new(cognitiveservices_v20260901.RaiPolicy),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.egressPolicy.rules.action.headers.valueRef.secretRef.secretKey",
+				Func: indexCognitiveservicesRaiPolicySecretKey,
+			},
+			{
+				Key:  ".spec.properties.egressPolicy.rules.action.headers.value",
+				Func: indexCognitiveservicesRaiPolicyValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.egressPolicy.rules.action.headers.value",
+						".spec.properties.egressPolicy.rules.action.headers.valueRef.secretRef.secretKey",
+					},
+					&cognitiveservices_v20260901.RaiPolicyList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.HostGroup)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.HostGroupsHost)})
@@ -2368,6 +2401,26 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.AccountsRaiPolicy)},
 		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.CommitmentPlan)},
 		&registration.KnownType{Obj: new(cognitiveservices_v20250601s.CommitmentPlansAccountAssociation)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901.AccountsManagedNetwork)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901.AccountsManagedNetworksOutboundRule)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901.AccountsProjectsApplication)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901.AccountsProjectsApplicationsAgentDeployment)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901.AccountsRaiToolLabel)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901.AccountsRaiTopic)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901.RaiExternalSafetyProvider)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901.RaiPolicy)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901s.AccountsManagedNetwork)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901s.AccountsManagedNetworksOutboundRule)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901s.AccountsProjectsApplication)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901s.AccountsProjectsApplicationsAgentDeployment)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901s.AccountsRaiToolLabel)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901s.AccountsRaiTopic)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901s.RaiExternalSafetyProvider)},
+		&registration.KnownType{Obj: new(cognitiveservices_v20260901s.RaiPolicy)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301.VirtualMachinesRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20220301s.VirtualMachinesRunCommand)})
 	result = append(
@@ -3127,6 +3180,8 @@ func createScheme() *runtime.Scheme {
 	_ = cdn_v20261001s.AddToScheme(scheme)
 	_ = cognitiveservices_v20250601.AddToScheme(scheme)
 	_ = cognitiveservices_v20250601s.AddToScheme(scheme)
+	_ = cognitiveservices_v20260901.AddToScheme(scheme)
+	_ = cognitiveservices_v20260901s.AddToScheme(scheme)
 	_ = compute_v20220301.AddToScheme(scheme)
 	_ = compute_v20220301s.AddToScheme(scheme)
 	_ = compute_v20250401.AddToScheme(scheme)
@@ -3327,14 +3382,22 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &cognitiveservices_customizations.AccountsConnectionExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsDefenderForAISettingExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsEncryptionScopeExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsManagedNetworkExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsManagedNetworksOutboundRuleExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsPrivateEndpointConnectionExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsProjectsApplicationExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsProjectsApplicationsAgentDeploymentExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsProjectsCapabilityHostExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsProjectsConnectionExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsRaiBlocklistExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsRaiBlocklistsRaiBlocklistItemExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsRaiPolicyExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsRaiToolLabelExtension{})
+	result = append(result, &cognitiveservices_customizations.AccountsRaiTopicExtension{})
 	result = append(result, &cognitiveservices_customizations.CommitmentPlanExtension{})
 	result = append(result, &cognitiveservices_customizations.CommitmentPlansAccountAssociationExtension{})
+	result = append(result, &cognitiveservices_customizations.RaiExternalSafetyProviderExtension{})
+	result = append(result, &cognitiveservices_customizations.RaiPolicyExtension{})
 	result = append(result, &compute_customizations.DiskAccessesPrivateEndpointConnectionExtension{})
 	result = append(result, &compute_customizations.GalleriesApplicationExtension{})
 	result = append(result, &compute_customizations.GalleriesApplicationsVersionExtension{})
@@ -4705,6 +4768,66 @@ func indexCognitiveservicesAccountsProjectsConnectionUsernamePasswordSecurityTok
 		return nil
 	}
 	return obj.Spec.Properties.UsernamePassword.Credentials.SecurityToken.Index()
+}
+
+// indexCognitiveservicesRaiPolicySecretKey an index function for cognitiveservices_v20260901.RaiPolicy .spec.properties.egressPolicy.rules.action.headers.valueRef.secretRef.secretKey
+func indexCognitiveservicesRaiPolicySecretKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20260901.RaiPolicy)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.EgressPolicy == nil {
+		return nil
+	}
+	for _, ruleItem := range obj.Spec.Properties.EgressPolicy.Rules {
+		if ruleItem.Action == nil {
+			continue
+		}
+		for _, headerItem := range ruleItem.Action.Headers {
+			if headerItem.ValueRef == nil {
+				continue
+			}
+			if headerItem.ValueRef.SecretRef == nil {
+				continue
+			}
+			if headerItem.ValueRef.SecretRef.SecretKey == nil {
+				continue
+			}
+			result = append(result, headerItem.ValueRef.SecretRef.SecretKey.Index()...)
+		}
+	}
+	return result
+}
+
+// indexCognitiveservicesRaiPolicyValue an index function for cognitiveservices_v20260901.RaiPolicy .spec.properties.egressPolicy.rules.action.headers.value
+func indexCognitiveservicesRaiPolicyValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*cognitiveservices_v20260901.RaiPolicy)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.EgressPolicy == nil {
+		return nil
+	}
+	for _, ruleItem := range obj.Spec.Properties.EgressPolicy.Rules {
+		if ruleItem.Action == nil {
+			continue
+		}
+		for _, headerItem := range ruleItem.Action.Headers {
+			if headerItem.Value == nil {
+				continue
+			}
+			result = append(result, headerItem.Value.Index()...)
+		}
+	}
+	return result
 }
 
 // indexComputeVirtualMachineAdminPassword an index function for compute_v20250401.VirtualMachine .spec.osProfile.adminPassword
