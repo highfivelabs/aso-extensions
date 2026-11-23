@@ -123,11 +123,9 @@ func TestCosmosFleetsAndMongoUsers(t *testing.T) {
 	})
 
 	// A change is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(space), space); err != nil {
-		t.Fatal(err)
-	}
-	space.Spec.ThroughputPoolConfiguration.MaxThroughput = ptr(8000)
-	if err := k8s.Update(ctx, space); err != nil {
+	if err := change(t, space, func(space *fleets.FleetsFleetspace) {
+		space.Spec.ThroughputPoolConfiguration.MaxThroughput = ptr(8000)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, spaceID, func(r map[string]any) error {
@@ -138,11 +136,9 @@ func TestCosmosFleetsAndMongoUsers(t *testing.T) {
 		return nil
 	})
 	// A pool's minimum above its maximum is refused.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(space), space); err != nil {
-		t.Fatal(err)
-	}
-	space.Spec.ThroughputPoolConfiguration.MinThroughput = ptr(10000)
-	if err := k8s.Update(ctx, space); err != nil {
+	if err := change(t, space, func(space *fleets.FleetsFleetspace) {
+		space.Spec.ThroughputPoolConfiguration.MinThroughput = ptr(10000)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "a pool's minimum above its maximum refused", notReadyWith(space, "minimum throughput is above"))

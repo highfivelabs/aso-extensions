@@ -179,11 +179,9 @@ func TestStorageNewcomers(t *testing.T) {
 	})
 
 	// The access point made inactive is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(point), point); err != nil {
-		t.Fatal(err)
-	}
-	point.Spec.Properties.State = ptr(storage2026.BlobAccessPointConfigurationState_Inactive)
-	if err := k8s.Update(ctx, point); err != nil {
+	if err := change(t, point, func(point *storage2026.StorageAccountsBlobAccessPointConfiguration) {
+		point.Spec.Properties.State = ptr(storage2026.BlobAccessPointConfigurationState_Inactive)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, pointID, func(r map[string]any) error {
@@ -194,11 +192,9 @@ func TestStorageNewcomers(t *testing.T) {
 	})
 
 	// A connector's description is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(connector), connector); err != nil {
-		t.Fatal(err)
-	}
-	connector.Spec.Properties.Description = ptr("the partner's lake")
-	if err := k8s.Update(ctx, connector); err != nil {
+	if err := change(t, connector, func(connector *storage.StorageAccountsConnector) {
+		connector.Spec.Properties.Description = ptr("the partner's lake")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, accountID+"/connectors/partner", func(r map[string]any) error {
@@ -209,15 +205,13 @@ func TestStorageNewcomers(t *testing.T) {
 	})
 
 	// The access point cannot move to another source type.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(point), point); err != nil {
-		t.Fatal(err)
-	}
-	s3 := point.Spec.Properties.Source.S3Compatible
-	point.Spec.Properties.Source = &storage2026.BlobAccessPointSourceProperties{Qumulo: &storage2026.BlobAccessPointQumuloSourceProperties{
-		SourceType: ptr(storage2026.BlobAccessPointQumuloSourceProperties_SourceType_Qumulo),
-		Connection: s3.Connection, Auth: s3.Auth,
-	}}
-	if err := k8s.Update(ctx, point); err != nil {
+	if err := change(t, point, func(point *storage2026.StorageAccountsBlobAccessPointConfiguration) {
+		s3 := point.Spec.Properties.Source.S3Compatible
+		point.Spec.Properties.Source = &storage2026.BlobAccessPointSourceProperties{Qumulo: &storage2026.BlobAccessPointQumuloSourceProperties{
+			SourceType: ptr(storage2026.BlobAccessPointQumuloSourceProperties_SourceType_Qumulo),
+			Connection: s3.Connection, Auth: s3.Auth,
+		}}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "a move to another source type refused", notReadyWith(point, "source type cannot change"))

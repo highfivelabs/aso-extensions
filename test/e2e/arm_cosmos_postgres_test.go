@@ -161,11 +161,9 @@ func TestCosmosDBForPostgreSQL(t *testing.T) {
 	if err := k8s.Update(ctx, office); err == nil || !strings.Contains(err.Error(), "spec.endIpAddress") {
 		t.Fatalf("an IPv6 address: the CRD's pattern should refuse it, got %v", err)
 	}
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(cluster), cluster); err != nil {
-		t.Fatal(err)
-	}
-	cluster.Spec.NodeCount = ptr(1)
-	if err := k8s.Update(ctx, cluster); err != nil {
+	if err := change(t, cluster, func(cluster *citus.ServerGroupsv2) {
+		cluster.Spec.NodeCount = ptr(1)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "a node count of 1 refused", notReadyWith(cluster, "not 1"))
