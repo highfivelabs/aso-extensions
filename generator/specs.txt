@@ -38,3 +38,7 @@ specification/msi
 specification/cdn
 specification/subscription
 specification/redis
+specification/redisenterprise
+specification/appconfiguration
+specification/postgresql
+specification/mongocluster

@@ -20,6 +20,10 @@ func TestPrivateEndpointConnections(t *testing.T) {
 		rg + "/providers/Microsoft.App/containerApps/app",
 		rg + "/providers/Microsoft.Compute/diskAccesses/disks",
 		rg + "/providers/Microsoft.Cache/redis/cache",
+		rg + "/providers/Microsoft.Cache/redisEnterprise/managed",
+		rg + "/providers/Microsoft.AppConfiguration/configurationStores/config",
+		rg + "/providers/Microsoft.DBforPostgreSQL/flexibleServers/pg",
+		rg + "/providers/Microsoft.DocumentDB/mongoClusters/mongo",
 	} {
 		a.AddResource(parent)
 		conn := parent + "/privateEndpointConnections/pe-1"

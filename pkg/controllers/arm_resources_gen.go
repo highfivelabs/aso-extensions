@@ -17,6 +17,9 @@ import (
 	app_v20260302ps "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260302preview/storage"
 	app_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701"
 	app_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701/storage"
+	appconfiguration_customizations "github.com/highfivelabs/aso-extensions/apis/arm/appconfiguration/customizations"
+	appconfiguration_v20240601 "github.com/highfivelabs/aso-extensions/apis/arm/appconfiguration/v20240601"
+	appconfiguration_v20240601s "github.com/highfivelabs/aso-extensions/apis/arm/appconfiguration/v20240601/storage"
 	authorization_customizations "github.com/highfivelabs/aso-extensions/apis/arm/authorization/customizations"
 	authorization_v20200501 "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501"
 	authorization_v20200501s "github.com/highfivelabs/aso-extensions/apis/arm/authorization/v20200501/storage"
@@ -36,6 +39,8 @@ import (
 	cache_customizations "github.com/highfivelabs/aso-extensions/apis/arm/cache/customizations"
 	cache_v20241101 "github.com/highfivelabs/aso-extensions/apis/arm/cache/v20241101"
 	cache_v20241101s "github.com/highfivelabs/aso-extensions/apis/arm/cache/v20241101/storage"
+	cache_v20250401 "github.com/highfivelabs/aso-extensions/apis/arm/cache/v20250401"
+	cache_v20250401s "github.com/highfivelabs/aso-extensions/apis/arm/cache/v20250401/storage"
 	cdn_customizations "github.com/highfivelabs/aso-extensions/apis/arm/cdn/customizations"
 	cdn_v20261001 "github.com/highfivelabs/aso-extensions/apis/arm/cdn/v20261001"
 	cdn_v20261001s "github.com/highfivelabs/aso-extensions/apis/arm/cdn/v20261001/storage"
@@ -69,10 +74,15 @@ import (
 	costmanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/customizations"
 	costmanagement_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601"
 	costmanagement_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601/storage"
+	dbforpostgresql_customizations "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/customizations"
+	dbforpostgresql_v20250801 "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/v20250801"
+	dbforpostgresql_v20250801s "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/v20250801/storage"
 	devtestlab_customizations "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/customizations"
 	devtestlab_v20180915 "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915"
 	devtestlab_v20180915s "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915/storage"
 	documentdb_customizations "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/customizations"
+	documentdb_v20240701 "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20240701"
+	documentdb_v20240701s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20240701/storage"
 	documentdb_v20240815 "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20240815"
 	documentdb_v20240815s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20240815/storage"
 	documentdb_v20260315 "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260315"
@@ -491,6 +501,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(app_v20260701.ContainerAppsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
+	result = append(result, &registration.StorageType{Obj: new(appconfiguration_v20240601.ConfigurationStoresPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.ManagementLock)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.PrivateLinkAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.ResourceManagementPrivateLink)})
@@ -659,6 +670,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(cache_v20241101.RedisPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(cache_v20250401.RedisEnterprisePrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(cdn_v20261001.CdnWebApplicationFirewallPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsCapabilityHost)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsCommitmentPlan)})
@@ -965,7 +977,9 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.ScheduledAction)})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.Setting)})
+	result = append(result, &registration.StorageType{Obj: new(dbforpostgresql_v20250801.FlexibleServersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Schedule)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240701.MongoClustersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspace)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspacesTable)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspacesTablesThroughputSetting)})
@@ -1914,6 +1928,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20260701s.ContainerApp)},
 		&registration.KnownType{Obj: new(app_v20260701s.ContainerAppsPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(app_v20260701s.ManagedEnvironmentsDotNetComponent)})
+	result = append(result, &registration.KnownType{Obj: new(appconfiguration_v20240601.ConfigurationStoresPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(appconfiguration_v20240601s.ConfigurationStoresPrivateEndpointConnection)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(authorization_v20200501.ManagementLock)},
@@ -2008,6 +2024,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsWebhook)})
 	result = append(result, &registration.KnownType{Obj: new(cache_v20241101.RedisPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(cache_v20241101s.RedisPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(cache_v20250401.RedisEnterprisePrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(cache_v20250401s.RedisEnterprisePrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(cdn_v20261001.CdnWebApplicationFirewallPolicy)})
 	result = append(result, &registration.KnownType{Obj: new(cdn_v20261001s.CdnWebApplicationFirewallPolicy)})
 	result = append(
@@ -2118,8 +2136,12 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Export)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.ScheduledAction)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Setting)})
+	result = append(result, &registration.KnownType{Obj: new(dbforpostgresql_v20250801.FlexibleServersPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(dbforpostgresql_v20250801s.FlexibleServersPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
 	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
+	result = append(result, &registration.KnownType{Obj: new(documentdb_v20240701.MongoClustersPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(documentdb_v20240701s.MongoClustersPrivateEndpointConnection)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspace)},
@@ -2655,6 +2677,8 @@ func createScheme() *runtime.Scheme {
 	_ = app_v20260302ps.AddToScheme(scheme)
 	_ = app_v20260701.AddToScheme(scheme)
 	_ = app_v20260701s.AddToScheme(scheme)
+	_ = appconfiguration_v20240601.AddToScheme(scheme)
+	_ = appconfiguration_v20240601s.AddToScheme(scheme)
 	_ = authorization_v20200501.AddToScheme(scheme)
 	_ = authorization_v20200501s.AddToScheme(scheme)
 	_ = authorization_v20201001.AddToScheme(scheme)
@@ -2671,6 +2695,8 @@ func createScheme() *runtime.Scheme {
 	_ = automation_v20241023s.AddToScheme(scheme)
 	_ = cache_v20241101.AddToScheme(scheme)
 	_ = cache_v20241101s.AddToScheme(scheme)
+	_ = cache_v20250401.AddToScheme(scheme)
+	_ = cache_v20250401s.AddToScheme(scheme)
 	_ = cdn_v20261001.AddToScheme(scheme)
 	_ = cdn_v20261001s.AddToScheme(scheme)
 	_ = cognitiveservices_v20250601.AddToScheme(scheme)
@@ -2697,8 +2723,12 @@ func createScheme() *runtime.Scheme {
 	_ = containerservice_v20260601s.AddToScheme(scheme)
 	_ = costmanagement_v20260601.AddToScheme(scheme)
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
+	_ = dbforpostgresql_v20250801.AddToScheme(scheme)
+	_ = dbforpostgresql_v20250801s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
+	_ = documentdb_v20240701.AddToScheme(scheme)
+	_ = documentdb_v20240701s.AddToScheme(scheme)
 	_ = documentdb_v20240815.AddToScheme(scheme)
 	_ = documentdb_v20240815s.AddToScheme(scheme)
 	_ = documentdb_v20260315.AddToScheme(scheme)
@@ -2826,6 +2856,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ManagedEnvironmentsPrivateEndpointConnectionExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
 	result = append(result, &app_customizations.SessionPoolExtension{})
+	result = append(result, &appconfiguration_customizations.ConfigurationStoresPrivateEndpointConnectionExtension{})
 	result = append(result, &authorization_customizations.AccessReviewHistoryDefinitionExtension{})
 	result = append(result, &authorization_customizations.AccessReviewScheduleDefinitionExtension{})
 	result = append(result, &authorization_customizations.AccessReviewScheduleSettingExtension{})
@@ -2862,6 +2893,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &automation_customizations.AutomationAccountsVariableExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsWatcherExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsWebhookExtension{})
+	result = append(result, &cache_customizations.RedisEnterprisePrivateEndpointConnectionExtension{})
 	result = append(result, &cache_customizations.RedisPrivateEndpointConnectionExtension{})
 	result = append(result, &cdn_customizations.CdnWebApplicationFirewallPolicyExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsCapabilityHostExtension{})
@@ -2906,6 +2938,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &costmanagement_customizations.ScheduledActionExtension{})
 	result = append(result, &costmanagement_customizations.SettingExtension{})
+	result = append(result, &dbforpostgresql_customizations.FlexibleServersPrivateEndpointConnectionExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspaceExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspacesTableExtension{})
@@ -2929,6 +2962,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &documentdb_customizations.DatabaseAccountsTableRoleAssignmentExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsTableRoleDefinitionExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsTablesThroughputSettingExtension{})
+	result = append(result, &documentdb_customizations.MongoClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClusterExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.DedicatedHsmExtension{})

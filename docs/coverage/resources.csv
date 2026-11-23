@@ -204,7 +204,7 @@ Microsoft.AppComplianceAutomation,Microsoft.AppComplianceAutomation/reports/scop
 Microsoft.AppComplianceAutomation,Microsoft.AppComplianceAutomation/reports/webhooks,8,,0,,0,8,false,spec_api=2024-06-27
 Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores,15,appconfiguration.azure.com/ConfigurationStore,15,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores/keyValues,3,appconfiguration.azure.com/KeyValue,3,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
-Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores/privateEndpointConnections,3,,0,,0,3,false,spec_api=2024-06-01
+Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores/privateEndpointConnections,3,,0,appconfiguration.azure.hfl.dev/ConfigurationStoresPrivateEndpointConnection,3,0,false,spec_api=2024-06-01; ours_api=2024-06-01
 Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores/replicas,1,appconfiguration.azure.com/Replica,1,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores/snapshots,5,appconfiguration.azure.com/Snapshot,5,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.AppLink,Microsoft.AppLink/appLinks,5,,0,,0,5,false,spec_api=2026-08-01-preview; spec-preview-only
@@ -552,7 +552,7 @@ Microsoft.Cache,Microsoft.Cache/redisEnterprise,17,cache.azure.com/RedisEnterpri
 Microsoft.Cache,Microsoft.Cache/redisEnterprise/databases,15,cache.azure.com/RedisEnterpriseDatabase,14,,0,1,false,spec_api=2026-09-01; official_api=2025-07-01; official-api-differs-from-spec
 Microsoft.Cache,Microsoft.Cache/redisEnterprise/databases/accessPolicyAssignments,2,cache.azure.com/RedisEnterpriseDatabaseAccessPolicyAssignment,2,,0,0,false,spec_api=2026-09-01; official_api=2025-07-01; official-api-differs-from-spec
 Microsoft.Cache,Microsoft.Cache/redisEnterprise/migrations,5,,0,,0,5,false,spec_api=2026-09-01
-Microsoft.Cache,Microsoft.Cache/redisEnterprise/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-09-01
+Microsoft.Cache,Microsoft.Cache/redisEnterprise/privateEndpointConnections,4,,0,cache.azure.hfl.dev/RedisEnterprisePrivateEndpointConnection,3,1,false,spec_api=2026-09-01; ours_api=2025-04-01; ours-api-differs-from-spec
 Microsoft.Capacity,Microsoft.Capacity/reservationOrders,18,,0,,0,18,false,spec_api=2022-11-01
 Microsoft.Capacity,Microsoft.Capacity/resourceProviders/locations/serviceLimits,5,,0,,0,5,false,spec_api=2020-10-25
 Microsoft.Cdn,Microsoft.Cdn/cdnWebApplicationFirewallPolicies,39,,0,cdn.azure.hfl.dev/CdnWebApplicationFirewallPolicy,39,0,false,spec_api=2026-10-01; ours_api=2026-10-01
@@ -885,7 +885,7 @@ Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/configuratio
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/databases,2,dbforpostgresql.azure.com/FlexibleServersDatabase,2,,0,0,false,spec_api=2026-10-01; official_api=2025-08-01; official-api-differs-from-spec
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/firewallRules,2,dbforpostgresql.azure.com/FlexibleServersFirewallRule,2,,0,0,false,spec_api=2026-10-01; official_api=2025-08-01; official-api-differs-from-spec
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/migrations,25,,0,,0,25,false,spec_api=2026-10-01
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-10-01
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/privateEndpointConnections,4,,0,dbforpostgresql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection,3,1,false,spec_api=2026-10-01; ours_api=2025-08-01; ours-api-differs-from-spec
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/users,22,,0,dbforpostgresql.azure.hfl.dev/User,22,0,false,"outside-denominator; a database role, not an ARM resource; extends ASO's PostgreSQL User"
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints,2,dbforpostgresql.azure.com/FlexibleServersVirtualEndpoint,2,,0,0,false,spec_api=2026-10-01; official_api=2025-08-01; official-api-differs-from-spec
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2,24,,0,,0,24,false,spec_api=2022-11-08
@@ -1040,7 +1040,7 @@ Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces,7,,0,,0,7,false,spe
 Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces/fleetspaceAccounts,2,,0,,0,2,false,spec_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters,26,documentdb.azure.com/MongoCluster,16,,0,10,false,spec_api=2026-06-01; official_api=2024-07-01; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/firewallRules,2,documentdb.azure.com/FirewallRule,2,,0,0,false,spec_api=2026-06-01; official_api=2024-07-01; official-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-06-01
+Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/privateEndpointConnections,4,,0,documentdb.azure.hfl.dev/MongoClustersPrivateEndpointConnection,3,1,false,spec_api=2026-06-01; ours_api=2024-07-01; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/users,4,,0,,0,4,false,spec_api=2026-06-01
 Microsoft.DocumentDB,Microsoft.DocumentDB/throughputPools,3,,0,,0,3,false,spec_api=2025-05-01-preview; spec-preview-only
 Microsoft.DocumentDB,Microsoft.DocumentDB/throughputPools/throughputPoolAccounts,2,,0,,0,2,false,spec_api=2025-05-01-preview; spec-preview-only

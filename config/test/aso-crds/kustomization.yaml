@@ -45,3 +45,6 @@ resources:
 - compute.azure.com_disks.yaml
 - compute.azure.com_diskaccesses.yaml
 - cache.azure.com_redis.yaml
+- cache.azure.com_redisenterprises.yaml
+- appconfiguration.azure.com_configurationstores.yaml
+- documentdb.azure.com_mongoclusters.yaml

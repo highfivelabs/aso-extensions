@@ -21,6 +21,7 @@ resources:
 - app.azure.hfl.dev_managedenvironmentsprivateendpointconnections.yaml
 - app.azure.hfl.dev_managedenvironmentsstorages.yaml
 - app.azure.hfl.dev_sessionpools.yaml
+- appconfiguration.azure.hfl.dev_configurationstoresprivateendpointconnections.yaml
 - authorization.azure.hfl.dev_accessreviewhistorydefinitions.yaml
 - authorization.azure.hfl.dev_accessreviewscheduledefinitions.yaml
 - authorization.azure.hfl.dev_accessreviewschedulesettings.yaml
@@ -57,6 +58,7 @@ resources:
 - automation.azure.hfl.dev_automationaccountsvariables.yaml
 - automation.azure.hfl.dev_automationaccountswatchers.yaml
 - automation.azure.hfl.dev_automationaccountswebhooks.yaml
+- cache.azure.hfl.dev_redisenterpriseprivateendpointconnections.yaml
 - cache.azure.hfl.dev_redisprivateendpointconnections.yaml
 - cdn.azure.hfl.dev_cdnwebapplicationfirewallpolicies.yaml
 - cognitiveservices.azure.hfl.dev_accountscapabilityhosts.yaml
@@ -101,6 +103,7 @@ resources:
 - costmanagement.azure.hfl.dev_exports.yaml
 - costmanagement.azure.hfl.dev_scheduledactions.yaml
 - costmanagement.azure.hfl.dev_settings.yaml
+- dbforpostgresql.azure.hfl.dev_flexibleserversprivateendpointconnections.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
 - devtestlab.azure.hfl.dev_schedules.yaml
 - documentdb.azure.hfl.dev_databaseaccountscassandrakeyspaces.yaml
@@ -125,6 +128,7 @@ resources:
 - documentdb.azure.hfl.dev_databaseaccountstableroledefinitions.yaml
 - documentdb.azure.hfl.dev_databaseaccountstables.yaml
 - documentdb.azure.hfl.dev_databaseaccountstablesthroughputsettings.yaml
+- documentdb.azure.hfl.dev_mongoclustersprivateendpointconnections.yaml
 - entra.azure.hfl.dev_directoryroleassignments.yaml
 - hardwaresecuritymodules.azure.hfl.dev_cloudhsmclusters.yaml
 - hardwaresecuritymodules.azure.hfl.dev_cloudhsmclustersprivateendpointconnections.yaml

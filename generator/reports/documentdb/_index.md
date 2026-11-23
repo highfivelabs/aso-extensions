@@ -32,4 +32,5 @@ no_list: true
 | DatabaseAccountsTableRoleAssignment                       | 2026-03-15  | v20260315   | v0.1.0         | -      |
 | DatabaseAccountsTableRoleDefinition                       | 2026-03-15  | v20260315   | v0.1.0         | -      |
 | DatabaseAccountsTablesThroughputSetting                   | 2024-08-15  | v20240815   | v0.1.0         | -      |
+| MongoClustersPrivateEndpointConnection                    | 2024-07-01  | v20240701   | v0.1.0         | -      |
 

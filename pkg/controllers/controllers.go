@@ -39,7 +39,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
+	asoappconfig "github.com/Azure/azure-service-operator/v2/api/appconfiguration/v20240601/storage"
 	asocache "github.com/Azure/azure-service-operator/v2/api/cache/v20241101/storage"
+	asoredisenterprise "github.com/Azure/azure-service-operator/v2/api/cache/v20250401/storage"
 	asocognitive "github.com/Azure/azure-service-operator/v2/api/cognitiveservices/v20250601/storage"
 	asocompute "github.com/Azure/azure-service-operator/v2/api/compute/v20220301/storage"
 	asodisk "github.com/Azure/azure-service-operator/v2/api/compute/v20240302/storage"
@@ -47,6 +49,7 @@ import (
 	asofleet "github.com/Azure/azure-service-operator/v2/api/containerservice/v1api20250301/storage"
 	asoaks "github.com/Azure/azure-service-operator/v2/api/containerservice/v20260501/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
+	asomongo "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240701/storage"
 	asocosmos "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240815/storage"
 	asoinsights "github.com/Azure/azure-service-operator/v2/api/insights/v1api20200202/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
@@ -113,6 +116,9 @@ func CreateScheme() *runtime.Scheme {
 	_ = asonetwork.AddToScheme(scheme)
 	_ = asodnsresolver.AddToScheme(scheme)
 	_ = asocache.AddToScheme(scheme)
+	_ = asoredisenterprise.AddToScheme(scheme)
+	_ = asoappconfig.AddToScheme(scheme)
+	_ = asomongo.AddToScheme(scheme)
 	_ = asodisk.AddToScheme(scheme)
 	_ = asoasg.AddToScheme(scheme)
 	_ = asowatcher.AddToScheme(scheme)
@@ -169,6 +175,9 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asodisk.Disk{}, Name: "aso_compute_disk"},
 		{Obj: &asodisk.DiskAccess{}, Name: "aso_compute_diskaccess"},
 		{Obj: &asocache.Redis{}, Name: "aso_cache_redis"},
+		{Obj: &asoredisenterprise.RedisEnterprise{}, Name: "aso_cache_redisenterprise"},
+		{Obj: &asoappconfig.ConfigurationStore{}, Name: "aso_appconfiguration_configurationstore"},
+		{Obj: &asomongo.MongoCluster{}, Name: "aso_documentdb_mongocluster"},
 		{Obj: &asoasg.ApplicationSecurityGroup{}, Name: "aso_network_applicationsecuritygroup"},
 		{Obj: &asowatcher.NetworkWatcher{}, Name: "aso_network_networkwatcher"},
 	}

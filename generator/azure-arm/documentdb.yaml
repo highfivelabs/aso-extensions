@@ -15,10 +15,18 @@ typeFilters:
     group: documentdb
     version: v20260315
     because: role-based access for the Cassandra, Gremlin, MongoDB (Entra) and Table APIs, the newest stable version (2024-08-15 has none)
+  - action: include
+    group: documentdb
+    version: v20240701
+    because: a MongoDB vCore cluster's private endpoint connections (docs/plan.md f38; specification/mongocluster), the version of ASO's MongoCluster (v1api20240701)
   - action: prune
     group: documentdb
     because: every other version is left alone
 groupModelConfiguration:
+  2024-07-01:
+    MongoClusters_PrivateEndpointConnection:
+      $exportAs: MongoClustersPrivateEndpointConnection
+      $supportedFrom: v0.1.0
   2024-08-15:
     DatabaseAccounts_GremlinDatabase:
       $exportAs: DatabaseAccountsGremlinDatabase

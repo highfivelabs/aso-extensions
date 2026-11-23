@@ -68,6 +68,8 @@ imports:
   cdn: azure-arm/cdn.yaml
   subscription: azure-arm/subscription.yaml
   cache: azure-arm/cache.yaml
+  appconfiguration: azure-arm/appconfiguration.yaml
+  dbforpostgresql: azure-arm/dbforpostgresql.yaml
 
 # Filters are applied in document order; the earliest match wins (as in ASO's
 # azure-arm.yaml, from which these are taken).

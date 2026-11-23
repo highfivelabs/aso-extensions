@@ -7,6 +7,7 @@ metadata:
 rules:
 - apiGroups:
   - app.azure.hfl.dev
+  - appconfiguration.azure.hfl.dev
   - authorization.azure.hfl.dev
   - automation.azure.hfl.dev
   - cache.azure.hfl.dev
@@ -17,6 +18,7 @@ rules:
   - containerregistry.azure.hfl.dev
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
+  - dbforpostgresql.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - documentdb.azure.hfl.dev
   - hardwaresecuritymodules.azure.hfl.dev
@@ -43,6 +45,7 @@ rules:
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups:
   - app.azure.hfl.dev
+  - appconfiguration.azure.hfl.dev
   - authorization.azure.hfl.dev
   - automation.azure.hfl.dev
   - cache.azure.hfl.dev
@@ -53,6 +56,7 @@ rules:
   - containerregistry.azure.hfl.dev
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
+  - dbforpostgresql.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - documentdb.azure.hfl.dev
   - hardwaresecuritymodules.azure.hfl.dev

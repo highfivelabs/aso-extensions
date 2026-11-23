@@ -32,4 +32,8 @@ storage/StorageAccount
 insights/Component
 sql/Server
 cache/Redis
+cache/RedisEnterprise
+appconfiguration/ConfigurationStore
+dbforpostgresql/FlexibleServer
+documentdb/MongoCluster
 sql/Servers_Database=ServersDatabase

@@ -1,0 +1,20 @@
+# App Configuration children ASO does not export
+# (Microsoft.AppConfiguration, 2024-06-01, the version of ASO's own v20240601
+# ConfigurationStore): a store's private endpoint connections (docs/plan.md
+# f38). Owned by ASO's ConfigurationStore.
+typeFilters:
+  - action: include
+    group: appconfiguration
+    version: v20240601
+    because: the version of ASO's ConfigurationStore (v20240601)
+  - action: prune
+    group: appconfiguration
+    because: every other version is left alone
+groupModelConfiguration:
+  2024-06-01:
+    ConfigurationStores_PrivateEndpointConnection:
+      $exportAs: ConfigurationStoresPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    PrivateEndpoint:
+      Id:
+        $referenceType: arm # the private endpoint's ARM ID (autolabel, reviewed)

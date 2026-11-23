@@ -46,3 +46,9 @@ RedisPrivateEndpointConnection: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+augmentConversionForPrivateEndpoint_STATUS: Interface
+
+augmentConversionForPrivateLinkServiceConnectionState: Interface
+
+augmentConversionForPrivateLinkServiceConnectionState_STATUS: Interface
+

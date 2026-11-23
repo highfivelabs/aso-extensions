@@ -20,7 +20,7 @@ Microsoft.ApiCenter,8,0,0,45,0,0,45,0.0,0.0,100.0
 Microsoft.ApiManagement,112,26,0,1078,270,0,808,25.0,0.0,75.0
 Microsoft.App,30,4,17,616,312,187,117,50.6,30.4,19.0
 Microsoft.AppComplianceAutomation,4,0,0,27,0,0,27,0.0,0.0,100.0
-Microsoft.AppConfiguration,5,4,0,27,24,0,3,88.9,0.0,11.1
+Microsoft.AppConfiguration,5,4,1,27,24,3,0,88.9,11.1,0.0
 Microsoft.AppLink,2,0,0,16,0,0,16,0.0,0.0,100.0
 Microsoft.AppPlatform,27,0,0,276,0,0,276,0.0,0.0,100.0
 Microsoft.Attestation,2,0,0,25,0,0,25,0.0,0.0,100.0
@@ -48,7 +48,7 @@ Microsoft.BillingBenefits,8,0,0,259,0,0,259,0.0,0.0,100.0
 Microsoft.BillingTrust,2,0,0,9,0,0,9,0.0,0.0,100.0
 Microsoft.Blueprint,4,0,0,64,0,0,64,0.0,0.0,100.0
 Microsoft.BotService,4,0,0,62,0,0,62,0.0,0.0,100.0
-Microsoft.Cache,12,9,1,97,78,3,16,80.4,3.1,16.5
+Microsoft.Cache,12,9,2,97,78,6,13,80.4,6.2,13.4
 Microsoft.Capacity,2,0,0,23,0,0,23,0.0,0.0,100.0
 Microsoft.Cdn,18,11,1,250,131,39,80,52.4,15.6,32.0
 Microsoft.CertificateRegistration,2,0,0,16,0,0,16,0.0,0.0,100.0
@@ -93,7 +93,7 @@ Microsoft.DataReplication,8,0,0,99,0,0,99,0.0,0.0,100.0
 Microsoft.DataShare,8,0,0,35,0,0,35,0.0,0.0,100.0
 Microsoft.DBforMariaDB,8,0,0,40,0,0,40,0.0,0.0,100.0
 Microsoft.DBforMySQL,18,5,0,111,56,0,55,50.5,0.0,49.5
-Microsoft.DBforPostgreSQL,18,8,0,135,56,0,79,41.5,0.0,58.5
+Microsoft.DBforPostgreSQL,18,8,1,135,56,3,76,41.5,2.2,56.3
 Microsoft.DelegatedNetwork,3,0,0,16,0,0,16,0.0,0.0,100.0
 Microsoft.DependencyMap,2,0,0,7,0,0,7,0.0,0.0,100.0
 Microsoft.Deployment.Admin,2,0,0,3,0,0,3,0.0,0.0,100.0
@@ -109,7 +109,7 @@ Microsoft.DevSpaces,1,0,0,6,0,0,6,0.0,0.0,100.0
 Microsoft.DevTestLab,19,0,1,321,0,15,306,0.0,4.7,95.3
 Microsoft.DigitalTwins,4,0,0,44,0,0,44,0.0,0.0,100.0
 Microsoft.Discovery,11,0,0,82,0,0,82,0.0,0.0,100.0
-Microsoft.DocumentDB,52,19,22,554,250,155,149,45.1,28.0,26.9
+Microsoft.DocumentDB,52,19,23,554,250,158,146,45.1,28.5,26.4
 Microsoft.DomainRegistration,2,0,0,70,0,0,70,0.0,0.0,100.0
 Microsoft.DurableTask,4,0,0,13,0,0,13,0.0,0.0,100.0
 Microsoft.Dynamics365FraudProtection,1,0,0,3,0,0,3,0.0,0.0,100.0

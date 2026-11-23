@@ -547,8 +547,9 @@ upstream's); the catalog's chart tests do that.
   repository and deployment token, one backend per site, SKUs, and the
   error codes.
 - The private endpoint connections of an Azure SQL server, a container
-  app, a disk access and an Azure Cache for Redis cache
-  (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
+  app, a disk access, an Azure Cache for Redis cache, a Redis Enterprise
+  cluster, an App Configuration store, a PostgreSQL flexible server and a
+  MongoDB vCore cluster (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
   a private endpoint makes a connection, so a PUT for one that does not
   exist is 404 and a PUT changes one that does (approve, reject). Not
   modelled: the private endpoint (a test adds the connection to the fake as

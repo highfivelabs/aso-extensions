@@ -45,3 +45,5 @@ DatabaseAccountsTableRoleDefinitionExtension: Object (0 properties)
 
 DatabaseAccountsTablesThroughputSettingExtension: Object (0 properties)
 
+MongoClustersPrivateEndpointConnectionExtension: Object (0 properties)
+

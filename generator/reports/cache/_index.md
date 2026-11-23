@@ -8,7 +8,8 @@ no_list: true
 
 ### Released
 
-| Resource                       | ARM Version | CRD Version | Supported From | Sample |
-|--------------------------------|-------------|-------------|----------------|--------|
-| RedisPrivateEndpointConnection | 2024-11-01  | v20241101   | v0.1.0         | -      |
+| Resource                                 | ARM Version | CRD Version | Supported From | Sample |
+|------------------------------------------|-------------|-------------|----------------|--------|
+| RedisEnterprisePrivateEndpointConnection | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| RedisPrivateEndpointConnection           | 2024-11-01  | v20241101   | v0.1.0         | -      |
 

@@ -315,12 +315,16 @@ func init() {
 	pec := conformanceFixture{setup: func(c *conformanceContext) { c.add(c.owner + "/privateEndpointConnections/conformance") }}
 	f["SitesPrivateEndpointConnection"] = pec
 	f["StaticSitesPrivateEndpointConnection"] = pec
-	// The private endpoint connections of docs/plan.md f37: the fake refuses
+	// The private endpoint connections of docs/plan.md f37 and f38: the fake refuses
 	// to make one (privateendpoints.go).
 	f["ServersPrivateEndpointConnection"] = pec
 	f["ContainerAppsPrivateEndpointConnection"] = pec
 	f["DiskAccessesPrivateEndpointConnection"] = pec
 	f["RedisPrivateEndpointConnection"] = pec
+	f["RedisEnterprisePrivateEndpointConnection"] = pec
+	f["ConfigurationStoresPrivateEndpointConnection"] = pec
+	f["FlexibleServersPrivateEndpointConnection"] = pec
+	f["MongoClustersPrivateEndpointConnection"] = pec
 	f["WorkspacesSummaryLog"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"ruleDefinition": map[string]any{"query": "AppRequests | summarize count() by bin(TimeGenerated, 1h)", "binSize": int64(60), "destinationTable": "Hourly_CL"}}
 	}}
