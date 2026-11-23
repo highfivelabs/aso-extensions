@@ -29,7 +29,7 @@ here" is `Registered`, so the tests that skipped for a provider now run.
 | Resource group (the only target) | `aso-extensions-live-tests`, eastus2 |
 | App registration | `aso-extensions-live-tests`, client ID `$AZURE_CLIENT_ID` |
 | Its credentials | no secret, no certificate; federated credentials only: issuer `https://accounts.google.com`, subject the unique ID of the offload VMs' Google service account (`$OFFLOAD_SA`), audience `api://AzureADTokenExchange` |
-| Its role | Contributor on the resource group, nothing else |
+| Its role | Contributor on the resource group; to be added by the builder, the two narrow custom roles of `hack/live/roles/` ("The subscription roles", below), not yet assigned |
 
 The identity and the group are owned outside this repository; agents never
 change them. Their IDs are not in the tree: a live run takes them from the
@@ -44,6 +44,7 @@ name of any that is missing.
 | `task check` compiles it (`go vet -tags live ./test/live/`) and runs none of it; only `task test-live` and `task live-list` reach `hack/live` | `Taskfile.yml` |
 | An explicit opt-in on every run: `ASO_EXT_LIVE=create-real-azure-resources` | `hack/live/run.sh`, `test/live/env_test.go` |
 | The group must be in `hack/live/targets.txt` (as `${AZURE_SUBSCRIPTION_ID}/<group>`), a reviewed change | the same |
+| A test reaches the subscription itself only when `hack/live/targets.txt` names it on the subscription's line, and skips otherwise | `subscriptionScope`, `test/live/subscription_test.go` |
 | Federated credentials only: a client secret, certificate or user password in the environment refuses the run, and the Azure CLI's directory is pointed at an empty one | `hack/live/credentials.sh`, `test/live/env_test.go` |
 | Contributor on one resource group: nothing outside it can be made or changed | the identity |
 
@@ -51,6 +52,63 @@ The manager runs as production runs it (`manager.Options{}` zero): ASO's
 global credential from the `AZURE_*` environment, workload identity, the
 public Resource Manager. The tests' own checks and fixtures use the same
 identity (`azidentity.NewWorkloadIdentityCredential`).
+
+## The subscription roles
+
+The builder's answer to `docs/plan.md` section 8, Q15 (2026-11-23, option
+b): the kinds kept at a subscription are live-tested in the sandbox
+subscription through a narrow custom role there; the tenant's
+`SubscriptionTenantPolicy` and the management group kinds stay fake-only.
+Two role definitions, reviewable files, cover exactly what the tests do:
+
+| File | Role | Assigned at | Actions |
+| --- | --- | --- | --- |
+| `hack/live/roles/subscription.json` | `aso-extensions live tests (subscription)` | the subscription | `read`, `write`, `delete` on `Microsoft.Authorization/accessReviewScheduleDefinitions`, `accessReviewHistoryDefinitions`, `policyDefinitions`, `policySetDefinitions`, `Microsoft.CostManagement/settings`, `Microsoft.Security/alertsSuppressionRules`, `governanceRules`; `read` and `write` on `Microsoft.Authorization/accessReviewScheduleSettings` and `Microsoft.Security/pricings` (neither can be deleted) |
+| `hack/live/roles/group-policy.json` | `aso-extensions live tests (group policy)` | the live resource group only | `read`, `write`, `delete` on `Microsoft.Authorization/policyAssignments` and `policyExemptions` (an assignment at the subscription is never made: the test assigns at the group) |
+
+Left out on purpose: PIM (`roleEligibilityScheduleRequests`,
+`roleAssignmentScheduleRequests`, `roleManagementPolicyAssignments`): an
+identity that may write them may grant itself any role, so no role of
+that kind is narrow, and PIM needs Entra ID P2; policy remediations (they
+deploy resources through the assignment's identity) and attestations;
+management groups and the tenant policy (tenant scope).
+
+**Applying them is the builder's** (an IAM change; agents never do it). As
+an Owner or User Access Administrator of the subscription, with the
+`.env` of `.env.example`:
+
+```sh
+set -a; . ./.env; set +a
+for r in subscription group-policy; do
+  sed "s|\${AZURE_SUBSCRIPTION_ID}|${AZURE_SUBSCRIPTION_ID}|g" "hack/live/roles/${r}.json" >"/tmp/live-role-${r}.json"
+  az role definition create --role-definition "@/tmp/live-role-${r}.json"
+done
+sp="$(az ad sp show --id "${AZURE_CLIENT_ID}" --query id -o tsv)"
+az role assignment create --assignee-object-id "${sp}" --assignee-principal-type ServicePrincipal \
+  --role "aso-extensions live tests (subscription)" --scope "/subscriptions/${AZURE_SUBSCRIPTION_ID}"
+az role assignment create --assignee-object-id "${sp}" --assignee-principal-type ServicePrincipal \
+  --role "aso-extensions live tests (group policy)" \
+  --scope "/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/aso-extensions-live-tests"
+```
+
+A later change to a file is applied with `az role definition update
+--role-definition @<file>` (the same substitution). The action names were
+written from Azure's operation names without reading them back from the
+tenant (no agent can): if Azure refuses one as unknown, or a test fails
+with `AuthorizationFailed` naming another action, the file is corrected in
+a reviewed change.
+
+**The tests** (`test/live/subscription_test.go`) run only when
+`hack/live/targets.txt`'s subscription line names them (`subscriptionScope`)
+and the identity's permissions at the subscription (read from
+`Microsoft.Authorization/permissions`) hold the actions (they skip, naming
+the action, until the roles are assigned). Each deletes what it made; a
+setting that cannot be deleted (an access review default setting, a
+Defender plan, tag inheritance that was already on) is read before the
+change and put back with a PUT afterwards (`restoreAfter`), then read back.
+Names carry the run ID (`<base>-ax...`) or the display name
+`aso-extensions live <run ID>`; `task live-list` lists any left at the
+subscription (the sweep never deletes there).
 
 ## Credentials: federation from the offload VMs
 
@@ -149,11 +207,11 @@ group:
 | `ManagementLock` | `Microsoft.Authorization/locks/write` (Owner or User Access Administrator, or a custom role) on the group; `TestLiveManagementLock` (a lock on an IP group fixture) reads the identity's permissions and skips, naming the action, until a role grants it (`ax1218083181`) |
 | `ResourceManagementPrivateLink` | `Microsoft.Authorization/resourceManagementPrivateLinks/write` on the group (refused `AuthorizationFailed`, 2026-11-12); `TestLiveResourceManagementPrivateLink` reads the identity's permissions on the group and skips until a role grants it |
 | `WorkspacesLinkedStorageAccount` | a role assignment (`Microsoft.Authorization/roleAssignments/write`): Azure retired `CustomLogs` links in 2025, and a `Query` or `Alerts` link needs the workspace's managed identity to hold Storage Table Data Contributor on the account; the `LinkedStorageAccount` step of `TestLiveWorkspaceChildren` skips the same way |
-| `PolicyDefinition`, `PolicySetDefinition` | subscription or management group scope |
-| `PolicyAssignment`, `PolicyExemption` | `Microsoft.Authorization/policyAssignments/write`, `.../policyExemptions/write` |
+| `PolicyDefinition`, `PolicySetDefinition` | subscription or management group scope; at the subscription, `hack/live/roles/subscription.json` ("The subscription roles"; `TestLiveAzurePolicy`, pending) |
+| `PolicyAssignment`, `PolicyExemption` | `Microsoft.Authorization/policyAssignments/write`, `.../policyExemptions/write`: `hack/live/roles/group-policy.json` on the group (`TestLiveAzurePolicy`, pending) |
 | `PolicyRemediation`, `PolicyAttestation` | a policy assignment to act on (above) |
-| `RoleEligibilityScheduleRequest`, `RoleAssignmentScheduleRequest`, `RoleManagementPolicyAssignment` | `Microsoft.Authorization` write, and Entra ID P2 for PIM |
-| `ManagementGroup`, `ManagementGroupsSubscription`, `ManagementGroupsSetting` | tenant scope |
+| `RoleEligibilityScheduleRequest`, `RoleAssignmentScheduleRequest`, `RoleManagementPolicyAssignment` | `Microsoft.Authorization` write, and Entra ID P2 for PIM; not in the roles of `hack/live/roles/` (a role that may write them may grant any role): fake-only for now |
+| `ManagementGroup`, `ManagementGroupsSubscription`, `ManagementGroupsSetting` | tenant scope: fake-only (`docs/plan.md` section 8, Q15) |
 | `NetworkManager` and its children, `NetworkManagerConnection` | a scope of a subscription or management group (`networkManagerScopes`), read on it; the connection is a subscription resource |
 | Entra `DirectoryRoleAssignment` (open pull request #46) | Microsoft Graph application permissions the identity lacks (`RoleManagement.ReadWrite.Directory`) |
 
@@ -313,12 +371,26 @@ All five in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
 TESTS="TestLiveAddressPrefixSet TestLiveRuleCollectionGroupDraft
 TestLiveConnectionMonitor TestLiveSummaryRule TestLiveSentinelWorkspace"`.
 
-Not written, for want of a scope the identity has (Contributor on the live
-group only; `docs/plan.md` §8, the question of 2026-11-23): the tenant's
-`SubscriptionTenantPolicy`, the access review kinds, the Cost Management
-`Setting`, `AlertsSuppressionRule` and `GovernanceRule`, all kept at a
-subscription or above. Sentinel's `SourceControl` needs a real repository and
-a credential for it.
+Written for the subscription (above, "The subscription roles"); each skips
+until the builder assigns the roles of `hack/live/roles/`:
+
+| Written | Test | Kinds | Changes at the subscription, and how it is undone | Command |
+| --- | --- | --- | --- | --- |
+| 2026-11-23 | `TestLiveAccessReviews` | `AccessReviewScheduleDefinition`, `AccessReviewHistoryDefinition`, `AccessReviewScheduleSetting` | a review definition starting in a year (no review runs, no mail) and a history definition, deleted; the default review settings' `justificationRequiredOnApproval` flipped, then put back. Needs Entra ID P2 or Governance in the tenant | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveAccessReviews"` |
+| 2026-11-23 | `TestLiveCostTagInheritance` | Cost Management `Setting` (`taginheritance`) | tag inheritance set, changed, deleted, then put back as read (deleted if it was off) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveCostTagInheritance"` |
+| 2026-11-23 | `TestLiveDefenderAlertRules` | `AlertsSuppressionRule`, `GovernanceRule` | a Disabled suppression rule and a disabled governance rule, changed, deleted | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveDefenderAlertRules"` |
+| 2026-11-23 | `TestLiveDefenderPlan` | `Pricing` | the Defender for Key Vault plan switched to the other tier (Standard is billed per vault-month: cents for a run's minutes), then put back as read | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveDefenderPlan"` |
+| 2026-11-23 | `TestLiveAzurePolicy` | `PolicyDefinition`, `PolicySetDefinition`, `PolicyAssignment`, `PolicyExemption` | an audit-only definition and a set at the subscription, assigned only to the live group with enforcement off, an exemption there; all deleted | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveAzurePolicy"` |
+
+All five in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
+TESTS="TestLiveAccessReviews TestLiveCostTagInheritance
+TestLiveDefenderAlertRules TestLiveDefenderPlan TestLiveAzurePolicy"`.
+
+Not written: the tenant's `SubscriptionTenantPolicy` and the management
+group kinds (`ManagementGroup`, `ManagementGroupsSubscription`,
+`ManagementGroupsSetting`, `ServiceGroup`): fake-only by the answer to Q15;
+PIM, policy remediations and attestations (above, "Left out on purpose").
+Sentinel's `SourceControl` needs a real repository and a credential for it.
 
 ## Ledger
 

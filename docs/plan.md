@@ -2128,3 +2128,23 @@ summarised here:
    any option: it changes the whole tenant, and its writer is a global
    administrator. Recommended: (b) for the subscription-scope kinds, (a) for
    the tenant policy and management groups.
+
+   **Answered, 2026-11-23** (the builder): (b) as recommended. Grant the live
+   identity a narrow custom role at the sandbox subscription covering only
+   the actions the subscription-scope kinds need; `hack/live/targets.txt`
+   names the subscription for those tests only; every test deletes or
+   restores what it changed; the tenant policy and the management groups
+   stay fake-only. **Done** (not applied: assigning a role is the
+   builder's): the role definitions `hack/live/roles/subscription.json` (at
+   the subscription: access reviews, the Cost Management setting, alert
+   suppression and governance rules, Defender plans, policy definitions and
+   set definitions) and `hack/live/roles/group-policy.json` (policy
+   assignments and exemptions, at the live group only), with the command to
+   apply them in `docs/live-runs.md`, "The subscription roles";
+   `hack/live/targets.txt`'s subscription line naming five tests; those
+   tests in `test/live/subscription_test.go` (`TestLiveAccessReviews`,
+   `TestLiveCostTagInheritance`, `TestLiveDefenderAlertRules`,
+   `TestLiveDefenderPlan`, `TestLiveAzurePolicy`), compiled by `task check`,
+   pending a run. PIM is left out: an identity that may write its requests
+   may grant itself any role, so it stays fake-only with the tenant policy
+   and the management groups (README.md).

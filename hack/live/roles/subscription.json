@@ -1,0 +1,38 @@
+{
+  "Name": "aso-extensions live tests (subscription)",
+  "IsCustom": true,
+  "Description": "The subscription-scope kinds of aso-extensions, for its live tests only (docs/live-runs.md, 'The subscription roles'; docs/plan.md section 8, Q15). Access reviews, the Cost Management tag inheritance setting, Defender for Cloud alert suppression rules, governance rules and plans, and policy definitions and set definitions. Nothing else.",
+  "Actions": [
+    "Microsoft.Authorization/accessReviewScheduleDefinitions/read",
+    "Microsoft.Authorization/accessReviewScheduleDefinitions/write",
+    "Microsoft.Authorization/accessReviewScheduleDefinitions/delete",
+    "Microsoft.Authorization/accessReviewHistoryDefinitions/read",
+    "Microsoft.Authorization/accessReviewHistoryDefinitions/write",
+    "Microsoft.Authorization/accessReviewHistoryDefinitions/delete",
+    "Microsoft.Authorization/accessReviewScheduleSettings/read",
+    "Microsoft.Authorization/accessReviewScheduleSettings/write",
+    "Microsoft.Authorization/policyDefinitions/read",
+    "Microsoft.Authorization/policyDefinitions/write",
+    "Microsoft.Authorization/policyDefinitions/delete",
+    "Microsoft.Authorization/policySetDefinitions/read",
+    "Microsoft.Authorization/policySetDefinitions/write",
+    "Microsoft.Authorization/policySetDefinitions/delete",
+    "Microsoft.CostManagement/settings/read",
+    "Microsoft.CostManagement/settings/write",
+    "Microsoft.CostManagement/settings/delete",
+    "Microsoft.Security/alertsSuppressionRules/read",
+    "Microsoft.Security/alertsSuppressionRules/write",
+    "Microsoft.Security/alertsSuppressionRules/delete",
+    "Microsoft.Security/governanceRules/read",
+    "Microsoft.Security/governanceRules/write",
+    "Microsoft.Security/governanceRules/delete",
+    "Microsoft.Security/pricings/read",
+    "Microsoft.Security/pricings/write"
+  ],
+  "NotActions": [],
+  "DataActions": [],
+  "NotDataActions": [],
+  "AssignableScopes": [
+    "/subscriptions/${AZURE_SUBSCRIPTION_ID}"
+  ]
+}

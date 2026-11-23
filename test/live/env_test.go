@@ -77,31 +77,35 @@ func refuse() string {
 		return err.Error()
 	}
 	target := os.Getenv("AZURE_SUBSCRIPTION_ID") + "/" + os.Getenv("LIVE_RESOURCE_GROUP")
-	if !allowed[target] {
+	if _, ok := allowed[target]; !ok {
 		return target + " is not in hack/live/targets.txt"
 	}
 	return ""
 }
 
-// allowedTargets reads hack/live/targets.txt: "<subscription>/<resource group>"
-// per line, a reviewed change, the subscription as ${AZURE_SUBSCRIPTION_ID}.
-func allowedTargets() (map[string]bool, error) {
+// allowedTargets reads hack/live/targets.txt, a reviewed change: per line a
+// target, "<subscription>/<resource group>" or a subscription alone, the
+// subscription written as ${AZURE_SUBSCRIPTION_ID}; a subscription's line
+// goes on to name the only tests that may touch it (subscriptionScope).
+// The map is target to those tests.
+func allowedTargets() (map[string][]string, error) {
 	root, _ := filepath.Abs("../..")
 	f, err := os.Open(filepath.Join(root, "hack/live/targets.txt"))
 	if err != nil {
 		return nil, err
 	}
 	defer f.Close()
-	out := map[string]bool{}
+	out := map[string][]string{}
 	s := bufio.NewScanner(f)
 	for s.Scan() {
-		line := strings.TrimSpace(strings.SplitN(s.Text(), "#", 2)[0])
+		fields := strings.Fields(strings.SplitN(s.Text(), "#", 2)[0])
+		if len(fields) == 0 {
+			continue
+		}
 		// The subscription is written as ${AZURE_SUBSCRIPTION_ID}: the ID is
 		// not in the tree (.env.example).
-		line = strings.ReplaceAll(line, "${AZURE_SUBSCRIPTION_ID}", os.Getenv("AZURE_SUBSCRIPTION_ID"))
-		if line != "" {
-			out[line] = true
-		}
+		target := strings.ReplaceAll(fields[0], "${AZURE_SUBSCRIPTION_ID}", os.Getenv("AZURE_SUBSCRIPTION_ID"))
+		out[target] = append(out[target], fields[1:]...)
 	}
 	return out, s.Err()
 }

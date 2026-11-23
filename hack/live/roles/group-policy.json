@@ -1,0 +1,19 @@
+{
+  "Name": "aso-extensions live tests (group policy)",
+  "IsCustom": true,
+  "Description": "Policy assignments and exemptions in the aso-extensions live-test resource group only, for TestLiveAzurePolicy (docs/live-runs.md, 'The subscription roles'; docs/plan.md section 8, Q15). Contributor, which the identity holds on the group, excludes Microsoft.Authorization writes.",
+  "Actions": [
+    "Microsoft.Authorization/policyAssignments/read",
+    "Microsoft.Authorization/policyAssignments/write",
+    "Microsoft.Authorization/policyAssignments/delete",
+    "Microsoft.Authorization/policyExemptions/read",
+    "Microsoft.Authorization/policyExemptions/write",
+    "Microsoft.Authorization/policyExemptions/delete"
+  ],
+  "NotActions": [],
+  "DataActions": [],
+  "NotDataActions": [],
+  "AssignableScopes": [
+    "/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/aso-extensions-live-tests"
+  ]
+}
