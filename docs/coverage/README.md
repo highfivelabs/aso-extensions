@@ -337,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 4,055 (9.3%) in 309 further resources; uncovered 32,194 (74.2%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 4,136 (9.5%) in 320 further resources; uncovered 32,113 (74.0%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 25.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 23.3% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.8% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 25.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 24.3% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.8% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 38.2% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 9.6% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 1.0% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 38.2% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 10.1% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 1.0% more by ours.
 
 **Ours.**
 
@@ -669,9 +669,20 @@ Generated; these cannot drift from the data.
 | `web.azure.hfl.dev/SitesConfigAppSettings` | `Microsoft.Web/sites/config` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
 | `web.azure.hfl.dev/SitesConfigAuthSettingsV2` | `Microsoft.Web/sites/config` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesConfigConnectionStrings` | `Microsoft.Web/sites/config` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
+| `web.azure.hfl.dev/SitesDomainOwnershipIdentifier` | `Microsoft.Web/sites/domainOwnershipIdentifiers` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesHostNameBinding` | `Microsoft.Web/sites/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesHybridConnection` | `Microsoft.Web/sites/hybridconnection` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesPrivateEndpointConnection` | `Microsoft.Web/sites/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesPublicCertificate` | `Microsoft.Web/sites/publicCertificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlot` | `Microsoft.Web/sites/slots` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsHostNameBinding` | `Microsoft.Web/sites/slots/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesVirtualNetworkConnection` | `Microsoft.Web/sites/virtualNetworkConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSite` | `Microsoft.Web/staticSites` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesCustomDomain` | `Microsoft.Web/staticSites/customDomains` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesDatabaseConnection` | `Microsoft.Web/staticSites/databaseConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesLinkedBackend` | `Microsoft.Web/staticSites/linkedBackends` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesPrivateEndpointConnection` | `Microsoft.Web/staticSites/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesUserProvidedFunctionApp` | `Microsoft.Web/staticSites/userProvidedFunctionApps` | ARM wire type of the generated kind (`apis/arm`) |
 
 **Outside the denominator.** 5 rows in `resources.csv` carry `notes=outside-denominator` and are in none of the percentages: our data-plane and database kinds above, and the 0 ASO kinds that are unmapped.
 

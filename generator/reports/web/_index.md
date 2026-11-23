@@ -16,7 +16,18 @@ no_list: true
 | SitesConfigAuthSettingsV2                | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesConfigLogs                          | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesConfigSlotConfigNames               | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesDomainOwnershipIdentifier           | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesHostNameBinding                     | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesHybridConnection                    | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesPrivateEndpointConnection           | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesPublicCertificate                   | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesSlot                                | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesSlotsHostNameBinding                | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesVirtualNetworkConnection            | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSite                               | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSitesCustomDomain                  | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSitesDatabaseConnection            | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSitesLinkedBackend                 | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSitesPrivateEndpointConnection     | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSitesUserProvidedFunctionApp       | 2026-07-15  | v20260715   | v0.1.0         | -      |
 

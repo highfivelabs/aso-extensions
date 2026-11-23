@@ -560,6 +560,35 @@ SitesConfigSlotConfigNames_Spec: Object (3 properties)
     ├── AzureStorageConfigNames: string[]
     └── ConnectionStringNames: string[]
 
+SitesDomainOwnershipIdentifier_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── Id: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+SitesDomainOwnershipIdentifier_Spec: Object (3 properties)
+├── Kind: *string
+├── Name: string
+└── Properties: *Object (1 property)
+    └── Id: *string
+
 SitesHostNameBinding_STATUS: Object (6 properties)
 ├── Id: *string
 ├── Kind: *string
@@ -621,6 +650,123 @@ SitesHostNameBinding_Spec: Object (3 properties)
     │   ├── "IpBasedEnabled"
     │   └── "SniEnabled"
     └── Thumbprint: *string
+
+SitesHybridConnection_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Name: *string
+├── Properties: *Object (5 properties)
+│   ├── BiztalkUri: *string
+│   ├── EntityName: *string
+│   ├── Hostname: *string
+│   ├── Port: *int
+│   └── ResourceType: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+SitesHybridConnection_Spec: Object (3 properties)
+├── Kind: *string
+├── Name: string
+└── Properties: *Object (7 properties)
+    ├── BiztalkUri: *string
+    ├── EntityConnectionString: *string
+    ├── EntityName: *string
+    ├── Hostname: *string
+    ├── Port: *int
+    ├── ResourceConnectionString: *string
+    └── ResourceType: *string
+
+SitesPrivateEndpointConnection_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── IpAddresses: string[]
+│   ├── PrivateEndpoint: *Object (1 property)
+│   │   └── Id: *string
+│   ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+│   │   ├── ActionsRequired: *string
+│   │   ├── Description: *string
+│   │   └── Status: *string
+│   └── ProvisioningState: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+SitesPrivateEndpointConnection_Spec: Object (3 properties)
+├── Kind: *string
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── IpAddresses: string[]
+    └── PrivateLinkServiceConnectionState: *Object (3 properties)
+        ├── ActionsRequired: *string
+        ├── Description: *string
+        └── Status: *string
+
+SitesPublicCertificate_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Name: *string
+├── Properties: *Object (3 properties)
+│   ├── Blob: *string
+│   ├── PublicCertificateLocation: *Enum (3 values)
+│   │   ├── "CurrentUserMy"
+│   │   ├── "LocalMachineMy"
+│   │   └── "Unknown"
+│   └── Thumbprint: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+SitesPublicCertificate_Spec: Object (3 properties)
+├── Kind: *string
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── Blob: *string
+    └── PublicCertificateLocation: *Enum (3 values)
+        ├── "CurrentUserMy"
+        ├── "LocalMachineMy"
+        └── "Unknown"
 
 SitesSlot_STATUS: Object (10 properties)
 ├── ExtendedLocation: *Object (2 properties)
@@ -1591,4 +1737,470 @@ SitesSlotsHostNameBinding_Spec: Object (3 properties)
     │   ├── "IpBasedEnabled"
     │   └── "SniEnabled"
     └── Thumbprint: *string
+
+SitesVirtualNetworkConnection_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Name: *string
+├── Properties: *Object (7 properties)
+│   ├── CertBlob: *string
+│   ├── CertThumbprint: *string
+│   ├── DnsServers: *string
+│   ├── IsSwift: *bool
+│   ├── ResyncRequired: *bool
+│   ├── Routes: Object (1 property)[]
+│   │   └── Id: *string
+│   └── VnetResourceId: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+SitesVirtualNetworkConnection_Spec: Object (3 properties)
+├── Kind: *string
+├── Name: string
+└── Properties: *Object (4 properties)
+    ├── CertBlob: *string
+    ├── DnsServers: *string
+    ├── IsSwift: *bool
+    └── VnetResourceId: *string
+
+StaticSiteARMResource_STATUS: Object (10 properties)
+├── Id: *string
+├── Identity: *Object (4 properties)
+│   ├── PrincipalId: *string
+│   ├── TenantId: *string
+│   ├── Type: *Enum (4 values)
+│   │   ├── "None"
+│   │   ├── "SystemAssigned"
+│   │   ├── "SystemAssigned, UserAssigned"
+│   │   └── "UserAssigned"
+│   └── UserAssignedIdentities: map[string]Object (2 properties)
+│       ├── ClientId: *string
+│       └── PrincipalId: *string
+├── Kind: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (17 properties)
+│   ├── AllowConfigFileUpdates: *bool
+│   ├── Branch: *string
+│   ├── BuildProperties: *Object (8 properties)
+│   │   ├── ApiBuildCommand: *string
+│   │   ├── ApiLocation: *string
+│   │   ├── AppArtifactLocation: *string
+│   │   ├── AppBuildCommand: *string
+│   │   ├── AppLocation: *string
+│   │   ├── GithubActionSecretNameOverride: *string
+│   │   ├── OutputLocation: *string
+│   │   └── SkipGithubActionWorkflowGeneration: *bool
+│   ├── ContentDistributionEndpoint: *string
+│   ├── CustomDomains: string[]
+│   ├── DatabaseConnections: Object (5 properties)[]
+│   │   ├── ConfigurationFiles: Object (3 properties)[]
+│   │   │   ├── Contents: *string
+│   │   │   ├── FileName: *string
+│   │   │   └── Type: *string
+│   │   ├── ConnectionIdentity: *string
+│   │   ├── Name: *string
+│   │   ├── Region: *string
+│   │   └── ResourceId: *string
+│   ├── DefaultHostname: *string
+│   ├── EnterpriseGradeCdnStatus: *Enum (4 values)
+│   │   ├── "Disabled"
+│   │   ├── "Disabling"
+│   │   ├── "Enabled"
+│   │   └── "Enabling"
+│   ├── KeyVaultReferenceIdentity: *string
+│   ├── LinkedBackends: Object (4 properties)[]
+│   │   ├── BackendResourceId: *string
+│   │   ├── CreatedOn: *string
+│   │   ├── ProvisioningState: *string
+│   │   └── Region: *string
+│   ├── PrivateEndpointConnections: Object (12 properties)[]
+│   │   ├── Error: *Object (8 properties)
+│   │   │   ├── Code: *string
+│   │   │   ├── Details: Object (6 properties)[]
+│   │   │   │   ├── Code: *string
+│   │   │   │   ├── ExtendedCode: *string
+│   │   │   │   ├── Message: *string
+│   │   │   │   ├── MessageTemplate: *string
+│   │   │   │   ├── Parameters: string[]
+│   │   │   │   └── Target: *string
+│   │   │   ├── ExtendedCode: *string
+│   │   │   ├── InnerErrors: Object (6 properties)[]
+│   │   │   │   ├── Code: *string
+│   │   │   │   ├── ExtendedCode: *string
+│   │   │   │   ├── Message: *string
+│   │   │   │   ├── MessageTemplate: *string
+│   │   │   │   ├── Parameters: string[]
+│   │   │   │   └── Target: *string
+│   │   │   ├── Message: *string
+│   │   │   ├── MessageTemplate: *string
+│   │   │   ├── Parameters: string[]
+│   │   │   └── Target: *string
+│   │   ├── Id: *string
+│   │   ├── Identity: *Object (4 properties)
+│   │   │   ├── PrincipalId: *string
+│   │   │   ├── TenantId: *string
+│   │   │   ├── Type: *Enum (4 values)
+│   │   │   │   ├── "None"
+│   │   │   │   ├── "SystemAssigned"
+│   │   │   │   ├── "SystemAssigned, UserAssigned"
+│   │   │   │   └── "UserAssigned"
+│   │   │   └── UserAssignedIdentities: map[string]Object (2 properties)
+│   │   │       ├── ClientId: *string
+│   │   │       └── PrincipalId: *string
+│   │   ├── Location: *string
+│   │   ├── Name: *string
+│   │   ├── Plan: *Object (5 properties)
+│   │   │   ├── Name: *string
+│   │   │   ├── Product: *string
+│   │   │   ├── PromotionCode: *string
+│   │   │   ├── Publisher: *string
+│   │   │   └── Version: *string
+│   │   ├── Properties: *Object (5 properties)
+│   │   │   ├── Id: *string
+│   │   │   ├── Kind: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── Properties: *Object (4 properties)
+│   │   │   │   ├── IpAddresses: string[]
+│   │   │   │   ├── PrivateEndpoint: *Object (1 property)
+│   │   │   │   │   └── Id: *string
+│   │   │   │   ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+│   │   │   │   │   ├── ActionsRequired: *string
+│   │   │   │   │   ├── Description: *string
+│   │   │   │   │   └── Status: *string
+│   │   │   │   └── ProvisioningState: *string
+│   │   │   └── Type: *string
+│   │   ├── Sku: *Object (8 properties)
+│   │   │   ├── Capabilities: Object (3 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── Reason: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── Capacity: *int
+│   │   │   ├── Family: *string
+│   │   │   ├── Locations: string[]
+│   │   │   ├── Name: *string
+│   │   │   ├── Size: *string
+│   │   │   ├── SkuCapacity: *Object (5 properties)
+│   │   │   │   ├── Default: *int
+│   │   │   │   ├── ElasticMaximum: *int
+│   │   │   │   ├── Maximum: *int
+│   │   │   │   ├── Minimum: *int
+│   │   │   │   └── ScaleType: *string
+│   │   │   └── Tier: *string
+│   │   ├── Status: *string
+│   │   ├── Tags: map[string]string
+│   │   ├── Type: *string
+│   │   └── Zones: string[]
+│   ├── Provider: *string
+│   ├── PublicNetworkAccess: *string
+│   ├── RepositoryUrl: *string
+│   ├── StagingEnvironmentPolicy: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── TemplateProperties: *Object (5 properties)
+│   │   ├── Description: *string
+│   │   ├── IsPrivate: *bool
+│   │   ├── Owner: *string
+│   │   ├── RepositoryName: *string
+│   │   └── TemplateRepositoryUrl: *string
+│   └── UserProvidedFunctionApps: Object (5 properties)[]
+│       ├── Id: *string
+│       ├── Kind: *string
+│       ├── Name: *string
+│       ├── Properties: *Object (3 properties)
+│       │   ├── CreatedOn: *string
+│       │   ├── FunctionAppRegion: *string
+│       │   └── FunctionAppResourceId: *string
+│       └── Type: *string
+├── Sku: *Object (8 properties)
+│   ├── Capabilities: Object (3 properties)[]
+│   │   ├── Name: *string
+│   │   ├── Reason: *string
+│   │   └── Value: *string
+│   ├── Capacity: *int
+│   ├── Family: *string
+│   ├── Locations: string[]
+│   ├── Name: *string
+│   ├── Size: *string
+│   ├── SkuCapacity: *Object (5 properties)
+│   │   ├── Default: *int
+│   │   ├── ElasticMaximum: *int
+│   │   ├── Maximum: *int
+│   │   ├── Minimum: *int
+│   │   └── ScaleType: *string
+│   └── Tier: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+├── Tags: map[string]string
+└── Type: *string
+
+StaticSite_Spec: Object (7 properties)
+├── Identity: *Object (2 properties)
+│   ├── Type: *Enum (4 values)
+│   │   ├── "None"
+│   │   ├── "SystemAssigned"
+│   │   ├── "SystemAssigned, UserAssigned"
+│   │   └── "UserAssigned"
+│   └── UserAssignedIdentities: map[string]Object (0 properties)
+├── Kind: *string
+├── Location: *string
+├── Name: string
+├── Properties: *Object (10 properties)
+│   ├── AllowConfigFileUpdates: *bool
+│   ├── Branch: *string
+│   ├── BuildProperties: *Object (8 properties)
+│   │   ├── ApiBuildCommand: *string
+│   │   ├── ApiLocation: *string
+│   │   ├── AppArtifactLocation: *string
+│   │   ├── AppBuildCommand: *string
+│   │   ├── AppLocation: *string
+│   │   ├── GithubActionSecretNameOverride: *string
+│   │   ├── OutputLocation: *string
+│   │   └── SkipGithubActionWorkflowGeneration: *bool
+│   ├── EnterpriseGradeCdnStatus: *Enum (4 values)
+│   │   ├── "Disabled"
+│   │   ├── "Disabling"
+│   │   ├── "Enabled"
+│   │   └── "Enabling"
+│   ├── Provider: *string
+│   ├── PublicNetworkAccess: *string
+│   ├── RepositoryToken: *string
+│   ├── RepositoryUrl: *string
+│   ├── StagingEnvironmentPolicy: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   └── TemplateProperties: *Object (5 properties)
+│       ├── Description: *string
+│       ├── IsPrivate: *bool
+│       ├── Owner: *string
+│       ├── RepositoryName: *string
+│       └── TemplateRepositoryUrl: *string
+├── Sku: *Object (8 properties)
+│   ├── Capabilities: Object (3 properties)[]
+│   │   ├── Name: *string
+│   │   ├── Reason: *string
+│   │   └── Value: *string
+│   ├── Capacity: *int
+│   ├── Family: *string
+│   ├── Locations: string[]
+│   ├── Name: *string
+│   ├── Size: *string
+│   ├── SkuCapacity: *Object (5 properties)
+│   │   ├── Default: *int
+│   │   ├── ElasticMaximum: *int
+│   │   ├── Maximum: *int
+│   │   ├── Minimum: *int
+│   │   └── ScaleType: *string
+│   └── Tier: *string
+└── Tags: map[string]string
+
+StaticSitesCustomDomain_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Name: *string
+├── Properties: *Object (5 properties)
+│   ├── CreatedOn: *string
+│   ├── DomainName: *string
+│   ├── ErrorMessage: *string
+│   ├── Status: *Enum (7 values)
+│   │   ├── "Adding"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Ready"
+│   │   ├── "RetrievingValidationToken"
+│   │   ├── "Unhealthy"
+│   │   └── "Validating"
+│   └── ValidationToken: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+StaticSitesCustomDomain_Spec: Object (3 properties)
+├── Kind: *string
+├── Name: string
+└── Properties: *Object (1 property)
+    └── ValidationMethod: *string
+
+StaticSitesDatabaseConnection_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── ConfigurationFiles: Object (3 properties)[]
+│   │   ├── Contents: *string
+│   │   ├── FileName: *string
+│   │   └── Type: *string
+│   ├── ConnectionIdentity: *string
+│   ├── Region: *string
+│   └── ResourceId: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+StaticSitesDatabaseConnection_Spec: Object (3 properties)
+├── Kind: *string
+├── Name: string
+└── Properties: *Object (4 properties)
+    ├── ConnectionIdentity: *string
+    ├── ConnectionString: *string
+    ├── Region: *string
+    └── ResourceId: *string
+
+StaticSitesLinkedBackend_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── BackendResourceId: *string
+│   ├── CreatedOn: *string
+│   ├── ProvisioningState: *string
+│   └── Region: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+StaticSitesLinkedBackend_Spec: Object (3 properties)
+├── Kind: *string
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── BackendResourceId: *string
+    └── Region: *string
+
+StaticSitesPrivateEndpointConnection_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── IpAddresses: string[]
+│   ├── PrivateEndpoint: *Object (1 property)
+│   │   └── Id: *string
+│   ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+│   │   ├── ActionsRequired: *string
+│   │   ├── Description: *string
+│   │   └── Status: *string
+│   └── ProvisioningState: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+StaticSitesPrivateEndpointConnection_Spec: Object (3 properties)
+├── Kind: *string
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── IpAddresses: string[]
+    └── PrivateLinkServiceConnectionState: *Object (3 properties)
+        ├── ActionsRequired: *string
+        ├── Description: *string
+        └── Status: *string
+
+StaticSitesUserProvidedFunctionApp_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Name: *string
+├── Properties: *Object (3 properties)
+│   ├── CreatedOn: *string
+│   ├── FunctionAppRegion: *string
+│   └── FunctionAppResourceId: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+StaticSitesUserProvidedFunctionApp_Spec: Object (3 properties)
+├── Kind: *string
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── FunctionAppRegion: *string
+    └── FunctionAppResourceId: *string
 

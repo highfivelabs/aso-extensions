@@ -13,9 +13,31 @@ SitesConfigLogsExtension: Object (0 properties)
 
 SitesConfigSlotConfigNamesExtension: Object (0 properties)
 
+SitesDomainOwnershipIdentifierExtension: Object (0 properties)
+
 SitesHostNameBindingExtension: Object (0 properties)
+
+SitesHybridConnectionExtension: Object (0 properties)
+
+SitesPrivateEndpointConnectionExtension: Object (0 properties)
+
+SitesPublicCertificateExtension: Object (0 properties)
 
 SitesSlotExtension: Object (0 properties)
 
 SitesSlotsHostNameBindingExtension: Object (0 properties)
+
+SitesVirtualNetworkConnectionExtension: Object (0 properties)
+
+StaticSiteExtension: Object (0 properties)
+
+StaticSitesCustomDomainExtension: Object (0 properties)
+
+StaticSitesDatabaseConnectionExtension: Object (0 properties)
+
+StaticSitesLinkedBackendExtension: Object (0 properties)
+
+StaticSitesPrivateEndpointConnectionExtension: Object (0 properties)
+
+StaticSitesUserProvidedFunctionAppExtension: Object (0 properties)
 

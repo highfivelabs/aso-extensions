@@ -538,6 +538,14 @@ upstream's); the catalog's chart tests do that.
   `mediaLink`; a host group has 1 to 3 fault domains (400 each). Not
   modelled: replication to regions (a version is ready at once), OS state
   and generation matching, host SKU availability, quota, and the error codes.
+- Static Web Apps' children and an App Service app's virtual network
+  connections (`Microsoft.Web/staticSites/*`, `sites/*/virtualNetworkConnections`,
+  2026-07-15; `pkg/fakecloud/arm/staticsites.go`): a linked backend, a
+  user-provided function app, a database connection and a network
+  connection name a resource that exists (404). Not modelled: custom domain
+  validation (a domain is Ready at once), builds, environments, the
+  repository and deployment token, one backend per site, SKUs, and the
+  error codes.
 - Log Analytics summary rules (`workspaces/summaryLogs`, 2025-07-01;
   `pkg/fakecloud/arm/loganalytics.go`): a rule's definition gives a query
   and a bin size of 20, 30, 60, 120, 180, 360, 720 or 1440 minutes (400).

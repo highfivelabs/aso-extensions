@@ -323,6 +323,17 @@ resources:
 - web.azure.hfl.dev_sitesconfigconnectionstrings.yaml
 - web.azure.hfl.dev_sitesconfiglogs.yaml
 - web.azure.hfl.dev_sitesconfigslotconfignames.yaml
+- web.azure.hfl.dev_sitesdomainownershipidentifiers.yaml
 - web.azure.hfl.dev_siteshostnamebindings.yaml
+- web.azure.hfl.dev_siteshybridconnections.yaml
+- web.azure.hfl.dev_sitesprivateendpointconnections.yaml
+- web.azure.hfl.dev_sitespubliccertificates.yaml
 - web.azure.hfl.dev_sitesslots.yaml
 - web.azure.hfl.dev_sitesslotshostnamebindings.yaml
+- web.azure.hfl.dev_sitesvirtualnetworkconnections.yaml
+- web.azure.hfl.dev_staticsites.yaml
+- web.azure.hfl.dev_staticsitescustomdomains.yaml
+- web.azure.hfl.dev_staticsitesdatabaseconnections.yaml
+- web.azure.hfl.dev_staticsiteslinkedbackends.yaml
+- web.azure.hfl.dev_staticsitesprivateendpointconnections.yaml
+- web.azure.hfl.dev_staticsitesuserprovidedfunctionapps.yaml

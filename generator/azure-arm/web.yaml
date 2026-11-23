@@ -5,6 +5,18 @@ typeTransformers:
     property: SasUrl
     remove: true
     because: a SAS URL carries its signature; the status never holds it
+  - group: web
+    version: v20260715
+    name: DatabaseConnectionProperties_STATUS
+    property: ConnectionString
+    remove: true
+    because: a connection string carries its credential; the status never holds it
+  - group: web
+    version: v20260715
+    name: RelayServiceConnectionEntityProperties_STATUS
+    property: EntityConnectionString;ResourceConnectionString
+    remove: true
+    because: Relay connection strings carry their SAS keys; the status never holds them
 typeFilters:
   - action: include
     group: web
@@ -45,6 +57,46 @@ groupModelConfiguration:
     Sites_BasicPublishingCredentialsPolicies_Scm:
       $exportAs: SitesBasicPublishingCredentialsPolicyScm
       $supportedFrom: v0.1.0
+    # Static Web Apps (which ASO has none of) and their children, and more
+    # children of ASO's Site (2026-11-23).
+    StaticSite:
+      $exportAs: StaticSite
+      $supportedFrom: v0.1.0
+    StaticSites_CustomDomain:
+      $exportAs: StaticSitesCustomDomain
+      $supportedFrom: v0.1.0
+    StaticSites_LinkedBackend:
+      $exportAs: StaticSitesLinkedBackend
+      $supportedFrom: v0.1.0
+    StaticSites_UserProvidedFunctionApp:
+      $exportAs: StaticSitesUserProvidedFunctionApp
+      $supportedFrom: v0.1.0
+    StaticSites_DatabaseConnection:
+      $exportAs: StaticSitesDatabaseConnection
+      $supportedFrom: v0.1.0
+    StaticSites_PrivateEndpointConnection:
+      $exportAs: StaticSitesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Sites_DomainOwnershipIdentifier:
+      $exportAs: SitesDomainOwnershipIdentifier
+      $supportedFrom: v0.1.0
+    Sites_PrivateEndpointConnection:
+      $exportAs: SitesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Sites_PublicCertificate:
+      $exportAs: SitesPublicCertificate
+      $supportedFrom: v0.1.0
+    Sites_VirtualNetworkConnection:
+      $exportAs: SitesVirtualNetworkConnection
+      $supportedFrom: v0.1.0
+    Sites_Hybridconnection:
+      $exportAs: SitesHybridConnection
+      $supportedFrom: v0.1.0
+    RelayServiceConnectionEntityProperties:
+      EntityConnectionString:
+        $importSecretMode: required # a Relay connection string with its SAS key: from a Secret
+      ResourceConnectionString:
+        $importSecretMode: required # the same, for the Relay resource: from a Secret
     # Reference and resource labels, as ASO's web.yaml has them for 2026-07-15
     ApiManagementConfig:
       Id:
@@ -92,3 +144,25 @@ groupModelConfiguration:
     AzureTableStorageApplicationLogsConfig:
       SasUrl:
         $importSecretMode: required
+    DatabaseConnectionProperties:
+      ConnectionString:
+        $importSecretMode: required # a database connection string carries its credential: from a Secret
+      ResourceId:
+        $referenceType: arm # the database (a Cosmos DB account, SQL server or the like) (autolabel, reviewed)
+      ConnectionIdentity:
+        $referenceType: simple # SystemAssigned or a user-assigned identity's ID, as Azure takes it (autolabel, reviewed)
+    StaticSiteUserProvidedFunctionAppARMResourceProperties:
+      FunctionAppResourceId:
+        $referenceType: arm # the function app: ASO's Site or an ARM ID (autolabel, reviewed)
+    VnetInfo:
+      VnetResourceId:
+        $referenceType: arm # the virtual network or subnet (autolabel, reviewed)
+    IdentifierProperties:
+      Id:
+        $referenceType: simple # the identifier's value (a domain verification ID), not an ARM ID (autolabel wrote arm; reviewed)
+    StaticSiteLinkedBackendARMResourceProperties:
+      BackendResourceId:
+        $referenceType: arm # the backend (a function app, container app or API Management service) (autolabel, reviewed)
+    StaticSiteCustomDomainOverviewARMResourceProperties:
+      ValidationToken:
+        $importSecretMode: never # the token Azure makes for a custom domain's TXT record, published in DNS: not a secret, and the status must show it (autolabel wrote required; reviewed)

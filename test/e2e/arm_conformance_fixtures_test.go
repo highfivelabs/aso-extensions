@@ -300,6 +300,21 @@ func init() {
 	f["HostGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"platformFaultDomainCount": int64(1)}
 	}}
+	// Static Web Apps' links and an app's network connection name a
+	// resource the fake holds (staticsites.go); a private endpoint makes a
+	// connection, which a PUT only changes.
+	f["StaticSitesLinkedBackend"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"backendResourceReference": armRef(c.ref)}
+	}}
+	f["StaticSitesUserProvidedFunctionApp"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"functionAppResourceReference": armRef(c.ref)}
+	}}
+	f["SitesVirtualNetworkConnection"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"vnetResourceReference": armRef(c.ref)}
+	}}
+	pec := conformanceFixture{setup: func(c *conformanceContext) { c.add(c.owner + "/privateEndpointConnections/conformance") }}
+	f["SitesPrivateEndpointConnection"] = pec
+	f["StaticSitesPrivateEndpointConnection"] = pec
 	f["WorkspacesSummaryLog"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"ruleDefinition": map[string]any{"query": "AppRequests | summarize count() by bin(TimeGenerated, 1h)", "binSize": int64(60), "destinationTable": "Hourly_CL"}}
 	}}
