@@ -41,8 +41,16 @@ typeFilters:
     because: settings (data export and alert sync), the newest stable version
   - action: include
     group: security
+    version: v20220101preview
+    because: governance rules (preview only)
+  - action: include
+    group: security
     version: v20190101
     because: advanced threat protection settings, the newest stable version
+  - action: include
+    group: security
+    version: v20190101preview
+    because: alerts suppression rules (preview only)
   - action: include
     group: security
     version: v20170801preview
@@ -366,3 +374,23 @@ groupModelConfiguration:
     WorkspaceSetting:
       $exportAs: WorkspaceSetting
       $supportedFrom: v0.1.0
+  # Alerts suppression rules: dismiss Defender for Cloud alerts of a type
+  # matching a scope, kept directly under a subscription (patch 0009).
+  2019-01-01-preview:
+    AlertsSuppressionRule:
+      $exportAs: AlertsSuppressionRule
+      $supportedFrom: v0.1.0
+  # Governance rules: owners and due dates assigned to recommendations, at a
+  # subscription, management group or security connector (/{scope}/, an
+  # extension resource). A rule's name must be a GUID: the hand-written
+  # Claimer in generator/_extensions/security/customizations defaults it
+  # (docs/plan.md, "Names that must be GUIDs").
+  2022-01-01-preview:
+    GovernanceRule:
+      $exportAs: GovernanceRule
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+      $operatorSpecProperties:
+        - name: NamingConvention
+          type: string
+          description: The uuid generation technique to use for any rule without an explicit AzureName. One of 'stable' or 'random'. <br> +kubebuilder:validation:Enum={"random","stable"}

@@ -11,10 +11,12 @@ no_list: true
 | Resource                                   | ARM Version        | CRD Version      | Supported From | Sample |
 |--------------------------------------------|--------------------|------------------|----------------|--------|
 | AdvancedThreatProtectionSetting            | 2019-01-01         | v20190101        | v0.1.0         | -      |
+| AlertsSuppressionRule                      | 2019-01-01-preview | v20190101preview | v0.1.0         | -      |
 | AutoProvisioningSetting                    | 2017-08-01-preview | v20170801preview | v0.1.0         | -      |
 | Automation                                 | 2023-12-01-preview | v20231201preview | v0.1.0         | -      |
 | CustomRecommendation                       | 2024-08-01         | v20240801        | v0.1.0         | -      |
 | DefenderForStorageSetting                  | 2025-06-01         | v20250601        | v0.1.0         | -      |
+| GovernanceRule                             | 2022-01-01-preview | v20220101preview | v0.1.0         | -      |
 | Pricing                                    | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | SecurityConnector                          | 2026-08-01-preview | v20260801preview | v0.1.0         | -      |
 | SecurityConnectorsDevOpsAzureDevOpsOrg     | 2025-03-01         | v20250301        | v0.1.0         | -      |

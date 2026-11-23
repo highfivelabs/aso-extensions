@@ -48,6 +48,12 @@ groupModelConfiguration:
     Workspaces_StorageInsightConfig:
       $exportAs: WorkspacesStorageInsightConfig
       $supportedFrom: v0.1.0
+    # Summary rules: a KQL query run on a schedule over a workspace's tables,
+    # its results written to a destination table (cheaper retention of
+    # verbose logs).
+    Workspaces_SummaryLog:
+      $exportAs: WorkspacesSummaryLog
+      $supportedFrom: v0.1.0
     StorageAccount:
       Id:
         $referenceType: arm # the storage account a storage insight config reads

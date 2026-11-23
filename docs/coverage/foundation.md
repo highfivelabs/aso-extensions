@@ -124,12 +124,12 @@ Generated: every resource of the two categories, by the order of the services in
 
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| platform-foundation | 18 | 246 | 4,675 | 43.2% | 38.0% | 18.8% |
-| security-adjacent | 7 | 93 | 1,049 | 8.6% | 47.0% | 44.4% |
+| platform-foundation | 18 | 246 | 4,675 | 43.2% | 38.2% | 18.6% |
+| security-adjacent | 7 | 93 | 1,049 | 8.6% | 49.0% | 42.4% |
 | application | 35 | 823 | 14,821 | 33.1% | 8.0% | 59.0% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 1.0% | 98.6% |
 
-### platform-foundation: 246 resources (25 with no kind, 80 partly covered, 141 covered)
+### platform-foundation: 246 resources (24 with no kind, 81 partly covered, 141 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -327,11 +327,11 @@ Generated: every resource of the two categories, by the order of the services in
 | 192 | `Microsoft.ManagedIdentity/userAssignedIdentities` | covered | `managedidentity/UserAssignedIdentity` | `managedidentity/UserAssignedIdentity` | 2 / 1 / 0 | resourceGroup | - | - | 3 |
 | 193 | `Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials` | covered | `managedidentity/FederatedIdentityCredential` |  | 3 / 0 / 0 | resourceGroup | - | - | 1 |
 | 194 | `Microsoft.OperationalInsights/workspaces/features/machineGroups` | no kind |  |  | 0 / 0 / 8 | resourceGroup | generator | S (8) | 0 |
-| 195 | `Microsoft.OperationalInsights/workspaces/summaryLogs` | no kind |  |  | 0 / 0 / 11 | resourceGroup | generator | S (11) | 0 |
-| 196 | `Microsoft.OperationalInsights/queryPacks` | partial, 1 of 3 missing |  | `operationalinsights/QueryPack` | 0 / 2 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 2 |
-| 197 | `Microsoft.OperationalInsights/workspaces/dataExports` | partial, 1 of 7 missing |  | `operationalinsights/WorkspacesDataExport` | 0 / 6 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 2 |
-| 198 | `Microsoft.OperationalInsights/workspaces/tables` | partial, 1 of 20 missing |  | `operationalinsights/WorkspacesTable` | 0 / 19 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 2 |
-| 199 | `Microsoft.OperationalInsights/workspaces` | partial, 3 of 23 missing | `operationalinsights/Workspace` |  | 20 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 2 |
+| 195 | `Microsoft.OperationalInsights/queryPacks` | partial, 1 of 3 missing |  | `operationalinsights/QueryPack` | 0 / 2 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 2 |
+| 196 | `Microsoft.OperationalInsights/workspaces/dataExports` | partial, 1 of 7 missing |  | `operationalinsights/WorkspacesDataExport` | 0 / 6 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 2 |
+| 197 | `Microsoft.OperationalInsights/workspaces/tables` | partial, 1 of 20 missing |  | `operationalinsights/WorkspacesTable` | 0 / 19 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 2 |
+| 198 | `Microsoft.OperationalInsights/workspaces` | partial, 3 of 23 missing | `operationalinsights/Workspace` |  | 20 / 0 / 3 | resourceGroup | extend: ASO's API version is older than the spec's | S (3) | 2 |
+| 199 | `Microsoft.OperationalInsights/workspaces/summaryLogs` | partial, 2 of 11 missing |  | `operationalinsights/WorkspacesSummaryLog` | 0 / 9 / 2 | resourceGroup | extend: newer API version or property config | S (2) | 0 |
 | 200 | `Microsoft.OperationalInsights/clusters` | partial, 2 of 18 missing |  | `operationalinsights/Cluster` | 0 / 16 / 2 | resourceGroup | extend: newer API version or property config | S (2) | 0 |
 | 201 | `Microsoft.OperationalInsights/workspaces/linkedStorageAccounts` | covered |  | `operationalinsights/WorkspacesLinkedStorageAccount` | 0 / 1 / 0 | resourceGroup | - | - | 2 |
 | 202 | `Microsoft.OperationalInsights/workspaces/linkedServices` | covered |  | `operationalinsights/WorkspacesLinkedService` | 0 / 4 / 0 | resourceGroup | - | - | 2 |
@@ -380,7 +380,7 @@ Generated: every resource of the two categories, by the order of the services in
 | 245 | `Microsoft.ContainerRegistry/registries/privateEndpointConnections` | covered |  | `containerregistry/RegistriesPrivateEndpointConnection` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 246 | `Microsoft.Billing/billingAccounts/billingSubscriptionAliases` | no kind |  |  | 0 / 0 / 17 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (17) | 0 |
 
-### security-adjacent: 93 resources (45 with no kind, 18 partly covered, 30 covered)
+### security-adjacent: 93 resources (43 with no kind, 20 partly covered, 30 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -408,21 +408,21 @@ Generated: every resource of the two categories, by the order of the services in
 | 22 | `Microsoft.Security/applications` | no kind |  |  | 0 / 0 / 4 | extension,subscription | generator, arbitrary owner (several scopes, patch 0006) | S (4) | 0 |
 | 23 | `Microsoft.Security/privateLinks/privateEndpointConnections` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
 | 24 | `Microsoft.Security/serviceEntitlements` | no kind |  |  | 0 / 0 / 4 | resourceGroup | generator | S (4) | 0 |
-| 25 | `Microsoft.Security/alertsSuppressionRules` | no kind |  |  | 0 / 0 / 7 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (7) | 0 |
-| 26 | `Microsoft.Security/batchPricings` | no kind |  |  | 0 / 0 / 9 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (9) | 0 |
-| 27 | `Microsoft.Security/standards` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
-| 28 | `Microsoft.Security/assessments/governanceAssignments` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
-| 29 | `Microsoft.Security/assignments` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
-| 30 | `Microsoft.Security/deviceSecurityGroups` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
-| 31 | `Microsoft.Security/informationProtectionPolicies` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
-| 32 | `Microsoft.Security/governanceRules` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
-| 33 | `Microsoft.Security/iotSecuritySolutions` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
-| 34 | `Microsoft.Security/assessmentMetadata` | no kind |  |  | 0 / 0 / 18 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (18) | 0 |
-| 35 | `Microsoft.Security/locations/jitNetworkAccessPolicies` | no kind |  |  | 0 / 0 / 19 | resourceGroup | generator | S (19) | 0 |
-| 36 | `Microsoft.Security/assessments` | no kind |  |  | 0 / 0 / 36 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (36) | 0 |
-| 37 | `Microsoft.Security/settings` | partial, 2 of 2 missing |  | `security/Setting` | 0 / 0 / 2 | subscription | extend: newer API version or property config | S (2) | 0 |
-| 38 | `Microsoft.Security/securityStandards` | partial, 1 of 6 missing |  | `security/SecurityStandard` | 0 / 5 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
-| 39 | `Microsoft.Security/standardAssignments` | partial, 1 of 13 missing |  | `security/StandardAssignment` | 0 / 12 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 25 | `Microsoft.Security/batchPricings` | no kind |  |  | 0 / 0 / 9 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (9) | 0 |
+| 26 | `Microsoft.Security/standards` | no kind |  |  | 0 / 0 / 9 | resourceGroup | generator | S (9) | 0 |
+| 27 | `Microsoft.Security/assessments/governanceAssignments` | no kind |  |  | 0 / 0 / 10 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (10) | 0 |
+| 28 | `Microsoft.Security/assignments` | no kind |  |  | 0 / 0 / 13 | resourceGroup | generator | S (13) | 0 |
+| 29 | `Microsoft.Security/deviceSecurityGroups` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
+| 30 | `Microsoft.Security/informationProtectionPolicies` | no kind |  |  | 0 / 0 / 15 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (15) | 0 |
+| 31 | `Microsoft.Security/iotSecuritySolutions` | no kind |  |  | 0 / 0 / 16 | resourceGroup | generator | S (16) | 0 |
+| 32 | `Microsoft.Security/assessmentMetadata` | no kind |  |  | 0 / 0 / 18 | subscription | generator, tenant or subscription owner (as ASO's Alias) | S (18) | 0 |
+| 33 | `Microsoft.Security/locations/jitNetworkAccessPolicies` | no kind |  |  | 0 / 0 / 19 | resourceGroup | generator | S (19) | 0 |
+| 34 | `Microsoft.Security/assessments` | no kind |  |  | 0 / 0 / 36 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (36) | 0 |
+| 35 | `Microsoft.Security/settings` | partial, 2 of 2 missing |  | `security/Setting` | 0 / 0 / 2 | subscription | extend: newer API version or property config | S (2) | 0 |
+| 36 | `Microsoft.Security/securityStandards` | partial, 1 of 6 missing |  | `security/SecurityStandard` | 0 / 5 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 37 | `Microsoft.Security/alertsSuppressionRules` | partial, 1 of 7 missing |  | `security/AlertsSuppressionRule` | 0 / 6 / 1 | subscription | extend: newer API version or property config | S (1) | 0 |
+| 38 | `Microsoft.Security/standardAssignments` | partial, 1 of 13 missing |  | `security/StandardAssignment` | 0 / 12 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 39 | `Microsoft.Security/governanceRules` | partial, 1 of 16 missing |  | `security/GovernanceRule` | 0 / 15 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
 | 40 | `Microsoft.Security/advancedThreatProtectionSettings` | covered |  | `security/AdvancedThreatProtectionSetting` | 0 / 1 / 0 | extension | - | - | 0 |
 | 41 | `Microsoft.Security/autoProvisioningSettings` | covered |  | `security/AutoProvisioningSetting` | 0 / 1 / 0 | subscription | - | - | 0 |
 | 42 | `Microsoft.Security/serverVulnerabilityAssessmentsSettings` | covered |  | `security/ServerVulnerabilityAssessmentsSetting` | 0 / 2 / 0 | subscription | - | - | 0 |

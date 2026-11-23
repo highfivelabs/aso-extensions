@@ -506,6 +506,21 @@ upstream's); the catalog's chart tests do that.
   fake's own). A rule collection group's draft
   (`ruleCollectionGroups/{g}/ruleCollectionGroupDrafts/default`) is kept as
   sent: deploying a draft is a POST on the policy, not faked.
+- Defender for Cloud governance rules (`Microsoft.Security/governanceRules`,
+  2022-01-01-preview; `pkg/fakecloud/arm/governance.go`), from the spec: a
+  rule's key (its name) is a GUID, its priority from 0 to 1000 and unique at
+  its scope, and it gives a condition set (400 each). Not modelled: owners
+  assigned to recommendations or notified, the condition sets' content
+  (free-form in the spec), excluded and member scopes, which scopes Azure
+  takes, and the error codes (the fake's own). Alerts suppression rules
+  (`alertsSuppressionRules`, 2019-01-01-preview) are kept as sent: no alert
+  is suppressed, and an expiry date in the past is not refused (Azure's rule
+  depends on the day).
+- Log Analytics summary rules (`workspaces/summaryLogs`, 2025-07-01;
+  `pkg/fakecloud/arm/loganalytics.go`): a rule's definition gives a query
+  and a bin size of 20, 30, 60, 120, 180, 360, 720 or 1440 minutes (400).
+  Not modelled: the rule running, its destination table being made, and
+  the query being valid KQL.
 - Resource Manager checks no role: real Azure lets only Owner and User
   Access Administrator (or a custom role with
   `Microsoft.Authorization/locks/*`) write locks, so ASO's identity may

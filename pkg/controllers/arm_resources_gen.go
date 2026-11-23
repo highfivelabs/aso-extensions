@@ -143,6 +143,10 @@ import (
 	security_v20170801ps "github.com/highfivelabs/aso-extensions/apis/arm/security/v20170801preview/storage"
 	security_v20190101 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20190101"
 	security_v20190101s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20190101/storage"
+	security_v20190101p "github.com/highfivelabs/aso-extensions/apis/arm/security/v20190101preview"
+	security_v20190101ps "github.com/highfivelabs/aso-extensions/apis/arm/security/v20190101preview/storage"
+	security_v20220101p "github.com/highfivelabs/aso-extensions/apis/arm/security/v20220101preview"
+	security_v20220101ps "github.com/highfivelabs/aso-extensions/apis/arm/security/v20220101preview/storage"
 	security_v20220501 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20220501"
 	security_v20220501s "github.com/highfivelabs/aso-extensions/apis/arm/security/v20220501/storage"
 	security_v20230501 "github.com/highfivelabs/aso-extensions/apis/arm/security/v20230501"
@@ -1333,6 +1337,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesSummaryLog)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.WorkspacesTable)})
 	result = append(result, &registration.StorageType{Obj: new(operationsmanagement_v20151101p.ManagementAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(operationsmanagement_v20151101p.ManagementConfiguration)})
@@ -1387,6 +1392,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(security_v20170801p.AutoProvisioningSetting)})
 	result = append(result, &registration.StorageType{Obj: new(security_v20170801p.WorkspaceSetting)})
 	result = append(result, &registration.StorageType{Obj: new(security_v20190101.AdvancedThreatProtectionSetting)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20190101p.AlertsSuppressionRule)})
+	result = append(result, &registration.StorageType{Obj: new(security_v20220101p.GovernanceRule)})
 	result = append(result, &registration.StorageType{Obj: new(security_v20220501.Setting)})
 	result = append(result, &registration.StorageType{Obj: new(security_v20230501.ServerVulnerabilityAssessmentsSetting)})
 	result = append(result, &registration.StorageType{Obj: new(security_v20231201p.Automation)})
@@ -2090,6 +2097,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesLinkedStorageAccount)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesSavedSearch)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesStorageInsightConfig)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesSummaryLog)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.WorkspacesTable)})
 	result = append(
 		result,
@@ -2102,6 +2110,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesLinkedStorageAccount)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesSavedSearch)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesStorageInsightConfig)},
+		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesSummaryLog)},
 		&registration.KnownType{Obj: new(operationalinsights_v20250701s.WorkspacesTable)})
 	result = append(
 		result,
@@ -2148,7 +2157,11 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(security_v20170801p.AutoProvisioningSetting)}, &registration.KnownType{Obj: new(security_v20170801p.WorkspaceSetting)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20170801ps.AutoProvisioningSetting)}, &registration.KnownType{Obj: new(security_v20170801ps.WorkspaceSetting)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20190101.AdvancedThreatProtectionSetting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20190101p.AlertsSuppressionRule)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20190101ps.AlertsSuppressionRule)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20190101s.AdvancedThreatProtectionSetting)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20220101p.GovernanceRule)})
+	result = append(result, &registration.KnownType{Obj: new(security_v20220101ps.GovernanceRule)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20220501.Setting)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20220501s.Setting)})
 	result = append(result, &registration.KnownType{Obj: new(security_v20230501.ServerVulnerabilityAssessmentsSetting)})
@@ -2367,7 +2380,11 @@ func createScheme() *runtime.Scheme {
 	_ = security_v20170801p.AddToScheme(scheme)
 	_ = security_v20170801ps.AddToScheme(scheme)
 	_ = security_v20190101.AddToScheme(scheme)
+	_ = security_v20190101p.AddToScheme(scheme)
+	_ = security_v20190101ps.AddToScheme(scheme)
 	_ = security_v20190101s.AddToScheme(scheme)
+	_ = security_v20220101p.AddToScheme(scheme)
+	_ = security_v20220101ps.AddToScheme(scheme)
 	_ = security_v20220501.AddToScheme(scheme)
 	_ = security_v20220501s.AddToScheme(scheme)
 	_ = security_v20230501.AddToScheme(scheme)
@@ -2619,6 +2636,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &operationalinsights_customizations.WorkspacesLinkedStorageAccountExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesSavedSearchExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesStorageInsightConfigExtension{})
+	result = append(result, &operationalinsights_customizations.WorkspacesSummaryLogExtension{})
 	result = append(result, &operationalinsights_customizations.WorkspacesTableExtension{})
 	result = append(result, &operationsmanagement_customizations.ManagementAssociationExtension{})
 	result = append(result, &operationsmanagement_customizations.ManagementConfigurationExtension{})
@@ -2638,10 +2656,12 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &resources_customizations.TemplateSpecExtension{})
 	result = append(result, &resources_customizations.TemplateSpecsVersionExtension{})
 	result = append(result, &security_customizations.AdvancedThreatProtectionSettingExtension{})
+	result = append(result, &security_customizations.AlertsSuppressionRuleExtension{})
 	result = append(result, &security_customizations.AutoProvisioningSettingExtension{})
 	result = append(result, &security_customizations.AutomationExtension{})
 	result = append(result, &security_customizations.CustomRecommendationExtension{})
 	result = append(result, &security_customizations.DefenderForStorageSettingExtension{})
+	result = append(result, &security_customizations.GovernanceRuleExtension{})
 	result = append(result, &security_customizations.PricingExtension{})
 	result = append(result, &security_customizations.SecurityConnectorExtension{})
 	result = append(result, &security_customizations.SecurityConnectorsDevOpsAzureDevOpsOrgExtension{})

@@ -225,6 +225,7 @@ resources:
 - operationalinsights.azure.hfl.dev_workspaceslinkedstorageaccounts.yaml
 - operationalinsights.azure.hfl.dev_workspacessavedsearches.yaml
 - operationalinsights.azure.hfl.dev_workspacesstorageinsightconfigs.yaml
+- operationalinsights.azure.hfl.dev_workspacessummarylogs.yaml
 - operationalinsights.azure.hfl.dev_workspacestables.yaml
 - operationsmanagement.azure.hfl.dev_managementassociations.yaml
 - operationsmanagement.azure.hfl.dev_managementconfigurations.yaml
@@ -245,10 +246,12 @@ resources:
 - resources.azure.hfl.dev_templatespecs.yaml
 - resources.azure.hfl.dev_templatespecsversions.yaml
 - security.azure.hfl.dev_advancedthreatprotectionsettings.yaml
+- security.azure.hfl.dev_alertssuppressionrules.yaml
 - security.azure.hfl.dev_automations.yaml
 - security.azure.hfl.dev_autoprovisioningsettings.yaml
 - security.azure.hfl.dev_customrecommendations.yaml
 - security.azure.hfl.dev_defenderforstoragesettings.yaml
+- security.azure.hfl.dev_governancerules.yaml
 - security.azure.hfl.dev_pricings.yaml
 - security.azure.hfl.dev_securityconnectors.yaml
 - security.azure.hfl.dev_securityconnectorsdevopsazuredevopsorgs.yaml

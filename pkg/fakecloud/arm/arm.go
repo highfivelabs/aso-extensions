@@ -36,7 +36,8 @@
 // bodies kept as properties, GUID names, singletons that cannot be
 // deleted), Network Watcher connection monitors and address prefix sets
 // (networkwatcher.go: test groups that name the monitor's own endpoints and
-// test configurations, CIDR prefixes), budgets
+// test configurations, CIDR prefixes), Defender for Cloud governance rules
+// (governance.go: GUID keys, one priority per scope), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -444,6 +445,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkNetworkWatcher(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkGovernance(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

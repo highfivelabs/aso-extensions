@@ -1762,7 +1762,7 @@ Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedSer
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedStorageAccounts,1,,0,operationalinsights.azure.hfl.dev/WorkspacesLinkedStorageAccount,1,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/savedSearches,9,,0,operationalinsights.azure.hfl.dev/WorkspacesSavedSearch,9,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/storageInsightConfigs,6,,0,operationalinsights.azure.hfl.dev/WorkspacesStorageInsightConfig,6,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/summaryLogs,11,,0,,0,11,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/summaryLogs,11,,0,operationalinsights.azure.hfl.dev/WorkspacesSummaryLog,9,2,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/tables,20,,0,operationalinsights.azure.hfl.dev/WorkspacesTable,19,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementAssociations,2,,0,operationsmanagement.azure.hfl.dev/ManagementAssociation,2,0,false,spec_api=2015-11-01-preview; spec-preview-only; ours_api=2015-11-01-preview
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementConfigurations,6,,0,operationsmanagement.azure.hfl.dev/ManagementConfiguration,6,0,false,spec_api=2015-11-01-preview; spec-preview-only; ours_api=2015-11-01-preview
@@ -1911,7 +1911,7 @@ Microsoft.Search,Microsoft.Search/searchServices/sharedPrivateLinkResources,6,,0
 Microsoft.SecretSyncController,Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses,9,,0,,0,9,false,spec_api=2026-09-25-preview; spec-preview-only
 Microsoft.SecretSyncController,Microsoft.SecretSyncController/secretSyncs,10,,0,,0,10,false,spec_api=2026-09-25-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/advancedThreatProtectionSettings,1,,0,security.azure.hfl.dev/AdvancedThreatProtectionSetting,1,0,false,spec_api=2019-01-01; ours_api=2019-01-01
-Microsoft.Security,Microsoft.Security/alertsSuppressionRules,7,,0,,0,7,false,spec_api=2019-01-01-preview; spec-preview-only
+Microsoft.Security,Microsoft.Security/alertsSuppressionRules,7,,0,security.azure.hfl.dev/AlertsSuppressionRule,6,1,false,spec_api=2019-01-01-preview; spec-preview-only; ours_api=2019-01-01-preview
 Microsoft.Security,Microsoft.Security/apiCollections,0,,0,,0,0,false,spec_api=2023-11-15
 Microsoft.Security,Microsoft.Security/applications,4,,0,,0,4,false,spec_api=2022-07-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/assessmentMetadata,18,,0,,0,18,false,spec_api=2025-05-04
@@ -1925,7 +1925,7 @@ Microsoft.Security,Microsoft.Security/customRecommendations,7,,0,security.azure.
 Microsoft.Security,Microsoft.Security/dataScanners,2,,0,,0,2,false,spec_api=2026-08-01
 Microsoft.Security,Microsoft.Security/defenderForStorageSettings,10,,0,security.azure.hfl.dev/DefenderForStorageSetting,10,0,false,spec_api=2025-06-01; ours_api=2025-06-01
 Microsoft.Security,Microsoft.Security/deviceSecurityGroups,15,,0,,0,15,false,spec_api=2019-08-01
-Microsoft.Security,Microsoft.Security/governanceRules,16,,0,,0,16,false,spec_api=2022-01-01-preview; spec-preview-only
+Microsoft.Security,Microsoft.Security/governanceRules,16,,0,security.azure.hfl.dev/GovernanceRule,15,1,false,spec_api=2022-01-01-preview; spec-preview-only; ours_api=2022-01-01-preview
 Microsoft.Security,Microsoft.Security/informationProtectionPolicies,15,,0,,0,15,false,spec_api=2017-08-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/iotSecuritySolutions,16,,0,,0,16,false,spec_api=2019-08-01
 Microsoft.Security,Microsoft.Security/locations/jitNetworkAccessPolicies,19,,0,,0,19,false,spec_api=2020-01-01

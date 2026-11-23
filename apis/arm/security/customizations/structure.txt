@@ -3,6 +3,8 @@ github.com/highfivelabs/aso-extensions/apis/arm/security/customizations
 -----------------------------------------------------------------------
 AdvancedThreatProtectionSettingExtension: Object (0 properties)
 
+AlertsSuppressionRuleExtension: Object (0 properties)
+
 AutoProvisioningSettingExtension: Object (0 properties)
 
 AutomationExtension: Object (0 properties)
@@ -10,6 +12,8 @@ AutomationExtension: Object (0 properties)
 CustomRecommendationExtension: Object (0 properties)
 
 DefenderForStorageSettingExtension: Object (0 properties)
+
+GovernanceRuleExtension: Object (0 properties)
 
 PricingExtension: Object (0 properties)
 

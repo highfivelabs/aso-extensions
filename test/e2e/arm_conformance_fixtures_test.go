@@ -232,6 +232,15 @@ func init() {
 	f["ApplicationSecurityGroupsAddressPrefixSet"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"properties": map[string]any{"addressPrefixes": []any{"10.0.0.0/16"}}}
 	}}
+	// A governance rule gives a condition set (its key, a GUID, is the
+	// Claimer's); a summary rule a query and a bin size Azure allows (the
+	// fake's rules, governance.go and loganalytics.go).
+	f["GovernanceRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"conditionSets": []any{map[string]any{"conditions": []any{}}}}
+	}}
+	f["WorkspacesSummaryLog"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"ruleDefinition": map[string]any{"query": "AppRequests | summarize count() by bin(TimeGenerated, 1h)", "binSize": int64(60), "destinationTable": "Hourly_CL"}}
+	}}
 	// Foundation batch 2: kinds with required fields or specific owners.
 	f["DeploymentSafeguard"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"level": "Warn"}
