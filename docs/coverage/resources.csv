@@ -649,7 +649,7 @@ Microsoft.Compute,Microsoft.Compute/restorePointCollections/restorePoints,43,,0,
 Microsoft.Compute,Microsoft.Compute/snapshots,55,compute.azure.com/Snapshot,52,,0,3,false,spec_api=2026-03-02; official_api=2024-03-02; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/sshPublicKeys,3,,0,compute.azure.hfl.dev/SshPublicKey,3,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachines,218,compute.azure.com/VirtualMachine,169,compute.azure.hfl.dev/VirtualMachine,34,15,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec; ours_api=2025-04-01; ours-api-differs-from-spec
-Microsoft.Compute,Microsoft.Compute/virtualMachines/diagnosticRunCommands,24,,0,,0,24,false,spec_api=2026-04-01
+Microsoft.Compute,Microsoft.Compute/virtualMachines/diagnosticRunCommands,24,,0,compute.azure.hfl.dev/VirtualMachinesDiagnosticRunCommand,24,0,false,spec_api=2026-04-01; ours_api=2026-04-01
 Microsoft.Compute,Microsoft.Compute/virtualMachines/extensions,27,compute.azure.com/VirtualMachinesExtension,26,,0,1,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachines/runCommands,24,,0,compute.azure.hfl.dev/VirtualMachinesRunCommand,15,9,false,spec_api=2026-04-01; ours_api=2022-03-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachineScaleSets,268,compute.azure.com/VirtualMachineScaleSet,176,,0,92,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec

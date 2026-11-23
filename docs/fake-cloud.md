@@ -687,6 +687,13 @@ upstream's); the catalog's chart tests do that.
   settings (400); its pipelines name only what it declares (400). Not
   modelled: the pipeline running, data reaching the data collection rule,
   persistence, TLS certificates, and the error codes.
+- A VM's diagnostic run commands
+  (`virtualMachines/*/diagnosticRunCommands`, 2026-04-01;
+  `pkg/fakecloud/arm/diagnosticruncommands.go`): the source is exactly one
+  of a script, a script URI, a command ID or a gallery script version
+  (400), and a gallery script version exists (404). Not modelled: the
+  script running, its output, the run-as account, and the error codes. A
+  VM's ordinary run commands are not checked.
 - Microsoft Foundry managed networks and outbound rules
   (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
   `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`

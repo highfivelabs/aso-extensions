@@ -23,6 +23,10 @@ typeFilters:
     because: Azure Compute Gallery (galleries, image definitions and versions, VM applications and versions), the newest stable GalleryRP version
   - action: include
     group: compute
+    version: v20260401
+    because: a VM's diagnostic run commands (docs/plan.md f55), only in the newest stable ComputeRP version; owned by ASO's VirtualMachine
+  - action: include
+    group: compute
     version: v20260302
     because: a disk access's private endpoint connections (docs/plan.md f37), the newest stable DiskRP version; owned by ASO's DiskAccess (2024-03-02)
 groupModelConfiguration:
@@ -77,6 +81,21 @@ groupModelConfiguration:
         $referenceType: arm # the source managed image or gallery image version (autolabel, reviewed)
       CommunityGalleryImageId:
         $referenceType: simple # a community gallery image's path, not an ARM ID (autolabel, reviewed)
+  # A VM's diagnostic run commands (docs/plan.md f55): run commands kept
+  # apart for diagnostics, with the run command's properties and labels.
+  2026-04-01:
+    VirtualMachines_DiagnosticRunCommand:
+      $exportAs: VirtualMachinesDiagnosticRunCommand
+      $supportedFrom: v0.1.0
+    VirtualMachineRunCommandProperties:
+      RunAsPassword:
+        $importSecretMode: optional # the password of the account the script runs as, from a Secret
+    VirtualMachineRunCommandProperties_STATUS:
+      RunAsPassword:
+        $importSecretMode: never
+    VirtualMachineRunCommandScriptSource:
+      GalleryScriptReferenceId:
+        $referenceType: arm # a gallery script version, our GalleriesScriptsVersion (autolabel wrote simple; reviewed)
   2022-03-01:
     VirtualMachines_RunCommand:
       $exportAs: VirtualMachinesRunCommand

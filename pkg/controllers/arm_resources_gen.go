@@ -58,6 +58,8 @@ import (
 	compute_v20260302s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260302/storage"
 	compute_v20260303 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260303"
 	compute_v20260303s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260303/storage"
+	compute_v20260401 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260401"
+	compute_v20260401s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260401/storage"
 	consumption_customizations "github.com/highfivelabs/aso-extensions/apis/arm/consumption/customizations"
 	consumption_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601"
 	consumption_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601/storage"
@@ -964,6 +966,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesScript)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesScriptsVersion)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.Gallery)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20260401.VirtualMachinesDiagnosticRunCommand)})
 	result = append(result, &registration.StorageType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.StorageType{
 		Obj: new(containerregistry_v20190401.RegistriesTask),
@@ -2862,6 +2865,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesScript)},
 		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesScriptsVersion)},
 		&registration.KnownType{Obj: new(compute_v20260303s.Gallery)})
+	result = append(result, &registration.KnownType{Obj: new(compute_v20260401.VirtualMachinesDiagnosticRunCommand)})
+	result = append(result, &registration.KnownType{Obj: new(compute_v20260401s.VirtualMachinesDiagnosticRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601s.Budget)})
 	result = append(result, &registration.KnownType{Obj: new(containerregistry_v20190401.RegistriesTask)})
@@ -3723,6 +3728,8 @@ func createScheme() *runtime.Scheme {
 	_ = compute_v20260302s.AddToScheme(scheme)
 	_ = compute_v20260303.AddToScheme(scheme)
 	_ = compute_v20260303s.AddToScheme(scheme)
+	_ = compute_v20260401.AddToScheme(scheme)
+	_ = compute_v20260401s.AddToScheme(scheme)
 	_ = consumption_v20260601.AddToScheme(scheme)
 	_ = consumption_v20260601s.AddToScheme(scheme)
 	_ = containerregistry_v20190401.AddToScheme(scheme)
@@ -3960,6 +3967,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &compute_customizations.RestorePointCollectionsRestorePointExtension{})
 	result = append(result, &compute_customizations.SshPublicKeyExtension{})
 	result = append(result, &compute_customizations.VirtualMachineExtension{})
+	result = append(result, &compute_customizations.VirtualMachinesDiagnosticRunCommandExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
 	result = append(result, &consumption_customizations.BudgetExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesConnectedRegistryExtension{})

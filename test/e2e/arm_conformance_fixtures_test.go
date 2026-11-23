@@ -546,6 +546,10 @@ func init() {
 	// Azure Monitor pipeline groups run on a custom location and their
 	// pipelines name what they declare (monitorpipeline.go).
 	f["PipelineGroup"] = conformanceFixture{coveredBy: "TestMonitorPipelineGroup"}
+	// A diagnostic run command has one source (diagnosticruncommands.go).
+	f["VirtualMachinesDiagnosticRunCommand"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"source": map[string]any{"script": "uptime"}}}
+	}}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}

@@ -377,6 +377,7 @@ ledger has a row for it.
 | 2026-11-23 | `TestLiveDevTestLab` | `Lab`, `LabsSchedule`, `LabsNotificationChannel`, `LabsCost` | none: a lab with no VM (DevTest Labs bills what a lab runs; it makes a storage account and a Key Vault beside the lab in the live group, storage cents, deleted with it); up to half an hour to make and delete; skips unless `Microsoft.DevTestLab` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveDevTestLab"` |
 | 2026-11-23 | `TestLiveSiteRecovery` | `VaultsReplicationFabric`, `VaultsReplicationPolicy`, `VaultsReplicationAlertSetting` (and `Vault`) | none: an empty vault with an Azure fabric for the live region and an A2A policy (free: nothing is replicated); skips unless `Microsoft.RecoveryServices` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSiteRecovery"` |
 | 2026-11-23 | `TestLiveStaticSiteBasicAuth` | `StaticSitesBasicAuth` (and `StaticSite`) | none: a Standard static web app with no content in westus2 (Standard bills per app-month, prorated: cents for a run); its password made per run | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveStaticSiteBasicAuth"` |
+| 2026-11-23 | `TestLiveVirtualMachineRunCommand` (extended) | `VirtualMachinesDiagnosticRunCommand` | the test's small Linux VM (about $0.03 an hour); the run command part passed on 2026-11-10 (`ax101935c071`), the diagnostic run command part is new | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveVirtualMachineRunCommand"` |
 
 All of them in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
 TESTS="TestLiveAddressPrefixSet TestLiveRuleCollectionGroupDraft
@@ -384,7 +385,8 @@ TestLiveConnectionMonitor TestLiveSummaryRule TestLiveSentinelWorkspace
 TestLiveSiteContainers TestLiveSqlServerExtras TestLiveRestorePoints
 TestLiveCosmosPostgres TestLiveCosmosFleet TestLiveStorageDataShare
 TestLiveSandboxGroup TestLiveVaultSettings TestLiveDevTestLab
-TestLiveSiteRecovery TestLiveStaticSiteBasicAuth"`.
+TestLiveSiteRecovery TestLiveStaticSiteBasicAuth
+TestLiveVirtualMachineRunCommand"`.
 
 Written for the subscription (above, "The subscription roles"); each skips
 until the builder assigns the roles of `hack/live/roles/`:

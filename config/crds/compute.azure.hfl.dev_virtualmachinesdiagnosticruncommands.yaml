@@ -1,0 +1,717 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: virtualmachinesdiagnosticruncommands.compute.azure.hfl.dev
+spec:
+  group: compute.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - compute
+    kind: VirtualMachinesDiagnosticRunCommand
+    listKind: VirtualMachinesDiagnosticRunCommandList
+    plural: virtualmachinesdiagnosticruncommands
+    singular: virtualmachinesdiagnosticruncommand
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260401
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /compute/resource-manager/Microsoft.Compute/Compute/stable/2026-04-01/ComputeRP.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/diagnosticRunCommands/{runCommandName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a compute.azure.com/VirtualMachine resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+              properties:
+                description: 'Properties: Describes the properties of a Virtual Machine
+                  diagnostic run command.'
+                properties:
+                  asyncExecution:
+                    description: |-
+                      AsyncExecution: Optional. If set to true, provisioning will complete as soon as the script starts and will not wait for
+                      script to complete.
+                    type: boolean
+                  errorBlobManagedIdentity:
+                    description: |-
+                      ErrorBlobManagedIdentity: User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty
+                      object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with
+                      'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's
+                      identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and
+                      https://aka.ms/RunCommandManaged
+                    properties:
+                      clientId:
+                        description: 'ClientId: Client Id (GUID value) of the user-assigned
+                          managed identity. ObjectId should not be used if this is
+                          provided.'
+                        type: string
+                      objectId:
+                        description: 'ObjectId: Object Id (GUID value) of the user-assigned
+                          managed identity. ClientId should not be used if this is
+                          provided.'
+                        type: string
+                    type: object
+                  errorBlobUri:
+                    description: |-
+                      ErrorBlobUri: Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read,
+                      append, create, write access OR use managed identity to provide the VM access to the blob. Refer
+                      errorBlobManagedIdentity parameter.
+                    type: string
+                  outputBlobManagedIdentity:
+                    description: |-
+                      OutputBlobManagedIdentity: User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty
+                      object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with
+                      'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's
+                      identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and
+                      https://aka.ms/RunCommandManaged
+                    properties:
+                      clientId:
+                        description: 'ClientId: Client Id (GUID value) of the user-assigned
+                          managed identity. ObjectId should not be used if this is
+                          provided.'
+                        type: string
+                      objectId:
+                        description: 'ObjectId: Object Id (GUID value) of the user-assigned
+                          managed identity. ClientId should not be used if this is
+                          provided.'
+                        type: string
+                    type: object
+                  outputBlobUri:
+                    description: |-
+                      OutputBlobUri: Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read,
+                      append, create, write access OR use managed identity to provide the VM access to the blob. Refer
+                      outputBlobManagedIdentity parameter.
+                    type: string
+                  parameters:
+                    description: 'Parameters: The parameters used by the script.'
+                    items:
+                      description: Describes the properties of a run command parameter.
+                      properties:
+                        name:
+                          description: 'Name: The run command parameter name.'
+                          type: string
+                        value:
+                          description: 'Value: The run command parameter value.'
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  protectedParameters:
+                    description: 'ProtectedParameters: The parameters used by the
+                      script.'
+                    items:
+                      description: Describes the properties of a run command parameter.
+                      properties:
+                        name:
+                          description: 'Name: The run command parameter name.'
+                          type: string
+                        value:
+                          description: 'Value: The run command parameter value.'
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  runAsPassword:
+                    description: 'RunAsPassword: Specifies the user account password
+                      on the VM when executing the run command.'
+                    type: string
+                  runAsPasswordFromSecret:
+                    description: 'RunAsPasswordFromSecret: Specifies the user account
+                      password on the VM when executing the run command.'
+                    properties:
+                      key:
+                        description: Key is the key in the Kubernetes secret being
+                          referenced
+                        type: string
+                      name:
+                        description: |-
+                          Name is the name of the Kubernetes secret being referenced.
+                          The secret must be in the same namespace as the resource
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
+                  runAsUser:
+                    description: 'RunAsUser: Specifies the user account on the VM
+                      when executing the run command.'
+                    type: string
+                  source:
+                    description: 'Source: The source of the run command script.'
+                    properties:
+                      commandId:
+                        description: |-
+                          CommandId: Specifies a commandId of predefined built-in script. Command IDs available for Linux are listed at
+                          https://aka.ms/RunCommandManagedLinux#available-commands, Windows at
+                          https://aka.ms/RunCommandManagedWindows#available-commands.
+                        type: string
+                      galleryScriptReferenceReference:
+                        description: |-
+                          GalleryScriptReferenceReference: The resource ID of a Gallery Script version that needs to be executed. Example ID looks
+                          like
+                          /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{scriptName}/versions/{version}.
+                        properties:
+                          armId:
+                            description: |-
+                              ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                              The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                              ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                            pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                            type: string
+                          group:
+                            description: Group is the Kubernetes group of the resource.
+                            type: string
+                          kind:
+                            description: Kind is the Kubernetes kind of the resource.
+                            type: string
+                          name:
+                            description: Name is the Kubernetes name of the resource.
+                            type: string
+                        type: object
+                      script:
+                        description: 'Script: Specifies the script content to be executed
+                          on the VM.'
+                        type: string
+                      scriptShell:
+                        description: |-
+                          ScriptShell: Optional. Specify which shell to use for running the script. These values must match those expected by the
+                          extension. Currently supported only for Windows VMs, script uses Powershell 7 when specified. Powershell 7 must be
+                          already installed on the machine to use Powershell7 parameter value.
+                        enum:
+                        - Default
+                        - Powershell7
+                        type: string
+                      scriptUri:
+                        description: |-
+                          ScriptUri: Specifies the script download location. It can be either SAS URI of an Azure storage blob with read access or
+                          public URI.
+                        type: string
+                      scriptUriManagedIdentity:
+                        description: |-
+                          ScriptUriManagedIdentity: User-assigned managed identity that has access to scriptUri in case of Azure storage blob. Use
+                          an empty object in case of system-assigned identity. Make sure the Azure storage blob exists, and managed identity has
+                          been given access to blob's container with 'Storage Blob Data Reader' role assignment. In case of user-assigned
+                          identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer
+                          https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged.
+                        properties:
+                          clientId:
+                            description: 'ClientId: Client Id (GUID value) of the
+                              user-assigned managed identity. ObjectId should not
+                              be used if this is provided.'
+                            type: string
+                          objectId:
+                            description: 'ObjectId: Object Id (GUID value) of the
+                              user-assigned managed identity. ClientId should not
+                              be used if this is provided.'
+                            type: string
+                        type: object
+                    type: object
+                  timeoutInSeconds:
+                    description: 'TimeoutInSeconds: The timeout in seconds to execute
+                      the run command.'
+                    type: integer
+                  treatFailureAsDeploymentFailure:
+                    description: |-
+                      TreatFailureAsDeploymentFailure: Optional. If set to true, any failure in the script will fail the deployment and
+                      ProvisioningState will be marked as Failed. If set to false, ProvisioningState would only reflect whether the run
+                      command was run or not by the extensions platform, it would not indicate whether script failed in case of script
+                      failures. See instance view of run command in case of script failures to see executionMessage, output, error:
+                      https://aka.ms/runcommandmanaged#get-execution-status-and-results
+                    type: boolean
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+            required:
+            - location
+            - owner
+            type: object
+          status:
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. Ex -
+                  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+                type: string
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              properties:
+                description: 'Properties: Describes the properties of a Virtual Machine
+                  diagnostic run command.'
+                properties:
+                  asyncExecution:
+                    description: |-
+                      AsyncExecution: Optional. If set to true, provisioning will complete as soon as the script starts and will not wait for
+                      script to complete.
+                    type: boolean
+                  errorBlobManagedIdentity:
+                    description: |-
+                      ErrorBlobManagedIdentity: User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty
+                      object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with
+                      'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's
+                      identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and
+                      https://aka.ms/RunCommandManaged
+                    properties:
+                      clientId:
+                        description: 'ClientId: Client Id (GUID value) of the user-assigned
+                          managed identity. ObjectId should not be used if this is
+                          provided.'
+                        type: string
+                      objectId:
+                        description: 'ObjectId: Object Id (GUID value) of the user-assigned
+                          managed identity. ClientId should not be used if this is
+                          provided.'
+                        type: string
+                    type: object
+                  errorBlobUri:
+                    description: |-
+                      ErrorBlobUri: Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read,
+                      append, create, write access OR use managed identity to provide the VM access to the blob. Refer
+                      errorBlobManagedIdentity parameter.
+                    type: string
+                  instanceView:
+                    description: 'InstanceView: The virtual machine run command instance
+                      view.'
+                    properties:
+                      endTime:
+                        description: 'EndTime: Script end time.'
+                        type: string
+                      error:
+                        description: 'Error: Script error stream.'
+                        type: string
+                      executionMessage:
+                        description: 'ExecutionMessage: Communicate script configuration
+                          errors or execution messages.'
+                        type: string
+                      executionState:
+                        description: 'ExecutionState: Script execution status.'
+                        type: string
+                      exitCode:
+                        description: 'ExitCode: Exit code returned from script execution.'
+                        type: integer
+                      output:
+                        description: 'Output: Script output stream.'
+                        type: string
+                      startTime:
+                        description: 'StartTime: Script start time.'
+                        type: string
+                      statuses:
+                        description: 'Statuses: The resource status information.'
+                        items:
+                          description: Instance view status.
+                          properties:
+                            code:
+                              description: 'Code: The status code.'
+                              type: string
+                            displayStatus:
+                              description: 'DisplayStatus: The short localizable label
+                                for the status.'
+                              type: string
+                            level:
+                              description: 'Level: The level code.'
+                              type: string
+                            message:
+                              description: 'Message: The detailed status message,
+                                including for alerts and error messages.'
+                              type: string
+                            time:
+                              description: 'Time: The time of the status.'
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  outputBlobManagedIdentity:
+                    description: |-
+                      OutputBlobManagedIdentity: User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty
+                      object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with
+                      'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's
+                      identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and
+                      https://aka.ms/RunCommandManaged
+                    properties:
+                      clientId:
+                        description: 'ClientId: Client Id (GUID value) of the user-assigned
+                          managed identity. ObjectId should not be used if this is
+                          provided.'
+                        type: string
+                      objectId:
+                        description: 'ObjectId: Object Id (GUID value) of the user-assigned
+                          managed identity. ClientId should not be used if this is
+                          provided.'
+                        type: string
+                    type: object
+                  outputBlobUri:
+                    description: |-
+                      OutputBlobUri: Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read,
+                      append, create, write access OR use managed identity to provide the VM access to the blob. Refer
+                      outputBlobManagedIdentity parameter.
+                    type: string
+                  parameters:
+                    description: 'Parameters: The parameters used by the script.'
+                    items:
+                      description: Describes the properties of a run command parameter.
+                      properties:
+                        name:
+                          description: 'Name: The run command parameter name.'
+                          type: string
+                        value:
+                          description: 'Value: The run command parameter value.'
+                          type: string
+                      type: object
+                    type: array
+                  protectedParameters:
+                    description: 'ProtectedParameters: The parameters used by the
+                      script.'
+                    items:
+                      description: Describes the properties of a run command parameter.
+                      properties:
+                        name:
+                          description: 'Name: The run command parameter name.'
+                          type: string
+                        value:
+                          description: 'Value: The run command parameter value.'
+                          type: string
+                      type: object
+                    type: array
+                  provisioningState:
+                    description: |-
+                      ProvisioningState: The provisioning state, which only appears in the response. If treatFailureAsDeploymentFailure set to
+                      true, any failure in the script will fail the deployment and ProvisioningState will be marked as Failed. If
+                      treatFailureAsDeploymentFailure set to false, ProvisioningState would only reflect whether the run command was run or
+                      not by the extensions platform, it would not indicate whether script failed in case of script failures. See instance
+                      view of run command in case of script failures to see executionMessage, output, error:
+                      https://aka.ms/runcommandmanaged#get-execution-status-and-results
+                    type: string
+                  runAsPassword:
+                    description: 'RunAsPassword: Specifies the user account password
+                      on the VM when executing the run command.'
+                    type: string
+                  runAsUser:
+                    description: 'RunAsUser: Specifies the user account on the VM
+                      when executing the run command.'
+                    type: string
+                  source:
+                    description: 'Source: The source of the run command script.'
+                    properties:
+                      commandId:
+                        description: |-
+                          CommandId: Specifies a commandId of predefined built-in script. Command IDs available for Linux are listed at
+                          https://aka.ms/RunCommandManagedLinux#available-commands, Windows at
+                          https://aka.ms/RunCommandManagedWindows#available-commands.
+                        type: string
+                      galleryScriptReferenceId:
+                        description: |-
+                          GalleryScriptReferenceId: The resource ID of a Gallery Script version that needs to be executed. Example ID looks like
+                          /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{scriptName}/versions/{version}.
+                        type: string
+                      script:
+                        description: 'Script: Specifies the script content to be executed
+                          on the VM.'
+                        type: string
+                      scriptShell:
+                        description: |-
+                          ScriptShell: Optional. Specify which shell to use for running the script. These values must match those expected by the
+                          extension. Currently supported only for Windows VMs, script uses Powershell 7 when specified. Powershell 7 must be
+                          already installed on the machine to use Powershell7 parameter value.
+                        type: string
+                      scriptUri:
+                        description: |-
+                          ScriptUri: Specifies the script download location. It can be either SAS URI of an Azure storage blob with read access or
+                          public URI.
+                        type: string
+                      scriptUriManagedIdentity:
+                        description: |-
+                          ScriptUriManagedIdentity: User-assigned managed identity that has access to scriptUri in case of Azure storage blob. Use
+                          an empty object in case of system-assigned identity. Make sure the Azure storage blob exists, and managed identity has
+                          been given access to blob's container with 'Storage Blob Data Reader' role assignment. In case of user-assigned
+                          identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer
+                          https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged.
+                        properties:
+                          clientId:
+                            description: 'ClientId: Client Id (GUID value) of the
+                              user-assigned managed identity. ObjectId should not
+                              be used if this is provided.'
+                            type: string
+                          objectId:
+                            description: 'ObjectId: Object Id (GUID value) of the
+                              user-assigned managed identity. ClientId should not
+                              be used if this is provided.'
+                            type: string
+                        type: object
+                    type: object
+                  timeoutInSeconds:
+                    description: 'TimeoutInSeconds: The timeout in seconds to execute
+                      the run command.'
+                    type: integer
+                  treatFailureAsDeploymentFailure:
+                    description: |-
+                      TreatFailureAsDeploymentFailure: Optional. If set to true, any failure in the script will fail the deployment and
+                      ProvisioningState will be marked as Failed. If set to false, ProvisioningState would only reflect whether the run
+                      command was run or not by the extensions platform, it would not indicate whether script failed in case of script
+                      failures. See instance view of run command in case of script failures to see executionMessage, output, error:
+                      https://aka.ms/runcommandmanaged#get-execution-status-and-results
+                    type: boolean
+                type: object
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -75,7 +75,9 @@
 // name, a static web app's basic authentication, a slot's repository, a
 // Kubernetes environment's custom location), Azure Monitor pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
-// processors and exporters, pipelines naming what is declared), budgets
+// processors and exporters, pipelines naming what is declared), a VM's
+// diagnostic run commands (diagnosticruncommands.go: one source, a gallery
+// script that exists), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -571,6 +573,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkMonitorPipeline(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkDiagnosticRunCommand(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

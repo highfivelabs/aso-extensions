@@ -1586,6 +1586,8 @@ VirtualMachine: Resource
 
 augmentConversionForCommonUserAssignedIdentitiesValue_STATUS: Interface
 
+augmentConversionForInstanceViewStatus_STATUS: Interface
+
 augmentConversionForSystemData_STATUS: Interface
 
 augmentConversionForUserAssignedIdentityDetails: Interface

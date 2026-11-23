@@ -20,10 +20,12 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
 
 	compute "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301"
+	compute20260401 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260401"
 )
 
-// A run command on a small Linux VM (a fixture, two vCPUs, about $0.03
-// an hour, no public IP), owned by a stand-in for ASO's VirtualMachine.
+// A run command, then a diagnostic run command, on a small Linux VM (a
+// fixture, two vCPUs, about $0.03 an hour, no public IP), owned by a
+// stand-in for ASO's VirtualMachine.
 func TestLiveVirtualMachineRunCommand(t *testing.T) {
 	ns := namespace(t, "vm")
 	vnetID := vnet(t, azName("vmnet"), "10.70.0.0/16", map[string]string{"default": "10.70.0.0/24"})
@@ -128,4 +130,26 @@ func TestLiveVirtualMachineRunCommand(t *testing.T) {
 	})
 	remove(t, timeout, run)
 	expectGone(t, id, "2022-03-01")
+
+	// A diagnostic run command on the same VM (docs/plan.md f55, 2026-04-01;
+	// added 2026-11-23, after this test's first passing run).
+	diag := &compute20260401.VirtualMachinesDiagnosticRunCommand{}
+	diag.Namespace, diag.Name = ns, "diag"
+	diag.Spec = compute20260401.VirtualMachinesDiagnosticRunCommand_Spec{
+		AzureName: "diag", Owner: owner("vm"), Location: ptr(location),
+		Properties: &compute20260401.VirtualMachineRunCommandProperties{
+			Source:           &compute20260401.VirtualMachineRunCommandScriptSource{Script: ptr("uptime")},
+			TimeoutInSeconds: ptr(120),
+		},
+	}
+	create(t, timeout, diag)
+	diagID := vmID + "/diagnosticRunCommands/diag"
+	expectResource(t, diagID, "2026-04-01", func(r map[string]any) error {
+		if src, _ := properties(r)["source"].(map[string]any); src["script"] != "uptime" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	remove(t, timeout, diag)
+	expectGone(t, diagID, "2026-04-01")
 }

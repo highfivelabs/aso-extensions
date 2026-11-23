@@ -7,7 +7,8 @@ import (
 	"encoding/json"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	storage "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401/storage"
+	v20250401s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401/storage"
+	v20260401s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260401/storage"
 	"github.com/kr/pretty"
 	"github.com/kylelemons/godebug/diff"
 	"github.com/leanovate/gopter"
@@ -40,7 +41,7 @@ func RunPropertyAssignmentTestForInstanceViewStatus_STATUS(subject InstanceViewS
 	copied := subject.DeepCopy()
 
 	// Use AssignPropertiesTo() for the first stage of conversion
-	var other storage.InstanceViewStatus_STATUS
+	var other v20250401s.InstanceViewStatus_STATUS
 	err := copied.AssignProperties_To_InstanceViewStatus_STATUS(&other)
 	if err != nil {
 		return err.Error()
@@ -135,6 +136,53 @@ func AddIndependentPropertyGeneratorsForInstanceViewStatus_STATUS(gens map[strin
 	gens["Time"] = gen.PtrOf(gen.AlphaString())
 }
 
+func Test_RunCommandInputParameter_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from RunCommandInputParameter to RunCommandInputParameter via AssignProperties_To_RunCommandInputParameter & AssignProperties_From_RunCommandInputParameter returns original",
+		prop.ForAll(RunPropertyAssignmentTestForRunCommandInputParameter, RunCommandInputParameterGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForRunCommandInputParameter tests if a specific instance of RunCommandInputParameter can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForRunCommandInputParameter(subject RunCommandInputParameter) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other v20260401s.RunCommandInputParameter
+	err := copied.AssignProperties_To_RunCommandInputParameter(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual RunCommandInputParameter
+	err = actual.AssignProperties_From_RunCommandInputParameter(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
 func Test_RunCommandInputParameter_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -202,6 +250,53 @@ func AddIndependentPropertyGeneratorsForRunCommandInputParameter(gens map[string
 	gens["Value"] = gen.PtrOf(gen.AlphaString())
 }
 
+func Test_RunCommandInputParameter_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from RunCommandInputParameter_STATUS to RunCommandInputParameter_STATUS via AssignProperties_To_RunCommandInputParameter_STATUS & AssignProperties_From_RunCommandInputParameter_STATUS returns original",
+		prop.ForAll(RunPropertyAssignmentTestForRunCommandInputParameter_STATUS, RunCommandInputParameter_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForRunCommandInputParameter_STATUS tests if a specific instance of RunCommandInputParameter_STATUS can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForRunCommandInputParameter_STATUS(subject RunCommandInputParameter_STATUS) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other v20260401s.RunCommandInputParameter_STATUS
+	err := copied.AssignProperties_To_RunCommandInputParameter_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual RunCommandInputParameter_STATUS
+	err = actual.AssignProperties_From_RunCommandInputParameter_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
 func Test_RunCommandInputParameter_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -267,6 +362,53 @@ func RunCommandInputParameter_STATUSGenerator() gopter.Gen {
 func AddIndependentPropertyGeneratorsForRunCommandInputParameter_STATUS(gens map[string]gopter.Gen) {
 	gens["Name"] = gen.PtrOf(gen.AlphaString())
 	gens["Value"] = gen.PtrOf(gen.AlphaString())
+}
+
+func Test_VirtualMachineRunCommandInstanceView_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from VirtualMachineRunCommandInstanceView_STATUS to VirtualMachineRunCommandInstanceView_STATUS via AssignProperties_To_VirtualMachineRunCommandInstanceView_STATUS & AssignProperties_From_VirtualMachineRunCommandInstanceView_STATUS returns original",
+		prop.ForAll(RunPropertyAssignmentTestForVirtualMachineRunCommandInstanceView_STATUS, VirtualMachineRunCommandInstanceView_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForVirtualMachineRunCommandInstanceView_STATUS tests if a specific instance of VirtualMachineRunCommandInstanceView_STATUS can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForVirtualMachineRunCommandInstanceView_STATUS(subject VirtualMachineRunCommandInstanceView_STATUS) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other v20260401s.VirtualMachineRunCommandInstanceView_STATUS
+	err := copied.AssignProperties_To_VirtualMachineRunCommandInstanceView_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual VirtualMachineRunCommandInstanceView_STATUS
+	err = actual.AssignProperties_From_VirtualMachineRunCommandInstanceView_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
 }
 
 func Test_VirtualMachineRunCommandInstanceView_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -355,6 +497,53 @@ func AddRelatedPropertyGeneratorsForVirtualMachineRunCommandInstanceView_STATUS(
 	gens["Statuses"] = gen.SliceOf(InstanceViewStatus_STATUSGenerator())
 }
 
+func Test_VirtualMachineRunCommandScriptSource_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from VirtualMachineRunCommandScriptSource to VirtualMachineRunCommandScriptSource via AssignProperties_To_VirtualMachineRunCommandScriptSource & AssignProperties_From_VirtualMachineRunCommandScriptSource returns original",
+		prop.ForAll(RunPropertyAssignmentTestForVirtualMachineRunCommandScriptSource, VirtualMachineRunCommandScriptSourceGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForVirtualMachineRunCommandScriptSource tests if a specific instance of VirtualMachineRunCommandScriptSource can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForVirtualMachineRunCommandScriptSource(subject VirtualMachineRunCommandScriptSource) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other v20260401s.VirtualMachineRunCommandScriptSource
+	err := copied.AssignProperties_To_VirtualMachineRunCommandScriptSource(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual VirtualMachineRunCommandScriptSource
+	err = actual.AssignProperties_From_VirtualMachineRunCommandScriptSource(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
+}
+
 func Test_VirtualMachineRunCommandScriptSource_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -421,6 +610,53 @@ func AddIndependentPropertyGeneratorsForVirtualMachineRunCommandScriptSource(gen
 	gens["CommandId"] = gen.PtrOf(gen.AlphaString())
 	gens["Script"] = gen.PtrOf(gen.AlphaString())
 	gens["ScriptUri"] = gen.PtrOf(gen.AlphaString())
+}
+
+func Test_VirtualMachineRunCommandScriptSource_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	parameters := gopter.DefaultTestParameters()
+	parameters.MaxSize = 10
+	properties := gopter.NewProperties(parameters)
+	properties.Property(
+		"Round trip from VirtualMachineRunCommandScriptSource_STATUS to VirtualMachineRunCommandScriptSource_STATUS via AssignProperties_To_VirtualMachineRunCommandScriptSource_STATUS & AssignProperties_From_VirtualMachineRunCommandScriptSource_STATUS returns original",
+		prop.ForAll(RunPropertyAssignmentTestForVirtualMachineRunCommandScriptSource_STATUS, VirtualMachineRunCommandScriptSource_STATUSGenerator()))
+	properties.TestingRun(t, gopter.NewFormatedReporter(false, 240, os.Stdout))
+}
+
+// RunPropertyAssignmentTestForVirtualMachineRunCommandScriptSource_STATUS tests if a specific instance of VirtualMachineRunCommandScriptSource_STATUS can be assigned to storage and back losslessly
+func RunPropertyAssignmentTestForVirtualMachineRunCommandScriptSource_STATUS(subject VirtualMachineRunCommandScriptSource_STATUS) string {
+	// Copy subject to make sure assignment doesn't modify it
+	copied := subject.DeepCopy()
+
+	// Use AssignPropertiesTo() for the first stage of conversion
+	var other v20260401s.VirtualMachineRunCommandScriptSource_STATUS
+	err := copied.AssignProperties_To_VirtualMachineRunCommandScriptSource_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Use AssignPropertiesFrom() to convert back to our original type
+	var actual VirtualMachineRunCommandScriptSource_STATUS
+	err = actual.AssignProperties_From_VirtualMachineRunCommandScriptSource_STATUS(&other)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Check for a match
+	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+	if !match {
+		actualFmt := pretty.Sprint(actual)
+		subjectFmt := pretty.Sprint(subject)
+		result := diff.Diff(subjectFmt, actualFmt)
+		return result
+	}
+
+	return ""
 }
 
 func Test_VirtualMachineRunCommandScriptSource_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {

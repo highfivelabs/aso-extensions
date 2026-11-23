@@ -103,6 +103,7 @@ resources:
 - compute.azure.hfl.dev_restorepointcollectionsrestorepoints.yaml
 - compute.azure.hfl.dev_sshpublickeys.yaml
 - compute.azure.hfl.dev_virtualmachines.yaml
+- compute.azure.hfl.dev_virtualmachinesdiagnosticruncommands.yaml
 - compute.azure.hfl.dev_virtualmachinesruncommands.yaml
 - consumption.azure.hfl.dev_budgets.yaml
 - containerregistry.azure.hfl.dev_registriesconnectedregistries.yaml

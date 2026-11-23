@@ -35,5 +35,7 @@ SshPublicKeyExtension: Object (0 properties)
 
 VirtualMachineExtension: Object (0 properties)
 
+VirtualMachinesDiagnosticRunCommandExtension: Object (0 properties)
+
 VirtualMachinesRunCommandExtension: Object (0 properties)
 

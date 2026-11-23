@@ -337,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 5,850 (13.5%) in 459 further resources; uncovered 30,399 (70.1%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 5,874 (13.5%) in 460 further resources; uncovered 30,375 (70.0%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 25.8% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 44.8% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.8% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 25.8% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 45.1% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.8% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 21.3% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 1.0% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 21.5% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 1.0% more by ours.
 
 **Ours.**
 
@@ -452,6 +452,7 @@ Generated; these cannot drift from the data.
 | `compute.azure.hfl.dev/RestorePointCollectionsRestorePoint` | `Microsoft.Compute/restorePointCollections/restorePoints` | ARM wire type of the generated kind (`apis/arm`) |
 | `compute.azure.hfl.dev/SshPublicKey` | `Microsoft.Compute/sshPublicKeys` | ARM wire type of the generated kind (`apis/arm`) |
 | `compute.azure.hfl.dev/VirtualMachine` | `Microsoft.Compute/virtualMachines` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/VirtualMachinesDiagnosticRunCommand` | `Microsoft.Compute/virtualMachines/diagnosticRunCommands` | ARM wire type of the generated kind (`apis/arm`) |
 | `compute.azure.hfl.dev/VirtualMachinesRunCommand` | `Microsoft.Compute/virtualMachines/runCommands` | ARM wire type of the generated kind (`apis/arm`) |
 | `consumption.azure.hfl.dev/Budget` | `Microsoft.Consumption/budgets` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesConnectedRegistry` | `Microsoft.ContainerRegistry/registries/connectedRegistries` | ARM wire type of the generated kind (`apis/arm`) |

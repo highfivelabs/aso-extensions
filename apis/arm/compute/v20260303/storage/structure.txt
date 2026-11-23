@@ -1241,3 +1241,5 @@ Gallery: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+augmentConversionForSystemData_STATUS: Interface
+
