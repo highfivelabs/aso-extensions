@@ -549,15 +549,28 @@ title: Supported Resources
 
 ### Released
 
-| Resource                        | ARM Version | CRD Version | Supported From | Sample |
-|---------------------------------|-------------|-------------|----------------|--------|
-| Vault                           | 2026-07-01  | v20260701   | v0.1.0         | -      |
-| VaultsBackupConfig              | 2026-07-01  | v20260701   | v0.1.0         | -      |
-| VaultsBackupEncryptionConfig    | 2026-07-01  | v20260701   | v0.1.0         | -      |
-| VaultsBackupPolicy              | 2026-07-01  | v20260701   | v0.1.0         | -      |
-| VaultsBackupResourceGuardProxy  | 2026-07-01  | v20260701   | v0.1.0         | -      |
-| VaultsBackupStorageConfig       | 2026-07-01  | v20260701   | v0.1.0         | -      |
-| VaultsPrivateEndpointConnection | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| Resource                                    | ARM Version | CRD Version | Supported From | Sample |
+|---------------------------------------------|-------------|-------------|----------------|--------|
+| Vault                                       | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsBackupConfig                          | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsBackupEncryptionConfig                | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsBackupPolicy                          | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsBackupResourceGuardProxy              | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsBackupStorageConfig                   | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsPrivateEndpointConnection             | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationAlertSetting               | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationFabric                     | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationMigrationItem              | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationPolicy                     | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationProtectedItem              | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationProtectionCluster          | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationProtectionContainer        | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationProtectionContainerMapping | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationProtectionIntent           | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationRecoveryPlan               | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationRecoveryServicesProvider   | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationVaultSetting               | 2026-07-01  | v20260701   | v0.1.0         | -      |
+| VaultsReplicationvCenter                    | 2026-07-01  | v20260701   | v0.1.0         | -      |
 
 ## Resources
 

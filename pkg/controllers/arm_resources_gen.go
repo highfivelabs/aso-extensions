@@ -1712,6 +1712,19 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsBackupStorageConfig)})
 	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationAlertSetting)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationFabric)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationMigrationItem)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationProtectedItem)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationProtectionCluster)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationProtectionContainer)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationProtectionContainerMapping)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationProtectionIntent)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationRecoveryPlan)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationRecoveryServicesProvider)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationVaultSetting)})
+	result = append(result, &registration.StorageType{Obj: new(recoveryservices_v20260701.VaultsReplicationvCenter)})
 	result = append(result, &registration.StorageType{Obj: new(resources_v20220201.TemplateSpec)})
 	result = append(result, &registration.StorageType{Obj: new(resources_v20220201.TemplateSpecsVersion)})
 	result = append(result, &registration.StorageType{
@@ -3188,7 +3201,20 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupPolicy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupResourceGuardProxy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsBackupStorageConfig)},
-		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsPrivateEndpointConnection)})
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationAlertSetting)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationFabric)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationMigrationItem)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationPolicy)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationProtectedItem)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationProtectionCluster)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationProtectionContainer)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationProtectionContainerMapping)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationProtectionIntent)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationRecoveryPlan)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationRecoveryServicesProvider)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationVaultSetting)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701.VaultsReplicationvCenter)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.Vault)},
@@ -3197,7 +3223,20 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupPolicy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupResourceGuardProxy)},
 		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsBackupStorageConfig)},
-		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsPrivateEndpointConnection)})
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationAlertSetting)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationFabric)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationMigrationItem)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationPolicy)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationProtectedItem)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationProtectionCluster)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationProtectionContainer)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationProtectionContainerMapping)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationProtectionIntent)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationRecoveryPlan)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationRecoveryServicesProvider)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationVaultSetting)},
+		&registration.KnownType{Obj: new(recoveryservices_v20260701s.VaultsReplicationvCenter)})
 	result = append(result, &registration.KnownType{Obj: new(resources_v20220201.TemplateSpec)}, &registration.KnownType{Obj: new(resources_v20220201.TemplateSpecsVersion)})
 	result = append(result, &registration.KnownType{Obj: new(resources_v20220201s.TemplateSpec)}, &registration.KnownType{Obj: new(resources_v20220201s.TemplateSpecsVersion)})
 	result = append(result, &registration.KnownType{Obj: new(resources_v20230801.DeploymentScript)})
@@ -3988,6 +4027,19 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &recoveryservices_customizations.VaultsBackupResourceGuardProxyExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsBackupStorageConfigExtension{})
 	result = append(result, &recoveryservices_customizations.VaultsPrivateEndpointConnectionExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationAlertSettingExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationFabricExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationMigrationItemExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationPolicyExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationProtectedItemExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationProtectionClusterExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationProtectionContainerExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationProtectionContainerMappingExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationProtectionIntentExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationRecoveryPlanExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationRecoveryServicesProviderExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationVaultSettingExtension{})
+	result = append(result, &recoveryservices_customizations.VaultsReplicationvCenterExtension{})
 	result = append(result, &resources_customizations.DeploymentScriptExtension{})
 	result = append(result, &resources_customizations.DeploymentStackExtension{})
 	result = append(result, &resources_customizations.TagSetExtension{})

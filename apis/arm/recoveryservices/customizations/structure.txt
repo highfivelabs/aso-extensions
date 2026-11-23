@@ -15,3 +15,29 @@ VaultsBackupStorageConfigExtension: Object (0 properties)
 
 VaultsPrivateEndpointConnectionExtension: Object (0 properties)
 
+VaultsReplicationAlertSettingExtension: Object (0 properties)
+
+VaultsReplicationFabricExtension: Object (0 properties)
+
+VaultsReplicationMigrationItemExtension: Object (0 properties)
+
+VaultsReplicationPolicyExtension: Object (0 properties)
+
+VaultsReplicationProtectedItemExtension: Object (0 properties)
+
+VaultsReplicationProtectionClusterExtension: Object (0 properties)
+
+VaultsReplicationProtectionContainerExtension: Object (0 properties)
+
+VaultsReplicationProtectionContainerMappingExtension: Object (0 properties)
+
+VaultsReplicationProtectionIntentExtension: Object (0 properties)
+
+VaultsReplicationRecoveryPlanExtension: Object (0 properties)
+
+VaultsReplicationRecoveryServicesProviderExtension: Object (0 properties)
+
+VaultsReplicationVaultSettingExtension: Object (0 properties)
+
+VaultsReplicationvCenterExtension: Object (0 properties)
+

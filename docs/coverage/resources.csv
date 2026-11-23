@@ -1846,21 +1846,21 @@ Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupstorageconfig
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/certificates,2,,0,,0,2,false,spec_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/extendedInformation,5,,0,,0,5,false,spec_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/privateEndpointConnections,9,,0,recoveryservices.azure.hfl.dev/VaultsPrivateEndpointConnection,9,0,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationAlertSettings,3,,0,,0,3,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics,10,,0,,0,10,false,spec_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationAlertSettings,3,,0,recoveryservices.azure.hfl.dev/VaultsReplicationAlertSetting,3,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics,10,,0,recoveryservices.azure.hfl.dev/VaultsReplicationFabric,10,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings,4,,0,,0,4,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers,1,,0,,0,1,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationMigrationItems,44,,0,,0,44,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems,111,,0,,0,111,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionClusters,163,,0,,0,163,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionContainerMappings,12,,0,,0,12,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationRecoveryServicesProviders,18,,0,,0,18,false,spec_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers,1,,0,recoveryservices.azure.hfl.dev/VaultsReplicationProtectionContainer,1,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationMigrationItems,44,,0,recoveryservices.azure.hfl.dev/VaultsReplicationMigrationItem,44,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems,111,,0,recoveryservices.azure.hfl.dev/VaultsReplicationProtectedItem,111,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionClusters,163,,0,recoveryservices.azure.hfl.dev/VaultsReplicationProtectionCluster,162,1,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionContainerMappings,12,,0,recoveryservices.azure.hfl.dev/VaultsReplicationProtectionContainerMapping,12,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationRecoveryServicesProviders,18,,0,recoveryservices.azure.hfl.dev/VaultsReplicationRecoveryServicesProvider,18,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationStorageClassifications/replicationStorageClassificationMappings,1,,0,,0,1,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationvCenters,5,,0,,0,5,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationPolicies,22,,0,,0,22,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationProtectionIntents,55,,0,,0,55,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationRecoveryPlans,31,,0,,0,31,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationVaultSettings,2,,0,,0,2,false,spec_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationvCenters,5,,0,recoveryservices.azure.hfl.dev/VaultsReplicationvCenter,5,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationPolicies,22,,0,recoveryservices.azure.hfl.dev/VaultsReplicationPolicy,22,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationProtectionIntents,55,,0,recoveryservices.azure.hfl.dev/VaultsReplicationProtectionIntent,55,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationRecoveryPlans,31,,0,recoveryservices.azure.hfl.dev/VaultsReplicationRecoveryPlan,31,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationVaultSettings,2,,0,recoveryservices.azure.hfl.dev/VaultsReplicationVaultSetting,2,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.RedHatOpenShift,Microsoft.RedHatOpenShift/hcpOpenShiftClusters,40,redhatopenshift.azure.com/HcpOpenShiftCluster,40,,0,0,false,spec_api=2026-10-01; official_api=2026-10-01
 Microsoft.RedHatOpenShift,Microsoft.RedHatOpenShift/hcpOpenShiftClusters/externalAuths,16,redhatopenshift.azure.com/HcpOpenShiftClustersExternalAuth,16,,0,0,false,spec_api=2026-10-01; official_api=2026-10-01
 Microsoft.RedHatOpenShift,Microsoft.RedHatOpenShift/hcpOpenShiftClusters/nodePools,24,redhatopenshift.azure.com/HcpOpenShiftClustersNodePool,24,,0,0,false,spec_api=2026-10-01; official_api=2026-10-01

@@ -3323,3 +3323,4447 @@ VaultsPrivateEndpointConnection_Spec: Object (5 properties)
 │       └── "Succeeded"
 └── Tags: map[string]string
 
+VaultsReplicationAlertSetting_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (3 properties)
+│   ├── CustomEmailAddresses: string[]
+│   ├── Locale: *string
+│   └── SendToOwners: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationAlertSetting_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (3 properties)
+    ├── CustomEmailAddresses: string[]
+    ├── Locale: *string
+    └── SendToOwners: *string
+
+VaultsReplicationFabric_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── BcdrState: *string
+│   ├── CustomDetails: *Object (6 properties)
+│   │   ├── Azure: *Object (6 properties)
+│   │   │   ├── ContainerIds: string[]
+│   │   │   ├── ExtendedLocations: Object (2 properties)[]
+│   │   │   │   ├── PrimaryExtendedLocation: *Object (2 properties)
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "EdgeZone"
+│   │   │   │   └── RecoveryExtendedLocation: *Object (2 properties)
+│   │   │   │       ├── Name: *string
+│   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │           └── "EdgeZone"
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "Azure"
+│   │   │   ├── Location: *string
+│   │   │   ├── LocationDetails: Object (12 properties)[]
+│   │   │   │   ├── InitialPrimaryExtendedLocation: *Object (2 properties)
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "EdgeZone"
+│   │   │   │   ├── InitialPrimaryFabricLocation: *string
+│   │   │   │   ├── InitialPrimaryZone: *string
+│   │   │   │   ├── InitialRecoveryExtendedLocation: *Object (2 properties)
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "EdgeZone"
+│   │   │   │   ├── InitialRecoveryFabricLocation: *string
+│   │   │   │   ├── InitialRecoveryZone: *string
+│   │   │   │   ├── PrimaryExtendedLocation: *Object (2 properties)
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "EdgeZone"
+│   │   │   │   ├── PrimaryFabricLocation: *string
+│   │   │   │   ├── PrimaryZone: *string
+│   │   │   │   ├── RecoveryExtendedLocation: *Object (2 properties)
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "EdgeZone"
+│   │   │   │   ├── RecoveryFabricLocation: *string
+│   │   │   │   └── RecoveryZone: *string
+│   │   │   └── Zones: Object (2 properties)[]
+│   │   │       ├── Source: *string
+│   │   │       └── Target: *string
+│   │   ├── HyperVSite: *Object (2 properties)
+│   │   │   ├── HyperVHosts: Object (3 properties)[]
+│   │   │   │   ├── Id: *string
+│   │   │   │   ├── MarsAgentVersion: *string
+│   │   │   │   └── Name: *string
+│   │   │   └── InstanceType: Enum (1 value)
+│   │   │       └── "HyperVSite"
+│   │   ├── InMageRcm: *Object (17 properties)
+│   │   │   ├── AgentDetails: Object (5 properties)[]
+│   │   │   │   ├── AgentId: *string
+│   │   │   │   ├── BiosId: *string
+│   │   │   │   ├── Disks: Object (5 properties)[]
+│   │   │   │   │   ├── CapacityInBytes: *int
+│   │   │   │   │   ├── DiskId: *string
+│   │   │   │   │   ├── DiskName: *string
+│   │   │   │   │   ├── IsOSDisk: *string
+│   │   │   │   │   └── LunId: *int
+│   │   │   │   ├── Fqdn: *string
+│   │   │   │   └── MachineId: *string
+│   │   │   ├── ControlPlaneUri: *string
+│   │   │   ├── DataPlaneUri: *string
+│   │   │   ├── Dras: Object (9 properties)[]
+│   │   │   │   ├── BiosId: *string
+│   │   │   │   ├── ForwardProtectedItemCount: *int
+│   │   │   │   ├── Health: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "None"
+│   │   │   │   │   ├── "Normal"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── HealthErrors: Object (15 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   ├── Id: *string
+│   │   │   │   ├── LastHeartbeatUtc: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── ReverseProtectedItemCount: *int
+│   │   │   │   └── Version: *string
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "InMageRcm"
+│   │   │   ├── MarsAgents: Object (9 properties)[]
+│   │   │   │   ├── BiosId: *string
+│   │   │   │   ├── FabricObjectId: *string
+│   │   │   │   ├── Fqdn: *string
+│   │   │   │   ├── Health: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "None"
+│   │   │   │   │   ├── "Normal"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── HealthErrors: Object (15 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   ├── Id: *string
+│   │   │   │   ├── LastHeartbeatUtc: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Version: *string
+│   │   │   ├── PhysicalSiteId: *string
+│   │   │   ├── ProcessServers: Object (29 properties)[]
+│   │   │   │   ├── AvailableMemoryInBytes: *int
+│   │   │   │   ├── AvailableSpaceInBytes: *int
+│   │   │   │   ├── BiosId: *string
+│   │   │   │   ├── DiskUsageStatus: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "Healthy"
+│   │   │   │   │   ├── "Unknown"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── FabricObjectId: *string
+│   │   │   │   ├── Fqdn: *string
+│   │   │   │   ├── FreeSpacePercentage: *float64
+│   │   │   │   ├── Health: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "None"
+│   │   │   │   │   ├── "Normal"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── HealthErrors: Object (15 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   ├── HistoricHealth: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "None"
+│   │   │   │   │   ├── "Normal"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── Id: *string
+│   │   │   │   ├── IpAddresses: string[]
+│   │   │   │   ├── LastHeartbeatUtc: *string
+│   │   │   │   ├── MemoryUsagePercentage: *float64
+│   │   │   │   ├── MemoryUsageStatus: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "Healthy"
+│   │   │   │   │   ├── "Unknown"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── ProcessorUsagePercentage: *float64
+│   │   │   │   ├── ProcessorUsageStatus: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "Healthy"
+│   │   │   │   │   ├── "Unknown"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── ProtectedItemCount: *int
+│   │   │   │   ├── SystemLoad: *int
+│   │   │   │   ├── SystemLoadStatus: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "Healthy"
+│   │   │   │   │   ├── "Unknown"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── ThroughputInBytes: *int
+│   │   │   │   ├── ThroughputStatus: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "Healthy"
+│   │   │   │   │   ├── "Unknown"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── ThroughputUploadPendingDataInBytes: *int
+│   │   │   │   ├── TotalMemoryInBytes: *int
+│   │   │   │   ├── TotalSpaceInBytes: *int
+│   │   │   │   ├── UsedMemoryInBytes: *int
+│   │   │   │   ├── UsedSpaceInBytes: *int
+│   │   │   │   └── Version: *string
+│   │   │   ├── PushInstallers: Object (9 properties)[]
+│   │   │   │   ├── BiosId: *string
+│   │   │   │   ├── FabricObjectId: *string
+│   │   │   │   ├── Fqdn: *string
+│   │   │   │   ├── Health: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "None"
+│   │   │   │   │   ├── "Normal"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── HealthErrors: Object (15 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   ├── Id: *string
+│   │   │   │   ├── LastHeartbeatUtc: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Version: *string
+│   │   │   ├── RcmProxies: Object (10 properties)[]
+│   │   │   │   ├── BiosId: *string
+│   │   │   │   ├── ClientAuthenticationType: *string
+│   │   │   │   ├── FabricObjectId: *string
+│   │   │   │   ├── Fqdn: *string
+│   │   │   │   ├── Health: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "None"
+│   │   │   │   │   ├── "Normal"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── HealthErrors: Object (15 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   ├── Id: *string
+│   │   │   │   ├── LastHeartbeatUtc: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Version: *string
+│   │   │   ├── ReplicationAgents: Object (9 properties)[]
+│   │   │   │   ├── BiosId: *string
+│   │   │   │   ├── FabricObjectId: *string
+│   │   │   │   ├── Fqdn: *string
+│   │   │   │   ├── Health: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "None"
+│   │   │   │   │   ├── "Normal"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── HealthErrors: Object (15 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   ├── Id: *string
+│   │   │   │   ├── LastHeartbeatUtc: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Version: *string
+│   │   │   ├── ReprotectAgents: Object (13 properties)[]
+│   │   │   │   ├── AccessibleDatastores: string[]
+│   │   │   │   ├── BiosId: *string
+│   │   │   │   ├── FabricObjectId: *string
+│   │   │   │   ├── Fqdn: *string
+│   │   │   │   ├── Health: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "None"
+│   │   │   │   │   ├── "Normal"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── HealthErrors: Object (15 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   ├── Id: *string
+│   │   │   │   ├── LastDiscoveryInUtc: *string
+│   │   │   │   ├── LastHeartbeatUtc: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── ProtectedItemCount: *int
+│   │   │   │   ├── VcenterId: *string
+│   │   │   │   └── Version: *string
+│   │   │   ├── ServiceContainerId: *string
+│   │   │   ├── ServiceEndpoint: *string
+│   │   │   ├── ServiceResourceId: *string
+│   │   │   ├── SourceAgentIdentityDetails: *Object (5 properties)
+│   │   │   │   ├── AadAuthority: *string
+│   │   │   │   ├── ApplicationId: *string
+│   │   │   │   ├── Audience: *string
+│   │   │   │   ├── ObjectId: *string
+│   │   │   │   └── TenantId: *string
+│   │   │   └── VmwareSiteId: *string
+│   │   ├── VMM: *Object (1 property)
+│   │   │   └── InstanceType: Enum (1 value)
+│   │   │       └── "VMM"
+│   │   ├── VMware: *Object (34 properties)
+│   │   │   ├── AgentCount: *string
+│   │   │   ├── AgentExpiryDate: *string
+│   │   │   ├── AgentVersion: *string
+│   │   │   ├── AgentVersionDetails: *Object (3 properties)
+│   │   │   │   ├── ExpiryDate: *string
+│   │   │   │   ├── Status: *Enum (5 values)
+│   │   │   │   │   ├── "Deprecated"
+│   │   │   │   │   ├── "NotSupported"
+│   │   │   │   │   ├── "SecurityUpdateRequired"
+│   │   │   │   │   ├── "Supported"
+│   │   │   │   │   └── "UpdateRequired"
+│   │   │   │   └── Version: *string
+│   │   │   ├── AvailableMemoryInBytes: *int
+│   │   │   ├── AvailableSpaceInBytes: *int
+│   │   │   ├── CpuLoad: *string
+│   │   │   ├── CpuLoadStatus: *string
+│   │   │   ├── CsServiceStatus: *string
+│   │   │   ├── DatabaseServerLoad: *string
+│   │   │   ├── DatabaseServerLoadStatus: *string
+│   │   │   ├── HostName: *string
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "VMware"
+│   │   │   ├── IpAddress: *string
+│   │   │   ├── LastHeartbeat: *string
+│   │   │   ├── MasterTargetServers: Object (18 properties)[]
+│   │   │   │   ├── AgentExpiryDate: *string
+│   │   │   │   ├── AgentVersion: *string
+│   │   │   │   ├── AgentVersionDetails: *Object (3 properties)
+│   │   │   │   │   ├── ExpiryDate: *string
+│   │   │   │   │   ├── Status: *Enum (5 values)
+│   │   │   │   │   │   ├── "Deprecated"
+│   │   │   │   │   │   ├── "NotSupported"
+│   │   │   │   │   │   ├── "SecurityUpdateRequired"
+│   │   │   │   │   │   ├── "Supported"
+│   │   │   │   │   │   └── "UpdateRequired"
+│   │   │   │   │   └── Version: *string
+│   │   │   │   ├── DataStores: Object (5 properties)[]
+│   │   │   │   │   ├── Capacity: *string
+│   │   │   │   │   ├── FreeSpace: *string
+│   │   │   │   │   ├── SymbolicName: *string
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   └── Uuid: *string
+│   │   │   │   ├── DiskCount: *int
+│   │   │   │   ├── HealthErrors: Object (15 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   ├── Id: *string
+│   │   │   │   ├── IpAddress: *string
+│   │   │   │   ├── LastHeartbeat: *string
+│   │   │   │   ├── MarsAgentExpiryDate: *string
+│   │   │   │   ├── MarsAgentVersion: *string
+│   │   │   │   ├── MarsAgentVersionDetails: *Object (3 properties)
+│   │   │   │   │   ├── ExpiryDate: *string
+│   │   │   │   │   ├── Status: *Enum (5 values)
+│   │   │   │   │   │   ├── "Deprecated"
+│   │   │   │   │   │   ├── "NotSupported"
+│   │   │   │   │   │   ├── "SecurityUpdateRequired"
+│   │   │   │   │   │   ├── "Supported"
+│   │   │   │   │   │   └── "UpdateRequired"
+│   │   │   │   │   └── Version: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── OsType: *string
+│   │   │   │   ├── OsVersion: *string
+│   │   │   │   ├── RetentionVolumes: Object (4 properties)[]
+│   │   │   │   │   ├── CapacityInBytes: *int
+│   │   │   │   │   ├── FreeSpaceInBytes: *int
+│   │   │   │   │   ├── ThresholdPercentage: *int
+│   │   │   │   │   └── VolumeName: *string
+│   │   │   │   ├── ValidationErrors: Object (15 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   └── VersionStatus: *string
+│   │   │   ├── MemoryUsageStatus: *string
+│   │   │   ├── ProcessServerCount: *string
+│   │   │   ├── ProcessServers: Object (36 properties)[]
+│   │   │   │   ├── AgentExpiryDate: *string
+│   │   │   │   ├── AgentVersion: *string
+│   │   │   │   ├── AgentVersionDetails: *Object (3 properties)
+│   │   │   │   │   ├── ExpiryDate: *string
+│   │   │   │   │   ├── Status: *Enum (5 values)
+│   │   │   │   │   │   ├── "Deprecated"
+│   │   │   │   │   │   ├── "NotSupported"
+│   │   │   │   │   │   ├── "SecurityUpdateRequired"
+│   │   │   │   │   │   ├── "Supported"
+│   │   │   │   │   │   └── "UpdateRequired"
+│   │   │   │   │   └── Version: *string
+│   │   │   │   ├── AvailableMemoryInBytes: *int
+│   │   │   │   ├── AvailableSpaceInBytes: *int
+│   │   │   │   ├── CpuLoad: *string
+│   │   │   │   ├── CpuLoadStatus: *string
+│   │   │   │   ├── FriendlyName: *string
+│   │   │   │   ├── Health: *Enum (4 values)
+│   │   │   │   │   ├── "Critical"
+│   │   │   │   │   ├── "None"
+│   │   │   │   │   ├── "Normal"
+│   │   │   │   │   └── "Warning"
+│   │   │   │   ├── HealthErrors: Object (15 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   ├── HostId: *string
+│   │   │   │   ├── Id: *string
+│   │   │   │   ├── IpAddress: *string
+│   │   │   │   ├── LastHeartbeat: *string
+│   │   │   │   ├── MachineCount: *string
+│   │   │   │   ├── MarsCommunicationStatus: *string
+│   │   │   │   ├── MarsRegistrationStatus: *string
+│   │   │   │   ├── MemoryUsageStatus: *string
+│   │   │   │   ├── MobilityServiceUpdates: Object (3 properties)[]
+│   │   │   │   │   ├── OsType: *string
+│   │   │   │   │   ├── RebootStatus: *string
+│   │   │   │   │   └── Version: *string
+│   │   │   │   ├── OsType: *string
+│   │   │   │   ├── OsVersion: *string
+│   │   │   │   ├── PsServiceStatus: *string
+│   │   │   │   ├── PsStatsRefreshTime: *string
+│   │   │   │   ├── ReplicationPairCount: *string
+│   │   │   │   ├── SpaceUsageStatus: *string
+│   │   │   │   ├── SslCertExpiryDate: *string
+│   │   │   │   ├── SslCertExpiryRemainingDays: *int
+│   │   │   │   ├── SystemLoad: *string
+│   │   │   │   ├── SystemLoadStatus: *string
+│   │   │   │   ├── ThroughputInBytes: *int
+│   │   │   │   ├── ThroughputInMBps: *int
+│   │   │   │   ├── ThroughputStatus: *string
+│   │   │   │   ├── ThroughputUploadPendingDataInBytes: *int
+│   │   │   │   ├── TotalMemoryInBytes: *int
+│   │   │   │   ├── TotalSpaceInBytes: *int
+│   │   │   │   └── VersionStatus: *string
+│   │   │   ├── ProtectedServers: *string
+│   │   │   ├── PsTemplateVersion: *string
+│   │   │   ├── ReplicationPairCount: *string
+│   │   │   ├── RunAsAccounts: Object (2 properties)[]
+│   │   │   │   ├── AccountId: *string
+│   │   │   │   └── AccountName: *string
+│   │   │   ├── SpaceUsageStatus: *string
+│   │   │   ├── SslCertExpiryDate: *string
+│   │   │   ├── SslCertExpiryRemainingDays: *int
+│   │   │   ├── SwitchProviderBlockingErrorDetails: Object (6 properties)[]
+│   │   │   │   ├── ErrorCode: *string
+│   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   ├── ErrorMessageParameters: map[string]string
+│   │   │   │   ├── ErrorTags: map[string]string
+│   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   └── RecommendedAction: *string
+│   │   │   ├── SystemLoad: *string
+│   │   │   ├── SystemLoadStatus: *string
+│   │   │   ├── TotalMemoryInBytes: *int
+│   │   │   ├── TotalSpaceInBytes: *int
+│   │   │   ├── VersionStatus: *string
+│   │   │   ├── WebLoad: *string
+│   │   │   └── WebLoadStatus: *string
+│   │   └── VMwareV2: *Object (8 properties)
+│   │       ├── InstanceType: Enum (1 value)
+│   │       │   └── "VMwareV2"
+│   │       ├── MigrationSolutionId: *string
+│   │       ├── PhysicalSiteId: *string
+│   │       ├── ProcessServers: Object (29 properties)[]
+│   │       │   ├── AvailableMemoryInBytes: *int
+│   │       │   ├── AvailableSpaceInBytes: *int
+│   │       │   ├── BiosId: *string
+│   │       │   ├── DiskUsageStatus: *Enum (4 values)
+│   │       │   │   ├── "Critical"
+│   │       │   │   ├── "Healthy"
+│   │       │   │   ├── "Unknown"
+│   │       │   │   └── "Warning"
+│   │       │   ├── FabricObjectId: *string
+│   │       │   ├── Fqdn: *string
+│   │       │   ├── FreeSpacePercentage: *float64
+│   │       │   ├── Health: *Enum (4 values)
+│   │       │   │   ├── "Critical"
+│   │       │   │   ├── "None"
+│   │       │   │   ├── "Normal"
+│   │       │   │   └── "Warning"
+│   │       │   ├── HealthErrors: Object (15 properties)[]
+│   │       │   │   ├── CreationTimeUtc: *string
+│   │       │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │       │   │   │   ├── "Allowed"
+│   │       │   │   │   └── "NotAllowed"
+│   │       │   │   ├── EntityId: *string
+│   │       │   │   ├── ErrorCategory: *string
+│   │       │   │   ├── ErrorCode: *string
+│   │       │   │   ├── ErrorId: *string
+│   │       │   │   ├── ErrorLevel: *string
+│   │       │   │   ├── ErrorMessage: *string
+│   │       │   │   ├── ErrorSource: *string
+│   │       │   │   ├── ErrorType: *string
+│   │       │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │       │   │   │   ├── CreationTimeUtc: *string
+│   │       │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │       │   │   │   │   ├── "Allowed"
+│   │       │   │   │   │   └── "NotAllowed"
+│   │       │   │   │   ├── EntityId: *string
+│   │       │   │   │   ├── ErrorCategory: *string
+│   │       │   │   │   ├── ErrorCode: *string
+│   │       │   │   │   ├── ErrorId: *string
+│   │       │   │   │   ├── ErrorLevel: *string
+│   │       │   │   │   ├── ErrorMessage: *string
+│   │       │   │   │   ├── ErrorSource: *string
+│   │       │   │   │   ├── ErrorType: *string
+│   │       │   │   │   ├── PossibleCauses: *string
+│   │       │   │   │   ├── RecommendedAction: *string
+│   │       │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │       │   │   │   └── SummaryMessage: *string
+│   │       │   │   ├── PossibleCauses: *string
+│   │       │   │   ├── RecommendedAction: *string
+│   │       │   │   ├── RecoveryProviderErrorMessage: *string
+│   │       │   │   └── SummaryMessage: *string
+│   │       │   ├── HistoricHealth: *Enum (4 values)
+│   │       │   │   ├── "Critical"
+│   │       │   │   ├── "None"
+│   │       │   │   ├── "Normal"
+│   │       │   │   └── "Warning"
+│   │       │   ├── Id: *string
+│   │       │   ├── IpAddresses: string[]
+│   │       │   ├── LastHeartbeatUtc: *string
+│   │       │   ├── MemoryUsagePercentage: *float64
+│   │       │   ├── MemoryUsageStatus: *Enum (4 values)
+│   │       │   │   ├── "Critical"
+│   │       │   │   ├── "Healthy"
+│   │       │   │   ├── "Unknown"
+│   │       │   │   └── "Warning"
+│   │       │   ├── Name: *string
+│   │       │   ├── ProcessorUsagePercentage: *float64
+│   │       │   ├── ProcessorUsageStatus: *Enum (4 values)
+│   │       │   │   ├── "Critical"
+│   │       │   │   ├── "Healthy"
+│   │       │   │   ├── "Unknown"
+│   │       │   │   └── "Warning"
+│   │       │   ├── ProtectedItemCount: *int
+│   │       │   ├── SystemLoad: *int
+│   │       │   ├── SystemLoadStatus: *Enum (4 values)
+│   │       │   │   ├── "Critical"
+│   │       │   │   ├── "Healthy"
+│   │       │   │   ├── "Unknown"
+│   │       │   │   └── "Warning"
+│   │       │   ├── ThroughputInBytes: *int
+│   │       │   ├── ThroughputStatus: *Enum (4 values)
+│   │       │   │   ├── "Critical"
+│   │       │   │   ├── "Healthy"
+│   │       │   │   ├── "Unknown"
+│   │       │   │   └── "Warning"
+│   │       │   ├── ThroughputUploadPendingDataInBytes: *int
+│   │       │   ├── TotalMemoryInBytes: *int
+│   │       │   ├── TotalSpaceInBytes: *int
+│   │       │   ├── UsedMemoryInBytes: *int
+│   │       │   ├── UsedSpaceInBytes: *int
+│   │       │   └── Version: *string
+│   │       ├── ServiceContainerId: *string
+│   │       ├── ServiceEndpoint: *string
+│   │       ├── ServiceResourceId: *string
+│   │       └── VmwareSiteId: *string
+│   ├── EncryptionDetails: *Object (3 properties)
+│   │   ├── KekCertExpiryDate: *string
+│   │   ├── KekCertThumbprint: *string
+│   │   └── KekState: *string
+│   ├── FriendlyName: *string
+│   ├── Health: *string
+│   ├── HealthErrorDetails: Object (15 properties)[]
+│   │   ├── CreationTimeUtc: *string
+│   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   ├── "Allowed"
+│   │   │   └── "NotAllowed"
+│   │   ├── EntityId: *string
+│   │   ├── ErrorCategory: *string
+│   │   ├── ErrorCode: *string
+│   │   ├── ErrorId: *string
+│   │   ├── ErrorLevel: *string
+│   │   ├── ErrorMessage: *string
+│   │   ├── ErrorSource: *string
+│   │   ├── ErrorType: *string
+│   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   ├── CreationTimeUtc: *string
+│   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   ├── "Allowed"
+│   │   │   │   └── "NotAllowed"
+│   │   │   ├── EntityId: *string
+│   │   │   ├── ErrorCategory: *string
+│   │   │   ├── ErrorCode: *string
+│   │   │   ├── ErrorId: *string
+│   │   │   ├── ErrorLevel: *string
+│   │   │   ├── ErrorMessage: *string
+│   │   │   ├── ErrorSource: *string
+│   │   │   ├── ErrorType: *string
+│   │   │   ├── PossibleCauses: *string
+│   │   │   ├── RecommendedAction: *string
+│   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   └── SummaryMessage: *string
+│   │   ├── PossibleCauses: *string
+│   │   ├── RecommendedAction: *string
+│   │   ├── RecoveryProviderErrorMessage: *string
+│   │   └── SummaryMessage: *string
+│   ├── InternalIdentifier: *string
+│   └── RolloverEncryptionDetails: *Object (3 properties)
+│       ├── KekCertExpiryDate: *string
+│       ├── KekCertThumbprint: *string
+│       └── KekState: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationFabric_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── CustomDetails: *Object (3 properties)
+        ├── Azure: *Object (2 properties)
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "Azure"
+        │   └── Location: *string
+        ├── InMageRcm: *Object (4 properties)
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "InMageRcm"
+        │   ├── PhysicalSiteId: *string
+        │   ├── SourceAgentIdentity: *Object (5 properties)
+        │   │   ├── AadAuthority: *string
+        │   │   ├── ApplicationId: *string
+        │   │   ├── Audience: *string
+        │   │   ├── ObjectId: *string
+        │   │   └── TenantId: *string
+        │   └── VmwareSiteId: *string
+        └── VMwareV2: *Object (4 properties)
+            ├── InstanceType: Enum (1 value)
+            │   └── "VMwareV2"
+            ├── MigrationSolutionId: *string
+            ├── PhysicalSiteId: *string
+            └── VmwareSiteId: *string
+
+VaultsReplicationMigrationItem_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (20 properties)
+│   ├── AllowedOperations: Enum (7 values)[]
+│   │   ├── "DisableMigration"
+│   │   ├── "Migrate"
+│   │   ├── "PauseReplication"
+│   │   ├── "ResumeReplication"
+│   │   ├── "StartResync"
+│   │   ├── "TestMigrate"
+│   │   └── "TestMigrateCleanup"
+│   ├── CriticalJobHistory: Object (4 properties)[]
+│   │   ├── JobId: *string
+│   │   ├── JobName: *string
+│   │   ├── JobStatus: *string
+│   │   └── StartTime: *string
+│   ├── CurrentJob: *Object (3 properties)
+│   │   ├── JobId: *string
+│   │   ├── JobName: *string
+│   │   └── StartTime: *string
+│   ├── EventCorrelationId: *string
+│   ├── Health: *Enum (4 values)
+│   │   ├── "Critical"
+│   │   ├── "None"
+│   │   ├── "Normal"
+│   │   └── "Warning"
+│   ├── HealthErrors: Object (15 properties)[]
+│   │   ├── CreationTimeUtc: *string
+│   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   ├── "Allowed"
+│   │   │   └── "NotAllowed"
+│   │   ├── EntityId: *string
+│   │   ├── ErrorCategory: *string
+│   │   ├── ErrorCode: *string
+│   │   ├── ErrorId: *string
+│   │   ├── ErrorLevel: *string
+│   │   ├── ErrorMessage: *string
+│   │   ├── ErrorSource: *string
+│   │   ├── ErrorType: *string
+│   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   ├── CreationTimeUtc: *string
+│   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   ├── "Allowed"
+│   │   │   │   └── "NotAllowed"
+│   │   │   ├── EntityId: *string
+│   │   │   ├── ErrorCategory: *string
+│   │   │   ├── ErrorCode: *string
+│   │   │   ├── ErrorId: *string
+│   │   │   ├── ErrorLevel: *string
+│   │   │   ├── ErrorMessage: *string
+│   │   │   ├── ErrorSource: *string
+│   │   │   ├── ErrorType: *string
+│   │   │   ├── PossibleCauses: *string
+│   │   │   ├── RecommendedAction: *string
+│   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   └── SummaryMessage: *string
+│   │   ├── PossibleCauses: *string
+│   │   ├── RecommendedAction: *string
+│   │   ├── RecoveryProviderErrorMessage: *string
+│   │   └── SummaryMessage: *string
+│   ├── LastMigrationStatus: *string
+│   ├── LastMigrationTime: *string
+│   ├── LastTestMigrationStatus: *string
+│   ├── LastTestMigrationTime: *string
+│   ├── MachineName: *string
+│   ├── MigrationState: *Enum (17 values)
+│   │   ├── "DisableMigrationFailed"
+│   │   ├── "DisableMigrationInProgress"
+│   │   ├── "EnableMigrationFailed"
+│   │   ├── "EnableMigrationInProgress"
+│   │   ├── "InitialSeedingFailed"
+│   │   ├── "InitialSeedingInProgress"
+│   │   ├── "MigrationCompletedWithInformation"
+│   │   ├── "MigrationFailed"
+│   │   ├── "MigrationInProgress"
+│   │   ├── "MigrationPartiallySucceeded"
+│   │   ├── "MigrationSucceeded"
+│   │   ├── "None"
+│   │   ├── "ProtectionSuspended"
+│   │   ├── "Replicating"
+│   │   ├── "ResumeInProgress"
+│   │   ├── "ResumeInitiated"
+│   │   └── "SuspendingProtection"
+│   ├── MigrationStateDescription: *string
+│   ├── PolicyFriendlyName: *string
+│   ├── PolicyId: *string
+│   ├── ProviderSpecificDetails: *Object (1 property)
+│   │   └── VMwareCbt: *Object (51 properties)
+│   │       ├── ApplianceMonitoringDetails: *Object (6 properties)
+│   │       │   ├── CpuDetails: *Object (4 properties)
+│   │       │   │   ├── Capacity: *int
+│   │       │   │   ├── ProcessUtilization: *float64
+│   │       │   │   ├── Status: *string
+│   │       │   │   └── TotalUtilization: *float64
+│   │       │   ├── DatastoreSnapshot: Object (3 properties)[]
+│   │       │   │   ├── DataStoreName: *string
+│   │       │   │   ├── TotalSnapshotsCreated: *int
+│   │       │   │   └── TotalSnapshotsSupported: *int
+│   │       │   ├── DisksReplicationDetails: *Object (4 properties)
+│   │       │   │   ├── Capacity: *int
+│   │       │   │   ├── ProcessUtilization: *float64
+│   │       │   │   ├── Status: *string
+│   │       │   │   └── TotalUtilization: *float64
+│   │       │   ├── EsxiNfcBuffer: *Object (4 properties)
+│   │       │   │   ├── Capacity: *int
+│   │       │   │   ├── ProcessUtilization: *float64
+│   │       │   │   ├── Status: *string
+│   │       │   │   └── TotalUtilization: *float64
+│   │       │   ├── NetworkBandwidth: *Object (4 properties)
+│   │       │   │   ├── Capacity: *int
+│   │       │   │   ├── ProcessUtilization: *float64
+│   │       │   │   ├── Status: *string
+│   │       │   │   └── TotalUtilization: *float64
+│   │       │   └── RamDetails: *Object (4 properties)
+│   │       │       ├── Capacity: *int
+│   │       │       ├── ProcessUtilization: *float64
+│   │       │       ├── Status: *string
+│   │       │       └── TotalUtilization: *float64
+│   │       ├── ConfidentialVmKeyVaultId: *string
+│   │       ├── DataMoverRunAsAccountId: *string
+│   │       ├── DeltaSyncProgressPercentage: *int
+│   │       ├── DeltaSyncRetryCount: *int
+│   │       ├── FirmwareType: *string
+│   │       ├── GatewayOperationDetails: *Object (8 properties)
+│   │       │   ├── DataStores: string[]
+│   │       │   ├── HostName: *string
+│   │       │   ├── ProgressPercentage: *int
+│   │       │   ├── State: *string
+│   │       │   ├── TimeElapsed: *int
+│   │       │   ├── TimeRemaining: *int
+│   │       │   ├── UploadSpeed: *int
+│   │       │   └── VmwareReadThroughput: *int
+│   │       ├── InitialSeedingProgressPercentage: *int
+│   │       ├── InitialSeedingRetryCount: *int
+│   │       ├── InstanceType: Enum (1 value)
+│   │       │   └── "VMwareCbt"
+│   │       ├── IsCheckSumResyncCycle: *string
+│   │       ├── LastRecoveryPointId: *string
+│   │       ├── LastRecoveryPointReceived: *string
+│   │       ├── LicenseType: *string
+│   │       ├── LinuxLicenseType: *Enum (3 values)
+│   │       │   ├── "LinuxServer"
+│   │       │   ├── "NoLicenseType"
+│   │       │   └── "NotSpecified"
+│   │       ├── MigrationProgressPercentage: *int
+│   │       ├── MigrationRecoveryPointId: *string
+│   │       ├── OperationName: *string
+│   │       ├── OsName: *string
+│   │       ├── OsType: *string
+│   │       ├── PerformAutoResync: *string
+│   │       ├── ProtectedDisks: Object (20 properties)[]
+│   │       │   ├── CapacityInBytes: *int
+│   │       │   ├── ConfidentialDiskEncryptionSetId: *string
+│   │       │   ├── DiskEncryptionSetId: *string
+│   │       │   ├── DiskId: *string
+│   │       │   ├── DiskName: *string
+│   │       │   ├── DiskPath: *string
+│   │       │   ├── DiskSizeInGB: *int
+│   │       │   ├── DiskType: *Enum (7 values)
+│   │       │   │   ├── "PremiumV2_LRS"
+│   │       │   │   ├── "Premium_LRS"
+│   │       │   │   ├── "Premium_ZRS"
+│   │       │   │   ├── "StandardSSD_LRS"
+│   │       │   │   ├── "StandardSSD_ZRS"
+│   │       │   │   ├── "Standard_LRS"
+│   │       │   │   └── "UltraSSD_LRS"
+│   │       │   ├── GatewayOperationDetails: *Object (8 properties)
+│   │       │   │   ├── DataStores: string[]
+│   │       │   │   ├── HostName: *string
+│   │       │   │   ├── ProgressPercentage: *int
+│   │       │   │   ├── State: *string
+│   │       │   │   ├── TimeElapsed: *int
+│   │       │   │   ├── TimeRemaining: *int
+│   │       │   │   ├── UploadSpeed: *int
+│   │       │   │   └── VmwareReadThroughput: *int
+│   │       │   ├── Iops: *int
+│   │       │   ├── IsOSDisk: *string
+│   │       │   ├── LogStorageAccountId: *string
+│   │       │   ├── LogStorageAccountSasSecretName: *string
+│   │       │   ├── SectorSizeInBytes: *int
+│   │       │   ├── SeedBlobUri: *string
+│   │       │   ├── SeedManagedDiskId: *string
+│   │       │   ├── TargetBlobUri: *string
+│   │       │   ├── TargetDiskName: *string
+│   │       │   ├── TargetManagedDiskId: *string
+│   │       │   └── ThroughputInMbps: *int
+│   │       ├── ResumeProgressPercentage: *int
+│   │       ├── ResumeRetryCount: *int
+│   │       ├── ResyncProgressPercentage: *int
+│   │       ├── ResyncRequired: *string
+│   │       ├── ResyncRetryCount: *int
+│   │       ├── ResyncState: *Enum (3 values)
+│   │       │   ├── "None"
+│   │       │   ├── "PreparedForResynchronization"
+│   │       │   └── "StartedResynchronization"
+│   │       ├── SeedDiskTags: map[string]string
+│   │       ├── SnapshotRunAsAccountId: *string
+│   │       ├── SqlServerLicenseType: *string
+│   │       ├── StorageAccountId: *string
+│   │       ├── SupportedOSVersions: string[]
+│   │       ├── TargetAvailabilitySetId: *string
+│   │       ├── TargetAvailabilityZone: *string
+│   │       ├── TargetBootDiagnosticsStorageAccountId: *string
+│   │       ├── TargetCapacityReservationGroupId: *string
+│   │       ├── TargetDiskTags: map[string]string
+│   │       ├── TargetGeneration: *string
+│   │       ├── TargetLocation: *string
+│   │       ├── TargetNetworkId: *string
+│   │       ├── TargetNicTags: map[string]string
+│   │       ├── TargetProximityPlacementGroupId: *string
+│   │       ├── TargetResourceGroupId: *string
+│   │       ├── TargetVmName: *string
+│   │       ├── TargetVmSecurityProfile: *Object (5 properties)
+│   │       │   ├── IsTargetVmConfidentialEncryptionEnabled: *string
+│   │       │   ├── IsTargetVmIntegrityMonitoringEnabled: *string
+│   │       │   ├── IsTargetVmSecureBootEnabled: *string
+│   │       │   ├── IsTargetVmTpmEnabled: *string
+│   │       │   └── TargetVmSecurityType: *Enum (3 values)
+│   │       │       ├── "ConfidentialVM"
+│   │       │       ├── "None"
+│   │       │       └── "TrustedLaunch"
+│   │       ├── TargetVmSize: *string
+│   │       ├── TargetVmTags: map[string]string
+│   │       ├── TestNetworkId: *string
+│   │       ├── VmNics: Object (14 properties)[]
+│   │       │   ├── IsPrimaryNic: *string
+│   │       │   ├── IsSelectedForMigration: *string
+│   │       │   ├── NicId: *string
+│   │       │   ├── SourceIPAddress: *string
+│   │       │   ├── SourceIPAddressType: *Enum (2 values)
+│   │       │   │   ├── "Dynamic"
+│   │       │   │   └── "Static"
+│   │       │   ├── SourceNetworkId: *string
+│   │       │   ├── TargetIPAddress: *string
+│   │       │   ├── TargetIPAddressType: *Enum (2 values)
+│   │       │   │   ├── "Dynamic"
+│   │       │   │   └── "Static"
+│   │       │   ├── TargetNicName: *string
+│   │       │   ├── TargetSubnetName: *string
+│   │       │   ├── TestIPAddress: *string
+│   │       │   ├── TestIPAddressType: *Enum (2 values)
+│   │       │   │   ├── "Dynamic"
+│   │       │   │   └── "Static"
+│   │       │   ├── TestNetworkId: *string
+│   │       │   └── TestSubnetName: *string
+│   │       └── VmwareMachineId: *string
+│   ├── RecoveryServicesProviderId: *string
+│   ├── ReplicationStatus: *string
+│   ├── TestMigrateState: *Enum (7 values)
+│   │   ├── "None"
+│   │   ├── "TestMigrationCleanupInProgress"
+│   │   ├── "TestMigrationCompletedWithInformation"
+│   │   ├── "TestMigrationFailed"
+│   │   ├── "TestMigrationInProgress"
+│   │   ├── "TestMigrationPartiallySucceeded"
+│   │   └── "TestMigrationSucceeded"
+│   └── TestMigrateStateDescription: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationMigrationItem_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── PolicyId: *string
+    └── ProviderSpecificDetails: *Object (1 property)
+        └── VMwareCbt: *Object (29 properties)
+            ├── ConfidentialVmKeyVaultId: *string
+            ├── DataMoverRunAsAccountId: *string
+            ├── DisksToInclude: Object (11 properties)[]
+            │   ├── ConfidentialDiskEncryptionSetId: *string
+            │   ├── DiskEncryptionSetId: *string
+            │   ├── DiskId: *string
+            │   ├── DiskSizeInGB: *int
+            │   ├── DiskType: *Enum (7 values)
+            │   │   ├── "PremiumV2_LRS"
+            │   │   ├── "Premium_LRS"
+            │   │   ├── "Premium_ZRS"
+            │   │   ├── "StandardSSD_LRS"
+            │   │   ├── "StandardSSD_ZRS"
+            │   │   ├── "Standard_LRS"
+            │   │   └── "UltraSSD_LRS"
+            │   ├── Iops: *int
+            │   ├── IsOSDisk: *string
+            │   ├── LogStorageAccountId: *string
+            │   ├── LogStorageAccountSasSecretName: *string
+            │   ├── SectorSizeInBytes: *int
+            │   └── ThroughputInMbps: *int
+            ├── InstanceType: Enum (1 value)
+            │   └── "VMwareCbt"
+            ├── LicenseType: *Enum (3 values)
+            │   ├── "NoLicenseType"
+            │   ├── "NotSpecified"
+            │   └── "WindowsServer"
+            ├── LinuxLicenseType: *Enum (3 values)
+            │   ├── "LinuxServer"
+            │   ├── "NoLicenseType"
+            │   └── "NotSpecified"
+            ├── PerformAutoResync: *string
+            ├── PerformSqlBulkRegistration: *string
+            ├── SeedDiskTags: map[string]string
+            ├── SnapshotRunAsAccountId: *string
+            ├── SqlServerLicenseType: *Enum (4 values)
+            │   ├── "AHUB"
+            │   ├── "NoLicenseType"
+            │   ├── "NotSpecified"
+            │   └── "PAYG"
+            ├── TargetAvailabilitySetId: *string
+            ├── TargetAvailabilityZone: *string
+            ├── TargetBootDiagnosticsStorageAccountId: *string
+            ├── TargetCapacityReservationGroupId: *string
+            ├── TargetDiskTags: map[string]string
+            ├── TargetNetworkId: *string
+            ├── TargetNicTags: map[string]string
+            ├── TargetProximityPlacementGroupId: *string
+            ├── TargetResourceGroupId: *string
+            ├── TargetSubnetName: *string
+            ├── TargetVmName: *string
+            ├── TargetVmSecurityProfile: *Object (5 properties)
+            │   ├── IsTargetVmConfidentialEncryptionEnabled: *string
+            │   ├── IsTargetVmIntegrityMonitoringEnabled: *string
+            │   ├── IsTargetVmSecureBootEnabled: *string
+            │   ├── IsTargetVmTpmEnabled: *string
+            │   └── TargetVmSecurityType: *Enum (3 values)
+            │       ├── "ConfidentialVM"
+            │       ├── "None"
+            │       └── "TrustedLaunch"
+            ├── TargetVmSize: *string
+            ├── TargetVmTags: map[string]string
+            ├── TestNetworkId: *string
+            ├── TestSubnetName: *string
+            ├── UserSelectedOSName: *string
+            └── VmwareMachineId: *string
+
+VaultsReplicationPolicy_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── FriendlyName: *string
+│   └── ProviderSpecificDetails: *Object (11 properties)
+│       ├── A2A: *Object (6 properties)
+│       │   ├── AppConsistentFrequencyInMinutes: *int
+│       │   ├── CrashConsistentFrequencyInMinutes: *int
+│       │   ├── InstanceType: Enum (1 value)
+│       │   │   └── "A2A"
+│       │   ├── MultiVmSyncStatus: *string
+│       │   ├── RecoveryPointHistory: *int
+│       │   └── RecoveryPointThresholdInMinutes: *int
+│       ├── HyperVReplica2012: *Object (11 properties)
+│       │   ├── AllowedAuthenticationType: *int
+│       │   ├── ApplicationConsistentSnapshotFrequencyInHours: *int
+│       │   ├── Compression: *string
+│       │   ├── InitialReplicationMethod: *string
+│       │   ├── InstanceType: Enum (1 value)
+│       │   │   └── "HyperVReplica2012"
+│       │   ├── OfflineReplicationExportPath: *string
+│       │   ├── OfflineReplicationImportPath: *string
+│       │   ├── OnlineReplicationStartTime: *string
+│       │   ├── RecoveryPoints: *int
+│       │   ├── ReplicaDeletionOption: *string
+│       │   └── ReplicationPort: *int
+│       ├── HyperVReplica2012R2: *Object (12 properties)
+│       │   ├── AllowedAuthenticationType: *int
+│       │   ├── ApplicationConsistentSnapshotFrequencyInHours: *int
+│       │   ├── Compression: *string
+│       │   ├── InitialReplicationMethod: *string
+│       │   ├── InstanceType: Enum (1 value)
+│       │   │   └── "HyperVReplica2012R2"
+│       │   ├── OfflineReplicationExportPath: *string
+│       │   ├── OfflineReplicationImportPath: *string
+│       │   ├── OnlineReplicationStartTime: *string
+│       │   ├── RecoveryPoints: *int
+│       │   ├── ReplicaDeletionOption: *string
+│       │   ├── ReplicationFrequencyInSeconds: *int
+│       │   └── ReplicationPort: *int
+│       ├── HyperVReplicaAzure: *Object (7 properties)
+│       │   ├── ActiveStorageAccountId: *string
+│       │   ├── ApplicationConsistentSnapshotFrequencyInHours: *int
+│       │   ├── Encryption: *string
+│       │   ├── InstanceType: Enum (1 value)
+│       │   │   └── "HyperVReplicaAzure"
+│       │   ├── OnlineReplicationStartTime: *string
+│       │   ├── RecoveryPointHistoryDurationInHours: *int
+│       │   └── ReplicationInterval: *int
+│       ├── HyperVReplicaBasePolicyDetails: *Object (11 properties)
+│       │   ├── AllowedAuthenticationType: *int
+│       │   ├── ApplicationConsistentSnapshotFrequencyInHours: *int
+│       │   ├── Compression: *string
+│       │   ├── InitialReplicationMethod: *string
+│       │   ├── InstanceType: Enum (1 value)
+│       │   │   └── "HyperVReplicaBasePolicyDetails"
+│       │   ├── OfflineReplicationExportPath: *string
+│       │   ├── OfflineReplicationImportPath: *string
+│       │   ├── OnlineReplicationStartTime: *string
+│       │   ├── RecoveryPoints: *int
+│       │   ├── ReplicaDeletionOption: *string
+│       │   └── ReplicationPort: *int
+│       ├── InMage: *Object (5 properties)
+│       │   ├── AppConsistentFrequencyInMinutes: *int
+│       │   ├── InstanceType: Enum (1 value)
+│       │   │   └── "InMage"
+│       │   ├── MultiVmSyncStatus: *string
+│       │   ├── RecoveryPointHistory: *int
+│       │   └── RecoveryPointThresholdInMinutes: *int
+│       ├── InMageAzureV2: *Object (6 properties)
+│       │   ├── AppConsistentFrequencyInMinutes: *int
+│       │   ├── CrashConsistentFrequencyInMinutes: *int
+│       │   ├── InstanceType: Enum (1 value)
+│       │   │   └── "InMageAzureV2"
+│       │   ├── MultiVmSyncStatus: *string
+│       │   ├── RecoveryPointHistory: *int
+│       │   └── RecoveryPointThresholdInMinutes: *int
+│       ├── InMageBasePolicyDetails: *Object (5 properties)
+│       │   ├── AppConsistentFrequencyInMinutes: *int
+│       │   ├── InstanceType: Enum (1 value)
+│       │   │   └── "InMageBasePolicyDetails"
+│       │   ├── MultiVmSyncStatus: *string
+│       │   ├── RecoveryPointHistory: *int
+│       │   └── RecoveryPointThresholdInMinutes: *int
+│       ├── InMageRcm: *Object (5 properties)
+│       │   ├── AppConsistentFrequencyInMinutes: *int
+│       │   ├── CrashConsistentFrequencyInMinutes: *int
+│       │   ├── EnableMultiVmSync: *string
+│       │   ├── InstanceType: Enum (1 value)
+│       │   │   └── "InMageRcm"
+│       │   └── RecoveryPointHistoryInMinutes: *int
+│       ├── InMageRcmFailback: *Object (3 properties)
+│       │   ├── AppConsistentFrequencyInMinutes: *int
+│       │   ├── CrashConsistentFrequencyInMinutes: *int
+│       │   └── InstanceType: Enum (1 value)
+│       │       └── "InMageRcmFailback"
+│       └── VMwareCbt: *Object (4 properties)
+│           ├── AppConsistentFrequencyInMinutes: *int
+│           ├── CrashConsistentFrequencyInMinutes: *int
+│           ├── InstanceType: Enum (1 value)
+│           │   └── "VMwareCbt"
+│           └── RecoveryPointHistoryInMinutes: *int
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationPolicy_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── ProviderSpecificInput: *Object (10 properties)
+        ├── A2A: *Object (5 properties)
+        │   ├── AppConsistentFrequencyInMinutes: *int
+        │   ├── CrashConsistentFrequencyInMinutes: *int
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "A2A"
+        │   ├── MultiVmSyncStatus: *Enum (2 values)
+        │   │   ├── "Disable"
+        │   │   └── "Enable"
+        │   └── RecoveryPointHistory: *int
+        ├── A2ACrossClusterMigration: *Object (1 property)
+        │   └── InstanceType: Enum (1 value)
+        │       └── "A2ACrossClusterMigration"
+        ├── HyperVReplica2012: *Object (11 properties)
+        │   ├── AllowedAuthenticationType: *int
+        │   ├── ApplicationConsistentSnapshotFrequencyInHours: *int
+        │   ├── Compression: *string
+        │   ├── InitialReplicationMethod: *string
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "HyperVReplica2012"
+        │   ├── OfflineReplicationExportPath: *string
+        │   ├── OfflineReplicationImportPath: *string
+        │   ├── OnlineReplicationStartTime: *string
+        │   ├── RecoveryPoints: *int
+        │   ├── ReplicaDeletion: *string
+        │   └── ReplicationPort: *int
+        ├── HyperVReplica2012R2: *Object (12 properties)
+        │   ├── AllowedAuthenticationType: *int
+        │   ├── ApplicationConsistentSnapshotFrequencyInHours: *int
+        │   ├── Compression: *string
+        │   ├── InitialReplicationMethod: *string
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "HyperVReplica2012R2"
+        │   ├── OfflineReplicationExportPath: *string
+        │   ├── OfflineReplicationImportPath: *string
+        │   ├── OnlineReplicationStartTime: *string
+        │   ├── RecoveryPoints: *int
+        │   ├── ReplicaDeletion: *string
+        │   ├── ReplicationFrequencyInSeconds: *int
+        │   └── ReplicationPort: *int
+        ├── HyperVReplicaAzure: *Object (6 properties)
+        │   ├── ApplicationConsistentSnapshotFrequencyInHours: *int
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "HyperVReplicaAzure"
+        │   ├── OnlineReplicationStartTime: *string
+        │   ├── RecoveryPointHistoryDuration: *int
+        │   ├── ReplicationInterval: *int
+        │   └── StorageAccounts: string[]
+        ├── InMage: *Object (5 properties)
+        │   ├── AppConsistentFrequencyInMinutes: *int
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "InMage"
+        │   ├── MultiVmSyncStatus: *Enum (2 values)
+        │   │   ├── "Disable"
+        │   │   └── "Enable"
+        │   ├── RecoveryPointHistory: *int
+        │   └── RecoveryPointThresholdInMinutes: *int
+        ├── InMageAzureV2: *Object (6 properties)
+        │   ├── AppConsistentFrequencyInMinutes: *int
+        │   ├── CrashConsistentFrequencyInMinutes: *int
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "InMageAzureV2"
+        │   ├── MultiVmSyncStatus: *Enum (2 values)
+        │   │   ├── "Disable"
+        │   │   └── "Enable"
+        │   ├── RecoveryPointHistory: *int
+        │   └── RecoveryPointThresholdInMinutes: *int
+        ├── InMageRcm: *Object (5 properties)
+        │   ├── AppConsistentFrequencyInMinutes: *int
+        │   ├── CrashConsistentFrequencyInMinutes: *int
+        │   ├── EnableMultiVmSync: *string
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "InMageRcm"
+        │   └── RecoveryPointHistoryInMinutes: *int
+        ├── InMageRcmFailback: *Object (3 properties)
+        │   ├── AppConsistentFrequencyInMinutes: *int
+        │   ├── CrashConsistentFrequencyInMinutes: *int
+        │   └── InstanceType: Enum (1 value)
+        │       └── "InMageRcmFailback"
+        └── VMwareCbt: *Object (4 properties)
+            ├── AppConsistentFrequencyInMinutes: *int
+            ├── CrashConsistentFrequencyInMinutes: *int
+            ├── InstanceType: Enum (1 value)
+            │   └── "VMwareCbt"
+            └── RecoveryPointHistoryInMinutes: *int
+
+VaultsReplicationProtectedItem_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (30 properties)
+│   ├── ActiveLocation: *string
+│   ├── AllowedOperations: string[]
+│   ├── CurrentScenario: *Object (3 properties)
+│   │   ├── JobId: *string
+│   │   ├── ScenarioName: *string
+│   │   └── StartTime: *string
+│   ├── EventCorrelationId: *string
+│   ├── FailoverHealth: *string
+│   ├── FailoverRecoveryPointId: *string
+│   ├── FriendlyName: *string
+│   ├── HealthErrors: Object (15 properties)[]
+│   │   ├── CreationTimeUtc: *string
+│   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   ├── "Allowed"
+│   │   │   └── "NotAllowed"
+│   │   ├── EntityId: *string
+│   │   ├── ErrorCategory: *string
+│   │   ├── ErrorCode: *string
+│   │   ├── ErrorId: *string
+│   │   ├── ErrorLevel: *string
+│   │   ├── ErrorMessage: *string
+│   │   ├── ErrorSource: *string
+│   │   ├── ErrorType: *string
+│   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   ├── CreationTimeUtc: *string
+│   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   ├── "Allowed"
+│   │   │   │   └── "NotAllowed"
+│   │   │   ├── EntityId: *string
+│   │   │   ├── ErrorCategory: *string
+│   │   │   ├── ErrorCode: *string
+│   │   │   ├── ErrorId: *string
+│   │   │   ├── ErrorLevel: *string
+│   │   │   ├── ErrorMessage: *string
+│   │   │   ├── ErrorSource: *string
+│   │   │   ├── ErrorType: *string
+│   │   │   ├── PossibleCauses: *string
+│   │   │   ├── RecommendedAction: *string
+│   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   └── SummaryMessage: *string
+│   │   ├── PossibleCauses: *string
+│   │   ├── RecommendedAction: *string
+│   │   ├── RecoveryProviderErrorMessage: *string
+│   │   └── SummaryMessage: *string
+│   ├── LastSuccessfulFailoverTime: *string
+│   ├── LastSuccessfulTestFailoverTime: *string
+│   ├── PolicyFriendlyName: *string
+│   ├── PolicyId: *string
+│   ├── PrimaryFabricFriendlyName: *string
+│   ├── PrimaryFabricProvider: *string
+│   ├── PrimaryProtectionContainerFriendlyName: *string
+│   ├── ProtectableItemId: *string
+│   ├── ProtectedItemType: *string
+│   ├── ProtectionState: *string
+│   ├── ProtectionStateDescription: *string
+│   ├── ProviderSpecificDetails: *Object (10 properties)
+│   │   ├── A2A: *Object (69 properties)
+│   │   │   ├── AgentCertificateExpiryDate: *string
+│   │   │   ├── AgentExpiryDate: *string
+│   │   │   ├── AgentReinstallAttemptToVersion: *string
+│   │   │   ├── AgentVersion: *string
+│   │   │   ├── AutoAgentUpgradeRetryCount: *int
+│   │   │   ├── AutoProtectionOfDataDisk: *Enum (2 values)
+│   │   │   │   ├── "Disabled"
+│   │   │   │   └── "Enabled"
+│   │   │   ├── ChurnOptionSelected: *Enum (2 values)
+│   │   │   │   ├── "High"
+│   │   │   │   └── "Normal"
+│   │   │   ├── DistroName: *string
+│   │   │   ├── DistroNameForWhichAgentIsInstalled: *string
+│   │   │   ├── FabricObjectId: *string
+│   │   │   ├── InitialPrimaryExtendedLocation: *Object (2 properties)
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "EdgeZone"
+│   │   │   ├── InitialPrimaryFabricLocation: *string
+│   │   │   ├── InitialPrimaryZone: *string
+│   │   │   ├── InitialRecoveryExtendedLocation: *Object (2 properties)
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "EdgeZone"
+│   │   │   ├── InitialRecoveryFabricLocation: *string
+│   │   │   ├── InitialRecoveryZone: *string
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "A2A"
+│   │   │   ├── IsAgentReinstallRequired: *bool
+│   │   │   ├── IsAgentUpgradeInProgress: *bool
+│   │   │   ├── IsAgentUpgradeRetryThresholdExhausted: *bool
+│   │   │   ├── IsAgentUpgradeable: *bool
+│   │   │   ├── IsClusterInfraReady: *bool
+│   │   │   ├── IsReplicationAgentCertificateUpdateRequired: *bool
+│   │   │   ├── IsReplicationAgentUpdateRequired: *bool
+│   │   │   ├── LastHeartbeat: *string
+│   │   │   ├── LastRpoCalculatedTime: *string
+│   │   │   ├── LifecycleId: *string
+│   │   │   ├── ManagementId: *string
+│   │   │   ├── MonitoringJobType: *string
+│   │   │   ├── MonitoringPercentageCompletion: *int
+│   │   │   ├── MultiVmGroupCreateOption: *Enum (2 values)
+│   │   │   │   ├── "AutoCreated"
+│   │   │   │   └── "UserSpecified"
+│   │   │   ├── MultiVmGroupId: *string
+│   │   │   ├── MultiVmGroupName: *string
+│   │   │   ├── OsFamilyName: *string
+│   │   │   ├── OsType: *string
+│   │   │   ├── PlatformFaultDomain: *int
+│   │   │   ├── PrimaryAvailabilityZone: *string
+│   │   │   ├── PrimaryExtendedLocation: *Object (2 properties)
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "EdgeZone"
+│   │   │   ├── PrimaryFabricLocation: *string
+│   │   │   ├── ProtectedDisks: Object (23 properties)[]
+│   │   │   │   ├── AllowedDiskLevelOperation: string[]
+│   │   │   │   ├── DataPendingAtSourceAgentInMB: *float64
+│   │   │   │   ├── DataPendingInStagingStorageAccountInMB: *float64
+│   │   │   │   ├── DekKeyVaultArmId: *string
+│   │   │   │   ├── DiskCapacityInBytes: *int
+│   │   │   │   ├── DiskName: *string
+│   │   │   │   ├── DiskState: *string
+│   │   │   │   ├── DiskType: *string
+│   │   │   │   ├── DiskUri: *string
+│   │   │   │   ├── FailoverDiskName: *string
+│   │   │   │   ├── IsDiskEncrypted: *bool
+│   │   │   │   ├── IsDiskKeyEncrypted: *bool
+│   │   │   │   ├── KekKeyVaultArmId: *string
+│   │   │   │   ├── KeyIdentifier: *string
+│   │   │   │   ├── MonitoringJobType: *string
+│   │   │   │   ├── MonitoringPercentageCompletion: *int
+│   │   │   │   ├── PrimaryDiskAzureStorageAccountId: *string
+│   │   │   │   ├── PrimaryStagingAzureStorageAccountId: *string
+│   │   │   │   ├── RecoveryAzureStorageAccountId: *string
+│   │   │   │   ├── RecoveryDiskUri: *string
+│   │   │   │   ├── ResyncRequired: *bool
+│   │   │   │   ├── SecretIdentifier: *string
+│   │   │   │   └── TfoDiskName: *string
+│   │   │   ├── ProtectedManagedDisks: Object (31 properties)[]
+│   │   │   │   ├── AllowedDiskLevelOperation: string[]
+│   │   │   │   ├── DataPendingAtSourceAgentInMB: *float64
+│   │   │   │   ├── DataPendingInStagingStorageAccountInMB: *float64
+│   │   │   │   ├── DekKeyVaultArmId: *string
+│   │   │   │   ├── DiskCapacityInBytes: *int
+│   │   │   │   ├── DiskId: *string
+│   │   │   │   ├── DiskName: *string
+│   │   │   │   ├── DiskState: *string
+│   │   │   │   ├── DiskType: *string
+│   │   │   │   ├── FailoverDiskName: *string
+│   │   │   │   ├── IsDiskEncrypted: *bool
+│   │   │   │   ├── IsDiskKeyEncrypted: *bool
+│   │   │   │   ├── KekKeyVaultArmId: *string
+│   │   │   │   ├── KeyIdentifier: *string
+│   │   │   │   ├── MonitoringJobType: *string
+│   │   │   │   ├── MonitoringPercentageCompletion: *int
+│   │   │   │   ├── PrimaryDiskEncryptionSetId: *string
+│   │   │   │   ├── PrimaryStagingAzureStorageAccountId: *string
+│   │   │   │   ├── RecoveryDiskAccessId: *string
+│   │   │   │   ├── RecoveryDiskEncryptionSetId: *string
+│   │   │   │   ├── RecoveryNetworkAccessPolicy: *Enum (3 values)
+│   │   │   │   │   ├── "AllowAll"
+│   │   │   │   │   ├── "AllowPrivate"
+│   │   │   │   │   └── "DenyAll"
+│   │   │   │   ├── RecoveryOrignalTargetDiskId: *string
+│   │   │   │   ├── RecoveryPublicNetworkAccess: *Enum (2 values)
+│   │   │   │   │   ├── "Disabled"
+│   │   │   │   │   └── "Enabled"
+│   │   │   │   ├── RecoveryReplicaDiskAccountType: *string
+│   │   │   │   ├── RecoveryReplicaDiskId: *string
+│   │   │   │   ├── RecoveryResourceGroupId: *string
+│   │   │   │   ├── RecoveryTargetDiskAccountType: *string
+│   │   │   │   ├── RecoveryTargetDiskId: *string
+│   │   │   │   ├── ResyncRequired: *bool
+│   │   │   │   ├── SecretIdentifier: *string
+│   │   │   │   └── TfoDiskName: *string
+│   │   │   ├── ProtectionClusterId: *string
+│   │   │   ├── ReasonsBlockingReInstall: *string
+│   │   │   ├── ReasonsBlockingReinstallDetails: Object (6 properties)[]
+│   │   │   │   ├── ErrorCode: *string
+│   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   ├── ErrorMessageParameters: map[string]string
+│   │   │   │   ├── ErrorTags: map[string]string
+│   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   └── RecommendedAction: *string
+│   │   │   ├── RecoveryAvailabilitySet: *string
+│   │   │   ├── RecoveryAvailabilityZone: *string
+│   │   │   ├── RecoveryAzureGeneration: *string
+│   │   │   ├── RecoveryAzureResourceGroupId: *string
+│   │   │   ├── RecoveryAzureVMName: *string
+│   │   │   ├── RecoveryAzureVMSize: *string
+│   │   │   ├── RecoveryBootDiagStorageAccountId: *string
+│   │   │   ├── RecoveryCapacityReservationGroupId: *string
+│   │   │   ├── RecoveryCloudService: *string
+│   │   │   ├── RecoveryExtendedLocation: *Object (2 properties)
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "EdgeZone"
+│   │   │   ├── RecoveryFabricLocation: *string
+│   │   │   ├── RecoveryFabricObjectId: *string
+│   │   │   ├── RecoveryProximityPlacementGroupId: *string
+│   │   │   ├── RecoveryVirtualMachineScaleSetId: *string
+│   │   │   ├── RpoInSeconds: *int
+│   │   │   ├── SelectedRecoveryAzureNetworkId: *string
+│   │   │   ├── SelectedTfoAzureNetworkId: *string
+│   │   │   ├── TestFailoverRecoveryFabricObjectId: *string
+│   │   │   ├── TfoAzureVMName: *string
+│   │   │   ├── UnprotectedDisks: Object (2 properties)[]
+│   │   │   │   ├── DiskAutoProtectionStatus: *Enum (2 values)
+│   │   │   │   │   ├── "Disabled"
+│   │   │   │   │   └── "Enabled"
+│   │   │   │   └── DiskLunId: *int
+│   │   │   ├── VmEncryptionType: *Enum (3 values)
+│   │   │   │   ├── "NotEncrypted"
+│   │   │   │   ├── "OnePassEncrypted"
+│   │   │   │   └── "TwoPassEncrypted"
+│   │   │   ├── VmNics: Object (19 properties)[]
+│   │   │   │   ├── EnableAcceleratedNetworkingOnRecovery: *bool
+│   │   │   │   ├── EnableAcceleratedNetworkingOnTfo: *bool
+│   │   │   │   ├── IpConfigs: Object (15 properties)[]
+│   │   │   │   │   ├── IpAddressType: *string
+│   │   │   │   │   ├── IsPrimary: *bool
+│   │   │   │   │   ├── IsSeletedForFailover: *bool
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── RecoveryIPAddressType: *string
+│   │   │   │   │   ├── RecoveryLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── RecoveryPublicIPAddressId: *string
+│   │   │   │   │   ├── RecoveryStaticIPAddress: *string
+│   │   │   │   │   ├── RecoverySubnetName: *string
+│   │   │   │   │   ├── StaticIPAddress: *string
+│   │   │   │   │   ├── SubnetName: *string
+│   │   │   │   │   ├── TfoLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── TfoPublicIPAddressId: *string
+│   │   │   │   │   ├── TfoStaticIPAddress: *string
+│   │   │   │   │   └── TfoSubnetName: *string
+│   │   │   │   ├── NicId: *string
+│   │   │   │   ├── RecoveryNetworkSecurityGroupId: *string
+│   │   │   │   ├── RecoveryNicName: *string
+│   │   │   │   ├── RecoveryNicResourceGroupName: *string
+│   │   │   │   ├── RecoveryVMNetworkId: *string
+│   │   │   │   ├── ReplicaNicId: *string
+│   │   │   │   ├── ReuseExistingNic: *bool
+│   │   │   │   ├── SelectionType: *string
+│   │   │   │   ├── SourceNicArmId: *string
+│   │   │   │   ├── TargetNicName: *string
+│   │   │   │   ├── TfoNetworkSecurityGroupId: *string
+│   │   │   │   ├── TfoRecoveryNicName: *string
+│   │   │   │   ├── TfoRecoveryNicResourceGroupName: *string
+│   │   │   │   ├── TfoReuseExistingNic: *bool
+│   │   │   │   ├── TfoVMNetworkId: *string
+│   │   │   │   └── VMNetworkName: *string
+│   │   │   ├── VmProtectionState: *string
+│   │   │   ├── VmProtectionStateDescription: *string
+│   │   │   └── VmSyncedConfigDetails: *Object (2 properties)
+│   │   │       ├── InputEndpoints: Object (4 properties)[]
+│   │   │       │   ├── EndpointName: *string
+│   │   │       │   ├── PrivatePort: *int
+│   │   │       │   ├── Protocol: *string
+│   │   │       │   └── PublicPort: *int
+│   │   │       └── Tags: map[string]string
+│   │   ├── A2ACrossClusterMigration: *Object (7 properties)
+│   │   │   ├── FabricObjectId: *string
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "A2ACrossClusterMigration"
+│   │   │   ├── LifecycleId: *string
+│   │   │   ├── OsType: *string
+│   │   │   ├── PrimaryFabricLocation: *string
+│   │   │   ├── VmProtectionState: *string
+│   │   │   └── VmProtectionStateDescription: *string
+│   │   ├── HyperVReplica2012: *Object (8 properties)
+│   │   │   ├── InitialReplicationDetails: *Object (2 properties)
+│   │   │   │   ├── InitialReplicationProgressPercentage: *string
+│   │   │   │   └── InitialReplicationType: *string
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "HyperVReplica2012"
+│   │   │   ├── LastReplicatedTime: *string
+│   │   │   ├── VMDiskDetails: Object (4 properties)[]
+│   │   │   │   ├── MaxSizeMB: *int
+│   │   │   │   ├── VhdId: *string
+│   │   │   │   ├── VhdName: *string
+│   │   │   │   └── VhdType: *string
+│   │   │   ├── VmId: *string
+│   │   │   ├── VmNics: Object (19 properties)[]
+│   │   │   │   ├── EnableAcceleratedNetworkingOnRecovery: *bool
+│   │   │   │   ├── EnableAcceleratedNetworkingOnTfo: *bool
+│   │   │   │   ├── IpConfigs: Object (15 properties)[]
+│   │   │   │   │   ├── IpAddressType: *string
+│   │   │   │   │   ├── IsPrimary: *bool
+│   │   │   │   │   ├── IsSeletedForFailover: *bool
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── RecoveryIPAddressType: *string
+│   │   │   │   │   ├── RecoveryLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── RecoveryPublicIPAddressId: *string
+│   │   │   │   │   ├── RecoveryStaticIPAddress: *string
+│   │   │   │   │   ├── RecoverySubnetName: *string
+│   │   │   │   │   ├── StaticIPAddress: *string
+│   │   │   │   │   ├── SubnetName: *string
+│   │   │   │   │   ├── TfoLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── TfoPublicIPAddressId: *string
+│   │   │   │   │   ├── TfoStaticIPAddress: *string
+│   │   │   │   │   └── TfoSubnetName: *string
+│   │   │   │   ├── NicId: *string
+│   │   │   │   ├── RecoveryNetworkSecurityGroupId: *string
+│   │   │   │   ├── RecoveryNicName: *string
+│   │   │   │   ├── RecoveryNicResourceGroupName: *string
+│   │   │   │   ├── RecoveryVMNetworkId: *string
+│   │   │   │   ├── ReplicaNicId: *string
+│   │   │   │   ├── ReuseExistingNic: *bool
+│   │   │   │   ├── SelectionType: *string
+│   │   │   │   ├── SourceNicArmId: *string
+│   │   │   │   ├── TargetNicName: *string
+│   │   │   │   ├── TfoNetworkSecurityGroupId: *string
+│   │   │   │   ├── TfoRecoveryNicName: *string
+│   │   │   │   ├── TfoRecoveryNicResourceGroupName: *string
+│   │   │   │   ├── TfoReuseExistingNic: *bool
+│   │   │   │   ├── TfoVMNetworkId: *string
+│   │   │   │   └── VMNetworkName: *string
+│   │   │   ├── VmProtectionState: *string
+│   │   │   └── VmProtectionStateDescription: *string
+│   │   ├── HyperVReplica2012R2: *Object (8 properties)
+│   │   │   ├── InitialReplicationDetails: *Object (2 properties)
+│   │   │   │   ├── InitialReplicationProgressPercentage: *string
+│   │   │   │   └── InitialReplicationType: *string
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "HyperVReplica2012R2"
+│   │   │   ├── LastReplicatedTime: *string
+│   │   │   ├── VMDiskDetails: Object (4 properties)[]
+│   │   │   │   ├── MaxSizeMB: *int
+│   │   │   │   ├── VhdId: *string
+│   │   │   │   ├── VhdName: *string
+│   │   │   │   └── VhdType: *string
+│   │   │   ├── VmId: *string
+│   │   │   ├── VmNics: Object (19 properties)[]
+│   │   │   │   ├── EnableAcceleratedNetworkingOnRecovery: *bool
+│   │   │   │   ├── EnableAcceleratedNetworkingOnTfo: *bool
+│   │   │   │   ├── IpConfigs: Object (15 properties)[]
+│   │   │   │   │   ├── IpAddressType: *string
+│   │   │   │   │   ├── IsPrimary: *bool
+│   │   │   │   │   ├── IsSeletedForFailover: *bool
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── RecoveryIPAddressType: *string
+│   │   │   │   │   ├── RecoveryLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── RecoveryPublicIPAddressId: *string
+│   │   │   │   │   ├── RecoveryStaticIPAddress: *string
+│   │   │   │   │   ├── RecoverySubnetName: *string
+│   │   │   │   │   ├── StaticIPAddress: *string
+│   │   │   │   │   ├── SubnetName: *string
+│   │   │   │   │   ├── TfoLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── TfoPublicIPAddressId: *string
+│   │   │   │   │   ├── TfoStaticIPAddress: *string
+│   │   │   │   │   └── TfoSubnetName: *string
+│   │   │   │   ├── NicId: *string
+│   │   │   │   ├── RecoveryNetworkSecurityGroupId: *string
+│   │   │   │   ├── RecoveryNicName: *string
+│   │   │   │   ├── RecoveryNicResourceGroupName: *string
+│   │   │   │   ├── RecoveryVMNetworkId: *string
+│   │   │   │   ├── ReplicaNicId: *string
+│   │   │   │   ├── ReuseExistingNic: *bool
+│   │   │   │   ├── SelectionType: *string
+│   │   │   │   ├── SourceNicArmId: *string
+│   │   │   │   ├── TargetNicName: *string
+│   │   │   │   ├── TfoNetworkSecurityGroupId: *string
+│   │   │   │   ├── TfoRecoveryNicName: *string
+│   │   │   │   ├── TfoRecoveryNicResourceGroupName: *string
+│   │   │   │   ├── TfoReuseExistingNic: *bool
+│   │   │   │   ├── TfoVMNetworkId: *string
+│   │   │   │   └── VMNetworkName: *string
+│   │   │   ├── VmProtectionState: *string
+│   │   │   └── VmProtectionStateDescription: *string
+│   │   ├── HyperVReplicaAzure: *Object (38 properties)
+│   │   │   ├── AllAvailableOSUpgradeConfigurations: Object (2 properties)[]
+│   │   │   │   ├── SupportedSourceOsVersion: *string
+│   │   │   │   └── SupportedTargetOsVersions: string[]
+│   │   │   ├── AzureVmDiskDetails: Object (10 properties)[]
+│   │   │   │   ├── CustomTargetDiskName: *string
+│   │   │   │   ├── DiskEncryptionSetId: *string
+│   │   │   │   ├── DiskId: *string
+│   │   │   │   ├── LunId: *string
+│   │   │   │   ├── MaxSizeMB: *string
+│   │   │   │   ├── TargetDiskLocation: *string
+│   │   │   │   ├── TargetDiskName: *string
+│   │   │   │   ├── VhdId: *string
+│   │   │   │   ├── VhdName: *string
+│   │   │   │   └── VhdType: *string
+│   │   │   ├── EnableRdpOnTargetOption: *string
+│   │   │   ├── Encryption: *string
+│   │   │   ├── InitialReplicationDetails: *Object (2 properties)
+│   │   │   │   ├── InitialReplicationProgressPercentage: *string
+│   │   │   │   └── InitialReplicationType: *string
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "HyperVReplicaAzure"
+│   │   │   ├── LastRecoveryPointReceived: *string
+│   │   │   ├── LastReplicatedTime: *string
+│   │   │   ├── LastRpoCalculatedTime: *string
+│   │   │   ├── LicenseType: *string
+│   │   │   ├── LinuxLicenseType: *Enum (3 values)
+│   │   │   │   ├── "LinuxServer"
+│   │   │   │   ├── "NoLicenseType"
+│   │   │   │   └── "NotSpecified"
+│   │   │   ├── OSDetails: *Object (7 properties)
+│   │   │   │   ├── OSMajorVersion: *string
+│   │   │   │   ├── OSMinorVersion: *string
+│   │   │   │   ├── OSVersion: *string
+│   │   │   │   ├── OsEdition: *string
+│   │   │   │   ├── OsType: *string
+│   │   │   │   ├── ProductType: *string
+│   │   │   │   └── UserSelectedOSName: *string
+│   │   │   ├── ProtectedManagedDisks: Object (9 properties)[]
+│   │   │   │   ├── DiskEncryptionSetId: *string
+│   │   │   │   ├── DiskId: *string
+│   │   │   │   ├── DiskSizeInGB: *int
+│   │   │   │   ├── Iops: *int
+│   │   │   │   ├── ReplicaDiskType: *string
+│   │   │   │   ├── SectorSizeInBytes: *int
+│   │   │   │   ├── SeedManagedDiskId: *string
+│   │   │   │   ├── TargetDiskAccountType: *Enum (7 values)
+│   │   │   │   │   ├── "PremiumV2_LRS"
+│   │   │   │   │   ├── "Premium_LRS"
+│   │   │   │   │   ├── "Premium_ZRS"
+│   │   │   │   │   ├── "StandardSSD_LRS"
+│   │   │   │   │   ├── "StandardSSD_ZRS"
+│   │   │   │   │   ├── "Standard_LRS"
+│   │   │   │   │   └── "UltraSSD_LRS"
+│   │   │   │   └── ThroughputInMbps: *int
+│   │   │   ├── RecoveryAvailabilitySetId: *string
+│   │   │   ├── RecoveryAzureLogStorageAccountId: *string
+│   │   │   ├── RecoveryAzureResourceGroupId: *string
+│   │   │   ├── RecoveryAzureStorageAccount: *string
+│   │   │   ├── RecoveryAzureVMSize: *string
+│   │   │   ├── RecoveryAzureVmName: *string
+│   │   │   ├── RpoInSeconds: *int
+│   │   │   ├── SeedManagedDiskTags: map[string]string
+│   │   │   ├── SelectedRecoveryAzureNetworkId: *string
+│   │   │   ├── SelectedSourceNicId: *string
+│   │   │   ├── SourceVmCpuCount: *int
+│   │   │   ├── SourceVmRamSizeInMB: *int
+│   │   │   ├── SqlServerLicenseType: *string
+│   │   │   ├── TargetAvailabilityZone: *string
+│   │   │   ├── TargetCapacityReservationGroupId: *string
+│   │   │   ├── TargetManagedDiskTags: map[string]string
+│   │   │   ├── TargetNicTags: map[string]string
+│   │   │   ├── TargetProximityPlacementGroupId: *string
+│   │   │   ├── TargetVmSecurityProfile: *Object (5 properties)
+│   │   │   │   ├── TargetVmConfidentialEncryption: *Enum (2 values)
+│   │   │   │   │   ├── "Disabled"
+│   │   │   │   │   └── "Enabled"
+│   │   │   │   ├── TargetVmMonitoring: *Enum (2 values)
+│   │   │   │   │   ├── "Disabled"
+│   │   │   │   │   └── "Enabled"
+│   │   │   │   ├── TargetVmSecureBoot: *Enum (2 values)
+│   │   │   │   │   ├── "Disabled"
+│   │   │   │   │   └── "Enabled"
+│   │   │   │   ├── TargetVmSecurityType: *Enum (3 values)
+│   │   │   │   │   ├── "ConfidentialVM"
+│   │   │   │   │   ├── "None"
+│   │   │   │   │   └── "TrustedLaunch"
+│   │   │   │   └── TargetVmTpm: *Enum (2 values)
+│   │   │   │       ├── "Disabled"
+│   │   │   │       └── "Enabled"
+│   │   │   ├── TargetVmTags: map[string]string
+│   │   │   ├── UseManagedDisks: *string
+│   │   │   ├── VmId: *string
+│   │   │   ├── VmNics: Object (19 properties)[]
+│   │   │   │   ├── EnableAcceleratedNetworkingOnRecovery: *bool
+│   │   │   │   ├── EnableAcceleratedNetworkingOnTfo: *bool
+│   │   │   │   ├── IpConfigs: Object (15 properties)[]
+│   │   │   │   │   ├── IpAddressType: *string
+│   │   │   │   │   ├── IsPrimary: *bool
+│   │   │   │   │   ├── IsSeletedForFailover: *bool
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── RecoveryIPAddressType: *string
+│   │   │   │   │   ├── RecoveryLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── RecoveryPublicIPAddressId: *string
+│   │   │   │   │   ├── RecoveryStaticIPAddress: *string
+│   │   │   │   │   ├── RecoverySubnetName: *string
+│   │   │   │   │   ├── StaticIPAddress: *string
+│   │   │   │   │   ├── SubnetName: *string
+│   │   │   │   │   ├── TfoLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── TfoPublicIPAddressId: *string
+│   │   │   │   │   ├── TfoStaticIPAddress: *string
+│   │   │   │   │   └── TfoSubnetName: *string
+│   │   │   │   ├── NicId: *string
+│   │   │   │   ├── RecoveryNetworkSecurityGroupId: *string
+│   │   │   │   ├── RecoveryNicName: *string
+│   │   │   │   ├── RecoveryNicResourceGroupName: *string
+│   │   │   │   ├── RecoveryVMNetworkId: *string
+│   │   │   │   ├── ReplicaNicId: *string
+│   │   │   │   ├── ReuseExistingNic: *bool
+│   │   │   │   ├── SelectionType: *string
+│   │   │   │   ├── SourceNicArmId: *string
+│   │   │   │   ├── TargetNicName: *string
+│   │   │   │   ├── TfoNetworkSecurityGroupId: *string
+│   │   │   │   ├── TfoRecoveryNicName: *string
+│   │   │   │   ├── TfoRecoveryNicResourceGroupName: *string
+│   │   │   │   ├── TfoReuseExistingNic: *bool
+│   │   │   │   ├── TfoVMNetworkId: *string
+│   │   │   │   └── VMNetworkName: *string
+│   │   │   ├── VmProtectionState: *string
+│   │   │   └── VmProtectionStateDescription: *string
+│   │   ├── HyperVReplicaBaseReplicationDetails: *Object (8 properties)
+│   │   │   ├── InitialReplicationDetails: *Object (2 properties)
+│   │   │   │   ├── InitialReplicationProgressPercentage: *string
+│   │   │   │   └── InitialReplicationType: *string
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "HyperVReplicaBaseReplicationDetails"
+│   │   │   ├── LastReplicatedTime: *string
+│   │   │   ├── VMDiskDetails: Object (4 properties)[]
+│   │   │   │   ├── MaxSizeMB: *int
+│   │   │   │   ├── VhdId: *string
+│   │   │   │   ├── VhdName: *string
+│   │   │   │   └── VhdType: *string
+│   │   │   ├── VmId: *string
+│   │   │   ├── VmNics: Object (19 properties)[]
+│   │   │   │   ├── EnableAcceleratedNetworkingOnRecovery: *bool
+│   │   │   │   ├── EnableAcceleratedNetworkingOnTfo: *bool
+│   │   │   │   ├── IpConfigs: Object (15 properties)[]
+│   │   │   │   │   ├── IpAddressType: *string
+│   │   │   │   │   ├── IsPrimary: *bool
+│   │   │   │   │   ├── IsSeletedForFailover: *bool
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── RecoveryIPAddressType: *string
+│   │   │   │   │   ├── RecoveryLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── RecoveryPublicIPAddressId: *string
+│   │   │   │   │   ├── RecoveryStaticIPAddress: *string
+│   │   │   │   │   ├── RecoverySubnetName: *string
+│   │   │   │   │   ├── StaticIPAddress: *string
+│   │   │   │   │   ├── SubnetName: *string
+│   │   │   │   │   ├── TfoLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── TfoPublicIPAddressId: *string
+│   │   │   │   │   ├── TfoStaticIPAddress: *string
+│   │   │   │   │   └── TfoSubnetName: *string
+│   │   │   │   ├── NicId: *string
+│   │   │   │   ├── RecoveryNetworkSecurityGroupId: *string
+│   │   │   │   ├── RecoveryNicName: *string
+│   │   │   │   ├── RecoveryNicResourceGroupName: *string
+│   │   │   │   ├── RecoveryVMNetworkId: *string
+│   │   │   │   ├── ReplicaNicId: *string
+│   │   │   │   ├── ReuseExistingNic: *bool
+│   │   │   │   ├── SelectionType: *string
+│   │   │   │   ├── SourceNicArmId: *string
+│   │   │   │   ├── TargetNicName: *string
+│   │   │   │   ├── TfoNetworkSecurityGroupId: *string
+│   │   │   │   ├── TfoRecoveryNicName: *string
+│   │   │   │   ├── TfoRecoveryNicResourceGroupName: *string
+│   │   │   │   ├── TfoReuseExistingNic: *bool
+│   │   │   │   ├── TfoVMNetworkId: *string
+│   │   │   │   └── VMNetworkName: *string
+│   │   │   ├── VmProtectionState: *string
+│   │   │   └── VmProtectionStateDescription: *string
+│   │   ├── InMage: *Object (41 properties)
+│   │   │   ├── ActiveSiteType: *string
+│   │   │   ├── AgentDetails: *Object (4 properties)
+│   │   │   │   ├── AgentExpiryDate: *string
+│   │   │   │   ├── AgentUpdateStatus: *string
+│   │   │   │   ├── AgentVersion: *string
+│   │   │   │   └── PostUpdateRebootStatus: *string
+│   │   │   ├── AzureStorageAccountId: *string
+│   │   │   ├── CompressedDataRateInMB: *float64
+│   │   │   ├── ConsistencyPoints: map[string]string
+│   │   │   ├── Datastores: string[]
+│   │   │   ├── DiscoveryType: *string
+│   │   │   ├── DiskResized: *string
+│   │   │   ├── InfrastructureVmId: *string
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "InMage"
+│   │   │   ├── IpAddress: *string
+│   │   │   ├── IsAdditionalStatsAvailable: *bool
+│   │   │   ├── LastHeartbeat: *string
+│   │   │   ├── LastRpoCalculatedTime: *string
+│   │   │   ├── LastUpdateReceivedTime: *string
+│   │   │   ├── MasterTargetId: *string
+│   │   │   ├── MultiVmGroupId: *string
+│   │   │   ├── MultiVmGroupName: *string
+│   │   │   ├── MultiVmSyncStatus: *string
+│   │   │   ├── OsDetails: *Object (3 properties)
+│   │   │   │   ├── OsType: *string
+│   │   │   │   ├── OsVhdId: *string
+│   │   │   │   └── VhdName: *string
+│   │   │   ├── OsVersion: *string
+│   │   │   ├── ProcessServerId: *string
+│   │   │   ├── ProtectedDisks: Object (22 properties)[]
+│   │   │   │   ├── DiskCapacityInBytes: *int
+│   │   │   │   ├── DiskId: *string
+│   │   │   │   ├── DiskName: *string
+│   │   │   │   ├── DiskResized: *string
+│   │   │   │   ├── FileSystemCapacityInBytes: *int
+│   │   │   │   ├── HealthErrorCode: *string
+│   │   │   │   ├── LastRpoCalculatedTime: *string
+│   │   │   │   ├── ProgressHealth: *string
+│   │   │   │   ├── ProgressStatus: *string
+│   │   │   │   ├── ProtectionStage: *string
+│   │   │   │   ├── PsDataInMB: *float64
+│   │   │   │   ├── ResyncDurationInSeconds: *int
+│   │   │   │   ├── ResyncLast15MinutesTransferredBytes: *int
+│   │   │   │   ├── ResyncLastDataTransferTimeUTC: *string
+│   │   │   │   ├── ResyncProcessedBytes: *int
+│   │   │   │   ├── ResyncProgressPercentage: *int
+│   │   │   │   ├── ResyncRequired: *string
+│   │   │   │   ├── ResyncStartTime: *string
+│   │   │   │   ├── ResyncTotalTransferredBytes: *int
+│   │   │   │   ├── RpoInSeconds: *int
+│   │   │   │   ├── SourceDataInMB: *float64
+│   │   │   │   └── TargetDataInMB: *float64
+│   │   │   ├── ProtectionStage: *string
+│   │   │   ├── RebootAfterUpdateStatus: *string
+│   │   │   ├── ReplicaId: *string
+│   │   │   ├── ResyncDetails: *Object (2 properties)
+│   │   │   │   ├── InitialReplicationProgressPercentage: *string
+│   │   │   │   └── InitialReplicationType: *string
+│   │   │   ├── RetentionWindowEnd: *string
+│   │   │   ├── RetentionWindowStart: *string
+│   │   │   ├── RpoInSeconds: *int
+│   │   │   ├── SourceVmCpuCount: *int
+│   │   │   ├── SourceVmRamSizeInMB: *int
+│   │   │   ├── TotalDataTransferred: *int
+│   │   │   ├── TotalProgressHealth: *string
+│   │   │   ├── UncompressedDataRateInMB: *float64
+│   │   │   ├── VCenterInfrastructureId: *string
+│   │   │   ├── ValidationErrors: Object (15 properties)[]
+│   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   └── "NotAllowed"
+│   │   │   │   ├── EntityId: *string
+│   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   ├── ErrorCode: *string
+│   │   │   │   ├── ErrorId: *string
+│   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   ├── ErrorSource: *string
+│   │   │   │   ├── ErrorType: *string
+│   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   └── SummaryMessage: *string
+│   │   │   ├── VmId: *string
+│   │   │   ├── VmNics: Object (19 properties)[]
+│   │   │   │   ├── EnableAcceleratedNetworkingOnRecovery: *bool
+│   │   │   │   ├── EnableAcceleratedNetworkingOnTfo: *bool
+│   │   │   │   ├── IpConfigs: Object (15 properties)[]
+│   │   │   │   │   ├── IpAddressType: *string
+│   │   │   │   │   ├── IsPrimary: *bool
+│   │   │   │   │   ├── IsSeletedForFailover: *bool
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── RecoveryIPAddressType: *string
+│   │   │   │   │   ├── RecoveryLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── RecoveryPublicIPAddressId: *string
+│   │   │   │   │   ├── RecoveryStaticIPAddress: *string
+│   │   │   │   │   ├── RecoverySubnetName: *string
+│   │   │   │   │   ├── StaticIPAddress: *string
+│   │   │   │   │   ├── SubnetName: *string
+│   │   │   │   │   ├── TfoLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── TfoPublicIPAddressId: *string
+│   │   │   │   │   ├── TfoStaticIPAddress: *string
+│   │   │   │   │   └── TfoSubnetName: *string
+│   │   │   │   ├── NicId: *string
+│   │   │   │   ├── RecoveryNetworkSecurityGroupId: *string
+│   │   │   │   ├── RecoveryNicName: *string
+│   │   │   │   ├── RecoveryNicResourceGroupName: *string
+│   │   │   │   ├── RecoveryVMNetworkId: *string
+│   │   │   │   ├── ReplicaNicId: *string
+│   │   │   │   ├── ReuseExistingNic: *bool
+│   │   │   │   ├── SelectionType: *string
+│   │   │   │   ├── SourceNicArmId: *string
+│   │   │   │   ├── TargetNicName: *string
+│   │   │   │   ├── TfoNetworkSecurityGroupId: *string
+│   │   │   │   ├── TfoRecoveryNicName: *string
+│   │   │   │   ├── TfoRecoveryNicResourceGroupName: *string
+│   │   │   │   ├── TfoReuseExistingNic: *bool
+│   │   │   │   ├── TfoVMNetworkId: *string
+│   │   │   │   └── VMNetworkName: *string
+│   │   │   ├── VmProtectionState: *string
+│   │   │   └── VmProtectionStateDescription: *string
+│   │   ├── InMageAzureV2: *Object (71 properties)
+│   │   │   ├── AgentExpiryDate: *string
+│   │   │   ├── AgentVersion: *string
+│   │   │   ├── AllAvailableOSUpgradeConfigurations: Object (2 properties)[]
+│   │   │   │   ├── SupportedSourceOsVersion: *string
+│   │   │   │   └── SupportedTargetOsVersions: string[]
+│   │   │   ├── AzureVMDiskDetails: Object (10 properties)[]
+│   │   │   │   ├── CustomTargetDiskName: *string
+│   │   │   │   ├── DiskEncryptionSetId: *string
+│   │   │   │   ├── DiskId: *string
+│   │   │   │   ├── LunId: *string
+│   │   │   │   ├── MaxSizeMB: *string
+│   │   │   │   ├── TargetDiskLocation: *string
+│   │   │   │   ├── TargetDiskName: *string
+│   │   │   │   ├── VhdId: *string
+│   │   │   │   ├── VhdName: *string
+│   │   │   │   └── VhdType: *string
+│   │   │   ├── AzureVmGeneration: *string
+│   │   │   ├── CompressedDataRateInMB: *float64
+│   │   │   ├── Datastores: string[]
+│   │   │   ├── DiscoveryType: *string
+│   │   │   ├── DiskResized: *string
+│   │   │   ├── EnableRdpOnTargetOption: *string
+│   │   │   ├── FirmwareType: *string
+│   │   │   ├── InfrastructureVmId: *string
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "InMageAzureV2"
+│   │   │   ├── IpAddress: *string
+│   │   │   ├── IsAdditionalStatsAvailable: *bool
+│   │   │   ├── IsAgentUpdateRequired: *string
+│   │   │   ├── IsRebootAfterUpdateRequired: *string
+│   │   │   ├── LastHeartbeat: *string
+│   │   │   ├── LastRecoveryPointReceived: *string
+│   │   │   ├── LastRpoCalculatedTime: *string
+│   │   │   ├── LastUpdateReceivedTime: *string
+│   │   │   ├── LicenseType: *string
+│   │   │   ├── MasterTargetId: *string
+│   │   │   ├── MultiVmGroupId: *string
+│   │   │   ├── MultiVmGroupName: *string
+│   │   │   ├── MultiVmSyncStatus: *string
+│   │   │   ├── OsDiskId: *string
+│   │   │   ├── OsName: *string
+│   │   │   ├── OsType: *string
+│   │   │   ├── OsVersion: *string
+│   │   │   ├── ProcessServerId: *string
+│   │   │   ├── ProcessServerName: *string
+│   │   │   ├── ProtectedDisks: Object (23 properties)[]
+│   │   │   │   ├── DiskCapacityInBytes: *int
+│   │   │   │   ├── DiskId: *string
+│   │   │   │   ├── DiskName: *string
+│   │   │   │   ├── DiskResized: *string
+│   │   │   │   ├── FileSystemCapacityInBytes: *int
+│   │   │   │   ├── HealthErrorCode: *string
+│   │   │   │   ├── LastRpoCalculatedTime: *string
+│   │   │   │   ├── ProgressHealth: *string
+│   │   │   │   ├── ProgressStatus: *string
+│   │   │   │   ├── ProtectionStage: *string
+│   │   │   │   ├── PsDataInMegaBytes: *float64
+│   │   │   │   ├── ResyncDurationInSeconds: *int
+│   │   │   │   ├── ResyncLast15MinutesTransferredBytes: *int
+│   │   │   │   ├── ResyncLastDataTransferTimeUTC: *string
+│   │   │   │   ├── ResyncProcessedBytes: *int
+│   │   │   │   ├── ResyncProgressPercentage: *int
+│   │   │   │   ├── ResyncRequired: *string
+│   │   │   │   ├── ResyncStartTime: *string
+│   │   │   │   ├── ResyncTotalTransferredBytes: *int
+│   │   │   │   ├── RpoInSeconds: *int
+│   │   │   │   ├── SecondsToTakeSwitchProvider: *int
+│   │   │   │   ├── SourceDataInMegaBytes: *float64
+│   │   │   │   └── TargetDataInMegaBytes: *float64
+│   │   │   ├── ProtectedManagedDisks: Object (5 properties)[]
+│   │   │   │   ├── DiskEncryptionSetId: *string
+│   │   │   │   ├── DiskId: *string
+│   │   │   │   ├── ReplicaDiskType: *string
+│   │   │   │   ├── SeedManagedDiskId: *string
+│   │   │   │   └── TargetDiskName: *string
+│   │   │   ├── ProtectionStage: *string
+│   │   │   ├── RecoveryAvailabilitySetId: *string
+│   │   │   ├── RecoveryAzureLogStorageAccountId: *string
+│   │   │   ├── RecoveryAzureResourceGroupId: *string
+│   │   │   ├── RecoveryAzureStorageAccount: *string
+│   │   │   ├── RecoveryAzureVMName: *string
+│   │   │   ├── RecoveryAzureVMSize: *string
+│   │   │   ├── ReplicaId: *string
+│   │   │   ├── ResyncProgressPercentage: *int
+│   │   │   ├── RpoInSeconds: *int
+│   │   │   ├── SeedManagedDiskTags: map[string]string
+│   │   │   ├── SelectedRecoveryAzureNetworkId: *string
+│   │   │   ├── SelectedSourceNicId: *string
+│   │   │   ├── SelectedTfoAzureNetworkId: *string
+│   │   │   ├── SourceVmCpuCount: *int
+│   │   │   ├── SourceVmRamSizeInMB: *int
+│   │   │   ├── SqlServerLicenseType: *string
+│   │   │   ├── SupportedOSVersions: string[]
+│   │   │   ├── SwitchProviderBlockingErrorDetails: Object (6 properties)[]
+│   │   │   │   ├── ErrorCode: *string
+│   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   ├── ErrorMessageParameters: map[string]string
+│   │   │   │   ├── ErrorTags: map[string]string
+│   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   └── RecommendedAction: *string
+│   │   │   ├── SwitchProviderDetails: *Object (4 properties)
+│   │   │   │   ├── TargetApplianceId: *string
+│   │   │   │   ├── TargetFabricId: *string
+│   │   │   │   ├── TargetResourceId: *string
+│   │   │   │   └── TargetVaultId: *string
+│   │   │   ├── TargetAvailabilityZone: *string
+│   │   │   ├── TargetManagedDiskTags: map[string]string
+│   │   │   ├── TargetNicTags: map[string]string
+│   │   │   ├── TargetProximityPlacementGroupId: *string
+│   │   │   ├── TargetVmId: *string
+│   │   │   ├── TargetVmTags: map[string]string
+│   │   │   ├── TotalDataTransferred: *int
+│   │   │   ├── TotalProgressHealth: *string
+│   │   │   ├── UncompressedDataRateInMB: *float64
+│   │   │   ├── UseManagedDisks: *string
+│   │   │   ├── VCenterInfrastructureId: *string
+│   │   │   ├── ValidationErrors: Object (15 properties)[]
+│   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   └── "NotAllowed"
+│   │   │   │   ├── EntityId: *string
+│   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   ├── ErrorCode: *string
+│   │   │   │   ├── ErrorId: *string
+│   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   ├── ErrorSource: *string
+│   │   │   │   ├── ErrorType: *string
+│   │   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   │   └── "NotAllowed"
+│   │   │   │   │   ├── EntityId: *string
+│   │   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorId: *string
+│   │   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorSource: *string
+│   │   │   │   │   ├── ErrorType: *string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   │   └── SummaryMessage: *string
+│   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   └── SummaryMessage: *string
+│   │   │   ├── VhdName: *string
+│   │   │   ├── VmId: *string
+│   │   │   ├── VmNics: Object (19 properties)[]
+│   │   │   │   ├── EnableAcceleratedNetworkingOnRecovery: *bool
+│   │   │   │   ├── EnableAcceleratedNetworkingOnTfo: *bool
+│   │   │   │   ├── IpConfigs: Object (15 properties)[]
+│   │   │   │   │   ├── IpAddressType: *string
+│   │   │   │   │   ├── IsPrimary: *bool
+│   │   │   │   │   ├── IsSeletedForFailover: *bool
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── RecoveryIPAddressType: *string
+│   │   │   │   │   ├── RecoveryLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── RecoveryPublicIPAddressId: *string
+│   │   │   │   │   ├── RecoveryStaticIPAddress: *string
+│   │   │   │   │   ├── RecoverySubnetName: *string
+│   │   │   │   │   ├── StaticIPAddress: *string
+│   │   │   │   │   ├── SubnetName: *string
+│   │   │   │   │   ├── TfoLBBackendAddressPoolIds: string[]
+│   │   │   │   │   ├── TfoPublicIPAddressId: *string
+│   │   │   │   │   ├── TfoStaticIPAddress: *string
+│   │   │   │   │   └── TfoSubnetName: *string
+│   │   │   │   ├── NicId: *string
+│   │   │   │   ├── RecoveryNetworkSecurityGroupId: *string
+│   │   │   │   ├── RecoveryNicName: *string
+│   │   │   │   ├── RecoveryNicResourceGroupName: *string
+│   │   │   │   ├── RecoveryVMNetworkId: *string
+│   │   │   │   ├── ReplicaNicId: *string
+│   │   │   │   ├── ReuseExistingNic: *bool
+│   │   │   │   ├── SelectionType: *string
+│   │   │   │   ├── SourceNicArmId: *string
+│   │   │   │   ├── TargetNicName: *string
+│   │   │   │   ├── TfoNetworkSecurityGroupId: *string
+│   │   │   │   ├── TfoRecoveryNicName: *string
+│   │   │   │   ├── TfoRecoveryNicResourceGroupName: *string
+│   │   │   │   ├── TfoReuseExistingNic: *bool
+│   │   │   │   ├── TfoVMNetworkId: *string
+│   │   │   │   └── VMNetworkName: *string
+│   │   │   ├── VmProtectionState: *string
+│   │   │   └── VmProtectionStateDescription: *string
+│   │   ├── InMageRcm: *Object (64 properties)
+│   │   │   ├── AgentUpgradeAttemptToVersion: *string
+│   │   │   ├── AgentUpgradeBlockingErrorDetails: Object (6 properties)[]
+│   │   │   │   ├── ErrorCode: *string
+│   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   ├── ErrorMessageParameters: map[string]string
+│   │   │   │   ├── ErrorTags: map[string]string
+│   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   └── RecommendedAction: *string
+│   │   │   ├── AgentUpgradeJobId: *string
+│   │   │   ├── AgentUpgradeState: *Enum (4 values)
+│   │   │   │   ├── "Commit"
+│   │   │   │   ├── "Completed"
+│   │   │   │   ├── "None"
+│   │   │   │   └── "Started"
+│   │   │   ├── AllocatedMemoryInMB: *float64
+│   │   │   ├── DiscoveredVmDetails: *Object (12 properties)
+│   │   │   │   ├── CreatedTimestamp: *string
+│   │   │   │   ├── Datastores: string[]
+│   │   │   │   ├── IpAddresses: string[]
+│   │   │   │   ├── IsDeleted: *bool
+│   │   │   │   ├── LastDiscoveryTimeInUtc: *string
+│   │   │   │   ├── OsName: *string
+│   │   │   │   ├── PowerStatus: *string
+│   │   │   │   ├── UpdatedTimestamp: *string
+│   │   │   │   ├── VCenterFqdn: *string
+│   │   │   │   ├── VCenterId: *string
+│   │   │   │   ├── VmFqdn: *string
+│   │   │   │   └── VmwareToolsStatus: *string
+│   │   │   ├── DiscoveryType: *string
+│   │   │   ├── FabricDiscoveryMachineId: *string
+│   │   │   ├── FailoverRecoveryPointId: *string
+│   │   │   ├── FirmwareType: *string
+│   │   │   ├── InitialReplicationProcessedBytes: *int
+│   │   │   ├── InitialReplicationProgressHealth: *Enum (4 values)
+│   │   │   │   ├── "InProgress"
+│   │   │   │   ├── "NoProgress"
+│   │   │   │   ├── "None"
+│   │   │   │   └── "SlowProgress"
+│   │   │   ├── InitialReplicationProgressPercentage: *int
+│   │   │   ├── InitialReplicationTransferredBytes: *int
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "InMageRcm"
+│   │   │   ├── InternalIdentifier: *string
+│   │   │   ├── IsAgentRegistrationSuccessfulAfterFailover: *bool
+│   │   │   ├── IsLastUpgradeSuccessful: *string
+│   │   │   ├── LastAgentUpgradeErrorDetails: Object (6 properties)[]
+│   │   │   │   ├── ErrorCode: *string
+│   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   ├── ErrorMessageParameters: map[string]string
+│   │   │   │   ├── ErrorTags: map[string]string
+│   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   └── RecommendedAction: *string
+│   │   │   ├── LastAgentUpgradeType: *string
+│   │   │   ├── LastRecoveryPointId: *string
+│   │   │   ├── LastRecoveryPointReceived: *string
+│   │   │   ├── LastRpoCalculatedTime: *string
+│   │   │   ├── LastRpoInSeconds: *int
+│   │   │   ├── LicenseType: *string
+│   │   │   ├── LinuxLicenseType: *Enum (3 values)
+│   │   │   │   ├── "LinuxServer"
+│   │   │   │   ├── "NoLicenseType"
+│   │   │   │   └── "NotSpecified"
+│   │   │   ├── MobilityAgentDetails: *Object (22 properties)
+│   │   │   │   ├── AgentReinstallAttemptToVersion: *string
+│   │   │   │   ├── AgentReinstallJobId: *string
+│   │   │   │   ├── AgentReinstallState: *Enum (2 values)
+│   │   │   │   │   ├── "AutoTriggered"
+│   │   │   │   │   └── "UserTriggered"
+│   │   │   │   ├── AgentVersionExpiryDate: *string
+│   │   │   │   ├── DistroName: *string
+│   │   │   │   ├── DistroNameForWhichAgentIsInstalled: *string
+│   │   │   │   ├── DriverVersion: *string
+│   │   │   │   ├── DriverVersionExpiryDate: *string
+│   │   │   │   ├── IsAgentReinstallRequired: *bool
+│   │   │   │   ├── IsAgentUpgradeable: *bool
+│   │   │   │   ├── IsLastReinstallSuccessful: *bool
+│   │   │   │   ├── IsUpgradeable: *string
+│   │   │   │   ├── LastAgentReinstallType: *string
+│   │   │   │   ├── LastHeartbeatUtc: *string
+│   │   │   │   ├── LatestAgentReleaseDate: *string
+│   │   │   │   ├── LatestUpgradableVersionWithoutReboot: *string
+│   │   │   │   ├── LatestVersion: *string
+│   │   │   │   ├── OsFamilyName: *string
+│   │   │   │   ├── ReasonsBlockingReinstall: Enum (3 values)[]
+│   │   │   │   │   ├── "AgentNoHeartbeat"
+│   │   │   │   │   ├── "DistroNotSupported"
+│   │   │   │   │   └── "Unknown"
+│   │   │   │   ├── ReasonsBlockingReinstallDetails: Object (6 properties)[]
+│   │   │   │   │   ├── ErrorCode: *string
+│   │   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   │   ├── ErrorMessageParameters: map[string]string
+│   │   │   │   │   ├── ErrorTags: map[string]string
+│   │   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   │   └── RecommendedAction: *string
+│   │   │   │   ├── ReasonsBlockingUpgrade: Enum (15 values)[]
+│   │   │   │   │   ├── "AgentNoHeartbeat"
+│   │   │   │   │   ├── "AlreadyOnLatestVersion"
+│   │   │   │   │   ├── "DistroIsNotReported"
+│   │   │   │   │   ├── "DistroNotSupportedForUpgrade"
+│   │   │   │   │   ├── "IncompatibleApplianceVersion"
+│   │   │   │   │   ├── "InvalidAgentVersion"
+│   │   │   │   │   ├── "InvalidDriverVersion"
+│   │   │   │   │   ├── "MissingUpgradePath"
+│   │   │   │   │   ├── "NotProtected"
+│   │   │   │   │   ├── "ProcessServerNoHeartbeat"
+│   │   │   │   │   ├── "RcmProxyNoHeartbeat"
+│   │   │   │   │   ├── "ReInstallRequired"
+│   │   │   │   │   ├── "RebootRequired"
+│   │   │   │   │   ├── "Unknown"
+│   │   │   │   │   └── "UnsupportedProtectionScenario"
+│   │   │   │   └── Version: *string
+│   │   │   ├── MultiVmGroupName: *string
+│   │   │   ├── OsName: *string
+│   │   │   ├── OsType: *string
+│   │   │   ├── PrimaryNicIpAddress: *string
+│   │   │   ├── ProcessServerId: *string
+│   │   │   ├── ProcessServerName: *string
+│   │   │   ├── ProcessorCoreCount: *int
+│   │   │   ├── ProtectedDisks: Object (22 properties)[]
+│   │   │   │   ├── CapacityInBytes: *int
+│   │   │   │   ├── ConfidentialDiskEncryptionSetId: *string
+│   │   │   │   ├── CustomTargetDiskName: *string
+│   │   │   │   ├── DataPendingAtSourceAgentInMB: *float64
+│   │   │   │   ├── DataPendingInLogDataStoreInMB: *float64
+│   │   │   │   ├── DiskEncryptionSetId: *string
+│   │   │   │   ├── DiskId: *string
+│   │   │   │   ├── DiskName: *string
+│   │   │   │   ├── DiskSizeInGB: *int
+│   │   │   │   ├── DiskState: *Enum (4 values)
+│   │   │   │   │   ├── "InitialReplicationFailed"
+│   │   │   │   │   ├── "InitialReplicationPending"
+│   │   │   │   │   ├── "Protected"
+│   │   │   │   │   └── "Unavailable"
+│   │   │   │   ├── DiskType: *Enum (7 values)
+│   │   │   │   │   ├── "PremiumV2_LRS"
+│   │   │   │   │   ├── "Premium_LRS"
+│   │   │   │   │   ├── "Premium_ZRS"
+│   │   │   │   │   ├── "StandardSSD_LRS"
+│   │   │   │   │   ├── "StandardSSD_ZRS"
+│   │   │   │   │   ├── "Standard_LRS"
+│   │   │   │   │   └── "UltraSSD_LRS"
+│   │   │   │   ├── Iops: *int
+│   │   │   │   ├── IrDetails: *Object (8 properties)
+│   │   │   │   │   ├── Last15MinutesTransferredBytes: *int
+│   │   │   │   │   ├── LastDataTransferTimeUtc: *string
+│   │   │   │   │   ├── LastRefreshTime: *string
+│   │   │   │   │   ├── ProcessedBytes: *int
+│   │   │   │   │   ├── ProgressHealth: *Enum (5 values)
+│   │   │   │   │   │   ├── "InProgress"
+│   │   │   │   │   │   ├── "NoProgress"
+│   │   │   │   │   │   ├── "None"
+│   │   │   │   │   │   ├── "Queued"
+│   │   │   │   │   │   └── "SlowProgress"
+│   │   │   │   │   ├── ProgressPercentage: *int
+│   │   │   │   │   ├── StartTime: *string
+│   │   │   │   │   └── TransferredBytes: *int
+│   │   │   │   ├── IsInitialReplicationComplete: *string
+│   │   │   │   ├── IsOSDisk: *string
+│   │   │   │   ├── LogStorageAccountId: *string
+│   │   │   │   ├── ResyncDetails: *Object (8 properties)
+│   │   │   │   │   ├── Last15MinutesTransferredBytes: *int
+│   │   │   │   │   ├── LastDataTransferTimeUtc: *string
+│   │   │   │   │   ├── LastRefreshTime: *string
+│   │   │   │   │   ├── ProcessedBytes: *int
+│   │   │   │   │   ├── ProgressHealth: *Enum (5 values)
+│   │   │   │   │   │   ├── "InProgress"
+│   │   │   │   │   │   ├── "NoProgress"
+│   │   │   │   │   │   ├── "None"
+│   │   │   │   │   │   ├── "Queued"
+│   │   │   │   │   │   └── "SlowProgress"
+│   │   │   │   │   ├── ProgressPercentage: *int
+│   │   │   │   │   ├── StartTime: *string
+│   │   │   │   │   └── TransferredBytes: *int
+│   │   │   │   ├── SectorSizeInBytes: *int
+│   │   │   │   ├── SeedBlobUri: *string
+│   │   │   │   ├── SeedManagedDiskId: *string
+│   │   │   │   ├── TargetManagedDiskId: *string
+│   │   │   │   └── ThroughputInMbps: *int
+│   │   │   ├── ResyncProcessedBytes: *int
+│   │   │   ├── ResyncProgressHealth: *Enum (4 values)
+│   │   │   │   ├── "InProgress"
+│   │   │   │   ├── "NoProgress"
+│   │   │   │   ├── "None"
+│   │   │   │   └── "SlowProgress"
+│   │   │   ├── ResyncProgressPercentage: *int
+│   │   │   ├── ResyncRequired: *string
+│   │   │   ├── ResyncState: *Enum (3 values)
+│   │   │   │   ├── "None"
+│   │   │   │   ├── "PreparedForResynchronization"
+│   │   │   │   └── "StartedResynchronization"
+│   │   │   ├── ResyncTransferredBytes: *int
+│   │   │   ├── RunAsAccountId: *string
+│   │   │   ├── SeedManagedDiskTags: Object (2 properties)[]
+│   │   │   │   ├── TagName: *string
+│   │   │   │   └── TagValue: *string
+│   │   │   ├── SqlServerLicenseType: *string
+│   │   │   ├── StorageAccountId: *string
+│   │   │   ├── SupportedOSVersions: string[]
+│   │   │   ├── TargetAvailabilitySetId: *string
+│   │   │   ├── TargetAvailabilityZone: *string
+│   │   │   ├── TargetBootDiagnosticsStorageAccountId: *string
+│   │   │   ├── TargetCapacityReservationGroupId: *string
+│   │   │   ├── TargetGeneration: *string
+│   │   │   ├── TargetLocation: *string
+│   │   │   ├── TargetManagedDiskTags: Object (2 properties)[]
+│   │   │   │   ├── TagName: *string
+│   │   │   │   └── TagValue: *string
+│   │   │   ├── TargetNetworkId: *string
+│   │   │   ├── TargetNicTags: Object (2 properties)[]
+│   │   │   │   ├── TagName: *string
+│   │   │   │   └── TagValue: *string
+│   │   │   ├── TargetProximityPlacementGroupId: *string
+│   │   │   ├── TargetResourceGroupId: *string
+│   │   │   ├── TargetVmName: *string
+│   │   │   ├── TargetVmSecurityProfile: *Object (5 properties)
+│   │   │   │   ├── TargetVmConfidentialEncryption: *Enum (2 values)
+│   │   │   │   │   ├── "Disabled"
+│   │   │   │   │   └── "Enabled"
+│   │   │   │   ├── TargetVmMonitoring: *Enum (2 values)
+│   │   │   │   │   ├── "Disabled"
+│   │   │   │   │   └── "Enabled"
+│   │   │   │   ├── TargetVmSecureBoot: *Enum (2 values)
+│   │   │   │   │   ├── "Disabled"
+│   │   │   │   │   └── "Enabled"
+│   │   │   │   ├── TargetVmSecurityType: *Enum (3 values)
+│   │   │   │   │   ├── "ConfidentialVM"
+│   │   │   │   │   ├── "None"
+│   │   │   │   │   └── "TrustedLaunch"
+│   │   │   │   └── TargetVmTpm: *Enum (2 values)
+│   │   │   │       ├── "Disabled"
+│   │   │   │       └── "Enabled"
+│   │   │   ├── TargetVmSize: *string
+│   │   │   ├── TargetVmTags: Object (2 properties)[]
+│   │   │   │   ├── TagName: *string
+│   │   │   │   └── TagValue: *string
+│   │   │   ├── TestNetworkId: *string
+│   │   │   ├── UnprotectedDisks: Object (3 properties)[]
+│   │   │   │   ├── CapacityInBytes: *int
+│   │   │   │   ├── DiskId: *string
+│   │   │   │   └── DiskName: *string
+│   │   │   └── VmNics: Object (14 properties)[]
+│   │   │       ├── IsPrimaryNic: *string
+│   │   │       ├── IsSelectedForFailover: *string
+│   │   │       ├── NicId: *string
+│   │   │       ├── SourceIPAddress: *string
+│   │   │       ├── SourceIPAddressType: *Enum (2 values)
+│   │   │       │   ├── "Dynamic"
+│   │   │       │   └── "Static"
+│   │   │       ├── SourceNetworkId: *string
+│   │   │       ├── SourceSubnetName: *string
+│   │   │       ├── TargetIPAddress: *string
+│   │   │       ├── TargetIPAddressType: *Enum (2 values)
+│   │   │       │   ├── "Dynamic"
+│   │   │       │   └── "Static"
+│   │   │       ├── TargetNicName: *string
+│   │   │       ├── TargetSubnetName: *string
+│   │   │       ├── TestIPAddress: *string
+│   │   │       ├── TestIPAddressType: *Enum (2 values)
+│   │   │       │   ├── "Dynamic"
+│   │   │       │   └── "Static"
+│   │   │       └── TestSubnetName: *string
+│   │   └── InMageRcmFailback: *Object (30 properties)
+│   │       ├── AzureVirtualMachineId: *string
+│   │       ├── DiscoveredVmDetails: *Object (12 properties)
+│   │       │   ├── CreatedTimestamp: *string
+│   │       │   ├── Datastores: string[]
+│   │       │   ├── IpAddresses: string[]
+│   │       │   ├── IsDeleted: *bool
+│   │       │   ├── LastDiscoveryTimeInUtc: *string
+│   │       │   ├── OsName: *string
+│   │       │   ├── PowerStatus: *string
+│   │       │   ├── UpdatedTimestamp: *string
+│   │       │   ├── VCenterFqdn: *string
+│   │       │   ├── VCenterId: *string
+│   │       │   ├── VmFqdn: *string
+│   │       │   └── VmwareToolsStatus: *string
+│   │       ├── InitialReplicationProcessedBytes: *int
+│   │       ├── InitialReplicationProgressHealth: *Enum (4 values)
+│   │       │   ├── "InProgress"
+│   │       │   ├── "NoProgress"
+│   │       │   ├── "None"
+│   │       │   └── "SlowProgress"
+│   │       ├── InitialReplicationProgressPercentage: *int
+│   │       ├── InitialReplicationTransferredBytes: *int
+│   │       ├── InstanceType: Enum (1 value)
+│   │       │   └── "InMageRcmFailback"
+│   │       ├── InternalIdentifier: *string
+│   │       ├── IsAgentRegistrationSuccessfulAfterFailover: *bool
+│   │       ├── LastPlannedFailoverStartTime: *string
+│   │       ├── LastPlannedFailoverStatus: *Enum (4 values)
+│   │       │   ├── "Cancelled"
+│   │       │   ├── "Failed"
+│   │       │   ├── "Succeeded"
+│   │       │   └── "Unknown"
+│   │       ├── LastUsedPolicyFriendlyName: *string
+│   │       ├── LastUsedPolicyId: *string
+│   │       ├── LogStorageAccountId: *string
+│   │       ├── MobilityAgentDetails: *Object (9 properties)
+│   │       │   ├── AgentVersionExpiryDate: *string
+│   │       │   ├── DriverVersion: *string
+│   │       │   ├── DriverVersionExpiryDate: *string
+│   │       │   ├── IsUpgradeable: *string
+│   │       │   ├── LastHeartbeatUtc: *string
+│   │       │   ├── LatestUpgradableVersionWithoutReboot: *string
+│   │       │   ├── LatestVersion: *string
+│   │       │   ├── ReasonsBlockingUpgrade: Enum (15 values)[]
+│   │       │   │   ├── "AgentNoHeartbeat"
+│   │       │   │   ├── "AlreadyOnLatestVersion"
+│   │       │   │   ├── "DistroIsNotReported"
+│   │       │   │   ├── "DistroNotSupportedForUpgrade"
+│   │       │   │   ├── "IncompatibleApplianceVersion"
+│   │       │   │   ├── "InvalidAgentVersion"
+│   │       │   │   ├── "InvalidDriverVersion"
+│   │       │   │   ├── "MissingUpgradePath"
+│   │       │   │   ├── "NotProtected"
+│   │       │   │   ├── "ProcessServerNoHeartbeat"
+│   │       │   │   ├── "RcmProxyNoHeartbeat"
+│   │       │   │   ├── "ReInstallRequired"
+│   │       │   │   ├── "RebootRequired"
+│   │       │   │   ├── "Unknown"
+│   │       │   │   └── "UnsupportedProtectionScenario"
+│   │       │   └── Version: *string
+│   │       ├── MultiVmGroupName: *string
+│   │       ├── OsType: *string
+│   │       ├── ProtectedDisks: Object (11 properties)[]
+│   │       │   ├── CapacityInBytes: *int
+│   │       │   ├── DataPendingAtSourceAgentInMB: *float64
+│   │       │   ├── DataPendingInLogDataStoreInMB: *float64
+│   │       │   ├── DiskId: *string
+│   │       │   ├── DiskName: *string
+│   │       │   ├── DiskUuid: *string
+│   │       │   ├── IrDetails: *Object (8 properties)
+│   │       │   │   ├── Last15MinutesTransferredBytes: *int
+│   │       │   │   ├── LastDataTransferTimeUtc: *string
+│   │       │   │   ├── LastRefreshTime: *string
+│   │       │   │   ├── ProcessedBytes: *int
+│   │       │   │   ├── ProgressHealth: *Enum (5 values)
+│   │       │   │   │   ├── "InProgress"
+│   │       │   │   │   ├── "NoProgress"
+│   │       │   │   │   ├── "None"
+│   │       │   │   │   ├── "Queued"
+│   │       │   │   │   └── "SlowProgress"
+│   │       │   │   ├── ProgressPercentage: *int
+│   │       │   │   ├── StartTime: *string
+│   │       │   │   └── TransferredBytes: *int
+│   │       │   ├── IsInitialReplicationComplete: *string
+│   │       │   ├── IsOSDisk: *string
+│   │       │   ├── LastSyncTime: *string
+│   │       │   └── ResyncDetails: *Object (8 properties)
+│   │       │       ├── Last15MinutesTransferredBytes: *int
+│   │       │       ├── LastDataTransferTimeUtc: *string
+│   │       │       ├── LastRefreshTime: *string
+│   │       │       ├── ProcessedBytes: *int
+│   │       │       ├── ProgressHealth: *Enum (5 values)
+│   │       │       │   ├── "InProgress"
+│   │       │       │   ├── "NoProgress"
+│   │       │       │   ├── "None"
+│   │       │       │   ├── "Queued"
+│   │       │       │   └── "SlowProgress"
+│   │       │       ├── ProgressPercentage: *int
+│   │       │       ├── StartTime: *string
+│   │       │       └── TransferredBytes: *int
+│   │       ├── ReprotectAgentId: *string
+│   │       ├── ReprotectAgentName: *string
+│   │       ├── ResyncProcessedBytes: *int
+│   │       ├── ResyncProgressHealth: *Enum (4 values)
+│   │       │   ├── "InProgress"
+│   │       │   ├── "NoProgress"
+│   │       │   ├── "None"
+│   │       │   └── "SlowProgress"
+│   │       ├── ResyncProgressPercentage: *int
+│   │       ├── ResyncRequired: *string
+│   │       ├── ResyncState: *Enum (3 values)
+│   │       │   ├── "None"
+│   │       │   ├── "PreparedForResynchronization"
+│   │       │   └── "StartedResynchronization"
+│   │       ├── ResyncTransferredBytes: *int
+│   │       ├── TargetDataStoreName: *string
+│   │       ├── TargetVmName: *string
+│   │       ├── TargetvCenterId: *string
+│   │       └── VmNics: Object (4 properties)[]
+│   │           ├── AdapterType: *string
+│   │           ├── MacAddress: *string
+│   │           ├── NetworkName: *string
+│   │           └── SourceIpAddress: *string
+│   ├── RecoveryContainerId: *string
+│   ├── RecoveryFabricFriendlyName: *string
+│   ├── RecoveryFabricId: *string
+│   ├── RecoveryProtectionContainerFriendlyName: *string
+│   ├── RecoveryServicesProviderId: *string
+│   ├── ReplicationHealth: *string
+│   ├── SwitchProviderState: *string
+│   ├── SwitchProviderStateDescription: *string
+│   ├── TestFailoverState: *string
+│   └── TestFailoverStateDescription: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationProtectedItem_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (3 properties)
+    ├── PolicyId: *string
+    ├── ProtectableItemId: *string
+    └── ProviderSpecificDetails: *Object (6 properties)
+        ├── A2A: *Object (22 properties)
+        │   ├── AutoProtectionOfDataDisk: *Enum (2 values)
+        │   │   ├── "Disabled"
+        │   │   └── "Enabled"
+        │   ├── DiskEncryptionInfo: *Object (2 properties)
+        │   │   ├── DiskEncryptionKeyInfo: *Object (2 properties)
+        │   │   │   ├── KeyVaultResourceArmId: *string
+        │   │   │   └── SecretIdentifier: *string
+        │   │   └── KeyEncryptionKeyInfo: *Object (2 properties)
+        │   │       ├── KeyIdentifier: *string
+        │   │       └── KeyVaultResourceArmId: *string
+        │   ├── FabricObjectId: *string
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "A2A"
+        │   ├── MultiVmGroupId: *string
+        │   ├── MultiVmGroupName: *string
+        │   ├── PlatformFaultDomain: *int
+        │   ├── ProtectionClusterId: *string
+        │   ├── RecoveryAvailabilitySetId: *string
+        │   ├── RecoveryAvailabilityZone: *string
+        │   ├── RecoveryAzureNetworkId: *string
+        │   ├── RecoveryBootDiagStorageAccountId: *string
+        │   ├── RecoveryCapacityReservationGroupId: *string
+        │   ├── RecoveryCloudServiceId: *string
+        │   ├── RecoveryContainerId: *string
+        │   ├── RecoveryExtendedLocation: *Object (2 properties)
+        │   │   ├── Name: *string
+        │   │   └── Type: *Enum (1 value)
+        │   │       └── "EdgeZone"
+        │   ├── RecoveryProximityPlacementGroupId: *string
+        │   ├── RecoveryResourceGroupId: *string
+        │   ├── RecoverySubnetName: *string
+        │   ├── RecoveryVirtualMachineScaleSetId: *string
+        │   ├── VmDisks: Object (3 properties)[]
+        │   │   ├── DiskUri: *string
+        │   │   ├── PrimaryStagingAzureStorageAccountId: *string
+        │   │   └── RecoveryAzureStorageAccountId: *string
+        │   └── VmManagedDisks: Object (10 properties)[]
+        │       ├── DiskEncryptionInfo: *Object (2 properties)
+        │       │   ├── DiskEncryptionKeyInfo: *Object (2 properties)
+        │       │   │   ├── KeyVaultResourceArmId: *string
+        │       │   │   └── SecretIdentifier: *string
+        │       │   └── KeyEncryptionKeyInfo: *Object (2 properties)
+        │       │       ├── KeyIdentifier: *string
+        │       │       └── KeyVaultResourceArmId: *string
+        │       ├── DiskId: *string
+        │       ├── PrimaryStagingAzureStorageAccountId: *string
+        │       ├── RecoveryDiskAccessId: *string
+        │       ├── RecoveryDiskEncryptionSetId: *string
+        │       ├── RecoveryNetworkAccessPolicy: *Enum (3 values)
+        │       │   ├── "AllowAll"
+        │       │   ├── "AllowPrivate"
+        │       │   └── "DenyAll"
+        │       ├── RecoveryPublicNetworkAccess: *Enum (2 values)
+        │       │   ├── "Disabled"
+        │       │   └── "Enabled"
+        │       ├── RecoveryReplicaDiskAccountType: *string
+        │       ├── RecoveryResourceGroupId: *string
+        │       └── RecoveryTargetDiskAccountType: *string
+        ├── A2ACrossClusterMigration: *Object (3 properties)
+        │   ├── FabricObjectId: *string
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "A2ACrossClusterMigration"
+        │   └── RecoveryContainerId: *string
+        ├── HyperVReplicaAzure: *Object (33 properties)
+        │   ├── DiskEncryptionSetId: *string
+        │   ├── DiskType: *Enum (7 values)
+        │   │   ├── "PremiumV2_LRS"
+        │   │   ├── "Premium_LRS"
+        │   │   ├── "Premium_ZRS"
+        │   │   ├── "StandardSSD_LRS"
+        │   │   ├── "StandardSSD_ZRS"
+        │   │   ├── "Standard_LRS"
+        │   │   └── "UltraSSD_LRS"
+        │   ├── DisksToInclude: string[]
+        │   ├── DisksToIncludeForManagedDisks: Object (8 properties)[]
+        │   │   ├── DiskEncryptionSetId: *string
+        │   │   ├── DiskId: *string
+        │   │   ├── DiskSizeInGB: *int
+        │   │   ├── DiskType: *Enum (7 values)
+        │   │   │   ├── "PremiumV2_LRS"
+        │   │   │   ├── "Premium_LRS"
+        │   │   │   ├── "Premium_ZRS"
+        │   │   │   ├── "StandardSSD_LRS"
+        │   │   │   ├── "StandardSSD_ZRS"
+        │   │   │   ├── "Standard_LRS"
+        │   │   │   └── "UltraSSD_LRS"
+        │   │   ├── Iops: *int
+        │   │   ├── LogStorageAccountId: *string
+        │   │   ├── SectorSizeInBytes: *int
+        │   │   └── ThroughputInMbps: *int
+        │   ├── EnableRdpOnTargetOption: *string
+        │   ├── HvHostVmId: *string
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "HyperVReplicaAzure"
+        │   ├── LicenseType: *Enum (3 values)
+        │   │   ├── "NoLicenseType"
+        │   │   ├── "NotSpecified"
+        │   │   └── "WindowsServer"
+        │   ├── LinuxLicenseType: *Enum (3 values)
+        │   │   ├── "LinuxServer"
+        │   │   ├── "NoLicenseType"
+        │   │   └── "NotSpecified"
+        │   ├── LogStorageAccountId: *string
+        │   ├── OsType: *string
+        │   ├── SeedManagedDiskTags: map[string]string
+        │   ├── SqlServerLicenseType: *Enum (4 values)
+        │   │   ├── "AHUB"
+        │   │   ├── "NoLicenseType"
+        │   │   ├── "NotSpecified"
+        │   │   └── "PAYG"
+        │   ├── TargetAvailabilitySetId: *string
+        │   ├── TargetAvailabilityZone: *string
+        │   ├── TargetAzureNetworkId: *string
+        │   ├── TargetAzureSubnetId: *string
+        │   ├── TargetAzureV1ResourceGroupId: *string
+        │   ├── TargetAzureV2ResourceGroupId: *string
+        │   ├── TargetAzureVmName: *string
+        │   ├── TargetCapacityReservationGroupId: *string
+        │   ├── TargetManagedDiskTags: map[string]string
+        │   ├── TargetNicTags: map[string]string
+        │   ├── TargetProximityPlacementGroupId: *string
+        │   ├── TargetStorageAccountId: *string
+        │   ├── TargetVmSecurityProfile: *Object (5 properties)
+        │   │   ├── TargetVmConfidentialEncryption: *Enum (2 values)
+        │   │   │   ├── "Disabled"
+        │   │   │   └── "Enabled"
+        │   │   ├── TargetVmMonitoring: *Enum (2 values)
+        │   │   │   ├── "Disabled"
+        │   │   │   └── "Enabled"
+        │   │   ├── TargetVmSecureBoot: *Enum (2 values)
+        │   │   │   ├── "Disabled"
+        │   │   │   └── "Enabled"
+        │   │   ├── TargetVmSecurityType: *Enum (3 values)
+        │   │   │   ├── "ConfidentialVM"
+        │   │   │   ├── "None"
+        │   │   │   └── "TrustedLaunch"
+        │   │   └── TargetVmTpm: *Enum (2 values)
+        │   │       ├── "Disabled"
+        │   │       └── "Enabled"
+        │   ├── TargetVmSize: *string
+        │   ├── TargetVmTags: map[string]string
+        │   ├── UseManagedDisks: *string
+        │   ├── UseManagedDisksForReplication: *string
+        │   ├── UserSelectedOSName: *string
+        │   ├── VhdId: *string
+        │   └── VmName: *string
+        ├── InMage: *Object (11 properties)
+        │   ├── DatastoreName: *string
+        │   ├── DiskExclusionInput: *Object (2 properties)
+        │   │   ├── DiskSignatureOptions: Object (1 property)[]
+        │   │   │   └── DiskSignature: *string
+        │   │   └── VolumeOptions: Object (2 properties)[]
+        │   │       ├── OnlyExcludeIfSingleVolume: *string
+        │   │       └── VolumeLabel: *string
+        │   ├── DisksToInclude: string[]
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "InMage"
+        │   ├── MasterTargetId: *string
+        │   ├── MultiVmGroupId: *string
+        │   ├── MultiVmGroupName: *string
+        │   ├── ProcessServerId: *string
+        │   ├── RetentionDrive: *string
+        │   ├── RunAsAccountId: *string
+        │   └── VmFriendlyName: *string
+        ├── InMageAzureV2: *Object (27 properties)
+        │   ├── DiskEncryptionSetId: *string
+        │   ├── DiskType: *Enum (7 values)
+        │   │   ├── "PremiumV2_LRS"
+        │   │   ├── "Premium_LRS"
+        │   │   ├── "Premium_ZRS"
+        │   │   ├── "StandardSSD_LRS"
+        │   │   ├── "StandardSSD_ZRS"
+        │   │   ├── "Standard_LRS"
+        │   │   └── "UltraSSD_LRS"
+        │   ├── DisksToInclude: Object (4 properties)[]
+        │   │   ├── DiskEncryptionSetId: *string
+        │   │   ├── DiskId: *string
+        │   │   ├── DiskType: *Enum (7 values)
+        │   │   │   ├── "PremiumV2_LRS"
+        │   │   │   ├── "Premium_LRS"
+        │   │   │   ├── "Premium_ZRS"
+        │   │   │   ├── "StandardSSD_LRS"
+        │   │   │   ├── "StandardSSD_ZRS"
+        │   │   │   ├── "Standard_LRS"
+        │   │   │   └── "UltraSSD_LRS"
+        │   │   └── LogStorageAccountId: *string
+        │   ├── EnableRdpOnTargetOption: *string
+        │   ├── InstanceType: Enum (1 value)
+        │   │   └── "InMageAzureV2"
+        │   ├── LicenseType: *Enum (3 values)
+        │   │   ├── "NoLicenseType"
+        │   │   ├── "NotSpecified"
+        │   │   └── "WindowsServer"
+        │   ├── LogStorageAccountId: *string
+        │   ├── MasterTargetId: *string
+        │   ├── MultiVmGroupId: *string
+        │   ├── MultiVmGroupName: *string
+        │   ├── ProcessServerId: *string
+        │   ├── RunAsAccountId: *string
+        │   ├── SeedManagedDiskTags: map[string]string
+        │   ├── SqlServerLicenseType: *Enum (4 values)
+        │   │   ├── "AHUB"
+        │   │   ├── "NoLicenseType"
+        │   │   ├── "NotSpecified"
+        │   │   └── "PAYG"
+        │   ├── StorageAccountId: *string
+        │   ├── TargetAvailabilitySetId: *string
+        │   ├── TargetAvailabilityZone: *string
+        │   ├── TargetAzureNetworkId: *string
+        │   ├── TargetAzureSubnetId: *string
+        │   ├── TargetAzureV1ResourceGroupId: *string
+        │   ├── TargetAzureV2ResourceGroupId: *string
+        │   ├── TargetAzureVmName: *string
+        │   ├── TargetManagedDiskTags: map[string]string
+        │   ├── TargetNicTags: map[string]string
+        │   ├── TargetProximityPlacementGroupId: *string
+        │   ├── TargetVmSize: *string
+        │   └── TargetVmTags: map[string]string
+        └── InMageRcm: *Object (28 properties)
+            ├── DisksDefault: *Object (8 properties)
+            │   ├── ConfidentialDiskEncryptionSetId: *string
+            │   ├── DiskEncryptionSetId: *string
+            │   ├── DiskSizeInGB: *int
+            │   ├── DiskType: *Enum (7 values)
+            │   │   ├── "PremiumV2_LRS"
+            │   │   ├── "Premium_LRS"
+            │   │   ├── "Premium_ZRS"
+            │   │   ├── "StandardSSD_LRS"
+            │   │   ├── "StandardSSD_ZRS"
+            │   │   ├── "Standard_LRS"
+            │   │   └── "UltraSSD_LRS"
+            │   ├── Iops: *int
+            │   ├── LogStorageAccountId: *string
+            │   ├── SectorSizeInBytes: *int
+            │   └── ThroughputInMbps: *int
+            ├── DisksToInclude: Object (9 properties)[]
+            │   ├── ConfidentialDiskEncryptionSetId: *string
+            │   ├── DiskEncryptionSetId: *string
+            │   ├── DiskId: *string
+            │   ├── DiskSizeInGB: *int
+            │   ├── DiskType: *Enum (7 values)
+            │   │   ├── "PremiumV2_LRS"
+            │   │   ├── "Premium_LRS"
+            │   │   ├── "Premium_ZRS"
+            │   │   ├── "StandardSSD_LRS"
+            │   │   ├── "StandardSSD_ZRS"
+            │   │   ├── "Standard_LRS"
+            │   │   └── "UltraSSD_LRS"
+            │   ├── Iops: *int
+            │   ├── LogStorageAccountId: *string
+            │   ├── SectorSizeInBytes: *int
+            │   └── ThroughputInMbps: *int
+            ├── FabricDiscoveryMachineId: *string
+            ├── InstanceType: Enum (1 value)
+            │   └── "InMageRcm"
+            ├── LicenseType: *Enum (3 values)
+            │   ├── "NoLicenseType"
+            │   ├── "NotSpecified"
+            │   └── "WindowsServer"
+            ├── LinuxLicenseType: *Enum (3 values)
+            │   ├── "LinuxServer"
+            │   ├── "NoLicenseType"
+            │   └── "NotSpecified"
+            ├── MultiVmGroupName: *string
+            ├── ProcessServerId: *string
+            ├── RunAsAccountId: *string
+            ├── SeedManagedDiskTags: Object (2 properties)[]
+            │   ├── TagName: *string
+            │   └── TagValue: *string
+            ├── SqlServerLicenseType: *Enum (4 values)
+            │   ├── "AHUB"
+            │   ├── "NoLicenseType"
+            │   ├── "NotSpecified"
+            │   └── "PAYG"
+            ├── TargetAvailabilitySetId: *string
+            ├── TargetAvailabilityZone: *string
+            ├── TargetBootDiagnosticsStorageAccountId: *string
+            ├── TargetCapacityReservationGroupId: *string
+            ├── TargetManagedDiskTags: Object (2 properties)[]
+            │   ├── TagName: *string
+            │   └── TagValue: *string
+            ├── TargetNetworkId: *string
+            ├── TargetNicTags: Object (2 properties)[]
+            │   ├── TagName: *string
+            │   └── TagValue: *string
+            ├── TargetProximityPlacementGroupId: *string
+            ├── TargetResourceGroupId: *string
+            ├── TargetSubnetName: *string
+            ├── TargetVmName: *string
+            ├── TargetVmSecurityProfile: *Object (5 properties)
+            │   ├── TargetVmConfidentialEncryption: *Enum (2 values)
+            │   │   ├── "Disabled"
+            │   │   └── "Enabled"
+            │   ├── TargetVmMonitoring: *Enum (2 values)
+            │   │   ├── "Disabled"
+            │   │   └── "Enabled"
+            │   ├── TargetVmSecureBoot: *Enum (2 values)
+            │   │   ├── "Disabled"
+            │   │   └── "Enabled"
+            │   ├── TargetVmSecurityType: *Enum (3 values)
+            │   │   ├── "ConfidentialVM"
+            │   │   ├── "None"
+            │   │   └── "TrustedLaunch"
+            │   └── TargetVmTpm: *Enum (2 values)
+            │       ├── "Disabled"
+            │       └── "Enabled"
+            ├── TargetVmSize: *string
+            ├── TargetVmTags: Object (2 properties)[]
+            │   ├── TagName: *string
+            │   └── TagValue: *string
+            ├── TestNetworkId: *string
+            ├── TestSubnetName: *string
+            └── UserSelectedOSName: *string
+
+VaultsReplicationProtectionCluster_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (30 properties)
+│   ├── ActiveLocation: *string
+│   ├── AgentClusterId: *string
+│   ├── AllowedOperations: string[]
+│   ├── AreAllClusterNodesRegistered: *bool
+│   ├── ClusterFqdn: *string
+│   ├── ClusterNodeFqdns: string[]
+│   ├── ClusterProtectedItemIds: string[]
+│   ├── ClusterRegisteredNodes: Object (4 properties)[]
+│   │   ├── BiosId: *string
+│   │   ├── ClusterNodeFqdn: *string
+│   │   ├── IsSharedDiskVirtualNode: *bool
+│   │   └── MachineId: *string
+│   ├── CurrentScenario: *Object (3 properties)
+│   │   ├── JobId: *string
+│   │   ├── ScenarioName: *string
+│   │   └── StartTime: *string
+│   ├── HealthErrors: Object (15 properties)[]
+│   │   ├── CreationTimeUtc: *string
+│   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   ├── "Allowed"
+│   │   │   └── "NotAllowed"
+│   │   ├── EntityId: *string
+│   │   ├── ErrorCategory: *string
+│   │   ├── ErrorCode: *string
+│   │   ├── ErrorId: *string
+│   │   ├── ErrorLevel: *string
+│   │   ├── ErrorMessage: *string
+│   │   ├── ErrorSource: *string
+│   │   ├── ErrorType: *string
+│   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   ├── CreationTimeUtc: *string
+│   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   ├── "Allowed"
+│   │   │   │   └── "NotAllowed"
+│   │   │   ├── EntityId: *string
+│   │   │   ├── ErrorCategory: *string
+│   │   │   ├── ErrorCode: *string
+│   │   │   ├── ErrorId: *string
+│   │   │   ├── ErrorLevel: *string
+│   │   │   ├── ErrorMessage: *string
+│   │   │   ├── ErrorSource: *string
+│   │   │   ├── ErrorType: *string
+│   │   │   ├── PossibleCauses: *string
+│   │   │   ├── RecommendedAction: *string
+│   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   └── SummaryMessage: *string
+│   │   ├── PossibleCauses: *string
+│   │   ├── RecommendedAction: *string
+│   │   ├── RecoveryProviderErrorMessage: *string
+│   │   └── SummaryMessage: *string
+│   ├── LastSuccessfulFailoverTime: *string
+│   ├── LastSuccessfulTestFailoverTime: *string
+│   ├── PolicyFriendlyName: *string
+│   ├── PolicyId: *string
+│   ├── PrimaryFabricFriendlyName: *string
+│   ├── PrimaryFabricProvider: *string
+│   ├── PrimaryProtectionContainerFriendlyName: *string
+│   ├── ProtectionClusterType: *string
+│   ├── ProtectionState: *string
+│   ├── ProtectionStateDescription: *string
+│   ├── ProviderSpecificDetails: *Object (1 property)
+│   │   └── A2A: *Object (21 properties)
+│   │       ├── ClusterManagementId: *string
+│   │       ├── FailoverRecoveryPointId: *string
+│   │       ├── InitialPrimaryExtendedLocation: *Object (2 properties)
+│   │       │   ├── Name: *string
+│   │       │   └── Type: *Enum (1 value)
+│   │       │       └── "EdgeZone"
+│   │       ├── InitialPrimaryFabricLocation: *string
+│   │       ├── InitialPrimaryZone: *string
+│   │       ├── InitialRecoveryExtendedLocation: *Object (2 properties)
+│   │       │   ├── Name: *string
+│   │       │   └── Type: *Enum (1 value)
+│   │       │       └── "EdgeZone"
+│   │       ├── InitialRecoveryFabricLocation: *string
+│   │       ├── InitialRecoveryZone: *string
+│   │       ├── InstanceType: Enum (1 value)
+│   │       │   └── "A2A"
+│   │       ├── LastRpoCalculatedTime: *string
+│   │       ├── LifecycleId: *string
+│   │       ├── MultiVmGroupCreateOption: *Enum (2 values)
+│   │       │   ├── "AutoCreated"
+│   │       │   └── "UserSpecified"
+│   │       ├── MultiVmGroupId: *string
+│   │       ├── MultiVmGroupName: *string
+│   │       ├── PrimaryAvailabilityZone: *string
+│   │       ├── PrimaryExtendedLocation: *Object (2 properties)
+│   │       │   ├── Name: *string
+│   │       │   └── Type: *Enum (1 value)
+│   │       │       └── "EdgeZone"
+│   │       ├── PrimaryFabricLocation: *string
+│   │       ├── RecoveryAvailabilityZone: *string
+│   │       ├── RecoveryExtendedLocation: *Object (2 properties)
+│   │       │   ├── Name: *string
+│   │       │   └── Type: *Enum (1 value)
+│   │       │       └── "EdgeZone"
+│   │       ├── RecoveryFabricLocation: *string
+│   │       └── RpoInSeconds: *int
+│   ├── ProvisioningState: *string
+│   ├── RecoveryContainerId: *string
+│   ├── RecoveryFabricFriendlyName: *string
+│   ├── RecoveryFabricId: *string
+│   ├── RecoveryProtectionContainerFriendlyName: *string
+│   ├── ReplicationHealth: *string
+│   ├── SharedDiskProperties: *Object (8 properties)
+│   │   ├── ActiveLocation: *string
+│   │   ├── AllowedOperations: string[]
+│   │   ├── CurrentScenario: *Object (3 properties)
+│   │   │   ├── JobId: *string
+│   │   │   ├── ScenarioName: *string
+│   │   │   └── StartTime: *string
+│   │   ├── HealthErrors: Object (15 properties)[]
+│   │   │   ├── CreationTimeUtc: *string
+│   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   ├── "Allowed"
+│   │   │   │   └── "NotAllowed"
+│   │   │   ├── EntityId: *string
+│   │   │   ├── ErrorCategory: *string
+│   │   │   ├── ErrorCode: *string
+│   │   │   ├── ErrorId: *string
+│   │   │   ├── ErrorLevel: *string
+│   │   │   ├── ErrorMessage: *string
+│   │   │   ├── ErrorSource: *string
+│   │   │   ├── ErrorType: *string
+│   │   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   │   ├── CreationTimeUtc: *string
+│   │   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   │   ├── "Allowed"
+│   │   │   │   │   └── "NotAllowed"
+│   │   │   │   ├── EntityId: *string
+│   │   │   │   ├── ErrorCategory: *string
+│   │   │   │   ├── ErrorCode: *string
+│   │   │   │   ├── ErrorId: *string
+│   │   │   │   ├── ErrorLevel: *string
+│   │   │   │   ├── ErrorMessage: *string
+│   │   │   │   ├── ErrorSource: *string
+│   │   │   │   ├── ErrorType: *string
+│   │   │   │   ├── PossibleCauses: *string
+│   │   │   │   ├── RecommendedAction: *string
+│   │   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   │   └── SummaryMessage: *string
+│   │   │   ├── PossibleCauses: *string
+│   │   │   ├── RecommendedAction: *string
+│   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   └── SummaryMessage: *string
+│   │   ├── ProtectionState: *string
+│   │   ├── ReplicationHealth: *string
+│   │   ├── SharedDiskProviderSpecificDetails: *Object (1 property)
+│   │   │   └── A2A: *Object (12 properties)
+│   │   │       ├── FailoverRecoveryPointId: *string
+│   │   │       ├── InstanceType: Enum (1 value)
+│   │   │       │   └── "A2A"
+│   │   │       ├── LastRpoCalculatedTime: *string
+│   │   │       ├── ManagementId: *string
+│   │   │       ├── MonitoringJobType: *string
+│   │   │       ├── MonitoringPercentageCompletion: *int
+│   │   │       ├── PrimaryFabricLocation: *string
+│   │   │       ├── ProtectedManagedDisks: Object (31 properties)[]
+│   │   │       │   ├── AllowedDiskLevelOperation: string[]
+│   │   │       │   ├── DataPendingAtSourceAgentInMB: *float64
+│   │   │       │   ├── DataPendingInStagingStorageAccountInMB: *float64
+│   │   │       │   ├── DekKeyVaultArmId: *string
+│   │   │       │   ├── DiskCapacityInBytes: *int
+│   │   │       │   ├── DiskId: *string
+│   │   │       │   ├── DiskName: *string
+│   │   │       │   ├── DiskState: *string
+│   │   │       │   ├── DiskType: *string
+│   │   │       │   ├── FailoverDiskName: *string
+│   │   │       │   ├── IsDiskEncrypted: *bool
+│   │   │       │   ├── IsDiskKeyEncrypted: *bool
+│   │   │       │   ├── KekKeyVaultArmId: *string
+│   │   │       │   ├── KeyIdentifier: *string
+│   │   │       │   ├── MonitoringJobType: *string
+│   │   │       │   ├── MonitoringPercentageCompletion: *int
+│   │   │       │   ├── PrimaryDiskEncryptionSetId: *string
+│   │   │       │   ├── PrimaryStagingAzureStorageAccountId: *string
+│   │   │       │   ├── RecoveryDiskAccessId: *string
+│   │   │       │   ├── RecoveryDiskEncryptionSetId: *string
+│   │   │       │   ├── RecoveryNetworkAccessPolicy: *Enum (3 values)
+│   │   │       │   │   ├── "AllowAll"
+│   │   │       │   │   ├── "AllowPrivate"
+│   │   │       │   │   └── "DenyAll"
+│   │   │       │   ├── RecoveryOrignalTargetDiskId: *string
+│   │   │       │   ├── RecoveryPublicNetworkAccess: *Enum (2 values)
+│   │   │       │   │   ├── "Disabled"
+│   │   │       │   │   └── "Enabled"
+│   │   │       │   ├── RecoveryReplicaDiskAccountType: *string
+│   │   │       │   ├── RecoveryReplicaDiskId: *string
+│   │   │       │   ├── RecoveryResourceGroupId: *string
+│   │   │       │   ├── RecoveryTargetDiskAccountType: *string
+│   │   │       │   ├── RecoveryTargetDiskId: *string
+│   │   │       │   ├── ResyncRequired: *bool
+│   │   │       │   ├── SecretIdentifier: *string
+│   │   │       │   └── TfoDiskName: *string
+│   │   │       ├── RecoveryFabricLocation: *string
+│   │   │       ├── RpoInSeconds: *int
+│   │   │       ├── SharedDiskIRErrors: Object (5 properties)[]
+│   │   │       │   ├── ErrorCode: *string
+│   │   │       │   ├── ErrorCodeEnum: *string
+│   │   │       │   ├── ErrorMessage: *string
+│   │   │       │   ├── PossibleCauses: *string
+│   │   │       │   └── RecommendedAction: *string
+│   │   │       └── UnprotectedDisks: Object (2 properties)[]
+│   │   │           ├── DiskAutoProtectionStatus: *Enum (2 values)
+│   │   │           │   ├── "Disabled"
+│   │   │           │   └── "Enabled"
+│   │   │           └── DiskLunId: *int
+│   │   └── TestFailoverState: *string
+│   ├── TestFailoverState: *string
+│   └── TestFailoverStateDescription: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationProtectionCluster_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (29 properties)
+    ├── ActiveLocation: *string
+    ├── AgentClusterId: *string
+    ├── AllowedOperations: string[]
+    ├── AreAllClusterNodesRegistered: *bool
+    ├── ClusterFqdn: *string
+    ├── ClusterNodeFqdns: string[]
+    ├── ClusterProtectedItemIds: string[]
+    ├── ClusterRegisteredNodes: Object (4 properties)[]
+    │   ├── BiosId: *string
+    │   ├── ClusterNodeFqdn: *string
+    │   ├── IsSharedDiskVirtualNode: *bool
+    │   └── MachineId: *string
+    ├── CurrentScenario: *Object (3 properties)
+    │   ├── JobId: *string
+    │   ├── ScenarioName: *string
+    │   └── StartTime: *string
+    ├── HealthErrors: Object (15 properties)[]
+    │   ├── CreationTimeUtc: *string
+    │   ├── CustomerResolvability: *Enum (2 values)
+    │   │   ├── "Allowed"
+    │   │   └── "NotAllowed"
+    │   ├── EntityId: *string
+    │   ├── ErrorCategory: *string
+    │   ├── ErrorCode: *string
+    │   ├── ErrorId: *string
+    │   ├── ErrorLevel: *string
+    │   ├── ErrorMessage: *string
+    │   ├── ErrorSource: *string
+    │   ├── ErrorType: *string
+    │   ├── InnerHealthErrors: Object (14 properties)[]
+    │   │   ├── CreationTimeUtc: *string
+    │   │   ├── CustomerResolvability: *Enum (2 values)
+    │   │   │   ├── "Allowed"
+    │   │   │   └── "NotAllowed"
+    │   │   ├── EntityId: *string
+    │   │   ├── ErrorCategory: *string
+    │   │   ├── ErrorCode: *string
+    │   │   ├── ErrorId: *string
+    │   │   ├── ErrorLevel: *string
+    │   │   ├── ErrorMessage: *string
+    │   │   ├── ErrorSource: *string
+    │   │   ├── ErrorType: *string
+    │   │   ├── PossibleCauses: *string
+    │   │   ├── RecommendedAction: *string
+    │   │   ├── RecoveryProviderErrorMessage: *string
+    │   │   └── SummaryMessage: *string
+    │   ├── PossibleCauses: *string
+    │   ├── RecommendedAction: *string
+    │   ├── RecoveryProviderErrorMessage: *string
+    │   └── SummaryMessage: *string
+    ├── LastSuccessfulFailoverTime: *string
+    ├── LastSuccessfulTestFailoverTime: *string
+    ├── PolicyFriendlyName: *string
+    ├── PolicyId: *string
+    ├── PrimaryFabricFriendlyName: *string
+    ├── PrimaryFabricProvider: *string
+    ├── PrimaryProtectionContainerFriendlyName: *string
+    ├── ProtectionClusterType: *string
+    ├── ProtectionState: *string
+    ├── ProtectionStateDescription: *string
+    ├── ProviderSpecificDetails: *Object (1 property)
+    │   └── A2A: *Object (21 properties)
+    │       ├── ClusterManagementId: *string
+    │       ├── FailoverRecoveryPointId: *string
+    │       ├── InitialPrimaryExtendedLocation: *Object (2 properties)
+    │       │   ├── Name: *string
+    │       │   └── Type: *Enum (1 value)
+    │       │       └── "EdgeZone"
+    │       ├── InitialPrimaryFabricLocation: *string
+    │       ├── InitialPrimaryZone: *string
+    │       ├── InitialRecoveryExtendedLocation: *Object (2 properties)
+    │       │   ├── Name: *string
+    │       │   └── Type: *Enum (1 value)
+    │       │       └── "EdgeZone"
+    │       ├── InitialRecoveryFabricLocation: *string
+    │       ├── InitialRecoveryZone: *string
+    │       ├── InstanceType: Enum (1 value)
+    │       │   └── "A2A"
+    │       ├── LastRpoCalculatedTime: *string
+    │       ├── LifecycleId: *string
+    │       ├── MultiVmGroupCreateOption: *Enum (2 values)
+    │       │   ├── "AutoCreated"
+    │       │   └── "UserSpecified"
+    │       ├── MultiVmGroupId: *string
+    │       ├── MultiVmGroupName: *string
+    │       ├── PrimaryAvailabilityZone: *string
+    │       ├── PrimaryExtendedLocation: *Object (2 properties)
+    │       │   ├── Name: *string
+    │       │   └── Type: *Enum (1 value)
+    │       │       └── "EdgeZone"
+    │       ├── PrimaryFabricLocation: *string
+    │       ├── RecoveryAvailabilityZone: *string
+    │       ├── RecoveryExtendedLocation: *Object (2 properties)
+    │       │   ├── Name: *string
+    │       │   └── Type: *Enum (1 value)
+    │       │       └── "EdgeZone"
+    │       ├── RecoveryFabricLocation: *string
+    │       └── RpoInSeconds: *int
+    ├── RecoveryContainerId: *string
+    ├── RecoveryFabricFriendlyName: *string
+    ├── RecoveryFabricId: *string
+    ├── RecoveryProtectionContainerFriendlyName: *string
+    ├── ReplicationHealth: *string
+    ├── SharedDiskProperties: *Object (8 properties)
+    │   ├── ActiveLocation: *string
+    │   ├── AllowedOperations: string[]
+    │   ├── CurrentScenario: *Object (3 properties)
+    │   │   ├── JobId: *string
+    │   │   ├── ScenarioName: *string
+    │   │   └── StartTime: *string
+    │   ├── HealthErrors: Object (15 properties)[]
+    │   │   ├── CreationTimeUtc: *string
+    │   │   ├── CustomerResolvability: *Enum (2 values)
+    │   │   │   ├── "Allowed"
+    │   │   │   └── "NotAllowed"
+    │   │   ├── EntityId: *string
+    │   │   ├── ErrorCategory: *string
+    │   │   ├── ErrorCode: *string
+    │   │   ├── ErrorId: *string
+    │   │   ├── ErrorLevel: *string
+    │   │   ├── ErrorMessage: *string
+    │   │   ├── ErrorSource: *string
+    │   │   ├── ErrorType: *string
+    │   │   ├── InnerHealthErrors: Object (14 properties)[]
+    │   │   │   ├── CreationTimeUtc: *string
+    │   │   │   ├── CustomerResolvability: *Enum (2 values)
+    │   │   │   │   ├── "Allowed"
+    │   │   │   │   └── "NotAllowed"
+    │   │   │   ├── EntityId: *string
+    │   │   │   ├── ErrorCategory: *string
+    │   │   │   ├── ErrorCode: *string
+    │   │   │   ├── ErrorId: *string
+    │   │   │   ├── ErrorLevel: *string
+    │   │   │   ├── ErrorMessage: *string
+    │   │   │   ├── ErrorSource: *string
+    │   │   │   ├── ErrorType: *string
+    │   │   │   ├── PossibleCauses: *string
+    │   │   │   ├── RecommendedAction: *string
+    │   │   │   ├── RecoveryProviderErrorMessage: *string
+    │   │   │   └── SummaryMessage: *string
+    │   │   ├── PossibleCauses: *string
+    │   │   ├── RecommendedAction: *string
+    │   │   ├── RecoveryProviderErrorMessage: *string
+    │   │   └── SummaryMessage: *string
+    │   ├── ProtectionState: *string
+    │   ├── ReplicationHealth: *string
+    │   ├── SharedDiskProviderSpecificDetails: *Object (1 property)
+    │   │   └── A2A: *Object (11 properties)
+    │   │       ├── FailoverRecoveryPointId: *string
+    │   │       ├── InstanceType: Enum (1 value)
+    │   │       │   └── "A2A"
+    │   │       ├── LastRpoCalculatedTime: *string
+    │   │       ├── ManagementId: *string
+    │   │       ├── MonitoringJobType: *string
+    │   │       ├── MonitoringPercentageCompletion: *int
+    │   │       ├── PrimaryFabricLocation: *string
+    │   │       ├── ProtectedManagedDisks: Object (31 properties)[]
+    │   │       │   ├── AllowedDiskLevelOperation: string[]
+    │   │       │   ├── DataPendingAtSourceAgentInMB: *float64
+    │   │       │   ├── DataPendingInStagingStorageAccountInMB: *float64
+    │   │       │   ├── DekKeyVaultArmId: *string
+    │   │       │   ├── DiskCapacityInBytes: *int
+    │   │       │   ├── DiskId: *string
+    │   │       │   ├── DiskName: *string
+    │   │       │   ├── DiskState: *string
+    │   │       │   ├── DiskType: *string
+    │   │       │   ├── FailoverDiskName: *string
+    │   │       │   ├── IsDiskEncrypted: *bool
+    │   │       │   ├── IsDiskKeyEncrypted: *bool
+    │   │       │   ├── KekKeyVaultArmId: *string
+    │   │       │   ├── KeyIdentifier: *string
+    │   │       │   ├── MonitoringJobType: *string
+    │   │       │   ├── MonitoringPercentageCompletion: *int
+    │   │       │   ├── PrimaryDiskEncryptionSetId: *string
+    │   │       │   ├── PrimaryStagingAzureStorageAccountId: *string
+    │   │       │   ├── RecoveryDiskAccessId: *string
+    │   │       │   ├── RecoveryDiskEncryptionSetId: *string
+    │   │       │   ├── RecoveryNetworkAccessPolicy: *Enum (3 values)
+    │   │       │   │   ├── "AllowAll"
+    │   │       │   │   ├── "AllowPrivate"
+    │   │       │   │   └── "DenyAll"
+    │   │       │   ├── RecoveryOrignalTargetDiskId: *string
+    │   │       │   ├── RecoveryPublicNetworkAccess: *Enum (2 values)
+    │   │       │   │   ├── "Disabled"
+    │   │       │   │   └── "Enabled"
+    │   │       │   ├── RecoveryReplicaDiskAccountType: *string
+    │   │       │   ├── RecoveryReplicaDiskId: *string
+    │   │       │   ├── RecoveryResourceGroupId: *string
+    │   │       │   ├── RecoveryTargetDiskAccountType: *string
+    │   │       │   ├── RecoveryTargetDiskId: *string
+    │   │       │   ├── ResyncRequired: *bool
+    │   │       │   ├── SecretIdentifier: *string
+    │   │       │   └── TfoDiskName: *string
+    │   │       ├── RecoveryFabricLocation: *string
+    │   │       ├── RpoInSeconds: *int
+    │   │       └── UnprotectedDisks: Object (2 properties)[]
+    │   │           ├── DiskAutoProtectionStatus: *Enum (2 values)
+    │   │           │   ├── "Disabled"
+    │   │           │   └── "Enabled"
+    │   │           └── DiskLunId: *int
+    │   └── TestFailoverState: *string
+    ├── TestFailoverState: *string
+    └── TestFailoverStateDescription: *string
+
+VaultsReplicationProtectionContainerMapping_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (11 properties)
+│   ├── Health: *string
+│   ├── HealthErrorDetails: Object (15 properties)[]
+│   │   ├── CreationTimeUtc: *string
+│   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   ├── "Allowed"
+│   │   │   └── "NotAllowed"
+│   │   ├── EntityId: *string
+│   │   ├── ErrorCategory: *string
+│   │   ├── ErrorCode: *string
+│   │   ├── ErrorId: *string
+│   │   ├── ErrorLevel: *string
+│   │   ├── ErrorMessage: *string
+│   │   ├── ErrorSource: *string
+│   │   ├── ErrorType: *string
+│   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   ├── CreationTimeUtc: *string
+│   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   ├── "Allowed"
+│   │   │   │   └── "NotAllowed"
+│   │   │   ├── EntityId: *string
+│   │   │   ├── ErrorCategory: *string
+│   │   │   ├── ErrorCode: *string
+│   │   │   ├── ErrorId: *string
+│   │   │   ├── ErrorLevel: *string
+│   │   │   ├── ErrorMessage: *string
+│   │   │   ├── ErrorSource: *string
+│   │   │   ├── ErrorType: *string
+│   │   │   ├── PossibleCauses: *string
+│   │   │   ├── RecommendedAction: *string
+│   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   └── SummaryMessage: *string
+│   │   ├── PossibleCauses: *string
+│   │   ├── RecommendedAction: *string
+│   │   ├── RecoveryProviderErrorMessage: *string
+│   │   └── SummaryMessage: *string
+│   ├── PolicyFriendlyName: *string
+│   ├── PolicyId: *string
+│   ├── ProviderSpecificDetails: *Object (3 properties)
+│   │   ├── A2A: *Object (6 properties)
+│   │   │   ├── AgentAutoUpdateStatus: *Enum (2 values)
+│   │   │   │   ├── "Disabled"
+│   │   │   │   └── "Enabled"
+│   │   │   ├── AutomationAccountArmId: *string
+│   │   │   ├── AutomationAccountAuthenticationType: *Enum (2 values)
+│   │   │   │   ├── "RunAsAccount"
+│   │   │   │   └── "SystemAssignedIdentity"
+│   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   └── "A2A"
+│   │   │   ├── JobScheduleName: *string
+│   │   │   └── ScheduleName: *string
+│   │   ├── InMageRcm: *Object (2 properties)
+│   │   │   ├── EnableAgentAutoUpgrade: *string
+│   │   │   └── InstanceType: Enum (1 value)
+│   │   │       └── "InMageRcm"
+│   │   └── VMwareCbt: *Object (9 properties)
+│   │       ├── ExcludedSkus: string[]
+│   │       ├── InstanceType: Enum (1 value)
+│   │       │   └── "VMwareCbt"
+│   │       ├── KeyVaultId: *string
+│   │       ├── KeyVaultUri: *string
+│   │       ├── RoleSizeToNicCountMap: map[string]int
+│   │       ├── ServiceBusConnectionStringSecretName: *string
+│   │       ├── StorageAccountId: *string
+│   │       ├── StorageAccountSasSecretName: *string
+│   │       └── TargetLocation: *string
+│   ├── SourceFabricFriendlyName: *string
+│   ├── SourceProtectionContainerFriendlyName: *string
+│   ├── State: *string
+│   ├── TargetFabricFriendlyName: *string
+│   ├── TargetProtectionContainerFriendlyName: *string
+│   └── TargetProtectionContainerId: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationProtectionContainerMapping_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (3 properties)
+    ├── PolicyId: *string
+    ├── ProviderSpecificInput: *Object (2 properties)
+    │   ├── A2A: *Object (4 properties)
+    │   │   ├── AgentAutoUpdateStatus: *Enum (2 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   └── "Enabled"
+    │   │   ├── AutomationAccountArmId: *string
+    │   │   ├── AutomationAccountAuthenticationType: *Enum (2 values)
+    │   │   │   ├── "RunAsAccount"
+    │   │   │   └── "SystemAssignedIdentity"
+    │   │   └── InstanceType: Enum (1 value)
+    │   │       └── "A2A"
+    │   └── VMwareCbt: *Object (7 properties)
+    │       ├── InstanceType: Enum (1 value)
+    │       │   └── "VMwareCbt"
+    │       ├── KeyVaultId: *string
+    │       ├── KeyVaultUri: *string
+    │       ├── ServiceBusConnectionStringSecretName: *string
+    │       ├── StorageAccountId: *string
+    │       ├── StorageAccountSasSecretName: *string
+    │       └── TargetLocation: *string
+    └── TargetProtectionContainerId: *string
+
+VaultsReplicationProtectionContainer_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (7 properties)
+│   ├── FabricFriendlyName: *string
+│   ├── FabricSpecificDetails: *Object (1 property)
+│   │   └── InstanceType: *string
+│   ├── FabricType: *string
+│   ├── FriendlyName: *string
+│   ├── PairingStatus: *string
+│   ├── ProtectedItemCount: *int
+│   └── Role: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationProtectionContainer_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── ProviderSpecificInput: Object (3 properties)[]
+        ├── A2A: *Object (1 property)
+        │   └── InstanceType: Enum (1 value)
+        │       └── "A2A"
+        ├── A2ACrossClusterMigration: *Object (1 property)
+        │   └── InstanceType: Enum (1 value)
+        │       └── "A2ACrossClusterMigration"
+        └── VMwareCbt: *Object (1 property)
+            └── InstanceType: Enum (1 value)
+                └── "VMwareCbt"
+
+VaultsReplicationProtectionIntent_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (6 properties)
+│   ├── CreationTimeUTC: *string
+│   ├── FriendlyName: *string
+│   ├── IsActive: *bool
+│   ├── JobId: *string
+│   ├── JobState: *string
+│   └── ProviderSpecificDetails: *Object (1 property)
+│       └── A2A: *Object (23 properties)
+│           ├── AgentAutoUpdateStatus: *Enum (2 values)
+│           │   ├── "Disabled"
+│           │   └── "Enabled"
+│           ├── AutoProtectionOfDataDisk: *Enum (2 values)
+│           │   ├── "Disabled"
+│           │   └── "Enabled"
+│           ├── AutomationAccountArmId: *string
+│           ├── AutomationAccountAuthenticationType: *Enum (2 values)
+│           │   ├── "RunAsAccount"
+│           │   └── "SystemAssignedIdentity"
+│           ├── DiskEncryptionInfo: *Object (2 properties)
+│           │   ├── DiskEncryptionKeyInfo: *Object (2 properties)
+│           │   │   ├── KeyVaultResourceArmId: *string
+│           │   │   └── SecretIdentifier: *string
+│           │   └── KeyEncryptionKeyInfo: *Object (2 properties)
+│           │       ├── KeyIdentifier: *string
+│           │       └── KeyVaultResourceArmId: *string
+│           ├── FabricObjectId: *string
+│           ├── InstanceType: Enum (1 value)
+│           │   └── "A2A"
+│           ├── MultiVmGroupId: *string
+│           ├── MultiVmGroupName: *string
+│           ├── PrimaryLocation: *string
+│           ├── PrimaryStagingStorageAccount: *Object (1 property)
+│           │   └── Existing: *Object (2 properties)
+│           │       ├── AzureStorageAccountId: *string
+│           │       └── ResourceType: Enum (1 value)
+│           │           └── "Existing"
+│           ├── ProtectionProfile: *Object (2 properties)
+│           │   ├── Existing: *Object (2 properties)
+│           │   │   ├── ProtectionProfileId: *string
+│           │   │   └── ResourceType: Enum (1 value)
+│           │   │       └── "Existing"
+│           │   └── New: *Object (6 properties)
+│           │       ├── AppConsistentFrequencyInMinutes: *int
+│           │       ├── CrashConsistentFrequencyInMinutes: *int
+│           │       ├── MultiVmSyncStatus: *Enum (2 values)
+│           │       │   ├── "Disable"
+│           │       │   └── "Enable"
+│           │       ├── PolicyName: *string
+│           │       ├── RecoveryPointHistory: *int
+│           │       └── ResourceType: Enum (1 value)
+│           │           └── "New"
+│           ├── RecoveryAvailabilitySet: *Object (1 property)
+│           │   └── Existing: *Object (2 properties)
+│           │       ├── RecoveryAvailabilitySetId: *string
+│           │       └── ResourceType: Enum (1 value)
+│           │           └── "Existing"
+│           ├── RecoveryAvailabilityType: *string
+│           ├── RecoveryAvailabilityZone: *string
+│           ├── RecoveryBootDiagStorageAccount: *Object (1 property)
+│           │   └── Existing: *Object (2 properties)
+│           │       ├── AzureStorageAccountId: *string
+│           │       └── ResourceType: Enum (1 value)
+│           │           └── "Existing"
+│           ├── RecoveryLocation: *string
+│           ├── RecoveryProximityPlacementGroup: *Object (1 property)
+│           │   └── Existing: *Object (2 properties)
+│           │       ├── RecoveryProximityPlacementGroupId: *string
+│           │       └── ResourceType: Enum (1 value)
+│           │           └── "Existing"
+│           ├── RecoveryResourceGroupId: *string
+│           ├── RecoverySubscriptionId: *string
+│           ├── RecoveryVirtualNetwork: *Object (2 properties)
+│           │   ├── Existing: *Object (3 properties)
+│           │   │   ├── RecoverySubnetName: *string
+│           │   │   ├── RecoveryVirtualNetworkId: *string
+│           │   │   └── ResourceType: Enum (1 value)
+│           │   │       └── "Existing"
+│           │   └── New: *Object (3 properties)
+│           │       ├── RecoveryVirtualNetworkName: *string
+│           │       ├── RecoveryVirtualNetworkResourceGroupName: *string
+│           │       └── ResourceType: Enum (1 value)
+│           │           └── "New"
+│           ├── VmDisks: Object (3 properties)[]
+│           │   ├── DiskUri: *string
+│           │   ├── PrimaryStagingStorageAccountCustomInput: *Object (1 property)
+│           │   │   └── Existing: *Object (2 properties)
+│           │   │       ├── AzureStorageAccountId: *string
+│           │   │       └── ResourceType: Enum (1 value)
+│           │   │           └── "Existing"
+│           │   └── RecoveryAzureStorageAccountCustomInput: *Object (1 property)
+│           │       └── Existing: *Object (2 properties)
+│           │           ├── AzureStorageAccountId: *string
+│           │           └── ResourceType: Enum (1 value)
+│           │               └── "Existing"
+│           └── VmManagedDisks: Object (7 properties)[]
+│               ├── DiskEncryptionInfo: *Object (2 properties)
+│               │   ├── DiskEncryptionKeyInfo: *Object (2 properties)
+│               │   │   ├── KeyVaultResourceArmId: *string
+│               │   │   └── SecretIdentifier: *string
+│               │   └── KeyEncryptionKeyInfo: *Object (2 properties)
+│               │       ├── KeyIdentifier: *string
+│               │       └── KeyVaultResourceArmId: *string
+│               ├── DiskId: *string
+│               ├── PrimaryStagingStorageAccountCustomInput: *Object (1 property)
+│               │   └── Existing: *Object (2 properties)
+│               │       ├── AzureStorageAccountId: *string
+│               │       └── ResourceType: Enum (1 value)
+│               │           └── "Existing"
+│               ├── RecoveryDiskEncryptionSetId: *string
+│               ├── RecoveryReplicaDiskAccountType: *string
+│               ├── RecoveryResourceGroupCustomInput: *Object (1 property)
+│               │   └── Existing: *Object (2 properties)
+│               │       ├── RecoveryResourceGroupId: *string
+│               │       └── ResourceType: Enum (1 value)
+│               │           └── "Existing"
+│               └── RecoveryTargetDiskAccountType: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationProtectionIntent_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── ProviderSpecificDetails: *Object (1 property)
+        └── A2A: *Object (23 properties)
+            ├── AgentAutoUpdateStatus: *Enum (2 values)
+            │   ├── "Disabled"
+            │   └── "Enabled"
+            ├── AutoProtectionOfDataDisk: *Enum (2 values)
+            │   ├── "Disabled"
+            │   └── "Enabled"
+            ├── AutomationAccountArmId: *string
+            ├── AutomationAccountAuthenticationType: *Enum (2 values)
+            │   ├── "RunAsAccount"
+            │   └── "SystemAssignedIdentity"
+            ├── DiskEncryptionInfo: *Object (2 properties)
+            │   ├── DiskEncryptionKeyInfo: *Object (2 properties)
+            │   │   ├── KeyVaultResourceArmId: *string
+            │   │   └── SecretIdentifier: *string
+            │   └── KeyEncryptionKeyInfo: *Object (2 properties)
+            │       ├── KeyIdentifier: *string
+            │       └── KeyVaultResourceArmId: *string
+            ├── FabricObjectId: *string
+            ├── InstanceType: Enum (1 value)
+            │   └── "A2A"
+            ├── MultiVmGroupId: *string
+            ├── MultiVmGroupName: *string
+            ├── PrimaryLocation: *string
+            ├── PrimaryStagingStorageAccountCustomInput: *Object (1 property)
+            │   └── Existing: *Object (2 properties)
+            │       ├── AzureStorageAccountId: *string
+            │       └── ResourceType: Enum (1 value)
+            │           └── "Existing"
+            ├── ProtectionProfileCustomInput: *Object (2 properties)
+            │   ├── Existing: *Object (2 properties)
+            │   │   ├── ProtectionProfileId: *string
+            │   │   └── ResourceType: Enum (1 value)
+            │   │       └── "Existing"
+            │   └── New: *Object (6 properties)
+            │       ├── AppConsistentFrequencyInMinutes: *int
+            │       ├── CrashConsistentFrequencyInMinutes: *int
+            │       ├── MultiVmSyncStatus: *Enum (2 values)
+            │       │   ├── "Disable"
+            │       │   └── "Enable"
+            │       ├── PolicyName: *string
+            │       ├── RecoveryPointHistory: *int
+            │       └── ResourceType: Enum (1 value)
+            │           └── "New"
+            ├── RecoveryAvailabilitySetCustomInput: *Object (1 property)
+            │   └── Existing: *Object (2 properties)
+            │       ├── RecoveryAvailabilitySetId: *string
+            │       └── ResourceType: Enum (1 value)
+            │           └── "Existing"
+            ├── RecoveryAvailabilityType: *Enum (3 values)
+            │   ├── "AvailabilitySet"
+            │   ├── "AvailabilityZone"
+            │   └── "Single"
+            ├── RecoveryAvailabilityZone: *string
+            ├── RecoveryBootDiagStorageAccount: *Object (1 property)
+            │   └── Existing: *Object (2 properties)
+            │       ├── AzureStorageAccountId: *string
+            │       └── ResourceType: Enum (1 value)
+            │           └── "Existing"
+            ├── RecoveryLocation: *string
+            ├── RecoveryProximityPlacementGroupCustomInput: *Object (1 property)
+            │   └── Existing: *Object (2 properties)
+            │       ├── RecoveryProximityPlacementGroupId: *string
+            │       └── ResourceType: Enum (1 value)
+            │           └── "Existing"
+            ├── RecoveryResourceGroupId: *string
+            ├── RecoverySubscriptionId: *string
+            ├── RecoveryVirtualNetworkCustomInput: *Object (2 properties)
+            │   ├── Existing: *Object (3 properties)
+            │   │   ├── RecoverySubnetName: *string
+            │   │   ├── RecoveryVirtualNetworkId: *string
+            │   │   └── ResourceType: Enum (1 value)
+            │   │       └── "Existing"
+            │   └── New: *Object (3 properties)
+            │       ├── RecoveryVirtualNetworkName: *string
+            │       ├── RecoveryVirtualNetworkResourceGroupName: *string
+            │       └── ResourceType: Enum (1 value)
+            │           └── "New"
+            ├── VmDisks: Object (3 properties)[]
+            │   ├── DiskUri: *string
+            │   ├── PrimaryStagingStorageAccountCustomInput: *Object (1 property)
+            │   │   └── Existing: *Object (2 properties)
+            │   │       ├── AzureStorageAccountId: *string
+            │   │       └── ResourceType: Enum (1 value)
+            │   │           └── "Existing"
+            │   └── RecoveryAzureStorageAccountCustomInput: *Object (1 property)
+            │       └── Existing: *Object (2 properties)
+            │           ├── AzureStorageAccountId: *string
+            │           └── ResourceType: Enum (1 value)
+            │               └── "Existing"
+            └── VmManagedDisks: Object (7 properties)[]
+                ├── DiskEncryptionInfo: *Object (2 properties)
+                │   ├── DiskEncryptionKeyInfo: *Object (2 properties)
+                │   │   ├── KeyVaultResourceArmId: *string
+                │   │   └── SecretIdentifier: *string
+                │   └── KeyEncryptionKeyInfo: *Object (2 properties)
+                │       ├── KeyIdentifier: *string
+                │       └── KeyVaultResourceArmId: *string
+                ├── DiskId: *string
+                ├── PrimaryStagingStorageAccountCustomInput: *Object (1 property)
+                │   └── Existing: *Object (2 properties)
+                │       ├── AzureStorageAccountId: *string
+                │       └── ResourceType: Enum (1 value)
+                │           └── "Existing"
+                ├── RecoveryDiskEncryptionSetId: *string
+                ├── RecoveryReplicaDiskAccountType: *string
+                ├── RecoveryResourceGroupCustomInput: *Object (1 property)
+                │   └── Existing: *Object (2 properties)
+                │       ├── RecoveryResourceGroupId: *string
+                │       └── ResourceType: Enum (1 value)
+                │           └── "Existing"
+                └── RecoveryTargetDiskAccountType: *string
+
+VaultsReplicationRecoveryPlan_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (16 properties)
+│   ├── AllowedOperations: string[]
+│   ├── CurrentScenario: *Object (3 properties)
+│   │   ├── JobId: *string
+│   │   ├── ScenarioName: *string
+│   │   └── StartTime: *string
+│   ├── CurrentScenarioStatus: *string
+│   ├── CurrentScenarioStatusDescription: *string
+│   ├── FailoverDeploymentModel: *string
+│   ├── FriendlyName: *string
+│   ├── Groups: Object (4 properties)[]
+│   │   ├── EndGroupActions: Object (4 properties)[]
+│   │   │   ├── ActionName: *string
+│   │   │   ├── CustomDetails: *Object (3 properties)
+│   │   │   │   ├── AutomationRunbook: *Object (4 properties)
+│   │   │   │   │   ├── FabricLocation: *Enum (2 values)
+│   │   │   │   │   │   ├── "Primary"
+│   │   │   │   │   │   └── "Recovery"
+│   │   │   │   │   ├── InstanceType: Enum (1 value)
+│   │   │   │   │   │   └── "AutomationRunbookActionDetails"
+│   │   │   │   │   ├── RunbookId: *string
+│   │   │   │   │   └── Timeout: *string
+│   │   │   │   ├── Manual: *Object (2 properties)
+│   │   │   │   │   ├── Description: *string
+│   │   │   │   │   └── InstanceType: Enum (1 value)
+│   │   │   │   │       └── "ManualActionDetails"
+│   │   │   │   └── Script: *Object (4 properties)
+│   │   │   │       ├── FabricLocation: *Enum (2 values)
+│   │   │   │       │   ├── "Primary"
+│   │   │   │       │   └── "Recovery"
+│   │   │   │       ├── InstanceType: Enum (1 value)
+│   │   │   │       │   └── "ScriptActionDetails"
+│   │   │   │       ├── Path: *string
+│   │   │   │       └── Timeout: *string
+│   │   │   ├── FailoverDirections: Enum (2 values)[]
+│   │   │   │   ├── "PrimaryToRecovery"
+│   │   │   │   └── "RecoveryToPrimary"
+│   │   │   └── FailoverTypes: Enum (14 values)[]
+│   │   │       ├── "CancelFailover"
+│   │   │       ├── "ChangePit"
+│   │   │       ├── "Commit"
+│   │   │       ├── "CompleteMigration"
+│   │   │       ├── "DisableProtection"
+│   │   │       ├── "Failback"
+│   │   │       ├── "FinalizeFailback"
+│   │   │       ├── "PlannedFailover"
+│   │   │       ├── "RepairReplication"
+│   │   │       ├── "ReverseReplicate"
+│   │   │       ├── "SwitchProtection"
+│   │   │       ├── "TestFailover"
+│   │   │       ├── "TestFailoverCleanup"
+│   │   │       └── "UnplannedFailover"
+│   │   ├── GroupType: *Enum (3 values)
+│   │   │   ├── "Boot"
+│   │   │   ├── "Failover"
+│   │   │   └── "Shutdown"
+│   │   ├── ReplicationProtectedItems: Object (2 properties)[]
+│   │   │   ├── Id: *string
+│   │   │   └── VirtualMachineId: *string
+│   │   └── StartGroupActions: Object (4 properties)[]
+│   │       ├── ActionName: *string
+│   │       ├── CustomDetails: *Object (3 properties)
+│   │       │   ├── AutomationRunbook: *Object (4 properties)
+│   │       │   │   ├── FabricLocation: *Enum (2 values)
+│   │       │   │   │   ├── "Primary"
+│   │       │   │   │   └── "Recovery"
+│   │       │   │   ├── InstanceType: Enum (1 value)
+│   │       │   │   │   └── "AutomationRunbookActionDetails"
+│   │       │   │   ├── RunbookId: *string
+│   │       │   │   └── Timeout: *string
+│   │       │   ├── Manual: *Object (2 properties)
+│   │       │   │   ├── Description: *string
+│   │       │   │   └── InstanceType: Enum (1 value)
+│   │       │   │       └── "ManualActionDetails"
+│   │       │   └── Script: *Object (4 properties)
+│   │       │       ├── FabricLocation: *Enum (2 values)
+│   │       │       │   ├── "Primary"
+│   │       │       │   └── "Recovery"
+│   │       │       ├── InstanceType: Enum (1 value)
+│   │       │       │   └── "ScriptActionDetails"
+│   │       │       ├── Path: *string
+│   │       │       └── Timeout: *string
+│   │       ├── FailoverDirections: Enum (2 values)[]
+│   │       │   ├── "PrimaryToRecovery"
+│   │       │   └── "RecoveryToPrimary"
+│   │       └── FailoverTypes: Enum (14 values)[]
+│   │           ├── "CancelFailover"
+│   │           ├── "ChangePit"
+│   │           ├── "Commit"
+│   │           ├── "CompleteMigration"
+│   │           ├── "DisableProtection"
+│   │           ├── "Failback"
+│   │           ├── "FinalizeFailback"
+│   │           ├── "PlannedFailover"
+│   │           ├── "RepairReplication"
+│   │           ├── "ReverseReplicate"
+│   │           ├── "SwitchProtection"
+│   │           ├── "TestFailover"
+│   │           ├── "TestFailoverCleanup"
+│   │           └── "UnplannedFailover"
+│   ├── LastPlannedFailoverTime: *string
+│   ├── LastTestFailoverTime: *string
+│   ├── LastUnplannedFailoverTime: *string
+│   ├── PrimaryFabricFriendlyName: *string
+│   ├── PrimaryFabricId: *string
+│   ├── ProviderSpecificDetails: Object (1 property)[]
+│   │   └── A2A: *Object (5 properties)
+│   │       ├── InstanceType: Enum (1 value)
+│   │       │   └── "A2A"
+│   │       ├── PrimaryExtendedLocation: *Object (2 properties)
+│   │       │   ├── Name: *string
+│   │       │   └── Type: *Enum (1 value)
+│   │       │       └── "EdgeZone"
+│   │       ├── PrimaryZone: *string
+│   │       ├── RecoveryExtendedLocation: *Object (2 properties)
+│   │       │   ├── Name: *string
+│   │       │   └── Type: *Enum (1 value)
+│   │       │       └── "EdgeZone"
+│   │       └── RecoveryZone: *string
+│   ├── RecoveryFabricFriendlyName: *string
+│   ├── RecoveryFabricId: *string
+│   └── ReplicationProviders: string[]
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationRecoveryPlan_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (5 properties)
+    ├── FailoverDeploymentModel: *Enum (3 values)
+    │   ├── "Classic"
+    │   ├── "NotApplicable"
+    │   └── "ResourceManager"
+    ├── Groups: Object (4 properties)[]
+    │   ├── EndGroupActions: Object (4 properties)[]
+    │   │   ├── ActionName: *string
+    │   │   ├── CustomDetails: *Object (3 properties)
+    │   │   │   ├── AutomationRunbook: *Object (4 properties)
+    │   │   │   │   ├── FabricLocation: *Enum (2 values)
+    │   │   │   │   │   ├── "Primary"
+    │   │   │   │   │   └── "Recovery"
+    │   │   │   │   ├── InstanceType: Enum (1 value)
+    │   │   │   │   │   └── "AutomationRunbookActionDetails"
+    │   │   │   │   ├── RunbookId: *string
+    │   │   │   │   └── Timeout: *string
+    │   │   │   ├── Manual: *Object (2 properties)
+    │   │   │   │   ├── Description: *string
+    │   │   │   │   └── InstanceType: Enum (1 value)
+    │   │   │   │       └── "ManualActionDetails"
+    │   │   │   └── Script: *Object (4 properties)
+    │   │   │       ├── FabricLocation: *Enum (2 values)
+    │   │   │       │   ├── "Primary"
+    │   │   │       │   └── "Recovery"
+    │   │   │       ├── InstanceType: Enum (1 value)
+    │   │   │       │   └── "ScriptActionDetails"
+    │   │   │       ├── Path: *string
+    │   │   │       └── Timeout: *string
+    │   │   ├── FailoverDirections: Enum (2 values)[]
+    │   │   │   ├── "PrimaryToRecovery"
+    │   │   │   └── "RecoveryToPrimary"
+    │   │   └── FailoverTypes: Enum (14 values)[]
+    │   │       ├── "CancelFailover"
+    │   │       ├── "ChangePit"
+    │   │       ├── "Commit"
+    │   │       ├── "CompleteMigration"
+    │   │       ├── "DisableProtection"
+    │   │       ├── "Failback"
+    │   │       ├── "FinalizeFailback"
+    │   │       ├── "PlannedFailover"
+    │   │       ├── "RepairReplication"
+    │   │       ├── "ReverseReplicate"
+    │   │       ├── "SwitchProtection"
+    │   │       ├── "TestFailover"
+    │   │       ├── "TestFailoverCleanup"
+    │   │       └── "UnplannedFailover"
+    │   ├── GroupType: *Enum (3 values)
+    │   │   ├── "Boot"
+    │   │   ├── "Failover"
+    │   │   └── "Shutdown"
+    │   ├── ReplicationProtectedItems: Object (2 properties)[]
+    │   │   ├── Id: *string
+    │   │   └── VirtualMachineId: *string
+    │   └── StartGroupActions: Object (4 properties)[]
+    │       ├── ActionName: *string
+    │       ├── CustomDetails: *Object (3 properties)
+    │       │   ├── AutomationRunbook: *Object (4 properties)
+    │       │   │   ├── FabricLocation: *Enum (2 values)
+    │       │   │   │   ├── "Primary"
+    │       │   │   │   └── "Recovery"
+    │       │   │   ├── InstanceType: Enum (1 value)
+    │       │   │   │   └── "AutomationRunbookActionDetails"
+    │       │   │   ├── RunbookId: *string
+    │       │   │   └── Timeout: *string
+    │       │   ├── Manual: *Object (2 properties)
+    │       │   │   ├── Description: *string
+    │       │   │   └── InstanceType: Enum (1 value)
+    │       │   │       └── "ManualActionDetails"
+    │       │   └── Script: *Object (4 properties)
+    │       │       ├── FabricLocation: *Enum (2 values)
+    │       │       │   ├── "Primary"
+    │       │       │   └── "Recovery"
+    │       │       ├── InstanceType: Enum (1 value)
+    │       │       │   └── "ScriptActionDetails"
+    │       │       ├── Path: *string
+    │       │       └── Timeout: *string
+    │       ├── FailoverDirections: Enum (2 values)[]
+    │       │   ├── "PrimaryToRecovery"
+    │       │   └── "RecoveryToPrimary"
+    │       └── FailoverTypes: Enum (14 values)[]
+    │           ├── "CancelFailover"
+    │           ├── "ChangePit"
+    │           ├── "Commit"
+    │           ├── "CompleteMigration"
+    │           ├── "DisableProtection"
+    │           ├── "Failback"
+    │           ├── "FinalizeFailback"
+    │           ├── "PlannedFailover"
+    │           ├── "RepairReplication"
+    │           ├── "ReverseReplicate"
+    │           ├── "SwitchProtection"
+    │           ├── "TestFailover"
+    │           ├── "TestFailoverCleanup"
+    │           └── "UnplannedFailover"
+    ├── PrimaryFabricId: *string
+    ├── ProviderSpecificInput: Object (1 property)[]
+    │   └── A2A: *Object (5 properties)
+    │       ├── InstanceType: Enum (1 value)
+    │       │   └── "A2A"
+    │       ├── PrimaryExtendedLocation: *Object (2 properties)
+    │       │   ├── Name: *string
+    │       │   └── Type: *Enum (1 value)
+    │       │       └── "EdgeZone"
+    │       ├── PrimaryZone: *string
+    │       ├── RecoveryExtendedLocation: *Object (2 properties)
+    │       │   ├── Name: *string
+    │       │   └── Type: *Enum (1 value)
+    │       │       └── "EdgeZone"
+    │       └── RecoveryZone: *string
+    └── RecoveryFabricId: *string
+
+VaultsReplicationRecoveryServicesProvider_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (20 properties)
+│   ├── AllowedScenarios: string[]
+│   ├── AuthenticationIdentityDetails: *Object (5 properties)
+│   │   ├── AadAuthority: *string
+│   │   ├── ApplicationId: *string
+│   │   ├── Audience: *string
+│   │   ├── ObjectId: *string
+│   │   └── TenantId: *string
+│   ├── BiosId: *string
+│   ├── ConnectionStatus: *string
+│   ├── DataPlaneAuthenticationIdentityDetails: *Object (5 properties)
+│   │   ├── AadAuthority: *string
+│   │   ├── ApplicationId: *string
+│   │   ├── Audience: *string
+│   │   ├── ObjectId: *string
+│   │   └── TenantId: *string
+│   ├── DraIdentifier: *string
+│   ├── FabricFriendlyName: *string
+│   ├── FabricType: *string
+│   ├── FriendlyName: *string
+│   ├── HealthErrorDetails: Object (15 properties)[]
+│   │   ├── CreationTimeUtc: *string
+│   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   ├── "Allowed"
+│   │   │   └── "NotAllowed"
+│   │   ├── EntityId: *string
+│   │   ├── ErrorCategory: *string
+│   │   ├── ErrorCode: *string
+│   │   ├── ErrorId: *string
+│   │   ├── ErrorLevel: *string
+│   │   ├── ErrorMessage: *string
+│   │   ├── ErrorSource: *string
+│   │   ├── ErrorType: *string
+│   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   ├── CreationTimeUtc: *string
+│   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   ├── "Allowed"
+│   │   │   │   └── "NotAllowed"
+│   │   │   ├── EntityId: *string
+│   │   │   ├── ErrorCategory: *string
+│   │   │   ├── ErrorCode: *string
+│   │   │   ├── ErrorId: *string
+│   │   │   ├── ErrorLevel: *string
+│   │   │   ├── ErrorMessage: *string
+│   │   │   ├── ErrorSource: *string
+│   │   │   ├── ErrorType: *string
+│   │   │   ├── PossibleCauses: *string
+│   │   │   ├── RecommendedAction: *string
+│   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   └── SummaryMessage: *string
+│   │   ├── PossibleCauses: *string
+│   │   ├── RecommendedAction: *string
+│   │   ├── RecoveryProviderErrorMessage: *string
+│   │   └── SummaryMessage: *string
+│   ├── LastHeartBeat: *string
+│   ├── MachineId: *string
+│   ├── MachineName: *string
+│   ├── ProtectedItemCount: *int
+│   ├── ProviderVersion: *string
+│   ├── ProviderVersionDetails: *Object (3 properties)
+│   │   ├── ExpiryDate: *string
+│   │   ├── Status: *Enum (5 values)
+│   │   │   ├── "Deprecated"
+│   │   │   ├── "NotSupported"
+│   │   │   ├── "SecurityUpdateRequired"
+│   │   │   ├── "Supported"
+│   │   │   └── "UpdateRequired"
+│   │   └── Version: *string
+│   ├── ProviderVersionExpiryDate: *string
+│   ├── ProviderVersionState: *string
+│   ├── ResourceAccessIdentityDetails: *Object (5 properties)
+│   │   ├── AadAuthority: *string
+│   │   ├── ApplicationId: *string
+│   │   ├── Audience: *string
+│   │   ├── ObjectId: *string
+│   │   └── TenantId: *string
+│   └── ServerVersion: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationRecoveryServicesProvider_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (6 properties)
+    ├── AuthenticationIdentityInput: *Object (5 properties)
+    │   ├── AadAuthority: *string
+    │   ├── ApplicationId: *string
+    │   ├── Audience: *string
+    │   ├── ObjectId: *string
+    │   └── TenantId: *string
+    ├── BiosId: *string
+    ├── DataPlaneAuthenticationIdentityInput: *Object (5 properties)
+    │   ├── AadAuthority: *string
+    │   ├── ApplicationId: *string
+    │   ├── Audience: *string
+    │   ├── ObjectId: *string
+    │   └── TenantId: *string
+    ├── MachineId: *string
+    ├── MachineName: *string
+    └── ResourceAccessIdentityInput: *Object (5 properties)
+        ├── AadAuthority: *string
+        ├── ApplicationId: *string
+        ├── Audience: *string
+        ├── ObjectId: *string
+        └── TenantId: *string
+
+VaultsReplicationVaultSetting_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── MigrationSolutionId: *string
+│   └── VmwareToAzureProviderType: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationVaultSetting_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── MigrationSolutionId: *string
+    └── VmwareToAzureProviderType: *string
+
+VaultsReplicationvCenter_STATUS: Object (6 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (11 properties)
+│   ├── DiscoveryStatus: *string
+│   ├── FabricArmResourceName: *string
+│   ├── FriendlyName: *string
+│   ├── HealthErrors: Object (15 properties)[]
+│   │   ├── CreationTimeUtc: *string
+│   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   ├── "Allowed"
+│   │   │   └── "NotAllowed"
+│   │   ├── EntityId: *string
+│   │   ├── ErrorCategory: *string
+│   │   ├── ErrorCode: *string
+│   │   ├── ErrorId: *string
+│   │   ├── ErrorLevel: *string
+│   │   ├── ErrorMessage: *string
+│   │   ├── ErrorSource: *string
+│   │   ├── ErrorType: *string
+│   │   ├── InnerHealthErrors: Object (14 properties)[]
+│   │   │   ├── CreationTimeUtc: *string
+│   │   │   ├── CustomerResolvability: *Enum (2 values)
+│   │   │   │   ├── "Allowed"
+│   │   │   │   └── "NotAllowed"
+│   │   │   ├── EntityId: *string
+│   │   │   ├── ErrorCategory: *string
+│   │   │   ├── ErrorCode: *string
+│   │   │   ├── ErrorId: *string
+│   │   │   ├── ErrorLevel: *string
+│   │   │   ├── ErrorMessage: *string
+│   │   │   ├── ErrorSource: *string
+│   │   │   ├── ErrorType: *string
+│   │   │   ├── PossibleCauses: *string
+│   │   │   ├── RecommendedAction: *string
+│   │   │   ├── RecoveryProviderErrorMessage: *string
+│   │   │   └── SummaryMessage: *string
+│   │   ├── PossibleCauses: *string
+│   │   ├── RecommendedAction: *string
+│   │   ├── RecoveryProviderErrorMessage: *string
+│   │   └── SummaryMessage: *string
+│   ├── InfrastructureId: *string
+│   ├── InternalId: *string
+│   ├── IpAddress: *string
+│   ├── LastHeartbeat: *string
+│   ├── Port: *string
+│   ├── ProcessServerId: *string
+│   └── RunAsAccountId: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+VaultsReplicationvCenter_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (5 properties)
+    ├── FriendlyName: *string
+    ├── IpAddress: *string
+    ├── Port: *string
+    ├── ProcessServerId: *string
+    └── RunAsAccountId: *string
+

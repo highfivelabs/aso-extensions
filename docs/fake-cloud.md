@@ -654,6 +654,19 @@ upstream's); the catalog's chart tests do that.
   has a value (400). Not modelled: VMs, disks and environments being made
   (in the lab's resource group or their own), artifacts being applied,
   schedules running, the lab's policies, and the error codes.
+- Azure Site Recovery, Azure to Azure (`vaults/*/replication*`, 2026-07-01;
+  `pkg/fakecloud/arm/siterecovery.go`): an Azure fabric names its region
+  (400) and a vault has one Azure fabric per region (409); an A2A policy's
+  app-consistent frequency is at most its recovery point retention (400); a
+  protection container mapping names a policy and a target container that
+  exist (404), not its own container (400); a replicated item names a
+  policy that exists (404), and for A2A the VM, recovery container and
+  recovery resource group exist (404) and its container maps to that
+  recovery container with that policy (400); a recovery plan's fabrics and
+  replicated items exist (404). Not modelled: replication running (initial
+  replication, recovery points, health), failover and the other POST
+  actions, the mobility agent, the on-premises scenarios beyond the generic
+  resource, and the error codes.
 - Microsoft Foundry managed networks and outbound rules
   (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
   `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`

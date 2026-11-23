@@ -508,6 +508,20 @@ func init() {
 	f["LabsUsersSecret"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"value": map[string]any{"name": "conformance", "key": "value"}}
 	}}
+	// Azure Site Recovery: a migration item's only scenario is VMware (its
+	// provider-specific input is a one-of with nothing set otherwise).
+	f["VaultsReplicationMigrationItem"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{
+			"policyReference": armRef(c.ref),
+			"providerSpecificDetails": map[string]any{"vMwareCbt": map[string]any{
+				"instanceType": "VMwareCbt", "dataMoverRunAsAccountId": "mover", "snapshotRunAsAccountId": "snapshot",
+				"vmwareMachineReference": armRef(c.ref), "targetResourceGroupReference": armRef(c.ref), "targetNetworkReference": armRef(c.ref),
+				"disksToInclude": []any{map[string]any{
+					"diskId": "disk0", "isOSDisk": "true", "logStorageAccountReference": armRef(c.ref), "logStorageAccountSasSecretName": "sas",
+				}},
+			}},
+		}}
+	}}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}

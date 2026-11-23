@@ -68,7 +68,10 @@
 // (vaultsettings.go: soft delete always on, redundancy locked by protected
 // items, customer-managed keys kept), DevTest Labs (devtestlab.go: fixed
 // schedule and cost names, a lab VM's network and subnet in its lab, its
-// sign-in, a secret's value), budgets
+// sign-in, a secret's value), Azure Site Recovery (siterecovery.go: one
+// Azure fabric per region, a policy's snapshot frequency, what mappings,
+// replicated items and recovery plans name, a mapping for each item),
+// budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -552,6 +555,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkDevTestLab(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSiteRecovery(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

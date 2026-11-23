@@ -2,8 +2,7 @@ typeFilters:
   - action: include
     group: recoveryservices
     version: v20260701
-    because: the newest stable version that both the vault and the backup specs have
-
+    because: the newest stable version that the vault, the backup and the Site Recovery specs have
 groupModelConfiguration:
   2026-07-01:
     Vault:
@@ -31,6 +30,57 @@ groupModelConfiguration:
     Vaults_BackupEncryptionConfigs_BackupResourceEncryptionConfig:
       $exportAs: VaultsBackupEncryptionConfig
       $supportedFrom: v0.1.0
+    # Azure Site Recovery (docs/plan.md f52; specification/recoveryservicessiterecovery,
+    # 2026-07-01): fabrics, protection containers and their mappings,
+    # replication policies, replicated and migrated items, protection
+    # clusters, recovery plans, registered providers and vCenters, and the
+    # vault's replication alert and vault settings. Named Vaults<Type>,
+    # without the intermediate ReplicationFabrics/ReplicationProtectionContainers
+    # segments (a CRD's plural is one DNS label of at most 63 characters).
+    # Not exported: network and storage classification mappings
+    # (replicationNetworks and replicationStorageClassifications are no
+    # resources, so the generator cannot own them). No DELETE in the spec
+    # (detach-on-delete): protection containers (removed with a POST), alert
+    # settings, vault settings and protection intents.
+    Vaults_ReplicationFabric:
+      $exportAs: VaultsReplicationFabric
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationFabrics_ReplicationProtectionContainer:
+      $exportAs: VaultsReplicationProtectionContainer
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationFabrics_ReplicationProtectionContainers_ReplicationProtectionContainerMapping:
+      $exportAs: VaultsReplicationProtectionContainerMapping
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationFabrics_ReplicationProtectionContainers_ReplicationProtectedItem:
+      $exportAs: VaultsReplicationProtectedItem
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationFabrics_ReplicationProtectionContainers_ReplicationMigrationItem:
+      $exportAs: VaultsReplicationMigrationItem
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationFabrics_ReplicationProtectionContainers_ReplicationProtectionCluster:
+      $exportAs: VaultsReplicationProtectionCluster
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationFabrics_ReplicationRecoveryServicesProvider:
+      $exportAs: VaultsReplicationRecoveryServicesProvider
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationFabrics_ReplicationvCenter:
+      $exportAs: VaultsReplicationvCenter
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationPolicy:
+      $exportAs: VaultsReplicationPolicy
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationRecoveryPlan:
+      $exportAs: VaultsReplicationRecoveryPlan
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationAlertSetting:
+      $exportAs: VaultsReplicationAlertSetting
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationVaultSetting:
+      $exportAs: VaultsReplicationVaultSetting
+      $supportedFrom: v0.1.0
+    Vaults_ReplicationProtectionIntent:
+      $exportAs: VaultsReplicationProtectionIntent
+      $supportedFrom: v0.1.0
     CmkKekIdentity:
       UserAssignedIdentity:
         $referenceType: arm # the identity that reads the customer-managed key
@@ -46,4 +96,225 @@ groupModelConfiguration:
         $referenceType: arm
     UserAssignedManagedIdentityDetails:
       IdentityArmId:
+        $referenceType: arm
+    RecoveryPlanAutomationRunbookActionDetails:
+      RunbookId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    InMageAzureV2EnableProtectionInput:
+      TargetAvailabilitySetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetProximityPlacementGroupId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      DiskEncryptionSetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    A2AProtectedManagedDiskDetails:
+      DiskId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      RecoveryDiskAccessId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      RecoveryReplicaDiskId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      RecoveryTargetDiskId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      DekKeyVaultArmId:
+        $referenceType: arm # an ARM ID (autolabel, reviewed)
+      RecoveryResourceGroupId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      RecoveryOrignalTargetDiskId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      KekKeyVaultArmId:
+        $referenceType: arm # an ARM ID (autolabel, reviewed)
+    A2AReplicationProtectionClusterDetails:
+      LifecycleId:
+        $referenceType: simple # a GUID, not a resource ID
+    KeyEncryptionKeyInfo:
+      KeyVaultResourceArmId:
+        $referenceType: arm # an ARM ID (autolabel, reviewed)
+    VMwareCbtDiskInput:
+      DiskEncryptionSetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      LogStorageAccountId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      ConfidentialDiskEncryptionSetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    InMageRcmFabricCreationInput:
+      VmwareSiteId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      PhysicalSiteId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    CurrentScenarioDetails:
+      JobId:
+        $referenceType: simple # a job's name, not a resource ID
+    A2AEnableProtectionInput:
+      FabricObjectId:
+        $referenceType: arm # the VM to replicate
+      RecoveryContainerId:
+        $referenceType: arm # the target protection container, our VaultsReplicationProtectionContainer
+      RecoveryResourceGroupId:
+        $referenceType: arm
+      RecoveryCloudServiceId:
+        $referenceType: arm
+      RecoveryAvailabilitySetId:
+        $referenceType: arm
+      RecoveryProximityPlacementGroupId:
+        $referenceType: arm
+      RecoveryBootDiagStorageAccountId:
+        $referenceType: arm
+      RecoveryVirtualMachineScaleSetId:
+        $referenceType: arm
+      RecoveryCapacityReservationGroupId:
+        $referenceType: arm
+      RecoveryAzureNetworkId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    ExistingProtectionProfile:
+      ProtectionProfileId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    DiskEncryptionKeyInfo:
+      KeyVaultResourceArmId:
+        $referenceType: arm # an ARM ID (autolabel, reviewed)
+    ExistingStorageAccount:
+      AzureStorageAccountId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    A2ACreateProtectionIntentInput:
+      FabricObjectId:
+        $referenceType: arm
+      RecoveryResourceGroupId:
+        $referenceType: arm
+      AutomationAccountArmId:
+        $referenceType: arm # an ARM ID (autolabel, reviewed)
+    RecoveryPlanProtectedItem:
+      Id:
+        $referenceType: arm # an ARM ID (autolabel, reviewed)
+    InMageRcmEnableProtectionInput:
+      TargetCapacityReservationGroupId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetAvailabilitySetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TestNetworkId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetBootDiagnosticsStorageAccountId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      FabricDiscoveryMachineId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetResourceGroupId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetNetworkId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    InMageRcmDisksDefaultInput:
+      DiskEncryptionSetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      LogStorageAccountId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      ConfidentialDiskEncryptionSetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    HyperVReplicaAzureEnableProtectionInput:
+      TargetProximityPlacementGroupId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetCapacityReservationGroupId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetAvailabilitySetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      DiskEncryptionSetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    HyperVReplicaAzureDiskInputDetails:
+      DiskEncryptionSetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    A2AVmManagedDiskInputDetails:
+      DiskId:
+        $referenceType: arm
+      RecoveryDiskEncryptionSetId:
+        $referenceType: arm
+      RecoveryDiskAccessId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      PrimaryStagingAzureStorageAccountId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      RecoveryResourceGroupId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    VMwareCbtContainerMappingInput:
+      KeyVaultId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      StorageAccountId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    A2AContainerMappingInput:
+      AutomationAccountArmId:
+        $referenceType: arm # an ARM ID (autolabel, reviewed)
+    VMwareV2FabricCreationInput:
+      PhysicalSiteId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      MigrationSolutionId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      VmwareSiteId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    VMwareCbtEnableMigrationInput:
+      TargetAvailabilitySetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetNetworkId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TestNetworkId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetCapacityReservationGroupId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetResourceGroupId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      VmwareMachineId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetProximityPlacementGroupId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      TargetBootDiagnosticsStorageAccountId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    InMageRcmDiskInput:
+      LogStorageAccountId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      ConfidentialDiskEncryptionSetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+      DiskEncryptionSetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    InMageAzureV2DiskInputDetails:
+      DiskEncryptionSetId:
+        $referenceType: arm # an ARM ID (autolabel wrote simple)
+    # Site Recovery references the generator does not flag (docs/plan.md f52).
+    A2AVmDiskInputDetails:
+      RecoveryAzureStorageAccountId:
+        $referenceType: arm
+      PrimaryStagingAzureStorageAccountId:
+        $referenceType: arm
+    EnableProtectionInputProperties:
+      PolicyId:
+        $referenceType: arm # our VaultsReplicationPolicy
+      ProtectableItemId:
+        $referenceType: arm
+    CreateProtectionContainerMappingInputProperties:
+      TargetProtectionContainerId:
+        $referenceType: arm # our VaultsReplicationProtectionContainer
+      PolicyId:
+        $referenceType: arm # our VaultsReplicationPolicy
+    CreateRecoveryPlanInputProperties:
+      PrimaryFabricId:
+        $referenceType: arm # our VaultsReplicationFabric
+      RecoveryFabricId:
+        $referenceType: arm
+    A2AProtectionIntentManagedDiskInputDetails:
+      DiskId:
+        $referenceType: arm
+      RecoveryDiskEncryptionSetId:
+        $referenceType: arm
+    ExistingRecoveryAvailabilitySet:
+      RecoveryAvailabilitySetId:
+        $referenceType: arm
+    ExistingRecoveryProximityPlacementGroup:
+      RecoveryProximityPlacementGroupId:
+        $referenceType: arm
+    ExistingRecoveryVirtualNetwork:
+      RecoveryVirtualNetworkId:
+        $referenceType: arm
+    ExistingRecoveryRecoveryResourceGroup:
+      RecoveryResourceGroupId:
+        $referenceType: arm
+    A2ACrossClusterMigrationEnableProtectionInput:
+      FabricObjectId:
+        $referenceType: arm
+      RecoveryContainerId:
+        $referenceType: arm
+    EnableMigrationInputProperties:
+      PolicyId:
         $referenceType: arm
