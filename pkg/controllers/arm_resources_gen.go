@@ -166,6 +166,8 @@ import (
 	securityinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/customizations"
 	securityinsights_v20250901 "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901"
 	securityinsights_v20250901s "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901/storage"
+	securityinsights_v20251001p "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20251001preview"
+	securityinsights_v20251001ps "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20251001preview/storage"
 	sql_customizations "github.com/highfivelabs/aso-extensions/apis/arm/sql/customizations"
 	sql_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/sql/v20250101"
 	sql_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/sql/v20250101/storage"
@@ -1465,6 +1467,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.AutomationRule)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.ContentMetadata)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.ContentPackage)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.ContentTemplate)})
 	result = append(result, &registration.StorageType{
@@ -1509,8 +1512,42 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.DataConnectorDefinition)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.OnboardingState)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.SecurityMLAnalyticsSetting)})
+	result = append(result, &registration.StorageType{
+		Obj: new(securityinsights_v20250901.SourceControl),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.repositoryAccess.code",
+				Func: indexSecurityinsightsSourceControlCode,
+			},
+			{
+				Key:  ".spec.repositoryAccess.state",
+				Func: indexSecurityinsightsSourceControlState,
+			},
+			{
+				Key:  ".spec.repositoryAccess.token",
+				Func: indexSecurityinsightsSourceControlToken,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.repositoryAccess.code",
+						".spec.repositoryAccess.state",
+						".spec.repositoryAccess.token",
+					},
+					&securityinsights_v20250901.SourceControlList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.Watchlist)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20250901.WatchlistsWatchlistItem)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.Setting)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.WorkspaceManagerAssignment)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.WorkspaceManagerConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.WorkspaceManagerGroup)})
+	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.WorkspaceManagerMember)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDatabasesGeoBackupPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)})
@@ -2201,12 +2238,14 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(securityinsights_v20250901.AlertRule)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901.AlertRulesAction)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901.AutomationRule)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.ContentMetadata)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901.ContentPackage)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901.ContentTemplate)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901.DataConnector)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901.DataConnectorDefinition)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901.OnboardingState)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901.SecurityMLAnalyticsSetting)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901.SourceControl)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901.Watchlist)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901.WatchlistsWatchlistItem)})
 	result = append(
@@ -2214,14 +2253,30 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.AlertRule)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.AlertRulesAction)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.AutomationRule)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.ContentMetadata)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.ContentPackage)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.ContentTemplate)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.DataConnector)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.DataConnectorDefinition)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.OnboardingState)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.SecurityMLAnalyticsSetting)},
+		&registration.KnownType{Obj: new(securityinsights_v20250901s.SourceControl)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.Watchlist)},
 		&registration.KnownType{Obj: new(securityinsights_v20250901s.WatchlistsWatchlistItem)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(securityinsights_v20251001p.Setting)},
+		&registration.KnownType{Obj: new(securityinsights_v20251001p.WorkspaceManagerAssignment)},
+		&registration.KnownType{Obj: new(securityinsights_v20251001p.WorkspaceManagerConfiguration)},
+		&registration.KnownType{Obj: new(securityinsights_v20251001p.WorkspaceManagerGroup)},
+		&registration.KnownType{Obj: new(securityinsights_v20251001p.WorkspaceManagerMember)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(securityinsights_v20251001ps.Setting)},
+		&registration.KnownType{Obj: new(securityinsights_v20251001ps.WorkspaceManagerAssignment)},
+		&registration.KnownType{Obj: new(securityinsights_v20251001ps.WorkspaceManagerConfiguration)},
+		&registration.KnownType{Obj: new(securityinsights_v20251001ps.WorkspaceManagerGroup)},
+		&registration.KnownType{Obj: new(securityinsights_v20251001ps.WorkspaceManagerMember)})
 	result = append(result, &registration.KnownType{Obj: new(sql_v20250101.ServersDatabasesGeoBackupPolicy)}, &registration.KnownType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
 	result = append(result, &registration.KnownType{Obj: new(sql_v20250101s.ServersDatabasesGeoBackupPolicy)}, &registration.KnownType{Obj: new(sql_v20250101s.ServersSqlVulnerabilityAssessment)})
 	result = append(
@@ -2403,6 +2458,8 @@ func createScheme() *runtime.Scheme {
 	_ = security_v20260801ps.AddToScheme(scheme)
 	_ = securityinsights_v20250901.AddToScheme(scheme)
 	_ = securityinsights_v20250901s.AddToScheme(scheme)
+	_ = securityinsights_v20251001p.AddToScheme(scheme)
+	_ = securityinsights_v20251001ps.AddToScheme(scheme)
 	_ = sql_v20250101.AddToScheme(scheme)
 	_ = sql_v20250101s.AddToScheme(scheme)
 	_ = storage_v20260601.AddToScheme(scheme)
@@ -2677,14 +2734,21 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &securityinsights_customizations.AlertRuleExtension{})
 	result = append(result, &securityinsights_customizations.AlertRulesActionExtension{})
 	result = append(result, &securityinsights_customizations.AutomationRuleExtension{})
+	result = append(result, &securityinsights_customizations.ContentMetadataExtension{})
 	result = append(result, &securityinsights_customizations.ContentPackageExtension{})
 	result = append(result, &securityinsights_customizations.ContentTemplateExtension{})
 	result = append(result, &securityinsights_customizations.DataConnectorDefinitionExtension{})
 	result = append(result, &securityinsights_customizations.DataConnectorExtension{})
 	result = append(result, &securityinsights_customizations.OnboardingStateExtension{})
 	result = append(result, &securityinsights_customizations.SecurityMLAnalyticsSettingExtension{})
+	result = append(result, &securityinsights_customizations.SettingExtension{})
+	result = append(result, &securityinsights_customizations.SourceControlExtension{})
 	result = append(result, &securityinsights_customizations.WatchlistExtension{})
 	result = append(result, &securityinsights_customizations.WatchlistsWatchlistItemExtension{})
+	result = append(result, &securityinsights_customizations.WorkspaceManagerAssignmentExtension{})
+	result = append(result, &securityinsights_customizations.WorkspaceManagerConfigurationExtension{})
+	result = append(result, &securityinsights_customizations.WorkspaceManagerGroupExtension{})
+	result = append(result, &securityinsights_customizations.WorkspaceManagerMemberExtension{})
 	result = append(result, &sql_customizations.ServersDatabasesGeoBackupPolicyExtension{})
 	result = append(result, &sql_customizations.ServersSqlVulnerabilityAssessmentExtension{})
 	result = append(result, &storage_customizations.StorageAccountsEncryptionScopeExtension{})
@@ -4464,6 +4528,51 @@ func indexSecurityinsightsDataConnectorSessionPassword(rawObj client.Object) []s
 		return nil
 	}
 	return obj.Spec.RestApiPollerDataConnector.Auth.Session.Password.Index()
+}
+
+// indexSecurityinsightsSourceControlCode an index function for securityinsights_v20250901.SourceControl .spec.repositoryAccess.code
+func indexSecurityinsightsSourceControlCode(rawObj client.Object) []string {
+	obj, ok := rawObj.(*securityinsights_v20250901.SourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.RepositoryAccess == nil {
+		return nil
+	}
+	if obj.Spec.RepositoryAccess.Code == nil {
+		return nil
+	}
+	return obj.Spec.RepositoryAccess.Code.Index()
+}
+
+// indexSecurityinsightsSourceControlState an index function for securityinsights_v20250901.SourceControl .spec.repositoryAccess.state
+func indexSecurityinsightsSourceControlState(rawObj client.Object) []string {
+	obj, ok := rawObj.(*securityinsights_v20250901.SourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.RepositoryAccess == nil {
+		return nil
+	}
+	if obj.Spec.RepositoryAccess.State == nil {
+		return nil
+	}
+	return obj.Spec.RepositoryAccess.State.Index()
+}
+
+// indexSecurityinsightsSourceControlToken an index function for securityinsights_v20250901.SourceControl .spec.repositoryAccess.token
+func indexSecurityinsightsSourceControlToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*securityinsights_v20250901.SourceControl)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.RepositoryAccess == nil {
+		return nil
+	}
+	if obj.Spec.RepositoryAccess.Token == nil {
+		return nil
+	}
+	return obj.Spec.RepositoryAccess.Token.Index()
 }
 
 // indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password

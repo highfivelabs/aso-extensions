@@ -521,6 +521,16 @@ upstream's); the catalog's chart tests do that.
   and a bin size of 20, 30, 60, 120, 180, 360, 720 or 1440 minutes (400).
   Not modelled: the rule running, its destination table being made, and
   the query being valid KQL.
+- Microsoft Sentinel settings and the workspace manager
+  (`Microsoft.SecurityInsights/settings`, `workspaceManager*`,
+  2025-10-01-preview; `pkg/fakecloud/arm/sentinel.go`): a setting is named
+  after its kind (`Anomalies`, `EntityAnalytics`, `EyesOn`, `Ueba`; 400); a
+  member's target workspace, a group's members, an assignment's group and
+  its items must exist (404). Not modelled: settings taking effect, the
+  configuration's mode gating the rest, content being published to members
+  (no job fields), members in other tenants, and the error codes (the
+  fake's own). Content metadata and source controls (2025-09-01) are kept
+  as sent: no repository is reached and no OAuth code exchanged.
 - Resource Manager checks no role: real Azure lets only Owner and User
   Access Administrator (or a custom role with
   `Microsoft.Authorization/locks/*`) write locks, so ASO's identity may

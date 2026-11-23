@@ -5,13 +5,20 @@
 # settings). Every resource is an extension resource of a Log Analytics
 # workspace (.../workspaces/{w}/providers/Microsoft.SecurityInsights/...),
 # owned by ASO's Workspace or its ARM ID. Not generated: incidents,
-# bookmarks, threat intelligence indicators and source controls (operational
-# data, not configuration).
+# bookmarks and threat intelligence indicators (operational data, not
+# configuration). Source controls (a repository content is deployed from)
+# were left out with them at first; they are configuration and generated
+# since 2026-11-23, with content metadata, settings and the workspace
+# manager.
 typeFilters:
   - action: include
     group: securityinsights
     version: v20250901
     because: the newest stable version of Microsoft Sentinel
+  - action: include
+    group: securityinsights
+    version: v20251001preview
+    because: Sentinel settings and workspace manager (multi-workspace) resources, the newest preview (preview only)
   - action: prune
     group: securityinsights
     because: every other version is left alone
@@ -21,21 +28,20 @@ typeTransformers:
   # dependency's criteria are dependencies. Removed; a content item's single
   # dependency (contentId, kind, version) stays, nested AND/OR criteria do
   # not; a connector UI instruction step keeps no inner steps.
+  # Each applies to both versions included (the preview one has the same
+  # types).
   - name: TemplateProperties_STATUS
     group: securityinsights
-    version: v20250901
     property: DependantTemplates
     remove: true
     because: directly recursive (a template's dependant templates are templates)
   - name: MetadataDependencies;MetadataDependencies_STATUS
     group: securityinsights
-    version: v20250901
     property: Criteria
     remove: true
     because: directly recursive (a dependency's criteria are dependencies)
   - name: InstructionStep;InstructionStep_STATUS
     group: securityinsights
-    version: v20250901
     property: InnerSteps
     remove: true
     because: directly recursive (a connector UI instruction step's inner steps are steps)  # Indirectly recursive (the generator's spec initialization overflows the
@@ -45,13 +51,11 @@ typeTransformers:
   # conditions.
   - name: AutomationRuleBooleanCondition;AutomationRuleBooleanCondition_STATUS
     group: securityinsights
-    version: v20250901
     property: InnerConditions
     remove: true
     because: indirectly recursive (a boolean condition's inner conditions are conditions)
   - name: AutomationRulePropertyArrayValuesCondition;AutomationRulePropertyArrayValuesCondition_STATUS
     group: securityinsights
-    version: v20250901
     property: ItemConditions
     remove: true
     because: indirectly recursive (an array condition's item conditions are conditions)
@@ -62,7 +66,6 @@ typeTransformers:
   # compile. Removed: an automation rule cannot assign an incident's owner.
   - name: IncidentPropertiesAction;IncidentPropertiesAction_STATUS
     group: securityinsights
-    version: v20250901
     property: Owner
     remove: true
     because: the property named Owner breaks the storage version (see above)
@@ -101,6 +104,16 @@ groupModelConfiguration:
       $supportedFrom: v0.1.0
     Watchlists_WatchlistItem:
       $exportAs: WatchlistsWatchlistItem
+      $supportedFrom: v0.1.0
+    # Content metadata (the source, author, support and dependencies of a
+    # content item: how content deployed as code is linked to its solution)
+    # and source controls (a GitHub or Azure DevOps repository Sentinel
+    # deploys content from; no DELETE in the spec: detach-on-delete).
+    Metadatum: # the generator singularizes metadata
+      $exportAs: ContentMetadata
+      $supportedFrom: v0.1.0
+    SourceControl:
+      $exportAs: SourceControl
       $supportedFrom: v0.1.0
     # Polymorphic resources (kind): each leaf is embedded in its resource, as
     # ASO's kusto.yaml does for a database; the spec has one property per
@@ -186,3 +199,48 @@ groupModelConfiguration:
         $importSecretMode: never # autolabel: review
       AccessTokenPrepend:
         $importSecretMode: never # autolabel: review
+    MetadataProperties:
+      ParentId:
+        $referenceType: arm # the content item (an alert rule, a workbook, ...) the metadata is for: ours by object, or an ARM ID (autolabel wrote simple; reviewed)
+  # Sentinel settings (polymorphic: Anomalies, EntityAnalytics, EyesOn,
+  # Ueba; each leaf embedded, as security.yaml's Setting) and the workspace
+  # manager (one workspace managing content in member workspaces), preview
+  # only.
+  2025-10-01-preview:
+    Setting:
+      $exportAs: Setting
+      $supportedFrom: v0.1.0
+    Anomalies:
+      $resourceEmbeddedInParent: Setting
+    Anomalies_STATUS:
+      $resourceEmbeddedInParent: Setting
+    EntityAnalytics:
+      $resourceEmbeddedInParent: Setting
+    EntityAnalytics_STATUS:
+      $resourceEmbeddedInParent: Setting
+    EyesOn:
+      $resourceEmbeddedInParent: Setting
+    EyesOn_STATUS:
+      $resourceEmbeddedInParent: Setting
+    Ueba:
+      $resourceEmbeddedInParent: Setting
+    Ueba_STATUS:
+      $resourceEmbeddedInParent: Setting
+    WorkspaceManagerConfiguration:
+      $exportAs: WorkspaceManagerConfiguration
+      $supportedFrom: v0.1.0
+    WorkspaceManagerGroup:
+      $exportAs: WorkspaceManagerGroup
+      $supportedFrom: v0.1.0
+    WorkspaceManagerMember:
+      $exportAs: WorkspaceManagerMember
+      $supportedFrom: v0.1.0
+    WorkspaceManagerAssignment:
+      $exportAs: WorkspaceManagerAssignment
+      $supportedFrom: v0.1.0
+    AssignmentItem:
+      ResourceId:
+        $referenceType: arm # a content item (an alert rule, an automation rule, ...) the assignment publishes (autolabel, reviewed)
+    WorkspaceManagerMemberProperties:
+      TargetWorkspaceResourceId:
+        $referenceType: arm # the member's Log Analytics workspace: ASO's Workspace or an ARM ID (autolabel, reviewed)

@@ -238,6 +238,26 @@ func init() {
 	f["GovernanceRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"conditionSets": []any{map[string]any{"conditions": []any{}}}}
 	}}
+	// Sentinel's workspace manager: a group names members, and an
+	// assignment a group, of the same workspace manager, which the fake
+	// checks exist (sentinel.go); the conformance owner is a resource group.
+	insights := func(c *conformanceContext) string { return c.resourceGroup + "/providers/Microsoft.SecurityInsights/" }
+	f["WorkspaceManagerGroup"] = conformanceFixture{
+		setup: func(c *conformanceContext) { c.add(insights(c) + "workspaceManagerMembers/m1") },
+		spec:  func(c *conformanceContext) map[string]any { return map[string]any{"memberResourceNames": []any{"m1"}} },
+	}
+	// Three groups have a kind named Setting: a key "group/Kind" is looked up
+	// before "Kind". Sentinel's is polymorphic and named after its kind.
+	f["securityinsights.azure.hfl.dev/Setting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "Ueba", "ueba": map[string]any{"kind": "Ueba", "dataSources": []any{"AuditLogs"}}}
+	}}
+	f["costmanagement.azure.hfl.dev/Setting"] = conformanceFixture{}
+	f["WorkspaceManagerAssignment"] = conformanceFixture{
+		setup: func(c *conformanceContext) { c.add(insights(c) + "workspaceManagerGroups/g1") },
+		spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"targetResourceName": "g1", "items": []any{map[string]any{"resourceReference": armRef(c.ref)}}}
+		},
+	}
 	f["WorkspacesSummaryLog"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"ruleDefinition": map[string]any{"query": "AppRequests | summarize count() by bin(TimeGenerated, 1h)", "binSize": int64(60), "destinationTable": "Hourly_CL"}}
 	}}

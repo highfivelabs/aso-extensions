@@ -7,6 +7,8 @@ AlertRulesActionExtension: Object (0 properties)
 
 AutomationRuleExtension: Object (0 properties)
 
+ContentMetadataExtension: Object (0 properties)
+
 ContentPackageExtension: Object (0 properties)
 
 ContentTemplateExtension: Object (0 properties)
@@ -19,7 +21,19 @@ OnboardingStateExtension: Object (0 properties)
 
 SecurityMLAnalyticsSettingExtension: Object (0 properties)
 
+SettingExtension: Object (0 properties)
+
+SourceControlExtension: Object (0 properties)
+
 WatchlistExtension: Object (0 properties)
 
 WatchlistsWatchlistItemExtension: Object (0 properties)
+
+WorkspaceManagerAssignmentExtension: Object (0 properties)
+
+WorkspaceManagerConfigurationExtension: Object (0 properties)
+
+WorkspaceManagerGroupExtension: Object (0 properties)
+
+WorkspaceManagerMemberExtension: Object (0 properties)
 

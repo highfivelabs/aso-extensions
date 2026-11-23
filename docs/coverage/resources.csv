@@ -1983,18 +1983,18 @@ Microsoft.SecurityInsights,Microsoft.SecurityInsights/incidents,16,,0,,0,16,fals
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/incidents/comments,2,,0,,0,2,false,spec_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/incidents/relations,2,,0,,0,2,false,spec_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/incidents/tasks,12,,0,,0,12,false,spec_api=2025-09-01
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/metadata,33,,0,,0,33,false,spec_api=2025-09-01
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/metadata,33,,0,securityinsights.azure.hfl.dev/ContentMetadata,32,1,false,spec_api=2025-09-01; ours_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/onboardingStates,2,,0,securityinsights.azure.hfl.dev/OnboardingState,2,0,false,spec_api=2025-09-01; ours_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/securityMLAnalyticsSettings,16,,0,securityinsights.azure.hfl.dev/SecurityMLAnalyticsSetting,16,0,false,spec_api=2025-09-01; ours_api=2025-09-01
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/settings,3,,0,,0,3,false,spec_api=2025-04-01-preview; spec-preview-only
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/sourcecontrols,16,,0,,0,16,false,spec_api=2025-09-01
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/settings,3,,0,securityinsights.azure.hfl.dev/Setting,0,3,false,spec_api=2025-04-01-preview; spec-preview-only; ours_api=2025-10-01-preview; ours-api-differs-from-spec
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/sourcecontrols,16,,0,securityinsights.azure.hfl.dev/SourceControl,16,0,false,spec_api=2025-09-01; ours_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/threatIntelligence/indicators,39,,0,,0,39,false,spec_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/watchlists,22,,0,securityinsights.azure.hfl.dev/Watchlist,22,0,false,spec_api=2025-09-01; ours_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/watchlists/watchlistItems,11,,0,securityinsights.azure.hfl.dev/WatchlistsWatchlistItem,11,0,false,spec_api=2025-09-01; ours_api=2025-09-01
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerAssignments,2,,0,,0,2,false,spec_api=2025-04-01-preview; spec-preview-only
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerConfigurations,1,,0,,0,1,false,spec_api=2025-04-01-preview; spec-preview-only
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerGroups,3,,0,,0,3,false,spec_api=2025-04-01-preview; spec-preview-only
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerMembers,2,,0,,0,2,false,spec_api=2025-04-01-preview; spec-preview-only
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerAssignments,2,,0,securityinsights.azure.hfl.dev/WorkspaceManagerAssignment,2,0,false,spec_api=2025-04-01-preview; spec-preview-only; ours_api=2025-10-01-preview; ours-api-differs-from-spec
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerConfigurations,1,,0,securityinsights.azure.hfl.dev/WorkspaceManagerConfiguration,1,0,false,spec_api=2025-04-01-preview; spec-preview-only; ours_api=2025-10-01-preview; ours-api-differs-from-spec
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerGroups,3,,0,securityinsights.azure.hfl.dev/WorkspaceManagerGroup,3,0,false,spec_api=2025-04-01-preview; spec-preview-only; ours_api=2025-10-01-preview; ours-api-differs-from-spec
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerMembers,2,,0,securityinsights.azure.hfl.dev/WorkspaceManagerMember,2,0,false,spec_api=2025-04-01-preview; spec-preview-only; ours_api=2025-10-01-preview; ours-api-differs-from-spec
 Microsoft.SerialConsole,Microsoft.SerialConsole/serialPorts,2,,0,,0,2,false,spec_api=2024-07-01
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces,28,servicebus.azure.com/Namespace,19,,0,9,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/AuthorizationRules,1,servicebus.azure.com/NamespacesAuthorizationRule,1,,0,0,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec

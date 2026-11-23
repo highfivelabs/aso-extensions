@@ -8,17 +8,24 @@ no_list: true
 
 ### Released
 
-| Resource                   | ARM Version | CRD Version | Supported From | Sample |
-|----------------------------|-------------|-------------|----------------|--------|
-| AlertRule                  | 2025-09-01  | v20250901   | v0.1.0         | -      |
-| AlertRulesAction           | 2025-09-01  | v20250901   | v0.1.0         | -      |
-| AutomationRule             | 2025-09-01  | v20250901   | v0.1.0         | -      |
-| ContentPackage             | 2025-09-01  | v20250901   | v0.1.0         | -      |
-| ContentTemplate            | 2025-09-01  | v20250901   | v0.1.0         | -      |
-| DataConnector              | 2025-09-01  | v20250901   | v0.1.0         | -      |
-| DataConnectorDefinition    | 2025-09-01  | v20250901   | v0.1.0         | -      |
-| OnboardingState            | 2025-09-01  | v20250901   | v0.1.0         | -      |
-| SecurityMLAnalyticsSetting | 2025-09-01  | v20250901   | v0.1.0         | -      |
-| Watchlist                  | 2025-09-01  | v20250901   | v0.1.0         | -      |
-| WatchlistsWatchlistItem    | 2025-09-01  | v20250901   | v0.1.0         | -      |
+| Resource                      | ARM Version        | CRD Version      | Supported From | Sample |
+|-------------------------------|--------------------|------------------|----------------|--------|
+| AlertRule                     | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| AlertRulesAction              | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| AutomationRule                | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| ContentMetadata               | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| ContentPackage                | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| ContentTemplate               | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| DataConnector                 | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| DataConnectorDefinition       | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| OnboardingState               | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| SecurityMLAnalyticsSetting    | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| Setting                       | 2025-10-01-preview | v20251001preview | v0.1.0         | -      |
+| SourceControl                 | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| Watchlist                     | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| WatchlistsWatchlistItem       | 2025-09-01         | v20250901        | v0.1.0         | -      |
+| WorkspaceManagerAssignment    | 2025-10-01-preview | v20251001preview | v0.1.0         | -      |
+| WorkspaceManagerConfiguration | 2025-10-01-preview | v20251001preview | v0.1.0         | -      |
+| WorkspaceManagerGroup         | 2025-10-01-preview | v20251001preview | v0.1.0         | -      |
+| WorkspaceManagerMember        | 2025-10-01-preview | v20251001preview | v0.1.0         | -      |
 

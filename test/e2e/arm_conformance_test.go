@@ -47,7 +47,8 @@ import (
 // that is what a kind's own test is for (arm_*_test.go), written when a kind
 // has such behaviour. See docs/testing.md.
 //
-// conformanceFixtures says what a kind needs beyond the smallest object,
+// conformanceFixtures says what a kind needs beyond the smallest object
+// (keyed by kind, or by "group/Kind" where two groups share a kind name),
 // when the fake's rules for that kind ask for more; a kind listed there with
 // skip is not run, with the reason.
 func TestGeneratedKindsConformance(t *testing.T) {
@@ -61,7 +62,10 @@ func TestGeneratedKindsConformance(t *testing.T) {
 		gvk := schema.GroupVersionKind{Group: crd.Spec.Group, Version: version.Name, Kind: crd.Spec.Names.Kind}
 		t.Run(gvk.Kind, func(t *testing.T) {
 			t.Parallel()
-			fix := conformanceFixtures[gvk.Kind]
+			fix, ok := conformanceFixtures[gvk.Group+"/"+gvk.Kind]
+			if !ok {
+				fix = conformanceFixtures[gvk.Kind]
+			}
 			if fix.skip != "" {
 				t.Skip(fix.skip)
 			}

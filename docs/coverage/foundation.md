@@ -125,7 +125,7 @@ Generated: every resource of the two categories, by the order of the services in
 | Category | Services | Resources | Attributes | Official | Ours beyond | Uncovered |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | platform-foundation | 18 | 246 | 4,675 | 43.2% | 38.2% | 18.6% |
-| security-adjacent | 7 | 93 | 1,049 | 8.6% | 49.0% | 42.4% |
+| security-adjacent | 7 | 93 | 1,049 | 8.6% | 54.3% | 37.1% |
 | application | 35 | 823 | 14,821 | 33.1% | 8.0% | 59.0% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 1.0% | 98.6% |
 
@@ -380,7 +380,7 @@ Generated: every resource of the two categories, by the order of the services in
 | 245 | `Microsoft.ContainerRegistry/registries/privateEndpointConnections` | covered |  | `containerregistry/RegistriesPrivateEndpointConnection` | 0 / 4 / 0 | resourceGroup | - | - | 0 |
 | 246 | `Microsoft.Billing/billingAccounts/billingSubscriptionAliases` | no kind |  |  | 0 / 0 / 17 | tenant | generator, tenant or subscription owner (as ASO's Alias) | S (17) | 0 |
 
-### security-adjacent: 93 resources (43 with no kind, 20 partly covered, 30 covered)
+### security-adjacent: 93 resources (36 with no kind, 22 partly covered, 35 covered)
 
 | # | Resource | Status | ASO | Ours | Attributes: official / ours / uncovered | Scope | Route | Size | AVMs |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- | ---: |
@@ -438,36 +438,36 @@ Generated: every resource of the two categories, by the order of the services in
 | 52 | `Microsoft.Security/automations` | covered |  | `security/Automation` | 0 / 20 / 0 | resourceGroup | - | - | 0 |
 | 53 | `Microsoft.Security/securityConnectors` | covered |  | `security/SecurityConnector` | 0 / 78 / 0 | resourceGroup | - | - | 0 |
 | 54 | `Microsoft.SecurityInsights/cases/comments` | no kind |  |  | 0 / 0 / 1 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (1) | 0 |
-| 55 | `Microsoft.SecurityInsights/workspaceManagerConfigurations` | no kind |  |  | 0 / 0 / 1 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (1) | 0 |
-| 56 | `Microsoft.SecurityInsights/hunts/comments` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 57 | `Microsoft.SecurityInsights/incidents/comments` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 58 | `Microsoft.SecurityInsights/incidents/relations` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 59 | `Microsoft.SecurityInsights/workspaceManagerAssignments` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 60 | `Microsoft.SecurityInsights/workspaceManagerMembers` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
-| 61 | `Microsoft.SecurityInsights/hunts/relations` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 62 | `Microsoft.SecurityInsights/settings` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 63 | `Microsoft.SecurityInsights/workspaceManagerGroups` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
-| 64 | `Microsoft.SecurityInsights/fileImports` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |
-| 65 | `Microsoft.SecurityInsights/cases/relations` | no kind |  |  | 0 / 0 / 8 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (8) | 0 |
-| 66 | `Microsoft.SecurityInsights/cases` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
-| 67 | `Microsoft.SecurityInsights/entityQueries` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
-| 68 | `Microsoft.SecurityInsights/incidents/tasks` | no kind |  |  | 0 / 0 / 12 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (12) | 0 |
-| 69 | `Microsoft.SecurityInsights/hunts` | no kind |  |  | 0 / 0 / 13 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (13) | 0 |
-| 70 | `Microsoft.SecurityInsights/incidents` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
-| 71 | `Microsoft.SecurityInsights/sourcecontrols` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
-| 72 | `Microsoft.SecurityInsights/bookmarks` | no kind |  |  | 0 / 0 / 17 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (17) | 0 |
-| 73 | `Microsoft.SecurityInsights/metadata` | no kind |  |  | 0 / 0 / 33 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (33) | 0 |
-| 74 | `Microsoft.SecurityInsights/threatIntelligence/indicators` | no kind |  |  | 0 / 0 / 39 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (39) | 0 |
-| 75 | `Microsoft.SecurityInsights/alertRules` | partial, 4 of 4 missing |  | `securityinsights/AlertRule` | 0 / 0 / 4 | extension | extend: newer API version or property config | S (4) | 0 |
-| 76 | `Microsoft.SecurityInsights/dataConnectors` | partial, 4 of 4 missing |  | `securityinsights/DataConnector` | 0 / 0 / 4 | extension | extend: newer API version or property config | S (4) | 0 |
-| 77 | `Microsoft.SecurityInsights/automationRules` | partial, 1 of 14 missing |  | `securityinsights/AutomationRule` | 0 / 13 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
-| 78 | `Microsoft.SecurityInsights/contentPackages` | partial, 1 of 37 missing |  | `securityinsights/ContentPackage` | 0 / 36 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
-| 79 | `Microsoft.SecurityInsights/dataConnectorDefinitions` | partial, 1 of 38 missing |  | `securityinsights/DataConnectorDefinition` | 0 / 37 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
-| 80 | `Microsoft.SecurityInsights/contentTemplates` | partial, 1 of 39 missing |  | `securityinsights/ContentTemplate` | 0 / 38 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
-| 81 | `Microsoft.SecurityInsights/onboardingStates` | covered |  | `securityinsights/OnboardingState` | 0 / 2 / 0 | extension | - | - | 0 |
-| 82 | `Microsoft.SecurityInsights/alertRules/actions` | covered |  | `securityinsights/AlertRulesAction` | 0 / 3 / 0 | extension | - | - | 0 |
-| 83 | `Microsoft.SecurityInsights/watchlists/watchlistItems` | covered |  | `securityinsights/WatchlistsWatchlistItem` | 0 / 11 / 0 | extension | - | - | 0 |
-| 84 | `Microsoft.SecurityInsights/securityMLAnalyticsSettings` | covered |  | `securityinsights/SecurityMLAnalyticsSetting` | 0 / 16 / 0 | extension | - | - | 0 |
+| 55 | `Microsoft.SecurityInsights/hunts/comments` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
+| 56 | `Microsoft.SecurityInsights/incidents/comments` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
+| 57 | `Microsoft.SecurityInsights/incidents/relations` | no kind |  |  | 0 / 0 / 2 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (2) | 0 |
+| 58 | `Microsoft.SecurityInsights/hunts/relations` | no kind |  |  | 0 / 0 / 3 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (3) | 0 |
+| 59 | `Microsoft.SecurityInsights/fileImports` | no kind |  |  | 0 / 0 / 6 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (6) | 0 |
+| 60 | `Microsoft.SecurityInsights/cases/relations` | no kind |  |  | 0 / 0 / 8 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (8) | 0 |
+| 61 | `Microsoft.SecurityInsights/cases` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
+| 62 | `Microsoft.SecurityInsights/entityQueries` | no kind |  |  | 0 / 0 / 11 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (11) | 0 |
+| 63 | `Microsoft.SecurityInsights/incidents/tasks` | no kind |  |  | 0 / 0 / 12 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (12) | 0 |
+| 64 | `Microsoft.SecurityInsights/hunts` | no kind |  |  | 0 / 0 / 13 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (13) | 0 |
+| 65 | `Microsoft.SecurityInsights/incidents` | no kind |  |  | 0 / 0 / 16 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (16) | 0 |
+| 66 | `Microsoft.SecurityInsights/bookmarks` | no kind |  |  | 0 / 0 / 17 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | S (17) | 0 |
+| 67 | `Microsoft.SecurityInsights/threatIntelligence/indicators` | no kind |  |  | 0 / 0 / 39 | extension | generator, arbitrary owner (as ASO's DiagnosticSetting) | M (39) | 0 |
+| 68 | `Microsoft.SecurityInsights/settings` | partial, 3 of 3 missing |  | `securityinsights/Setting` | 0 / 0 / 3 | extension | extend: newer API version or property config | S (3) | 0 |
+| 69 | `Microsoft.SecurityInsights/alertRules` | partial, 4 of 4 missing |  | `securityinsights/AlertRule` | 0 / 0 / 4 | extension | extend: newer API version or property config | S (4) | 0 |
+| 70 | `Microsoft.SecurityInsights/dataConnectors` | partial, 4 of 4 missing |  | `securityinsights/DataConnector` | 0 / 0 / 4 | extension | extend: newer API version or property config | S (4) | 0 |
+| 71 | `Microsoft.SecurityInsights/automationRules` | partial, 1 of 14 missing |  | `securityinsights/AutomationRule` | 0 / 13 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 72 | `Microsoft.SecurityInsights/metadata` | partial, 1 of 33 missing |  | `securityinsights/ContentMetadata` | 0 / 32 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 73 | `Microsoft.SecurityInsights/contentPackages` | partial, 1 of 37 missing |  | `securityinsights/ContentPackage` | 0 / 36 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 74 | `Microsoft.SecurityInsights/dataConnectorDefinitions` | partial, 1 of 38 missing |  | `securityinsights/DataConnectorDefinition` | 0 / 37 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 75 | `Microsoft.SecurityInsights/contentTemplates` | partial, 1 of 39 missing |  | `securityinsights/ContentTemplate` | 0 / 38 / 1 | extension | extend: newer API version or property config | S (1) | 0 |
+| 76 | `Microsoft.SecurityInsights/workspaceManagerConfigurations` | covered |  | `securityinsights/WorkspaceManagerConfiguration` | 0 / 1 / 0 | extension | - | - | 0 |
+| 77 | `Microsoft.SecurityInsights/onboardingStates` | covered |  | `securityinsights/OnboardingState` | 0 / 2 / 0 | extension | - | - | 0 |
+| 78 | `Microsoft.SecurityInsights/workspaceManagerAssignments` | covered |  | `securityinsights/WorkspaceManagerAssignment` | 0 / 2 / 0 | extension | - | - | 0 |
+| 79 | `Microsoft.SecurityInsights/workspaceManagerMembers` | covered |  | `securityinsights/WorkspaceManagerMember` | 0 / 2 / 0 | extension | - | - | 0 |
+| 80 | `Microsoft.SecurityInsights/alertRules/actions` | covered |  | `securityinsights/AlertRulesAction` | 0 / 3 / 0 | extension | - | - | 0 |
+| 81 | `Microsoft.SecurityInsights/workspaceManagerGroups` | covered |  | `securityinsights/WorkspaceManagerGroup` | 0 / 3 / 0 | extension | - | - | 0 |
+| 82 | `Microsoft.SecurityInsights/watchlists/watchlistItems` | covered |  | `securityinsights/WatchlistsWatchlistItem` | 0 / 11 / 0 | extension | - | - | 0 |
+| 83 | `Microsoft.SecurityInsights/securityMLAnalyticsSettings` | covered |  | `securityinsights/SecurityMLAnalyticsSetting` | 0 / 16 / 0 | extension | - | - | 0 |
+| 84 | `Microsoft.SecurityInsights/sourcecontrols` | covered |  | `securityinsights/SourceControl` | 0 / 16 / 0 | extension | - | - | 0 |
 | 85 | `Microsoft.SecurityInsights/watchlists` | covered |  | `securityinsights/Watchlist` | 0 / 22 / 0 | extension | - | - | 0 |
 | 86 | `Microsoft.Purview/accounts` | partial, 1 of 9 missing |  | `purview/Account` | 0 / 8 / 1 | resourceGroup | extend: newer API version or property config | S (1) | 0 |
 | 87 | `Microsoft.Purview/accounts/privateEndpointConnections` | covered |  | `purview/AccountsPrivateEndpointConnection` | 0 / 4 / 0 | resourceGroup | - | - | 0 |

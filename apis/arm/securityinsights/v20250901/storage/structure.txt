@@ -429,6 +429,115 @@ AutomationRule: Resource
     │   └── TriggersWhen: *string
     └── Type: *string
 
+ContentMetadata: Resource
+├── Spec: Object (25 properties)
+│   ├── Author: *Object (4 properties)
+│   │   ├── Email: *string
+│   │   ├── Link: *string
+│   │   ├── Name: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── AzureName: string
+│   ├── Categories: *Object (3 properties)
+│   │   ├── Domains: string[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Verticals: string[]
+│   ├── ContentId: *string
+│   ├── ContentSchemaVersion: *string
+│   ├── CustomVersion: *string
+│   ├── Dependencies: *Object (6 properties)
+│   │   ├── ContentId: *string
+│   │   ├── Kind: *string
+│   │   ├── Name: *string
+│   │   ├── Operator: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Version: *string
+│   ├── Etag: *string
+│   ├── FirstPublishDate: *string
+│   ├── Icon: *string
+│   ├── Kind: *string
+│   ├── LastPublishDate: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   ├── ParentReference: *genruntime.ResourceReference
+│   ├── PreviewImages: string[]
+│   ├── PreviewImagesDark: string[]
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Providers: string[]
+│   ├── Source: *Object (4 properties)
+│   │   ├── Kind: *string
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SourceId: *string
+│   ├── Support: *Object (5 properties)
+│   │   ├── Email: *string
+│   │   ├── Link: *string
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Tier: *string
+│   ├── ThreatAnalysisTactics: string[]
+│   ├── ThreatAnalysisTechniques: string[]
+│   └── Version: *string
+└── Status: Object (26 properties)
+    ├── Author: *Object (4 properties)
+    │   ├── Email: *string
+    │   ├── Link: *string
+    │   ├── Name: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Categories: *Object (3 properties)
+    │   ├── Domains: string[]
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Verticals: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── ContentId: *string
+    ├── ContentSchemaVersion: *string
+    ├── CustomVersion: *string
+    ├── Dependencies: *Object (6 properties)
+    │   ├── ContentId: *string
+    │   ├── Kind: *string
+    │   ├── Name: *string
+    │   ├── Operator: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Version: *string
+    ├── Etag: *string
+    ├── FirstPublishDate: *string
+    ├── Icon: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── LastPublishDate: *string
+    ├── Name: *string
+    ├── ParentId: *string
+    ├── PreviewImages: string[]
+    ├── PreviewImagesDark: string[]
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Providers: string[]
+    ├── Source: *Object (4 properties)
+    │   ├── Kind: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── SourceId: *string
+    ├── Support: *Object (5 properties)
+    │   ├── Email: *string
+    │   ├── Link: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Tier: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── ThreatAnalysisTactics: string[]
+    ├── ThreatAnalysisTechniques: string[]
+    ├── Type: *string
+    └── Version: *string
+
 ContentPackage: Resource
 ├── Spec: Object (29 properties)
 │   ├── Author: *Object (4 properties)
@@ -1523,6 +1632,118 @@ SecurityMLAnalyticsSetting: Resource
     ├── Conditions: conditions.Condition[]
     ├── Name: *string
     └── PropertyBag: genruntime.PropertyBag
+
+SourceControl: Resource
+├── Spec: Object (14 properties)
+│   ├── AzureName: string
+│   ├── ContentTypes: string[]
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── Etag: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.ArbitraryOwnerReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RepoType: *string
+│   ├── Repository: *Object (4 properties)
+│   │   ├── Branch: *string
+│   │   ├── DisplayUrl: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Url: *string
+│   ├── RepositoryAccess: *Object (7 properties)
+│   │   ├── ClientId: *string
+│   │   ├── Code: *genruntime.SecretReference
+│   │   ├── InstallationId: *string
+│   │   ├── Kind: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── State: *genruntime.SecretReference
+│   │   └── Token: *genruntime.SecretReference
+│   ├── RepositoryResourceInfo: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Webhook: *Object (2 properties)
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── RotateWebhookSecret: *bool
+│   └── ServicePrincipal: *Object (2 properties)
+│       ├── CredentialsExpireOn: *string
+│       └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (20 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ContentTypes: string[]
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── Etag: *string
+    ├── Id: *string
+    ├── LastDeploymentInfo: *Object (4 properties)
+    │   ├── Deployment: *Object (6 properties)
+    │   │   ├── DeploymentId: *string
+    │   │   ├── DeploymentLogsUrl: *string
+    │   │   ├── DeploymentResult: *string
+    │   │   ├── DeploymentState: *string
+    │   │   ├── DeploymentTime: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── DeploymentFetchStatus: *string
+    │   ├── Message: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Name: *string
+    ├── PropertiesId: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── PullRequest: *Object (3 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── State: *string
+    │   └── Url: *string
+    ├── RepoType: *string
+    ├── Repository: *Object (5 properties)
+    │   ├── Branch: *string
+    │   ├── DeploymentLogsUrl: *string
+    │   ├── DisplayUrl: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Url: *string
+    ├── RepositoryAccess: *Object (4 properties)
+    │   ├── ClientId: *string
+    │   ├── InstallationId: *string
+    │   ├── Kind: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── RepositoryResourceInfo: *Object (4 properties)
+    │   ├── AzureDevOpsResourceInfo: *Object (3 properties)
+    │   │   ├── PipelineId: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── ServiceConnectionId: *string
+    │   ├── GitHubResourceInfo: *Object (2 properties)
+    │   │   ├── AppInstallationId: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Webhook: *Object (5 properties)
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── RotateWebhookSecret: *bool
+    │       ├── WebhookId: *string
+    │       ├── WebhookSecretUpdateTime: *string
+    │       └── WebhookUrl: *string
+    ├── ServicePrincipal: *Object (5 properties)
+    │   ├── AppId: *string
+    │   ├── CredentialsExpireOn: *string
+    │   ├── Id: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── TenantId: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    ├── Version: *string
+    └── WorkloadIdentityFederation: *Object (6 properties)
+        ├── AppId: *string
+        ├── Id: *string
+        ├── Issuer: *string
+        ├── PropertyBag: genruntime.PropertyBag
+        ├── Subject: *string
+        └── TenantId: *string
 
 Watchlist: Resource
 ├── Spec: Object (27 properties)

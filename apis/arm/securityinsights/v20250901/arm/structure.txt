@@ -822,6 +822,165 @@ AutomationRule_Spec: Object (3 properties)
             ├── "Created"
             └── "Updated"
 
+ContentMetadata_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (19 properties)
+│   ├── Author: *Object (3 properties)
+│   │   ├── Email: *string
+│   │   ├── Link: *string
+│   │   └── Name: *string
+│   ├── Categories: *Object (2 properties)
+│   │   ├── Domains: string[]
+│   │   └── Verticals: string[]
+│   ├── ContentId: *string
+│   ├── ContentSchemaVersion: *string
+│   ├── CustomVersion: *string
+│   ├── Dependencies: *Object (5 properties)
+│   │   ├── ContentId: *string
+│   │   ├── Kind: *Enum (21 values)
+│   │   │   ├── "AnalyticsRule"
+│   │   │   ├── "AnalyticsRuleTemplate"
+│   │   │   ├── "AutomationRule"
+│   │   │   ├── "AzureFunction"
+│   │   │   ├── "DataConnector"
+│   │   │   ├── "DataType"
+│   │   │   ├── "HuntingQuery"
+│   │   │   ├── "InvestigationQuery"
+│   │   │   ├── "LogicAppsCustomConnector"
+│   │   │   ├── "Notebook"
+│   │   │   ├── "Parser"
+│   │   │   ├── "Playbook"
+│   │   │   ├── "PlaybookTemplate"
+│   │   │   ├── "ResourcesDataConnector"
+│   │   │   ├── "Solution"
+│   │   │   ├── "Standalone"
+│   │   │   ├── "SummaryRule"
+│   │   │   ├── "Watchlist"
+│   │   │   ├── "WatchlistTemplate"
+│   │   │   ├── "Workbook"
+│   │   │   └── "WorkbookTemplate"
+│   │   ├── Name: *string
+│   │   ├── Operator: *Enum (2 values)
+│   │   │   ├── "AND"
+│   │   │   └── "OR"
+│   │   └── Version: *string
+│   ├── FirstPublishDate: *string
+│   ├── Icon: *string
+│   ├── Kind: *string
+│   ├── LastPublishDate: *string
+│   ├── ParentId: *string
+│   ├── PreviewImages: string[]
+│   ├── PreviewImagesDark: string[]
+│   ├── Providers: string[]
+│   ├── Source: *Object (3 properties)
+│   │   ├── Kind: *Enum (4 values)
+│   │   │   ├── "Community"
+│   │   │   ├── "LocalWorkspace"
+│   │   │   ├── "Solution"
+│   │   │   └── "SourceRepository"
+│   │   ├── Name: *string
+│   │   └── SourceId: *string
+│   ├── Support: *Object (4 properties)
+│   │   ├── Email: *string
+│   │   ├── Link: *string
+│   │   ├── Name: *string
+│   │   └── Tier: *Enum (3 values)
+│   │       ├── "Community"
+│   │       ├── "Microsoft"
+│   │       └── "Partner"
+│   ├── ThreatAnalysisTactics: string[]
+│   ├── ThreatAnalysisTechniques: string[]
+│   └── Version: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ContentMetadata_Spec: Object (3 properties)
+├── Etag: *string
+├── Name: string
+└── Properties: *Object (19 properties)
+    ├── Author: *Object (3 properties)
+    │   ├── Email: *string
+    │   ├── Link: *string
+    │   └── Name: *string
+    ├── Categories: *Object (2 properties)
+    │   ├── Domains: string[]
+    │   └── Verticals: string[]
+    ├── ContentId: *string
+    ├── ContentSchemaVersion: *string
+    ├── CustomVersion: *string
+    ├── Dependencies: *Object (5 properties)
+    │   ├── ContentId: *string
+    │   ├── Kind: *Enum (21 values)
+    │   │   ├── "AnalyticsRule"
+    │   │   ├── "AnalyticsRuleTemplate"
+    │   │   ├── "AutomationRule"
+    │   │   ├── "AzureFunction"
+    │   │   ├── "DataConnector"
+    │   │   ├── "DataType"
+    │   │   ├── "HuntingQuery"
+    │   │   ├── "InvestigationQuery"
+    │   │   ├── "LogicAppsCustomConnector"
+    │   │   ├── "Notebook"
+    │   │   ├── "Parser"
+    │   │   ├── "Playbook"
+    │   │   ├── "PlaybookTemplate"
+    │   │   ├── "ResourcesDataConnector"
+    │   │   ├── "Solution"
+    │   │   ├── "Standalone"
+    │   │   ├── "SummaryRule"
+    │   │   ├── "Watchlist"
+    │   │   ├── "WatchlistTemplate"
+    │   │   ├── "Workbook"
+    │   │   └── "WorkbookTemplate"
+    │   ├── Name: *string
+    │   ├── Operator: *Enum (2 values)
+    │   │   ├── "AND"
+    │   │   └── "OR"
+    │   └── Version: *string
+    ├── FirstPublishDate: *string
+    ├── Icon: *string
+    ├── Kind: *string
+    ├── LastPublishDate: *string
+    ├── ParentId: *string
+    ├── PreviewImages: string[]
+    ├── PreviewImagesDark: string[]
+    ├── Providers: string[]
+    ├── Source: *Object (3 properties)
+    │   ├── Kind: *Enum (4 values)
+    │   │   ├── "Community"
+    │   │   ├── "LocalWorkspace"
+    │   │   ├── "Solution"
+    │   │   └── "SourceRepository"
+    │   ├── Name: *string
+    │   └── SourceId: *string
+    ├── Support: *Object (4 properties)
+    │   ├── Email: *string
+    │   ├── Link: *string
+    │   ├── Name: *string
+    │   └── Tier: *Enum (3 values)
+    │       ├── "Community"
+    │       ├── "Microsoft"
+    │       └── "Partner"
+    ├── ThreatAnalysisTactics: string[]
+    ├── ThreatAnalysisTechniques: string[]
+    └── Version: *string
+
 ContentPackage_STATUS: Object (6 properties)
 ├── Etag: *string
 ├── Id: *string
@@ -2236,6 +2395,138 @@ SecurityMLAnalyticsSetting_Spec: Object (4 properties)
     │   ├── "Reconnaissance"
     │   └── "ResourceDevelopment"
     └── Techniques: string[]
+
+SourceControl_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (13 properties)
+│   ├── ContentTypes: Enum (6 values)[]
+│   │   ├── "AnalyticsRule"
+│   │   ├── "AutomationRule"
+│   │   ├── "HuntingQuery"
+│   │   ├── "Parser"
+│   │   ├── "Playbook"
+│   │   └── "Workbook"
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── Id: *string
+│   ├── LastDeploymentInfo: *Object (3 properties)
+│   │   ├── Deployment: *Object (5 properties)
+│   │   │   ├── DeploymentId: *string
+│   │   │   ├── DeploymentLogsUrl: *string
+│   │   │   ├── DeploymentResult: *Enum (3 values)
+│   │   │   │   ├── "Canceled"
+│   │   │   │   ├── "Failed"
+│   │   │   │   └── "Success"
+│   │   │   ├── DeploymentState: *Enum (4 values)
+│   │   │   │   ├── "Canceling"
+│   │   │   │   ├── "Completed"
+│   │   │   │   ├── "In_Progress"
+│   │   │   │   └── "Queued"
+│   │   │   └── DeploymentTime: *string
+│   │   ├── DeploymentFetchStatus: *Enum (3 values)
+│   │   │   ├── "NotFound"
+│   │   │   ├── "Success"
+│   │   │   └── "Unauthorized"
+│   │   └── Message: *string
+│   ├── PullRequest: *Object (2 properties)
+│   │   ├── State: *Enum (2 values)
+│   │   │   ├── "Closed"
+│   │   │   └── "Open"
+│   │   └── Url: *string
+│   ├── RepoType: *Enum (2 values)
+│   │   ├── "AzureDevOps"
+│   │   └── "Github"
+│   ├── Repository: *Object (4 properties)
+│   │   ├── Branch: *string
+│   │   ├── DeploymentLogsUrl: *string
+│   │   ├── DisplayUrl: *string
+│   │   └── Url: *string
+│   ├── RepositoryAccess: *Object (3 properties)
+│   │   ├── ClientId: *string
+│   │   ├── InstallationId: *string
+│   │   └── Kind: *Enum (3 values)
+│   │       ├── "App"
+│   │       ├── "OAuth"
+│   │       └── "PAT"
+│   ├── RepositoryResourceInfo: *Object (3 properties)
+│   │   ├── AzureDevOpsResourceInfo: *Object (2 properties)
+│   │   │   ├── PipelineId: *string
+│   │   │   └── ServiceConnectionId: *string
+│   │   ├── GitHubResourceInfo: *Object (1 property)
+│   │   │   └── AppInstallationId: *string
+│   │   └── Webhook: *Object (4 properties)
+│   │       ├── RotateWebhookSecret: *bool
+│   │       ├── WebhookId: *string
+│   │       ├── WebhookSecretUpdateTime: *string
+│   │       └── WebhookUrl: *string
+│   ├── ServicePrincipal: *Object (4 properties)
+│   │   ├── AppId: *string
+│   │   ├── CredentialsExpireOn: *string
+│   │   ├── Id: *string
+│   │   └── TenantId: *string
+│   ├── Version: *Enum (2 values)
+│   │   ├── "V1"
+│   │   └── "V2"
+│   └── WorkloadIdentityFederation: *Object (5 properties)
+│       ├── AppId: *string
+│       ├── Id: *string
+│       ├── Issuer: *string
+│       ├── Subject: *string
+│       └── TenantId: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+SourceControl_Spec: Object (3 properties)
+├── Etag: *string
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── ContentTypes: Enum (6 values)[]
+    │   ├── "AnalyticsRule"
+    │   ├── "AutomationRule"
+    │   ├── "HuntingQuery"
+    │   ├── "Parser"
+    │   ├── "Playbook"
+    │   └── "Workbook"
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── RepoType: *Enum (2 values)
+    │   ├── "AzureDevOps"
+    │   └── "Github"
+    ├── Repository: *Object (3 properties)
+    │   ├── Branch: *string
+    │   ├── DisplayUrl: *string
+    │   └── Url: *string
+    ├── RepositoryAccess: *Object (6 properties)
+    │   ├── ClientId: *string
+    │   ├── Code: *string
+    │   ├── InstallationId: *string
+    │   ├── Kind: *Enum (3 values)
+    │   │   ├── "App"
+    │   │   ├── "OAuth"
+    │   │   └── "PAT"
+    │   ├── State: *string
+    │   └── Token: *string
+    ├── RepositoryResourceInfo: *Object (1 property)
+    │   └── Webhook: *Object (1 property)
+    │       └── RotateWebhookSecret: *bool
+    └── ServicePrincipal: *Object (1 property)
+        └── CredentialsExpireOn: *string
 
 Watchlist_STATUS: Object (6 properties)
 ├── Etag: *string

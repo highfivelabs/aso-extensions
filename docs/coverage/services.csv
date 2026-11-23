@@ -229,7 +229,7 @@ Microsoft.Search,3,1,0,33,13,0,20,39.4,0.0,60.6
 Microsoft.SecretSyncController,2,0,0,19,0,0,19,0.0,0.0,100.0
 Microsoft.Security,41,0,19,400,0,208,192,0.0,52.0,48.0
 Microsoft.SecurityAndCompliance,12,0,0,156,0,0,156,0.0,0.0,100.0
-Microsoft.SecurityInsights,32,0,11,393,0,178,215,0.0,45.3,54.7
+Microsoft.SecurityInsights,32,0,18,393,0,234,159,0.0,59.5,40.5
 Microsoft.SerialConsole,1,0,0,2,0,0,2,0.0,0.0,100.0
 Microsoft.ServiceBus,14,8,0,113,79,0,34,69.9,0.0,30.1
 Microsoft.ServiceFabric,11,0,0,424,0,0,424,0.0,0.0,100.0
