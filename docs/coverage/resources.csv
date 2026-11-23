@@ -2312,7 +2312,7 @@ Microsoft.Web,Microsoft.Web/sites/config,302,,0,web.azure.hfl.dev/SitesConfigApp
 Microsoft.Web,Microsoft.Web/sites/deployments,10,,0,,0,10,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/domainOwnershipIdentifiers,2,,0,web.azure.hfl.dev/SitesDomainOwnershipIdentifier,2,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/extensions,15,,0,,0,15,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/functions,14,,0,,0,14,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/functions,14,,0,web.azure.hfl.dev/SitesFunction,14,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/functions/keys,1,,0,,0,1,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/hostNameBindings,9,,0,web.azure.hfl.dev/SitesHostNameBinding,9,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/hybridconnection,8,,0,web.azure.hfl.dev/SitesHybridConnection,8,0,false,spec_api=2026-07-15; ours_api=2026-07-15
@@ -2320,36 +2320,36 @@ Microsoft.Web,Microsoft.Web/sites/hybridConnectionNamespaces/relays,9,,0,,0,9,fa
 Microsoft.Web,Microsoft.Web/sites/instances/deployments,13,,0,,0,13,false,spec_api=2015-08-01
 Microsoft.Web,Microsoft.Web/sites/instances/extensions,15,,0,,0,15,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/networkConfig,3,,0,,0,3,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/premieraddons,8,,0,,0,8,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/privateAccess,7,,0,,0,7,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/premieraddons,8,,0,web.azure.hfl.dev/SitesPremieraddon,8,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/privateAccess,7,,0,web.azure.hfl.dev/SitesPrivateAccess,7,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/privateEndpointConnections,6,,0,web.azure.hfl.dev/SitesPrivateEndpointConnection,5,1,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/publicCertificates,3,,0,web.azure.hfl.dev/SitesPublicCertificate,3,0,false,spec_api=2026-07-15; ours_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/sitecontainers,16,,0,,0,16,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/sitecontainers,16,,0,web.azure.hfl.dev/SitesSitecontainer,16,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/siteextensions,0,,0,,0,0,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots,244,,0,web.azure.hfl.dev/SitesSlot,244,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/backups,15,,0,,0,15,false,spec_api=2015-08-01
-Microsoft.Web,Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies,2,,0,,0,2,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies,2,,0,web.azure.hfl.dev/SitesSlotsBasicPublishingCredentialsPolicyFtp,2,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/certificates,11,,0,,0,11,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/config,299,,0,,0,299,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/config,299,,0,web.azure.hfl.dev/SitesSlotsConfigAuthSettingsV2,79,220,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/deployments,10,,0,,0,10,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/domainOwnershipIdentifiers,2,,0,,0,2,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/domainOwnershipIdentifiers,2,,0,web.azure.hfl.dev/SitesSlotsDomainOwnershipIdentifier,2,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/extensions,15,,0,,0,15,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/functions,14,,0,,0,14,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/functions,14,,0,web.azure.hfl.dev/SitesSlotsFunction,14,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/functions/keys,1,,0,,0,1,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/hostNameBindings,9,,0,web.azure.hfl.dev/SitesSlotsHostNameBinding,9,0,false,spec_api=2026-07-15; ours_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/hybridconnection,8,,0,,0,8,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/hybridconnection,8,,0,web.azure.hfl.dev/SitesSlotsHybridConnection,8,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/hybridConnectionNamespaces/relays,9,,0,,0,9,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/instances/deployments,13,,0,,0,13,false,spec_api=2015-08-01
 Microsoft.Web,Microsoft.Web/sites/slots/instances/extensions,15,,0,,0,15,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/networkConfig,3,,0,,0,3,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/premieraddons,8,,0,,0,8,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/privateAccess,7,,0,,0,7,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/privateEndpointConnections,6,,0,,0,6,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/publicCertificates,3,,0,,0,3,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/sitecontainers,16,,0,,0,16,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/premieraddons,8,,0,web.azure.hfl.dev/SitesSlotsPremieraddon,8,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/privateAccess,7,,0,web.azure.hfl.dev/SitesSlotsPrivateAccess,7,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/privateEndpointConnections,6,,0,web.azure.hfl.dev/SitesSlotsPrivateEndpointConnection,5,1,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/publicCertificates,3,,0,web.azure.hfl.dev/SitesSlotsPublicCertificate,3,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/sitecontainers,16,,0,web.azure.hfl.dev/SitesSlotsSitecontainer,16,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/siteextensions,0,,0,,0,0,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/sourcecontrols,15,,0,,0,15,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/virtualNetworkConnections,5,,0,,0,5,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/virtualNetworkConnections,5,,0,web.azure.hfl.dev/SitesSlotsVirtualNetworkConnection,5,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/virtualNetworkConnections/gateways,3,,0,,0,3,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/sourcecontrols,15,web.azure.com/SitesSourcecontrol,15,,0,0,false,spec_api=2026-07-15; official_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/virtualNetworkConnections,5,,0,web.azure.hfl.dev/SitesVirtualNetworkConnection,5,0,false,spec_api=2026-07-15; ours_api=2026-07-15

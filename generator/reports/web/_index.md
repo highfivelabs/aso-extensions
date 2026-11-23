@@ -8,26 +8,43 @@ no_list: true
 
 ### Released
 
-| Resource                                 | ARM Version | CRD Version | Supported From | Sample |
-|------------------------------------------|-------------|-------------|----------------|--------|
-| Certificate                              | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesBasicPublishingCredentialsPolicyFtp | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesBasicPublishingCredentialsPolicyScm | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesConfigAuthSettingsV2                | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesConfigLogs                          | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesConfigSlotConfigNames               | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesDomainOwnershipIdentifier           | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesHostNameBinding                     | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesHybridConnection                    | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesPrivateEndpointConnection           | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesPublicCertificate                   | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesSlot                                | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesSlotsHostNameBinding                | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| SitesVirtualNetworkConnection            | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| StaticSite                               | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| StaticSitesCustomDomain                  | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| StaticSitesDatabaseConnection            | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| StaticSitesLinkedBackend                 | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| StaticSitesPrivateEndpointConnection     | 2026-07-15  | v20260715   | v0.1.0         | -      |
-| StaticSitesUserProvidedFunctionApp       | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| Resource                                      | ARM Version | CRD Version | Supported From | Sample |
+|-----------------------------------------------|-------------|-------------|----------------|--------|
+| Certificate                                   | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesBasicPublishingCredentialsPolicyFtp      | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesBasicPublishingCredentialsPolicyScm      | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesConfigAuthSettingsV2                     | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesConfigLogs                               | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesConfigSlotConfigNames                    | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesDomainOwnershipIdentifier                | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesFunction                                 | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesHostNameBinding                          | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesHybridConnection                         | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesPremieraddon                             | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesPrivateAccess                            | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesPrivateEndpointConnection                | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesPublicCertificate                        | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSitecontainer                            | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlot                                     | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsBasicPublishingCredentialsPolicyFtp | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsBasicPublishingCredentialsPolicyScm | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsConfigAuthSettingsV2                | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsConfigLogs                          | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsDomainOwnershipIdentifier           | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsFunction                            | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsHostNameBinding                     | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsHybridConnection                    | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsPremieraddon                        | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsPrivateAccess                       | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsPrivateEndpointConnection           | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsPublicCertificate                   | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsSitecontainer                       | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsVirtualNetworkConnection            | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesVirtualNetworkConnection                 | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSite                                    | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSitesCustomDomain                       | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSitesDatabaseConnection                 | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSitesLinkedBackend                      | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSitesPrivateEndpointConnection          | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSitesUserProvidedFunctionApp            | 2026-07-15  | v20260715   | v0.1.0         | -      |
 

@@ -546,10 +546,20 @@ upstream's); the catalog's chart tests do that.
   validation (a domain is Ready at once), builds, environments, the
   repository and deployment token, one backend per site, SKUs, and the
   error codes.
+- An App Service app's and slot's sidecar containers, private access and a
+  slot's virtual network connections (`Microsoft.Web/sites/*/sitecontainers`,
+  `.../privateAccess/virtualNetworks`, the same under `sites/*/slots`,
+  2026-07-15; `pkg/fakecloud/arm/sitechildren.go`): a container gives its
+  image and `isMain` (400), an app or slot has one main container (409);
+  private access and a slot's network connection name networks that exist
+  (404). Not modelled: images being pulled and containers started, registry
+  credentials, the Linux `sitecontainers` mode a sidecar app needs,
+  functions being deployed or run, premier add-ons being bought, and the
+  error codes.
 - The private endpoint connections of an Azure SQL server, a container
   app, a disk access, an Azure Cache for Redis cache, a Redis Enterprise
-  cluster, an App Configuration store, a PostgreSQL flexible server and a
-  MongoDB vCore cluster (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
+  cluster, an App Configuration store, a PostgreSQL flexible server, a
+  MongoDB vCore cluster, an App Service app or slot and a static web app (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
   a private endpoint makes a connection, so a PUT for one that does not
   exist is 404 and a PUT changes one that does (approve, reject). Not
   modelled: the private endpoint (a test adds the connection to the fake as

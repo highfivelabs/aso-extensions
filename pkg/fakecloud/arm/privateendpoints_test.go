@@ -24,6 +24,9 @@ func TestPrivateEndpointConnections(t *testing.T) {
 		rg + "/providers/Microsoft.AppConfiguration/configurationStores/config",
 		rg + "/providers/Microsoft.DBforPostgreSQL/flexibleServers/pg",
 		rg + "/providers/Microsoft.DocumentDB/mongoClusters/mongo",
+		rg + "/providers/Microsoft.Web/sites/web",
+		rg + "/providers/Microsoft.Web/sites/web/slots/staging",
+		rg + "/providers/Microsoft.Web/staticSites/static",
 	} {
 		a.AddResource(parent)
 		conn := parent + "/privateEndpointConnections/pe-1"
@@ -34,8 +37,8 @@ func TestPrivateEndpointConnections(t *testing.T) {
 		expect(t, "approving the connection under "+parent, code, resp, http.StatusOK)
 	}
 	// Another service's connections are not this rule's.
-	other := rg + "/providers/Microsoft.Web/sites/web/privateEndpointConnections/pe-1"
-	a.AddResource(rg + "/providers/Microsoft.Web/sites/web")
+	other := rg + "/providers/Microsoft.Search/searchServices/search/privateEndpointConnections/pe-1"
+	a.AddResource(rg + "/providers/Microsoft.Search/searchServices/search")
 	code, resp := do(t, a, http.MethodPut, other, approve)
-	expect(t, "a site's connection", code, resp, http.StatusCreated)
+	expect(t, "a search service's connection", code, resp, http.StatusCreated)
 }

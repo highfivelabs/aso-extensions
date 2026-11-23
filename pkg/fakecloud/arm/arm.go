@@ -46,7 +46,9 @@
 // assignment's definition of the same API and account), Azure Compute
 // Gallery and dedicated host groups (gallery.go: names, versions and their
 // sources, fault domains), Static Web Apps' children and an app's virtual
-// network connections (staticsites.go: what they link to exists), budgets
+// network connections (staticsites.go: what they link to exists), an app's
+// or slot's sidecar containers and private access (sitechildren.go: one main
+// container, the networks named exist), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -486,6 +488,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkSQLJobs(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSiteChildren(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

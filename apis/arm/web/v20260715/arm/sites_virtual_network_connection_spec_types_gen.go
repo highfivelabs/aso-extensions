@@ -30,19 +30,3 @@ func (connection *SitesVirtualNetworkConnection_Spec) GetName() string {
 func (connection *SitesVirtualNetworkConnection_Spec) GetType() string {
 	return "Microsoft.Web/sites/virtualNetworkConnections"
 }
-
-// Virtual Network information contract.
-type VnetInfo struct {
-	// CertBlob: A certificate file (.cer) blob containing the public key of the private key used to authenticate a
-	// \nPoint-To-Site VPN connection.
-	CertBlob *string `json:"certBlob,omitempty"`
-
-	// DnsServers: DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses.
-	DnsServers *string `json:"dnsServers,omitempty"`
-
-	// IsSwift: Flag that is used to denote if this is VNET injection
-	IsSwift *bool `json:"isSwift,omitempty"`
-
-	// VnetResourceId: The Virtual Network's resource ID.
-	VnetResourceId *string `json:"vnetResourceId,omitempty"`
-}

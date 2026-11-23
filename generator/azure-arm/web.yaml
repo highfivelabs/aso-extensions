@@ -17,6 +17,12 @@ typeTransformers:
     property: EntityConnectionString;ResourceConnectionString
     remove: true
     because: Relay connection strings carry their SAS keys; the status never holds them
+  - group: web
+    version: v20260715
+    name: SiteContainerProperties_STATUS
+    property: PasswordSecret
+    remove: true
+    because: a sidecar's registry password; the status never holds it
 typeFilters:
   - action: include
     group: web
@@ -25,7 +31,6 @@ typeFilters:
   - action: prune
     group: web
     because: every other version is left alone
-
 groupModelConfiguration:
   2026-07-15:
     Certificate:
@@ -92,6 +97,66 @@ groupModelConfiguration:
     Sites_Hybridconnection:
       $exportAs: SitesHybridConnection
       $supportedFrom: v0.1.0
+    # The rest of a site's children, and a slot's (docs/plan.md f40,
+    # 2026-11-23): sidecar containers, functions, premier add-ons, private
+    # access; on a slot (our SitesSlot) the same, and the children a site
+    # has had since c4b and f36. Not the Relay connections under
+    # hybridConnectionNamespaces/{namespace}: that segment is no resource,
+    # so the generator gives them a resource group as owner.
+    Sites_Sitecontainer:
+      $exportAs: SitesSitecontainer
+      $supportedFrom: v0.1.0
+    Sites_Function:
+      $exportAs: SitesFunction
+      $supportedFrom: v0.1.0
+    Sites_Premieraddon:
+      $exportAs: SitesPremieraddon
+      $supportedFrom: v0.1.0
+    Sites_PrivateAccess_VirtualNetwork:
+      $exportAs: SitesPrivateAccess
+      $supportedFrom: v0.1.0
+    Sites_Slots_Sitecontainer:
+      $exportAs: SitesSlotsSitecontainer
+      $supportedFrom: v0.1.0
+    Sites_Slots_Function:
+      $exportAs: SitesSlotsFunction
+      $supportedFrom: v0.1.0
+    Sites_Slots_Premieraddon:
+      $exportAs: SitesSlotsPremieraddon
+      $supportedFrom: v0.1.0
+    Sites_Slots_PrivateAccess_VirtualNetwork:
+      $exportAs: SitesSlotsPrivateAccess
+      $supportedFrom: v0.1.0
+    Sites_Slots_Config_AuthsettingsV2:
+      $exportAs: SitesSlotsConfigAuthSettingsV2
+      $supportedFrom: v0.1.0
+    Sites_Slots_Config_Log:
+      $exportAs: SitesSlotsConfigLogs
+      $supportedFrom: v0.1.0
+    Sites_Slots_BasicPublishingCredentialsPolicies_Ftp:
+      $exportAs: SitesSlotsBasicPublishingCredentialsPolicyFtp
+      $supportedFrom: v0.1.0
+    Sites_Slots_BasicPublishingCredentialsPolicies_Scm:
+      $exportAs: SitesSlotsBasicPublishingCredentialsPolicyScm
+      $supportedFrom: v0.1.0
+    Sites_Slots_DomainOwnershipIdentifier:
+      $exportAs: SitesSlotsDomainOwnershipIdentifier
+      $supportedFrom: v0.1.0
+    Sites_Slots_PrivateEndpointConnection:
+      $exportAs: SitesSlotsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Sites_Slots_PublicCertificate:
+      $exportAs: SitesSlotsPublicCertificate
+      $supportedFrom: v0.1.0
+    Sites_Slots_VirtualNetworkConnection:
+      $exportAs: SitesSlotsVirtualNetworkConnection
+      $supportedFrom: v0.1.0
+    Sites_Slots_Hybridconnection:
+      $exportAs: SitesSlotsHybridConnection
+      $supportedFrom: v0.1.0
+    SiteContainerProperties:
+      PasswordSecret:
+        $importSecretMode: required # the registry password of a sidecar's image: from a Secret
     RelayServiceConnectionEntityProperties:
       EntityConnectionString:
         $importSecretMode: required # a Relay connection string with its SAS key: from a Secret
@@ -166,3 +231,6 @@ groupModelConfiguration:
     StaticSiteCustomDomainOverviewARMResourceProperties:
       ValidationToken:
         $importSecretMode: never # the token Azure makes for a custom domain's TXT record, published in DNS: not a secret, and the status must show it (autolabel wrote required; reviewed)
+    PrivateAccessVirtualNetwork:
+      ResourceId:
+        $referenceType: arm # the virtual network's ARM ID (autolabel, reviewed)

@@ -1809,6 +1809,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesConfigSlotConfigNames)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesDomainOwnershipIdentifier)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesFunction)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesHostNameBinding)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.SitesHybridConnection),
@@ -1834,8 +1835,29 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesPremieraddon)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesPrivateAccess)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesPublicCertificate)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.SitesSitecontainer),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.passwordSecret",
+				Func: indexWebSitesSitecontainerPasswordSecret,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.passwordSecret",
+					},
+					&web_v20260715.SitesSitecontainerList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.SitesSlot),
 		Indexes: []registration.Index{
@@ -1855,7 +1877,89 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsBasicPublishingCredentialsPolicyFtp)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsBasicPublishingCredentialsPolicyScm)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsConfigAuthSettingsV2)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.SitesSlotsConfigLogs),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.applicationLogs.azureBlobStorage.sasUrl",
+				Func: indexWebSitesSlotsConfigLogsApplicationLogsAzureBlobStorageSasUrl,
+			},
+			{
+				Key:  ".spec.applicationLogs.azureTableStorage.sasUrl",
+				Func: indexWebSitesSlotsConfigLogsApplicationLogsAzureTableStorageSasUrl,
+			},
+			{
+				Key:  ".spec.httpLogs.azureBlobStorage.sasUrl",
+				Func: indexWebSitesSlotsConfigLogsHttpLogsAzureBlobStorageSasUrl,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.applicationLogs.azureBlobStorage.sasUrl",
+						".spec.applicationLogs.azureTableStorage.sasUrl",
+						".spec.httpLogs.azureBlobStorage.sasUrl",
+					},
+					&web_v20260715.SitesSlotsConfigLogsList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsDomainOwnershipIdentifier)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsFunction)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsHostNameBinding)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.SitesSlotsHybridConnection),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.entityConnectionString",
+				Func: indexWebSitesSlotsHybridConnectionEntityConnectionString,
+			},
+			{
+				Key:  ".spec.resourceConnectionString",
+				Func: indexWebSitesSlotsHybridConnectionResourceConnectionString,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.entityConnectionString",
+						".spec.resourceConnectionString",
+					},
+					&web_v20260715.SitesSlotsHybridConnectionList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsPremieraddon)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsPrivateAccess)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsPublicCertificate)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.SitesSlotsSitecontainer),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.passwordSecret",
+				Func: indexWebSitesSlotsSitecontainerPasswordSecret,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.passwordSecret",
+					},
+					&web_v20260715.SitesSlotsSitecontainerList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsVirtualNetworkConnection)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesVirtualNetworkConnection)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.StaticSite),
@@ -2664,12 +2768,29 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(web_v20260715.SitesConfigLogs)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesConfigSlotConfigNames)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesDomainOwnershipIdentifier)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesFunction)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesHostNameBinding)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesHybridConnection)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesPremieraddon)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesPrivateAccess)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesPublicCertificate)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSitecontainer)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlot)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsBasicPublishingCredentialsPolicyFtp)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsBasicPublishingCredentialsPolicyScm)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsConfigAuthSettingsV2)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsConfigLogs)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsDomainOwnershipIdentifier)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsFunction)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsHostNameBinding)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsHybridConnection)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsPremieraddon)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsPrivateAccess)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsPublicCertificate)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsSitecontainer)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsVirtualNetworkConnection)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesVirtualNetworkConnection)},
 		&registration.KnownType{Obj: new(web_v20260715.StaticSite)},
 		&registration.KnownType{Obj: new(web_v20260715.StaticSitesCustomDomain)},
@@ -2686,12 +2807,29 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigLogs)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigSlotConfigNames)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesDomainOwnershipIdentifier)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesFunction)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesHostNameBinding)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesHybridConnection)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesPremieraddon)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesPrivateAccess)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesPublicCertificate)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSitecontainer)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlot)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsBasicPublishingCredentialsPolicyFtp)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsBasicPublishingCredentialsPolicyScm)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsConfigAuthSettingsV2)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsConfigLogs)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsDomainOwnershipIdentifier)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsFunction)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsHostNameBinding)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsHybridConnection)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsPremieraddon)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsPrivateAccess)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsPublicCertificate)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsSitecontainer)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsVirtualNetworkConnection)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesVirtualNetworkConnection)},
 		&registration.KnownType{Obj: new(web_v20260715s.StaticSite)},
 		&registration.KnownType{Obj: new(web_v20260715s.StaticSitesCustomDomain)},
@@ -3205,12 +3343,29 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &web_customizations.SitesConfigLogsExtension{})
 	result = append(result, &web_customizations.SitesConfigSlotConfigNamesExtension{})
 	result = append(result, &web_customizations.SitesDomainOwnershipIdentifierExtension{})
+	result = append(result, &web_customizations.SitesFunctionExtension{})
 	result = append(result, &web_customizations.SitesHostNameBindingExtension{})
 	result = append(result, &web_customizations.SitesHybridConnectionExtension{})
+	result = append(result, &web_customizations.SitesPremieraddonExtension{})
+	result = append(result, &web_customizations.SitesPrivateAccessExtension{})
 	result = append(result, &web_customizations.SitesPrivateEndpointConnectionExtension{})
 	result = append(result, &web_customizations.SitesPublicCertificateExtension{})
+	result = append(result, &web_customizations.SitesSitecontainerExtension{})
 	result = append(result, &web_customizations.SitesSlotExtension{})
+	result = append(result, &web_customizations.SitesSlotsBasicPublishingCredentialsPolicyFtpExtension{})
+	result = append(result, &web_customizations.SitesSlotsBasicPublishingCredentialsPolicyScmExtension{})
+	result = append(result, &web_customizations.SitesSlotsConfigAuthSettingsV2Extension{})
+	result = append(result, &web_customizations.SitesSlotsConfigLogsExtension{})
+	result = append(result, &web_customizations.SitesSlotsDomainOwnershipIdentifierExtension{})
+	result = append(result, &web_customizations.SitesSlotsFunctionExtension{})
 	result = append(result, &web_customizations.SitesSlotsHostNameBindingExtension{})
+	result = append(result, &web_customizations.SitesSlotsHybridConnectionExtension{})
+	result = append(result, &web_customizations.SitesSlotsPremieraddonExtension{})
+	result = append(result, &web_customizations.SitesSlotsPrivateAccessExtension{})
+	result = append(result, &web_customizations.SitesSlotsPrivateEndpointConnectionExtension{})
+	result = append(result, &web_customizations.SitesSlotsPublicCertificateExtension{})
+	result = append(result, &web_customizations.SitesSlotsSitecontainerExtension{})
+	result = append(result, &web_customizations.SitesSlotsVirtualNetworkConnectionExtension{})
 	result = append(result, &web_customizations.SitesVirtualNetworkConnectionExtension{})
 	result = append(result, &web_customizations.StaticSiteExtension{})
 	result = append(result, &web_customizations.StaticSitesCustomDomainExtension{})
@@ -5236,6 +5391,18 @@ func indexWebSitesHybridConnectionResourceConnectionString(rawObj client.Object)
 	return obj.Spec.ResourceConnectionString.Index()
 }
 
+// indexWebSitesSitecontainerPasswordSecret an index function for web_v20260715.SitesSitecontainer .spec.passwordSecret
+func indexWebSitesSitecontainerPasswordSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesSitecontainer)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PasswordSecret == nil {
+		return nil
+	}
+	return obj.Spec.PasswordSecret.Index()
+}
+
 // indexWebSitesSlotAccessKey an index function for web_v20260715.SitesSlot .spec.siteConfig.azureStorageAccounts.accessKey
 func indexWebSitesSlotAccessKey(rawObj client.Object) []string {
 	obj, ok := rawObj.(*web_v20260715.SitesSlot)
@@ -5253,6 +5420,96 @@ func indexWebSitesSlotAccessKey(rawObj client.Object) []string {
 		result = append(result, value.AccessKey.Index()...)
 	}
 	return result
+}
+
+// indexWebSitesSlotsConfigLogsApplicationLogsAzureBlobStorageSasUrl an index function for web_v20260715.SitesSlotsConfigLogs .spec.applicationLogs.azureBlobStorage.sasUrl
+func indexWebSitesSlotsConfigLogsApplicationLogsAzureBlobStorageSasUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesSlotsConfigLogs)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureBlobStorage == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureBlobStorage.SasUrl == nil {
+		return nil
+	}
+	return obj.Spec.ApplicationLogs.AzureBlobStorage.SasUrl.Index()
+}
+
+// indexWebSitesSlotsConfigLogsApplicationLogsAzureTableStorageSasUrl an index function for web_v20260715.SitesSlotsConfigLogs .spec.applicationLogs.azureTableStorage.sasUrl
+func indexWebSitesSlotsConfigLogsApplicationLogsAzureTableStorageSasUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesSlotsConfigLogs)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureTableStorage == nil {
+		return nil
+	}
+	if obj.Spec.ApplicationLogs.AzureTableStorage.SasUrl == nil {
+		return nil
+	}
+	return obj.Spec.ApplicationLogs.AzureTableStorage.SasUrl.Index()
+}
+
+// indexWebSitesSlotsConfigLogsHttpLogsAzureBlobStorageSasUrl an index function for web_v20260715.SitesSlotsConfigLogs .spec.httpLogs.azureBlobStorage.sasUrl
+func indexWebSitesSlotsConfigLogsHttpLogsAzureBlobStorageSasUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesSlotsConfigLogs)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.HttpLogs == nil {
+		return nil
+	}
+	if obj.Spec.HttpLogs.AzureBlobStorage == nil {
+		return nil
+	}
+	if obj.Spec.HttpLogs.AzureBlobStorage.SasUrl == nil {
+		return nil
+	}
+	return obj.Spec.HttpLogs.AzureBlobStorage.SasUrl.Index()
+}
+
+// indexWebSitesSlotsHybridConnectionEntityConnectionString an index function for web_v20260715.SitesSlotsHybridConnection .spec.entityConnectionString
+func indexWebSitesSlotsHybridConnectionEntityConnectionString(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesSlotsHybridConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.EntityConnectionString == nil {
+		return nil
+	}
+	return obj.Spec.EntityConnectionString.Index()
+}
+
+// indexWebSitesSlotsHybridConnectionResourceConnectionString an index function for web_v20260715.SitesSlotsHybridConnection .spec.resourceConnectionString
+func indexWebSitesSlotsHybridConnectionResourceConnectionString(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesSlotsHybridConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ResourceConnectionString == nil {
+		return nil
+	}
+	return obj.Spec.ResourceConnectionString.Index()
+}
+
+// indexWebSitesSlotsSitecontainerPasswordSecret an index function for web_v20260715.SitesSlotsSitecontainer .spec.passwordSecret
+func indexWebSitesSlotsSitecontainerPasswordSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesSlotsSitecontainer)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PasswordSecret == nil {
+		return nil
+	}
+	return obj.Spec.PasswordSecret.Index()
 }
 
 // indexWebStaticSiteRepositoryToken an index function for web_v20260715.StaticSite .spec.repositoryToken

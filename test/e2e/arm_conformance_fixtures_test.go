@@ -314,6 +314,10 @@ func init() {
 	}}
 	pec := conformanceFixture{setup: func(c *conformanceContext) { c.add(c.owner + "/privateEndpointConnections/conformance") }}
 	f["SitesPrivateEndpointConnection"] = pec
+	f["SitesSlotsPrivateEndpointConnection"] = pec
+	// A slot's network connection names a network the fake holds, as an
+	// app's does (sitechildren.go).
+	f["SitesSlotsVirtualNetworkConnection"] = f["SitesVirtualNetworkConnection"]
 	f["StaticSitesPrivateEndpointConnection"] = pec
 	// The private endpoint connections of docs/plan.md f37 and f38: the fake refuses
 	// to make one (privateendpoints.go).
