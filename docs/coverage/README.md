@@ -337,20 +337,22 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 4,881 (11.3%) in 413 further resources; uncovered 31,368 (72.3%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 4,922 (11.3%) in 417 further resources; uncovered 31,327 (72.2%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 25.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 33.4% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.8% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 25.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 34.0% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.8% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 38.2% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 15.1% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 1.0% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 38.2% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 15.4% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 1.0% more by ours.
 
 **Ours.**
 
 | Kind | Resource | How mapped |
 | --- | --- | --- |
+| `app.azure.hfl.dev/Agent` | `Microsoft.App/agents` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/AgentsConnector` | `Microsoft.App/agents/connectors` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ConnectedEnvironment` | `Microsoft.App/connectedEnvironments` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ConnectedEnvironmentsCertificate` | `Microsoft.App/connectedEnvironments/certificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ConnectedEnvironmentsDaprComponent` | `Microsoft.App/connectedEnvironments/daprComponents` | ARM wire type of the generated kind (`apis/arm`) |
@@ -369,6 +371,8 @@ Generated; these cannot drift from the data.
 | `app.azure.hfl.dev/ManagedEnvironmentsManagedCertificate` | `Microsoft.App/managedEnvironments/managedCertificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ManagedEnvironmentsPrivateEndpointConnection` | `Microsoft.App/managedEnvironments/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ManagedEnvironmentsStorage` | `Microsoft.App/managedEnvironments/storages` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/SandboxGroup` | `Microsoft.App/sandboxGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/SandboxGroupsVnetConnection` | `Microsoft.App/sandboxGroups/vnetConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/SessionPool` | `Microsoft.App/sessionPools` | ARM wire type of the generated kind (`apis/arm`) |
 | `appconfiguration.azure.hfl.dev/ConfigurationStoresPrivateEndpointConnection` | `Microsoft.AppConfiguration/configurationStores/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/AccessReviewHistoryDefinition` | `Microsoft.Authorization/accessReviewHistoryDefinitions` | ARM wire type of the generated kind (`apis/arm`) |

@@ -372,12 +372,14 @@ ledger has a row for it.
 | 2026-11-23 | `TestLiveCosmosPostgres` | `ServerGroupsv2`, `ServerGroupsv2FirewallRule`, `ServerGroupsv2Role`, `ServerGroupsv2CoordinatorConfiguration` | none: the cluster is the kind under test, one Burstable node (1 vCore, 32 GiB; a few cents an hour, about 15 minutes to make and to delete); skips unless `Microsoft.DBforPostgreSQL` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveCosmosPostgres"` |
 | 2026-11-23 | `TestLiveCosmosFleet` | `Fleet`, `FleetsFleetspace` | none: a fleet and a fleetspace with no throughput pool (free); skips unless `Microsoft.DocumentDB` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveCosmosFleet"` |
 | 2026-11-23 | `TestLiveStorageDataShare` | `StorageAccountsDataShare` | a StorageV2 account (storage cents); the share is read-only to the live identity itself | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveStorageDataShare"` |
+| 2026-11-23 | `TestLiveSandboxGroup` | `SandboxGroup` | none: a sandbox group with no environment linked (free: no sandbox runs); skips unless `Microsoft.App` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSandboxGroup"` |
 
 All of them in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
 TESTS="TestLiveAddressPrefixSet TestLiveRuleCollectionGroupDraft
 TestLiveConnectionMonitor TestLiveSummaryRule TestLiveSentinelWorkspace
 TestLiveSiteContainers TestLiveSqlServerExtras TestLiveRestorePoints
-TestLiveCosmosPostgres TestLiveCosmosFleet TestLiveStorageDataShare"`.
+TestLiveCosmosPostgres TestLiveCosmosFleet TestLiveStorageDataShare
+TestLiveSandboxGroup"`.
 
 Written for the subscription (above, "The subscription roles"); each skips
 until the builder assigns the roles of `hack/live/roles/`:
@@ -414,7 +416,9 @@ fleetspace account pools a provisioned-throughput account into a billed
 pool. The storage connectors, blob access points, capacity metrics rule and
 context caches of f48: a connector needs another tenant's data share, an
 access point an S3-compatible store, and the metrics rule bills as custom
-metrics.
+metrics. `SandboxGroupsVnetConnection`, `Agent` and `AgentsConnector`
+(`docs/plan.md` f49): a connection needs a subnet delegated to sandboxes,
+and an SRE agent bills per agent-hour.
 
 ## Ledger
 

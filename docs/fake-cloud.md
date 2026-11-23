@@ -625,6 +625,14 @@ upstream's); the catalog's chart tests do that.
   connection test, data being shared or read through a connector or an
   access point, capacity metrics being emitted, context caches caching, and
   the error codes.
+- Container Apps sandbox groups and Azure SRE Agent agents
+  (`Microsoft.App/sandboxGroups/*`, `Microsoft.App/agents/*`, 2026-07-01;
+  `pkg/fakecloud/arm/appextras.go`): a sandbox group's environment link
+  cannot be changed or removed once set (409); the environment it links and
+  the subnet its network connection names exist (404; a connection names
+  one, 400); an agent's subnet and AzureVNet sandbox egress come together
+  (400). Not modelled: sandboxes running, the agent acting, its connectors
+  reaching their data sources, and the error codes.
 - Microsoft Foundry managed networks and outbound rules
   (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
   `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`

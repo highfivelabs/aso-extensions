@@ -368,6 +368,10 @@ func init() {
 			"auth":       map[string]any{"accessKey": map[string]any{"authType": "AccessKey", "accessKeyId": "conformance", "secretAccessKey": secret}},
 		}}}}
 	}}
+	// A sandbox group's network connection names a subnet (appextras.go).
+	f["SandboxGroupsVnetConnection"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"subnetReference": armRef(c.add(c.in("Microsoft.Network/virtualNetworks/conformance/subnets/sandboxes")))}}
+	}}
 	// An account's managed network is named default (foundry.go).
 	f["AccountsManagedNetwork"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"azureName": "default"}

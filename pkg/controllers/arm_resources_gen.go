@@ -489,6 +489,49 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(app_v20260302p.ManagedEnvironmentsDaprSubscription)})
 	result = append(result, &registration.StorageType{Obj: new(app_v20260302p.ManagedEnvironmentsJavaComponent)})
 	result = append(result, &registration.StorageType{
+		Obj: new(app_v20260701.Agent),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.incidentManagementConfiguration.connectionKey",
+				Func: indexAppAgentConnectionKey,
+			},
+			{
+				Key:  ".spec.properties.logConfiguration.applicationInsightsConfiguration.connectionString",
+				Func: indexAppAgentConnectionString,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.incidentManagementConfiguration.connectionKey",
+						".spec.properties.logConfiguration.applicationInsightsConfiguration.connectionString",
+					},
+					&app_v20260701.AgentList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(app_v20260701.AgentsConnector),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.dataSource",
+				Func: indexAppAgentsConnectorDataSource,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.dataSource",
+					},
+					&app_v20260701.AgentsConnectorList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
 		Obj: new(app_v20260701.ContainerApp),
 		Indexes: []registration.Index{
 			{
@@ -509,6 +552,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(app_v20260701.ContainerAppsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
+	result = append(result, &registration.StorageType{Obj: new(app_v20260701.SandboxGroup)})
+	result = append(result, &registration.StorageType{Obj: new(app_v20260701.SandboxGroupsVnetConnection)})
 	result = append(result, &registration.StorageType{Obj: new(appconfiguration_v20240601.ConfigurationStoresPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.ManagementLock)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.PrivateLinkAssociation)})
@@ -2375,14 +2420,22 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(app_v20260302ps.ManagedEnvironmentsDaprSubscription)}, &registration.KnownType{Obj: new(app_v20260302ps.ManagedEnvironmentsJavaComponent)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(app_v20260701.Agent)},
+		&registration.KnownType{Obj: new(app_v20260701.AgentsConnector)},
 		&registration.KnownType{Obj: new(app_v20260701.ContainerApp)},
 		&registration.KnownType{Obj: new(app_v20260701.ContainerAppsPrivateEndpointConnection)},
-		&registration.KnownType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
+		&registration.KnownType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)},
+		&registration.KnownType{Obj: new(app_v20260701.SandboxGroup)},
+		&registration.KnownType{Obj: new(app_v20260701.SandboxGroupsVnetConnection)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(app_v20260701s.Agent)},
+		&registration.KnownType{Obj: new(app_v20260701s.AgentsConnector)},
 		&registration.KnownType{Obj: new(app_v20260701s.ContainerApp)},
 		&registration.KnownType{Obj: new(app_v20260701s.ContainerAppsPrivateEndpointConnection)},
-		&registration.KnownType{Obj: new(app_v20260701s.ManagedEnvironmentsDotNetComponent)})
+		&registration.KnownType{Obj: new(app_v20260701s.ManagedEnvironmentsDotNetComponent)},
+		&registration.KnownType{Obj: new(app_v20260701s.SandboxGroup)},
+		&registration.KnownType{Obj: new(app_v20260701s.SandboxGroupsVnetConnection)})
 	result = append(result, &registration.KnownType{Obj: new(appconfiguration_v20240601.ConfigurationStoresPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(appconfiguration_v20240601s.ConfigurationStoresPrivateEndpointConnection)})
 	result = append(
@@ -3484,6 +3537,8 @@ func createScheme() *runtime.Scheme {
 // getResourceExtensions returns a list of resource extensions
 func getResourceExtensions() []genruntime.ResourceExtension {
 	var result []genruntime.ResourceExtension
+	result = append(result, &app_customizations.AgentExtension{})
+	result = append(result, &app_customizations.AgentsConnectorExtension{})
 	result = append(result, &app_customizations.ConnectedEnvironmentExtension{})
 	result = append(result, &app_customizations.ConnectedEnvironmentsCertificateExtension{})
 	result = append(result, &app_customizations.ConnectedEnvironmentsDaprComponentExtension{})
@@ -3502,6 +3557,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ManagedEnvironmentsManagedCertificateExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsPrivateEndpointConnectionExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsStorageExtension{})
+	result = append(result, &app_customizations.SandboxGroupExtension{})
+	result = append(result, &app_customizations.SandboxGroupsVnetConnectionExtension{})
 	result = append(result, &app_customizations.SessionPoolExtension{})
 	result = append(result, &appconfiguration_customizations.ConfigurationStoresPrivateEndpointConnectionExtension{})
 	result = append(result, &authorization_customizations.AccessReviewHistoryDefinitionExtension{})
@@ -3908,6 +3965,60 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &web_customizations.StaticSitesPrivateEndpointConnectionExtension{})
 	result = append(result, &web_customizations.StaticSitesUserProvidedFunctionAppExtension{})
 	return result
+}
+
+// indexAppAgentConnectionKey an index function for app_v20260701.Agent .spec.properties.incidentManagementConfiguration.connectionKey
+func indexAppAgentConnectionKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260701.Agent)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.IncidentManagementConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.Properties.IncidentManagementConfiguration.ConnectionKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.IncidentManagementConfiguration.ConnectionKey.Index()
+}
+
+// indexAppAgentConnectionString an index function for app_v20260701.Agent .spec.properties.logConfiguration.applicationInsightsConfiguration.connectionString
+func indexAppAgentConnectionString(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260701.Agent)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.LogConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.Properties.LogConfiguration.ApplicationInsightsConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.Properties.LogConfiguration.ApplicationInsightsConfiguration.ConnectionString == nil {
+		return nil
+	}
+	return obj.Spec.Properties.LogConfiguration.ApplicationInsightsConfiguration.ConnectionString.Index()
+}
+
+// indexAppAgentsConnectorDataSource an index function for app_v20260701.AgentsConnector .spec.properties.dataSource
+func indexAppAgentsConnectorDataSource(rawObj client.Object) []string {
+	obj, ok := rawObj.(*app_v20260701.AgentsConnector)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.DataSource == nil {
+		return nil
+	}
+	return obj.Spec.Properties.DataSource.Index()
 }
 
 // indexAppConnectedEnvironmentCertificatePassword an index function for app_v20260101.ConnectedEnvironment .spec.customDomainConfiguration.certificatePassword

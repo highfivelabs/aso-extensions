@@ -10,6 +10,8 @@ no_list: true
 
 | Resource                                     | ARM Version        | CRD Version      | Supported From | Sample |
 |----------------------------------------------|--------------------|------------------|----------------|--------|
+| Agent                                        | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| AgentsConnector                              | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | ConnectedEnvironment                         | 2026-01-01         | v20260101        | v0.1.0         | -      |
 | ConnectedEnvironmentsCertificate             | 2026-01-01         | v20260101        | v0.1.0         | -      |
 | ConnectedEnvironmentsDaprComponent           | 2026-01-01         | v20260101        | v0.1.0         | -      |
@@ -28,5 +30,7 @@ no_list: true
 | ManagedEnvironmentsManagedCertificate        | 2025-01-01         | v20250101        | v0.1.0         | -      |
 | ManagedEnvironmentsPrivateEndpointConnection | 2026-01-01         | v20260101        | v0.1.0         | -      |
 | ManagedEnvironmentsStorage                   | 2026-01-01         | v20260101        | v0.1.0         | -      |
+| SandboxGroup                                 | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| SandboxGroupsVnetConnection                  | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | SessionPool                                  | 2026-01-01         | v20260101        | v0.1.0         | -      |
 

@@ -94,13 +94,6 @@ var kind_Values = map[string]Kind{
 	"workflowapp": Kind_Workflowapp,
 }
 
-// Managed service identity (system assigned and/or user assigned identities)
-type ManagedServiceIdentity struct {
-	// Type: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
-	Type                   *ManagedServiceIdentityType            `json:"type,omitempty"`
-	UserAssignedIdentities map[string]UserAssignedIdentityDetails `json:"userAssignedIdentities,omitempty"`
-}
-
 // Non versioned Container App configuration properties that define the mutable settings of a Container app
 type Configuration struct {
 	// ActiveRevisionsMode: ActiveRevisionsMode controls how active revisions are handled for the Container app:
@@ -154,25 +147,6 @@ var extendedLocationTypes_Values = map[string]ExtendedLocationTypes{
 	"customlocation": ExtendedLocationTypes_CustomLocation,
 }
 
-// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
-// +kubebuilder:validation:Enum={"None","SystemAssigned","SystemAssigned,UserAssigned","UserAssigned"}
-type ManagedServiceIdentityType string
-
-const (
-	ManagedServiceIdentityType_None                       = ManagedServiceIdentityType("None")
-	ManagedServiceIdentityType_SystemAssigned             = ManagedServiceIdentityType("SystemAssigned")
-	ManagedServiceIdentityType_SystemAssignedUserAssigned = ManagedServiceIdentityType("SystemAssigned,UserAssigned")
-	ManagedServiceIdentityType_UserAssigned               = ManagedServiceIdentityType("UserAssigned")
-)
-
-// Mapping from string to ManagedServiceIdentityType
-var managedServiceIdentityType_Values = map[string]ManagedServiceIdentityType{
-	"none":                        ManagedServiceIdentityType_None,
-	"systemassigned":              ManagedServiceIdentityType_SystemAssigned,
-	"systemassigned,userassigned": ManagedServiceIdentityType_SystemAssignedUserAssigned,
-	"userassigned":                ManagedServiceIdentityType_UserAssigned,
-}
-
 // Container App versioned application definition.
 // Defines the desired state of an immutable revision.
 // Any changes to this
@@ -201,10 +175,6 @@ type Template struct {
 
 	// Volumes: List of volume definitions for the Container App.
 	Volumes []Volume `json:"volumes,omitempty"`
-}
-
-// Information about the user assigned identity for the resource
-type UserAssignedIdentityDetails struct {
 }
 
 // Container App base container definition.

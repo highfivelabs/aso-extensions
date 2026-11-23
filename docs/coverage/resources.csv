@@ -168,8 +168,8 @@ Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags,1,,0,,0,
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/apiLinks,1,,0,,0,1,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/operationLinks,1,,0,,0,1,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/productLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.App,Microsoft.App/agents,32,,0,,0,32,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/agents/connectors,5,,0,,0,5,false,spec_api=2026-07-01
+Microsoft.App,Microsoft.App/agents,32,,0,app.azure.hfl.dev/Agent,32,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.App,Microsoft.App/agents/connectors,5,,0,app.azure.hfl.dev/AgentsConnector,5,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.App,Microsoft.App/builders,7,,0,,0,7,false,spec_api=2025-02-02-preview; spec-preview-only
 Microsoft.App,Microsoft.App/builders/builds,12,,0,,0,12,false,spec_api=2025-02-02-preview; spec-preview-only
 Microsoft.App,Microsoft.App/connectedEnvironments,11,,0,app.azure.hfl.dev/ConnectedEnvironment,11,0,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
@@ -195,8 +195,8 @@ Microsoft.App,Microsoft.App/managedEnvironments/maintenanceConfigurations,3,,0,a
 Microsoft.App,Microsoft.App/managedEnvironments/managedCertificates,4,,0,app.azure.hfl.dev/ManagedEnvironmentsManagedCertificate,4,0,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/privateEndpointConnections,4,,0,app.azure.hfl.dev/ManagedEnvironmentsPrivateEndpointConnection,3,1,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/storages,9,,0,app.azure.hfl.dev/ManagedEnvironmentsStorage,9,0,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
-Microsoft.App,Microsoft.App/sandboxGroups,3,,0,,0,3,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/sandboxGroups/vnetConnections,1,,0,,0,1,false,spec_api=2026-07-01
+Microsoft.App,Microsoft.App/sandboxGroups,3,,0,app.azure.hfl.dev/SandboxGroup,3,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.App,Microsoft.App/sandboxGroups/vnetConnections,1,,0,app.azure.hfl.dev/SandboxGroupsVnetConnection,1,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.App,Microsoft.App/sessionPools,46,,0,app.azure.hfl.dev/SessionPool,31,15,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
 Microsoft.AppComplianceAutomation,Microsoft.AppComplianceAutomation/reports,12,,0,,0,12,false,spec_api=2024-06-27
 Microsoft.AppComplianceAutomation,Microsoft.AppComplianceAutomation/reports/evidences,5,,0,,0,5,false,spec_api=2024-06-27

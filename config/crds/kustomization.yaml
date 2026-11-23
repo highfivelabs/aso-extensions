@@ -2,6 +2,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- app.azure.hfl.dev_agents.yaml
+- app.azure.hfl.dev_agentsconnectors.yaml
 - app.azure.hfl.dev_connectedenvironments.yaml
 - app.azure.hfl.dev_connectedenvironmentscertificates.yaml
 - app.azure.hfl.dev_connectedenvironmentsdaprcomponents.yaml
@@ -20,6 +22,8 @@ resources:
 - app.azure.hfl.dev_managedenvironmentsmanagedcertificates.yaml
 - app.azure.hfl.dev_managedenvironmentsprivateendpointconnections.yaml
 - app.azure.hfl.dev_managedenvironmentsstorages.yaml
+- app.azure.hfl.dev_sandboxgroups.yaml
+- app.azure.hfl.dev_sandboxgroupsvnetconnections.yaml
 - app.azure.hfl.dev_sessionpools.yaml
 - appconfiguration.azure.hfl.dev_configurationstoresprivateendpointconnections.yaml
 - authorization.azure.hfl.dev_accessreviewhistorydefinitions.yaml
