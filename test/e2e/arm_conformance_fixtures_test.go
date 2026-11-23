@@ -490,6 +490,24 @@ func init() {
 	f["ExpressRouteLag"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"location": "westus", "properties": map[string]any{"peeringLocation": "Equinix-Silicon-Valley", "bandwidthInGbps": 100}}
 	}}
+	// DevTest Labs (devtestlab.go): a lab's and a lab VM's schedules and a
+	// lab's costs have fixed names; a lab VM signs in with a password and a
+	// user's secret has a value, both from the test's Secret.
+	f["LabsSchedule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "LabVmsShutdown", "taskType": "LabVmsShutdownTask", "dailyRecurrence": map[string]any{"time": "1900"}}
+	}}
+	f["LabsVirtualmachinesSchedule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "LabVmsShutdown", "taskType": "LabVmsShutdownTask", "dailyRecurrence": map[string]any{"time": "1900"}}
+	}}
+	f["LabsCost"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "targetCost", "currencyCode": "USD"}
+	}}
+	f["LabsVirtualMachine"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"userName": "labadmin", "password": map[string]any{"name": "conformance", "key": "value"}}
+	}}
+	f["LabsUsersSecret"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"value": map[string]any{"name": "conformance", "key": "value"}}
+	}}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}

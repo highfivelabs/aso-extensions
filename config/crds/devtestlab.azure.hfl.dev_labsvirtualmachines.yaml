@@ -1,0 +1,1240 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: labsvirtualmachines.devtestlab.azure.hfl.dev
+spec:
+  group: devtestlab.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - devtestlab
+    kind: LabsVirtualMachine
+    listKind: LabsVirtualMachineList
+    plural: labsvirtualmachines
+    singular: labsvirtualmachine
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20180915
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /devtestlabs/resource-manager/Microsoft.DevTestLab/DevTestLabs/stable/2018-09-15/DTL.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              allowClaim:
+                description: 'AllowClaim: Indicates whether another user can take
+                  ownership of the virtual machine'
+                type: boolean
+              artifacts:
+                description: 'Artifacts: The artifacts to be installed on the virtual
+                  machine.'
+                items:
+                  description: Properties of an artifact.
+                  properties:
+                    artifactReference:
+                      description: 'ArtifactReference: The artifact''s identifier.'
+                      properties:
+                        armId:
+                          description: |-
+                            ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                            The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                            ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                          pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                          type: string
+                        group:
+                          description: Group is the Kubernetes group of the resource.
+                          type: string
+                        kind:
+                          description: Kind is the Kubernetes kind of the resource.
+                          type: string
+                        name:
+                          description: Name is the Kubernetes name of the resource.
+                          type: string
+                      type: object
+                    artifactTitle:
+                      description: 'ArtifactTitle: The artifact''s title.'
+                      type: string
+                    deploymentStatusMessage:
+                      description: 'DeploymentStatusMessage: The status message from
+                        the deployment.'
+                      type: string
+                    installTime:
+                      description: 'InstallTime: The time that the artifact starts
+                        to install on the virtual machine.'
+                      type: string
+                    parameters:
+                      description: 'Parameters: The parameters of the artifact.'
+                      items:
+                        description: Properties of an artifact parameter.
+                        properties:
+                          name:
+                            description: 'Name: The name of the artifact parameter.'
+                            type: string
+                          value:
+                            description: 'Value: The value of the artifact parameter.'
+                            type: string
+                        type: object
+                      type: array
+                    status:
+                      description: 'Status: The status of the artifact.'
+                      type: string
+                    vmExtensionStatusMessage:
+                      description: 'VmExtensionStatusMessage: The status message from
+                        the virtual machine extension.'
+                      type: string
+                  type: object
+                type: array
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              createdDate:
+                description: 'CreatedDate: The creation date of the virtual machine.'
+                type: string
+              customImageReference:
+                description: 'CustomImageReference: The custom image identifier of
+                  the virtual machine.'
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              dataDiskParameters:
+                description: 'DataDiskParameters: New or existing data disks to attach
+                  to the virtual machine after creation'
+                items:
+                  description: Request body for adding a new or existing data disk
+                    to a virtual machine.
+                  properties:
+                    attachNewDataDiskOptions:
+                      description: 'AttachNewDataDiskOptions: Specifies options to
+                        attach a new disk to the virtual machine.'
+                      properties:
+                        diskName:
+                          description: 'DiskName: The name of the disk to be attached.'
+                          type: string
+                        diskSizeGiB:
+                          description: 'DiskSizeGiB: Size of the disk to be attached
+                            in Gibibytes.'
+                          type: integer
+                        diskType:
+                          description: 'DiskType: The storage type for the disk (i.e.
+                            Standard, Premium).'
+                          enum:
+                          - Premium
+                          - Standard
+                          - StandardSSD
+                          type: string
+                      type: object
+                    existingLabDiskReference:
+                      description: 'ExistingLabDiskReference: Specifies the existing
+                        lab disk id to attach to virtual machine.'
+                      properties:
+                        armId:
+                          description: |-
+                            ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                            The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                            ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                          pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                          type: string
+                        group:
+                          description: Group is the Kubernetes group of the resource.
+                          type: string
+                        kind:
+                          description: Kind is the Kubernetes kind of the resource.
+                          type: string
+                        name:
+                          description: Name is the Kubernetes name of the resource.
+                          type: string
+                      type: object
+                    hostCaching:
+                      description: 'HostCaching: Caching option for a data disk (i.e.
+                        None, ReadOnly, ReadWrite).'
+                      enum:
+                      - None
+                      - ReadOnly
+                      - ReadWrite
+                      type: string
+                  type: object
+                type: array
+              disallowPublicIpAddress:
+                description: 'DisallowPublicIpAddress: Indicates whether the virtual
+                  machine is to be created without a public IP address.'
+                type: boolean
+              environmentReference:
+                description: 'EnvironmentReference: The resource ID of the environment
+                  that contains this virtual machine, if any.'
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              expirationDate:
+                description: 'ExpirationDate: The expiration date for VM.'
+                type: string
+              galleryImageReference:
+                description: 'GalleryImageReference: The Microsoft Azure Marketplace
+                  image reference of the virtual machine.'
+                properties:
+                  offer:
+                    description: 'Offer: The offer of the gallery image.'
+                    type: string
+                  osType:
+                    description: 'OsType: The OS type of the gallery image.'
+                    type: string
+                  publisher:
+                    description: 'Publisher: The publisher of the gallery image.'
+                    type: string
+                  sku:
+                    description: 'Sku: The SKU of the gallery image.'
+                    type: string
+                  version:
+                    description: 'Version: The version of the gallery image.'
+                    type: string
+                type: object
+              isAuthenticationWithSshKey:
+                description: 'IsAuthenticationWithSshKey: Indicates whether this virtual
+                  machine uses an SSH key for authentication.'
+                type: boolean
+              labSubnetName:
+                description: 'LabSubnetName: The lab subnet name of the virtual machine.'
+                type: string
+              labVirtualNetworkReference:
+                description: 'LabVirtualNetworkReference: The lab virtual network
+                  identifier of the virtual machine.'
+                properties:
+                  armId:
+                    description: |-
+                      ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                      The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                      ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: Name is the Kubernetes name of the resource.
+                    type: string
+                type: object
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              networkInterface:
+                description: 'NetworkInterface: The network interface properties.'
+                properties:
+                  dnsName:
+                    description: 'DnsName: The DNS name.'
+                    type: string
+                  privateIpAddress:
+                    description: 'PrivateIpAddress: The private IP address.'
+                    type: string
+                  publicIpAddress:
+                    description: 'PublicIpAddress: The public IP address.'
+                    type: string
+                  publicIpAddressReference:
+                    description: 'PublicIpAddressReference: The resource ID of the
+                      public IP address.'
+                    properties:
+                      armId:
+                        description: |-
+                          ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                          The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                          ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                        pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                        type: string
+                      group:
+                        description: Group is the Kubernetes group of the resource.
+                        type: string
+                      kind:
+                        description: Kind is the Kubernetes kind of the resource.
+                        type: string
+                      name:
+                        description: Name is the Kubernetes name of the resource.
+                        type: string
+                    type: object
+                  rdpAuthority:
+                    description: |-
+                      RdpAuthority: The RdpAuthority property is a server DNS host name or IP address followed by the service port number for
+                      RDP (Remote Desktop Protocol).
+                    type: string
+                  sharedPublicIpAddressConfiguration:
+                    description: 'SharedPublicIpAddressConfiguration: The configuration
+                      for sharing a public IP address across multiple virtual machines.'
+                    properties:
+                      inboundNatRules:
+                        description: 'InboundNatRules: The incoming NAT rules'
+                        items:
+                          description: A rule for NAT - exposing a VM's port (backendPort)
+                            on the public IP address using a load balancer.
+                          properties:
+                            backendPort:
+                              description: 'BackendPort: The port to which the external
+                                traffic will be redirected.'
+                              type: integer
+                            frontendPort:
+                              description: |-
+                                FrontendPort: The external endpoint port of the inbound connection. Possible values range between 1 and 65535,
+                                inclusive. If unspecified, a value will be allocated automatically.
+                              type: integer
+                            transportProtocol:
+                              description: 'TransportProtocol: The transport protocol
+                                for the endpoint.'
+                              enum:
+                              - Tcp
+                              - Udp
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  sshAuthority:
+                    description: |-
+                      SshAuthority: The SshAuthority property is a server DNS host name or IP address followed by the service port number for
+                      SSH.
+                    type: string
+                  subnetReference:
+                    description: 'SubnetReference: The resource ID of the sub net.'
+                    properties:
+                      armId:
+                        description: |-
+                          ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                          The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                          ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                        pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                        type: string
+                      group:
+                        description: Group is the Kubernetes group of the resource.
+                        type: string
+                      kind:
+                        description: Kind is the Kubernetes kind of the resource.
+                        type: string
+                      name:
+                        description: Name is the Kubernetes name of the resource.
+                        type: string
+                    type: object
+                  virtualNetworkReference:
+                    description: 'VirtualNetworkReference: The resource ID of the
+                      virtual network.'
+                    properties:
+                      armId:
+                        description: |-
+                          ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                          The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                          ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                        pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                        type: string
+                      group:
+                        description: Group is the Kubernetes group of the resource.
+                        type: string
+                      kind:
+                        description: Kind is the Kubernetes kind of the resource.
+                        type: string
+                      name:
+                        description: Name is the Kubernetes name of the resource.
+                        type: string
+                    type: object
+                type: object
+              notes:
+                description: 'Notes: The notes of the virtual machine.'
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a devtestlab.azure.hfl.dev/Lab resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+              ownerObjectId:
+                description: 'OwnerObjectId: The object identifier of the owner of
+                  the virtual machine.'
+                type: string
+              ownerUserPrincipalName:
+                description: 'OwnerUserPrincipalName: The user principal name of the
+                  virtual machine owner.'
+                type: string
+              password:
+                description: 'Password: The password of the virtual machine administrator.'
+                properties:
+                  key:
+                    description: Key is the key in the Kubernetes secret being referenced
+                    type: string
+                  name:
+                    description: |-
+                      Name is the name of the Kubernetes secret being referenced.
+                      The secret must be in the same namespace as the resource
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              planId:
+                description: 'PlanId: The id of the plan associated with the virtual
+                  machine image'
+                type: string
+              scheduleParameters:
+                description: 'ScheduleParameters: Virtual Machine schedules to be
+                  created'
+                items:
+                  description: Properties for creating a schedule.
+                  properties:
+                    dailyRecurrence:
+                      description: 'DailyRecurrence: If the schedule will occur once
+                        each day of the week, specify the daily recurrence.'
+                      properties:
+                        time:
+                          description: 'Time: The time of day the schedule will occur.'
+                          type: string
+                      type: object
+                    hourlyRecurrence:
+                      description: 'HourlyRecurrence: If the schedule will occur multiple
+                        times a day, specify the hourly recurrence.'
+                      properties:
+                        minute:
+                          description: 'Minute: Minutes of the hour the schedule will
+                            run.'
+                          type: integer
+                      type: object
+                    name:
+                      description: 'Name: The name of the virtual machine or environment'
+                      type: string
+                    notificationSettings:
+                      description: 'NotificationSettings: Notification settings.'
+                      properties:
+                        emailRecipient:
+                          description: 'EmailRecipient: The email recipient to send
+                            notifications to (can be a list of semi-colon separated
+                            email addresses).'
+                          type: string
+                        notificationLocale:
+                          description: 'NotificationLocale: The locale to use when
+                            sending a notification (fallback for unsupported languages
+                            is EN).'
+                          type: string
+                        status:
+                          description: 'Status: If notifications are enabled for this
+                            schedule (i.e. Enabled, Disabled).'
+                          enum:
+                          - Disabled
+                          - Enabled
+                          type: string
+                        timeInMinutes:
+                          description: 'TimeInMinutes: Time in minutes before event
+                            at which notification will be sent.'
+                          type: integer
+                        webhookUrl:
+                          description: 'WebhookUrl: The webhook URL to which the notification
+                            will be sent.'
+                          type: string
+                      type: object
+                    status:
+                      description: 'Status: The status of the schedule (i.e. Enabled,
+                        Disabled)'
+                      enum:
+                      - Disabled
+                      - Enabled
+                      type: string
+                    tags:
+                      additionalProperties:
+                        type: string
+                      description: 'Tags: The tags of the resource.'
+                      type: object
+                    targetResourceReference:
+                      description: 'TargetResourceReference: The resource ID to which
+                        the schedule belongs'
+                      properties:
+                        armId:
+                          description: |-
+                            ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                            The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                            ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                          pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                          type: string
+                        group:
+                          description: Group is the Kubernetes group of the resource.
+                          type: string
+                        kind:
+                          description: Kind is the Kubernetes kind of the resource.
+                          type: string
+                        name:
+                          description: Name is the Kubernetes name of the resource.
+                          type: string
+                      type: object
+                    taskType:
+                      description: 'TaskType: The task type of the schedule (e.g.
+                        LabVmsShutdownTask, LabVmAutoStart).'
+                      type: string
+                    timeZoneId:
+                      description: |-
+                        TimeZoneId: The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The
+                        possible values for this property can be found in `IReadOnlyCollection<string>
+                        TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds`
+                        (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md)
+                      type: string
+                    weeklyRecurrence:
+                      description: 'WeeklyRecurrence: If the schedule will occur only
+                        some days of the week, specify the weekly recurrence.'
+                      properties:
+                        time:
+                          description: 'Time: The time of the day the schedule will
+                            occur.'
+                          type: string
+                        weekdays:
+                          description: 'Weekdays: The days of the week for which the
+                            schedule is set (e.g. Sunday, Monday, Tuesday, etc.).'
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                  type: object
+                type: array
+              size:
+                description: 'Size: The size of the virtual machine.'
+                type: string
+              sshKey:
+                description: 'SshKey: The SSH key of the virtual machine administrator.'
+                properties:
+                  key:
+                    description: Key is the key in the Kubernetes secret being referenced
+                    type: string
+                  name:
+                    description: |-
+                      Name is the name of the Kubernetes secret being referenced.
+                      The secret must be in the same namespace as the resource
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              storageType:
+                description: 'StorageType: Storage type to use for virtual machine
+                  (i.e. Standard, Premium).'
+                type: string
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              userName:
+                description: 'UserName: The user name of the virtual machine.'
+                type: string
+            required:
+            - owner
+            type: object
+          status:
+            properties:
+              allowClaim:
+                description: 'AllowClaim: Indicates whether another user can take
+                  ownership of the virtual machine'
+                type: boolean
+              applicableSchedule:
+                description: 'ApplicableSchedule: The applicable schedule for the
+                  virtual machine.'
+                properties:
+                  id:
+                    description: |-
+                      Id: Fully qualified resource ID for the resource. Ex -
+                      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+                    type: string
+                type: object
+              artifactDeploymentStatus:
+                description: 'ArtifactDeploymentStatus: The artifact deployment status
+                  for the virtual machine.'
+                properties:
+                  artifactsApplied:
+                    description: 'ArtifactsApplied: The total count of the artifacts
+                      that were successfully applied.'
+                    type: integer
+                  deploymentStatus:
+                    description: 'DeploymentStatus: The deployment status of the artifact.'
+                    type: string
+                  totalArtifacts:
+                    description: 'TotalArtifacts: The total count of the artifacts
+                      that were tentatively applied.'
+                    type: integer
+                type: object
+              artifacts:
+                description: 'Artifacts: The artifacts to be installed on the virtual
+                  machine.'
+                items:
+                  description: Properties of an artifact.
+                  properties:
+                    artifactId:
+                      description: 'ArtifactId: The artifact''s identifier.'
+                      type: string
+                    artifactTitle:
+                      description: 'ArtifactTitle: The artifact''s title.'
+                      type: string
+                    deploymentStatusMessage:
+                      description: 'DeploymentStatusMessage: The status message from
+                        the deployment.'
+                      type: string
+                    installTime:
+                      description: 'InstallTime: The time that the artifact starts
+                        to install on the virtual machine.'
+                      type: string
+                    parameters:
+                      description: 'Parameters: The parameters of the artifact.'
+                      items:
+                        description: Properties of an artifact parameter.
+                        properties:
+                          name:
+                            description: 'Name: The name of the artifact parameter.'
+                            type: string
+                          value:
+                            description: 'Value: The value of the artifact parameter.'
+                            type: string
+                        type: object
+                      type: array
+                    status:
+                      description: 'Status: The status of the artifact.'
+                      type: string
+                    vmExtensionStatusMessage:
+                      description: 'VmExtensionStatusMessage: The status message from
+                        the virtual machine extension.'
+                      type: string
+                  type: object
+                type: array
+              computeId:
+                description: 'ComputeId: The resource identifier (Microsoft.Compute)
+                  of the virtual machine.'
+                type: string
+              computeVm:
+                description: 'ComputeVm: The compute virtual machine properties.'
+                properties:
+                  dataDiskIds:
+                    description: 'DataDiskIds: Gets data disks blob uri for the virtual
+                      machine.'
+                    items:
+                      type: string
+                    type: array
+                  dataDisks:
+                    description: 'DataDisks: Gets all data disks attached to the virtual
+                      machine.'
+                    items:
+                      description: A data disks attached to a virtual machine.
+                      properties:
+                        diskSizeGiB:
+                          description: 'DiskSizeGiB: Gets data disk size in GiB.'
+                          type: integer
+                        diskUri:
+                          description: 'DiskUri: When backed by a blob, the URI of
+                            underlying blob.'
+                          type: string
+                        managedDiskId:
+                          description: 'ManagedDiskId: When backed by managed disk,
+                            this is the ID of the compute disk resource.'
+                          type: string
+                        name:
+                          description: 'Name: Gets data disk name.'
+                          type: string
+                      type: object
+                    type: array
+                  networkInterfaceId:
+                    description: 'NetworkInterfaceId: Gets the network interface ID
+                      of the virtual machine.'
+                    type: string
+                  osDiskId:
+                    description: 'OsDiskId: Gets OS disk blob uri for the virtual
+                      machine.'
+                    type: string
+                  osType:
+                    description: 'OsType: Gets the OS type of the virtual machine.'
+                    type: string
+                  statuses:
+                    description: 'Statuses: Gets the statuses of the virtual machine.'
+                    items:
+                      description: Status information about a virtual machine.
+                      properties:
+                        code:
+                          description: 'Code: Gets the status Code.'
+                          type: string
+                        displayStatus:
+                          description: 'DisplayStatus: Gets the short localizable
+                            label for the status.'
+                          type: string
+                        message:
+                          description: 'Message: Gets the message associated with
+                            the status.'
+                          type: string
+                      type: object
+                    type: array
+                  vmSize:
+                    description: 'VmSize: Gets the size of the virtual machine.'
+                    type: string
+                type: object
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              createdByUser:
+                description: 'CreatedByUser: The email address of creator of the virtual
+                  machine.'
+                type: string
+              createdByUserId:
+                description: 'CreatedByUserId: The object identifier of the creator
+                  of the virtual machine.'
+                type: string
+              createdDate:
+                description: 'CreatedDate: The creation date of the virtual machine.'
+                type: string
+              customImageId:
+                description: 'CustomImageId: The custom image identifier of the virtual
+                  machine.'
+                type: string
+              dataDiskParameters:
+                description: 'DataDiskParameters: New or existing data disks to attach
+                  to the virtual machine after creation'
+                items:
+                  description: Request body for adding a new or existing data disk
+                    to a virtual machine.
+                  properties:
+                    attachNewDataDiskOptions:
+                      description: 'AttachNewDataDiskOptions: Specifies options to
+                        attach a new disk to the virtual machine.'
+                      properties:
+                        diskName:
+                          description: 'DiskName: The name of the disk to be attached.'
+                          type: string
+                        diskSizeGiB:
+                          description: 'DiskSizeGiB: Size of the disk to be attached
+                            in Gibibytes.'
+                          type: integer
+                        diskType:
+                          description: 'DiskType: The storage type for the disk (i.e.
+                            Standard, Premium).'
+                          type: string
+                      type: object
+                    existingLabDiskId:
+                      description: 'ExistingLabDiskId: Specifies the existing lab
+                        disk id to attach to virtual machine.'
+                      type: string
+                    hostCaching:
+                      description: 'HostCaching: Caching option for a data disk (i.e.
+                        None, ReadOnly, ReadWrite).'
+                      type: string
+                  type: object
+                type: array
+              disallowPublicIpAddress:
+                description: 'DisallowPublicIpAddress: Indicates whether the virtual
+                  machine is to be created without a public IP address.'
+                type: boolean
+              environmentId:
+                description: 'EnvironmentId: The resource ID of the environment that
+                  contains this virtual machine, if any.'
+                type: string
+              expirationDate:
+                description: 'ExpirationDate: The expiration date for VM.'
+                type: string
+              fqdn:
+                description: 'Fqdn: The fully-qualified domain name of the virtual
+                  machine.'
+                type: string
+              galleryImageReference:
+                description: 'GalleryImageReference: The Microsoft Azure Marketplace
+                  image reference of the virtual machine.'
+                properties:
+                  offer:
+                    description: 'Offer: The offer of the gallery image.'
+                    type: string
+                  osType:
+                    description: 'OsType: The OS type of the gallery image.'
+                    type: string
+                  publisher:
+                    description: 'Publisher: The publisher of the gallery image.'
+                    type: string
+                  sku:
+                    description: 'Sku: The SKU of the gallery image.'
+                    type: string
+                  version:
+                    description: 'Version: The version of the gallery image.'
+                    type: string
+                type: object
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. Ex -
+                  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+                type: string
+              isAuthenticationWithSshKey:
+                description: 'IsAuthenticationWithSshKey: Indicates whether this virtual
+                  machine uses an SSH key for authentication.'
+                type: boolean
+              labSubnetName:
+                description: 'LabSubnetName: The lab subnet name of the virtual machine.'
+                type: string
+              labVirtualNetworkId:
+                description: 'LabVirtualNetworkId: The lab virtual network identifier
+                  of the virtual machine.'
+                type: string
+              lastKnownPowerState:
+                description: 'LastKnownPowerState: Last known compute power state
+                  captured in DTL'
+                type: string
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              networkInterface:
+                description: 'NetworkInterface: The network interface properties.'
+                properties:
+                  dnsName:
+                    description: 'DnsName: The DNS name.'
+                    type: string
+                  privateIpAddress:
+                    description: 'PrivateIpAddress: The private IP address.'
+                    type: string
+                  publicIpAddress:
+                    description: 'PublicIpAddress: The public IP address.'
+                    type: string
+                  publicIpAddressId:
+                    description: 'PublicIpAddressId: The resource ID of the public
+                      IP address.'
+                    type: string
+                  rdpAuthority:
+                    description: |-
+                      RdpAuthority: The RdpAuthority property is a server DNS host name or IP address followed by the service port number for
+                      RDP (Remote Desktop Protocol).
+                    type: string
+                  sharedPublicIpAddressConfiguration:
+                    description: 'SharedPublicIpAddressConfiguration: The configuration
+                      for sharing a public IP address across multiple virtual machines.'
+                    properties:
+                      inboundNatRules:
+                        description: 'InboundNatRules: The incoming NAT rules'
+                        items:
+                          description: A rule for NAT - exposing a VM's port (backendPort)
+                            on the public IP address using a load balancer.
+                          properties:
+                            backendPort:
+                              description: 'BackendPort: The port to which the external
+                                traffic will be redirected.'
+                              type: integer
+                            frontendPort:
+                              description: |-
+                                FrontendPort: The external endpoint port of the inbound connection. Possible values range between 1 and 65535,
+                                inclusive. If unspecified, a value will be allocated automatically.
+                              type: integer
+                            transportProtocol:
+                              description: 'TransportProtocol: The transport protocol
+                                for the endpoint.'
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  sshAuthority:
+                    description: |-
+                      SshAuthority: The SshAuthority property is a server DNS host name or IP address followed by the service port number for
+                      SSH.
+                    type: string
+                  subnetId:
+                    description: 'SubnetId: The resource ID of the sub net.'
+                    type: string
+                  virtualNetworkId:
+                    description: 'VirtualNetworkId: The resource ID of the virtual
+                      network.'
+                    type: string
+                type: object
+              notes:
+                description: 'Notes: The notes of the virtual machine.'
+                type: string
+              osType:
+                description: 'OsType: The OS type of the virtual machine.'
+                type: string
+              ownerObjectId:
+                description: 'OwnerObjectId: The object identifier of the owner of
+                  the virtual machine.'
+                type: string
+              ownerUserPrincipalName:
+                description: 'OwnerUserPrincipalName: The user principal name of the
+                  virtual machine owner.'
+                type: string
+              planId:
+                description: 'PlanId: The id of the plan associated with the virtual
+                  machine image'
+                type: string
+              provisioningState:
+                description: 'ProvisioningState: The provisioning status of the resource.'
+                type: string
+              scheduleParameters:
+                description: 'ScheduleParameters: Virtual Machine schedules to be
+                  created'
+                items:
+                  description: Properties for creating a schedule.
+                  properties:
+                    dailyRecurrence:
+                      description: 'DailyRecurrence: If the schedule will occur once
+                        each day of the week, specify the daily recurrence.'
+                      properties:
+                        time:
+                          description: 'Time: The time of day the schedule will occur.'
+                          type: string
+                      type: object
+                    hourlyRecurrence:
+                      description: 'HourlyRecurrence: If the schedule will occur multiple
+                        times a day, specify the hourly recurrence.'
+                      properties:
+                        minute:
+                          description: 'Minute: Minutes of the hour the schedule will
+                            run.'
+                          type: integer
+                      type: object
+                    location:
+                      description: 'Location: The location of the new virtual machine
+                        or environment'
+                      type: string
+                    name:
+                      description: 'Name: The name of the virtual machine or environment'
+                      type: string
+                    notificationSettings:
+                      description: 'NotificationSettings: Notification settings.'
+                      properties:
+                        emailRecipient:
+                          description: 'EmailRecipient: The email recipient to send
+                            notifications to (can be a list of semi-colon separated
+                            email addresses).'
+                          type: string
+                        notificationLocale:
+                          description: 'NotificationLocale: The locale to use when
+                            sending a notification (fallback for unsupported languages
+                            is EN).'
+                          type: string
+                        status:
+                          description: 'Status: If notifications are enabled for this
+                            schedule (i.e. Enabled, Disabled).'
+                          type: string
+                        timeInMinutes:
+                          description: 'TimeInMinutes: Time in minutes before event
+                            at which notification will be sent.'
+                          type: integer
+                        webhookUrl:
+                          description: 'WebhookUrl: The webhook URL to which the notification
+                            will be sent.'
+                          type: string
+                      type: object
+                    status:
+                      description: 'Status: The status of the schedule (i.e. Enabled,
+                        Disabled)'
+                      type: string
+                    tags:
+                      additionalProperties:
+                        type: string
+                      description: 'Tags: The tags of the resource.'
+                      type: object
+                    targetResourceId:
+                      description: 'TargetResourceId: The resource ID to which the
+                        schedule belongs'
+                      type: string
+                    taskType:
+                      description: 'TaskType: The task type of the schedule (e.g.
+                        LabVmsShutdownTask, LabVmAutoStart).'
+                      type: string
+                    timeZoneId:
+                      description: |-
+                        TimeZoneId: The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The
+                        possible values for this property can be found in `IReadOnlyCollection<string>
+                        TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds`
+                        (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md)
+                      type: string
+                    weeklyRecurrence:
+                      description: 'WeeklyRecurrence: If the schedule will occur only
+                        some days of the week, specify the weekly recurrence.'
+                      properties:
+                        time:
+                          description: 'Time: The time of the day the schedule will
+                            occur.'
+                          type: string
+                        weekdays:
+                          description: 'Weekdays: The days of the week for which the
+                            schedule is set (e.g. Sunday, Monday, Tuesday, etc.).'
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                  type: object
+                type: array
+              size:
+                description: 'Size: The size of the virtual machine.'
+                type: string
+              storageType:
+                description: 'StorageType: Storage type to use for virtual machine
+                  (i.e. Standard, Premium).'
+                type: string
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+              uniqueIdentifier:
+                description: 'UniqueIdentifier: The unique immutable identifier of
+                  a resource (Guid).'
+                type: string
+              userName:
+                description: 'UserName: The user name of the virtual machine.'
+                type: string
+              virtualMachineCreationSource:
+                description: 'VirtualMachineCreationSource: Tells source of creation
+                  of lab virtual machine. Output property only.'
+                type: string
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

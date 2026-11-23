@@ -643,6 +643,17 @@ upstream's); the catalog's chart tests do that.
   (400). Not modelled: enhanced security and multi-user authorization,
   cross-region restore taking effect, the key being reachable, and the
   error codes.
+- DevTest Labs (`Microsoft.DevTestLab/labs/*`, 2018-09-15;
+  `pkg/fakecloud/arm/devtestlab.go`): a lab's schedules are named
+  `LabVmsShutdown` (`LabVmsShutdownTask`) or `LabVmAutoStart`
+  (`LabVmsStartupTask`) and a lab VM's is `LabVmsShutdown` (400); a lab's
+  cost settings are named `targetCost` (400); a lab virtual network names a
+  virtual network that exists (404); a lab VM names a virtual network of
+  its own lab that exists (404) and one of its lab subnets (400), and has a
+  password, or an SSH key when it signs in with one (400); a user's secret
+  has a value (400). Not modelled: VMs, disks and environments being made
+  (in the lab's resource group or their own), artifacts being applied,
+  schedules running, the lab's policies, and the error codes.
 - Microsoft Foundry managed networks and outbound rules
   (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
   `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`

@@ -106,7 +106,7 @@ Microsoft.DeviceUpdate,5,0,0,52,0,0,52,0.0,0.0,100.0
 Microsoft.DevOps,1,0,0,19,0,0,19,0.0,0.0,100.0
 Microsoft.DevOpsInfrastructure,1,0,0,52,0,0,52,0.0,0.0,100.0
 Microsoft.DevSpaces,1,0,0,6,0,0,6,0.0,0.0,100.0
-Microsoft.DevTestLab,19,0,1,321,0,15,306,0.0,4.7,95.3
+Microsoft.DevTestLab,19,0,18,321,0,313,8,0.0,97.5,2.5
 Microsoft.DigitalTwins,4,0,0,44,0,0,44,0.0,0.0,100.0
 Microsoft.Discovery,11,0,0,82,0,0,82,0.0,0.0,100.0
 Microsoft.DocumentDB,52,19,27,554,250,173,131,45.1,31.2,23.6

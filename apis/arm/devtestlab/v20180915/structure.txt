@@ -4,6 +4,1511 @@ github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915
 APIVersion: Enum (1 value)
 └── "2018-09-15"
 
+Lab: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (13 properties)
+│   ├── Announcement: *Object (5 properties)
+│   │   ├── Enabled: *Enum (2 values)
+│   │   │   ├── "Disabled"
+│   │   │   └── "Enabled"
+│   │   ├── ExpirationDate: *string
+│   │   ├── Expired: *bool
+│   │   ├── Markdown: *string
+│   │   └── Title: *string
+│   ├── AzureName: string
+│   ├── EnvironmentPermission: *Enum (2 values)
+│   │   ├── "Contributor"
+│   │   └── "Reader"
+│   ├── ExtendedProperties: map[string]string
+│   ├── LabStorageType: *Enum (3 values)
+│   │   ├── "Premium"
+│   │   ├── "Standard"
+│   │   └── "StandardSSD"
+│   ├── Location: *string
+│   ├── MandatoryArtifactsResourceIdsLinuxReferences: genruntime.ResourceReference[]
+│   ├── MandatoryArtifactsResourceIdsWindowsReferences: genruntime.ResourceReference[]
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PremiumDataDisks: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── Support: *Object (2 properties)
+│   │   ├── Enabled: *Enum (2 values)
+│   │   │   ├── "Disabled"
+│   │   │   └── "Enabled"
+│   │   └── Markdown: *string
+│   └── Tags: map[string]string
+└── Status: Object (27 properties)
+    ├── Announcement: *Object (7 properties)
+    │   ├── Enabled: *Enum (2 values)
+    │   │   ├── "Disabled"
+    │   │   └── "Enabled"
+    │   ├── ExpirationDate: *string
+    │   ├── Expired: *bool
+    │   ├── Markdown: *string
+    │   ├── ProvisioningState: *string
+    │   ├── Title: *string
+    │   └── UniqueIdentifier: *string
+    ├── ArtifactsStorageAccount: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DefaultPremiumStorageAccount: *string
+    ├── DefaultStorageAccount: *string
+    ├── EnvironmentPermission: *Enum (2 values)
+    │   ├── "Contributor"
+    │   └── "Reader"
+    ├── ExtendedProperties: map[string]string
+    ├── Id: *string
+    ├── LabStorageType: *Enum (3 values)
+    │   ├── "Premium"
+    │   ├── "Standard"
+    │   └── "StandardSSD"
+    ├── LoadBalancerId: *string
+    ├── Location: *string
+    ├── MandatoryArtifactsResourceIdsLinux: string[]
+    ├── MandatoryArtifactsResourceIdsWindows: string[]
+    ├── Name: *string
+    ├── NetworkSecurityGroupId: *string
+    ├── PremiumDataDiskStorageAccount: *string
+    ├── PremiumDataDisks: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── ProvisioningState: *string
+    ├── PublicIpId: *string
+    ├── Support: *Object (2 properties)
+    │   ├── Enabled: *Enum (2 values)
+    │   │   ├── "Disabled"
+    │   │   └── "Enabled"
+    │   └── Markdown: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    ├── VaultName: *string
+    └── VmCreationResourceGroup: *string
+
+LabsArtifactSource: Resource
+├── Owner: Lab
+├── Spec: Object (13 properties)
+│   ├── ArmTemplateFolderPath: *string
+│   ├── AzureName: string
+│   ├── BranchRef: *string
+│   ├── DisplayName: *string
+│   ├── FolderPath: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── SecurityToken: *genruntime.SecretReference
+│   ├── SourceType: *Enum (3 values)
+│   │   ├── "GitHub"
+│   │   ├── "StorageAccount"
+│   │   └── "VsoGit"
+│   ├── Status: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── Tags: map[string]string
+│   └── Uri: *string
+└── Status: Object (17 properties)
+    ├── ArmTemplateFolderPath: *string
+    ├── BranchRef: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DisplayName: *string
+    ├── FolderPath: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *string
+    ├── SourceType: *Enum (3 values)
+    │   ├── "GitHub"
+    │   ├── "StorageAccount"
+    │   └── "VsoGit"
+    ├── Status: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── Uri: *string
+
+LabsCost: Resource
+├── Owner: Lab
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── CreatedDate: *string
+│   ├── CurrencyCode: *string
+│   ├── EndDateTime: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── StartDateTime: *string
+│   ├── Tags: map[string]string
+│   └── TargetCost: *Object (6 properties)
+│       ├── CostThresholds: Object (5 properties)[]
+│       │   ├── DisplayOnChart: *Enum (2 values)
+│       │   │   ├── "Disabled"
+│       │   │   └── "Enabled"
+│       │   ├── NotificationSent: *string
+│       │   ├── PercentageThreshold: *Object (1 property)
+│       │   │   └── ThresholdValue: *float64
+│       │   ├── SendNotificationWhenExceeded: *Enum (2 values)
+│       │   │   ├── "Disabled"
+│       │   │   └── "Enabled"
+│       │   └── ThresholdId: *string
+│       ├── CycleEndDateTime: *string
+│       ├── CycleStartDateTime: *string
+│       ├── CycleType: *Enum (2 values)
+│       │   ├── "CalendarMonth"
+│       │   └── "Custom"
+│       ├── Status: *Enum (2 values)
+│       │   ├── "Disabled"
+│       │   └── "Enabled"
+│       └── Target: *int
+└── Status: Object (17 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── CurrencyCode: *string
+    ├── EndDateTime: *string
+    ├── Id: *string
+    ├── LabCostDetails: Object (3 properties)[]
+    │   ├── Cost: *float64
+    │   ├── CostType: *Enum (3 values)
+    │   │   ├── "Projected"
+    │   │   ├── "Reported"
+    │   │   └── "Unavailable"
+    │   └── Date: *string
+    ├── LabCostSummary: *Object (1 property)
+    │   └── EstimatedLabCost: *float64
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *string
+    ├── ResourceCosts: Object (9 properties)[]
+    │   ├── ExternalResourceId: *string
+    │   ├── ResourceCost: *float64
+    │   ├── ResourceId: *string
+    │   ├── ResourceOwner: *string
+    │   ├── ResourcePricingTier: *string
+    │   ├── ResourceStatus: *string
+    │   ├── ResourceType: *string
+    │   ├── ResourceUId: *string
+    │   └── Resourcename: *string
+    ├── StartDateTime: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── TargetCost: *Object (6 properties)
+    │   ├── CostThresholds: Object (5 properties)[]
+    │   │   ├── DisplayOnChart: *Enum (2 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   └── "Enabled"
+    │   │   ├── NotificationSent: *string
+    │   │   ├── PercentageThreshold: *Object (1 property)
+    │   │   │   └── ThresholdValue: *float64
+    │   │   ├── SendNotificationWhenExceeded: *Enum (2 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   └── "Enabled"
+    │   │   └── ThresholdId: *string
+    │   ├── CycleEndDateTime: *string
+    │   ├── CycleStartDateTime: *string
+    │   ├── CycleType: *Enum (2 values)
+    │   │   ├── "CalendarMonth"
+    │   │   └── "Custom"
+    │   ├── Status: *Enum (2 values)
+    │   │   ├── "Disabled"
+    │   │   └── "Enabled"
+    │   └── Target: *int
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsCustomImage: Resource
+├── Owner: Lab
+├── Spec: Object (14 properties)
+│   ├── Author: *string
+│   ├── AzureName: string
+│   ├── CustomImagePlan: *Object (3 properties)
+│   │   ├── Id: *string
+│   │   ├── Offer: *string
+│   │   └── Publisher: *string
+│   ├── DataDiskStorageInfo: Object (2 properties)[]
+│   │   ├── Lun: *string
+│   │   └── StorageType: *Enum (3 values)
+│   │       ├── "Premium"
+│   │       ├── "Standard"
+│   │       └── "StandardSSD"
+│   ├── Description: *string
+│   ├── IsPlanAuthorized: *bool
+│   ├── Location: *string
+│   ├── ManagedImageReference: *genruntime.ResourceReference
+│   ├── ManagedSnapshotReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Tags: map[string]string
+│   ├── Vhd: *Object (3 properties)
+│   │   ├── ImageName: *string
+│   │   ├── OsType: *Enum (3 values)
+│   │   │   ├── "Linux"
+│   │   │   ├── "None"
+│   │   │   └── "Windows"
+│   │   └── SysPrep: *bool
+│   └── Vm: *Object (3 properties)
+│       ├── LinuxOsInfo: *Object (1 property)
+│       │   └── LinuxOsState: *Enum (3 values)
+│       │       ├── "DeprovisionApplied"
+│       │       ├── "DeprovisionRequested"
+│       │       └── "NonDeprovisioned"
+│       ├── SourceVmReference: *genruntime.ResourceReference
+│       └── WindowsOsInfo: *Object (1 property)
+│           └── WindowsOsState: *Enum (3 values)
+│               ├── "NonSysprepped"
+│               ├── "SysprepApplied"
+│               └── "SysprepRequested"
+└── Status: Object (19 properties)
+    ├── Author: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreationDate: *string
+    ├── CustomImagePlan: *Object (3 properties)
+    │   ├── Id: *string
+    │   ├── Offer: *string
+    │   └── Publisher: *string
+    ├── DataDiskStorageInfo: Object (2 properties)[]
+    │   ├── Lun: *string
+    │   └── StorageType: *Enum (3 values)
+    │       ├── "Premium"
+    │       ├── "Standard"
+    │       └── "StandardSSD"
+    ├── Description: *string
+    ├── Id: *string
+    ├── IsPlanAuthorized: *bool
+    ├── Location: *string
+    ├── ManagedImageId: *string
+    ├── ManagedSnapshotId: *string
+    ├── Name: *string
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    ├── Vhd: *Object (3 properties)
+    │   ├── ImageName: *string
+    │   ├── OsType: *Enum (3 values)
+    │   │   ├── "Linux"
+    │   │   ├── "None"
+    │   │   └── "Windows"
+    │   └── SysPrep: *bool
+    └── Vm: *Object (3 properties)
+        ├── LinuxOsInfo: *Object (1 property)
+        │   └── LinuxOsState: *Enum (3 values)
+        │       ├── "DeprovisionApplied"
+        │       ├── "DeprovisionRequested"
+        │       └── "NonDeprovisioned"
+        ├── SourceVmId: *string
+        └── WindowsOsInfo: *Object (1 property)
+            └── WindowsOsState: *Enum (3 values)
+                ├── "NonSysprepped"
+                ├── "SysprepApplied"
+                └── "SysprepRequested"
+
+LabsFormula: Resource
+├── Owner: Lab
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── FormulaContent: *Object (27 properties)
+│   │   ├── AllowClaim: *bool
+│   │   ├── Artifacts: Object (7 properties)[]
+│   │   │   ├── ArtifactReference: *genruntime.ResourceReference
+│   │   │   ├── ArtifactTitle: *string
+│   │   │   ├── DeploymentStatusMessage: *string
+│   │   │   ├── InstallTime: *string
+│   │   │   ├── Parameters: Object (2 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── Status: *string
+│   │   │   └── VmExtensionStatusMessage: *string
+│   │   ├── BulkCreationParameters: *Object (1 property)
+│   │   │   └── InstanceCount: *int
+│   │   ├── CreatedDate: *string
+│   │   ├── CustomImageReference: *genruntime.ResourceReference
+│   │   ├── DataDiskParameters: Object (3 properties)[]
+│   │   │   ├── AttachNewDataDiskOptions: *Object (3 properties)
+│   │   │   │   ├── DiskName: *string
+│   │   │   │   ├── DiskSizeGiB: *int
+│   │   │   │   └── DiskType: *Enum (3 values)
+│   │   │   │       ├── "Premium"
+│   │   │   │       ├── "Standard"
+│   │   │   │       └── "StandardSSD"
+│   │   │   ├── ExistingLabDiskReference: *genruntime.ResourceReference
+│   │   │   └── HostCaching: *Enum (3 values)
+│   │   │       ├── "None"
+│   │   │       ├── "ReadOnly"
+│   │   │       └── "ReadWrite"
+│   │   ├── DisallowPublicIpAddress: *bool
+│   │   ├── EnvironmentReference: *genruntime.ResourceReference
+│   │   ├── ExpirationDate: *string
+│   │   ├── GalleryImageReference: *Object (5 properties)
+│   │   │   ├── Offer: *string
+│   │   │   ├── OsType: *string
+│   │   │   ├── Publisher: *string
+│   │   │   ├── Sku: *string
+│   │   │   └── Version: *string
+│   │   ├── IsAuthenticationWithSshKey: *bool
+│   │   ├── LabSubnetName: *string
+│   │   ├── LabVirtualNetworkReference: *genruntime.ResourceReference
+│   │   ├── Location: *string
+│   │   ├── Name: *string
+│   │   ├── NetworkInterface: *Object (9 properties)
+│   │   │   ├── DnsName: *string
+│   │   │   ├── PrivateIpAddress: *string
+│   │   │   ├── PublicIpAddress: *string
+│   │   │   ├── PublicIpAddressReference: *genruntime.ResourceReference
+│   │   │   ├── RdpAuthority: *string
+│   │   │   ├── SharedPublicIpAddressConfiguration: *Object (1 property)
+│   │   │   │   └── InboundNatRules: Object (3 properties)[]
+│   │   │   │       ├── BackendPort: *int
+│   │   │   │       ├── FrontendPort: *int
+│   │   │   │       └── TransportProtocol: *Enum (2 values)
+│   │   │   │           ├── "Tcp"
+│   │   │   │           └── "Udp"
+│   │   │   ├── SshAuthority: *string
+│   │   │   ├── SubnetReference: *genruntime.ResourceReference
+│   │   │   └── VirtualNetworkReference: *genruntime.ResourceReference
+│   │   ├── Notes: *string
+│   │   ├── OwnerObjectId: *string
+│   │   ├── OwnerUserPrincipalName: *string
+│   │   ├── Password: *genruntime.SecretReference
+│   │   ├── PlanId: *string
+│   │   ├── ScheduleParameters: Object (10 properties)[]
+│   │   │   ├── DailyRecurrence: *Object (1 property)
+│   │   │   │   └── Time: *string
+│   │   │   ├── HourlyRecurrence: *Object (1 property)
+│   │   │   │   └── Minute: *int
+│   │   │   ├── Name: *string
+│   │   │   ├── NotificationSettings: *Object (5 properties)
+│   │   │   │   ├── EmailRecipient: *string
+│   │   │   │   ├── NotificationLocale: *string
+│   │   │   │   ├── Status: *Enum (2 values)
+│   │   │   │   │   ├── "Disabled"
+│   │   │   │   │   └── "Enabled"
+│   │   │   │   ├── TimeInMinutes: *int
+│   │   │   │   └── WebhookUrl: *string
+│   │   │   ├── Status: *Enum (2 values)
+│   │   │   │   ├── "Disabled"
+│   │   │   │   └── "Enabled"
+│   │   │   ├── Tags: map[string]string
+│   │   │   ├── TargetResourceReference: *genruntime.ResourceReference
+│   │   │   ├── TaskType: *string
+│   │   │   ├── TimeZoneId: *string
+│   │   │   └── WeeklyRecurrence: *Object (2 properties)
+│   │   │       ├── Time: *string
+│   │   │       └── Weekdays: string[]
+│   │   ├── Size: *string
+│   │   ├── SshKey: *genruntime.SecretReference
+│   │   ├── StorageType: *string
+│   │   ├── Tags: map[string]string
+│   │   └── UserName: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OsType: *string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Tags: map[string]string
+│   └── Vm: *Object (1 property)
+│       └── LabVmReference: *genruntime.ResourceReference
+└── Status: Object (15 properties)
+    ├── Author: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreationDate: *string
+    ├── Description: *string
+    ├── FormulaContent: *Object (25 properties)
+    │   ├── AllowClaim: *bool
+    │   ├── Artifacts: Object (7 properties)[]
+    │   │   ├── ArtifactId: *string
+    │   │   ├── ArtifactTitle: *string
+    │   │   ├── DeploymentStatusMessage: *string
+    │   │   ├── InstallTime: *string
+    │   │   ├── Parameters: Object (2 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   └── Value: *string
+    │   │   ├── Status: *string
+    │   │   └── VmExtensionStatusMessage: *string
+    │   ├── BulkCreationParameters: *Object (1 property)
+    │   │   └── InstanceCount: *int
+    │   ├── CreatedDate: *string
+    │   ├── CustomImageId: *string
+    │   ├── DataDiskParameters: Object (3 properties)[]
+    │   │   ├── AttachNewDataDiskOptions: *Object (3 properties)
+    │   │   │   ├── DiskName: *string
+    │   │   │   ├── DiskSizeGiB: *int
+    │   │   │   └── DiskType: *Enum (3 values)
+    │   │   │       ├── "Premium"
+    │   │   │       ├── "Standard"
+    │   │   │       └── "StandardSSD"
+    │   │   ├── ExistingLabDiskId: *string
+    │   │   └── HostCaching: *Enum (3 values)
+    │   │       ├── "None"
+    │   │       ├── "ReadOnly"
+    │   │       └── "ReadWrite"
+    │   ├── DisallowPublicIpAddress: *bool
+    │   ├── EnvironmentId: *string
+    │   ├── ExpirationDate: *string
+    │   ├── GalleryImageReference: *Object (5 properties)
+    │   │   ├── Offer: *string
+    │   │   ├── OsType: *string
+    │   │   ├── Publisher: *string
+    │   │   ├── Sku: *string
+    │   │   └── Version: *string
+    │   ├── IsAuthenticationWithSshKey: *bool
+    │   ├── LabSubnetName: *string
+    │   ├── LabVirtualNetworkId: *string
+    │   ├── Location: *string
+    │   ├── Name: *string
+    │   ├── NetworkInterface: *Object (9 properties)
+    │   │   ├── DnsName: *string
+    │   │   ├── PrivateIpAddress: *string
+    │   │   ├── PublicIpAddress: *string
+    │   │   ├── PublicIpAddressId: *string
+    │   │   ├── RdpAuthority: *string
+    │   │   ├── SharedPublicIpAddressConfiguration: *Object (1 property)
+    │   │   │   └── InboundNatRules: Object (3 properties)[]
+    │   │   │       ├── BackendPort: *int
+    │   │   │       ├── FrontendPort: *int
+    │   │   │       └── TransportProtocol: *Enum (2 values)
+    │   │   │           ├── "Tcp"
+    │   │   │           └── "Udp"
+    │   │   ├── SshAuthority: *string
+    │   │   ├── SubnetId: *string
+    │   │   └── VirtualNetworkId: *string
+    │   ├── Notes: *string
+    │   ├── OwnerObjectId: *string
+    │   ├── OwnerUserPrincipalName: *string
+    │   ├── PlanId: *string
+    │   ├── ScheduleParameters: Object (11 properties)[]
+    │   │   ├── DailyRecurrence: *Object (1 property)
+    │   │   │   └── Time: *string
+    │   │   ├── HourlyRecurrence: *Object (1 property)
+    │   │   │   └── Minute: *int
+    │   │   ├── Location: *string
+    │   │   ├── Name: *string
+    │   │   ├── NotificationSettings: *Object (5 properties)
+    │   │   │   ├── EmailRecipient: *string
+    │   │   │   ├── NotificationLocale: *string
+    │   │   │   ├── Status: *Enum (2 values)
+    │   │   │   │   ├── "Disabled"
+    │   │   │   │   └── "Enabled"
+    │   │   │   ├── TimeInMinutes: *int
+    │   │   │   └── WebhookUrl: *string
+    │   │   ├── Status: *Enum (2 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   └── "Enabled"
+    │   │   ├── Tags: map[string]string
+    │   │   ├── TargetResourceId: *string
+    │   │   ├── TaskType: *string
+    │   │   ├── TimeZoneId: *string
+    │   │   └── WeeklyRecurrence: *Object (2 properties)
+    │   │       ├── Time: *string
+    │   │       └── Weekdays: string[]
+    │   ├── Size: *string
+    │   ├── StorageType: *string
+    │   ├── Tags: map[string]string
+    │   └── UserName: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── OsType: *string
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── Vm: *Object (1 property)
+        └── LabVmId: *string
+
+LabsNotificationChannel: Resource
+├── Owner: Lab
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── EmailRecipient: *string
+│   ├── Events: Object (1 property)[]
+│   │   └── EventName: *Enum (2 values)
+│   │       ├── "AutoShutdown"
+│   │       └── "Cost"
+│   ├── Location: *string
+│   ├── NotificationLocale: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Tags: map[string]string
+│   └── WebHookUrl: *string
+└── Status: Object (15 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── Description: *string
+    ├── EmailRecipient: *string
+    ├── Events: Object (1 property)[]
+    │   └── EventName: *Enum (2 values)
+    │       ├── "AutoShutdown"
+    │       └── "Cost"
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NotificationLocale: *string
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── WebHookUrl: *string
+
+LabsSchedule: Resource
+├── Owner: Lab
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── DailyRecurrence: *Object (1 property)
+│   │   └── Time: *string
+│   ├── HourlyRecurrence: *Object (1 property)
+│   │   └── Minute: *int
+│   ├── Location: *string
+│   ├── NotificationSettings: *Object (5 properties)
+│   │   ├── EmailRecipient: *string
+│   │   ├── NotificationLocale: *string
+│   │   ├── Status: *Enum (2 values)
+│   │   │   ├── "Disabled"
+│   │   │   └── "Enabled"
+│   │   ├── TimeInMinutes: *int
+│   │   └── WebhookUrl: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Status: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── Tags: map[string]string
+│   ├── TargetResourceReference: *genruntime.ResourceReference
+│   ├── TaskType: *string
+│   ├── TimeZoneId: *string
+│   └── WeeklyRecurrence: *Object (2 properties)
+│       ├── Time: *string
+│       └── Weekdays: string[]
+└── Status: Object (18 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DailyRecurrence: *Object (1 property)
+    │   └── Time: *string
+    ├── HourlyRecurrence: *Object (1 property)
+    │   └── Minute: *int
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NotificationSettings: *Object (5 properties)
+    │   ├── EmailRecipient: *string
+    │   ├── NotificationLocale: *string
+    │   ├── Status: *Enum (2 values)
+    │   │   ├── "Disabled"
+    │   │   └── "Enabled"
+    │   ├── TimeInMinutes: *int
+    │   └── WebhookUrl: *string
+    ├── ProvisioningState: *string
+    ├── Status: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── TargetResourceId: *string
+    ├── TaskType: *string
+    ├── TimeZoneId: *string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── WeeklyRecurrence: *Object (2 properties)
+        ├── Time: *string
+        └── Weekdays: string[]
+
+LabsServiceRunner: Resource
+├── Owner: Lab
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Identity: *Object (4 properties)
+│   │   ├── ClientSecretUrl: *string
+│   │   ├── PrincipalId: *string
+│   │   ├── TenantId: *string
+│   │   └── Type: *Enum (4 values)
+│   │       ├── "None"
+│   │       ├── "SystemAssigned"
+│   │       ├── "SystemAssigned,UserAssigned"
+│   │       └── "UserAssigned"
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── ClientSecretUrl: *string
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   └── Type: *Enum (4 values)
+    │       ├── "None"
+    │       ├── "SystemAssigned"
+    │       ├── "SystemAssigned,UserAssigned"
+    │       └── "UserAssigned"
+    ├── Location: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+LabsUser: Resource
+├── Owner: Lab
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Identity: *Object (5 properties)
+│   │   ├── AppId: *string
+│   │   ├── ObjectId: *string
+│   │   ├── PrincipalId: *string
+│   │   ├── PrincipalName: *string
+│   │   └── TenantId: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── SecretStore: *Object (2 properties)
+│   │   ├── KeyVaultReference: *genruntime.ResourceReference
+│   │   └── KeyVaultUri: *string
+│   └── Tags: map[string]string
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── Id: *string
+    ├── Identity: *Object (5 properties)
+    │   ├── AppId: *string
+    │   ├── ObjectId: *string
+    │   ├── PrincipalId: *string
+    │   ├── PrincipalName: *string
+    │   └── TenantId: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *string
+    ├── SecretStore: *Object (2 properties)
+    │   ├── KeyVaultId: *string
+    │   └── KeyVaultUri: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsUsersDisk: Resource
+├── Owner: LabsUser
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── DiskBlobName: *string
+│   ├── DiskSizeGiB: *int
+│   ├── DiskType: *Enum (3 values)
+│   │   ├── "Premium"
+│   │   ├── "Standard"
+│   │   └── "StandardSSD"
+│   ├── DiskUri: *string
+│   ├── HostCaching: *string
+│   ├── LeasedByLabVmReference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── ManagedDiskReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── StorageAccountReference: *genruntime.ResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (18 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DiskBlobName: *string
+    ├── DiskSizeGiB: *int
+    ├── DiskType: *Enum (3 values)
+    │   ├── "Premium"
+    │   ├── "Standard"
+    │   └── "StandardSSD"
+    ├── DiskUri: *string
+    ├── HostCaching: *string
+    ├── Id: *string
+    ├── LeasedByLabVmId: *string
+    ├── Location: *string
+    ├── ManagedDiskId: *string
+    ├── Name: *string
+    ├── ProvisioningState: *string
+    ├── StorageAccountId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsUsersEnvironment: Resource
+├── Owner: LabsUser
+├── Spec: Object (7 properties)
+│   ├── ArmTemplateDisplayName: *string
+│   ├── AzureName: string
+│   ├── DeploymentProperties: *Object (2 properties)
+│   │   ├── ArmTemplateReference: *genruntime.ResourceReference
+│   │   └── Parameters: Object (2 properties)[]
+│   │       ├── Name: *string
+│   │       └── Value: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (13 properties)
+    ├── ArmTemplateDisplayName: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedByUser: *string
+    ├── DeploymentProperties: *Object (2 properties)
+    │   ├── ArmTemplateId: *string
+    │   └── Parameters: Object (2 properties)[]
+    │       ├── Name: *string
+    │       └── Value: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *string
+    ├── ResourceGroupId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsUsersSecret: Resource
+├── Owner: LabsUser
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Tags: map[string]string
+│   └── Value: *genruntime.SecretReference
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsUsersServiceFabric: Resource
+├── Owner: LabsUser
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── EnvironmentReference: *genruntime.ResourceReference
+│   ├── ExternalServiceFabricReference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (12 properties)
+    ├── ApplicableSchedule: *Object (1 property)
+    │   └── Id: *string
+    ├── Conditions: conditions.Condition[]
+    ├── EnvironmentId: *string
+    ├── ExternalServiceFabricId: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsUsersServicefabricsSchedule: Resource
+├── Owner: LabsUsersServiceFabric
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── DailyRecurrence: *Object (1 property)
+│   │   └── Time: *string
+│   ├── HourlyRecurrence: *Object (1 property)
+│   │   └── Minute: *int
+│   ├── Location: *string
+│   ├── NotificationSettings: *Object (5 properties)
+│   │   ├── EmailRecipient: *string
+│   │   ├── NotificationLocale: *string
+│   │   ├── Status: *Enum (2 values)
+│   │   │   ├── "Disabled"
+│   │   │   └── "Enabled"
+│   │   ├── TimeInMinutes: *int
+│   │   └── WebhookUrl: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Status: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── Tags: map[string]string
+│   ├── TargetResourceReference: *genruntime.ResourceReference
+│   ├── TaskType: *string
+│   ├── TimeZoneId: *string
+│   └── WeeklyRecurrence: *Object (2 properties)
+│       ├── Time: *string
+│       └── Weekdays: string[]
+└── Status: Object (18 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DailyRecurrence: *Object (1 property)
+    │   └── Time: *string
+    ├── HourlyRecurrence: *Object (1 property)
+    │   └── Minute: *int
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NotificationSettings: *Object (5 properties)
+    │   ├── EmailRecipient: *string
+    │   ├── NotificationLocale: *string
+    │   ├── Status: *Enum (2 values)
+    │   │   ├── "Disabled"
+    │   │   └── "Enabled"
+    │   ├── TimeInMinutes: *int
+    │   └── WebhookUrl: *string
+    ├── ProvisioningState: *string
+    ├── Status: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── TargetResourceId: *string
+    ├── TaskType: *string
+    ├── TimeZoneId: *string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── WeeklyRecurrence: *Object (2 properties)
+        ├── Time: *string
+        └── Weekdays: string[]
+
+LabsVirtualMachine: Resource
+├── Owner: Lab
+├── Spec: Object (28 properties)
+│   ├── AllowClaim: *bool
+│   ├── Artifacts: Object (7 properties)[]
+│   │   ├── ArtifactReference: *genruntime.ResourceReference
+│   │   ├── ArtifactTitle: *string
+│   │   ├── DeploymentStatusMessage: *string
+│   │   ├── InstallTime: *string
+│   │   ├── Parameters: Object (2 properties)[]
+│   │   │   ├── Name: *string
+│   │   │   └── Value: *string
+│   │   ├── Status: *string
+│   │   └── VmExtensionStatusMessage: *string
+│   ├── AzureName: string
+│   ├── CreatedDate: *string
+│   ├── CustomImageReference: *genruntime.ResourceReference
+│   ├── DataDiskParameters: Object (3 properties)[]
+│   │   ├── AttachNewDataDiskOptions: *Object (3 properties)
+│   │   │   ├── DiskName: *string
+│   │   │   ├── DiskSizeGiB: *int
+│   │   │   └── DiskType: *Enum (3 values)
+│   │   │       ├── "Premium"
+│   │   │       ├── "Standard"
+│   │   │       └── "StandardSSD"
+│   │   ├── ExistingLabDiskReference: *genruntime.ResourceReference
+│   │   └── HostCaching: *Enum (3 values)
+│   │       ├── "None"
+│   │       ├── "ReadOnly"
+│   │       └── "ReadWrite"
+│   ├── DisallowPublicIpAddress: *bool
+│   ├── EnvironmentReference: *genruntime.ResourceReference
+│   ├── ExpirationDate: *string
+│   ├── GalleryImageReference: *Object (5 properties)
+│   │   ├── Offer: *string
+│   │   ├── OsType: *string
+│   │   ├── Publisher: *string
+│   │   ├── Sku: *string
+│   │   └── Version: *string
+│   ├── IsAuthenticationWithSshKey: *bool
+│   ├── LabSubnetName: *string
+│   ├── LabVirtualNetworkReference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── NetworkInterface: *Object (9 properties)
+│   │   ├── DnsName: *string
+│   │   ├── PrivateIpAddress: *string
+│   │   ├── PublicIpAddress: *string
+│   │   ├── PublicIpAddressReference: *genruntime.ResourceReference
+│   │   ├── RdpAuthority: *string
+│   │   ├── SharedPublicIpAddressConfiguration: *Object (1 property)
+│   │   │   └── InboundNatRules: Object (3 properties)[]
+│   │   │       ├── BackendPort: *int
+│   │   │       ├── FrontendPort: *int
+│   │   │       └── TransportProtocol: *Enum (2 values)
+│   │   │           ├── "Tcp"
+│   │   │           └── "Udp"
+│   │   ├── SshAuthority: *string
+│   │   ├── SubnetReference: *genruntime.ResourceReference
+│   │   └── VirtualNetworkReference: *genruntime.ResourceReference
+│   ├── Notes: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── OwnerObjectId: *string
+│   ├── OwnerUserPrincipalName: *string
+│   ├── Password: *genruntime.SecretReference
+│   ├── PlanId: *string
+│   ├── ScheduleParameters: Object (10 properties)[]
+│   │   ├── DailyRecurrence: *Object (1 property)
+│   │   │   └── Time: *string
+│   │   ├── HourlyRecurrence: *Object (1 property)
+│   │   │   └── Minute: *int
+│   │   ├── Name: *string
+│   │   ├── NotificationSettings: *Object (5 properties)
+│   │   │   ├── EmailRecipient: *string
+│   │   │   ├── NotificationLocale: *string
+│   │   │   ├── Status: *Enum (2 values)
+│   │   │   │   ├── "Disabled"
+│   │   │   │   └── "Enabled"
+│   │   │   ├── TimeInMinutes: *int
+│   │   │   └── WebhookUrl: *string
+│   │   ├── Status: *Enum (2 values)
+│   │   │   ├── "Disabled"
+│   │   │   └── "Enabled"
+│   │   ├── Tags: map[string]string
+│   │   ├── TargetResourceReference: *genruntime.ResourceReference
+│   │   ├── TaskType: *string
+│   │   ├── TimeZoneId: *string
+│   │   └── WeeklyRecurrence: *Object (2 properties)
+│   │       ├── Time: *string
+│   │       └── Weekdays: string[]
+│   ├── Size: *string
+│   ├── SshKey: *genruntime.SecretReference
+│   ├── StorageType: *string
+│   ├── Tags: map[string]string
+│   └── UserName: *string
+└── Status: Object (40 properties)
+    ├── AllowClaim: *bool
+    ├── ApplicableSchedule: *Object (1 property)
+    │   └── Id: *string
+    ├── ArtifactDeploymentStatus: *Object (3 properties)
+    │   ├── ArtifactsApplied: *int
+    │   ├── DeploymentStatus: *string
+    │   └── TotalArtifacts: *int
+    ├── Artifacts: Object (7 properties)[]
+    │   ├── ArtifactId: *string
+    │   ├── ArtifactTitle: *string
+    │   ├── DeploymentStatusMessage: *string
+    │   ├── InstallTime: *string
+    │   ├── Parameters: Object (2 properties)[]
+    │   │   ├── Name: *string
+    │   │   └── Value: *string
+    │   ├── Status: *string
+    │   └── VmExtensionStatusMessage: *string
+    ├── ComputeId: *string
+    ├── ComputeVm: *Object (7 properties)
+    │   ├── DataDiskIds: string[]
+    │   ├── DataDisks: Object (4 properties)[]
+    │   │   ├── DiskSizeGiB: *int
+    │   │   ├── DiskUri: *string
+    │   │   ├── ManagedDiskId: *string
+    │   │   └── Name: *string
+    │   ├── NetworkInterfaceId: *string
+    │   ├── OsDiskId: *string
+    │   ├── OsType: *string
+    │   ├── Statuses: Object (3 properties)[]
+    │   │   ├── Code: *string
+    │   │   ├── DisplayStatus: *string
+    │   │   └── Message: *string
+    │   └── VmSize: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedByUser: *string
+    ├── CreatedByUserId: *string
+    ├── CreatedDate: *string
+    ├── CustomImageId: *string
+    ├── DataDiskParameters: Object (3 properties)[]
+    │   ├── AttachNewDataDiskOptions: *Object (3 properties)
+    │   │   ├── DiskName: *string
+    │   │   ├── DiskSizeGiB: *int
+    │   │   └── DiskType: *Enum (3 values)
+    │   │       ├── "Premium"
+    │   │       ├── "Standard"
+    │   │       └── "StandardSSD"
+    │   ├── ExistingLabDiskId: *string
+    │   └── HostCaching: *Enum (3 values)
+    │       ├── "None"
+    │       ├── "ReadOnly"
+    │       └── "ReadWrite"
+    ├── DisallowPublicIpAddress: *bool
+    ├── EnvironmentId: *string
+    ├── ExpirationDate: *string
+    ├── Fqdn: *string
+    ├── GalleryImageReference: *Object (5 properties)
+    │   ├── Offer: *string
+    │   ├── OsType: *string
+    │   ├── Publisher: *string
+    │   ├── Sku: *string
+    │   └── Version: *string
+    ├── Id: *string
+    ├── IsAuthenticationWithSshKey: *bool
+    ├── LabSubnetName: *string
+    ├── LabVirtualNetworkId: *string
+    ├── LastKnownPowerState: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NetworkInterface: *Object (9 properties)
+    │   ├── DnsName: *string
+    │   ├── PrivateIpAddress: *string
+    │   ├── PublicIpAddress: *string
+    │   ├── PublicIpAddressId: *string
+    │   ├── RdpAuthority: *string
+    │   ├── SharedPublicIpAddressConfiguration: *Object (1 property)
+    │   │   └── InboundNatRules: Object (3 properties)[]
+    │   │       ├── BackendPort: *int
+    │   │       ├── FrontendPort: *int
+    │   │       └── TransportProtocol: *Enum (2 values)
+    │   │           ├── "Tcp"
+    │   │           └── "Udp"
+    │   ├── SshAuthority: *string
+    │   ├── SubnetId: *string
+    │   └── VirtualNetworkId: *string
+    ├── Notes: *string
+    ├── OsType: *string
+    ├── OwnerObjectId: *string
+    ├── OwnerUserPrincipalName: *string
+    ├── PlanId: *string
+    ├── ProvisioningState: *string
+    ├── ScheduleParameters: Object (11 properties)[]
+    │   ├── DailyRecurrence: *Object (1 property)
+    │   │   └── Time: *string
+    │   ├── HourlyRecurrence: *Object (1 property)
+    │   │   └── Minute: *int
+    │   ├── Location: *string
+    │   ├── Name: *string
+    │   ├── NotificationSettings: *Object (5 properties)
+    │   │   ├── EmailRecipient: *string
+    │   │   ├── NotificationLocale: *string
+    │   │   ├── Status: *Enum (2 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   └── "Enabled"
+    │   │   ├── TimeInMinutes: *int
+    │   │   └── WebhookUrl: *string
+    │   ├── Status: *Enum (2 values)
+    │   │   ├── "Disabled"
+    │   │   └── "Enabled"
+    │   ├── Tags: map[string]string
+    │   ├── TargetResourceId: *string
+    │   ├── TaskType: *string
+    │   ├── TimeZoneId: *string
+    │   └── WeeklyRecurrence: *Object (2 properties)
+    │       ├── Time: *string
+    │       └── Weekdays: string[]
+    ├── Size: *string
+    ├── StorageType: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    ├── UserName: *string
+    └── VirtualMachineCreationSource: *Enum (3 values)
+        ├── "FromCustomImage"
+        ├── "FromGalleryImage"
+        └── "FromSharedGalleryImage"
+
+LabsVirtualNetwork: Resource
+├── Owner: Lab
+├── Spec: Object (9 properties)
+│   ├── AllowedSubnets: Object (3 properties)[]
+│   │   ├── AllowPublicIp: *Enum (3 values)
+│   │   │   ├── "Allow"
+│   │   │   ├── "Default"
+│   │   │   └── "Deny"
+│   │   ├── LabSubnetName: *string
+│   │   └── ResourceReference: *genruntime.ResourceReference
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── ExternalProviderResourceReference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── SubnetOverrides: Object (6 properties)[]
+│   │   ├── LabSubnetName: *string
+│   │   ├── ResourceReference: *genruntime.ResourceReference
+│   │   ├── SharedPublicIpAddressConfiguration: *Object (1 property)
+│   │   │   └── AllowedPorts: Object (2 properties)[]
+│   │   │       ├── BackendPort: *int
+│   │   │       └── TransportProtocol: *Enum (2 values)
+│   │   │           ├── "Tcp"
+│   │   │           └── "Udp"
+│   │   ├── UseInVmCreationPermission: *Enum (3 values)
+│   │   │   ├── "Allow"
+│   │   │   ├── "Default"
+│   │   │   └── "Deny"
+│   │   ├── UsePublicIpAddressPermission: *Enum (3 values)
+│   │   │   ├── "Allow"
+│   │   │   ├── "Default"
+│   │   │   └── "Deny"
+│   │   └── VirtualNetworkPoolName: *string
+│   └── Tags: map[string]string
+└── Status: Object (15 properties)
+    ├── AllowedSubnets: Object (3 properties)[]
+    │   ├── AllowPublicIp: *Enum (3 values)
+    │   │   ├── "Allow"
+    │   │   ├── "Default"
+    │   │   └── "Deny"
+    │   ├── LabSubnetName: *string
+    │   └── ResourceId: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── Description: *string
+    ├── ExternalProviderResourceId: *string
+    ├── ExternalSubnets: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── Name: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *string
+    ├── SubnetOverrides: Object (6 properties)[]
+    │   ├── LabSubnetName: *string
+    │   ├── ResourceId: *string
+    │   ├── SharedPublicIpAddressConfiguration: *Object (1 property)
+    │   │   └── AllowedPorts: Object (2 properties)[]
+    │   │       ├── BackendPort: *int
+    │   │       └── TransportProtocol: *Enum (2 values)
+    │   │           ├── "Tcp"
+    │   │           └── "Udp"
+    │   ├── UseInVmCreationPermission: *Enum (3 values)
+    │   │   ├── "Allow"
+    │   │   ├── "Default"
+    │   │   └── "Deny"
+    │   ├── UsePublicIpAddressPermission: *Enum (3 values)
+    │   │   ├── "Allow"
+    │   │   ├── "Default"
+    │   │   └── "Deny"
+    │   └── VirtualNetworkPoolName: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsVirtualmachinesSchedule: Resource
+├── Owner: LabsVirtualMachine
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── DailyRecurrence: *Object (1 property)
+│   │   └── Time: *string
+│   ├── HourlyRecurrence: *Object (1 property)
+│   │   └── Minute: *int
+│   ├── Location: *string
+│   ├── NotificationSettings: *Object (5 properties)
+│   │   ├── EmailRecipient: *string
+│   │   ├── NotificationLocale: *string
+│   │   ├── Status: *Enum (2 values)
+│   │   │   ├── "Disabled"
+│   │   │   └── "Enabled"
+│   │   ├── TimeInMinutes: *int
+│   │   └── WebhookUrl: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Status: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── Tags: map[string]string
+│   ├── TargetResourceReference: *genruntime.ResourceReference
+│   ├── TaskType: *string
+│   ├── TimeZoneId: *string
+│   └── WeeklyRecurrence: *Object (2 properties)
+│       ├── Time: *string
+│       └── Weekdays: string[]
+└── Status: Object (18 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DailyRecurrence: *Object (1 property)
+    │   └── Time: *string
+    ├── HourlyRecurrence: *Object (1 property)
+    │   └── Minute: *int
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NotificationSettings: *Object (5 properties)
+    │   ├── EmailRecipient: *string
+    │   ├── NotificationLocale: *string
+    │   ├── Status: *Enum (2 values)
+    │   │   ├── "Disabled"
+    │   │   └── "Enabled"
+    │   ├── TimeInMinutes: *int
+    │   └── WebhookUrl: *string
+    ├── ProvisioningState: *string
+    ├── Status: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── TargetResourceId: *string
+    ├── TaskType: *string
+    ├── TimeZoneId: *string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── WeeklyRecurrence: *Object (2 properties)
+        ├── Time: *string
+        └── Weekdays: string[]
+
 Schedule: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (13 properties)

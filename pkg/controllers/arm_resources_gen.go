@@ -1110,6 +1110,105 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(dbforpostgresql_v20250801.FlexibleServersPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Lab)})
+	result = append(result, &registration.StorageType{
+		Obj: new(devtestlab_v20180915.LabsArtifactSource),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.securityToken",
+				Func: indexDevtestlabLabsArtifactSourceSecurityToken,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.securityToken",
+					},
+					&devtestlab_v20180915.LabsArtifactSourceList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsCost)})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsCustomImage)})
+	result = append(result, &registration.StorageType{
+		Obj: new(devtestlab_v20180915.LabsFormula),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.formulaContent.password",
+				Func: indexDevtestlabLabsFormulaPassword,
+			},
+			{
+				Key:  ".spec.formulaContent.sshKey",
+				Func: indexDevtestlabLabsFormulaSshKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.formulaContent.password",
+						".spec.formulaContent.sshKey",
+					},
+					&devtestlab_v20180915.LabsFormulaList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsNotificationChannel)})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsSchedule)})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsServiceRunner)})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsUser)})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsUsersDisk)})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsUsersEnvironment)})
+	result = append(result, &registration.StorageType{
+		Obj: new(devtestlab_v20180915.LabsUsersSecret),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.value",
+				Func: indexDevtestlabLabsUsersSecretValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.value",
+					},
+					&devtestlab_v20180915.LabsUsersSecretList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsUsersServiceFabric)})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsUsersServicefabricsSchedule)})
+	result = append(result, &registration.StorageType{
+		Obj: new(devtestlab_v20180915.LabsVirtualMachine),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.password",
+				Func: indexDevtestlabLabsVirtualMachinePassword,
+			},
+			{
+				Key:  ".spec.sshKey",
+				Func: indexDevtestlabLabsVirtualMachineSshKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.password",
+						".spec.sshKey",
+					},
+					&devtestlab_v20180915.LabsVirtualMachineList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsVirtualNetwork)})
+	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.LabsVirtualmachinesSchedule)})
 	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Schedule)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240701.MongoClustersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsCassandraKeyspace)})
@@ -2697,8 +2796,46 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(dbforpostgresql_v20221108s.ServerGroupsv2Role)})
 	result = append(result, &registration.KnownType{Obj: new(dbforpostgresql_v20250801.FlexibleServersPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(dbforpostgresql_v20250801s.FlexibleServersPrivateEndpointConnection)})
-	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
-	result = append(result, &registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(devtestlab_v20180915.Lab)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsArtifactSource)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsCost)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsCustomImage)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsFormula)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsNotificationChannel)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsSchedule)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsServiceRunner)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsUser)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsUsersDisk)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsUsersEnvironment)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsUsersSecret)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsUsersServiceFabric)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsUsersServicefabricsSchedule)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsVirtualMachine)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsVirtualNetwork)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.LabsVirtualmachinesSchedule)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915.Schedule)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.Lab)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsArtifactSource)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsCost)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsCustomImage)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsFormula)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsNotificationChannel)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsSchedule)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsServiceRunner)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsUser)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsUsersDisk)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsUsersEnvironment)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsUsersSecret)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsUsersServiceFabric)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsUsersServicefabricsSchedule)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsVirtualMachine)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsVirtualNetwork)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.LabsVirtualmachinesSchedule)},
+		&registration.KnownType{Obj: new(devtestlab_v20180915s.Schedule)})
 	result = append(result, &registration.KnownType{Obj: new(documentdb_v20240701.MongoClustersPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(documentdb_v20240701s.MongoClustersPrivateEndpointConnection)})
 	result = append(
@@ -3672,6 +3809,23 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2NodeConfigurationExtension{})
 	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2PrivateEndpointConnectionExtension{})
 	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2RoleExtension{})
+	result = append(result, &devtestlab_customizations.LabExtension{})
+	result = append(result, &devtestlab_customizations.LabsArtifactSourceExtension{})
+	result = append(result, &devtestlab_customizations.LabsCostExtension{})
+	result = append(result, &devtestlab_customizations.LabsCustomImageExtension{})
+	result = append(result, &devtestlab_customizations.LabsFormulaExtension{})
+	result = append(result, &devtestlab_customizations.LabsNotificationChannelExtension{})
+	result = append(result, &devtestlab_customizations.LabsScheduleExtension{})
+	result = append(result, &devtestlab_customizations.LabsServiceRunnerExtension{})
+	result = append(result, &devtestlab_customizations.LabsUserExtension{})
+	result = append(result, &devtestlab_customizations.LabsUsersDiskExtension{})
+	result = append(result, &devtestlab_customizations.LabsUsersEnvironmentExtension{})
+	result = append(result, &devtestlab_customizations.LabsUsersSecretExtension{})
+	result = append(result, &devtestlab_customizations.LabsUsersServiceFabricExtension{})
+	result = append(result, &devtestlab_customizations.LabsUsersServicefabricsScheduleExtension{})
+	result = append(result, &devtestlab_customizations.LabsVirtualMachineExtension{})
+	result = append(result, &devtestlab_customizations.LabsVirtualNetworkExtension{})
+	result = append(result, &devtestlab_customizations.LabsVirtualmachinesScheduleExtension{})
 	result = append(result, &devtestlab_customizations.ScheduleExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspaceExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspacesTableExtension{})
@@ -5368,6 +5522,84 @@ func indexDbforpostgresqlServerGroupsv2RolePassword(rawObj client.Object) []stri
 		return nil
 	}
 	return obj.Spec.Password.Index()
+}
+
+// indexDevtestlabLabsArtifactSourceSecurityToken an index function for devtestlab_v20180915.LabsArtifactSource .spec.securityToken
+func indexDevtestlabLabsArtifactSourceSecurityToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*devtestlab_v20180915.LabsArtifactSource)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SecurityToken == nil {
+		return nil
+	}
+	return obj.Spec.SecurityToken.Index()
+}
+
+// indexDevtestlabLabsFormulaPassword an index function for devtestlab_v20180915.LabsFormula .spec.formulaContent.password
+func indexDevtestlabLabsFormulaPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*devtestlab_v20180915.LabsFormula)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.FormulaContent == nil {
+		return nil
+	}
+	if obj.Spec.FormulaContent.Password == nil {
+		return nil
+	}
+	return obj.Spec.FormulaContent.Password.Index()
+}
+
+// indexDevtestlabLabsFormulaSshKey an index function for devtestlab_v20180915.LabsFormula .spec.formulaContent.sshKey
+func indexDevtestlabLabsFormulaSshKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*devtestlab_v20180915.LabsFormula)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.FormulaContent == nil {
+		return nil
+	}
+	if obj.Spec.FormulaContent.SshKey == nil {
+		return nil
+	}
+	return obj.Spec.FormulaContent.SshKey.Index()
+}
+
+// indexDevtestlabLabsUsersSecretValue an index function for devtestlab_v20180915.LabsUsersSecret .spec.value
+func indexDevtestlabLabsUsersSecretValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*devtestlab_v20180915.LabsUsersSecret)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Value == nil {
+		return nil
+	}
+	return obj.Spec.Value.Index()
+}
+
+// indexDevtestlabLabsVirtualMachinePassword an index function for devtestlab_v20180915.LabsVirtualMachine .spec.password
+func indexDevtestlabLabsVirtualMachinePassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*devtestlab_v20180915.LabsVirtualMachine)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Password == nil {
+		return nil
+	}
+	return obj.Spec.Password.Index()
+}
+
+// indexDevtestlabLabsVirtualMachineSshKey an index function for devtestlab_v20180915.LabsVirtualMachine .spec.sshKey
+func indexDevtestlabLabsVirtualMachineSshKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*devtestlab_v20180915.LabsVirtualMachine)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SshKey == nil {
+		return nil
+	}
+	return obj.Spec.SshKey.Index()
 }
 
 // indexDocumentdbDatabaseAccountsCassandraRoleAssignmentPrincipalIdFromConfig an index function for documentdb_v20260315.DatabaseAccountsCassandraRoleAssignment .spec.principalIdFromConfig

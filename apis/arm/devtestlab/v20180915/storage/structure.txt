@@ -4,6 +4,1404 @@ github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915/storage
 APIVersion: Enum (1 value)
 └── "2018-09-15"
 
+Lab: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (15 properties)
+│   ├── Announcement: *Object (6 properties)
+│   │   ├── Enabled: *string
+│   │   ├── ExpirationDate: *string
+│   │   ├── Expired: *bool
+│   │   ├── Markdown: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Title: *string
+│   ├── AzureName: string
+│   ├── EnvironmentPermission: *string
+│   ├── ExtendedProperties: map[string]string
+│   ├── LabStorageType: *string
+│   ├── Location: *string
+│   ├── MandatoryArtifactsResourceIdsLinuxReferences: genruntime.ResourceReference[]
+│   ├── MandatoryArtifactsResourceIdsWindowsReferences: genruntime.ResourceReference[]
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PremiumDataDisks: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Support: *Object (3 properties)
+│   │   ├── Enabled: *string
+│   │   ├── Markdown: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (28 properties)
+    ├── Announcement: *Object (8 properties)
+    │   ├── Enabled: *string
+    │   ├── ExpirationDate: *string
+    │   ├── Expired: *bool
+    │   ├── Markdown: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisioningState: *string
+    │   ├── Title: *string
+    │   └── UniqueIdentifier: *string
+    ├── ArtifactsStorageAccount: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DefaultPremiumStorageAccount: *string
+    ├── DefaultStorageAccount: *string
+    ├── EnvironmentPermission: *string
+    ├── ExtendedProperties: map[string]string
+    ├── Id: *string
+    ├── LabStorageType: *string
+    ├── LoadBalancerId: *string
+    ├── Location: *string
+    ├── MandatoryArtifactsResourceIdsLinux: string[]
+    ├── MandatoryArtifactsResourceIdsWindows: string[]
+    ├── Name: *string
+    ├── NetworkSecurityGroupId: *string
+    ├── PremiumDataDiskStorageAccount: *string
+    ├── PremiumDataDisks: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── PublicIpId: *string
+    ├── Support: *Object (3 properties)
+    │   ├── Enabled: *string
+    │   ├── Markdown: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    ├── VaultName: *string
+    └── VmCreationResourceGroup: *string
+
+LabsArtifactSource: Resource
+├── Owner: devtestlab/v20180915.Lab
+├── Spec: Object (15 properties)
+│   ├── ArmTemplateFolderPath: *string
+│   ├── AzureName: string
+│   ├── BranchRef: *string
+│   ├── DisplayName: *string
+│   ├── FolderPath: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── SecurityToken: *genruntime.SecretReference
+│   ├── SourceType: *string
+│   ├── Status: *string
+│   ├── Tags: map[string]string
+│   └── Uri: *string
+└── Status: Object (18 properties)
+    ├── ArmTemplateFolderPath: *string
+    ├── BranchRef: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DisplayName: *string
+    ├── FolderPath: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SourceType: *string
+    ├── Status: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── Uri: *string
+
+LabsCost: Resource
+├── Owner: devtestlab/v20180915.Lab
+├── Spec: Object (12 properties)
+│   ├── AzureName: string
+│   ├── CreatedDate: *string
+│   ├── CurrencyCode: *string
+│   ├── EndDateTime: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── StartDateTime: *string
+│   ├── Tags: map[string]string
+│   └── TargetCost: *Object (7 properties)
+│       ├── CostThresholds: Object (6 properties)[]
+│       │   ├── DisplayOnChart: *string
+│       │   ├── NotificationSent: *string
+│       │   ├── PercentageThreshold: *Object (2 properties)
+│       │   │   ├── PropertyBag: genruntime.PropertyBag
+│       │   │   └── ThresholdValue: *float64
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   ├── SendNotificationWhenExceeded: *string
+│       │   └── ThresholdId: *string
+│       ├── CycleEndDateTime: *string
+│       ├── CycleStartDateTime: *string
+│       ├── CycleType: *string
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── Status: *string
+│       └── Target: *int
+└── Status: Object (18 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── CurrencyCode: *string
+    ├── EndDateTime: *string
+    ├── Id: *string
+    ├── LabCostDetails: Object (4 properties)[]
+    │   ├── Cost: *float64
+    │   ├── CostType: *string
+    │   ├── Date: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── LabCostSummary: *Object (2 properties)
+    │   ├── EstimatedLabCost: *float64
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ResourceCosts: Object (10 properties)[]
+    │   ├── ExternalResourceId: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ResourceCost: *float64
+    │   ├── ResourceId: *string
+    │   ├── ResourceOwner: *string
+    │   ├── ResourcePricingTier: *string
+    │   ├── ResourceStatus: *string
+    │   ├── ResourceType: *string
+    │   ├── ResourceUId: *string
+    │   └── Resourcename: *string
+    ├── StartDateTime: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── TargetCost: *Object (7 properties)
+    │   ├── CostThresholds: Object (6 properties)[]
+    │   │   ├── DisplayOnChart: *string
+    │   │   ├── NotificationSent: *string
+    │   │   ├── PercentageThreshold: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── ThresholdValue: *float64
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── SendNotificationWhenExceeded: *string
+    │   │   └── ThresholdId: *string
+    │   ├── CycleEndDateTime: *string
+    │   ├── CycleStartDateTime: *string
+    │   ├── CycleType: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Status: *string
+    │   └── Target: *int
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsCustomImage: Resource
+├── Owner: devtestlab/v20180915.Lab
+├── Spec: Object (16 properties)
+│   ├── Author: *string
+│   ├── AzureName: string
+│   ├── CustomImagePlan: *Object (4 properties)
+│   │   ├── Id: *string
+│   │   ├── Offer: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Publisher: *string
+│   ├── DataDiskStorageInfo: Object (3 properties)[]
+│   │   ├── Lun: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── StorageType: *string
+│   ├── Description: *string
+│   ├── IsPlanAuthorized: *bool
+│   ├── Location: *string
+│   ├── ManagedImageReference: *genruntime.ResourceReference
+│   ├── ManagedSnapshotReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Tags: map[string]string
+│   ├── Vhd: *Object (4 properties)
+│   │   ├── ImageName: *string
+│   │   ├── OsType: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SysPrep: *bool
+│   └── Vm: *Object (4 properties)
+│       ├── LinuxOsInfo: *Object (2 properties)
+│       │   ├── LinuxOsState: *string
+│       │   └── PropertyBag: genruntime.PropertyBag
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── SourceVmReference: *genruntime.ResourceReference
+│       └── WindowsOsInfo: *Object (2 properties)
+│           ├── PropertyBag: genruntime.PropertyBag
+│           └── WindowsOsState: *string
+└── Status: Object (20 properties)
+    ├── Author: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreationDate: *string
+    ├── CustomImagePlan: *Object (4 properties)
+    │   ├── Id: *string
+    │   ├── Offer: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Publisher: *string
+    ├── DataDiskStorageInfo: Object (3 properties)[]
+    │   ├── Lun: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── StorageType: *string
+    ├── Description: *string
+    ├── Id: *string
+    ├── IsPlanAuthorized: *bool
+    ├── Location: *string
+    ├── ManagedImageId: *string
+    ├── ManagedSnapshotId: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    ├── Vhd: *Object (4 properties)
+    │   ├── ImageName: *string
+    │   ├── OsType: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── SysPrep: *bool
+    └── Vm: *Object (4 properties)
+        ├── LinuxOsInfo: *Object (2 properties)
+        │   ├── LinuxOsState: *string
+        │   └── PropertyBag: genruntime.PropertyBag
+        ├── PropertyBag: genruntime.PropertyBag
+        ├── SourceVmId: *string
+        └── WindowsOsInfo: *Object (2 properties)
+            ├── PropertyBag: genruntime.PropertyBag
+            └── WindowsOsState: *string
+
+LabsFormula: Resource
+├── Owner: devtestlab/v20180915.Lab
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── FormulaContent: *Object (28 properties)
+│   │   ├── AllowClaim: *bool
+│   │   ├── Artifacts: Object (8 properties)[]
+│   │   │   ├── ArtifactReference: *genruntime.ResourceReference
+│   │   │   ├── ArtifactTitle: *string
+│   │   │   ├── DeploymentStatusMessage: *string
+│   │   │   ├── InstallTime: *string
+│   │   │   ├── Parameters: Object (3 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Value: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Status: *string
+│   │   │   └── VmExtensionStatusMessage: *string
+│   │   ├── BulkCreationParameters: *Object (2 properties)
+│   │   │   ├── InstanceCount: *int
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── CreatedDate: *string
+│   │   ├── CustomImageReference: *genruntime.ResourceReference
+│   │   ├── DataDiskParameters: Object (4 properties)[]
+│   │   │   ├── AttachNewDataDiskOptions: *Object (4 properties)
+│   │   │   │   ├── DiskName: *string
+│   │   │   │   ├── DiskSizeGiB: *int
+│   │   │   │   ├── DiskType: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ExistingLabDiskReference: *genruntime.ResourceReference
+│   │   │   ├── HostCaching: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── DisallowPublicIpAddress: *bool
+│   │   ├── EnvironmentReference: *genruntime.ResourceReference
+│   │   ├── ExpirationDate: *string
+│   │   ├── GalleryImageReference: *Object (6 properties)
+│   │   │   ├── Offer: *string
+│   │   │   ├── OsType: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Publisher: *string
+│   │   │   ├── Sku: *string
+│   │   │   └── Version: *string
+│   │   ├── IsAuthenticationWithSshKey: *bool
+│   │   ├── LabSubnetName: *string
+│   │   ├── LabVirtualNetworkReference: *genruntime.ResourceReference
+│   │   ├── Location: *string
+│   │   ├── Name: *string
+│   │   ├── NetworkInterface: *Object (10 properties)
+│   │   │   ├── DnsName: *string
+│   │   │   ├── PrivateIpAddress: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PublicIpAddress: *string
+│   │   │   ├── PublicIpAddressReference: *genruntime.ResourceReference
+│   │   │   ├── RdpAuthority: *string
+│   │   │   ├── SharedPublicIpAddressConfiguration: *Object (2 properties)
+│   │   │   │   ├── InboundNatRules: Object (4 properties)[]
+│   │   │   │   │   ├── BackendPort: *int
+│   │   │   │   │   ├── FrontendPort: *int
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── TransportProtocol: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── SshAuthority: *string
+│   │   │   ├── SubnetReference: *genruntime.ResourceReference
+│   │   │   └── VirtualNetworkReference: *genruntime.ResourceReference
+│   │   ├── Notes: *string
+│   │   ├── OwnerObjectId: *string
+│   │   ├── OwnerUserPrincipalName: *string
+│   │   ├── Password: *genruntime.SecretReference
+│   │   ├── PlanId: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── ScheduleParameters: Object (11 properties)[]
+│   │   │   ├── DailyRecurrence: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Time: *string
+│   │   │   ├── HourlyRecurrence: *Object (2 properties)
+│   │   │   │   ├── Minute: *int
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Name: *string
+│   │   │   ├── NotificationSettings: *Object (6 properties)
+│   │   │   │   ├── EmailRecipient: *string
+│   │   │   │   ├── NotificationLocale: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Status: *string
+│   │   │   │   ├── TimeInMinutes: *int
+│   │   │   │   └── WebhookUrl: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Status: *string
+│   │   │   ├── Tags: map[string]string
+│   │   │   ├── TargetResourceReference: *genruntime.ResourceReference
+│   │   │   ├── TaskType: *string
+│   │   │   ├── TimeZoneId: *string
+│   │   │   └── WeeklyRecurrence: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Time: *string
+│   │   │       └── Weekdays: string[]
+│   │   ├── Size: *string
+│   │   ├── SshKey: *genruntime.SecretReference
+│   │   ├── StorageType: *string
+│   │   ├── Tags: map[string]string
+│   │   └── UserName: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── OsType: *string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Tags: map[string]string
+│   └── Vm: *Object (2 properties)
+│       ├── LabVmReference: *genruntime.ResourceReference
+│       └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (16 properties)
+    ├── Author: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreationDate: *string
+    ├── Description: *string
+    ├── FormulaContent: *Object (26 properties)
+    │   ├── AllowClaim: *bool
+    │   ├── Artifacts: Object (8 properties)[]
+    │   │   ├── ArtifactId: *string
+    │   │   ├── ArtifactTitle: *string
+    │   │   ├── DeploymentStatusMessage: *string
+    │   │   ├── InstallTime: *string
+    │   │   ├── Parameters: Object (3 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Value: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Status: *string
+    │   │   └── VmExtensionStatusMessage: *string
+    │   ├── BulkCreationParameters: *Object (2 properties)
+    │   │   ├── InstanceCount: *int
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── CreatedDate: *string
+    │   ├── CustomImageId: *string
+    │   ├── DataDiskParameters: Object (4 properties)[]
+    │   │   ├── AttachNewDataDiskOptions: *Object (4 properties)
+    │   │   │   ├── DiskName: *string
+    │   │   │   ├── DiskSizeGiB: *int
+    │   │   │   ├── DiskType: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ExistingLabDiskId: *string
+    │   │   ├── HostCaching: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── DisallowPublicIpAddress: *bool
+    │   ├── EnvironmentId: *string
+    │   ├── ExpirationDate: *string
+    │   ├── GalleryImageReference: *Object (6 properties)
+    │   │   ├── Offer: *string
+    │   │   ├── OsType: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Publisher: *string
+    │   │   ├── Sku: *string
+    │   │   └── Version: *string
+    │   ├── IsAuthenticationWithSshKey: *bool
+    │   ├── LabSubnetName: *string
+    │   ├── LabVirtualNetworkId: *string
+    │   ├── Location: *string
+    │   ├── Name: *string
+    │   ├── NetworkInterface: *Object (10 properties)
+    │   │   ├── DnsName: *string
+    │   │   ├── PrivateIpAddress: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PublicIpAddress: *string
+    │   │   ├── PublicIpAddressId: *string
+    │   │   ├── RdpAuthority: *string
+    │   │   ├── SharedPublicIpAddressConfiguration: *Object (2 properties)
+    │   │   │   ├── InboundNatRules: Object (4 properties)[]
+    │   │   │   │   ├── BackendPort: *int
+    │   │   │   │   ├── FrontendPort: *int
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── TransportProtocol: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── SshAuthority: *string
+    │   │   ├── SubnetId: *string
+    │   │   └── VirtualNetworkId: *string
+    │   ├── Notes: *string
+    │   ├── OwnerObjectId: *string
+    │   ├── OwnerUserPrincipalName: *string
+    │   ├── PlanId: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ScheduleParameters: Object (12 properties)[]
+    │   │   ├── DailyRecurrence: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Time: *string
+    │   │   ├── HourlyRecurrence: *Object (2 properties)
+    │   │   │   ├── Minute: *int
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Location: *string
+    │   │   ├── Name: *string
+    │   │   ├── NotificationSettings: *Object (6 properties)
+    │   │   │   ├── EmailRecipient: *string
+    │   │   │   ├── NotificationLocale: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Status: *string
+    │   │   │   ├── TimeInMinutes: *int
+    │   │   │   └── WebhookUrl: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Status: *string
+    │   │   ├── Tags: map[string]string
+    │   │   ├── TargetResourceId: *string
+    │   │   ├── TaskType: *string
+    │   │   ├── TimeZoneId: *string
+    │   │   └── WeeklyRecurrence: *Object (3 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       ├── Time: *string
+    │   │       └── Weekdays: string[]
+    │   ├── Size: *string
+    │   ├── StorageType: *string
+    │   ├── Tags: map[string]string
+    │   └── UserName: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── OsType: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── Vm: *Object (2 properties)
+        ├── LabVmId: *string
+        └── PropertyBag: genruntime.PropertyBag
+
+LabsNotificationChannel: Resource
+├── Owner: devtestlab/v20180915.Lab
+├── Spec: Object (12 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── EmailRecipient: *string
+│   ├── Events: Object (2 properties)[]
+│   │   ├── EventName: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Location: *string
+│   ├── NotificationLocale: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Tags: map[string]string
+│   └── WebHookUrl: *string
+└── Status: Object (16 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── Description: *string
+    ├── EmailRecipient: *string
+    ├── Events: Object (2 properties)[]
+    │   ├── EventName: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NotificationLocale: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── WebHookUrl: *string
+
+LabsSchedule: Resource
+├── Owner: devtestlab/v20180915.Lab
+├── Spec: Object (15 properties)
+│   ├── AzureName: string
+│   ├── DailyRecurrence: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Time: *string
+│   ├── HourlyRecurrence: *Object (2 properties)
+│   │   ├── Minute: *int
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Location: *string
+│   ├── NotificationSettings: *Object (6 properties)
+│   │   ├── EmailRecipient: *string
+│   │   ├── NotificationLocale: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Status: *string
+│   │   ├── TimeInMinutes: *int
+│   │   └── WebhookUrl: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Status: *string
+│   ├── Tags: map[string]string
+│   ├── TargetResourceReference: *genruntime.ResourceReference
+│   ├── TaskType: *string
+│   ├── TimeZoneId: *string
+│   └── WeeklyRecurrence: *Object (3 properties)
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── Time: *string
+│       └── Weekdays: string[]
+└── Status: Object (19 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DailyRecurrence: *Object (2 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Time: *string
+    ├── HourlyRecurrence: *Object (2 properties)
+    │   ├── Minute: *int
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NotificationSettings: *Object (6 properties)
+    │   ├── EmailRecipient: *string
+    │   ├── NotificationLocale: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Status: *string
+    │   ├── TimeInMinutes: *int
+    │   └── WebhookUrl: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Status: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── TargetResourceId: *string
+    ├── TaskType: *string
+    ├── TimeZoneId: *string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── WeeklyRecurrence: *Object (3 properties)
+        ├── PropertyBag: genruntime.PropertyBag
+        ├── Time: *string
+        └── Weekdays: string[]
+
+LabsServiceRunner: Resource
+├── Owner: devtestlab/v20180915.Lab
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Identity: *Object (5 properties)
+│   │   ├── ClientSecretUrl: *string
+│   │   ├── PrincipalId: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── TenantId: *string
+│   │   └── Type: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Identity: *Object (5 properties)
+    │   ├── ClientSecretUrl: *string
+    │   ├── PrincipalId: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── TenantId: *string
+    │   └── Type: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
+LabsUser: Resource
+├── Owner: devtestlab/v20180915.Lab
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Identity: *Object (6 properties)
+│   │   ├── AppId: *string
+│   │   ├── ObjectId: *string
+│   │   ├── PrincipalId: *string
+│   │   ├── PrincipalName: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── TenantId: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── SecretStore: *Object (3 properties)
+│   │   ├── KeyVaultReference: *genruntime.ResourceReference
+│   │   ├── KeyVaultUri: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (13 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── Id: *string
+    ├── Identity: *Object (6 properties)
+    │   ├── AppId: *string
+    │   ├── ObjectId: *string
+    │   ├── PrincipalId: *string
+    │   ├── PrincipalName: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── TenantId: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SecretStore: *Object (3 properties)
+    │   ├── KeyVaultId: *string
+    │   ├── KeyVaultUri: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsUsersDisk: Resource
+├── Owner: devtestlab/v20180915.LabsUser
+├── Spec: Object (15 properties)
+│   ├── AzureName: string
+│   ├── DiskBlobName: *string
+│   ├── DiskSizeGiB: *int
+│   ├── DiskType: *string
+│   ├── DiskUri: *string
+│   ├── HostCaching: *string
+│   ├── LeasedByLabVmReference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── ManagedDiskReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── StorageAccountReference: *genruntime.ResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (19 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DiskBlobName: *string
+    ├── DiskSizeGiB: *int
+    ├── DiskType: *string
+    ├── DiskUri: *string
+    ├── HostCaching: *string
+    ├── Id: *string
+    ├── LeasedByLabVmId: *string
+    ├── Location: *string
+    ├── ManagedDiskId: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── StorageAccountId: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsUsersEnvironment: Resource
+├── Owner: devtestlab/v20180915.LabsUser
+├── Spec: Object (9 properties)
+│   ├── ArmTemplateDisplayName: *string
+│   ├── AzureName: string
+│   ├── DeploymentProperties: *Object (3 properties)
+│   │   ├── ArmTemplateReference: *genruntime.ResourceReference
+│   │   ├── Parameters: Object (3 properties)[]
+│   │   │   ├── Name: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Value: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (14 properties)
+    ├── ArmTemplateDisplayName: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedByUser: *string
+    ├── DeploymentProperties: *Object (3 properties)
+    │   ├── ArmTemplateId: *string
+    │   ├── Parameters: Object (3 properties)[]
+    │   │   ├── Name: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Value: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ResourceGroupId: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsUsersSecret: Resource
+├── Owner: devtestlab/v20180915.LabsUser
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Tags: map[string]string
+│   └── Value: *genruntime.SecretReference
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsUsersServiceFabric: Resource
+├── Owner: devtestlab/v20180915.LabsUser
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── EnvironmentReference: *genruntime.ResourceReference
+│   ├── ExternalServiceFabricReference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (13 properties)
+    ├── ApplicableSchedule: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── EnvironmentId: *string
+    ├── ExternalServiceFabricId: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsUsersServicefabricsSchedule: Resource
+├── Owner: devtestlab/v20180915.LabsUsersServiceFabric
+├── Spec: Object (15 properties)
+│   ├── AzureName: string
+│   ├── DailyRecurrence: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Time: *string
+│   ├── HourlyRecurrence: *Object (2 properties)
+│   │   ├── Minute: *int
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Location: *string
+│   ├── NotificationSettings: *Object (6 properties)
+│   │   ├── EmailRecipient: *string
+│   │   ├── NotificationLocale: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Status: *string
+│   │   ├── TimeInMinutes: *int
+│   │   └── WebhookUrl: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Status: *string
+│   ├── Tags: map[string]string
+│   ├── TargetResourceReference: *genruntime.ResourceReference
+│   ├── TaskType: *string
+│   ├── TimeZoneId: *string
+│   └── WeeklyRecurrence: *Object (3 properties)
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── Time: *string
+│       └── Weekdays: string[]
+└── Status: Object (19 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DailyRecurrence: *Object (2 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Time: *string
+    ├── HourlyRecurrence: *Object (2 properties)
+    │   ├── Minute: *int
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NotificationSettings: *Object (6 properties)
+    │   ├── EmailRecipient: *string
+    │   ├── NotificationLocale: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Status: *string
+    │   ├── TimeInMinutes: *int
+    │   └── WebhookUrl: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Status: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── TargetResourceId: *string
+    ├── TaskType: *string
+    ├── TimeZoneId: *string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── WeeklyRecurrence: *Object (3 properties)
+        ├── PropertyBag: genruntime.PropertyBag
+        ├── Time: *string
+        └── Weekdays: string[]
+
+LabsVirtualMachine: Resource
+├── Owner: devtestlab/v20180915.Lab
+├── Spec: Object (30 properties)
+│   ├── AllowClaim: *bool
+│   ├── Artifacts: Object (8 properties)[]
+│   │   ├── ArtifactReference: *genruntime.ResourceReference
+│   │   ├── ArtifactTitle: *string
+│   │   ├── DeploymentStatusMessage: *string
+│   │   ├── InstallTime: *string
+│   │   ├── Parameters: Object (3 properties)[]
+│   │   │   ├── Name: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Value: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Status: *string
+│   │   └── VmExtensionStatusMessage: *string
+│   ├── AzureName: string
+│   ├── CreatedDate: *string
+│   ├── CustomImageReference: *genruntime.ResourceReference
+│   ├── DataDiskParameters: Object (4 properties)[]
+│   │   ├── AttachNewDataDiskOptions: *Object (4 properties)
+│   │   │   ├── DiskName: *string
+│   │   │   ├── DiskSizeGiB: *int
+│   │   │   ├── DiskType: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── ExistingLabDiskReference: *genruntime.ResourceReference
+│   │   ├── HostCaching: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── DisallowPublicIpAddress: *bool
+│   ├── EnvironmentReference: *genruntime.ResourceReference
+│   ├── ExpirationDate: *string
+│   ├── GalleryImageReference: *Object (6 properties)
+│   │   ├── Offer: *string
+│   │   ├── OsType: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Publisher: *string
+│   │   ├── Sku: *string
+│   │   └── Version: *string
+│   ├── IsAuthenticationWithSshKey: *bool
+│   ├── LabSubnetName: *string
+│   ├── LabVirtualNetworkReference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── NetworkInterface: *Object (10 properties)
+│   │   ├── DnsName: *string
+│   │   ├── PrivateIpAddress: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── PublicIpAddress: *string
+│   │   ├── PublicIpAddressReference: *genruntime.ResourceReference
+│   │   ├── RdpAuthority: *string
+│   │   ├── SharedPublicIpAddressConfiguration: *Object (2 properties)
+│   │   │   ├── InboundNatRules: Object (4 properties)[]
+│   │   │   │   ├── BackendPort: *int
+│   │   │   │   ├── FrontendPort: *int
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── TransportProtocol: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── SshAuthority: *string
+│   │   ├── SubnetReference: *genruntime.ResourceReference
+│   │   └── VirtualNetworkReference: *genruntime.ResourceReference
+│   ├── Notes: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── OwnerObjectId: *string
+│   ├── OwnerUserPrincipalName: *string
+│   ├── Password: *genruntime.SecretReference
+│   ├── PlanId: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── ScheduleParameters: Object (11 properties)[]
+│   │   ├── DailyRecurrence: *Object (2 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Time: *string
+│   │   ├── HourlyRecurrence: *Object (2 properties)
+│   │   │   ├── Minute: *int
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── Name: *string
+│   │   ├── NotificationSettings: *Object (6 properties)
+│   │   │   ├── EmailRecipient: *string
+│   │   │   ├── NotificationLocale: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Status: *string
+│   │   │   ├── TimeInMinutes: *int
+│   │   │   └── WebhookUrl: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Status: *string
+│   │   ├── Tags: map[string]string
+│   │   ├── TargetResourceReference: *genruntime.ResourceReference
+│   │   ├── TaskType: *string
+│   │   ├── TimeZoneId: *string
+│   │   └── WeeklyRecurrence: *Object (3 properties)
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── Time: *string
+│   │       └── Weekdays: string[]
+│   ├── Size: *string
+│   ├── SshKey: *genruntime.SecretReference
+│   ├── StorageType: *string
+│   ├── Tags: map[string]string
+│   └── UserName: *string
+└── Status: Object (41 properties)
+    ├── AllowClaim: *bool
+    ├── ApplicableSchedule: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── ArtifactDeploymentStatus: *Object (4 properties)
+    │   ├── ArtifactsApplied: *int
+    │   ├── DeploymentStatus: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── TotalArtifacts: *int
+    ├── Artifacts: Object (8 properties)[]
+    │   ├── ArtifactId: *string
+    │   ├── ArtifactTitle: *string
+    │   ├── DeploymentStatusMessage: *string
+    │   ├── InstallTime: *string
+    │   ├── Parameters: Object (3 properties)[]
+    │   │   ├── Name: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Value: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Status: *string
+    │   └── VmExtensionStatusMessage: *string
+    ├── ComputeId: *string
+    ├── ComputeVm: *Object (8 properties)
+    │   ├── DataDiskIds: string[]
+    │   ├── DataDisks: Object (5 properties)[]
+    │   │   ├── DiskSizeGiB: *int
+    │   │   ├── DiskUri: *string
+    │   │   ├── ManagedDiskId: *string
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── NetworkInterfaceId: *string
+    │   ├── OsDiskId: *string
+    │   ├── OsType: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Statuses: Object (4 properties)[]
+    │   │   ├── Code: *string
+    │   │   ├── DisplayStatus: *string
+    │   │   ├── Message: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── VmSize: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedByUser: *string
+    ├── CreatedByUserId: *string
+    ├── CreatedDate: *string
+    ├── CustomImageId: *string
+    ├── DataDiskParameters: Object (4 properties)[]
+    │   ├── AttachNewDataDiskOptions: *Object (4 properties)
+    │   │   ├── DiskName: *string
+    │   │   ├── DiskSizeGiB: *int
+    │   │   ├── DiskType: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── ExistingLabDiskId: *string
+    │   ├── HostCaching: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── DisallowPublicIpAddress: *bool
+    ├── EnvironmentId: *string
+    ├── ExpirationDate: *string
+    ├── Fqdn: *string
+    ├── GalleryImageReference: *Object (6 properties)
+    │   ├── Offer: *string
+    │   ├── OsType: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Publisher: *string
+    │   ├── Sku: *string
+    │   └── Version: *string
+    ├── Id: *string
+    ├── IsAuthenticationWithSshKey: *bool
+    ├── LabSubnetName: *string
+    ├── LabVirtualNetworkId: *string
+    ├── LastKnownPowerState: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NetworkInterface: *Object (10 properties)
+    │   ├── DnsName: *string
+    │   ├── PrivateIpAddress: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── PublicIpAddress: *string
+    │   ├── PublicIpAddressId: *string
+    │   ├── RdpAuthority: *string
+    │   ├── SharedPublicIpAddressConfiguration: *Object (2 properties)
+    │   │   ├── InboundNatRules: Object (4 properties)[]
+    │   │   │   ├── BackendPort: *int
+    │   │   │   ├── FrontendPort: *int
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── TransportProtocol: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── SshAuthority: *string
+    │   ├── SubnetId: *string
+    │   └── VirtualNetworkId: *string
+    ├── Notes: *string
+    ├── OsType: *string
+    ├── OwnerObjectId: *string
+    ├── OwnerUserPrincipalName: *string
+    ├── PlanId: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ScheduleParameters: Object (12 properties)[]
+    │   ├── DailyRecurrence: *Object (2 properties)
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Time: *string
+    │   ├── HourlyRecurrence: *Object (2 properties)
+    │   │   ├── Minute: *int
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── Location: *string
+    │   ├── Name: *string
+    │   ├── NotificationSettings: *Object (6 properties)
+    │   │   ├── EmailRecipient: *string
+    │   │   ├── NotificationLocale: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Status: *string
+    │   │   ├── TimeInMinutes: *int
+    │   │   └── WebhookUrl: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Status: *string
+    │   ├── Tags: map[string]string
+    │   ├── TargetResourceId: *string
+    │   ├── TaskType: *string
+    │   ├── TimeZoneId: *string
+    │   └── WeeklyRecurrence: *Object (3 properties)
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── Time: *string
+    │       └── Weekdays: string[]
+    ├── Size: *string
+    ├── StorageType: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    ├── UserName: *string
+    └── VirtualMachineCreationSource: *string
+
+LabsVirtualNetwork: Resource
+├── Owner: devtestlab/v20180915.Lab
+├── Spec: Object (11 properties)
+│   ├── AllowedSubnets: Object (4 properties)[]
+│   │   ├── AllowPublicIp: *string
+│   │   ├── LabSubnetName: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── ResourceReference: *genruntime.ResourceReference
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── ExternalProviderResourceReference: *genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── SubnetOverrides: Object (7 properties)[]
+│   │   ├── LabSubnetName: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── ResourceReference: *genruntime.ResourceReference
+│   │   ├── SharedPublicIpAddressConfiguration: *Object (2 properties)
+│   │   │   ├── AllowedPorts: Object (3 properties)[]
+│   │   │   │   ├── BackendPort: *int
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── TransportProtocol: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── UseInVmCreationPermission: *string
+│   │   ├── UsePublicIpAddressPermission: *string
+│   │   └── VirtualNetworkPoolName: *string
+│   └── Tags: map[string]string
+└── Status: Object (16 properties)
+    ├── AllowedSubnets: Object (4 properties)[]
+    │   ├── AllowPublicIp: *string
+    │   ├── LabSubnetName: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── ResourceId: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── Description: *string
+    ├── ExternalProviderResourceId: *string
+    ├── ExternalSubnets: Object (3 properties)[]
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SubnetOverrides: Object (7 properties)[]
+    │   ├── LabSubnetName: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ResourceId: *string
+    │   ├── SharedPublicIpAddressConfiguration: *Object (2 properties)
+    │   │   ├── AllowedPorts: Object (3 properties)[]
+    │   │   │   ├── BackendPort: *int
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── TransportProtocol: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── UseInVmCreationPermission: *string
+    │   ├── UsePublicIpAddressPermission: *string
+    │   └── VirtualNetworkPoolName: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── UniqueIdentifier: *string
+
+LabsVirtualmachinesSchedule: Resource
+├── Owner: devtestlab/v20180915.LabsVirtualMachine
+├── Spec: Object (15 properties)
+│   ├── AzureName: string
+│   ├── DailyRecurrence: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Time: *string
+│   ├── HourlyRecurrence: *Object (2 properties)
+│   │   ├── Minute: *int
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Location: *string
+│   ├── NotificationSettings: *Object (6 properties)
+│   │   ├── EmailRecipient: *string
+│   │   ├── NotificationLocale: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Status: *string
+│   │   ├── TimeInMinutes: *int
+│   │   └── WebhookUrl: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Status: *string
+│   ├── Tags: map[string]string
+│   ├── TargetResourceReference: *genruntime.ResourceReference
+│   ├── TaskType: *string
+│   ├── TimeZoneId: *string
+│   └── WeeklyRecurrence: *Object (3 properties)
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── Time: *string
+│       └── Weekdays: string[]
+└── Status: Object (19 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DailyRecurrence: *Object (2 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Time: *string
+    ├── HourlyRecurrence: *Object (2 properties)
+    │   ├── Minute: *int
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NotificationSettings: *Object (6 properties)
+    │   ├── EmailRecipient: *string
+    │   ├── NotificationLocale: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Status: *string
+    │   ├── TimeInMinutes: *int
+    │   └── WebhookUrl: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Status: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── TargetResourceId: *string
+    ├── TaskType: *string
+    ├── TimeZoneId: *string
+    ├── Type: *string
+    ├── UniqueIdentifier: *string
+    └── WeeklyRecurrence: *Object (3 properties)
+        ├── PropertyBag: genruntime.PropertyBag
+        ├── Time: *string
+        └── Weekdays: string[]
+
 Schedule: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (15 properties)

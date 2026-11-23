@@ -958,24 +958,24 @@ Microsoft.DeviceUpdate,Microsoft.DeviceUpdate/updateInstances,5,,0,,0,5,false,sp
 Microsoft.DevOps,Microsoft.DevOps/pipelines,19,,0,,0,19,false,spec_api=2020-07-13-preview; spec-preview-only
 Microsoft.DevOpsInfrastructure,Microsoft.DevOpsInfrastructure/pools,52,,0,,0,52,false,spec_api=2026-06-02
 Microsoft.DevSpaces,Microsoft.DevSpaces/controllers,6,,0,,0,6,false,spec_api=2019-04-01
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs,15,,0,,0,15,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/artifactsources,10,,0,,0,10,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/costs,16,,0,,0,16,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/customimages,18,,0,,0,18,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/formulas,71,,0,,0,71,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/notificationchannels,7,,0,,0,7,false,spec_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs,15,,0,devtestlab.azure.hfl.dev/Lab,15,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/artifactsources,10,,0,devtestlab.azure.hfl.dev/LabsArtifactSource,10,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/costs,16,,0,devtestlab.azure.hfl.dev/LabsCost,16,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/customimages,18,,0,devtestlab.azure.hfl.dev/LabsCustomImage,18,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/formulas,71,,0,devtestlab.azure.hfl.dev/LabsFormula,71,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/notificationchannels,7,,0,devtestlab.azure.hfl.dev/LabsNotificationChannel,7,0,false,spec_api=2018-09-15; ours_api=2018-09-15
 Microsoft.DevTestLab,Microsoft.DevTestLab/labs/policysets/policies,8,,0,,0,8,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/schedules,15,,0,,0,15,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/servicerunners,6,,0,,0,6,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users,9,,0,,0,9,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/disks,10,,0,,0,10,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/environments,6,,0,,0,6,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/secrets,3,,0,,0,3,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/servicefabrics,4,,0,,0,4,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/servicefabrics/schedules,15,,0,,0,15,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualmachines,64,,0,,0,64,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualmachines/schedules,15,,0,,0,15,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualnetworks,14,,0,,0,14,false,spec_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/schedules,15,,0,devtestlab.azure.hfl.dev/LabsSchedule,15,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/servicerunners,6,,0,devtestlab.azure.hfl.dev/LabsServiceRunner,6,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users,9,,0,devtestlab.azure.hfl.dev/LabsUser,9,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/disks,10,,0,devtestlab.azure.hfl.dev/LabsUsersDisk,10,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/environments,6,,0,devtestlab.azure.hfl.dev/LabsUsersEnvironment,6,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/secrets,3,,0,devtestlab.azure.hfl.dev/LabsUsersSecret,3,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/servicefabrics,4,,0,devtestlab.azure.hfl.dev/LabsUsersServiceFabric,4,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/servicefabrics/schedules,15,,0,devtestlab.azure.hfl.dev/LabsUsersServicefabricsSchedule,15,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualmachines,64,,0,devtestlab.azure.hfl.dev/LabsVirtualMachine,64,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualmachines/schedules,15,,0,devtestlab.azure.hfl.dev/LabsVirtualmachinesSchedule,15,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualnetworks,14,,0,devtestlab.azure.hfl.dev/LabsVirtualNetwork,14,0,false,spec_api=2018-09-15; ours_api=2018-09-15
 Microsoft.DevTestLab,Microsoft.DevTestLab/schedules,15,,0,devtestlab.azure.hfl.dev/Schedule,15,0,false,spec_api=2018-09-15; ours_api=2018-09-15
 Microsoft.DigitalTwins,Microsoft.DigitalTwins/digitalTwinsInstances,10,,0,,0,10,false,spec_api=2023-01-31
 Microsoft.DigitalTwins,Microsoft.DigitalTwins/digitalTwinsInstances/endpoints,15,,0,,0,15,false,spec_api=2023-01-31
