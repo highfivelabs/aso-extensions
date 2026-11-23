@@ -58,7 +58,9 @@
 // (foundry.go: the default name, no way back to V1, a rule's target
 // exists), Azure Cosmos DB for PostgreSQL clusters (cosmospostgres.go: what
 // a new cluster needs, its node count, a replica's source, firewall rule
-// addresses, role passwords), budgets
+// addresses, role passwords), Cosmos DB fleets and MongoDB vCore cluster
+// users (cosmosfleet.go: a fleetspace's pool, the account a fleetspace
+// account names, a user's Entra object ID), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -522,6 +524,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkCosmosPostgres(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkCosmosFleet(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

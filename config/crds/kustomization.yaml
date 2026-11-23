@@ -148,7 +148,11 @@ resources:
 - documentdb.azure.hfl.dev_databaseaccountstableroledefinitions.yaml
 - documentdb.azure.hfl.dev_databaseaccountstables.yaml
 - documentdb.azure.hfl.dev_databaseaccountstablesthroughputsettings.yaml
+- documentdb.azure.hfl.dev_fleets.yaml
+- documentdb.azure.hfl.dev_fleetsfleetspaces.yaml
+- documentdb.azure.hfl.dev_fleetsfleetspacesfleetspaceaccounts.yaml
 - documentdb.azure.hfl.dev_mongoclustersprivateendpointconnections.yaml
+- documentdb.azure.hfl.dev_mongoclustersusers.yaml
 - entra.azure.hfl.dev_directoryroleassignments.yaml
 - hardwaresecuritymodules.azure.hfl.dev_cloudhsmclusters.yaml
 - hardwaresecuritymodules.azure.hfl.dev_cloudhsmclustersprivateendpointconnections.yaml

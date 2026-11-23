@@ -608,6 +608,15 @@ upstream's); the catalog's chart tests do that.
   connection (`privateendpoints.go`). Not modelled: the servers a cluster
   makes, its state, high availability, replicas kept in step, a
   configuration's name being a server parameter, and the error codes.
+- Azure Cosmos DB fleets and MongoDB vCore cluster users
+  (`Microsoft.DocumentDB/fleets/*`, 2026-03-15, and
+  `mongoClusters/*/users/*`, 2026-06-01; `pkg/fakecloud/arm/cosmosfleet.go`):
+  a fleetspace's pool has its minimum at or below its maximum (400); a
+  fleetspace account names a Cosmos DB account (400) that exists (404); a
+  cluster user is named by an Entra object ID (400) and has an identity
+  provider (400). Not modelled: throughput being pooled, regions matching,
+  an account in one fleetspace only, the principal existing, roles being
+  granted in the cluster, and the error codes.
 - Microsoft Foundry managed networks and outbound rules
   (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
   `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`

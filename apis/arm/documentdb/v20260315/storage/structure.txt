@@ -316,3 +316,116 @@ DatabaseAccountsTableRoleDefinition: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+Fleet: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
+FleetsFleetspace: Resource
+├── Owner: documentdb/v20260315.Fleet
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── DataRegions: string[]
+│   ├── FleetspaceApiKind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── ServiceTier: *string
+│   └── ThroughputPoolConfiguration: *Object (5 properties)
+│       ├── DedicatedRUs: *int
+│       ├── MaxConsumableRUs: *int
+│       ├── MaxThroughput: *int
+│       ├── MinThroughput: *int
+│       └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DataRegions: string[]
+    ├── FleetspaceApiKind: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ServiceTier: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── ThroughputPoolConfiguration: *Object (5 properties)
+    │   ├── DedicatedRUs: *int
+    │   ├── MaxConsumableRUs: *int
+    │   ├── MaxThroughput: *int
+    │   ├── MinThroughput: *int
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FleetsFleetspacesFleetspaceAccount: Resource
+├── Owner: documentdb/v20260315.FleetsFleetspace
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── GlobalDatabaseAccountProperties: *Object (3 properties)
+│   │   ├── ArmLocation: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── ResourceReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── GlobalDatabaseAccountProperties: *Object (3 properties)
+    │   ├── ArmLocation: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── ResourceId: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+augmentConversionForSystemData_STATUS: Interface
+

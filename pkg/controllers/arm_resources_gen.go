@@ -91,6 +91,8 @@ import (
 	documentdb_v20240815s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20240815/storage"
 	documentdb_v20260315 "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260315"
 	documentdb_v20260315s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260315/storage"
+	documentdb_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260601"
+	documentdb_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260601/storage"
 	hardwaresecuritymodules_customizations "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/customizations"
 	hardwaresecuritymodules_v20250331 "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331"
 	hardwaresecuritymodules_v20250331s "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331/storage"
@@ -1157,6 +1159,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.DatabaseAccountsTableRoleDefinition)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.Fleet)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.FleetsFleetspace)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.FleetsFleetspacesFleetspaceAccount)})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260601.MongoClustersUser)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
@@ -2624,7 +2630,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsMongoMIRoleAssignment)},
 		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsMongoMIRoleDefinition)},
 		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsTableRoleAssignment)},
-		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsTableRoleDefinition)})
+		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsTableRoleDefinition)},
+		&registration.KnownType{Obj: new(documentdb_v20260315.Fleet)},
+		&registration.KnownType{Obj: new(documentdb_v20260315.FleetsFleetspace)},
+		&registration.KnownType{Obj: new(documentdb_v20260315.FleetsFleetspacesFleetspaceAccount)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsCassandraRoleAssignment)},
@@ -2634,7 +2643,12 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsMongoMIRoleAssignment)},
 		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsMongoMIRoleDefinition)},
 		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsTableRoleAssignment)},
-		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsTableRoleDefinition)})
+		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsTableRoleDefinition)},
+		&registration.KnownType{Obj: new(documentdb_v20260315s.Fleet)},
+		&registration.KnownType{Obj: new(documentdb_v20260315s.FleetsFleetspace)},
+		&registration.KnownType{Obj: new(documentdb_v20260315s.FleetsFleetspacesFleetspaceAccount)})
+	result = append(result, &registration.KnownType{Obj: new(documentdb_v20260601.MongoClustersUser)})
+	result = append(result, &registration.KnownType{Obj: new(documentdb_v20260601s.MongoClustersUser)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)},
@@ -3294,6 +3308,8 @@ func createScheme() *runtime.Scheme {
 	_ = documentdb_v20240815s.AddToScheme(scheme)
 	_ = documentdb_v20260315.AddToScheme(scheme)
 	_ = documentdb_v20260315s.AddToScheme(scheme)
+	_ = documentdb_v20260601.AddToScheme(scheme)
+	_ = documentdb_v20260601s.AddToScheme(scheme)
 	_ = hardwaresecuritymodules_v20250331.AddToScheme(scheme)
 	_ = hardwaresecuritymodules_v20250331s.AddToScheme(scheme)
 	_ = insights_v20160301.AddToScheme(scheme)
@@ -3543,7 +3559,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &documentdb_customizations.DatabaseAccountsTableRoleAssignmentExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsTableRoleDefinitionExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsTablesThroughputSettingExtension{})
+	result = append(result, &documentdb_customizations.FleetExtension{})
+	result = append(result, &documentdb_customizations.FleetsFleetspaceExtension{})
+	result = append(result, &documentdb_customizations.FleetsFleetspacesFleetspaceAccountExtension{})
 	result = append(result, &documentdb_customizations.MongoClustersPrivateEndpointConnectionExtension{})
+	result = append(result, &documentdb_customizations.MongoClustersUserExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClusterExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.DedicatedHsmExtension{})

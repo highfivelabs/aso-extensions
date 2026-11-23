@@ -370,12 +370,13 @@ ledger has a row for it.
 | 2026-11-23 | `TestLiveSqlServerExtras` | `ServersDevOpsAuditingSetting`, `ServersDatabasesDataMaskingPolicy`, `ServersSqlVulnerabilityAssessment` | an Azure SQL server (free, public access off) and a Basic database (about $0.007 an hour) in the first region that takes them | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSqlServerExtras"` |
 | 2026-11-23 | `TestLiveRestorePoints` | `RestorePointCollection`, `RestorePointCollectionsRestorePoint`, `Gallery`, `GalleriesScript`, `GalleriesInVMAccessControlProfile` | a small Linux VM (about $0.03 an hour) and its restore point's disk snapshot (a fraction of a cent); the gallery definitions are free | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveRestorePoints"` |
 | 2026-11-23 | `TestLiveCosmosPostgres` | `ServerGroupsv2`, `ServerGroupsv2FirewallRule`, `ServerGroupsv2Role`, `ServerGroupsv2CoordinatorConfiguration` | none: the cluster is the kind under test, one Burstable node (1 vCore, 32 GiB; a few cents an hour, about 15 minutes to make and to delete); skips unless `Microsoft.DBforPostgreSQL` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveCosmosPostgres"` |
+| 2026-11-23 | `TestLiveCosmosFleet` | `Fleet`, `FleetsFleetspace` | none: a fleet and a fleetspace with no throughput pool (free); skips unless `Microsoft.DocumentDB` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveCosmosFleet"` |
 
 All of them in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
 TESTS="TestLiveAddressPrefixSet TestLiveRuleCollectionGroupDraft
 TestLiveConnectionMonitor TestLiveSummaryRule TestLiveSentinelWorkspace
 TestLiveSiteContainers TestLiveSqlServerExtras TestLiveRestorePoints
-TestLiveCosmosPostgres"`.
+TestLiveCosmosPostgres TestLiveCosmosFleet"`.
 
 Written for the subscription (above, "The subscription roles"); each skips
 until the builder assigns the roles of `hack/live/roles/`:
@@ -405,6 +406,11 @@ instance takes hours to make and bills by the vCore-hour.
 The Foundry kinds of `docs/plan.md` f44: FQDN rules provision a billed Azure
 Firewall, agent applications need agents made in Foundry's data plane, and a
 RAI topic trains from a sample blob.
+`MongoClustersUser` and `FleetsFleetspacesFleetspaceAccount` (`docs/plan.md`
+f47): a user needs a MongoDB vCore cluster with Microsoft Entra
+authentication on (ASO's 2024-07-01 `MongoCluster` cannot turn it on), and a
+fleetspace account pools a provisioned-throughput account into a billed
+pool.
 
 ## Ledger
 

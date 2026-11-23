@@ -84,6 +84,7 @@ The following resources have newer versions available in the Azure REST API spec
 | 💡    | DatabaseAccountsSqlRoleDefinition                         | **2026-03-15**   | 2024-08-15       | -                 | -                 |
 | 💡    | DatabaseAccountsTable                                     | **2026-03-15**   | 2024-08-15       | -                 | -                 |
 | 💡    | DatabaseAccountsTablesThroughputSetting                   | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | MongoClustersPrivateEndpointConnection                    | **2026-06-01**   | 2024-07-01       | -                 | -                 |
 
 ## network
 

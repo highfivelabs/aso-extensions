@@ -339,6 +339,19 @@ func init() {
 	f["ServerGroupsv2CoordinatorConfiguration"] = pgConfig
 	f["ServerGroupsv2NodeConfiguration"] = pgConfig
 	f["ServerGroupsv2PrivateEndpointConnection"] = pec
+	// Cosmos DB fleets and MongoDB vCore users (cosmosfleet.go): a
+	// fleetspace account names a Cosmos DB account; a user is an Entra
+	// object ID with an identity provider.
+	f["FleetsFleetspacesFleetspaceAccount"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"globalDatabaseAccountProperties": map[string]any{
+			"resourceReference": armRef(c.add(c.in("Microsoft.DocumentDB/databaseAccounts/conformance"))), "armLocation": "westus"}}
+	}}
+	f["MongoClustersUser"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": conformancePrincipal, "properties": map[string]any{
+			"identityProvider": map[string]any{"microsoftEntraID": map[string]any{"type": "MicrosoftEntraID",
+				"properties": map[string]any{"principalType": "servicePrincipal"}}},
+			"roles": []any{map[string]any{"db": "admin", "role": "root"}}}}
+	}}
 	// An account's managed network is named default (foundry.go).
 	f["AccountsManagedNetwork"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"azureName": "default"}

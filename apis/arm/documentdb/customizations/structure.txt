@@ -45,5 +45,13 @@ DatabaseAccountsTableRoleDefinitionExtension: Object (0 properties)
 
 DatabaseAccountsTablesThroughputSettingExtension: Object (0 properties)
 
+FleetExtension: Object (0 properties)
+
+FleetsFleetspaceExtension: Object (0 properties)
+
+FleetsFleetspacesFleetspaceAccountExtension: Object (0 properties)
+
 MongoClustersPrivateEndpointConnectionExtension: Object (0 properties)
+
+MongoClustersUserExtension: Object (0 properties)
 

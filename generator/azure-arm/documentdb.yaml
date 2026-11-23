@@ -5,7 +5,10 @@
 # services, SQL role definitions, private endpoint connections and client
 # encryption keys. The catalog's modules use Gremlin and the SQL dedicated
 # gateway (docs/coverage/catalog-azure.md). Owned by ASO's DatabaseAccount
-# (or SqlDatabase, a client encryption key), then by our kinds.
+# (or SqlDatabase, a client encryption key), then by our kinds. At
+# 2026-03-15 also role-based access for the other APIs and Cosmos DB fleets
+# (docs/plan.md f47); at 2026-06-01 (specification/mongocluster) a MongoDB
+# vCore cluster's Entra users, owned by ASO's MongoCluster.
 typeFilters:
   - action: include
     group: documentdb
@@ -14,11 +17,15 @@ typeFilters:
   - action: include
     group: documentdb
     version: v20260315
-    because: role-based access for the Cassandra, Gremlin, MongoDB (Entra) and Table APIs, the newest stable version (2024-08-15 has none)
+    because: role-based access for the Cassandra, Gremlin, MongoDB (Entra) and Table APIs, and fleets, the newest stable version (2024-08-15 has none)
   - action: include
     group: documentdb
     version: v20240701
     because: a MongoDB vCore cluster's private endpoint connections (docs/plan.md f38; specification/mongocluster), the version of ASO's MongoCluster (v1api20240701)
+  - action: include
+    group: documentdb
+    version: v20260601
+    because: a MongoDB vCore cluster's Microsoft Entra users (docs/plan.md f47; specification/mongocluster, the newest stable version; 2024-07-01, ASO's, has none)
   - action: prune
     group: documentdb
     because: every other version is left alone
@@ -100,6 +107,18 @@ groupModelConfiguration:
   # generator/_extensions/documentdb/customizations default them, as ASO's
   # SqlRoleAssignment webhook does.
   2026-03-15:
+    Fleet:
+      $exportAs: Fleet
+      $supportedFrom: v0.1.0
+    Fleets_Fleetspace:
+      $exportAs: FleetsFleetspace
+      $supportedFrom: v0.1.0
+    Fleets_Fleetspaces_FleetspaceAccount:
+      $exportAs: FleetsFleetspacesFleetspaceAccount
+      $supportedFrom: v0.1.0
+    FleetspaceAccountPropertiesGlobalDatabaseAccountProperties:
+      ResourceId:
+        $referenceType: arm # the Cosmos DB account the fleetspace pools (ASO's DatabaseAccount by object, or an ARM ID)
     DatabaseAccounts_CassandraRoleDefinition:
       $exportAs: DatabaseAccountsCassandraRoleDefinition
       $supportedFrom: v0.1.0
@@ -159,3 +178,7 @@ groupModelConfiguration:
     GremlinRoleDefinitionResourceProperties:
       Id:
         $referenceType: simple # the definition's own ID, not a reference (autolabel wrote arm; reviewed)
+  2026-06-01:
+    MongoClusters_User:
+      $exportAs: MongoClustersUser
+      $supportedFrom: v0.1.0

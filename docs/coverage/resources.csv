@@ -1035,13 +1035,13 @@ Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tableRoleAssignments,
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tableRoleDefinitions,7,,0,documentdb.azure.hfl.dev/DatabaseAccountsTableRoleDefinition,7,0,false,spec_api=2026-03-15; ours_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tables,11,,0,documentdb.azure.hfl.dev/DatabaseAccountsTable,9,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tables/throughputSettings,8,,0,documentdb.azure.hfl.dev/DatabaseAccountsTablesThroughputSetting,6,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/fleets,3,,0,,0,3,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces,7,,0,,0,7,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces/fleetspaceAccounts,2,,0,,0,2,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/fleets,3,,0,documentdb.azure.hfl.dev/Fleet,2,1,false,spec_api=2026-03-15; ours_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces,7,,0,documentdb.azure.hfl.dev/FleetsFleetspace,7,0,false,spec_api=2026-03-15; ours_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces/fleetspaceAccounts,2,,0,documentdb.azure.hfl.dev/FleetsFleetspacesFleetspaceAccount,2,0,false,spec_api=2026-03-15; ours_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters,26,documentdb.azure.com/MongoCluster,16,,0,10,false,spec_api=2026-06-01; official_api=2024-07-01; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/firewallRules,2,documentdb.azure.com/FirewallRule,2,,0,0,false,spec_api=2026-06-01; official_api=2024-07-01; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/privateEndpointConnections,4,,0,documentdb.azure.hfl.dev/MongoClustersPrivateEndpointConnection,3,1,false,spec_api=2026-06-01; ours_api=2024-07-01; ours-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/users,4,,0,,0,4,false,spec_api=2026-06-01
+Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/users,4,,0,documentdb.azure.hfl.dev/MongoClustersUser,4,0,false,spec_api=2026-06-01; ours_api=2026-06-01
 Microsoft.DocumentDB,Microsoft.DocumentDB/throughputPools,3,,0,,0,3,false,spec_api=2025-05-01-preview; spec-preview-only
 Microsoft.DocumentDB,Microsoft.DocumentDB/throughputPools/throughputPoolAccounts,2,,0,,0,2,false,spec_api=2025-05-01-preview; spec-preview-only
 Microsoft.DomainRegistration,Microsoft.DomainRegistration/domains,68,,0,,0,68,false,spec_api=2024-11-01

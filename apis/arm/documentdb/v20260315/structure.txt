@@ -348,3 +348,165 @@ DatabaseAccountsTableRoleDefinition: Resource
     │       └── "User"
     └── Type: *string
 
+Fleet: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (5 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 50
+│   │   ├── Rule 1: MinLength: 3
+│   │   └── Rule 2: Pattern: "^[a-z0-9]+(-[a-z0-9]+)*"
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (10 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Initializing"
+    │   ├── "InternallyReady"
+    │   ├── "Online"
+    │   ├── "Succeeded"
+    │   ├── "Uninitialized"
+    │   └── "Updating"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+FleetsFleetspace: Resource
+├── Owner: Fleet
+├── Spec: Object (7 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 50
+│   │   ├── Rule 1: MinLength: 3
+│   │   └── Rule 2: Pattern: "^[a-z0-9]+(-[a-z0-9]+)*"
+│   ├── DataRegions: Validated<string[]> (1 rule)
+│   │   └── Rule 0: MinItems: 1
+│   ├── FleetspaceApiKind: *Enum (1 value)
+│   │   └── "NoSQL"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── ServiceTier: *Enum (2 values)
+│   │   ├── "BusinessCritical"
+│   │   └── "GeneralPurpose"
+│   └── ThroughputPoolConfiguration: *Object (4 properties)
+│       ├── DedicatedRUs: *int
+│       ├── MaxConsumableRUs: *int
+│       ├── MaxThroughput: *int
+│       └── MinThroughput: *int
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DataRegions: string[]
+    ├── FleetspaceApiKind: *Enum (1 value)
+    │   └── "NoSQL"
+    ├── Id: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (10 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Initializing"
+    │   ├── "InternallyReady"
+    │   ├── "Online"
+    │   ├── "Succeeded"
+    │   ├── "Uninitialized"
+    │   └── "Updating"
+    ├── ServiceTier: *Enum (2 values)
+    │   ├── "BusinessCritical"
+    │   └── "GeneralPurpose"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── ThroughputPoolConfiguration: *Object (4 properties)
+    │   ├── DedicatedRUs: *int
+    │   ├── MaxConsumableRUs: *int
+    │   ├── MaxThroughput: *int
+    │   └── MinThroughput: *int
+    └── Type: *string
+
+FleetsFleetspacesFleetspaceAccount: Resource
+├── Owner: FleetsFleetspace
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 50
+│   │   ├── Rule 1: MinLength: 3
+│   │   └── Rule 2: Pattern: "^[a-z0-9]+(-[a-z0-9]+)*"
+│   ├── GlobalDatabaseAccountProperties: *Object (2 properties)
+│   │   ├── ArmLocation: *string
+│   │   └── ResourceReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── GlobalDatabaseAccountProperties: *Object (2 properties)
+    │   ├── ArmLocation: *string
+    │   └── ResourceId: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (10 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Initializing"
+    │   ├── "InternallyReady"
+    │   ├── "Online"
+    │   ├── "Succeeded"
+    │   ├── "Uninitialized"
+    │   └── "Updating"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
