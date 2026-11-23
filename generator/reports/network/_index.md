@@ -11,6 +11,7 @@ no_list: true
 | Resource                                               | ARM Version | CRD Version | Supported From | Sample |
 |--------------------------------------------------------|-------------|-------------|----------------|--------|
 | ApplicationGateway                                     | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| ApplicationSecurityGroupsAddressPrefixSet              | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | DdosCustomPolicy                                       | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | DnsResolverDomainList                                  | 2025-05-01  | v20250501   | v0.1.0         | -      |
 | DnsResolverPoliciesDnsSecurityRule                     | 2025-05-01  | v20250501   | v0.1.0         | -      |
@@ -29,6 +30,7 @@ no_list: true
 | ExpressRoutePortsAuthorization                         | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | FirewallPoliciesFirewallPolicyDraft                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | FirewallPoliciesKubeSelectorGroup                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| FirewallPoliciesRuleCollectionGroupDraft               | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | FirewallPoliciesSignatureOverride                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | IpGroup                                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | LocalNetworkGateway                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
@@ -63,6 +65,7 @@ no_list: true
 | NetworkVirtualAppliancesConnection                     | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkVirtualAppliancesInboundSecurityRule            | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkVirtualAppliancesVirtualApplianceSite           | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkWatchersConnectionMonitor                       | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | P2sVpnGateway                                          | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | PrivateDnsZonesSOARecord                               | 2024-06-01  | v20240601   | v0.1.0         | -      |
 | RouteFilter                                            | 2026-03-01  | v20260301   | v0.1.0         | -      |

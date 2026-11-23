@@ -75,6 +75,8 @@ trap 'rm -rf "${out}"' EXIT
     paths="./api/containerservice/v1api20250301/storage/..." \
     paths="./api/network/v1api20180501/storage/..." \
     paths="./api/network/v1api20240601/storage/..." \
+    paths="./api/network/v1api20240101/storage/..." \
+    paths="./api/network/v1api20241001/storage/..." \
     paths="./api/documentdb/v1api20240815/storage/..." \
     paths="./api/cognitiveservices/v20250601/storage/..." \
     paths="./api/storage/v20260601/storage/..." \
@@ -100,6 +102,9 @@ cp "${out}/dbforpostgresql.azure.com_flexibleservers.yaml" "${out}/keyvault.azur
   "${out}/network.azure.com_bastionhosts.yaml" \
   "${out}/network.azure.com_ddosprotectionplans.yaml" \
   "${out}/network.azure.com_firewallpolicies.yaml" \
+  "${out}/network.azure.com_firewallpoliciesrulecollectiongroups.yaml" \
+  "${out}/network.azure.com_applicationsecuritygroups.yaml" \
+  "${out}/network.azure.com_networkwatchers.yaml" \
   "${out}/network.azure.com_loadbalancers.yaml" \
   "${out}/network.azure.com_natgateways.yaml" \
   "${out}/network.azure.com_networkinterfaces.yaml" \
@@ -144,6 +149,9 @@ cp "${out}/dbforpostgresql.azure.com_flexibleservers.yaml" "${out}/keyvault.azur
   echo "- network.azure.com_bastionhosts.yaml"
   echo "- network.azure.com_ddosprotectionplans.yaml"
   echo "- network.azure.com_firewallpolicies.yaml"
+  echo "- network.azure.com_firewallpoliciesrulecollectiongroups.yaml"
+  echo "- network.azure.com_applicationsecuritygroups.yaml"
+  echo "- network.azure.com_networkwatchers.yaml"
   echo "- network.azure.com_loadbalancers.yaml"
   echo "- network.azure.com_natgateways.yaml"
   echo "- network.azure.com_networkinterfaces.yaml"

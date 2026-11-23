@@ -352,6 +352,22 @@ groupModelConfiguration:
     FirewallPolicyIntrusionDetectionSignatureSpecification:
       Id:
         $referenceType: simple # an IDPS signature's ID (a number), not an ARM ID; as ASO's network.yaml labels it
+    # A rule collection group's draft (ruleCollectionGroupDrafts/default: its
+    # rules staged before the policy's draft is deployed), owned by ASO's
+    # FirewallPoliciesRuleCollectionGroup; an application security group's
+    # address prefix sets (CIDRs grouped under an ASG, for NSG rules), owned
+    # by ASO's ApplicationSecurityGroup; Network Watcher connection monitors
+    # (reachability and latency between endpoints, to a Log Analytics
+    # workspace), owned by ASO's NetworkWatcher.
+    FirewallPolicies_RuleCollectionGroups_RuleCollectionGroupDraft:
+      $exportAs: FirewallPoliciesRuleCollectionGroupDraft # shortened: the generator's name makes a listKind longer than the 63 characters a CRD allows
+      $supportedFrom: v0.1.0
+    ApplicationSecurityGroups_AddressPrefixSet:
+      $exportAs: ApplicationSecurityGroupsAddressPrefixSet
+      $supportedFrom: v0.1.0
+    NetworkWatchers_ConnectionMonitor:
+      $exportAs: NetworkWatchersConnectionMonitor
+      $supportedFrom: v0.1.0
     # Network virtual appliances (a third-party firewall or SD-WAN appliance,
     # in a Virtual WAN hub or a virtual network) and their children. The
     # appliance's PUT lists its sites, connections and inbound security rules
@@ -585,6 +601,18 @@ groupModelConfiguration:
     DdosDetectionRule:
       Id:
         $referenceType: arm # autolabel: review
+    ConnectionMonitorEndpoint:
+      ResourceId:
+        $referenceType: arm # the endpoint's resource (a VM, subnet, virtual network or workspace), by object or ARM ID (autolabel, reviewed)
+    ConnectionMonitorSource:
+      ResourceId:
+        $referenceType: arm # the source VM of a v1 connection monitor (autolabel, reviewed)
+    ConnectionMonitorWorkspaceSettings:
+      WorkspaceResourceId:
+        $referenceType: arm # the Log Analytics workspace the monitor writes to: ASO's Workspace or an ARM ID (autolabel, reviewed)
+    ConnectionMonitorDestination:
+      ResourceId:
+        $referenceType: arm # the destination resource of a v1 connection monitor (autolabel, reviewed)
 typeTransformers:
   - group: network
     version: v20180501
@@ -662,7 +690,7 @@ typeTransformers:
     because: a key; exported to a Secret, not shown in the status
   - group: network
     version: v20260301
-    name: ExpressRouteCircuits_Authorization_Spec;ExpressRouteCircuits_Peering_Spec;ExpressRouteCircuits_Peerings_Connection_Spec;ExpressRoutePorts_Authorization_Spec;ExpressRouteGateways_ExpressRouteConnection_Spec;VirtualHubs_HubVirtualNetworkConnection_Spec;VirtualHubs_RouteTable_Spec;VirtualHubs_BgpConnection_Spec;VirtualHubs_RoutingIntent_Spec;VirtualHubs_HubRouteTable_Spec;VirtualHubs_IpConfiguration_Spec;VpnGateways_VpnConnection_Spec;VpnGateways_NatRule_Spec;VirtualRouters_Peering_Spec;FirewallPolicies_KubeSelectorGroup_Spec;NetworkVirtualAppliances_VirtualApplianceSite_Spec;NetworkVirtualAppliances_NetworkVirtualApplianceConnection_Spec;NetworkVirtualAppliances_InboundSecurityRule_Spec
+    name: ExpressRouteCircuits_Authorization_Spec;ExpressRouteCircuits_Peering_Spec;ExpressRouteCircuits_Peerings_Connection_Spec;ExpressRoutePorts_Authorization_Spec;ExpressRouteGateways_ExpressRouteConnection_Spec;VirtualHubs_HubVirtualNetworkConnection_Spec;VirtualHubs_RouteTable_Spec;VirtualHubs_BgpConnection_Spec;VirtualHubs_RoutingIntent_Spec;VirtualHubs_HubRouteTable_Spec;VirtualHubs_IpConfiguration_Spec;VpnGateways_VpnConnection_Spec;VpnGateways_NatRule_Spec;VirtualRouters_Peering_Spec;FirewallPolicies_KubeSelectorGroup_Spec;FirewallPolicies_RuleCollectionGroups_RuleCollectionGroupDraft_Spec;NetworkVirtualAppliances_VirtualApplianceSite_Spec;NetworkVirtualAppliances_NetworkVirtualApplianceConnection_Spec;NetworkVirtualAppliances_InboundSecurityRule_Spec
     property: Id
     remove: true
     because: a child resource's own ARM ID (the spec's SubResource), which Azure sets; ASO's subnets and routes have none in their spec either

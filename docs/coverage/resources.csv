@@ -1536,7 +1536,7 @@ Microsoft.Network,Microsoft.Network/applicationGateways,266,network.azure.com/Ap
 Microsoft.Network,Microsoft.Network/applicationGateways/privateEndpointConnections,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies,57,network.azure.com/WebApplicationFirewallPolicy,45,,0,12,false,spec_api=2026-03-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/applicationSecurityGroups,3,network.azure.com/ApplicationSecurityGroup,2,,0,1,false,spec_api=2026-03-01; official_api=2024-01-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/applicationSecurityGroups/addressPrefixSets,1,,0,,0,1,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/applicationSecurityGroups/addressPrefixSets,1,,0,network.azure.hfl.dev/ApplicationSecurityGroupsAddressPrefixSet,1,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/authenticationPolicies,14,,0,,0,14,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/azureFirewalls,64,network.azure.com/AzureFirewall,58,,0,6,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/bastionHosts,26,network.azure.com/BastionHost,20,,0,6,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
@@ -1583,7 +1583,7 @@ Microsoft.Network,Microsoft.Network/firewallPolicies,41,network.azure.com/Firewa
 Microsoft.Network,Microsoft.Network/firewallPolicies/firewallPolicyDrafts,36,,0,network.azure.hfl.dev/FirewallPoliciesFirewallPolicyDraft,36,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies/kubeSelectorGroups,8,,0,network.azure.hfl.dev/FirewallPoliciesKubeSelectorGroup,8,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies/ruleCollectionGroups,30,network.azure.com/FirewallPoliciesRuleCollectionGroup,27,,0,3,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/firewallPolicies/ruleCollectionGroups/ruleCollectionGroupDrafts,30,,0,,0,30,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/firewallPolicies/ruleCollectionGroups/ruleCollectionGroupDrafts,30,,0,network.azure.hfl.dev/FirewallPoliciesRuleCollectionGroupDraft,30,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies/signatureOverrides,1,,0,network.azure.hfl.dev/FirewallPoliciesSignatureOverride,1,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firstPartyServiceTags,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/frontDoors,61,,0,,0,61,false,spec_api=2026-04-01
@@ -1638,7 +1638,7 @@ Microsoft.Network,Microsoft.Network/networkVirtualAppliances/networkVirtualAppli
 Microsoft.Network,Microsoft.Network/networkVirtualAppliances/virtualApplianceSites,4,,0,network.azure.hfl.dev/NetworkVirtualAppliancesVirtualApplianceSite,4,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkWatchers,3,network.azure.com/NetworkWatcher,2,,0,1,false,spec_api=2026-03-01; official_api=2024-10-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkWatchers/connectionAnalyzers,23,,0,,0,23,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkWatchers/connectionMonitors,46,,0,,0,46,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkWatchers/connectionMonitors,46,,0,network.azure.hfl.dev/NetworkWatchersConnectionMonitor,46,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkWatchers/flowLogs,18,network.azure.com/NetworkWatchersFlowLog,16,,0,2,false,spec_api=2026-03-01; official_api=2024-10-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkWatchers/packetCaptures,20,,0,,0,20,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/p2svpnGateways,24,,0,network.azure.hfl.dev/P2sVpnGateway,24,0,false,spec_api=2026-03-01; ours_api=2026-03-01

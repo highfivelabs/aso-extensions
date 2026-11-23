@@ -1061,6 +1061,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ApplicationSecurityGroupsAddressPrefixSet)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.DdosCustomPolicy)})
 	result = append(result, &registration.StorageType{
 		Obj: new(network_v20260301.ExpressRouteCircuit),
@@ -1151,6 +1152,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.FirewallPoliciesFirewallPolicyDraft)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.FirewallPoliciesKubeSelectorGroup)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.FirewallPoliciesRuleCollectionGroupDraft)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.FirewallPoliciesSignatureOverride)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.IpGroup)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
@@ -1197,6 +1199,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesConnection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesInboundSecurityRule)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkVirtualAppliancesVirtualApplianceSite)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkWatchersConnectionMonitor)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.P2sVpnGateway)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFilter)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)})
@@ -1937,6 +1940,7 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(network_v20260301.ApplicationGateway)},
+		&registration.KnownType{Obj: new(network_v20260301.ApplicationSecurityGroupsAddressPrefixSet)},
 		&registration.KnownType{Obj: new(network_v20260301.DdosCustomPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuit)},
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRouteCircuitsAuthorization)},
@@ -1950,6 +1954,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301.FirewallPoliciesFirewallPolicyDraft)},
 		&registration.KnownType{Obj: new(network_v20260301.FirewallPoliciesKubeSelectorGroup)},
+		&registration.KnownType{Obj: new(network_v20260301.FirewallPoliciesRuleCollectionGroupDraft)},
 		&registration.KnownType{Obj: new(network_v20260301.FirewallPoliciesSignatureOverride)},
 		&registration.KnownType{Obj: new(network_v20260301.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
@@ -1978,6 +1983,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.NetworkVirtualAppliancesConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkVirtualAppliancesInboundSecurityRule)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkVirtualAppliancesVirtualApplianceSite)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkWatchersConnectionMonitor)},
 		&registration.KnownType{Obj: new(network_v20260301.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301.RouteFilter)},
 		&registration.KnownType{Obj: new(network_v20260301.RouteFiltersRouteFilterRule)},
@@ -2005,6 +2011,7 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(network_v20260301s.ApplicationGateway)},
+		&registration.KnownType{Obj: new(network_v20260301s.ApplicationSecurityGroupsAddressPrefixSet)},
 		&registration.KnownType{Obj: new(network_v20260301s.DdosCustomPolicy)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuit)},
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRouteCircuitsAuthorization)},
@@ -2018,6 +2025,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.ExpressRoutePortsAuthorization)},
 		&registration.KnownType{Obj: new(network_v20260301s.FirewallPoliciesFirewallPolicyDraft)},
 		&registration.KnownType{Obj: new(network_v20260301s.FirewallPoliciesKubeSelectorGroup)},
+		&registration.KnownType{Obj: new(network_v20260301s.FirewallPoliciesRuleCollectionGroupDraft)},
 		&registration.KnownType{Obj: new(network_v20260301s.FirewallPoliciesSignatureOverride)},
 		&registration.KnownType{Obj: new(network_v20260301s.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
@@ -2046,6 +2054,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkVirtualAppliancesConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkVirtualAppliancesInboundSecurityRule)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkVirtualAppliancesVirtualApplianceSite)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkWatchersConnectionMonitor)},
 		&registration.KnownType{Obj: new(network_v20260301s.P2sVpnGateway)},
 		&registration.KnownType{Obj: new(network_v20260301s.RouteFilter)},
 		&registration.KnownType{Obj: new(network_v20260301s.RouteFiltersRouteFilterRule)},
@@ -2521,6 +2530,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &management_customizations.ManagementGroupsSubscriptionExtension{})
 	result = append(result, &management_customizations.ServiceGroupExtension{})
 	result = append(result, &network_customizations.ApplicationGatewayExtension{})
+	result = append(result, &network_customizations.ApplicationSecurityGroupsAddressPrefixSetExtension{})
 	result = append(result, &network_customizations.DdosCustomPolicyExtension{})
 	result = append(result, &network_customizations.DnsResolverDomainListExtension{})
 	result = append(result, &network_customizations.DnsResolverPoliciesDnsSecurityRuleExtension{})
@@ -2539,6 +2549,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.ExpressRoutePortsAuthorizationExtension{})
 	result = append(result, &network_customizations.FirewallPoliciesFirewallPolicyDraftExtension{})
 	result = append(result, &network_customizations.FirewallPoliciesKubeSelectorGroupExtension{})
+	result = append(result, &network_customizations.FirewallPoliciesRuleCollectionGroupDraftExtension{})
 	result = append(result, &network_customizations.FirewallPoliciesSignatureOverrideExtension{})
 	result = append(result, &network_customizations.IpGroupExtension{})
 	result = append(result, &network_customizations.LocalNetworkGatewayExtension{})
@@ -2573,6 +2584,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.NetworkVirtualAppliancesConnectionExtension{})
 	result = append(result, &network_customizations.NetworkVirtualAppliancesInboundSecurityRuleExtension{})
 	result = append(result, &network_customizations.NetworkVirtualAppliancesVirtualApplianceSiteExtension{})
+	result = append(result, &network_customizations.NetworkWatchersConnectionMonitorExtension{})
 	result = append(result, &network_customizations.P2sVpnGatewayExtension{})
 	result = append(result, &network_customizations.PrivateDnsZonesSOARecordExtension{})
 	result = append(result, &network_customizations.RouteFilterExtension{})

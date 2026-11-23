@@ -27,6 +27,9 @@ resources:
 - network.azure.com_bastionhosts.yaml
 - network.azure.com_ddosprotectionplans.yaml
 - network.azure.com_firewallpolicies.yaml
+- network.azure.com_firewallpoliciesrulecollectiongroups.yaml
+- network.azure.com_applicationsecuritygroups.yaml
+- network.azure.com_networkwatchers.yaml
 - network.azure.com_loadbalancers.yaml
 - network.azure.com_natgateways.yaml
 - network.azure.com_networkinterfaces.yaml

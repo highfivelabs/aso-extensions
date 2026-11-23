@@ -492,6 +492,20 @@ upstream's); the catalog's chart tests do that.
   a scope managed by two network managers for the same feature, the other tenant accepting a scope connection, a
   network manager connection's state, dynamic membership through Azure
   Policy, a static member's region, and the error codes (the fake's own).
+- Network Watcher connection monitors and application security group
+  address prefix sets (`networkWatchers/connectionMonitors`,
+  `applicationSecurityGroups/addressPrefixSets`, 2026-03-01;
+  `pkg/fakecloud/arm/networkwatcher.go`), from the spec: a (v2) monitor has
+  a test group, and each test group's sources and destinations name the
+  monitor's own endpoints and its test configurations the monitor's own
+  (400); an endpoint's `resourceId`, and a v1 monitor's source, must exist
+  (404); an address prefix set has at least one prefix, each CIDR (IPv4 or
+  IPv6, 400). Not modelled: a monitor running (no checks or results), the
+  Network Watcher agent, endpoint filters and scopes, the watcher's region,
+  a prefix set taking effect in security rules, and the error codes (the
+  fake's own). A rule collection group's draft
+  (`ruleCollectionGroups/{g}/ruleCollectionGroupDrafts/default`) is kept as
+  sent: deploying a draft is a POST on the policy, not faked.
 - Resource Manager checks no role: real Azure lets only Owner and User
   Access Administrator (or a custom role with
   `Microsoft.Authorization/locks/*`) write locks, so ASO's identity may

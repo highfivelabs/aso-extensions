@@ -52,7 +52,9 @@ import (
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
 	asodns "github.com/Azure/azure-service-operator/v2/api/network/v1api20180501/storage"
 	asodnsresolver "github.com/Azure/azure-service-operator/v2/api/network/v1api20220701/storage"
+	asoasg "github.com/Azure/azure-service-operator/v2/api/network/v1api20240101/storage"
 	asoprivatedns "github.com/Azure/azure-service-operator/v2/api/network/v1api20240601/storage"
+	asowatcher "github.com/Azure/azure-service-operator/v2/api/network/v1api20241001/storage"
 	asonetwork "github.com/Azure/azure-service-operator/v2/api/network/v20250301/storage"
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
@@ -112,6 +114,8 @@ func CreateScheme() *runtime.Scheme {
 	_ = asodnsresolver.AddToScheme(scheme)
 	_ = asocache.AddToScheme(scheme)
 	_ = asodisk.AddToScheme(scheme)
+	_ = asoasg.AddToScheme(scheme)
+	_ = asowatcher.AddToScheme(scheme)
 	return scheme
 }
 
@@ -149,6 +153,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asonetwork.BastionHost{}, Name: "aso_network_bastionhost"},
 		{Obj: &asonetwork.DdosProtectionPlan{}, Name: "aso_network_ddosprotectionplan"},
 		{Obj: &asonetwork.FirewallPolicy{}, Name: "aso_network_firewallpolicy"},
+		{Obj: &asonetwork.FirewallPoliciesRuleCollectionGroup{}, Name: "aso_network_firewallpoliciesrulecollectiongroup"},
 		{Obj: &asonetwork.LoadBalancer{}, Name: "aso_network_loadbalancer"},
 		{Obj: &asonetwork.NatGateway{}, Name: "aso_network_natgateway"},
 		{Obj: &asonetwork.NetworkInterface{}, Name: "aso_network_networkinterface"},
@@ -163,6 +168,8 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asosql.ServersElasticPool{}, Name: "aso_sql_serverselasticpool"},
 		{Obj: &asodisk.Disk{}, Name: "aso_compute_disk"},
 		{Obj: &asocache.Redis{}, Name: "aso_cache_redis"},
+		{Obj: &asoasg.ApplicationSecurityGroup{}, Name: "aso_network_applicationsecuritygroup"},
+		{Obj: &asowatcher.NetworkWatcher{}, Name: "aso_network_networkwatcher"},
 	}
 }
 

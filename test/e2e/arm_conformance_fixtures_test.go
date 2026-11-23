@@ -219,6 +219,19 @@ func init() {
 	f["SecurityConnectorsDevOpsAzureDevOpsOrg"] = conformanceFixture{annotations: detach, stays: true}
 	f["SecurityConnectorsDevOpsAzureDevOpsProject"] = conformanceFixture{annotations: detach, stays: true}
 	f["SecurityConnectorsDevOpsAzureDevOpsRepo"] = conformanceFixture{annotations: detach, stays: true}
+	// A connection monitor has a test group naming its own endpoints and
+	// test configuration; an address prefix set at least one CIDR (the
+	// fake's rules, networkwatcher.go).
+	f["NetworkWatchersConnectionMonitor"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{
+			"endpoints":          []any{map[string]any{"name": "a", "address": "10.0.0.4"}, map[string]any{"name": "b", "address": "www.example.com"}},
+			"testConfigurations": []any{map[string]any{"name": "t", "protocol": "Tcp", "tcpConfiguration": map[string]any{"port": int64(443)}}},
+			"testGroups":         []any{map[string]any{"name": "g", "sources": []any{"a"}, "destinations": []any{"b"}, "testConfigurations": []any{"t"}}},
+		}
+	}}
+	f["ApplicationSecurityGroupsAddressPrefixSet"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"addressPrefixes": []any{"10.0.0.0/16"}}}
+	}}
 	// Foundation batch 2: kinds with required fields or specific owners.
 	f["DeploymentSafeguard"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"level": "Warn"}

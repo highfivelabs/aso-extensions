@@ -47,7 +47,7 @@ rules:
   resources: ["registries"]
   verbs: ["get", "list", "watch"]
 - apiGroups: ["network.azure.com"]
-  resources: ["dnszones", "privatednszones", "azurefirewalls", "bastionhosts", "ddosprotectionplans", "firewallpolicies", "loadbalancers", "natgateways", "networkinterfaces", "networksecuritygroups", "privateendpoints", "publicipaddresses", "routetables", "virtualnetworks", "dnsresolvers", "dnsforwardingrulesets"]
+  resources: ["dnszones", "privatednszones", "azurefirewalls", "bastionhosts", "ddosprotectionplans", "firewallpolicies", "loadbalancers", "natgateways", "networkinterfaces", "networksecuritygroups", "privateendpoints", "publicipaddresses", "routetables", "virtualnetworks", "dnsresolvers", "dnsforwardingrulesets", "firewallpoliciesrulecollectiongroups", "applicationsecuritygroups", "networkwatchers"]
   verbs: ["get", "list", "watch"]
 - apiGroups: ["compute.azure.com"]
   resources: ["virtualmachines", "disks"]

@@ -19,6 +19,9 @@ containerservice/ManagedCluster
 containerservice/Fleet
 network/DnsZone
 network/FirewallPolicy
+network/FirewallPolicies_RuleCollectionGroup=FirewallPoliciesRuleCollectionGroup
+network/ApplicationSecurityGroup
+network/NetworkWatcher
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase
