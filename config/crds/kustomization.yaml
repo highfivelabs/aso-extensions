@@ -334,7 +334,13 @@ resources:
 - sql.azure.hfl.dev_managedinstancessqlagents.yaml
 - sql.azure.hfl.dev_managedinstancesstartstopschedules.yaml
 - sql.azure.hfl.dev_managedinstancesvulnerabilityassessments.yaml
+- sql.azure.hfl.dev_serversdatabasesdatamaskingpolicies.yaml
 - sql.azure.hfl.dev_serversdatabasesgeobackuppolicies.yaml
+- sql.azure.hfl.dev_serversdatabasesledgerdigestuploads.yaml
+- sql.azure.hfl.dev_serversdatabasesmaintenancewindows.yaml
+- sql.azure.hfl.dev_serversdatabasesworkloadgroups.yaml
+- sql.azure.hfl.dev_serversdatabasesworkloadgroupsworkloadclassifiers.yaml
+- sql.azure.hfl.dev_serversdevopsauditingsettings.yaml
 - sql.azure.hfl.dev_serversdnsaliases.yaml
 - sql.azure.hfl.dev_serversjobagents.yaml
 - sql.azure.hfl.dev_serversjobagentscredentials.yaml
@@ -344,6 +350,8 @@ resources:
 - sql.azure.hfl.dev_serversjobagentstargetgroups.yaml
 - sql.azure.hfl.dev_serversprivateendpointconnections.yaml
 - sql.azure.hfl.dev_serverssqlvulnerabilityassessments.yaml
+- sql.azure.hfl.dev_serverssqlvulnerabilityassessmentsbaselines.yaml
+- sql.azure.hfl.dev_serverssqlvulnerabilityassessmentsbaselinesrules.yaml
 - sql.azure.hfl.dev_users.yaml
 - storage.azure.hfl.dev_storageaccountsencryptionscopes.yaml
 - storage.azure.hfl.dev_storageaccountsinventorypolicies.yaml

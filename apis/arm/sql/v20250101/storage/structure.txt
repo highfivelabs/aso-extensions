@@ -815,6 +815,39 @@ ManagedInstancesVulnerabilityAssessment: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+ServersDatabasesDataMaskingPolicy: Resource
+├── Owner: sql/v20250101.Servers_Database
+├── Spec: Object (6 properties)
+│   ├── DataMaskingState: *string
+│   ├── ExemptPrincipals: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (12 properties)
+    ├── ApplicationPrincipals: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DataMaskingState: *string
+    ├── ExemptPrincipals: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── MaskingLevel: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 ServersDatabasesGeoBackupPolicy: Resource
 ├── Owner: sql/v20250101.Servers_Database
 ├── Spec: Object (5 properties)
@@ -835,6 +868,181 @@ ServersDatabasesGeoBackupPolicy: Resource
     ├── PropertyBag: genruntime.PropertyBag
     ├── State: *string
     ├── StorageType: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+ServersDatabasesLedgerDigestUpload: Resource
+├── Owner: sql/v20250101.Servers_Database
+├── Spec: Object (5 properties)
+│   ├── DigestStorageEndpoint: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DigestStorageEndpoint: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── State: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+ServersDatabasesMaintenanceWindow: Resource
+├── Owner: sql/v20250101.Servers_Database
+├── Spec: Object (5 properties)
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── TimeRanges: Object (4 properties)[]
+│       ├── DayOfWeek: *string
+│       ├── Duration: *string
+│       ├── PropertyBag: genruntime.PropertyBag
+│       └── StartTime: *string
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── TimeRanges: Object (4 properties)[]
+    │   ├── DayOfWeek: *string
+    │   ├── Duration: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── StartTime: *string
+    └── Type: *string
+
+ServersDatabasesWorkloadGroup: Resource
+├── Owner: sql/v20250101.Servers_Database
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── Importance: *string
+│   ├── MaxResourcePercent: *int
+│   ├── MaxResourcePercentPerRequest: *float64
+│   ├── MinResourcePercent: *int
+│   ├── MinResourcePercentPerRequest: *float64
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── QueryExecutionTimeout: *int
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Importance: *string
+    ├── MaxResourcePercent: *int
+    ├── MaxResourcePercentPerRequest: *float64
+    ├── MinResourcePercent: *int
+    ├── MinResourcePercentPerRequest: *float64
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── QueryExecutionTimeout: *int
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+ServersDatabasesWorkloadGroupsWorkloadClassifier: Resource
+├── Owner: sql/v20250101.ServersDatabasesWorkloadGroup
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── Context: *string
+│   ├── EndTime: *string
+│   ├── Importance: *string
+│   ├── Label: *string
+│   ├── MemberName: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── StartTime: *string
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Context: *string
+    ├── EndTime: *string
+    ├── Id: *string
+    ├── Importance: *string
+    ├── Label: *string
+    ├── MemberName: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── StartTime: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+ServersDevOpsAuditingSetting: Resource
+├── Owner: sql/v20250101.Server
+├── Spec: Object (10 properties)
+│   ├── IsAzureMonitorTargetEnabled: *bool
+│   ├── IsManagedIdentityInUse: *bool
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── State: *string
+│   ├── StorageAccountAccessKey: *genruntime.SecretReference
+│   ├── StorageAccountSubscriptionId: *string
+│   └── StorageEndpoint: *string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IsAzureMonitorTargetEnabled: *bool
+    ├── IsManagedIdentityInUse: *bool
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── State: *string
+    ├── StorageAccountSubscriptionId: *string
+    ├── StorageEndpoint: *string
     ├── SystemData: *Object (7 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string
@@ -1215,6 +1423,63 @@ ServersSqlVulnerabilityAssessment: Resource
     ├── Name: *string
     ├── PropertyBag: genruntime.PropertyBag
     ├── State: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+ServersSqlVulnerabilityAssessmentsBaseline: Resource
+├── Owner: sql/v20250101.ServersSqlVulnerabilityAssessment
+├── Spec: Object (6 properties)
+│   ├── LatestScan: *bool
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Results: map[string]string[][]
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Results: map[string]string[][]
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+ServersSqlVulnerabilityAssessmentsBaselinesRule: Resource
+├── Owner: sql/v20250101.ServersSqlVulnerabilityAssessmentsBaseline
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── LatestScan: *bool
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Results: string[][]
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Results: string[][]
     ├── SystemData: *Object (7 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string

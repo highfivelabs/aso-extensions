@@ -1867,7 +1867,31 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDatabasesDataMaskingPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDatabasesGeoBackupPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDatabasesLedgerDigestUpload)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDatabasesMaintenanceWindow)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDatabasesWorkloadGroup)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDatabasesWorkloadGroupsWorkloadClassifier)})
+	result = append(result, &registration.StorageType{
+		Obj: new(sql_v20250101.ServersDevOpsAuditingSetting),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.storageAccountAccessKey",
+				Func: indexSqlServersDevOpsAuditingSettingStorageAccountAccessKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.storageAccountAccessKey",
+					},
+					&sql_v20250101.ServersDevOpsAuditingSettingList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDnsAlias)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersJobAgent)})
 	result = append(result, &registration.StorageType{
@@ -1895,6 +1919,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersJobAgentsTargetGroup)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessmentsBaseline)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessmentsBaselinesRule)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsInventoryPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsLocalUser)})
@@ -2896,7 +2922,13 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(sql_v20250101.ManagedInstancesSqlAgent)},
 		&registration.KnownType{Obj: new(sql_v20250101.ManagedInstancesStartStopSchedule)},
 		&registration.KnownType{Obj: new(sql_v20250101.ManagedInstancesVulnerabilityAssessment)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersDatabasesDataMaskingPolicy)},
 		&registration.KnownType{Obj: new(sql_v20250101.ServersDatabasesGeoBackupPolicy)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersDatabasesLedgerDigestUpload)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersDatabasesMaintenanceWindow)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersDatabasesWorkloadGroup)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersDatabasesWorkloadGroupsWorkloadClassifier)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersDevOpsAuditingSetting)},
 		&registration.KnownType{Obj: new(sql_v20250101.ServersDnsAlias)},
 		&registration.KnownType{Obj: new(sql_v20250101.ServersJobAgent)},
 		&registration.KnownType{Obj: new(sql_v20250101.ServersJobAgentsCredential)},
@@ -2905,7 +2937,9 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(sql_v20250101.ServersJobAgentsPrivateEndpoint)},
 		&registration.KnownType{Obj: new(sql_v20250101.ServersJobAgentsTargetGroup)},
 		&registration.KnownType{Obj: new(sql_v20250101.ServersPrivateEndpointConnection)},
-		&registration.KnownType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
+		&registration.KnownType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessmentsBaseline)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessmentsBaselinesRule)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(sql_v20250101s.InstancePool)},
@@ -2930,7 +2964,13 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(sql_v20250101s.ManagedInstancesSqlAgent)},
 		&registration.KnownType{Obj: new(sql_v20250101s.ManagedInstancesStartStopSchedule)},
 		&registration.KnownType{Obj: new(sql_v20250101s.ManagedInstancesVulnerabilityAssessment)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersDatabasesDataMaskingPolicy)},
 		&registration.KnownType{Obj: new(sql_v20250101s.ServersDatabasesGeoBackupPolicy)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersDatabasesLedgerDigestUpload)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersDatabasesMaintenanceWindow)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersDatabasesWorkloadGroup)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersDatabasesWorkloadGroupsWorkloadClassifier)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersDevOpsAuditingSetting)},
 		&registration.KnownType{Obj: new(sql_v20250101s.ServersDnsAlias)},
 		&registration.KnownType{Obj: new(sql_v20250101s.ServersJobAgent)},
 		&registration.KnownType{Obj: new(sql_v20250101s.ServersJobAgentsCredential)},
@@ -2939,7 +2979,9 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(sql_v20250101s.ServersJobAgentsPrivateEndpoint)},
 		&registration.KnownType{Obj: new(sql_v20250101s.ServersJobAgentsTargetGroup)},
 		&registration.KnownType{Obj: new(sql_v20250101s.ServersPrivateEndpointConnection)},
-		&registration.KnownType{Obj: new(sql_v20250101s.ServersSqlVulnerabilityAssessment)})
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersSqlVulnerabilityAssessment)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersSqlVulnerabilityAssessmentsBaseline)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersSqlVulnerabilityAssessmentsBaselinesRule)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)},
@@ -3548,7 +3590,13 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &sql_customizations.ManagedInstancesSqlAgentExtension{})
 	result = append(result, &sql_customizations.ManagedInstancesStartStopScheduleExtension{})
 	result = append(result, &sql_customizations.ManagedInstancesVulnerabilityAssessmentExtension{})
+	result = append(result, &sql_customizations.ServersDatabasesDataMaskingPolicyExtension{})
 	result = append(result, &sql_customizations.ServersDatabasesGeoBackupPolicyExtension{})
+	result = append(result, &sql_customizations.ServersDatabasesLedgerDigestUploadExtension{})
+	result = append(result, &sql_customizations.ServersDatabasesMaintenanceWindowExtension{})
+	result = append(result, &sql_customizations.ServersDatabasesWorkloadGroupExtension{})
+	result = append(result, &sql_customizations.ServersDatabasesWorkloadGroupsWorkloadClassifierExtension{})
+	result = append(result, &sql_customizations.ServersDevOpsAuditingSettingExtension{})
 	result = append(result, &sql_customizations.ServersDnsAliasExtension{})
 	result = append(result, &sql_customizations.ServersJobAgentExtension{})
 	result = append(result, &sql_customizations.ServersJobAgentsCredentialExtension{})
@@ -3558,6 +3606,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &sql_customizations.ServersJobAgentsTargetGroupExtension{})
 	result = append(result, &sql_customizations.ServersPrivateEndpointConnectionExtension{})
 	result = append(result, &sql_customizations.ServersSqlVulnerabilityAssessmentExtension{})
+	result = append(result, &sql_customizations.ServersSqlVulnerabilityAssessmentsBaselineExtension{})
+	result = append(result, &sql_customizations.ServersSqlVulnerabilityAssessmentsBaselinesRuleExtension{})
 	result = append(result, &storage_customizations.StorageAccountsEncryptionScopeExtension{})
 	result = append(result, &storage_customizations.StorageAccountsInventoryPolicyExtension{})
 	result = append(result, &storage_customizations.StorageAccountsLocalUserExtension{})
@@ -5628,6 +5678,18 @@ func indexSqlManagedInstancesVulnerabilityAssessmentStorageContainerSasKey(rawOb
 		return nil
 	}
 	return obj.Spec.StorageContainerSasKey.Index()
+}
+
+// indexSqlServersDevOpsAuditingSettingStorageAccountAccessKey an index function for sql_v20250101.ServersDevOpsAuditingSetting .spec.storageAccountAccessKey
+func indexSqlServersDevOpsAuditingSettingStorageAccountAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*sql_v20250101.ServersDevOpsAuditingSetting)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageAccountAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.StorageAccountAccessKey.Index()
 }
 
 // indexSqlServersJobAgentsCredentialPassword an index function for sql_v20250101.ServersJobAgentsCredential .spec.password

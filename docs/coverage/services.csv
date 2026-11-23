@@ -240,7 +240,7 @@ Microsoft.SignalRService,15,4,0,123,50,0,73,40.7,0.0,59.3
 Microsoft.SoftwarePlan,1,0,0,2,0,0,2,0.0,0.0,100.0
 Microsoft.Solutions,3,0,0,64,0,0,64,0.0,0.0,100.0
 Microsoft.Sovereign,3,0,0,52,0,0,52,0.0,0.0,100.0
-Microsoft.Sql,93,28,32,539,240,137,162,44.5,25.4,30.1
+Microsoft.Sql,93,28,40,539,240,165,134,44.5,30.6,24.9
 Microsoft.SqlVirtualMachine,3,0,0,116,0,0,116,0.0,0.0,100.0
 Microsoft.StandbyPool,2,0,0,20,0,0,20,0.0,0.0,100.0
 Microsoft.Storage,23,10,6,336,212,58,66,63.1,17.3,19.6

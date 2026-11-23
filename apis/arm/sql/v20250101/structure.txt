@@ -971,6 +971,46 @@ ManagedInstancesVulnerabilityAssessment: Resource
     │       └── "User"
     └── Type: *string
 
+ServersDatabasesDataMaskingPolicy: Resource
+├── Owner: Servers_Database
+├── Spec: Object (4 properties)
+│   ├── DataMaskingState: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── ExemptPrincipals: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (11 properties)
+    ├── ApplicationPrincipals: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DataMaskingState: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── ExemptPrincipals: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── MaskingLevel: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 ServersDatabasesGeoBackupPolicy: Resource
 ├── Owner: Servers_Database
 ├── Spec: Object (3 properties)
@@ -991,6 +1031,215 @@ ServersDatabasesGeoBackupPolicy: Resource
     │   ├── "Disabled"
     │   └── "Enabled"
     ├── StorageType: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+ServersDatabasesLedgerDigestUpload: Resource
+├── Owner: Servers_Database
+├── Spec: Object (3 properties)
+│   ├── DigestStorageEndpoint: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DigestStorageEndpoint: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── State: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+ServersDatabasesMaintenanceWindow: Resource
+├── Owner: Servers_Database
+├── Spec: Object (3 properties)
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── TimeRanges: Object (3 properties)[]
+│       ├── DayOfWeek: *Enum (7 values)
+│       │   ├── "Friday"
+│       │   ├── "Monday"
+│       │   ├── "Saturday"
+│       │   ├── "Sunday"
+│       │   ├── "Thursday"
+│       │   ├── "Tuesday"
+│       │   └── "Wednesday"
+│       ├── Duration: *string
+│       └── StartTime: *string
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── TimeRanges: Object (3 properties)[]
+    │   ├── DayOfWeek: *Enum (7 values)
+    │   │   ├── "Friday"
+    │   │   ├── "Monday"
+    │   │   ├── "Saturday"
+    │   │   ├── "Sunday"
+    │   │   ├── "Thursday"
+    │   │   ├── "Tuesday"
+    │   │   └── "Wednesday"
+    │   ├── Duration: *string
+    │   └── StartTime: *string
+    └── Type: *string
+
+ServersDatabasesWorkloadGroup: Resource
+├── Owner: Servers_Database
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Importance: *string
+│   ├── MaxResourcePercent: *int
+│   ├── MaxResourcePercentPerRequest: *float64
+│   ├── MinResourcePercent: *int
+│   ├── MinResourcePercentPerRequest: *float64
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── QueryExecutionTimeout: *int
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Importance: *string
+    ├── MaxResourcePercent: *int
+    ├── MaxResourcePercentPerRequest: *float64
+    ├── MinResourcePercent: *int
+    ├── MinResourcePercentPerRequest: *float64
+    ├── Name: *string
+    ├── QueryExecutionTimeout: *int
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+ServersDatabasesWorkloadGroupsWorkloadClassifier: Resource
+├── Owner: ServersDatabasesWorkloadGroup
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Context: *string
+│   ├── EndTime: *string
+│   ├── Importance: *string
+│   ├── Label: *string
+│   ├── MemberName: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── StartTime: *string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Context: *string
+    ├── EndTime: *string
+    ├── Id: *string
+    ├── Importance: *string
+    ├── Label: *string
+    ├── MemberName: *string
+    ├── Name: *string
+    ├── StartTime: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+ServersDevOpsAuditingSetting: Resource
+├── Owner: Server
+├── Spec: Object (8 properties)
+│   ├── IsAzureMonitorTargetEnabled: *bool
+│   ├── IsManagedIdentityInUse: *bool
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── State: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── StorageAccountAccessKey: *genruntime.SecretReference
+│   ├── StorageAccountSubscriptionId: *Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$"
+│   └── StorageEndpoint: *string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IsAzureMonitorTargetEnabled: *bool
+    ├── IsManagedIdentityInUse: *bool
+    ├── Name: *string
+    ├── State: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── StorageAccountSubscriptionId: *string
+    ├── StorageEndpoint: *string
     ├── SystemData: *Object (6 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string
@@ -1435,6 +1684,69 @@ ServersSqlVulnerabilityAssessment: Resource
     ├── State: *Enum (2 values)
     │   ├── "Disabled"
     │   └── "Enabled"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+ServersSqlVulnerabilityAssessmentsBaseline: Resource
+├── Owner: ServersSqlVulnerabilityAssessment
+├── Spec: Object (4 properties)
+│   ├── LatestScan: *bool
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Results: map[string]string[][]
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Results: map[string]string[][]
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+ServersSqlVulnerabilityAssessmentsBaselinesRule: Resource
+├── Owner: ServersSqlVulnerabilityAssessmentsBaseline
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── LatestScan: *bool
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Results: string[][]
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Results: string[][]
     ├── SystemData: *Object (6 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string

@@ -585,6 +585,15 @@ upstream's); the catalog's chart tests do that.
   Not modelled: Key Vault being read, scans, schedules stopping the
   instance, the SQL Server end of a distributed availability group, DTC
   and SQL Agent, pool capacity, and the error codes.
+- Azure SQL Microsoft support operations auditing and workload groups
+  (`Microsoft.Sql/servers/*/devOpsAuditingSettings/Default`,
+  `.../databases/*/workloadGroups/*`, 2025-01-01;
+  `pkg/fakecloud/arm/sqlserverextras.go`): Enabled auditing names a storage
+  endpoint or Azure Monitor (400); a workload group's minimum share is no
+  more than its cap, both 0 to 100 (400). Not modelled: workload groups
+  needing a dedicated SQL pool, masking being applied, maintenance windows
+  being kept, ledger digests being uploaded, baselines matching scans, and
+  the error codes.
 - Azure SQL Elastic Jobs (`Microsoft.Sql/servers/jobAgents/*`,
   2025-01-01; `pkg/fakecloud/arm/sqljobs.go`): a job agent names a job
   database that exists (404); a credential has a username and a password

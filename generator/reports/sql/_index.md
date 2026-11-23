@@ -32,7 +32,13 @@ no_list: true
 | ManagedInstancesSqlAgent                                 | 2025-01-01  | v20250101   | v0.1.0         | -      |
 | ManagedInstancesStartStopSchedule                        | 2025-01-01  | v20250101   | v0.1.0         | -      |
 | ManagedInstancesVulnerabilityAssessment                  | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersDatabasesDataMaskingPolicy                        | 2025-01-01  | v20250101   | v0.1.0         | -      |
 | ServersDatabasesGeoBackupPolicy                          | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersDatabasesLedgerDigestUpload                       | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersDatabasesMaintenanceWindow                        | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersDatabasesWorkloadGroup                            | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersDatabasesWorkloadGroupsWorkloadClassifier         | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersDevOpsAuditingSetting                             | 2025-01-01  | v20250101   | v0.1.0         | -      |
 | ServersDnsAlias                                          | 2025-01-01  | v20250101   | v0.1.0         | -      |
 | ServersJobAgent                                          | 2025-01-01  | v20250101   | v0.1.0         | -      |
 | ServersJobAgentsCredential                               | 2025-01-01  | v20250101   | v0.1.0         | -      |
@@ -42,4 +48,6 @@ no_list: true
 | ServersJobAgentsTargetGroup                              | 2025-01-01  | v20250101   | v0.1.0         | -      |
 | ServersPrivateEndpointConnection                         | 2025-01-01  | v20250101   | v0.1.0         | -      |
 | ServersSqlVulnerabilityAssessment                        | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersSqlVulnerabilityAssessmentsBaseline               | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersSqlVulnerabilityAssessmentsBaselinesRule          | 2025-01-01  | v20250101   | v0.1.0         | -      |
 

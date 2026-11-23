@@ -889,6 +889,43 @@ ManagedInstancesVulnerabilityAssessment_Spec: Object (2 properties)
     ├── StorageContainerPath: *string
     └── StorageContainerSasKey: *string
 
+ServersDatabasesDataMaskingPolicy_STATUS: Object (7 properties)
+├── Id: *string
+├── Kind: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── ApplicationPrincipals: *string
+│   ├── DataMaskingState: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── ExemptPrincipals: *string
+│   └── MaskingLevel: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersDatabasesDataMaskingPolicy_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── DataMaskingState: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    └── ExemptPrincipals: *string
+
 ServersDatabasesGeoBackupPolicy_STATUS: Object (7 properties)
 ├── Id: *string
 ├── Kind: *string
@@ -922,6 +959,197 @@ ServersDatabasesGeoBackupPolicy_Spec: Object (2 properties)
     └── State: *Enum (2 values)
         ├── "Disabled"
         └── "Enabled"
+
+ServersDatabasesLedgerDigestUpload_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── DigestStorageEndpoint: *string
+│   └── State: *Enum (2 values)
+│       ├── "Disabled"
+│       └── "Enabled"
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersDatabasesLedgerDigestUpload_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── DigestStorageEndpoint: *string
+
+ServersDatabasesMaintenanceWindow_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── TimeRanges: Object (3 properties)[]
+│       ├── DayOfWeek: *Enum (7 values)
+│       │   ├── "Friday"
+│       │   ├── "Monday"
+│       │   ├── "Saturday"
+│       │   ├── "Sunday"
+│       │   ├── "Thursday"
+│       │   ├── "Tuesday"
+│       │   └── "Wednesday"
+│       ├── Duration: *string
+│       └── StartTime: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersDatabasesMaintenanceWindow_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── TimeRanges: Object (3 properties)[]
+        ├── DayOfWeek: *Enum (7 values)
+        │   ├── "Friday"
+        │   ├── "Monday"
+        │   ├── "Saturday"
+        │   ├── "Sunday"
+        │   ├── "Thursday"
+        │   ├── "Tuesday"
+        │   └── "Wednesday"
+        ├── Duration: *string
+        └── StartTime: *string
+
+ServersDatabasesWorkloadGroup_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (6 properties)
+│   ├── Importance: *string
+│   ├── MaxResourcePercent: *int
+│   ├── MaxResourcePercentPerRequest: *float64
+│   ├── MinResourcePercent: *int
+│   ├── MinResourcePercentPerRequest: *float64
+│   └── QueryExecutionTimeout: *int
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersDatabasesWorkloadGroup_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (6 properties)
+    ├── Importance: *string
+    ├── MaxResourcePercent: *int
+    ├── MaxResourcePercentPerRequest: *float64
+    ├── MinResourcePercent: *int
+    ├── MinResourcePercentPerRequest: *float64
+    └── QueryExecutionTimeout: *int
+
+ServersDatabasesWorkloadGroupsWorkloadClassifier_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (6 properties)
+│   ├── Context: *string
+│   ├── EndTime: *string
+│   ├── Importance: *string
+│   ├── Label: *string
+│   ├── MemberName: *string
+│   └── StartTime: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersDatabasesWorkloadGroupsWorkloadClassifier_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (6 properties)
+    ├── Context: *string
+    ├── EndTime: *string
+    ├── Importance: *string
+    ├── Label: *string
+    ├── MemberName: *string
+    └── StartTime: *string
+
+ServersDevOpsAuditingSetting_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (5 properties)
+│   ├── IsAzureMonitorTargetEnabled: *bool
+│   ├── IsManagedIdentityInUse: *bool
+│   ├── State: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── StorageAccountSubscriptionId: *string
+│   └── StorageEndpoint: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersDevOpsAuditingSetting_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (6 properties)
+    ├── IsAzureMonitorTargetEnabled: *bool
+    ├── IsManagedIdentityInUse: *bool
+    ├── State: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── StorageAccountAccessKey: *string
+    ├── StorageAccountSubscriptionId: *string
+    └── StorageEndpoint: *string
 
 ServersDnsAlias_STATUS: Object (5 properties)
 ├── Id: *string
@@ -1327,4 +1555,60 @@ ServersSqlVulnerabilityAssessment_Spec: Object (2 properties)
     └── State: *Enum (2 values)
         ├── "Disabled"
         └── "Enabled"
+
+ServersSqlVulnerabilityAssessmentsBaseline_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── Results: map[string]string[][]
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersSqlVulnerabilityAssessmentsBaseline_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── LatestScan: *bool
+    └── Results: map[string]string[][]
+
+ServersSqlVulnerabilityAssessmentsBaselinesRule_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── Results: string[][]
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+ServersSqlVulnerabilityAssessmentsBaselinesRule_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── LatestScan: *bool
+    └── Results: string[][]
 

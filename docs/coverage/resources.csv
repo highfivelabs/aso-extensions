@@ -2105,13 +2105,13 @@ Microsoft.Sql,Microsoft.Sql/servers/databases/auditingSettings,10,sql.azure.com/
 Microsoft.Sql,Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies,6,sql.azure.com/ServersDatabasesBackupLongTermRetentionPolicy,6,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies,2,sql.azure.com/ServersDatabasesBackupShortTermRetentionPolicy,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/connectionPolicies,7,,0,,0,7,false,spec_api=2014-04-01
-Microsoft.Sql,Microsoft.Sql/servers/databases/dataMaskingPolicies,2,,0,,0,2,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/dataMaskingPolicies,2,,0,sql.azure.hfl.dev/ServersDatabasesDataMaskingPolicy,2,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/dataMaskingPolicies/rules,11,,0,,0,11,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/extendedAuditingSettings,11,,0,,0,11,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/extensions,12,,0,,0,12,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/geoBackupPolicies,1,,0,sql.azure.hfl.dev/ServersDatabasesGeoBackupPolicy,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/databases/ledgerDigestUploads,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/databases/maintenanceWindows,3,,0,,0,3,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/ledgerDigestUploads,1,,0,sql.azure.hfl.dev/ServersDatabasesLedgerDigestUpload,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/maintenanceWindows,3,,0,sql.azure.hfl.dev/ServersDatabasesMaintenanceWindow,3,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/replicationLinks,1,,0,,0,1,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/schemas/tables/columns/sensitivityLabels,6,,0,,0,6,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/securityAlertPolicies,7,sql.azure.com/ServersDatabasesSecurityAlertPolicy,7,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
@@ -2123,9 +2123,9 @@ Microsoft.Sql,Microsoft.Sql/servers/databases/transparentDataEncryption,2,sql.az
 Microsoft.Sql,Microsoft.Sql/servers/databases/users,8,,0,sql.azure.hfl.dev/User,8,0,false,"outside-denominator; a database user, not an ARM resource; ASO's Azure SQL User with Entra users (ASO pull request #5104)"
 Microsoft.Sql,Microsoft.Sql/servers/databases/vulnerabilityAssessments,6,sql.azure.com/ServersDatabasesVulnerabilityAssessment,6,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/vulnerabilityAssessments/rules/baselines,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/databases/workloadGroups,6,,0,,0,6,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers,6,,0,,0,6,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/devOpsAuditingSettings,6,,0,,0,6,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/workloadGroups,6,,0,sql.azure.hfl.dev/ServersDatabasesWorkloadGroup,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers,6,,0,sql.azure.hfl.dev/ServersDatabasesWorkloadGroupsWorkloadClassifier,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/devOpsAuditingSettings,6,,0,sql.azure.hfl.dev/ServersDevOpsAuditingSetting,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/disasterRecoveryConfiguration,0,,0,,0,0,false,spec_api=2014-04-01
 Microsoft.Sql,Microsoft.Sql/servers/dnsAliases,0,,0,sql.azure.hfl.dev/ServersDnsAlias,0,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/elasticPools,19,sql.azure.com/ServersElasticPool,19,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
@@ -2146,8 +2146,8 @@ Microsoft.Sql,Microsoft.Sql/servers/outboundFirewallRules,0,sql.azure.com/Server
 Microsoft.Sql,Microsoft.Sql/servers/privateEndpointConnections,3,,0,sql.azure.hfl.dev/ServersPrivateEndpointConnection,3,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/securityAlertPolicies,7,sql.azure.com/ServersSecurityAlertPolicy,7,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments,1,,0,sql.azure.hfl.dev/ServersSqlVulnerabilityAssessment,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines,2,,0,,0,2,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines/rules,2,,0,,0,2,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines,2,,0,sql.azure.hfl.dev/ServersSqlVulnerabilityAssessmentsBaseline,2,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines/rules,2,,0,sql.azure.hfl.dev/ServersSqlVulnerabilityAssessmentsBaselinesRule,2,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/syncAgents,1,,0,,0,1,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/virtualNetworkRules,2,sql.azure.com/ServersVirtualNetworkRule,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/vulnerabilityAssessments,6,sql.azure.com/ServersVulnerabilityAssessment,6,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
