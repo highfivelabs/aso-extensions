@@ -430,7 +430,10 @@ resources:
 - storage.azure.hfl.dev_storageaccountsstoragetaskassignments.yaml
 - subscription.azure.hfl.dev_subscriptiontenantpolicies.yaml
 - web.azure.hfl.dev_aigateways.yaml
+- web.azure.hfl.dev_apiconnections.yaml
 - web.azure.hfl.dev_certificates.yaml
+- web.azure.hfl.dev_connectiongateways.yaml
+- web.azure.hfl.dev_customapis.yaml
 - web.azure.hfl.dev_hostingenvironments.yaml
 - web.azure.hfl.dev_hostingenvironmentsconfigurationcustomdnssuffixes.yaml
 - web.azure.hfl.dev_hostingenvironmentsconfigurationnetworkings.yaml

@@ -18,6 +18,18 @@ typeTransformers:
     remove: true
     because: Relay connection strings carry their SAS keys; the status never holds them
   - group: web
+    version: v20160601
+    name: Connection_Properties_STATUS
+    property: ParameterValues;CustomParameterValues
+    remove: true
+    because: an API connection's parameter values carry its credentials (connection strings, keys, passwords); the status never holds them
+  - group: web
+    version: v20160601
+    name: ApiOAuthSettings_STATUS
+    property: ClientSecret
+    remove: true
+    because: a custom API's OAuth client secret; the status never holds it
+  - group: web
     version: v20260715
     name: SiteContainerProperties_STATUS
     property: PasswordSecret
@@ -28,6 +40,10 @@ typeFilters:
     group: web
     version: v20260715
     because: the version of ASO's Site and ServerFarm, the owners of what we generate
+  - action: include
+    group: web
+    version: v20160601
+    because: the only version of the Logic Apps API connections, custom APIs and on-premises data gateways (logicAppsManagementClient.json; docs/plan.md f56)
   - action: prune
     group: web
     because: every other version is left alone
@@ -297,3 +313,30 @@ groupModelConfiguration:
     StaticSiteBasicAuthPropertiesARMResourceProperties:
       Password:
         $importSecretMode: required # the static web app's basic authentication password: from a Secret
+  # Logic Apps API connections, custom APIs (custom connectors) and on-premises
+  # data gateways (logicAppsManagementClient.json, 2016-06-01, their only
+  # version; docs/plan.md f56). In a resource group.
+  2016-06-01:
+    Connection:
+      $exportAs: ApiConnection
+      $supportedFrom: v0.1.0
+    CustomApi:
+      $exportAs: CustomApi
+      $supportedFrom: v0.1.0
+    ConnectionGateway:
+      $exportAs: ConnectionGateway
+      $supportedFrom: v0.1.0
+    Connection_Properties_Spec:
+      ParameterValues:
+        $importSecretMode: required # the connection's credentials (a connection string, a key, a password): each value from a Secret
+      CustomParameterValues:
+        $importSecretMode: required # a custom connector's parameter values, as secret as the others
+    ApiOAuthSettings:
+      ClientSecret:
+        $importSecretMode: required # a custom API's OAuth client secret: from a Secret
+    ApiReference:
+      Id:
+        $referenceType: arm # the API a connection uses: a managed API (/subscriptions/{s}/providers/Microsoft.Web/locations/{l}/managedApis/{api}) by ARM ID, or our CustomApi
+    ConnectionGatewayReference:
+      Id:
+        $referenceType: arm # the gateway installation (/subscriptions/{s}/providers/Microsoft.Web/locations/{l}/connectionGatewayInstallations/{id}), registered by installing the gateway on a machine

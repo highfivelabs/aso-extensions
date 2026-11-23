@@ -546,6 +546,18 @@ func init() {
 	// Azure Monitor pipeline groups run on a custom location and their
 	// pipelines name what they declare (monitorpipeline.go).
 	f["PipelineGroup"] = conformanceFixture{coveredBy: "TestMonitorPipelineGroup"}
+	// Logic Apps connections name an API, custom APIs carry a definition and
+	// gateways name their installation (logicconnections.go).
+	f["ApiConnection"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"api": embedRef(c.add(c.in("Microsoft.Web/customApis/conformance")))}}
+	}}
+	f["CustomApi"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"apiDefinitions": map[string]any{"originalSwaggerUrl": "https://contoso.example/openapi.json"}}}
+	}}
+	f["ConnectionGateway"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		install := c.add("/subscriptions/" + subID + "/providers/Microsoft.Web/locations/westus/connectionGatewayInstallations/" + c.ns)
+		return map[string]any{"properties": map[string]any{"connectionGatewayInstallation": embedRef(install)}}
+	}}
 	// A diagnostic run command has one source (diagnosticruncommands.go).
 	f["VirtualMachinesDiagnosticRunCommand"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"properties": map[string]any{"source": map[string]any{"script": "uptime"}}}

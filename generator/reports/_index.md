@@ -747,7 +747,10 @@ title: Supported Resources
 | Resource                                        | ARM Version | CRD Version | Supported From | Sample |
 |-------------------------------------------------|-------------|-------------|----------------|--------|
 | AiGateway                                       | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| ApiConnection                                   | 2016-06-01  | v20160601   | v0.1.0         | -      |
 | Certificate                                     | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| ConnectionGateway                               | 2016-06-01  | v20160601   | v0.1.0         | -      |
+| CustomApi                                       | 2016-06-01  | v20160601   | v0.1.0         | -      |
 | HostingEnvironment                              | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | HostingEnvironmentsConfigurationCustomDnsSuffix | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | HostingEnvironmentsConfigurationNetworking      | 2026-07-15  | v20260715   | v0.1.0         | -      |

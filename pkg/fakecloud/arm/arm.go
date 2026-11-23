@@ -73,7 +73,10 @@
 // replicated items and recovery plans name, a mapping for each item), App
 // Service leftovers (webextras.go: a certificate's source, the gateway's
 // name, a static web app's basic authentication, a slot's repository, a
-// Kubernetes environment's custom location), Azure Monitor pipeline groups
+// Kubernetes environment's custom location), Logic Apps API connections,
+// custom APIs and data gateways (logicconnections.go: the API a connection
+// uses in its region, its parameter values kept aside, a custom API's
+// definition, a gateway's installation), Azure Monitor pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
 // processors and exporters, pipelines naming what is declared), a VM's
 // diagnostic run commands (diagnosticruncommands.go: one source, a gallery
@@ -569,6 +572,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkWebExtras(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkLogicConnections(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

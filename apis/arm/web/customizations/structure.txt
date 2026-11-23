@@ -3,7 +3,13 @@ github.com/highfivelabs/aso-extensions/apis/arm/web/customizations
 ------------------------------------------------------------------
 AiGatewayExtension: Object (0 properties)
 
+ApiConnectionExtension: Object (0 properties)
+
 CertificateExtension: Object (0 properties)
+
+ConnectionGatewayExtension: Object (0 properties)
+
+CustomApiExtension: Object (0 properties)
 
 HostingEnvironmentExtension: Object (0 properties)
 

@@ -680,6 +680,19 @@ upstream's); the catalog's chart tests do that.
   Not modelled: certificates read or issued, the VPN package, basic
   authentication taking effect, deployments, the Arc cluster, AI gateways,
   and the error codes.
+- Logic Apps API connections, custom APIs and on-premises data gateways
+  (`Microsoft.Web/connections`, `customApis`, `connectionGateways`,
+  2016-06-01; `pkg/fakecloud/arm/logicconnections.go`): a connection names
+  its API (400), a managed API in the connection's region (400) or a custom
+  API that exists (404), and its `parameterValues` and
+  `customParameterValues` are kept aside (`SharedKey`, under the
+  connection's ID and `/parameterValues/<name>`) and never returned; a
+  custom API carries an OpenAPI document, an OpenAPI URL or a WSDL (400),
+  and an OAuth connection parameter's client secret is kept aside and never
+  returned; a gateway names a gateway installation that exists (404). Not
+  modelled: OAuth consent and a connection's status, connections reaching
+  their target, the managed API catalogue (any name is accepted), the
+  gateway's machine, and the error codes.
 - Azure Monitor pipeline groups (`Microsoft.Monitor/pipelineGroups`,
   2026-04-01; `pkg/fakecloud/arm/monitorpipeline.go`): a group runs on a
   custom location (400) that exists (404); its receivers, processors and

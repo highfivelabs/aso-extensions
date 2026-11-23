@@ -216,6 +216,8 @@ import (
 	subscription_v20211001 "github.com/highfivelabs/aso-extensions/apis/arm/subscription/v20211001"
 	subscription_v20211001s "github.com/highfivelabs/aso-extensions/apis/arm/subscription/v20211001/storage"
 	web_customizations "github.com/highfivelabs/aso-extensions/apis/arm/web/customizations"
+	web_v20160601 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20160601"
+	web_v20160601s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20160601/storage"
 	web_v20260715 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715"
 	web_v20260715s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715/storage"
 	"k8s.io/api/core/v1"
@@ -2240,6 +2242,50 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(subscription_v20211001.SubscriptionTenantPolicy)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20160601.ApiConnection),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.customParameterValues",
+				Func: indexWebApiConnectionCustomParameterValues,
+			},
+			{
+				Key:  ".spec.properties.parameterValues",
+				Func: indexWebApiConnectionParameterValues,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.customParameterValues",
+						".spec.properties.parameterValues",
+					},
+					&web_v20160601.ApiConnectionList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(web_v20160601.ConnectionGateway)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20160601.CustomApi),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.connectionParameters.oAuthSettings.clientSecret",
+				Func: indexWebCustomApiClientSecret,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.connectionParameters.oAuthSettings.clientSecret",
+					},
+					&web_v20160601.CustomApiList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.AiGateway)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.Certificate),
@@ -3577,6 +3623,16 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(subscription_v20211001s.SubscriptionTenantPolicy)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(web_v20160601.ApiConnection)},
+		&registration.KnownType{Obj: new(web_v20160601.ConnectionGateway)},
+		&registration.KnownType{Obj: new(web_v20160601.CustomApi)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(web_v20160601s.ApiConnection)},
+		&registration.KnownType{Obj: new(web_v20160601s.ConnectionGateway)},
+		&registration.KnownType{Obj: new(web_v20160601s.CustomApi)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(web_v20260715.AiGateway)},
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
 		&registration.KnownType{Obj: new(web_v20260715.HostingEnvironment)},
@@ -3858,6 +3914,8 @@ func createScheme() *runtime.Scheme {
 	_ = storage_v20260901s.AddToScheme(scheme)
 	_ = subscription_v20211001.AddToScheme(scheme)
 	_ = subscription_v20211001s.AddToScheme(scheme)
+	_ = web_v20160601.AddToScheme(scheme)
+	_ = web_v20160601s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
 	_ = web_v20260715s.AddToScheme(scheme)
 	return scheme
@@ -4288,7 +4346,10 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &storage_customizations.StorageAccountsStorageTaskAssignmentExtension{})
 	result = append(result, &subscription_customizations.SubscriptionTenantPolicyExtension{})
 	result = append(result, &web_customizations.AiGatewayExtension{})
+	result = append(result, &web_customizations.ApiConnectionExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
+	result = append(result, &web_customizations.ConnectionGatewayExtension{})
+	result = append(result, &web_customizations.CustomApiExtension{})
 	result = append(result, &web_customizations.HostingEnvironmentExtension{})
 	result = append(result, &web_customizations.HostingEnvironmentsConfigurationCustomDnsSuffixExtension{})
 	result = append(result, &web_customizations.HostingEnvironmentsConfigurationNetworkingExtension{})
@@ -6789,6 +6850,36 @@ func indexStorageStorageAccountsBlobAccessPointConfigurationS3CompatibleSecretAc
 	return obj.Spec.Properties.Source.S3Compatible.Auth.AccessKey.SecretAccessKey.Index()
 }
 
+// indexWebApiConnectionCustomParameterValues an index function for web_v20160601.ApiConnection .spec.properties.customParameterValues
+func indexWebApiConnectionCustomParameterValues(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20160601.ApiConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.CustomParameterValues == nil {
+		return nil
+	}
+	return obj.Spec.Properties.CustomParameterValues.Index()
+}
+
+// indexWebApiConnectionParameterValues an index function for web_v20160601.ApiConnection .spec.properties.parameterValues
+func indexWebApiConnectionParameterValues(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20160601.ApiConnection)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ParameterValues == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ParameterValues.Index()
+}
+
 // indexWebCertificatePassword an index function for web_v20260715.Certificate .spec.password
 func indexWebCertificatePassword(rawObj client.Object) []string {
 	obj, ok := rawObj.(*web_v20260715.Certificate)
@@ -6811,6 +6902,28 @@ func indexWebCertificatePfxBlob(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.PfxBlob.Index()
+}
+
+// indexWebCustomApiClientSecret an index function for web_v20160601.CustomApi .spec.properties.connectionParameters.oAuthSettings.clientSecret
+func indexWebCustomApiClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20160601.CustomApi)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	for _, value := range obj.Spec.Properties.ConnectionParameters {
+		if value.OAuthSettings == nil {
+			continue
+		}
+		if value.OAuthSettings.ClientSecret == nil {
+			continue
+		}
+		result = append(result, value.OAuthSettings.ClientSecret.Index()...)
+	}
+	return result
 }
 
 // indexWebKubeEnvironmentKubeConfig an index function for web_v20260715.KubeEnvironment .spec.arcConfiguration.kubeConfig
