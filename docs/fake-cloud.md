@@ -535,9 +535,12 @@ upstream's); the catalog's chart tests do that.
   `pkg/fakecloud/arm/gallery.go`): a gallery's name has letters, digits,
   dots and underscores only; a version's name is `X.Y.Z`; an image version
   names a source that exists (404) and an application version its package's
-  `mediaLink`; a host group has 1 to 3 fault domains (400 each). Not
-  modelled: replication to regions (a version is ready at once), OS state
-  and generation matching, host SKU availability, quota, and the error codes.
+  `mediaLink`, a script version its `scriptLink`; a restore point
+  collection's source VM exists (404); a host group has 1 to 3 fault
+  domains (400 each). Not modelled: replication to regions (a version is
+  ready at once), OS state and generation matching, script parameters,
+  access control rules being enforced, restore points being taken, host
+  SKU availability, quota, and the error codes.
 - Static Web Apps' children and an App Service app's virtual network
   connections (`Microsoft.Web/staticSites/*`, `sites/*/virtualNetworkConnections`,
   2026-07-15; `pkg/fakecloud/arm/staticsites.go`): a linked backend, a

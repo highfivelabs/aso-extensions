@@ -348,30 +348,6 @@ type RegionalReplicationStatus_STATUS struct {
 	State       *string                `json:"state,omitempty"`
 }
 
-// Storage version of v20260303.TargetRegion
-// Describes the target region information.
-type TargetRegion struct {
-	AdditionalReplicaSets []AdditionalReplicaSet `json:"additionalReplicaSets,omitempty"`
-	Encryption            *EncryptionImages      `json:"encryption,omitempty"`
-	ExcludeFromLatest     *bool                  `json:"excludeFromLatest,omitempty"`
-	Name                  *string                `json:"name,omitempty"`
-	PropertyBag           genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	RegionalReplicaCount  *int                   `json:"regionalReplicaCount,omitempty"`
-	StorageAccountType    *string                `json:"storageAccountType,omitempty"`
-}
-
-// Storage version of v20260303.TargetRegion_STATUS
-// Describes the target region information.
-type TargetRegion_STATUS struct {
-	AdditionalReplicaSets []AdditionalReplicaSet_STATUS `json:"additionalReplicaSets,omitempty"`
-	Encryption            *EncryptionImages_STATUS      `json:"encryption,omitempty"`
-	ExcludeFromLatest     *bool                         `json:"excludeFromLatest,omitempty"`
-	Name                  *string                       `json:"name,omitempty"`
-	PropertyBag           genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
-	RegionalReplicaCount  *int                          `json:"regionalReplicaCount,omitempty"`
-	StorageAccountType    *string                       `json:"storageAccountType,omitempty"`
-}
-
 // Storage version of v20260303.UserArtifactManage
 type UserArtifactManage struct {
 	Install     *string                `json:"install,omitempty"`
@@ -424,38 +400,6 @@ type UserArtifactSource_STATUS struct {
 	PropertyBag              genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
-// Storage version of v20260303.AdditionalReplicaSet
-// Describes the additional replica set information.
-type AdditionalReplicaSet struct {
-	PropertyBag          genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	RegionalReplicaCount *int                   `json:"regionalReplicaCount,omitempty"`
-	StorageAccountType   *string                `json:"storageAccountType,omitempty"`
-}
-
-// Storage version of v20260303.AdditionalReplicaSet_STATUS
-// Describes the additional replica set information.
-type AdditionalReplicaSet_STATUS struct {
-	PropertyBag          genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	RegionalReplicaCount *int                   `json:"regionalReplicaCount,omitempty"`
-	StorageAccountType   *string                `json:"storageAccountType,omitempty"`
-}
-
-// Storage version of v20260303.EncryptionImages
-// Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact.
-type EncryptionImages struct {
-	DataDiskImages []DataDiskImageEncryption `json:"dataDiskImages,omitempty"`
-	OsDiskImage    *OSDiskImageEncryption    `json:"osDiskImage,omitempty"`
-	PropertyBag    genruntime.PropertyBag    `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20260303.EncryptionImages_STATUS
-// Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact.
-type EncryptionImages_STATUS struct {
-	DataDiskImages []DataDiskImageEncryption_STATUS `json:"dataDiskImages,omitempty"`
-	OsDiskImage    *OSDiskImageEncryption_STATUS    `json:"osDiskImage,omitempty"`
-	PropertyBag    genruntime.PropertyBag           `json:"$propertyBag,omitempty"`
-}
-
 // Storage version of v20260303.GalleryExtendedLocation
 // The name of the extended location.
 type GalleryExtendedLocation struct {
@@ -470,74 +414,6 @@ type GalleryExtendedLocation_STATUS struct {
 	Name        *string                `json:"name,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	Type        *string                `json:"type,omitempty"`
-}
-
-// Storage version of v20260303.DataDiskImageEncryption
-// Contains encryption settings for a data disk image.
-type DataDiskImageEncryption struct {
-	// DiskEncryptionSetReference: A relative URI containing the resource ID of the disk encryption set.
-	DiskEncryptionSetReference *genruntime.ResourceReference `armReference:"DiskEncryptionSetId" json:"diskEncryptionSetReference,omitempty"`
-	Lun                        *int                          `json:"lun,omitempty"`
-	PropertyBag                genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
-	SecurityProfile            *DataDiskImageSecurityProfile `json:"securityProfile,omitempty"`
-}
-
-// Storage version of v20260303.DataDiskImageEncryption_STATUS
-// Contains encryption settings for a data disk image.
-type DataDiskImageEncryption_STATUS struct {
-	DiskEncryptionSetId *string                              `json:"diskEncryptionSetId,omitempty"`
-	Lun                 *int                                 `json:"lun,omitempty"`
-	PropertyBag         genruntime.PropertyBag               `json:"$propertyBag,omitempty"`
-	SecurityProfile     *DataDiskImageSecurityProfile_STATUS `json:"securityProfile,omitempty"`
-}
-
-// Storage version of v20260303.OSDiskImageEncryption
-// Contains encryption settings for an OS disk image.
-type OSDiskImageEncryption struct {
-	// DiskEncryptionSetReference: A relative URI containing the resource ID of the disk encryption set.
-	DiskEncryptionSetReference *genruntime.ResourceReference `armReference:"DiskEncryptionSetId" json:"diskEncryptionSetReference,omitempty"`
-	PropertyBag                genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
-	SecurityProfile            *OSDiskImageSecurityProfile   `json:"securityProfile,omitempty"`
-}
-
-// Storage version of v20260303.OSDiskImageEncryption_STATUS
-// Contains encryption settings for an OS disk image.
-type OSDiskImageEncryption_STATUS struct {
-	DiskEncryptionSetId *string                            `json:"diskEncryptionSetId,omitempty"`
-	PropertyBag         genruntime.PropertyBag             `json:"$propertyBag,omitempty"`
-	SecurityProfile     *OSDiskImageSecurityProfile_STATUS `json:"securityProfile,omitempty"`
-}
-
-// Storage version of v20260303.DataDiskImageSecurityProfile
-// Contains security profile for a DataDisk image.
-type DataDiskImageSecurityProfile struct {
-	ConfidentialVMEncryptionType *string                `json:"confidentialVMEncryptionType,omitempty"`
-	PropertyBag                  genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	SecureVMDiskEncryptionSetId  *string                `json:"secureVMDiskEncryptionSetId,omitempty"`
-}
-
-// Storage version of v20260303.DataDiskImageSecurityProfile_STATUS
-// Contains security profile for a DataDisk image.
-type DataDiskImageSecurityProfile_STATUS struct {
-	ConfidentialVMEncryptionType *string                `json:"confidentialVMEncryptionType,omitempty"`
-	PropertyBag                  genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	SecureVMDiskEncryptionSetId  *string                `json:"secureVMDiskEncryptionSetId,omitempty"`
-}
-
-// Storage version of v20260303.OSDiskImageSecurityProfile
-// Contains security profile for an OS disk image.
-type OSDiskImageSecurityProfile struct {
-	ConfidentialVMEncryptionType *string                `json:"confidentialVMEncryptionType,omitempty"`
-	PropertyBag                  genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	SecureVMDiskEncryptionSetId  *string                `json:"secureVMDiskEncryptionSetId,omitempty"`
-}
-
-// Storage version of v20260303.OSDiskImageSecurityProfile_STATUS
-// Contains security profile for an OS disk image.
-type OSDiskImageSecurityProfile_STATUS struct {
-	ConfidentialVMEncryptionType *string                `json:"confidentialVMEncryptionType,omitempty"`
-	PropertyBag                  genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	SecureVMDiskEncryptionSetId  *string                `json:"secureVMDiskEncryptionSetId,omitempty"`
 }
 
 func init() {

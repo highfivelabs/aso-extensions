@@ -1,6 +1,18 @@
 | Type Definitions in package "compute"                          | v20220301 | v20250401 | v20260302 | v20260303 |
 |----------------------------------------------------------------|-----------|-----------|-----------|-----------|
 | APIVersion                                                     | v20220301 | v20250401 | v20260302 | v20260303 |
+| AccessControlRules                                             |           |           |           | v20260303 |
+| AccessControlRulesIdentity                                     |           |           |           | v20260303 |
+| AccessControlRulesIdentity_STATUS                              |           |           |           | v20260303 |
+| AccessControlRulesMode                                         |           |           |           | v20260303 |
+| AccessControlRulesMode_STATUS                                  |           |           |           | v20260303 |
+| AccessControlRulesPrivilege                                    |           |           |           | v20260303 |
+| AccessControlRulesPrivilege_STATUS                             |           |           |           | v20260303 |
+| AccessControlRulesRole                                         |           |           |           | v20260303 |
+| AccessControlRulesRoleAssignment                               |           |           |           | v20260303 |
+| AccessControlRulesRoleAssignment_STATUS                        |           |           |           | v20260303 |
+| AccessControlRulesRole_STATUS                                  |           |           |           | v20260303 |
+| AccessControlRules_STATUS                                      |           |           |           | v20260303 |
 | AdditionalCapabilities                                         |           | v20250401 |           |           |
 | AdditionalCapabilities_STATUS                                  |           | v20250401 |           |           |
 | AdditionalReplicaSet                                           |           |           |           | v20260303 |
@@ -36,6 +48,7 @@
 | CommonOperatingSystemTypes_STATUS                              |           | v20250401 |           | v20260303 |
 | CommonResourceIdentityType                                     |           | v20250401 |           | v20260303 |
 | CommonResourceIdentityType_STATUS                              |           | v20250401 |           | v20260303 |
+| CommonSnapshotAccessState_STATUS                               |           | v20250401 |           |           |
 | CommonUserAssignedIdentitiesValue_STATUS                       |           | v20250401 |           | v20260303 |
 | CommunityGalleryInfo                                           |           |           |           | v20260303 |
 | CommunityGalleryInfo_STATUS                                    |           |           |           | v20260303 |
@@ -43,6 +56,8 @@
 | ComponentNames_STATUS                                          |           | v20250401 |           |           |
 | ConfidentialVMEncryptionType                                   |           |           |           | v20260303 |
 | ConfidentialVMEncryptionType_STATUS                            |           |           |           | v20260303 |
+| ConsistencyModeTypes                                           |           | v20250401 |           |           |
+| ConsistencyModeTypes_STATUS                                    |           | v20250401 |           |           |
 | DataDisk                                                       |           | v20250401 |           |           |
 | DataDiskImageEncryption                                        |           |           |           | v20260303 |
 | DataDiskImageEncryption_STATUS                                 |           |           |           | v20260303 |
@@ -88,6 +103,10 @@
 | DiskEncryptionSettings                                         |           | v20250401 |           |           |
 | DiskEncryptionSettings_STATUS                                  |           | v20250401 |           |           |
 | DiskInstanceView_STATUS                                        |           | v20250401 |           |           |
+| DiskRestorePointAttributes                                     |           | v20250401 |           |           |
+| DiskRestorePointAttributes_STATUS                              |           | v20250401 |           |           |
+| DiskRestorePointInstanceView_STATUS                            |           | v20250401 |           |           |
+| DiskRestorePointReplicationStatus_STATUS                       |           | v20250401 |           |           |
 | DomainNameLabelScopeTypes                                      |           | v20250401 |           |           |
 | DomainNameLabelScopeTypes_STATUS                               |           | v20250401 |           |           |
 | EdgeZoneStorageAccountType                                     |           |           |           | v20260303 |
@@ -96,6 +115,10 @@
 | EncryptionIdentity_STATUS                                      |           | v20250401 |           |           |
 | EncryptionImages                                               |           |           |           | v20260303 |
 | EncryptionImages_STATUS                                        |           |           |           | v20260303 |
+| EndpointAccess                                                 |           |           |           | v20260303 |
+| EndpointAccess_STATUS                                          |           |           |           | v20260303 |
+| EndpointTypes                                                  |           |           |           | v20260303 |
+| EndpointTypes_STATUS                                           |           |           |           | v20260303 |
 | EventGridAndResourceGraph                                      |           | v20250401 |           |           |
 | EventGridAndResourceGraph_STATUS                               |           | v20250401 |           |           |
 | ExecutedValidation_STATUS                                      |           |           |           | v20260303 |
@@ -115,6 +138,18 @@
 | GalleriesImagesVersion                                         |           |           |           | v20260303 |
 | GalleriesImagesVersion_STATUS                                  |           |           |           | v20260303 |
 | GalleriesImagesVersion_Spec                                    |           |           |           | v20260303 |
+| GalleriesInVMAccessControlProfile                              |           |           |           | v20260303 |
+| GalleriesInVMAccessControlProfile_STATUS                       |           |           |           | v20260303 |
+| GalleriesInVMAccessControlProfile_Spec                         |           |           |           | v20260303 |
+| GalleriesInVMAccessControlProfilesVersion                      |           |           |           | v20260303 |
+| GalleriesInVMAccessControlProfilesVersion_STATUS               |           |           |           | v20260303 |
+| GalleriesInVMAccessControlProfilesVersion_Spec                 |           |           |           | v20260303 |
+| GalleriesScript                                                |           |           |           | v20260303 |
+| GalleriesScript_STATUS                                         |           |           |           | v20260303 |
+| GalleriesScript_Spec                                           |           |           |           | v20260303 |
+| GalleriesScriptsVersion                                        |           |           |           | v20260303 |
+| GalleriesScriptsVersion_STATUS                                 |           |           |           | v20260303 |
+| GalleriesScriptsVersion_Spec                                   |           |           |           | v20260303 |
 | Gallery                                                        |           |           |           | v20260303 |
 | GalleryApplicationCustomAction                                 |           |           |           | v20260303 |
 | GalleryApplicationCustomActionParameter                        |           |           |           | v20260303 |
@@ -163,9 +198,23 @@
 | GalleryImageVersionStorageProfile_STATUS                       |           |           |           | v20260303 |
 | GalleryImageVersionUefiSettings                                |           |           |           | v20260303 |
 | GalleryImageVersionUefiSettings_STATUS                         |           |           |           | v20260303 |
+| GalleryInVMAccessControlProfileProperties                      |           |           |           | v20260303 |
+| GalleryInVMAccessControlProfileProperties_STATUS               |           |           |           | v20260303 |
+| GalleryInVMAccessControlProfileVersionProperties               |           |           |           | v20260303 |
+| GalleryInVMAccessControlProfileVersionProperties_STATUS        |           |           |           | v20260303 |
 | GalleryProperties                                              |           |           |           | v20260303 |
 | GalleryProperties_STATUS                                       |           |           |           | v20260303 |
 | GalleryProvisioningState_STATUS                                |           |           |           | v20260303 |
+| GalleryScriptParameter                                         |           |           |           | v20260303 |
+| GalleryScriptParameterType                                     |           |           |           | v20260303 |
+| GalleryScriptParameterType_STATUS                              |           |           |           | v20260303 |
+| GalleryScriptParameter_STATUS                                  |           |           |           | v20260303 |
+| GalleryScriptProperties                                        |           |           |           | v20260303 |
+| GalleryScriptProperties_STATUS                                 |           |           |           | v20260303 |
+| GalleryScriptVersionProperties                                 |           |           |           | v20260303 |
+| GalleryScriptVersionProperties_STATUS                          |           |           |           | v20260303 |
+| GalleryScriptVersionPublishingProfile                          |           |           |           | v20260303 |
+| GalleryScriptVersionPublishingProfile_STATUS                   |           |           |           | v20260303 |
 | GallerySharingPermissionTypes                                  |           |           |           | v20260303 |
 | GallerySharingPermissionTypes_STATUS                           |           |           |           | v20260303 |
 | GalleryTargetExtendedLocation                                  |           |           |           | v20260303 |
@@ -185,6 +234,7 @@
 | HostGroupsHost_STATUS                                          |           | v20250401 |           |           |
 | HostGroupsHost_Spec                                            |           | v20250401 |           |           |
 | HyperVGenerationType_STATUS                                    |           | v20250401 |           |           |
+| HyperVGenerationTypes_STATUS                                   |           | v20250401 |           |           |
 | IPVersions                                                     |           | v20250401 |           |           |
 | IPVersions_STATUS                                              |           | v20250401 |           |           |
 | ImageMetadataProfile_STATUS                                    |           |           |           | v20260303 |
@@ -247,6 +297,7 @@
 | OSImageNotificationProfile_STATUS                              |           | v20250401 |           |           |
 | OSProfile                                                      |           | v20250401 |           |           |
 | OSProfile_STATUS                                               |           | v20250401 |           |           |
+| OperatingSystemType_STATUS                                     |           | v20250401 |           |           |
 | PassNames                                                      |           | v20250401 |           |           |
 | PassNames_STATUS                                               |           | v20250401 |           |           |
 | PatchOperationStatus_STATUS                                    |           | v20250401 |           |           |
@@ -298,6 +349,32 @@
 | ReplicationStatus_STATUS                                       |           |           |           | v20260303 |
 | ResourceRange                                                  |           |           |           | v20260303 |
 | ResourceRange_STATUS                                           |           |           |           | v20260303 |
+| RestorePointCollection                                         |           | v20250401 |           |           |
+| RestorePointCollectionProperties                               |           | v20250401 |           |           |
+| RestorePointCollectionProperties_STATUS                        |           | v20250401 |           |           |
+| RestorePointCollectionSourceProperties                         |           | v20250401 |           |           |
+| RestorePointCollectionSourceProperties_STATUS                  |           | v20250401 |           |           |
+| RestorePointCollection_STATUS                                  |           | v20250401 |           |           |
+| RestorePointCollection_Spec                                    |           | v20250401 |           |           |
+| RestorePointCollectionsRestorePoint                            |           | v20250401 |           |           |
+| RestorePointCollectionsRestorePoint_STATUS                     |           | v20250401 |           |           |
+| RestorePointCollectionsRestorePoint_Spec                       |           | v20250401 |           |           |
+| RestorePointEncryption                                         |           | v20250401 |           |           |
+| RestorePointEncryptionType                                     |           | v20250401 |           |           |
+| RestorePointEncryptionType_STATUS                              |           | v20250401 |           |           |
+| RestorePointEncryption_STATUS                                  |           | v20250401 |           |           |
+| RestorePointInstanceView_STATUS                                |           | v20250401 |           |           |
+| RestorePointProperties                                         |           | v20250401 |           |           |
+| RestorePointProperties_STATUS                                  |           | v20250401 |           |           |
+| RestorePointSourceMetadata                                     |           | v20250401 |           |           |
+| RestorePointSourceMetadata_STATUS                              |           | v20250401 |           |           |
+| RestorePointSourceVMDataDisk                                   |           | v20250401 |           |           |
+| RestorePointSourceVMDataDisk_STATUS                            |           | v20250401 |           |           |
+| RestorePointSourceVMOSDisk                                     |           | v20250401 |           |           |
+| RestorePointSourceVMOSDisk_STATUS                              |           | v20250401 |           |           |
+| RestorePointSourceVMStorageProfile                             |           | v20250401 |           |           |
+| RestorePointSourceVMStorageProfile_STATUS                      |           | v20250401 |           |           |
+| RestorePoint_STATUS                                            |           | v20250401 |           |           |
 | RunCommandInputParameter                                       | v20220301 |           |           |           |
 | RunCommandInputParameter_STATUS                                | v20220301 |           |           |           |
 | ScheduledEventsAdditionalPublishingTargets                     |           | v20250401 |           |           |
@@ -306,6 +383,8 @@
 | ScheduledEventsPolicy_STATUS                                   |           | v20250401 |           |           |
 | ScheduledEventsProfile                                         |           | v20250401 |           |           |
 | ScheduledEventsProfile_STATUS                                  |           | v20250401 |           |           |
+| ScriptSource                                                   |           |           |           | v20260303 |
+| ScriptSource_STATUS                                            |           |           |           | v20260303 |
 | SecretsProvisioningComponent                                   |           |           |           | v20260303 |
 | SecretsProvisioningComponentName                               |           |           |           | v20260303 |
 | SecretsProvisioningComponentName_STATUS                        |           |           |           | v20260303 |

@@ -989,12 +989,6 @@ type AdditionalUnattendContent struct {
 	SettingName *SettingNames `json:"settingName,omitempty"`
 }
 
-// The API entity reference.
-type ApiEntityReference struct {
-	// Id: The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
-	Id *string `json:"id,omitempty"`
-}
-
 // Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The default values are:
 // None for Standard storage. ReadOnly for Premium storage
 // +kubebuilder:validation:Enum={"None","ReadOnly","ReadWrite"}

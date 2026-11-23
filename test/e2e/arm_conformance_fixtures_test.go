@@ -297,6 +297,9 @@ func init() {
 	f["GalleriesApplicationsVersion"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"azureName": "1.0.0", "publishingProfile": map[string]any{"source": map[string]any{"mediaLink": "https://example.blob.core.windows.net/pkgs/agent.zip"}}}
 	}}
+	f["GalleriesScriptsVersion"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "1.0.0", "properties": map[string]any{"publishingProfile": map[string]any{"source": map[string]any{"scriptLink": "https://example.blob.core.windows.net/scripts/harden.sh"}}}}
+	}}
 	f["HostGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"platformFaultDomainCount": int64(1)}
 	}}

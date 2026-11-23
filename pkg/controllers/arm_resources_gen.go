@@ -878,6 +878,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.HostGroup)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.HostGroupsHost)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.ProximityPlacementGroup)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.RestorePointCollection)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.RestorePointCollectionsRestorePoint)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20250401.SshPublicKey)})
 	result = append(result, &registration.StorageType{
 		Obj: new(compute_v20250401.VirtualMachine),
@@ -903,6 +905,10 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesApplicationsVersion)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesImage)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesImagesVersion)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesInVMAccessControlProfile)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesInVMAccessControlProfilesVersion)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesScript)})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesScriptsVersion)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.Gallery)})
 	result = append(result, &registration.StorageType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.StorageType{
@@ -2428,6 +2434,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(compute_v20250401.HostGroup)},
 		&registration.KnownType{Obj: new(compute_v20250401.HostGroupsHost)},
 		&registration.KnownType{Obj: new(compute_v20250401.ProximityPlacementGroup)},
+		&registration.KnownType{Obj: new(compute_v20250401.RestorePointCollection)},
+		&registration.KnownType{Obj: new(compute_v20250401.RestorePointCollectionsRestorePoint)},
 		&registration.KnownType{Obj: new(compute_v20250401.SshPublicKey)},
 		&registration.KnownType{Obj: new(compute_v20250401.VirtualMachine)})
 	result = append(
@@ -2435,6 +2443,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(compute_v20250401s.HostGroup)},
 		&registration.KnownType{Obj: new(compute_v20250401s.HostGroupsHost)},
 		&registration.KnownType{Obj: new(compute_v20250401s.ProximityPlacementGroup)},
+		&registration.KnownType{Obj: new(compute_v20250401s.RestorePointCollection)},
+		&registration.KnownType{Obj: new(compute_v20250401s.RestorePointCollectionsRestorePoint)},
 		&registration.KnownType{Obj: new(compute_v20250401s.SshPublicKey)},
 		&registration.KnownType{Obj: new(compute_v20250401s.VirtualMachine)})
 	result = append(result, &registration.KnownType{Obj: new(compute_v20260302.DiskAccessesPrivateEndpointConnection)})
@@ -2445,6 +2455,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(compute_v20260303.GalleriesApplicationsVersion)},
 		&registration.KnownType{Obj: new(compute_v20260303.GalleriesImage)},
 		&registration.KnownType{Obj: new(compute_v20260303.GalleriesImagesVersion)},
+		&registration.KnownType{Obj: new(compute_v20260303.GalleriesInVMAccessControlProfile)},
+		&registration.KnownType{Obj: new(compute_v20260303.GalleriesInVMAccessControlProfilesVersion)},
+		&registration.KnownType{Obj: new(compute_v20260303.GalleriesScript)},
+		&registration.KnownType{Obj: new(compute_v20260303.GalleriesScriptsVersion)},
 		&registration.KnownType{Obj: new(compute_v20260303.Gallery)})
 	result = append(
 		result,
@@ -2452,6 +2466,10 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesApplicationsVersion)},
 		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesImage)},
 		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesImagesVersion)},
+		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesInVMAccessControlProfile)},
+		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesInVMAccessControlProfilesVersion)},
+		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesScript)},
+		&registration.KnownType{Obj: new(compute_v20260303s.GalleriesScriptsVersion)},
 		&registration.KnownType{Obj: new(compute_v20260303s.Gallery)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601s.Budget)})
@@ -3403,10 +3421,16 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &compute_customizations.GalleriesApplicationsVersionExtension{})
 	result = append(result, &compute_customizations.GalleriesImageExtension{})
 	result = append(result, &compute_customizations.GalleriesImagesVersionExtension{})
+	result = append(result, &compute_customizations.GalleriesInVMAccessControlProfileExtension{})
+	result = append(result, &compute_customizations.GalleriesInVMAccessControlProfilesVersionExtension{})
+	result = append(result, &compute_customizations.GalleriesScriptExtension{})
+	result = append(result, &compute_customizations.GalleriesScriptsVersionExtension{})
 	result = append(result, &compute_customizations.GalleryExtension{})
 	result = append(result, &compute_customizations.HostGroupExtension{})
 	result = append(result, &compute_customizations.HostGroupsHostExtension{})
 	result = append(result, &compute_customizations.ProximityPlacementGroupExtension{})
+	result = append(result, &compute_customizations.RestorePointCollectionExtension{})
+	result = append(result, &compute_customizations.RestorePointCollectionsRestorePointExtension{})
 	result = append(result, &compute_customizations.SshPublicKeyExtension{})
 	result = append(result, &compute_customizations.VirtualMachineExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})

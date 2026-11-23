@@ -8,18 +8,24 @@ no_list: true
 
 ### Released
 
-| Resource                              | ARM Version | CRD Version | Supported From | Sample |
-|---------------------------------------|-------------|-------------|----------------|--------|
-| DiskAccessesPrivateEndpointConnection | 2026-03-02  | v20260302   | v0.1.0         | -      |
-| GalleriesApplication                  | 2026-03-03  | v20260303   | v0.1.0         | -      |
-| GalleriesApplicationsVersion          | 2026-03-03  | v20260303   | v0.1.0         | -      |
-| GalleriesImage                        | 2026-03-03  | v20260303   | v0.1.0         | -      |
-| GalleriesImagesVersion                | 2026-03-03  | v20260303   | v0.1.0         | -      |
-| Gallery                               | 2026-03-03  | v20260303   | v0.1.0         | -      |
-| HostGroup                             | 2025-04-01  | v20250401   | v0.1.0         | -      |
-| HostGroupsHost                        | 2025-04-01  | v20250401   | v0.1.0         | -      |
-| ProximityPlacementGroup               | 2025-04-01  | v20250401   | v0.1.0         | -      |
-| SshPublicKey                          | 2025-04-01  | v20250401   | v0.1.0         | -      |
-| VirtualMachine                        | 2025-04-01  | v20250401   | v0.1.0         | -      |
-| VirtualMachinesRunCommand             | 2022-03-01  | v20220301   | v0.1.0         | -      |
+| Resource                                  | ARM Version | CRD Version | Supported From | Sample |
+|-------------------------------------------|-------------|-------------|----------------|--------|
+| DiskAccessesPrivateEndpointConnection     | 2026-03-02  | v20260302   | v0.1.0         | -      |
+| GalleriesApplication                      | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| GalleriesApplicationsVersion              | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| GalleriesImage                            | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| GalleriesImagesVersion                    | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| GalleriesInVMAccessControlProfile         | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| GalleriesInVMAccessControlProfilesVersion | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| GalleriesScript                           | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| GalleriesScriptsVersion                   | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| Gallery                                   | 2026-03-03  | v20260303   | v0.1.0         | -      |
+| HostGroup                                 | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| HostGroupsHost                            | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| ProximityPlacementGroup                   | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| RestorePointCollection                    | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| RestorePointCollectionsRestorePoint       | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| SshPublicKey                              | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| VirtualMachine                            | 2025-04-01  | v20250401   | v0.1.0         | -      |
+| VirtualMachinesRunCommand                 | 2022-03-01  | v20220301   | v0.1.0         | -      |
 

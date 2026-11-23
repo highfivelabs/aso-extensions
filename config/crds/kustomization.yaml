@@ -88,9 +88,15 @@ resources:
 - compute.azure.hfl.dev_galleriesapplicationsversions.yaml
 - compute.azure.hfl.dev_galleriesimages.yaml
 - compute.azure.hfl.dev_galleriesimagesversions.yaml
+- compute.azure.hfl.dev_galleriesinvmaccesscontrolprofiles.yaml
+- compute.azure.hfl.dev_galleriesinvmaccesscontrolprofilesversions.yaml
+- compute.azure.hfl.dev_galleriesscripts.yaml
+- compute.azure.hfl.dev_galleriesscriptsversions.yaml
 - compute.azure.hfl.dev_hostgroups.yaml
 - compute.azure.hfl.dev_hostgroupshosts.yaml
 - compute.azure.hfl.dev_proximityplacementgroups.yaml
+- compute.azure.hfl.dev_restorepointcollections.yaml
+- compute.azure.hfl.dev_restorepointcollectionsrestorepoints.yaml
 - compute.azure.hfl.dev_sshpublickeys.yaml
 - compute.azure.hfl.dev_virtualmachines.yaml
 - compute.azure.hfl.dev_virtualmachinesruncommands.yaml

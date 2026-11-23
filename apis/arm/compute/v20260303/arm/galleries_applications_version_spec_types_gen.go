@@ -171,28 +171,6 @@ var storageAccountType_Values = map[string]StorageAccountType{
 	"standard_zrs":  StorageAccountType_Standard_ZRS,
 }
 
-// Describes the target region information.
-type TargetRegion struct {
-	// AdditionalReplicaSets: List of storage sku with replica count to create direct drive replicas.
-	AdditionalReplicaSets []AdditionalReplicaSet `json:"additionalReplicaSets,omitempty"`
-
-	// Encryption: Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery
-	// artifact.
-	Encryption *EncryptionImages `json:"encryption,omitempty"`
-
-	// ExcludeFromLatest: Contains the flag setting to hide an image when users specify version='latest'
-	ExcludeFromLatest *bool `json:"excludeFromLatest,omitempty"`
-
-	// Name: The name of the region.
-	Name *string `json:"name,omitempty"`
-
-	// RegionalReplicaCount: The number of replicas of the Image Version to be created per region. This property is updatable.
-	RegionalReplicaCount *int `json:"regionalReplicaCount,omitempty"`
-
-	// StorageAccountType: Specifies the storage account type to be used to store the image. This property is not updatable.
-	StorageAccountType *StorageAccountType `json:"storageAccountType,omitempty"`
-}
-
 type UserArtifactManage struct {
 	// Install: Required. The path and arguments to install the gallery application. This is limited to 4096 characters.
 	Install *string `json:"install,omitempty"`
@@ -231,15 +209,6 @@ type UserArtifactSource struct {
 	MediaLink *string `json:"mediaLink,omitempty"`
 }
 
-// Describes the additional replica set information.
-type AdditionalReplicaSet struct {
-	// RegionalReplicaCount: The number of direct drive replicas of the Image Version to be created.This Property is updatable
-	RegionalReplicaCount *int `json:"regionalReplicaCount,omitempty"`
-
-	// StorageAccountType: Specifies the storage account type to be used to create the direct drive replicas
-	StorageAccountType *StorageAccountType `json:"storageAccountType,omitempty"`
-}
-
 // Specifies the storage account type to be used to store the image. This property is not updatable.
 // +kubebuilder:validation:Enum={"Premium_LRS","StandardSSD_LRS","Standard_LRS","Standard_ZRS"}
 type EdgeZoneStorageAccountType string
@@ -257,15 +226,6 @@ var edgeZoneStorageAccountType_Values = map[string]EdgeZoneStorageAccountType{
 	"standardssd_lrs": EdgeZoneStorageAccountType_StandardSSD_LRS,
 	"standard_lrs":    EdgeZoneStorageAccountType_Standard_LRS,
 	"standard_zrs":    EdgeZoneStorageAccountType_Standard_ZRS,
-}
-
-// Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact.
-type EncryptionImages struct {
-	// DataDiskImages: A list of encryption specifications for data disk images.
-	DataDiskImages []DataDiskImageEncryption `json:"dataDiskImages,omitempty"`
-
-	// OsDiskImage: Contains encryption settings for an OS disk image.
-	OsDiskImage *OSDiskImageEncryption `json:"osDiskImage,omitempty"`
 }
 
 // Optional. The action to be taken with regards to install/update/remove of the gallery application in the event of a
@@ -292,19 +252,6 @@ type GalleryExtendedLocation struct {
 	Type *GalleryExtendedLocationType `json:"type,omitempty"`
 }
 
-// Contains encryption settings for a data disk image.
-type DataDiskImageEncryption struct {
-	// DiskEncryptionSetId: A relative URI containing the resource ID of the disk encryption set.
-	DiskEncryptionSetId *string `json:"diskEncryptionSetId,omitempty"`
-
-	// Lun: This property specifies the logical unit number of the data disk. This value is used to identify data disks within
-	// the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine.
-	Lun *int `json:"lun,omitempty"`
-
-	// SecurityProfile: This property specifies the security profile of a data disk image.
-	SecurityProfile *DataDiskImageSecurityProfile `json:"securityProfile,omitempty"`
-}
-
 // It is type of the extended location.
 // +kubebuilder:validation:Enum={"EdgeZone","Unknown"}
 type GalleryExtendedLocationType string
@@ -318,52 +265,4 @@ const (
 var galleryExtendedLocationType_Values = map[string]GalleryExtendedLocationType{
 	"edgezone": GalleryExtendedLocationType_EdgeZone,
 	"unknown":  GalleryExtendedLocationType_Unknown,
-}
-
-// Contains encryption settings for an OS disk image.
-type OSDiskImageEncryption struct {
-	// DiskEncryptionSetId: A relative URI containing the resource ID of the disk encryption set.
-	DiskEncryptionSetId *string `json:"diskEncryptionSetId,omitempty"`
-
-	// SecurityProfile: This property specifies the security profile of an OS disk image.
-	SecurityProfile *OSDiskImageSecurityProfile `json:"securityProfile,omitempty"`
-}
-
-// Contains security profile for a DataDisk image.
-type DataDiskImageSecurityProfile struct {
-	// ConfidentialVMEncryptionType: confidential VM encryption types
-	ConfidentialVMEncryptionType *ConfidentialVMEncryptionType `json:"confidentialVMEncryptionType,omitempty"`
-
-	// SecureVMDiskEncryptionSetId: secure VM disk encryption set id
-	SecureVMDiskEncryptionSetId *string `json:"secureVMDiskEncryptionSetId,omitempty"`
-}
-
-// Contains security profile for an OS disk image.
-type OSDiskImageSecurityProfile struct {
-	// ConfidentialVMEncryptionType: confidential VM encryption types
-	ConfidentialVMEncryptionType *ConfidentialVMEncryptionType `json:"confidentialVMEncryptionType,omitempty"`
-
-	// SecureVMDiskEncryptionSetId: secure VM disk encryption set id
-	SecureVMDiskEncryptionSetId *string `json:"secureVMDiskEncryptionSetId,omitempty"`
-}
-
-// confidential VM encryption types
-// +kubebuilder:validation:Enum={"DataDiskEncryptedWithCmk","EncryptedVMGuestStateOnlyWithPmk","EncryptedWithCmk","EncryptedWithPmk","NonPersistedTPM"}
-type ConfidentialVMEncryptionType string
-
-const (
-	ConfidentialVMEncryptionType_DataDiskEncryptedWithCmk         = ConfidentialVMEncryptionType("DataDiskEncryptedWithCmk")
-	ConfidentialVMEncryptionType_EncryptedVMGuestStateOnlyWithPmk = ConfidentialVMEncryptionType("EncryptedVMGuestStateOnlyWithPmk")
-	ConfidentialVMEncryptionType_EncryptedWithCmk                 = ConfidentialVMEncryptionType("EncryptedWithCmk")
-	ConfidentialVMEncryptionType_EncryptedWithPmk                 = ConfidentialVMEncryptionType("EncryptedWithPmk")
-	ConfidentialVMEncryptionType_NonPersistedTPM                  = ConfidentialVMEncryptionType("NonPersistedTPM")
-)
-
-// Mapping from string to ConfidentialVMEncryptionType
-var confidentialVMEncryptionType_Values = map[string]ConfidentialVMEncryptionType{
-	"datadiskencryptedwithcmk":         ConfidentialVMEncryptionType_DataDiskEncryptedWithCmk,
-	"encryptedvmgueststateonlywithpmk": ConfidentialVMEncryptionType_EncryptedVMGuestStateOnlyWithPmk,
-	"encryptedwithcmk":                 ConfidentialVMEncryptionType_EncryptedWithCmk,
-	"encryptedwithpmk":                 ConfidentialVMEncryptionType_EncryptedWithPmk,
-	"nonpersistedtpm":                  ConfidentialVMEncryptionType_NonPersistedTPM,
 }

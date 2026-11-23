@@ -1612,12 +1612,6 @@ type AdditionalUnattendContent_STATUS struct {
 	SettingName *SettingNames_STATUS `json:"settingName,omitempty"`
 }
 
-// The API entity reference.
-type ApiEntityReference_STATUS struct {
-	// Id: The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
-	Id *string `json:"id,omitempty"`
-}
-
 // Describes the properties of an virtual machine instance view for available patch summary.
 type AvailablePatchSummary_STATUS struct {
 	// AssessmentActivityId: The activity ID of the operation that produced this result. It is used to correlate across CRP and

@@ -47,6 +47,20 @@ groupModelConfiguration:
     Galleries_Applications_Version:
       $exportAs: GalleriesApplicationsVersion
       $supportedFrom: v0.1.0
+    # A gallery's scripts and in-VM access control profiles (the metadata
+    # security protocol's rules), each with its versions (docs/plan.md f45).
+    Galleries_Script:
+      $exportAs: GalleriesScript
+      $supportedFrom: v0.1.0
+    Galleries_Scripts_Version:
+      $exportAs: GalleriesScriptsVersion
+      $supportedFrom: v0.1.0
+    Galleries_InVMAccessControlProfile:
+      $exportAs: GalleriesInVMAccessControlProfile
+      $supportedFrom: v0.1.0
+    Galleries_InVMAccessControlProfiles_Version:
+      $exportAs: GalleriesInVMAccessControlProfilesVersion
+      $supportedFrom: v0.1.0
     GalleryDiskImageSource:
       Id:
         $referenceType: arm # the source disk or snapshot (autolabel, reviewed)
@@ -93,6 +107,14 @@ groupModelConfiguration:
       $supportedFrom: v0.1.0
     HostGroups_Host:
       $exportAs: HostGroupsHost
+      $supportedFrom: v0.1.0
+    # Restore point collections and their restore points: a VM's crash- or
+    # application-consistent snapshots (docs/plan.md f45).
+    RestorePointCollection:
+      $exportAs: RestorePointCollection
+      $supportedFrom: v0.1.0
+    RestorePointCollections_RestorePoint:
+      $exportAs: RestorePointCollectionsRestorePoint
       $supportedFrom: v0.1.0
     ApiEntityReference:
       Id:
@@ -141,3 +163,6 @@ groupModelConfiguration:
     HostEndpointSettings:
       InVMAccessControlProfileReferenceId:
         $referenceType: arm # a gallery inVMAccessControlProfile version's ARM ID (autolabel wrote simple)
+    RestorePointCollectionSourceProperties:
+      Id:
+        $referenceType: arm # the source virtual machine: ASO's or our VirtualMachine, or an ARM ID (autolabel, reviewed)

@@ -126,7 +126,7 @@ Generated: every resource of the two categories, by the order of the services in
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | platform-foundation | 18 | 246 | 4,675 | 43.2% | 38.2% | 18.6% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 60.3% | 31.1% |
-| application | 35 | 823 | 14,821 | 33.1% | 13.6% | 53.4% |
+| application | 35 | 823 | 14,821 | 33.1% | 14.5% | 52.5% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 1.0% | 98.6% |
 
 ### platform-foundation: 246 resources (24 with no kind, 81 partly covered, 141 covered)

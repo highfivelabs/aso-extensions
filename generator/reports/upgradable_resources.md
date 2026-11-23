@@ -47,14 +47,16 @@ The following resources have newer versions available in the Azure REST API spec
 
 ## compute
 
-|      | Resource                  | Available Stable | Supported Stable | Available Preview | Supported Preview |
-|------|---------------------------|------------------|------------------|-------------------|-------------------|
-|      | HostGroup                 | 2026-04-01       | 2025-04-01       | -                 | -                 |
-|      | HostGroupsHost            | 2026-04-01       | 2025-04-01       | -                 | -                 |
-|      | ProximityPlacementGroup   | 2026-04-01       | 2025-04-01       | -                 | -                 |
-|      | SshPublicKey              | 2026-04-01       | 2025-04-01       | -                 | -                 |
-|      | VirtualMachine            | 2026-04-01       | 2025-04-01       | -                 | -                 |
-| 💡    | VirtualMachinesRunCommand | **2026-04-01**   | 2022-03-01       | -                 | -                 |
+|      | Resource                            | Available Stable | Supported Stable | Available Preview | Supported Preview |
+|------|-------------------------------------|------------------|------------------|-------------------|-------------------|
+|      | HostGroup                           | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | HostGroupsHost                      | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | ProximityPlacementGroup             | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | RestorePointCollection              | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | RestorePointCollectionsRestorePoint | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | SshPublicKey                        | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | VirtualMachine                      | 2026-04-01       | 2025-04-01       | -                 | -                 |
+| 💡    | VirtualMachinesRunCommand           | **2026-04-01**   | 2022-03-01       | -                 | -                 |
 
 ## containerservice
 

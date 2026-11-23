@@ -1348,22 +1348,6 @@ type AdditionalUnattendContent_STATUS struct {
 	SettingName   *string                `json:"settingName,omitempty"`
 }
 
-// Storage version of v20250401.ApiEntityReference
-// The API entity reference.
-type ApiEntityReference struct {
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-
-	// Reference: The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
-	Reference *genruntime.ResourceReference `armReference:"Id" json:"reference,omitempty"`
-}
-
-// Storage version of v20250401.ApiEntityReference_STATUS
-// The API entity reference.
-type ApiEntityReference_STATUS struct {
-	Id          *string                `json:"id,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
 type augmentConversionForCommonUserAssignedIdentitiesValue_STATUS interface {
 	AssignPropertiesFrom(src *storage.CommonUserAssignedIdentitiesValue_STATUS) error
 	AssignPropertiesTo(dst *storage.CommonUserAssignedIdentitiesValue_STATUS) error

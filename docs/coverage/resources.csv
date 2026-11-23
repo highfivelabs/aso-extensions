@@ -635,17 +635,17 @@ Microsoft.Compute,Microsoft.Compute/galleries/applications,16,,0,compute.azure.h
 Microsoft.Compute,Microsoft.Compute/galleries/applications/versions,52,,0,compute.azure.hfl.dev/GalleriesApplicationsVersion,52,0,false,spec_api=2026-03-03; ours_api=2026-03-03
 Microsoft.Compute,Microsoft.Compute/galleries/images,26,,0,compute.azure.hfl.dev/GalleriesImage,26,0,false,spec_api=2026-03-03; ours_api=2026-03-03
 Microsoft.Compute,Microsoft.Compute/galleries/images/versions,61,,0,compute.azure.hfl.dev/GalleriesImagesVersion,61,0,false,spec_api=2026-03-03; ours_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/inVMAccessControlProfiles,5,,0,,0,5,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/inVMAccessControlProfiles/versions,30,,0,,0,30,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/scripts,8,,0,,0,8,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/scripts/versions,43,,0,,0,43,false,spec_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/inVMAccessControlProfiles,5,,0,compute.azure.hfl.dev/GalleriesInVMAccessControlProfile,5,0,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/inVMAccessControlProfiles/versions,30,,0,compute.azure.hfl.dev/GalleriesInVMAccessControlProfilesVersion,30,0,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/scripts,8,,0,compute.azure.hfl.dev/GalleriesScript,8,0,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/scripts/versions,43,,0,compute.azure.hfl.dev/GalleriesScriptsVersion,43,0,false,spec_api=2026-03-03; ours_api=2026-03-03
 Microsoft.Compute,Microsoft.Compute/hostGroups,6,,0,compute.azure.hfl.dev/HostGroup,6,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/hostGroups/hosts,8,,0,compute.azure.hfl.dev/HostGroupsHost,8,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/images,24,compute.azure.com/Image,24,,0,0,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/interconnectBlocks,10,,0,,0,10,false,spec_api=2026-04-01
 Microsoft.Compute,Microsoft.Compute/proximityPlacementGroups,10,,0,compute.azure.hfl.dev/ProximityPlacementGroup,10,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
-Microsoft.Compute,Microsoft.Compute/restorePointCollections,4,,0,,0,4,false,spec_api=2026-04-01
-Microsoft.Compute,Microsoft.Compute/restorePointCollections/restorePoints,43,,0,,0,43,false,spec_api=2026-04-01
+Microsoft.Compute,Microsoft.Compute/restorePointCollections,4,,0,compute.azure.hfl.dev/RestorePointCollection,4,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
+Microsoft.Compute,Microsoft.Compute/restorePointCollections/restorePoints,43,,0,compute.azure.hfl.dev/RestorePointCollectionsRestorePoint,43,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/snapshots,55,compute.azure.com/Snapshot,52,,0,3,false,spec_api=2026-03-02; official_api=2024-03-02; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/sshPublicKeys,3,,0,compute.azure.hfl.dev/SshPublicKey,3,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachines,218,compute.azure.com/VirtualMachine,169,compute.azure.hfl.dev/VirtualMachine,34,15,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec; ours_api=2025-04-01; ours-api-differs-from-spec

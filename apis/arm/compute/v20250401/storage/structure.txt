@@ -221,6 +221,363 @@ ProximityPlacementGroup: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Zones: string[]
 
+RestorePointCollection: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── InstantAccess: *bool
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Source: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (13 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── InstantAccess: *bool
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RestorePointCollectionId: *string
+    ├── RestorePoints: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Source: *Object (3 properties)
+    │   ├── Id: *string
+    │   ├── Location: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
+RestorePointCollectionsRestorePoint: Resource
+├── Owner: compute/v20250401.RestorePointCollection
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── ConsistencyMode: *string
+│   ├── ExcludeDisks: Object (2 properties)[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── InstantAccessDurationMinutes: *int
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── SourceMetadata: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── StorageProfile: *Object (3 properties)
+│   │       ├── DataDisks: Object (3 properties)[]
+│   │       │   ├── DiskRestorePoint: *Object (3 properties)
+│   │       │   │   ├── Encryption: *Object (3 properties)
+│   │       │   │   │   ├── DiskEncryptionSet: *Object (2 properties)
+│   │       │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   └── Type: *string
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   └── SourceDiskRestorePoint: *Object (2 properties)
+│   │       │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │       └── Reference: *genruntime.ResourceReference
+│   │       │   ├── ManagedDisk: *Object (5 properties)
+│   │       │   │   ├── DiskEncryptionSet: *Object (2 properties)
+│   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   └── Reference: *genruntime.ResourceReference
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   ├── Reference: *genruntime.ResourceReference
+│   │       │   │   ├── SecurityProfile: *Object (3 properties)
+│   │       │   │   │   ├── DiskEncryptionSet: *Object (2 properties)
+│   │       │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   └── SecurityEncryptionType: *string
+│   │       │   │   └── StorageAccountType: *string
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       ├── OsDisk: *Object (3 properties)
+│   │       │   ├── DiskRestorePoint: *Object (3 properties)
+│   │       │   │   ├── Encryption: *Object (3 properties)
+│   │       │   │   │   ├── DiskEncryptionSet: *Object (2 properties)
+│   │       │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   └── Type: *string
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   └── SourceDiskRestorePoint: *Object (2 properties)
+│   │       │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │       └── Reference: *genruntime.ResourceReference
+│   │       │   ├── ManagedDisk: *Object (5 properties)
+│   │       │   │   ├── DiskEncryptionSet: *Object (2 properties)
+│   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   └── Reference: *genruntime.ResourceReference
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   ├── Reference: *genruntime.ResourceReference
+│   │       │   │   ├── SecurityProfile: *Object (3 properties)
+│   │       │   │   │   ├── DiskEncryptionSet: *Object (2 properties)
+│   │       │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   │   └── Reference: *genruntime.ResourceReference
+│   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   └── SecurityEncryptionType: *string
+│   │       │   │   └── StorageAccountType: *string
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── SourceRestorePoint: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── TimeCreated: *string
+└── Status: Object (14 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ConsistencyMode: *string
+    ├── ExcludeDisks: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── InstanceView: *Object (3 properties)
+    │   ├── DiskRestorePoints: Object (4 properties)[]
+    │   │   ├── Id: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReplicationStatus: *Object (3 properties)
+    │   │   │   ├── CompletionPercent: *int
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Status: *Object (6 properties)
+    │   │   │       ├── Code: *string
+    │   │   │       ├── DisplayStatus: *string
+    │   │   │       ├── Level: *string
+    │   │   │       ├── Message: *string
+    │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │       └── Time: *string
+    │   │   └── SnapshotAccessState: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Statuses: Object (6 properties)[]
+    │       ├── Code: *string
+    │       ├── DisplayStatus: *string
+    │       ├── Level: *string
+    │       ├── Message: *string
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── Time: *string
+    ├── InstantAccessDurationMinutes: *int
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SourceMetadata: *Object (11 properties)
+    │   ├── DiagnosticsProfile: *Object (2 properties)
+    │   │   ├── BootDiagnostics: *Object (3 properties)
+    │   │   │   ├── Enabled: *bool
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── StorageUri: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── HardwareProfile: *Object (3 properties)
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── VmSize: *string
+    │   │   └── VmSizeProperties: *Object (3 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       ├── VCPUsAvailable: *int
+    │   │       └── VCPUsPerCore: *int
+    │   ├── HyperVGeneration: *string
+    │   ├── LicenseType: *string
+    │   ├── Location: *string
+    │   ├── OsProfile: *Object (9 properties)
+    │   │   ├── AdminUsername: *string
+    │   │   ├── AllowExtensionOperations: *bool
+    │   │   ├── ComputerName: *string
+    │   │   ├── CustomData: *string
+    │   │   ├── LinuxConfiguration: *Object (6 properties)
+    │   │   │   ├── DisablePasswordAuthentication: *bool
+    │   │   │   ├── EnableVMAgentPlatformUpdates: *bool
+    │   │   │   ├── PatchSettings: *Object (4 properties)
+    │   │   │   │   ├── AssessmentMode: *string
+    │   │   │   │   ├── AutomaticByPlatformSettings: *Object (3 properties)
+    │   │   │   │   │   ├── BypassPlatformSafetyChecksOnUserSchedule: *bool
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   └── RebootSetting: *string
+    │   │   │   │   ├── PatchMode: *string
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ProvisionVMAgent: *bool
+    │   │   │   └── Ssh: *Object (2 properties)
+    │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │       └── PublicKeys: Object (3 properties)[]
+    │   │   │           ├── KeyData: *string
+    │   │   │           ├── Path: *string
+    │   │   │           └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── RequireGuestProvisionSignal: *bool
+    │   │   ├── Secrets: Object (3 properties)[]
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SourceVault: *Object (2 properties)
+    │   │   │   │   ├── Id: *string
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── VaultCertificates: Object (3 properties)[]
+    │   │   │       ├── CertificateStore: *string
+    │   │   │       ├── CertificateUrl: *string
+    │   │   │       └── PropertyBag: genruntime.PropertyBag
+    │   │   └── WindowsConfiguration: *Object (8 properties)
+    │   │       ├── AdditionalUnattendContent: Object (5 properties)[]
+    │   │       │   ├── ComponentName: *string
+    │   │       │   ├── Content: *string
+    │   │       │   ├── PassName: *string
+    │   │       │   ├── PropertyBag: genruntime.PropertyBag
+    │   │       │   └── SettingName: *string
+    │   │       ├── EnableAutomaticUpdates: *bool
+    │   │       ├── EnableVMAgentPlatformUpdates: *bool
+    │   │       ├── PatchSettings: *Object (5 properties)
+    │   │       │   ├── AssessmentMode: *string
+    │   │       │   ├── AutomaticByPlatformSettings: *Object (3 properties)
+    │   │       │   │   ├── BypassPlatformSafetyChecksOnUserSchedule: *bool
+    │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │       │   │   └── RebootSetting: *string
+    │   │       │   ├── EnableHotpatching: *bool
+    │   │       │   ├── PatchMode: *string
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       ├── ProvisionVMAgent: *bool
+    │   │       ├── TimeZone: *string
+    │   │       └── WinRM: *Object (2 properties)
+    │   │           ├── Listeners: Object (3 properties)[]
+    │   │           │   ├── CertificateUrl: *string
+    │   │           │   ├── PropertyBag: genruntime.PropertyBag
+    │   │           │   └── Protocol: *string
+    │   │           └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── SecurityProfile: *Object (6 properties)
+    │   │   ├── EncryptionAtHost: *bool
+    │   │   ├── EncryptionIdentity: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── UserAssignedIdentityResourceId: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ProxyAgentSettings: *Object (7 properties)
+    │   │   │   ├── AddProxyAgentExtension: *bool
+    │   │   │   ├── Enabled: *bool
+    │   │   │   ├── Imds: *Object (3 properties)
+    │   │   │   │   ├── InVMAccessControlProfileReferenceId: *string
+    │   │   │   │   ├── Mode: *string
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── KeyIncarnationId: *int
+    │   │   │   ├── Mode: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── WireServer: *Object (3 properties)
+    │   │   │       ├── InVMAccessControlProfileReferenceId: *string
+    │   │   │       ├── Mode: *string
+    │   │   │       └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── SecurityType: *string
+    │   │   └── UefiSettings: *Object (3 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       ├── SecureBootEnabled: *bool
+    │   │       └── VTpmEnabled: *bool
+    │   ├── StorageProfile: *Object (4 properties)
+    │   │   ├── DataDisks: Object (8 properties)[]
+    │   │   │   ├── Caching: *string
+    │   │   │   ├── DiskRestorePoint: *Object (4 properties)
+    │   │   │   │   ├── Encryption: *Object (3 properties)
+    │   │   │   │   │   ├── DiskEncryptionSet: *Object (2 properties)
+    │   │   │   │   │   │   ├── Id: *string
+    │   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   └── Type: *string
+    │   │   │   │   ├── Id: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── SourceDiskRestorePoint: *Object (2 properties)
+    │   │   │   │       ├── Id: *string
+    │   │   │   │       └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── DiskSizeGB: *int
+    │   │   │   ├── Lun: *int
+    │   │   │   ├── ManagedDisk: *Object (5 properties)
+    │   │   │   │   ├── DiskEncryptionSet: *Object (2 properties)
+    │   │   │   │   │   ├── Id: *string
+    │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── Id: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── SecurityProfile: *Object (3 properties)
+    │   │   │   │   │   ├── DiskEncryptionSet: *Object (2 properties)
+    │   │   │   │   │   │   ├── Id: *string
+    │   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   └── SecurityEncryptionType: *string
+    │   │   │   │   └── StorageAccountType: *string
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── WriteAcceleratorEnabled: *bool
+    │   │   ├── DiskControllerType: *string
+    │   │   ├── OsDisk: *Object (9 properties)
+    │   │   │   ├── Caching: *string
+    │   │   │   ├── DiskRestorePoint: *Object (4 properties)
+    │   │   │   │   ├── Encryption: *Object (3 properties)
+    │   │   │   │   │   ├── DiskEncryptionSet: *Object (2 properties)
+    │   │   │   │   │   │   ├── Id: *string
+    │   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   └── Type: *string
+    │   │   │   │   ├── Id: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── SourceDiskRestorePoint: *Object (2 properties)
+    │   │   │   │       ├── Id: *string
+    │   │   │   │       └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── DiskSizeGB: *int
+    │   │   │   ├── EncryptionSettings: *Object (4 properties)
+    │   │   │   │   ├── DiskEncryptionKey: *Object (3 properties)
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   ├── SecretUrl: *string
+    │   │   │   │   │   └── SourceVault: *Object (2 properties)
+    │   │   │   │   │       ├── Id: *string
+    │   │   │   │   │       └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── Enabled: *bool
+    │   │   │   │   ├── KeyEncryptionKey: *Object (3 properties)
+    │   │   │   │   │   ├── KeyUrl: *string
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   └── SourceVault: *Object (2 properties)
+    │   │   │   │   │       ├── Id: *string
+    │   │   │   │   │       └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ManagedDisk: *Object (5 properties)
+    │   │   │   │   ├── DiskEncryptionSet: *Object (2 properties)
+    │   │   │   │   │   ├── Id: *string
+    │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── Id: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── SecurityProfile: *Object (3 properties)
+    │   │   │   │   │   ├── DiskEncryptionSet: *Object (2 properties)
+    │   │   │   │   │   │   ├── Id: *string
+    │   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   └── SecurityEncryptionType: *string
+    │   │   │   │   └── StorageAccountType: *string
+    │   │   │   ├── Name: *string
+    │   │   │   ├── OsType: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── WriteAcceleratorEnabled: *bool
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── UserData: *string
+    │   └── VmId: *string
+    ├── SourceRestorePoint: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── TimeCreated: *string
+    └── Type: *string
+
 SshPublicKey: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (8 properties)
