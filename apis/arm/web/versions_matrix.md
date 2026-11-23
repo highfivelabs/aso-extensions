@@ -1,6 +1,10 @@
 | Type Definitions in package "web"                                         | v20260715 |
 |---------------------------------------------------------------------------|-----------|
 | APIVersion                                                                | v20260715 |
+| AiGateway                                                                 | v20260715 |
+| AiGatewayProperties_STATUS                                                | v20260715 |
+| AiGateway_STATUS                                                          | v20260715 |
+| AiGateway_Spec                                                            | v20260715 |
 | AiIntegration                                                             | v20260715 |
 | AiIntegration_STATUS                                                      | v20260715 |
 | AllowedAudiencesValidation                                                | v20260715 |
@@ -11,6 +15,8 @@
 | ApiDefinitionInfo_STATUS                                                  | v20260715 |
 | ApiManagementConfig                                                       | v20260715 |
 | ApiManagementConfig_STATUS                                                | v20260715 |
+| AppLogsConfiguration                                                      | v20260715 |
+| AppLogsConfiguration_STATUS                                               | v20260715 |
 | AppRegistration                                                           | v20260715 |
 | AppRegistration_STATUS                                                    | v20260715 |
 | AppServiceEnvironment                                                     | v20260715 |
@@ -23,6 +29,8 @@
 | Apple_STATUS                                                              | v20260715 |
 | ApplicationLogsConfig                                                     | v20260715 |
 | ApplicationLogsConfig_STATUS                                              | v20260715 |
+| ArcConfiguration                                                          | v20260715 |
+| ArcConfiguration_STATUS                                                   | v20260715 |
 | ArmIdWrapper_STATUS                                                       | v20260715 |
 | ArmPlan_STATUS                                                            | v20260715 |
 | AseV3NetworkingConfigurationProperties                                    | v20260715 |
@@ -92,6 +100,8 @@
 | ConnStringInfo_STATUS                                                     | v20260715 |
 | ConnectionStringType                                                      | v20260715 |
 | ConnectionStringType_STATUS                                               | v20260715 |
+| ContainerAppsConfiguration                                                | v20260715 |
+| ContainerAppsConfiguration_STATUS                                         | v20260715 |
 | CookieExpiration                                                          | v20260715 |
 | CookieExpirationConvention                                                | v20260715 |
 | CookieExpirationConvention_STATUS                                         | v20260715 |
@@ -146,6 +156,10 @@
 | ForwardProxyConvention                                                    | v20260715 |
 | ForwardProxyConvention_STATUS                                             | v20260715 |
 | ForwardProxy_STATUS                                                       | v20260715 |
+| FrontEndConfiguration                                                     | v20260715 |
+| FrontEndConfiguration_STATUS                                              | v20260715 |
+| FrontEndServiceType                                                       | v20260715 |
+| FrontEndServiceType_STATUS                                                | v20260715 |
 | FtpsState                                                                 | v20260715 |
 | FtpsState_STATUS                                                          | v20260715 |
 | FunctionAppConfig                                                         | v20260715 |
@@ -173,6 +187,12 @@
 | FunctionsSiteUpdateStrategy                                               | v20260715 |
 | FunctionsSiteUpdateStrategy_STATUS                                        | v20260715 |
 | GitHub                                                                    | v20260715 |
+| GitHubActionCodeConfiguration                                             | v20260715 |
+| GitHubActionCodeConfiguration_STATUS                                      | v20260715 |
+| GitHubActionConfiguration                                                 | v20260715 |
+| GitHubActionConfiguration_STATUS                                          | v20260715 |
+| GitHubActionContainerConfiguration                                        | v20260715 |
+| GitHubActionContainerConfiguration_STATUS                                 | v20260715 |
 | GitHub_STATUS                                                             | v20260715 |
 | GlobalValidation                                                          | v20260715 |
 | GlobalValidation_STATUS                                                   | v20260715 |
@@ -224,10 +244,18 @@
 | JwtClaimChecks                                                            | v20260715 |
 | JwtClaimChecks_STATUS                                                     | v20260715 |
 | KeyVaultSecretStatus_STATUS                                               | v20260715 |
+| KubeEnvironment                                                           | v20260715 |
+| KubeEnvironmentProperties                                                 | v20260715 |
+| KubeEnvironmentProperties_STATUS                                          | v20260715 |
+| KubeEnvironmentProvisioningState_STATUS                                   | v20260715 |
+| KubeEnvironment_STATUS                                                    | v20260715 |
+| KubeEnvironment_Spec                                                      | v20260715 |
 | LegacyMicrosoftAccount                                                    | v20260715 |
 | LegacyMicrosoftAccount_STATUS                                             | v20260715 |
 | LoadBalancingMode                                                         | v20260715 |
 | LoadBalancingMode_STATUS                                                  | v20260715 |
+| LogAnalyticsConfiguration                                                 | v20260715 |
+| LogAnalyticsConfiguration_STATUS                                          | v20260715 |
 | LogLevel                                                                  | v20260715 |
 | LogLevel_STATUS                                                           | v20260715 |
 | Login                                                                     | v20260715 |
@@ -322,6 +350,8 @@
 | SiteMachineKey_STATUS                                                     | v20260715 |
 | SiteProperties                                                            | v20260715 |
 | SiteProperties_STATUS                                                     | v20260715 |
+| SiteSourceControlProperties                                               | v20260715 |
+| SiteSourceControlProperties_STATUS                                        | v20260715 |
 | SiteUpdateStrategyType                                                    | v20260715 |
 | SiteUpdateStrategyType_STATUS                                             | v20260715 |
 | SitesBasicPublishingCredentialsPolicyFtp                                  | v20260715 |
@@ -330,6 +360,9 @@
 | SitesBasicPublishingCredentialsPolicyScm                                  | v20260715 |
 | SitesBasicPublishingCredentialsPolicyScm_STATUS                           | v20260715 |
 | SitesBasicPublishingCredentialsPolicyScm_Spec                             | v20260715 |
+| SitesCertificate                                                          | v20260715 |
+| SitesCertificate_STATUS                                                   | v20260715 |
+| SitesCertificate_Spec                                                     | v20260715 |
 | SitesConfigAuthSettingsV2                                                 | v20260715 |
 | SitesConfigAuthSettingsV2_STATUS                                          | v20260715 |
 | SitesConfigAuthSettingsV2_Spec                                            | v20260715 |
@@ -375,6 +408,9 @@
 | SitesSlotsBasicPublishingCredentialsPolicyScm                             | v20260715 |
 | SitesSlotsBasicPublishingCredentialsPolicyScm_STATUS                      | v20260715 |
 | SitesSlotsBasicPublishingCredentialsPolicyScm_Spec                        | v20260715 |
+| SitesSlotsCertificate                                                     | v20260715 |
+| SitesSlotsCertificate_STATUS                                              | v20260715 |
+| SitesSlotsCertificate_Spec                                                | v20260715 |
 | SitesSlotsConfigAuthSettingsV2                                            | v20260715 |
 | SitesSlotsConfigAuthSettingsV2_STATUS                                     | v20260715 |
 | SitesSlotsConfigAuthSettingsV2_Spec                                       | v20260715 |
@@ -408,12 +444,21 @@
 | SitesSlotsSitecontainer                                                   | v20260715 |
 | SitesSlotsSitecontainer_STATUS                                            | v20260715 |
 | SitesSlotsSitecontainer_Spec                                              | v20260715 |
+| SitesSlotsSourcecontrol                                                   | v20260715 |
+| SitesSlotsSourcecontrol_STATUS                                            | v20260715 |
+| SitesSlotsSourcecontrol_Spec                                              | v20260715 |
 | SitesSlotsVirtualNetworkConnection                                        | v20260715 |
 | SitesSlotsVirtualNetworkConnection_STATUS                                 | v20260715 |
 | SitesSlotsVirtualNetworkConnection_Spec                                   | v20260715 |
+| SitesSlotsVirtualNetworkConnectionsGateway                                | v20260715 |
+| SitesSlotsVirtualNetworkConnectionsGateway_STATUS                         | v20260715 |
+| SitesSlotsVirtualNetworkConnectionsGateway_Spec                           | v20260715 |
 | SitesVirtualNetworkConnection                                             | v20260715 |
 | SitesVirtualNetworkConnection_STATUS                                      | v20260715 |
 | SitesVirtualNetworkConnection_Spec                                        | v20260715 |
+| SitesVirtualNetworkConnectionsGateway                                     | v20260715 |
+| SitesVirtualNetworkConnectionsGateway_STATUS                              | v20260715 |
+| SitesVirtualNetworkConnectionsGateway_Spec                                | v20260715 |
 | Sites_BasicPublishingCredentialsPolicies_Ftp_Name_Spec                    | v20260715 |
 | Sites_BasicPublishingCredentialsPolicies_Scm_Name_Spec                    | v20260715 |
 | Sites_Config_AuthsettingsV2_Name_Spec                                     | v20260715 |
@@ -425,6 +470,7 @@
 | Sites_Slots_Config_AuthsettingsV2_Name_Spec                               | v20260715 |
 | Sites_Slots_Config_Log_Name_Spec                                          | v20260715 |
 | Sites_Slots_PrivateAccess_VirtualNetwork_Name_Spec                        | v20260715 |
+| Sites_Slots_Sourcecontrol_Name_Spec                                       | v20260715 |
 | SkuCapacity                                                               | v20260715 |
 | SkuCapacity_STATUS                                                        | v20260715 |
 | SkuDescription                                                            | v20260715 |
@@ -440,6 +486,8 @@
 | StagingEnvironmentPolicy_STATUS                                           | v20260715 |
 | StaticSite                                                                | v20260715 |
 | StaticSiteARMResource_STATUS                                              | v20260715 |
+| StaticSiteBasicAuthPropertiesARMResourceProperties                        | v20260715 |
+| StaticSiteBasicAuthPropertiesARMResourceProperties_STATUS                 | v20260715 |
 | StaticSiteBuildProperties                                                 | v20260715 |
 | StaticSiteBuildProperties_STATUS                                          | v20260715 |
 | StaticSiteCustomDomainOverviewARMResourceProperties_STATUS                | v20260715 |
@@ -457,6 +505,9 @@
 | StaticSiteUserProvidedFunctionApp_STATUS                                  | v20260715 |
 | StaticSite_STATUS                                                         | v20260715 |
 | StaticSite_Spec                                                           | v20260715 |
+| StaticSitesBasicAuth                                                      | v20260715 |
+| StaticSitesBasicAuth_STATUS                                               | v20260715 |
+| StaticSitesBasicAuth_Spec                                                 | v20260715 |
 | StaticSitesCustomDomain                                                   | v20260715 |
 | StaticSitesCustomDomain_STATUS                                            | v20260715 |
 | StaticSitesCustomDomain_Spec                                              | v20260715 |
@@ -472,10 +523,13 @@
 | StaticSitesUserProvidedFunctionApp                                        | v20260715 |
 | StaticSitesUserProvidedFunctionApp_STATUS                                 | v20260715 |
 | StaticSitesUserProvidedFunctionApp_Spec                                   | v20260715 |
+| StaticSites_BasicAuth_Name_Spec                                           | v20260715 |
 | StatusCodesBasedTrigger                                                   | v20260715 |
 | StatusCodesBasedTrigger_STATUS                                            | v20260715 |
 | StatusCodesRangeBasedTrigger                                              | v20260715 |
 | StatusCodesRangeBasedTrigger_STATUS                                       | v20260715 |
+| StorageType                                                               | v20260715 |
+| StorageType_STATUS                                                        | v20260715 |
 | SupportedTlsVersions                                                      | v20260715 |
 | SupportedTlsVersions_STATUS                                               | v20260715 |
 | SystemData_CreatedByType_STATUS                                           | v20260715 |
@@ -501,6 +555,8 @@
 | VirtualDirectory_STATUS                                                   | v20260715 |
 | VirtualNetworkProfile                                                     | v20260715 |
 | VirtualNetworkProfile_STATUS                                              | v20260715 |
+| VnetGatewayProperties                                                     | v20260715 |
+| VnetGatewayProperties_STATUS                                              | v20260715 |
 | VnetInfo                                                                  | v20260715 |
 | VnetInfo_STATUS_Sites_Slots_VirtualNetworkConnection_SubResourceEmbedded  | v20260715 |
 | VnetInfo_STATUS_Sites_VirtualNetworkConnection_SubResourceEmbedded        | v20260715 |

@@ -337,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 5,724 (13.2%) in 450 further resources; uncovered 30,525 (70.4%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 5,798 (13.4%) in 458 further resources; uncovered 30,451 (70.2%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 25.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 43.8% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.8% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 25.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 44.8% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.8% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 38.2% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 20.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 1.0% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 38.2% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 21.3% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 1.0% more by ours.
 
 **Ours.**
 
@@ -776,11 +776,14 @@ Generated; these cannot drift from the data.
 | `storage.azure.hfl.dev/StorageAccountsPrivateEndpointConnection` | `Microsoft.Storage/storageAccounts/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `storage.azure.hfl.dev/StorageAccountsStorageTaskAssignment` | `Microsoft.Storage/storageAccounts/storageTaskAssignments` | ARM wire type of the generated kind (`apis/arm`) |
 | `subscription.azure.hfl.dev/SubscriptionTenantPolicy` | `Microsoft.Subscription/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/AiGateway` | `Microsoft.Web/aigateways` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/Certificate` | `Microsoft.Web/certificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/HostingEnvironment` | `Microsoft.Web/hostingEnvironments` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/HostingEnvironmentsConfigurationCustomDnsSuffix` | `Microsoft.Web/hostingEnvironments/configurations` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/HostingEnvironmentsPrivateEndpointConnection` | `Microsoft.Web/hostingEnvironments/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/KubeEnvironment` | `Microsoft.Web/kubeEnvironments` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesBasicPublishingCredentialsPolicyFtp` | `Microsoft.Web/sites/basicPublishingCredentialsPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesCertificate` | `Microsoft.Web/sites/certificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesConfigAppSettings` | `Microsoft.Web/sites/config` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
 | `web.azure.hfl.dev/SitesConfigAuthSettingsV2` | `Microsoft.Web/sites/config` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesConfigConnectionStrings` | `Microsoft.Web/sites/config` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
@@ -795,6 +798,7 @@ Generated; these cannot drift from the data.
 | `web.azure.hfl.dev/SitesSitecontainer` | `Microsoft.Web/sites/sitecontainers` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlot` | `Microsoft.Web/sites/slots` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsBasicPublishingCredentialsPolicyFtp` | `Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsCertificate` | `Microsoft.Web/sites/slots/certificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsConfigAuthSettingsV2` | `Microsoft.Web/sites/slots/config` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsDomainOwnershipIdentifier` | `Microsoft.Web/sites/slots/domainOwnershipIdentifiers` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsFunction` | `Microsoft.Web/sites/slots/functions` | ARM wire type of the generated kind (`apis/arm`) |
@@ -805,9 +809,13 @@ Generated; these cannot drift from the data.
 | `web.azure.hfl.dev/SitesSlotsPrivateEndpointConnection` | `Microsoft.Web/sites/slots/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsPublicCertificate` | `Microsoft.Web/sites/slots/publicCertificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsSitecontainer` | `Microsoft.Web/sites/slots/sitecontainers` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsSourcecontrol` | `Microsoft.Web/sites/slots/sourcecontrols` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsVirtualNetworkConnection` | `Microsoft.Web/sites/slots/virtualNetworkConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsVirtualNetworkConnectionsGateway` | `Microsoft.Web/sites/slots/virtualNetworkConnections/gateways` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesVirtualNetworkConnection` | `Microsoft.Web/sites/virtualNetworkConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesVirtualNetworkConnectionsGateway` | `Microsoft.Web/sites/virtualNetworkConnections/gateways` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/StaticSite` | `Microsoft.Web/staticSites` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesBasicAuth` | `Microsoft.Web/staticSites/basicAuth` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/StaticSitesCustomDomain` | `Microsoft.Web/staticSites/customDomains` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/StaticSitesDatabaseConnection` | `Microsoft.Web/staticSites/databaseConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/StaticSitesLinkedBackend` | `Microsoft.Web/staticSites/linkedBackends` | ARM wire type of the generated kind (`apis/arm`) |

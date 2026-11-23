@@ -522,6 +522,27 @@ func init() {
 			}},
 		}}
 	}}
+	// App Service leftovers (webextras.go): a certificate's PFX and password
+	// from the test's Secret, the integration gateway named primary, a slot's
+	// repository, basic authentication's scope and password, and a
+	// Kubernetes environment's custom location.
+	cert := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"pfxBlob": secret, "password": secret}
+	}}
+	f["SitesCertificate"], f["SitesSlotsCertificate"] = cert, cert
+	gateway := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "primary", "vnetName": "vnet"}
+	}}
+	f["SitesVirtualNetworkConnectionsGateway"], f["SitesSlotsVirtualNetworkConnectionsGateway"] = gateway, gateway
+	f["SitesSlotsSourcecontrol"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"repoUrl": "https://github.com/contoso/app", "branch": "main", "isManualIntegration": true}
+	}}
+	f["StaticSitesBasicAuth"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"applicableEnvironmentsMode": "AllEnvironments", "password": secret}
+	}}
+	f["KubeEnvironment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"extendedLocation": map[string]any{"name": c.add(c.in("Microsoft.ExtendedLocation/customLocations/arc"))}}
+	}}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}

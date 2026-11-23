@@ -2233,6 +2233,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(subscription_v20211001.SubscriptionTenantPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.AiGateway)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.Certificate),
 		Indexes: []registration.Index{
@@ -2261,8 +2262,56 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.HostingEnvironmentsConfigurationCustomDnsSuffix)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.HostingEnvironmentsConfigurationNetworking)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.HostingEnvironmentsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.KubeEnvironment),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.arcConfiguration.kubeConfig",
+				Func: indexWebKubeEnvironmentKubeConfig,
+			},
+			{
+				Key:  ".spec.appLogsConfiguration.logAnalyticsConfiguration.sharedKey",
+				Func: indexWebKubeEnvironmentSharedKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.appLogsConfiguration.logAnalyticsConfiguration.sharedKey",
+						".spec.arcConfiguration.kubeConfig",
+					},
+					&web_v20260715.KubeEnvironmentList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyFtp)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyScm)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.SitesCertificate),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.password",
+				Func: indexWebSitesCertificatePassword,
+			},
+			{
+				Key:  ".spec.pfxBlob",
+				Func: indexWebSitesCertificatePfxBlob,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.password",
+						".spec.pfxBlob",
+					},
+					&web_v20260715.SitesCertificateList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesConfigAuthSettingsV2)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.SitesConfigLogs),
@@ -2365,6 +2414,30 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsBasicPublishingCredentialsPolicyFtp)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsBasicPublishingCredentialsPolicyScm)})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.SitesSlotsCertificate),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.password",
+				Func: indexWebSitesSlotsCertificatePassword,
+			},
+			{
+				Key:  ".spec.pfxBlob",
+				Func: indexWebSitesSlotsCertificatePfxBlob,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.password",
+						".spec.pfxBlob",
+					},
+					&web_v20260715.SitesSlotsCertificateList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsConfigAuthSettingsV2)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.SitesSlotsConfigLogs),
@@ -2445,8 +2518,29 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.SitesSlotsSourcecontrol),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.gitHubActionConfiguration.containerConfiguration.password",
+				Func: indexWebSitesSlotsSourcecontrolPassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.gitHubActionConfiguration.containerConfiguration.password",
+					},
+					&web_v20260715.SitesSlotsSourcecontrolList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsVirtualNetworkConnection)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesSlotsVirtualNetworkConnectionsGateway)})
 	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesVirtualNetworkConnection)})
+	result = append(result, &registration.StorageType{Obj: new(web_v20260715.SitesVirtualNetworkConnectionsGateway)})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20260715.StaticSite),
 		Indexes: []registration.Index{
@@ -2463,6 +2557,25 @@ func getKnownStorageTypes() []*registration.StorageType {
 						".spec.repositoryToken",
 					},
 					&web_v20260715.StaticSiteList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(web_v20260715.StaticSitesBasicAuth),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.password",
+				Func: indexWebStaticSitesBasicAuthPassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.password",
+					},
+					&web_v20260715.StaticSitesBasicAuthList{}),
 			},
 		},
 	})
@@ -3453,13 +3566,16 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(subscription_v20211001s.SubscriptionTenantPolicy)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(web_v20260715.AiGateway)},
 		&registration.KnownType{Obj: new(web_v20260715.Certificate)},
 		&registration.KnownType{Obj: new(web_v20260715.HostingEnvironment)},
 		&registration.KnownType{Obj: new(web_v20260715.HostingEnvironmentsConfigurationCustomDnsSuffix)},
 		&registration.KnownType{Obj: new(web_v20260715.HostingEnvironmentsConfigurationNetworking)},
 		&registration.KnownType{Obj: new(web_v20260715.HostingEnvironmentsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(web_v20260715.KubeEnvironment)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyFtp)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesBasicPublishingCredentialsPolicyScm)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesCertificate)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesConfigAuthSettingsV2)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesConfigLogs)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesConfigSlotConfigNames)},
@@ -3475,6 +3591,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlot)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsBasicPublishingCredentialsPolicyFtp)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsBasicPublishingCredentialsPolicyScm)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsCertificate)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsConfigAuthSettingsV2)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsConfigLogs)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsDomainOwnershipIdentifier)},
@@ -3486,9 +3603,13 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsPublicCertificate)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsSitecontainer)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsSourcecontrol)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsVirtualNetworkConnection)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesSlotsVirtualNetworkConnectionsGateway)},
 		&registration.KnownType{Obj: new(web_v20260715.SitesVirtualNetworkConnection)},
+		&registration.KnownType{Obj: new(web_v20260715.SitesVirtualNetworkConnectionsGateway)},
 		&registration.KnownType{Obj: new(web_v20260715.StaticSite)},
+		&registration.KnownType{Obj: new(web_v20260715.StaticSitesBasicAuth)},
 		&registration.KnownType{Obj: new(web_v20260715.StaticSitesCustomDomain)},
 		&registration.KnownType{Obj: new(web_v20260715.StaticSitesDatabaseConnection)},
 		&registration.KnownType{Obj: new(web_v20260715.StaticSitesLinkedBackend)},
@@ -3496,13 +3617,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(web_v20260715.StaticSitesUserProvidedFunctionApp)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(web_v20260715s.AiGateway)},
 		&registration.KnownType{Obj: new(web_v20260715s.Certificate)},
 		&registration.KnownType{Obj: new(web_v20260715s.HostingEnvironment)},
 		&registration.KnownType{Obj: new(web_v20260715s.HostingEnvironmentsConfigurationCustomDnsSuffix)},
 		&registration.KnownType{Obj: new(web_v20260715s.HostingEnvironmentsConfigurationNetworking)},
 		&registration.KnownType{Obj: new(web_v20260715s.HostingEnvironmentsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(web_v20260715s.KubeEnvironment)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesBasicPublishingCredentialsPolicyFtp)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesBasicPublishingCredentialsPolicyScm)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesCertificate)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigAuthSettingsV2)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigLogs)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesConfigSlotConfigNames)},
@@ -3518,6 +3642,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlot)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsBasicPublishingCredentialsPolicyFtp)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsBasicPublishingCredentialsPolicyScm)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsCertificate)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsConfigAuthSettingsV2)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsConfigLogs)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsDomainOwnershipIdentifier)},
@@ -3529,9 +3654,13 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsPublicCertificate)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsSitecontainer)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsSourcecontrol)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsVirtualNetworkConnection)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesSlotsVirtualNetworkConnectionsGateway)},
 		&registration.KnownType{Obj: new(web_v20260715s.SitesVirtualNetworkConnection)},
+		&registration.KnownType{Obj: new(web_v20260715s.SitesVirtualNetworkConnectionsGateway)},
 		&registration.KnownType{Obj: new(web_v20260715s.StaticSite)},
+		&registration.KnownType{Obj: new(web_v20260715s.StaticSitesBasicAuth)},
 		&registration.KnownType{Obj: new(web_v20260715s.StaticSitesCustomDomain)},
 		&registration.KnownType{Obj: new(web_v20260715s.StaticSitesDatabaseConnection)},
 		&registration.KnownType{Obj: new(web_v20260715s.StaticSitesLinkedBackend)},
@@ -4141,13 +4270,16 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &storage_customizations.StorageAccountsPrivateEndpointConnectionExtension{})
 	result = append(result, &storage_customizations.StorageAccountsStorageTaskAssignmentExtension{})
 	result = append(result, &subscription_customizations.SubscriptionTenantPolicyExtension{})
+	result = append(result, &web_customizations.AiGatewayExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
 	result = append(result, &web_customizations.HostingEnvironmentExtension{})
 	result = append(result, &web_customizations.HostingEnvironmentsConfigurationCustomDnsSuffixExtension{})
 	result = append(result, &web_customizations.HostingEnvironmentsConfigurationNetworkingExtension{})
 	result = append(result, &web_customizations.HostingEnvironmentsPrivateEndpointConnectionExtension{})
+	result = append(result, &web_customizations.KubeEnvironmentExtension{})
 	result = append(result, &web_customizations.SitesBasicPublishingCredentialsPolicyFtpExtension{})
 	result = append(result, &web_customizations.SitesBasicPublishingCredentialsPolicyScmExtension{})
+	result = append(result, &web_customizations.SitesCertificateExtension{})
 	result = append(result, &web_customizations.SitesConfigAuthSettingsV2Extension{})
 	result = append(result, &web_customizations.SitesConfigLogsExtension{})
 	result = append(result, &web_customizations.SitesConfigSlotConfigNamesExtension{})
@@ -4163,6 +4295,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &web_customizations.SitesSlotExtension{})
 	result = append(result, &web_customizations.SitesSlotsBasicPublishingCredentialsPolicyFtpExtension{})
 	result = append(result, &web_customizations.SitesSlotsBasicPublishingCredentialsPolicyScmExtension{})
+	result = append(result, &web_customizations.SitesSlotsCertificateExtension{})
 	result = append(result, &web_customizations.SitesSlotsConfigAuthSettingsV2Extension{})
 	result = append(result, &web_customizations.SitesSlotsConfigLogsExtension{})
 	result = append(result, &web_customizations.SitesSlotsDomainOwnershipIdentifierExtension{})
@@ -4174,9 +4307,13 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &web_customizations.SitesSlotsPrivateEndpointConnectionExtension{})
 	result = append(result, &web_customizations.SitesSlotsPublicCertificateExtension{})
 	result = append(result, &web_customizations.SitesSlotsSitecontainerExtension{})
+	result = append(result, &web_customizations.SitesSlotsSourcecontrolExtension{})
 	result = append(result, &web_customizations.SitesSlotsVirtualNetworkConnectionExtension{})
+	result = append(result, &web_customizations.SitesSlotsVirtualNetworkConnectionsGatewayExtension{})
 	result = append(result, &web_customizations.SitesVirtualNetworkConnectionExtension{})
+	result = append(result, &web_customizations.SitesVirtualNetworkConnectionsGatewayExtension{})
 	result = append(result, &web_customizations.StaticSiteExtension{})
+	result = append(result, &web_customizations.StaticSitesBasicAuthExtension{})
 	result = append(result, &web_customizations.StaticSitesCustomDomainExtension{})
 	result = append(result, &web_customizations.StaticSitesDatabaseConnectionExtension{})
 	result = append(result, &web_customizations.StaticSitesLinkedBackendExtension{})
@@ -6659,6 +6796,63 @@ func indexWebCertificatePfxBlob(rawObj client.Object) []string {
 	return obj.Spec.PfxBlob.Index()
 }
 
+// indexWebKubeEnvironmentKubeConfig an index function for web_v20260715.KubeEnvironment .spec.arcConfiguration.kubeConfig
+func indexWebKubeEnvironmentKubeConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.KubeEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ArcConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.ArcConfiguration.KubeConfig == nil {
+		return nil
+	}
+	return obj.Spec.ArcConfiguration.KubeConfig.Index()
+}
+
+// indexWebKubeEnvironmentSharedKey an index function for web_v20260715.KubeEnvironment .spec.appLogsConfiguration.logAnalyticsConfiguration.sharedKey
+func indexWebKubeEnvironmentSharedKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.KubeEnvironment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.AppLogsConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.AppLogsConfiguration.LogAnalyticsConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.AppLogsConfiguration.LogAnalyticsConfiguration.SharedKey == nil {
+		return nil
+	}
+	return obj.Spec.AppLogsConfiguration.LogAnalyticsConfiguration.SharedKey.Index()
+}
+
+// indexWebSitesCertificatePassword an index function for web_v20260715.SitesCertificate .spec.password
+func indexWebSitesCertificatePassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Password == nil {
+		return nil
+	}
+	return obj.Spec.Password.Index()
+}
+
+// indexWebSitesCertificatePfxBlob an index function for web_v20260715.SitesCertificate .spec.pfxBlob
+func indexWebSitesCertificatePfxBlob(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PfxBlob == nil {
+		return nil
+	}
+	return obj.Spec.PfxBlob.Index()
+}
+
 // indexWebSitesConfigLogsApplicationLogsAzureBlobStorageSasUrl an index function for web_v20260715.SitesConfigLogs .spec.applicationLogs.azureBlobStorage.sasUrl
 func indexWebSitesConfigLogsApplicationLogsAzureBlobStorageSasUrl(rawObj client.Object) []string {
 	obj, ok := rawObj.(*web_v20260715.SitesConfigLogs)
@@ -6768,6 +6962,30 @@ func indexWebSitesSlotAccessKey(rawObj client.Object) []string {
 	return result
 }
 
+// indexWebSitesSlotsCertificatePassword an index function for web_v20260715.SitesSlotsCertificate .spec.password
+func indexWebSitesSlotsCertificatePassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesSlotsCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Password == nil {
+		return nil
+	}
+	return obj.Spec.Password.Index()
+}
+
+// indexWebSitesSlotsCertificatePfxBlob an index function for web_v20260715.SitesSlotsCertificate .spec.pfxBlob
+func indexWebSitesSlotsCertificatePfxBlob(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesSlotsCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PfxBlob == nil {
+		return nil
+	}
+	return obj.Spec.PfxBlob.Index()
+}
+
 // indexWebSitesSlotsConfigLogsApplicationLogsAzureBlobStorageSasUrl an index function for web_v20260715.SitesSlotsConfigLogs .spec.applicationLogs.azureBlobStorage.sasUrl
 func indexWebSitesSlotsConfigLogsApplicationLogsAzureBlobStorageSasUrl(rawObj client.Object) []string {
 	obj, ok := rawObj.(*web_v20260715.SitesSlotsConfigLogs)
@@ -6858,6 +7076,24 @@ func indexWebSitesSlotsSitecontainerPasswordSecret(rawObj client.Object) []strin
 	return obj.Spec.PasswordSecret.Index()
 }
 
+// indexWebSitesSlotsSourcecontrolPassword an index function for web_v20260715.SitesSlotsSourcecontrol .spec.gitHubActionConfiguration.containerConfiguration.password
+func indexWebSitesSlotsSourcecontrolPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.SitesSlotsSourcecontrol)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.GitHubActionConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.GitHubActionConfiguration.ContainerConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.GitHubActionConfiguration.ContainerConfiguration.Password == nil {
+		return nil
+	}
+	return obj.Spec.GitHubActionConfiguration.ContainerConfiguration.Password.Index()
+}
+
 // indexWebStaticSiteRepositoryToken an index function for web_v20260715.StaticSite .spec.repositoryToken
 func indexWebStaticSiteRepositoryToken(rawObj client.Object) []string {
 	obj, ok := rawObj.(*web_v20260715.StaticSite)
@@ -6868,6 +7104,18 @@ func indexWebStaticSiteRepositoryToken(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.RepositoryToken.Index()
+}
+
+// indexWebStaticSitesBasicAuthPassword an index function for web_v20260715.StaticSitesBasicAuth .spec.password
+func indexWebStaticSitesBasicAuthPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*web_v20260715.StaticSitesBasicAuth)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Password == nil {
+		return nil
+	}
+	return obj.Spec.Password.Index()
 }
 
 // indexWebStaticSitesDatabaseConnectionConnectionString an index function for web_v20260715.StaticSitesDatabaseConnection .spec.connectionString

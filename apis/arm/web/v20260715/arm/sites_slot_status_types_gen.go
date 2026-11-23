@@ -38,15 +38,6 @@ type SitesSlot_STATUS struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// Extended Location.
-type ExtendedLocation_STATUS struct {
-	// Name: Name of extended location.
-	Name *string `json:"name,omitempty"`
-
-	// Type: Type of extended location.
-	Type *string `json:"type,omitempty"`
-}
-
 // Managed service identity.
 type ManagedServiceIdentity_STATUS struct {
 	// PrincipalId: Principal Id of managed service identity.

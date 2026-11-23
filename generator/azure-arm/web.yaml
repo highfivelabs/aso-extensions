@@ -161,6 +161,39 @@ groupModelConfiguration:
     HostingEnvironment:
       $exportAs: HostingEnvironment
       $supportedFrom: v0.1.0
+    # docs/plan.md f53: certificates of an app and of a slot (the PFX and
+    # its password from Secrets, as Certificate's), a slot's source control
+    # (sourcecontrols/web, as ASO's SitesSourcecontrol for an app), the
+    # gateway of an app's or slot's gateway-required virtual network
+    # integration (no DELETE: detach-on-delete), a static web app's basic
+    # authentication (basicAuth/default, no DELETE), App Service AI gateways
+    # and Kubernetes environments (App Service on Azure Arc). Not a plan's
+    # virtual network gateways and routes: serverfarms/{name}/
+    # virtualNetworkConnections/{vnet} is no resource.
+    Sites_Certificate:
+      $exportAs: SitesCertificate
+      $supportedFrom: v0.1.0
+    Sites_Slots_Certificate:
+      $exportAs: SitesSlotsCertificate
+      $supportedFrom: v0.1.0
+    Sites_Slots_Sourcecontrol:
+      $exportAs: SitesSlotsSourcecontrol
+      $supportedFrom: v0.1.0
+    Sites_VirtualNetworkConnections_Gateway:
+      $exportAs: SitesVirtualNetworkConnectionsGateway
+      $supportedFrom: v0.1.0
+    Sites_Slots_VirtualNetworkConnections_Gateway:
+      $exportAs: SitesSlotsVirtualNetworkConnectionsGateway
+      $supportedFrom: v0.1.0
+    StaticSites_BasicAuth:
+      $exportAs: StaticSitesBasicAuth
+      $supportedFrom: v0.1.0
+    AiGateway:
+      $exportAs: AiGateway
+      $supportedFrom: v0.1.0
+    KubeEnvironment:
+      $exportAs: KubeEnvironment
+      $supportedFrom: v0.1.0
     HostingEnvironments_Configurations_Networking:
       $exportAs: HostingEnvironmentsConfigurationNetworking
       $supportedFrom: v0.1.0
@@ -253,3 +286,14 @@ groupModelConfiguration:
     VirtualNetworkProfile:
       Id:
         $referenceType: arm # the virtual network, or the subnet, the environment is injected into (autolabel, reviewed)
+    KubeEnvironmentProperties:
+      AksResourceID:
+        $referenceType: arm # the AKS cluster of an App Service on Azure Arc environment
+    ContainerAppsConfiguration:
+      ControlPlaneSubnetResourceId:
+        $referenceType: arm # a subnet (autolabel, reviewed)
+      AppSubnetResourceId:
+        $referenceType: arm # a subnet (autolabel, reviewed)
+    StaticSiteBasicAuthPropertiesARMResourceProperties:
+      Password:
+        $importSecretMode: required # the static web app's basic authentication password: from a Secret

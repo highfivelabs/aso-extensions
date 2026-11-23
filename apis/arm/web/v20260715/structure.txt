@@ -4,6 +4,42 @@ github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715
 APIVersion: Enum (1 value)
 └── "2026-07-15"
 
+AiGateway: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (5 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "[a-zA-Z0-9_.()-]{0,79}$"
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (1 property)
+    │   └── AiGatewayId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
 Certificate: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (14 properties)
@@ -314,6 +350,115 @@ HostingEnvironmentsPrivateEndpointConnection: Resource
     │       └── "User"
     └── Type: *string
 
+KubeEnvironment: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (14 properties)
+│   ├── AksResourceReference: *genruntime.ResourceReference
+│   ├── AppLogsConfiguration: *Object (2 properties)
+│   │   ├── Destination: *string
+│   │   └── LogAnalyticsConfiguration: *Object (2 properties)
+│   │       ├── CustomerId: *string
+│   │       └── SharedKey: *genruntime.SecretReference
+│   ├── ArcConfiguration: *Object (7 properties)
+│   │   ├── ArtifactStorageAccessMode: *string
+│   │   ├── ArtifactStorageClassName: *string
+│   │   ├── ArtifactStorageMountPath: *string
+│   │   ├── ArtifactStorageNodeName: *string
+│   │   ├── ArtifactsStorageType: *Enum (2 values)
+│   │   │   ├── "LocalNode"
+│   │   │   └── "NetworkFileSystem"
+│   │   ├── FrontEndServiceConfiguration: *Object (1 property)
+│   │   │   └── Kind: *Enum (2 values)
+│   │   │       ├── "LoadBalancer"
+│   │   │       └── "NodePort"
+│   │   └── KubeConfig: *genruntime.SecretReference
+│   ├── AzureName: string
+│   ├── ContainerAppsConfiguration: *Object (6 properties)
+│   │   ├── AppSubnetResourceReference: *genruntime.ResourceReference
+│   │   ├── ControlPlaneSubnetResourceReference: *genruntime.ResourceReference
+│   │   ├── DaprAIInstrumentationKey: *string
+│   │   ├── DockerBridgeCidr: *string
+│   │   ├── PlatformReservedCidr: *string
+│   │   └── PlatformReservedDnsIP: *string
+│   ├── EnvironmentType: *string
+│   ├── ExtendedLocation: *Object (1 property)
+│   │   └── Name: *string
+│   ├── InternalLoadBalancerEnabled: *bool
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── StaticIp: *string
+│   └── Tags: map[string]string
+└── Status: Object (19 properties)
+    ├── AksResourceID: *string
+    ├── AppLogsConfiguration: *Object (2 properties)
+    │   ├── Destination: *string
+    │   └── LogAnalyticsConfiguration: *Object (1 property)
+    │       └── CustomerId: *string
+    ├── ArcConfiguration: *Object (6 properties)
+    │   ├── ArtifactStorageAccessMode: *string
+    │   ├── ArtifactStorageClassName: *string
+    │   ├── ArtifactStorageMountPath: *string
+    │   ├── ArtifactStorageNodeName: *string
+    │   ├── ArtifactsStorageType: *Enum (2 values)
+    │   │   ├── "LocalNode"
+    │   │   └── "NetworkFileSystem"
+    │   └── FrontEndServiceConfiguration: *Object (1 property)
+    │       └── Kind: *Enum (2 values)
+    │           ├── "LoadBalancer"
+    │           └── "NodePort"
+    ├── Conditions: conditions.Condition[]
+    ├── ContainerAppsConfiguration: *Object (6 properties)
+    │   ├── AppSubnetResourceId: *string
+    │   ├── ControlPlaneSubnetResourceId: *string
+    │   ├── DaprAIInstrumentationKey: *string
+    │   ├── DockerBridgeCidr: *string
+    │   ├── PlatformReservedCidr: *string
+    │   └── PlatformReservedDnsIP: *string
+    ├── DefaultDomain: *string
+    ├── DeploymentErrors: *string
+    ├── EnvironmentType: *string
+    ├── ExtendedLocation: *Object (2 properties)
+    │   ├── Name: *string
+    │   └── Type: *string
+    ├── Id: *string
+    ├── InternalLoadBalancerEnabled: *bool
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (10 values)
+    │   ├── "Canceled"
+    │   ├── "Failed"
+    │   ├── "InfrastructureSetupComplete"
+    │   ├── "InfrastructureSetupInProgress"
+    │   ├── "InitializationInProgress"
+    │   ├── "ScheduledForDelete"
+    │   ├── "Succeeded"
+    │   ├── "UpgradeFailed"
+    │   ├── "UpgradeRequested"
+    │   └── "Waiting"
+    ├── StaticIp: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
 SitesBasicPublishingCredentialsPolicyFtp: Resource
 ├── Owner: Site
 ├── Spec: Object (4 properties)
@@ -377,6 +522,84 @@ SitesBasicPublishingCredentialsPolicyScm: Resource
     │       ├── "ManagedIdentity"
     │       └── "User"
     └── Type: *string
+
+SitesCertificate: Resource
+├── Owner: Site
+├── Spec: Object (14 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[A-z][A-z0-9]*$"
+│   ├── CanonicalName: *string
+│   ├── DomainValidationMethod: *string
+│   ├── HostNames: string[]
+│   ├── KeyVaultReference: *genruntime.ResourceReference
+│   ├── KeyVaultSecretName: *string
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   ├── PfxBlob: *genruntime.SecretReference
+│   ├── ServerFarmReference: *genruntime.ResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (28 properties)
+    ├── CanonicalName: *string
+    ├── CerBlob: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DomainValidationMethod: *string
+    ├── ExpirationDate: *string
+    ├── FriendlyName: *string
+    ├── HostNames: string[]
+    ├── HostingEnvironmentProfile: *Object (3 properties)
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   └── Type: *string
+    ├── Id: *string
+    ├── IssueDate: *string
+    ├── Issuer: *string
+    ├── KeyVaultId: *string
+    ├── KeyVaultSecretName: *string
+    ├── KeyVaultSecretStatus: *Enum (11 values)
+    │   ├── "AzureServiceUnauthorizedToAccessKeyVault"
+    │   ├── "CertificateOrderFailed"
+    │   ├── "ExternalPrivateKey"
+    │   ├── "Initialized"
+    │   ├── "KeyVaultDoesNotExist"
+    │   ├── "KeyVaultSecretDoesNotExist"
+    │   ├── "OperationNotPermittedOnKeyVault"
+    │   ├── "Succeeded"
+    │   ├── "Unknown"
+    │   ├── "UnknownError"
+    │   └── "WaitingOnCertificateOrder"
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Password: *string
+    ├── PublicKeyHash: *string
+    ├── SelfLink: *string
+    ├── ServerFarmId: *string
+    ├── SiteName: *string
+    ├── SubjectName: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Thumbprint: *string
+    ├── Type: *string
+    └── Valid: *bool
 
 SitesConfigAuthSettingsV2: Resource
 ├── Owner: Site
@@ -2253,6 +2476,84 @@ SitesSlotsBasicPublishingCredentialsPolicyScm: Resource
     │       └── "User"
     └── Type: *string
 
+SitesSlotsCertificate: Resource
+├── Owner: SitesSlot
+├── Spec: Object (14 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[A-z][A-z0-9]*$"
+│   ├── CanonicalName: *string
+│   ├── DomainValidationMethod: *string
+│   ├── HostNames: string[]
+│   ├── KeyVaultReference: *genruntime.ResourceReference
+│   ├── KeyVaultSecretName: *string
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   ├── PfxBlob: *genruntime.SecretReference
+│   ├── ServerFarmReference: *genruntime.ResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (28 properties)
+    ├── CanonicalName: *string
+    ├── CerBlob: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DomainValidationMethod: *string
+    ├── ExpirationDate: *string
+    ├── FriendlyName: *string
+    ├── HostNames: string[]
+    ├── HostingEnvironmentProfile: *Object (3 properties)
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   └── Type: *string
+    ├── Id: *string
+    ├── IssueDate: *string
+    ├── Issuer: *string
+    ├── KeyVaultId: *string
+    ├── KeyVaultSecretName: *string
+    ├── KeyVaultSecretStatus: *Enum (11 values)
+    │   ├── "AzureServiceUnauthorizedToAccessKeyVault"
+    │   ├── "CertificateOrderFailed"
+    │   ├── "ExternalPrivateKey"
+    │   ├── "Initialized"
+    │   ├── "KeyVaultDoesNotExist"
+    │   ├── "KeyVaultSecretDoesNotExist"
+    │   ├── "OperationNotPermittedOnKeyVault"
+    │   ├── "Succeeded"
+    │   ├── "Unknown"
+    │   ├── "UnknownError"
+    │   └── "WaitingOnCertificateOrder"
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Password: *string
+    ├── PublicKeyHash: *string
+    ├── SelfLink: *string
+    ├── ServerFarmId: *string
+    ├── SiteName: *string
+    ├── SubjectName: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Thumbprint: *string
+    ├── Type: *string
+    └── Valid: *bool
+
 SitesSlotsConfigAuthSettingsV2: Resource
 ├── Owner: SitesSlot
 ├── Spec: Object (8 properties)
@@ -3107,6 +3408,69 @@ SitesSlotsSitecontainer: Resource
         ├── ReadOnly: *bool
         └── VolumeSubPath: *string
 
+SitesSlotsSourcecontrol: Resource
+├── Owner: SitesSlot
+├── Spec: Object (10 properties)
+│   ├── Branch: *string
+│   ├── DeploymentRollbackEnabled: *bool
+│   ├── GitHubActionConfiguration: *Object (4 properties)
+│   │   ├── CodeConfiguration: *Object (2 properties)
+│   │   │   ├── RuntimeStack: *string
+│   │   │   └── RuntimeVersion: *string
+│   │   ├── ContainerConfiguration: *Object (4 properties)
+│   │   │   ├── ImageName: *string
+│   │   │   ├── Password: *genruntime.SecretReference
+│   │   │   ├── ServerUrl: *string
+│   │   │   └── Username: *string
+│   │   ├── GenerateWorkflowFile: *bool
+│   │   └── IsLinux: *bool
+│   ├── IsGitHubAction: *bool
+│   ├── IsManualIntegration: *bool
+│   ├── IsMercurial: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── RepoUrl: *string
+└── Status: Object (13 properties)
+    ├── Branch: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DeploymentRollbackEnabled: *bool
+    ├── GitHubActionConfiguration: *Object (4 properties)
+    │   ├── CodeConfiguration: *Object (2 properties)
+    │   │   ├── RuntimeStack: *string
+    │   │   └── RuntimeVersion: *string
+    │   ├── ContainerConfiguration: *Object (3 properties)
+    │   │   ├── ImageName: *string
+    │   │   ├── ServerUrl: *string
+    │   │   └── Username: *string
+    │   ├── GenerateWorkflowFile: *bool
+    │   └── IsLinux: *bool
+    ├── Id: *string
+    ├── IsGitHubAction: *bool
+    ├── IsManualIntegration: *bool
+    ├── IsMercurial: *bool
+    ├── Kind: *string
+    ├── Name: *string
+    ├── RepoUrl: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 SitesSlotsVirtualNetworkConnection: Resource
 ├── Owner: SitesSlot
 ├── Spec: Object (8 properties)
@@ -3150,6 +3514,41 @@ SitesSlotsVirtualNetworkConnection: Resource
     ├── Type: *string
     └── VnetResourceId: *string
 
+SitesSlotsVirtualNetworkConnectionsGateway: Resource
+├── Owner: SitesSlotsVirtualNetworkConnection
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── VnetName: *string
+│   └── VpnPackageUri: *string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    ├── VnetName: *string
+    └── VpnPackageUri: *string
+
 SitesVirtualNetworkConnection: Resource
 ├── Owner: Site
 ├── Spec: Object (8 properties)
@@ -3192,6 +3591,41 @@ SitesVirtualNetworkConnection: Resource
     │       └── "User"
     ├── Type: *string
     └── VnetResourceId: *string
+
+SitesVirtualNetworkConnectionsGateway: Resource
+├── Owner: SitesVirtualNetworkConnection
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── VnetName: *string
+│   └── VpnPackageUri: *string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    ├── VnetName: *string
+    └── VpnPackageUri: *string
 
 StaticSite: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
@@ -3439,6 +3873,44 @@ StaticSite: Resource
         ├── Kind: *string
         ├── Name: *string
         └── Type: *string
+
+StaticSitesBasicAuth: Resource
+├── Owner: StaticSite
+├── Spec: Object (7 properties)
+│   ├── ApplicableEnvironmentsMode: *string
+│   ├── Environments: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   └── SecretUrl: *string
+└── Status: Object (10 properties)
+    ├── ApplicableEnvironmentsMode: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Environments: string[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SecretState: *string
+    ├── SecretUrl: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
 
 StaticSitesCustomDomain: Resource
 ├── Owner: StaticSite

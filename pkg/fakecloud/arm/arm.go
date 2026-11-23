@@ -70,8 +70,10 @@
 // schedule and cost names, a lab VM's network and subnet in its lab, its
 // sign-in, a secret's value), Azure Site Recovery (siterecovery.go: one
 // Azure fabric per region, a policy's snapshot frequency, what mappings,
-// replicated items and recovery plans name, a mapping for each item),
-// budgets
+// replicated items and recovery plans name, a mapping for each item), App
+// Service leftovers (webextras.go: a certificate's source, the gateway's
+// name, a static web app's basic authentication, a slot's repository, a
+// Kubernetes environment's custom location), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -559,6 +561,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkSiteRecovery(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkWebExtras(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

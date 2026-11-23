@@ -10,13 +10,16 @@ no_list: true
 
 | Resource                                        | ARM Version | CRD Version | Supported From | Sample |
 |-------------------------------------------------|-------------|-------------|----------------|--------|
+| AiGateway                                       | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | Certificate                                     | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | HostingEnvironment                              | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | HostingEnvironmentsConfigurationCustomDnsSuffix | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | HostingEnvironmentsConfigurationNetworking      | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | HostingEnvironmentsPrivateEndpointConnection    | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| KubeEnvironment                                 | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesBasicPublishingCredentialsPolicyFtp        | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesBasicPublishingCredentialsPolicyScm        | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesCertificate                                | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesConfigAuthSettingsV2                       | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesConfigLogs                                 | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesConfigSlotConfigNames                      | 2026-07-15  | v20260715   | v0.1.0         | -      |
@@ -32,6 +35,7 @@ no_list: true
 | SitesSlot                                       | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesSlotsBasicPublishingCredentialsPolicyFtp   | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesSlotsBasicPublishingCredentialsPolicyScm   | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsCertificate                           | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesSlotsConfigAuthSettingsV2                  | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesSlotsConfigLogs                            | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesSlotsDomainOwnershipIdentifier             | 2026-07-15  | v20260715   | v0.1.0         | -      |
@@ -43,9 +47,13 @@ no_list: true
 | SitesSlotsPrivateEndpointConnection             | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesSlotsPublicCertificate                     | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesSlotsSitecontainer                         | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsSourcecontrol                         | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesSlotsVirtualNetworkConnection              | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesSlotsVirtualNetworkConnectionsGateway      | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | SitesVirtualNetworkConnection                   | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| SitesVirtualNetworkConnectionsGateway           | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | StaticSite                                      | 2026-07-15  | v20260715   | v0.1.0         | -      |
+| StaticSitesBasicAuth                            | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | StaticSitesCustomDomain                         | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | StaticSitesDatabaseConnection                   | 2026-07-15  | v20260715   | v0.1.0         | -      |
 | StaticSitesLinkedBackend                        | 2026-07-15  | v20260715   | v0.1.0         | -      |

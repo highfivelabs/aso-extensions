@@ -667,6 +667,19 @@ upstream's); the catalog's chart tests do that.
   replication, recovery points, health), failover and the other POST
   actions, the mobility agent, the on-premises scenarios beyond the generic
   resource, and the error codes.
+- App Service leftovers (`sites/*/certificates`, `virtualNetworkConnections/*/gateways`,
+  `staticSites/*/basicAuth`, `sites/*/slots/*/sourcecontrols/web`,
+  `kubeEnvironments`, 2026-07-15; `pkg/fakecloud/arm/webextras.go`): an
+  app's or slot's certificate comes from a PFX with its password, a Key
+  Vault secret, or a host name (400); an integration's gateway is named
+  `primary` (400); a static web app's basic authentication is named
+  `default`, is refused on the Free plan, names its scope (and the
+  environments for `SpecifiedEnvironments`) and has a password or secret
+  URL (400); a slot's source control names its repository (400); a
+  Kubernetes environment names a custom location (400) that exists (404).
+  Not modelled: certificates read or issued, the VPN package, basic
+  authentication taking effect, deployments, the Arc cluster, AI gateways,
+  and the error codes.
 - Microsoft Foundry managed networks and outbound rules
   (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
   `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`

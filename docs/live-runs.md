@@ -376,6 +376,7 @@ ledger has a row for it.
 | 2026-11-23 | `TestLiveVaultSettings` | `VaultsBackupStorageConfig`, `VaultsBackupConfig` (and `Vault`) | none: an empty vault (free while it protects nothing); soft delete left Enabled, not AlwaysON; skips unless `Microsoft.RecoveryServices` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveVaultSettings"` |
 | 2026-11-23 | `TestLiveDevTestLab` | `Lab`, `LabsSchedule`, `LabsNotificationChannel`, `LabsCost` | none: a lab with no VM (DevTest Labs bills what a lab runs; it makes a storage account and a Key Vault beside the lab in the live group, storage cents, deleted with it); up to half an hour to make and delete; skips unless `Microsoft.DevTestLab` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveDevTestLab"` |
 | 2026-11-23 | `TestLiveSiteRecovery` | `VaultsReplicationFabric`, `VaultsReplicationPolicy`, `VaultsReplicationAlertSetting` (and `Vault`) | none: an empty vault with an Azure fabric for the live region and an A2A policy (free: nothing is replicated); skips unless `Microsoft.RecoveryServices` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSiteRecovery"` |
+| 2026-11-23 | `TestLiveStaticSiteBasicAuth` | `StaticSitesBasicAuth` (and `StaticSite`) | none: a Standard static web app with no content in westus2 (Standard bills per app-month, prorated: cents for a run); its password made per run | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveStaticSiteBasicAuth"` |
 
 All of them in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
 TESTS="TestLiveAddressPrefixSet TestLiveRuleCollectionGroupDraft
@@ -383,7 +384,7 @@ TestLiveConnectionMonitor TestLiveSummaryRule TestLiveSentinelWorkspace
 TestLiveSiteContainers TestLiveSqlServerExtras TestLiveRestorePoints
 TestLiveCosmosPostgres TestLiveCosmosFleet TestLiveStorageDataShare
 TestLiveSandboxGroup TestLiveVaultSettings TestLiveDevTestLab
-TestLiveSiteRecovery"`.
+TestLiveSiteRecovery TestLiveStaticSiteBasicAuth"`.
 
 Written for the subscription (above, "The subscription roles"); each skips
 until the builder assigns the roles of `hack/live/roles/`:

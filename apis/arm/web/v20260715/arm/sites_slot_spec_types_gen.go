@@ -45,12 +45,6 @@ func (slot *SitesSlot_Spec) GetType() string {
 	return "Microsoft.Web/sites/slots"
 }
 
-// Extended Location.
-type ExtendedLocation struct {
-	// Name: Name of extended location.
-	Name *string `json:"name,omitempty"`
-}
-
 // Managed service identity.
 type ManagedServiceIdentity struct {
 	// Type: Type of managed service identity.
