@@ -11,5 +11,6 @@ no_list: true
 | Resource                          | ARM Version | CRD Version | Supported From | Sample |
 |-----------------------------------|-------------|-------------|----------------|--------|
 | ServersDatabasesGeoBackupPolicy   | 2025-01-01  | v20250101   | v0.1.0         | -      |
+| ServersPrivateEndpointConnection  | 2025-01-01  | v20250101   | v0.1.0         | -      |
 | ServersSqlVulnerabilityAssessment | 2025-01-01  | v20250101   | v0.1.0         | -      |
 

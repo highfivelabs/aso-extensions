@@ -21,7 +21,15 @@ typeFilters:
     group: compute
     version: v20260303
     because: Azure Compute Gallery (galleries, image definitions and versions, VM applications and versions), the newest stable GalleryRP version
+  - action: include
+    group: compute
+    version: v20260302
+    because: a disk access's private endpoint connections (docs/plan.md f37), the newest stable DiskRP version; owned by ASO's DiskAccess (2024-03-02)
 groupModelConfiguration:
+  2026-03-02:
+    DiskAccesses_PrivateEndpointConnection:
+      $exportAs: DiskAccessesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
   # Azure Compute Gallery, which ASO has none of (2026-11-23).
   2026-03-03:
     Gallery:

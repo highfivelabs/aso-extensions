@@ -9,6 +9,7 @@ rules:
   - app.azure.hfl.dev
   - authorization.azure.hfl.dev
   - automation.azure.hfl.dev
+  - cache.azure.hfl.dev
   - cdn.azure.hfl.dev
   - cognitiveservices.azure.hfl.dev
   - compute.azure.hfl.dev
@@ -44,6 +45,7 @@ rules:
   - app.azure.hfl.dev
   - authorization.azure.hfl.dev
   - automation.azure.hfl.dev
+  - cache.azure.hfl.dev
   - cdn.azure.hfl.dev
   - cognitiveservices.azure.hfl.dev
   - compute.azure.hfl.dev

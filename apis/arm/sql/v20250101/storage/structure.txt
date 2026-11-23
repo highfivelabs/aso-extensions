@@ -34,6 +34,49 @@ ServersDatabasesGeoBackupPolicy: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+ServersPrivateEndpointConnection: Resource
+├── Owner: sql/v20250101.Server
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PrivateEndpoint: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+│   │   ├── Description: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Status: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── GroupIds: string[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+    │   ├── ActionsRequired: *string
+    │   ├── Description: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Status: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 ServersSqlVulnerabilityAssessment: Resource
 ├── Owner: sql/v20250101.Server
 ├── Spec: Object (5 properties)

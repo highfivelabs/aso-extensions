@@ -41,6 +41,62 @@ ServersDatabasesGeoBackupPolicy: Resource
     │       └── "User"
     └── Type: *string
 
+ServersPrivateEndpointConnection: Resource
+├── Owner: Server
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PrivateEndpoint: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   └── PrivateLinkServiceConnectionState: *Object (2 properties)
+│       ├── Description: *string
+│       └── Status: *Enum (4 values)
+│           ├── "Approved"
+│           ├── "Disconnected"
+│           ├── "Pending"
+│           └── "Rejected"
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── GroupIds: string[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (1 property)
+    │   └── Id: *string
+    ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+    │   ├── ActionsRequired: *Enum (1 value)
+    │   │   └── "None"
+    │   ├── Description: *string
+    │   └── Status: *Enum (4 values)
+    │       ├── "Approved"
+    │       ├── "Disconnected"
+    │       ├── "Pending"
+    │       └── "Rejected"
+    ├── ProvisioningState: *Enum (5 values)
+    │   ├── "Approving"
+    │   ├── "Dropping"
+    │   ├── "Failed"
+    │   ├── "Ready"
+    │   └── "Rejecting"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 ServersSqlVulnerabilityAssessment: Resource
 ├── Owner: Server
 ├── Spec: Object (3 properties)

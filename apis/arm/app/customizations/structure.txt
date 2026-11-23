@@ -11,6 +11,8 @@ ConnectedEnvironmentsStorageExtension: Object (0 properties)
 
 ContainerAppExtension: Object (0 properties)
 
+ContainerAppsPrivateEndpointConnectionExtension: Object (0 properties)
+
 ContainerAppsSourceControlExtension: Object (0 properties)
 
 ManagedEnvironmentExtension: Object (0 properties)

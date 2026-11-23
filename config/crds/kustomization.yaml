@@ -7,6 +7,7 @@ resources:
 - app.azure.hfl.dev_connectedenvironmentsdaprcomponents.yaml
 - app.azure.hfl.dev_connectedenvironmentsstorages.yaml
 - app.azure.hfl.dev_containerapps.yaml
+- app.azure.hfl.dev_containerappsprivateendpointconnections.yaml
 - app.azure.hfl.dev_containerappssourcecontrols.yaml
 - app.azure.hfl.dev_managedenvironments.yaml
 - app.azure.hfl.dev_managedenvironmentscertificates.yaml
@@ -56,6 +57,7 @@ resources:
 - automation.azure.hfl.dev_automationaccountsvariables.yaml
 - automation.azure.hfl.dev_automationaccountswatchers.yaml
 - automation.azure.hfl.dev_automationaccountswebhooks.yaml
+- cache.azure.hfl.dev_redisprivateendpointconnections.yaml
 - cdn.azure.hfl.dev_cdnwebapplicationfirewallpolicies.yaml
 - cognitiveservices.azure.hfl.dev_accountscapabilityhosts.yaml
 - cognitiveservices.azure.hfl.dev_accountscommitmentplans.yaml
@@ -70,6 +72,7 @@ resources:
 - cognitiveservices.azure.hfl.dev_accountsraipolicies.yaml
 - cognitiveservices.azure.hfl.dev_commitmentplans.yaml
 - cognitiveservices.azure.hfl.dev_commitmentplansaccountassociations.yaml
+- compute.azure.hfl.dev_diskaccessesprivateendpointconnections.yaml
 - compute.azure.hfl.dev_galleries.yaml
 - compute.azure.hfl.dev_galleriesapplications.yaml
 - compute.azure.hfl.dev_galleriesapplicationsversions.yaml
@@ -306,6 +309,7 @@ resources:
 - securityinsights.azure.hfl.dev_workspacemanagergroups.yaml
 - securityinsights.azure.hfl.dev_workspacemanagermembers.yaml
 - sql.azure.hfl.dev_serversdatabasesgeobackuppolicies.yaml
+- sql.azure.hfl.dev_serversprivateendpointconnections.yaml
 - sql.azure.hfl.dev_serverssqlvulnerabilityassessments.yaml
 - sql.azure.hfl.dev_users.yaml
 - storage.azure.hfl.dev_storageaccountsencryptionscopes.yaml

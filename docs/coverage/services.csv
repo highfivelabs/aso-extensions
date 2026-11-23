@@ -18,7 +18,7 @@ Microsoft.AlertsManagement,5,2,0,69,32,0,37,46.4,0.0,53.6
 Microsoft.AnalysisServices,1,0,0,18,0,0,18,0.0,0.0,100.0
 Microsoft.ApiCenter,8,0,0,45,0,0,45,0.0,0.0,100.0
 Microsoft.ApiManagement,112,26,0,1078,270,0,808,25.0,0.0,75.0
-Microsoft.App,30,4,16,616,312,184,120,50.6,29.9,19.5
+Microsoft.App,30,4,17,616,312,187,117,50.6,30.4,19.0
 Microsoft.AppComplianceAutomation,4,0,0,27,0,0,27,0.0,0.0,100.0
 Microsoft.AppConfiguration,5,4,0,27,24,0,3,88.9,0.0,11.1
 Microsoft.AppLink,2,0,0,16,0,0,16,0.0,0.0,100.0
@@ -48,7 +48,7 @@ Microsoft.BillingBenefits,8,0,0,259,0,0,259,0.0,0.0,100.0
 Microsoft.BillingTrust,2,0,0,9,0,0,9,0.0,0.0,100.0
 Microsoft.Blueprint,4,0,0,64,0,0,64,0.0,0.0,100.0
 Microsoft.BotService,4,0,0,62,0,0,62,0.0,0.0,100.0
-Microsoft.Cache,12,9,0,97,78,0,19,80.4,0.0,19.6
+Microsoft.Cache,12,9,1,97,78,3,16,80.4,3.1,16.5
 Microsoft.Capacity,2,0,0,23,0,0,23,0.0,0.0,100.0
 Microsoft.Cdn,18,11,1,250,131,39,80,52.4,15.6,32.0
 Microsoft.CertificateRegistration,2,0,0,16,0,0,16,0.0,0.0,100.0
@@ -58,7 +58,7 @@ Microsoft.CodeSigning,2,0,0,10,0,0,10,0.0,0.0,100.0
 Microsoft.CognitiveServices,26,3,13,338,81,102,155,24.0,30.2,45.9
 Microsoft.Communication,7,4,0,25,15,0,10,60.0,0.0,40.0
 Microsoft.Community,1,0,0,22,0,0,22,0.0,0.0,100.0
-Microsoft.Compute,41,12,10,1458,554,244,660,38.0,16.7,45.3
+Microsoft.Compute,41,12,11,1458,554,247,657,38.0,16.9,45.1
 Microsoft.Compute.Admin,4,0,0,27,0,0,27,0.0,0.0,100.0
 Microsoft.ComputeBulkActions,1,0,0,218,0,0,218,0.0,0.0,100.0
 Microsoft.ComputeLimit,5,0,0,5,0,0,5,0.0,0.0,100.0
@@ -240,7 +240,7 @@ Microsoft.SignalRService,15,4,0,123,50,0,73,40.7,0.0,59.3
 Microsoft.SoftwarePlan,1,0,0,2,0,0,2,0.0,0.0,100.0
 Microsoft.Solutions,3,0,0,64,0,0,64,0.0,0.0,100.0
 Microsoft.Sovereign,3,0,0,52,0,0,52,0.0,0.0,100.0
-Microsoft.Sql,93,28,2,539,240,2,297,44.5,0.4,55.1
+Microsoft.Sql,93,28,3,539,240,5,294,44.5,0.9,54.5
 Microsoft.SqlVirtualMachine,3,0,0,116,0,0,116,0.0,0.0,100.0
 Microsoft.StandbyPool,2,0,0,20,0,0,20,0.0,0.0,100.0
 Microsoft.Storage,23,10,6,336,212,58,66,63.1,17.3,19.6

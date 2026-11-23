@@ -167,6 +167,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asoweb.ServerFarm{}, Name: "aso_web_serverfarm"},
 		{Obj: &asosql.ServersElasticPool{}, Name: "aso_sql_serverselasticpool"},
 		{Obj: &asodisk.Disk{}, Name: "aso_compute_disk"},
+		{Obj: &asodisk.DiskAccess{}, Name: "aso_compute_diskaccess"},
 		{Obj: &asocache.Redis{}, Name: "aso_cache_redis"},
 		{Obj: &asoasg.ApplicationSecurityGroup{}, Name: "aso_network_applicationsecuritygroup"},
 		{Obj: &asowatcher.NetworkWatcher{}, Name: "aso_network_networkwatcher"},

@@ -50,7 +50,7 @@ rules:
   resources: ["dnszones", "privatednszones", "azurefirewalls", "bastionhosts", "ddosprotectionplans", "firewallpolicies", "loadbalancers", "natgateways", "networkinterfaces", "networksecuritygroups", "privateendpoints", "publicipaddresses", "routetables", "virtualnetworks", "dnsresolvers", "dnsforwardingrulesets", "firewallpoliciesrulecollectiongroups", "applicationsecuritygroups", "networkwatchers"]
   verbs: ["get", "list", "watch"]
 - apiGroups: ["compute.azure.com"]
-  resources: ["virtualmachines", "disks"]
+  resources: ["virtualmachines", "disks", "diskaccesses"]
   verbs: ["get", "list", "watch"]
 - apiGroups: ["containerservice.azure.com"]
   resources: ["managedclusters", "fleets"]

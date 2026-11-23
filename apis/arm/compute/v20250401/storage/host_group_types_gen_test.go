@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	storage "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260303/storage"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260302/storage"
 	"github.com/kr/pretty"
 	"github.com/kylelemons/godebug/diff"
 	"github.com/leanovate/gopter"

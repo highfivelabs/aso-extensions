@@ -15,6 +15,7 @@ no_list: true
 | ConnectedEnvironmentsDaprComponent           | 2026-01-01         | v20260101        | v0.1.0         | -      |
 | ConnectedEnvironmentsStorage                 | 2026-01-01         | v20260101        | v0.1.0         | -      |
 | ContainerApp                                 | 2026-07-01         | v20260701        | v0.1.0         | -      |
+| ContainerAppsPrivateEndpointConnection       | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | ContainerAppsSourceControl                   | 2026-01-01         | v20260101        | v0.1.0         | -      |
 | ManagedEnvironment                           | 2025-10-02-preview | v20251002preview | v0.1.0         | -      |
 | ManagedEnvironmentsCertificate               | 2025-01-01         | v20250101        | v0.1.0         | -      |

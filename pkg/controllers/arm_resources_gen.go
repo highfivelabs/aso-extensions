@@ -33,6 +33,9 @@ import (
 	automation_customizations "github.com/highfivelabs/aso-extensions/apis/arm/automation/customizations"
 	automation_v20241023 "github.com/highfivelabs/aso-extensions/apis/arm/automation/v20241023"
 	automation_v20241023s "github.com/highfivelabs/aso-extensions/apis/arm/automation/v20241023/storage"
+	cache_customizations "github.com/highfivelabs/aso-extensions/apis/arm/cache/customizations"
+	cache_v20241101 "github.com/highfivelabs/aso-extensions/apis/arm/cache/v20241101"
+	cache_v20241101s "github.com/highfivelabs/aso-extensions/apis/arm/cache/v20241101/storage"
 	cdn_customizations "github.com/highfivelabs/aso-extensions/apis/arm/cdn/customizations"
 	cdn_v20261001 "github.com/highfivelabs/aso-extensions/apis/arm/cdn/v20261001"
 	cdn_v20261001s "github.com/highfivelabs/aso-extensions/apis/arm/cdn/v20261001/storage"
@@ -44,6 +47,8 @@ import (
 	compute_v20220301s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20220301/storage"
 	compute_v20250401 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401"
 	compute_v20250401s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401/storage"
+	compute_v20260302 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260302"
+	compute_v20260302s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260302/storage"
 	compute_v20260303 "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260303"
 	compute_v20260303s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260303/storage"
 	consumption_customizations "github.com/highfivelabs/aso-extensions/apis/arm/consumption/customizations"
@@ -484,6 +489,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(app_v20260701.ContainerAppsPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.ManagementLock)})
 	result = append(result, &registration.StorageType{Obj: new(authorization_v20200501.PrivateLinkAssociation)})
@@ -652,6 +658,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(cache_v20241101.RedisPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(cdn_v20261001.CdnWebApplicationFirewallPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsCapabilityHost)})
 	result = append(result, &registration.StorageType{Obj: new(cognitiveservices_v20250601.AccountsCommitmentPlan)})
@@ -846,6 +853,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(compute_v20260302.DiskAccessesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesApplication)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesApplicationsVersion)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.GalleriesImage)})
@@ -1695,6 +1703,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.WorkspaceManagerGroup)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.WorkspaceManagerMember)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersDatabasesGeoBackupPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)})
 	result = append(result, &registration.StorageType{Obj: new(storage_v20260601.StorageAccountsInventoryPolicy)})
@@ -1895,8 +1904,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(app_v20260101s.SessionPool)})
 	result = append(result, &registration.KnownType{Obj: new(app_v20260302p.ManagedEnvironmentsDaprSubscription)}, &registration.KnownType{Obj: new(app_v20260302p.ManagedEnvironmentsJavaComponent)})
 	result = append(result, &registration.KnownType{Obj: new(app_v20260302ps.ManagedEnvironmentsDaprSubscription)}, &registration.KnownType{Obj: new(app_v20260302ps.ManagedEnvironmentsJavaComponent)})
-	result = append(result, &registration.KnownType{Obj: new(app_v20260701.ContainerApp)}, &registration.KnownType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
-	result = append(result, &registration.KnownType{Obj: new(app_v20260701s.ContainerApp)}, &registration.KnownType{Obj: new(app_v20260701s.ManagedEnvironmentsDotNetComponent)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(app_v20260701.ContainerApp)},
+		&registration.KnownType{Obj: new(app_v20260701.ContainerAppsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(app_v20260701.ManagedEnvironmentsDotNetComponent)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(app_v20260701s.ContainerApp)},
+		&registration.KnownType{Obj: new(app_v20260701s.ContainerAppsPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(app_v20260701s.ManagedEnvironmentsDotNetComponent)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(authorization_v20200501.ManagementLock)},
@@ -1989,6 +2006,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsVariable)},
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsWatcher)},
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsWebhook)})
+	result = append(result, &registration.KnownType{Obj: new(cache_v20241101.RedisPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(cache_v20241101s.RedisPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(cdn_v20261001.CdnWebApplicationFirewallPolicy)})
 	result = append(result, &registration.KnownType{Obj: new(cdn_v20261001s.CdnWebApplicationFirewallPolicy)})
 	result = append(
@@ -2037,6 +2056,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(compute_v20250401s.ProximityPlacementGroup)},
 		&registration.KnownType{Obj: new(compute_v20250401s.SshPublicKey)},
 		&registration.KnownType{Obj: new(compute_v20250401s.VirtualMachine)})
+	result = append(result, &registration.KnownType{Obj: new(compute_v20260302.DiskAccessesPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(compute_v20260302s.DiskAccessesPrivateEndpointConnection)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(compute_v20260303.GalleriesApplication)},
@@ -2545,8 +2566,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(securityinsights_v20251001ps.WorkspaceManagerConfiguration)},
 		&registration.KnownType{Obj: new(securityinsights_v20251001ps.WorkspaceManagerGroup)},
 		&registration.KnownType{Obj: new(securityinsights_v20251001ps.WorkspaceManagerMember)})
-	result = append(result, &registration.KnownType{Obj: new(sql_v20250101.ServersDatabasesGeoBackupPolicy)}, &registration.KnownType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
-	result = append(result, &registration.KnownType{Obj: new(sql_v20250101s.ServersDatabasesGeoBackupPolicy)}, &registration.KnownType{Obj: new(sql_v20250101s.ServersSqlVulnerabilityAssessment)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(sql_v20250101.ServersDatabasesGeoBackupPolicy)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(sql_v20250101.ServersSqlVulnerabilityAssessment)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersDatabasesGeoBackupPolicy)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(sql_v20250101s.ServersSqlVulnerabilityAssessment)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(storage_v20260601.StorageAccountsEncryptionScope)},
@@ -2640,6 +2669,8 @@ func createScheme() *runtime.Scheme {
 	_ = authorization_v20260701s.AddToScheme(scheme)
 	_ = automation_v20241023.AddToScheme(scheme)
 	_ = automation_v20241023s.AddToScheme(scheme)
+	_ = cache_v20241101.AddToScheme(scheme)
+	_ = cache_v20241101s.AddToScheme(scheme)
 	_ = cdn_v20261001.AddToScheme(scheme)
 	_ = cdn_v20261001s.AddToScheme(scheme)
 	_ = cognitiveservices_v20250601.AddToScheme(scheme)
@@ -2648,6 +2679,8 @@ func createScheme() *runtime.Scheme {
 	_ = compute_v20220301s.AddToScheme(scheme)
 	_ = compute_v20250401.AddToScheme(scheme)
 	_ = compute_v20250401s.AddToScheme(scheme)
+	_ = compute_v20260302.AddToScheme(scheme)
+	_ = compute_v20260302s.AddToScheme(scheme)
 	_ = compute_v20260303.AddToScheme(scheme)
 	_ = compute_v20260303s.AddToScheme(scheme)
 	_ = consumption_v20260601.AddToScheme(scheme)
@@ -2779,6 +2812,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &app_customizations.ConnectedEnvironmentsDaprComponentExtension{})
 	result = append(result, &app_customizations.ConnectedEnvironmentsStorageExtension{})
 	result = append(result, &app_customizations.ContainerAppExtension{})
+	result = append(result, &app_customizations.ContainerAppsPrivateEndpointConnectionExtension{})
 	result = append(result, &app_customizations.ContainerAppsSourceControlExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentExtension{})
 	result = append(result, &app_customizations.ManagedEnvironmentsCertificateExtension{})
@@ -2828,6 +2862,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &automation_customizations.AutomationAccountsVariableExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsWatcherExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsWebhookExtension{})
+	result = append(result, &cache_customizations.RedisPrivateEndpointConnectionExtension{})
 	result = append(result, &cdn_customizations.CdnWebApplicationFirewallPolicyExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsCapabilityHostExtension{})
 	result = append(result, &cognitiveservices_customizations.AccountsCommitmentPlanExtension{})
@@ -2842,6 +2877,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &cognitiveservices_customizations.AccountsRaiPolicyExtension{})
 	result = append(result, &cognitiveservices_customizations.CommitmentPlanExtension{})
 	result = append(result, &cognitiveservices_customizations.CommitmentPlansAccountAssociationExtension{})
+	result = append(result, &compute_customizations.DiskAccessesPrivateEndpointConnectionExtension{})
 	result = append(result, &compute_customizations.GalleriesApplicationExtension{})
 	result = append(result, &compute_customizations.GalleriesApplicationsVersionExtension{})
 	result = append(result, &compute_customizations.GalleriesImageExtension{})
@@ -3073,6 +3109,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &securityinsights_customizations.WorkspaceManagerGroupExtension{})
 	result = append(result, &securityinsights_customizations.WorkspaceManagerMemberExtension{})
 	result = append(result, &sql_customizations.ServersDatabasesGeoBackupPolicyExtension{})
+	result = append(result, &sql_customizations.ServersPrivateEndpointConnectionExtension{})
 	result = append(result, &sql_customizations.ServersSqlVulnerabilityAssessmentExtension{})
 	result = append(result, &storage_customizations.StorageAccountsEncryptionScopeExtension{})
 	result = append(result, &storage_customizations.StorageAccountsInventoryPolicyExtension{})

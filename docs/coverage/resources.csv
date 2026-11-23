@@ -178,7 +178,7 @@ Microsoft.App,Microsoft.App/connectedEnvironments/daprComponents,13,,0,app.azure
 Microsoft.App,Microsoft.App/connectedEnvironments/storages,6,,0,app.azure.hfl.dev/ConnectedEnvironmentsStorage,6,0,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/containerApps,141,app.azure.com/ContainerApp,132,app.azure.hfl.dev/ContainerApp,9,0,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec; ours_api=2026-07-01
 Microsoft.App,Microsoft.App/containerApps/authConfigs,75,app.azure.com/AuthConfig,72,,0,3,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
-Microsoft.App,Microsoft.App/containerApps/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-07-01
+Microsoft.App,Microsoft.App/containerApps/privateEndpointConnections,4,,0,app.azure.hfl.dev/ContainerAppsPrivateEndpointConnection,3,1,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.App,Microsoft.App/containerApps/resiliencyPolicies,19,,0,,0,19,false,spec_api=2025-02-02-preview; spec-preview-only
 Microsoft.App,Microsoft.App/containerApps/sourcecontrols,17,,0,app.azure.hfl.dev/ContainerAppsSourceControl,17,0,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/jobs,80,app.azure.com/Job,80,,0,0,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
@@ -547,7 +547,7 @@ Microsoft.Cache,Microsoft.Cache/redis/accessPolicyAssignments,3,cache.azure.com/
 Microsoft.Cache,Microsoft.Cache/redis/firewallRules,2,cache.azure.com/RedisFirewallRule,2,,0,0,false,spec_api=2024-11-01; official_api=2024-11-01
 Microsoft.Cache,Microsoft.Cache/redis/linkedServers,3,cache.azure.com/RedisLinkedServer,3,,0,0,false,spec_api=2024-11-01; official_api=2024-11-01
 Microsoft.Cache,Microsoft.Cache/redis/patchSchedules,3,cache.azure.com/RedisPatchSchedule,3,,0,0,false,spec_api=2024-11-01; official_api=2024-11-01
-Microsoft.Cache,Microsoft.Cache/redis/privateEndpointConnections,4,,0,,0,4,false,spec_api=2024-11-01
+Microsoft.Cache,Microsoft.Cache/redis/privateEndpointConnections,4,,0,cache.azure.hfl.dev/RedisPrivateEndpointConnection,3,1,false,spec_api=2024-11-01; ours_api=2024-11-01
 Microsoft.Cache,Microsoft.Cache/redisEnterprise,17,cache.azure.com/RedisEnterprise,13,,0,4,false,spec_api=2026-09-01; official_api=2025-07-01; official-api-differs-from-spec
 Microsoft.Cache,Microsoft.Cache/redisEnterprise/databases,15,cache.azure.com/RedisEnterpriseDatabase,14,,0,1,false,spec_api=2026-09-01; official_api=2025-07-01; official-api-differs-from-spec
 Microsoft.Cache,Microsoft.Cache/redisEnterprise/databases/accessPolicyAssignments,2,cache.azure.com/RedisEnterpriseDatabaseAccessPolicyAssignment,2,,0,0,false,spec_api=2026-09-01; official_api=2025-07-01; official-api-differs-from-spec
@@ -627,7 +627,7 @@ Microsoft.Compute,Microsoft.Compute/capacityReservationGroups/capacityReservatio
 Microsoft.Compute,Microsoft.Compute/cloudServices,35,,0,,0,35,false,spec_api=2024-11-04
 Microsoft.Compute,Microsoft.Compute/cloudServices/updateDomains,0,,0,,0,0,false,spec_api=2024-11-04
 Microsoft.Compute,Microsoft.Compute/diskAccesses,5,compute.azure.com/DiskAccess,4,,0,1,false,spec_api=2026-03-02; official_api=2024-03-02; official-api-differs-from-spec
-Microsoft.Compute,Microsoft.Compute/diskAccesses/privateEndpointConnections,3,,0,,0,3,false,spec_api=2026-03-02
+Microsoft.Compute,Microsoft.Compute/diskAccesses/privateEndpointConnections,3,,0,compute.azure.hfl.dev/DiskAccessesPrivateEndpointConnection,3,0,false,spec_api=2026-03-02; ours_api=2026-03-02
 Microsoft.Compute,Microsoft.Compute/diskEncryptionSets,9,compute.azure.com/DiskEncryptionSet,9,,0,0,false,spec_api=2026-03-02; official_api=2024-03-02; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/disks,62,compute.azure.com/Disk,58,,0,4,false,spec_api=2026-03-02; official_api=2024-03-02; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/galleries,14,,0,compute.azure.hfl.dev/Gallery,13,1,false,spec_api=2026-03-03; ours_api=2026-03-03
@@ -2143,7 +2143,7 @@ Microsoft.Sql,Microsoft.Sql/servers/jobAgents/privateEndpoints,1,,0,,0,1,false,s
 Microsoft.Sql,Microsoft.Sql/servers/jobAgents/targetGroups,7,,0,,0,7,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/keys,2,sql.azure.com/ServersKey,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/outboundFirewallRules,0,sql.azure.com/ServersOutboundFirewallRule,0,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/privateEndpointConnections,3,,0,,0,3,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/privateEndpointConnections,3,,0,sql.azure.hfl.dev/ServersPrivateEndpointConnection,3,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/securityAlertPolicies,7,sql.azure.com/ServersSecurityAlertPolicy,7,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments,1,,0,sql.azure.hfl.dev/ServersSqlVulnerabilityAssessment,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines,2,,0,,0,2,false,spec_api=2025-01-01

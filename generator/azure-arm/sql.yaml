@@ -23,3 +23,11 @@ groupModelConfiguration:
     Servers_Databases_GeoBackupPolicy:
       $exportAs: ServersDatabasesGeoBackupPolicy
       $supportedFrom: v0.1.0
+    # A server's private endpoint connections (docs/plan.md f37): a private
+    # endpoint makes one; the kind approves or rejects it.
+    Servers_PrivateEndpointConnection:
+      $exportAs: ServersPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    PrivateEndpointProperty:
+      Id:
+        $referenceType: arm # the private endpoint's ARM ID (autolabel, reviewed)

@@ -43,4 +43,5 @@ resources:
 - web.azure.com_serverfarms.yaml
 - sql.azure.com_serverselasticpools.yaml
 - compute.azure.com_disks.yaml
+- compute.azure.com_diskaccesses.yaml
 - cache.azure.com_redis.yaml

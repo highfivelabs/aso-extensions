@@ -3,5 +3,7 @@ github.com/highfivelabs/aso-extensions/apis/arm/sql/customizations
 ------------------------------------------------------------------
 ServersDatabasesGeoBackupPolicyExtension: Object (0 properties)
 
+ServersPrivateEndpointConnectionExtension: Object (0 properties)
+
 ServersSqlVulnerabilityAssessmentExtension: Object (0 properties)
 

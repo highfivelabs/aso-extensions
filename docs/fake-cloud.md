@@ -546,6 +546,14 @@ upstream's); the catalog's chart tests do that.
   validation (a domain is Ready at once), builds, environments, the
   repository and deployment token, one backend per site, SKUs, and the
   error codes.
+- The private endpoint connections of an Azure SQL server, a container
+  app, a disk access and an Azure Cache for Redis cache
+  (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
+  a private endpoint makes a connection, so a PUT for one that does not
+  exist is 404 and a PUT changes one that does (approve, reject). Not
+  modelled: the private endpoint (a test adds the connection to the fake as
+  one would), the states Azure allows a move between (a rejected connection
+  cannot be approved again), and the error codes (the fake's own).
 - Log Analytics summary rules (`workspaces/summaryLogs`, 2025-07-01;
   `pkg/fakecloud/arm/loganalytics.go`): a rule's definition gives a query
   and a bin size of 20, 30, 60, 120, 180, 360, 720 or 1440 minutes (400).

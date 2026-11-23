@@ -1,0 +1,16 @@
+# Azure Cache for Redis children ASO does not export (Microsoft.Cache,
+# 2024-11-01, the version of ASO's own v20241101 Redis): a cache's private
+# endpoint connections (docs/plan.md f37). Owned by ASO's Redis.
+typeFilters:
+  - action: include
+    group: cache
+    version: v20241101
+    because: the version of ASO's Redis (v20241101)
+  - action: prune
+    group: cache
+    because: every other version is left alone
+groupModelConfiguration:
+  2024-11-01:
+    Redis_PrivateEndpointConnection:
+      $exportAs: RedisPrivateEndpointConnection
+      $supportedFrom: v0.1.0

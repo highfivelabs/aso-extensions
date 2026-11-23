@@ -141,6 +141,11 @@ groupModelConfiguration:
       Identity:
         $referenceType: arm+wellknown # permits `system` to use a system-assigned identity
   2026-07-01:
+    # A container app's private endpoint connections (docs/plan.md f37; the
+    # first stable version with them), owned by ASO's ContainerApp.
+    ContainerApps_PrivateEndpointConnection:
+      $exportAs: ContainerAppsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
     # Our ContainerApp beside ASO's (2025-01-01), for `kind` (2026-11-13).
     # Labels as ASO's app.yaml has them for 2025-01-01.
     ContainerApp:

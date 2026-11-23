@@ -64,6 +64,9 @@
 | ContainerAppRunningStatus_STATUS                                                 |           |                  |           |                  | v20260701 |
 | ContainerApp_STATUS                                                              |           |                  |           |                  | v20260701 |
 | ContainerApp_Spec                                                                |           |                  |           |                  | v20260701 |
+| ContainerAppsPrivateEndpointConnection                                           |           |                  |           |                  | v20260701 |
+| ContainerAppsPrivateEndpointConnection_STATUS                                    |           |                  |           |                  | v20260701 |
+| ContainerAppsPrivateEndpointConnection_Spec                                      |           |                  |           |                  | v20260701 |
 | ContainerAppsSourceControl                                                       |           |                  | v20260101 |                  |           |
 | ContainerAppsSourceControl_STATUS                                                |           |                  | v20260101 |                  |           |
 | ContainerAppsSourceControl_Spec                                                  |           |                  | v20260101 |                  |           |
@@ -268,15 +271,15 @@
 | OtlpConfiguration_STATUS                                                         |           | v20251002preview |           |                  |           |
 | PoolManagementType                                                               |           |                  | v20260101 |                  |           |
 | PoolManagementType_STATUS                                                        |           |                  | v20260101 |                  |           |
-| PrivateEndpointConnectionProperties                                              |           |                  | v20260101 |                  |           |
-| PrivateEndpointConnectionProperties_STATUS                                       |           |                  | v20260101 |                  |           |
-| PrivateEndpointConnectionProvisioningState_STATUS                                |           |                  | v20260101 |                  |           |
+| PrivateEndpointConnectionProperties                                              |           |                  | v20260101 |                  | v20260701 |
+| PrivateEndpointConnectionProperties_STATUS                                       |           |                  | v20260101 |                  | v20260701 |
+| PrivateEndpointConnectionProvisioningState_STATUS                                |           |                  | v20260101 |                  | v20260701 |
 | PrivateEndpointConnection_STATUS                                                 |           | v20251002preview |           |                  |           |
-| PrivateEndpointServiceConnectionStatus                                           |           |                  | v20260101 |                  |           |
-| PrivateEndpointServiceConnectionStatus_STATUS                                    |           |                  | v20260101 |                  |           |
-| PrivateEndpoint_STATUS                                                           |           |                  | v20260101 |                  |           |
-| PrivateLinkServiceConnectionState                                                |           |                  | v20260101 |                  |           |
-| PrivateLinkServiceConnectionState_STATUS                                         |           |                  | v20260101 |                  |           |
+| PrivateEndpointServiceConnectionStatus                                           |           |                  | v20260101 |                  | v20260701 |
+| PrivateEndpointServiceConnectionStatus_STATUS                                    |           |                  | v20260101 |                  | v20260701 |
+| PrivateEndpoint_STATUS                                                           |           |                  | v20260101 |                  | v20260701 |
+| PrivateLinkServiceConnectionState                                                |           |                  | v20260101 |                  | v20260701 |
+| PrivateLinkServiceConnectionState_STATUS                                         |           |                  | v20260101 |                  | v20260701 |
 | PublicNetworkAccess                                                              |           | v20251002preview |           |                  |           |
 | PublicNetworkAccess_STATUS                                                       |           | v20251002preview |           |                  |           |
 | QueueScaleRule                                                                   |           |                  |           |                  | v20260701 |

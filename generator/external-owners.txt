@@ -14,6 +14,7 @@ web/Site
 operationalinsights/Workspace
 containerregistry/Registry
 compute/VirtualMachine
+compute/DiskAccess
 keyvault/Vault
 containerservice/ManagedCluster
 containerservice/Fleet
@@ -30,4 +31,5 @@ cognitiveservices/Accounts_Project=Project
 storage/StorageAccount
 insights/Component
 sql/Server
+cache/Redis
 sql/Servers_Database=ServersDatabase
