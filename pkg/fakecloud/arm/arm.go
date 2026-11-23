@@ -41,7 +41,9 @@
 // the workspace manager (sentinel.go: settings named by kind, members,
 // groups and assignments that name what exists), Defender custom
 // assessments (assessments.go: GUID metadata keys, an assessment named after
-// metadata that exists), budgets
+// metadata that exists), Cosmos DB role definitions and assignments for the
+// Cassandra, Gremlin, MongoDB and Table APIs (cosmosrbac.go: GUID names, an
+// assignment's definition of the same API and account), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -461,6 +463,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkAssessments(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkCosmosRBAC(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

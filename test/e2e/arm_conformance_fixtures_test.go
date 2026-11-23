@@ -272,6 +272,22 @@ func init() {
 	f["PrivateLinksPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
 		c.add(c.owner + "/privateEndpointConnections/conformance")
 	}}
+	// A Cosmos DB role assignment names a role definition of its API in its
+	// account, which the fake checks exists, and is scoped to the account
+	// (cosmosrbac.go).
+	for kind, collection := range map[string]string{
+		"DatabaseAccountsCassandraRoleAssignment": "cassandraRoleDefinitions",
+		"DatabaseAccountsGremlinRoleAssignment":   "gremlinRoleDefinitions",
+		"DatabaseAccountsMongoMIRoleAssignment":   "mongoMIRoleDefinitions",
+		"DatabaseAccountsTableRoleAssignment":     "tableRoleDefinitions",
+	} {
+		f[kind] = conformanceFixture{
+			setup: func(c *conformanceContext) { c.add(c.owner + "/" + collection + "/" + conformanceRoleDefinition) },
+			spec: func(c *conformanceContext) map[string]any {
+				return map[string]any{"roleDefinitionId": c.owner + "/" + collection + "/" + conformanceRoleDefinition, "scope": c.owner, "principalId": conformancePrincipal}
+			},
+		}
+	}
 	f["WorkspacesSummaryLog"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"ruleDefinition": map[string]any{"query": "AppRequests | summarize count() by bin(TimeGenerated, 1h)", "binSize": int64(60), "destinationTable": "Hourly_CL"}}
 	}}
@@ -340,3 +356,7 @@ func init() {
 // conformanceAssessmentKey is the assessment metadata a conformance
 // Assessment reports on.
 const conformanceAssessmentKey = "3b5c7a1e-0d2f-4c3b-9a8e-6f1e2d3c4b5a"
+
+// conformanceRoleDefinition is the Cosmos DB role definition a conformance
+// role assignment names.
+const conformanceRoleDefinition = "6b4a2d3c-1e5f-4a7b-8c9d-0e1f2a3b4c5d"

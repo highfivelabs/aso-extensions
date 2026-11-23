@@ -524,6 +524,12 @@ upstream's); the catalog's chart tests do that.
   metadata, the secure score, an assessment showing or expiring, and the
   error codes. Defender private links and SQL vulnerability assessment
   settings and baseline rules are kept as sent (no scan runs).
+- Cosmos DB role definitions and assignments of the Cassandra, Gremlin,
+  MongoDB (Entra) and Table APIs (2026-03-15; `pkg/fakecloud/arm/cosmosrbac.go`):
+  names are GUIDs (400); an assignment names a definition of the same API
+  in the same account (400) that exists (404), scoped to the account or a
+  path under it (400). Not modelled: built-in definitions, the data plane
+  enforcing anything, the principal existing, and the error codes.
 - Log Analytics summary rules (`workspaces/summaryLogs`, 2025-07-01;
   `pkg/fakecloud/arm/loganalytics.go`): a rule's definition gives a query
   and a bin size of 20, 30, 60, 120, 180, 360, 720 or 1440 minutes (400).

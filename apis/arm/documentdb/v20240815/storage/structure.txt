@@ -839,3 +839,7 @@ DatabaseAccountsTablesThroughputSetting: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+augmentConversionForPermission: Interface
+
+augmentConversionForPermission_STATUS: Interface
+

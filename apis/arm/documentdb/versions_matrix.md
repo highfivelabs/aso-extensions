@@ -1,174 +1,219 @@
-| Type Definitions in package "documentdb"                                  | v20240815 |
-|---------------------------------------------------------------------------|-----------|
-| APIVersion                                                                | v20240815 |
-| AutoUpgradePolicyResource                                                 | v20240815 |
-| AutoUpgradePolicyResource_STATUS                                          | v20240815 |
-| AutoscaleSettings                                                         | v20240815 |
-| AutoscaleSettingsResource                                                 | v20240815 |
-| AutoscaleSettingsResource_STATUS                                          | v20240815 |
-| AutoscaleSettings_STATUS                                                  | v20240815 |
-| CassandraKeyspaceCreateUpdateProperties                                   | v20240815 |
-| CassandraKeyspaceGetProperties_Resource_STATUS                            | v20240815 |
-| CassandraKeyspaceGetProperties_STATUS                                     | v20240815 |
-| CassandraKeyspaceResource                                                 | v20240815 |
-| CassandraPartitionKey                                                     | v20240815 |
-| CassandraPartitionKey_STATUS                                              | v20240815 |
-| CassandraSchema                                                           | v20240815 |
-| CassandraSchema_STATUS                                                    | v20240815 |
-| CassandraTableCreateUpdateProperties                                      | v20240815 |
-| CassandraTableGetProperties_Resource_STATUS                               | v20240815 |
-| CassandraTableGetProperties_STATUS                                        | v20240815 |
-| CassandraTableResource                                                    | v20240815 |
-| ClientEncryptionKeyCreateUpdateProperties                                 | v20240815 |
-| ClientEncryptionKeyGetProperties_Resource_STATUS                          | v20240815 |
-| ClientEncryptionKeyGetProperties_STATUS                                   | v20240815 |
-| ClientEncryptionKeyResource                                               | v20240815 |
-| ClusterKey                                                                | v20240815 |
-| ClusterKey_STATUS                                                         | v20240815 |
-| Column                                                                    | v20240815 |
-| Column_STATUS                                                             | v20240815 |
-| CompositePath                                                             | v20240815 |
-| CompositePath_Order                                                       | v20240815 |
-| CompositePath_Order_STATUS                                                | v20240815 |
-| CompositePath_STATUS                                                      | v20240815 |
-| ConflictResolutionPolicy                                                  | v20240815 |
-| ConflictResolutionPolicy_Mode                                             | v20240815 |
-| ConflictResolutionPolicy_Mode_STATUS                                      | v20240815 |
-| ConflictResolutionPolicy_STATUS                                           | v20240815 |
-| ContainerPartitionKey                                                     | v20240815 |
-| ContainerPartitionKey_Kind                                                | v20240815 |
-| ContainerPartitionKey_Kind_STATUS                                         | v20240815 |
-| ContainerPartitionKey_STATUS                                              | v20240815 |
-| CreateMode                                                                | v20240815 |
-| CreateMode_STATUS                                                         | v20240815 |
-| CreateUpdateOptions                                                       | v20240815 |
-| DataTransferServiceResourceCreateUpdateProperties                         | v20240815 |
-| DataTransferServiceResourceCreateUpdateProperties_ServiceType             | v20240815 |
-| DataTransferServiceResourceProperties_STATUS                              | v20240815 |
-| DataTransferServiceResourceProperties_ServiceType_STATUS                  | v20240815 |
-| DatabaseAccountsCassandraKeyspace                                         | v20240815 |
-| DatabaseAccountsCassandraKeyspace_STATUS                                  | v20240815 |
-| DatabaseAccountsCassandraKeyspace_Spec                                    | v20240815 |
-| DatabaseAccountsCassandraKeyspacesTable                                   | v20240815 |
-| DatabaseAccountsCassandraKeyspacesTable_STATUS                            | v20240815 |
-| DatabaseAccountsCassandraKeyspacesTable_Spec                              | v20240815 |
-| DatabaseAccountsCassandraKeyspacesTablesThroughputSetting                 | v20240815 |
-| DatabaseAccountsCassandraKeyspacesTablesThroughputSetting_STATUS          | v20240815 |
-| DatabaseAccountsCassandraKeyspacesTablesThroughputSetting_Spec            | v20240815 |
-| DatabaseAccountsCassandraKeyspacesThroughputSetting                       | v20240815 |
-| DatabaseAccountsCassandraKeyspacesThroughputSetting_STATUS                | v20240815 |
-| DatabaseAccountsCassandraKeyspacesThroughputSetting_Spec                  | v20240815 |
-| DatabaseAccountsGremlinDatabase                                           | v20240815 |
-| DatabaseAccountsGremlinDatabase_STATUS                                    | v20240815 |
-| DatabaseAccountsGremlinDatabase_Spec                                      | v20240815 |
-| DatabaseAccountsGremlinDatabasesGraph                                     | v20240815 |
-| DatabaseAccountsGremlinDatabasesGraph_STATUS                              | v20240815 |
-| DatabaseAccountsGremlinDatabasesGraph_Spec                                | v20240815 |
-| DatabaseAccountsGremlinDatabasesGraphsThroughputSetting                   | v20240815 |
-| DatabaseAccountsGremlinDatabasesGraphsThroughputSetting_STATUS            | v20240815 |
-| DatabaseAccountsGremlinDatabasesGraphsThroughputSetting_Spec              | v20240815 |
-| DatabaseAccountsGremlinDatabasesThroughputSetting                         | v20240815 |
-| DatabaseAccountsGremlinDatabasesThroughputSetting_STATUS                  | v20240815 |
-| DatabaseAccountsGremlinDatabasesThroughputSetting_Spec                    | v20240815 |
-| DatabaseAccountsPrivateEndpointConnection                                 | v20240815 |
-| DatabaseAccountsPrivateEndpointConnection_STATUS                          | v20240815 |
-| DatabaseAccountsPrivateEndpointConnection_Spec                            | v20240815 |
-| DatabaseAccountsService                                                   | v20240815 |
-| DatabaseAccountsService_STATUS                                            | v20240815 |
-| DatabaseAccountsService_Spec                                              | v20240815 |
-| DatabaseAccountsSqlDatabasesClientEncryptionKey                           | v20240815 |
-| DatabaseAccountsSqlDatabasesClientEncryptionKey_STATUS                    | v20240815 |
-| DatabaseAccountsSqlDatabasesClientEncryptionKey_Spec                      | v20240815 |
-| DatabaseAccountsSqlRoleDefinition                                         | v20240815 |
-| DatabaseAccountsSqlRoleDefinition_STATUS                                  | v20240815 |
-| DatabaseAccountsSqlRoleDefinition_Spec                                    | v20240815 |
-| DatabaseAccountsTable                                                     | v20240815 |
-| DatabaseAccountsTable_STATUS                                              | v20240815 |
-| DatabaseAccountsTable_Spec                                                | v20240815 |
-| DatabaseAccountsTablesThroughputSetting                                   | v20240815 |
-| DatabaseAccountsTablesThroughputSetting_STATUS                            | v20240815 |
-| DatabaseAccountsTablesThroughputSetting_Spec                              | v20240815 |
-| DatabaseAccounts_CassandraKeyspaces_Tables_ThroughputSetting_Name_Spec    | v20240815 |
-| DatabaseAccounts_CassandraKeyspaces_ThroughputSetting_Name_Spec           | v20240815 |
-| DatabaseAccounts_GremlinDatabases_Graphs_ThroughputSetting_Name_Spec      | v20240815 |
-| DatabaseAccounts_GremlinDatabases_ThroughputSetting_Name_Spec             | v20240815 |
-| DatabaseAccounts_Tables_ThroughputSetting_Name_Spec                       | v20240815 |
-| ExcludedPath                                                              | v20240815 |
-| ExcludedPath_STATUS                                                       | v20240815 |
-| GraphAPIComputeRegionalServiceResource_STATUS                             | v20240815 |
-| GraphAPIComputeServiceResourceCreateUpdateProperties                      | v20240815 |
-| GraphAPIComputeServiceResourceCreateUpdateProperties_ServiceType          | v20240815 |
-| GraphAPIComputeServiceResourceProperties_STATUS                           | v20240815 |
-| GraphAPIComputeServiceResourceProperties_ServiceType_STATUS               | v20240815 |
-| GremlinDatabaseCreateUpdateProperties                                     | v20240815 |
-| GremlinDatabaseGetProperties_Resource_STATUS                              | v20240815 |
-| GremlinDatabaseGetProperties_STATUS                                       | v20240815 |
-| GremlinDatabaseResource                                                   | v20240815 |
-| GremlinGraphCreateUpdateProperties                                        | v20240815 |
-| GremlinGraphGetProperties_Resource_STATUS                                 | v20240815 |
-| GremlinGraphGetProperties_STATUS                                          | v20240815 |
-| GremlinGraphResource                                                      | v20240815 |
-| IncludedPath                                                              | v20240815 |
-| IncludedPath_STATUS                                                       | v20240815 |
-| Indexes                                                                   | v20240815 |
-| Indexes_DataType                                                          | v20240815 |
-| Indexes_DataType_STATUS                                                   | v20240815 |
-| Indexes_Kind                                                              | v20240815 |
-| Indexes_Kind_STATUS                                                       | v20240815 |
-| Indexes_STATUS                                                            | v20240815 |
-| IndexingPolicy                                                            | v20240815 |
-| IndexingPolicy_IndexingMode                                               | v20240815 |
-| IndexingPolicy_IndexingMode_STATUS                                        | v20240815 |
-| IndexingPolicy_STATUS                                                     | v20240815 |
-| KeyWrapMetadata                                                           | v20240815 |
-| KeyWrapMetadata_STATUS                                                    | v20240815 |
-| MaterializedViewsBuilderServiceResourceCreateUpdateProperties             | v20240815 |
-| MaterializedViewsBuilderServiceResourceCreateUpdateProperties_ServiceType | v20240815 |
-| MaterializedViewsBuilderServiceResourceProperties_STATUS                  | v20240815 |
-| MaterializedViewsBuilderServiceResourceProperties_ServiceType_STATUS      | v20240815 |
-| OptionsResource_STATUS                                                    | v20240815 |
-| Permission                                                                | v20240815 |
-| Permission_STATUS                                                         | v20240815 |
-| PrivateEndpointConnectionProperties                                       | v20240815 |
-| PrivateEndpointConnectionProperties_STATUS                                | v20240815 |
-| PrivateEndpointProperty                                                   | v20240815 |
-| PrivateEndpointProperty_STATUS                                            | v20240815 |
-| PrivateLinkServiceConnectionStateProperty                                 | v20240815 |
-| PrivateLinkServiceConnectionStateProperty_STATUS                          | v20240815 |
-| RegionalServiceResource_STATUS                                            | v20240815 |
-| RestoreParametersBase                                                     | v20240815 |
-| RestoreParametersBase_STATUS                                              | v20240815 |
-| ServiceResourceCreateUpdateProperties                                     | v20240815 |
-| ServiceResourceInstanceSize                                               | v20240815 |
-| ServiceResourceInstanceSize_STATUS                                        | v20240815 |
-| ServiceResourceProperties_STATUS                                          | v20240815 |
-| ServiceResourceStatus_STATUS                                              | v20240815 |
-| SpatialSpec                                                               | v20240815 |
-| SpatialSpec_STATUS                                                        | v20240815 |
-| SpatialType                                                               | v20240815 |
-| SpatialType_STATUS                                                        | v20240815 |
-| SqlDedicatedGatewayRegionalServiceResource_STATUS                         | v20240815 |
-| SqlDedicatedGatewayServiceResourceCreateUpdateProperties                  | v20240815 |
-| SqlDedicatedGatewayServiceResourceCreateUpdateProperties_ServiceType      | v20240815 |
-| SqlDedicatedGatewayServiceResourceProperties_STATUS                       | v20240815 |
-| SqlDedicatedGatewayServiceResourceProperties_ServiceType_STATUS           | v20240815 |
-| SqlDedicatedGatewayType                                                   | v20240815 |
-| SqlDedicatedGatewayType_STATUS                                            | v20240815 |
-| SqlRoleDefinitionResource                                                 | v20240815 |
-| SqlRoleDefinitionResource_STATUS                                          | v20240815 |
-| SqlRoleDefinitionResource_Type                                            | v20240815 |
-| SqlRoleDefinitionResource_Type_STATUS                                     | v20240815 |
-| TableCreateUpdateProperties                                               | v20240815 |
-| TableGetProperties_Resource_STATUS                                        | v20240815 |
-| TableGetProperties_STATUS                                                 | v20240815 |
-| TableResource                                                             | v20240815 |
-| ThroughputPolicyResource                                                  | v20240815 |
-| ThroughputPolicyResource_STATUS                                           | v20240815 |
-| ThroughputSettingsGetProperties_Resource_STATUS                           | v20240815 |
-| ThroughputSettingsGetProperties_STATUS                                    | v20240815 |
-| ThroughputSettingsResource                                                | v20240815 |
-| ThroughputSettingsUpdateProperties                                        | v20240815 |
-| UniqueKey                                                                 | v20240815 |
-| UniqueKeyPolicy                                                           | v20240815 |
-| UniqueKeyPolicy_STATUS                                                    | v20240815 |
-| UniqueKey_STATUS                                                          | v20240815 |
+| Type Definitions in package "documentdb"                                  | v20240815 | v20260315 |
+|---------------------------------------------------------------------------|-----------|-----------|
+| APIVersion                                                                | v20240815 | v20260315 |
+| AutoUpgradePolicyResource                                                 | v20240815 |           |
+| AutoUpgradePolicyResource_STATUS                                          | v20240815 |           |
+| AutoscaleSettings                                                         | v20240815 |           |
+| AutoscaleSettingsResource                                                 | v20240815 |           |
+| AutoscaleSettingsResource_STATUS                                          | v20240815 |           |
+| AutoscaleSettings_STATUS                                                  | v20240815 |           |
+| CassandraKeyspaceCreateUpdateProperties                                   | v20240815 |           |
+| CassandraKeyspaceGetProperties_Resource_STATUS                            | v20240815 |           |
+| CassandraKeyspaceGetProperties_STATUS                                     | v20240815 |           |
+| CassandraKeyspaceResource                                                 | v20240815 |           |
+| CassandraPartitionKey                                                     | v20240815 |           |
+| CassandraPartitionKey_STATUS                                              | v20240815 |           |
+| CassandraRoleAssignmentResourceProperties                                 |           | v20260315 |
+| CassandraRoleAssignmentResourceProperties_STATUS                          |           | v20260315 |
+| CassandraRoleDefinitionResourceProperties                                 |           | v20260315 |
+| CassandraRoleDefinitionResourceProperties_STATUS                          |           | v20260315 |
+| CassandraSchema                                                           | v20240815 |           |
+| CassandraSchema_STATUS                                                    | v20240815 |           |
+| CassandraTableCreateUpdateProperties                                      | v20240815 |           |
+| CassandraTableGetProperties_Resource_STATUS                               | v20240815 |           |
+| CassandraTableGetProperties_STATUS                                        | v20240815 |           |
+| CassandraTableResource                                                    | v20240815 |           |
+| ClientEncryptionKeyCreateUpdateProperties                                 | v20240815 |           |
+| ClientEncryptionKeyGetProperties_Resource_STATUS                          | v20240815 |           |
+| ClientEncryptionKeyGetProperties_STATUS                                   | v20240815 |           |
+| ClientEncryptionKeyResource                                               | v20240815 |           |
+| ClusterKey                                                                | v20240815 |           |
+| ClusterKey_STATUS                                                         | v20240815 |           |
+| Column                                                                    | v20240815 |           |
+| Column_STATUS                                                             | v20240815 |           |
+| CompositePath                                                             | v20240815 |           |
+| CompositePath_Order                                                       | v20240815 |           |
+| CompositePath_Order_STATUS                                                | v20240815 |           |
+| CompositePath_STATUS                                                      | v20240815 |           |
+| ConflictResolutionPolicy                                                  | v20240815 |           |
+| ConflictResolutionPolicy_Mode                                             | v20240815 |           |
+| ConflictResolutionPolicy_Mode_STATUS                                      | v20240815 |           |
+| ConflictResolutionPolicy_STATUS                                           | v20240815 |           |
+| ContainerPartitionKey                                                     | v20240815 |           |
+| ContainerPartitionKey_Kind                                                | v20240815 |           |
+| ContainerPartitionKey_Kind_STATUS                                         | v20240815 |           |
+| ContainerPartitionKey_STATUS                                              | v20240815 |           |
+| CreateMode                                                                | v20240815 |           |
+| CreateMode_STATUS                                                         | v20240815 |           |
+| CreateUpdateOptions                                                       | v20240815 |           |
+| DataTransferServiceResourceCreateUpdateProperties                         | v20240815 |           |
+| DataTransferServiceResourceCreateUpdateProperties_ServiceType             | v20240815 |           |
+| DataTransferServiceResourceProperties_STATUS                              | v20240815 |           |
+| DataTransferServiceResourceProperties_ServiceType_STATUS                  | v20240815 |           |
+| DatabaseAccountsCassandraKeyspace                                         | v20240815 |           |
+| DatabaseAccountsCassandraKeyspace_STATUS                                  | v20240815 |           |
+| DatabaseAccountsCassandraKeyspace_Spec                                    | v20240815 |           |
+| DatabaseAccountsCassandraKeyspacesTable                                   | v20240815 |           |
+| DatabaseAccountsCassandraKeyspacesTable_STATUS                            | v20240815 |           |
+| DatabaseAccountsCassandraKeyspacesTable_Spec                              | v20240815 |           |
+| DatabaseAccountsCassandraKeyspacesTablesThroughputSetting                 | v20240815 |           |
+| DatabaseAccountsCassandraKeyspacesTablesThroughputSetting_STATUS          | v20240815 |           |
+| DatabaseAccountsCassandraKeyspacesTablesThroughputSetting_Spec            | v20240815 |           |
+| DatabaseAccountsCassandraKeyspacesThroughputSetting                       | v20240815 |           |
+| DatabaseAccountsCassandraKeyspacesThroughputSetting_STATUS                | v20240815 |           |
+| DatabaseAccountsCassandraKeyspacesThroughputSetting_Spec                  | v20240815 |           |
+| DatabaseAccountsCassandraRoleAssignment                                   |           | v20260315 |
+| DatabaseAccountsCassandraRoleAssignment_STATUS                            |           | v20260315 |
+| DatabaseAccountsCassandraRoleAssignment_Spec                              |           | v20260315 |
+| DatabaseAccountsCassandraRoleDefinition                                   |           | v20260315 |
+| DatabaseAccountsCassandraRoleDefinition_STATUS                            |           | v20260315 |
+| DatabaseAccountsCassandraRoleDefinition_Spec                              |           | v20260315 |
+| DatabaseAccountsGremlinDatabase                                           | v20240815 |           |
+| DatabaseAccountsGremlinDatabase_STATUS                                    | v20240815 |           |
+| DatabaseAccountsGremlinDatabase_Spec                                      | v20240815 |           |
+| DatabaseAccountsGremlinDatabasesGraph                                     | v20240815 |           |
+| DatabaseAccountsGremlinDatabasesGraph_STATUS                              | v20240815 |           |
+| DatabaseAccountsGremlinDatabasesGraph_Spec                                | v20240815 |           |
+| DatabaseAccountsGremlinDatabasesGraphsThroughputSetting                   | v20240815 |           |
+| DatabaseAccountsGremlinDatabasesGraphsThroughputSetting_STATUS            | v20240815 |           |
+| DatabaseAccountsGremlinDatabasesGraphsThroughputSetting_Spec              | v20240815 |           |
+| DatabaseAccountsGremlinDatabasesThroughputSetting                         | v20240815 |           |
+| DatabaseAccountsGremlinDatabasesThroughputSetting_STATUS                  | v20240815 |           |
+| DatabaseAccountsGremlinDatabasesThroughputSetting_Spec                    | v20240815 |           |
+| DatabaseAccountsGremlinRoleAssignment                                     |           | v20260315 |
+| DatabaseAccountsGremlinRoleAssignment_STATUS                              |           | v20260315 |
+| DatabaseAccountsGremlinRoleAssignment_Spec                                |           | v20260315 |
+| DatabaseAccountsGremlinRoleDefinition                                     |           | v20260315 |
+| DatabaseAccountsGremlinRoleDefinition_STATUS                              |           | v20260315 |
+| DatabaseAccountsGremlinRoleDefinition_Spec                                |           | v20260315 |
+| DatabaseAccountsMongoMIRoleAssignment                                     |           | v20260315 |
+| DatabaseAccountsMongoMIRoleAssignment_STATUS                              |           | v20260315 |
+| DatabaseAccountsMongoMIRoleAssignment_Spec                                |           | v20260315 |
+| DatabaseAccountsMongoMIRoleDefinition                                     |           | v20260315 |
+| DatabaseAccountsMongoMIRoleDefinition_STATUS                              |           | v20260315 |
+| DatabaseAccountsMongoMIRoleDefinition_Spec                                |           | v20260315 |
+| DatabaseAccountsPrivateEndpointConnection                                 | v20240815 |           |
+| DatabaseAccountsPrivateEndpointConnection_STATUS                          | v20240815 |           |
+| DatabaseAccountsPrivateEndpointConnection_Spec                            | v20240815 |           |
+| DatabaseAccountsService                                                   | v20240815 |           |
+| DatabaseAccountsService_STATUS                                            | v20240815 |           |
+| DatabaseAccountsService_Spec                                              | v20240815 |           |
+| DatabaseAccountsSqlDatabasesClientEncryptionKey                           | v20240815 |           |
+| DatabaseAccountsSqlDatabasesClientEncryptionKey_STATUS                    | v20240815 |           |
+| DatabaseAccountsSqlDatabasesClientEncryptionKey_Spec                      | v20240815 |           |
+| DatabaseAccountsSqlRoleDefinition                                         | v20240815 |           |
+| DatabaseAccountsSqlRoleDefinition_STATUS                                  | v20240815 |           |
+| DatabaseAccountsSqlRoleDefinition_Spec                                    | v20240815 |           |
+| DatabaseAccountsTable                                                     | v20240815 |           |
+| DatabaseAccountsTableRoleAssignment                                       |           | v20260315 |
+| DatabaseAccountsTableRoleAssignment_STATUS                                |           | v20260315 |
+| DatabaseAccountsTableRoleAssignment_Spec                                  |           | v20260315 |
+| DatabaseAccountsTableRoleDefinition                                       |           | v20260315 |
+| DatabaseAccountsTableRoleDefinition_STATUS                                |           | v20260315 |
+| DatabaseAccountsTableRoleDefinition_Spec                                  |           | v20260315 |
+| DatabaseAccountsTable_STATUS                                              | v20240815 |           |
+| DatabaseAccountsTable_Spec                                                | v20240815 |           |
+| DatabaseAccountsTablesThroughputSetting                                   | v20240815 |           |
+| DatabaseAccountsTablesThroughputSetting_STATUS                            | v20240815 |           |
+| DatabaseAccountsTablesThroughputSetting_Spec                              | v20240815 |           |
+| DatabaseAccounts_CassandraKeyspaces_Tables_ThroughputSetting_Name_Spec    | v20240815 |           |
+| DatabaseAccounts_CassandraKeyspaces_ThroughputSetting_Name_Spec           | v20240815 |           |
+| DatabaseAccounts_GremlinDatabases_Graphs_ThroughputSetting_Name_Spec      | v20240815 |           |
+| DatabaseAccounts_GremlinDatabases_ThroughputSetting_Name_Spec             | v20240815 |           |
+| DatabaseAccounts_Tables_ThroughputSetting_Name_Spec                       | v20240815 |           |
+| ExcludedPath                                                              | v20240815 |           |
+| ExcludedPath_STATUS                                                       | v20240815 |           |
+| GraphAPIComputeRegionalServiceResource_STATUS                             | v20240815 |           |
+| GraphAPIComputeServiceResourceCreateUpdateProperties                      | v20240815 |           |
+| GraphAPIComputeServiceResourceCreateUpdateProperties_ServiceType          | v20240815 |           |
+| GraphAPIComputeServiceResourceProperties_STATUS                           | v20240815 |           |
+| GraphAPIComputeServiceResourceProperties_ServiceType_STATUS               | v20240815 |           |
+| GremlinDatabaseCreateUpdateProperties                                     | v20240815 |           |
+| GremlinDatabaseGetProperties_Resource_STATUS                              | v20240815 |           |
+| GremlinDatabaseGetProperties_STATUS                                       | v20240815 |           |
+| GremlinDatabaseResource                                                   | v20240815 |           |
+| GremlinGraphCreateUpdateProperties                                        | v20240815 |           |
+| GremlinGraphGetProperties_Resource_STATUS                                 | v20240815 |           |
+| GremlinGraphGetProperties_STATUS                                          | v20240815 |           |
+| GremlinGraphResource                                                      | v20240815 |           |
+| GremlinRoleAssignmentResourceProperties                                   |           | v20260315 |
+| GremlinRoleAssignmentResourceProperties_STATUS                            |           | v20260315 |
+| GremlinRoleDefinitionResourceProperties                                   |           | v20260315 |
+| GremlinRoleDefinitionResourceProperties_STATUS                            |           | v20260315 |
+| IncludedPath                                                              | v20240815 |           |
+| IncludedPath_STATUS                                                       | v20240815 |           |
+| Indexes                                                                   | v20240815 |           |
+| Indexes_DataType                                                          | v20240815 |           |
+| Indexes_DataType_STATUS                                                   | v20240815 |           |
+| Indexes_Kind                                                              | v20240815 |           |
+| Indexes_Kind_STATUS                                                       | v20240815 |           |
+| Indexes_STATUS                                                            | v20240815 |           |
+| IndexingPolicy                                                            | v20240815 |           |
+| IndexingPolicy_IndexingMode                                               | v20240815 |           |
+| IndexingPolicy_IndexingMode_STATUS                                        | v20240815 |           |
+| IndexingPolicy_STATUS                                                     | v20240815 |           |
+| KeyWrapMetadata                                                           | v20240815 |           |
+| KeyWrapMetadata_STATUS                                                    | v20240815 |           |
+| MaterializedViewsBuilderServiceResourceCreateUpdateProperties             | v20240815 |           |
+| MaterializedViewsBuilderServiceResourceCreateUpdateProperties_ServiceType | v20240815 |           |
+| MaterializedViewsBuilderServiceResourceProperties_STATUS                  | v20240815 |           |
+| MaterializedViewsBuilderServiceResourceProperties_ServiceType_STATUS      | v20240815 |           |
+| MongoMIRoleAssignmentResourceProperties                                   |           | v20260315 |
+| MongoMIRoleAssignmentResourceProperties_STATUS                            |           | v20260315 |
+| MongoMIRoleDefinitionResourceProperties                                   |           | v20260315 |
+| MongoMIRoleDefinitionResourceProperties_STATUS                            |           | v20260315 |
+| OptionsResource_STATUS                                                    | v20240815 |           |
+| Permission                                                                | v20240815 | v20260315 |
+| Permission_STATUS                                                         | v20240815 | v20260315 |
+| PrivateEndpointConnectionProperties                                       | v20240815 |           |
+| PrivateEndpointConnectionProperties_STATUS                                | v20240815 |           |
+| PrivateEndpointProperty                                                   | v20240815 |           |
+| PrivateEndpointProperty_STATUS                                            | v20240815 |           |
+| PrivateLinkServiceConnectionStateProperty                                 | v20240815 |           |
+| PrivateLinkServiceConnectionStateProperty_STATUS                          | v20240815 |           |
+| RegionalServiceResource_STATUS                                            | v20240815 |           |
+| RestoreParametersBase                                                     | v20240815 |           |
+| RestoreParametersBase_STATUS                                              | v20240815 |           |
+| RoleDefinitionType                                                        |           | v20260315 |
+| RoleDefinitionType_STATUS                                                 |           | v20260315 |
+| ServiceResourceCreateUpdateProperties                                     | v20240815 |           |
+| ServiceResourceInstanceSize                                               | v20240815 |           |
+| ServiceResourceInstanceSize_STATUS                                        | v20240815 |           |
+| ServiceResourceProperties_STATUS                                          | v20240815 |           |
+| ServiceResourceStatus_STATUS                                              | v20240815 |           |
+| SpatialSpec                                                               | v20240815 |           |
+| SpatialSpec_STATUS                                                        | v20240815 |           |
+| SpatialType                                                               | v20240815 |           |
+| SpatialType_STATUS                                                        | v20240815 |           |
+| SqlDedicatedGatewayRegionalServiceResource_STATUS                         | v20240815 |           |
+| SqlDedicatedGatewayServiceResourceCreateUpdateProperties                  | v20240815 |           |
+| SqlDedicatedGatewayServiceResourceCreateUpdateProperties_ServiceType      | v20240815 |           |
+| SqlDedicatedGatewayServiceResourceProperties_STATUS                       | v20240815 |           |
+| SqlDedicatedGatewayServiceResourceProperties_ServiceType_STATUS           | v20240815 |           |
+| SqlDedicatedGatewayType                                                   | v20240815 |           |
+| SqlDedicatedGatewayType_STATUS                                            | v20240815 |           |
+| SqlRoleDefinitionResource                                                 | v20240815 |           |
+| SqlRoleDefinitionResource_STATUS                                          | v20240815 |           |
+| SqlRoleDefinitionResource_Type                                            | v20240815 |           |
+| SqlRoleDefinitionResource_Type_STATUS                                     | v20240815 |           |
+| SystemData_CreatedByType_STATUS                                           |           | v20260315 |
+| SystemData_LastModifiedByType_STATUS                                      |           | v20260315 |
+| SystemData_STATUS                                                         |           | v20260315 |
+| TableCreateUpdateProperties                                               | v20240815 |           |
+| TableGetProperties_Resource_STATUS                                        | v20240815 |           |
+| TableGetProperties_STATUS                                                 | v20240815 |           |
+| TableResource                                                             | v20240815 |           |
+| TableRoleAssignmentResourceProperties                                     |           | v20260315 |
+| TableRoleAssignmentResourceProperties_STATUS                              |           | v20260315 |
+| TableRoleDefinitionResourceProperties                                     |           | v20260315 |
+| TableRoleDefinitionResourceProperties_STATUS                              |           | v20260315 |
+| ThroughputPolicyResource                                                  | v20240815 |           |
+| ThroughputPolicyResource_STATUS                                           | v20240815 |           |
+| ThroughputSettingsGetProperties_Resource_STATUS                           | v20240815 |           |
+| ThroughputSettingsGetProperties_STATUS                                    | v20240815 |           |
+| ThroughputSettingsResource                                                | v20240815 |           |
+| ThroughputSettingsUpdateProperties                                        | v20240815 |           |
+| UniqueKey                                                                 | v20240815 |           |
+| UniqueKeyPolicy                                                           | v20240815 |           |
+| UniqueKeyPolicy_STATUS                                                    | v20240815 |           |
+| UniqueKey_STATUS                                                          | v20240815 |           |

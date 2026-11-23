@@ -68,6 +68,8 @@ import (
 	documentdb_customizations "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/customizations"
 	documentdb_v20240815 "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20240815"
 	documentdb_v20240815s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20240815/storage"
+	documentdb_v20260315 "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260315"
+	documentdb_v20260315s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260315/storage"
 	hardwaresecuritymodules_customizations "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/customizations"
 	hardwaresecuritymodules_v20250331 "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331"
 	hardwaresecuritymodules_v20250331s "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331/storage"
@@ -959,6 +961,86 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsSqlRoleDefinition)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsTable)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20240815.DatabaseAccountsTablesThroughputSetting)})
+	result = append(result, &registration.StorageType{
+		Obj: new(documentdb_v20260315.DatabaseAccountsCassandraRoleAssignment),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.principalIdFromConfig",
+				Func: indexDocumentdbDatabaseAccountsCassandraRoleAssignmentPrincipalIdFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.principalIdFromConfig",
+					},
+					&documentdb_v20260315.DatabaseAccountsCassandraRoleAssignmentList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.DatabaseAccountsCassandraRoleDefinition)})
+	result = append(result, &registration.StorageType{
+		Obj: new(documentdb_v20260315.DatabaseAccountsGremlinRoleAssignment),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.principalIdFromConfig",
+				Func: indexDocumentdbDatabaseAccountsGremlinRoleAssignmentPrincipalIdFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.principalIdFromConfig",
+					},
+					&documentdb_v20260315.DatabaseAccountsGremlinRoleAssignmentList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.DatabaseAccountsGremlinRoleDefinition)})
+	result = append(result, &registration.StorageType{
+		Obj: new(documentdb_v20260315.DatabaseAccountsMongoMIRoleAssignment),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.principalIdFromConfig",
+				Func: indexDocumentdbDatabaseAccountsMongoMIRoleAssignmentPrincipalIdFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.principalIdFromConfig",
+					},
+					&documentdb_v20260315.DatabaseAccountsMongoMIRoleAssignmentList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.DatabaseAccountsMongoMIRoleDefinition)})
+	result = append(result, &registration.StorageType{
+		Obj: new(documentdb_v20260315.DatabaseAccountsTableRoleAssignment),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.principalIdFromConfig",
+				Func: indexDocumentdbDatabaseAccountsTableRoleAssignmentPrincipalIdFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.principalIdFromConfig",
+					},
+					&documentdb_v20260315.DatabaseAccountsTableRoleAssignmentList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.DatabaseAccountsTableRoleDefinition)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
@@ -1944,6 +2026,26 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(documentdb_v20240815s.DatabaseAccountsTablesThroughputSetting)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsCassandraRoleAssignment)},
+		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsCassandraRoleDefinition)},
+		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsGremlinRoleAssignment)},
+		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsGremlinRoleDefinition)},
+		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsMongoMIRoleAssignment)},
+		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsMongoMIRoleDefinition)},
+		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsTableRoleAssignment)},
+		&registration.KnownType{Obj: new(documentdb_v20260315.DatabaseAccountsTableRoleDefinition)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsCassandraRoleAssignment)},
+		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsCassandraRoleDefinition)},
+		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsGremlinRoleAssignment)},
+		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsGremlinRoleDefinition)},
+		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsMongoMIRoleAssignment)},
+		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsMongoMIRoleDefinition)},
+		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsTableRoleAssignment)},
+		&registration.KnownType{Obj: new(documentdb_v20260315s.DatabaseAccountsTableRoleDefinition)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)},
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
@@ -2435,6 +2537,8 @@ func createScheme() *runtime.Scheme {
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
 	_ = documentdb_v20240815.AddToScheme(scheme)
 	_ = documentdb_v20240815s.AddToScheme(scheme)
+	_ = documentdb_v20260315.AddToScheme(scheme)
+	_ = documentdb_v20260315s.AddToScheme(scheme)
 	_ = hardwaresecuritymodules_v20250331.AddToScheme(scheme)
 	_ = hardwaresecuritymodules_v20250331s.AddToScheme(scheme)
 	_ = insights_v20160301.AddToScheme(scheme)
@@ -2631,15 +2735,23 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspacesTableExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspacesTablesThroughputSettingExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraKeyspacesThroughputSettingExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraRoleAssignmentExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsCassandraRoleDefinitionExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsGremlinDatabaseExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsGremlinDatabasesGraphExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsGremlinDatabasesGraphsThroughputSettingExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsGremlinDatabasesThroughputSettingExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsGremlinRoleAssignmentExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsGremlinRoleDefinitionExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsMongoMIRoleAssignmentExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsMongoMIRoleDefinitionExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsPrivateEndpointConnectionExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsServiceExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsSqlDatabasesClientEncryptionKeyExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsSqlRoleDefinitionExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsTableExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsTableRoleAssignmentExtension{})
+	result = append(result, &documentdb_customizations.DatabaseAccountsTableRoleDefinitionExtension{})
 	result = append(result, &documentdb_customizations.DatabaseAccountsTablesThroughputSettingExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClusterExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClustersPrivateEndpointConnectionExtension{})
@@ -4092,6 +4204,54 @@ func indexCostmanagementExportSasToken(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.DeliveryInfo.Destination.SasToken.Index()
+}
+
+// indexDocumentdbDatabaseAccountsCassandraRoleAssignmentPrincipalIdFromConfig an index function for documentdb_v20260315.DatabaseAccountsCassandraRoleAssignment .spec.principalIdFromConfig
+func indexDocumentdbDatabaseAccountsCassandraRoleAssignmentPrincipalIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*documentdb_v20260315.DatabaseAccountsCassandraRoleAssignment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PrincipalIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.PrincipalIdFromConfig.Index()
+}
+
+// indexDocumentdbDatabaseAccountsGremlinRoleAssignmentPrincipalIdFromConfig an index function for documentdb_v20260315.DatabaseAccountsGremlinRoleAssignment .spec.principalIdFromConfig
+func indexDocumentdbDatabaseAccountsGremlinRoleAssignmentPrincipalIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*documentdb_v20260315.DatabaseAccountsGremlinRoleAssignment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PrincipalIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.PrincipalIdFromConfig.Index()
+}
+
+// indexDocumentdbDatabaseAccountsMongoMIRoleAssignmentPrincipalIdFromConfig an index function for documentdb_v20260315.DatabaseAccountsMongoMIRoleAssignment .spec.principalIdFromConfig
+func indexDocumentdbDatabaseAccountsMongoMIRoleAssignmentPrincipalIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*documentdb_v20260315.DatabaseAccountsMongoMIRoleAssignment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PrincipalIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.PrincipalIdFromConfig.Index()
+}
+
+// indexDocumentdbDatabaseAccountsTableRoleAssignmentPrincipalIdFromConfig an index function for documentdb_v20260315.DatabaseAccountsTableRoleAssignment .spec.principalIdFromConfig
+func indexDocumentdbDatabaseAccountsTableRoleAssignmentPrincipalIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*documentdb_v20260315.DatabaseAccountsTableRoleAssignment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PrincipalIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.PrincipalIdFromConfig.Index()
 }
 
 // indexKeyvaultManagedHSMTenantIdFromConfig an index function for keyvault_v20260515.ManagedHSM .spec.properties.tenantIdFromConfig

@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260315/storage"
 	"github.com/rotisserie/eris"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -261,12 +262,186 @@ type Permission struct {
 	PropertyBag    genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
+// AssignProperties_From_Permission populates our Permission from the provided source Permission
+func (permission *Permission) AssignProperties_From_Permission(source *storage.Permission) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// DataActions
+	permission.DataActions = genruntime.CloneSliceOfString(source.DataActions)
+
+	// Id
+	if source.Id != nil {
+		propertyBag.Add("Id", *source.Id)
+	} else {
+		propertyBag.Remove("Id")
+	}
+
+	// NotDataActions
+	permission.NotDataActions = genruntime.CloneSliceOfString(source.NotDataActions)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		permission.PropertyBag = propertyBag
+	} else {
+		permission.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForPermission interface (if implemented) to customize the conversion
+	var permissionAsAny any = permission
+	if augmentedPermission, ok := permissionAsAny.(augmentConversionForPermission); ok {
+		err := augmentedPermission.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_Permission populates the provided destination Permission from our Permission
+func (permission *Permission) AssignProperties_To_Permission(destination *storage.Permission) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(permission.PropertyBag)
+
+	// DataActions
+	destination.DataActions = genruntime.CloneSliceOfString(permission.DataActions)
+
+	// Id
+	if propertyBag.Contains("Id") {
+		var id string
+		err := propertyBag.Pull("Id", &id)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'Id' from propertyBag")
+		}
+
+		destination.Id = &id
+	} else {
+		destination.Id = nil
+	}
+
+	// NotDataActions
+	destination.NotDataActions = genruntime.CloneSliceOfString(permission.NotDataActions)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForPermission interface (if implemented) to customize the conversion
+	var permissionAsAny any = permission
+	if augmentedPermission, ok := permissionAsAny.(augmentConversionForPermission); ok {
+		err := augmentedPermission.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20240815.Permission_STATUS
 // The set of data plane operations permitted through this Role Definition.
 type Permission_STATUS struct {
 	DataActions    []string               `json:"dataActions,omitempty"`
 	NotDataActions []string               `json:"notDataActions,omitempty"`
 	PropertyBag    genruntime.PropertyBag `json:"$propertyBag,omitempty"`
+}
+
+// AssignProperties_From_Permission_STATUS populates our Permission_STATUS from the provided source Permission_STATUS
+func (permission *Permission_STATUS) AssignProperties_From_Permission_STATUS(source *storage.Permission_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// DataActions
+	permission.DataActions = genruntime.CloneSliceOfString(source.DataActions)
+
+	// Id
+	if source.Id != nil {
+		propertyBag.Add("Id", *source.Id)
+	} else {
+		propertyBag.Remove("Id")
+	}
+
+	// NotDataActions
+	permission.NotDataActions = genruntime.CloneSliceOfString(source.NotDataActions)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		permission.PropertyBag = propertyBag
+	} else {
+		permission.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForPermission_STATUS interface (if implemented) to customize the conversion
+	var permissionAsAny any = permission
+	if augmentedPermission, ok := permissionAsAny.(augmentConversionForPermission_STATUS); ok {
+		err := augmentedPermission.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_Permission_STATUS populates the provided destination Permission_STATUS from our Permission_STATUS
+func (permission *Permission_STATUS) AssignProperties_To_Permission_STATUS(destination *storage.Permission_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(permission.PropertyBag)
+
+	// DataActions
+	destination.DataActions = genruntime.CloneSliceOfString(permission.DataActions)
+
+	// Id
+	if propertyBag.Contains("Id") {
+		var id string
+		err := propertyBag.Pull("Id", &id)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'Id' from propertyBag")
+		}
+
+		destination.Id = &id
+	} else {
+		destination.Id = nil
+	}
+
+	// NotDataActions
+	destination.NotDataActions = genruntime.CloneSliceOfString(permission.NotDataActions)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForPermission_STATUS interface (if implemented) to customize the conversion
+	var permissionAsAny any = permission
+	if augmentedPermission, ok := permissionAsAny.(augmentConversionForPermission_STATUS); ok {
+		err := augmentedPermission.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+type augmentConversionForPermission interface {
+	AssignPropertiesFrom(src *storage.Permission) error
+	AssignPropertiesTo(dst *storage.Permission) error
+}
+
+type augmentConversionForPermission_STATUS interface {
+	AssignPropertiesFrom(src *storage.Permission_STATUS) error
+	AssignPropertiesTo(dst *storage.Permission_STATUS) error
 }
 
 func init() {

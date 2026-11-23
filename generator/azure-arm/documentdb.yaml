@@ -11,6 +11,10 @@ typeFilters:
     group: documentdb
     version: v20240815
     because: the version of ASO's DatabaseAccount (v1api20240815, its storage version)
+  - action: include
+    group: documentdb
+    version: v20260315
+    because: role-based access for the Cassandra, Gremlin, MongoDB (Entra) and Table APIs, the newest stable version (2024-08-15 has none)
   - action: prune
     group: documentdb
     because: every other version is left alone
@@ -81,3 +85,69 @@ groupModelConfiguration:
     PrivateEndpointProperty:
       Id:
         $referenceType: arm # the private endpoint's ARM ID (autolabel, reviewed)
+  # Data-plane role-based access for the Cassandra, Gremlin, MongoDB
+  # (Microsoft Entra) and Table APIs, as ASO's SqlRoleAssignment is for the
+  # SQL API: role definitions and assignments on ASO's DatabaseAccount. Their
+  # names are GUIDs: the hand-written Claimers in
+  # generator/_extensions/documentdb/customizations default them, as ASO's
+  # SqlRoleAssignment webhook does.
+  2026-03-15:
+    DatabaseAccounts_CassandraRoleDefinition:
+      $exportAs: DatabaseAccountsCassandraRoleDefinition
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+    DatabaseAccounts_CassandraRoleAssignment:
+      $exportAs: DatabaseAccountsCassandraRoleAssignment
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+    CassandraRoleAssignmentResourceProperties:
+      PrincipalId:
+        $importConfigMapMode: optional # as ASO's SqlRoleAssignmentResource: a managed identity's exported principal ID
+    DatabaseAccounts_GremlinRoleDefinition:
+      $exportAs: DatabaseAccountsGremlinRoleDefinition
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+    DatabaseAccounts_GremlinRoleAssignment:
+      $exportAs: DatabaseAccountsGremlinRoleAssignment
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+    GremlinRoleAssignmentResourceProperties:
+      PrincipalId:
+        $importConfigMapMode: optional # as ASO's SqlRoleAssignmentResource: a managed identity's exported principal ID
+    DatabaseAccounts_MongoMIRoleDefinition:
+      $exportAs: DatabaseAccountsMongoMIRoleDefinition
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+    DatabaseAccounts_MongoMIRoleAssignment:
+      $exportAs: DatabaseAccountsMongoMIRoleAssignment
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+    MongoMIRoleAssignmentResourceProperties:
+      PrincipalId:
+        $importConfigMapMode: optional # as ASO's SqlRoleAssignmentResource: a managed identity's exported principal ID
+    DatabaseAccounts_TableRoleDefinition:
+      $exportAs: DatabaseAccountsTableRoleDefinition
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+    DatabaseAccounts_TableRoleAssignment:
+      $exportAs: DatabaseAccountsTableRoleAssignment
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+    TableRoleAssignmentResourceProperties:
+      PrincipalId:
+        $importConfigMapMode: optional # as ASO's SqlRoleAssignmentResource: a managed identity's exported principal ID
+    TableRoleDefinitionResourceProperties:
+      Id:
+        $referenceType: simple # the definition's own ID, not a reference (autolabel wrote arm; reviewed)
+    CassandraRoleDefinitionResourceProperties:
+      Id:
+        $referenceType: simple # the definition's own ID, not a reference (autolabel wrote arm; reviewed)
+    Permission:
+      Id:
+        $referenceType: simple # a permission's identifier, not an ARM ID (autolabel wrote arm; reviewed)
+    MongoMIRoleDefinitionResourceProperties:
+      Id:
+        $referenceType: simple # the definition's own ID, not a reference (autolabel wrote arm; reviewed)
+    GremlinRoleDefinitionResourceProperties:
+      Id:
+        $referenceType: simple # the definition's own ID, not a reference (autolabel wrote arm; reviewed)
