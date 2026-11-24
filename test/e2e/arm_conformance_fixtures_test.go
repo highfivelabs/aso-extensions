@@ -247,6 +247,22 @@ func init() {
 	f["servicebus.azure.hfl.dev/NamespacesPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
 		c.add(c.owner + "/privateEndpointConnections/conformance")
 	}}
+	// The same for Event Hubs, whose application groups name their clients
+	// as SASKeyName= or AADAppID= (messaging.go).
+	f["eventhub.azure.hfl.dev/NamespacesDisasterRecoveryConfig"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"partnerNamespaceReference": armRef(c.add(c.in("Microsoft.EventHub/namespaces/partner")))}
+	}}
+	f["eventhub.azure.hfl.dev/NamespacesPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
+	// Log Analytics' "Cluster" fixture is another kind's: a dedicated Event
+	// Hubs cluster's SKU is Dedicated.
+	f["eventhub.azure.hfl.dev/Cluster"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sku": map[string]any{"name": "Dedicated", "capacity": int64(1)}}
+	}}
+	f["NamespacesApplicationGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"clientAppGroupIdentifier": "SASKeyName=conformance"}
+	}}
 	f["NetworkInterfacesTapConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"virtualNetworkTap": embedRef(c.add(c.in("Microsoft.Network/virtualNetworkTaps/conformance")))}
 	}}

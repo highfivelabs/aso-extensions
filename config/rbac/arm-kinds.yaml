@@ -22,6 +22,7 @@ rules:
   - dbforpostgresql.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - documentdb.azure.hfl.dev
+  - eventhub.azure.hfl.dev
   - hardwaresecuritymodules.azure.hfl.dev
   - insights.azure.hfl.dev
   - keyvault.azure.hfl.dev
@@ -63,6 +64,7 @@ rules:
   - dbforpostgresql.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - documentdb.azure.hfl.dev
+  - eventhub.azure.hfl.dev
   - hardwaresecuritymodules.azure.hfl.dev
   - insights.azure.hfl.dev
   - keyvault.azure.hfl.dev

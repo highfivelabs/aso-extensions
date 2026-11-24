@@ -1124,18 +1124,18 @@ Microsoft.EventGrid,Microsoft.EventGrid/systemTopics/eventSubscriptions,38,,0,,0
 Microsoft.EventGrid,Microsoft.EventGrid/topics,29,eventgrid.azure.com/Topic,25,,0,4,false,spec_api=2025-02-15; official_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/topics/eventSubscriptions,38,,0,,0,38,false,spec_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/topics/privateEndpointConnections,6,,0,,0,6,false,spec_api=2025-02-15
-Microsoft.EventHub,Microsoft.EventHub/clusters,7,,0,,0,7,false,spec_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/clusters,7,,0,eventhub.azure.hfl.dev/Cluster,7,0,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.EventHub,Microsoft.EventHub/namespaces,32,eventhub.azure.com/Namespace,22,,0,10,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
-Microsoft.EventHub,Microsoft.EventHub/namespaces/applicationGroups,6,,0,,0,6,false,spec_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/namespaces/applicationGroups,6,,0,eventhub.azure.hfl.dev/NamespacesApplicationGroup,6,0,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.EventHub,Microsoft.EventHub/namespaces/AuthorizationRules,1,eventhub.azure.com/NamespacesAuthorizationRule,1,,0,0,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
-Microsoft.EventHub,Microsoft.EventHub/namespaces/disasterRecoveryConfigs,2,,0,,0,2,false,spec_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/namespaces/disasterRecoveryConfigs,2,,0,eventhub.azure.hfl.dev/NamespacesDisasterRecoveryConfig,2,0,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.EventHub,Microsoft.EventHub/namespaces/eventhubs,23,eventhub.azure.com/NamespacesEventhub,20,,0,3,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.EventHub,Microsoft.EventHub/namespaces/eventhubs/authorizationRules,1,eventhub.azure.com/NamespacesEventhubsAuthorizationRule,1,,0,0,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.EventHub,Microsoft.EventHub/namespaces/eventhubs/consumergroups,1,eventhub.azure.com/NamespacesEventhubsConsumerGroup,1,,0,0,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.EventHub,Microsoft.EventHub/namespaces/ipfilterrules,3,,0,,0,3,false,spec_api=2018-01-01-preview; spec-preview-only
-Microsoft.EventHub,Microsoft.EventHub/namespaces/networkRuleSets,7,,0,,0,7,false,spec_api=2026-01-01
-Microsoft.EventHub,Microsoft.EventHub/namespaces/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-01-01
-Microsoft.EventHub,Microsoft.EventHub/namespaces/schemagroups,3,,0,,0,3,false,spec_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/namespaces/networkRuleSets,7,,0,eventhub.azure.hfl.dev/NamespacesNetworkRuleSet,7,0,false,spec_api=2026-01-01; ours_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/namespaces/privateEndpointConnections,4,,0,eventhub.azure.hfl.dev/NamespacesPrivateEndpointConnection,3,1,false,spec_api=2026-01-01; ours_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/namespaces/schemagroups,3,,0,eventhub.azure.hfl.dev/NamespacesSchemaGroup,3,0,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.EventHub,Microsoft.EventHub/namespaces/virtualnetworkrules,1,,0,,0,1,false,spec_api=2018-01-01-preview; spec-preview-only
 Microsoft.ExtendedLocation,Microsoft.ExtendedLocation/customLocations,11,,0,,0,11,false,spec_api=2021-08-15
 Microsoft.Fabric,Microsoft.Fabric/capacities,5,,0,,0,5,false,spec_api=2023-11-01

@@ -98,6 +98,9 @@ import (
 	documentdb_v20260315s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260315/storage"
 	documentdb_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260601"
 	documentdb_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260601/storage"
+	eventhub_customizations "github.com/highfivelabs/aso-extensions/apis/arm/eventhub/customizations"
+	eventhub_v20260101 "github.com/highfivelabs/aso-extensions/apis/arm/eventhub/v20260101"
+	eventhub_v20260101s "github.com/highfivelabs/aso-extensions/apis/arm/eventhub/v20260101/storage"
 	hardwaresecuritymodules_customizations "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/customizations"
 	hardwaresecuritymodules_v20250331 "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331"
 	hardwaresecuritymodules_v20250331s "github.com/highfivelabs/aso-extensions/apis/arm/hardwaresecuritymodules/v20250331/storage"
@@ -1326,6 +1329,12 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.FleetsFleetspace)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.FleetsFleetspacesFleetspaceAccount)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260601.MongoClustersUser)})
+	result = append(result, &registration.StorageType{Obj: new(eventhub_v20260101.Cluster)})
+	result = append(result, &registration.StorageType{Obj: new(eventhub_v20260101.NamespacesApplicationGroup)})
+	result = append(result, &registration.StorageType{Obj: new(eventhub_v20260101.NamespacesDisasterRecoveryConfig)})
+	result = append(result, &registration.StorageType{Obj: new(eventhub_v20260101.NamespacesNetworkRuleSet)})
+	result = append(result, &registration.StorageType{Obj: new(eventhub_v20260101.NamespacesPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(eventhub_v20260101.NamespacesSchemaGroup)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
@@ -3098,6 +3107,22 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(documentdb_v20260601s.MongoClustersUser)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(eventhub_v20260101.Cluster)},
+		&registration.KnownType{Obj: new(eventhub_v20260101.NamespacesApplicationGroup)},
+		&registration.KnownType{Obj: new(eventhub_v20260101.NamespacesDisasterRecoveryConfig)},
+		&registration.KnownType{Obj: new(eventhub_v20260101.NamespacesNetworkRuleSet)},
+		&registration.KnownType{Obj: new(eventhub_v20260101.NamespacesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(eventhub_v20260101.NamespacesSchemaGroup)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(eventhub_v20260101s.Cluster)},
+		&registration.KnownType{Obj: new(eventhub_v20260101s.NamespacesApplicationGroup)},
+		&registration.KnownType{Obj: new(eventhub_v20260101s.NamespacesDisasterRecoveryConfig)},
+		&registration.KnownType{Obj: new(eventhub_v20260101s.NamespacesNetworkRuleSet)},
+		&registration.KnownType{Obj: new(eventhub_v20260101s.NamespacesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(eventhub_v20260101s.NamespacesSchemaGroup)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmCluster)},
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
@@ -3849,6 +3874,8 @@ func createScheme() *runtime.Scheme {
 	_ = documentdb_v20260315s.AddToScheme(scheme)
 	_ = documentdb_v20260601.AddToScheme(scheme)
 	_ = documentdb_v20260601s.AddToScheme(scheme)
+	_ = eventhub_v20260101.AddToScheme(scheme)
+	_ = eventhub_v20260101s.AddToScheme(scheme)
 	_ = hardwaresecuritymodules_v20250331.AddToScheme(scheme)
 	_ = hardwaresecuritymodules_v20250331s.AddToScheme(scheme)
 	_ = insights_v20160301.AddToScheme(scheme)
@@ -4136,6 +4163,12 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &documentdb_customizations.FleetsFleetspacesFleetspaceAccountExtension{})
 	result = append(result, &documentdb_customizations.MongoClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &documentdb_customizations.MongoClustersUserExtension{})
+	result = append(result, &eventhub_customizations.ClusterExtension{})
+	result = append(result, &eventhub_customizations.NamespacesApplicationGroupExtension{})
+	result = append(result, &eventhub_customizations.NamespacesDisasterRecoveryConfigExtension{})
+	result = append(result, &eventhub_customizations.NamespacesNetworkRuleSetExtension{})
+	result = append(result, &eventhub_customizations.NamespacesPrivateEndpointConnectionExtension{})
+	result = append(result, &eventhub_customizations.NamespacesSchemaGroupExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClusterExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.DedicatedHsmExtension{})

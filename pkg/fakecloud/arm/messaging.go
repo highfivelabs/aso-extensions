@@ -10,11 +10,13 @@ import (
 	"strings"
 )
 
-// A Service Bus namespace's network rule set and geo-disaster recovery alias
-// (Microsoft.ServiceBus/namespaces/networkRuleSets/default and
-// disasterRecoveryConfigs, 2026-01-01; docs/plan.md f61), as far as the fake
-// models them. Each rule is one the spec or Azure's documentation of the
-// namespace's network security and geo-disaster recovery states:
+// A Service Bus or Event Hubs namespace's network rule set and
+// geo-disaster recovery alias (Microsoft.ServiceBus and Microsoft.EventHub
+// namespaces/networkRuleSets/default and disasterRecoveryConfigs, 2026-01-01;
+// docs/plan.md f61, f62), and an Event Hubs namespace's application groups
+// (f62), as far as the fake models them. Each rule is one the spec or
+// Azure's documentation of the namespace's network security, geo-disaster
+// recovery and resource governance states:
 //
 //   - a namespace has one network rule set, named default (404 for any
 //     other name, as the spec's path has no name parameter), which has no
@@ -23,7 +25,10 @@ import (
 //   - a virtual network rule names a subnet (400) that exists (404);
 //   - a disaster recovery alias names a partner namespace (400) that exists
 //     (404) and is another namespace of the same service (400); a namespace
-//     is in one pairing at most, as primary or secondary (409).
+//     is in one pairing at most, as primary or secondary (409);
+//   - an application group's clientAppGroupIdentifier is SASKeyName=<key
+//     name> or AADAppID=<GUID> (400), and its policies' names are unique
+//     (400).
 //
 // The connections of a namespace's private endpoints are privateendpoints.go's.
 // Not modelled: the tiers that take IP and virtual network rules, the
@@ -31,9 +36,11 @@ import (
 // breaking the pairing and failover (POSTs, not faked; Azure wants the pairing
 // broken before the alias is deleted), and the error codes (the fake's own).
 var (
-	messagingRuleSet = regexp.MustCompile(`(?i)/providers/microsoft\.servicebus/namespaces/[^/]+/networkrulesets/([^/]+)$`)
-	messagingAlias   = regexp.MustCompile(`(?i)^(.*/providers/microsoft\.servicebus/namespaces/[^/]+)/disasterrecoveryconfigs/[^/]+$`)
-	messagingNS      = regexp.MustCompile(`(?i)/providers/(microsoft\.servicebus)/namespaces/[^/]+$`)
+	messagingRuleSet = regexp.MustCompile(`(?i)/providers/microsoft\.(servicebus|eventhub)/namespaces/[^/]+/networkrulesets/([^/]+)$`)
+	messagingAlias   = regexp.MustCompile(`(?i)^(.*/providers/microsoft\.(?:servicebus|eventhub)/namespaces/[^/]+)/disasterrecoveryconfigs/[^/]+$`)
+	messagingNS      = regexp.MustCompile(`(?i)/providers/(microsoft\.(?:servicebus|eventhub))/namespaces/[^/]+$`)
+	appGroup         = regexp.MustCompile(`(?i)/providers/microsoft\.eventhub/namespaces/[^/]+/applicationgroups/[^/]+$`)
+	appGroupClient   = regexp.MustCompile(`(?i)^(SASKeyName=[^=;]+|AADAppID=[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$`)
 )
 
 // checkMessaging refuses a network rule set or a disaster recovery alias the
@@ -41,8 +48,8 @@ var (
 func (a *ARM) checkMessaging(id string, body map[string]any) (status int, code, message string) {
 	props, _ := body["properties"].(map[string]any)
 	if m := messagingRuleSet.FindStringSubmatch(id); m != nil {
-		if !strings.EqualFold(m[1], "default") {
-			return http.StatusNotFound, "ResourceNotFound", "A namespace has one network rule set, default; " + m[1] + " is not it."
+		if !strings.EqualFold(m[2], "default") {
+			return http.StatusNotFound, "ResourceNotFound", "A namespace has one network rule set, default; " + m[2] + " is not it."
 		}
 		bad := func(msg string) (int, string, string) {
 			return http.StatusBadRequest, "InvalidNetworkRuleSet", msg
@@ -64,6 +71,25 @@ func (a *ARM) checkMessaging(id string, body map[string]any) (status int, code, 
 			if !a.exists(subnet) {
 				return http.StatusNotFound, "ResourceNotFound", "The subnet " + subnet + " was not found."
 			}
+		}
+		return 0, "", ""
+	}
+	if appGroup.MatchString(id) {
+		bad := func(msg string) (int, string, string) {
+			return http.StatusBadRequest, "InvalidApplicationGroup", msg
+		}
+		if c, _ := props["clientAppGroupIdentifier"].(string); !appGroupClient.MatchString(c) {
+			return bad("An application group's clientAppGroupIdentifier is SASKeyName=<key name> or AADAppID=<GUID>, not " + c + ".")
+		}
+		seen := map[string]bool{}
+		policies, _ := props["policies"].([]any)
+		for _, p := range policies {
+			pm, _ := p.(map[string]any)
+			name, _ := pm["name"].(string)
+			if seen[strings.ToLower(name)] {
+				return bad("An application group's policy names are unique; " + name + " is there twice.")
+			}
+			seen[strings.ToLower(name)] = true
 		}
 		return 0, "", ""
 	}

@@ -82,10 +82,11 @@
 // groups that exist, one action, a schedule in order), virtual network TAP
 // (vnettap.go: one destination that exists, a VXLAN port, a tap
 // configuration naming a TAP that exists, the TAP listing its
-// configurations), a Service Bus namespace's network rule set and
-// disaster recovery alias (messaging.go: the default rule set, IPv4 masks,
-// subnets that exist, a partner namespace of the same service in one
-// pairing), Azure Monitor
+// configurations), Service Bus and Event Hubs namespaces' network rule
+// sets and disaster recovery aliases and Event Hubs application groups
+// (messaging.go: the default rule set, IPv4 masks, subnets that exist, a
+// partner namespace of the same service in one pairing, a client group
+// identifier, unique policy names), Azure Monitor
 // pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
 // processors and exporters, pipelines naming what is declared), a VM's

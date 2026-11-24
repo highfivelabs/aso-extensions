@@ -1,0 +1,53 @@
+# Event Hubs kinds ASO does not export (Microsoft.EventHub, openapi.json
+# 2026-01-01, the newest stable version; docs/plan.md f62, tier 3 row t2 of
+# docs/coverage/foundation.md): a namespace's network rule set (its one
+# default), private endpoint connections, application groups (resource
+# governance: throttling policies per client group), schema groups (the
+# schema registry) and geo-disaster recovery alias, and a dedicated Event
+# Hubs cluster. The children are owned by ASO's Namespace; the cluster by a
+# resource group. Not exported: the 2018-01-01-preview IP filter and virtual
+# network rules (replaced by the rule set).
+typeFilters:
+  - action: include
+    group: eventhub
+    version: v20260101
+    because: the newest stable version of the namespace's children and of the cluster
+  - action: prune
+    group: eventhub
+    because: every other version is left alone (ASO has the namespace, event hubs, consumer groups and authorization rules)
+typeTransformers:
+  - group: eventhub
+    version: v20260101
+    name: PrivateEndpointConnectionProperties
+    property: ProvisioningState
+    remove: true
+    because: set by Azure; should be marked readOnly (ASO removes it from its own eventhub connections)
+groupModelConfiguration:
+  2026-01-01:
+    Namespaces_NetworkRuleSet:
+      $exportAs: NamespacesNetworkRuleSet
+      $supportedFrom: v0.1.0
+    Namespaces_PrivateEndpointConnection:
+      $exportAs: NamespacesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Namespaces_ApplicationGroup:
+      $exportAs: NamespacesApplicationGroup
+      $supportedFrom: v0.1.0
+    Namespaces_Schemagroup:
+      $exportAs: NamespacesSchemaGroup
+      $supportedFrom: v0.1.0
+    Namespaces_DisasterRecoveryConfig:
+      $exportAs: NamespacesDisasterRecoveryConfig
+      $supportedFrom: v0.1.0
+    Cluster:
+      $exportAs: Cluster
+      $supportedFrom: v0.1.0
+    Subnet:
+      Id:
+        $referenceType: arm # a virtual network rule's subnet (ASO's VirtualNetworksSubnet, or an ARM ID)
+    PrivateEndpoint:
+      Id:
+        $referenceType: arm # the private endpoint of a connection (ASO's PrivateEndpoint, or an ARM ID)
+    ArmDisasterRecoveryProperties:
+      PartnerNamespace:
+        $referenceType: arm # the paired namespace in another region (ASO's Namespace, or an ARM ID)

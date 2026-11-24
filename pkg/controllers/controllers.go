@@ -51,6 +51,7 @@ import (
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asomongo "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240701/storage"
 	asocosmos "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240815/storage"
+	asoeventhub "github.com/Azure/azure-service-operator/v2/api/eventhub/v20240101/storage"
 	asoinsights "github.com/Azure/azure-service-operator/v2/api/insights/v1api20200202/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
 	asodns "github.com/Azure/azure-service-operator/v2/api/network/v1api20180501/storage"
@@ -124,6 +125,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asoasg.AddToScheme(scheme)
 	_ = asowatcher.AddToScheme(scheme)
 	_ = asoservicebus.AddToScheme(scheme)
+	_ = asoeventhub.AddToScheme(scheme)
 	return scheme
 }
 
@@ -185,6 +187,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asoasg.ApplicationSecurityGroup{}, Name: "aso_network_applicationsecuritygroup"},
 		{Obj: &asowatcher.NetworkWatcher{}, Name: "aso_network_networkwatcher"},
 		{Obj: &asoservicebus.Namespace{}, Name: "aso_servicebus_namespace"},
+		{Obj: &asoeventhub.Namespace{}, Name: "aso_eventhub_namespace"},
 	}
 }
 

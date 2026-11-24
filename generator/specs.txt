@@ -47,3 +47,4 @@ specification/postgresql
 specification/postgresqlhsc
 specification/mongocluster
 specification/servicebus
+specification/eventhub

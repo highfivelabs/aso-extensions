@@ -51,3 +51,4 @@ resources:
 - appconfiguration.azure.com_configurationstores.yaml
 - documentdb.azure.com_mongoclusters.yaml
 - servicebus.azure.com_namespaces.yaml
+- eventhub.azure.com_namespaces.yaml

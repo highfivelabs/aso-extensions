@@ -25,6 +25,7 @@ network/ApplicationSecurityGroup
 network/NetworkWatcher
 network/NetworkInterface
 servicebus/Namespace
+eventhub/Namespace
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase
