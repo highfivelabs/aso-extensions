@@ -995,3 +995,1487 @@ TagProductLink: Resource
     ├── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+Workspace: Resource
+├── Owner: apimanagement/v20240501.Service
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+WorkspaceApi: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (30 properties)
+│   ├── APIVersion: *string
+│   ├── ApiRevision: *string
+│   ├── ApiRevisionDescription: *string
+│   ├── ApiType: *string
+│   ├── ApiVersionDescription: *string
+│   ├── ApiVersionSet: *Object (7 properties)
+│   │   ├── Description: *string
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Reference: *genruntime.ResourceReference
+│   │   ├── VersionHeaderName: *string
+│   │   ├── VersionQueryName: *string
+│   │   └── VersioningScheme: *string
+│   ├── ApiVersionSetReference: *genruntime.ResourceReference
+│   ├── AuthenticationSettings: *Object (5 properties)
+│   │   ├── OAuth2: *Object (3 properties)
+│   │   │   ├── AuthorizationServerId: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Scope: *string
+│   │   ├── OAuth2AuthenticationSettings: Object (3 properties)[]
+│   │   │   ├── AuthorizationServerId: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Scope: *string
+│   │   ├── Openid: *Object (3 properties)
+│   │   │   ├── BearerTokenSendingMethods: string[]
+│   │   │   ├── OpenidProviderId: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── OpenidAuthenticationSettings: Object (3 properties)[]
+│   │   │   ├── BearerTokenSendingMethods: string[]
+│   │   │   ├── OpenidProviderId: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── AzureName: string
+│   ├── Contact: *Object (4 properties)
+│   │   ├── Email: *string
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Url: *string
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── Format: *string
+│   ├── IsCurrent: *bool
+│   ├── License: *Object (3 properties)
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Url: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Path: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Protocols: string[]
+│   ├── ServiceUrl: *string
+│   ├── SourceApiReference: *genruntime.ResourceReference
+│   ├── SubscriptionKeyParameterNames: *Object (3 properties)
+│   │   ├── Header: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Query: *string
+│   ├── SubscriptionRequired: *bool
+│   ├── TermsOfServiceUrl: *string
+│   ├── TranslateRequiredQueryParameters: *string
+│   ├── Type: *string
+│   ├── Value: *string
+│   └── WsdlSelector: *Object (3 properties)
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── WsdlEndpointName: *string
+│       └── WsdlServiceName: *string
+└── Status: Object (27 properties)
+    ├── APIVersion: *string
+    ├── ApiRevision: *string
+    ├── ApiRevisionDescription: *string
+    ├── ApiVersionDescription: *string
+    ├── ApiVersionSet: *Object (7 properties)
+    │   ├── Description: *string
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── VersionHeaderName: *string
+    │   ├── VersionQueryName: *string
+    │   └── VersioningScheme: *string
+    ├── ApiVersionSetId: *string
+    ├── AuthenticationSettings: *Object (5 properties)
+    │   ├── OAuth2: *Object (3 properties)
+    │   │   ├── AuthorizationServerId: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Scope: *string
+    │   ├── OAuth2AuthenticationSettings: Object (3 properties)[]
+    │   │   ├── AuthorizationServerId: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Scope: *string
+    │   ├── Openid: *Object (3 properties)
+    │   │   ├── BearerTokenSendingMethods: string[]
+    │   │   ├── OpenidProviderId: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── OpenidAuthenticationSettings: Object (3 properties)[]
+    │   │   ├── BearerTokenSendingMethods: string[]
+    │   │   ├── OpenidProviderId: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── Contact: *Object (4 properties)
+    │   ├── Email: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Url: *string
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── Id: *string
+    ├── IsCurrent: *bool
+    ├── IsOnline: *bool
+    ├── License: *Object (3 properties)
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Url: *string
+    ├── Name: *string
+    ├── Path: *string
+    ├── PropertiesType: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Protocols: string[]
+    ├── ProvisioningState: *string
+    ├── ServiceUrl: *string
+    ├── SourceApiId: *string
+    ├── SubscriptionKeyParameterNames: *Object (3 properties)
+    │   ├── Header: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Query: *string
+    ├── SubscriptionRequired: *bool
+    ├── TermsOfServiceUrl: *string
+    └── Type: *string
+
+WorkspaceApiDiagnostic: Resource
+├── Owner: apimanagement/v20240501.WorkspaceApi
+├── Spec: Object (15 properties)
+│   ├── AlwaysLog: *string
+│   ├── AzureName: string
+│   ├── Backend: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Request: *Object (4 properties)
+│   │   │   ├── Body: *Object (2 properties)
+│   │   │   │   ├── Bytes: *int
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── DataMasking: *Object (3 properties)
+│   │   │   │   ├── Headers: Object (3 properties)[]
+│   │   │   │   │   ├── Mode: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Value: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── QueryParams: Object (3 properties)[]
+│   │   │   │       ├── Mode: *string
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       └── Value: *string
+│   │   │   ├── Headers: string[]
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── Response: *Object (4 properties)
+│   │       ├── Body: *Object (2 properties)
+│   │       │   ├── Bytes: *int
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       ├── DataMasking: *Object (3 properties)
+│   │       │   ├── Headers: Object (3 properties)[]
+│   │       │   │   ├── Mode: *string
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   └── Value: *string
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   └── QueryParams: Object (3 properties)[]
+│   │       │       ├── Mode: *string
+│   │       │       ├── PropertyBag: genruntime.PropertyBag
+│   │       │       └── Value: *string
+│   │       ├── Headers: string[]
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── Frontend: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Request: *Object (4 properties)
+│   │   │   ├── Body: *Object (2 properties)
+│   │   │   │   ├── Bytes: *int
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── DataMasking: *Object (3 properties)
+│   │   │   │   ├── Headers: Object (3 properties)[]
+│   │   │   │   │   ├── Mode: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Value: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── QueryParams: Object (3 properties)[]
+│   │   │   │       ├── Mode: *string
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       └── Value: *string
+│   │   │   ├── Headers: string[]
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── Response: *Object (4 properties)
+│   │       ├── Body: *Object (2 properties)
+│   │       │   ├── Bytes: *int
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       ├── DataMasking: *Object (3 properties)
+│   │       │   ├── Headers: Object (3 properties)[]
+│   │       │   │   ├── Mode: *string
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   └── Value: *string
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   └── QueryParams: Object (3 properties)[]
+│   │       │       ├── Mode: *string
+│   │       │       ├── PropertyBag: genruntime.PropertyBag
+│   │       │       └── Value: *string
+│   │       ├── Headers: string[]
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── HttpCorrelationProtocol: *string
+│   ├── LogClientIp: *bool
+│   ├── LoggerReference: *genruntime.ResourceReference
+│   ├── Metrics: *bool
+│   ├── OperationNameFormat: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Sampling: *Object (3 properties)
+│   │   ├── Percentage: *int
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SamplingType: *string
+│   └── Verbosity: *string
+└── Status: Object (15 properties)
+    ├── AlwaysLog: *string
+    ├── Backend: *Object (3 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Request: *Object (4 properties)
+    │   │   ├── Body: *Object (2 properties)
+    │   │   │   ├── Bytes: *int
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── DataMasking: *Object (3 properties)
+    │   │   │   ├── Headers: Object (3 properties)[]
+    │   │   │   │   ├── Mode: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── Value: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── QueryParams: Object (3 properties)[]
+    │   │   │       ├── Mode: *string
+    │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │       └── Value: *string
+    │   │   ├── Headers: string[]
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── Response: *Object (4 properties)
+    │       ├── Body: *Object (2 properties)
+    │       │   ├── Bytes: *int
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── DataMasking: *Object (3 properties)
+    │       │   ├── Headers: Object (3 properties)[]
+    │       │   │   ├── Mode: *string
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   └── Value: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── QueryParams: Object (3 properties)[]
+    │       │       ├── Mode: *string
+    │       │       ├── PropertyBag: genruntime.PropertyBag
+    │       │       └── Value: *string
+    │       ├── Headers: string[]
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── Frontend: *Object (3 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Request: *Object (4 properties)
+    │   │   ├── Body: *Object (2 properties)
+    │   │   │   ├── Bytes: *int
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── DataMasking: *Object (3 properties)
+    │   │   │   ├── Headers: Object (3 properties)[]
+    │   │   │   │   ├── Mode: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── Value: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── QueryParams: Object (3 properties)[]
+    │   │   │       ├── Mode: *string
+    │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │       └── Value: *string
+    │   │   ├── Headers: string[]
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── Response: *Object (4 properties)
+    │       ├── Body: *Object (2 properties)
+    │       │   ├── Bytes: *int
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── DataMasking: *Object (3 properties)
+    │       │   ├── Headers: Object (3 properties)[]
+    │       │   │   ├── Mode: *string
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   └── Value: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── QueryParams: Object (3 properties)[]
+    │       │       ├── Mode: *string
+    │       │       ├── PropertyBag: genruntime.PropertyBag
+    │       │       └── Value: *string
+    │       ├── Headers: string[]
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── HttpCorrelationProtocol: *string
+    ├── Id: *string
+    ├── LogClientIp: *bool
+    ├── LoggerId: *string
+    ├── Metrics: *bool
+    ├── Name: *string
+    ├── OperationNameFormat: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Sampling: *Object (3 properties)
+    │   ├── Percentage: *float64
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── SamplingType: *string
+    ├── Type: *string
+    └── Verbosity: *string
+
+WorkspaceApiOperation: Resource
+├── Owner: apimanagement/v20240501.WorkspaceApi
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── Method: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Policies: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Request: *Object (5 properties)
+│   │   ├── Description: *string
+│   │   ├── Headers: Object (10 properties)[]
+│   │   │   ├── DefaultValue: *string
+│   │   │   ├── Description: *string
+│   │   │   ├── Examples: map[string]Object (5 properties)
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── ExternalValue: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Summary: *string
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Required: *bool
+│   │   │   ├── SchemaId: *string
+│   │   │   ├── Type: *string
+│   │   │   ├── TypeName: *string
+│   │   │   └── Values: string[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── QueryParameters: Object (10 properties)[]
+│   │   │   ├── DefaultValue: *string
+│   │   │   ├── Description: *string
+│   │   │   ├── Examples: map[string]Object (5 properties)
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── ExternalValue: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Summary: *string
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Required: *bool
+│   │   │   ├── SchemaId: *string
+│   │   │   ├── Type: *string
+│   │   │   ├── TypeName: *string
+│   │   │   └── Values: string[]
+│   │   └── Representations: Object (6 properties)[]
+│   │       ├── ContentType: *string
+│   │       ├── Examples: map[string]Object (5 properties)
+│   │       │   ├── Description: *string
+│   │       │   ├── ExternalValue: *string
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   ├── Summary: *string
+│   │       │   └── Value: *v1.JSON
+│   │       ├── FormParameters: Object (10 properties)[]
+│   │       │   ├── DefaultValue: *string
+│   │       │   ├── Description: *string
+│   │       │   ├── Examples: map[string]Object (5 properties)
+│   │       │   │   ├── Description: *string
+│   │       │   │   ├── ExternalValue: *string
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   ├── Summary: *string
+│   │       │   │   └── Value: *v1.JSON
+│   │       │   ├── Name: *string
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   ├── Required: *bool
+│   │       │   ├── SchemaId: *string
+│   │       │   ├── Type: *string
+│   │       │   ├── TypeName: *string
+│   │       │   └── Values: string[]
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── SchemaId: *string
+│   │       └── TypeName: *string
+│   ├── Responses: Object (5 properties)[]
+│   │   ├── Description: *string
+│   │   ├── Headers: Object (10 properties)[]
+│   │   │   ├── DefaultValue: *string
+│   │   │   ├── Description: *string
+│   │   │   ├── Examples: map[string]Object (5 properties)
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── ExternalValue: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Summary: *string
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Required: *bool
+│   │   │   ├── SchemaId: *string
+│   │   │   ├── Type: *string
+│   │   │   ├── TypeName: *string
+│   │   │   └── Values: string[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Representations: Object (6 properties)[]
+│   │   │   ├── ContentType: *string
+│   │   │   ├── Examples: map[string]Object (5 properties)
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── ExternalValue: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Summary: *string
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   ├── FormParameters: Object (10 properties)[]
+│   │   │   │   ├── DefaultValue: *string
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── Examples: map[string]Object (5 properties)
+│   │   │   │   │   ├── Description: *string
+│   │   │   │   │   ├── ExternalValue: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Summary: *string
+│   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Required: *bool
+│   │   │   │   ├── SchemaId: *string
+│   │   │   │   ├── Type: *string
+│   │   │   │   ├── TypeName: *string
+│   │   │   │   └── Values: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── SchemaId: *string
+│   │   │   └── TypeName: *string
+│   │   └── StatusCode: *int
+│   ├── TemplateParameters: Object (10 properties)[]
+│   │   ├── DefaultValue: *string
+│   │   ├── Description: *string
+│   │   ├── Examples: map[string]Object (5 properties)
+│   │   │   ├── Description: *string
+│   │   │   ├── ExternalValue: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Summary: *string
+│   │   │   └── Value: *v1.JSON
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Required: *bool
+│   │   ├── SchemaId: *string
+│   │   ├── Type: *string
+│   │   ├── TypeName: *string
+│   │   └── Values: string[]
+│   └── UrlTemplate: *string
+└── Status: Object (13 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── Id: *string
+    ├── Method: *string
+    ├── Name: *string
+    ├── Policies: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Request: *Object (5 properties)
+    │   ├── Description: *string
+    │   ├── Headers: Object (10 properties)[]
+    │   │   ├── DefaultValue: *string
+    │   │   ├── Description: *string
+    │   │   ├── Examples: map[string]Object (5 properties)
+    │   │   │   ├── Description: *string
+    │   │   │   ├── ExternalValue: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Summary: *string
+    │   │   │   └── Value: *v1.JSON
+    │   │   ├── Name: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Required: *bool
+    │   │   ├── SchemaId: *string
+    │   │   ├── Type: *string
+    │   │   ├── TypeName: *string
+    │   │   └── Values: string[]
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── QueryParameters: Object (10 properties)[]
+    │   │   ├── DefaultValue: *string
+    │   │   ├── Description: *string
+    │   │   ├── Examples: map[string]Object (5 properties)
+    │   │   │   ├── Description: *string
+    │   │   │   ├── ExternalValue: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Summary: *string
+    │   │   │   └── Value: *v1.JSON
+    │   │   ├── Name: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Required: *bool
+    │   │   ├── SchemaId: *string
+    │   │   ├── Type: *string
+    │   │   ├── TypeName: *string
+    │   │   └── Values: string[]
+    │   └── Representations: Object (6 properties)[]
+    │       ├── ContentType: *string
+    │       ├── Examples: map[string]Object (5 properties)
+    │       │   ├── Description: *string
+    │       │   ├── ExternalValue: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   ├── Summary: *string
+    │       │   └── Value: *v1.JSON
+    │       ├── FormParameters: Object (10 properties)[]
+    │       │   ├── DefaultValue: *string
+    │       │   ├── Description: *string
+    │       │   ├── Examples: map[string]Object (5 properties)
+    │       │   │   ├── Description: *string
+    │       │   │   ├── ExternalValue: *string
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   ├── Summary: *string
+    │       │   │   └── Value: *v1.JSON
+    │       │   ├── Name: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   ├── Required: *bool
+    │       │   ├── SchemaId: *string
+    │       │   ├── Type: *string
+    │       │   ├── TypeName: *string
+    │       │   └── Values: string[]
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── SchemaId: *string
+    │       └── TypeName: *string
+    ├── Responses: Object (5 properties)[]
+    │   ├── Description: *string
+    │   ├── Headers: Object (10 properties)[]
+    │   │   ├── DefaultValue: *string
+    │   │   ├── Description: *string
+    │   │   ├── Examples: map[string]Object (5 properties)
+    │   │   │   ├── Description: *string
+    │   │   │   ├── ExternalValue: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Summary: *string
+    │   │   │   └── Value: *v1.JSON
+    │   │   ├── Name: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Required: *bool
+    │   │   ├── SchemaId: *string
+    │   │   ├── Type: *string
+    │   │   ├── TypeName: *string
+    │   │   └── Values: string[]
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Representations: Object (6 properties)[]
+    │   │   ├── ContentType: *string
+    │   │   ├── Examples: map[string]Object (5 properties)
+    │   │   │   ├── Description: *string
+    │   │   │   ├── ExternalValue: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Summary: *string
+    │   │   │   └── Value: *v1.JSON
+    │   │   ├── FormParameters: Object (10 properties)[]
+    │   │   │   ├── DefaultValue: *string
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Examples: map[string]Object (5 properties)
+    │   │   │   │   ├── Description: *string
+    │   │   │   │   ├── ExternalValue: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── Summary: *string
+    │   │   │   │   └── Value: *v1.JSON
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Required: *bool
+    │   │   │   ├── SchemaId: *string
+    │   │   │   ├── Type: *string
+    │   │   │   ├── TypeName: *string
+    │   │   │   └── Values: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── SchemaId: *string
+    │   │   └── TypeName: *string
+    │   └── StatusCode: *int
+    ├── TemplateParameters: Object (10 properties)[]
+    │   ├── DefaultValue: *string
+    │   ├── Description: *string
+    │   ├── Examples: map[string]Object (5 properties)
+    │   │   ├── Description: *string
+    │   │   ├── ExternalValue: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Summary: *string
+    │   │   └── Value: *v1.JSON
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Required: *bool
+    │   ├── SchemaId: *string
+    │   ├── Type: *string
+    │   ├── TypeName: *string
+    │   └── Values: string[]
+    ├── Type: *string
+    └── UrlTemplate: *string
+
+WorkspaceApiOperationPolicy: Resource
+├── Owner: apimanagement/v20240501.WorkspaceApiOperation
+├── Spec: Object (6 properties)
+│   ├── Format: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Value: *string
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Format: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── Value: *string
+
+WorkspaceApiPolicy: Resource
+├── Owner: apimanagement/v20240501.WorkspaceApi
+├── Spec: Object (6 properties)
+│   ├── Format: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Value: *string
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Format: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── Value: *string
+
+WorkspaceApiRelease: Resource
+├── Owner: apimanagement/v20240501.WorkspaceApi
+├── Spec: Object (7 properties)
+│   ├── ApiReference: *genruntime.ResourceReference
+│   ├── AzureName: string
+│   ├── Notes: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (9 properties)
+    ├── ApiId: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDateTime: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Notes: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── UpdatedDateTime: *string
+
+WorkspaceApiSchema: Resource
+├── Owner: apimanagement/v20240501.WorkspaceApi
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── ContentType: *string
+│   ├── Document: *Object (4 properties)
+│   │   ├── Components: map[string]v1.JSON
+│   │   ├── Definitions: map[string]v1.JSON
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Value: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ContentType: *string
+    ├── Document: *Object (4 properties)
+    │   ├── Components: map[string]v1.JSON
+    │   ├── Definitions: map[string]v1.JSON
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Value: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    └── Type: *string
+
+WorkspaceApiVersionSet: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── VersionHeaderName: *string
+│   ├── VersionQueryName: *string
+│   └── VersioningScheme: *string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    ├── VersionHeaderName: *string
+    ├── VersionQueryName: *string
+    └── VersioningScheme: *string
+
+WorkspaceBackend: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (17 properties)
+│   ├── AzureName: string
+│   ├── CircuitBreaker: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Rules: Object (5 properties)[]
+│   │       ├── AcceptRetryAfter: *bool
+│   │       ├── FailureCondition: *Object (6 properties)
+│   │       │   ├── Count: *int
+│   │       │   ├── ErrorReasons: string[]
+│   │       │   ├── Interval: *string
+│   │       │   ├── Percentage: *int
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   └── StatusCodeRanges: Object (3 properties)[]
+│   │       │       ├── Max: *int
+│   │       │       ├── Min: *int
+│   │       │       └── PropertyBag: genruntime.PropertyBag
+│   │       ├── Name: *string
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── TripDuration: *string
+│   ├── Credentials: *Object (6 properties)
+│   │   ├── Authorization: *Object (3 properties)
+│   │   │   ├── Parameter: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Scheme: *string
+│   │   ├── Certificate: string[]
+│   │   ├── CertificateIds: string[]
+│   │   ├── Header: map[string]string[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Query: map[string]string[]
+│   ├── Description: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Pool: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Services: Object (4 properties)[]
+│   │       ├── Priority: *int
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── Reference: *genruntime.ResourceReference
+│   │       └── Weight: *int
+│   ├── Properties: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── ServiceFabricCluster: *Object (7 properties)
+│   │       ├── ClientCertificateId: *string
+│   │       ├── ClientCertificatethumbprint: *string
+│   │       ├── ManagementEndpoints: string[]
+│   │       ├── MaxPartitionResolutionRetries: *int
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── ServerCertificateThumbprints: string[]
+│   │       └── ServerX509Names: Object (3 properties)[]
+│   │           ├── IssuerCertificateThumbprint: *string
+│   │           ├── Name: *string
+│   │           └── PropertyBag: genruntime.PropertyBag
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Protocol: *string
+│   ├── Proxy: *Object (4 properties)
+│   │   ├── Password: *genruntime.SecretReference
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Url: *string
+│   │   └── Username: *string
+│   ├── ResourceReference: *genruntime.ResourceReference
+│   ├── Title: *string
+│   ├── Tls: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── ValidateCertificateChain: *bool
+│   │   └── ValidateCertificateName: *bool
+│   ├── Type: *string
+│   └── Url: *string
+└── Status: Object (17 properties)
+    ├── CircuitBreaker: *Object (2 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Rules: Object (5 properties)[]
+    │       ├── AcceptRetryAfter: *bool
+    │       ├── FailureCondition: *Object (6 properties)
+    │       │   ├── Count: *int
+    │       │   ├── ErrorReasons: string[]
+    │       │   ├── Interval: *string
+    │       │   ├── Percentage: *int
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── StatusCodeRanges: Object (3 properties)[]
+    │       │       ├── Max: *int
+    │       │       ├── Min: *int
+    │       │       └── PropertyBag: genruntime.PropertyBag
+    │       ├── Name: *string
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── TripDuration: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Credentials: *Object (6 properties)
+    │   ├── Authorization: *Object (3 properties)
+    │   │   ├── Parameter: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Scheme: *string
+    │   ├── Certificate: string[]
+    │   ├── CertificateIds: string[]
+    │   ├── Header: map[string]string[]
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Query: map[string]string[]
+    ├── Description: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Pool: *Object (2 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Services: Object (4 properties)[]
+    │       ├── Id: *string
+    │       ├── Priority: *int
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── Weight: *int
+    ├── Properties: *Object (2 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── ServiceFabricCluster: *Object (7 properties)
+    │       ├── ClientCertificateId: *string
+    │       ├── ClientCertificatethumbprint: *string
+    │       ├── ManagementEndpoints: string[]
+    │       ├── MaxPartitionResolutionRetries: *int
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── ServerCertificateThumbprints: string[]
+    │       └── ServerX509Names: Object (3 properties)[]
+    │           ├── IssuerCertificateThumbprint: *string
+    │           ├── Name: *string
+    │           └── PropertyBag: genruntime.PropertyBag
+    ├── PropertiesType: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Protocol: *string
+    ├── Proxy: *Object (3 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Url: *string
+    │   └── Username: *string
+    ├── ResourceId: *string
+    ├── Title: *string
+    ├── Tls: *Object (3 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ValidateCertificateChain: *bool
+    │   └── ValidateCertificateName: *bool
+    ├── Type: *string
+    └── Url: *string
+
+WorkspaceCertificate: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Data: *genruntime.SecretReference
+│   ├── KeyVault: *Object (4 properties)
+│   │   ├── IdentityClientId: *string
+│   │   ├── IdentityClientIdFromConfig: *genruntime.ConfigMapReference
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretIdentifier: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ExpirationDate: *string
+    ├── Id: *string
+    ├── KeyVault: *Object (4 properties)
+    │   ├── IdentityClientId: *string
+    │   ├── LastStatus: *Object (4 properties)
+    │   │   ├── Code: *string
+    │   │   ├── Message: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── TimeStampUtc: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── SecretIdentifier: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Subject: *string
+    ├── Thumbprint: *string
+    └── Type: *string
+
+WorkspaceDiagnostic: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (15 properties)
+│   ├── AlwaysLog: *string
+│   ├── AzureName: string
+│   ├── Backend: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Request: *Object (4 properties)
+│   │   │   ├── Body: *Object (2 properties)
+│   │   │   │   ├── Bytes: *int
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── DataMasking: *Object (3 properties)
+│   │   │   │   ├── Headers: Object (3 properties)[]
+│   │   │   │   │   ├── Mode: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Value: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── QueryParams: Object (3 properties)[]
+│   │   │   │       ├── Mode: *string
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       └── Value: *string
+│   │   │   ├── Headers: string[]
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── Response: *Object (4 properties)
+│   │       ├── Body: *Object (2 properties)
+│   │       │   ├── Bytes: *int
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       ├── DataMasking: *Object (3 properties)
+│   │       │   ├── Headers: Object (3 properties)[]
+│   │       │   │   ├── Mode: *string
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   └── Value: *string
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   └── QueryParams: Object (3 properties)[]
+│   │       │       ├── Mode: *string
+│   │       │       ├── PropertyBag: genruntime.PropertyBag
+│   │       │       └── Value: *string
+│   │       ├── Headers: string[]
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── Frontend: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Request: *Object (4 properties)
+│   │   │   ├── Body: *Object (2 properties)
+│   │   │   │   ├── Bytes: *int
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── DataMasking: *Object (3 properties)
+│   │   │   │   ├── Headers: Object (3 properties)[]
+│   │   │   │   │   ├── Mode: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Value: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── QueryParams: Object (3 properties)[]
+│   │   │   │       ├── Mode: *string
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       └── Value: *string
+│   │   │   ├── Headers: string[]
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── Response: *Object (4 properties)
+│   │       ├── Body: *Object (2 properties)
+│   │       │   ├── Bytes: *int
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       ├── DataMasking: *Object (3 properties)
+│   │       │   ├── Headers: Object (3 properties)[]
+│   │       │   │   ├── Mode: *string
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   └── Value: *string
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   └── QueryParams: Object (3 properties)[]
+│   │       │       ├── Mode: *string
+│   │       │       ├── PropertyBag: genruntime.PropertyBag
+│   │       │       └── Value: *string
+│   │       ├── Headers: string[]
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── HttpCorrelationProtocol: *string
+│   ├── LogClientIp: *bool
+│   ├── LoggerReference: *genruntime.ResourceReference
+│   ├── Metrics: *bool
+│   ├── OperationNameFormat: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Sampling: *Object (3 properties)
+│   │   ├── Percentage: *int
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SamplingType: *string
+│   └── Verbosity: *string
+└── Status: Object (15 properties)
+    ├── AlwaysLog: *string
+    ├── Backend: *Object (3 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Request: *Object (4 properties)
+    │   │   ├── Body: *Object (2 properties)
+    │   │   │   ├── Bytes: *int
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── DataMasking: *Object (3 properties)
+    │   │   │   ├── Headers: Object (3 properties)[]
+    │   │   │   │   ├── Mode: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── Value: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── QueryParams: Object (3 properties)[]
+    │   │   │       ├── Mode: *string
+    │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │       └── Value: *string
+    │   │   ├── Headers: string[]
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── Response: *Object (4 properties)
+    │       ├── Body: *Object (2 properties)
+    │       │   ├── Bytes: *int
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── DataMasking: *Object (3 properties)
+    │       │   ├── Headers: Object (3 properties)[]
+    │       │   │   ├── Mode: *string
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   └── Value: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── QueryParams: Object (3 properties)[]
+    │       │       ├── Mode: *string
+    │       │       ├── PropertyBag: genruntime.PropertyBag
+    │       │       └── Value: *string
+    │       ├── Headers: string[]
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── Frontend: *Object (3 properties)
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Request: *Object (4 properties)
+    │   │   ├── Body: *Object (2 properties)
+    │   │   │   ├── Bytes: *int
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── DataMasking: *Object (3 properties)
+    │   │   │   ├── Headers: Object (3 properties)[]
+    │   │   │   │   ├── Mode: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── Value: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── QueryParams: Object (3 properties)[]
+    │   │   │       ├── Mode: *string
+    │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │       └── Value: *string
+    │   │   ├── Headers: string[]
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── Response: *Object (4 properties)
+    │       ├── Body: *Object (2 properties)
+    │       │   ├── Bytes: *int
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── DataMasking: *Object (3 properties)
+    │       │   ├── Headers: Object (3 properties)[]
+    │       │   │   ├── Mode: *string
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   └── Value: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── QueryParams: Object (3 properties)[]
+    │       │       ├── Mode: *string
+    │       │       ├── PropertyBag: genruntime.PropertyBag
+    │       │       └── Value: *string
+    │       ├── Headers: string[]
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── HttpCorrelationProtocol: *string
+    ├── Id: *string
+    ├── LogClientIp: *bool
+    ├── LoggerId: *string
+    ├── Metrics: *bool
+    ├── Name: *string
+    ├── OperationNameFormat: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Sampling: *Object (3 properties)
+    │   ├── Percentage: *float64
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── SamplingType: *string
+    ├── Type: *string
+    └── Verbosity: *string
+
+WorkspaceGroup: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── ExternalId: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Type: *string
+└── Status: Object (10 properties)
+    ├── BuiltIn: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── ExternalId: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertiesType: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+WorkspaceGroupUser: Resource
+├── Owner: apimanagement/v20240501.WorkspaceGroup
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (2 properties)
+    ├── Conditions: conditions.Condition[]
+    └── PropertyBag: genruntime.PropertyBag
+
+WorkspaceLogger: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── Credentials: *genruntime.SecretMapReference
+│   ├── Description: *string
+│   ├── IsBuffered: *bool
+│   ├── LoggerType: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── ResourceReference: *genruntime.ResourceReference
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Credentials: map[string]string
+    ├── Description: *string
+    ├── Id: *string
+    ├── IsBuffered: *bool
+    ├── LoggerType: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ResourceId: *string
+    └── Type: *string
+
+WorkspaceNamedValue: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── DisplayName: *string
+│   ├── KeyVault: *Object (4 properties)
+│   │   ├── IdentityClientId: *string
+│   │   ├── IdentityClientIdFromConfig: *genruntime.ConfigMapReference
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretIdentifier: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Secret: *bool
+│   ├── Tags: string[]
+│   └── Value: *string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DisplayName: *string
+    ├── Id: *string
+    ├── KeyVault: *Object (4 properties)
+    │   ├── IdentityClientId: *string
+    │   ├── LastStatus: *Object (4 properties)
+    │   │   ├── Code: *string
+    │   │   ├── Message: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── TimeStampUtc: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── SecretIdentifier: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Secret: *bool
+    ├── Tags: string[]
+    ├── Type: *string
+    └── Value: *string
+
+WorkspacePolicy: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (6 properties)
+│   ├── Format: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Value: *string
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Format: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── Value: *string
+
+WorkspacePolicyFragment: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── Format: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Value: *string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Format: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Type: *string
+    └── Value: *string
+
+WorkspaceProduct: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (12 properties)
+│   ├── ApprovalRequired: *bool
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── State: *string
+│   ├── SubscriptionRequired: *bool
+│   ├── SubscriptionsLimit: *int
+│   └── Terms: *string
+└── Status: Object (12 properties)
+    ├── ApprovalRequired: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── State: *string
+    ├── SubscriptionRequired: *bool
+    ├── SubscriptionsLimit: *int
+    ├── Terms: *string
+    └── Type: *string
+
+WorkspaceProductApiLink: Resource
+├── Owner: apimanagement/v20240501.WorkspaceProduct
+├── Spec: Object (6 properties)
+│   ├── ApiReference: *genruntime.ResourceReference
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (6 properties)
+    ├── ApiId: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+WorkspaceProductGroupLink: Resource
+├── Owner: apimanagement/v20240501.WorkspaceProduct
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── GroupReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── GroupId: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+WorkspaceProductPolicy: Resource
+├── Owner: apimanagement/v20240501.WorkspaceProduct
+├── Spec: Object (6 properties)
+│   ├── Format: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Value: *string
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Format: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── Value: *string
+
+WorkspaceSchema: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── Document: map[string]v1.JSON
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── SchemaType: *string
+│   └── Value: *v1.JSON
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Document: map[string]v1.JSON
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SchemaType: *string
+    ├── Type: *string
+    └── Value: *v1.JSON
+
+WorkspaceSubscription: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (12 properties)
+│   ├── AllowTracing: *bool
+│   ├── AzureName: string
+│   ├── DisplayName: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── OwnerReference: *genruntime.ResourceReference
+│   ├── PrimaryKey: *genruntime.SecretReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Scope: *string
+│   ├── SecondaryKey: *genruntime.SecretReference
+│   └── State: *string
+└── Status: Object (16 properties)
+    ├── AllowTracing: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedDate: *string
+    ├── DisplayName: *string
+    ├── EndDate: *string
+    ├── ExpirationDate: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── NotificationDate: *string
+    ├── OwnerId: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Scope: *string
+    ├── StartDate: *string
+    ├── State: *string
+    ├── StateComment: *string
+    └── Type: *string
+
+WorkspaceTag: Resource
+├── Owner: apimanagement/v20240501.Workspace
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── DisplayName: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DisplayName: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+WorkspaceTagApiLink: Resource
+├── Owner: apimanagement/v20240501.WorkspaceTag
+├── Spec: Object (6 properties)
+│   ├── ApiReference: *genruntime.ResourceReference
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (6 properties)
+    ├── ApiId: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+WorkspaceTagOperationLink: Resource
+├── Owner: apimanagement/v20240501.WorkspaceTag
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperationReference: *genruntime.ResourceReference
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── OperationId: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+WorkspaceTagProductLink: Resource
+├── Owner: apimanagement/v20240501.WorkspaceTag
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── ProductReference: *genruntime.ResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── ProductId: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+

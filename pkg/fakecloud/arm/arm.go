@@ -416,6 +416,14 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		writeJSON(w, http.StatusOK, a.render(id, *res))
+	case http.MethodHead:
+		// CheckExistence, which ASO's reconciler uses for a resource with
+		// no GET (an API Management workspace group's users): 204 or 404.
+		if _, ok := a.resources[key]; ok {
+			w.WriteHeader(http.StatusNoContent)
+		} else {
+			w.WriteHeader(http.StatusNotFound)
+		}
 	case http.MethodPut:
 		if l := a.lockOver(id, "ReadOnly"); l != nil {
 			writeScopeLocked(w, r.Method, id, l)

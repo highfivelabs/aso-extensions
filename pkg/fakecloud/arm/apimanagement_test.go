@@ -115,3 +115,54 @@ func TestAPIManagementLinksAndGateways(t *testing.T) {
 	put("a connection to a missing workspace", gws+"edge/configConnections/team", props(`{"sourceId":"`+svc+`/workspaces/missing"}`), http.StatusNotFound)
 	put("a connection", gws+"edge/configConnections/team", props(`{"sourceId":"`+workspace+`"}`), http.StatusCreated)
 }
+
+// The third part (docs/plan.md f72): a workspace has a display name and a
+// service of a tier that takes workspaces, and its children's rules are
+// scoped to it.
+func TestAPIManagementWorkspaces(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/apis"
+	a.AddResource(rg)
+	put := func(what, id, body string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, id, body)
+		expect(t, what, code, resp, want)
+	}
+	props := func(p string) string { return `{"properties":` + p + `}` }
+	service := func(name, sku string) string {
+		id := rg + "/providers/Microsoft.ApiManagement/service/" + name
+		put("a "+sku+" service", id, `{"location":"westus","sku":{"name":"`+sku+`","capacity":1},"properties":{"publisherEmail":"apim@example.com","publisherName":"test"}}`, http.StatusCreated)
+		return id
+	}
+	developer, premium := service("developer", "Developer"), service("premium", "Premium")
+	put("a workspace on a Developer service", developer+"/workspaces/team", props(`{"displayName":"Team"}`), http.StatusBadRequest)
+	ws := premium + "/workspaces/team"
+	put("a workspace with no display name", ws, props(`{}`), http.StatusBadRequest)
+	put("a workspace", ws, props(`{"displayName":"Team","description":"The team's APIs"}`), http.StatusCreated)
+	stood := rg + "/providers/Microsoft.ApiManagement/service/stand-in"
+	a.AddResource(stood)
+	put("a workspace on a service the fake holds no SKU of", stood+"/workspaces/team", props(`{"displayName":"Team"}`), http.StatusCreated)
+
+	api := ws + "/apis/orders"
+	put("a workspace API", api, props(`{"displayName":"Orders","path":"orders","protocols":["https"]}`), http.StatusCreated)
+	put("an undeclared template parameter", api+"/operations/get", props(`{"displayName":"Get","method":"GET","urlTemplate":"/orders/{id}"}`), http.StatusBadRequest)
+	put("an operation", api+"/operations/get", props(`{"displayName":"Get","method":"GET","urlTemplate":"/orders"}`), http.StatusCreated)
+	put("a policy of another root", api+"/operations/get/policies/policy", props(`{"value":"<inbound/>"}`), http.StatusBadRequest)
+	put("a service tag's link from the workspace", ws+"/tags/public/apiLinks/orders", props(`{"apiId":"`+api+`"}`), http.StatusNotFound)
+	put("a workspace tag", ws+"/tags/public", props(`{"displayName":"Public"}`), http.StatusCreated)
+	put("a workspace tag's link to the service's API", ws+"/tags/public/apiLinks/orders", props(`{"apiId":"`+premium+`/apis/orders"}`), http.StatusBadRequest)
+	put("a workspace tag's API link", ws+"/tags/public/apiLinks/orders", props(`{"apiId":"`+api+`"}`), http.StatusCreated)
+	put("a workspace release of another API", api+"/releases/v1", props(`{"apiId":"`+premium+`/apis/orders"}`), http.StatusBadRequest)
+	put("a workspace release", api+"/releases/v1", props(`{"apiId":"`+api+`"}`), http.StatusCreated)
+
+	// A group's user has no GET: ASO's reconciler asks with a HEAD.
+	user := ws + "/groups/developers/users/alice"
+	put("a workspace group", ws+"/groups/developers", props(`{"displayName":"Developers"}`), http.StatusCreated)
+	if code, _ := do(t, a, http.MethodHead, user, ""); code != http.StatusNotFound {
+		t.Errorf("HEAD on a missing user: %d, want 404", code)
+	}
+	put("a group's user", user, `{}`, http.StatusCreated)
+	if code, _ := do(t, a, http.MethodHead, user, ""); code != http.StatusNoContent {
+		t.Errorf("HEAD on a user: %d, want 204", code)
+	}
+}

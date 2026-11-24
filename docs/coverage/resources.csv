@@ -137,37 +137,37 @@ Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/productLinks,1,,0,a
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/templates,7,,0,,0,7,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/tenant,4,,0,,0,4,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/users,10,apimanagement.azure.com/User,10,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis,42,,0,,0,42,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/diagnostics,33,,0,,0,33,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/operations,94,,0,,0,94,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/operations/policies,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/policies,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/releases,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/schemas,4,,0,,0,4,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apiVersionSets,5,,0,,0,5,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/backends,36,,0,,0,36,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/certificates,4,,0,,0,4,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/diagnostics,33,,0,,0,33,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/groups,4,,0,,0,4,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/groups/users,0,,0,,0,0,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/loggers,5,,0,,0,5,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/namedValues,6,,0,,0,6,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces,2,,0,apimanagement.azure.hfl.dev/Workspace,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis,42,,0,apimanagement.azure.hfl.dev/WorkspaceApi,42,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/diagnostics,33,,0,apimanagement.azure.hfl.dev/WorkspaceApiDiagnostic,33,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/operations,94,,0,apimanagement.azure.hfl.dev/WorkspaceApiOperation,94,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/operations/policies,2,,0,apimanagement.azure.hfl.dev/WorkspaceApiOperationPolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/policies,2,,0,apimanagement.azure.hfl.dev/WorkspaceApiPolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/releases,2,,0,apimanagement.azure.hfl.dev/WorkspaceApiRelease,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/schemas,4,,0,apimanagement.azure.hfl.dev/WorkspaceApiSchema,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apiVersionSets,5,,0,apimanagement.azure.hfl.dev/WorkspaceApiVersionSet,5,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/backends,36,,0,apimanagement.azure.hfl.dev/WorkspaceBackend,36,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/certificates,4,,0,apimanagement.azure.hfl.dev/WorkspaceCertificate,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/diagnostics,33,,0,apimanagement.azure.hfl.dev/WorkspaceDiagnostic,33,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/groups,4,,0,apimanagement.azure.hfl.dev/WorkspaceGroup,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/groups/users,0,,0,apimanagement.azure.hfl.dev/WorkspaceGroupUser,0,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/loggers,5,,0,apimanagement.azure.hfl.dev/WorkspaceLogger,4,1,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/namedValues,6,,0,apimanagement.azure.hfl.dev/WorkspaceNamedValue,6,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/notifications,0,,0,,0,0,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/notifications/recipientEmails,0,,0,,0,0,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/notifications/recipientUsers,0,,0,,0,0,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/policies,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/policyFragments,3,,0,,0,3,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products,7,,0,,0,7,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/apiLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/groupLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/policies,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/schemas,4,,0,,0,4,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/subscriptions,7,,0,,0,7,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/apiLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/operationLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/productLinks,1,,0,,0,1,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/policies,2,,0,apimanagement.azure.hfl.dev/WorkspacePolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/policyFragments,3,,0,apimanagement.azure.hfl.dev/WorkspacePolicyFragment,3,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products,7,,0,apimanagement.azure.hfl.dev/WorkspaceProduct,7,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/apiLinks,1,,0,apimanagement.azure.hfl.dev/WorkspaceProductApiLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/groupLinks,1,,0,apimanagement.azure.hfl.dev/WorkspaceProductGroupLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/policies,2,,0,apimanagement.azure.hfl.dev/WorkspaceProductPolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/schemas,4,,0,apimanagement.azure.hfl.dev/WorkspaceSchema,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/subscriptions,7,,0,apimanagement.azure.hfl.dev/WorkspaceSubscription,7,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags,1,,0,apimanagement.azure.hfl.dev/WorkspaceTag,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/apiLinks,1,,0,apimanagement.azure.hfl.dev/WorkspaceTagApiLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/operationLinks,1,,0,apimanagement.azure.hfl.dev/WorkspaceTagOperationLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/productLinks,1,,0,apimanagement.azure.hfl.dev/WorkspaceTagProductLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.App,Microsoft.App/agents,32,,0,app.azure.hfl.dev/Agent,32,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.App,Microsoft.App/agents/connectors,5,,0,app.azure.hfl.dev/AgentsConnector,5,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.App,Microsoft.App/builders,7,,0,,0,7,false,spec_api=2025-02-02-preview; spec-preview-only

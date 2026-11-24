@@ -337,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 7,124 (16.4%) in 535 further resources; uncovered 29,125 (67.2%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 7,428 (17.1%) in 563 further resources; uncovered 28,821 (66.5%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.0% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 2.9% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.0% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 4.0% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 27.9% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 30.0% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
 
 **Ours.**
 
@@ -380,6 +380,34 @@ Generated; these cannot drift from the data.
 | `apimanagement.azure.hfl.dev/TagApiLink` | `Microsoft.ApiManagement/service/tags/apiLinks` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/TagOperationLink` | `Microsoft.ApiManagement/service/tags/operationLinks` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/TagProductLink` | `Microsoft.ApiManagement/service/tags/productLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/Workspace` | `Microsoft.ApiManagement/service/workspaces` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApi` | `Microsoft.ApiManagement/service/workspaces/apis` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiDiagnostic` | `Microsoft.ApiManagement/service/workspaces/apis/diagnostics` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiOperation` | `Microsoft.ApiManagement/service/workspaces/apis/operations` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiOperationPolicy` | `Microsoft.ApiManagement/service/workspaces/apis/operations/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiPolicy` | `Microsoft.ApiManagement/service/workspaces/apis/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiRelease` | `Microsoft.ApiManagement/service/workspaces/apis/releases` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiSchema` | `Microsoft.ApiManagement/service/workspaces/apis/schemas` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiVersionSet` | `Microsoft.ApiManagement/service/workspaces/apiVersionSets` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceBackend` | `Microsoft.ApiManagement/service/workspaces/backends` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceCertificate` | `Microsoft.ApiManagement/service/workspaces/certificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceDiagnostic` | `Microsoft.ApiManagement/service/workspaces/diagnostics` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceGroup` | `Microsoft.ApiManagement/service/workspaces/groups` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceGroupUser` | `Microsoft.ApiManagement/service/workspaces/groups/users` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceLogger` | `Microsoft.ApiManagement/service/workspaces/loggers` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceNamedValue` | `Microsoft.ApiManagement/service/workspaces/namedValues` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspacePolicy` | `Microsoft.ApiManagement/service/workspaces/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspacePolicyFragment` | `Microsoft.ApiManagement/service/workspaces/policyFragments` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceProduct` | `Microsoft.ApiManagement/service/workspaces/products` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceProductApiLink` | `Microsoft.ApiManagement/service/workspaces/products/apiLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceProductGroupLink` | `Microsoft.ApiManagement/service/workspaces/products/groupLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceProductPolicy` | `Microsoft.ApiManagement/service/workspaces/products/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceSchema` | `Microsoft.ApiManagement/service/workspaces/schemas` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceSubscription` | `Microsoft.ApiManagement/service/workspaces/subscriptions` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceTag` | `Microsoft.ApiManagement/service/workspaces/tags` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceTagApiLink` | `Microsoft.ApiManagement/service/workspaces/tags/apiLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceTagOperationLink` | `Microsoft.ApiManagement/service/workspaces/tags/operationLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceTagProductLink` | `Microsoft.ApiManagement/service/workspaces/tags/productLinks` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/Agent` | `Microsoft.App/agents` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/AgentsConnector` | `Microsoft.App/agents/connectors` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ConnectedEnvironment` | `Microsoft.App/connectedEnvironments` | ARM wire type of the generated kind (`apis/arm`) |

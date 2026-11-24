@@ -49,8 +49,19 @@ import (
 //     connection is a workspace gateway's (400) and names a workspace that
 //     exists (404).
 //
+// And of the third part, docs/plan.md f72:
+//
+//   - a workspace sends its displayName (400), on a service of the Premium
+//     or PremiumV2 tier when the fake holds the service's SKU (400; a
+//     service made outside the fake, as ASO's stand-ins are, is not
+//     checked);
+//   - a workspace's children follow the rules above, scoped to the
+//     workspace: a tag link names a tag of the workspace, a link what is
+//     in the workspace, a release the workspace's API.
+//
 // Not modelled: the gateway running the APIs, policy semantics, resolvers
-// being called, the developer portal, an identity provider's or
+// being called, a workspace's APIs answering only through a workspace
+// gateway, a workspace's own role assignments, the developer portal, an identity provider's or
 // authorization server's endpoints answering, and the error codes (the
 // fake's own).
 var (
@@ -96,11 +107,15 @@ var (
 	apimConfigConn   = regexp.MustCompile(`(?i)^(/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.apimanagement/gateways/[^/]+)/configconnections/[^/]+$`)
 	apimWorkspace    = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.apimanagement/service/[^/]+/workspaces/[^/]+$`)
 	apimWorkspaceGW  = []string{"WorkspaceGatewayStandard", "WorkspaceGatewayPremium"}
-	apimTagLink      = regexp.MustCompile(`(?i)^(apis/[^/]+|products/[^/]+|apis/[^/]+/operations/[^/]+)/tags/([^/]+)$`)
-	apimOpPolicy     = regexp.MustCompile(`(?i)^apis/[^/]+/(operations|resolvers)/[^/]+/policies/[^/]+$`)
-	apimOp           = regexp.MustCompile(`(?i)^apis/[^/]+/operations/[^/]+$`)
-	apimIdP          = regexp.MustCompile(`(?i)^identityproviders/([^/]+)$`)
-	apimCache        = regexp.MustCompile(`(?i)^caches/[^/]+$`)
+	apimInWorkspace  = regexp.MustCompile(`(?i)^(workspaces/[^/]+)(/.*)?$`)
+	// The tiers that take workspaces (API Management's documentation,
+	// "Workspaces in Azure API Management").
+	apimWorkspaceTiers = []string{"Premium", "PremiumV2"}
+	apimTagLink        = regexp.MustCompile(`(?i)^(apis/[^/]+|products/[^/]+|apis/[^/]+/operations/[^/]+)/tags/([^/]+)$`)
+	apimOpPolicy       = regexp.MustCompile(`(?i)^apis/[^/]+/(operations|resolvers)/[^/]+/policies/[^/]+$`)
+	apimOp             = regexp.MustCompile(`(?i)^apis/[^/]+/operations/[^/]+$`)
+	apimIdP            = regexp.MustCompile(`(?i)^identityproviders/([^/]+)$`)
+	apimCache          = regexp.MustCompile(`(?i)^caches/[^/]+$`)
 )
 
 // checkAPIManagement refuses what the rules above do not allow; code is ""
@@ -144,6 +159,24 @@ func (a *ARM) checkAPIManagement(id string, body map[string]any) (status int, co
 		return 0, "", ""
 	}
 	service, rest := m[1], m[2]
+	// A workspace's children are the service's contracts, scoped to it:
+	// what they link and name is the workspace's.
+	scope := service
+	if w := apimInWorkspace.FindStringSubmatch(rest); w != nil {
+		if w[2] == "" {
+			if stringOf(props["displayName"]) == "" {
+				return bad("'displayName' is required.")
+			}
+			if svc := a.resources[strings.ToLower(service)]; svc != nil {
+				sku, _ := (*svc)["sku"].(map[string]any)
+				if name := stringOf(sku["name"]); name != "" && !slices.Contains(apimWorkspaceTiers, name) {
+					return bad("Workspaces are available in the " + strings.Join(apimWorkspaceTiers, " and ") + " tiers, not " + name + ".")
+				}
+			}
+			return 0, "", ""
+		}
+		scope, rest = service+"/"+w[1], w[2][1:]
+	}
 	for _, r := range apimRequired {
 		if !r.path.MatchString(rest) {
 			continue
@@ -183,7 +216,7 @@ func (a *ARM) checkAPIManagement(id string, body map[string]any) (status int, co
 			return bad("A resolver's path is Type/field, not " + stringOf(props["path"]) + ".")
 		}
 	case apimRelease.MatchString(rest):
-		api := service + "/" + apimRelease.FindStringSubmatch(rest)[1]
+		api := scope + "/" + apimRelease.FindStringSubmatch(rest)[1]
 		if r := stringOf(props["apiId"]); r != "" && !strings.EqualFold(r, api) {
 			return bad("A release's apiId is the API it belongs to, " + api + "; not " + r + ".")
 		}
@@ -210,15 +243,15 @@ func (a *ARM) checkAPIManagement(id string, body map[string]any) (status int, co
 			continue
 		}
 		target := stringOf(props[l.prop])
-		if !strings.HasPrefix(strings.ToLower(target), strings.ToLower(service)+"/") || !l.target.MatchString(target[len(service)+1:]) {
-			return bad("'" + l.prop + "' is the ARM ID of what the link names, in the same service; not " + target + ".")
+		if !strings.HasPrefix(strings.ToLower(target), strings.ToLower(scope)+"/") || !l.target.MatchString(target[len(scope)+1:]) {
+			return bad("'" + l.prop + "' is the ARM ID of what the link names, in the same service (and workspace); not " + target + ".")
 		}
 		if !a.exists(target) {
 			return http.StatusNotFound, "ResourceNotFound", "The resource " + target + " was not found."
 		}
 	}
 	if t := apimTagLink.FindStringSubmatch(rest); t != nil {
-		if tag := service + "/tags/" + t[2]; !a.exists(tag) {
+		if tag := scope + "/tags/" + t[2]; !a.exists(tag) {
 			return http.StatusNotFound, "ResourceNotFound", "The tag " + tag + " was not found."
 		}
 	}

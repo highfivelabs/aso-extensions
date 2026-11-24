@@ -57,3 +57,59 @@ TagOperationLinkExtension: Object (0 properties)
 
 TagProductLinkExtension: Object (0 properties)
 
+WorkspaceApiDiagnosticExtension: Object (0 properties)
+
+WorkspaceApiExtension: Object (0 properties)
+
+WorkspaceApiOperationExtension: Object (0 properties)
+
+WorkspaceApiOperationPolicyExtension: Object (0 properties)
+
+WorkspaceApiPolicyExtension: Object (0 properties)
+
+WorkspaceApiReleaseExtension: Object (0 properties)
+
+WorkspaceApiSchemaExtension: Object (0 properties)
+
+WorkspaceApiVersionSetExtension: Object (0 properties)
+
+WorkspaceBackendExtension: Object (0 properties)
+
+WorkspaceCertificateExtension: Object (0 properties)
+
+WorkspaceDiagnosticExtension: Object (0 properties)
+
+WorkspaceExtension: Object (0 properties)
+
+WorkspaceGroupExtension: Object (0 properties)
+
+WorkspaceGroupUserExtension: Object (0 properties)
+
+WorkspaceLoggerExtension: Object (0 properties)
+
+WorkspaceNamedValueExtension: Object (0 properties)
+
+WorkspacePolicyExtension: Object (0 properties)
+
+WorkspacePolicyFragmentExtension: Object (0 properties)
+
+WorkspaceProductApiLinkExtension: Object (0 properties)
+
+WorkspaceProductExtension: Object (0 properties)
+
+WorkspaceProductGroupLinkExtension: Object (0 properties)
+
+WorkspaceProductPolicyExtension: Object (0 properties)
+
+WorkspaceSchemaExtension: Object (0 properties)
+
+WorkspaceSubscriptionExtension: Object (0 properties)
+
+WorkspaceTagApiLinkExtension: Object (0 properties)
+
+WorkspaceTagExtension: Object (0 properties)
+
+WorkspaceTagOperationLinkExtension: Object (0 properties)
+
+WorkspaceTagProductLinkExtension: Object (0 properties)
+

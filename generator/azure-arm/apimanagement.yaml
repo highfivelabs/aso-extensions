@@ -17,8 +17,16 @@
 # group: a workspace gateway) with their configuration connections to a
 # workspace.
 #
-# Not exported here: workspaces and their children (the next part of t4),
-# the developer portal's content, API issues and the tenant's access keys.
+# The third part (docs/plan.md f72): workspaces (a Premium service's) and
+# their children, the same contracts as the service's own: APIs with their
+# operations, policies, releases, schemas and diagnostics, version sets,
+# backends, certificates, diagnostics, groups and their users, loggers,
+# named values, policies and fragments, products with their links and
+# policies, schemas, subscriptions, and tags with their links.
+#
+# Not exported here: a workspace's notifications and their recipients (no
+# attributes; their names are an enum of notification kinds), the
+# developer portal's content, API issues and the tenant's access keys.
 typeFilters:
   - action: include
     group: apimanagement
@@ -160,6 +168,129 @@ groupModelConfiguration:
     BackendSubnetConfiguration:
       Id:
         $referenceType: arm # the subnet a workspace gateway is injected into
+    Service_Workspace:
+      $exportAs: Workspace
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Api:
+      $exportAs: WorkspaceApi
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Diagnostic:
+      $exportAs: WorkspaceApiDiagnostic
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Operation:
+      $exportAs: WorkspaceApiOperation
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Operations_Policy:
+      $exportAs: WorkspaceApiOperationPolicy
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Policy:
+      $exportAs: WorkspaceApiPolicy
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Release:
+      $exportAs: WorkspaceApiRelease
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Schema:
+      $exportAs: WorkspaceApiSchema
+      $supportedFrom: v0.1.0
+    Service_Workspaces_ApiVersionSet:
+      $exportAs: WorkspaceApiVersionSet
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Backend:
+      $exportAs: WorkspaceBackend
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Certificate:
+      $exportAs: WorkspaceCertificate
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Diagnostic:
+      $exportAs: WorkspaceDiagnostic
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Group:
+      $exportAs: WorkspaceGroup
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Groups_User:
+      $exportAs: WorkspaceGroupUser
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Logger:
+      $exportAs: WorkspaceLogger
+      $supportedFrom: v0.1.0
+    Service_Workspaces_NamedValue:
+      $exportAs: WorkspaceNamedValue
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Policy:
+      $exportAs: WorkspacePolicy
+      $supportedFrom: v0.1.0
+    Service_Workspaces_PolicyFragment:
+      $exportAs: WorkspacePolicyFragment
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Product:
+      $exportAs: WorkspaceProduct
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Products_ApiLink:
+      $exportAs: WorkspaceProductApiLink
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Products_GroupLink:
+      $exportAs: WorkspaceProductGroupLink
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Products_Policy:
+      $exportAs: WorkspaceProductPolicy
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Schema:
+      $exportAs: WorkspaceSchema
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Subscription:
+      $exportAs: WorkspaceSubscription
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Tag:
+      $exportAs: WorkspaceTag
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Tags_ApiLink:
+      $exportAs: WorkspaceTagApiLink
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Tags_OperationLink:
+      $exportAs: WorkspaceTagOperationLink
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Tags_ProductLink:
+      $exportAs: WorkspaceTagProductLink
+      $supportedFrom: v0.1.0
+    # Copied from ASO's v2/azure-arm/apimanagement.yaml (2024-05-01, at the
+    # pin): the labels of the service-level types the workspace kinds share.
+    ApiCreateOrUpdateProperties:
+      ApiVersionSetId:
+        $referenceType: arm
+      SourceApiId:
+        $referenceType: arm
+    ApiVersionSetContractDetails:
+      Id:
+        $referenceType: arm
+    BackendContractProperties:
+      ResourceId:
+        $referenceType: arm
+    BackendProxyContract:
+      Password:
+        $importSecretMode: required
+    CertificateCreateOrUpdateProperties:
+      Data:
+        $importSecretMode: required
+      Password:
+        $importSecretMode: required
+    DiagnosticContractProperties:
+      LoggerId:
+        $referenceType: arm
+    KeyVaultContractCreateProperties:
+      IdentityClientId:
+        $importConfigMapMode: optional
+    LoggerContractProperties:
+      Credentials:
+        $importSecretMode: required
+      ResourceId:
+        $referenceType: arm
+    SubscriptionCreateParameterProperties:
+      PrimaryKey:
+        $importSecretMode: required
+      SecondaryKey:
+        $importSecretMode: required
+      OwnerId:
+        $referenceType: arm
     CacheContractProperties:
       ResourceId:
         $referenceType: arm # the Azure Cache for Redis behind an external cache (ASO's Redis, or an ARM ID)

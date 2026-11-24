@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	corev1 "k8s.io/api/core/v1"
+	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	asoapim "github.com/Azure/azure-service-operator/v2/api/apimanagement/v20240501/storage"
@@ -420,6 +421,263 @@ func TestAPIManagementLinksAndGateways(t *testing.T) {
 		}
 	}
 	for _, id := range []string{gwID, gwID + "/configConnections/team-connection", tagID, tagID + "/apiLinks/catalog", apiID + "/resolvers/item-resolver", apiID + "/wikis/default"} {
+		if armFake.HasResource(id) {
+			t.Errorf("%s is still in the fake", id)
+		}
+	}
+}
+
+// The workspace kinds of docs/plan.md f72, on ASO's Service by name: a
+// workspace with an API, its operation and that operation's policy, a
+// version set, a tag linked to the API, a product with links to the API
+// and a group, a named value, a backend, a logger with its credentials
+// from a Secret and a diagnostic naming it by object, a subscription to the
+// product with its keys from a Secret, a policy, a policy fragment and a
+// schema; and a workspace gateway's configuration connection naming the
+// workspace by object. A workspace tag's link to the service's own API is
+// refused (the fake's rules,
+// apimanagement.go); a change is PUT again; deleted, all go.
+func TestAPIManagementWorkspaces(t *testing.T) {
+	ctx := context.Background()
+	ns := namespace(t, "apim-ws")
+	strictCredential(t, ns, clientA)
+	trustNamespace(ns)
+	rgID := "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"
+	svcID := rgID + "/providers/Microsoft.ApiManagement/service/gateway"
+	serviceAPI := svcID + "/apis/legacy"
+	for _, id := range []string{rgID, svcID, serviceAPI} {
+		armFake.AddResource(id)
+	}
+	resourceGroup(t, ns, "rg", ns+"-rg")
+	svc := &asoapim.Service{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "gateway"}}
+	svc.Spec.AzureName, svc.Spec.Location = "gateway", ptr("westus")
+	svc.Spec.Owner = &genruntime.KnownResourceReference{Name: "rg"}
+	asoStandIn(t, svc, svcID)
+	if err := k8s.Create(ctx, &corev1.Secret{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "apim-keys"},
+		StringData: map[string]string{"instrumentationKey": "00000000-0000-0000-0000-0000000000f1", "primary": "primary-key-value", "secondary": "secondary-key-value"},
+	}); err != nil {
+		t.Fatal(err)
+	}
+	in := func(name string) *genruntime.KnownResourceReference {
+		return &genruntime.KnownResourceReference{Name: name}
+	}
+
+	ws := &apim.Workspace{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team"},
+		Spec:       apim.Workspace_Spec{Owner: in("gateway"), DisplayName: ptr("Team"), Description: ptr("The team's APIs")},
+	}
+	gw := &apim.Gateway{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-gateway"},
+		Spec: apim.Gateway_Spec{Owner: in("rg"), Location: ptr("westus"),
+			Sku: &apim.ApiManagementGatewaySkuProperties{Name: ptr(apim.ApiManagementGatewaySkuProperties_Name_WorkspaceGatewayStandard), Capacity: ptr(1)}},
+	}
+	for _, o := range []conditioned{ws, gw} {
+		if err := k8s.Create(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	eventually(t, timeout, "the workspace Ready", ready(ws))
+	eventually(t, timeout, "the gateway Ready", ready(gw))
+
+	// What the others name: the API, tag, product, group and logger.
+	onWS := in("team")
+	versions := &apim.WorkspaceApiVersionSet{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "orders-versions"},
+		Spec: apim.WorkspaceApiVersionSet_Spec{Owner: onWS, DisplayName: ptr("Orders"),
+			VersioningScheme: ptr(apim.ApiVersionSetContractProperties_VersioningScheme_Segment)},
+	}
+	api := &apim.WorkspaceApi{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "orders"},
+		Spec: apim.WorkspaceApi_Spec{Owner: onWS, DisplayName: ptr("Orders"), Path: ptr("team/orders"),
+			Protocols:  []apim.ApiCreateOrUpdateProperties_Protocols{apim.ApiCreateOrUpdateProperties_Protocols_Https},
+			ServiceUrl: ptr("https://orders.example.com"), APIVersion: ptr("v1"),
+			ApiVersionSet: &apim.ApiVersionSetContractDetails{Reference: &genruntime.ResourceReference{
+				Group: "apimanagement.azure.hfl.dev", Kind: "WorkspaceApiVersionSet", Name: "orders-versions"}}},
+	}
+	tag := &apim.WorkspaceTag{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-public"},
+		Spec:       apim.WorkspaceTag_Spec{AzureName: "public", Owner: onWS, DisplayName: ptr("Public")},
+	}
+	product := &apim.WorkspaceProduct{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-starter"},
+		Spec: apim.WorkspaceProduct_Spec{AzureName: "starter", Owner: onWS, DisplayName: ptr("Starter"),
+			SubscriptionRequired: ptr(true), State: ptr(apim.ProductContractProperties_State_Published)},
+	}
+	group := &apim.WorkspaceGroup{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-developers"},
+		Spec:       apim.WorkspaceGroup_Spec{AzureName: "developers", Owner: onWS, DisplayName: ptr("Developers")},
+	}
+	logger := &apim.WorkspaceLogger{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-insights"},
+		Spec: apim.WorkspaceLogger_Spec{AzureName: "insights", Owner: onWS, LoggerType: ptr(apim.LoggerContractProperties_LoggerType_ApplicationInsights),
+			Credentials: &genruntime.SecretMapReference{Name: "apim-keys"}},
+	}
+	named := &apim.WorkspaceNamedValue{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-region"},
+		Spec:       apim.WorkspaceNamedValue_Spec{AzureName: "region", Owner: onWS, DisplayName: ptr("region"), Value: ptr("westus")},
+	}
+	backend := &apim.WorkspaceBackend{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-orders-backend"},
+		Spec: apim.WorkspaceBackend_Spec{AzureName: "orders", Owner: onWS, Url: ptr("https://orders.example.com"),
+			Protocol: ptr(apim.BackendContractProperties_Protocol_Http)},
+	}
+	fragment := &apim.WorkspacePolicyFragment{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-cors"},
+		Spec: apim.WorkspacePolicyFragment_Spec{AzureName: "cors", Owner: onWS,
+			Value: ptr(`<fragment><cors><allowed-origins><origin>*</origin></allowed-origins></cors></fragment>`)},
+	}
+	policy := &apim.WorkspacePolicy{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-policy"},
+		Spec: apim.WorkspacePolicy_Spec{Owner: onWS,
+			Value: ptr(`<policies><inbound><base /></inbound><backend><base /></backend><outbound><base /></outbound></policies>`)},
+	}
+	schema := &apim.WorkspaceSchema{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-order-schema"},
+		Spec: apim.WorkspaceSchema_Spec{AzureName: "order", Owner: onWS, SchemaType: ptr(apim.GlobalSchemaContractProperties_SchemaType_Json),
+			Document: map[string]v1.JSON{"type": {Raw: []byte(`"object"`)}}},
+	}
+	conn := &apim.GatewayConfigConnection{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-connection"},
+		Spec: apim.GatewayConfigConnection_Spec{Owner: in("team-gateway"),
+			SourceReference: &genruntime.ResourceReference{Group: "apimanagement.azure.hfl.dev", Kind: "Workspace", Name: "team"}},
+	}
+	second := []conditioned{versions, api, tag, product, group, logger, named, backend, fragment, policy, schema, conn}
+	for _, o := range second {
+		if err := k8s.Create(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, o := range second {
+		eventually(t, timeout, o.GetName()+" Ready", ready(o))
+	}
+
+	op := &apim.WorkspaceApiOperation{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "orders-get"},
+		Spec: apim.WorkspaceApiOperation_Spec{AzureName: "get", Owner: in("orders"), DisplayName: ptr("Get order"), Method: ptr("GET"),
+			UrlTemplate: ptr("/{id}"), TemplateParameters: []apim.ParameterContract{{Name: ptr("id"), Type: ptr("string"), Required: ptr(true)}}},
+	}
+	tagLink := &apim.WorkspaceTagApiLink{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-public-orders"},
+		Spec: apim.WorkspaceTagApiLink_Spec{AzureName: "orders", Owner: in("team-public"),
+			ApiReference: &genruntime.ResourceReference{Group: "apimanagement.azure.hfl.dev", Kind: "WorkspaceApi", Name: "orders"}},
+	}
+	strayLink := &apim.WorkspaceTagApiLink{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-public-legacy"},
+		Spec:       apim.WorkspaceTagApiLink_Spec{AzureName: "legacy", Owner: in("team-public"), ApiReference: &genruntime.ResourceReference{ARMID: serviceAPI}},
+	}
+	productAPI := &apim.WorkspaceProductApiLink{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-starter-orders"},
+		Spec: apim.WorkspaceProductApiLink_Spec{AzureName: "orders", Owner: in("team-starter"),
+			ApiReference: &genruntime.ResourceReference{Group: "apimanagement.azure.hfl.dev", Kind: "WorkspaceApi", Name: "orders"}},
+	}
+	productGroup := &apim.WorkspaceProductGroupLink{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-starter-developers"},
+		Spec: apim.WorkspaceProductGroupLink_Spec{AzureName: "developers", Owner: in("team-starter"),
+			GroupReference: &genruntime.ResourceReference{Group: "apimanagement.azure.hfl.dev", Kind: "WorkspaceGroup", Name: "team-developers"}},
+	}
+	diagnostic := &apim.WorkspaceDiagnostic{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-diagnostic"},
+		Spec: apim.WorkspaceDiagnostic_Spec{AzureName: "applicationinsights", Owner: onWS,
+			LoggerReference: &genruntime.ResourceReference{Group: "apimanagement.azure.hfl.dev", Kind: "WorkspaceLogger", Name: "team-insights"},
+			Sampling:        &apim.SamplingSettings{SamplingType: ptr(apim.SamplingSettings_SamplingType_Fixed), Percentage: ptr(50)}},
+	}
+	sub := &apim.WorkspaceSubscription{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "team-starter-sub"},
+		Spec: apim.WorkspaceSubscription_Spec{AzureName: "starter-sub", Owner: onWS, DisplayName: ptr("Starter"),
+			Scope:      ptr(svcID + "/workspaces/team/products/starter"),
+			PrimaryKey: &genruntime.SecretReference{Name: "apim-keys", Key: "primary"}, SecondaryKey: &genruntime.SecretReference{Name: "apim-keys", Key: "secondary"}},
+	}
+	third := []conditioned{op, tagLink, strayLink, productAPI, productGroup, diagnostic, sub}
+	for _, o := range third {
+		if err := k8s.Create(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, o := range []conditioned{op, tagLink, productAPI, productGroup, diagnostic, sub} {
+		eventually(t, timeout, o.GetName()+" Ready", ready(o))
+	}
+	eventually(t, timeout, "a workspace tag's link to the service's API refused", notReadyWith(strayLink, "same service"))
+	opPolicy := &apim.WorkspaceApiOperationPolicy{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "orders-get-policy"},
+		Spec: apim.WorkspaceApiOperationPolicy_Spec{Owner: in("orders-get"),
+			Value: ptr(`<policies><inbound><base /><include-fragment fragment-id="cors" /></inbound><backend><base /></backend><outbound><base /></outbound></policies>`)},
+	}
+	if err := k8s.Create(ctx, opPolicy); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the operation's policy Ready", ready(opPolicy))
+
+	wsID := svcID + "/workspaces/team"
+	apiID := wsID + "/apis/orders"
+	expectResource(t, apiID, func(r map[string]any) error {
+		p := properties(r)
+		set, _ := p["apiVersionSet"].(map[string]any)
+		if p["path"] != "team/orders" || set["id"] != wsID+"/apiVersionSets/orders-versions" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	expectResource(t, wsID+"/tags/public/apiLinks/orders", func(r map[string]any) error {
+		if p := properties(r); p["apiId"] != apiID {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	expectResource(t, wsID+"/diagnostics/applicationinsights", func(r map[string]any) error {
+		if p := properties(r); p["loggerId"] != wsID+"/loggers/insights" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	expectResource(t, wsID+"/subscriptions/starter-sub", func(r map[string]any) error {
+		if p := properties(r); p["primaryKey"] != "primary-key-value" || p["secondaryKey"] != "secondary-key-value" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	expectResource(t, wsID+"/loggers/insights", func(r map[string]any) error {
+		c, _ := properties(r)["credentials"].(map[string]any)
+		if c["instrumentationKey"] != "00000000-0000-0000-0000-0000000000f1" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	expectResource(t, rgID+"/providers/Microsoft.ApiManagement/gateways/team-gateway/configConnections/team-connection", func(r map[string]any) error {
+		if p := properties(r); p["sourceId"] != wsID {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	for _, id := range []string{apiID + "/operations/get/policies/policy", wsID + "/products/starter/apiLinks/orders", wsID + "/products/starter/groupLinks/developers",
+		wsID + "/namedValues/region", wsID + "/backends/orders", wsID + "/policyFragments/cors", wsID + "/policies/policy", wsID + "/schemas/order"} {
+		if !armFake.HasResource(id) {
+			t.Errorf("%s is not in the fake", id)
+		}
+	}
+
+	// A change is PUT again: the workspace's description.
+	if err := change(t, ws, func(w *apim.Workspace) { w.Spec.Description = ptr("The team's APIs, and only theirs") }); err != nil {
+		t.Fatal(err)
+	}
+	expectResource(t, wsID, func(r map[string]any) error {
+		if p := properties(r); p["description"] != "The team's APIs, and only theirs" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+
+	for _, objs := range [][]conditioned{{opPolicy}, third, second, {ws, gw}} {
+		for _, o := range objs {
+			if err := k8s.Delete(ctx, o); err != nil {
+				t.Fatal(err)
+			}
+		}
+		for _, o := range objs {
+			eventually(t, timeout, o.GetName()+" gone", gone(o))
+		}
+	}
+	for _, id := range []string{wsID, apiID, wsID + "/tags/public", wsID + "/subscriptions/starter-sub"} {
 		if armFake.HasResource(id) {
 			t.Errorf("%s is still in the fake", id)
 		}

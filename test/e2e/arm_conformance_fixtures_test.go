@@ -347,6 +347,14 @@ func init() {
 	f[g+"TagProductLink"] = link("productReference", "/products/conformance")
 	f[g+"ProductGroupLink"] = link("groupReference", "/groups/conformance")
 	f[g+"GatewayConfigConnection"] = conformanceFixture{coveredBy: "TestAPIManagementLinksAndGateways"}
+	// The workspace kinds (f72): the same rules, scoped to the workspace
+	// (the owner's parent).
+	f[g+"WorkspaceApiOperation"], f[g+"WorkspaceApiOperationPolicy"], f[g+"WorkspaceTag"] = f[g+"ApiOperation"], f[g+"ApiOperationPolicy"], f[g+"Tag"]
+	f[g+"WorkspaceApiSchema"], f[g+"WorkspaceSchema"] = f[g+"ApiSchema"], f[g+"GlobalSchema"]
+	f[g+"WorkspaceTagApiLink"], f[g+"WorkspaceProductApiLink"] = link("apiReference", "/apis/conformance"), link("apiReference", "/apis/conformance")
+	f[g+"WorkspaceTagOperationLink"] = link("operationReference", "/apis/conformance/operations/conformance")
+	f[g+"WorkspaceTagProductLink"] = link("productReference", "/products/conformance")
+	f[g+"WorkspaceProductGroupLink"] = link("groupReference", "/groups/conformance")
 	// A MySQL flexible server's threat protection setting is Default and
 	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
 	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

@@ -100,5 +100,7 @@ copied:
     from: {pin: azure-service-operator, paths: [v2/azure-arm/containerinstance.yaml]}
   - here: [generator/azure-arm/signalrservice.yaml]
     from: {pin: azure-service-operator, paths: [v2/azure-arm/signalrservice.yaml]}
+  - here: [generator/azure-arm/apimanagement.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/apimanagement.yaml]}
   - here: [pkg/util/azuresql/azuresql.go, pkg/util/azuresql/role.go]
     from: {pin: azure-service-operator, paths: [v2/internal/util/azuresql/]}

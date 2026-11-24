@@ -367,6 +367,146 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.TagApiLink)})
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.TagOperationLink)})
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.TagProductLink)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.Workspace)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceApi)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceApiDiagnostic)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceApiOperation)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceApiOperationPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceApiPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceApiRelease)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceApiSchema)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceApiVersionSet)})
+	result = append(result, &registration.StorageType{
+		Obj: new(apimanagement_v20240501.WorkspaceBackend),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.proxy.password",
+				Func: indexApimanagementWorkspaceBackendPassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.proxy.password",
+					},
+					&apimanagement_v20240501.WorkspaceBackendList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(apimanagement_v20240501.WorkspaceCertificate),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.data",
+				Func: indexApimanagementWorkspaceCertificateData,
+			},
+			{
+				Key:  ".spec.keyVault.identityClientIdFromConfig",
+				Func: indexApimanagementWorkspaceCertificateIdentityClientIdFromConfig,
+			},
+			{
+				Key:  ".spec.password",
+				Func: indexApimanagementWorkspaceCertificatePassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.data",
+						".spec.password",
+					},
+					&apimanagement_v20240501.WorkspaceCertificateList{}),
+			},
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.keyVault.identityClientIdFromConfig",
+					},
+					&apimanagement_v20240501.WorkspaceCertificateList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceDiagnostic)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceGroup)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceGroupUser)})
+	result = append(result, &registration.StorageType{
+		Obj: new(apimanagement_v20240501.WorkspaceLogger),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.credentials",
+				Func: indexApimanagementWorkspaceLoggerCredentials,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.credentials",
+					},
+					&apimanagement_v20240501.WorkspaceLoggerList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(apimanagement_v20240501.WorkspaceNamedValue),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.keyVault.identityClientIdFromConfig",
+				Func: indexApimanagementWorkspaceNamedValueIdentityClientIdFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.keyVault.identityClientIdFromConfig",
+					},
+					&apimanagement_v20240501.WorkspaceNamedValueList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspacePolicy)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspacePolicyFragment)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceProduct)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceProductApiLink)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceProductGroupLink)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceProductPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceSchema)})
+	result = append(result, &registration.StorageType{
+		Obj: new(apimanagement_v20240501.WorkspaceSubscription),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.primaryKey",
+				Func: indexApimanagementWorkspaceSubscriptionPrimaryKey,
+			},
+			{
+				Key:  ".spec.secondaryKey",
+				Func: indexApimanagementWorkspaceSubscriptionSecondaryKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.primaryKey",
+						".spec.secondaryKey",
+					},
+					&apimanagement_v20240501.WorkspaceSubscriptionList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceTag)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceTagApiLink)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceTagOperationLink)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.WorkspaceTagProductLink)})
 	result = append(result, &registration.StorageType{
 		Obj: new(app_v20250101.ManagedEnvironmentsCertificate),
 		Indexes: []registration.Index{
@@ -3075,7 +3215,35 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(apimanagement_v20240501.Tag)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.TagApiLink)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.TagOperationLink)},
-		&registration.KnownType{Obj: new(apimanagement_v20240501.TagProductLink)})
+		&registration.KnownType{Obj: new(apimanagement_v20240501.TagProductLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.Workspace)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceApi)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceApiDiagnostic)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceApiOperation)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceApiOperationPolicy)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceApiPolicy)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceApiRelease)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceApiSchema)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceApiVersionSet)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceBackend)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceCertificate)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceDiagnostic)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceGroup)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceGroupUser)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceLogger)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceNamedValue)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspacePolicy)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspacePolicyFragment)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceProduct)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceProductApiLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceProductGroupLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceProductPolicy)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceSchema)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceSubscription)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceTag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceTagApiLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceTagOperationLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.WorkspaceTagProductLink)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiOperation)},
@@ -3105,7 +3273,35 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.Tag)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.TagApiLink)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.TagOperationLink)},
-		&registration.KnownType{Obj: new(apimanagement_v20240501s.TagProductLink)})
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.TagProductLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.Workspace)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceApi)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceApiDiagnostic)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceApiOperation)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceApiOperationPolicy)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceApiPolicy)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceApiRelease)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceApiSchema)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceApiVersionSet)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceBackend)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceCertificate)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceDiagnostic)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceGroup)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceGroupUser)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceLogger)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceNamedValue)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspacePolicy)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspacePolicyFragment)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceProduct)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceProductApiLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceProductGroupLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceProductPolicy)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceSchema)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceSubscription)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceTag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceTagApiLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceTagOperationLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.WorkspaceTagProductLink)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsCertificate)},
@@ -4526,6 +4722,34 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &apimanagement_customizations.TagExtension{})
 	result = append(result, &apimanagement_customizations.TagOperationLinkExtension{})
 	result = append(result, &apimanagement_customizations.TagProductLinkExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceApiDiagnosticExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceApiExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceApiOperationExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceApiOperationPolicyExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceApiPolicyExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceApiReleaseExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceApiSchemaExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceApiVersionSetExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceBackendExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceCertificateExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceDiagnosticExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceGroupExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceGroupUserExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceLoggerExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceNamedValueExtension{})
+	result = append(result, &apimanagement_customizations.WorkspacePolicyExtension{})
+	result = append(result, &apimanagement_customizations.WorkspacePolicyFragmentExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceProductApiLinkExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceProductExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceProductGroupLinkExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceProductPolicyExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceSchemaExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceSubscriptionExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceTagApiLinkExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceTagExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceTagOperationLinkExtension{})
+	result = append(result, &apimanagement_customizations.WorkspaceTagProductLinkExtension{})
 	result = append(result, &app_customizations.AgentExtension{})
 	result = append(result, &app_customizations.AgentsConnectorExtension{})
 	result = append(result, &app_customizations.ConnectedEnvironmentExtension{})
@@ -5103,6 +5327,111 @@ func indexApimanagementOpenIdConnectProviderClientSecret(rawObj client.Object) [
 		return nil
 	}
 	return obj.Spec.ClientSecret.Index()
+}
+
+// indexApimanagementWorkspaceBackendPassword an index function for apimanagement_v20240501.WorkspaceBackend .spec.proxy.password
+func indexApimanagementWorkspaceBackendPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.WorkspaceBackend)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Proxy == nil {
+		return nil
+	}
+	if obj.Spec.Proxy.Password == nil {
+		return nil
+	}
+	return obj.Spec.Proxy.Password.Index()
+}
+
+// indexApimanagementWorkspaceCertificateData an index function for apimanagement_v20240501.WorkspaceCertificate .spec.data
+func indexApimanagementWorkspaceCertificateData(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.WorkspaceCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Data == nil {
+		return nil
+	}
+	return obj.Spec.Data.Index()
+}
+
+// indexApimanagementWorkspaceCertificateIdentityClientIdFromConfig an index function for apimanagement_v20240501.WorkspaceCertificate .spec.keyVault.identityClientIdFromConfig
+func indexApimanagementWorkspaceCertificateIdentityClientIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.WorkspaceCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.KeyVault == nil {
+		return nil
+	}
+	if obj.Spec.KeyVault.IdentityClientIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.KeyVault.IdentityClientIdFromConfig.Index()
+}
+
+// indexApimanagementWorkspaceCertificatePassword an index function for apimanagement_v20240501.WorkspaceCertificate .spec.password
+func indexApimanagementWorkspaceCertificatePassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.WorkspaceCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Password == nil {
+		return nil
+	}
+	return obj.Spec.Password.Index()
+}
+
+// indexApimanagementWorkspaceLoggerCredentials an index function for apimanagement_v20240501.WorkspaceLogger .spec.credentials
+func indexApimanagementWorkspaceLoggerCredentials(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.WorkspaceLogger)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Credentials == nil {
+		return nil
+	}
+	return obj.Spec.Credentials.Index()
+}
+
+// indexApimanagementWorkspaceNamedValueIdentityClientIdFromConfig an index function for apimanagement_v20240501.WorkspaceNamedValue .spec.keyVault.identityClientIdFromConfig
+func indexApimanagementWorkspaceNamedValueIdentityClientIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.WorkspaceNamedValue)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.KeyVault == nil {
+		return nil
+	}
+	if obj.Spec.KeyVault.IdentityClientIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.KeyVault.IdentityClientIdFromConfig.Index()
+}
+
+// indexApimanagementWorkspaceSubscriptionPrimaryKey an index function for apimanagement_v20240501.WorkspaceSubscription .spec.primaryKey
+func indexApimanagementWorkspaceSubscriptionPrimaryKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.WorkspaceSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.PrimaryKey == nil {
+		return nil
+	}
+	return obj.Spec.PrimaryKey.Index()
+}
+
+// indexApimanagementWorkspaceSubscriptionSecondaryKey an index function for apimanagement_v20240501.WorkspaceSubscription .spec.secondaryKey
+func indexApimanagementWorkspaceSubscriptionSecondaryKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.WorkspaceSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SecondaryKey == nil {
+		return nil
+	}
+	return obj.Spec.SecondaryKey.Index()
 }
 
 // indexAppAgentConnectionKey an index function for app_v20260701.Agent .spec.properties.incidentManagementConfiguration.connectionKey
