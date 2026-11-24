@@ -62,3 +62,38 @@ func TestMachineLearning(t *testing.T) {
 	put("a batch deployment", be+"/deployments/v1", `{"compute":"cpu-cluster","model":{"referenceType":"Id","assetId":"azureml:churn:1"}}`, http.StatusCreated)
 	put("a batch endpoint defaulting to it", be, `{"authMode":"AADToken","defaults":{"deploymentName":"v1"}}`, http.StatusOK)
 }
+
+// Machine Learning jobs and schedules (f85): a job's compute exists; a job
+// that exists may change its tags, display name, description, properties
+// and archive flag, nothing else; a schedule's cron expression has five
+// fields and a recurrence's hours and minutes are in range.
+func TestMachineLearningJobs(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/ml"
+	ws := rg + "/providers/Microsoft.MachineLearningServices/workspaces/lab"
+	compute := ws + "/computes/cpu"
+	for _, id := range []string{rg, ws, compute} {
+		a.AddResource(id)
+	}
+	put := func(what, id, props string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, id, `{"properties":`+props+`}`)
+		expect(t, what, code, resp, want)
+	}
+	job := ws + "/jobs/train"
+	command := `"jobType":"Command","command":"python train.py","environmentId":"azureml:sklearn:1"`
+	put("a job on a missing compute", job, `{`+command+`,"computeId":"`+compute+`x"}`, http.StatusNotFound)
+	put("a job", job, `{`+command+`,"computeId":"`+compute+`","description":"first"}`, http.StatusCreated)
+	put("a job's tags and description changed", job, `{`+command+`,"computeId":"`+compute+`","description":"kept","tags":{"team":"ml"}}`, http.StatusOK)
+	put("a job archived", job, `{`+command+`,"computeId":"`+compute+`","description":"kept","tags":{"team":"ml"},"isArchived":true}`, http.StatusOK)
+	put("a job's command changed", job, `{"jobType":"Command","command":"python retrain.py","environmentId":"azureml:sklearn:1","computeId":"`+compute+`"}`, http.StatusConflict)
+	put("a job's compute dropped", job, `{`+command+`,"description":"kept","tags":{"team":"ml"},"isArchived":true}`, http.StatusConflict)
+
+	sched := ws + "/schedules/nightly"
+	action := `"action":{"actionType":"CreateJob","jobDefinition":{` + command + `}}`
+	put("a cron of four fields", sched, `{`+action+`,"trigger":{"triggerType":"Cron","expression":"0 2 * *"}}`, http.StatusBadRequest)
+	put("a cron schedule", sched, `{`+action+`,"trigger":{"triggerType":"Cron","expression":"0 2 * * *"}}`, http.StatusCreated)
+	put("a recurrence at hour 24", sched, `{`+action+`,"trigger":{"triggerType":"Recurrence","frequency":"Day","interval":1,"schedule":{"hours":[24],"minutes":[0]}}}`, http.StatusBadRequest)
+	put("a recurrence at minute 60", sched, `{`+action+`,"trigger":{"triggerType":"Recurrence","frequency":"Day","interval":1,"schedule":{"hours":[2],"minutes":[60]}}}`, http.StatusBadRequest)
+	put("a recurrence", sched, `{`+action+`,"isEnabled":false,"trigger":{"triggerType":"Recurrence","frequency":"Day","interval":1,"schedule":{"hours":[2],"minutes":[30]}}}`, http.StatusOK)
+}

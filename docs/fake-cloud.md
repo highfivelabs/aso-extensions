@@ -636,9 +636,13 @@ upstream's); the catalog's chart tests do that.
   online endpoint sends traffic only to its deployments that exist, 0 to
   100 each and 100 in all (400); a batch endpoint's default deployment
   exists (400); a managed online deployment names its instance type
-  (400). Connections follow `privateendpoints.go`. Not modelled: what an
-  asset points at, image builds, the managed network, serving and
-  scaling, and the error codes.
+  (400). A job's compute exists (404); a job that exists may change only
+  its tags, display name, description, properties and archive flag (409: a
+  job runs once); a schedule's cron expression has five fields and a
+  recurrence's hours and minutes are in range (400). Connections follow
+  `privateendpoints.go`. Not modelled: what an asset points at, image
+  builds, the managed network, serving and scaling, a job running (no
+  status or outputs), a schedule firing, and the error codes.
 - A MySQL flexible server's advanced threat protection setting
   (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
   2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404

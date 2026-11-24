@@ -2324,16 +2324,10 @@ var materializationSettings_StoreType_STATUS_Values = map[string]Materialization
 	"onlineandoffline": MaterializationSettings_StoreType_STATUS_OnlineAndOffline,
 }
 
-// Configuration for notification.
 type NotificationSetting struct {
-	// EmailOn: Send email notification to user on specified notification type
-	EmailOn []EmailNotificationEnableType `json:"emailOn,omitempty"`
-
-	// Emails: This is the email recipient list which has a limitation of 499 characters in total concat with comma separator
-	Emails []string `json:"emails,omitempty"`
-
-	// Webhooks: Send webhook callback to a service. Key is a user-provided name for the webhook.
-	Webhooks map[string]Webhook `json:"webhooks,omitempty"`
+	EmailOn  []EmailNotificationEnableType `json:"emailOn,omitempty"`
+	Emails   []string                      `json:"emails,omitempty"`
+	Webhooks map[string]Webhook            `json:"webhooks,omitempty"`
 }
 
 var _ genruntime.ARMTransformer = &NotificationSetting{}
@@ -2533,16 +2527,10 @@ func (setting *NotificationSetting) Initialize_From_NotificationSetting_STATUS(s
 	return nil
 }
 
-// Configuration for notification.
 type NotificationSetting_STATUS struct {
-	// EmailOn: Send email notification to user on specified notification type
-	EmailOn []EmailNotificationEnableType_STATUS `json:"emailOn,omitempty"`
-
-	// Emails: This is the email recipient list which has a limitation of 499 characters in total concat with comma separator
-	Emails []string `json:"emails,omitempty"`
-
-	// Webhooks: Send webhook callback to a service. Key is a user-provided name for the webhook.
-	Webhooks map[string]Webhook_STATUS `json:"webhooks,omitempty"`
+	EmailOn  []EmailNotificationEnableType_STATUS `json:"emailOn,omitempty"`
+	Emails   []string                             `json:"emails,omitempty"`
+	Webhooks map[string]Webhook_STATUS            `json:"webhooks,omitempty"`
 }
 
 var _ genruntime.FromARMConverter = &NotificationSetting_STATUS{}
@@ -2672,33 +2660,18 @@ func (setting *NotificationSetting_STATUS) AssignProperties_To_NotificationSetti
 }
 
 type RecurrenceTrigger struct {
-	// EndTime: Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer
-	// https://en.wikipedia.org/wiki/ISO_8601.
-	// Recommented format would be "2022-06-01T00:00:01"
-	// If not present, the schedule will run indefinitely
 	EndTime *string `json:"endTime,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// Frequency: [Required] The frequency to trigger schedule.
 	Frequency *RecurrenceFrequency `json:"frequency,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// Interval: [Required] Specifies schedule interval in conjunction with frequency
-	Interval *int `json:"interval,omitempty"`
-
-	// Schedule: The recurrence schedule.
-	Schedule *RecurrenceSchedule `json:"schedule,omitempty"`
-
-	// StartTime: Specifies start time of schedule in ISO 8601 format, but without a UTC offset.
-	StartTime *string `json:"startTime,omitempty"`
-
-	// TimeZone: Specifies time zone in which the schedule runs.
-	// TimeZone should follow Windows time zone format. Refer:
-	// https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
-	TimeZone *string `json:"timeZone,omitempty"`
+	Interval  *int                `json:"interval,omitempty"`
+	Schedule  *RecurrenceSchedule `json:"schedule,omitempty"`
+	StartTime *string             `json:"startTime,omitempty"`
+	TimeZone  *string             `json:"timeZone,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// TriggerType: [Required]
 	TriggerType *RecurrenceTrigger_TriggerType `json:"triggerType,omitempty"`
 }
 
@@ -2755,10 +2728,11 @@ func (trigger *RecurrenceTrigger) ConvertToARM(resolved genruntime.ConvertToARMR
 
 	// Set property "TriggerType":
 	if trigger.TriggerType != nil {
-		var temp string
-		temp = string(*trigger.TriggerType)
-		triggerType := arm.RecurrenceTrigger_TriggerType(temp)
-		result.TriggerType = &triggerType
+		var temp arm.RecurrenceTrigger_TriggerType
+		var temp1 string
+		temp1 = string(*trigger.TriggerType)
+		temp = arm.RecurrenceTrigger_TriggerType(temp1)
+		result.TriggerType = temp
 	}
 	return result, nil
 }
@@ -2819,12 +2793,11 @@ func (trigger *RecurrenceTrigger) PopulateFromARM(owner genruntime.ArbitraryOwne
 	}
 
 	// Set property "TriggerType":
-	if typedInput.TriggerType != nil {
-		var temp string
-		temp = string(*typedInput.TriggerType)
-		triggerType := RecurrenceTrigger_TriggerType(temp)
-		trigger.TriggerType = &triggerType
-	}
+	var temp RecurrenceTrigger_TriggerType
+	var temp1 string
+	temp1 = string(typedInput.TriggerType)
+	temp = RecurrenceTrigger_TriggerType(temp1)
+	trigger.TriggerType = &temp
 
 	// No error
 	return nil
@@ -2983,30 +2956,12 @@ func (trigger *RecurrenceTrigger) Initialize_From_RecurrenceTrigger_STATUS(sourc
 }
 
 type RecurrenceTrigger_STATUS struct {
-	// EndTime: Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer
-	// https://en.wikipedia.org/wiki/ISO_8601.
-	// Recommented format would be "2022-06-01T00:00:01"
-	// If not present, the schedule will run indefinitely
-	EndTime *string `json:"endTime,omitempty"`
-
-	// Frequency: [Required] The frequency to trigger schedule.
-	Frequency *RecurrenceFrequency_STATUS `json:"frequency,omitempty"`
-
-	// Interval: [Required] Specifies schedule interval in conjunction with frequency
-	Interval *int `json:"interval,omitempty"`
-
-	// Schedule: The recurrence schedule.
-	Schedule *RecurrenceSchedule_STATUS `json:"schedule,omitempty"`
-
-	// StartTime: Specifies start time of schedule in ISO 8601 format, but without a UTC offset.
-	StartTime *string `json:"startTime,omitempty"`
-
-	// TimeZone: Specifies time zone in which the schedule runs.
-	// TimeZone should follow Windows time zone format. Refer:
-	// https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
-	TimeZone *string `json:"timeZone,omitempty"`
-
-	// TriggerType: [Required]
+	EndTime     *string                               `json:"endTime,omitempty"`
+	Frequency   *RecurrenceFrequency_STATUS           `json:"frequency,omitempty"`
+	Interval    *int                                  `json:"interval,omitempty"`
+	Schedule    *RecurrenceSchedule_STATUS            `json:"schedule,omitempty"`
+	StartTime   *string                               `json:"startTime,omitempty"`
+	TimeZone    *string                               `json:"timeZone,omitempty"`
 	TriggerType *RecurrenceTrigger_TriggerType_STATUS `json:"triggerType,omitempty"`
 }
 
@@ -3068,12 +3023,11 @@ func (trigger *RecurrenceTrigger_STATUS) PopulateFromARM(owner genruntime.Arbitr
 	}
 
 	// Set property "TriggerType":
-	if typedInput.TriggerType != nil {
-		var temp string
-		temp = string(*typedInput.TriggerType)
-		triggerType := RecurrenceTrigger_TriggerType_STATUS(temp)
-		trigger.TriggerType = &triggerType
-	}
+	var temp RecurrenceTrigger_TriggerType_STATUS
+	var temp1 string
+	temp1 = string(typedInput.TriggerType)
+	temp = RecurrenceTrigger_TriggerType_STATUS(temp1)
+	trigger.TriggerType = &temp
 
 	// No error
 	return nil
@@ -3184,7 +3138,6 @@ func (trigger *RecurrenceTrigger_STATUS) AssignProperties_To_RecurrenceTrigger_S
 	return nil
 }
 
-// Enum to determine the email notification type.
 // +kubebuilder:validation:Enum={"JobCancelled","JobCompleted","JobFailed"}
 type EmailNotificationEnableType string
 
@@ -3201,7 +3154,6 @@ var emailNotificationEnableType_Values = map[string]EmailNotificationEnableType{
 	"jobfailed":    EmailNotificationEnableType_JobFailed,
 }
 
-// Enum to determine the email notification type.
 type EmailNotificationEnableType_STATUS string
 
 const (
@@ -3217,7 +3169,6 @@ var emailNotificationEnableType_STATUS_Values = map[string]EmailNotificationEnab
 	"jobfailed":    EmailNotificationEnableType_STATUS_JobFailed,
 }
 
-// Enum to describe the frequency of a recurrence schedule
 // +kubebuilder:validation:Enum={"Day","Hour","Minute","Month","Week"}
 type RecurrenceFrequency string
 
@@ -3238,7 +3189,6 @@ var recurrenceFrequency_Values = map[string]RecurrenceFrequency{
 	"week":   RecurrenceFrequency_Week,
 }
 
-// Enum to describe the frequency of a recurrence schedule
 type RecurrenceFrequency_STATUS string
 
 const (
@@ -3260,18 +3210,12 @@ var recurrenceFrequency_STATUS_Values = map[string]RecurrenceFrequency_STATUS{
 
 type RecurrenceSchedule struct {
 	// +kubebuilder:validation:Required
-	// Hours: [Required] List of hours for the schedule.
 	Hours []int `json:"hours,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// Minutes: [Required] List of minutes for the schedule.
-	Minutes []int `json:"minutes,omitempty"`
-
-	// MonthDays: List of month days for the schedule
-	MonthDays []int `json:"monthDays,omitempty"`
-
-	// WeekDays: List of days for the schedule.
-	WeekDays []WeekDay `json:"weekDays,omitempty"`
+	Minutes   []int     `json:"minutes,omitempty"`
+	MonthDays []int     `json:"monthDays,omitempty"`
+	WeekDays  []WeekDay `json:"weekDays,omitempty"`
 }
 
 var _ genruntime.ARMTransformer = &RecurrenceSchedule{}
@@ -3509,17 +3453,10 @@ func (schedule *RecurrenceSchedule) Initialize_From_RecurrenceSchedule_STATUS(so
 }
 
 type RecurrenceSchedule_STATUS struct {
-	// Hours: [Required] List of hours for the schedule.
-	Hours []int `json:"hours,omitempty"`
-
-	// Minutes: [Required] List of minutes for the schedule.
-	Minutes []int `json:"minutes,omitempty"`
-
-	// MonthDays: List of month days for the schedule
-	MonthDays []int `json:"monthDays,omitempty"`
-
-	// WeekDays: List of days for the schedule.
-	WeekDays []WeekDay_STATUS `json:"weekDays,omitempty"`
+	Hours     []int            `json:"hours,omitempty"`
+	Minutes   []int            `json:"minutes,omitempty"`
+	MonthDays []int            `json:"monthDays,omitempty"`
+	WeekDays  []WeekDay_STATUS `json:"weekDays,omitempty"`
 }
 
 var _ genruntime.FromARMConverter = &RecurrenceSchedule_STATUS{}
@@ -3693,7 +3630,6 @@ var recurrenceTrigger_TriggerType_STATUS_Values = map[string]RecurrenceTrigger_T
 }
 
 type Webhook struct {
-	// AzureDevOps: Mutually exclusive with all other properties
 	AzureDevOps *AzureDevOpsWebhook `json:"azureDevOps,omitempty"`
 }
 
@@ -3812,7 +3748,6 @@ func (webhook *Webhook) Initialize_From_Webhook_STATUS(source *Webhook_STATUS) e
 }
 
 type Webhook_STATUS struct {
-	// AzureDevOps: Mutually exclusive with all other properties
 	AzureDevOps *AzureDevOpsWebhook_STATUS `json:"azureDevOps,omitempty"`
 }
 
@@ -3893,11 +3828,9 @@ func (webhook *Webhook_STATUS) AssignProperties_To_Webhook_STATUS(destination *s
 }
 
 type AzureDevOpsWebhook struct {
-	// EventType: Send callback on a specified notification event
 	EventType *string `json:"eventType,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// WebhookType: [Required] Specifies the type of service to send a callback
 	WebhookType *WebhookType `json:"webhookType,omitempty"`
 }
 
@@ -4021,10 +3954,7 @@ func (webhook *AzureDevOpsWebhook) Initialize_From_AzureDevOpsWebhook_STATUS(sou
 }
 
 type AzureDevOpsWebhook_STATUS struct {
-	// EventType: Send callback on a specified notification event
-	EventType *string `json:"eventType,omitempty"`
-
-	// WebhookType: [Required] Specifies the type of service to send a callback
+	EventType   *string             `json:"eventType,omitempty"`
 	WebhookType *WebhookType_STATUS `json:"webhookType,omitempty"`
 }
 
@@ -4105,7 +4035,6 @@ func (webhook *AzureDevOpsWebhook_STATUS) AssignProperties_To_AzureDevOpsWebhook
 	return nil
 }
 
-// Enum of weekday
 // +kubebuilder:validation:Enum={"Friday","Monday","Saturday","Sunday","Thursday","Tuesday","Wednesday"}
 type WeekDay string
 
@@ -4130,7 +4059,6 @@ var weekDay_Values = map[string]WeekDay{
 	"wednesday": WeekDay_Wednesday,
 }
 
-// Enum of weekday
 type WeekDay_STATUS string
 
 const (
@@ -4154,7 +4082,6 @@ var weekDay_STATUS_Values = map[string]WeekDay_STATUS{
 	"wednesday": WeekDay_STATUS_Wednesday,
 }
 
-// Enum to determine the webhook callback service type.
 // +kubebuilder:validation:Enum={"AzureDevOps"}
 type WebhookType string
 
@@ -4165,7 +4092,6 @@ var webhookType_Values = map[string]WebhookType{
 	"azuredevops": WebhookType_AzureDevOps,
 }
 
-// Enum to determine the webhook callback service type.
 type WebhookType_STATUS string
 
 const WebhookType_STATUS_AzureDevOps = WebhookType_STATUS("AzureDevOps")

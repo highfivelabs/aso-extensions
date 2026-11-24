@@ -644,7 +644,7 @@ func AddIndependentPropertyGeneratorsForRecurrenceTrigger_STATUS(gens map[string
 	gens["Interval"] = gen.PtrOf(gen.Int())
 	gens["StartTime"] = gen.PtrOf(gen.AlphaString())
 	gens["TimeZone"] = gen.PtrOf(gen.AlphaString())
-	gens["TriggerType"] = gen.PtrOf(gen.OneConstOf(RecurrenceTrigger_TriggerType_STATUS_Recurrence))
+	gens["TriggerType"] = gen.OneConstOf(RecurrenceTrigger_TriggerType_STATUS_Recurrence)
 }
 
 // AddRelatedPropertyGeneratorsForRecurrenceTrigger_STATUS is a factory method for creating gopter generators

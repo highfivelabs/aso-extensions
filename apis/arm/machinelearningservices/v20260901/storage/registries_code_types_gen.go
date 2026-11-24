@@ -277,7 +277,6 @@ type RegistriesCodeOperatorSpec struct {
 }
 
 // Storage version of v20260901.SystemData_STATUS
-// Metadata pertaining to creation and last modification of the resource.
 type SystemData_STATUS struct {
 	CreatedAt          *string                `json:"createdAt,omitempty"`
 	CreatedBy          *string                `json:"createdBy,omitempty"`

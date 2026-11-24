@@ -53,6 +53,8 @@ WorkspacesFeaturestoreEntitiesVersionExtension: Object (0 properties)
 
 WorkspacesFeaturestoreEntityExtension: Object (0 properties)
 
+WorkspacesJobExtension: Object (0 properties)
+
 WorkspacesModelExtension: Object (0 properties)
 
 WorkspacesModelsVersionExtension: Object (0 properties)
@@ -64,6 +66,8 @@ WorkspacesOnlineEndpointsDeploymentExtension: Object (0 properties)
 WorkspacesOutboundRuleExtension: Object (0 properties)
 
 WorkspacesPrivateEndpointConnectionExtension: Object (0 properties)
+
+WorkspacesScheduleExtension: Object (0 properties)
 
 WorkspacesServerlessEndpointExtension: Object (0 properties)
 

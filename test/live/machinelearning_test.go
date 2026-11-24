@@ -19,8 +19,9 @@ import (
 const machineLearningAPI = "2026-09-01"
 
 // A Machine Learning workspace's model and environment containers, an
-// environment version naming a public image and a batch endpoint with no
-// deployment (f83), on a workspace made as a
+// environment version naming a public image, a batch endpoint with no
+// deployment (f83) and a disabled schedule of a serverless command job
+// (f85: it never fires, so no job runs), on a workspace made as a
 // fixture with its storage account and key vault (docs/plan.md f82):
 // created, the model's description changed, deleted. Storage cents: the
 // workspace bills nothing by itself, the version names a prebuilt image
@@ -28,7 +29,7 @@ const machineLearningAPI = "2026-09-01"
 // identity), outbound rules (a managed network, billed by the hour),
 // connections (a private endpoint), registries (a registry's storage and
 // registry per region), model and data versions (their URIs are checked
-// against real storage).
+// against real storage), jobs (a job runs at once and bills its compute).
 func TestLiveMachineLearningAssets(t *testing.T) {
 	t.Parallel()
 	requireProvider(t, "Microsoft.MachineLearningServices")
@@ -66,7 +67,17 @@ func TestLiveMachineLearningAssets(t *testing.T) {
 	batch.Namespace, batch.Name = ns, "nightly"
 	batch.Spec = ml.WorkspacesBatchEndpoint_Spec{Owner: owner("lab"), Location: ptr(location),
 		Properties: &ml.BatchEndpointProperties{AuthMode: ptr(ml.EndpointAuthMode_AADToken), Description: ptr("live test")}}
-	create(t, timeout, model, env, batch)
+	schedule := &ml.WorkspacesSchedule{}
+	schedule.Namespace, schedule.Name = ns, "nightly-training"
+	schedule.Spec = ml.WorkspacesSchedule_Spec{Owner: owner("lab"), Properties: &ml.ScheduleProperties{
+		IsEnabled: ptr(false), Description: ptr("live test"),
+		Action: &ml.ScheduleActionBase{CreateJob: &ml.JobScheduleAction{ActionType: ptr(ml.JobScheduleAction_ActionType_CreateJob),
+			JobDefinition: &ml.JobBaseProperties{Command: &ml.CommandJob{JobType: ptr(ml.CommandJob_JobType_Command),
+				Command:       ptr("echo live test"),
+				EnvironmentId: ptr("azureml://registries/azureml/environments/sklearn-1.5/labels/latest"),
+				Resources:     &ml.JobResourceConfiguration{InstanceType: ptr("Standard_DS3_v2"), InstanceCount: ptr(1)}}}}},
+		Trigger: &ml.TriggerBase{Cron: &ml.CronTrigger{TriggerType: ptr(ml.CronTrigger_TriggerType_Cron), Expression: ptr("0 2 * * *")}}}}
+	create(t, timeout, model, env, batch, schedule)
 	version := &ml.WorkspacesEnvironmentsVersion{}
 	version.Namespace, version.Name = ns, "py-1"
 	version.Spec = ml.WorkspacesEnvironmentsVersion_Spec{AzureName: "1", Owner: owner("py"), Properties: &ml.EnvironmentVersionProperties{
@@ -87,6 +98,13 @@ func TestLiveMachineLearningAssets(t *testing.T) {
 		}
 		return nil
 	})
+	expectResource(t, wsID+"/schedules/nightly-training", machineLearningAPI, func(r map[string]any) error {
+		if properties(r)["isEnabled"] != false {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	remove(t, timeout, schedule)
 	remove(t, timeout, batch)
 	remove(t, timeout, version)
 	remove(t, timeout, env)

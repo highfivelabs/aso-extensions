@@ -484,6 +484,18 @@ func init() {
 		return map[string]any{"properties": map[string]any{"fqdn": map[string]any{"type": "FQDN", "destination": "pypi.org"}}}
 	}}
 	f["machinelearningservices.azure.hfl.dev/WorkspacesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// A job and a schedule are unions (f85): a command job; a schedule
+	// making one on a cron of five fields.
+	mlCommand := map[string]any{"command": map[string]any{"jobType": "Command", "command": "python train.py",
+		"environmentId": "azureml://registries/azureml/environments/sklearn-1.5/versions/1"}}
+	f["WorkspacesJob"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": mlCommand}
+	}}
+	f["WorkspacesSchedule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{
+			"action":  map[string]any{"createJob": map[string]any{"actionType": "CreateJob", "jobDefinition": mlCommand}},
+			"trigger": map[string]any{"cron": map[string]any{"triggerType": "Cron", "expression": "0 2 * * *"}}}}
+	}}
 	// A managed online deployment names its instance type (a union member).
 	f["WorkspacesOnlineEndpointsDeployment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"properties": map[string]any{"managed": map[string]any{"endpointComputeType": "Managed", "instanceType": "Standard_DS3_v2"}}}

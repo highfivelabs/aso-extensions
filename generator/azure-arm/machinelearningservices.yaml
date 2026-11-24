@@ -132,6 +132,18 @@ groupModelConfiguration:
     Workspaces_FeaturestoreEntities_Version:
       $exportAs: WorkspacesFeaturestoreEntitiesVersion
       $supportedFrom: v0.1.0
+    Workspaces_Job:
+      $exportAs: WorkspacesJob
+      $supportedFrom: v0.1.0
+    Workspaces_Schedule:
+      $exportAs: WorkspacesSchedule
+      $supportedFrom: v0.1.0
+      # The jobs a schedule makes and the monitors it runs: without their
+      # descriptions (ASO's option for a CRD over the size limit), its CRD is
+      # 195 KB of JSON, and the jobs' (whose types it shares) 151 KB; with
+      # them 526 KB and 415 KB, over the 256 KiB a client-side apply keeps
+      # (docs/plan.md f85). Types shared with other kinds lose theirs too.
+      $stripDocumentation: true
     AccountKeyDatastoreCredentials:
       Secrets:
         $importSecretMode: never
@@ -199,3 +211,48 @@ groupModelConfiguration:
         $importSecretMode: required
       SecondaryKey:
         $importSecretMode: required
+    # Jobs (docs/plan.md f85): a job's component, code and environment take
+    # an ARM ID or an asset URI (azureml://...), as the deployments' do
+    # (above): plain strings. Its compute, its source job and a managed
+    # identity are ARM resources: references.
+    AutoMLJob:
+      ComponentId:
+        $referenceType: simple # a component version's ARM ID or asset URI
+      ComputeId:
+        $referenceType: arm # a compute (ASO's WorkspacesCompute, or an ARM ID)
+      EnvironmentId:
+        $referenceType: simple # as BatchDeploymentProperties
+    CommandJob:
+      CodeId:
+        $referenceType: simple # as CodeConfiguration
+      ComponentId:
+        $referenceType: simple # as AutoMLJob
+      ComputeId:
+        $referenceType: arm # as AutoMLJob
+      EnvironmentId:
+        $referenceType: simple # as BatchDeploymentProperties
+    PipelineJob:
+      ComponentId:
+        $referenceType: simple # as AutoMLJob
+      ComputeId:
+        $referenceType: arm # as AutoMLJob
+      SourceJobId:
+        $referenceType: arm # the job this one was cloned from (our WorkspacesJob, or an ARM ID)
+    SparkJob:
+      ComponentId:
+        $referenceType: simple # as AutoMLJob
+      ComputeId:
+        $referenceType: arm # as AutoMLJob
+    SweepJob:
+      ComponentId:
+        $referenceType: simple # as AutoMLJob
+      ComputeId:
+        $referenceType: arm # as AutoMLJob
+    TrialComponent:
+      CodeId:
+        $referenceType: simple # as CodeConfiguration
+      EnvironmentId:
+        $referenceType: simple # as BatchDeploymentProperties
+    ManagedIdentity:
+      ResourceId:
+        $referenceType: arm # a user-assigned identity (ASO's UserAssignedIdentity, or an ARM ID)

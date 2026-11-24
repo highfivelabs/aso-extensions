@@ -64,9 +64,7 @@ type BatchEndpointProperties struct {
 	Properties map[string]string `json:"properties,omitempty"`
 }
 
-// Managed service identity (system assigned and/or user assigned identities)
 type ManagedServiceIdentity struct {
-	// Type: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
 	Type                   *ManagedServiceIdentityType            `json:"type,omitempty"`
 	UserAssignedIdentities map[string]UserAssignedIdentityDetails `json:"userAssignedIdentities,omitempty"`
 }
@@ -125,7 +123,6 @@ var endpointAuthMode_Values = map[string]EndpointAuthMode{
 	"key":      EndpointAuthMode_Key,
 }
 
-// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
 // +kubebuilder:validation:Enum={"None","SystemAssigned","SystemAssigned,UserAssigned","UserAssigned"}
 type ManagedServiceIdentityType string
 

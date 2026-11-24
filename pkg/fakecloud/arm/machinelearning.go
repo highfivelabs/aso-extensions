@@ -5,6 +5,7 @@ package arm
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"regexp"
 	"strings"
@@ -31,7 +32,16 @@ import (
 //   - an online endpoint sends traffic only to its deployments that exist,
 //     each share 0 to 100 and all of them 100 together (400) (f83);
 //   - a batch endpoint's default deployment exists (400);
-//   - a managed online deployment names its instance type (400).
+//   - a managed online deployment names its instance type (400);
+//   - a job runs once: on a job that exists, a PUT may change its tags
+//     (the spec: "For update case, the Tags in the definition passed in
+//     will replace Tags in the existing job"), its display name,
+//     description, properties and archive flag (what `az ml job update`
+//     and archiving change); any other change is refused (409) (f85);
+//   - a job's compute (computeId) exists (404);
+//   - a schedule's cron expression has five fields (NCronTab, the spec's
+//     format), and a recurrence's hours are 0 to 23 and its minutes 0 to
+//     59 (400).
 //
 // Private endpoint connections follow the shared rule (privateendpoints.go).
 // Not modelled: uploading or validating what an asset points at, image
@@ -46,6 +56,10 @@ var (
 	mlBatch      = regexp.MustCompile(mlParent + `/batchendpoints/[^/]+$`)
 	mlOnlineDep  = regexp.MustCompile(mlParent + `/onlineendpoints/[^/]+/deployments/[^/]+$`)
 	mlImmutables = []string{"codeUri", "dataUri", "modelUri", "image", "build", "componentSpec", "dataType", "modelType"}
+	mlJob        = regexp.MustCompile(mlParent + `/jobs/[^/]+$`)
+	mlSchedule   = regexp.MustCompile(mlParent + `/schedules/[^/]+$`)
+	// What a PUT may change on a job that exists.
+	mlJobMutable = map[string]bool{"tags": true, "displayName": true, "description": true, "properties": true, "isArchived": true}
 )
 
 // checkMachineLearning refuses what the rules above do not allow; code is
@@ -127,6 +141,38 @@ func (a *ARM) checkMachineLearning(id string, body map[string]any) (status int, 
 	case mlOnlineDep.MatchString(id):
 		if stringOf(props["endpointComputeType"]) == "Managed" && stringOf(props["instanceType"]) == "" {
 			return bad("A managed online deployment names its instanceType.")
+		}
+	case mlJob.MatchString(id):
+		if compute := stringOf(props["computeId"]); compute != "" && !a.exists(compute) {
+			return http.StatusNotFound, "ResourceNotFound", "The compute " + compute + " was not found."
+		}
+		if old, ok := a.resources[strings.ToLower(id)]; ok {
+			oldProps, _ := (*old)["properties"].(map[string]any)
+			for _, m := range []map[string]any{oldProps, props} {
+				for k := range m {
+					if !mlJobMutable[k] && k != "provisioningState" && !sameJSON(oldProps[k], props[k]) {
+						return http.StatusConflict, "Conflict", "A job runs once: only its tags, display name, description, properties and archive flag can change, not " + k + "; make a new job."
+					}
+				}
+			}
+		}
+	case mlSchedule.MatchString(id):
+		trigger, _ := props["trigger"].(map[string]any)
+		switch stringOf(trigger["triggerType"]) {
+		case "Cron":
+			if len(strings.Fields(stringOf(trigger["expression"]))) != 5 {
+				return bad("A cron trigger's expression has five fields (NCronTab): minutes, hours, days, months and days of the week.")
+			}
+		case "Recurrence":
+			pattern, _ := trigger["schedule"].(map[string]any)
+			for k, max := range map[string]float64{"hours": 23, "minutes": 59} {
+				list, _ := pattern[k].([]any)
+				for _, v := range list {
+					if n, _ := v.(float64); n < 0 || n > max {
+						return bad(fmt.Sprintf("A recurrence's %s are 0 to %v.", k, max))
+					}
+				}
+			}
 		}
 	case mlOutbound.MatchString(id):
 		switch stringOf(props["type"]) {

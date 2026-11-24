@@ -619,12 +619,14 @@ title: Supported Resources
 | WorkspacesFeaturesetsVersion          | 2026-09-01  | v20260901   | v0.1.0         | -      |
 | WorkspacesFeaturestoreEntitiesVersion | 2026-09-01  | v20260901   | v0.1.0         | -      |
 | WorkspacesFeaturestoreEntity          | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesJob                         | 2026-09-01  | v20260901   | v0.1.0         | -      |
 | WorkspacesModel                       | 2026-09-01  | v20260901   | v0.1.0         | -      |
 | WorkspacesModelsVersion               | 2026-09-01  | v20260901   | v0.1.0         | -      |
 | WorkspacesOnlineEndpoint              | 2026-09-01  | v20260901   | v0.1.0         | -      |
 | WorkspacesOnlineEndpointsDeployment   | 2026-09-01  | v20260901   | v0.1.0         | -      |
 | WorkspacesOutboundRule                | 2026-09-01  | v20260901   | v0.1.0         | -      |
 | WorkspacesPrivateEndpointConnection   | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesSchedule                    | 2026-09-01  | v20260901   | v0.1.0         | -      |
 | WorkspacesServerlessEndpoint          | 2026-09-01  | v20260901   | v0.1.0         | -      |
 
 ## Maintenance

@@ -306,3 +306,115 @@ func TestMachineLearningEndpoints(t *testing.T) {
 		}
 	}
 }
+
+// The Machine Learning jobs and schedules of docs/plan.md f85, on ASO's
+// Workspace by name: a command job on a compute by ARM ID; its description
+// changed and PUT again; its command changed, refused (a job runs once:
+// the fake's rule, machinelearning.go), then changed back; a job on a
+// missing compute refused. A schedule whose cron expression has four
+// fields refused, then fixed by a change; a disabled daily recurrence
+// creating a command job. Deleted, all go.
+func TestMachineLearningJobs(t *testing.T) {
+	ctx := context.Background()
+	ns := namespace(t, "mljob")
+	strictCredential(t, ns, clientA)
+	trustNamespace(ns)
+	rgID := "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"
+	wsID := rgID + "/providers/Microsoft.MachineLearningServices/workspaces/lab"
+	computeID := wsID + "/computes/cpu"
+	for _, id := range []string{rgID, wsID, computeID} {
+		armFake.AddResource(id)
+	}
+	resourceGroup(t, ns, "rg", ns+"-rg")
+	ws := &asoml.Workspace{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "lab"}}
+	ws.Spec.AzureName, ws.Spec.Location = "lab", ptr("westus")
+	ws.Spec.Owner = &genruntime.KnownResourceReference{Name: "rg"}
+	asoStandIn(t, ws, wsID)
+	meta := func(name string) metav1.ObjectMeta { return metav1.ObjectMeta{Namespace: ns, Name: name} }
+	onWS := &genruntime.KnownResourceReference{Name: "lab"}
+
+	command := func(compute string) *ml.JobBaseProperties {
+		return &ml.JobBaseProperties{Command: &ml.CommandJob{JobType: ptr(ml.CommandJob_JobType_Command),
+			Command:          ptr("python train.py"),
+			EnvironmentId:    ptr("azureml://registries/azureml/environments/sklearn-1.5/versions/1"),
+			ComputeReference: &genruntime.ResourceReference{ARMID: compute},
+			ExperimentName:   ptr("churn"), Description: ptr("first")}}
+	}
+	train := &ml.WorkspacesJob{ObjectMeta: meta("train"), Spec: ml.WorkspacesJob_Spec{Owner: onWS, Properties: command(computeID)}}
+	lost := &ml.WorkspacesJob{ObjectMeta: meta("lost"), Spec: ml.WorkspacesJob_Spec{Owner: onWS, Properties: command(computeID + "x")}}
+	cron := &ml.WorkspacesSchedule{ObjectMeta: meta("hourly"), Spec: ml.WorkspacesSchedule_Spec{Owner: onWS, Properties: &ml.ScheduleProperties{
+		Action: &ml.ScheduleActionBase{CreateJob: &ml.JobScheduleAction{ActionType: ptr(ml.JobScheduleAction_ActionType_CreateJob),
+			JobDefinition: command(computeID)}},
+		Trigger: &ml.TriggerBase{Cron: &ml.CronTrigger{TriggerType: ptr(ml.CronTrigger_TriggerType_Cron), Expression: ptr("0 * * *")}}}}}
+	daily := &ml.WorkspacesSchedule{ObjectMeta: meta("daily"), Spec: ml.WorkspacesSchedule_Spec{Owner: onWS, Properties: &ml.ScheduleProperties{
+		IsEnabled: ptr(false), DisplayName: ptr("nightly training"),
+		Action: &ml.ScheduleActionBase{CreateJob: &ml.JobScheduleAction{ActionType: ptr(ml.JobScheduleAction_ActionType_CreateJob),
+			JobDefinition: command(computeID)}},
+		Trigger: &ml.TriggerBase{Recurrence: &ml.RecurrenceTrigger{TriggerType: ptr(ml.RecurrenceTrigger_TriggerType_Recurrence),
+			Frequency: ptr(ml.RecurrenceFrequency_Day), Interval: ptr(1), TimeZone: ptr("UTC"),
+			Schedule: &ml.RecurrenceSchedule{Hours: []int{2}, Minutes: []int{30}}}}}}}
+	for _, o := range []conditioned{train, lost, cron, daily} {
+		if err := k8s.Create(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	eventually(t, timeout, "the job Ready", ready(train))
+	eventually(t, timeout, "the daily schedule Ready", ready(daily))
+	eventually(t, timeout, "a job on a missing compute refused", notReadyWith(lost, "was not found"))
+	eventually(t, timeout, "a cron of four fields refused", notReadyWith(cron, "five fields"))
+	expectResource(t, wsID+"/jobs/train", func(r map[string]any) error {
+		p := properties(r)
+		if p["jobType"] != "Command" || p["command"] != "python train.py" || p["computeId"] != computeID {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	expectResource(t, wsID+"/schedules/daily", func(r map[string]any) error {
+		p := properties(r)
+		action, _ := p["action"].(map[string]any)
+		job, _ := action["jobDefinition"].(map[string]any)
+		trigger, _ := p["trigger"].(map[string]any)
+		if p["isEnabled"] != false || job["command"] != "python train.py" || trigger["frequency"] != "Day" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+
+	// The cron is fixed; the job's description may change, its command may not.
+	if err := change(t, cron, func(s *ml.WorkspacesSchedule) { s.Spec.Properties.Trigger.Cron.Expression = ptr("0 * * * *") }); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the cron schedule Ready after the change", ready(cron))
+	if err := change(t, train, func(j *ml.WorkspacesJob) { j.Spec.Properties.Command.Description = ptr("first, kept") }); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the job's description PUT again", func() error {
+		r, ok := armFake.Resource(wsID + "/jobs/train")
+		if !ok || properties(r)["description"] != "first, kept" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	if err := change(t, train, func(j *ml.WorkspacesJob) { j.Spec.Properties.Command.Command = ptr("python retrain.py") }); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "a job's command change refused", notReadyWith(train, "runs once"))
+	if err := change(t, train, func(j *ml.WorkspacesJob) { j.Spec.Properties.Command.Command = ptr("python train.py") }); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the job Ready again", ready(train))
+
+	for _, o := range []conditioned{train, lost, cron, daily} {
+		if err := k8s.Delete(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, o := range []conditioned{train, lost, cron, daily} {
+		eventually(t, timeout, o.GetName()+" gone", gone(o))
+	}
+	for _, id := range []string{wsID + "/jobs/train", wsID + "/schedules/hourly", wsID + "/schedules/daily"} {
+		if armFake.HasResource(id) {
+			t.Errorf("%s is still in the fake", id)
+		}
+	}
+}

@@ -327,7 +327,6 @@ type MaterializationComputeResource_STATUS struct {
 }
 
 // Storage version of v20260901.NotificationSetting
-// Configuration for notification.
 type NotificationSetting struct {
 	EmailOn     []string               `json:"emailOn,omitempty"`
 	Emails      []string               `json:"emails,omitempty"`
@@ -336,7 +335,6 @@ type NotificationSetting struct {
 }
 
 // Storage version of v20260901.NotificationSetting_STATUS
-// Configuration for notification.
 type NotificationSetting_STATUS struct {
 	EmailOn     []string                  `json:"emailOn,omitempty"`
 	Emails      []string                  `json:"emails,omitempty"`

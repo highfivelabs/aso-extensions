@@ -62,17 +62,9 @@ type BatchEndpointProperties_STATUS struct {
 	SwaggerUri *string `json:"swaggerUri,omitempty"`
 }
 
-// Managed service identity (system assigned and/or user assigned identities)
 type ManagedServiceIdentity_STATUS struct {
-	// PrincipalId: The service principal ID of the system assigned identity. This property will only be provided for a system
-	// assigned identity.
-	PrincipalId *string `json:"principalId,omitempty"`
-
-	// TenantId: The tenant ID of the system assigned identity. This property will only be provided for a system assigned
-	// identity.
-	TenantId *string `json:"tenantId,omitempty"`
-
-	// Type: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
+	PrincipalId            *string                                `json:"principalId,omitempty"`
+	TenantId               *string                                `json:"tenantId,omitempty"`
 	Type                   *ManagedServiceIdentityType_STATUS     `json:"type,omitempty"`
 	UserAssignedIdentities map[string]UserAssignedIdentity_STATUS `json:"userAssignedIdentities,omitempty"`
 }
@@ -143,7 +135,6 @@ var endpointProvisioningState_STATUS_Values = map[string]EndpointProvisioningSta
 	"updating":  EndpointProvisioningState_STATUS_Updating,
 }
 
-// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
 type ManagedServiceIdentityType_STATUS string
 
 const (
@@ -180,11 +171,7 @@ var skuTier_STATUS_Values = map[string]SkuTier_STATUS{
 	"standard": SkuTier_STATUS_Standard,
 }
 
-// User assigned identity properties
 type UserAssignedIdentity_STATUS struct {
-	// ClientId: The client ID of the assigned identity.
-	ClientId *string `json:"clientId,omitempty"`
-
-	// PrincipalId: The principal ID of the assigned identity.
+	ClientId    *string `json:"clientId,omitempty"`
 	PrincipalId *string `json:"principalId,omitempty"`
 }

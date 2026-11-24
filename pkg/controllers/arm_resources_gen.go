@@ -2254,6 +2254,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturesetsVersion)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturestoreEntitiesVersion)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturestoreEntity)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesJob)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesModel)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesModelsVersion)})
 	result = append(result, &registration.StorageType{
@@ -2283,6 +2284,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesOnlineEndpointsDeployment)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesOutboundRule)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesSchedule)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesServerlessEndpoint)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.ConfigurationAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
@@ -4638,12 +4640,14 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturesetsVersion)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturestoreEntitiesVersion)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturestoreEntity)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesJob)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesModel)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesModelsVersion)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesOnlineEndpoint)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesOnlineEndpointsDeployment)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesOutboundRule)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesSchedule)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesServerlessEndpoint)})
 	result = append(
 		result,
@@ -4673,12 +4677,14 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesFeaturesetsVersion)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesFeaturestoreEntitiesVersion)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesFeaturestoreEntity)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesJob)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesModel)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesModelsVersion)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesOnlineEndpoint)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesOnlineEndpointsDeployment)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesOutboundRule)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesSchedule)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesServerlessEndpoint)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401s.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401s.MaintenanceConfiguration)})
@@ -5945,12 +5951,14 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &machinelearningservices_customizations.WorkspacesFeaturesetsVersionExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesFeaturestoreEntitiesVersionExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesFeaturestoreEntityExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesJobExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesModelExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesModelsVersionExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesOnlineEndpointExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesOnlineEndpointsDeploymentExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesOutboundRuleExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesPrivateEndpointConnectionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesScheduleExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesServerlessEndpointExtension{})
 	result = append(result, &maintenance_customizations.ConfigurationAssignmentExtension{})
 	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})

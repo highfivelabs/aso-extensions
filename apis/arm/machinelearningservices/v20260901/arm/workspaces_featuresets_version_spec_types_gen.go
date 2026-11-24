@@ -109,47 +109,22 @@ var materializationSettings_StoreType_Values = map[string]MaterializationSetting
 	"onlineandoffline": MaterializationSettings_StoreType_OnlineAndOffline,
 }
 
-// Configuration for notification.
 type NotificationSetting struct {
-	// EmailOn: Send email notification to user on specified notification type
-	EmailOn []EmailNotificationEnableType `json:"emailOn,omitempty"`
-
-	// Emails: This is the email recipient list which has a limitation of 499 characters in total concat with comma separator
-	Emails []string `json:"emails,omitempty"`
-
-	// Webhooks: Send webhook callback to a service. Key is a user-provided name for the webhook.
-	Webhooks map[string]Webhook `json:"webhooks,omitempty"`
+	EmailOn  []EmailNotificationEnableType `json:"emailOn,omitempty"`
+	Emails   []string                      `json:"emails,omitempty"`
+	Webhooks map[string]Webhook            `json:"webhooks,omitempty"`
 }
 
 type RecurrenceTrigger struct {
-	// EndTime: Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer
-	// https://en.wikipedia.org/wiki/ISO_8601.
-	// Recommented format would be "2022-06-01T00:00:01"
-	// If not present, the schedule will run indefinitely
-	EndTime *string `json:"endTime,omitempty"`
-
-	// Frequency: [Required] The frequency to trigger schedule.
-	Frequency *RecurrenceFrequency `json:"frequency,omitempty"`
-
-	// Interval: [Required] Specifies schedule interval in conjunction with frequency
-	Interval *int `json:"interval,omitempty"`
-
-	// Schedule: The recurrence schedule.
-	Schedule *RecurrenceSchedule `json:"schedule,omitempty"`
-
-	// StartTime: Specifies start time of schedule in ISO 8601 format, but without a UTC offset.
-	StartTime *string `json:"startTime,omitempty"`
-
-	// TimeZone: Specifies time zone in which the schedule runs.
-	// TimeZone should follow Windows time zone format. Refer:
-	// https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
-	TimeZone *string `json:"timeZone,omitempty"`
-
-	// TriggerType: [Required]
-	TriggerType *RecurrenceTrigger_TriggerType `json:"triggerType,omitempty"`
+	EndTime     *string                       `json:"endTime,omitempty"`
+	Frequency   *RecurrenceFrequency          `json:"frequency,omitempty"`
+	Interval    *int                          `json:"interval,omitempty"`
+	Schedule    *RecurrenceSchedule           `json:"schedule,omitempty"`
+	StartTime   *string                       `json:"startTime,omitempty"`
+	TimeZone    *string                       `json:"timeZone,omitempty"`
+	TriggerType RecurrenceTrigger_TriggerType `json:"triggerType,omitempty"`
 }
 
-// Enum to determine the email notification type.
 // +kubebuilder:validation:Enum={"JobCancelled","JobCompleted","JobFailed"}
 type EmailNotificationEnableType string
 
@@ -166,7 +141,6 @@ var emailNotificationEnableType_Values = map[string]EmailNotificationEnableType{
 	"jobfailed":    EmailNotificationEnableType_JobFailed,
 }
 
-// Enum to describe the frequency of a recurrence schedule
 // +kubebuilder:validation:Enum={"Day","Hour","Minute","Month","Week"}
 type RecurrenceFrequency string
 
@@ -188,17 +162,10 @@ var recurrenceFrequency_Values = map[string]RecurrenceFrequency{
 }
 
 type RecurrenceSchedule struct {
-	// Hours: [Required] List of hours for the schedule.
-	Hours []int `json:"hours,omitempty"`
-
-	// Minutes: [Required] List of minutes for the schedule.
-	Minutes []int `json:"minutes,omitempty"`
-
-	// MonthDays: List of month days for the schedule
-	MonthDays []int `json:"monthDays,omitempty"`
-
-	// WeekDays: List of days for the schedule.
-	WeekDays []WeekDay `json:"weekDays,omitempty"`
+	Hours     []int     `json:"hours,omitempty"`
+	Minutes   []int     `json:"minutes,omitempty"`
+	MonthDays []int     `json:"monthDays,omitempty"`
+	WeekDays  []WeekDay `json:"weekDays,omitempty"`
 }
 
 // +kubebuilder:validation:Enum={"Recurrence"}
@@ -212,7 +179,6 @@ var recurrenceTrigger_TriggerType_Values = map[string]RecurrenceTrigger_TriggerT
 }
 
 type Webhook struct {
-	// AzureDevOps: Mutually exclusive with all other properties
 	AzureDevOps *AzureDevOpsWebhook `json:"azureDevOps,omitempty"`
 }
 
@@ -243,14 +209,10 @@ func (webhook *Webhook) UnmarshalJSON(data []byte) error {
 }
 
 type AzureDevOpsWebhook struct {
-	// EventType: Send callback on a specified notification event
-	EventType *string `json:"eventType,omitempty"`
-
-	// WebhookType: [Required] Specifies the type of service to send a callback
+	EventType   *string     `json:"eventType,omitempty"`
 	WebhookType WebhookType `json:"webhookType,omitempty"`
 }
 
-// Enum of weekday
 // +kubebuilder:validation:Enum={"Friday","Monday","Saturday","Sunday","Thursday","Tuesday","Wednesday"}
 type WeekDay string
 
@@ -275,7 +237,6 @@ var weekDay_Values = map[string]WeekDay{
 	"wednesday": WeekDay_Wednesday,
 }
 
-// Enum to determine the webhook callback service type.
 // +kubebuilder:validation:Enum={"AzureDevOps"}
 type WebhookType string
 

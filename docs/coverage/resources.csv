@@ -1401,10 +1401,10 @@ Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/d
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/environments,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesEnvironment,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/environments/versions,20,,0,machinelearningservices.azure.hfl.dev/WorkspacesEnvironmentsVersion,20,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeatureset,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,25,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeaturesetsVersion,25,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,25,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeaturesetsVersion,23,2,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featurestoreEntities,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntity,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featurestoreEntities/versions,8,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntitiesVersion,8,0,false,spec_api=2026-09-01; ours_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,230,,0,,0,230,false,spec_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,230,,0,machinelearningservices.azure.hfl.dev/WorkspacesJob,1,229,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/labelingJobs,19,,0,,0,19,false,spec_api=2020-09-01-preview; spec-preview-only
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/marketplaceSubscriptions,1,,0,,0,1,false,spec_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/models,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesModel,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
@@ -1413,7 +1413,7 @@ Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/o
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/onlineEndpoints/deployments,57,,0,machinelearningservices.azure.hfl.dev/WorkspacesOnlineEndpointsDeployment,57,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/outboundRules,5,,0,machinelearningservices.azure.hfl.dev/WorkspacesOutboundRule,5,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/privateEndpointConnections,13,,0,machinelearningservices.azure.hfl.dev/WorkspacesPrivateEndpointConnection,12,1,false,spec_api=2026-09-01; ours_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,307,,0,,0,307,false,spec_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,307,,0,machinelearningservices.azure.hfl.dev/WorkspacesSchedule,5,302,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/serverlessEndpoints,13,,0,machinelearningservices.azure.hfl.dev/WorkspacesServerlessEndpoint,13,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.Maintenance,Microsoft.Maintenance/applyUpdates,0,,0,,0,0,false,spec_api=2023-04-01
 Microsoft.Maintenance,Microsoft.Maintenance/configurationAssignments,9,,0,maintenance.azure.hfl.dev/ConfigurationAssignment,9,0,false,spec_api=2023-04-01; ours_api=2023-04-01

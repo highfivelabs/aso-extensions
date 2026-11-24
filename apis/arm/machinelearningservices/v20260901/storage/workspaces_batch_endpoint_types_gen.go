@@ -274,7 +274,6 @@ type BatchEndpointProperties_STATUS struct {
 }
 
 // Storage version of v20260901.ManagedServiceIdentity
-// Managed service identity (system assigned and/or user assigned identities)
 type ManagedServiceIdentity struct {
 	PropertyBag            genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
 	Type                   *string                       `json:"type,omitempty"`
@@ -282,7 +281,6 @@ type ManagedServiceIdentity struct {
 }
 
 // Storage version of v20260901.ManagedServiceIdentity_STATUS
-// Managed service identity (system assigned and/or user assigned identities)
 type ManagedServiceIdentity_STATUS struct {
 	PrincipalId            *string                                `json:"principalId,omitempty"`
 	PropertyBag            genruntime.PropertyBag                 `json:"$propertyBag,omitempty"`
@@ -344,7 +342,6 @@ type EndpointAuthKeys struct {
 }
 
 // Storage version of v20260901.UserAssignedIdentity_STATUS
-// User assigned identity properties
 type UserAssignedIdentity_STATUS struct {
 	ClientId    *string                `json:"clientId,omitempty"`
 	PrincipalId *string                `json:"principalId,omitempty"`
@@ -352,7 +349,6 @@ type UserAssignedIdentity_STATUS struct {
 }
 
 // Storage version of v20260901.UserAssignedIdentityDetails
-// Information about the user assigned identity for the resource
 type UserAssignedIdentityDetails struct {
 	PropertyBag genruntime.PropertyBag       `json:"$propertyBag,omitempty"`
 	Reference   genruntime.ResourceReference `armReference:"Reference" json:"reference,omitempty"`

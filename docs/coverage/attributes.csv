@@ -23722,8 +23722,8 @@ Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/f
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,properties.isArchived,boolean,false,ours,,properties.isArchived
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,properties.materializationSettings.notification.emailOn[],string,false,ours,,properties.materializationSettings.notification.emailOn[]
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,properties.materializationSettings.notification.emails[],string,false,ours,,properties.materializationSettings.notification.emails[]
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,properties.materializationSettings.notification.webhooks{}.eventType,string,false,ours,,properties.materializationSettings.notification.webhooks{}.eventType
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,properties.materializationSettings.notification.webhooks{}.webhookType,string,false,ours,,properties.materializationSettings.notification.webhooks{}.webhookType
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,properties.materializationSettings.notification.webhooks{}.eventType,string,false,none,,
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,properties.materializationSettings.notification.webhooks{}.webhookType,string,false,none,,
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,properties.materializationSettings.resource.instanceType,string,false,ours,,properties.materializationSettings.resource.instanceType
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,properties.materializationSettings.schedule.endTime,string,false,ours,,properties.materializationSettings.schedule.endTime
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,properties.materializationSettings.schedule.frequency,string,false,ours,,properties.materializationSettings.schedule.frequency
@@ -23756,7 +23756,7 @@ Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/f
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,properties.archives[],string,false,none,,
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,properties.args,string,false,none,,
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,properties.codeId,string,true,none,,
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,properties.command,string,true,none,,
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,properties.command,string,true,ours,,properties.command.codeId
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,properties.componentId,string,false,none,,
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,properties.computeId,string,false,none,,
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,properties.conf{},string,false,none,,
@@ -24404,11 +24404,11 @@ Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/s
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.action.monitorDefinition.signals{}.referenceData.windowSize,string,true,none,,
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.action.monitorDefinition.signals{}.referenceData.windowStart,string,true,none,,
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.action.monitorDefinition.signals{}.signalType,string,true,none,,
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.description,string,false,none,,
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.displayName,string,false,none,,
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.isEnabled,boolean,false,none,,
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.properties{},string,false,none,,
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.tags{},string,false,none,,
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.description,string,false,ours,,properties.description
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.displayName,string,false,ours,,properties.displayName
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.isEnabled,boolean,false,ours,,properties.isEnabled
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.properties{},string,false,ours,,properties.properties{}
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.tags{},string,false,ours,,properties.tags{}
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.trigger.endTime,string,false,none,,
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.trigger.expression,string,true,none,,
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,properties.trigger.frequency,string,true,none,,
