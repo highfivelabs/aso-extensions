@@ -94,5 +94,11 @@ copied:
     from: {pr: Azure/azure-service-operator#5104, paths: [v2/internal/reconcilers/azuresql/aad_user.go]}
   - here: [generator/azure-arm/security.yaml]
     from: {pr: Azure/azure-service-operator#5783, paths: [v2/azure-arm/security.yaml]}
+  - here: [generator/azure-arm/eventgrid.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/eventgrid.yaml]}
+  - here: [generator/azure-arm/containerinstance.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/containerinstance.yaml]}
+  - here: [generator/azure-arm/signalrservice.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/signalrservice.yaml]}
   - here: [pkg/util/azuresql/azuresql.go, pkg/util/azuresql/role.go]
     from: {pin: azure-service-operator, paths: [v2/internal/util/azuresql/]}
