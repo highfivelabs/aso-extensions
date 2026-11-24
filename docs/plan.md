@@ -198,6 +198,29 @@ run over the pinned specs with configuration kept here.
   overflows on recursive specs are fixed (0018, a flattened free-form
   property; 0019, a type that holds itself in the spec initialization
   scanner; f84).
+- **The generator's own tests with our patches** (checked 2026-11-24 in a
+  scratch worktree of the pin, `go test ./...` in
+  `v2/tools/generator`). At the pin alone every package passes. With
+  patches 0001 to 0016 (as of `4edd7c31`, before 0017 to 0019 and the
+  change to 0008) and with 0001 to 0019 (as of `4f5132e`) the same five
+  tests fail, and only they:
+  `TestHybridMigrationReleaseForGroup_IsCaseInsensitive` and
+  `..._WhenRegistered_ReturnsRelease` (`internal/astmodel`),
+  `TestResourceVersionsReport_SupportedFrom_OverridesForHybridMigrationGroup`,
+  `Test_resourceVersionsReportPartition_isDeprecatedResource_HybridMigration`
+  and `TestGolden_ReportAllResourceVersions` (`internal/codegen/pipeline`).
+  Patches 0001 and 0002 alone give the same five, 0001 alone none: they
+  come from 0002 emptying the legacy and hybrid migration tables, which
+  those tests (and the golden resource-versions report) read. They were
+  there before 0017 to 0019; those patches and 0008's change break no test,
+  and their own new tests pass. Neither `task check` nor CI runs the
+  generator's tests: the generator is its own Go module inside
+  `third_party/` (`go list ./...` at the root lists no `third_party`
+  package), so `go test ./...` never reaches it, and the unit tests our
+  generator patches add (0008, 0017, 0018, 0019) run only when someone runs
+  them by hand. Recommended (not done here): make 0002 leave the tables'
+  tests their own fixture groups, then add the generator's tests to
+  `check:static` so a patch that breaks the generator fails CI.
 - **Resources at several scopes** (patch 0006, `ASO_GENERATOR_MULTI_SCOPE`).
   The specs define some resources once per scope: a policy definition at
   `/subscriptions/{s}/providers/Microsoft.Authorization/policyDefinitions/{n}`
