@@ -1347,18 +1347,18 @@ Microsoft.LabServices,Microsoft.LabServices/labs/users,2,,0,,0,2,false,spec_api=
 Microsoft.LoadTestService,Microsoft.LoadTestService/loadTests,8,,0,,0,8,false,spec_api=2022-12-01
 Microsoft.LoadTestService,Microsoft.LoadTestService/playwrightWorkspaces,4,,0,,0,4,false,spec_api=2025-09-01
 Microsoft.Logic,Microsoft.Logic/automationProjects,5,,0,,0,5,false,spec_api=2026-04-01-preview; spec-preview-only
-Microsoft.Logic,Microsoft.Logic/integrationAccounts,5,,0,,0,5,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/agreements,560,,0,,0,560,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/assemblies,12,,0,,0,12,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/batchConfigurations,19,,0,,0,19,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/certificates,7,,0,,0,7,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/maps,7,,0,,0,7,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/partners,6,,0,,0,6,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/schemas,9,,0,,0,9,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/sessions,3,,0,,0,3,false,spec_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts,5,,0,logic.azure.hfl.dev/IntegrationAccount,4,1,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/agreements,560,,0,logic.azure.hfl.dev/IntegrationAccountsAgreement,560,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/assemblies,12,,0,logic.azure.hfl.dev/IntegrationAccountsAssembly,12,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/batchConfigurations,19,,0,logic.azure.hfl.dev/IntegrationAccountsBatchConfiguration,19,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/certificates,7,,0,logic.azure.hfl.dev/IntegrationAccountsCertificate,7,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/maps,7,,0,logic.azure.hfl.dev/IntegrationAccountsMap,7,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/partners,6,,0,logic.azure.hfl.dev/IntegrationAccountsPartner,6,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/schemas,9,,0,logic.azure.hfl.dev/IntegrationAccountsSchema,9,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/sessions,3,,0,logic.azure.hfl.dev/IntegrationAccountsSession,3,0,false,spec_api=2019-05-01; ours_api=2019-05-01
 Microsoft.Logic,Microsoft.Logic/integrationServiceEnvironments,19,,0,,0,19,false,spec_api=2019-05-01
 Microsoft.Logic,Microsoft.Logic/integrationServiceEnvironments/managedApis,4,,0,,0,4,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/workflows,32,,0,,0,32,false,spec_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/workflows,32,,0,logic.azure.hfl.dev/Workflow,31,1,false,spec_api=2019-05-01; ours_api=2019-05-01
 Microsoft.M365SecurityAndCompliance,Microsoft.M365SecurityAndCompliance/privateLinkServicesForEDMUpload,22,,0,,0,22,false,spec_api=2021-03-25-preview; spec-preview-only
 Microsoft.M365SecurityAndCompliance,Microsoft.M365SecurityAndCompliance/privateLinkServicesForEDMUpload/privateEndpointConnections,4,,0,,0,4,false,spec_api=2021-03-25-preview; spec-preview-only
 Microsoft.M365SecurityAndCompliance,Microsoft.M365SecurityAndCompliance/privateLinkServicesForM365ComplianceCenter,22,,0,,0,22,false,spec_api=2021-03-25-preview; spec-preview-only

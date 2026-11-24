@@ -57,3 +57,4 @@ specification/webpubsub
 specification/azure-kusto
 specification/dataprotection
 specification/batch
+specification/logic

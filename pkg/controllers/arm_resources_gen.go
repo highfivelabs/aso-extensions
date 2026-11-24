@@ -150,6 +150,9 @@ import (
 	kusto_customizations "github.com/highfivelabs/aso-extensions/apis/arm/kusto/customizations"
 	kusto_v20250214 "github.com/highfivelabs/aso-extensions/apis/arm/kusto/v20250214"
 	kusto_v20250214s "github.com/highfivelabs/aso-extensions/apis/arm/kusto/v20250214/storage"
+	logic_customizations "github.com/highfivelabs/aso-extensions/apis/arm/logic/customizations"
+	logic_v20190501 "github.com/highfivelabs/aso-extensions/apis/arm/logic/v20190501"
+	logic_v20190501s "github.com/highfivelabs/aso-extensions/apis/arm/logic/v20190501/storage"
 	maintenance_customizations "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/customizations"
 	maintenance_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401"
 	maintenance_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401/storage"
@@ -1925,6 +1928,69 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(kusto_v20250214.ClustersManagedPrivateEndpoint)})
 	result = append(result, &registration.StorageType{Obj: new(kusto_v20250214.ClustersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(kusto_v20250214.ClustersSandboxCustomImage)})
+	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.IntegrationAccount)})
+	result = append(result, &registration.StorageType{
+		Obj: new(logic_v20190501.IntegrationAccountsAgreement),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.content.edifact.receiveAgreement.protocolSettings.envelopeOverrides.applicationPassword",
+				Func: indexLogicIntegrationAccountsAgreementReceiveAgreementApplicationPassword,
+			},
+			{
+				Key:  ".spec.content.edifact.receiveAgreement.protocolSettings.envelopeSettings.groupApplicationPassword",
+				Func: indexLogicIntegrationAccountsAgreementReceiveAgreementGroupApplicationPassword,
+			},
+			{
+				Key:  ".spec.content.x12.receiveAgreement.protocolSettings.securitySettings.passwordValue",
+				Func: indexLogicIntegrationAccountsAgreementReceiveAgreementPasswordValue,
+			},
+			{
+				Key:  ".spec.content.edifact.receiveAgreement.protocolSettings.envelopeSettings.recipientReferencePasswordValue",
+				Func: indexLogicIntegrationAccountsAgreementReceiveAgreementRecipientReferencePasswordValue,
+			},
+			{
+				Key:  ".spec.content.edifact.sendAgreement.protocolSettings.envelopeOverrides.applicationPassword",
+				Func: indexLogicIntegrationAccountsAgreementSendAgreementApplicationPassword,
+			},
+			{
+				Key:  ".spec.content.edifact.sendAgreement.protocolSettings.envelopeSettings.groupApplicationPassword",
+				Func: indexLogicIntegrationAccountsAgreementSendAgreementGroupApplicationPassword,
+			},
+			{
+				Key:  ".spec.content.x12.sendAgreement.protocolSettings.securitySettings.passwordValue",
+				Func: indexLogicIntegrationAccountsAgreementSendAgreementPasswordValue,
+			},
+			{
+				Key:  ".spec.content.edifact.sendAgreement.protocolSettings.envelopeSettings.recipientReferencePasswordValue",
+				Func: indexLogicIntegrationAccountsAgreementSendAgreementRecipientReferencePasswordValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.content.edifact.receiveAgreement.protocolSettings.envelopeOverrides.applicationPassword",
+						".spec.content.edifact.receiveAgreement.protocolSettings.envelopeSettings.groupApplicationPassword",
+						".spec.content.edifact.receiveAgreement.protocolSettings.envelopeSettings.recipientReferencePasswordValue",
+						".spec.content.edifact.sendAgreement.protocolSettings.envelopeOverrides.applicationPassword",
+						".spec.content.edifact.sendAgreement.protocolSettings.envelopeSettings.groupApplicationPassword",
+						".spec.content.edifact.sendAgreement.protocolSettings.envelopeSettings.recipientReferencePasswordValue",
+						".spec.content.x12.receiveAgreement.protocolSettings.securitySettings.passwordValue",
+						".spec.content.x12.sendAgreement.protocolSettings.securitySettings.passwordValue",
+					},
+					&logic_v20190501.IntegrationAccountsAgreementList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.IntegrationAccountsAssembly)})
+	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.IntegrationAccountsBatchConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.IntegrationAccountsCertificate)})
+	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.IntegrationAccountsMap)})
+	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.IntegrationAccountsPartner)})
+	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.IntegrationAccountsSchema)})
+	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.IntegrationAccountsSession)})
+	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.Workflow)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.ConfigurationAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(managedidentity_v20241130.UserAssignedIdentity)})
@@ -3899,6 +3965,30 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(kusto_v20250214s.ClustersManagedPrivateEndpoint)},
 		&registration.KnownType{Obj: new(kusto_v20250214s.ClustersPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(kusto_v20250214s.ClustersSandboxCustomImage)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(logic_v20190501.IntegrationAccount)},
+		&registration.KnownType{Obj: new(logic_v20190501.IntegrationAccountsAgreement)},
+		&registration.KnownType{Obj: new(logic_v20190501.IntegrationAccountsAssembly)},
+		&registration.KnownType{Obj: new(logic_v20190501.IntegrationAccountsBatchConfiguration)},
+		&registration.KnownType{Obj: new(logic_v20190501.IntegrationAccountsCertificate)},
+		&registration.KnownType{Obj: new(logic_v20190501.IntegrationAccountsMap)},
+		&registration.KnownType{Obj: new(logic_v20190501.IntegrationAccountsPartner)},
+		&registration.KnownType{Obj: new(logic_v20190501.IntegrationAccountsSchema)},
+		&registration.KnownType{Obj: new(logic_v20190501.IntegrationAccountsSession)},
+		&registration.KnownType{Obj: new(logic_v20190501.Workflow)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(logic_v20190501s.IntegrationAccount)},
+		&registration.KnownType{Obj: new(logic_v20190501s.IntegrationAccountsAgreement)},
+		&registration.KnownType{Obj: new(logic_v20190501s.IntegrationAccountsAssembly)},
+		&registration.KnownType{Obj: new(logic_v20190501s.IntegrationAccountsBatchConfiguration)},
+		&registration.KnownType{Obj: new(logic_v20190501s.IntegrationAccountsCertificate)},
+		&registration.KnownType{Obj: new(logic_v20190501s.IntegrationAccountsMap)},
+		&registration.KnownType{Obj: new(logic_v20190501s.IntegrationAccountsPartner)},
+		&registration.KnownType{Obj: new(logic_v20190501s.IntegrationAccountsSchema)},
+		&registration.KnownType{Obj: new(logic_v20190501s.IntegrationAccountsSession)},
+		&registration.KnownType{Obj: new(logic_v20190501s.Workflow)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401s.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401s.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(managedidentity_v20241130.UserAssignedIdentity)})
@@ -4668,6 +4758,8 @@ func createScheme() *runtime.Scheme {
 	_ = kubernetesconfiguration_v20241101ps.AddToScheme(scheme)
 	_ = kusto_v20250214.AddToScheme(scheme)
 	_ = kusto_v20250214s.AddToScheme(scheme)
+	_ = logic_v20190501.AddToScheme(scheme)
+	_ = logic_v20190501s.AddToScheme(scheme)
 	_ = maintenance_v20230401.AddToScheme(scheme)
 	_ = maintenance_v20230401s.AddToScheme(scheme)
 	_ = managedidentity_v20241130.AddToScheme(scheme)
@@ -5038,6 +5130,16 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &kusto_customizations.ClustersManagedPrivateEndpointExtension{})
 	result = append(result, &kusto_customizations.ClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &kusto_customizations.ClustersSandboxCustomImageExtension{})
+	result = append(result, &logic_customizations.IntegrationAccountExtension{})
+	result = append(result, &logic_customizations.IntegrationAccountsAgreementExtension{})
+	result = append(result, &logic_customizations.IntegrationAccountsAssemblyExtension{})
+	result = append(result, &logic_customizations.IntegrationAccountsBatchConfigurationExtension{})
+	result = append(result, &logic_customizations.IntegrationAccountsCertificateExtension{})
+	result = append(result, &logic_customizations.IntegrationAccountsMapExtension{})
+	result = append(result, &logic_customizations.IntegrationAccountsPartnerExtension{})
+	result = append(result, &logic_customizations.IntegrationAccountsSchemaExtension{})
+	result = append(result, &logic_customizations.IntegrationAccountsSessionExtension{})
+	result = append(result, &logic_customizations.WorkflowExtension{})
 	result = append(result, &maintenance_customizations.ConfigurationAssignmentExtension{})
 	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})
 	result = append(result, &managedidentity_customizations.UserAssignedIdentityExtension{})
@@ -7647,6 +7749,224 @@ func indexKustoClustersDatabasesScriptScriptUrlSasToken(rawObj client.Object) []
 		return nil
 	}
 	return obj.Spec.ScriptUrlSasToken.Index()
+}
+
+// indexLogicIntegrationAccountsAgreementReceiveAgreementApplicationPassword an index function for logic_v20190501.IntegrationAccountsAgreement .spec.content.edifact.receiveAgreement.protocolSettings.envelopeOverrides.applicationPassword
+func indexLogicIntegrationAccountsAgreementReceiveAgreementApplicationPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*logic_v20190501.IntegrationAccountsAgreement)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Content == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.ReceiveAgreement == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.ReceiveAgreement.ProtocolSettings == nil {
+		return nil
+	}
+	for _, envelopeOverrideItem := range obj.Spec.Content.Edifact.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides {
+		if envelopeOverrideItem.ApplicationPassword == nil {
+			continue
+		}
+		result = append(result, envelopeOverrideItem.ApplicationPassword.Index()...)
+	}
+	return result
+}
+
+// indexLogicIntegrationAccountsAgreementReceiveAgreementGroupApplicationPassword an index function for logic_v20190501.IntegrationAccountsAgreement .spec.content.edifact.receiveAgreement.protocolSettings.envelopeSettings.groupApplicationPassword
+func indexLogicIntegrationAccountsAgreementReceiveAgreementGroupApplicationPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*logic_v20190501.IntegrationAccountsAgreement)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Content == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.ReceiveAgreement == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.ReceiveAgreement.ProtocolSettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.ReceiveAgreement.ProtocolSettings.EnvelopeSettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.ReceiveAgreement.ProtocolSettings.EnvelopeSettings.GroupApplicationPassword == nil {
+		return nil
+	}
+	return obj.Spec.Content.Edifact.ReceiveAgreement.ProtocolSettings.EnvelopeSettings.GroupApplicationPassword.Index()
+}
+
+// indexLogicIntegrationAccountsAgreementReceiveAgreementPasswordValue an index function for logic_v20190501.IntegrationAccountsAgreement .spec.content.x12.receiveAgreement.protocolSettings.securitySettings.passwordValue
+func indexLogicIntegrationAccountsAgreementReceiveAgreementPasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*logic_v20190501.IntegrationAccountsAgreement)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Content == nil {
+		return nil
+	}
+	if obj.Spec.Content.X12 == nil {
+		return nil
+	}
+	if obj.Spec.Content.X12.ReceiveAgreement == nil {
+		return nil
+	}
+	if obj.Spec.Content.X12.ReceiveAgreement.ProtocolSettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.X12.ReceiveAgreement.ProtocolSettings.SecuritySettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.X12.ReceiveAgreement.ProtocolSettings.SecuritySettings.PasswordValue == nil {
+		return nil
+	}
+	return obj.Spec.Content.X12.ReceiveAgreement.ProtocolSettings.SecuritySettings.PasswordValue.Index()
+}
+
+// indexLogicIntegrationAccountsAgreementReceiveAgreementRecipientReferencePasswordValue an index function for logic_v20190501.IntegrationAccountsAgreement .spec.content.edifact.receiveAgreement.protocolSettings.envelopeSettings.recipientReferencePasswordValue
+func indexLogicIntegrationAccountsAgreementReceiveAgreementRecipientReferencePasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*logic_v20190501.IntegrationAccountsAgreement)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Content == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.ReceiveAgreement == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.ReceiveAgreement.ProtocolSettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.ReceiveAgreement.ProtocolSettings.EnvelopeSettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.ReceiveAgreement.ProtocolSettings.EnvelopeSettings.RecipientReferencePasswordValue == nil {
+		return nil
+	}
+	return obj.Spec.Content.Edifact.ReceiveAgreement.ProtocolSettings.EnvelopeSettings.RecipientReferencePasswordValue.Index()
+}
+
+// indexLogicIntegrationAccountsAgreementSendAgreementApplicationPassword an index function for logic_v20190501.IntegrationAccountsAgreement .spec.content.edifact.sendAgreement.protocolSettings.envelopeOverrides.applicationPassword
+func indexLogicIntegrationAccountsAgreementSendAgreementApplicationPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*logic_v20190501.IntegrationAccountsAgreement)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Content == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.SendAgreement == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings == nil {
+		return nil
+	}
+	for _, envelopeOverrideItem := range obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings.EnvelopeOverrides {
+		if envelopeOverrideItem.ApplicationPassword == nil {
+			continue
+		}
+		result = append(result, envelopeOverrideItem.ApplicationPassword.Index()...)
+	}
+	return result
+}
+
+// indexLogicIntegrationAccountsAgreementSendAgreementGroupApplicationPassword an index function for logic_v20190501.IntegrationAccountsAgreement .spec.content.edifact.sendAgreement.protocolSettings.envelopeSettings.groupApplicationPassword
+func indexLogicIntegrationAccountsAgreementSendAgreementGroupApplicationPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*logic_v20190501.IntegrationAccountsAgreement)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Content == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.SendAgreement == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings.EnvelopeSettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings.EnvelopeSettings.GroupApplicationPassword == nil {
+		return nil
+	}
+	return obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings.EnvelopeSettings.GroupApplicationPassword.Index()
+}
+
+// indexLogicIntegrationAccountsAgreementSendAgreementPasswordValue an index function for logic_v20190501.IntegrationAccountsAgreement .spec.content.x12.sendAgreement.protocolSettings.securitySettings.passwordValue
+func indexLogicIntegrationAccountsAgreementSendAgreementPasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*logic_v20190501.IntegrationAccountsAgreement)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Content == nil {
+		return nil
+	}
+	if obj.Spec.Content.X12 == nil {
+		return nil
+	}
+	if obj.Spec.Content.X12.SendAgreement == nil {
+		return nil
+	}
+	if obj.Spec.Content.X12.SendAgreement.ProtocolSettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.X12.SendAgreement.ProtocolSettings.SecuritySettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.X12.SendAgreement.ProtocolSettings.SecuritySettings.PasswordValue == nil {
+		return nil
+	}
+	return obj.Spec.Content.X12.SendAgreement.ProtocolSettings.SecuritySettings.PasswordValue.Index()
+}
+
+// indexLogicIntegrationAccountsAgreementSendAgreementRecipientReferencePasswordValue an index function for logic_v20190501.IntegrationAccountsAgreement .spec.content.edifact.sendAgreement.protocolSettings.envelopeSettings.recipientReferencePasswordValue
+func indexLogicIntegrationAccountsAgreementSendAgreementRecipientReferencePasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*logic_v20190501.IntegrationAccountsAgreement)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Content == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.SendAgreement == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings.EnvelopeSettings == nil {
+		return nil
+	}
+	if obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings.EnvelopeSettings.RecipientReferencePasswordValue == nil {
+		return nil
+	}
+	return obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings.EnvelopeSettings.RecipientReferencePasswordValue.Index()
 }
 
 // indexNetworkApplicationGatewayAuthenticationCertificatesData an index function for network_v20260301.ApplicationGateway .spec.authenticationCertificates.data

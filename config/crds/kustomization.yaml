@@ -284,6 +284,16 @@ resources:
 - kusto.azure.hfl.dev_clustersmanagedprivateendpoints.yaml
 - kusto.azure.hfl.dev_clustersprivateendpointconnections.yaml
 - kusto.azure.hfl.dev_clusterssandboxcustomimages.yaml
+- logic.azure.hfl.dev_integrationaccounts.yaml
+- logic.azure.hfl.dev_integrationaccountsagreements.yaml
+- logic.azure.hfl.dev_integrationaccountsassemblies.yaml
+- logic.azure.hfl.dev_integrationaccountsbatchconfigurations.yaml
+- logic.azure.hfl.dev_integrationaccountscertificates.yaml
+- logic.azure.hfl.dev_integrationaccountsmaps.yaml
+- logic.azure.hfl.dev_integrationaccountspartners.yaml
+- logic.azure.hfl.dev_integrationaccountsschemas.yaml
+- logic.azure.hfl.dev_integrationaccountssessions.yaml
+- logic.azure.hfl.dev_workflows.yaml
 - maintenance.azure.hfl.dev_configurationassignments.yaml
 - maintenance.azure.hfl.dev_maintenanceconfigurations.yaml
 - managedidentity.azure.hfl.dev_userassignedidentities.yaml

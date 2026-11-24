@@ -77,6 +77,7 @@ Not affiliated with or endorsed by Microsoft.
 | `kusto.azure.hfl.dev/v20250214` `ClustersAttachedDatabaseConfiguration`, `ClustersManagedPrivateEndpoint`, `ClustersPrivateEndpointConnection`, `ClustersSandboxCustomImage`, `ClustersDatabasesScript` | Azure Data Explorer: a cluster's follower databases (a leader cluster by object or ARM ID, with table-level sharing), managed private endpoints, private endpoint connections and Python or R sandbox images, and a database's KQL scripts (inline from a Secret, or by URL with its SAS token from a Secret). Owned by ASO's `Cluster` and `Database`; generated | ours; ASO's `kusto` group has the cluster, databases, data connections and principal assignments (2026-11-24); not live-tested (a cluster bills by the hour and takes long to make) |
 | `dataprotection.azure.hfl.dev/v20260701` `ResourceGuard`, `BackupVaultsBackupResourceGuardProxy` | multi-user authorization for backup: resource guards (the critical operations of a backup vault or a Recovery Services vault that need a second person's approval) and a backup vault's guard proxy (the guard by object or ARM ID; deleting it sends the unlockDelete Azure requires first, as our Recovery Services proxy does). Owned by ASO's `ResourceGroup` and `BackupVault`; generated | ours; ASO's `dataprotection` group has the backup vault, backup instances and policies (2026-11-24); `TestLiveDataProtectionResourceGuard` pending |
 | `batch.azure.hfl.dev/v20250601` `BatchAccountsApplication`, `BatchAccountsPool` | Batch: an account's applications (the package entries pools install) and pools (VM size, image and node agent, fixed or automatic scaling, subnet, application packages by object or ARM ID, start task, user accounts and mount credentials from Secrets, VM extensions with protected settings from a Secret). Owned by ASO's `BatchAccount`; generated | ours; ASO's `batch` group has the account only (2026-11-24); `TestLiveBatchPool` pending |
+| `logic.azure.hfl.dev/v20190501` `Workflow`, `IntegrationAccount`, `IntegrationAccountsAssembly`, `IntegrationAccountsBatchConfiguration`, `IntegrationAccountsSchema`, `IntegrationAccountsMap`, `IntegrationAccountsPartner`, `IntegrationAccountsAgreement`, `IntegrationAccountsCertificate`, `IntegrationAccountsSession` | Logic Apps: Consumption workflows (the definition, parameters of any JSON, access control, the integration account by object or ARM ID) and integration accounts with their B2B artifacts: XML schemas, maps, partners, AS2, X12 and EDIFACT agreements (their header passwords from Secrets), certificates (a Key Vault key by reference), batch configurations, sessions and assemblies. In a resource group, the children owned by our `IntegrationAccount`; generated | ours; ASO has no `logic` group (2026-11-24); `TestLiveLogicWorkflow` pending |
 | `monitor.azure.hfl.dev/v20260401` `PipelineGroup` | the Azure Monitor pipeline at the edge: on an Azure Arc-enabled cluster's custom location, syslog and OTLP receivers, batch and transformation processors, and exporters to a data collection rule, joined into pipelines. Owned by ASO's `ResourceGroup`; generated | ours; ASO's `monitor` group exports only the Azure Monitor workspace (2026-11-23); not live-tested (needs an Arc cluster) |
 | `compute.azure.hfl.dev/v20260401` `VirtualMachinesDiagnosticRunCommand` | a virtual machine's diagnostic run commands: a script, script URI, command ID or gallery script version (by reference) run for diagnostics, the run-as password from a Secret. Owned by ASO's `VirtualMachine`; generated | ours; ASO exports no run command (2026-11-23); live part of `TestLiveVirtualMachineRunCommand` pending |
 | `web.azure.hfl.dev/v20260715` `StaticSite`, `StaticSitesCustomDomain`, `StaticSitesLinkedBackend`, `StaticSitesUserProvidedFunctionApp`, `StaticSitesDatabaseConnection`, `StaticSitesPrivateEndpointConnection`, `SitesDomainOwnershipIdentifier`, `SitesPrivateEndpointConnection`, `SitesPublicCertificate`, `SitesVirtualNetworkConnection`, `SitesHybridConnection` | Azure Static Web Apps (with their custom domains, linked backends, bring-your-own function apps, database connections and private endpoint connections; the repository token and connection strings from Secrets) and more children of ASO's `Site`: domain ownership identifiers, private endpoint connections, public certificates, virtual network connections and hybrid connections (Relay connection strings from Secrets). ASO has none | ours; none in a release, `main` or an open pull request (2026-11-23); not live-tested |
@@ -103,7 +104,7 @@ Not affiliated with or endorsed by Microsoft.
 <!-- coverage:start -->
 ![Azure coverage by attributes and by resources: official, ours beyond official, uncovered](docs/coverage/bars/_total.svg)
 
-Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 17.5%; 66.1% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
+Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 19.0%; 64.6% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
 The purple bar is Terraform's `azurerm` provider beside them, an estimate: the share of the same attributes that a writable attribute of a mapped Terraform resource matches by the lenient rule (L2, 8.2% overall), with the strict rule (L1, 7.2%) as its tick; the method and its error are in the catalog's ["Method and error"](https://github.com/highfivelabs/catalog/blob/13064af34996c47f1a5498bb17aca16194c4574e/docs/terraform-leverage.md#method-and-error), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at catalog `13064af34996`. `azapi` is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema.
 
@@ -113,7 +114,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | platform-foundation | 18 | 246 | 43.2% | 39.3% | 17.5% | ~18.7% |
 | security-adjacent | 7 | 93 | 8.6% | 60.3% | 31.1% | ~11.1% |
-| application | 35 | 823 | 33.1% | 31.0% | 35.9% | ~11.3% |
+| application | 35 | 823 | 33.1% | 35.5% | 31.5% | ~11.3% |
 | other | 230 | 1,262 | 0.5% | 2.3% | 97.3% | ~3.9% |
 
 ![Coverage by tier](docs/coverage/bars/_tiers.svg)
@@ -122,7 +123,7 @@ The purple bar is Terraform's `azurerm` provider beside them, an estimate: the s
 | --- | ---: | ---: | ---: | ---: | ---: |
 | 1 | 17 | 43.0% | 33.2% | 23.8% | ~13.8% |
 | 2 | 18 | 26.5% | 46.0% | 27.4% | ~8.2% |
-| 3 | 245 | 5.9% | 4.6% | 89.5% | ~6.6% |
+| 3 | 245 | 5.9% | 7.0% | 87.1% | ~6.6% |
 
 By service, tier first and then attributes covered (every tier 1 and 2 service, and any other with coverage; the category is the service's default, some resources differ); method, caveats and the data (service, resource and attribute level) are in [`docs/coverage/`](docs/coverage/README.md), all services in [`services.csv`](docs/coverage/services.csv).
 
@@ -171,7 +172,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 
 </details>
 
-<details><summary>Tier 3: 24 services</summary>
+<details><summary>Tier 3: 25 services</summary>
 
 | Tier | Service | Category | Coverage | Official | Ours beyond | Uncovered | Terraform (estimate) |
 | ---: | --- | --- | --- | ---: | ---: | ---: | ---: |
@@ -189,6 +190,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 | 3 | `Microsoft.MachineLearningServices` | application | ![Microsoft.MachineLearningServices](docs/coverage/bars/Microsoft.MachineLearningServices.svg) | 11.0% | 0.0% | 89.0% | ~0.0% |
 | 3 | `Microsoft.DataProtection` | application | ![Microsoft.DataProtection](docs/coverage/bars/Microsoft.DataProtection.svg) | 72.1% | 8.7% | 19.2% | ~5.8% |
 | 3 | `Microsoft.Batch` | application | ![Microsoft.Batch](docs/coverage/bars/Microsoft.Batch.svg) | 10.8% | 85.4% | 3.8% | ~36.2% |
+| 3 | `Microsoft.Logic` | application | ![Microsoft.Logic](docs/coverage/bars/Microsoft.Logic.svg) | 0.0% | 95.6% | 4.4% | ~6.7% |
 | 3 | `Microsoft.Devices` | application | ![Microsoft.Devices](docs/coverage/bars/Microsoft.Devices.svg) | 58.6% | 0.0% | 41.4% | ~0.0% |
 | 3 | `Microsoft.NotificationHubs` | application | ![Microsoft.NotificationHubs](docs/coverage/bars/Microsoft.NotificationHubs.svg) | 90.8% | 0.0% | 9.2% | ~13.3% |
 | 3 | `Microsoft.ServiceLinker` | application | ![Microsoft.ServiceLinker](docs/coverage/bars/Microsoft.ServiceLinker.svg) | 24.7% | 0.0% | 75.3% | ~0.0% |
@@ -202,7 +204,7 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 
 </details>
 
-221 other services in the specs have no coverage from either and are in tier 3.
+220 other services in the specs have no coverage from either and are in tier 3.
 <!-- coverage:end -->
 
 ## Where it sits

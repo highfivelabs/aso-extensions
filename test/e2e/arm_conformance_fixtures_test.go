@@ -361,6 +361,30 @@ func init() {
 		return map[string]any{"vmSize": "STANDARD_D2S_V3", "deploymentConfiguration": map[string]any{"virtualMachineConfiguration": map[string]any{
 			"imageReference": map[string]any{"publisher": "canonical", "offer": "ubuntu-24_04-lts", "sku": "server"}, "nodeAgentSkuId": "batch.node.ubuntu 24.04"}}}
 	}}
+	// Logic Apps (logic.go): an integration account has a SKU (the first
+	// enum value is NotSpecified); a schema and a map their content; a
+	// batch configuration a release criterion; an assembly its content; an
+	// agreement names partners of its account and carries its type's
+	// content, so its own test runs it.
+	f["IntegrationAccount"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sku": map[string]any{"name": "Free"}}
+	}}
+	f["IntegrationAccountsSchema"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"schemaType": "Xml", "content": "<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"/>"}
+	}}
+	f["IntegrationAccountsMap"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"mapType": "Liquid", "content": "{{ content }}"}
+	}}
+	f["IntegrationAccountsBatchConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"batchGroupName": "conformance", "releaseCriteria": map[string]any{"messageCount": int64(1)}}}
+	}}
+	f["IntegrationAccountsAssembly"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"assemblyName": "Conformance", "content": "TVqQAAMAAAAEAAAA"}}
+	}}
+	f["IntegrationAccountsCertificate"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"publicCertificate": "MIIBconformance"}
+	}}
+	f["IntegrationAccountsAgreement"] = conformanceFixture{coveredBy: "TestLogicWorkflowAndIntegrationAccount"}
 	// A MySQL flexible server's threat protection setting is Default and
 	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
 	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

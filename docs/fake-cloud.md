@@ -568,6 +568,19 @@ upstream's); the catalog's chart tests do that.
   Applications are kept as sent. Not modelled: nodes allocated (a pool is
   steady at once), quotas, images and node agents being real, start tasks
   running, package versions, and the error codes.
+- Logic Apps workflows and integration accounts (`Microsoft.Logic`,
+  2019-05-01; `pkg/fakecloud/arm/logic.go`): a workflow's definition names
+  its `$schema` and `contentVersion` (400) and its integration account
+  exists (404); an integration account's SKU is Free, Basic or Standard
+  (400); a schema and a map have their type and content, an assembly its
+  name and content (400); a partner's business identities have a qualifier
+  and a value (400); an agreement names a host and a guest partner of its
+  account that exist (404), identities of those partners (400) and the
+  content of its type (400); a certificate has a public certificate or a
+  Key Vault key, the vault existing (404); a batch configuration has a
+  release criterion (400). Not modelled: workflows running, the definition
+  language beyond its two fields, the SKUs' artifact limits, B2B messages,
+  and the error codes.
 - A MySQL flexible server's advanced threat protection setting
   (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
   2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404
