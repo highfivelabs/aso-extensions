@@ -1039,6 +1039,36 @@ open ASO pull request adds is copied and shipped here, and kept in step with
 upstream mechanically (`upstream.yaml`, the coverage check) until a release
 carries it.
 
+**Track ASO's `main`; never wait on an upstream pull request or release**
+(the builder, 2026-11-24, for all of the KRM extensions repositories; it
+confirms the 2026-11-10 rule above and adds the pin's cadence and what a
+build contains). The builder, verbatim: "I think we shoudl not wait and
+make the extensions repo take these or build them and pull ahead. we can
+afford right now to have some churn in having folks transition and
+actually want to see what that experience looks like" and "let's reverse
+the earlier decision. I think if it's in PR we have no idea how long it'll
+take to land. for all krm extnsions repos let's take changes that land on
+main and of course those on official releases but our latest build should
+have the contents of their main + any fixes + what we extend". So:
+
+- **A gap with an upstream pull request is built now**, from the pull
+  request's code where it works, otherwise generated or written here, as
+  the rule above already says. A field ASO's own kind lacks is filled now
+  too (section 3, "Field gaps in ASO's own kinds"), not left for a release.
+- **The pin follows `main`.** Move the "Commit" row of `UPSTREAM.md` to
+  the head of ASO's `main` at least weekly and before every release of
+  ours (the procedure in `UPSTREAM.md`, "Moving the pin"), not only when
+  a gap closes. The pin was 2026-11-06's `main` until this decision.
+- **Our latest build is ASO `main` + our fixes + our extensions.** What
+  `main` has and no release has yet ships in our build; our fixes ship as
+  `patches/`; our kinds ship as ours. A kind ASO has only on `main` is no
+  longer a gap here once the pin reaches it.
+- **Transition is expected.** When ASO ships a kind or field we carry,
+  ours is deprecated (above). Users moving across is accepted churn, and
+  the experience is worth observing and writing down.
+- Unchanged: the copy-upstream rule, `patches/`, never editing
+  `third_party/`, the merge gate, and the live-run rules.
+
 ## 5. Testing: the fake cloud
 
 ASO's own tests replay recordings of real Azure, which cannot be made
