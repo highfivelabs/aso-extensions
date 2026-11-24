@@ -389,6 +389,11 @@ func init() {
 	f["kusto.azure.hfl.dev/ClustersPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
 		c.add(c.owner + "/privateEndpointConnections/conformance")
 	}}
+	// A backup vault's guard proxy names a guard; its DELETE needs an
+	// unlock, which the kind's extension sends (backup.go).
+	f["BackupVaultsBackupResourceGuardProxy"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"resourceGuardResourceReference": armRef(c.add(c.in("Microsoft.DataProtection/resourceGuards/conformance")))}}
+	}}
 	f["NetworkInterfacesTapConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"virtualNetworkTap": embedRef(c.add(c.in("Microsoft.Network/virtualNetworkTaps/conformance")))}
 	}}

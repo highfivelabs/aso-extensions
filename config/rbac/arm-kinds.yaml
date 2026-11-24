@@ -21,6 +21,7 @@ rules:
   - containerregistry.azure.hfl.dev
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
+  - dataprotection.azure.hfl.dev
   - dbformysql.azure.hfl.dev
   - dbforpostgresql.azure.hfl.dev
   - devtestlab.azure.hfl.dev
@@ -69,6 +70,7 @@ rules:
   - containerregistry.azure.hfl.dev
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
+  - dataprotection.azure.hfl.dev
   - dbformysql.azure.hfl.dev
   - dbforpostgresql.azure.hfl.dev
   - devtestlab.azure.hfl.dev

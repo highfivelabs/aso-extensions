@@ -55,3 +55,4 @@ specification/containerinstance
 specification/signalr
 specification/webpubsub
 specification/azure-kusto
+specification/dataprotection

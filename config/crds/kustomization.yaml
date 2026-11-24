@@ -139,6 +139,8 @@ resources:
 - costmanagement.azure.hfl.dev_exports.yaml
 - costmanagement.azure.hfl.dev_scheduledactions.yaml
 - costmanagement.azure.hfl.dev_settings.yaml
+- dataprotection.azure.hfl.dev_backupvaultsbackupresourceguardproxies.yaml
+- dataprotection.azure.hfl.dev_resourceguards.yaml
 - dbformysql.azure.hfl.dev_flexibleserversadvancedthreatprotectionsettings.yaml
 - dbformysql.azure.hfl.dev_flexibleserversprivateendpointconnections.yaml
 - dbforpostgresql.azure.hfl.dev_flexibleserversprivateendpointconnections.yaml

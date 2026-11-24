@@ -49,6 +49,7 @@ import (
 	asoregistry "github.com/Azure/azure-service-operator/v2/api/containerregistry/v20251101/storage"
 	asofleet "github.com/Azure/azure-service-operator/v2/api/containerservice/v1api20250301/storage"
 	asoaks "github.com/Azure/azure-service-operator/v2/api/containerservice/v20260501/storage"
+	asodataprotection "github.com/Azure/azure-service-operator/v2/api/dataprotection/v20231101/storage"
 	asomysql "github.com/Azure/azure-service-operator/v2/api/dbformysql/v20241230/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asomongo "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240701/storage"
@@ -136,6 +137,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asomysql.AddToScheme(scheme)
 	_ = asosignalr.AddToScheme(scheme)
 	_ = asokusto.AddToScheme(scheme)
+	_ = asodataprotection.AddToScheme(scheme)
 	return scheme
 }
 
@@ -208,6 +210,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asosignalr.Replica{}, Name: "aso_signalrservice_replica"},
 		{Obj: &asokusto.Cluster{}, Name: "aso_kusto_cluster"},
 		{Obj: &asokusto.Database{}, Name: "aso_kusto_database"},
+		{Obj: &asodataprotection.BackupVault{}, Name: "aso_dataprotection_backupvault"},
 	}
 }
 

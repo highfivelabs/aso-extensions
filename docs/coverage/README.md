@@ -337,7 +337,7 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 7,086 (16.3%) in 518 further resources; uncovered 29,163 (67.2%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 7,095 (16.4%) in 520 further resources; uncovered 29,154 (67.2%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
@@ -488,6 +488,8 @@ Generated; these cannot drift from the data.
 | `costmanagement.azure.hfl.dev/Export` | `Microsoft.CostManagement/exports` | ARM wire type of the generated kind (`apis/arm`) |
 | `costmanagement.azure.hfl.dev/ScheduledAction` | `Microsoft.CostManagement/scheduledActions` | ARM wire type of the generated kind (`apis/arm`) |
 | `costmanagement.azure.hfl.dev/Setting` | `Microsoft.CostManagement/settings` | ARM wire type of the generated kind (`apis/arm`) |
+| `dataprotection.azure.hfl.dev/BackupVaultsBackupResourceGuardProxy` | `Microsoft.DataProtection/backupVaults/backupResourceGuardProxies` | ARM wire type of the generated kind (`apis/arm`) |
+| `dataprotection.azure.hfl.dev/ResourceGuard` | `Microsoft.DataProtection/resourceGuards` | ARM wire type of the generated kind (`apis/arm`) |
 | `dbformysql.azure.hfl.dev/FlexibleServersAdvancedThreatProtectionSetting` | `Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings` | ARM wire type of the generated kind (`apis/arm`) |
 | `dbformysql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection` | `Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `dbforpostgresql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection` | `Microsoft.DBforPostgreSQL/flexibleServers/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |

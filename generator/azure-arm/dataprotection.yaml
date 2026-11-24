@@ -1,0 +1,27 @@
+# Data Protection kinds ASO does not export (Microsoft.DataProtection,
+# dataprotection.json 2026-07-01, the newest stable version; ASO's own
+# BackupVault is 2023-11-01; docs/plan.md f70, tier 3 row t13 of
+# docs/coverage/foundation.md): resource guards (multi-user authorization:
+# the critical operations of a backup vault or Recovery Services vault that
+# need a second person's approval) and a backup vault's resource guard
+# proxy (the vault's link to its guard). The guard is in a resource group;
+# the proxy is owned by ASO's BackupVault.
+typeFilters:
+  - action: include
+    group: dataprotection
+    version: v20260701
+    because: the newest stable version (ASO's BackupVault is v20231101)
+  - action: prune
+    group: dataprotection
+    because: every other version is left alone (ASO has the backup vault, its backup instances and policies)
+groupModelConfiguration:
+  2026-07-01:
+    ResourceGuard:
+      $exportAs: ResourceGuard
+      $supportedFrom: v0.1.0
+    BackupVaults_BackupResourceGuardProxy:
+      $exportAs: BackupVaultsBackupResourceGuardProxy
+      $supportedFrom: v0.1.0
+    ResourceGuardProxyBase:
+      ResourceGuardResourceId:
+        $referenceType: arm # the guard (our ResourceGuard, or an ARM ID)

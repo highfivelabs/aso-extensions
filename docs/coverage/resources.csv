@@ -833,8 +833,8 @@ Microsoft.DataMigration,Microsoft.DataMigration/sqlMigrationServices,3,,0,,0,3,f
 Microsoft.DataProtection,Microsoft.DataProtection/backupVaults,23,dataprotection.azure.com/BackupVault,13,,0,10,false,spec_api=2026-07-01; official_api=2023-11-01; official-api-differs-from-spec
 Microsoft.DataProtection,Microsoft.DataProtection/backupVaults/backupInstances,51,dataprotection.azure.com/BackupVaultsBackupInstance,41,,0,10,false,spec_api=2026-07-01; official_api=2023-11-01; official-api-differs-from-spec
 Microsoft.DataProtection,Microsoft.DataProtection/backupVaults/backupPolicies,21,dataprotection.azure.com/BackupVaultsBackupPolicy,21,,0,0,false,spec_api=2026-07-01; official_api=2023-11-01; official-api-differs-from-spec
-Microsoft.DataProtection,Microsoft.DataProtection/backupVaults/backupResourceGuardProxies,5,,0,,0,5,false,spec_api=2026-07-01
-Microsoft.DataProtection,Microsoft.DataProtection/resourceGuards,4,,0,,0,4,false,spec_api=2026-07-01
+Microsoft.DataProtection,Microsoft.DataProtection/backupVaults/backupResourceGuardProxies,5,,0,dataprotection.azure.hfl.dev/BackupVaultsBackupResourceGuardProxy,5,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.DataProtection,Microsoft.DataProtection/resourceGuards,4,,0,dataprotection.azure.hfl.dev/ResourceGuard,4,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.DataReplication,Microsoft.DataReplication/replicationFabrics,12,,0,,0,12,false,spec_api=2026-05-01
 Microsoft.DataReplication,Microsoft.DataReplication/replicationFabrics/fabricAgents,19,,0,,0,19,false,spec_api=2026-05-01
 Microsoft.DataReplication,Microsoft.DataReplication/replicationVaults,6,,0,,0,6,false,spec_api=2026-05-01

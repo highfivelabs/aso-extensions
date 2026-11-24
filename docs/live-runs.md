@@ -387,6 +387,7 @@ ledger has a row for it.
 | 2026-11-24 | `TestLiveAPIManagementOperation` | `ApiOperation`, `ApiOperationPolicy`, `Tag`, `ApiTag` | a Consumption API Management service and an API (Consumption bills calls only, none is made; a few minutes to make); skips unless `Microsoft.ApiManagement` is registered. Not live: identity providers (no developer portal in Consumption), authorization servers, caches, schemas | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveAPIManagementOperation"` |
 | 2026-11-24 | `TestLiveContainerGroupProfile` | `ContainerGroupProfile`, `NGroup` | none: a profile (a template) and an NGroup with a desired count of zero (free: no container group runs); skips unless `Microsoft.ContainerInstance` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveContainerGroupProfile"` |
 | 2026-11-24 | `TestLiveWebPubSubHub` | `WebPubSub`, `WebPubSubHub` | none: a Free_F1 Web PubSub service and a hub (free; a subscription's Free units are limited, and a run past the limit fails on the service); skips unless `Microsoft.SignalRService` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveWebPubSubHub"` |
+| 2026-11-24 | `TestLiveDataProtectionResourceGuard` | `ResourceGuard`, `BackupVaultsBackupResourceGuardProxy` | an empty backup vault (free); the guard and proxy are free; skips unless `Microsoft.DataProtection` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveDataProtectionResourceGuard"` |
 | 2026-11-23 | `TestLiveVirtualMachineRunCommand` (extended) | `VirtualMachinesDiagnosticRunCommand` | the test's small Linux VM (about $0.03 an hour); the run command part passed on 2026-11-10 (`ax101935c071`), the diagnostic run command part is new | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveVirtualMachineRunCommand"` |
 
 All of them in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
@@ -401,7 +402,7 @@ TestLiveSmartDetectionRule TestLiveAlertProcessingRule
 TestLiveVirtualNetworkTap TestLiveServiceBusNetworkRuleSet
 TestLiveEventHubsNamespaceChildren TestLiveEventGridSystemTopic
 TestLiveAPIManagementOperation TestLiveContainerGroupProfile
-TestLiveWebPubSubHub"`.
+TestLiveWebPubSubHub TestLiveDataProtectionResourceGuard"`.
 
 Written for the subscription (above, "The subscription roles"); each skips
 until the builder assigns the roles of `hack/live/roles/`:

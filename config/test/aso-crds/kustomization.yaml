@@ -62,3 +62,4 @@ resources:
 - signalrservice.azure.com_replicas.yaml
 - kusto.azure.com_clusters.yaml
 - kusto.azure.com_databases.yaml
+- dataprotection.azure.com_backupvaults.yaml

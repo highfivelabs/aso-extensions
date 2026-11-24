@@ -87,6 +87,9 @@ import (
 	costmanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/customizations"
 	costmanagement_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601"
 	costmanagement_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601/storage"
+	dataprotection_customizations "github.com/highfivelabs/aso-extensions/apis/arm/dataprotection/customizations"
+	dataprotection_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/dataprotection/v20260701"
+	dataprotection_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/dataprotection/v20260701/storage"
 	dbformysql_customizations "github.com/highfivelabs/aso-extensions/apis/arm/dbformysql/customizations"
 	dbformysql_v20241230 "github.com/highfivelabs/aso-extensions/apis/arm/dbformysql/v20241230"
 	dbformysql_v20241230s "github.com/highfivelabs/aso-extensions/apis/arm/dbformysql/v20241230/storage"
@@ -1259,6 +1262,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.ScheduledAction)})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.Setting)})
+	result = append(result, &registration.StorageType{Obj: new(dataprotection_v20260701.BackupVaultsBackupResourceGuardProxy)})
+	result = append(result, &registration.StorageType{Obj: new(dataprotection_v20260701.ResourceGuard)})
 	result = append(result, &registration.StorageType{Obj: new(dbformysql_v20241230.FlexibleServersAdvancedThreatProtectionSetting)})
 	result = append(result, &registration.StorageType{Obj: new(dbformysql_v20241230.FlexibleServersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{
@@ -3364,6 +3369,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Export)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.ScheduledAction)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Setting)})
+	result = append(result, &registration.KnownType{Obj: new(dataprotection_v20260701.BackupVaultsBackupResourceGuardProxy)}, &registration.KnownType{Obj: new(dataprotection_v20260701.ResourceGuard)})
+	result = append(result, &registration.KnownType{Obj: new(dataprotection_v20260701s.BackupVaultsBackupResourceGuardProxy)}, &registration.KnownType{Obj: new(dataprotection_v20260701s.ResourceGuard)})
 	result = append(result, &registration.KnownType{Obj: new(dbformysql_v20241230.FlexibleServersAdvancedThreatProtectionSetting)}, &registration.KnownType{Obj: new(dbformysql_v20241230.FlexibleServersPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(dbformysql_v20241230s.FlexibleServersAdvancedThreatProtectionSetting)}, &registration.KnownType{Obj: new(dbformysql_v20241230s.FlexibleServersPrivateEndpointConnection)})
 	result = append(
@@ -4305,6 +4312,8 @@ func createScheme() *runtime.Scheme {
 	_ = containerservice_v20260601s.AddToScheme(scheme)
 	_ = costmanagement_v20260601.AddToScheme(scheme)
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
+	_ = dataprotection_v20260701.AddToScheme(scheme)
+	_ = dataprotection_v20260701s.AddToScheme(scheme)
 	_ = dbformysql_v20241230.AddToScheme(scheme)
 	_ = dbformysql_v20241230s.AddToScheme(scheme)
 	_ = dbforpostgresql_v20221108.AddToScheme(scheme)
@@ -4580,6 +4589,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &costmanagement_customizations.ScheduledActionExtension{})
 	result = append(result, &costmanagement_customizations.SettingExtension{})
+	result = append(result, &dataprotection_customizations.BackupVaultsBackupResourceGuardProxyExtension{})
+	result = append(result, &dataprotection_customizations.ResourceGuardExtension{})
 	result = append(result, &dbformysql_customizations.FlexibleServersAdvancedThreatProtectionSettingExtension{})
 	result = append(result, &dbformysql_customizations.FlexibleServersPrivateEndpointConnectionExtension{})
 	result = append(result, &dbforpostgresql_customizations.FlexibleServersPrivateEndpointConnectionExtension{})

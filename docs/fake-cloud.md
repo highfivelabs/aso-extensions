@@ -578,6 +578,15 @@ upstream's); the catalog's chart tests do that.
   base image (400); a database script one source, URL or inline (400).
   Connections follow `privateendpoints.go`. Not modelled: followers kept in
   step, scripts running, images built, and the error codes.
+- Resource guard proxies (`Microsoft.RecoveryServices/vaults/` and
+  `Microsoft.DataProtection/backupVaults/backupResourceGuardProxies`;
+  `pkg/fakecloud/arm/backup.go`; the backup vault's added 2026-11-24, f70):
+  a proxy naming a guard is deleted only after a POST to its
+  `unlockDelete` names it and the guard's `deleteResourceGuardProxyRequests`
+  request (400 otherwise, as a live run of 2026-11-12 showed of Recovery
+  Services); one unlock opens one DELETE. Resource guards themselves are
+  kept as sent. Not modelled: the unlock's expiry and the guard's role
+  checks.
 - Virtual network TAP (`virtualNetworkTaps` and
   `networkInterfaces/tapConfigurations`, 2026-03-01;
   `pkg/fakecloud/arm/vnettap.go`): a TAP has one destination, a NIC's IP

@@ -50,6 +50,7 @@ imports:
   containerinstance: azure-arm/containerinstance.yaml
   signalrservice: azure-arm/signalrservice.yaml
   kusto: azure-arm/kusto.yaml
+  dataprotection: azure-arm/dataprotection.yaml
   network: azure-arm/network.yaml
   containerregistry: azure-arm/containerregistry.yaml
   compute: azure-arm/compute.yaml
