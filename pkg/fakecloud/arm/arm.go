@@ -639,6 +639,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := a.checkDataFactory(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		if status, code, msg := a.checkEventGrid(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
@@ -692,7 +696,9 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		if props == nil {
 			props = map[string]any{}
 		}
-		props["provisioningState"] = "Succeeded"
+		if !propertiesAreAMap(id) {
+			props["provisioningState"] = "Succeeded"
+		}
 		body["properties"] = props
 		a.compute(id, body, props)
 		status = http.StatusOK

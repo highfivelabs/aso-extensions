@@ -1,0 +1,54 @@
+# Data Factory kinds ASO does not export (Microsoft.DataFactory, 2018-06-01,
+# the only stable version and the one of ASO's own Factory; docs/plan.md f78,
+# tier 3 row t10 of docs/coverage/foundation.md): a factory's managed
+# virtual network and its managed private endpoints, credentials (a
+# user-assigned identity or a service principal), global parameters and
+# private endpoint connections. Owned by ASO's Factory.
+#
+# Not exported: linked services, datasets, pipelines, triggers, data flows,
+# integration runtimes and change data capture. With any of linked
+# services and datasets (or all of them), ASO's generator at the pin
+# overflows its stack in its flattening stage (the stage after it finds the
+# resources), on the specs' polymorphic, mutually referring types, before
+# any CRD is written; so whether their CRDs would fit the size limit is not
+# known. Recorded in docs/plan.md f78.
+typeFilters:
+  - action: include
+    group: datafactory
+    version: v20180601
+    because: the only stable version, ASO's own (v20180601)
+  - action: prune
+    group: datafactory
+    because: every other version is left alone (ASO has the factory)
+typeTransformers:
+  - group: datafactory
+    name: ExpressionV2;ExpressionV2_STATUS
+    property: Operands
+    remove: true
+    because: We don't currently support directly recursive types (ASO's datafactory.yaml).
+groupModelConfiguration:
+  2018-06-01:
+    Factories_ManagedVirtualNetwork:
+      $exportAs: FactoriesManagedVirtualNetwork
+      $supportedFrom: v0.1.0
+    Factories_ManagedVirtualNetworks_ManagedPrivateEndpoint:
+      $exportAs: FactoriesManagedVirtualNetworksManagedPrivateEndpoint
+      $supportedFrom: v0.1.0
+    Factories_Credential:
+      $exportAs: FactoriesCredential
+      $supportedFrom: v0.1.0
+    Factories_GlobalParameter:
+      $exportAs: FactoriesGlobalParameter
+      $supportedFrom: v0.1.0
+    Factories_PrivateEndpointConnection:
+      $exportAs: FactoriesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    ManagedIdentityTypeProperties:
+      ResourceId:
+        $referenceType: arm # the user-assigned identity a credential stands for
+    ManagedPrivateEndpoint:
+      PrivateLinkResourceId:
+        $referenceType: arm # what the managed private endpoint connects to
+    PrivateEndpoint:
+      Id:
+        $referenceType: arm # the private endpoint of a connection

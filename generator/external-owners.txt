@@ -40,6 +40,7 @@ dataprotection/BackupVault
 batch/BatchAccount
 devices/IotHub
 notificationhubs/Namespace
+datafactory/Factory
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase

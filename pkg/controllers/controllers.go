@@ -50,6 +50,7 @@ import (
 	asoregistry "github.com/Azure/azure-service-operator/v2/api/containerregistry/v20251101/storage"
 	asofleet "github.com/Azure/azure-service-operator/v2/api/containerservice/v1api20250301/storage"
 	asoaks "github.com/Azure/azure-service-operator/v2/api/containerservice/v20260501/storage"
+	asodatafactory "github.com/Azure/azure-service-operator/v2/api/datafactory/v20180601/storage"
 	asodataprotection "github.com/Azure/azure-service-operator/v2/api/dataprotection/v20231101/storage"
 	asomysql "github.com/Azure/azure-service-operator/v2/api/dbformysql/v20241230/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
@@ -144,6 +145,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asobatch.AddToScheme(scheme)
 	_ = asodevices.AddToScheme(scheme)
 	_ = asonotificationhubs.AddToScheme(scheme)
+	_ = asodatafactory.AddToScheme(scheme)
 	return scheme
 }
 
@@ -220,6 +222,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asobatch.BatchAccount{}, Name: "aso_batch_batchaccount"},
 		{Obj: &asodevices.IotHub{}, Name: "aso_devices_iothub"},
 		{Obj: &asonotificationhubs.Namespace{}, Name: "aso_notificationhubs_namespace"},
+		{Obj: &asodatafactory.Factory{}, Name: "aso_datafactory_factory"},
 	}
 }
 

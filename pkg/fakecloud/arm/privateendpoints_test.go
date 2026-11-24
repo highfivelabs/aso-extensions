@@ -33,6 +33,7 @@ func TestPrivateEndpointConnections(t *testing.T) {
 		rg + "/providers/Microsoft.Devices/IotHubs/hub",
 		rg + "/providers/Microsoft.Devices/provisioningServices/dps",
 		rg + "/providers/Microsoft.NotificationHubs/namespaces/push",
+		rg + "/providers/Microsoft.DataFactory/factories/etl",
 	} {
 		a.AddResource(parent)
 		conn := parent + "/privateEndpointConnections/pe-1"

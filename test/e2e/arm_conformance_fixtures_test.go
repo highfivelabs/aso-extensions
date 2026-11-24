@@ -412,6 +412,28 @@ func init() {
 		return map[string]any{"source": "conformance"}
 	}}
 	f["PartnerTopicsEventSubscription"] = f["SystemTopicsEventSubscription"]
+	// Data Factory (datafactory.go): the managed network and global
+	// parameters are named default; a managed private endpoint names a
+	// target and group; a credential an identity that exists; a global
+	// parameter has a type; a private endpoint makes the connection.
+	f["FactoriesManagedVirtualNetwork"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "default"}
+	}}
+	f["FactoriesManagedVirtualNetworksManagedPrivateEndpoint"] = conformanceFixture{
+		owner: func(c *conformanceContext) string {
+			return c.add(c.in("Microsoft.DataFactory/factories/conformance/managedVirtualNetworks/default"), c.in("Microsoft.DataFactory/factories/conformance"))
+		},
+		spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"properties": map[string]any{"groupId": "blob", "privateLinkResourceReference": armRef(c.ref)}}
+		}}
+	f["FactoriesCredential"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"managedIdentity": map[string]any{"type": "ManagedIdentity",
+			"resourceReference": armRef(c.add(c.in("Microsoft.ManagedIdentity/userAssignedIdentities/conformance")))}}}
+	}}
+	f["FactoriesGlobalParameter"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "default", "properties": map[string]any{"conformance": map[string]any{"type": "String", "value": "conformance"}}}
+	}}
+	f["FactoriesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
 	// A MySQL flexible server's threat protection setting is Default and
 	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
 	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

@@ -90,6 +90,9 @@ import (
 	costmanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/customizations"
 	costmanagement_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601"
 	costmanagement_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601/storage"
+	datafactory_customizations "github.com/highfivelabs/aso-extensions/apis/arm/datafactory/customizations"
+	datafactory_v20180601 "github.com/highfivelabs/aso-extensions/apis/arm/datafactory/v20180601"
+	datafactory_v20180601s "github.com/highfivelabs/aso-extensions/apis/arm/datafactory/v20180601/storage"
 	dataprotection_customizations "github.com/highfivelabs/aso-extensions/apis/arm/dataprotection/customizations"
 	dataprotection_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/dataprotection/v20260701"
 	dataprotection_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/dataprotection/v20260701/storage"
@@ -1491,6 +1494,11 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.ScheduledAction)})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.Setting)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesCredential)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesGlobalParameter)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetwork)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(dataprotection_v20260701.BackupVaultsBackupResourceGuardProxy)})
 	result = append(result, &registration.StorageType{Obj: new(dataprotection_v20260701.ResourceGuard)})
 	result = append(result, &registration.StorageType{Obj: new(dbformysql_v20241230.FlexibleServersAdvancedThreatProtectionSetting)})
@@ -3829,6 +3837,20 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Export)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.ScheduledAction)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Setting)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesCredential)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesGlobalParameter)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetwork)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesPrivateEndpointConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesCredential)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesGlobalParameter)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesManagedVirtualNetwork)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(dataprotection_v20260701.BackupVaultsBackupResourceGuardProxy)}, &registration.KnownType{Obj: new(dataprotection_v20260701.ResourceGuard)})
 	result = append(result, &registration.KnownType{Obj: new(dataprotection_v20260701s.BackupVaultsBackupResourceGuardProxy)}, &registration.KnownType{Obj: new(dataprotection_v20260701s.ResourceGuard)})
 	result = append(result, &registration.KnownType{Obj: new(dbformysql_v20241230.FlexibleServersAdvancedThreatProtectionSetting)}, &registration.KnownType{Obj: new(dbformysql_v20241230.FlexibleServersPrivateEndpointConnection)})
@@ -4824,6 +4846,8 @@ func createScheme() *runtime.Scheme {
 	_ = containerservice_v20260601s.AddToScheme(scheme)
 	_ = costmanagement_v20260601.AddToScheme(scheme)
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
+	_ = datafactory_v20180601.AddToScheme(scheme)
+	_ = datafactory_v20180601s.AddToScheme(scheme)
 	_ = dataprotection_v20260701.AddToScheme(scheme)
 	_ = dataprotection_v20260701s.AddToScheme(scheme)
 	_ = dbformysql_v20241230.AddToScheme(scheme)
@@ -5154,6 +5178,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &costmanagement_customizations.ScheduledActionExtension{})
 	result = append(result, &costmanagement_customizations.SettingExtension{})
+	result = append(result, &datafactory_customizations.FactoriesCredentialExtension{})
+	result = append(result, &datafactory_customizations.FactoriesGlobalParameterExtension{})
+	result = append(result, &datafactory_customizations.FactoriesManagedVirtualNetworkExtension{})
+	result = append(result, &datafactory_customizations.FactoriesManagedVirtualNetworksManagedPrivateEndpointExtension{})
+	result = append(result, &datafactory_customizations.FactoriesPrivateEndpointConnectionExtension{})
 	result = append(result, &dataprotection_customizations.BackupVaultsBackupResourceGuardProxyExtension{})
 	result = append(result, &dataprotection_customizations.ResourceGuardExtension{})
 	result = append(result, &dbformysql_customizations.FlexibleServersAdvancedThreatProtectionSettingExtension{})

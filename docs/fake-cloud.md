@@ -596,6 +596,16 @@ upstream's); the catalog's chart tests do that.
   `privateendpoints.go`. Not modelled: devices, enrollments and their
   attestation, proof of possession, allocation at work, and the error
   codes.
+- Data Factory children (`Microsoft.DataFactory`, 2018-06-01;
+  `pkg/fakecloud/arm/datafactory.go`): a factory's managed virtual network
+  and global parameters are named `default` (400); a managed private
+  endpoint names a target that exists (404) and a group (400); a managed
+  identity credential names an identity that exists (404), a service
+  principal one its principal, key and tenant (400); a global parameter has
+  a type (400). Global parameters' properties are a map of the parameters:
+  the fake adds no `provisioningState` to them. Connections follow
+  `privateendpoints.go`. Not modelled: the managed network's isolation, a
+  managed endpoint's approval by its target, and the error codes.
 - A MySQL flexible server's advanced threat protection setting
   (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
   2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404

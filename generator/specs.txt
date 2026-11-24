@@ -61,3 +61,4 @@ specification/logic
 specification/iothub
 specification/deviceprovisioningservices
 specification/notificationhubs
+specification/datafactory
