@@ -506,6 +506,18 @@ upstream's); the catalog's chart tests do that.
   fake's own). A rule collection group's draft
   (`ruleCollectionGroups/{g}/ruleCollectionGroupDrafts/default`) is kept as
   sent: deploying a draft is a POST on the policy, not faked.
+- A Service Bus namespace's network rule set and geo-disaster recovery
+  alias (`Microsoft.ServiceBus/namespaces/networkRuleSets/default` and
+  `disasterRecoveryConfigs`, 2026-01-01; `pkg/fakecloud/arm/messaging.go`):
+  the one rule set is named default (404 otherwise) and has no DELETE (405);
+  an IP rule's mask is an IPv4 address or CIDR range (400); a virtual
+  network rule names a subnet (400) that exists (404); an alias names a
+  partner namespace (400) that exists (404) and is another namespace of the
+  same service (400); a namespace is in one pairing at most (409). The
+  namespace's private endpoint connections follow `privateendpoints.go`.
+  Not modelled: the tiers each takes (private endpoints and pairing are
+  Premium's), the partner's region, the secondary's copy of the
+  alias, breaking the pairing and failover, and the error codes.
 - Virtual network TAP (`virtualNetworkTaps` and
   `networkInterfaces/tapConfigurations`, 2026-03-01;
   `pkg/fakecloud/arm/vnettap.go`): a TAP has one destination, a NIC's IP

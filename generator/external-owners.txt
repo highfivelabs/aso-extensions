@@ -24,6 +24,7 @@ network/FirewallPolicies_RuleCollectionGroup=FirewallPoliciesRuleCollectionGroup
 network/ApplicationSecurityGroup
 network/NetworkWatcher
 network/NetworkInterface
+servicebus/Namespace
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase

@@ -46,3 +46,4 @@ specification/appconfiguration
 specification/postgresql
 specification/postgresqlhsc
 specification/mongocluster
+specification/servicebus

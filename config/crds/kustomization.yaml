@@ -379,6 +379,9 @@ resources:
 - securityinsights.azure.hfl.dev_workspacemanagerconfigurations.yaml
 - securityinsights.azure.hfl.dev_workspacemanagergroups.yaml
 - securityinsights.azure.hfl.dev_workspacemanagermembers.yaml
+- servicebus.azure.hfl.dev_namespacesdisasterrecoveryconfigs.yaml
+- servicebus.azure.hfl.dev_namespacesnetworkrulesets.yaml
+- servicebus.azure.hfl.dev_namespacesprivateendpointconnections.yaml
 - sql.azure.hfl.dev_instancepools.yaml
 - sql.azure.hfl.dev_managedinstancesadministrators.yaml
 - sql.azure.hfl.dev_managedinstancesadvancedthreatprotectionsettings.yaml

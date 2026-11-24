@@ -82,7 +82,10 @@
 // groups that exist, one action, a schedule in order), virtual network TAP
 // (vnettap.go: one destination that exists, a VXLAN port, a tap
 // configuration naming a TAP that exists, the TAP listing its
-// configurations), Azure Monitor
+// configurations), a Service Bus namespace's network rule set and
+// disaster recovery alias (messaging.go: the default rule set, IPv4 masks,
+// subnets that exist, a partner namespace of the same service in one
+// pairing), Azure Monitor
 // pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
 // processors and exporters, pipelines naming what is declared), a VM's
@@ -582,6 +585,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := a.checkMessaging(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		if status, code, msg := a.checkVirtualNetworkTap(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
@@ -656,6 +663,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		}
 		if isManagedHSMKey(id) {
 			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A managed HSM key cannot be deleted through Resource Manager; delete it in the HSM's data plane.")
+			return
+		}
+		if messagingRuleSet.MatchString(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A namespace's network rule set cannot be deleted; it is deleted with its namespace.")
 			return
 		}
 		if isSmartDetectionRule(id) {

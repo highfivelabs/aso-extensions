@@ -1998,11 +1998,11 @@ Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerMembers,2,
 Microsoft.SerialConsole,Microsoft.SerialConsole/serialPorts,2,,0,,0,2,false,spec_api=2024-07-01
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces,28,servicebus.azure.com/Namespace,19,,0,9,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/AuthorizationRules,1,servicebus.azure.com/NamespacesAuthorizationRule,1,,0,0,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
-Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs,2,,0,,0,2,false,spec_api=2026-01-01
+Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs,2,,0,servicebus.azure.hfl.dev/NamespacesDisasterRecoveryConfig,2,0,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/ipfilterrules,3,,0,,0,3,false,spec_api=2018-01-01-preview; spec-preview-only
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/migrationConfigurations,2,,0,,0,2,false,spec_api=2026-01-01
-Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/networkRuleSets,7,,0,,0,7,false,spec_api=2026-01-01
-Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-01-01
+Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/networkRuleSets,7,,0,servicebus.azure.hfl.dev/NamespacesNetworkRuleSet,7,0,false,spec_api=2026-01-01; ours_api=2026-01-01
+Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/privateEndpointConnections,4,,0,servicebus.azure.hfl.dev/NamespacesPrivateEndpointConnection,3,1,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/queues,17,servicebus.azure.com/NamespacesQueue,15,,0,2,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/queues/authorizationRules,1,servicebus.azure.com/QueueAuthorizationRule,1,,0,0,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/topics,12,servicebus.azure.com/NamespacesTopic,10,,0,2,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec

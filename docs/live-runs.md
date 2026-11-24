@@ -381,6 +381,7 @@ ledger has a row for it.
 | 2026-11-24 | `TestLiveSmartDetectionRule` | `ComponentsProactiveDetectionConfig` | a Log Analytics workspace and a workspace-based Application Insights component (free with nothing ingested); the rule is detached and goes with the component | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSmartDetectionRule"` |
 | 2026-11-24 | `TestLiveAlertProcessingRule` | `ActionRule` | none: a disabled alert processing rule on the live group (free); skips unless `Microsoft.AlertsManagement` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveAlertProcessingRule"` |
 | 2026-11-24 | `TestLiveVirtualNetworkTap` | `VirtualNetworkTap`, `NetworkInterfacesTapConfiguration` | a virtual network and two NICs with no VM (free); the TAP for the minutes of the run (no traffic mirrored). Unknown until run: whether Azure takes a tap configuration on a NIC no VM uses | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveVirtualNetworkTap"` |
+| 2026-11-24 | `TestLiveServiceBusNetworkRuleSet` | `NamespacesNetworkRuleSet` | a Standard Service Bus namespace (a base rate by the hour: cents for a run); skips unless `Microsoft.ServiceBus` is registered. Not live yet: IP and virtual network rules (the tier they need is to be seen), private endpoint connections and disaster recovery (Premium namespaces) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveServiceBusNetworkRuleSet"` |
 | 2026-11-23 | `TestLiveVirtualMachineRunCommand` (extended) | `VirtualMachinesDiagnosticRunCommand` | the test's small Linux VM (about $0.03 an hour); the run command part passed on 2026-11-10 (`ax101935c071`), the diagnostic run command part is new | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveVirtualMachineRunCommand"` |
 
 All of them in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
@@ -392,7 +393,7 @@ TestLiveSandboxGroup TestLiveVaultSettings TestLiveDevTestLab
 TestLiveSiteRecovery TestLiveStaticSiteBasicAuth
 TestLiveVirtualMachineRunCommand TestLiveLogicAppsConnections
 TestLiveSmartDetectionRule TestLiveAlertProcessingRule
-TestLiveVirtualNetworkTap"`.
+TestLiveVirtualNetworkTap TestLiveServiceBusNetworkRuleSet"`.
 
 Written for the subscription (above, "The subscription roles"); each skips
 until the builder assigns the roles of `hack/live/roles/`:

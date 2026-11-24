@@ -42,6 +42,7 @@ imports:
   insights: azure-arm/insights.yaml
   monitor: azure-arm/monitor.yaml
   alertsmanagement: azure-arm/alertsmanagement.yaml
+  servicebus: azure-arm/servicebus.yaml
   network: azure-arm/network.yaml
   containerregistry: azure-arm/containerregistry.yaml
   compute: azure-arm/compute.yaml

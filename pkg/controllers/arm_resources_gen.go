@@ -209,6 +209,9 @@ import (
 	securityinsights_v20250901s "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20250901/storage"
 	securityinsights_v20251001p "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20251001preview"
 	securityinsights_v20251001ps "github.com/highfivelabs/aso-extensions/apis/arm/securityinsights/v20251001preview/storage"
+	servicebus_customizations "github.com/highfivelabs/aso-extensions/apis/arm/servicebus/customizations"
+	servicebus_v20260101 "github.com/highfivelabs/aso-extensions/apis/arm/servicebus/v20260101"
+	servicebus_v20260101s "github.com/highfivelabs/aso-extensions/apis/arm/servicebus/v20260101/storage"
 	sql_customizations "github.com/highfivelabs/aso-extensions/apis/arm/sql/customizations"
 	sql_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/sql/v20250101"
 	sql_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/sql/v20250101/storage"
@@ -1985,6 +1988,9 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.WorkspaceManagerConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.WorkspaceManagerGroup)})
 	result = append(result, &registration.StorageType{Obj: new(securityinsights_v20251001p.WorkspaceManagerMember)})
+	result = append(result, &registration.StorageType{Obj: new(servicebus_v20260101.NamespacesDisasterRecoveryConfig)})
+	result = append(result, &registration.StorageType{Obj: new(servicebus_v20260101.NamespacesNetworkRuleSet)})
+	result = append(result, &registration.StorageType{Obj: new(servicebus_v20260101.NamespacesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.InstancePool)})
 	result = append(result, &registration.StorageType{
 		Obj: new(sql_v20250101.ManagedInstancesAdministrator),
@@ -3526,6 +3532,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(securityinsights_v20251001ps.WorkspaceManagerMember)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(servicebus_v20260101.NamespacesDisasterRecoveryConfig)},
+		&registration.KnownType{Obj: new(servicebus_v20260101.NamespacesNetworkRuleSet)},
+		&registration.KnownType{Obj: new(servicebus_v20260101.NamespacesPrivateEndpointConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(servicebus_v20260101s.NamespacesDisasterRecoveryConfig)},
+		&registration.KnownType{Obj: new(servicebus_v20260101s.NamespacesNetworkRuleSet)},
+		&registration.KnownType{Obj: new(servicebus_v20260101s.NamespacesPrivateEndpointConnection)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(sql_v20250101.InstancePool)},
 		&registration.KnownType{Obj: new(sql_v20250101.ManagedInstancesAdministrator)},
 		&registration.KnownType{Obj: new(sql_v20250101.ManagedInstancesAdvancedThreatProtectionSetting)},
@@ -3927,6 +3943,8 @@ func createScheme() *runtime.Scheme {
 	_ = securityinsights_v20250901s.AddToScheme(scheme)
 	_ = securityinsights_v20251001p.AddToScheme(scheme)
 	_ = securityinsights_v20251001ps.AddToScheme(scheme)
+	_ = servicebus_v20260101.AddToScheme(scheme)
+	_ = servicebus_v20260101s.AddToScheme(scheme)
 	_ = sql_v20250101.AddToScheme(scheme)
 	_ = sql_v20250101s.AddToScheme(scheme)
 	_ = storage_v20260601.AddToScheme(scheme)
@@ -4317,6 +4335,9 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &securityinsights_customizations.WorkspaceManagerConfigurationExtension{})
 	result = append(result, &securityinsights_customizations.WorkspaceManagerGroupExtension{})
 	result = append(result, &securityinsights_customizations.WorkspaceManagerMemberExtension{})
+	result = append(result, &servicebus_customizations.NamespacesDisasterRecoveryConfigExtension{})
+	result = append(result, &servicebus_customizations.NamespacesNetworkRuleSetExtension{})
+	result = append(result, &servicebus_customizations.NamespacesPrivateEndpointConnectionExtension{})
 	result = append(result, &sql_customizations.InstancePoolExtension{})
 	result = append(result, &sql_customizations.ManagedInstancesAdministratorExtension{})
 	result = append(result, &sql_customizations.ManagedInstancesAdvancedThreatProtectionSettingExtension{})

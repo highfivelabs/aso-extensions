@@ -61,6 +61,7 @@ import (
 	asonetwork "github.com/Azure/azure-service-operator/v2/api/network/v20250301/storage"
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
+	asoservicebus "github.com/Azure/azure-service-operator/v2/api/servicebus/v20240101/storage"
 	asosql "github.com/Azure/azure-service-operator/v2/api/sql/v20250101/storage"
 	asostorage "github.com/Azure/azure-service-operator/v2/api/storage/v20260601/storage"
 	asoweb "github.com/Azure/azure-service-operator/v2/api/web/v20260715/storage"
@@ -122,6 +123,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asodisk.AddToScheme(scheme)
 	_ = asoasg.AddToScheme(scheme)
 	_ = asowatcher.AddToScheme(scheme)
+	_ = asoservicebus.AddToScheme(scheme)
 	return scheme
 }
 
@@ -182,6 +184,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asomongo.MongoCluster{}, Name: "aso_documentdb_mongocluster"},
 		{Obj: &asoasg.ApplicationSecurityGroup{}, Name: "aso_network_applicationsecuritygroup"},
 		{Obj: &asowatcher.NetworkWatcher{}, Name: "aso_network_networkwatcher"},
+		{Obj: &asoservicebus.Namespace{}, Name: "aso_servicebus_namespace"},
 	}
 }
 

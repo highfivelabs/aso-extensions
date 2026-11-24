@@ -231,7 +231,7 @@ Microsoft.Security,41,0,25,400,0,271,129,0.0,67.8,32.2
 Microsoft.SecurityAndCompliance,12,0,0,156,0,0,156,0.0,0.0,100.0
 Microsoft.SecurityInsights,32,0,18,393,0,234,159,0.0,59.5,40.5
 Microsoft.SerialConsole,1,0,0,2,0,0,2,0.0,0.0,100.0
-Microsoft.ServiceBus,14,8,0,113,79,0,34,69.9,0.0,30.1
+Microsoft.ServiceBus,14,8,3,113,79,12,22,69.9,10.6,19.5
 Microsoft.ServiceFabric,11,0,0,424,0,0,424,0.0,0.0,100.0
 Microsoft.ServiceFabricMesh,6,0,0,109,0,0,109,0.0,0.0,100.0
 Microsoft.ServiceLinker,4,1,0,190,47,0,143,24.7,0.0,75.3

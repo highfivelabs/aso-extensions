@@ -238,6 +238,15 @@ func init() {
 		return map[string]any{"destinationNetworkInterfaceIPConfiguration": embedRef(
 			c.add(c.in("Microsoft.Network/networkInterfaces/collector/ipConfigurations/ipconfig1")))}
 	}}
+	// A Service Bus disaster recovery alias names a partner namespace of
+	// the service that exists; a private endpoint makes a connection
+	// (messaging.go, privateendpoints.go).
+	f["servicebus.azure.hfl.dev/NamespacesDisasterRecoveryConfig"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"partnerNamespaceReference": armRef(c.add(c.in("Microsoft.ServiceBus/namespaces/partner")))}
+	}}
+	f["servicebus.azure.hfl.dev/NamespacesPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
 	f["NetworkInterfacesTapConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"virtualNetworkTap": embedRef(c.add(c.in("Microsoft.Network/virtualNetworkTaps/conformance")))}
 	}}

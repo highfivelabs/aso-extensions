@@ -39,6 +39,7 @@ rules:
   - resources.azure.hfl.dev
   - security.azure.hfl.dev
   - securityinsights.azure.hfl.dev
+  - servicebus.azure.hfl.dev
   - sql.azure.hfl.dev
   - storage.azure.hfl.dev
   - subscription.azure.hfl.dev
@@ -79,6 +80,7 @@ rules:
   - resources.azure.hfl.dev
   - security.azure.hfl.dev
   - securityinsights.azure.hfl.dev
+  - servicebus.azure.hfl.dev
   - sql.azure.hfl.dev
   - storage.azure.hfl.dev
   - subscription.azure.hfl.dev
