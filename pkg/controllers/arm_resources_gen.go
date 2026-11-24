@@ -101,6 +101,8 @@ import (
 	insights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations"
 	insights_v20160301 "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301"
 	insights_v20160301s "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20160301/storage"
+	insights_v20180501p "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20180501preview"
+	insights_v20180501ps "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20180501preview/storage"
 	insights_v20180601p "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20180601preview"
 	insights_v20180601ps "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20180601preview/storage"
 	insights_v20200301p "github.com/highfivelabs/aso-extensions/apis/arm/insights/v20200301preview"
@@ -1321,6 +1323,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.CloudHsmClustersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(hardwaresecuritymodules_v20250331.DedicatedHsm)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20160301.LogProfile)})
+	result = append(result, &registration.StorageType{Obj: new(insights_v20180501p.ComponentsProactiveDetectionConfig)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20180601p.GuestDiagnosticSetting)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20180601p.GuestDiagnosticSettingsAssociation)})
 	result = append(result, &registration.StorageType{Obj: new(insights_v20200301p.ComponentsLinkedStorageAccount)})
@@ -3091,6 +3094,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(hardwaresecuritymodules_v20250331s.DedicatedHsm)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20160301.LogProfile)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20160301s.LogProfile)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20180501p.ComponentsProactiveDetectionConfig)})
+	result = append(result, &registration.KnownType{Obj: new(insights_v20180501ps.ComponentsProactiveDetectionConfig)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20180601p.GuestDiagnosticSetting)}, &registration.KnownType{Obj: new(insights_v20180601p.GuestDiagnosticSettingsAssociation)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20180601ps.GuestDiagnosticSetting)}, &registration.KnownType{Obj: new(insights_v20180601ps.GuestDiagnosticSettingsAssociation)})
 	result = append(result, &registration.KnownType{Obj: new(insights_v20200301p.ComponentsLinkedStorageAccount)})
@@ -3818,6 +3823,8 @@ func createScheme() *runtime.Scheme {
 	_ = hardwaresecuritymodules_v20250331s.AddToScheme(scheme)
 	_ = insights_v20160301.AddToScheme(scheme)
 	_ = insights_v20160301s.AddToScheme(scheme)
+	_ = insights_v20180501p.AddToScheme(scheme)
+	_ = insights_v20180501ps.AddToScheme(scheme)
 	_ = insights_v20180601p.AddToScheme(scheme)
 	_ = insights_v20180601ps.AddToScheme(scheme)
 	_ = insights_v20200301p.AddToScheme(scheme)
@@ -4100,6 +4107,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &hardwaresecuritymodules_customizations.CloudHsmClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &hardwaresecuritymodules_customizations.DedicatedHsmExtension{})
 	result = append(result, &insights_customizations.ComponentsLinkedStorageAccountExtension{})
+	result = append(result, &insights_customizations.ComponentsProactiveDetectionConfigExtension{})
 	result = append(result, &insights_customizations.GuestDiagnosticSettingExtension{})
 	result = append(result, &insights_customizations.GuestDiagnosticSettingsAssociationExtension{})
 	result = append(result, &insights_customizations.LogProfileExtension{})

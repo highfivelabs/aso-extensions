@@ -378,6 +378,7 @@ ledger has a row for it.
 | 2026-11-23 | `TestLiveSiteRecovery` | `VaultsReplicationFabric`, `VaultsReplicationPolicy`, `VaultsReplicationAlertSetting` (and `Vault`) | none: an empty vault with an Azure fabric for the live region and an A2A policy (free: nothing is replicated); skips unless `Microsoft.RecoveryServices` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSiteRecovery"` |
 | 2026-11-23 | `TestLiveStaticSiteBasicAuth` | `StaticSitesBasicAuth` (and `StaticSite`) | none: a Standard static web app with no content in westus2 (Standard bills per app-month, prorated: cents for a run); its password made per run | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveStaticSiteBasicAuth"` |
 | 2026-11-23 | `TestLiveLogicAppsConnections` | `CustomApi`, `ApiConnection` | none: a custom API from an inline OpenAPI document, a connection to it and one to the RSS managed API (no sign-in) in the live region; free (connections bill nothing until a Logic App runs an action) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveLogicAppsConnections"` |
+| 2026-11-24 | `TestLiveSmartDetectionRule` | `ComponentsProactiveDetectionConfig` | a Log Analytics workspace and a workspace-based Application Insights component (free with nothing ingested); the rule is detached and goes with the component | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSmartDetectionRule"` |
 | 2026-11-23 | `TestLiveVirtualMachineRunCommand` (extended) | `VirtualMachinesDiagnosticRunCommand` | the test's small Linux VM (about $0.03 an hour); the run command part passed on 2026-11-10 (`ax101935c071`), the diagnostic run command part is new | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveVirtualMachineRunCommand"` |
 
 All of them in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
@@ -387,7 +388,8 @@ TestLiveSiteContainers TestLiveSqlServerExtras TestLiveRestorePoints
 TestLiveCosmosPostgres TestLiveCosmosFleet TestLiveStorageDataShare
 TestLiveSandboxGroup TestLiveVaultSettings TestLiveDevTestLab
 TestLiveSiteRecovery TestLiveStaticSiteBasicAuth
-TestLiveVirtualMachineRunCommand TestLiveLogicAppsConnections"`.
+TestLiveVirtualMachineRunCommand TestLiveLogicAppsConnections
+TestLiveSmartDetectionRule"`.
 
 Written for the subscription (above, "The subscription roles"); each skips
 until the builder assigns the roles of `hack/live/roles/`:

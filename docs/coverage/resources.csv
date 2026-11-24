@@ -1240,7 +1240,7 @@ Microsoft.Insights,Microsoft.Insights/components/favorites,7,,0,,0,7,false,spec_
 Microsoft.Insights,Microsoft.Insights/components/linkedStorageAccounts,1,,0,insights.azure.hfl.dev/ComponentsLinkedStorageAccount,1,0,false,spec_api=2020-03-01-preview; spec-preview-only; ours_api=2020-03-01-preview
 Microsoft.Insights,Microsoft.Insights/components/myanalyticsItems,3,,0,,0,3,false,spec_api=2015-05-01
 Microsoft.Insights,Microsoft.Insights/components/pricingPlans,5,insights.azure.com/PricingPlan,5,,0,0,false,spec_api=2017-10-01; official_api=2017-10-01
-Microsoft.Insights,Microsoft.Insights/components/ProactiveDetectionConfigs,12,,0,,0,12,false,spec_api=2015-05-01
+Microsoft.Insights,Microsoft.Insights/components/ProactiveDetectionConfigs,12,,0,insights.azure.hfl.dev/ComponentsProactiveDetectionConfig,11,1,false,spec_api=2015-05-01; ours_api=2018-05-01-preview; ours-api-differs-from-spec
 Microsoft.Insights,Microsoft.Insights/dataCollectionEndpoints,16,insights.azure.com/DataCollectionEndpoint,12,,0,4,false,spec_api=2024-03-11; official_api=2024-03-11
 Microsoft.Insights,Microsoft.Insights/dataCollectionRuleAssociations,3,insights.azure.com/DataCollectionRuleAssociation,3,,0,0,false,spec_api=2024-03-11; official_api=2024-03-11
 Microsoft.Insights,Microsoft.Insights/dataCollectionRules,140,insights.azure.com/DataCollectionRule,140,,0,0,false,spec_api=2024-03-11; official_api=2024-03-11

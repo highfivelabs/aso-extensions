@@ -76,7 +76,9 @@
 // Kubernetes environment's custom location), Logic Apps API connections,
 // custom APIs and data gateways (logicconnections.go: the API a connection
 // uses in its region, its parameter values kept aside, a custom API's
-// definition, a gateway's installation), Azure Monitor pipeline groups
+// definition, a gateway's installation), Application Insights smart
+// detection rules (smartdetection.go: a rule Azure defines, no DELETE),
+// Azure Monitor pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
 // processors and exporters, pipelines naming what is declared), a VM's
 // diagnostic run commands (diagnosticruncommands.go: one source, a gallery
@@ -575,6 +577,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := a.checkSmartDetection(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		if status, code, msg := a.checkLogicConnections(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
@@ -637,6 +643,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		}
 		if isManagedHSMKey(id) {
 			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A managed HSM key cannot be deleted through Resource Manager; delete it in the HSM's data plane.")
+			return
+		}
+		if isSmartDetectionRule(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A smart detection rule cannot be deleted; it lives as long as its component.")
 			return
 		}
 		if undeletableSingleton(id) {

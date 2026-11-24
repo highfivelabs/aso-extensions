@@ -693,6 +693,13 @@ upstream's); the catalog's chart tests do that.
   modelled: OAuth consent and a connection's status, connections reaching
   their target, the managed API catalogue (any name is accepted), the
   gateway's machine, and the error codes.
+- Application Insights smart detection rules
+  (`Microsoft.Insights/components/ProactiveDetectionConfigs`,
+  2018-05-01-preview; `pkg/fakecloud/arm/smartdetection.go`): a rule is one
+  Application Insights defines (`slowpageloadtime` and the others its
+  documentation names; 400), and has no DELETE (405). Not modelled: the
+  rules running, mail, a rule's definition (Azure's own), and the error
+  codes.
 - Azure Monitor pipeline groups (`Microsoft.Monitor/pipelineGroups`,
   2026-04-01; `pkg/fakecloud/arm/monitorpipeline.go`): a group runs on a
   custom location (400) that exists (404); its receivers, processors and

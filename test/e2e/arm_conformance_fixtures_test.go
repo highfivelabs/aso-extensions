@@ -546,6 +546,11 @@ func init() {
 	// Azure Monitor pipeline groups run on a custom location and their
 	// pipelines name what they declare (monitorpipeline.go).
 	f["PipelineGroup"] = conformanceFixture{coveredBy: "TestMonitorPipelineGroup"}
+	// A smart detection rule is one Application Insights defines and has no
+	// DELETE (smartdetection.go): the object is detached and the rule stays.
+	f["ComponentsProactiveDetectionConfig"] = conformanceFixture{annotations: detach, stays: true, spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "slowpageloadtime"}
+	}}
 	// Logic Apps connections name an API, custom APIs carry a definition and
 	// gateways name their installation (logicconnections.go).
 	f["ApiConnection"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

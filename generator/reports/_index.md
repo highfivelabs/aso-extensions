@@ -330,6 +330,7 @@ title: Supported Resources
 | Resource                                   | ARM Version        | CRD Version      | Supported From | Sample |
 |--------------------------------------------|--------------------|------------------|----------------|--------|
 | ComponentsLinkedStorageAccount             | 2020-03-01-preview | v20200301preview | v0.1.0         | -      |
+| ComponentsProactiveDetectionConfig         | 2018-05-01-preview | v20180501preview | v0.1.0         | -      |
 | GuestDiagnosticSetting                     | 2018-06-01-preview | v20180601preview | v0.1.0         | -      |
 | GuestDiagnosticSettingsAssociation         | 2018-06-01-preview | v20180601preview | v0.1.0         | -      |
 | LogProfile                                 | 2016-03-01         | v20160301        | v0.1.0         | -      |

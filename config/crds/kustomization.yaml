@@ -180,6 +180,7 @@ resources:
 - hardwaresecuritymodules.azure.hfl.dev_cloudhsmclustersprivateendpointconnections.yaml
 - hardwaresecuritymodules.azure.hfl.dev_dedicatedhsms.yaml
 - insights.azure.hfl.dev_componentslinkedstorageaccounts.yaml
+- insights.azure.hfl.dev_componentsproactivedetectionconfigs.yaml
 - insights.azure.hfl.dev_guestdiagnosticsettings.yaml
 - insights.azure.hfl.dev_guestdiagnosticsettingsassociations.yaml
 - insights.azure.hfl.dev_logprofiles.yaml

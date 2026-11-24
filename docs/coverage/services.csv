@@ -149,7 +149,7 @@ Microsoft.HybridNetwork,17,0,0,173,0,0,173,0.0,0.0,100.0
 Microsoft.Impact,3,0,0,47,0,0,47,0.0,0.0,100.0
 Microsoft.ImportExport,1,0,0,57,0,0,57,0.0,0.0,100.0
 Microsoft.InfrastructureInsights.Admin,1,0,0,20,0,0,20,0.0,0.0,100.0
-Microsoft.Insights,28,13,10,552,400,87,65,72.5,15.8,11.8
+Microsoft.Insights,28,13,11,552,400,98,54,72.5,17.8,9.8
 Microsoft.IntegrationSpaces,5,0,0,27,0,0,27,0.0,0.0,100.0
 Microsoft.Intune,6,0,0,42,0,0,42,0.0,0.0,100.0
 Microsoft.IoTCentral,1,0,0,7,0,0,7,0.0,0.0,100.0
