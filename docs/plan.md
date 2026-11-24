@@ -866,6 +866,12 @@ would need the previous release built first, and it has no guard.
 Ranked by how much an application stack on Azure needs them and how cheap
 they are to carry. "Built" means in this repository with tests.
 
+Tier 3 (the builder's application primitives, the tier 3 rows of
+`docs/coverage/priority.csv`, and the services no row names) is ranked in
+`docs/coverage/foundation.md`, "Tier 3: application primitives" (t1 to t21,
+2026-11-24); its rows are recorded in the table under (c) as they are built,
+f61 on.
+
 (a) Upstream has code or an open pull request (read-only `gh`, 2026-11-07;
 rechecked 2026-11-08, see below):
 
