@@ -78,7 +78,9 @@
 // uses in its region, its parameter values kept aside, a custom API's
 // definition, a gateway's installation), Application Insights smart
 // detection rules (smartdetection.go: a rule Azure defines, no DELETE),
-// Azure Monitor pipeline groups
+// alert processing rules (alertprocessing.go: global, scopes and action
+// groups that exist, one action, a schedule in order), Azure Monitor
+// pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
 // processors and exporters, pipelines naming what is declared), a VM's
 // diagnostic run commands (diagnosticruncommands.go: one source, a gallery
@@ -574,6 +576,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkWebExtras(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkAlertProcessingRule(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

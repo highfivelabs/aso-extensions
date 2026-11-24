@@ -42,7 +42,7 @@ Microsoft.AgFoodPlatform,Microsoft.AgFoodPlatform/farmBeats/extensions,2,,0,,0,2
 Microsoft.AgFoodPlatform,Microsoft.AgFoodPlatform/farmBeats/privateEndpointConnections,4,,0,,0,4,false,spec_api=2023-06-01-preview; spec-preview-only
 Microsoft.AgFoodPlatform,Microsoft.AgFoodPlatform/farmBeats/solutions,8,,0,,0,8,false,spec_api=2023-06-01-preview; spec-preview-only
 Microsoft.AgriculturePlatform,Microsoft.AgriculturePlatform/agriServices,23,,0,,0,23,false,spec_api=2024-06-01-preview; spec-preview-only
-Microsoft.AlertsManagement,Microsoft.AlertsManagement/actionRules,18,,0,,0,18,false,spec_api=2021-08-08
+Microsoft.AlertsManagement,Microsoft.AlertsManagement/actionRules,18,,0,alertsmanagement.azure.hfl.dev/ActionRule,18,0,false,spec_api=2021-08-08; ours_api=2021-08-08
 Microsoft.AlertsManagement,Microsoft.AlertsManagement/issues,4,,0,,0,4,false,spec_api=2025-03-01-preview; spec-preview-only
 Microsoft.AlertsManagement,Microsoft.AlertsManagement/prometheusRuleGroups,19,alertsmanagement.azure.com/PrometheusRuleGroup,19,,0,0,false,spec_api=2023-03-01; official_api=2023-03-01
 Microsoft.AlertsManagement,Microsoft.AlertsManagement/smartDetectorAlertRules,13,alertsmanagement.azure.com/SmartDetectorAlertRule,13,,0,0,false,spec_api=2021-04-01; official_api=2021-04-01

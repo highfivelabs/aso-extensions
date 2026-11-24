@@ -14,7 +14,7 @@ Microsoft.Addons,1,0,0,0,0,0,0,0.0,0.0,0.0
 Microsoft.Advisor,3,0,0,14,0,0,14,0.0,0.0,100.0
 Microsoft.AgFoodPlatform,5,0,0,28,0,0,28,0.0,0.0,100.0
 Microsoft.AgriculturePlatform,1,0,0,23,0,0,23,0.0,0.0,100.0
-Microsoft.AlertsManagement,5,2,0,69,32,0,37,46.4,0.0,53.6
+Microsoft.AlertsManagement,5,2,1,69,32,18,19,46.4,26.1,27.5
 Microsoft.AnalysisServices,1,0,0,18,0,0,18,0.0,0.0,100.0
 Microsoft.ApiCenter,8,0,0,45,0,0,45,0.0,0.0,100.0
 Microsoft.ApiManagement,112,26,0,1078,270,0,808,25.0,0.0,75.0

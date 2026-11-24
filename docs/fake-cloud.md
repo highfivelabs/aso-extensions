@@ -700,6 +700,13 @@ upstream's); the catalog's chart tests do that.
   documentation names; 400), and has no DELETE (405). Not modelled: the
   rules running, mail, a rule's definition (Azure's own), and the error
   codes.
+- Alert processing rules (`Microsoft.AlertsManagement/actionRules`,
+  2021-08-08; `pkg/fakecloud/arm/alertprocessing.go`): a rule is Global
+  (400), applies to at least one scope that exists (400, 404), and has
+  exactly one action: one to five action groups that exist, or removing
+  them all (400, 404); a schedule ends after it starts, and a weekly or
+  monthly recurrence names its days (400). Not modelled: alerts being
+  processed, time zone names, and the error codes.
 - Azure Monitor pipeline groups (`Microsoft.Monitor/pipelineGroups`,
   2026-04-01; `pkg/fakecloud/arm/monitorpipeline.go`): a group runs on a
   custom location (400) that exists (404); its receivers, processors and

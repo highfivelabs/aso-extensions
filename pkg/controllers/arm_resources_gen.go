@@ -6,6 +6,9 @@ package controllers
 import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/registration"
+	alertsmanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/alertsmanagement/customizations"
+	alertsmanagement_v20210808 "github.com/highfivelabs/aso-extensions/apis/arm/alertsmanagement/v20210808"
+	alertsmanagement_v20210808s "github.com/highfivelabs/aso-extensions/apis/arm/alertsmanagement/v20210808/storage"
 	app_customizations "github.com/highfivelabs/aso-extensions/apis/arm/app/customizations"
 	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
@@ -231,6 +234,7 @@ import (
 // getKnownStorageTypes returns the list of storage types which can be reconciled.
 func getKnownStorageTypes() []*registration.StorageType {
 	var result []*registration.StorageType
+	result = append(result, &registration.StorageType{Obj: new(alertsmanagement_v20210808.ActionRule)})
 	result = append(result, &registration.StorageType{
 		Obj: new(app_v20250101.ManagedEnvironmentsCertificate),
 		Indexes: []registration.Index{
@@ -2664,6 +2668,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 // getKnownTypes returns the list of all types and their webhooks
 func getKnownTypes() []*registration.KnownType {
 	var result []*registration.KnownType
+	result = append(result, &registration.KnownType{Obj: new(alertsmanagement_v20210808.ActionRule)})
+	result = append(result, &registration.KnownType{Obj: new(alertsmanagement_v20210808s.ActionRule)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsCertificate)},
@@ -3745,6 +3751,8 @@ func getKnownTypes() []*registration.KnownType {
 func createScheme() *runtime.Scheme {
 	scheme := runtime.NewScheme()
 	_ = clientgoscheme.AddToScheme(scheme)
+	_ = alertsmanagement_v20210808.AddToScheme(scheme)
+	_ = alertsmanagement_v20210808s.AddToScheme(scheme)
 	_ = app_v20250101.AddToScheme(scheme)
 	_ = app_v20250101s.AddToScheme(scheme)
 	_ = app_v20251002p.AddToScheme(scheme)
@@ -3931,6 +3939,7 @@ func createScheme() *runtime.Scheme {
 // getResourceExtensions returns a list of resource extensions
 func getResourceExtensions() []genruntime.ResourceExtension {
 	var result []genruntime.ResourceExtension
+	result = append(result, &alertsmanagement_customizations.ActionRuleExtension{})
 	result = append(result, &app_customizations.AgentExtension{})
 	result = append(result, &app_customizations.AgentsConnectorExtension{})
 	result = append(result, &app_customizations.ConnectedEnvironmentExtension{})

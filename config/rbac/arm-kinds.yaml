@@ -6,6 +6,7 @@ metadata:
   name: arm-kinds
 rules:
 - apiGroups:
+  - alertsmanagement.azure.hfl.dev
   - app.azure.hfl.dev
   - appconfiguration.azure.hfl.dev
   - authorization.azure.hfl.dev
@@ -45,6 +46,7 @@ rules:
   resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups:
+  - alertsmanagement.azure.hfl.dev
   - app.azure.hfl.dev
   - appconfiguration.azure.hfl.dev
   - authorization.azure.hfl.dev

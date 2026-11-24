@@ -546,6 +546,14 @@ func init() {
 	// Azure Monitor pipeline groups run on a custom location and their
 	// pipelines name what they declare (monitorpipeline.go).
 	f["PipelineGroup"] = conformanceFixture{coveredBy: "TestMonitorPipelineGroup"}
+	// An alert processing rule is global, applies to a scope and has one
+	// action (alertprocessing.go).
+	f["ActionRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"location": "Global", "properties": map[string]any{
+			"scopesReferences": []any{armRef(c.resourceGroup)},
+			"actions":          []any{map[string]any{"removeAllActionGroups": map[string]any{"actionType": "RemoveAllActionGroups"}}},
+		}}
+	}}
 	// A smart detection rule is one Application Insights defines and has no
 	// DELETE (smartdetection.go): the object is detached and the rule stays.
 	f["ComponentsProactiveDetectionConfig"] = conformanceFixture{annotations: detach, stays: true, spec: func(c *conformanceContext) map[string]any {

@@ -5,6 +5,7 @@ specification/web
 specification/operationalinsights
 specification/monitor
 specification/monitoringservice
+specification/alertsmanagement
 specification/network
 specification/dns
 specification/privatedns
