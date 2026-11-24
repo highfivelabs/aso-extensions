@@ -93,7 +93,9 @@
 // policies, tags, schemas and providers (apimanagement.go: required
 // properties, declared template parameters, <policies> XML, tags that exist,
 // identity provider types), a MySQL flexible server's threat protection
-// setting (mysql.go: Default, Enabled or Disabled, no DELETE), Azure Monitor
+// setting (mysql.go: Default, Enabled or Disabled, no DELETE), container
+// group profiles and NGroups (containerinstance.go: containers with images
+// and requests, profiles that exist), Azure Monitor
 // pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
 // processors and exporters, pipelines naming what is declared), a VM's
@@ -590,6 +592,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkWebExtras(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkContainerInstance(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

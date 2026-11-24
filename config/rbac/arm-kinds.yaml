@@ -17,6 +17,7 @@ rules:
   - cognitiveservices.azure.hfl.dev
   - compute.azure.hfl.dev
   - consumption.azure.hfl.dev
+  - containerinstance.azure.hfl.dev
   - containerregistry.azure.hfl.dev
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
@@ -62,6 +63,7 @@ rules:
   - cognitiveservices.azure.hfl.dev
   - compute.azure.hfl.dev
   - consumption.azure.hfl.dev
+  - containerinstance.azure.hfl.dev
   - containerregistry.azure.hfl.dev
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev

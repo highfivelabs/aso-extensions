@@ -695,10 +695,10 @@ Microsoft.ConnectedVMwarevSphere,Microsoft.ConnectedVMwarevSphere/virtualMachine
 Microsoft.ConnectedVMwarevSphere,Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates,8,,0,,0,8,false,spec_api=2023-12-01
 Microsoft.ConnectedVMwarevSphere,Microsoft.ConnectedVMwarevSphere/virtualNetworks,8,,0,,0,8,false,spec_api=2023-12-01
 Microsoft.Consumption,Microsoft.Consumption/budgets,26,,0,consumption.azure.hfl.dev/Budget,26,0,false,spec_api=2026-06-01; ours_api=2026-06-01
-Microsoft.ContainerInstance,Microsoft.ContainerInstance/containerGroupProfiles,124,,0,,0,124,false,spec_api=2026-07-01
+Microsoft.ContainerInstance,Microsoft.ContainerInstance/containerGroupProfiles,124,,0,containerinstance.azure.hfl.dev/ContainerGroupProfile,123,1,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.ContainerInstance,Microsoft.ContainerInstance/containerGroups,131,containerinstance.azure.com/ContainerGroup,92,,0,39,false,spec_api=2026-07-01; official_api=2021-10-01; official-api-differs-from-spec
-Microsoft.ContainerInstance,Microsoft.ContainerInstance/ngroups,37,,0,,0,37,false,spec_api=2026-07-01
-Microsoft.ContainerInstance,Microsoft.ContainerInstance/sandboxGroups,5,,0,,0,5,false,spec_api=2026-07-01
+Microsoft.ContainerInstance,Microsoft.ContainerInstance/ngroups,37,,0,containerinstance.azure.hfl.dev/NGroup,37,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.ContainerInstance,Microsoft.ContainerInstance/sandboxGroups,5,,0,containerinstance.azure.hfl.dev/SandboxGroup,5,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries,26,containerregistry.azure.com/Registry,26,,0,0,false,spec_api=2025-11-01; official_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/cacheRules,3,containerregistry.azure.com/RegistryCacheRule,3,,0,0,false,spec_api=2025-11-01; official_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/connectedRegistries,13,,0,containerregistry.azure.hfl.dev/RegistriesConnectedRegistry,12,1,false,spec_api=2025-11-01; ours_api=2025-11-01

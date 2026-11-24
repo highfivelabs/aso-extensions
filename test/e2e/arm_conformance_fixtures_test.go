@@ -337,6 +337,17 @@ func init() {
 	f["dbformysql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
 		c.add(c.owner + "/privateEndpointConnections/conformance")
 	}}
+	// A container group profile has an OS type and a container with an image
+	// and requests; an NGroup's profiles exist (containerinstance.go).
+	f["ContainerGroupProfile"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"osType": "Linux", "containers": []any{map[string]any{
+			"name": "conformance", "image": "mcr.microsoft.com/azuredocs/aci-helloworld",
+			"resources": map[string]any{"requests": map[string]any{"cpu": 1.0, "memoryInGB": 1.0}},
+		}}}
+	}}
+	f["NGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"containerGroupProfiles": []any{map[string]any{"resource": embedRef(c.add(c.in("Microsoft.ContainerInstance/containerGroupProfiles/conformance")))}}}
+	}}
 	f["NetworkInterfacesTapConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"virtualNetworkTap": embedRef(c.add(c.in("Microsoft.Network/virtualNetworkTaps/conformance")))}
 	}}

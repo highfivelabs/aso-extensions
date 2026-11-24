@@ -120,6 +120,9 @@ resources:
 - compute.azure.hfl.dev_virtualmachinesdiagnosticruncommands.yaml
 - compute.azure.hfl.dev_virtualmachinesruncommands.yaml
 - consumption.azure.hfl.dev_budgets.yaml
+- containerinstance.azure.hfl.dev_containergroupprofiles.yaml
+- containerinstance.azure.hfl.dev_ngroups.yaml
+- containerinstance.azure.hfl.dev_sandboxgroups.yaml
 - containerregistry.azure.hfl.dev_registriesconnectedregistries.yaml
 - containerregistry.azure.hfl.dev_registriescredentialsets.yaml
 - containerregistry.azure.hfl.dev_registriesprivateendpointconnections.yaml

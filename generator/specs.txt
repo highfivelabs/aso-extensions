@@ -51,3 +51,4 @@ specification/eventhub
 specification/eventgrid
 specification/apimanagement
 specification/mysql
+specification/containerinstance

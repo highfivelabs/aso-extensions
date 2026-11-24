@@ -69,6 +69,9 @@ import (
 	consumption_customizations "github.com/highfivelabs/aso-extensions/apis/arm/consumption/customizations"
 	consumption_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601"
 	consumption_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/consumption/v20260601/storage"
+	containerinstance_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerinstance/customizations"
+	containerinstance_v20260701 "github.com/highfivelabs/aso-extensions/apis/arm/containerinstance/v20260701"
+	containerinstance_v20260701s "github.com/highfivelabs/aso-extensions/apis/arm/containerinstance/v20260701/storage"
 	containerregistry_customizations "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/customizations"
 	containerregistry_v20190401 "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20190401"
 	containerregistry_v20190401s "github.com/highfivelabs/aso-extensions/apis/arm/containerregistry/v20190401/storage"
@@ -1081,6 +1084,70 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260303.Gallery)})
 	result = append(result, &registration.StorageType{Obj: new(compute_v20260401.VirtualMachinesDiagnosticRunCommand)})
 	result = append(result, &registration.StorageType{Obj: new(consumption_v20260601.Budget)})
+	result = append(result, &registration.StorageType{
+		Obj: new(containerinstance_v20260701.ContainerGroupProfile),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.containers.environmentVariables.secureValue",
+				Func: indexContainerinstanceContainerGroupProfileContainersSecureValue,
+			},
+			{
+				Key:  ".spec.initContainers.environmentVariables.secureValue",
+				Func: indexContainerinstanceContainerGroupProfileInitContainersSecureValue,
+			},
+			{
+				Key:  ".spec.imageRegistryCredentials.password",
+				Func: indexContainerinstanceContainerGroupProfilePassword,
+			},
+			{
+				Key:  ".spec.volumes.secret",
+				Func: indexContainerinstanceContainerGroupProfileSecret,
+			},
+			{
+				Key:  ".spec.volumes.azureFile.storageAccountKey",
+				Func: indexContainerinstanceContainerGroupProfileStorageAccountKey,
+			},
+			{
+				Key:  ".spec.diagnostics.logAnalytics.workspaceKey",
+				Func: indexContainerinstanceContainerGroupProfileWorkspaceKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.containers.environmentVariables.secureValue",
+						".spec.diagnostics.logAnalytics.workspaceKey",
+						".spec.imageRegistryCredentials.password",
+						".spec.initContainers.environmentVariables.secureValue",
+						".spec.volumes.azureFile.storageAccountKey",
+						".spec.volumes.secret",
+					},
+					&containerinstance_v20260701.ContainerGroupProfileList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(containerinstance_v20260701.NGroup),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.containerGroupProfiles.containerGroupProperties.volumes.azureFile.storageAccountKey",
+				Func: indexContainerinstanceNGroupStorageAccountKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.containerGroupProfiles.containerGroupProperties.volumes.azureFile.storageAccountKey",
+					},
+					&containerinstance_v20260701.NGroupList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(containerinstance_v20260701.SandboxGroup)})
 	result = append(result, &registration.StorageType{
 		Obj: new(containerregistry_v20190401.RegistriesTask),
 		Indexes: []registration.Index{
@@ -3180,6 +3247,16 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(compute_v20260401s.VirtualMachinesDiagnosticRunCommand)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601.Budget)})
 	result = append(result, &registration.KnownType{Obj: new(consumption_v20260601s.Budget)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(containerinstance_v20260701.ContainerGroupProfile)},
+		&registration.KnownType{Obj: new(containerinstance_v20260701.NGroup)},
+		&registration.KnownType{Obj: new(containerinstance_v20260701.SandboxGroup)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(containerinstance_v20260701s.ContainerGroupProfile)},
+		&registration.KnownType{Obj: new(containerinstance_v20260701s.NGroup)},
+		&registration.KnownType{Obj: new(containerinstance_v20260701s.SandboxGroup)})
 	result = append(result, &registration.KnownType{Obj: new(containerregistry_v20190401.RegistriesTask)})
 	result = append(result, &registration.KnownType{Obj: new(containerregistry_v20190401s.RegistriesTask)})
 	result = append(
@@ -4111,6 +4188,8 @@ func createScheme() *runtime.Scheme {
 	_ = compute_v20260401s.AddToScheme(scheme)
 	_ = consumption_v20260601.AddToScheme(scheme)
 	_ = consumption_v20260601s.AddToScheme(scheme)
+	_ = containerinstance_v20260701.AddToScheme(scheme)
+	_ = containerinstance_v20260701s.AddToScheme(scheme)
 	_ = containerregistry_v20190401.AddToScheme(scheme)
 	_ = containerregistry_v20190401s.AddToScheme(scheme)
 	_ = containerregistry_v20251101.AddToScheme(scheme)
@@ -4375,6 +4454,9 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &compute_customizations.VirtualMachinesDiagnosticRunCommandExtension{})
 	result = append(result, &compute_customizations.VirtualMachinesRunCommandExtension{})
 	result = append(result, &consumption_customizations.BudgetExtension{})
+	result = append(result, &containerinstance_customizations.ContainerGroupProfileExtension{})
+	result = append(result, &containerinstance_customizations.NGroupExtension{})
+	result = append(result, &containerinstance_customizations.SandboxGroupExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesConnectedRegistryExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesCredentialSetExtension{})
 	result = append(result, &containerregistry_customizations.RegistriesPrivateEndpointConnectionExtension{})
@@ -6004,6 +6086,135 @@ func indexComputeVirtualMachineAdminPassword(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.OsProfile.AdminPassword.Index()
+}
+
+// indexContainerinstanceContainerGroupProfileContainersSecureValue an index function for containerinstance_v20260701.ContainerGroupProfile .spec.containers.environmentVariables.secureValue
+func indexContainerinstanceContainerGroupProfileContainersSecureValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerinstance_v20260701.ContainerGroupProfile)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, containerItem := range obj.Spec.Containers {
+		for _, environmentVariableItem := range containerItem.EnvironmentVariables {
+			if environmentVariableItem.SecureValue == nil {
+				continue
+			}
+			result = append(result, environmentVariableItem.SecureValue.Index()...)
+		}
+	}
+	return result
+}
+
+// indexContainerinstanceContainerGroupProfileInitContainersSecureValue an index function for containerinstance_v20260701.ContainerGroupProfile .spec.initContainers.environmentVariables.secureValue
+func indexContainerinstanceContainerGroupProfileInitContainersSecureValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerinstance_v20260701.ContainerGroupProfile)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, initContainerItem := range obj.Spec.InitContainers {
+		for _, environmentVariableItem := range initContainerItem.EnvironmentVariables {
+			if environmentVariableItem.SecureValue == nil {
+				continue
+			}
+			result = append(result, environmentVariableItem.SecureValue.Index()...)
+		}
+	}
+	return result
+}
+
+// indexContainerinstanceContainerGroupProfilePassword an index function for containerinstance_v20260701.ContainerGroupProfile .spec.imageRegistryCredentials.password
+func indexContainerinstanceContainerGroupProfilePassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerinstance_v20260701.ContainerGroupProfile)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, imageRegistryCredentialItem := range obj.Spec.ImageRegistryCredentials {
+		if imageRegistryCredentialItem.Password == nil {
+			continue
+		}
+		result = append(result, imageRegistryCredentialItem.Password.Index()...)
+	}
+	return result
+}
+
+// indexContainerinstanceContainerGroupProfileSecret an index function for containerinstance_v20260701.ContainerGroupProfile .spec.volumes.secret
+func indexContainerinstanceContainerGroupProfileSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerinstance_v20260701.ContainerGroupProfile)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, volumeItem := range obj.Spec.Volumes {
+		if volumeItem.Secret == nil {
+			continue
+		}
+		result = append(result, volumeItem.Secret.Index()...)
+	}
+	return result
+}
+
+// indexContainerinstanceContainerGroupProfileStorageAccountKey an index function for containerinstance_v20260701.ContainerGroupProfile .spec.volumes.azureFile.storageAccountKey
+func indexContainerinstanceContainerGroupProfileStorageAccountKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerinstance_v20260701.ContainerGroupProfile)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, volumeItem := range obj.Spec.Volumes {
+		if volumeItem.AzureFile == nil {
+			continue
+		}
+		if volumeItem.AzureFile.StorageAccountKey == nil {
+			continue
+		}
+		result = append(result, volumeItem.AzureFile.StorageAccountKey.Index()...)
+	}
+	return result
+}
+
+// indexContainerinstanceContainerGroupProfileWorkspaceKey an index function for containerinstance_v20260701.ContainerGroupProfile .spec.diagnostics.logAnalytics.workspaceKey
+func indexContainerinstanceContainerGroupProfileWorkspaceKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerinstance_v20260701.ContainerGroupProfile)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Diagnostics == nil {
+		return nil
+	}
+	if obj.Spec.Diagnostics.LogAnalytics == nil {
+		return nil
+	}
+	if obj.Spec.Diagnostics.LogAnalytics.WorkspaceKey == nil {
+		return nil
+	}
+	return obj.Spec.Diagnostics.LogAnalytics.WorkspaceKey.Index()
+}
+
+// indexContainerinstanceNGroupStorageAccountKey an index function for containerinstance_v20260701.NGroup .spec.containerGroupProfiles.containerGroupProperties.volumes.azureFile.storageAccountKey
+func indexContainerinstanceNGroupStorageAccountKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*containerinstance_v20260701.NGroup)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, containerGroupProfileItem := range obj.Spec.ContainerGroupProfiles {
+		if containerGroupProfileItem.ContainerGroupProperties == nil {
+			continue
+		}
+		for _, volumeItem := range containerGroupProfileItem.ContainerGroupProperties.Volumes {
+			if volumeItem.AzureFile == nil {
+				continue
+			}
+			if volumeItem.AzureFile.StorageAccountKey == nil {
+				continue
+			}
+			result = append(result, volumeItem.AzureFile.StorageAccountKey.Index()...)
+		}
+	}
+	return result
 }
 
 // indexContainerregistryRegistriesTaskDockerContextAccessToken an index function for containerregistry_v20190401.RegistriesTask .spec.step.docker.contextAccessToken

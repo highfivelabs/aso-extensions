@@ -1,0 +1,59 @@
+# Azure Container Instances kinds ASO does not export
+# (Microsoft.ContainerInstance, containerInstance.json 2026-07-01, the newest
+# stable version; docs/plan.md f67, tier 3 row t7 of
+# docs/coverage/foundation.md): container group profiles (a container
+# group's definition, kept as a template with revisions), NGroups (a set of
+# container groups made and kept from profiles, with an elastic count) and
+# sandbox groups. In a resource group. ASO's containerinstance group exports
+# ContainerGroup (2021-10-01) only.
+typeFilters:
+  - action: include
+    group: containerinstance
+    version: v20260701
+    because: the newest stable version (ASO's ContainerGroup is 2021-10-01)
+  - action: prune
+    group: containerinstance
+    because: every other version is left alone
+typeTransformers:
+  - group: containerinstance
+    version: v20260701
+    name: Volume_STATUS
+    property: Secret
+    remove: true
+    because: a secret volume's file contents; not shown in the status
+groupModelConfiguration:
+  2026-07-01:
+    ContainerGroupProfile:
+      $exportAs: ContainerGroupProfile
+      $supportedFrom: v0.1.0
+    NGroup:
+      $exportAs: NGroup
+      $supportedFrom: v0.1.0
+    SandboxGroup:
+      $exportAs: SandboxGroup
+      $supportedFrom: v0.1.0
+    # As ASO's containerinstance.yaml labels its ContainerGroup's.
+    ContainerGroupSubnetId:
+      Id:
+        $referenceType: arm
+    LogAnalytics:
+      WorkspaceResourceId:
+        $referenceType: arm
+    ApiEntityReference:
+      Id:
+        $referenceType: arm # an NGroup's container group profile, or a load balancer's or gateway's pool: our ContainerGroupProfile or ASO's kinds, or an ARM ID
+    ApplicationGateway:
+      Resource:
+        $referenceType: arm # an NGroup's application gateway (ASO's ApplicationGateway, or an ARM ID)
+    ApplicationGatewayBackendAddressPool:
+      Resource:
+        $referenceType: arm # its backend pool (an ARM ID: ASO keeps the pools inside the gateway)
+    LoadBalancerBackendAddressPool:
+      Resource:
+        $referenceType: arm # an NGroup's load balancer backend pool (an ARM ID: ASO keeps the pools inside the load balancer)
+    ImageRegistryCredential:
+      PasswordReference:
+        $importSecretMode: never # names one of the profile's secretReferences (a Key Vault secret), not the password itself
+    Volume:
+      Secret:
+        $importSecretMode: required # a secret volume's files, base64 values: from a Secret, never in the object

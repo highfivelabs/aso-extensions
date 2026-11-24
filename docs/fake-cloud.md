@@ -551,6 +551,13 @@ upstream's); the catalog's chart tests do that.
   otherwise), Enabled or Disabled (400), with no DELETE (405). The server's
   private endpoint connections follow `privateendpoints.go`. Not modelled:
   threats detected, alerts, Defender's plan, and the error codes.
+- Container group profiles and NGroups (`Microsoft.ContainerInstance`,
+  2026-07-01; `pkg/fakecloud/arm/containerinstance.go`): a profile has an
+  OS type and at least one container, each named once, with an image and
+  CPU and memory requests (400); an NGroup's profiles are named (400) and
+  exist (404), its desired count not negative (400). Sandbox groups are
+  kept as sent. Not modelled: container groups being made, images, SKUs and
+  quotas, a profile's revisions, and the error codes.
 - Virtual network TAP (`virtualNetworkTaps` and
   `networkInterfaces/tapConfigurations`, 2026-03-01;
   `pkg/fakecloud/arm/vnettap.go`): a TAP has one destination, a NIC's IP
