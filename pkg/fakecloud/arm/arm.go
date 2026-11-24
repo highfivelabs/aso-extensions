@@ -92,7 +92,8 @@
 // permission bindings naming what exists), API Management operations,
 // policies, tags, schemas and providers (apimanagement.go: required
 // properties, declared template parameters, <policies> XML, tags that exist,
-// identity provider types), Azure Monitor
+// identity provider types), a MySQL flexible server's threat protection
+// setting (mysql.go: Default, Enabled or Disabled, no DELETE), Azure Monitor
 // pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
 // processors and exporters, pipelines naming what is declared), a VM's
@@ -592,6 +593,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := checkMySQL(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		if status, code, msg := a.checkAPIManagement(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
@@ -678,6 +683,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		}
 		if isManagedHSMKey(id) {
 			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A managed HSM key cannot be deleted through Resource Manager; delete it in the HSM's data plane.")
+			return
+		}
+		if mysqlThreatProtection.MatchString(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A server's advanced threat protection setting cannot be deleted; it is deleted with its server.")
 			return
 		}
 		if messagingRuleSet.MatchString(id) {

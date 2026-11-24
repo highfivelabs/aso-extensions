@@ -329,6 +329,14 @@ func init() {
 	f[g+"Cache"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"connectionString": secretRef, "useFromLocation": "default"}
 	}}
+	// A MySQL flexible server's threat protection setting is Default and
+	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
+	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "Default", "state": "Enabled"}
+	}}
+	f["dbformysql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
 	f["NetworkInterfacesTapConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"virtualNetworkTap": embedRef(c.add(c.in("Microsoft.Network/virtualNetworkTaps/conformance")))}
 	}}

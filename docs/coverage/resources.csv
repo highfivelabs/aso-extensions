@@ -861,13 +861,13 @@ Microsoft.DBforMariaDB,Microsoft.DBforMariaDB/servers/securityAlertPolicies,7,,0
 Microsoft.DBforMariaDB,Microsoft.DBforMariaDB/servers/virtualNetworkRules,2,,0,,0,2,false,spec_api=2018-06-01
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers,44,dbformysql.azure.com/FlexibleServer,44,,0,0,false,spec_api=2024-12-30; official_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/administrators,5,dbformysql.azure.com/FlexibleServersAdministrator,5,,0,0,false,spec_api=2024-12-30; official_api=2024-12-30
-Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings,1,,0,,0,1,false,spec_api=2024-12-30
+Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings,1,,0,dbformysql.azure.hfl.dev/FlexibleServersAdvancedThreatProtectionSetting,1,0,false,spec_api=2024-12-30; ours_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/backups,0,,0,,0,0,false,spec_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/backupsV2,4,,0,,0,4,false,spec_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/configurations,3,dbformysql.azure.com/FlexibleServersConfiguration,3,,0,0,false,spec_api=2024-12-30; official_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/databases,2,dbformysql.azure.com/FlexibleServersDatabase,2,,0,0,false,spec_api=2024-12-30; official_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/firewallRules,2,dbformysql.azure.com/FlexibleServersFirewallRule,2,,0,0,false,spec_api=2024-12-30; official_api=2024-12-30
-Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,4,,0,,0,4,false,spec_api=2024-12-30
+Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,4,,0,dbformysql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection,3,1,false,spec_api=2024-12-30; ours_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/servers,22,,0,,0,22,false,spec_api=2017-12-01
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/servers/administrators,4,,0,,0,4,false,spec_api=2017-12-01
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/servers/configurations,2,,0,,0,2,false,spec_api=2017-12-01

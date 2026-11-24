@@ -31,6 +31,7 @@ eventgrid/Namespaces_Topic=NamespaceTopic
 apimanagement/Service
 apimanagement/Service_Api=Api
 apimanagement/Service_Product=Product
+dbformysql/FlexibleServer
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase

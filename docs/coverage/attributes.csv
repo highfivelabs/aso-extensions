@@ -15310,7 +15310,7 @@ Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/administrators,propert
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/administrators,properties.login,string,false,official,login,
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/administrators,properties.sid,string,false,official,sid,
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/administrators,properties.tenantId,string,false,official,tenantId,
-Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings,properties.state,string,false,none,,
+Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings,properties.state,string,false,ours,,state
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/backupsV2,properties.backupNameV2,string,false,none,,
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/backupsV2,properties.backupType,string,false,none,,
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/backupsV2,properties.completedTime,string,false,none,,
@@ -15323,9 +15323,9 @@ Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/databases,properties.c
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/firewallRules,properties.endIpAddress,string,true,official,endIpAddress,
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/firewallRules,properties.startIpAddress,string,true,official,startIpAddress,
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,properties.privateEndpoint,object,false,none,,
-Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,properties.privateLinkServiceConnectionState.actionsRequired,string,false,none,,
-Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,properties.privateLinkServiceConnectionState.description,string,false,none,,
-Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,properties.privateLinkServiceConnectionState.status,string,false,none,,
+Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,properties.privateLinkServiceConnectionState.actionsRequired,string,false,ours,,privateLinkServiceConnectionState.actionsRequired
+Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,properties.privateLinkServiceConnectionState.description,string,false,ours,,privateLinkServiceConnectionState.description
+Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,properties.privateLinkServiceConnectionState.status,string,false,ours,,privateLinkServiceConnectionState.status
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/servers,identity.type,string,false,none,,
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/servers,location,string,true,none,,
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/servers,properties.administratorLogin,string,true,none,,

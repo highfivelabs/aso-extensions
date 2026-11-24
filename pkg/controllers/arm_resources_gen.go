@@ -84,6 +84,9 @@ import (
 	costmanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/customizations"
 	costmanagement_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601"
 	costmanagement_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/costmanagement/v20260601/storage"
+	dbformysql_customizations "github.com/highfivelabs/aso-extensions/apis/arm/dbformysql/customizations"
+	dbformysql_v20241230 "github.com/highfivelabs/aso-extensions/apis/arm/dbformysql/v20241230"
+	dbformysql_v20241230s "github.com/highfivelabs/aso-extensions/apis/arm/dbformysql/v20241230/storage"
 	dbforpostgresql_customizations "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/customizations"
 	dbforpostgresql_v20221108 "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/v20221108"
 	dbforpostgresql_v20221108s "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/v20221108/storage"
@@ -1183,6 +1186,8 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.ScheduledAction)})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.Setting)})
+	result = append(result, &registration.StorageType{Obj: new(dbformysql_v20241230.FlexibleServersAdvancedThreatProtectionSetting)})
+	result = append(result, &registration.StorageType{Obj: new(dbformysql_v20241230.FlexibleServersPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{
 		Obj: new(dbforpostgresql_v20221108.ServerGroupsv2),
 		Indexes: []registration.Index{
@@ -3219,6 +3224,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Export)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.ScheduledAction)},
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Setting)})
+	result = append(result, &registration.KnownType{Obj: new(dbformysql_v20241230.FlexibleServersAdvancedThreatProtectionSetting)}, &registration.KnownType{Obj: new(dbformysql_v20241230.FlexibleServersPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(dbformysql_v20241230s.FlexibleServersAdvancedThreatProtectionSetting)}, &registration.KnownType{Obj: new(dbformysql_v20241230s.FlexibleServersPrivateEndpointConnection)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(dbforpostgresql_v20221108.ServerGroupsv2)},
@@ -4116,6 +4123,8 @@ func createScheme() *runtime.Scheme {
 	_ = containerservice_v20260601s.AddToScheme(scheme)
 	_ = costmanagement_v20260601.AddToScheme(scheme)
 	_ = costmanagement_v20260601s.AddToScheme(scheme)
+	_ = dbformysql_v20241230.AddToScheme(scheme)
+	_ = dbformysql_v20241230s.AddToScheme(scheme)
 	_ = dbforpostgresql_v20221108.AddToScheme(scheme)
 	_ = dbforpostgresql_v20221108s.AddToScheme(scheme)
 	_ = dbforpostgresql_v20250801.AddToScheme(scheme)
@@ -4382,6 +4391,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &costmanagement_customizations.ScheduledActionExtension{})
 	result = append(result, &costmanagement_customizations.SettingExtension{})
+	result = append(result, &dbformysql_customizations.FlexibleServersAdvancedThreatProtectionSettingExtension{})
+	result = append(result, &dbformysql_customizations.FlexibleServersPrivateEndpointConnectionExtension{})
 	result = append(result, &dbforpostgresql_customizations.FlexibleServersPrivateEndpointConnectionExtension{})
 	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2CoordinatorConfigurationExtension{})
 	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2Extension{})

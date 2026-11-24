@@ -46,6 +46,7 @@ imports:
   eventhub: azure-arm/eventhub.yaml
   eventgrid: azure-arm/eventgrid.yaml
   apimanagement: azure-arm/apimanagement.yaml
+  dbformysql: azure-arm/dbformysql.yaml
   network: azure-arm/network.yaml
   containerregistry: azure-arm/containerregistry.yaml
   compute: azure-arm/compute.yaml

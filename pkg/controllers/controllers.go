@@ -49,6 +49,7 @@ import (
 	asoregistry "github.com/Azure/azure-service-operator/v2/api/containerregistry/v20251101/storage"
 	asofleet "github.com/Azure/azure-service-operator/v2/api/containerservice/v1api20250301/storage"
 	asoaks "github.com/Azure/azure-service-operator/v2/api/containerservice/v20260501/storage"
+	asomysql "github.com/Azure/azure-service-operator/v2/api/dbformysql/v20241230/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
 	asomongo "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240701/storage"
 	asocosmos "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240815/storage"
@@ -130,6 +131,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asoeventhub.AddToScheme(scheme)
 	_ = asoeventgrid.AddToScheme(scheme)
 	_ = asoapim.AddToScheme(scheme)
+	_ = asomysql.AddToScheme(scheme)
 	return scheme
 }
 
@@ -197,6 +199,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asoapim.Service{}, Name: "aso_apimanagement_service"},
 		{Obj: &asoapim.Api{}, Name: "aso_apimanagement_api"},
 		{Obj: &asoapim.Product{}, Name: "aso_apimanagement_product"},
+		{Obj: &asomysql.FlexibleServer{}, Name: "aso_dbformysql_flexibleserver"},
 	}
 }
 

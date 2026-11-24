@@ -545,6 +545,12 @@ upstream's); the catalog's chart tests do that.
   provider is named by its type (400); a cache's Redis, when named, exists
   (404). Not modelled: the gateway serving the APIs, policy semantics, the
   developer portal, the providers' endpoints answering, and the error codes.
+- A MySQL flexible server's advanced threat protection setting
+  (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
+  2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404
+  otherwise), Enabled or Disabled (400), with no DELETE (405). The server's
+  private endpoint connections follow `privateendpoints.go`. Not modelled:
+  threats detected, alerts, Defender's plan, and the error codes.
 - Virtual network TAP (`virtualNetworkTaps` and
   `networkInterfaces/tapConfigurations`, 2026-03-01;
   `pkg/fakecloud/arm/vnettap.go`): a TAP has one destination, a NIC's IP
