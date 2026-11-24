@@ -18,12 +18,13 @@ import (
 
 const machineLearningAPI = "2026-09-01"
 
-// A Machine Learning workspace's model and environment containers and an
-// environment version naming a public image, on a workspace made as a
+// A Machine Learning workspace's model and environment containers, an
+// environment version naming a public image and a batch endpoint with no
+// deployment (f83), on a workspace made as a
 // fixture with its storage account and key vault (docs/plan.md f82):
 // created, the model's description changed, deleted. Storage cents: the
-// workspace bills nothing by itself, and the version names a prebuilt
-// image (no image build). Not here: datastores (a real account key or
+// workspace bills nothing by itself, the version names a prebuilt image
+// (no image build), and a batch endpoint bills only its deployments' jobs. Not here: datastores (a real account key or
 // identity), outbound rules (a managed network, billed by the hour),
 // connections (a private endpoint), registries (a registry's storage and
 // registry per region), model and data versions (their URIs are checked
@@ -61,7 +62,11 @@ func TestLiveMachineLearningAssets(t *testing.T) {
 	env := &ml.WorkspacesEnvironment{}
 	env.Namespace, env.Name = ns, "py"
 	env.Spec = ml.WorkspacesEnvironment_Spec{Owner: owner("lab"), Properties: &ml.EnvironmentContainerProperties{Description: ptr("live test")}}
-	create(t, timeout, model, env)
+	batch := &ml.WorkspacesBatchEndpoint{}
+	batch.Namespace, batch.Name = ns, "nightly"
+	batch.Spec = ml.WorkspacesBatchEndpoint_Spec{Owner: owner("lab"), Location: ptr(location),
+		Properties: &ml.BatchEndpointProperties{AuthMode: ptr(ml.EndpointAuthMode_AADToken), Description: ptr("live test")}}
+	create(t, timeout, model, env, batch)
 	version := &ml.WorkspacesEnvironmentsVersion{}
 	version.Namespace, version.Name = ns, "py-1"
 	version.Spec = ml.WorkspacesEnvironmentsVersion_Spec{AzureName: "1", Owner: owner("py"), Properties: &ml.EnvironmentVersionProperties{
@@ -82,6 +87,7 @@ func TestLiveMachineLearningAssets(t *testing.T) {
 		}
 		return nil
 	})
+	remove(t, timeout, batch)
 	remove(t, timeout, version)
 	remove(t, timeout, env)
 	remove(t, timeout, model)

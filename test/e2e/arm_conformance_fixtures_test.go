@@ -484,6 +484,10 @@ func init() {
 		return map[string]any{"properties": map[string]any{"fqdn": map[string]any{"type": "FQDN", "destination": "pypi.org"}}}
 	}}
 	f["machinelearningservices.azure.hfl.dev/WorkspacesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// A managed online deployment names its instance type (a union member).
+	f["WorkspacesOnlineEndpointsDeployment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"managed": map[string]any{"endpointComputeType": "Managed", "instanceType": "Standard_DS3_v2"}}}
+	}}
 	// A dedicated SQL pool names a SKU; its auditing and assessment as the
 	// workspace's (synapse.go).
 	f[syn+"WorkspacesSqlPool"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

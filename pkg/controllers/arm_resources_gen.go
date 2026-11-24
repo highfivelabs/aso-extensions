@@ -2102,6 +2102,32 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesEnvironmentsVersion)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesModel)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesModelsVersion)})
+	result = append(result, &registration.StorageType{
+		Obj: new(machinelearningservices_v20260901.WorkspacesBatchEndpoint),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.keys.primaryKey",
+				Func: indexMachinelearningservicesWorkspacesBatchEndpointPrimaryKey,
+			},
+			{
+				Key:  ".spec.properties.keys.secondaryKey",
+				Func: indexMachinelearningservicesWorkspacesBatchEndpointSecondaryKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.keys.primaryKey",
+						".spec.properties.keys.secondaryKey",
+					},
+					&machinelearningservices_v20260901.WorkspacesBatchEndpointList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesBatchEndpointsDeployment)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesCapabilityHost)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesCode)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesCodesVersion)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesComponent)})
@@ -2224,10 +2250,40 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesEnvironment)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesEnvironmentsVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesFeatureset)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturesetsVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturestoreEntitiesVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturestoreEntity)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesModel)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesModelsVersion)})
+	result = append(result, &registration.StorageType{
+		Obj: new(machinelearningservices_v20260901.WorkspacesOnlineEndpoint),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.keys.primaryKey",
+				Func: indexMachinelearningservicesWorkspacesOnlineEndpointPrimaryKey,
+			},
+			{
+				Key:  ".spec.properties.keys.secondaryKey",
+				Func: indexMachinelearningservicesWorkspacesOnlineEndpointSecondaryKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.keys.primaryKey",
+						".spec.properties.keys.secondaryKey",
+					},
+					&machinelearningservices_v20260901.WorkspacesOnlineEndpointList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesOnlineEndpointsDeployment)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesOutboundRule)})
 	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesServerlessEndpoint)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.ConfigurationAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(managedidentity_v20241130.UserAssignedIdentity)})
@@ -4566,6 +4622,9 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesEnvironmentsVersion)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesModel)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesModelsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesBatchEndpoint)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesBatchEndpointsDeployment)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesCapabilityHost)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesCode)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesCodesVersion)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesComponent)},
@@ -4575,10 +4634,17 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesDatastore)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesEnvironment)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesEnvironmentsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesFeatureset)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturesetsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturestoreEntitiesVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesFeaturestoreEntity)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesModel)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesModelsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesOnlineEndpoint)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesOnlineEndpointsDeployment)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesOutboundRule)},
-		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesPrivateEndpointConnection)})
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesServerlessEndpoint)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesCode)},
@@ -4591,6 +4657,9 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesEnvironmentsVersion)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesModel)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesModelsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesBatchEndpoint)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesBatchEndpointsDeployment)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesCapabilityHost)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesCode)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesCodesVersion)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesComponent)},
@@ -4600,10 +4669,17 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesDatastore)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesEnvironment)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesEnvironmentsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesFeatureset)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesFeaturesetsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesFeaturestoreEntitiesVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesFeaturestoreEntity)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesModel)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesModelsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesOnlineEndpoint)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesOnlineEndpointsDeployment)},
 		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesOutboundRule)},
-		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesPrivateEndpointConnection)})
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesServerlessEndpoint)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401s.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401s.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(managedidentity_v20241130.UserAssignedIdentity)})
@@ -5853,6 +5929,9 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &machinelearningservices_customizations.RegistriesEnvironmentsVersionExtension{})
 	result = append(result, &machinelearningservices_customizations.RegistriesModelExtension{})
 	result = append(result, &machinelearningservices_customizations.RegistriesModelsVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesBatchEndpointExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesBatchEndpointsDeploymentExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesCapabilityHostExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesCodeExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesCodesVersionExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesComponentExtension{})
@@ -5862,10 +5941,17 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &machinelearningservices_customizations.WorkspacesDatastoreExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesEnvironmentExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesEnvironmentsVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesFeaturesetExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesFeaturesetsVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesFeaturestoreEntitiesVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesFeaturestoreEntityExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesModelExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesModelsVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesOnlineEndpointExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesOnlineEndpointsDeploymentExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesOutboundRuleExtension{})
 	result = append(result, &machinelearningservices_customizations.WorkspacesPrivateEndpointConnectionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesServerlessEndpointExtension{})
 	result = append(result, &maintenance_customizations.ConfigurationAssignmentExtension{})
 	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})
 	result = append(result, &managedidentity_customizations.UserAssignedIdentityExtension{})
@@ -8859,6 +8945,42 @@ func indexLogicIntegrationAccountsAgreementSendAgreementRecipientReferencePasswo
 	return obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings.EnvelopeSettings.RecipientReferencePasswordValue.Index()
 }
 
+// indexMachinelearningservicesWorkspacesBatchEndpointPrimaryKey an index function for machinelearningservices_v20260901.WorkspacesBatchEndpoint .spec.properties.keys.primaryKey
+func indexMachinelearningservicesWorkspacesBatchEndpointPrimaryKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesBatchEndpoint)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Keys == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Keys.PrimaryKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Keys.PrimaryKey.Index()
+}
+
+// indexMachinelearningservicesWorkspacesBatchEndpointSecondaryKey an index function for machinelearningservices_v20260901.WorkspacesBatchEndpoint .spec.properties.keys.secondaryKey
+func indexMachinelearningservicesWorkspacesBatchEndpointSecondaryKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesBatchEndpoint)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Keys == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Keys.SecondaryKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Keys.SecondaryKey.Index()
+}
+
 // indexMachinelearningservicesWorkspacesDatastoreAzureBlobCertificate an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureBlob.credentials.certificate.secrets.certificate
 func indexMachinelearningservicesWorkspacesDatastoreAzureBlobCertificate(rawObj client.Object) []string {
 	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
@@ -9397,6 +9519,42 @@ func indexMachinelearningservicesWorkspacesDatastoreOneLakeSasToken(rawObj clien
 		return nil
 	}
 	return obj.Spec.Properties.OneLake.Credentials.Sas.Secrets.SasToken.Index()
+}
+
+// indexMachinelearningservicesWorkspacesOnlineEndpointPrimaryKey an index function for machinelearningservices_v20260901.WorkspacesOnlineEndpoint .spec.properties.keys.primaryKey
+func indexMachinelearningservicesWorkspacesOnlineEndpointPrimaryKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesOnlineEndpoint)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Keys == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Keys.PrimaryKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Keys.PrimaryKey.Index()
+}
+
+// indexMachinelearningservicesWorkspacesOnlineEndpointSecondaryKey an index function for machinelearningservices_v20260901.WorkspacesOnlineEndpoint .spec.properties.keys.secondaryKey
+func indexMachinelearningservicesWorkspacesOnlineEndpointSecondaryKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesOnlineEndpoint)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Keys == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Keys.SecondaryKey == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Keys.SecondaryKey.Index()
 }
 
 // indexNetworkApplicationGatewayAuthenticationCertificatesData an index function for network_v20260301.ApplicationGateway .spec.authenticationCertificates.data

@@ -27,7 +27,11 @@ import (
 //     its account and container (400);
 //   - an outbound rule of type FQDN names a destination, a ServiceTag rule
 //     its service tag, a PrivateEndpoint rule its target and sub-resource
-//     (400), and the target exists (404).
+//     (400), and the target exists (404);
+//   - an online endpoint sends traffic only to its deployments that exist,
+//     each share 0 to 100 and all of them 100 together (400) (f83);
+//   - a batch endpoint's default deployment exists (400);
+//   - a managed online deployment names its instance type (400).
 //
 // Private endpoint connections follow the shared rule (privateendpoints.go).
 // Not modelled: uploading or validating what an asset points at, image
@@ -38,6 +42,9 @@ var (
 	mlVersion    = regexp.MustCompile(mlParent + `/(codes|components|data|environments|models)/[^/]+/versions/[^/]+$`)
 	mlDatastore  = regexp.MustCompile(mlParent + `/datastores/[^/]+$`)
 	mlOutbound   = regexp.MustCompile(mlParent + `/outboundrules/[^/]+$`)
+	mlOnline     = regexp.MustCompile(mlParent + `/onlineendpoints/[^/]+$`)
+	mlBatch      = regexp.MustCompile(mlParent + `/batchendpoints/[^/]+$`)
+	mlOnlineDep  = regexp.MustCompile(mlParent + `/onlineendpoints/[^/]+/deployments/[^/]+$`)
 	mlImmutables = []string{"codeUri", "dataUri", "modelUri", "image", "build", "componentSpec", "dataType", "modelType"}
 )
 
@@ -95,6 +102,31 @@ func (a *ARM) checkMachineLearning(id string, body map[string]any) (status int, 
 			}
 		default:
 			return bad("A datastore's credentialsType is None, AccountKey, Sas, ServicePrincipal or Certificate, not " + t + ".")
+		}
+	case mlOnline.MatchString(id):
+		traffic, _ := props["traffic"].(map[string]any)
+		total := 0.0
+		for name, v := range traffic {
+			share, _ := v.(float64)
+			if share < 0 || share > 100 {
+				return bad("An endpoint's traffic to " + name + " is 0 to 100.")
+			}
+			total += share
+			if share > 0 && !a.exists(id+"/deployments/"+name) {
+				return bad("An endpoint's traffic names the deployment " + name + ", which does not exist.")
+			}
+		}
+		if len(traffic) > 0 && total != 0 && total != 100 {
+			return bad("An endpoint's traffic adds up to 100.")
+		}
+	case mlBatch.MatchString(id):
+		defaults, _ := props["defaults"].(map[string]any)
+		if name := stringOf(defaults["deploymentName"]); name != "" && !a.exists(id+"/deployments/"+name) {
+			return bad("A batch endpoint's default deployment " + name + " does not exist.")
+		}
+	case mlOnlineDep.MatchString(id):
+		if stringOf(props["endpointComputeType"]) == "Managed" && stringOf(props["instanceType"]) == "" {
+			return bad("A managed online deployment names its instanceType.")
 		}
 	case mlOutbound.MatchString(id):
 		switch stringOf(props["type"]) {

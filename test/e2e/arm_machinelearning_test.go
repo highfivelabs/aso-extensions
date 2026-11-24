@@ -182,3 +182,127 @@ func TestMachineLearningAssets(t *testing.T) {
 		}
 	}
 }
+
+// The Machine Learning endpoint kinds of docs/plan.md f83, on ASO's
+// Workspace by name: an online endpoint with its keys from a Secret, a
+// managed deployment on it, the endpoint's traffic then sent to the
+// deployment; a batch endpoint, a deployment and the endpoint's default
+// naming it. An endpoint sending traffic to a missing deployment and a
+// managed deployment with no instance type are refused (the fake's rules,
+// machinelearning.go); the endpoint is fixed by a change. Deleted, all go.
+func TestMachineLearningEndpoints(t *testing.T) {
+	ctx := context.Background()
+	ns := namespace(t, "mlep")
+	strictCredential(t, ns, clientA)
+	trustNamespace(ns)
+	rgID := "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"
+	wsID := rgID + "/providers/Microsoft.MachineLearningServices/workspaces/lab"
+	for _, id := range []string{rgID, wsID} {
+		armFake.AddResource(id)
+	}
+	resourceGroup(t, ns, "rg", ns+"-rg")
+	ws := &asoml.Workspace{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "lab"}}
+	ws.Spec.AzureName, ws.Spec.Location = "lab", ptr("westus")
+	ws.Spec.Owner = &genruntime.KnownResourceReference{Name: "rg"}
+	asoStandIn(t, ws, wsID)
+	if err := k8s.Create(ctx, &corev1.Secret{
+		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "score-keys"},
+		StringData: map[string]string{"primary": "cHJpbWFyeQ==", "secondary": "c2Vjb25kYXJ5"},
+	}); err != nil {
+		t.Fatal(err)
+	}
+	meta := func(name string) metav1.ObjectMeta { return metav1.ObjectMeta{Namespace: ns, Name: name} }
+	onWS := &genruntime.KnownResourceReference{Name: "lab"}
+	create := func(objs ...conditioned) {
+		t.Helper()
+		for _, o := range objs {
+			if err := k8s.Create(ctx, o); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+
+	online := &ml.WorkspacesOnlineEndpoint{ObjectMeta: meta("score"), Spec: ml.WorkspacesOnlineEndpoint_Spec{Owner: onWS, Location: ptr("westus"),
+		Properties: &ml.OnlineEndpointProperties{AuthMode: ptr(ml.EndpointAuthMode_Key), Traffic: map[string]int{"blue": 100},
+			Keys: &ml.EndpointAuthKeys{PrimaryKey: &genruntime.SecretReference{Name: "score-keys", Key: "primary"},
+				SecondaryKey: &genruntime.SecretReference{Name: "score-keys", Key: "secondary"}}}}}
+	batch := &ml.WorkspacesBatchEndpoint{ObjectMeta: meta("nightly"), Spec: ml.WorkspacesBatchEndpoint_Spec{Owner: onWS, Location: ptr("westus"),
+		Properties: &ml.BatchEndpointProperties{AuthMode: ptr(ml.EndpointAuthMode_AADToken)}}}
+	create(online, batch)
+	eventually(t, timeout, "the batch endpoint Ready", ready(batch))
+	eventually(t, timeout, "traffic to a missing deployment refused", notReadyWith(online, "does not exist"))
+	if err := change(t, online, func(e *ml.WorkspacesOnlineEndpoint) { e.Spec.Properties.Traffic = nil }); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the online endpoint Ready", ready(online))
+
+	deployment := func(name, instanceType string) *ml.WorkspacesOnlineEndpointsDeployment {
+		d := &ml.WorkspacesOnlineEndpointsDeployment{ObjectMeta: meta(name), Spec: ml.WorkspacesOnlineEndpointsDeployment_Spec{
+			AzureName: name, Owner: &genruntime.KnownResourceReference{Name: "score"}, Location: ptr("westus"), Sku: &ml.Sku{Name: ptr("Default"), Capacity: ptr(1)},
+			Properties: &ml.OnlineDeploymentProperties{Managed: &ml.ManagedOnlineDeployment{
+				EndpointComputeType: ptr(ml.ManagedOnlineDeployment_EndpointComputeType_Managed), Model: ptr("azureml:churn:1"),
+				EnvironmentId:     ptr("azureml://registries/azureml/environments/sklearn-1.5/versions/1"),
+				CodeConfiguration: &ml.CodeConfiguration{CodeId: ptr("azureml:scoring:1"), ScoringScript: ptr("score.py")}}}}}
+		if instanceType != "" {
+			d.Spec.Properties.Managed.InstanceType = ptr(instanceType)
+		}
+		return d
+	}
+	blue, green := deployment("blue", "Standard_DS3_v2"), deployment("green", "")
+	batchDeployment := &ml.WorkspacesBatchEndpointsDeployment{ObjectMeta: meta("v1"), Spec: ml.WorkspacesBatchEndpointsDeployment_Spec{
+		Owner: &genruntime.KnownResourceReference{Name: "nightly"}, Location: ptr("westus"),
+		Properties: &ml.BatchDeploymentProperties{Compute: ptr("cpu-cluster"), MiniBatchSize: ptr(10),
+			Model: &ml.AssetReferenceBase{Id: &ml.IdAssetReference{ReferenceType: ptr(ml.IdAssetReference_ReferenceType_Id), AssetId: ptr("azureml:churn:1")}}}}}
+	create(blue, green, batchDeployment)
+	eventually(t, timeout, "the blue deployment Ready", ready(blue))
+	eventually(t, timeout, "the batch deployment Ready", ready(batchDeployment))
+	eventually(t, timeout, "a managed deployment with no instance type refused", notReadyWith(green, "instanceType"))
+
+	// The endpoints now name their deployments.
+	if err := change(t, online, func(e *ml.WorkspacesOnlineEndpoint) { e.Spec.Properties.Traffic = map[string]int{"blue": 100} }); err != nil {
+		t.Fatal(err)
+	}
+	if err := change(t, batch, func(e *ml.WorkspacesBatchEndpoint) {
+		e.Spec.Properties.Defaults = &ml.BatchEndpointDefaults{DeploymentName: ptr("v1")}
+	}); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the online endpoint Ready after the change", ready(online))
+	eventually(t, timeout, "the batch endpoint Ready after the change", ready(batch))
+	expectResource(t, wsID+"/onlineEndpoints/score", func(r map[string]any) error {
+		p := properties(r)
+		traffic, _ := p["traffic"].(map[string]any)
+		keys, _ := p["keys"].(map[string]any)
+		if fmt.Sprint(traffic["blue"]) != "100" || keys["primaryKey"] != "cHJpbWFyeQ==" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	expectResource(t, wsID+"/onlineEndpoints/score/deployments/blue", func(r map[string]any) error {
+		if p := properties(r); p["environmentId"] != "azureml://registries/azureml/environments/sklearn-1.5/versions/1" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+
+	// The endpoints stop naming the deployments before they go.
+	if err := change(t, online, func(e *ml.WorkspacesOnlineEndpoint) { e.Spec.Properties.Traffic = nil }); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the online endpoint Ready with no traffic", ready(online))
+	for _, objs := range [][]conditioned{{blue, green, batchDeployment}, {online, batch}} {
+		for _, o := range objs {
+			if err := k8s.Delete(ctx, o); err != nil {
+				t.Fatal(err)
+			}
+		}
+		for _, o := range objs {
+			eventually(t, timeout, o.GetName()+" gone", gone(o))
+		}
+	}
+	for _, id := range []string{wsID + "/onlineEndpoints/score", wsID + "/batchEndpoints/nightly", wsID + "/onlineEndpoints/score/deployments/blue"} {
+		if armFake.HasResource(id) {
+			t.Errorf("%s is still in the fake", id)
+		}
+	}
+}

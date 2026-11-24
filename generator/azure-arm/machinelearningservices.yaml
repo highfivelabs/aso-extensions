@@ -25,6 +25,12 @@ typeTransformers:
     property: Secrets
     remove: true
     because: a datastore's secrets come from Secrets (below); Azure does not return them, and a status must not hold them
+  - group: machinelearningservices
+    version: v20260901
+    name: BatchEndpointProperties_STATUS;OnlineEndpointProperties_STATUS
+    property: Keys
+    remove: true
+    because: an endpoint's auth keys come from Secrets (below); Azure does not return them, and a status must not hold them
 groupModelConfiguration:
   2026-09-01:
     Workspaces_Code:
@@ -96,6 +102,36 @@ groupModelConfiguration:
     Registries_Models_Version:
       $exportAs: RegistriesModelsVersion
       $supportedFrom: v0.1.0
+    Workspaces_OnlineEndpoint:
+      $exportAs: WorkspacesOnlineEndpoint
+      $supportedFrom: v0.1.0
+    Workspaces_OnlineEndpoints_Deployment:
+      $exportAs: WorkspacesOnlineEndpointsDeployment
+      $supportedFrom: v0.1.0
+    Workspaces_BatchEndpoint:
+      $exportAs: WorkspacesBatchEndpoint
+      $supportedFrom: v0.1.0
+    Workspaces_BatchEndpoints_Deployment:
+      $exportAs: WorkspacesBatchEndpointsDeployment
+      $supportedFrom: v0.1.0
+    Workspaces_ServerlessEndpoint:
+      $exportAs: WorkspacesServerlessEndpoint
+      $supportedFrom: v0.1.0
+    Workspaces_CapabilityHost:
+      $exportAs: WorkspacesCapabilityHost
+      $supportedFrom: v0.1.0
+    Workspaces_Featureset:
+      $exportAs: WorkspacesFeatureset
+      $supportedFrom: v0.1.0
+    Workspaces_Featuresets_Version:
+      $exportAs: WorkspacesFeaturesetsVersion
+      $supportedFrom: v0.1.0
+    Workspaces_FeaturestoreEntity:
+      $exportAs: WorkspacesFeaturestoreEntity
+      $supportedFrom: v0.1.0
+    Workspaces_FeaturestoreEntities_Version:
+      $exportAs: WorkspacesFeaturestoreEntitiesVersion
+      $supportedFrom: v0.1.0
     AccountKeyDatastoreCredentials:
       Secrets:
         $importSecretMode: never
@@ -123,3 +159,43 @@ groupModelConfiguration:
     DatasetReference:
       Id:
         $referenceType: arm # a model version's dataset, "the fully qualified ARM id" (a data version: our WorkspacesDataVersion, or an ARM ID)
+    # Asset IDs: the spec says "ARM resource ID", but Machine Learning also
+    # takes asset URIs here (azureml://registries/{r}/environments/{e}/versions/{v},
+    # a curated environment), which no ARM ID reference allows: plain strings.
+    BatchDeploymentProperties:
+      EnvironmentId:
+        $referenceType: simple # an environment version's ARM ID or asset URI
+    KubernetesOnlineDeployment:
+      EnvironmentId:
+        $referenceType: simple # as BatchDeploymentProperties
+    ManagedOnlineDeployment:
+      EnvironmentId:
+        $referenceType: simple # as BatchDeploymentProperties
+    CodeConfiguration:
+      CodeId:
+        $referenceType: simple # a code version's ARM ID or asset URI
+    Collection:
+      DataId:
+        $referenceType: simple # a data asset's ARM ID or asset URI
+    IdAssetReference:
+      AssetId:
+        $referenceType: simple # a model or other asset's ARM ID or asset URI
+    OutputPathAssetReference:
+      JobId:
+        $referenceType: simple # a job's ID (jobs are not kinds here)
+    DataPathAssetReference:
+      DatastoreId:
+        $referenceType: arm # a datastore (our WorkspacesDatastore, or an ARM ID)
+    OnlineEndpointProperties:
+      Compute:
+        $referenceType: arm # an attached Kubernetes compute (ASO's WorkspacesCompute, or an ARM ID)
+      Keys:
+        $importSecretMode: never # as BatchEndpointProperties
+    BatchEndpointProperties:
+      Keys:
+        $importSecretMode: never # an object of two keys, each a Secret (EndpointAuthKeys)
+    EndpointAuthKeys:
+      PrimaryKey:
+        $importSecretMode: required
+      SecondaryKey:
+        $importSecretMode: required

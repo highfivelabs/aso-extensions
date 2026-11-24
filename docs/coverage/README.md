@@ -337,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 8,698 (20.1%) in 642 further resources; uncovered 27,551 (63.5%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 8,893 (20.5%) in 652 further resources; uncovered 27,356 (63.1%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.0% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 8.7% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.0% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 9.4% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 38.5% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 39.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
 
 **Ours.**
 
@@ -669,6 +669,9 @@ Generated; these cannot drift from the data.
 | `machinelearningservices.azure.hfl.dev/RegistriesEnvironmentsVersion` | `Microsoft.MachineLearningServices/registries/environments/versions` | ARM wire type of the generated kind (`apis/arm`) |
 | `machinelearningservices.azure.hfl.dev/RegistriesModel` | `Microsoft.MachineLearningServices/registries/models` | ARM wire type of the generated kind (`apis/arm`) |
 | `machinelearningservices.azure.hfl.dev/RegistriesModelsVersion` | `Microsoft.MachineLearningServices/registries/models/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesBatchEndpoint` | `Microsoft.MachineLearningServices/workspaces/batchEndpoints` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesBatchEndpointsDeployment` | `Microsoft.MachineLearningServices/workspaces/batchEndpoints/deployments` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesCapabilityHost` | `Microsoft.MachineLearningServices/workspaces/capabilityHosts` | ARM wire type of the generated kind (`apis/arm`) |
 | `machinelearningservices.azure.hfl.dev/WorkspacesCode` | `Microsoft.MachineLearningServices/workspaces/codes` | ARM wire type of the generated kind (`apis/arm`) |
 | `machinelearningservices.azure.hfl.dev/WorkspacesCodesVersion` | `Microsoft.MachineLearningServices/workspaces/codes/versions` | ARM wire type of the generated kind (`apis/arm`) |
 | `machinelearningservices.azure.hfl.dev/WorkspacesComponent` | `Microsoft.MachineLearningServices/workspaces/components` | ARM wire type of the generated kind (`apis/arm`) |
@@ -678,10 +681,17 @@ Generated; these cannot drift from the data.
 | `machinelearningservices.azure.hfl.dev/WorkspacesDatastore` | `Microsoft.MachineLearningServices/workspaces/datastores` | ARM wire type of the generated kind (`apis/arm`) |
 | `machinelearningservices.azure.hfl.dev/WorkspacesEnvironment` | `Microsoft.MachineLearningServices/workspaces/environments` | ARM wire type of the generated kind (`apis/arm`) |
 | `machinelearningservices.azure.hfl.dev/WorkspacesEnvironmentsVersion` | `Microsoft.MachineLearningServices/workspaces/environments/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesFeatureset` | `Microsoft.MachineLearningServices/workspaces/featuresets` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesFeaturesetsVersion` | `Microsoft.MachineLearningServices/workspaces/featuresets/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntitiesVersion` | `Microsoft.MachineLearningServices/workspaces/featurestoreEntities/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntity` | `Microsoft.MachineLearningServices/workspaces/featurestoreEntities` | ARM wire type of the generated kind (`apis/arm`) |
 | `machinelearningservices.azure.hfl.dev/WorkspacesModel` | `Microsoft.MachineLearningServices/workspaces/models` | ARM wire type of the generated kind (`apis/arm`) |
 | `machinelearningservices.azure.hfl.dev/WorkspacesModelsVersion` | `Microsoft.MachineLearningServices/workspaces/models/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesOnlineEndpoint` | `Microsoft.MachineLearningServices/workspaces/onlineEndpoints` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesOnlineEndpointsDeployment` | `Microsoft.MachineLearningServices/workspaces/onlineEndpoints/deployments` | ARM wire type of the generated kind (`apis/arm`) |
 | `machinelearningservices.azure.hfl.dev/WorkspacesOutboundRule` | `Microsoft.MachineLearningServices/workspaces/outboundRules` | ARM wire type of the generated kind (`apis/arm`) |
 | `machinelearningservices.azure.hfl.dev/WorkspacesPrivateEndpointConnection` | `Microsoft.MachineLearningServices/workspaces/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesServerlessEndpoint` | `Microsoft.MachineLearningServices/workspaces/serverlessEndpoints` | ARM wire type of the generated kind (`apis/arm`) |
 | `maintenance.azure.hfl.dev/ConfigurationAssignment` | `Microsoft.Maintenance/configurationAssignments` | ARM wire type of the generated kind (`apis/arm`) |
 | `maintenance.azure.hfl.dev/MaintenanceConfiguration` | `Microsoft.Maintenance/maintenanceConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
 | `managedidentity.azure.hfl.dev/UserAssignedIdentity` | `Microsoft.ManagedIdentity/userAssignedIdentities` | ARM wire type of the generated kind (`apis/arm`) |

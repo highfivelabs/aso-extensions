@@ -1386,9 +1386,9 @@ Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/e
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/models,4,,0,machinelearningservices.azure.hfl.dev/RegistriesModel,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/models/versions,12,,0,machinelearningservices.azure.hfl.dev/RegistriesModelsVersion,12,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces,61,machinelearningservices.azure.com/Workspace,50,,0,11,false,spec_api=2026-09-01; official_api=2024-04-01; official-api-differs-from-spec
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/batchEndpoints,16,,0,,0,16,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/batchEndpoints/deployments,39,,0,,0,39,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/capabilityHosts,10,,0,,0,10,false,spec_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/batchEndpoints,16,,0,machinelearningservices.azure.hfl.dev/WorkspacesBatchEndpoint,16,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/batchEndpoints/deployments,39,,0,machinelearningservices.azure.hfl.dev/WorkspacesBatchEndpointsDeployment,39,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/capabilityHosts,10,,0,machinelearningservices.azure.hfl.dev/WorkspacesCapabilityHost,10,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/codes,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesCode,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/codes/versions,6,,0,machinelearningservices.azure.hfl.dev/WorkspacesCodesVersion,6,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/components,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesComponent,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
@@ -1400,21 +1400,21 @@ Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/d
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/datastores,25,,0,machinelearningservices.azure.hfl.dev/WorkspacesDatastore,25,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/environments,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesEnvironment,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/environments/versions,20,,0,machinelearningservices.azure.hfl.dev/WorkspacesEnvironmentsVersion,20,0,false,spec_api=2026-09-01; ours_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,25,,0,,0,25,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featurestoreEntities,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featurestoreEntities/versions,8,,0,,0,8,false,spec_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeatureset,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,25,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeaturesetsVersion,25,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featurestoreEntities,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntity,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featurestoreEntities/versions,8,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntitiesVersion,8,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,230,,0,,0,230,false,spec_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/labelingJobs,19,,0,,0,19,false,spec_api=2020-09-01-preview; spec-preview-only
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/marketplaceSubscriptions,1,,0,,0,1,false,spec_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/models,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesModel,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/models/versions,12,,0,machinelearningservices.azure.hfl.dev/WorkspacesModelsVersion,12,0,false,spec_api=2026-09-01; ours_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/onlineEndpoints,19,,0,,0,19,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/onlineEndpoints/deployments,57,,0,,0,57,false,spec_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/onlineEndpoints,19,,0,machinelearningservices.azure.hfl.dev/WorkspacesOnlineEndpoint,19,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/onlineEndpoints/deployments,57,,0,machinelearningservices.azure.hfl.dev/WorkspacesOnlineEndpointsDeployment,57,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/outboundRules,5,,0,machinelearningservices.azure.hfl.dev/WorkspacesOutboundRule,5,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/privateEndpointConnections,13,,0,machinelearningservices.azure.hfl.dev/WorkspacesPrivateEndpointConnection,12,1,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,307,,0,,0,307,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/serverlessEndpoints,13,,0,,0,13,false,spec_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/serverlessEndpoints,13,,0,machinelearningservices.azure.hfl.dev/WorkspacesServerlessEndpoint,13,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.Maintenance,Microsoft.Maintenance/applyUpdates,0,,0,,0,0,false,spec_api=2023-04-01
 Microsoft.Maintenance,Microsoft.Maintenance/configurationAssignments,9,,0,maintenance.azure.hfl.dev/ConfigurationAssignment,9,0,false,spec_api=2023-04-01; ours_api=2023-04-01
 Microsoft.Maintenance,Microsoft.Maintenance/maintenanceConfigurations,19,,0,maintenance.azure.hfl.dev/MaintenanceConfiguration,19,0,false,spec_api=2023-04-01; ours_api=2023-04-01

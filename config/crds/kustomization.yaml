@@ -320,6 +320,9 @@ resources:
 - machinelearningservices.azure.hfl.dev_registriesenvironmentsversions.yaml
 - machinelearningservices.azure.hfl.dev_registriesmodels.yaml
 - machinelearningservices.azure.hfl.dev_registriesmodelsversions.yaml
+- machinelearningservices.azure.hfl.dev_workspacesbatchendpoints.yaml
+- machinelearningservices.azure.hfl.dev_workspacesbatchendpointsdeployments.yaml
+- machinelearningservices.azure.hfl.dev_workspacescapabilityhosts.yaml
 - machinelearningservices.azure.hfl.dev_workspacescodes.yaml
 - machinelearningservices.azure.hfl.dev_workspacescodesversions.yaml
 - machinelearningservices.azure.hfl.dev_workspacescomponents.yaml
@@ -329,10 +332,17 @@ resources:
 - machinelearningservices.azure.hfl.dev_workspacesdataversions.yaml
 - machinelearningservices.azure.hfl.dev_workspacesenvironments.yaml
 - machinelearningservices.azure.hfl.dev_workspacesenvironmentsversions.yaml
+- machinelearningservices.azure.hfl.dev_workspacesfeaturesets.yaml
+- machinelearningservices.azure.hfl.dev_workspacesfeaturesetsversions.yaml
+- machinelearningservices.azure.hfl.dev_workspacesfeaturestoreentities.yaml
+- machinelearningservices.azure.hfl.dev_workspacesfeaturestoreentitiesversions.yaml
 - machinelearningservices.azure.hfl.dev_workspacesmodels.yaml
 - machinelearningservices.azure.hfl.dev_workspacesmodelsversions.yaml
+- machinelearningservices.azure.hfl.dev_workspacesonlineendpoints.yaml
+- machinelearningservices.azure.hfl.dev_workspacesonlineendpointsdeployments.yaml
 - machinelearningservices.azure.hfl.dev_workspacesoutboundrules.yaml
 - machinelearningservices.azure.hfl.dev_workspacesprivateendpointconnections.yaml
+- machinelearningservices.azure.hfl.dev_workspacesserverlessendpoints.yaml
 - maintenance.azure.hfl.dev_configurationassignments.yaml
 - maintenance.azure.hfl.dev_maintenanceconfigurations.yaml
 - managedidentity.azure.hfl.dev_userassignedidentities.yaml

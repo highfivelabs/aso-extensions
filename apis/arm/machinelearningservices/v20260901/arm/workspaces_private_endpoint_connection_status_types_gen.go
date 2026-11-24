@@ -31,21 +31,6 @@ type WorkspacesPrivateEndpointConnection_STATUS struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// Managed service identity (system assigned and/or user assigned identities)
-type ManagedServiceIdentity_STATUS struct {
-	// PrincipalId: The service principal ID of the system assigned identity. This property will only be provided for a system
-	// assigned identity.
-	PrincipalId *string `json:"principalId,omitempty"`
-
-	// TenantId: The tenant ID of the system assigned identity. This property will only be provided for a system assigned
-	// identity.
-	TenantId *string `json:"tenantId,omitempty"`
-
-	// Type: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
-	Type                   *ManagedServiceIdentityType_STATUS     `json:"type,omitempty"`
-	UserAssignedIdentities map[string]UserAssignedIdentity_STATUS `json:"userAssignedIdentities,omitempty"`
-}
-
 // Private endpoint connection properties.
 type PrivateEndpointConnectionProperties_STATUS struct {
 	// PrivateEndpoint: The Private Endpoint resource.
@@ -56,45 +41,6 @@ type PrivateEndpointConnectionProperties_STATUS struct {
 
 	// ProvisioningState: The current provisioning state.
 	ProvisioningState *PrivateEndpointConnectionProvisioningState_STATUS `json:"provisioningState,omitempty"`
-}
-
-// The resource model definition representing SKU
-type Sku_STATUS struct {
-	// Capacity: If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible
-	// for the resource this may be omitted.
-	Capacity *int `json:"capacity,omitempty"`
-
-	// Family: If the service has different generations of hardware, for the same SKU, then that can be captured here.
-	Family *string `json:"family,omitempty"`
-
-	// Name: The name of the SKU. Ex - P3. It is typically a letter+number code
-	Name *string `json:"name,omitempty"`
-
-	// Size: The SKU size. When the name field is the combination of tier and some other value, this would be the standalone
-	// code.
-	Size *string `json:"size,omitempty"`
-
-	// Tier: This field is required to be implemented by the Resource Provider if the service has more than one tier, but is
-	// not  required on a PUT.
-	Tier *SkuTier_STATUS `json:"tier,omitempty"`
-}
-
-// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
-type ManagedServiceIdentityType_STATUS string
-
-const (
-	ManagedServiceIdentityType_STATUS_None                       = ManagedServiceIdentityType_STATUS("None")
-	ManagedServiceIdentityType_STATUS_SystemAssigned             = ManagedServiceIdentityType_STATUS("SystemAssigned")
-	ManagedServiceIdentityType_STATUS_SystemAssignedUserAssigned = ManagedServiceIdentityType_STATUS("SystemAssigned,UserAssigned")
-	ManagedServiceIdentityType_STATUS_UserAssigned               = ManagedServiceIdentityType_STATUS("UserAssigned")
-)
-
-// Mapping from string to ManagedServiceIdentityType_STATUS
-var managedServiceIdentityType_STATUS_Values = map[string]ManagedServiceIdentityType_STATUS{
-	"none":                        ManagedServiceIdentityType_STATUS_None,
-	"systemassigned":              ManagedServiceIdentityType_STATUS_SystemAssigned,
-	"systemassigned,userassigned": ManagedServiceIdentityType_STATUS_SystemAssignedUserAssigned,
-	"userassigned":                ManagedServiceIdentityType_STATUS_UserAssigned,
 }
 
 // The current provisioning state.
@@ -130,34 +76,6 @@ type PrivateLinkServiceConnectionState_STATUS struct {
 	// connection)\r\nRejected -> Pending (Service consumer re-initiates the connection request that was rejected)\r\nRejected
 	// -> Disconnected (Service provider deletes the connection)
 	Status *EndpointServiceConnectionStatus_STATUS `json:"status,omitempty"`
-}
-
-// This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not
-// required on a PUT.
-type SkuTier_STATUS string
-
-const (
-	SkuTier_STATUS_Basic    = SkuTier_STATUS("Basic")
-	SkuTier_STATUS_Free     = SkuTier_STATUS("Free")
-	SkuTier_STATUS_Premium  = SkuTier_STATUS("Premium")
-	SkuTier_STATUS_Standard = SkuTier_STATUS("Standard")
-)
-
-// Mapping from string to SkuTier_STATUS
-var skuTier_STATUS_Values = map[string]SkuTier_STATUS{
-	"basic":    SkuTier_STATUS_Basic,
-	"free":     SkuTier_STATUS_Free,
-	"premium":  SkuTier_STATUS_Premium,
-	"standard": SkuTier_STATUS_Standard,
-}
-
-// User assigned identity properties
-type UserAssignedIdentity_STATUS struct {
-	// ClientId: The client ID of the assigned identity.
-	ClientId *string `json:"clientId,omitempty"`
-
-	// PrincipalId: The principal ID of the assigned identity.
-	PrincipalId *string `json:"principalId,omitempty"`
 }
 
 // The Private Endpoint resource.

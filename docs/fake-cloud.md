@@ -632,9 +632,13 @@ upstream's); the catalog's chart tests do that.
   (409); an environment version names an image or a build (400); a
   datastore's credentials carry what their type needs, and a blob datastore
   names its account and container (400); an outbound rule names its
-  destination, and a private endpoint rule's target exists (404).
-  Connections follow `privateendpoints.go`. Not modelled: what an asset
-  points at, image builds, the managed network, and the error codes.
+  destination, and a private endpoint rule's target exists (404). An
+  online endpoint sends traffic only to its deployments that exist, 0 to
+  100 each and 100 in all (400); a batch endpoint's default deployment
+  exists (400); a managed online deployment names its instance type
+  (400). Connections follow `privateendpoints.go`. Not modelled: what an
+  asset points at, image builds, the managed network, serving and
+  scaling, and the error codes.
 - A MySQL flexible server's advanced threat protection setting
   (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
   2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404

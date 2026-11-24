@@ -591,31 +591,41 @@ title: Supported Resources
 
 ### Released
 
-| Resource                            | ARM Version | CRD Version | Supported From | Sample |
-|-------------------------------------|-------------|-------------|----------------|--------|
-| RegistriesCode                      | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| RegistriesCodesVersion              | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| RegistriesComponent                 | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| RegistriesComponentsVersion         | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| RegistriesData                      | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| RegistriesDataVersion               | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| RegistriesEnvironment               | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| RegistriesEnvironmentsVersion       | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| RegistriesModel                     | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| RegistriesModelsVersion             | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesCode                      | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesCodesVersion              | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesComponent                 | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesComponentsVersion         | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesData                      | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesDataVersion               | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesDatastore                 | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesEnvironment               | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesEnvironmentsVersion       | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesModel                     | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesModelsVersion             | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesOutboundRule              | 2026-09-01  | v20260901   | v0.1.0         | -      |
-| WorkspacesPrivateEndpointConnection | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| Resource                              | ARM Version | CRD Version | Supported From | Sample |
+|---------------------------------------|-------------|-------------|----------------|--------|
+| RegistriesCode                        | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| RegistriesCodesVersion                | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| RegistriesComponent                   | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| RegistriesComponentsVersion           | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| RegistriesData                        | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| RegistriesDataVersion                 | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| RegistriesEnvironment                 | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| RegistriesEnvironmentsVersion         | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| RegistriesModel                       | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| RegistriesModelsVersion               | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesBatchEndpoint               | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesBatchEndpointsDeployment    | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesCapabilityHost              | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesCode                        | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesCodesVersion                | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesComponent                   | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesComponentsVersion           | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesData                        | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesDataVersion                 | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesDatastore                   | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesEnvironment                 | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesEnvironmentsVersion         | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesFeatureset                  | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesFeaturesetsVersion          | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesFeaturestoreEntitiesVersion | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesFeaturestoreEntity          | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesModel                       | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesModelsVersion               | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesOnlineEndpoint              | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesOnlineEndpointsDeployment   | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesOutboundRule                | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesPrivateEndpointConnection   | 2026-09-01  | v20260901   | v0.1.0         | -      |
+| WorkspacesServerlessEndpoint          | 2026-09-01  | v20260901   | v0.1.0         | -      |
 
 ## Maintenance
 

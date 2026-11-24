@@ -620,6 +620,361 @@ RegistriesModelsVersion: Resource
     │       └── "User"
     └── Type: *string
 
+WorkspacesBatchEndpoint: Resource
+├── Owner: Workspace
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Identity: *Object (2 properties)
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssigned,UserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (5 properties)
+│   │   ├── AuthMode: *Enum (3 values)
+│   │   │   ├── "AADToken"
+│   │   │   ├── "AMLToken"
+│   │   │   └── "Key"
+│   │   ├── Defaults: *Object (1 property)
+│   │   │   └── DeploymentName: *string
+│   │   ├── Description: *string
+│   │   ├── Keys: *Object (2 properties)
+│   │   │   ├── PrimaryKey: *genruntime.SecretReference
+│   │   │   └── SecondaryKey: *genruntime.SecretReference
+│   │   └── Properties: map[string]string
+│   ├── Sku: *Object (5 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Family: *string
+│   │   ├── Name: *string
+│   │   ├── Size: *string
+│   │   └── Tier: *Enum (4 values)
+│   │       ├── "Basic"
+│   │       ├── "Free"
+│   │       ├── "Premium"
+│   │       └── "Standard"
+│   └── Tags: map[string]string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssigned,UserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (7 properties)
+    │   ├── AuthMode: *Enum (3 values)
+    │   │   ├── "AADToken"
+    │   │   ├── "AMLToken"
+    │   │   └── "Key"
+    │   ├── Defaults: *Object (1 property)
+    │   │   └── DeploymentName: *string
+    │   ├── Description: *string
+    │   ├── Properties: map[string]string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   ├── ScoringUri: *string
+    │   └── SwaggerUri: *string
+    ├── Sku: *Object (5 properties)
+    │   ├── Capacity: *int
+    │   ├── Family: *string
+    │   ├── Name: *string
+    │   ├── Size: *string
+    │   └── Tier: *Enum (4 values)
+    │       ├── "Basic"
+    │       ├── "Free"
+    │       ├── "Premium"
+    │       └── "Standard"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+WorkspacesBatchEndpointsDeployment: Resource
+├── Owner: WorkspacesBatchEndpoint
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Identity: *Object (2 properties)
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssigned,UserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (16 properties)
+│   │   ├── CodeConfiguration: *Object (2 properties)
+│   │   │   ├── CodeId: *string
+│   │   │   └── ScoringScript: Validated<*string> (2 rules)
+│   │   │       ├── Rule 0: MinLength: 1
+│   │   │       └── Rule 1: Pattern: "[a-zA-Z0-9_]"
+│   │   ├── Compute: *string
+│   │   ├── DeploymentConfiguration: *Object (1 property)
+│   │   │   └── PipelineComponent: *Object (5 properties)
+│   │   │       ├── ComponentId: *Object (2 properties)
+│   │   │       │   ├── AssetId: *string
+│   │   │       │   └── ReferenceType: *Enum (1 value)
+│   │   │       │       └── "Id"
+│   │   │       ├── DeploymentConfigurationType: *Enum (1 value)
+│   │   │       │   └── "PipelineComponent"
+│   │   │       ├── Description: *string
+│   │   │       ├── Settings: map[string]string
+│   │   │       └── Tags: map[string]string
+│   │   ├── Description: *string
+│   │   ├── EnvironmentId: *string
+│   │   ├── EnvironmentVariables: map[string]string
+│   │   ├── ErrorThreshold: *int
+│   │   ├── LoggingLevel: *Enum (3 values)
+│   │   │   ├── "Debug"
+│   │   │   ├── "Info"
+│   │   │   └── "Warning"
+│   │   ├── MaxConcurrencyPerInstance: *int
+│   │   ├── MiniBatchSize: *int
+│   │   ├── Model: *Object (3 properties)
+│   │   │   ├── DataPath: *Object (3 properties)
+│   │   │   │   ├── DatastoreReference: *genruntime.ResourceReference
+│   │   │   │   ├── Path: *string
+│   │   │   │   └── ReferenceType: *Enum (1 value)
+│   │   │   │       └── "DataPath"
+│   │   │   ├── Id: *Object (2 properties)
+│   │   │   │   ├── AssetId: *string
+│   │   │   │   └── ReferenceType: *Enum (1 value)
+│   │   │   │       └── "Id"
+│   │   │   └── OutputPath: *Object (3 properties)
+│   │   │       ├── JobId: *string
+│   │   │       ├── Path: *string
+│   │   │       └── ReferenceType: *Enum (1 value)
+│   │   │           └── "OutputPath"
+│   │   ├── OutputAction: *Enum (2 values)
+│   │   │   ├── "AppendRow"
+│   │   │   └── "SummaryOnly"
+│   │   ├── OutputFileName: *string
+│   │   ├── Properties: map[string]string
+│   │   ├── Resources: *Object (3 properties)
+│   │   │   ├── InstanceCount: *int
+│   │   │   ├── InstanceType: *string
+│   │   │   └── Properties: map[string]v1.JSON
+│   │   └── RetrySettings: *Object (2 properties)
+│   │       ├── MaxRetries: *int
+│   │       └── Timeout: *string
+│   ├── Sku: *Object (5 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Family: *string
+│   │   ├── Name: *string
+│   │   ├── Size: *string
+│   │   └── Tier: *Enum (4 values)
+│   │       ├── "Basic"
+│   │       ├── "Free"
+│   │       ├── "Premium"
+│   │       └── "Standard"
+│   └── Tags: map[string]string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssigned,UserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (17 properties)
+    │   ├── CodeConfiguration: *Object (2 properties)
+    │   │   ├── CodeId: *string
+    │   │   └── ScoringScript: *string
+    │   ├── Compute: *string
+    │   ├── DeploymentConfiguration: *Object (1 property)
+    │   │   └── PipelineComponent: *Object (5 properties)
+    │   │       ├── ComponentId: *Object (2 properties)
+    │   │       │   ├── AssetId: *string
+    │   │       │   └── ReferenceType: *Enum (1 value)
+    │   │       │       └── "Id"
+    │   │       ├── DeploymentConfigurationType: *Enum (1 value)
+    │   │       │   └── "PipelineComponent"
+    │   │       ├── Description: *string
+    │   │       ├── Settings: map[string]string
+    │   │       └── Tags: map[string]string
+    │   ├── Description: *string
+    │   ├── EnvironmentId: *string
+    │   ├── EnvironmentVariables: map[string]string
+    │   ├── ErrorThreshold: *int
+    │   ├── LoggingLevel: *Enum (3 values)
+    │   │   ├── "Debug"
+    │   │   ├── "Info"
+    │   │   └── "Warning"
+    │   ├── MaxConcurrencyPerInstance: *int
+    │   ├── MiniBatchSize: *int
+    │   ├── Model: *Object (3 properties)
+    │   │   ├── DataPath: *Object (3 properties)
+    │   │   │   ├── DatastoreId: *string
+    │   │   │   ├── Path: *string
+    │   │   │   └── ReferenceType: *Enum (1 value)
+    │   │   │       └── "DataPath"
+    │   │   ├── Id: *Object (2 properties)
+    │   │   │   ├── AssetId: *string
+    │   │   │   └── ReferenceType: *Enum (1 value)
+    │   │   │       └── "Id"
+    │   │   └── OutputPath: *Object (3 properties)
+    │   │       ├── JobId: *string
+    │   │       ├── Path: *string
+    │   │       └── ReferenceType: *Enum (1 value)
+    │   │           └── "OutputPath"
+    │   ├── OutputAction: *Enum (2 values)
+    │   │   ├── "AppendRow"
+    │   │   └── "SummaryOnly"
+    │   ├── OutputFileName: *string
+    │   ├── Properties: map[string]string
+    │   ├── ProvisioningState: *Enum (7 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Scaling"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   ├── Resources: *Object (3 properties)
+    │   │   ├── InstanceCount: *int
+    │   │   ├── InstanceType: *string
+    │   │   └── Properties: map[string]v1.JSON
+    │   └── RetrySettings: *Object (2 properties)
+    │       ├── MaxRetries: *int
+    │       └── Timeout: *string
+    ├── Sku: *Object (5 properties)
+    │   ├── Capacity: *int
+    │   ├── Family: *string
+    │   ├── Name: *string
+    │   ├── Size: *string
+    │   └── Tier: *Enum (4 values)
+    │       ├── "Basic"
+    │       ├── "Free"
+    │       ├── "Premium"
+    │       └── "Standard"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+WorkspacesCapabilityHost: Resource
+├── Owner: Workspace
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (10 properties)
+│       ├── AcaEnvironmentConnections: string[]
+│       ├── AiServicesConnections: string[]
+│       ├── CapabilityHostKind: *Enum (1 value)
+│       │   └── "Agents"
+│       ├── CustomerSubnet: *string
+│       ├── Description: *string
+│       ├── Properties: map[string]string
+│       ├── StorageConnections: string[]
+│       ├── Tags: map[string]string
+│       ├── ThreadStorageConnections: string[]
+│       └── VectorStoreConnections: string[]
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (12 properties)
+    │   ├── AcaEnvironmentConnections: string[]
+    │   ├── AiServicesConnections: string[]
+    │   ├── CapabilityHostKind: *Enum (1 value)
+    │   │   └── "Agents"
+    │   ├── CustomerSubnet: *string
+    │   ├── Description: *string
+    │   ├── Messages: string[]
+    │   ├── Properties: map[string]string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   ├── StorageConnections: string[]
+    │   ├── Tags: map[string]string
+    │   ├── ThreadStorageConnections: string[]
+    │   └── VectorStoreConnections: string[]
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 WorkspacesCode: Resource
 ├── Owner: Workspace
 ├── Spec: Object (4 properties)
@@ -1683,6 +2038,320 @@ WorkspacesEnvironmentsVersion: Resource
     │       └── "User"
     └── Type: *string
 
+WorkspacesFeatureset: Resource
+├── Owner: Workspace
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (4 properties)
+│       ├── Description: *string
+│       ├── IsArchived: *bool
+│       ├── Properties: map[string]string
+│       └── Tags: map[string]string
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (7 properties)
+    │   ├── Description: *string
+    │   ├── IsArchived: *bool
+    │   ├── LatestVersion: *string
+    │   ├── NextVersion: *string
+    │   ├── Properties: map[string]string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   └── Tags: map[string]string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+WorkspacesFeaturesetsVersion: Resource
+├── Owner: WorkspacesFeatureset
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (9 properties)
+│       ├── Description: *string
+│       ├── Entities: string[]
+│       ├── IsAnonymous: *bool
+│       ├── IsArchived: *bool
+│       ├── MaterializationSettings: *Object (5 properties)
+│       │   ├── Notification: *Object (3 properties)
+│       │   │   ├── EmailOn: Enum (3 values)[]
+│       │   │   │   ├── "JobCancelled"
+│       │   │   │   ├── "JobCompleted"
+│       │   │   │   └── "JobFailed"
+│       │   │   ├── Emails: string[]
+│       │   │   └── Webhooks: map[string]Object (1 property)
+│       │   │       └── AzureDevOps: *Object (2 properties)
+│       │   │           ├── EventType: *string
+│       │   │           └── WebhookType: *Enum (1 value)
+│       │   │               └── "AzureDevOps"
+│       │   ├── Resource: *Object (1 property)
+│       │   │   └── InstanceType: *string
+│       │   ├── Schedule: *Object (7 properties)
+│       │   │   ├── EndTime: *string
+│       │   │   ├── Frequency: *Enum (5 values)
+│       │   │   │   ├── "Day"
+│       │   │   │   ├── "Hour"
+│       │   │   │   ├── "Minute"
+│       │   │   │   ├── "Month"
+│       │   │   │   └── "Week"
+│       │   │   ├── Interval: *int
+│       │   │   ├── Schedule: *Object (4 properties)
+│       │   │   │   ├── Hours: int[]
+│       │   │   │   ├── Minutes: int[]
+│       │   │   │   ├── MonthDays: int[]
+│       │   │   │   └── WeekDays: Enum (7 values)[]
+│       │   │   │       ├── "Friday"
+│       │   │   │       ├── "Monday"
+│       │   │   │       ├── "Saturday"
+│       │   │   │       ├── "Sunday"
+│       │   │   │       ├── "Thursday"
+│       │   │   │       ├── "Tuesday"
+│       │   │   │       └── "Wednesday"
+│       │   │   ├── StartTime: *string
+│       │   │   ├── TimeZone: *string
+│       │   │   └── TriggerType: *Enum (1 value)
+│       │   │       └── "Recurrence"
+│       │   ├── SparkConfiguration: map[string]string
+│       │   └── StoreType: *Enum (4 values)
+│       │       ├── "None"
+│       │       ├── "Offline"
+│       │       ├── "Online"
+│       │       └── "OnlineAndOffline"
+│       ├── Properties: map[string]string
+│       ├── Specification: *Object (1 property)
+│       │   └── Path: *string
+│       ├── Stage: *string
+│       └── Tags: map[string]string
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (10 properties)
+    │   ├── Description: *string
+    │   ├── Entities: string[]
+    │   ├── IsAnonymous: *bool
+    │   ├── IsArchived: *bool
+    │   ├── MaterializationSettings: *Object (5 properties)
+    │   │   ├── Notification: *Object (3 properties)
+    │   │   │   ├── EmailOn: Enum (3 values)[]
+    │   │   │   │   ├── "JobCancelled"
+    │   │   │   │   ├── "JobCompleted"
+    │   │   │   │   └── "JobFailed"
+    │   │   │   ├── Emails: string[]
+    │   │   │   └── Webhooks: map[string]Object (1 property)
+    │   │   │       └── AzureDevOps: *Object (2 properties)
+    │   │   │           ├── EventType: *string
+    │   │   │           └── WebhookType: *Enum (1 value)
+    │   │   │               └── "AzureDevOps"
+    │   │   ├── Resource: *Object (1 property)
+    │   │   │   └── InstanceType: *string
+    │   │   ├── Schedule: *Object (7 properties)
+    │   │   │   ├── EndTime: *string
+    │   │   │   ├── Frequency: *Enum (5 values)
+    │   │   │   │   ├── "Day"
+    │   │   │   │   ├── "Hour"
+    │   │   │   │   ├── "Minute"
+    │   │   │   │   ├── "Month"
+    │   │   │   │   └── "Week"
+    │   │   │   ├── Interval: *int
+    │   │   │   ├── Schedule: *Object (4 properties)
+    │   │   │   │   ├── Hours: int[]
+    │   │   │   │   ├── Minutes: int[]
+    │   │   │   │   ├── MonthDays: int[]
+    │   │   │   │   └── WeekDays: Enum (7 values)[]
+    │   │   │   │       ├── "Friday"
+    │   │   │   │       ├── "Monday"
+    │   │   │   │       ├── "Saturday"
+    │   │   │   │       ├── "Sunday"
+    │   │   │   │       ├── "Thursday"
+    │   │   │   │       ├── "Tuesday"
+    │   │   │   │       └── "Wednesday"
+    │   │   │   ├── StartTime: *string
+    │   │   │   ├── TimeZone: *string
+    │   │   │   └── TriggerType: *Enum (1 value)
+    │   │   │       └── "Recurrence"
+    │   │   ├── SparkConfiguration: map[string]string
+    │   │   └── StoreType: *Enum (4 values)
+    │   │       ├── "None"
+    │   │       ├── "Offline"
+    │   │       ├── "Online"
+    │   │       └── "OnlineAndOffline"
+    │   ├── Properties: map[string]string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   ├── Specification: *Object (1 property)
+    │   │   └── Path: *string
+    │   ├── Stage: *string
+    │   └── Tags: map[string]string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+WorkspacesFeaturestoreEntitiesVersion: Resource
+├── Owner: WorkspacesFeaturestoreEntity
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (7 properties)
+│       ├── Description: *string
+│       ├── IndexColumns: Object (2 properties)[]
+│       │   ├── ColumnName: *string
+│       │   └── DataType: *Enum (8 values)
+│       │       ├── "Binary"
+│       │       ├── "Boolean"
+│       │       ├── "Datetime"
+│       │       ├── "Double"
+│       │       ├── "Float"
+│       │       ├── "Integer"
+│       │       ├── "Long"
+│       │       └── "String"
+│       ├── IsAnonymous: *bool
+│       ├── IsArchived: *bool
+│       ├── Properties: map[string]string
+│       ├── Stage: *string
+│       └── Tags: map[string]string
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (8 properties)
+    │   ├── Description: *string
+    │   ├── IndexColumns: Object (2 properties)[]
+    │   │   ├── ColumnName: *string
+    │   │   └── DataType: *Enum (8 values)
+    │   │       ├── "Binary"
+    │   │       ├── "Boolean"
+    │   │       ├── "Datetime"
+    │   │       ├── "Double"
+    │   │       ├── "Float"
+    │   │       ├── "Integer"
+    │   │       ├── "Long"
+    │   │       └── "String"
+    │   ├── IsAnonymous: *bool
+    │   ├── IsArchived: *bool
+    │   ├── Properties: map[string]string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   ├── Stage: *string
+    │   └── Tags: map[string]string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+WorkspacesFeaturestoreEntity: Resource
+├── Owner: Workspace
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (4 properties)
+│       ├── Description: *string
+│       ├── IsArchived: *bool
+│       ├── Properties: map[string]string
+│       └── Tags: map[string]string
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (7 properties)
+    │   ├── Description: *string
+    │   ├── IsArchived: *bool
+    │   ├── LatestVersion: *string
+    │   ├── NextVersion: *string
+    │   ├── Properties: map[string]string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   └── Tags: map[string]string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 WorkspacesModel: Resource
 ├── Owner: Workspace
 ├── Spec: Object (4 properties)
@@ -1795,6 +2464,496 @@ WorkspacesModelsVersion: Resource
     │       ├── "Key"
     │       ├── "ManagedIdentity"
     │       └── "User"
+    └── Type: *string
+
+WorkspacesOnlineEndpoint: Resource
+├── Owner: Workspace
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Identity: *Object (2 properties)
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssigned,UserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (8 properties)
+│   │   ├── AuthMode: *Enum (3 values)
+│   │   │   ├── "AADToken"
+│   │   │   ├── "AMLToken"
+│   │   │   └── "Key"
+│   │   ├── ComputeReference: *genruntime.ResourceReference
+│   │   ├── Description: *string
+│   │   ├── Keys: *Object (2 properties)
+│   │   │   ├── PrimaryKey: *genruntime.SecretReference
+│   │   │   └── SecondaryKey: *genruntime.SecretReference
+│   │   ├── MirrorTraffic: map[string]int
+│   │   ├── Properties: map[string]string
+│   │   ├── PublicNetworkAccess: *Enum (2 values)
+│   │   │   ├── "Disabled"
+│   │   │   └── "Enabled"
+│   │   └── Traffic: map[string]int
+│   ├── Sku: *Object (5 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Family: *string
+│   │   ├── Name: *string
+│   │   ├── Size: *string
+│   │   └── Tier: *Enum (4 values)
+│   │       ├── "Basic"
+│   │       ├── "Free"
+│   │       ├── "Premium"
+│   │       └── "Standard"
+│   └── Tags: map[string]string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssigned,UserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (10 properties)
+    │   ├── AuthMode: *Enum (3 values)
+    │   │   ├── "AADToken"
+    │   │   ├── "AMLToken"
+    │   │   └── "Key"
+    │   ├── Compute: *string
+    │   ├── Description: *string
+    │   ├── MirrorTraffic: map[string]int
+    │   ├── Properties: map[string]string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   ├── PublicNetworkAccess: *Enum (2 values)
+    │   │   ├── "Disabled"
+    │   │   └── "Enabled"
+    │   ├── ScoringUri: *string
+    │   ├── SwaggerUri: *string
+    │   └── Traffic: map[string]int
+    ├── Sku: *Object (5 properties)
+    │   ├── Capacity: *int
+    │   ├── Family: *string
+    │   ├── Name: *string
+    │   ├── Size: *string
+    │   └── Tier: *Enum (4 values)
+    │       ├── "Basic"
+    │       ├── "Free"
+    │       ├── "Premium"
+    │       └── "Standard"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+WorkspacesOnlineEndpointsDeployment: Resource
+├── Owner: WorkspacesOnlineEndpoint
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Identity: *Object (2 properties)
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssigned,UserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (2 properties)
+│   │   ├── Kubernetes: *Object (18 properties)
+│   │   │   ├── AppInsightsEnabled: *bool
+│   │   │   ├── CodeConfiguration: *Object (2 properties)
+│   │   │   │   ├── CodeId: *string
+│   │   │   │   └── ScoringScript: Validated<*string> (2 rules)
+│   │   │   │       ├── Rule 0: MinLength: 1
+│   │   │   │       └── Rule 1: Pattern: "[a-zA-Z0-9_]"
+│   │   │   ├── ContainerResourceRequirements: *Object (2 properties)
+│   │   │   │   ├── ContainerResourceLimits: *Object (3 properties)
+│   │   │   │   │   ├── Cpu: *string
+│   │   │   │   │   ├── Gpu: *string
+│   │   │   │   │   └── Memory: *string
+│   │   │   │   └── ContainerResourceRequests: *Object (3 properties)
+│   │   │   │       ├── Cpu: *string
+│   │   │   │       ├── Gpu: *string
+│   │   │   │       └── Memory: *string
+│   │   │   ├── DataCollector: *Object (3 properties)
+│   │   │   │   ├── Collections: map[string]Object (4 properties)
+│   │   │   │   │   ├── ClientId: *string
+│   │   │   │   │   ├── DataCollectionMode: *Enum (2 values)
+│   │   │   │   │   │   ├── "Disabled"
+│   │   │   │   │   │   └── "Enabled"
+│   │   │   │   │   ├── DataId: *string
+│   │   │   │   │   └── SamplingRate: *float64
+│   │   │   │   ├── RequestLogging: *Object (1 property)
+│   │   │   │   │   └── CaptureHeaders: string[]
+│   │   │   │   └── RollingRate: *Enum (5 values)
+│   │   │   │       ├── "Day"
+│   │   │   │       ├── "Hour"
+│   │   │   │       ├── "Minute"
+│   │   │   │       ├── "Month"
+│   │   │   │       └── "Year"
+│   │   │   ├── Description: *string
+│   │   │   ├── EgressPublicNetworkAccess: *Enum (2 values)
+│   │   │   │   ├── "Disabled"
+│   │   │   │   └── "Enabled"
+│   │   │   ├── EndpointComputeType: *Enum (1 value)
+│   │   │   │   └── "Kubernetes"
+│   │   │   ├── EnvironmentId: *string
+│   │   │   ├── EnvironmentVariables: map[string]string
+│   │   │   ├── InstanceType: *string
+│   │   │   ├── LivenessProbe: *Object (5 properties)
+│   │   │   │   ├── FailureThreshold: *int
+│   │   │   │   ├── InitialDelay: *string
+│   │   │   │   ├── Period: *string
+│   │   │   │   ├── SuccessThreshold: *int
+│   │   │   │   └── Timeout: *string
+│   │   │   ├── Model: *string
+│   │   │   ├── ModelMountPath: *string
+│   │   │   ├── Properties: map[string]string
+│   │   │   ├── ReadinessProbe: *Object (5 properties)
+│   │   │   │   ├── FailureThreshold: *int
+│   │   │   │   ├── InitialDelay: *string
+│   │   │   │   ├── Period: *string
+│   │   │   │   ├── SuccessThreshold: *int
+│   │   │   │   └── Timeout: *string
+│   │   │   ├── RequestSettings: *Object (3 properties)
+│   │   │   │   ├── MaxConcurrentRequestsPerInstance: *int
+│   │   │   │   ├── MaxQueueWait: *string
+│   │   │   │   └── RequestTimeout: *string
+│   │   │   ├── ScaleSettings: *Object (2 properties)
+│   │   │   │   ├── Default: *Object (1 property)
+│   │   │   │   │   └── ScaleType: *Enum (1 value)
+│   │   │   │   │       └── "Default"
+│   │   │   │   └── TargetUtilization: *Object (5 properties)
+│   │   │   │       ├── MaxInstances: *int
+│   │   │   │       ├── MinInstances: *int
+│   │   │   │       ├── PollingInterval: *string
+│   │   │   │       ├── ScaleType: *Enum (1 value)
+│   │   │   │       │   └── "TargetUtilization"
+│   │   │   │       └── TargetUtilizationPercentage: *int
+│   │   │   └── StartupProbe: *Object (5 properties)
+│   │   │       ├── FailureThreshold: *int
+│   │   │       ├── InitialDelay: *string
+│   │   │       ├── Period: *string
+│   │   │       ├── SuccessThreshold: *int
+│   │   │       └── Timeout: *string
+│   │   └── Managed: *Object (17 properties)
+│   │       ├── AppInsightsEnabled: *bool
+│   │       ├── CodeConfiguration: *Object (2 properties)
+│   │       │   ├── CodeId: *string
+│   │       │   └── ScoringScript: Validated<*string> (2 rules)
+│   │       │       ├── Rule 0: MinLength: 1
+│   │       │       └── Rule 1: Pattern: "[a-zA-Z0-9_]"
+│   │       ├── DataCollector: *Object (3 properties)
+│   │       │   ├── Collections: map[string]Object (4 properties)
+│   │       │   │   ├── ClientId: *string
+│   │       │   │   ├── DataCollectionMode: *Enum (2 values)
+│   │       │   │   │   ├── "Disabled"
+│   │       │   │   │   └── "Enabled"
+│   │       │   │   ├── DataId: *string
+│   │       │   │   └── SamplingRate: *float64
+│   │       │   ├── RequestLogging: *Object (1 property)
+│   │       │   │   └── CaptureHeaders: string[]
+│   │       │   └── RollingRate: *Enum (5 values)
+│   │       │       ├── "Day"
+│   │       │       ├── "Hour"
+│   │       │       ├── "Minute"
+│   │       │       ├── "Month"
+│   │       │       └── "Year"
+│   │       ├── Description: *string
+│   │       ├── EgressPublicNetworkAccess: *Enum (2 values)
+│   │       │   ├── "Disabled"
+│   │       │   └── "Enabled"
+│   │       ├── EndpointComputeType: *Enum (1 value)
+│   │       │   └── "Managed"
+│   │       ├── EnvironmentId: *string
+│   │       ├── EnvironmentVariables: map[string]string
+│   │       ├── InstanceType: *string
+│   │       ├── LivenessProbe: *Object (5 properties)
+│   │       │   ├── FailureThreshold: *int
+│   │       │   ├── InitialDelay: *string
+│   │       │   ├── Period: *string
+│   │       │   ├── SuccessThreshold: *int
+│   │       │   └── Timeout: *string
+│   │       ├── Model: *string
+│   │       ├── ModelMountPath: *string
+│   │       ├── Properties: map[string]string
+│   │       ├── ReadinessProbe: *Object (5 properties)
+│   │       │   ├── FailureThreshold: *int
+│   │       │   ├── InitialDelay: *string
+│   │       │   ├── Period: *string
+│   │       │   ├── SuccessThreshold: *int
+│   │       │   └── Timeout: *string
+│   │       ├── RequestSettings: *Object (3 properties)
+│   │       │   ├── MaxConcurrentRequestsPerInstance: *int
+│   │       │   ├── MaxQueueWait: *string
+│   │       │   └── RequestTimeout: *string
+│   │       ├── ScaleSettings: *Object (2 properties)
+│   │       │   ├── Default: *Object (1 property)
+│   │       │   │   └── ScaleType: *Enum (1 value)
+│   │       │   │       └── "Default"
+│   │       │   └── TargetUtilization: *Object (5 properties)
+│   │       │       ├── MaxInstances: *int
+│   │       │       ├── MinInstances: *int
+│   │       │       ├── PollingInterval: *string
+│   │       │       ├── ScaleType: *Enum (1 value)
+│   │       │       │   └── "TargetUtilization"
+│   │       │       └── TargetUtilizationPercentage: *int
+│   │       └── StartupProbe: *Object (5 properties)
+│   │           ├── FailureThreshold: *int
+│   │           ├── InitialDelay: *string
+│   │           ├── Period: *string
+│   │           ├── SuccessThreshold: *int
+│   │           └── Timeout: *string
+│   ├── Sku: *Object (5 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Family: *string
+│   │   ├── Name: *string
+│   │   ├── Size: *string
+│   │   └── Tier: *Enum (4 values)
+│   │       ├── "Basic"
+│   │       ├── "Free"
+│   │       ├── "Premium"
+│   │       └── "Standard"
+│   └── Tags: map[string]string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssigned,UserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (2 properties)
+    │   ├── Kubernetes: *Object (19 properties)
+    │   │   ├── AppInsightsEnabled: *bool
+    │   │   ├── CodeConfiguration: *Object (2 properties)
+    │   │   │   ├── CodeId: *string
+    │   │   │   └── ScoringScript: *string
+    │   │   ├── ContainerResourceRequirements: *Object (2 properties)
+    │   │   │   ├── ContainerResourceLimits: *Object (3 properties)
+    │   │   │   │   ├── Cpu: *string
+    │   │   │   │   ├── Gpu: *string
+    │   │   │   │   └── Memory: *string
+    │   │   │   └── ContainerResourceRequests: *Object (3 properties)
+    │   │   │       ├── Cpu: *string
+    │   │   │       ├── Gpu: *string
+    │   │   │       └── Memory: *string
+    │   │   ├── DataCollector: *Object (3 properties)
+    │   │   │   ├── Collections: map[string]Object (4 properties)
+    │   │   │   │   ├── ClientId: *string
+    │   │   │   │   ├── DataCollectionMode: *Enum (2 values)
+    │   │   │   │   │   ├── "Disabled"
+    │   │   │   │   │   └── "Enabled"
+    │   │   │   │   ├── DataId: *string
+    │   │   │   │   └── SamplingRate: *float64
+    │   │   │   ├── RequestLogging: *Object (1 property)
+    │   │   │   │   └── CaptureHeaders: string[]
+    │   │   │   └── RollingRate: *Enum (5 values)
+    │   │   │       ├── "Day"
+    │   │   │       ├── "Hour"
+    │   │   │       ├── "Minute"
+    │   │   │       ├── "Month"
+    │   │   │       └── "Year"
+    │   │   ├── Description: *string
+    │   │   ├── EgressPublicNetworkAccess: *Enum (2 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   └── "Enabled"
+    │   │   ├── EndpointComputeType: *Enum (1 value)
+    │   │   │   └── "Kubernetes"
+    │   │   ├── EnvironmentId: *string
+    │   │   ├── EnvironmentVariables: map[string]string
+    │   │   ├── InstanceType: *string
+    │   │   ├── LivenessProbe: *Object (5 properties)
+    │   │   │   ├── FailureThreshold: *int
+    │   │   │   ├── InitialDelay: *string
+    │   │   │   ├── Period: *string
+    │   │   │   ├── SuccessThreshold: *int
+    │   │   │   └── Timeout: *string
+    │   │   ├── Model: *string
+    │   │   ├── ModelMountPath: *string
+    │   │   ├── Properties: map[string]string
+    │   │   ├── ProvisioningState: *Enum (7 values)
+    │   │   │   ├── "Canceled"
+    │   │   │   ├── "Creating"
+    │   │   │   ├── "Deleting"
+    │   │   │   ├── "Failed"
+    │   │   │   ├── "Scaling"
+    │   │   │   ├── "Succeeded"
+    │   │   │   └── "Updating"
+    │   │   ├── ReadinessProbe: *Object (5 properties)
+    │   │   │   ├── FailureThreshold: *int
+    │   │   │   ├── InitialDelay: *string
+    │   │   │   ├── Period: *string
+    │   │   │   ├── SuccessThreshold: *int
+    │   │   │   └── Timeout: *string
+    │   │   ├── RequestSettings: *Object (3 properties)
+    │   │   │   ├── MaxConcurrentRequestsPerInstance: *int
+    │   │   │   ├── MaxQueueWait: *string
+    │   │   │   └── RequestTimeout: *string
+    │   │   ├── ScaleSettings: *Object (2 properties)
+    │   │   │   ├── Default: *Object (1 property)
+    │   │   │   │   └── ScaleType: *Enum (1 value)
+    │   │   │   │       └── "Default"
+    │   │   │   └── TargetUtilization: *Object (5 properties)
+    │   │   │       ├── MaxInstances: *int
+    │   │   │       ├── MinInstances: *int
+    │   │   │       ├── PollingInterval: *string
+    │   │   │       ├── ScaleType: *Enum (1 value)
+    │   │   │       │   └── "TargetUtilization"
+    │   │   │       └── TargetUtilizationPercentage: *int
+    │   │   └── StartupProbe: *Object (5 properties)
+    │   │       ├── FailureThreshold: *int
+    │   │       ├── InitialDelay: *string
+    │   │       ├── Period: *string
+    │   │       ├── SuccessThreshold: *int
+    │   │       └── Timeout: *string
+    │   └── Managed: *Object (18 properties)
+    │       ├── AppInsightsEnabled: *bool
+    │       ├── CodeConfiguration: *Object (2 properties)
+    │       │   ├── CodeId: *string
+    │       │   └── ScoringScript: *string
+    │       ├── DataCollector: *Object (3 properties)
+    │       │   ├── Collections: map[string]Object (4 properties)
+    │       │   │   ├── ClientId: *string
+    │       │   │   ├── DataCollectionMode: *Enum (2 values)
+    │       │   │   │   ├── "Disabled"
+    │       │   │   │   └── "Enabled"
+    │       │   │   ├── DataId: *string
+    │       │   │   └── SamplingRate: *float64
+    │       │   ├── RequestLogging: *Object (1 property)
+    │       │   │   └── CaptureHeaders: string[]
+    │       │   └── RollingRate: *Enum (5 values)
+    │       │       ├── "Day"
+    │       │       ├── "Hour"
+    │       │       ├── "Minute"
+    │       │       ├── "Month"
+    │       │       └── "Year"
+    │       ├── Description: *string
+    │       ├── EgressPublicNetworkAccess: *Enum (2 values)
+    │       │   ├── "Disabled"
+    │       │   └── "Enabled"
+    │       ├── EndpointComputeType: *Enum (1 value)
+    │       │   └── "Managed"
+    │       ├── EnvironmentId: *string
+    │       ├── EnvironmentVariables: map[string]string
+    │       ├── InstanceType: *string
+    │       ├── LivenessProbe: *Object (5 properties)
+    │       │   ├── FailureThreshold: *int
+    │       │   ├── InitialDelay: *string
+    │       │   ├── Period: *string
+    │       │   ├── SuccessThreshold: *int
+    │       │   └── Timeout: *string
+    │       ├── Model: *string
+    │       ├── ModelMountPath: *string
+    │       ├── Properties: map[string]string
+    │       ├── ProvisioningState: *Enum (7 values)
+    │       │   ├── "Canceled"
+    │       │   ├── "Creating"
+    │       │   ├── "Deleting"
+    │       │   ├── "Failed"
+    │       │   ├── "Scaling"
+    │       │   ├── "Succeeded"
+    │       │   └── "Updating"
+    │       ├── ReadinessProbe: *Object (5 properties)
+    │       │   ├── FailureThreshold: *int
+    │       │   ├── InitialDelay: *string
+    │       │   ├── Period: *string
+    │       │   ├── SuccessThreshold: *int
+    │       │   └── Timeout: *string
+    │       ├── RequestSettings: *Object (3 properties)
+    │       │   ├── MaxConcurrentRequestsPerInstance: *int
+    │       │   ├── MaxQueueWait: *string
+    │       │   └── RequestTimeout: *string
+    │       ├── ScaleSettings: *Object (2 properties)
+    │       │   ├── Default: *Object (1 property)
+    │       │   │   └── ScaleType: *Enum (1 value)
+    │       │   │       └── "Default"
+    │       │   └── TargetUtilization: *Object (5 properties)
+    │       │       ├── MaxInstances: *int
+    │       │       ├── MinInstances: *int
+    │       │       ├── PollingInterval: *string
+    │       │       ├── ScaleType: *Enum (1 value)
+    │       │       │   └── "TargetUtilization"
+    │       │       └── TargetUtilizationPercentage: *int
+    │       └── StartupProbe: *Object (5 properties)
+    │           ├── FailureThreshold: *int
+    │           ├── InitialDelay: *string
+    │           ├── Period: *string
+    │           ├── SuccessThreshold: *int
+    │           └── Timeout: *string
+    ├── Sku: *Object (5 properties)
+    │   ├── Capacity: *int
+    │   ├── Family: *string
+    │   ├── Name: *string
+    │   ├── Size: *string
+    │   └── Tier: *Enum (4 values)
+    │       ├── "Basic"
+    │       ├── "Free"
+    │       ├── "Premium"
+    │       └── "Standard"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
     └── Type: *string
 
 WorkspacesOutboundRule: Resource
@@ -2029,6 +3188,123 @@ WorkspacesPrivateEndpointConnection: Resource
     │   ├── "Deleting"
     │   ├── "Failed"
     │   └── "Succeeded"
+    ├── Sku: *Object (5 properties)
+    │   ├── Capacity: *int
+    │   ├── Family: *string
+    │   ├── Name: *string
+    │   ├── Size: *string
+    │   └── Tier: *Enum (4 values)
+    │       ├── "Basic"
+    │       ├── "Free"
+    │       ├── "Premium"
+    │       └── "Standard"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+WorkspacesServerlessEndpoint: Resource
+├── Owner: Workspace
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Identity: *Object (2 properties)
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssigned,UserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (3 properties)
+│   │   ├── AuthMode: *Enum (3 values)
+│   │   │   ├── "AAD"
+│   │   │   ├── "Key"
+│   │   │   └── "KeyAndAAD"
+│   │   ├── ContentSafety: *Object (1 property)
+│   │   │   └── ContentSafetyStatus: *Enum (2 values)
+│   │   │       ├── "Disabled"
+│   │   │       └── "Enabled"
+│   │   └── ModelSettings: *Object (1 property)
+│   │       └── ModelId: *string
+│   ├── Sku: *Object (5 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Family: *string
+│   │   ├── Name: *string
+│   │   ├── Size: *string
+│   │   └── Tier: *Enum (4 values)
+│   │       ├── "Basic"
+│   │       ├── "Free"
+│   │       ├── "Premium"
+│   │       └── "Standard"
+│   └── Tags: map[string]string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssigned,UserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (7 properties)
+    │   ├── AuthMode: *Enum (3 values)
+    │   │   ├── "AAD"
+    │   │   ├── "Key"
+    │   │   └── "KeyAndAAD"
+    │   ├── ContentSafety: *Object (1 property)
+    │   │   └── ContentSafetyStatus: *Enum (2 values)
+    │   │       ├── "Disabled"
+    │   │       └── "Enabled"
+    │   ├── EndpointState: *Enum (9 values)
+    │   │   ├── "Creating"
+    │   │   ├── "CreationFailed"
+    │   │   ├── "Deleting"
+    │   │   ├── "DeletionFailed"
+    │   │   ├── "Online"
+    │   │   ├── "Reinstating"
+    │   │   ├── "Suspended"
+    │   │   ├── "Suspending"
+    │   │   └── "Unknown"
+    │   ├── InferenceEndpoint: *Object (2 properties)
+    │   │   ├── Headers: map[string]string
+    │   │   └── Uri: *string
+    │   ├── MarketplaceSubscriptionId: *string
+    │   ├── ModelSettings: *Object (1 property)
+    │   │   └── ModelId: *string
+    │   └── ProvisioningState: *Enum (6 values)
+    │       ├── "Canceled"
+    │       ├── "Creating"
+    │       ├── "Deleting"
+    │       ├── "Failed"
+    │       ├── "Succeeded"
+    │       └── "Updating"
     ├── Sku: *Object (5 properties)
     │   ├── Capacity: *int
     │   ├── Family: *string

@@ -38,57 +38,10 @@ func (connection *WorkspacesPrivateEndpointConnection_Spec) GetType() string {
 	return "Microsoft.MachineLearningServices/workspaces/privateEndpointConnections"
 }
 
-// Managed service identity (system assigned and/or user assigned identities)
-type ManagedServiceIdentity struct {
-	// Type: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
-	Type                   *ManagedServiceIdentityType            `json:"type,omitempty"`
-	UserAssignedIdentities map[string]UserAssignedIdentityDetails `json:"userAssignedIdentities,omitempty"`
-}
-
 // Private endpoint connection properties.
 type PrivateEndpointConnectionProperties struct {
 	// PrivateLinkServiceConnectionState: The connection state.
 	PrivateLinkServiceConnectionState *PrivateLinkServiceConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
-}
-
-// The resource model definition representing SKU
-type Sku struct {
-	// Capacity: If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible
-	// for the resource this may be omitted.
-	Capacity *int `json:"capacity,omitempty"`
-
-	// Family: If the service has different generations of hardware, for the same SKU, then that can be captured here.
-	Family *string `json:"family,omitempty"`
-
-	// Name: The name of the SKU. Ex - P3. It is typically a letter+number code
-	Name *string `json:"name,omitempty"`
-
-	// Size: The SKU size. When the name field is the combination of tier and some other value, this would be the standalone
-	// code.
-	Size *string `json:"size,omitempty"`
-
-	// Tier: This field is required to be implemented by the Resource Provider if the service has more than one tier, but is
-	// not  required on a PUT.
-	Tier *SkuTier `json:"tier,omitempty"`
-}
-
-// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
-// +kubebuilder:validation:Enum={"None","SystemAssigned","SystemAssigned,UserAssigned","UserAssigned"}
-type ManagedServiceIdentityType string
-
-const (
-	ManagedServiceIdentityType_None                       = ManagedServiceIdentityType("None")
-	ManagedServiceIdentityType_SystemAssigned             = ManagedServiceIdentityType("SystemAssigned")
-	ManagedServiceIdentityType_SystemAssignedUserAssigned = ManagedServiceIdentityType("SystemAssigned,UserAssigned")
-	ManagedServiceIdentityType_UserAssigned               = ManagedServiceIdentityType("UserAssigned")
-)
-
-// Mapping from string to ManagedServiceIdentityType
-var managedServiceIdentityType_Values = map[string]ManagedServiceIdentityType{
-	"none":                        ManagedServiceIdentityType_None,
-	"systemassigned":              ManagedServiceIdentityType_SystemAssigned,
-	"systemassigned,userassigned": ManagedServiceIdentityType_SystemAssignedUserAssigned,
-	"userassigned":                ManagedServiceIdentityType_UserAssigned,
 }
 
 // A collection of information about the state of the connection between service consumer and provider.
@@ -106,30 +59,6 @@ type PrivateLinkServiceConnectionState struct {
 	// connection)\r\nRejected -> Pending (Service consumer re-initiates the connection request that was rejected)\r\nRejected
 	// -> Disconnected (Service provider deletes the connection)
 	Status *EndpointServiceConnectionStatus `json:"status,omitempty"`
-}
-
-// This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not
-// required on a PUT.
-// +kubebuilder:validation:Enum={"Basic","Free","Premium","Standard"}
-type SkuTier string
-
-const (
-	SkuTier_Basic    = SkuTier("Basic")
-	SkuTier_Free     = SkuTier("Free")
-	SkuTier_Premium  = SkuTier("Premium")
-	SkuTier_Standard = SkuTier("Standard")
-)
-
-// Mapping from string to SkuTier
-var skuTier_Values = map[string]SkuTier{
-	"basic":    SkuTier_Basic,
-	"free":     SkuTier_Free,
-	"premium":  SkuTier_Premium,
-	"standard": SkuTier_Standard,
-}
-
-// Information about the user assigned identity for the resource
-type UserAssignedIdentityDetails struct {
 }
 
 // Connection status of the service consumer with the service provider

@@ -48,4 +48,17 @@ func TestMachineLearning(t *testing.T) {
 	put("an endpoint rule to nothing", ws+"/outboundRules/lake", `{"type":"PrivateEndpoint","destination":{"serviceResourceId":"`+storage+`x","subresourceTarget":"blob"}}`, http.StatusNotFound)
 	put("an endpoint rule", ws+"/outboundRules/lake", `{"type":"PrivateEndpoint","destination":{"serviceResourceId":"`+storage+`","subresourceTarget":"blob"}}`, http.StatusCreated)
 	put("a service tag rule", ws+"/outboundRules/monitor", `{"type":"ServiceTag","destination":{"serviceTag":"AzureMonitor","protocol":"TCP","portRanges":"443"}}`, http.StatusCreated)
+
+	ep := ws + "/onlineEndpoints/score"
+	put("an endpoint with traffic to nothing", ep, `{"authMode":"Key","traffic":{"blue":100}}`, http.StatusBadRequest)
+	put("an endpoint", ep, `{"authMode":"Key"}`, http.StatusCreated)
+	put("a managed deployment with no instance type", ep+"/deployments/blue", `{"endpointComputeType":"Managed","model":"azureml:churn:1"}`, http.StatusBadRequest)
+	put("a managed deployment", ep+"/deployments/blue", `{"endpointComputeType":"Managed","model":"azureml:churn:1","instanceType":"Standard_DS3_v2"}`, http.StatusCreated)
+	put("traffic of 90", ep, `{"authMode":"Key","traffic":{"blue":90}}`, http.StatusBadRequest)
+	put("traffic to the deployment", ep, `{"authMode":"Key","traffic":{"blue":100}}`, http.StatusOK)
+	be := ws + "/batchEndpoints/nightly"
+	put("a batch endpoint defaulting to nothing", be, `{"authMode":"AADToken","defaults":{"deploymentName":"v1"}}`, http.StatusBadRequest)
+	put("a batch endpoint", be, `{"authMode":"AADToken"}`, http.StatusCreated)
+	put("a batch deployment", be+"/deployments/v1", `{"compute":"cpu-cluster","model":{"referenceType":"Id","assetId":"azureml:churn:1"}}`, http.StatusCreated)
+	put("a batch endpoint defaulting to it", be, `{"authMode":"AADToken","defaults":{"deploymentName":"v1"}}`, http.StatusOK)
 }

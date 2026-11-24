@@ -249,24 +249,6 @@ func (connection *WorkspacesPrivateEndpointConnection_STATUS) ConvertStatusTo(de
 	return destination.ConvertStatusFrom(connection)
 }
 
-// Storage version of v20260901.ManagedServiceIdentity
-// Managed service identity (system assigned and/or user assigned identities)
-type ManagedServiceIdentity struct {
-	PropertyBag            genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
-	Type                   *string                       `json:"type,omitempty"`
-	UserAssignedIdentities []UserAssignedIdentityDetails `json:"userAssignedIdentities,omitempty"`
-}
-
-// Storage version of v20260901.ManagedServiceIdentity_STATUS
-// Managed service identity (system assigned and/or user assigned identities)
-type ManagedServiceIdentity_STATUS struct {
-	PrincipalId            *string                                `json:"principalId,omitempty"`
-	PropertyBag            genruntime.PropertyBag                 `json:"$propertyBag,omitempty"`
-	TenantId               *string                                `json:"tenantId,omitempty"`
-	Type                   *string                                `json:"type,omitempty"`
-	UserAssignedIdentities map[string]UserAssignedIdentity_STATUS `json:"userAssignedIdentities,omitempty"`
-}
-
 // Storage version of v20260901.PrivateLinkServiceConnectionState
 // A collection of information about the state of the connection between service consumer and provider.
 type PrivateLinkServiceConnectionState struct {
@@ -285,28 +267,6 @@ type PrivateLinkServiceConnectionState_STATUS struct {
 	Status          *string                `json:"status,omitempty"`
 }
 
-// Storage version of v20260901.Sku
-// The resource model definition representing SKU
-type Sku struct {
-	Capacity    *int                   `json:"capacity,omitempty"`
-	Family      *string                `json:"family,omitempty"`
-	Name        *string                `json:"name,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Size        *string                `json:"size,omitempty"`
-	Tier        *string                `json:"tier,omitempty"`
-}
-
-// Storage version of v20260901.Sku_STATUS
-// The resource model definition representing SKU
-type Sku_STATUS struct {
-	Capacity    *int                   `json:"capacity,omitempty"`
-	Family      *string                `json:"family,omitempty"`
-	Name        *string                `json:"name,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Size        *string                `json:"size,omitempty"`
-	Tier        *string                `json:"tier,omitempty"`
-}
-
 // Storage version of v20260901.WorkspacePrivateEndpointResource_STATUS
 // The Private Endpoint resource.
 type WorkspacePrivateEndpointResource_STATUS struct {
@@ -321,21 +281,6 @@ type WorkspacesPrivateEndpointConnectionOperatorSpec struct {
 	ConfigMapExpressions []*core.DestinationExpression `json:"configMapExpressions,omitempty"`
 	PropertyBag          genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
 	SecretExpressions    []*core.DestinationExpression `json:"secretExpressions,omitempty"`
-}
-
-// Storage version of v20260901.UserAssignedIdentity_STATUS
-// User assigned identity properties
-type UserAssignedIdentity_STATUS struct {
-	ClientId    *string                `json:"clientId,omitempty"`
-	PrincipalId *string                `json:"principalId,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20260901.UserAssignedIdentityDetails
-// Information about the user assigned identity for the resource
-type UserAssignedIdentityDetails struct {
-	PropertyBag genruntime.PropertyBag       `json:"$propertyBag,omitempty"`
-	Reference   genruntime.ResourceReference `armReference:"Reference" json:"reference,omitempty"`
 }
 
 func init() {
