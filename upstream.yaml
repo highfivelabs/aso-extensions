@@ -51,6 +51,8 @@ patches:
   - {file: patches/azure-service-operator/0015-generator-unused-arm-input.patch, pin: azure-service-operator, upstream_candidate: "yes"}
   - {file: patches/azure-service-operator/0016-cel-write-once-and-owner-rules.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
   - {file: patches/azure-service-operator/0017-generator-path-level-parameters.patch, pin: azure-service-operator, upstream_candidate: "yes"}
+  - {file: patches/azure-service-operator/0018-generator-flatten-external-type.patch, pin: azure-service-operator, upstream_candidate: "yes"}
+  - {file: patches/azure-service-operator/0019-generator-spec-initialization-cycles.patch, pin: azure-service-operator, upstream_candidate: "yes"}
 
 # "What is copied, from where": here (our paths) and from (ASO's paths at
 # the pin, from the repository root, so under v2/; a directory ends in /).

@@ -1,0 +1,52 @@
+diff --git a/v2/tools/generator/internal/codegen/pipeline/flatten_properties.go b/v2/tools/generator/internal/codegen/pipeline/flatten_properties.go
+index a316666..fb8edd7 100644
+--- a/v2/tools/generator/internal/codegen/pipeline/flatten_properties.go
++++ b/v2/tools/generator/internal/codegen/pipeline/flatten_properties.go
+@@ -227,6 +227,18 @@ func flattenPropType(
+ 			return nil, err
+ 		}
+ 
++		// Modified by High Five Labs: a name that does not resolve to a
++		// definition here (an external type, such as free-form JSON, v1.JSON)
++		// comes back unchanged, and flattening it again recursed until the
++		// stack overflowed (Data Factory's linked services, whose
++		// typeProperties are free-form for some types). It cannot be
++		// flattened: say so, and the property is kept as it is.
++		if os.Getenv("ASO_GENERATOR_FLATTEN_EXTERNAL") != "" {
++			if name, ok := resolved.(astmodel.TypeName); ok && astmodel.TypeEquals(name, propType) {
++				return nil, eris.Errorf("flatten applied to a type with no definition here: %s", astmodel.DebugDescription(propType))
++			}
++		}
++
+ 		props, err := flattenPropType(container, resolved, defs, log)
+ 		if err != nil {
+ 			return nil, err
+diff --git a/v2/tools/generator/internal/codegen/pipeline/flatten_properties_test.go b/v2/tools/generator/internal/codegen/pipeline/flatten_properties_test.go
+index f626cba..edc01b5 100644
+--- a/v2/tools/generator/internal/codegen/pipeline/flatten_properties_test.go
++++ b/v2/tools/generator/internal/codegen/pipeline/flatten_properties_test.go
+@@ -144,3 +144,24 @@ func TestFlattenProperties_FlattensSelectedProperties(t *testing.T) {
+ 
+ 	test.AssertPackagesGenerateExpectedCode(t, state.Definitions())
+ }
++
++// Modified by High Five Labs: a property marked for flattening whose type
++// has no definition here (free-form JSON) is kept, not flattened, instead
++// of recursing until the stack overflows.
++func TestFlattenProperties_ExternalType_KeepsProperty(t *testing.T) {
++	t.Setenv("ASO_GENERATOR_FLATTEN_EXTERNAL", "1")
++	g := NewGomegaWithT(t)
++
++	free := astmodel.NewPropertyDefinition("TypeProperties", "typeProperties", astmodel.JSONType).SetFlatten(true)
++	name := astmodel.NewPropertyDefinition("Name", "name", astmodel.StringType)
++	objType := astmodel.NewObjectType().WithProperties(name, free)
++
++	defs := make(astmodel.TypeDefinitionSet)
++	defs.Add(astmodel.MakeTypeDefinition(astmodel.MakeInternalTypeName(placeholderPackage, "LinkedService"), objType))
++
++	result, err := FlattenProperties(logr.Discard()).Run(context.Background(), NewState(defs))
++	g.Expect(err).ToNot(HaveOccurred())
++
++	expected := astmodel.NewObjectType().WithProperties(name, free.SetFlatten(false))
++	g.Expect(result.Definitions()[astmodel.MakeInternalTypeName(placeholderPackage, "LinkedService")].Type()).To(Equal(expected))
++}

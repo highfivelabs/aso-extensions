@@ -42,6 +42,10 @@ export ASO_GENERATOR_RAPID_ONEOF_RELATED=1
 export ASO_GENERATOR_EXTENSION_CHILDREN=1
 # A PUT body when the path declares its own parameters (patch 0017).
 export ASO_GENERATOR_PATH_PARAMETERS=1
+# A property marked flatten whose type has no definition (patch 0018).
+export ASO_GENERATOR_FLATTEN_EXTERNAL=1
+# A spec and status pair visited once by the spec initialization scanner (patch 0019).
+export ASO_GENERATOR_SPEC_INIT_CYCLES=1
 # CEL rules for what ASO's webhooks would check on update (patch 0016):
 # spec.owner and a set spec.azureName cannot change.
 export ASO_GENERATOR_CEL_VALIDATIONS=1
