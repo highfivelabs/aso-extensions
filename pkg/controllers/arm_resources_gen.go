@@ -181,6 +181,9 @@ import (
 	network_v20250501s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20250501/storage"
 	network_v20260301 "github.com/highfivelabs/aso-extensions/apis/arm/network/v20260301"
 	network_v20260301s "github.com/highfivelabs/aso-extensions/apis/arm/network/v20260301/storage"
+	notificationhubs_customizations "github.com/highfivelabs/aso-extensions/apis/arm/notificationhubs/customizations"
+	notificationhubs_v20230901 "github.com/highfivelabs/aso-extensions/apis/arm/notificationhubs/v20230901"
+	notificationhubs_v20230901s "github.com/highfivelabs/aso-extensions/apis/arm/notificationhubs/v20230901/storage"
 	operationalinsights_customizations "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/customizations"
 	operationalinsights_v20250701 "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701"
 	operationalinsights_v20250701s "github.com/highfivelabs/aso-extensions/apis/arm/operationalinsights/v20250701/storage"
@@ -2325,6 +2328,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(notificationhubs_v20230901.NamespacesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.Cluster)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPack)})
 	result = append(result, &registration.StorageType{Obj: new(operationalinsights_v20250701.QueryPacksQuery)})
@@ -4221,6 +4225,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.VpnGatewaysVpnConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.VpnServerConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301s.VpnSite)})
+	result = append(result, &registration.KnownType{Obj: new(notificationhubs_v20230901.NamespacesPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(notificationhubs_v20230901s.NamespacesPrivateEndpointConnection)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(operationalinsights_v20250701.Cluster)},
@@ -4822,6 +4828,8 @@ func createScheme() *runtime.Scheme {
 	_ = network_v20250501s.AddToScheme(scheme)
 	_ = network_v20260301.AddToScheme(scheme)
 	_ = network_v20260301s.AddToScheme(scheme)
+	_ = notificationhubs_v20230901.AddToScheme(scheme)
+	_ = notificationhubs_v20230901s.AddToScheme(scheme)
 	_ = operationalinsights_v20250701.AddToScheme(scheme)
 	_ = operationalinsights_v20250701s.AddToScheme(scheme)
 	_ = operationsmanagement_v20151101p.AddToScheme(scheme)
@@ -5280,6 +5288,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.VpnGatewaysVpnConnectionExtension{})
 	result = append(result, &network_customizations.VpnServerConfigurationExtension{})
 	result = append(result, &network_customizations.VpnSiteExtension{})
+	result = append(result, &notificationhubs_customizations.NamespacesPrivateEndpointConnectionExtension{})
 	result = append(result, &operationalinsights_customizations.ClusterExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPackExtension{})
 	result = append(result, &operationalinsights_customizations.QueryPacksQueryExtension{})

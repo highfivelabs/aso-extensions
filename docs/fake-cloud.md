@@ -708,7 +708,10 @@ upstream's); the catalog's chart tests do that.
   app, a disk access, an Azure Cache for Redis cache, a Redis Enterprise
   cluster, an App Configuration store, a PostgreSQL flexible server, a
   MongoDB vCore cluster, an App Service app or slot, a static web app, an
-  App Service Environment and a SQL managed instance (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
+  App Service Environment, a SQL managed instance, and (f61 to f76) the
+  messaging, MySQL, SignalR, Data Explorer, API Management, IoT hub,
+  Device Provisioning and Notification Hubs owners named in the file
+  (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
   a private endpoint makes a connection, so a PUT for one that does not
   exist is 404 and a PUT changes one that does (approve, reject). Not
   modelled: the private endpoint (a test adds the connection to the fake as

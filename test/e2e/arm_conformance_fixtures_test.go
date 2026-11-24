@@ -398,6 +398,10 @@ func init() {
 		c.add(c.owner + "/privateEndpointConnections/conformance")
 	}}
 	f["ProvisioningServicesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// A private endpoint makes the connections of an API Management service
+	// and a Notification Hubs namespace (privateendpoints.go).
+	f[g+"PrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	f["notificationhubs.azure.hfl.dev/NamespacesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
 	// A MySQL flexible server's threat protection setting is Default and
 	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
 	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

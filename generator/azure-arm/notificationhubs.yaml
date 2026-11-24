@@ -1,0 +1,18 @@
+# Notification Hubs kinds ASO does not export (Microsoft.NotificationHubs,
+# 2023-09-01, the newest stable version and the one of ASO's own Namespace;
+# docs/plan.md f76, tier 3 row t17 of docs/coverage/foundation.md): a
+# namespace's private endpoint connections (a private endpoint makes one; the
+# kind approves or rejects it). Owned by ASO's Namespace.
+typeFilters:
+  - action: include
+    group: notificationhubs
+    version: v20230901
+    because: the newest stable version, the one of ASO's Namespace (v1api20230901)
+  - action: prune
+    group: notificationhubs
+    because: every other version is left alone (ASO has the namespace, hubs and rules)
+groupModelConfiguration:
+  2023-09-01:
+    Namespaces_PrivateEndpointConnection:
+      $exportAs: NamespacesPrivateEndpointConnection
+      $supportedFrom: v0.1.0

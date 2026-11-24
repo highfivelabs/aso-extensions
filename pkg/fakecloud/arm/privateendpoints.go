@@ -16,7 +16,9 @@ import (
 // app's and slot's, a static web app's, an App Service Environment's, a
 // SQL managed instance's, a Service Bus namespace's (f61), an Event Hubs
 // namespace's (f62), a MySQL flexible server's (f66), a Web PubSub or
-// SignalR service's (f68) and a Data Explorer cluster's (f69)), as far as
+// SignalR service's (f68), a Data Explorer cluster's (f69), an API
+// Management service's (f71), an IoT hub's and a Device Provisioning
+// Service's (f75) and a Notification Hubs namespace's (f76)), as far as
 // the fake models them: a private endpoint makes a connection, and a PUT
 // only changes one that exists
 // (approves, rejects or describes it), as the specs' descriptions say
@@ -24,7 +26,7 @@ import (
 // connection that does not exist is 404, as for Key Vault's (keyvault.go).
 // Not modelled: the private endpoint itself, the states Azure allows a move
 // between, and the error codes (the fake's own).
-var privateEndpointConnection = regexp.MustCompile(`(?i)/providers/(microsoft\.sql/servers|microsoft\.app/containerapps|microsoft\.compute/diskaccesses|microsoft\.cache/redis|microsoft\.cache/redisenterprise|microsoft\.appconfiguration/configurationstores|microsoft\.dbforpostgresql/flexibleservers|microsoft\.dbforpostgresql/servergroupsv2|microsoft\.documentdb/mongoclusters|microsoft\.web/sites|microsoft\.web/sites/[^/]+/slots|microsoft\.web/staticsites|microsoft\.web/hostingenvironments|microsoft\.sql/managedinstances|microsoft\.servicebus/namespaces|microsoft\.eventhub/namespaces|microsoft\.dbformysql/flexibleservers|microsoft\.signalrservice/webpubsub|microsoft\.signalrservice/signalr|microsoft\.kusto/clusters)/[^/]+/privateendpointconnections/[^/]+$`)
+var privateEndpointConnection = regexp.MustCompile(`(?i)/providers/(microsoft\.sql/servers|microsoft\.app/containerapps|microsoft\.compute/diskaccesses|microsoft\.cache/redis|microsoft\.cache/redisenterprise|microsoft\.appconfiguration/configurationstores|microsoft\.dbforpostgresql/flexibleservers|microsoft\.dbforpostgresql/servergroupsv2|microsoft\.documentdb/mongoclusters|microsoft\.web/sites|microsoft\.web/sites/[^/]+/slots|microsoft\.web/staticsites|microsoft\.web/hostingenvironments|microsoft\.sql/managedinstances|microsoft\.servicebus/namespaces|microsoft\.eventhub/namespaces|microsoft\.dbformysql/flexibleservers|microsoft\.signalrservice/webpubsub|microsoft\.signalrservice/signalr|microsoft\.kusto/clusters|microsoft\.apimanagement/service|microsoft\.devices/iothubs|microsoft\.devices/provisioningservices|microsoft\.notificationhubs/namespaces)/[^/]+/privateendpointconnections/[^/]+$`)
 
 // checkPrivateEndpointConnections refuses to make a connection; code is ""
 // when the connection exists or id is none of these.

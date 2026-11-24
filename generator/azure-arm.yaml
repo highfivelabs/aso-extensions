@@ -54,6 +54,7 @@ imports:
   batch: azure-arm/batch.yaml
   logic: azure-arm/logic.yaml
   devices: azure-arm/devices.yaml
+  notificationhubs: azure-arm/notificationhubs.yaml
   network: azure-arm/network.yaml
   containerregistry: azure-arm/containerregistry.yaml
   compute: azure-arm/compute.yaml

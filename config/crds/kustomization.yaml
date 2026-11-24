@@ -390,6 +390,7 @@ resources:
 - network.azure.hfl.dev_vpngatewaysvpnconnections.yaml
 - network.azure.hfl.dev_vpnserverconfigurations.yaml
 - network.azure.hfl.dev_vpnsites.yaml
+- notificationhubs.azure.hfl.dev_namespacesprivateendpointconnections.yaml
 - operationalinsights.azure.hfl.dev_clusters.yaml
 - operationalinsights.azure.hfl.dev_querypacks.yaml
 - operationalinsights.azure.hfl.dev_querypacksqueries.yaml

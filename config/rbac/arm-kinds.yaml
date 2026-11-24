@@ -41,6 +41,7 @@ rules:
   - management.azure.hfl.dev
   - monitor.azure.hfl.dev
   - network.azure.hfl.dev
+  - notificationhubs.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
   - operationsmanagement.azure.hfl.dev
   - policyinsights.azure.hfl.dev
@@ -93,6 +94,7 @@ rules:
   - management.azure.hfl.dev
   - monitor.azure.hfl.dev
   - network.azure.hfl.dev
+  - notificationhubs.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
   - operationsmanagement.azure.hfl.dev
   - policyinsights.azure.hfl.dev

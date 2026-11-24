@@ -1731,7 +1731,7 @@ Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces,47,notification
 Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/authorizationRules,5,notificationhubs.azure.com/NamespacesAuthorizationRule,3,,0,2,false,spec_api=2023-09-01; official_api=2023-09-01
 Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/notificationHubs,38,notificationhubs.azure.com/NotificationHub,38,,0,0,false,spec_api=2023-09-01; official_api=2023-09-01
 Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules,5,notificationhubs.azure.com/NotificationHubsAuthorizationRule,3,,0,2,false,spec_api=2023-09-01; official_api=2023-09-01
-Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/privateEndpointConnections,3,,0,,0,3,false,spec_api=2023-09-01
+Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/privateEndpointConnections,3,,0,notificationhubs.azure.hfl.dev/NamespacesPrivateEndpointConnection,2,1,false,spec_api=2023-09-01; ours_api=2023-09-01
 Microsoft.OffAzure,Microsoft.OffAzure/hypervSites,13,,0,,0,13,false,spec_api=2023-06-06
 Microsoft.OffAzure,Microsoft.OffAzure/hypervSites/clusters,4,,0,,0,4,false,spec_api=2023-06-06
 Microsoft.OffAzure,Microsoft.OffAzure/hypervSites/hosts,3,,0,,0,3,false,spec_api=2023-06-06

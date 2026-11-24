@@ -32473,8 +32473,8 @@ Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/notificationHub
 Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules,properties.secondaryKey,string,false,none,,
 Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules,tags{},string,false,official,tags{},
 Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/privateEndpointConnections,properties.privateEndpoint,object,false,none,,
-Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/privateEndpointConnections,properties.privateLinkServiceConnectionState.status,string,false,none,,
-Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/privateEndpointConnections,properties.provisioningState,string,false,none,,
+Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/privateEndpointConnections,properties.privateLinkServiceConnectionState.status,string,false,ours,,properties.privateLinkServiceConnectionState.status
+Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/privateEndpointConnections,properties.provisioningState,string,false,ours,,properties.provisioningState
 Microsoft.OffAzure,Microsoft.OffAzure/hypervSites,location,string,true,none,,
 Microsoft.OffAzure,Microsoft.OffAzure/hypervSites,properties.agentDetails.keyVaultId,string,false,none,,
 Microsoft.OffAzure,Microsoft.OffAzure/hypervSites,properties.agentDetails.keyVaultUri,string,false,none,,

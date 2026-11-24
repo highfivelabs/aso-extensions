@@ -67,6 +67,7 @@ import (
 	asoprivatedns "github.com/Azure/azure-service-operator/v2/api/network/v1api20240601/storage"
 	asowatcher "github.com/Azure/azure-service-operator/v2/api/network/v1api20241001/storage"
 	asonetwork "github.com/Azure/azure-service-operator/v2/api/network/v20250301/storage"
+	asonotificationhubs "github.com/Azure/azure-service-operator/v2/api/notificationhubs/v1api20230901/storage"
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
 	asoservicebus "github.com/Azure/azure-service-operator/v2/api/servicebus/v20240101/storage"
@@ -142,6 +143,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asodataprotection.AddToScheme(scheme)
 	_ = asobatch.AddToScheme(scheme)
 	_ = asodevices.AddToScheme(scheme)
+	_ = asonotificationhubs.AddToScheme(scheme)
 	return scheme
 }
 
@@ -217,6 +219,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asodataprotection.BackupVault{}, Name: "aso_dataprotection_backupvault"},
 		{Obj: &asobatch.BatchAccount{}, Name: "aso_batch_batchaccount"},
 		{Obj: &asodevices.IotHub{}, Name: "aso_devices_iothub"},
+		{Obj: &asonotificationhubs.Namespace{}, Name: "aso_notificationhubs_namespace"},
 	}
 }
 

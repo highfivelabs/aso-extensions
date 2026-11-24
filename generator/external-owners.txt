@@ -39,6 +39,7 @@ kusto/Clusters_Database=Database
 dataprotection/BackupVault
 batch/BatchAccount
 devices/IotHub
+notificationhubs/Namespace
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase

@@ -65,3 +65,4 @@ resources:
 - dataprotection.azure.com_backupvaults.yaml
 - batch.azure.com_batchaccounts.yaml
 - devices.azure.com_iothubs.yaml
+- notificationhubs.azure.com_namespaces.yaml
