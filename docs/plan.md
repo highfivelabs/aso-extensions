@@ -1061,8 +1061,18 @@ have the contents of their main + any fixes + what we extend". So:
   a gap closes. The pin was 2026-11-06's `main` until this decision.
 - **Our latest build is ASO `main` + our fixes + our extensions.** What
   `main` has and no release has yet ships in our build; our fixes ship as
-  `patches/`; our kinds ship as ours. A kind ASO has only on `main` is no
-  longer a gap here once the pin reaches it.
+  `patches/`; our kinds ship as ours. A kind ASO has only on `main` is
+  served by our controller until ASO releases it.
+  The builder, 2026-11-24, on what the build carries, verbatim: "our build
+  has the contents of their main - if there are merged but unreleased
+  contents in their repo that we coudl use to fill in gaps on attributes
+  or resources, we shoudl take them and publish them on our extensions
+  controller". So upstream stays installed beside us at its release, and
+  our extensions controller serves what upstream has merged on its main
+  branch but not released, wherever it fills a gap in resources or
+  attributes: as our own kinds in our API group (copied by the copy-
+  upstream rule), or as field kinds on upstream's kinds. When upstream
+  releases it, ours retires.
 - **Transition is expected.** When ASO ships a kind or field we carry,
   ours is deprecated (above). Users moving across is accepted churn, and
   the experience is worth observing and writing down.
