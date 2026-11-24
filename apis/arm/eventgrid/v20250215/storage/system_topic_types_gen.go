@@ -252,45 +252,12 @@ func (topic *SystemTopic_STATUS) ConvertStatusTo(destination genruntime.Converti
 	return destination.ConvertStatusFrom(topic)
 }
 
-// Storage version of v20250215.IdentityInfo
-// The identity information for the resource.
-type IdentityInfo struct {
-	PropertyBag            genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
-	Type                   *string                       `json:"type,omitempty"`
-	UserAssignedIdentities []UserAssignedIdentityDetails `json:"userAssignedIdentities,omitempty"`
-}
-
-// Storage version of v20250215.IdentityInfo_STATUS
-// The identity information for the resource.
-type IdentityInfo_STATUS struct {
-	PrincipalId            *string                                  `json:"principalId,omitempty"`
-	PropertyBag            genruntime.PropertyBag                   `json:"$propertyBag,omitempty"`
-	TenantId               *string                                  `json:"tenantId,omitempty"`
-	Type                   *string                                  `json:"type,omitempty"`
-	UserAssignedIdentities map[string]UserIdentityProperties_STATUS `json:"userAssignedIdentities,omitempty"`
-}
-
 // Storage version of v20250215.SystemTopicOperatorSpec
 // Details for configuring operator behavior. Fields in this struct are interpreted by the operator directly rather than being passed to Azure
 type SystemTopicOperatorSpec struct {
 	ConfigMapExpressions []*core.DestinationExpression `json:"configMapExpressions,omitempty"`
 	PropertyBag          genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
 	SecretExpressions    []*core.DestinationExpression `json:"secretExpressions,omitempty"`
-}
-
-// Storage version of v20250215.UserAssignedIdentityDetails
-// Information about the user assigned identity for the resource
-type UserAssignedIdentityDetails struct {
-	PropertyBag genruntime.PropertyBag       `json:"$propertyBag,omitempty"`
-	Reference   genruntime.ResourceReference `armReference:"Reference" json:"reference,omitempty"`
-}
-
-// Storage version of v20250215.UserIdentityProperties_STATUS
-// The information about the user identity.
-type UserIdentityProperties_STATUS struct {
-	ClientId    *string                `json:"clientId,omitempty"`
-	PrincipalId *string                `json:"principalId,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
 func init() {

@@ -28,7 +28,14 @@ import (
 //     has a query (400); a CA certificate has its encodedCertificate (400);
 //   - a permission binding names a topic space and a client group of its
 //     namespace that exist (404), and a permission, Publisher or
-//     Subscriber (400).
+//     Subscriber (400);
+//   - (f77) a partner namespace names a partner registration (400) that
+//     exists (404); a partner topic channel names the subscriber's
+//     subscription, resource group and partner topic name (400); a partner
+//     configuration's authorized partners each name a registration's
+//     immutable ID or a partner name (400); a partner topic names its
+//     source (400); a partner topic's event subscription has a destination
+//     as a system topic's.
 //
 // Not modelled: events (nothing publishes here), the source's region a
 // system topic must share, filter semantics, the endpoint validation
@@ -36,7 +43,12 @@ import (
 // broker being enabled, and the error codes (the fake's own).
 var (
 	egSystemTopic  = regexp.MustCompile(`(?i)/providers/microsoft\.eventgrid/systemtopics/[^/]+$`)
-	egSubscription = regexp.MustCompile(`(?i)/providers/microsoft\.eventgrid/(systemtopics/[^/]+|namespaces/[^/]+/topics/[^/]+)/eventsubscriptions/[^/]+$`)
+	egSubscription = regexp.MustCompile(`(?i)/providers/microsoft\.eventgrid/(systemtopics/[^/]+|partnertopics/[^/]+|namespaces/[^/]+/topics/[^/]+)/eventsubscriptions/[^/]+$`)
+	egPartnerNS    = regexp.MustCompile(`(?i)/providers/microsoft\.eventgrid/partnernamespaces/[^/]+$`)
+	egPartnerReg   = regexp.MustCompile(`(?i)/providers/microsoft\.eventgrid/partnerregistrations/[^/]+$`)
+	egChannel      = regexp.MustCompile(`(?i)/providers/microsoft\.eventgrid/partnernamespaces/[^/]+/channels/[^/]+$`)
+	egPartnerConf  = regexp.MustCompile(`(?i)/providers/microsoft\.eventgrid/partnerconfigurations/default$`)
+	egPartnerTopic = regexp.MustCompile(`(?i)/providers/microsoft\.eventgrid/partnertopics/[^/]+$`)
 	egNSSub        = regexp.MustCompile(`(?i)/providers/microsoft\.eventgrid/namespaces/[^/]+/topics/[^/]+/eventsubscriptions/[^/]+$`)
 	egNSChild      = regexp.MustCompile(`(?i)^(.*/providers/microsoft\.eventgrid/namespaces/[^/]+)/(topicspaces|clientgroups|cacertificates|permissionbindings|clients)/[^/]+$`)
 )
@@ -49,6 +61,36 @@ func (a *ARM) checkEventGrid(id string, body map[string]any) (status int, code, 
 		return http.StatusBadRequest, "InvalidRequest", msg
 	}
 	switch {
+	case egPartnerNS.MatchString(id):
+		reg := stringOf(props["partnerRegistrationFullyQualifiedId"])
+		if !egPartnerReg.MatchString(reg) {
+			return bad("A partner namespace names its partner registration's ARM ID.")
+		}
+		if !a.exists(reg) {
+			return http.StatusNotFound, "ResourceNotFound", "The partner registration " + reg + " was not found."
+		}
+	case egChannel.MatchString(id):
+		if strings.EqualFold(stringOf(props["channelType"]), "PartnerTopic") {
+			info, _ := props["partnerTopicInfo"].(map[string]any)
+			for _, f := range []string{"azureSubscriptionId", "resourceGroupName", "name"} {
+				if stringOf(info[f]) == "" {
+					return bad("A partner topic channel names the partner topic's azureSubscriptionId, resourceGroupName and name.")
+				}
+			}
+		}
+	case egPartnerConf.MatchString(id):
+		auth, _ := props["partnerAuthorization"].(map[string]any)
+		partners, _ := auth["authorizedPartnersList"].([]any)
+		for _, p := range partners {
+			pm, _ := p.(map[string]any)
+			if stringOf(pm["partnerRegistrationImmutableId"]) == "" && stringOf(pm["partnerName"]) == "" {
+				return bad("An authorized partner names a partnerRegistrationImmutableId or a partnerName.")
+			}
+		}
+	case egPartnerTopic.MatchString(id):
+		if stringOf(props["source"]) == "" {
+			return bad("A partner topic names its source.")
+		}
 	case egSystemTopic.MatchString(id):
 		source, _ := props["source"].(string)
 		if source == "" {

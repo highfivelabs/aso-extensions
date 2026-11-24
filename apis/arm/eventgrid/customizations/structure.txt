@@ -13,6 +13,18 @@ NamespacesTopicSpaceExtension: Object (0 properties)
 
 NamespacesTopicsEventSubscriptionExtension: Object (0 properties)
 
+PartnerConfigurationExtension: Object (0 properties)
+
+PartnerNamespaceExtension: Object (0 properties)
+
+PartnerNamespacesChannelExtension: Object (0 properties)
+
+PartnerRegistrationExtension: Object (0 properties)
+
+PartnerTopicExtension: Object (0 properties)
+
+PartnerTopicsEventSubscriptionExtension: Object (0 properties)
+
 SystemTopicExtension: Object (0 properties)
 
 SystemTopicsEventSubscriptionExtension: Object (0 properties)

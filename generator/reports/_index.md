@@ -457,6 +457,12 @@ title: Supported Resources
 | NamespacesPermissionBinding       | 2025-02-15  | v20250215   | v0.1.0         | -      |
 | NamespacesTopicSpace              | 2025-02-15  | v20250215   | v0.1.0         | -      |
 | NamespacesTopicsEventSubscription | 2025-02-15  | v20250215   | v0.1.0         | -      |
+| PartnerConfiguration              | 2025-02-15  | v20250215   | v0.1.0         | -      |
+| PartnerNamespace                  | 2025-02-15  | v20250215   | v0.1.0         | -      |
+| PartnerNamespacesChannel          | 2025-02-15  | v20250215   | v0.1.0         | -      |
+| PartnerRegistration               | 2025-02-15  | v20250215   | v0.1.0         | -      |
+| PartnerTopic                      | 2025-02-15  | v20250215   | v0.1.0         | -      |
+| PartnerTopicsEventSubscription    | 2025-02-15  | v20250215   | v0.1.0         | -      |
 | SystemTopic                       | 2025-02-15  | v20250215   | v0.1.0         | -      |
 | SystemTopicsEventSubscription     | 2025-02-15  | v20250215   | v0.1.0         | -      |
 

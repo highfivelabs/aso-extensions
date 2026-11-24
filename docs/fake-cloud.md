@@ -532,9 +532,15 @@ upstream's); the catalog's chart tests do that.
   has one to ten templates, a client group a query, a CA certificate its
   certificate (400); a permission binding is Publisher or Subscriber (400)
   and names a topic space and client group of its namespace that exist
-  (404). Not modelled: events, the region a system topic shares with its
-  source, filter semantics, a webhook's validation handshake, MQTT clients
-  connecting, whether the namespace's broker is on, and the error codes.
+  (404). The partner resources (f77): a partner namespace names a partner
+  registration (400) that exists (404); a partner topic channel names the
+  subscriber's subscription, resource group and topic (400); a partner
+  configuration's authorized partners are named (400); a partner topic
+  names its source (400); a partner topic's subscription has a destination,
+  as a system topic's. Not modelled: events, the region a system topic
+  shares with its source, filter semantics, a webhook's validation
+  handshake, MQTT clients connecting, whether the namespace's broker is on,
+  a channel making its partner topic and activation, and the error codes.
 - API Management operations, policies, tags, schemas and providers
   (`Microsoft.ApiManagement/service/...`, 2024-05-01;
   `pkg/fakecloud/arm/apimanagement.go`): each kind sends what the spec

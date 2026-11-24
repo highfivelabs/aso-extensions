@@ -1816,6 +1816,62 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.PartnerConfiguration)})
+	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.PartnerNamespace)})
+	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.PartnerNamespacesChannel)})
+	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.PartnerRegistration)})
+	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.PartnerTopic)})
+	result = append(result, &registration.StorageType{
+		Obj: new(eventgrid_v20250215.PartnerTopicsEventSubscription),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+				Func: indexEventgridPartnerTopicsEventSubscriptionAzureActiveDirectoryApplicationIdOrUriFromConfig,
+			},
+			{
+				Key:  ".spec.deliveryWithResourceIdentity.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+				Func: indexEventgridPartnerTopicsEventSubscriptionDeliveryWithResourceIdentityAzureActiveDirectoryApplicationIdOrUriFromConfig,
+			},
+			{
+				Key:  ".spec.deliveryWithResourceIdentity.destination.webHook.endpointUrl",
+				Func: indexEventgridPartnerTopicsEventSubscriptionDeliveryWithResourceIdentityEndpointUrl,
+			},
+			{
+				Key:  ".spec.deliveryWithResourceIdentity.destination.storageQueue.queueNameFromConfig",
+				Func: indexEventgridPartnerTopicsEventSubscriptionDeliveryWithResourceIdentityQueueNameFromConfig,
+			},
+			{
+				Key:  ".spec.destination.webHook.endpointUrl",
+				Func: indexEventgridPartnerTopicsEventSubscriptionEndpointUrl,
+			},
+			{
+				Key:  ".spec.destination.storageQueue.queueNameFromConfig",
+				Func: indexEventgridPartnerTopicsEventSubscriptionQueueNameFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.deliveryWithResourceIdentity.destination.webHook.endpointUrl",
+						".spec.destination.webHook.endpointUrl",
+					},
+					&eventgrid_v20250215.PartnerTopicsEventSubscriptionList{}),
+			},
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.deliveryWithResourceIdentity.destination.storageQueue.queueNameFromConfig",
+						".spec.deliveryWithResourceIdentity.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+						".spec.destination.storageQueue.queueNameFromConfig",
+						".spec.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+					},
+					&eventgrid_v20250215.PartnerTopicsEventSubscriptionList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.SystemTopic)})
 	result = append(result, &registration.StorageType{
 		Obj: new(eventgrid_v20250215.SystemTopicsEventSubscription),
@@ -3917,6 +3973,12 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(eventgrid_v20250215.NamespacesPermissionBinding)},
 		&registration.KnownType{Obj: new(eventgrid_v20250215.NamespacesTopicSpace)},
 		&registration.KnownType{Obj: new(eventgrid_v20250215.NamespacesTopicsEventSubscription)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.PartnerConfiguration)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.PartnerNamespace)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.PartnerNamespacesChannel)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.PartnerRegistration)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.PartnerTopic)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.PartnerTopicsEventSubscription)},
 		&registration.KnownType{Obj: new(eventgrid_v20250215.SystemTopic)},
 		&registration.KnownType{Obj: new(eventgrid_v20250215.SystemTopicsEventSubscription)})
 	result = append(
@@ -3927,6 +3989,12 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(eventgrid_v20250215s.NamespacesPermissionBinding)},
 		&registration.KnownType{Obj: new(eventgrid_v20250215s.NamespacesTopicSpace)},
 		&registration.KnownType{Obj: new(eventgrid_v20250215s.NamespacesTopicsEventSubscription)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.PartnerConfiguration)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.PartnerNamespace)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.PartnerNamespacesChannel)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.PartnerRegistration)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.PartnerTopic)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.PartnerTopicsEventSubscription)},
 		&registration.KnownType{Obj: new(eventgrid_v20250215s.SystemTopic)},
 		&registration.KnownType{Obj: new(eventgrid_v20250215s.SystemTopicsEventSubscription)})
 	result = append(
@@ -5153,6 +5221,12 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &eventgrid_customizations.NamespacesPermissionBindingExtension{})
 	result = append(result, &eventgrid_customizations.NamespacesTopicSpaceExtension{})
 	result = append(result, &eventgrid_customizations.NamespacesTopicsEventSubscriptionExtension{})
+	result = append(result, &eventgrid_customizations.PartnerConfigurationExtension{})
+	result = append(result, &eventgrid_customizations.PartnerNamespaceExtension{})
+	result = append(result, &eventgrid_customizations.PartnerNamespacesChannelExtension{})
+	result = append(result, &eventgrid_customizations.PartnerRegistrationExtension{})
+	result = append(result, &eventgrid_customizations.PartnerTopicExtension{})
+	result = append(result, &eventgrid_customizations.PartnerTopicsEventSubscriptionExtension{})
 	result = append(result, &eventgrid_customizations.SystemTopicExtension{})
 	result = append(result, &eventgrid_customizations.SystemTopicsEventSubscriptionExtension{})
 	result = append(result, &eventhub_customizations.ClusterExtension{})
@@ -7658,6 +7732,123 @@ func indexEventgridNamespacesTopicsEventSubscriptionPushQueueNameFromConfig(rawO
 		return nil
 	}
 	return obj.Spec.DeliveryConfiguration.Push.Destination.StorageQueue.QueueNameFromConfig.Index()
+}
+
+// indexEventgridPartnerTopicsEventSubscriptionAzureActiveDirectoryApplicationIdOrUriFromConfig an index function for eventgrid_v20250215.PartnerTopicsEventSubscription .spec.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig
+func indexEventgridPartnerTopicsEventSubscriptionAzureActiveDirectoryApplicationIdOrUriFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.PartnerTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Destination == nil {
+		return nil
+	}
+	if obj.Spec.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig.Index()
+}
+
+// indexEventgridPartnerTopicsEventSubscriptionDeliveryWithResourceIdentityAzureActiveDirectoryApplicationIdOrUriFromConfig an index function for eventgrid_v20250215.PartnerTopicsEventSubscription .spec.deliveryWithResourceIdentity.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig
+func indexEventgridPartnerTopicsEventSubscriptionDeliveryWithResourceIdentityAzureActiveDirectoryApplicationIdOrUriFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.PartnerTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig.Index()
+}
+
+// indexEventgridPartnerTopicsEventSubscriptionDeliveryWithResourceIdentityEndpointUrl an index function for eventgrid_v20250215.PartnerTopicsEventSubscription .spec.deliveryWithResourceIdentity.destination.webHook.endpointUrl
+func indexEventgridPartnerTopicsEventSubscriptionDeliveryWithResourceIdentityEndpointUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.PartnerTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook.EndpointUrl == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook.EndpointUrl.Index()
+}
+
+// indexEventgridPartnerTopicsEventSubscriptionDeliveryWithResourceIdentityQueueNameFromConfig an index function for eventgrid_v20250215.PartnerTopicsEventSubscription .spec.deliveryWithResourceIdentity.destination.storageQueue.queueNameFromConfig
+func indexEventgridPartnerTopicsEventSubscriptionDeliveryWithResourceIdentityQueueNameFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.PartnerTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.StorageQueue == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.StorageQueue.QueueNameFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryWithResourceIdentity.Destination.StorageQueue.QueueNameFromConfig.Index()
+}
+
+// indexEventgridPartnerTopicsEventSubscriptionEndpointUrl an index function for eventgrid_v20250215.PartnerTopicsEventSubscription .spec.destination.webHook.endpointUrl
+func indexEventgridPartnerTopicsEventSubscriptionEndpointUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.PartnerTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Destination == nil {
+		return nil
+	}
+	if obj.Spec.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.Destination.WebHook.EndpointUrl == nil {
+		return nil
+	}
+	return obj.Spec.Destination.WebHook.EndpointUrl.Index()
+}
+
+// indexEventgridPartnerTopicsEventSubscriptionQueueNameFromConfig an index function for eventgrid_v20250215.PartnerTopicsEventSubscription .spec.destination.storageQueue.queueNameFromConfig
+func indexEventgridPartnerTopicsEventSubscriptionQueueNameFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.PartnerTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Destination == nil {
+		return nil
+	}
+	if obj.Spec.Destination.StorageQueue == nil {
+		return nil
+	}
+	if obj.Spec.Destination.StorageQueue.QueueNameFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.Destination.StorageQueue.QueueNameFromConfig.Index()
 }
 
 // indexEventgridSystemTopicsEventSubscriptionAzureActiveDirectoryApplicationIdOrUriFromConfig an index function for eventgrid_v20250215.SystemTopicsEventSubscription .spec.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig

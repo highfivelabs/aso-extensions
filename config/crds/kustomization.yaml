@@ -253,6 +253,12 @@ resources:
 - eventgrid.azure.hfl.dev_namespacespermissionbindings.yaml
 - eventgrid.azure.hfl.dev_namespacestopicseventsubscriptions.yaml
 - eventgrid.azure.hfl.dev_namespacestopicspaces.yaml
+- eventgrid.azure.hfl.dev_partnerconfigurations.yaml
+- eventgrid.azure.hfl.dev_partnernamespaces.yaml
+- eventgrid.azure.hfl.dev_partnernamespaceschannels.yaml
+- eventgrid.azure.hfl.dev_partnerregistrations.yaml
+- eventgrid.azure.hfl.dev_partnertopics.yaml
+- eventgrid.azure.hfl.dev_partnertopicseventsubscriptions.yaml
 - eventgrid.azure.hfl.dev_systemtopics.yaml
 - eventgrid.azure.hfl.dev_systemtopicseventsubscriptions.yaml
 - eventhub.azure.hfl.dev_clusters.yaml

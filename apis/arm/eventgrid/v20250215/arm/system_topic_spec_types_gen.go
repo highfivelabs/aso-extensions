@@ -37,14 +37,6 @@ func (topic *SystemTopic_Spec) GetType() string {
 	return "Microsoft.EventGrid/systemTopics"
 }
 
-// The identity information for the resource.
-type IdentityInfo struct {
-	// Type: The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created
-	// identity and a set of user-assigned identities. The type 'None' will remove any identity.
-	Type                   *IdentityInfo_Type                     `json:"type,omitempty"`
-	UserAssignedIdentities map[string]UserAssignedIdentityDetails `json:"userAssignedIdentities,omitempty"`
-}
-
 // Properties of the System Topic.
 type SystemTopicProperties struct {
 	// Source: Source for the system topic.
@@ -52,26 +44,4 @@ type SystemTopicProperties struct {
 
 	// TopicType: TopicType for the system topic.
 	TopicType *string `json:"topicType,omitempty"`
-}
-
-// +kubebuilder:validation:Enum={"None","SystemAssigned","SystemAssigned, UserAssigned","UserAssigned"}
-type IdentityInfo_Type string
-
-const (
-	IdentityInfo_Type_None                       = IdentityInfo_Type("None")
-	IdentityInfo_Type_SystemAssigned             = IdentityInfo_Type("SystemAssigned")
-	IdentityInfo_Type_SystemAssignedUserAssigned = IdentityInfo_Type("SystemAssigned, UserAssigned")
-	IdentityInfo_Type_UserAssigned               = IdentityInfo_Type("UserAssigned")
-)
-
-// Mapping from string to IdentityInfo_Type
-var identityInfo_Type_Values = map[string]IdentityInfo_Type{
-	"none":                         IdentityInfo_Type_None,
-	"systemassigned":               IdentityInfo_Type_SystemAssigned,
-	"systemassigned, userassigned": IdentityInfo_Type_SystemAssignedUserAssigned,
-	"userassigned":                 IdentityInfo_Type_UserAssigned,
-}
-
-// Information about the user assigned identity for the resource
-type UserAssignedIdentityDetails struct {
 }

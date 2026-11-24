@@ -12,8 +12,14 @@
 # topics (ASO's extension EventSubscription, owned by the topic or domain,
 # makes the same subscription); private endpoint connections (their path's
 # parent type is a parameter, {parentType}, which no generated kind's owner
-# can be); and the partner resources (partner registrations, namespaces,
-# channels, configurations and topics: a SaaS partner's side of Event Grid).
+# can be).
+#
+# The partner resources (docs/plan.md f77, row t3b): a SaaS partner's
+# registration, partner namespace and channels (the partner's side), and a
+# subscriber's partner configuration (which partners it authorizes),
+# partner topics and their event subscriptions. In a resource group, the
+# channels owned by our PartnerNamespace, the subscriptions by our
+# PartnerTopic.
 typeFilters:
   - action: include
     group: eventgrid
@@ -68,3 +74,24 @@ groupModelConfiguration:
     WebHookEventSubscriptionDestinationProperties:
       AzureActiveDirectoryApplicationIdOrUri:
         $importConfigMapMode: optional
+    PartnerRegistration:
+      $exportAs: PartnerRegistration
+      $supportedFrom: v0.1.0
+    PartnerNamespace:
+      $exportAs: PartnerNamespace
+      $supportedFrom: v0.1.0
+    PartnerNamespaces_Channel:
+      $exportAs: PartnerNamespacesChannel
+      $supportedFrom: v0.1.0
+    PartnerConfiguration:
+      $exportAs: PartnerConfiguration
+      $supportedFrom: v0.1.0
+    PartnerTopic:
+      $exportAs: PartnerTopic
+      $supportedFrom: v0.1.0
+    PartnerTopics_EventSubscription:
+      $exportAs: PartnerTopicsEventSubscription
+      $supportedFrom: v0.1.0
+    PartnerNamespaceProperties:
+      PartnerRegistrationFullyQualifiedId:
+        $referenceType: arm # the partner registration (our PartnerRegistration, or an ARM ID)

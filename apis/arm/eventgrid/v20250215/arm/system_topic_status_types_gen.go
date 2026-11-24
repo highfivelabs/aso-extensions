@@ -30,25 +30,6 @@ type SystemTopic_STATUS struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// The identity information for the resource.
-type IdentityInfo_STATUS struct {
-	// PrincipalId: The principal ID of resource identity.
-	PrincipalId *string `json:"principalId,omitempty"`
-
-	// TenantId: The tenant ID of resource.
-	TenantId *string `json:"tenantId,omitempty"`
-
-	// Type: The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created
-	// identity and a set of user-assigned identities. The type 'None' will remove any identity.
-	Type *IdentityInfo_Type_STATUS `json:"type,omitempty"`
-
-	// UserAssignedIdentities: The list of user identities associated with the resource. The user identity dictionary key
-	// references will be ARM resource ids in the form:
-	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-	// This property is currently not used and reserved for future usage.
-	UserAssignedIdentities map[string]UserIdentityProperties_STATUS `json:"userAssignedIdentities,omitempty"`
-}
-
 // Properties of the System Topic.
 type SystemTopicProperties_STATUS struct {
 	// MetricResourceId: Metric resource id for the system topic.
@@ -62,23 +43,6 @@ type SystemTopicProperties_STATUS struct {
 
 	// TopicType: TopicType for the system topic.
 	TopicType *string `json:"topicType,omitempty"`
-}
-
-type IdentityInfo_Type_STATUS string
-
-const (
-	IdentityInfo_Type_STATUS_None                       = IdentityInfo_Type_STATUS("None")
-	IdentityInfo_Type_STATUS_SystemAssigned             = IdentityInfo_Type_STATUS("SystemAssigned")
-	IdentityInfo_Type_STATUS_SystemAssignedUserAssigned = IdentityInfo_Type_STATUS("SystemAssigned, UserAssigned")
-	IdentityInfo_Type_STATUS_UserAssigned               = IdentityInfo_Type_STATUS("UserAssigned")
-)
-
-// Mapping from string to IdentityInfo_Type_STATUS
-var identityInfo_Type_STATUS_Values = map[string]IdentityInfo_Type_STATUS{
-	"none":                         IdentityInfo_Type_STATUS_None,
-	"systemassigned":               IdentityInfo_Type_STATUS_SystemAssigned,
-	"systemassigned, userassigned": IdentityInfo_Type_STATUS_SystemAssignedUserAssigned,
-	"userassigned":                 IdentityInfo_Type_STATUS_UserAssigned,
 }
 
 type SystemTopicProperties_ProvisioningState_STATUS string
@@ -100,13 +64,4 @@ var systemTopicProperties_ProvisioningState_STATUS_Values = map[string]SystemTop
 	"failed":    SystemTopicProperties_ProvisioningState_STATUS_Failed,
 	"succeeded": SystemTopicProperties_ProvisioningState_STATUS_Succeeded,
 	"updating":  SystemTopicProperties_ProvisioningState_STATUS_Updating,
-}
-
-// The information about the user identity.
-type UserIdentityProperties_STATUS struct {
-	// ClientId: The client id of user assigned identity.
-	ClientId *string `json:"clientId,omitempty"`
-
-	// PrincipalId: The principal id of user assigned identity.
-	PrincipalId *string `json:"principalId,omitempty"`
 }

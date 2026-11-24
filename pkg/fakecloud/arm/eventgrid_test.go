@@ -58,3 +58,31 @@ func TestEventGrid(t *testing.T) {
 	put("a binding to a missing client group", binding, `{"properties":{"topicSpaceName":"sensors","clientGroupName":"other","permission":"Publisher"}}`, http.StatusNotFound)
 	put("a binding", binding, `{"properties":{"topicSpaceName":"sensors","clientGroupName":"devices","permission":"Publisher"}}`, http.StatusCreated)
 }
+
+// The partner resources (f77): a partner namespace names a registration that
+// exists, a partner topic channel names where its topic goes, authorized
+// partners are named, a partner topic names its source, and its event
+// subscriptions have a destination.
+func TestEventGridPartners(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/partners"
+	a.AddResource(rg)
+	put := func(what, id, props string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, id, `{"location":"westus","properties":`+props+`}`)
+		expect(t, what, code, resp, want)
+	}
+	eg := rg + "/providers/Microsoft.EventGrid/"
+	put("a partner namespace with no registration", eg+"partnerNamespaces/saas", `{}`, http.StatusBadRequest)
+	put("a partner namespace with a missing registration", eg+"partnerNamespaces/saas", `{"partnerRegistrationFullyQualifiedId":"`+eg+`partnerRegistrations/saas"}`, http.StatusNotFound)
+	put("a partner registration", eg+"partnerRegistrations/saas", `{}`, http.StatusCreated)
+	put("a partner namespace", eg+"partnerNamespaces/saas", `{"partnerRegistrationFullyQualifiedId":"`+eg+`partnerRegistrations/saas","partnerTopicRoutingMode":"ChannelNameHeader"}`, http.StatusCreated)
+	put("a channel with no topic name", eg+"partnerNamespaces/saas/channels/contoso", `{"channelType":"PartnerTopic","partnerTopicInfo":{"azureSubscriptionId":"`+sub1+`","resourceGroupName":"partners"}}`, http.StatusBadRequest)
+	put("a channel", eg+"partnerNamespaces/saas/channels/contoso", `{"channelType":"PartnerTopic","partnerTopicInfo":{"azureSubscriptionId":"`+sub1+`","resourceGroupName":"partners","name":"saas-events","source":"tenant-1"}}`, http.StatusCreated)
+	put("an unnamed authorized partner", eg+"partnerConfigurations/default", `{"partnerAuthorization":{"authorizedPartnersList":[{"authorizationExpirationTimeInUtc":"2030-01-01T00:00:00Z"}]}}`, http.StatusBadRequest)
+	put("a partner configuration", eg+"partnerConfigurations/default", `{"partnerAuthorization":{"defaultMaximumExpirationTimeInDays":7,"authorizedPartnersList":[{"partnerName":"saas"}]}}`, http.StatusCreated)
+	put("a partner topic with no source", eg+"partnerTopics/saas-events", `{}`, http.StatusBadRequest)
+	put("a partner topic", eg+"partnerTopics/saas-events", `{"source":"tenant-1","activationState":"Activated"}`, http.StatusCreated)
+	put("a subscription with no destination", eg+"partnerTopics/saas-events/eventSubscriptions/all", `{}`, http.StatusBadRequest)
+	put("a subscription", eg+"partnerTopics/saas-events/eventSubscriptions/all", `{"destination":{"endpointType":"WebHook","properties":{"endpointUrl":"https://hooks.example.com/events"}}}`, http.StatusCreated)
+}

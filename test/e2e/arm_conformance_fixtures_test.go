@@ -402,6 +402,16 @@ func init() {
 	// and a Notification Hubs namespace (privateendpoints.go).
 	f[g+"PrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
 	f["notificationhubs.azure.hfl.dev/NamespacesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// Event Grid partners (eventgrid.go): a partner namespace names a
+	// registration that exists; a partner topic its source; a partner
+	// topic's subscription a destination.
+	f["PartnerNamespace"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"partnerRegistrationFullyQualifiedReference": armRef(c.add(c.in("Microsoft.EventGrid/partnerRegistrations/conformance")))}
+	}}
+	f["PartnerTopic"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"source": "conformance"}
+	}}
+	f["PartnerTopicsEventSubscription"] = f["SystemTopicsEventSubscription"]
 	// A MySQL flexible server's threat protection setting is Default and
 	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
 	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
