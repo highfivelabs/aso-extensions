@@ -197,7 +197,8 @@ run over the pinned specs with configuration kept here.
   the path's parameters, and the kind's spec came out empty). Two stack
   overflows on recursive specs are fixed (0018, a flattened free-form
   property; 0019, a type that holds itself in the spec initialization
-  scanner; f84).
+  scanner; f84). Patch 0008 also keeps a receiver from starting with a
+  digit (Data Factory's `Db2Source` got `2Source`; f84, f86).
 - **The generator's own tests with our patches** (checked 2026-11-24 in a
   scratch worktree of the pin, `go test ./...` in
   `v2/tools/generator`). At the pin alone every package passes. With
