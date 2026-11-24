@@ -54,3 +54,6 @@ resources:
 - eventhub.azure.com_namespaces.yaml
 - eventgrid.azure.com_namespaces.yaml
 - eventgrid.azure.com_namespacetopics.yaml
+- apimanagement.azure.com_services.yaml
+- apimanagement.azure.com_apis.yaml
+- apimanagement.azure.com_products.yaml

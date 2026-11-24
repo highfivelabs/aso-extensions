@@ -28,6 +28,9 @@ servicebus/Namespace
 eventhub/Namespace
 eventgrid/Namespace
 eventgrid/Namespaces_Topic=NamespaceTopic
+apimanagement/Service
+apimanagement/Service_Api=Api
+apimanagement/Service_Product=Product
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase

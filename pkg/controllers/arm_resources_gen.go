@@ -9,6 +9,9 @@ import (
 	alertsmanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/alertsmanagement/customizations"
 	alertsmanagement_v20210808 "github.com/highfivelabs/aso-extensions/apis/arm/alertsmanagement/v20210808"
 	alertsmanagement_v20210808s "github.com/highfivelabs/aso-extensions/apis/arm/alertsmanagement/v20210808/storage"
+	apimanagement_customizations "github.com/highfivelabs/aso-extensions/apis/arm/apimanagement/customizations"
+	apimanagement_v20240501 "github.com/highfivelabs/aso-extensions/apis/arm/apimanagement/v20240501"
+	apimanagement_v20240501s "github.com/highfivelabs/aso-extensions/apis/arm/apimanagement/v20240501/storage"
 	app_customizations "github.com/highfivelabs/aso-extensions/apis/arm/app/customizations"
 	app_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101"
 	app_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/app/v20250101/storage"
@@ -244,6 +247,96 @@ import (
 func getKnownStorageTypes() []*registration.StorageType {
 	var result []*registration.StorageType
 	result = append(result, &registration.StorageType{Obj: new(alertsmanagement_v20210808.ActionRule)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiOperation)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiOperationPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiOperationTag)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiSchema)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiTag)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiTagDescription)})
+	result = append(result, &registration.StorageType{
+		Obj: new(apimanagement_v20240501.AuthorizationServer),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.clientSecret",
+				Func: indexApimanagementAuthorizationServerClientSecret,
+			},
+			{
+				Key:  ".spec.resourceOwnerPassword",
+				Func: indexApimanagementAuthorizationServerResourceOwnerPassword,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.clientSecret",
+						".spec.resourceOwnerPassword",
+					},
+					&apimanagement_v20240501.AuthorizationServerList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(apimanagement_v20240501.Cache),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.connectionString",
+				Func: indexApimanagementCacheConnectionString,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.connectionString",
+					},
+					&apimanagement_v20240501.CacheList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.GlobalSchema)})
+	result = append(result, &registration.StorageType{
+		Obj: new(apimanagement_v20240501.IdentityProvider),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.clientSecret",
+				Func: indexApimanagementIdentityProviderClientSecret,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.clientSecret",
+					},
+					&apimanagement_v20240501.IdentityProviderList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(apimanagement_v20240501.OpenIdConnectProvider),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.clientSecret",
+				Func: indexApimanagementOpenIdConnectProviderClientSecret,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.clientSecret",
+					},
+					&apimanagement_v20240501.OpenIdConnectProviderList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ProductTag)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.Tag)})
 	result = append(result, &registration.StorageType{
 		Obj: new(app_v20250101.ManagedEnvironmentsCertificate),
 		Indexes: []registration.Index{
@@ -2800,6 +2893,36 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(alertsmanagement_v20210808s.ActionRule)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiOperation)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiOperationPolicy)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiOperationTag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiSchema)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiTag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiTagDescription)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.AuthorizationServer)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.Cache)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.GlobalSchema)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.IdentityProvider)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.OpenIdConnectProvider)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ProductTag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.Tag)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiOperation)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiOperationPolicy)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiOperationTag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiSchema)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiTag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiTagDescription)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.AuthorizationServer)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.Cache)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.GlobalSchema)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.IdentityProvider)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.OpenIdConnectProvider)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ProductTag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.Tag)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsCertificate)},
 		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsDaprComponent)},
 		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsManagedCertificate)})
@@ -3931,6 +4054,8 @@ func createScheme() *runtime.Scheme {
 	_ = clientgoscheme.AddToScheme(scheme)
 	_ = alertsmanagement_v20210808.AddToScheme(scheme)
 	_ = alertsmanagement_v20210808s.AddToScheme(scheme)
+	_ = apimanagement_v20240501.AddToScheme(scheme)
+	_ = apimanagement_v20240501s.AddToScheme(scheme)
 	_ = app_v20250101.AddToScheme(scheme)
 	_ = app_v20250101s.AddToScheme(scheme)
 	_ = app_v20251002p.AddToScheme(scheme)
@@ -4124,6 +4249,19 @@ func createScheme() *runtime.Scheme {
 func getResourceExtensions() []genruntime.ResourceExtension {
 	var result []genruntime.ResourceExtension
 	result = append(result, &alertsmanagement_customizations.ActionRuleExtension{})
+	result = append(result, &apimanagement_customizations.ApiOperationExtension{})
+	result = append(result, &apimanagement_customizations.ApiOperationPolicyExtension{})
+	result = append(result, &apimanagement_customizations.ApiOperationTagExtension{})
+	result = append(result, &apimanagement_customizations.ApiSchemaExtension{})
+	result = append(result, &apimanagement_customizations.ApiTagDescriptionExtension{})
+	result = append(result, &apimanagement_customizations.ApiTagExtension{})
+	result = append(result, &apimanagement_customizations.AuthorizationServerExtension{})
+	result = append(result, &apimanagement_customizations.CacheExtension{})
+	result = append(result, &apimanagement_customizations.GlobalSchemaExtension{})
+	result = append(result, &apimanagement_customizations.IdentityProviderExtension{})
+	result = append(result, &apimanagement_customizations.OpenIdConnectProviderExtension{})
+	result = append(result, &apimanagement_customizations.ProductTagExtension{})
+	result = append(result, &apimanagement_customizations.TagExtension{})
 	result = append(result, &app_customizations.AgentExtension{})
 	result = append(result, &app_customizations.AgentsConnectorExtension{})
 	result = append(result, &app_customizations.ConnectedEnvironmentExtension{})
@@ -4618,6 +4756,66 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &web_customizations.StaticSitesPrivateEndpointConnectionExtension{})
 	result = append(result, &web_customizations.StaticSitesUserProvidedFunctionAppExtension{})
 	return result
+}
+
+// indexApimanagementAuthorizationServerClientSecret an index function for apimanagement_v20240501.AuthorizationServer .spec.clientSecret
+func indexApimanagementAuthorizationServerClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.AuthorizationServer)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.ClientSecret.Index()
+}
+
+// indexApimanagementAuthorizationServerResourceOwnerPassword an index function for apimanagement_v20240501.AuthorizationServer .spec.resourceOwnerPassword
+func indexApimanagementAuthorizationServerResourceOwnerPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.AuthorizationServer)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ResourceOwnerPassword == nil {
+		return nil
+	}
+	return obj.Spec.ResourceOwnerPassword.Index()
+}
+
+// indexApimanagementCacheConnectionString an index function for apimanagement_v20240501.Cache .spec.connectionString
+func indexApimanagementCacheConnectionString(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.Cache)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ConnectionString == nil {
+		return nil
+	}
+	return obj.Spec.ConnectionString.Index()
+}
+
+// indexApimanagementIdentityProviderClientSecret an index function for apimanagement_v20240501.IdentityProvider .spec.clientSecret
+func indexApimanagementIdentityProviderClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.IdentityProvider)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.ClientSecret.Index()
+}
+
+// indexApimanagementOpenIdConnectProviderClientSecret an index function for apimanagement_v20240501.OpenIdConnectProvider .spec.clientSecret
+func indexApimanagementOpenIdConnectProviderClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*apimanagement_v20240501.OpenIdConnectProvider)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.ClientSecret.Index()
 }
 
 // indexAppAgentConnectionKey an index function for app_v20260701.Agent .spec.properties.incidentManagementConfiguration.connectionKey

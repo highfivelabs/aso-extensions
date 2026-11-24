@@ -535,6 +535,16 @@ upstream's); the catalog's chart tests do that.
   (404). Not modelled: events, the region a system topic shares with its
   source, filter semantics, a webhook's validation handshake, MQTT clients
   connecting, whether the namespace's broker is on, and the error codes.
+- API Management operations, policies, tags, schemas and providers
+  (`Microsoft.ApiManagement/service/...`, 2024-05-01;
+  `pkg/fakecloud/arm/apimanagement.go`): each kind sends what the spec
+  requires of it (400); an operation's URL template names only its
+  template parameters (400); an operation's policy in the xml or rawxml
+  format is XML with a `<policies>` root (400); an API's, product's or
+  operation's tag names a tag of the service that exists (404); an identity
+  provider is named by its type (400); a cache's Redis, when named, exists
+  (404). Not modelled: the gateway serving the APIs, policy semantics, the
+  developer portal, the providers' endpoints answering, and the error codes.
 - Virtual network TAP (`virtualNetworkTaps` and
   `networkInterfaces/tapConfigurations`, 2026-03-01;
   `pkg/fakecloud/arm/vnettap.go`): a TAP has one destination, a NIC's IP

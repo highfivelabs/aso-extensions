@@ -38,6 +38,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
+	asoapim "github.com/Azure/azure-service-operator/v2/api/apimanagement/v20240501/storage"
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
 	asoappconfig "github.com/Azure/azure-service-operator/v2/api/appconfiguration/v20240601/storage"
 	asocache "github.com/Azure/azure-service-operator/v2/api/cache/v20241101/storage"
@@ -128,6 +129,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asoservicebus.AddToScheme(scheme)
 	_ = asoeventhub.AddToScheme(scheme)
 	_ = asoeventgrid.AddToScheme(scheme)
+	_ = asoapim.AddToScheme(scheme)
 	return scheme
 }
 
@@ -192,6 +194,9 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asoeventhub.Namespace{}, Name: "aso_eventhub_namespace"},
 		{Obj: &asoeventgrid.Namespace{}, Name: "aso_eventgrid_namespace"},
 		{Obj: &asoeventgrid.NamespaceTopic{}, Name: "aso_eventgrid_namespacetopic"},
+		{Obj: &asoapim.Service{}, Name: "aso_apimanagement_service"},
+		{Obj: &asoapim.Api{}, Name: "aso_apimanagement_api"},
+		{Obj: &asoapim.Product{}, Name: "aso_apimanagement_product"},
 	}
 }
 

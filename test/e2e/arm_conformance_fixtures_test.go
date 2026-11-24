@@ -291,6 +291,44 @@ func init() {
 		spec: func(c *conformanceContext) map[string]any {
 			return map[string]any{"topicSpaceName": "ts", "clientGroupName": "cg", "permission": "Subscriber"}
 		}}
+	// API Management (apimanagement.go): what the spec requires of each
+	// kind, declared template parameters, <policies> XML, tag links naming a
+	// tag of the service that exists, an identity provider named by its type.
+	g := "apimanagement.azure.hfl.dev/"
+	secretRef := map[string]any{"name": "conformance", "key": "value"}
+	f[g+"ApiOperation"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"displayName": "Conformance", "method": "GET", "urlTemplate": "/conformance"}
+	}}
+	f[g+"ApiOperationPolicy"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"value": "<policies><inbound><base /></inbound></policies>"}
+	}}
+	f[g+"Tag"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"displayName": "Conformance"}
+	}}
+	serviceTag := conformanceFixture{setup: func(c *conformanceContext) { c.add(c.parent() + "/tags/conformance") }}
+	f[g+"ApiTag"], f[g+"ProductTag"] = serviceTag, serviceTag
+	f[g+"ApiOperationTag"] = conformanceFixture{setup: func(c *conformanceContext) { c.add(parentOf(c.parent()) + "/tags/conformance") }}
+	f[g+"ApiSchema"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"contentType": "application/vnd.oai.openapi.components+json"}
+	}}
+	f[g+"GlobalSchema"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"schemaType": "json"}
+	}}
+	f[g+"IdentityProvider"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "aad", "clientId": "conformance", "clientSecret": secretRef}
+	}}
+	f[g+"OpenIdConnectProvider"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"displayName": "Conformance", "metadataEndpoint": "https://idp.example.com/.well-known/openid-configuration", "clientId": "conformance"}
+	}}
+	f[g+"AuthorizationServer"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{
+			"displayName": "Conformance", "clientId": "conformance", "grantTypes": []any{"authorizationCode"},
+			"clientRegistrationEndpoint": "https://idp.example.com/register", "authorizationEndpoint": "https://idp.example.com/authorize",
+		}
+	}}
+	f[g+"Cache"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"connectionString": secretRef, "useFromLocation": "default"}
+	}}
 	f["NetworkInterfacesTapConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"virtualNetworkTap": embedRef(c.add(c.in("Microsoft.Network/virtualNetworkTaps/conformance")))}
 	}}

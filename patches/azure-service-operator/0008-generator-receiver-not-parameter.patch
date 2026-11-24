@@ -25,16 +25,16 @@ index 46b4245..16a9073 100644
  
 +// Modified by High Five Labs: with ASO_GENERATOR_RECEIVER_NOT_PARAMETER set,
 +// a receiver may not be named after the parameter of a generated conversion
-+// function either ("source" or "destination"): a type ending in "Source"
-+// (Log Analytics' Workspaces_DataSource) yielded receiver "source", which
-+// the AssignProperties_From_... parameter then shadowed, and the storage
-+// conversions did not compile.
++// function ("source", "destination": Log Analytics' Workspaces_DataSource
++// yielded "source", which the AssignProperties_From_... parameter shadowed)
++// or after the "schema" package a resource's methods use (API Management's
++// Service_Apis_Schema yielded "schema"): the generated code did not compile.
 +func isForbiddenReceiverName(lowerBase string) bool {
 +	if forbiddenReceiverNames.Contains(lowerBase) {
 +		return true
 +	}
 +
-+	return os.Getenv("ASO_GENERATOR_RECEIVER_NOT_PARAMETER") != "" && (lowerBase == "source" || lowerBase == "destination")
++	return os.Getenv("ASO_GENERATOR_RECEIVER_NOT_PARAMETER") != "" && (lowerBase == "source" || lowerBase == "destination" || lowerBase == "schema")
 +}
 +
  func (factory *identifierFactory) CreateGroupName(group string) string {

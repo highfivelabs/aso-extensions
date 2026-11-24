@@ -3,6 +3,19 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - alertsmanagement.azure.hfl.dev_actionrules.yaml
+- apimanagement.azure.hfl.dev_apioperationpolicies.yaml
+- apimanagement.azure.hfl.dev_apioperations.yaml
+- apimanagement.azure.hfl.dev_apioperationtags.yaml
+- apimanagement.azure.hfl.dev_apischemas.yaml
+- apimanagement.azure.hfl.dev_apitagdescriptions.yaml
+- apimanagement.azure.hfl.dev_apitags.yaml
+- apimanagement.azure.hfl.dev_authorizationservers.yaml
+- apimanagement.azure.hfl.dev_caches.yaml
+- apimanagement.azure.hfl.dev_globalschemas.yaml
+- apimanagement.azure.hfl.dev_identityproviders.yaml
+- apimanagement.azure.hfl.dev_openidconnectproviders.yaml
+- apimanagement.azure.hfl.dev_producttags.yaml
+- apimanagement.azure.hfl.dev_tags.yaml
 - app.azure.hfl.dev_agents.yaml
 - app.azure.hfl.dev_agentsconnectors.yaml
 - app.azure.hfl.dev_connectedenvironments.yaml

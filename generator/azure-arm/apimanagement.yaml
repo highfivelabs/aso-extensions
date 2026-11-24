@@ -1,0 +1,105 @@
+# API Management kinds ASO does not export (Microsoft.ApiManagement, the
+# 2024-05-01 specs, the newest stable version and the one of ASO's own
+# Service, Api and Product; docs/plan.md f64, the first part of tier 3 row t4
+# of docs/coverage/foundation.md): an API's operations (with their policies
+# and tags), schemas, tag descriptions and tags; a product's tags; the
+# service's tags, global schemas, identity providers (the developer portal's
+# sign-in), OpenID Connect providers and OAuth 2.0 authorization servers
+# (for the APIs' OAuth settings), and external caches. Owned by ASO's
+# Service, Api and Product and our ApiOperation.
+#
+# Not exported here: the tags' apiLinks, operationLinks and productLinks
+# (the same links as an API's, an operation's and a product's tags, made
+# from the tag's side), workspaces and their children (a Premium service;
+# the next part of t4), self-hosted gateways, the developer portal's
+# content, and API issues.
+typeFilters:
+  - action: include
+    group: apimanagement
+    version: v20240501
+    because: the newest stable version, the one of ASO's Service, Api and Product (v20240501)
+  - action: prune
+    group: apimanagement
+    because: every other version is left alone (ASO has the service and most of its children)
+typeTransformers:
+  - name: Service_IdentityProvider_Name_Spec
+    group: apimanagement
+    version: v20240501
+    target:
+      name: string
+    because: >-
+      An identity provider's name is its type (aad, aadB2C, facebook, google,
+      microsoft, twitter). ASO's generator keeps such an enum in the storage
+      version, which then imports the API version that imports it, an import
+      cycle (as operationalinsights.yaml says of linked storage accounts). A
+      string it is; the fake, as Azure, refuses any other name.
+  - group: apimanagement
+    version: v20240501
+    name: AuthorizationServerContractProperties_STATUS
+    property: ResourceOwnerPassword
+    remove: true
+    because: a password; Azure does not return it, and it is not shown in the status
+groupModelConfiguration:
+  2024-05-01:
+    Service_Apis_Operation:
+      $exportAs: ApiOperation
+      $supportedFrom: v0.1.0
+    Service_Apis_Operations_Policy:
+      $exportAs: ApiOperationPolicy
+      $supportedFrom: v0.1.0
+    Service_Apis_Operations_Tag:
+      $exportAs: ApiOperationTag
+      $supportedFrom: v0.1.0
+    Service_Apis_Schema:
+      $exportAs: ApiSchema
+      $supportedFrom: v0.1.0
+    Service_Apis_TagDescription:
+      $exportAs: ApiTagDescription
+      $supportedFrom: v0.1.0
+    Service_Apis_Tag:
+      $exportAs: ApiTag
+      $supportedFrom: v0.1.0
+    Service_Products_Tag:
+      $exportAs: ProductTag
+      $supportedFrom: v0.1.0
+    Service_Tag:
+      $exportAs: Tag
+      $supportedFrom: v0.1.0
+    Service_Schema:
+      $exportAs: GlobalSchema
+      $supportedFrom: v0.1.0
+    Service_IdentityProvider:
+      $exportAs: IdentityProvider
+      $supportedFrom: v0.1.0
+    Service_OpenidConnectProvider:
+      $exportAs: OpenIdConnectProvider
+      $supportedFrom: v0.1.0
+    Service_AuthorizationServer:
+      $exportAs: AuthorizationServer
+      $supportedFrom: v0.1.0
+    Service_Cache:
+      $exportAs: Cache
+      $supportedFrom: v0.1.0
+    CacheContractProperties:
+      ResourceId:
+        $referenceType: arm # the Azure Cache for Redis behind an external cache (ASO's Redis, or an ARM ID)
+      ConnectionString:
+        $importSecretMode: required # the cache's connection string, which holds its access key
+    AuthorizationServerContractProperties:
+      ClientSecret:
+        $importSecretMode: required
+      ResourceOwnerPassword:
+        $importSecretMode: required # the resource owner's password, for the password grant
+      TokenEndpoint:
+        $importSecretMode: never # a URL
+    IdentityProviderCreateContractProperties:
+      ClientSecret:
+        $importSecretMode: required
+      PasswordResetPolicyName:
+        $importSecretMode: never # the name of an Azure AD B2C policy
+    IdentityProviderContractProperties:
+      PasswordResetPolicyName:
+        $importSecretMode: never # the same, as the status shows it
+    OpenidConnectProviderContractProperties:
+      ClientSecret:
+        $importSecretMode: required

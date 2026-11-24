@@ -89,7 +89,10 @@
 // identifier, unique policy names), Event Grid system topics, event
 // subscriptions and MQTT broker children (eventgrid.go: one system topic a
 // source, destinations that exist, https webhooks, topic templates,
-// permission bindings naming what exists), Azure Monitor
+// permission bindings naming what exists), API Management operations,
+// policies, tags, schemas and providers (apimanagement.go: required
+// properties, declared template parameters, <policies> XML, tags that exist,
+// identity provider types), Azure Monitor
 // pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
 // processors and exporters, pipelines naming what is declared), a VM's
@@ -586,6 +589,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkWebExtras(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkAPIManagement(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

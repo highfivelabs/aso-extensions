@@ -49,3 +49,4 @@ specification/mongocluster
 specification/servicebus
 specification/eventhub
 specification/eventgrid
+specification/apimanagement
