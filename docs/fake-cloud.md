@@ -606,6 +606,19 @@ upstream's); the catalog's chart tests do that.
   the fake adds no `provisioningState` to them. Connections follow
   `privateendpoints.go`. Not modelled: the managed network's isolation, a
   managed endpoint's approval by its target, and the error codes.
+- Synapse workspace children (`Microsoft.Synapse`, 2021-06-01;
+  `pkg/fakecloud/arm/synapse.go`): an IP firewall rule is an ordered IPv4
+  range (400); an Entra admin names its login and sid (400); Entra-only
+  authentication is enabled only once the workspace has an Entra admin
+  (400); a key is a Key Vault key URL (400); an `AzureKeyVault` encryption
+  protector names a key of the workspace that exists (404); enabled auditing
+  names a storage endpoint or Azure Monitor (400); a vulnerability
+  assessment names a blob container URL (400); an integration runtime is
+  `Managed` or `SelfHosted`, and a runtime linked by RBAC names a shared
+  runtime that exists (404); the singletons keep the names the spec's enums
+  give and refuse DELETE (405). Connections follow `privateendpoints.go`.
+  Not modelled: the workspace's SQL endpoints (no audit, alert or scan
+  runs), key activation, runtime nodes and states, and the error codes.
 - A MySQL flexible server's advanced threat protection setting
   (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
   2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404

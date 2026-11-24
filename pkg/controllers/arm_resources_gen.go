@@ -264,6 +264,9 @@ import (
 	subscription_customizations "github.com/highfivelabs/aso-extensions/apis/arm/subscription/customizations"
 	subscription_v20211001 "github.com/highfivelabs/aso-extensions/apis/arm/subscription/v20211001"
 	subscription_v20211001s "github.com/highfivelabs/aso-extensions/apis/arm/subscription/v20211001/storage"
+	synapse_customizations "github.com/highfivelabs/aso-extensions/apis/arm/synapse/customizations"
+	synapse_v20210601 "github.com/highfivelabs/aso-extensions/apis/arm/synapse/v20210601"
+	synapse_v20210601s "github.com/highfivelabs/aso-extensions/apis/arm/synapse/v20210601/storage"
 	web_customizations "github.com/highfivelabs/aso-extensions/apis/arm/web/customizations"
 	web_v20160601 "github.com/highfivelabs/aso-extensions/apis/arm/web/v20160601"
 	web_v20160601s "github.com/highfivelabs/aso-extensions/apis/arm/web/v20160601/storage"
@@ -2990,6 +2993,194 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(subscription_v20211001.SubscriptionTenantPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.PrivateLinkHub)})
+	result = append(result, &registration.StorageType{
+		Obj: new(synapse_v20210601.WorkspacesAdministrator),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.loginFromConfig",
+				Func: indexSynapseWorkspacesAdministratorLoginFromConfig,
+			},
+			{
+				Key:  ".spec.sidFromConfig",
+				Func: indexSynapseWorkspacesAdministratorSidFromConfig,
+			},
+			{
+				Key:  ".spec.tenantIdFromConfig",
+				Func: indexSynapseWorkspacesAdministratorTenantIdFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.loginFromConfig",
+						".spec.sidFromConfig",
+						".spec.tenantIdFromConfig",
+					},
+					&synapse_v20210601.WorkspacesAdministratorList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(synapse_v20210601.WorkspacesAuditingSetting),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.storageAccountAccessKey",
+				Func: indexSynapseWorkspacesAuditingSettingStorageAccountAccessKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.storageAccountAccessKey",
+					},
+					&synapse_v20210601.WorkspacesAuditingSettingList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesAzureADOnlyAuthentication)})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesDedicatedSQLMinimalTlsSetting)})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesEncryptionProtector)})
+	result = append(result, &registration.StorageType{
+		Obj: new(synapse_v20210601.WorkspacesExtendedAuditingSetting),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.storageAccountAccessKey",
+				Func: indexSynapseWorkspacesExtendedAuditingSettingStorageAccountAccessKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.storageAccountAccessKey",
+					},
+					&synapse_v20210601.WorkspacesExtendedAuditingSettingList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesFirewallRule)})
+	result = append(result, &registration.StorageType{
+		Obj: new(synapse_v20210601.WorkspacesIntegrationRuntime),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.managed.ssisProperties.catalogInfo.catalogAdminPassword.value",
+				Func: indexSynapseWorkspacesIntegrationRuntimeCatalogAdminPasswordValue,
+			},
+			{
+				Key:  ".spec.properties.selfHosted.linkedInfo.key.key.value",
+				Func: indexSynapseWorkspacesIntegrationRuntimeKeyValue,
+			},
+			{
+				Key:  ".spec.properties.managed.ssisProperties.customSetupScriptProperties.sasToken.value",
+				Func: indexSynapseWorkspacesIntegrationRuntimeSasTokenValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.managed.ssisProperties.catalogInfo.catalogAdminPassword.value",
+						".spec.properties.managed.ssisProperties.customSetupScriptProperties.sasToken.value",
+						".spec.properties.selfHosted.linkedInfo.key.key.value",
+					},
+					&synapse_v20210601.WorkspacesIntegrationRuntimeList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesKey)})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesManagedIdentitySqlControlSetting)})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{
+		Obj: new(synapse_v20210601.WorkspacesSecurityAlertPolicy),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.storageAccountAccessKey",
+				Func: indexSynapseWorkspacesSecurityAlertPolicyStorageAccountAccessKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.storageAccountAccessKey",
+					},
+					&synapse_v20210601.WorkspacesSecurityAlertPolicyList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(synapse_v20210601.WorkspacesSqlAdministrator),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.loginFromConfig",
+				Func: indexSynapseWorkspacesSqlAdministratorLoginFromConfig,
+			},
+			{
+				Key:  ".spec.sidFromConfig",
+				Func: indexSynapseWorkspacesSqlAdministratorSidFromConfig,
+			},
+			{
+				Key:  ".spec.tenantIdFromConfig",
+				Func: indexSynapseWorkspacesSqlAdministratorTenantIdFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.loginFromConfig",
+						".spec.sidFromConfig",
+						".spec.tenantIdFromConfig",
+					},
+					&synapse_v20210601.WorkspacesSqlAdministratorList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(synapse_v20210601.WorkspacesVulnerabilityAssessment),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.storageAccountAccessKey",
+				Func: indexSynapseWorkspacesVulnerabilityAssessmentStorageAccountAccessKey,
+			},
+			{
+				Key:  ".spec.storageContainerPathFromConfig",
+				Func: indexSynapseWorkspacesVulnerabilityAssessmentStorageContainerPathFromConfig,
+			},
+			{
+				Key:  ".spec.storageContainerSasKey",
+				Func: indexSynapseWorkspacesVulnerabilityAssessmentStorageContainerSasKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.storageAccountAccessKey",
+						".spec.storageContainerSasKey",
+					},
+					&synapse_v20210601.WorkspacesVulnerabilityAssessmentList{}),
+			},
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.storageContainerPathFromConfig",
+					},
+					&synapse_v20210601.WorkspacesVulnerabilityAssessmentList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{
 		Obj: new(web_v20160601.ApiConnection),
 		Indexes: []registration.Index{
@@ -4661,6 +4852,40 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(subscription_v20211001s.SubscriptionTenantPolicy)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(synapse_v20210601.PrivateLinkHub)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesAdministrator)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesAuditingSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesAzureADOnlyAuthentication)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesDedicatedSQLMinimalTlsSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesEncryptionProtector)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesExtendedAuditingSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesFirewallRule)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesIntegrationRuntime)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesKey)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesManagedIdentitySqlControlSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSecurityAlertPolicy)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlAdministrator)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesVulnerabilityAssessment)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(synapse_v20210601s.PrivateLinkHub)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesAdministrator)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesAuditingSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesAzureADOnlyAuthentication)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesDedicatedSQLMinimalTlsSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesEncryptionProtector)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesExtendedAuditingSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesFirewallRule)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesIntegrationRuntime)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesKey)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesManagedIdentitySqlControlSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSecurityAlertPolicy)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlAdministrator)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesVulnerabilityAssessment)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(web_v20160601.ApiConnection)},
 		&registration.KnownType{Obj: new(web_v20160601.ConnectionGateway)},
 		&registration.KnownType{Obj: new(web_v20160601.CustomApi)})
@@ -4986,6 +5211,8 @@ func createScheme() *runtime.Scheme {
 	_ = storage_v20260901s.AddToScheme(scheme)
 	_ = subscription_v20211001.AddToScheme(scheme)
 	_ = subscription_v20211001s.AddToScheme(scheme)
+	_ = synapse_v20210601.AddToScheme(scheme)
+	_ = synapse_v20210601s.AddToScheme(scheme)
 	_ = web_v20160601.AddToScheme(scheme)
 	_ = web_v20160601s.AddToScheme(scheme)
 	_ = web_v20260715.AddToScheme(scheme)
@@ -5546,6 +5773,21 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &storage_customizations.StorageAccountsPrivateEndpointConnectionExtension{})
 	result = append(result, &storage_customizations.StorageAccountsStorageTaskAssignmentExtension{})
 	result = append(result, &subscription_customizations.SubscriptionTenantPolicyExtension{})
+	result = append(result, &synapse_customizations.PrivateLinkHubExtension{})
+	result = append(result, &synapse_customizations.WorkspacesAdministratorExtension{})
+	result = append(result, &synapse_customizations.WorkspacesAuditingSettingExtension{})
+	result = append(result, &synapse_customizations.WorkspacesAzureADOnlyAuthenticationExtension{})
+	result = append(result, &synapse_customizations.WorkspacesDedicatedSQLMinimalTlsSettingExtension{})
+	result = append(result, &synapse_customizations.WorkspacesEncryptionProtectorExtension{})
+	result = append(result, &synapse_customizations.WorkspacesExtendedAuditingSettingExtension{})
+	result = append(result, &synapse_customizations.WorkspacesFirewallRuleExtension{})
+	result = append(result, &synapse_customizations.WorkspacesIntegrationRuntimeExtension{})
+	result = append(result, &synapse_customizations.WorkspacesKeyExtension{})
+	result = append(result, &synapse_customizations.WorkspacesManagedIdentitySqlControlSettingExtension{})
+	result = append(result, &synapse_customizations.WorkspacesPrivateEndpointConnectionExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSecurityAlertPolicyExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlAdministratorExtension{})
+	result = append(result, &synapse_customizations.WorkspacesVulnerabilityAssessmentExtension{})
 	result = append(result, &web_customizations.AiGatewayExtension{})
 	result = append(result, &web_customizations.ApiConnectionExtension{})
 	result = append(result, &web_customizations.CertificateExtension{})
@@ -9182,6 +9424,231 @@ func indexStorageStorageAccountsBlobAccessPointConfigurationS3CompatibleSecretAc
 		return nil
 	}
 	return obj.Spec.Properties.Source.S3Compatible.Auth.AccessKey.SecretAccessKey.Index()
+}
+
+// indexSynapseWorkspacesAdministratorLoginFromConfig an index function for synapse_v20210601.WorkspacesAdministrator .spec.loginFromConfig
+func indexSynapseWorkspacesAdministratorLoginFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesAdministrator)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.LoginFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.LoginFromConfig.Index()
+}
+
+// indexSynapseWorkspacesAdministratorSidFromConfig an index function for synapse_v20210601.WorkspacesAdministrator .spec.sidFromConfig
+func indexSynapseWorkspacesAdministratorSidFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesAdministrator)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SidFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.SidFromConfig.Index()
+}
+
+// indexSynapseWorkspacesAdministratorTenantIdFromConfig an index function for synapse_v20210601.WorkspacesAdministrator .spec.tenantIdFromConfig
+func indexSynapseWorkspacesAdministratorTenantIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesAdministrator)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.TenantIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.TenantIdFromConfig.Index()
+}
+
+// indexSynapseWorkspacesAuditingSettingStorageAccountAccessKey an index function for synapse_v20210601.WorkspacesAuditingSetting .spec.storageAccountAccessKey
+func indexSynapseWorkspacesAuditingSettingStorageAccountAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesAuditingSetting)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageAccountAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.StorageAccountAccessKey.Index()
+}
+
+// indexSynapseWorkspacesExtendedAuditingSettingStorageAccountAccessKey an index function for synapse_v20210601.WorkspacesExtendedAuditingSetting .spec.storageAccountAccessKey
+func indexSynapseWorkspacesExtendedAuditingSettingStorageAccountAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesExtendedAuditingSetting)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageAccountAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.StorageAccountAccessKey.Index()
+}
+
+// indexSynapseWorkspacesIntegrationRuntimeCatalogAdminPasswordValue an index function for synapse_v20210601.WorkspacesIntegrationRuntime .spec.properties.managed.ssisProperties.catalogInfo.catalogAdminPassword.value
+func indexSynapseWorkspacesIntegrationRuntimeCatalogAdminPasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesIntegrationRuntime)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CatalogInfo == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CatalogInfo.CatalogAdminPassword == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CatalogInfo.CatalogAdminPassword.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Managed.SsisProperties.CatalogInfo.CatalogAdminPassword.Value.Index()
+}
+
+// indexSynapseWorkspacesIntegrationRuntimeKeyValue an index function for synapse_v20210601.WorkspacesIntegrationRuntime .spec.properties.selfHosted.linkedInfo.key.key.value
+func indexSynapseWorkspacesIntegrationRuntimeKeyValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesIntegrationRuntime)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SelfHosted == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SelfHosted.LinkedInfo == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SelfHosted.LinkedInfo.Key == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SelfHosted.LinkedInfo.Key.Key == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SelfHosted.LinkedInfo.Key.Key.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.SelfHosted.LinkedInfo.Key.Key.Value.Index()
+}
+
+// indexSynapseWorkspacesIntegrationRuntimeSasTokenValue an index function for synapse_v20210601.WorkspacesIntegrationRuntime .spec.properties.managed.ssisProperties.customSetupScriptProperties.sasToken.value
+func indexSynapseWorkspacesIntegrationRuntimeSasTokenValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesIntegrationRuntime)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CustomSetupScriptProperties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CustomSetupScriptProperties.SasToken == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CustomSetupScriptProperties.SasToken.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Managed.SsisProperties.CustomSetupScriptProperties.SasToken.Value.Index()
+}
+
+// indexSynapseWorkspacesSecurityAlertPolicyStorageAccountAccessKey an index function for synapse_v20210601.WorkspacesSecurityAlertPolicy .spec.storageAccountAccessKey
+func indexSynapseWorkspacesSecurityAlertPolicyStorageAccountAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesSecurityAlertPolicy)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageAccountAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.StorageAccountAccessKey.Index()
+}
+
+// indexSynapseWorkspacesSqlAdministratorLoginFromConfig an index function for synapse_v20210601.WorkspacesSqlAdministrator .spec.loginFromConfig
+func indexSynapseWorkspacesSqlAdministratorLoginFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesSqlAdministrator)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.LoginFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.LoginFromConfig.Index()
+}
+
+// indexSynapseWorkspacesSqlAdministratorSidFromConfig an index function for synapse_v20210601.WorkspacesSqlAdministrator .spec.sidFromConfig
+func indexSynapseWorkspacesSqlAdministratorSidFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesSqlAdministrator)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.SidFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.SidFromConfig.Index()
+}
+
+// indexSynapseWorkspacesSqlAdministratorTenantIdFromConfig an index function for synapse_v20210601.WorkspacesSqlAdministrator .spec.tenantIdFromConfig
+func indexSynapseWorkspacesSqlAdministratorTenantIdFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesSqlAdministrator)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.TenantIdFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.TenantIdFromConfig.Index()
+}
+
+// indexSynapseWorkspacesVulnerabilityAssessmentStorageAccountAccessKey an index function for synapse_v20210601.WorkspacesVulnerabilityAssessment .spec.storageAccountAccessKey
+func indexSynapseWorkspacesVulnerabilityAssessmentStorageAccountAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesVulnerabilityAssessment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageAccountAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.StorageAccountAccessKey.Index()
+}
+
+// indexSynapseWorkspacesVulnerabilityAssessmentStorageContainerPathFromConfig an index function for synapse_v20210601.WorkspacesVulnerabilityAssessment .spec.storageContainerPathFromConfig
+func indexSynapseWorkspacesVulnerabilityAssessmentStorageContainerPathFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesVulnerabilityAssessment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageContainerPathFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.StorageContainerPathFromConfig.Index()
+}
+
+// indexSynapseWorkspacesVulnerabilityAssessmentStorageContainerSasKey an index function for synapse_v20210601.WorkspacesVulnerabilityAssessment .spec.storageContainerSasKey
+func indexSynapseWorkspacesVulnerabilityAssessmentStorageContainerSasKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesVulnerabilityAssessment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageContainerSasKey == nil {
+		return nil
+	}
+	return obj.Spec.StorageContainerSasKey.Index()
 }
 
 // indexWebApiConnectionCustomParameterValues an index function for web_v20160601.ApiConnection .spec.properties.customParameterValues

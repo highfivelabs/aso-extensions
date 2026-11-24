@@ -643,6 +643,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := a.checkSynapse(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		if status, code, msg := a.checkEventGrid(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
@@ -743,6 +747,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		}
 		if isSmartDetectionRule(id) {
 			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A smart detection rule cannot be deleted; it lives as long as its component.")
+			return
+		}
+		if synapseUndeletable(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A Synapse workspace's setting cannot be deleted; it is deleted with its workspace.")
 			return
 		}
 		if undeletableSingleton(id) {

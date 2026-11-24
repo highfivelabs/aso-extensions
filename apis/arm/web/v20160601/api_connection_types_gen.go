@@ -2451,12 +2451,12 @@ type ConnectionError_STATUS struct {
 var _ genruntime.FromARMConverter = &ConnectionError_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (error *ConnectionError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (connectionError *ConnectionError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.ConnectionError_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (error *ConnectionError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (connectionError *ConnectionError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.ConnectionError_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.ConnectionError_STATUS, got %T", armInput)
@@ -2465,7 +2465,7 @@ func (error *ConnectionError_STATUS) PopulateFromARM(owner genruntime.ArbitraryO
 	// Set property "Id":
 	if typedInput.Id != nil {
 		id := *typedInput.Id
-		error.Id = &id
+		connectionError.Id = &id
 	}
 
 	// No error
@@ -2473,22 +2473,22 @@ func (error *ConnectionError_STATUS) PopulateFromARM(owner genruntime.ArbitraryO
 }
 
 // AssignProperties_From_ConnectionError_STATUS populates our ConnectionError_STATUS from the provided source ConnectionError_STATUS
-func (error *ConnectionError_STATUS) AssignProperties_From_ConnectionError_STATUS(source *storage.ConnectionError_STATUS) error {
+func (connectionError *ConnectionError_STATUS) AssignProperties_From_ConnectionError_STATUS(source *storage.ConnectionError_STATUS) error {
 
 	// Id
-	error.Id = genruntime.ClonePointerToString(source.Id)
+	connectionError.Id = genruntime.ClonePointerToString(source.Id)
 
 	// No error
 	return nil
 }
 
 // AssignProperties_To_ConnectionError_STATUS populates the provided destination ConnectionError_STATUS from our ConnectionError_STATUS
-func (error *ConnectionError_STATUS) AssignProperties_To_ConnectionError_STATUS(destination *storage.ConnectionError_STATUS) error {
+func (connectionError *ConnectionError_STATUS) AssignProperties_To_ConnectionError_STATUS(destination *storage.ConnectionError_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// Id
-	destination.Id = genruntime.ClonePointerToString(error.Id)
+	destination.Id = genruntime.ClonePointerToString(connectionError.Id)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {

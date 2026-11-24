@@ -62,3 +62,4 @@ specification/iothub
 specification/deviceprovisioningservices
 specification/notificationhubs
 specification/datafactory
+specification/synapse

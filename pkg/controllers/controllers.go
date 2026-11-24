@@ -75,6 +75,7 @@ import (
 	asosignalr "github.com/Azure/azure-service-operator/v2/api/signalrservice/v1api20240301/storage"
 	asosql "github.com/Azure/azure-service-operator/v2/api/sql/v20250101/storage"
 	asostorage "github.com/Azure/azure-service-operator/v2/api/storage/v20260601/storage"
+	asosynapse "github.com/Azure/azure-service-operator/v2/api/synapse/v20210601/storage"
 	asoweb "github.com/Azure/azure-service-operator/v2/api/web/v20260715/storage"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
@@ -146,6 +147,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asodevices.AddToScheme(scheme)
 	_ = asonotificationhubs.AddToScheme(scheme)
 	_ = asodatafactory.AddToScheme(scheme)
+	_ = asosynapse.AddToScheme(scheme)
 	return scheme
 }
 
@@ -223,6 +225,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asodevices.IotHub{}, Name: "aso_devices_iothub"},
 		{Obj: &asonotificationhubs.Namespace{}, Name: "aso_notificationhubs_namespace"},
 		{Obj: &asodatafactory.Factory{}, Name: "aso_datafactory_factory"},
+		{Obj: &asosynapse.Workspace{}, Name: "aso_synapse_workspace"},
 	}
 }
 

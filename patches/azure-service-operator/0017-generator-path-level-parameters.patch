@@ -1,0 +1,93 @@
+diff --git a/v2/tools/generator/internal/jsonast/path_parameters_test.go b/v2/tools/generator/internal/jsonast/path_parameters_test.go
+new file mode 100644
+index 0000000..51eca0c
+--- /dev/null
++++ b/v2/tools/generator/internal/jsonast/path_parameters_test.go
+@@ -0,0 +1,48 @@
++/*
++Copyright (c) Microsoft Corporation.
++Licensed under the MIT license.
++*/
++
++// Modified by High Five Labs: a new test of putSchemaParameters.
++
++package jsonast
++
++import (
++	"testing"
++
++	"github.com/go-openapi/spec"
++	. "github.com/onsi/gomega"
++)
++
++func pathItemWithPathLevelParameters() spec.PathItem {
++	var item spec.PathItem
++	item.Parameters = []spec.Parameter{*spec.PathParam("privateLinkHubName")}
++	item.Put = spec.NewOperation("PrivateLinkHubs_CreateOrUpdate")
++	item.Put.Parameters = []spec.Parameter{*spec.BodyParam("privateLinkHubInfo", spec.RefSchema("#/definitions/PrivateLinkHub"))}
++	return item
++}
++
++func Test_putSchemaParameters_Upstream_UsesPathParameters(t *testing.T) {
++	t.Setenv("ASO_GENERATOR_PATH_PARAMETERS", "")
++	g := NewGomegaWithT(t)
++
++	params := putSchemaParameters(pathItemWithPathLevelParameters())
++
++	g.Expect(params).To(HaveLen(1))
++	g.Expect(params[0].In).To(Equal("path"))
++}
++
++func Test_putSchemaParameters_WithPathParameters_KeepsPutBody(t *testing.T) {
++	t.Setenv("ASO_GENERATOR_PATH_PARAMETERS", "1")
++	g := NewGomegaWithT(t)
++
++	item := pathItemWithPathLevelParameters()
++	params := putSchemaParameters(item)
++
++	g.Expect(params).To(HaveLen(2))
++	g.Expect(params[0].In).To(Equal("body"))
++	g.Expect(params[0].Name).To(Equal("privateLinkHubInfo"))
++	g.Expect(params[1].In).To(Equal("path"))
++	// The PUT's own list is not changed.
++	g.Expect(item.Put.Parameters).To(HaveLen(1))
++}
+diff --git a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+index 5448251..cee2b11 100644
+--- a/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
++++ b/v2/tools/generator/internal/jsonast/swagger_type_extractor.go
+@@ -412,7 +412,7 @@ func (extractor *SwaggerTypeExtractor) findARMResourceSchema(op spec.PathItem, r
+ 			"operation", rawOperationPath,
+ 			"swagger", extractor.swaggerPath,
+ 		)
+-		params = op.Parameters
++		params = putSchemaParameters(op)
+ 	}
+ 
+ 	// the actual Schema must come from the PUT parameters
+@@ -456,6 +456,25 @@ func (extractor *SwaggerTypeExtractor) findARMResourceSchema(op spec.PathItem, r
+ 	return foundSpec, foundStatus, true
+ }
+ 
++// putSchemaParameters returns the parameters findARMResourceSchema reads the
++// PUT's body from when the path declares parameters of its own (Modified by
++// High Five Labs). Upstream uses the path's parameters instead of the PUT's,
++// so a spec that declares the path's name parameters at path level and the
++// body on the PUT (Synapse's privateLinkHubs and privateEndpointConnections,
++// 2021-06-01) loses the body and the kind's spec comes out empty ("no body
++// parameter found for PUT operation"). With ASO_GENERATOR_PATH_PARAMETERS
++// set, they are the union, the PUT's first, as the resource's name and path
++// already are ("The union is the final parameter set", above).
++func putSchemaParameters(op spec.PathItem) []spec.Parameter {
++	if os.Getenv("ASO_GENERATOR_PATH_PARAMETERS") == "" {
++		return op.Parameters
++	}
++
++	result := make([]spec.Parameter, 0, len(op.Put.Parameters)+len(op.Parameters))
++	result = append(result, op.Put.Parameters...)
++	return append(result, op.Parameters...)
++}
++
+ // fullyResolveParameter resolves the parameter and returns the file that contained the parameter and the parameter
+ func (extractor *SwaggerTypeExtractor) fullyResolveParameter(param spec.Parameter) (string, spec.Parameter) {
+ 	if param.Ref.GetURL() == nil {

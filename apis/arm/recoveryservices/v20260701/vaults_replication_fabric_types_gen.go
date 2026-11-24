@@ -1791,12 +1791,12 @@ type HealthError_STATUS struct {
 var _ genruntime.FromARMConverter = &HealthError_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (error *HealthError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (healthError *HealthError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.HealthError_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (error *HealthError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (healthError *HealthError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.HealthError_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.HealthError_STATUS, got %T", armInput)
@@ -1805,7 +1805,7 @@ func (error *HealthError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwner
 	// Set property "CreationTimeUtc":
 	if typedInput.CreationTimeUtc != nil {
 		creationTimeUtc := *typedInput.CreationTimeUtc
-		error.CreationTimeUtc = &creationTimeUtc
+		healthError.CreationTimeUtc = &creationTimeUtc
 	}
 
 	// Set property "CustomerResolvability":
@@ -1813,55 +1813,55 @@ func (error *HealthError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwner
 		var temp string
 		temp = string(*typedInput.CustomerResolvability)
 		customerResolvability := HealthErrorCustomerResolvability_STATUS(temp)
-		error.CustomerResolvability = &customerResolvability
+		healthError.CustomerResolvability = &customerResolvability
 	}
 
 	// Set property "EntityId":
 	if typedInput.EntityId != nil {
 		entityId := *typedInput.EntityId
-		error.EntityId = &entityId
+		healthError.EntityId = &entityId
 	}
 
 	// Set property "ErrorCategory":
 	if typedInput.ErrorCategory != nil {
 		errorCategory := *typedInput.ErrorCategory
-		error.ErrorCategory = &errorCategory
+		healthError.ErrorCategory = &errorCategory
 	}
 
 	// Set property "ErrorCode":
 	if typedInput.ErrorCode != nil {
 		errorCode := *typedInput.ErrorCode
-		error.ErrorCode = &errorCode
+		healthError.ErrorCode = &errorCode
 	}
 
 	// Set property "ErrorId":
 	if typedInput.ErrorId != nil {
 		errorId := *typedInput.ErrorId
-		error.ErrorId = &errorId
+		healthError.ErrorId = &errorId
 	}
 
 	// Set property "ErrorLevel":
 	if typedInput.ErrorLevel != nil {
 		errorLevel := *typedInput.ErrorLevel
-		error.ErrorLevel = &errorLevel
+		healthError.ErrorLevel = &errorLevel
 	}
 
 	// Set property "ErrorMessage":
 	if typedInput.ErrorMessage != nil {
 		errorMessage := *typedInput.ErrorMessage
-		error.ErrorMessage = &errorMessage
+		healthError.ErrorMessage = &errorMessage
 	}
 
 	// Set property "ErrorSource":
 	if typedInput.ErrorSource != nil {
 		errorSource := *typedInput.ErrorSource
-		error.ErrorSource = &errorSource
+		healthError.ErrorSource = &errorSource
 	}
 
 	// Set property "ErrorType":
 	if typedInput.ErrorType != nil {
 		errorType := *typedInput.ErrorType
-		error.ErrorType = &errorType
+		healthError.ErrorType = &errorType
 	}
 
 	// Set property "InnerHealthErrors":
@@ -1871,31 +1871,31 @@ func (error *HealthError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwner
 		if err != nil {
 			return err
 		}
-		error.InnerHealthErrors = append(error.InnerHealthErrors, item1)
+		healthError.InnerHealthErrors = append(healthError.InnerHealthErrors, item1)
 	}
 
 	// Set property "PossibleCauses":
 	if typedInput.PossibleCauses != nil {
 		possibleCauses := *typedInput.PossibleCauses
-		error.PossibleCauses = &possibleCauses
+		healthError.PossibleCauses = &possibleCauses
 	}
 
 	// Set property "RecommendedAction":
 	if typedInput.RecommendedAction != nil {
 		recommendedAction := *typedInput.RecommendedAction
-		error.RecommendedAction = &recommendedAction
+		healthError.RecommendedAction = &recommendedAction
 	}
 
 	// Set property "RecoveryProviderErrorMessage":
 	if typedInput.RecoveryProviderErrorMessage != nil {
 		recoveryProviderErrorMessage := *typedInput.RecoveryProviderErrorMessage
-		error.RecoveryProviderErrorMessage = &recoveryProviderErrorMessage
+		healthError.RecoveryProviderErrorMessage = &recoveryProviderErrorMessage
 	}
 
 	// Set property "SummaryMessage":
 	if typedInput.SummaryMessage != nil {
 		summaryMessage := *typedInput.SummaryMessage
-		error.SummaryMessage = &summaryMessage
+		healthError.SummaryMessage = &summaryMessage
 	}
 
 	// No error
@@ -1903,43 +1903,43 @@ func (error *HealthError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwner
 }
 
 // AssignProperties_From_HealthError_STATUS populates our HealthError_STATUS from the provided source HealthError_STATUS
-func (error *HealthError_STATUS) AssignProperties_From_HealthError_STATUS(source *storage.HealthError_STATUS) error {
+func (healthError *HealthError_STATUS) AssignProperties_From_HealthError_STATUS(source *storage.HealthError_STATUS) error {
 
 	// CreationTimeUtc
-	error.CreationTimeUtc = genruntime.ClonePointerToString(source.CreationTimeUtc)
+	healthError.CreationTimeUtc = genruntime.ClonePointerToString(source.CreationTimeUtc)
 
 	// CustomerResolvability
 	if source.CustomerResolvability != nil {
 		customerResolvability := *source.CustomerResolvability
 		customerResolvabilityTemp := genruntime.ToEnum(customerResolvability, healthErrorCustomerResolvability_STATUS_Values)
-		error.CustomerResolvability = &customerResolvabilityTemp
+		healthError.CustomerResolvability = &customerResolvabilityTemp
 	} else {
-		error.CustomerResolvability = nil
+		healthError.CustomerResolvability = nil
 	}
 
 	// EntityId
-	error.EntityId = genruntime.ClonePointerToString(source.EntityId)
+	healthError.EntityId = genruntime.ClonePointerToString(source.EntityId)
 
 	// ErrorCategory
-	error.ErrorCategory = genruntime.ClonePointerToString(source.ErrorCategory)
+	healthError.ErrorCategory = genruntime.ClonePointerToString(source.ErrorCategory)
 
 	// ErrorCode
-	error.ErrorCode = genruntime.ClonePointerToString(source.ErrorCode)
+	healthError.ErrorCode = genruntime.ClonePointerToString(source.ErrorCode)
 
 	// ErrorId
-	error.ErrorId = genruntime.ClonePointerToString(source.ErrorId)
+	healthError.ErrorId = genruntime.ClonePointerToString(source.ErrorId)
 
 	// ErrorLevel
-	error.ErrorLevel = genruntime.ClonePointerToString(source.ErrorLevel)
+	healthError.ErrorLevel = genruntime.ClonePointerToString(source.ErrorLevel)
 
 	// ErrorMessage
-	error.ErrorMessage = genruntime.ClonePointerToString(source.ErrorMessage)
+	healthError.ErrorMessage = genruntime.ClonePointerToString(source.ErrorMessage)
 
 	// ErrorSource
-	error.ErrorSource = genruntime.ClonePointerToString(source.ErrorSource)
+	healthError.ErrorSource = genruntime.ClonePointerToString(source.ErrorSource)
 
 	// ErrorType
-	error.ErrorType = genruntime.ClonePointerToString(source.ErrorType)
+	healthError.ErrorType = genruntime.ClonePointerToString(source.ErrorType)
 
 	// InnerHealthErrors
 	if source.InnerHealthErrors != nil {
@@ -1952,71 +1952,71 @@ func (error *HealthError_STATUS) AssignProperties_From_HealthError_STATUS(source
 			}
 			innerHealthErrorList[innerHealthErrorIndex] = innerHealthError
 		}
-		error.InnerHealthErrors = innerHealthErrorList
+		healthError.InnerHealthErrors = innerHealthErrorList
 	} else {
-		error.InnerHealthErrors = nil
+		healthError.InnerHealthErrors = nil
 	}
 
 	// PossibleCauses
-	error.PossibleCauses = genruntime.ClonePointerToString(source.PossibleCauses)
+	healthError.PossibleCauses = genruntime.ClonePointerToString(source.PossibleCauses)
 
 	// RecommendedAction
-	error.RecommendedAction = genruntime.ClonePointerToString(source.RecommendedAction)
+	healthError.RecommendedAction = genruntime.ClonePointerToString(source.RecommendedAction)
 
 	// RecoveryProviderErrorMessage
-	error.RecoveryProviderErrorMessage = genruntime.ClonePointerToString(source.RecoveryProviderErrorMessage)
+	healthError.RecoveryProviderErrorMessage = genruntime.ClonePointerToString(source.RecoveryProviderErrorMessage)
 
 	// SummaryMessage
-	error.SummaryMessage = genruntime.ClonePointerToString(source.SummaryMessage)
+	healthError.SummaryMessage = genruntime.ClonePointerToString(source.SummaryMessage)
 
 	// No error
 	return nil
 }
 
 // AssignProperties_To_HealthError_STATUS populates the provided destination HealthError_STATUS from our HealthError_STATUS
-func (error *HealthError_STATUS) AssignProperties_To_HealthError_STATUS(destination *storage.HealthError_STATUS) error {
+func (healthError *HealthError_STATUS) AssignProperties_To_HealthError_STATUS(destination *storage.HealthError_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// CreationTimeUtc
-	destination.CreationTimeUtc = genruntime.ClonePointerToString(error.CreationTimeUtc)
+	destination.CreationTimeUtc = genruntime.ClonePointerToString(healthError.CreationTimeUtc)
 
 	// CustomerResolvability
-	if error.CustomerResolvability != nil {
-		customerResolvability := string(*error.CustomerResolvability)
+	if healthError.CustomerResolvability != nil {
+		customerResolvability := string(*healthError.CustomerResolvability)
 		destination.CustomerResolvability = &customerResolvability
 	} else {
 		destination.CustomerResolvability = nil
 	}
 
 	// EntityId
-	destination.EntityId = genruntime.ClonePointerToString(error.EntityId)
+	destination.EntityId = genruntime.ClonePointerToString(healthError.EntityId)
 
 	// ErrorCategory
-	destination.ErrorCategory = genruntime.ClonePointerToString(error.ErrorCategory)
+	destination.ErrorCategory = genruntime.ClonePointerToString(healthError.ErrorCategory)
 
 	// ErrorCode
-	destination.ErrorCode = genruntime.ClonePointerToString(error.ErrorCode)
+	destination.ErrorCode = genruntime.ClonePointerToString(healthError.ErrorCode)
 
 	// ErrorId
-	destination.ErrorId = genruntime.ClonePointerToString(error.ErrorId)
+	destination.ErrorId = genruntime.ClonePointerToString(healthError.ErrorId)
 
 	// ErrorLevel
-	destination.ErrorLevel = genruntime.ClonePointerToString(error.ErrorLevel)
+	destination.ErrorLevel = genruntime.ClonePointerToString(healthError.ErrorLevel)
 
 	// ErrorMessage
-	destination.ErrorMessage = genruntime.ClonePointerToString(error.ErrorMessage)
+	destination.ErrorMessage = genruntime.ClonePointerToString(healthError.ErrorMessage)
 
 	// ErrorSource
-	destination.ErrorSource = genruntime.ClonePointerToString(error.ErrorSource)
+	destination.ErrorSource = genruntime.ClonePointerToString(healthError.ErrorSource)
 
 	// ErrorType
-	destination.ErrorType = genruntime.ClonePointerToString(error.ErrorType)
+	destination.ErrorType = genruntime.ClonePointerToString(healthError.ErrorType)
 
 	// InnerHealthErrors
-	if error.InnerHealthErrors != nil {
-		innerHealthErrorList := make([]storage.InnerHealthError_STATUS, len(error.InnerHealthErrors))
-		for innerHealthErrorIndex, innerHealthErrorItem := range error.InnerHealthErrors {
+	if healthError.InnerHealthErrors != nil {
+		innerHealthErrorList := make([]storage.InnerHealthError_STATUS, len(healthError.InnerHealthErrors))
+		for innerHealthErrorIndex, innerHealthErrorItem := range healthError.InnerHealthErrors {
 			var innerHealthError storage.InnerHealthError_STATUS
 			err := innerHealthErrorItem.AssignProperties_To_InnerHealthError_STATUS(&innerHealthError)
 			if err != nil {
@@ -2030,16 +2030,16 @@ func (error *HealthError_STATUS) AssignProperties_To_HealthError_STATUS(destinat
 	}
 
 	// PossibleCauses
-	destination.PossibleCauses = genruntime.ClonePointerToString(error.PossibleCauses)
+	destination.PossibleCauses = genruntime.ClonePointerToString(healthError.PossibleCauses)
 
 	// RecommendedAction
-	destination.RecommendedAction = genruntime.ClonePointerToString(error.RecommendedAction)
+	destination.RecommendedAction = genruntime.ClonePointerToString(healthError.RecommendedAction)
 
 	// RecoveryProviderErrorMessage
-	destination.RecoveryProviderErrorMessage = genruntime.ClonePointerToString(error.RecoveryProviderErrorMessage)
+	destination.RecoveryProviderErrorMessage = genruntime.ClonePointerToString(healthError.RecoveryProviderErrorMessage)
 
 	// SummaryMessage
-	destination.SummaryMessage = genruntime.ClonePointerToString(error.SummaryMessage)
+	destination.SummaryMessage = genruntime.ClonePointerToString(healthError.SummaryMessage)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {
@@ -3489,12 +3489,12 @@ type InnerHealthError_STATUS struct {
 var _ genruntime.FromARMConverter = &InnerHealthError_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (error *InnerHealthError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (healthError *InnerHealthError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.InnerHealthError_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (error *InnerHealthError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (healthError *InnerHealthError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.InnerHealthError_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.InnerHealthError_STATUS, got %T", armInput)
@@ -3503,7 +3503,7 @@ func (error *InnerHealthError_STATUS) PopulateFromARM(owner genruntime.Arbitrary
 	// Set property "CreationTimeUtc":
 	if typedInput.CreationTimeUtc != nil {
 		creationTimeUtc := *typedInput.CreationTimeUtc
-		error.CreationTimeUtc = &creationTimeUtc
+		healthError.CreationTimeUtc = &creationTimeUtc
 	}
 
 	// Set property "CustomerResolvability":
@@ -3511,79 +3511,79 @@ func (error *InnerHealthError_STATUS) PopulateFromARM(owner genruntime.Arbitrary
 		var temp string
 		temp = string(*typedInput.CustomerResolvability)
 		customerResolvability := HealthErrorCustomerResolvability_STATUS(temp)
-		error.CustomerResolvability = &customerResolvability
+		healthError.CustomerResolvability = &customerResolvability
 	}
 
 	// Set property "EntityId":
 	if typedInput.EntityId != nil {
 		entityId := *typedInput.EntityId
-		error.EntityId = &entityId
+		healthError.EntityId = &entityId
 	}
 
 	// Set property "ErrorCategory":
 	if typedInput.ErrorCategory != nil {
 		errorCategory := *typedInput.ErrorCategory
-		error.ErrorCategory = &errorCategory
+		healthError.ErrorCategory = &errorCategory
 	}
 
 	// Set property "ErrorCode":
 	if typedInput.ErrorCode != nil {
 		errorCode := *typedInput.ErrorCode
-		error.ErrorCode = &errorCode
+		healthError.ErrorCode = &errorCode
 	}
 
 	// Set property "ErrorId":
 	if typedInput.ErrorId != nil {
 		errorId := *typedInput.ErrorId
-		error.ErrorId = &errorId
+		healthError.ErrorId = &errorId
 	}
 
 	// Set property "ErrorLevel":
 	if typedInput.ErrorLevel != nil {
 		errorLevel := *typedInput.ErrorLevel
-		error.ErrorLevel = &errorLevel
+		healthError.ErrorLevel = &errorLevel
 	}
 
 	// Set property "ErrorMessage":
 	if typedInput.ErrorMessage != nil {
 		errorMessage := *typedInput.ErrorMessage
-		error.ErrorMessage = &errorMessage
+		healthError.ErrorMessage = &errorMessage
 	}
 
 	// Set property "ErrorSource":
 	if typedInput.ErrorSource != nil {
 		errorSource := *typedInput.ErrorSource
-		error.ErrorSource = &errorSource
+		healthError.ErrorSource = &errorSource
 	}
 
 	// Set property "ErrorType":
 	if typedInput.ErrorType != nil {
 		errorType := *typedInput.ErrorType
-		error.ErrorType = &errorType
+		healthError.ErrorType = &errorType
 	}
 
 	// Set property "PossibleCauses":
 	if typedInput.PossibleCauses != nil {
 		possibleCauses := *typedInput.PossibleCauses
-		error.PossibleCauses = &possibleCauses
+		healthError.PossibleCauses = &possibleCauses
 	}
 
 	// Set property "RecommendedAction":
 	if typedInput.RecommendedAction != nil {
 		recommendedAction := *typedInput.RecommendedAction
-		error.RecommendedAction = &recommendedAction
+		healthError.RecommendedAction = &recommendedAction
 	}
 
 	// Set property "RecoveryProviderErrorMessage":
 	if typedInput.RecoveryProviderErrorMessage != nil {
 		recoveryProviderErrorMessage := *typedInput.RecoveryProviderErrorMessage
-		error.RecoveryProviderErrorMessage = &recoveryProviderErrorMessage
+		healthError.RecoveryProviderErrorMessage = &recoveryProviderErrorMessage
 	}
 
 	// Set property "SummaryMessage":
 	if typedInput.SummaryMessage != nil {
 		summaryMessage := *typedInput.SummaryMessage
-		error.SummaryMessage = &summaryMessage
+		healthError.SummaryMessage = &summaryMessage
 	}
 
 	// No error
@@ -3591,111 +3591,111 @@ func (error *InnerHealthError_STATUS) PopulateFromARM(owner genruntime.Arbitrary
 }
 
 // AssignProperties_From_InnerHealthError_STATUS populates our InnerHealthError_STATUS from the provided source InnerHealthError_STATUS
-func (error *InnerHealthError_STATUS) AssignProperties_From_InnerHealthError_STATUS(source *storage.InnerHealthError_STATUS) error {
+func (healthError *InnerHealthError_STATUS) AssignProperties_From_InnerHealthError_STATUS(source *storage.InnerHealthError_STATUS) error {
 
 	// CreationTimeUtc
-	error.CreationTimeUtc = genruntime.ClonePointerToString(source.CreationTimeUtc)
+	healthError.CreationTimeUtc = genruntime.ClonePointerToString(source.CreationTimeUtc)
 
 	// CustomerResolvability
 	if source.CustomerResolvability != nil {
 		customerResolvability := *source.CustomerResolvability
 		customerResolvabilityTemp := genruntime.ToEnum(customerResolvability, healthErrorCustomerResolvability_STATUS_Values)
-		error.CustomerResolvability = &customerResolvabilityTemp
+		healthError.CustomerResolvability = &customerResolvabilityTemp
 	} else {
-		error.CustomerResolvability = nil
+		healthError.CustomerResolvability = nil
 	}
 
 	// EntityId
-	error.EntityId = genruntime.ClonePointerToString(source.EntityId)
+	healthError.EntityId = genruntime.ClonePointerToString(source.EntityId)
 
 	// ErrorCategory
-	error.ErrorCategory = genruntime.ClonePointerToString(source.ErrorCategory)
+	healthError.ErrorCategory = genruntime.ClonePointerToString(source.ErrorCategory)
 
 	// ErrorCode
-	error.ErrorCode = genruntime.ClonePointerToString(source.ErrorCode)
+	healthError.ErrorCode = genruntime.ClonePointerToString(source.ErrorCode)
 
 	// ErrorId
-	error.ErrorId = genruntime.ClonePointerToString(source.ErrorId)
+	healthError.ErrorId = genruntime.ClonePointerToString(source.ErrorId)
 
 	// ErrorLevel
-	error.ErrorLevel = genruntime.ClonePointerToString(source.ErrorLevel)
+	healthError.ErrorLevel = genruntime.ClonePointerToString(source.ErrorLevel)
 
 	// ErrorMessage
-	error.ErrorMessage = genruntime.ClonePointerToString(source.ErrorMessage)
+	healthError.ErrorMessage = genruntime.ClonePointerToString(source.ErrorMessage)
 
 	// ErrorSource
-	error.ErrorSource = genruntime.ClonePointerToString(source.ErrorSource)
+	healthError.ErrorSource = genruntime.ClonePointerToString(source.ErrorSource)
 
 	// ErrorType
-	error.ErrorType = genruntime.ClonePointerToString(source.ErrorType)
+	healthError.ErrorType = genruntime.ClonePointerToString(source.ErrorType)
 
 	// PossibleCauses
-	error.PossibleCauses = genruntime.ClonePointerToString(source.PossibleCauses)
+	healthError.PossibleCauses = genruntime.ClonePointerToString(source.PossibleCauses)
 
 	// RecommendedAction
-	error.RecommendedAction = genruntime.ClonePointerToString(source.RecommendedAction)
+	healthError.RecommendedAction = genruntime.ClonePointerToString(source.RecommendedAction)
 
 	// RecoveryProviderErrorMessage
-	error.RecoveryProviderErrorMessage = genruntime.ClonePointerToString(source.RecoveryProviderErrorMessage)
+	healthError.RecoveryProviderErrorMessage = genruntime.ClonePointerToString(source.RecoveryProviderErrorMessage)
 
 	// SummaryMessage
-	error.SummaryMessage = genruntime.ClonePointerToString(source.SummaryMessage)
+	healthError.SummaryMessage = genruntime.ClonePointerToString(source.SummaryMessage)
 
 	// No error
 	return nil
 }
 
 // AssignProperties_To_InnerHealthError_STATUS populates the provided destination InnerHealthError_STATUS from our InnerHealthError_STATUS
-func (error *InnerHealthError_STATUS) AssignProperties_To_InnerHealthError_STATUS(destination *storage.InnerHealthError_STATUS) error {
+func (healthError *InnerHealthError_STATUS) AssignProperties_To_InnerHealthError_STATUS(destination *storage.InnerHealthError_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// CreationTimeUtc
-	destination.CreationTimeUtc = genruntime.ClonePointerToString(error.CreationTimeUtc)
+	destination.CreationTimeUtc = genruntime.ClonePointerToString(healthError.CreationTimeUtc)
 
 	// CustomerResolvability
-	if error.CustomerResolvability != nil {
-		customerResolvability := string(*error.CustomerResolvability)
+	if healthError.CustomerResolvability != nil {
+		customerResolvability := string(*healthError.CustomerResolvability)
 		destination.CustomerResolvability = &customerResolvability
 	} else {
 		destination.CustomerResolvability = nil
 	}
 
 	// EntityId
-	destination.EntityId = genruntime.ClonePointerToString(error.EntityId)
+	destination.EntityId = genruntime.ClonePointerToString(healthError.EntityId)
 
 	// ErrorCategory
-	destination.ErrorCategory = genruntime.ClonePointerToString(error.ErrorCategory)
+	destination.ErrorCategory = genruntime.ClonePointerToString(healthError.ErrorCategory)
 
 	// ErrorCode
-	destination.ErrorCode = genruntime.ClonePointerToString(error.ErrorCode)
+	destination.ErrorCode = genruntime.ClonePointerToString(healthError.ErrorCode)
 
 	// ErrorId
-	destination.ErrorId = genruntime.ClonePointerToString(error.ErrorId)
+	destination.ErrorId = genruntime.ClonePointerToString(healthError.ErrorId)
 
 	// ErrorLevel
-	destination.ErrorLevel = genruntime.ClonePointerToString(error.ErrorLevel)
+	destination.ErrorLevel = genruntime.ClonePointerToString(healthError.ErrorLevel)
 
 	// ErrorMessage
-	destination.ErrorMessage = genruntime.ClonePointerToString(error.ErrorMessage)
+	destination.ErrorMessage = genruntime.ClonePointerToString(healthError.ErrorMessage)
 
 	// ErrorSource
-	destination.ErrorSource = genruntime.ClonePointerToString(error.ErrorSource)
+	destination.ErrorSource = genruntime.ClonePointerToString(healthError.ErrorSource)
 
 	// ErrorType
-	destination.ErrorType = genruntime.ClonePointerToString(error.ErrorType)
+	destination.ErrorType = genruntime.ClonePointerToString(healthError.ErrorType)
 
 	// PossibleCauses
-	destination.PossibleCauses = genruntime.ClonePointerToString(error.PossibleCauses)
+	destination.PossibleCauses = genruntime.ClonePointerToString(healthError.PossibleCauses)
 
 	// RecommendedAction
-	destination.RecommendedAction = genruntime.ClonePointerToString(error.RecommendedAction)
+	destination.RecommendedAction = genruntime.ClonePointerToString(healthError.RecommendedAction)
 
 	// RecoveryProviderErrorMessage
-	destination.RecoveryProviderErrorMessage = genruntime.ClonePointerToString(error.RecoveryProviderErrorMessage)
+	destination.RecoveryProviderErrorMessage = genruntime.ClonePointerToString(healthError.RecoveryProviderErrorMessage)
 
 	// SummaryMessage
-	destination.SummaryMessage = genruntime.ClonePointerToString(error.SummaryMessage)
+	destination.SummaryMessage = genruntime.ClonePointerToString(healthError.SummaryMessage)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {

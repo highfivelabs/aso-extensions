@@ -40,6 +40,8 @@ export ASO_GENERATOR_SUBSCRIPTION_EXTENSION=1
 export ASO_GENERATOR_MORE_EXTENSION_SCOPES=1
 export ASO_GENERATOR_RAPID_ONEOF_RELATED=1
 export ASO_GENERATOR_EXTENSION_CHILDREN=1
+# A PUT body when the path declares its own parameters (patch 0017).
+export ASO_GENERATOR_PATH_PARAMETERS=1
 # CEL rules for what ASO's webhooks would check on update (patch 0016):
 # spec.owner and a set spec.azureName cannot change.
 export ASO_GENERATOR_CEL_VALIDATIONS=1

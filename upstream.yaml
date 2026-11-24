@@ -50,6 +50,7 @@ patches:
   - {file: patches/azure-service-operator/0014-generator-fixed-names.patch, pin: azure-service-operator, upstream_candidate: "no"}
   - {file: patches/azure-service-operator/0015-generator-unused-arm-input.patch, pin: azure-service-operator, upstream_candidate: "yes"}
   - {file: patches/azure-service-operator/0016-cel-write-once-and-owner-rules.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
+  - {file: patches/azure-service-operator/0017-generator-path-level-parameters.patch, pin: azure-service-operator, upstream_candidate: "yes"}
 
 # "What is copied, from where": here (our paths) and from (ASO's paths at
 # the pin, from the repository root, so under v2/; a directory ends in /).
@@ -108,5 +109,7 @@ copied:
     from: {pin: azure-service-operator, paths: [v2/azure-arm/devices.yaml]}
   - here: [generator/azure-arm/datafactory.yaml]
     from: {pin: azure-service-operator, paths: [v2/azure-arm/datafactory.yaml]}
+  - here: [generator/azure-arm/synapse.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/sql.yaml]}
   - here: [pkg/util/azuresql/azuresql.go, pkg/util/azuresql/role.go]
     from: {pin: azure-service-operator, paths: [v2/internal/util/azuresql/]}

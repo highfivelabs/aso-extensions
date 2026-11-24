@@ -8815,22 +8815,22 @@ type ApplicationGatewayCustomError struct {
 var _ genruntime.ARMTransformer = &ApplicationGatewayCustomError{}
 
 // ConvertToARM converts from a Kubernetes CRD object to an ARM object
-func (error *ApplicationGatewayCustomError) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
-	if error == nil {
+func (customError *ApplicationGatewayCustomError) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
+	if customError == nil {
 		return nil, nil
 	}
 	result := &arm.ApplicationGatewayCustomError{}
 
 	// Set property "CustomErrorPageUrl":
-	if error.CustomErrorPageUrl != nil {
-		customErrorPageUrl := *error.CustomErrorPageUrl
+	if customError.CustomErrorPageUrl != nil {
+		customErrorPageUrl := *customError.CustomErrorPageUrl
 		result.CustomErrorPageUrl = &customErrorPageUrl
 	}
 
 	// Set property "StatusCode":
-	if error.StatusCode != nil {
+	if customError.StatusCode != nil {
 		var temp string
-		temp = string(*error.StatusCode)
+		temp = string(*customError.StatusCode)
 		statusCode := arm.ApplicationGatewayCustomErrorStatusCode(temp)
 		result.StatusCode = &statusCode
 	}
@@ -8838,12 +8838,12 @@ func (error *ApplicationGatewayCustomError) ConvertToARM(resolved genruntime.Con
 }
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (error *ApplicationGatewayCustomError) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (customError *ApplicationGatewayCustomError) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.ApplicationGatewayCustomError{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (error *ApplicationGatewayCustomError) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (customError *ApplicationGatewayCustomError) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.ApplicationGatewayCustomError)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.ApplicationGatewayCustomError, got %T", armInput)
@@ -8852,7 +8852,7 @@ func (error *ApplicationGatewayCustomError) PopulateFromARM(owner genruntime.Arb
 	// Set property "CustomErrorPageUrl":
 	if typedInput.CustomErrorPageUrl != nil {
 		customErrorPageUrl := *typedInput.CustomErrorPageUrl
-		error.CustomErrorPageUrl = &customErrorPageUrl
+		customError.CustomErrorPageUrl = &customErrorPageUrl
 	}
 
 	// Set property "StatusCode":
@@ -8860,7 +8860,7 @@ func (error *ApplicationGatewayCustomError) PopulateFromARM(owner genruntime.Arb
 		var temp string
 		temp = string(*typedInput.StatusCode)
 		statusCode := ApplicationGatewayCustomErrorStatusCode(temp)
-		error.StatusCode = &statusCode
+		customError.StatusCode = &statusCode
 	}
 
 	// No error
@@ -8868,18 +8868,18 @@ func (error *ApplicationGatewayCustomError) PopulateFromARM(owner genruntime.Arb
 }
 
 // AssignProperties_From_ApplicationGatewayCustomError populates our ApplicationGatewayCustomError from the provided source ApplicationGatewayCustomError
-func (error *ApplicationGatewayCustomError) AssignProperties_From_ApplicationGatewayCustomError(source *storage.ApplicationGatewayCustomError) error {
+func (customError *ApplicationGatewayCustomError) AssignProperties_From_ApplicationGatewayCustomError(source *storage.ApplicationGatewayCustomError) error {
 
 	// CustomErrorPageUrl
-	error.CustomErrorPageUrl = genruntime.ClonePointerToString(source.CustomErrorPageUrl)
+	customError.CustomErrorPageUrl = genruntime.ClonePointerToString(source.CustomErrorPageUrl)
 
 	// StatusCode
 	if source.StatusCode != nil {
 		statusCode := *source.StatusCode
 		statusCodeTemp := genruntime.ToEnum(statusCode, applicationGatewayCustomErrorStatusCode_Values)
-		error.StatusCode = &statusCodeTemp
+		customError.StatusCode = &statusCodeTemp
 	} else {
-		error.StatusCode = nil
+		customError.StatusCode = nil
 	}
 
 	// No error
@@ -8887,16 +8887,16 @@ func (error *ApplicationGatewayCustomError) AssignProperties_From_ApplicationGat
 }
 
 // AssignProperties_To_ApplicationGatewayCustomError populates the provided destination ApplicationGatewayCustomError from our ApplicationGatewayCustomError
-func (error *ApplicationGatewayCustomError) AssignProperties_To_ApplicationGatewayCustomError(destination *storage.ApplicationGatewayCustomError) error {
+func (customError *ApplicationGatewayCustomError) AssignProperties_To_ApplicationGatewayCustomError(destination *storage.ApplicationGatewayCustomError) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// CustomErrorPageUrl
-	destination.CustomErrorPageUrl = genruntime.ClonePointerToString(error.CustomErrorPageUrl)
+	destination.CustomErrorPageUrl = genruntime.ClonePointerToString(customError.CustomErrorPageUrl)
 
 	// StatusCode
-	if error.StatusCode != nil {
-		statusCode := string(*error.StatusCode)
+	if customError.StatusCode != nil {
+		statusCode := string(*customError.StatusCode)
 		destination.StatusCode = &statusCode
 	} else {
 		destination.StatusCode = nil
@@ -8914,17 +8914,17 @@ func (error *ApplicationGatewayCustomError) AssignProperties_To_ApplicationGatew
 }
 
 // Initialize_From_ApplicationGatewayCustomError_STATUS populates our ApplicationGatewayCustomError from the provided source ApplicationGatewayCustomError_STATUS
-func (error *ApplicationGatewayCustomError) Initialize_From_ApplicationGatewayCustomError_STATUS(source *ApplicationGatewayCustomError_STATUS) error {
+func (customError *ApplicationGatewayCustomError) Initialize_From_ApplicationGatewayCustomError_STATUS(source *ApplicationGatewayCustomError_STATUS) error {
 
 	// CustomErrorPageUrl
-	error.CustomErrorPageUrl = genruntime.ClonePointerToString(source.CustomErrorPageUrl)
+	customError.CustomErrorPageUrl = genruntime.ClonePointerToString(source.CustomErrorPageUrl)
 
 	// StatusCode
 	if source.StatusCode != nil {
 		statusCode := genruntime.ToEnum(string(*source.StatusCode), applicationGatewayCustomErrorStatusCode_Values)
-		error.StatusCode = &statusCode
+		customError.StatusCode = &statusCode
 	} else {
-		error.StatusCode = nil
+		customError.StatusCode = nil
 	}
 
 	// No error
@@ -8943,12 +8943,12 @@ type ApplicationGatewayCustomError_STATUS struct {
 var _ genruntime.FromARMConverter = &ApplicationGatewayCustomError_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (error *ApplicationGatewayCustomError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (customError *ApplicationGatewayCustomError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.ApplicationGatewayCustomError_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (error *ApplicationGatewayCustomError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (customError *ApplicationGatewayCustomError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.ApplicationGatewayCustomError_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.ApplicationGatewayCustomError_STATUS, got %T", armInput)
@@ -8957,7 +8957,7 @@ func (error *ApplicationGatewayCustomError_STATUS) PopulateFromARM(owner genrunt
 	// Set property "CustomErrorPageUrl":
 	if typedInput.CustomErrorPageUrl != nil {
 		customErrorPageUrl := *typedInput.CustomErrorPageUrl
-		error.CustomErrorPageUrl = &customErrorPageUrl
+		customError.CustomErrorPageUrl = &customErrorPageUrl
 	}
 
 	// Set property "StatusCode":
@@ -8965,7 +8965,7 @@ func (error *ApplicationGatewayCustomError_STATUS) PopulateFromARM(owner genrunt
 		var temp string
 		temp = string(*typedInput.StatusCode)
 		statusCode := ApplicationGatewayCustomErrorStatusCode_STATUS(temp)
-		error.StatusCode = &statusCode
+		customError.StatusCode = &statusCode
 	}
 
 	// No error
@@ -8973,18 +8973,18 @@ func (error *ApplicationGatewayCustomError_STATUS) PopulateFromARM(owner genrunt
 }
 
 // AssignProperties_From_ApplicationGatewayCustomError_STATUS populates our ApplicationGatewayCustomError_STATUS from the provided source ApplicationGatewayCustomError_STATUS
-func (error *ApplicationGatewayCustomError_STATUS) AssignProperties_From_ApplicationGatewayCustomError_STATUS(source *storage.ApplicationGatewayCustomError_STATUS) error {
+func (customError *ApplicationGatewayCustomError_STATUS) AssignProperties_From_ApplicationGatewayCustomError_STATUS(source *storage.ApplicationGatewayCustomError_STATUS) error {
 
 	// CustomErrorPageUrl
-	error.CustomErrorPageUrl = genruntime.ClonePointerToString(source.CustomErrorPageUrl)
+	customError.CustomErrorPageUrl = genruntime.ClonePointerToString(source.CustomErrorPageUrl)
 
 	// StatusCode
 	if source.StatusCode != nil {
 		statusCode := *source.StatusCode
 		statusCodeTemp := genruntime.ToEnum(statusCode, applicationGatewayCustomErrorStatusCode_STATUS_Values)
-		error.StatusCode = &statusCodeTemp
+		customError.StatusCode = &statusCodeTemp
 	} else {
-		error.StatusCode = nil
+		customError.StatusCode = nil
 	}
 
 	// No error
@@ -8992,16 +8992,16 @@ func (error *ApplicationGatewayCustomError_STATUS) AssignProperties_From_Applica
 }
 
 // AssignProperties_To_ApplicationGatewayCustomError_STATUS populates the provided destination ApplicationGatewayCustomError_STATUS from our ApplicationGatewayCustomError_STATUS
-func (error *ApplicationGatewayCustomError_STATUS) AssignProperties_To_ApplicationGatewayCustomError_STATUS(destination *storage.ApplicationGatewayCustomError_STATUS) error {
+func (customError *ApplicationGatewayCustomError_STATUS) AssignProperties_To_ApplicationGatewayCustomError_STATUS(destination *storage.ApplicationGatewayCustomError_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// CustomErrorPageUrl
-	destination.CustomErrorPageUrl = genruntime.ClonePointerToString(error.CustomErrorPageUrl)
+	destination.CustomErrorPageUrl = genruntime.ClonePointerToString(customError.CustomErrorPageUrl)
 
 	// StatusCode
-	if error.StatusCode != nil {
-		statusCode := string(*error.StatusCode)
+	if customError.StatusCode != nil {
+		statusCode := string(*customError.StatusCode)
 		destination.StatusCode = &statusCode
 	} else {
 		destination.StatusCode = nil

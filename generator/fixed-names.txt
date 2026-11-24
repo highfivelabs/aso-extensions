@@ -22,3 +22,5 @@ hostingEnvironments/configurations/customdnssuffix
 vaults/backupconfig/vaultconfig
 vaults/backupstorageconfig/vaultstorageconfig
 vaults/backupEncryptionConfigs/backupResourceEncryptionConfig
+workspaces/administrators/activeDirectory
+workspaces/sqlAdministrators/activeDirectory

@@ -434,6 +434,36 @@ func init() {
 		return map[string]any{"azureName": "default", "properties": map[string]any{"conformance": map[string]any{"type": "String", "value": "conformance"}}}
 	}}
 	f["FactoriesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// Synapse (synapse.go): a firewall rule is an IPv4 range; an Entra admin
+	// names a login and sid; a key is a Key Vault key URL; enabled auditing
+	// has a destination; an assessment writes to a blob container; a
+	// runtime is Managed or SelfHosted; a private endpoint makes the
+	// connection.
+	syn := "synapse.azure.hfl.dev/"
+	f[syn+"WorkspacesFirewallRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"startIpAddress": "10.0.0.1", "endIpAddress": "10.0.0.9"}
+	}}
+	synAdmin := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"administratorType": "ActiveDirectory", "login": "conformance", "sid": "00000000-0000-0000-0000-0000000000c1"}
+	}}
+	f[syn+"WorkspacesAdministrator"], f[syn+"WorkspacesSqlAdministrator"] = synAdmin, synAdmin
+	f[syn+"WorkspacesKey"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"keyVaultUrl": "https://conformance.vault.azure.net/keys/conformance"}
+	}}
+	f[syn+"WorkspacesEncryptionProtector"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"serverKeyType": "ServiceManaged"}
+	}}
+	synAuditing := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"state": "Enabled", "isAzureMonitorTargetEnabled": true}
+	}}
+	f[syn+"WorkspacesAuditingSetting"], f[syn+"WorkspacesExtendedAuditingSetting"] = synAuditing, synAuditing
+	f[syn+"WorkspacesVulnerabilityAssessment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"storageContainerPath": "https://conformance.blob.core.windows.net/scans"}
+	}}
+	f[syn+"WorkspacesIntegrationRuntime"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"managed": map[string]any{"type": "Managed"}}}
+	}}
+	f[syn+"WorkspacesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
 	// A MySQL flexible server's threat protection setting is Default and
 	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
 	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

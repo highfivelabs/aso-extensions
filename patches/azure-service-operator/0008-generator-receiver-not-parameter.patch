@@ -1,5 +1,5 @@
 diff --git a/v2/tools/generator/internal/astmodel/identifier_factory.go b/v2/tools/generator/internal/astmodel/identifier_factory.go
-index 46b4245..16a9073 100644
+index 46b4245..fc442d2 100644
 --- a/v2/tools/generator/internal/astmodel/identifier_factory.go
 +++ b/v2/tools/generator/internal/astmodel/identifier_factory.go
 @@ -6,6 +6,7 @@
@@ -19,7 +19,7 @@ index 46b4245..16a9073 100644
  			base = words[len(words)-2] + base
  		}
  	}
-@@ -303,6 +304,20 @@ func createForbiddenReceiverSuffixes() set.Set[string] {
+@@ -303,6 +304,34 @@ func createForbiddenReceiverSuffixes() set.Set[string] {
  // (e.g. a type ending in "Storage" yields receiver "storage", clashing with the storage subpackage alias).
  var forbiddenReceiverNames = set.Make(strings.ToLower(ARMPackageName), strings.ToLower(StoragePackageName))
  
@@ -28,15 +28,64 @@ index 46b4245..16a9073 100644
 +// function ("source", "destination": Log Analytics' Workspaces_DataSource
 +// yielded "source", which the AssignProperties_From_... parameter shadowed)
 +// or after the "schema" package a resource's methods use (API Management's
-+// Service_Apis_Schema yielded "schema"): the generated code did not compile.
++// Service_Apis_Schema yielded "schema"), nor (2026-11-24) after a Go
++// predeclared identifier the generated code uses (Synapse's SecureString
++// yielded "string", which shadowed the type): the generated code did not
++// compile.
 +func isForbiddenReceiverName(lowerBase string) bool {
 +	if forbiddenReceiverNames.Contains(lowerBase) {
 +		return true
 +	}
 +
-+	return os.Getenv("ASO_GENERATOR_RECEIVER_NOT_PARAMETER") != "" && (lowerBase == "source" || lowerBase == "destination" || lowerBase == "schema")
++	if os.Getenv("ASO_GENERATOR_RECEIVER_NOT_PARAMETER") == "" {
++		return false
++	}
++
++	return lowerBase == "source" || lowerBase == "destination" || lowerBase == "schema" || predeclaredIdentifiers.Contains(lowerBase)
 +}
++
++// predeclaredIdentifiers are Go's predeclared types and functions, which
++// generated method bodies use (Modified by High Five Labs).
++var predeclaredIdentifiers = set.Make(
++	"any", "bool", "byte", "error", "float32", "float64", "int", "int8", "int16", "int32", "int64",
++	"rune", "string", "uint", "uint8", "uint16", "uint32", "uint64", "uintptr",
++	"append", "cap", "copy", "delete", "len", "make", "new", "panic")
 +
  func (factory *identifierFactory) CreateGroupName(group string) string {
  	return strings.TrimPrefix(strings.ToLower(group), "microsoft.")
  }
+diff --git a/v2/tools/generator/internal/astmodel/identifier_factory_test.go b/v2/tools/generator/internal/astmodel/identifier_factory_test.go
+index 7087959..3a50255 100644
+--- a/v2/tools/generator/internal/astmodel/identifier_factory_test.go
++++ b/v2/tools/generator/internal/astmodel/identifier_factory_test.go
+@@ -240,3 +240,30 @@ func Test_CreateReceiver_GivenTypeName_ReturnsExpectedResult(t *testing.T) {
+ 		})
+ 	}
+ }
++
++// Modified by High Five Labs: with ASO_GENERATOR_RECEIVER_NOT_PARAMETER set,
++// a receiver is named after neither a conversion function's parameter nor
++// the schema package nor a Go predeclared identifier.
++func Test_CreateReceiver_NotParameter_ReturnsQualifiedName(t *testing.T) {
++	t.Setenv("ASO_GENERATOR_RECEIVER_NOT_PARAMETER", "1")
++
++	cases := []struct {
++		name     string
++		expected string
++	}{
++		{"Workspaces_DataSource" + SpecSuffix, "dataSource"},
++		{"ExportDeliveryDestination", "deliveryDestination"},
++		{"Service_Apis_Schema" + SpecSuffix, "apisSchema"},
++		{"SecureString", "secureString"},
++		{"SecureString" + StatusSuffix, "secureString"},
++		{"Address", "address"},
++	}
++
++	factory := NewIdentifierFactory()
++	for _, c := range cases {
++		t.Run(c.name, func(t *testing.T) {
++			g := NewGomegaWithT(t)
++			g.Expect(factory.CreateReceiver(c.name)).To(Equal(c.expected))
++		})
++	}
++}

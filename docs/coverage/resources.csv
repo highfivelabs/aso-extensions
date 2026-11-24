@@ -2226,28 +2226,28 @@ Microsoft.Support,Microsoft.Support/fileWorkspaces,0,,0,,0,0,false,spec_api=2024
 Microsoft.Support,Microsoft.Support/fileWorkspaces/files,3,,0,,0,3,false,spec_api=2024-04-01
 Microsoft.Support,Microsoft.Support/supportTickets,31,,0,,0,31,false,spec_api=2024-04-01
 Microsoft.Support,Microsoft.Support/supportTickets/communications,3,,0,,0,3,false,spec_api=2024-04-01
-Microsoft.Synapse,Microsoft.Synapse/privateLinkHubs,3,,0,,0,3,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/privateLinkHubs,3,,0,synapse.azure.hfl.dev/PrivateLinkHub,2,1,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces,37,synapse.azure.com/Workspace,34,,0,3,false,spec_api=2021-06-01; official_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/administrators,4,,0,,0,4,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/auditingSettings,10,,0,,0,10,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/azureADOnlyAuthentications,1,,0,,0,1,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/administrators,4,,0,synapse.azure.hfl.dev/WorkspacesAdministrator,4,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/auditingSettings,10,,0,synapse.azure.hfl.dev/WorkspacesAuditingSetting,10,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/azureADOnlyAuthentications,1,,0,synapse.azure.hfl.dev/WorkspacesAzureADOnlyAuthentication,1,0,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces/bigDataPools,30,synapse.azure.com/WorkspacesBigDataPool,30,,0,0,false,spec_api=2021-06-01; official_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/dedicatedSQLminimalTlsSettings,1,,0,,0,1,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/encryptionProtector,2,,0,,0,2,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/extendedAuditingSettings,11,,0,,0,11,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/firewallRules,2,,0,,0,2,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/integrationRuntimes,43,,0,,0,43,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/keys,2,,0,,0,2,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/dedicatedSQLminimalTlsSettings,1,,0,synapse.azure.hfl.dev/WorkspacesDedicatedSQLMinimalTlsSetting,1,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/encryptionProtector,2,,0,synapse.azure.hfl.dev/WorkspacesEncryptionProtector,2,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/extendedAuditingSettings,11,,0,synapse.azure.hfl.dev/WorkspacesExtendedAuditingSetting,11,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/firewallRules,2,,0,synapse.azure.hfl.dev/WorkspacesFirewallRule,2,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/integrationRuntimes,43,,0,synapse.azure.hfl.dev/WorkspacesIntegrationRuntime,2,41,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/keys,2,,0,synapse.azure.hfl.dev/WorkspacesKey,2,0,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools,12,,0,,0,12,false,spec_api=2021-06-01-preview; spec-preview-only
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools/attachedDatabaseConfigurations,10,,0,,0,10,false,spec_api=2021-06-01-preview; spec-preview-only
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools/databases,3,,0,,0,3,false,spec_api=2021-06-01-preview; spec-preview-only
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections,10,,0,,0,10,false,spec_api=2021-06-01-preview; spec-preview-only
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments,4,,0,,0,4,false,spec_api=2021-06-01-preview; spec-preview-only
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools/principalAssignments,4,,0,,0,4,false,spec_api=2021-06-01-preview; spec-preview-only
-Microsoft.Synapse,Microsoft.Synapse/workspaces/managedIdentitySqlControlSettings,1,,0,,0,1,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/privateEndpointConnections,3,,0,,0,3,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/securityAlertPolicies,7,,0,,0,7,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlAdministrators,4,,0,,0,4,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/managedIdentitySqlControlSettings,1,,0,synapse.azure.hfl.dev/WorkspacesManagedIdentitySqlControlSetting,1,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/privateEndpointConnections,3,,0,synapse.azure.hfl.dev/WorkspacesPrivateEndpointConnection,2,1,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/securityAlertPolicies,7,,0,synapse.azure.hfl.dev/WorkspacesSecurityAlertPolicy,7,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlAdministrators,4,,0,synapse.azure.hfl.dev/WorkspacesSqlAdministrator,4,0,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlDatabases,6,,0,,0,6,false,spec_api=2020-04-01-preview; spec-preview-only
 Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools,14,,0,,0,14,false,spec_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/auditingSettings,8,,0,,0,8,false,spec_api=2021-06-01
@@ -2263,7 +2263,7 @@ Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/vulnerabilityAssessments
 Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/vulnerabilityAssessments/rules/baselines,1,,0,,0,1,false,spec_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/workloadGroups,6,,0,,0,6,false,spec_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/workloadGroups/workloadClassifiers,6,,0,,0,6,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/vulnerabilityAssessments,6,,0,,0,6,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/vulnerabilityAssessments,6,,0,synapse.azure.hfl.dev/WorkspacesVulnerabilityAssessment,6,0,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Syntex,Microsoft.Syntex/documentProcessors,4,,0,,0,4,false,spec_api=2022-09-15-preview; spec-preview-only
 Microsoft.TestBase,Microsoft.TestBase/testBaseAccounts,7,,0,,0,7,false,spec_api=2023-11-01-preview; spec-preview-only
 Microsoft.TestBase,Microsoft.TestBase/testBaseAccounts/actionRequests,10,,0,,0,10,false,spec_api=2023-11-01-preview; spec-preview-only

@@ -7194,12 +7194,12 @@ type AutoScaleRunError_STATUS struct {
 var _ genruntime.FromARMConverter = &AutoScaleRunError_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (error *AutoScaleRunError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (runError *AutoScaleRunError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.AutoScaleRunError_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (error *AutoScaleRunError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (runError *AutoScaleRunError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.AutoScaleRunError_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.AutoScaleRunError_STATUS, got %T", armInput)
@@ -7208,7 +7208,7 @@ func (error *AutoScaleRunError_STATUS) PopulateFromARM(owner genruntime.Arbitrar
 	// Set property "Code":
 	if typedInput.Code != nil {
 		code := *typedInput.Code
-		error.Code = &code
+		runError.Code = &code
 	}
 
 	// Set property "Details":
@@ -7218,13 +7218,13 @@ func (error *AutoScaleRunError_STATUS) PopulateFromARM(owner genruntime.Arbitrar
 		if err != nil {
 			return err
 		}
-		error.Details = append(error.Details, item1)
+		runError.Details = append(runError.Details, item1)
 	}
 
 	// Set property "Message":
 	if typedInput.Message != nil {
 		message := *typedInput.Message
-		error.Message = &message
+		runError.Message = &message
 	}
 
 	// No error
@@ -7232,10 +7232,10 @@ func (error *AutoScaleRunError_STATUS) PopulateFromARM(owner genruntime.Arbitrar
 }
 
 // AssignProperties_From_AutoScaleRunError_STATUS populates our AutoScaleRunError_STATUS from the provided source AutoScaleRunError_STATUS
-func (error *AutoScaleRunError_STATUS) AssignProperties_From_AutoScaleRunError_STATUS(source *storage.AutoScaleRunError_STATUS) error {
+func (runError *AutoScaleRunError_STATUS) AssignProperties_From_AutoScaleRunError_STATUS(source *storage.AutoScaleRunError_STATUS) error {
 
 	// Code
-	error.Code = genruntime.ClonePointerToString(source.Code)
+	runError.Code = genruntime.ClonePointerToString(source.Code)
 
 	// Details
 	if source.Details != nil {
@@ -7248,30 +7248,30 @@ func (error *AutoScaleRunError_STATUS) AssignProperties_From_AutoScaleRunError_S
 			}
 			detailList[detailIndex] = detail
 		}
-		error.Details = detailList
+		runError.Details = detailList
 	} else {
-		error.Details = nil
+		runError.Details = nil
 	}
 
 	// Message
-	error.Message = genruntime.ClonePointerToString(source.Message)
+	runError.Message = genruntime.ClonePointerToString(source.Message)
 
 	// No error
 	return nil
 }
 
 // AssignProperties_To_AutoScaleRunError_STATUS populates the provided destination AutoScaleRunError_STATUS from our AutoScaleRunError_STATUS
-func (error *AutoScaleRunError_STATUS) AssignProperties_To_AutoScaleRunError_STATUS(destination *storage.AutoScaleRunError_STATUS) error {
+func (runError *AutoScaleRunError_STATUS) AssignProperties_To_AutoScaleRunError_STATUS(destination *storage.AutoScaleRunError_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// Code
-	destination.Code = genruntime.ClonePointerToString(error.Code)
+	destination.Code = genruntime.ClonePointerToString(runError.Code)
 
 	// Details
-	if error.Details != nil {
-		detailList := make([]storage.AutoScaleRunError_STATUS_Unrolled, len(error.Details))
-		for detailIndex, detailItem := range error.Details {
+	if runError.Details != nil {
+		detailList := make([]storage.AutoScaleRunError_STATUS_Unrolled, len(runError.Details))
+		for detailIndex, detailItem := range runError.Details {
 			var detail storage.AutoScaleRunError_STATUS_Unrolled
 			err := detailItem.AssignProperties_To_AutoScaleRunError_STATUS_Unrolled(&detail)
 			if err != nil {
@@ -7285,7 +7285,7 @@ func (error *AutoScaleRunError_STATUS) AssignProperties_To_AutoScaleRunError_STA
 	}
 
 	// Message
-	destination.Message = genruntime.ClonePointerToString(error.Message)
+	destination.Message = genruntime.ClonePointerToString(runError.Message)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {
@@ -10229,12 +10229,12 @@ type ResizeError_STATUS struct {
 var _ genruntime.FromARMConverter = &ResizeError_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (error *ResizeError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (resizeError *ResizeError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.ResizeError_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (error *ResizeError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (resizeError *ResizeError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.ResizeError_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.ResizeError_STATUS, got %T", armInput)
@@ -10243,7 +10243,7 @@ func (error *ResizeError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwner
 	// Set property "Code":
 	if typedInput.Code != nil {
 		code := *typedInput.Code
-		error.Code = &code
+		resizeError.Code = &code
 	}
 
 	// Set property "Details":
@@ -10253,13 +10253,13 @@ func (error *ResizeError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwner
 		if err != nil {
 			return err
 		}
-		error.Details = append(error.Details, item1)
+		resizeError.Details = append(resizeError.Details, item1)
 	}
 
 	// Set property "Message":
 	if typedInput.Message != nil {
 		message := *typedInput.Message
-		error.Message = &message
+		resizeError.Message = &message
 	}
 
 	// No error
@@ -10267,10 +10267,10 @@ func (error *ResizeError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwner
 }
 
 // AssignProperties_From_ResizeError_STATUS populates our ResizeError_STATUS from the provided source ResizeError_STATUS
-func (error *ResizeError_STATUS) AssignProperties_From_ResizeError_STATUS(source *storage.ResizeError_STATUS) error {
+func (resizeError *ResizeError_STATUS) AssignProperties_From_ResizeError_STATUS(source *storage.ResizeError_STATUS) error {
 
 	// Code
-	error.Code = genruntime.ClonePointerToString(source.Code)
+	resizeError.Code = genruntime.ClonePointerToString(source.Code)
 
 	// Details
 	if source.Details != nil {
@@ -10283,30 +10283,30 @@ func (error *ResizeError_STATUS) AssignProperties_From_ResizeError_STATUS(source
 			}
 			detailList[detailIndex] = detail
 		}
-		error.Details = detailList
+		resizeError.Details = detailList
 	} else {
-		error.Details = nil
+		resizeError.Details = nil
 	}
 
 	// Message
-	error.Message = genruntime.ClonePointerToString(source.Message)
+	resizeError.Message = genruntime.ClonePointerToString(source.Message)
 
 	// No error
 	return nil
 }
 
 // AssignProperties_To_ResizeError_STATUS populates the provided destination ResizeError_STATUS from our ResizeError_STATUS
-func (error *ResizeError_STATUS) AssignProperties_To_ResizeError_STATUS(destination *storage.ResizeError_STATUS) error {
+func (resizeError *ResizeError_STATUS) AssignProperties_To_ResizeError_STATUS(destination *storage.ResizeError_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// Code
-	destination.Code = genruntime.ClonePointerToString(error.Code)
+	destination.Code = genruntime.ClonePointerToString(resizeError.Code)
 
 	// Details
-	if error.Details != nil {
-		detailList := make([]storage.ResizeError_STATUS_Unrolled, len(error.Details))
-		for detailIndex, detailItem := range error.Details {
+	if resizeError.Details != nil {
+		detailList := make([]storage.ResizeError_STATUS_Unrolled, len(resizeError.Details))
+		for detailIndex, detailItem := range resizeError.Details {
 			var detail storage.ResizeError_STATUS_Unrolled
 			err := detailItem.AssignProperties_To_ResizeError_STATUS_Unrolled(&detail)
 			if err != nil {
@@ -10320,7 +10320,7 @@ func (error *ResizeError_STATUS) AssignProperties_To_ResizeError_STATUS(destinat
 	}
 
 	// Message
-	destination.Message = genruntime.ClonePointerToString(error.Message)
+	destination.Message = genruntime.ClonePointerToString(resizeError.Message)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {

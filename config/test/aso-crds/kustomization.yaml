@@ -67,3 +67,4 @@ resources:
 - devices.azure.com_iothubs.yaml
 - notificationhubs.azure.com_namespaces.yaml
 - datafactory.azure.com_factories.yaml
+- synapse.azure.com_workspaces.yaml

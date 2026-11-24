@@ -26028,12 +26028,12 @@ type ApiError_STATUS struct {
 var _ genruntime.FromARMConverter = &ApiError_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (error *ApiError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (apiError *ApiError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.ApiError_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (error *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (apiError *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.ApiError_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.ApiError_STATUS, got %T", armInput)
@@ -26042,7 +26042,7 @@ func (error *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerRef
 	// Set property "Code":
 	if typedInput.Code != nil {
 		code := *typedInput.Code
-		error.Code = &code
+		apiError.Code = &code
 	}
 
 	// Set property "Details":
@@ -26052,7 +26052,7 @@ func (error *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerRef
 		if err != nil {
 			return err
 		}
-		error.Details = append(error.Details, item1)
+		apiError.Details = append(apiError.Details, item1)
 	}
 
 	// Set property "Innererror":
@@ -26063,19 +26063,19 @@ func (error *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerRef
 			return err
 		}
 		innererror := innererror1
-		error.Innererror = &innererror
+		apiError.Innererror = &innererror
 	}
 
 	// Set property "Message":
 	if typedInput.Message != nil {
 		message := *typedInput.Message
-		error.Message = &message
+		apiError.Message = &message
 	}
 
 	// Set property "Target":
 	if typedInput.Target != nil {
 		target := *typedInput.Target
-		error.Target = &target
+		apiError.Target = &target
 	}
 
 	// No error
@@ -26083,10 +26083,10 @@ func (error *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerRef
 }
 
 // AssignProperties_From_ApiError_STATUS populates our ApiError_STATUS from the provided source ApiError_STATUS
-func (error *ApiError_STATUS) AssignProperties_From_ApiError_STATUS(source *storage.ApiError_STATUS) error {
+func (apiError *ApiError_STATUS) AssignProperties_From_ApiError_STATUS(source *storage.ApiError_STATUS) error {
 
 	// Code
-	error.Code = genruntime.ClonePointerToString(source.Code)
+	apiError.Code = genruntime.ClonePointerToString(source.Code)
 
 	// Details
 	if source.Details != nil {
@@ -26099,9 +26099,9 @@ func (error *ApiError_STATUS) AssignProperties_From_ApiError_STATUS(source *stor
 			}
 			detailList[detailIndex] = detail
 		}
-		error.Details = detailList
+		apiError.Details = detailList
 	} else {
-		error.Details = nil
+		apiError.Details = nil
 	}
 
 	// Innererror
@@ -26111,33 +26111,33 @@ func (error *ApiError_STATUS) AssignProperties_From_ApiError_STATUS(source *stor
 		if err != nil {
 			return eris.Wrap(err, "calling AssignProperties_From_InnerError_STATUS() to populate field Innererror")
 		}
-		error.Innererror = &innererror
+		apiError.Innererror = &innererror
 	} else {
-		error.Innererror = nil
+		apiError.Innererror = nil
 	}
 
 	// Message
-	error.Message = genruntime.ClonePointerToString(source.Message)
+	apiError.Message = genruntime.ClonePointerToString(source.Message)
 
 	// Target
-	error.Target = genruntime.ClonePointerToString(source.Target)
+	apiError.Target = genruntime.ClonePointerToString(source.Target)
 
 	// No error
 	return nil
 }
 
 // AssignProperties_To_ApiError_STATUS populates the provided destination ApiError_STATUS from our ApiError_STATUS
-func (error *ApiError_STATUS) AssignProperties_To_ApiError_STATUS(destination *storage.ApiError_STATUS) error {
+func (apiError *ApiError_STATUS) AssignProperties_To_ApiError_STATUS(destination *storage.ApiError_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// Code
-	destination.Code = genruntime.ClonePointerToString(error.Code)
+	destination.Code = genruntime.ClonePointerToString(apiError.Code)
 
 	// Details
-	if error.Details != nil {
-		detailList := make([]storage.ApiErrorBase_STATUS, len(error.Details))
-		for detailIndex, detailItem := range error.Details {
+	if apiError.Details != nil {
+		detailList := make([]storage.ApiErrorBase_STATUS, len(apiError.Details))
+		for detailIndex, detailItem := range apiError.Details {
 			var detail storage.ApiErrorBase_STATUS
 			err := detailItem.AssignProperties_To_ApiErrorBase_STATUS(&detail)
 			if err != nil {
@@ -26151,9 +26151,9 @@ func (error *ApiError_STATUS) AssignProperties_To_ApiError_STATUS(destination *s
 	}
 
 	// Innererror
-	if error.Innererror != nil {
+	if apiError.Innererror != nil {
 		var innererror storage.InnerError_STATUS
-		err := error.Innererror.AssignProperties_To_InnerError_STATUS(&innererror)
+		err := apiError.Innererror.AssignProperties_To_InnerError_STATUS(&innererror)
 		if err != nil {
 			return eris.Wrap(err, "calling AssignProperties_To_InnerError_STATUS() to populate field Innererror")
 		}
@@ -26163,10 +26163,10 @@ func (error *ApiError_STATUS) AssignProperties_To_ApiError_STATUS(destination *s
 	}
 
 	// Message
-	destination.Message = genruntime.ClonePointerToString(error.Message)
+	destination.Message = genruntime.ClonePointerToString(apiError.Message)
 
 	// Target
-	destination.Target = genruntime.ClonePointerToString(error.Target)
+	destination.Target = genruntime.ClonePointerToString(apiError.Target)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {
@@ -29203,12 +29203,12 @@ type InnerError_STATUS struct {
 var _ genruntime.FromARMConverter = &InnerError_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (error *InnerError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (innerError *InnerError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.InnerError_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (error *InnerError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (innerError *InnerError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.InnerError_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.InnerError_STATUS, got %T", armInput)
@@ -29217,13 +29217,13 @@ func (error *InnerError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerR
 	// Set property "Errordetail":
 	if typedInput.Errordetail != nil {
 		errordetail := *typedInput.Errordetail
-		error.Errordetail = &errordetail
+		innerError.Errordetail = &errordetail
 	}
 
 	// Set property "Exceptiontype":
 	if typedInput.Exceptiontype != nil {
 		exceptiontype := *typedInput.Exceptiontype
-		error.Exceptiontype = &exceptiontype
+		innerError.Exceptiontype = &exceptiontype
 	}
 
 	// No error
@@ -29231,28 +29231,28 @@ func (error *InnerError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerR
 }
 
 // AssignProperties_From_InnerError_STATUS populates our InnerError_STATUS from the provided source InnerError_STATUS
-func (error *InnerError_STATUS) AssignProperties_From_InnerError_STATUS(source *storage.InnerError_STATUS) error {
+func (innerError *InnerError_STATUS) AssignProperties_From_InnerError_STATUS(source *storage.InnerError_STATUS) error {
 
 	// Errordetail
-	error.Errordetail = genruntime.ClonePointerToString(source.Errordetail)
+	innerError.Errordetail = genruntime.ClonePointerToString(source.Errordetail)
 
 	// Exceptiontype
-	error.Exceptiontype = genruntime.ClonePointerToString(source.Exceptiontype)
+	innerError.Exceptiontype = genruntime.ClonePointerToString(source.Exceptiontype)
 
 	// No error
 	return nil
 }
 
 // AssignProperties_To_InnerError_STATUS populates the provided destination InnerError_STATUS from our InnerError_STATUS
-func (error *InnerError_STATUS) AssignProperties_To_InnerError_STATUS(destination *storage.InnerError_STATUS) error {
+func (innerError *InnerError_STATUS) AssignProperties_To_InnerError_STATUS(destination *storage.InnerError_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// Errordetail
-	destination.Errordetail = genruntime.ClonePointerToString(error.Errordetail)
+	destination.Errordetail = genruntime.ClonePointerToString(innerError.Errordetail)
 
 	// Exceptiontype
-	destination.Exceptiontype = genruntime.ClonePointerToString(error.Exceptiontype)
+	destination.Exceptiontype = genruntime.ClonePointerToString(innerError.Exceptiontype)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {
