@@ -1104,14 +1104,14 @@ Microsoft.EventGrid,Microsoft.EventGrid/domains/topics,0,eventgrid.azure.com/Dom
 Microsoft.EventGrid,Microsoft.EventGrid/domains/topics/eventSubscriptions,38,,0,,0,38,false,spec_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/eventSubscriptions,38,eventgrid.azure.com/EventSubscription,38,,0,0,false,spec_api=2025-02-15; official_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/namespaces,45,eventgrid.azure.com/Namespace,34,,0,11,false,spec_api=2025-02-15; official_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/caCertificates,2,,0,,0,2,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/clientGroups,2,,0,,0,2,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/clients,6,,0,,0,6,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/permissionBindings,4,,0,,0,4,false,spec_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/caCertificates,2,,0,eventgrid.azure.hfl.dev/NamespacesCaCertificate,2,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/clientGroups,2,,0,eventgrid.azure.hfl.dev/NamespacesClientGroup,2,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/clients,6,,0,eventgrid.azure.hfl.dev/NamespacesClient,6,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/permissionBindings,4,,0,eventgrid.azure.hfl.dev/NamespacesPermissionBinding,4,0,false,spec_api=2025-02-15; ours_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/namespaces/privateEndpointConnections,6,,0,,0,6,false,spec_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/namespaces/topics,3,eventgrid.azure.com/NamespaceTopic,3,,0,0,false,spec_api=2025-02-15; official_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/topics/eventSubscriptions,39,,0,,0,39,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/topicSpaces,2,,0,,0,2,false,spec_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/topics/eventSubscriptions,39,,0,eventgrid.azure.hfl.dev/NamespacesTopicsEventSubscription,39,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/topicSpaces,2,,0,eventgrid.azure.hfl.dev/NamespacesTopicSpace,2,0,false,spec_api=2025-02-15; ours_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/partnerConfigurations,7,,0,,0,7,false,spec_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/partnerNamespaces,9,,0,,0,9,false,spec_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/partnerNamespaces/channels,14,,0,,0,14,false,spec_api=2025-02-15
@@ -1119,8 +1119,8 @@ Microsoft.EventGrid,Microsoft.EventGrid/partnerNamespaces/privateEndpointConnect
 Microsoft.EventGrid,Microsoft.EventGrid/partnerRegistrations,3,,0,,0,3,false,spec_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/partnerTopics,18,,0,,0,18,false,spec_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/partnerTopics/eventSubscriptions,38,,0,,0,38,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/systemTopics,9,,0,,0,9,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/systemTopics/eventSubscriptions,38,,0,,0,38,false,spec_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/systemTopics,9,,0,eventgrid.azure.hfl.dev/SystemTopic,5,4,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/systemTopics/eventSubscriptions,38,,0,eventgrid.azure.hfl.dev/SystemTopicsEventSubscription,38,0,false,spec_api=2025-02-15; ours_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/topics,29,eventgrid.azure.com/Topic,25,,0,4,false,spec_api=2025-02-15; official_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/topics/eventSubscriptions,38,,0,,0,38,false,spec_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/topics/privateEndpointConnections,6,,0,,0,6,false,spec_api=2025-02-15

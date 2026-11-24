@@ -86,7 +86,10 @@
 // sets and disaster recovery aliases and Event Hubs application groups
 // (messaging.go: the default rule set, IPv4 masks, subnets that exist, a
 // partner namespace of the same service in one pairing, a client group
-// identifier, unique policy names), Azure Monitor
+// identifier, unique policy names), Event Grid system topics, event
+// subscriptions and MQTT broker children (eventgrid.go: one system topic a
+// source, destinations that exist, https webhooks, topic templates,
+// permission bindings naming what exists), Azure Monitor
 // pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
 // processors and exporters, pipelines naming what is declared), a VM's
@@ -583,6 +586,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkWebExtras(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkEventGrid(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

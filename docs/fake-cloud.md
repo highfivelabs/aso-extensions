@@ -522,6 +522,19 @@ upstream's); the catalog's chart tests do that.
   Not modelled: the tiers each takes (private endpoints and pairing are
   Premium's), the partner's region, the secondary's copy of the
   alias, breaking the pairing and failover, and the error codes.
+- Event Grid system topics, event subscriptions and MQTT broker children
+  (`Microsoft.EventGrid`, 2025-02-15; `pkg/fakecloud/arm/eventgrid.go`): a
+  system topic names a source (400) that exists (404) and a topic type
+  (400), one system topic a source (409); a system topic's or namespace
+  topic's event subscription has a destination (400), one named by
+  resource ID exists (404), a webhook's URL is https (400), and a namespace
+  topic's delivers by Queue or Push with a destination (400); a topic space
+  has one to ten templates, a client group a query, a CA certificate its
+  certificate (400); a permission binding is Publisher or Subscriber (400)
+  and names a topic space and client group of its namespace that exist
+  (404). Not modelled: events, the region a system topic shares with its
+  source, filter semantics, a webhook's validation handshake, MQTT clients
+  connecting, whether the namespace's broker is on, and the error codes.
 - Virtual network TAP (`virtualNetworkTaps` and
   `networkInterfaces/tapConfigurations`, 2026-03-01;
   `pkg/fakecloud/arm/vnettap.go`): a TAP has one destination, a NIC's IP

@@ -1,0 +1,70 @@
+# Event Grid kinds ASO does not export (Microsoft.EventGrid, EventGrid.json
+# 2025-02-15, the newest stable version and the one of ASO's own eventgrid
+# kinds; docs/plan.md f63, tier 3 row t3 of docs/coverage/foundation.md):
+# system topics (the events an Azure resource publishes, such as a storage
+# account's blob events) and their event subscriptions, the event
+# subscriptions of a namespace topic (queue or push delivery), and the MQTT
+# broker's clients, client groups, topic spaces, permission bindings and CA
+# certificates on a namespace. Owned by a resource group, our SystemTopic,
+# and ASO's Namespace and NamespaceTopic.
+#
+# Not exported: the typed event subscriptions of topics, domains and domain
+# topics (ASO's extension EventSubscription, owned by the topic or domain,
+# makes the same subscription); private endpoint connections (their path's
+# parent type is a parameter, {parentType}, which no generated kind's owner
+# can be); and the partner resources (partner registrations, namespaces,
+# channels, configurations and topics: a SaaS partner's side of Event Grid).
+typeFilters:
+  - action: include
+    group: eventgrid
+    version: v20250215
+    because: the newest stable version, ASO's own (v20250215)
+  - action: prune
+    group: eventgrid
+    because: every other version is left alone (ASO has topics, domains, namespaces, namespace topics and the extension event subscription)
+typeTransformers:
+  - group: eventgrid
+    version: v20250215
+    name: IdentityInfo
+    property: PrincipalId;TenantId
+    remove: true
+    because: set by Azure once the identity is provisioned, not by a user; Swagger reuses the shape for output (as ASO's eventgrid.yaml removes them)
+groupModelConfiguration:
+  2025-02-15:
+    SystemTopic:
+      $exportAs: SystemTopic
+      $supportedFrom: v0.1.0
+    SystemTopics_EventSubscription:
+      $exportAs: SystemTopicsEventSubscription
+      $supportedFrom: v0.1.0
+    Namespaces_Topics_EventSubscription:
+      $exportAs: NamespacesTopicsEventSubscription
+      $supportedFrom: v0.1.0
+    Namespaces_Client:
+      $exportAs: NamespacesClient
+      $supportedFrom: v0.1.0
+    Namespaces_ClientGroup:
+      $exportAs: NamespacesClientGroup
+      $supportedFrom: v0.1.0
+    Namespaces_TopicSpace:
+      $exportAs: NamespacesTopicSpace
+      $supportedFrom: v0.1.0
+    Namespaces_PermissionBinding:
+      $exportAs: NamespacesPermissionBinding
+      $supportedFrom: v0.1.0
+    Namespaces_CaCertificate:
+      $exportAs: NamespacesCaCertificate
+      $supportedFrom: v0.1.0
+    SystemTopicProperties:
+      Source:
+        $referenceType: arm # the Azure resource whose events the system topic publishes (a storage account, a resource group, a key vault)
+    # As ASO's eventgrid.yaml configures its own EventSubscription.
+    StaticDeliveryAttributeMappingProperties:
+      IsSecret:
+        $importSecretMode: never # a flag saying whether the value is sensitive, not a secret value itself
+    StorageQueueEventSubscriptionDestinationProperties:
+      QueueName:
+        $importConfigMapMode: optional
+    WebHookEventSubscriptionDestinationProperties:
+      AzureActiveDirectoryApplicationIdOrUri:
+        $importConfigMapMode: optional

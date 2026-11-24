@@ -26,6 +26,8 @@ network/NetworkWatcher
 network/NetworkInterface
 servicebus/Namespace
 eventhub/Namespace
+eventgrid/Namespace
+eventgrid/Namespaces_Topic=NamespaceTopic
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase

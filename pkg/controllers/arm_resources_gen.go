@@ -98,6 +98,9 @@ import (
 	documentdb_v20260315s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260315/storage"
 	documentdb_v20260601 "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260601"
 	documentdb_v20260601s "github.com/highfivelabs/aso-extensions/apis/arm/documentdb/v20260601/storage"
+	eventgrid_customizations "github.com/highfivelabs/aso-extensions/apis/arm/eventgrid/customizations"
+	eventgrid_v20250215 "github.com/highfivelabs/aso-extensions/apis/arm/eventgrid/v20250215"
+	eventgrid_v20250215s "github.com/highfivelabs/aso-extensions/apis/arm/eventgrid/v20250215/storage"
 	eventhub_customizations "github.com/highfivelabs/aso-extensions/apis/arm/eventhub/customizations"
 	eventhub_v20260101 "github.com/highfivelabs/aso-extensions/apis/arm/eventhub/v20260101"
 	eventhub_v20260101s "github.com/highfivelabs/aso-extensions/apis/arm/eventhub/v20260101/storage"
@@ -1329,6 +1332,114 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.FleetsFleetspace)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260315.FleetsFleetspacesFleetspaceAccount)})
 	result = append(result, &registration.StorageType{Obj: new(documentdb_v20260601.MongoClustersUser)})
+	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.NamespacesCaCertificate)})
+	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.NamespacesClient)})
+	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.NamespacesClientGroup)})
+	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.NamespacesPermissionBinding)})
+	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.NamespacesTopicSpace)})
+	result = append(result, &registration.StorageType{
+		Obj: new(eventgrid_v20250215.NamespacesTopicsEventSubscription),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.deliveryConfiguration.push.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+				Func: indexEventgridNamespacesTopicsEventSubscriptionPushAzureActiveDirectoryApplicationIdOrUriFromConfig,
+			},
+			{
+				Key:  ".spec.deliveryConfiguration.push.deliveryWithResourceIdentity.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+				Func: indexEventgridNamespacesTopicsEventSubscriptionPushDeliveryWithResourceIdentityAzureActiveDirectoryApplicationIdOrUriFromConfig,
+			},
+			{
+				Key:  ".spec.deliveryConfiguration.push.deliveryWithResourceIdentity.destination.webHook.endpointUrl",
+				Func: indexEventgridNamespacesTopicsEventSubscriptionPushDeliveryWithResourceIdentityEndpointUrl,
+			},
+			{
+				Key:  ".spec.deliveryConfiguration.push.deliveryWithResourceIdentity.destination.storageQueue.queueNameFromConfig",
+				Func: indexEventgridNamespacesTopicsEventSubscriptionPushDeliveryWithResourceIdentityQueueNameFromConfig,
+			},
+			{
+				Key:  ".spec.deliveryConfiguration.push.destination.webHook.endpointUrl",
+				Func: indexEventgridNamespacesTopicsEventSubscriptionPushEndpointUrl,
+			},
+			{
+				Key:  ".spec.deliveryConfiguration.push.destination.storageQueue.queueNameFromConfig",
+				Func: indexEventgridNamespacesTopicsEventSubscriptionPushQueueNameFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.deliveryConfiguration.push.deliveryWithResourceIdentity.destination.webHook.endpointUrl",
+						".spec.deliveryConfiguration.push.destination.webHook.endpointUrl",
+					},
+					&eventgrid_v20250215.NamespacesTopicsEventSubscriptionList{}),
+			},
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.deliveryConfiguration.push.deliveryWithResourceIdentity.destination.storageQueue.queueNameFromConfig",
+						".spec.deliveryConfiguration.push.deliveryWithResourceIdentity.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+						".spec.deliveryConfiguration.push.destination.storageQueue.queueNameFromConfig",
+						".spec.deliveryConfiguration.push.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+					},
+					&eventgrid_v20250215.NamespacesTopicsEventSubscriptionList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(eventgrid_v20250215.SystemTopic)})
+	result = append(result, &registration.StorageType{
+		Obj: new(eventgrid_v20250215.SystemTopicsEventSubscription),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+				Func: indexEventgridSystemTopicsEventSubscriptionAzureActiveDirectoryApplicationIdOrUriFromConfig,
+			},
+			{
+				Key:  ".spec.deliveryWithResourceIdentity.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+				Func: indexEventgridSystemTopicsEventSubscriptionDeliveryWithResourceIdentityAzureActiveDirectoryApplicationIdOrUriFromConfig,
+			},
+			{
+				Key:  ".spec.deliveryWithResourceIdentity.destination.webHook.endpointUrl",
+				Func: indexEventgridSystemTopicsEventSubscriptionDeliveryWithResourceIdentityEndpointUrl,
+			},
+			{
+				Key:  ".spec.deliveryWithResourceIdentity.destination.storageQueue.queueNameFromConfig",
+				Func: indexEventgridSystemTopicsEventSubscriptionDeliveryWithResourceIdentityQueueNameFromConfig,
+			},
+			{
+				Key:  ".spec.destination.webHook.endpointUrl",
+				Func: indexEventgridSystemTopicsEventSubscriptionEndpointUrl,
+			},
+			{
+				Key:  ".spec.destination.storageQueue.queueNameFromConfig",
+				Func: indexEventgridSystemTopicsEventSubscriptionQueueNameFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.deliveryWithResourceIdentity.destination.webHook.endpointUrl",
+						".spec.destination.webHook.endpointUrl",
+					},
+					&eventgrid_v20250215.SystemTopicsEventSubscriptionList{}),
+			},
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.deliveryWithResourceIdentity.destination.storageQueue.queueNameFromConfig",
+						".spec.deliveryWithResourceIdentity.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+						".spec.destination.storageQueue.queueNameFromConfig",
+						".spec.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig",
+					},
+					&eventgrid_v20250215.SystemTopicsEventSubscriptionList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(eventhub_v20260101.Cluster)})
 	result = append(result, &registration.StorageType{Obj: new(eventhub_v20260101.NamespacesApplicationGroup)})
 	result = append(result, &registration.StorageType{Obj: new(eventhub_v20260101.NamespacesDisasterRecoveryConfig)})
@@ -3107,6 +3218,26 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(documentdb_v20260601s.MongoClustersUser)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(eventgrid_v20250215.NamespacesCaCertificate)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.NamespacesClient)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.NamespacesClientGroup)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.NamespacesPermissionBinding)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.NamespacesTopicSpace)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.NamespacesTopicsEventSubscription)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.SystemTopic)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215.SystemTopicsEventSubscription)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.NamespacesCaCertificate)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.NamespacesClient)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.NamespacesClientGroup)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.NamespacesPermissionBinding)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.NamespacesTopicSpace)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.NamespacesTopicsEventSubscription)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.SystemTopic)},
+		&registration.KnownType{Obj: new(eventgrid_v20250215s.SystemTopicsEventSubscription)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(eventhub_v20260101.Cluster)},
 		&registration.KnownType{Obj: new(eventhub_v20260101.NamespacesApplicationGroup)},
 		&registration.KnownType{Obj: new(eventhub_v20260101.NamespacesDisasterRecoveryConfig)},
@@ -3874,6 +4005,8 @@ func createScheme() *runtime.Scheme {
 	_ = documentdb_v20260315s.AddToScheme(scheme)
 	_ = documentdb_v20260601.AddToScheme(scheme)
 	_ = documentdb_v20260601s.AddToScheme(scheme)
+	_ = eventgrid_v20250215.AddToScheme(scheme)
+	_ = eventgrid_v20250215s.AddToScheme(scheme)
 	_ = eventhub_v20260101.AddToScheme(scheme)
 	_ = eventhub_v20260101s.AddToScheme(scheme)
 	_ = hardwaresecuritymodules_v20250331.AddToScheme(scheme)
@@ -4163,6 +4296,14 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &documentdb_customizations.FleetsFleetspacesFleetspaceAccountExtension{})
 	result = append(result, &documentdb_customizations.MongoClustersPrivateEndpointConnectionExtension{})
 	result = append(result, &documentdb_customizations.MongoClustersUserExtension{})
+	result = append(result, &eventgrid_customizations.NamespacesCaCertificateExtension{})
+	result = append(result, &eventgrid_customizations.NamespacesClientExtension{})
+	result = append(result, &eventgrid_customizations.NamespacesClientGroupExtension{})
+	result = append(result, &eventgrid_customizations.NamespacesPermissionBindingExtension{})
+	result = append(result, &eventgrid_customizations.NamespacesTopicSpaceExtension{})
+	result = append(result, &eventgrid_customizations.NamespacesTopicsEventSubscriptionExtension{})
+	result = append(result, &eventgrid_customizations.SystemTopicExtension{})
+	result = append(result, &eventgrid_customizations.SystemTopicsEventSubscriptionExtension{})
 	result = append(result, &eventhub_customizations.ClusterExtension{})
 	result = append(result, &eventhub_customizations.NamespacesApplicationGroupExtension{})
 	result = append(result, &eventhub_customizations.NamespacesDisasterRecoveryConfigExtension{})
@@ -5994,6 +6135,276 @@ func indexDocumentdbDatabaseAccountsTableRoleAssignmentPrincipalIdFromConfig(raw
 		return nil
 	}
 	return obj.Spec.PrincipalIdFromConfig.Index()
+}
+
+// indexEventgridNamespacesTopicsEventSubscriptionPushAzureActiveDirectoryApplicationIdOrUriFromConfig an index function for eventgrid_v20250215.NamespacesTopicsEventSubscription .spec.deliveryConfiguration.push.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig
+func indexEventgridNamespacesTopicsEventSubscriptionPushAzureActiveDirectoryApplicationIdOrUriFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.NamespacesTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryConfiguration.Push.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig.Index()
+}
+
+// indexEventgridNamespacesTopicsEventSubscriptionPushDeliveryWithResourceIdentityAzureActiveDirectoryApplicationIdOrUriFromConfig an index function for eventgrid_v20250215.NamespacesTopicsEventSubscription .spec.deliveryConfiguration.push.deliveryWithResourceIdentity.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig
+func indexEventgridNamespacesTopicsEventSubscriptionPushDeliveryWithResourceIdentityAzureActiveDirectoryApplicationIdOrUriFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.NamespacesTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig.Index()
+}
+
+// indexEventgridNamespacesTopicsEventSubscriptionPushDeliveryWithResourceIdentityEndpointUrl an index function for eventgrid_v20250215.NamespacesTopicsEventSubscription .spec.deliveryConfiguration.push.deliveryWithResourceIdentity.destination.webHook.endpointUrl
+func indexEventgridNamespacesTopicsEventSubscriptionPushDeliveryWithResourceIdentityEndpointUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.NamespacesTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination.WebHook.EndpointUrl == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination.WebHook.EndpointUrl.Index()
+}
+
+// indexEventgridNamespacesTopicsEventSubscriptionPushDeliveryWithResourceIdentityQueueNameFromConfig an index function for eventgrid_v20250215.NamespacesTopicsEventSubscription .spec.deliveryConfiguration.push.deliveryWithResourceIdentity.destination.storageQueue.queueNameFromConfig
+func indexEventgridNamespacesTopicsEventSubscriptionPushDeliveryWithResourceIdentityQueueNameFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.NamespacesTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination.StorageQueue == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination.StorageQueue.QueueNameFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryConfiguration.Push.DeliveryWithResourceIdentity.Destination.StorageQueue.QueueNameFromConfig.Index()
+}
+
+// indexEventgridNamespacesTopicsEventSubscriptionPushEndpointUrl an index function for eventgrid_v20250215.NamespacesTopicsEventSubscription .spec.deliveryConfiguration.push.destination.webHook.endpointUrl
+func indexEventgridNamespacesTopicsEventSubscriptionPushEndpointUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.NamespacesTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.Destination.WebHook.EndpointUrl == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryConfiguration.Push.Destination.WebHook.EndpointUrl.Index()
+}
+
+// indexEventgridNamespacesTopicsEventSubscriptionPushQueueNameFromConfig an index function for eventgrid_v20250215.NamespacesTopicsEventSubscription .spec.deliveryConfiguration.push.destination.storageQueue.queueNameFromConfig
+func indexEventgridNamespacesTopicsEventSubscriptionPushQueueNameFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.NamespacesTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.Destination.StorageQueue == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryConfiguration.Push.Destination.StorageQueue.QueueNameFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryConfiguration.Push.Destination.StorageQueue.QueueNameFromConfig.Index()
+}
+
+// indexEventgridSystemTopicsEventSubscriptionAzureActiveDirectoryApplicationIdOrUriFromConfig an index function for eventgrid_v20250215.SystemTopicsEventSubscription .spec.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig
+func indexEventgridSystemTopicsEventSubscriptionAzureActiveDirectoryApplicationIdOrUriFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.SystemTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Destination == nil {
+		return nil
+	}
+	if obj.Spec.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig.Index()
+}
+
+// indexEventgridSystemTopicsEventSubscriptionDeliveryWithResourceIdentityAzureActiveDirectoryApplicationIdOrUriFromConfig an index function for eventgrid_v20250215.SystemTopicsEventSubscription .spec.deliveryWithResourceIdentity.destination.webHook.azureActiveDirectoryApplicationIdOrUriFromConfig
+func indexEventgridSystemTopicsEventSubscriptionDeliveryWithResourceIdentityAzureActiveDirectoryApplicationIdOrUriFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.SystemTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook.AzureActiveDirectoryApplicationIdOrUriFromConfig.Index()
+}
+
+// indexEventgridSystemTopicsEventSubscriptionDeliveryWithResourceIdentityEndpointUrl an index function for eventgrid_v20250215.SystemTopicsEventSubscription .spec.deliveryWithResourceIdentity.destination.webHook.endpointUrl
+func indexEventgridSystemTopicsEventSubscriptionDeliveryWithResourceIdentityEndpointUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.SystemTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook.EndpointUrl == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryWithResourceIdentity.Destination.WebHook.EndpointUrl.Index()
+}
+
+// indexEventgridSystemTopicsEventSubscriptionDeliveryWithResourceIdentityQueueNameFromConfig an index function for eventgrid_v20250215.SystemTopicsEventSubscription .spec.deliveryWithResourceIdentity.destination.storageQueue.queueNameFromConfig
+func indexEventgridSystemTopicsEventSubscriptionDeliveryWithResourceIdentityQueueNameFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.SystemTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.StorageQueue == nil {
+		return nil
+	}
+	if obj.Spec.DeliveryWithResourceIdentity.Destination.StorageQueue.QueueNameFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.DeliveryWithResourceIdentity.Destination.StorageQueue.QueueNameFromConfig.Index()
+}
+
+// indexEventgridSystemTopicsEventSubscriptionEndpointUrl an index function for eventgrid_v20250215.SystemTopicsEventSubscription .spec.destination.webHook.endpointUrl
+func indexEventgridSystemTopicsEventSubscriptionEndpointUrl(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.SystemTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Destination == nil {
+		return nil
+	}
+	if obj.Spec.Destination.WebHook == nil {
+		return nil
+	}
+	if obj.Spec.Destination.WebHook.EndpointUrl == nil {
+		return nil
+	}
+	return obj.Spec.Destination.WebHook.EndpointUrl.Index()
+}
+
+// indexEventgridSystemTopicsEventSubscriptionQueueNameFromConfig an index function for eventgrid_v20250215.SystemTopicsEventSubscription .spec.destination.storageQueue.queueNameFromConfig
+func indexEventgridSystemTopicsEventSubscriptionQueueNameFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*eventgrid_v20250215.SystemTopicsEventSubscription)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Destination == nil {
+		return nil
+	}
+	if obj.Spec.Destination.StorageQueue == nil {
+		return nil
+	}
+	if obj.Spec.Destination.StorageQueue.QueueNameFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.Destination.StorageQueue.QueueNameFromConfig.Index()
 }
 
 // indexKeyvaultManagedHSMTenantIdFromConfig an index function for keyvault_v20260515.ManagedHSM .spec.properties.tenantIdFromConfig

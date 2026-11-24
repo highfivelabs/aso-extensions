@@ -177,6 +177,14 @@ resources:
 - documentdb.azure.hfl.dev_mongoclustersprivateendpointconnections.yaml
 - documentdb.azure.hfl.dev_mongoclustersusers.yaml
 - entra.azure.hfl.dev_directoryroleassignments.yaml
+- eventgrid.azure.hfl.dev_namespacescacertificates.yaml
+- eventgrid.azure.hfl.dev_namespacesclientgroups.yaml
+- eventgrid.azure.hfl.dev_namespacesclients.yaml
+- eventgrid.azure.hfl.dev_namespacespermissionbindings.yaml
+- eventgrid.azure.hfl.dev_namespacestopicseventsubscriptions.yaml
+- eventgrid.azure.hfl.dev_namespacestopicspaces.yaml
+- eventgrid.azure.hfl.dev_systemtopics.yaml
+- eventgrid.azure.hfl.dev_systemtopicseventsubscriptions.yaml
 - eventhub.azure.hfl.dev_clusters.yaml
 - eventhub.azure.hfl.dev_namespacesapplicationgroups.yaml
 - eventhub.azure.hfl.dev_namespacesdisasterrecoveryconfigs.yaml

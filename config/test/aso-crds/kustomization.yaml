@@ -52,3 +52,5 @@ resources:
 - documentdb.azure.com_mongoclusters.yaml
 - servicebus.azure.com_namespaces.yaml
 - eventhub.azure.com_namespaces.yaml
+- eventgrid.azure.com_namespaces.yaml
+- eventgrid.azure.com_namespacetopics.yaml

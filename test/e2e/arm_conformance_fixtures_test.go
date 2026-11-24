@@ -263,6 +263,34 @@ func init() {
 	f["NamespacesApplicationGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"clientAppGroupIdentifier": "SASKeyName=conformance"}
 	}}
+	// Event Grid (eventgrid.go): a system topic's source and type; an event
+	// subscription's destination; a namespace topic subscription's delivery
+	// mode; a topic space's templates, a client group's query, a CA
+	// certificate's certificate; a permission binding's topic space and
+	// client group, which exist.
+	f["SystemTopic"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sourceReference": armRef(c.ref), "topicType": "Microsoft.Storage.StorageAccounts"}
+	}}
+	f["SystemTopicsEventSubscription"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"destination": map[string]any{"eventHub": map[string]any{"endpointType": "EventHub", "resourceReference": armRef(c.ref)}}}
+	}}
+	f["NamespacesTopicsEventSubscription"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"deliveryConfiguration": map[string]any{"deliveryMode": "Queue", "queue": map[string]any{"maxDeliveryCount": int64(1)}}}
+	}}
+	f["NamespacesTopicSpace"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"topicTemplates": []any{"conformance/#"}}
+	}}
+	f["NamespacesClientGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"query": "attributes.type = 'conformance'"}
+	}}
+	f["NamespacesCaCertificate"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"encodedCertificate": "conformance"}
+	}}
+	f["NamespacesPermissionBinding"] = conformanceFixture{
+		setup: func(c *conformanceContext) { c.add(c.owner+"/topicSpaces/ts", c.owner+"/clientGroups/cg") },
+		spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"topicSpaceName": "ts", "clientGroupName": "cg", "permission": "Subscriber"}
+		}}
 	f["NetworkInterfacesTapConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"virtualNetworkTap": embedRef(c.add(c.in("Microsoft.Network/virtualNetworkTaps/conformance")))}
 	}}
