@@ -62,6 +62,7 @@ import (
 	asoinsights "github.com/Azure/azure-service-operator/v2/api/insights/v1api20200202/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
 	asokusto "github.com/Azure/azure-service-operator/v2/api/kusto/v1api20240413/storage"
+	asoml "github.com/Azure/azure-service-operator/v2/api/machinelearningservices/v1api20240401/storage"
 	asodns "github.com/Azure/azure-service-operator/v2/api/network/v1api20180501/storage"
 	asodnsresolver "github.com/Azure/azure-service-operator/v2/api/network/v1api20220701/storage"
 	asoasg "github.com/Azure/azure-service-operator/v2/api/network/v1api20240101/storage"
@@ -148,6 +149,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asonotificationhubs.AddToScheme(scheme)
 	_ = asodatafactory.AddToScheme(scheme)
 	_ = asosynapse.AddToScheme(scheme)
+	_ = asoml.AddToScheme(scheme)
 	return scheme
 }
 
@@ -226,6 +228,8 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asonotificationhubs.Namespace{}, Name: "aso_notificationhubs_namespace"},
 		{Obj: &asodatafactory.Factory{}, Name: "aso_datafactory_factory"},
 		{Obj: &asosynapse.Workspace{}, Name: "aso_synapse_workspace"},
+		{Obj: &asoml.Workspace{}, Name: "aso_machinelearningservices_workspace"},
+		{Obj: &asoml.Registry{}, Name: "aso_machinelearningservices_registry"},
 	}
 }
 

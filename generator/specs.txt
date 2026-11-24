@@ -63,3 +63,4 @@ specification/deviceprovisioningservices
 specification/notificationhubs
 specification/datafactory
 specification/synapse
+specification/machinelearningservices

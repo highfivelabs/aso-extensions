@@ -57,6 +57,7 @@ imports:
   notificationhubs: azure-arm/notificationhubs.yaml
   datafactory: azure-arm/datafactory.yaml
   synapse: azure-arm/synapse.yaml
+  machinelearningservices: azure-arm/machinelearningservices.yaml
   network: azure-arm/network.yaml
   containerregistry: azure-arm/containerregistry.yaml
   compute: azure-arm/compute.yaml

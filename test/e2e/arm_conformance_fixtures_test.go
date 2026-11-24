@@ -464,6 +464,26 @@ func init() {
 		return map[string]any{"properties": map[string]any{"managed": map[string]any{"type": "Managed"}}}
 	}}
 	f[syn+"WorkspacesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// Machine Learning (machinelearning.go): an environment version names
+	// an image; a data version is uri_folder; a blob datastore its account and container; an outbound
+	// rule its destination; a private endpoint makes the connection.
+	mlEnv := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"image": "mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu22.04"}}
+	}}
+	f["WorkspacesEnvironmentsVersion"], f["RegistriesEnvironmentsVersion"] = mlEnv, mlEnv
+	// A data version is one of the union's members (none is no body).
+	mlData := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"uri_Folder": map[string]any{"dataType": "uri_folder", "dataUri": "azureml://datastores/conformance/paths/conformance/"}}}
+	}}
+	f["WorkspacesDataVersion"], f["RegistriesDataVersion"] = mlData, mlData
+	f["WorkspacesDatastore"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"azureBlob": map[string]any{"datastoreType": "AzureBlob",
+			"accountName": "conformance", "containerName": "conformance", "credentials": map[string]any{"none": map[string]any{"credentialsType": "None"}}}}}
+	}}
+	f["WorkspacesOutboundRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"fqdn": map[string]any{"type": "FQDN", "destination": "pypi.org"}}}
+	}}
+	f["machinelearningservices.azure.hfl.dev/WorkspacesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
 	// A dedicated SQL pool names a SKU; its auditing and assessment as the
 	// workspace's (synapse.go).
 	f[syn+"WorkspacesSqlPool"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

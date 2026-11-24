@@ -161,6 +161,9 @@ import (
 	logic_customizations "github.com/highfivelabs/aso-extensions/apis/arm/logic/customizations"
 	logic_v20190501 "github.com/highfivelabs/aso-extensions/apis/arm/logic/v20190501"
 	logic_v20190501s "github.com/highfivelabs/aso-extensions/apis/arm/logic/v20190501/storage"
+	machinelearningservices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/machinelearningservices/customizations"
+	machinelearningservices_v20260901 "github.com/highfivelabs/aso-extensions/apis/arm/machinelearningservices/v20260901"
+	machinelearningservices_v20260901s "github.com/highfivelabs/aso-extensions/apis/arm/machinelearningservices/v20260901/storage"
 	maintenance_customizations "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/customizations"
 	maintenance_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401"
 	maintenance_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401/storage"
@@ -2089,6 +2092,142 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.IntegrationAccountsSchema)})
 	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.IntegrationAccountsSession)})
 	result = append(result, &registration.StorageType{Obj: new(logic_v20190501.Workflow)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesCode)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesCodesVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesComponent)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesComponentsVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesData)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesDataVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesEnvironment)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesEnvironmentsVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesModel)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.RegistriesModelsVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesCode)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesCodesVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesComponent)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesComponentsVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesData)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesDataVersion)})
+	result = append(result, &registration.StorageType{
+		Obj: new(machinelearningservices_v20260901.WorkspacesDatastore),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.azureBlob.credentials.certificate.secrets.certificate",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureBlobCertificate,
+			},
+			{
+				Key:  ".spec.properties.azureBlob.credentials.servicePrincipal.secrets.clientSecret",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureBlobClientSecret,
+			},
+			{
+				Key:  ".spec.properties.azureBlob.credentials.accountKey.secrets.key",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureBlobKey,
+			},
+			{
+				Key:  ".spec.properties.azureBlob.credentials.sas.secrets.sasToken",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureBlobSasToken,
+			},
+			{
+				Key:  ".spec.properties.azureDataLakeGen1.credentials.certificate.secrets.certificate",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1Certificate,
+			},
+			{
+				Key:  ".spec.properties.azureDataLakeGen1.credentials.servicePrincipal.secrets.clientSecret",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1ClientSecret,
+			},
+			{
+				Key:  ".spec.properties.azureDataLakeGen1.credentials.accountKey.secrets.key",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1Key,
+			},
+			{
+				Key:  ".spec.properties.azureDataLakeGen1.credentials.sas.secrets.sasToken",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1SasToken,
+			},
+			{
+				Key:  ".spec.properties.azureDataLakeGen2.credentials.certificate.secrets.certificate",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2Certificate,
+			},
+			{
+				Key:  ".spec.properties.azureDataLakeGen2.credentials.servicePrincipal.secrets.clientSecret",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2ClientSecret,
+			},
+			{
+				Key:  ".spec.properties.azureDataLakeGen2.credentials.accountKey.secrets.key",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2Key,
+			},
+			{
+				Key:  ".spec.properties.azureDataLakeGen2.credentials.sas.secrets.sasToken",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2SasToken,
+			},
+			{
+				Key:  ".spec.properties.azureFile.credentials.certificate.secrets.certificate",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureFileCertificate,
+			},
+			{
+				Key:  ".spec.properties.azureFile.credentials.servicePrincipal.secrets.clientSecret",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureFileClientSecret,
+			},
+			{
+				Key:  ".spec.properties.azureFile.credentials.accountKey.secrets.key",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureFileKey,
+			},
+			{
+				Key:  ".spec.properties.azureFile.credentials.sas.secrets.sasToken",
+				Func: indexMachinelearningservicesWorkspacesDatastoreAzureFileSasToken,
+			},
+			{
+				Key:  ".spec.properties.oneLake.credentials.certificate.secrets.certificate",
+				Func: indexMachinelearningservicesWorkspacesDatastoreOneLakeCertificate,
+			},
+			{
+				Key:  ".spec.properties.oneLake.credentials.servicePrincipal.secrets.clientSecret",
+				Func: indexMachinelearningservicesWorkspacesDatastoreOneLakeClientSecret,
+			},
+			{
+				Key:  ".spec.properties.oneLake.credentials.accountKey.secrets.key",
+				Func: indexMachinelearningservicesWorkspacesDatastoreOneLakeKey,
+			},
+			{
+				Key:  ".spec.properties.oneLake.credentials.sas.secrets.sasToken",
+				Func: indexMachinelearningservicesWorkspacesDatastoreOneLakeSasToken,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.azureBlob.credentials.accountKey.secrets.key",
+						".spec.properties.azureBlob.credentials.certificate.secrets.certificate",
+						".spec.properties.azureBlob.credentials.sas.secrets.sasToken",
+						".spec.properties.azureBlob.credentials.servicePrincipal.secrets.clientSecret",
+						".spec.properties.azureDataLakeGen1.credentials.accountKey.secrets.key",
+						".spec.properties.azureDataLakeGen1.credentials.certificate.secrets.certificate",
+						".spec.properties.azureDataLakeGen1.credentials.sas.secrets.sasToken",
+						".spec.properties.azureDataLakeGen1.credentials.servicePrincipal.secrets.clientSecret",
+						".spec.properties.azureDataLakeGen2.credentials.accountKey.secrets.key",
+						".spec.properties.azureDataLakeGen2.credentials.certificate.secrets.certificate",
+						".spec.properties.azureDataLakeGen2.credentials.sas.secrets.sasToken",
+						".spec.properties.azureDataLakeGen2.credentials.servicePrincipal.secrets.clientSecret",
+						".spec.properties.azureFile.credentials.accountKey.secrets.key",
+						".spec.properties.azureFile.credentials.certificate.secrets.certificate",
+						".spec.properties.azureFile.credentials.sas.secrets.sasToken",
+						".spec.properties.azureFile.credentials.servicePrincipal.secrets.clientSecret",
+						".spec.properties.oneLake.credentials.accountKey.secrets.key",
+						".spec.properties.oneLake.credentials.certificate.secrets.certificate",
+						".spec.properties.oneLake.credentials.sas.secrets.sasToken",
+						".spec.properties.oneLake.credentials.servicePrincipal.secrets.clientSecret",
+					},
+					&machinelearningservices_v20260901.WorkspacesDatastoreList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesEnvironment)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesEnvironmentsVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesModel)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesModelsVersion)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesOutboundRule)})
+	result = append(result, &registration.StorageType{Obj: new(machinelearningservices_v20260901.WorkspacesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.ConfigurationAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(managedidentity_v20241130.UserAssignedIdentity)})
@@ -4415,6 +4554,56 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(logic_v20190501s.IntegrationAccountsSchema)},
 		&registration.KnownType{Obj: new(logic_v20190501s.IntegrationAccountsSession)},
 		&registration.KnownType{Obj: new(logic_v20190501s.Workflow)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesCode)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesCodesVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesComponent)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesComponentsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesData)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesDataVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesEnvironment)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesEnvironmentsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesModel)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.RegistriesModelsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesCode)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesCodesVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesComponent)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesComponentsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesData)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesDataVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesDatastore)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesEnvironment)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesEnvironmentsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesModel)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesModelsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesOutboundRule)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901.WorkspacesPrivateEndpointConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesCode)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesCodesVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesComponent)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesComponentsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesData)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesDataVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesEnvironment)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesEnvironmentsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesModel)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.RegistriesModelsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesCode)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesCodesVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesComponent)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesComponentsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesData)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesDataVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesDatastore)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesEnvironment)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesEnvironmentsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesModel)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesModelsVersion)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesOutboundRule)},
+		&registration.KnownType{Obj: new(machinelearningservices_v20260901s.WorkspacesPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401s.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401s.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(managedidentity_v20241130.UserAssignedIdentity)})
@@ -5252,6 +5441,8 @@ func createScheme() *runtime.Scheme {
 	_ = kusto_v20250214s.AddToScheme(scheme)
 	_ = logic_v20190501.AddToScheme(scheme)
 	_ = logic_v20190501s.AddToScheme(scheme)
+	_ = machinelearningservices_v20260901.AddToScheme(scheme)
+	_ = machinelearningservices_v20260901s.AddToScheme(scheme)
 	_ = maintenance_v20230401.AddToScheme(scheme)
 	_ = maintenance_v20230401s.AddToScheme(scheme)
 	_ = managedidentity_v20241130.AddToScheme(scheme)
@@ -5652,6 +5843,29 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &logic_customizations.IntegrationAccountsSchemaExtension{})
 	result = append(result, &logic_customizations.IntegrationAccountsSessionExtension{})
 	result = append(result, &logic_customizations.WorkflowExtension{})
+	result = append(result, &machinelearningservices_customizations.RegistriesCodeExtension{})
+	result = append(result, &machinelearningservices_customizations.RegistriesCodesVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.RegistriesComponentExtension{})
+	result = append(result, &machinelearningservices_customizations.RegistriesComponentsVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.RegistriesDataExtension{})
+	result = append(result, &machinelearningservices_customizations.RegistriesDataVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.RegistriesEnvironmentExtension{})
+	result = append(result, &machinelearningservices_customizations.RegistriesEnvironmentsVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.RegistriesModelExtension{})
+	result = append(result, &machinelearningservices_customizations.RegistriesModelsVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesCodeExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesCodesVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesComponentExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesComponentsVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesDataExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesDataVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesDatastoreExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesEnvironmentExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesEnvironmentsVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesModelExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesModelsVersionExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesOutboundRuleExtension{})
+	result = append(result, &machinelearningservices_customizations.WorkspacesPrivateEndpointConnectionExtension{})
 	result = append(result, &maintenance_customizations.ConfigurationAssignmentExtension{})
 	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})
 	result = append(result, &managedidentity_customizations.UserAssignedIdentityExtension{})
@@ -8643,6 +8857,546 @@ func indexLogicIntegrationAccountsAgreementSendAgreementRecipientReferencePasswo
 		return nil
 	}
 	return obj.Spec.Content.Edifact.SendAgreement.ProtocolSettings.EnvelopeSettings.RecipientReferencePasswordValue.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureBlobCertificate an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureBlob.credentials.certificate.secrets.certificate
+func indexMachinelearningservicesWorkspacesDatastoreAzureBlobCertificate(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.Certificate == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.Certificate.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.Certificate.Secrets.Certificate == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureBlob.Credentials.Certificate.Secrets.Certificate.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureBlobClientSecret an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureBlob.credentials.servicePrincipal.secrets.clientSecret
+func indexMachinelearningservicesWorkspacesDatastoreAzureBlobClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.ServicePrincipal == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.ServicePrincipal.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.ServicePrincipal.Secrets.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureBlob.Credentials.ServicePrincipal.Secrets.ClientSecret.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureBlobKey an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureBlob.credentials.accountKey.secrets.key
+func indexMachinelearningservicesWorkspacesDatastoreAzureBlobKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.AccountKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.AccountKey.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.AccountKey.Secrets.Key == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureBlob.Credentials.AccountKey.Secrets.Key.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureBlobSasToken an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureBlob.credentials.sas.secrets.sasToken
+func indexMachinelearningservicesWorkspacesDatastoreAzureBlobSasToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.Sas == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.Sas.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureBlob.Credentials.Sas.Secrets.SasToken == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureBlob.Credentials.Sas.Secrets.SasToken.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1Certificate an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureDataLakeGen1.credentials.certificate.secrets.certificate
+func indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1Certificate(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.Certificate == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.Certificate.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.Certificate.Secrets.Certificate == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureDataLakeGen1.Credentials.Certificate.Secrets.Certificate.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1ClientSecret an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureDataLakeGen1.credentials.servicePrincipal.secrets.clientSecret
+func indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1ClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.ServicePrincipal == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.ServicePrincipal.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.ServicePrincipal.Secrets.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureDataLakeGen1.Credentials.ServicePrincipal.Secrets.ClientSecret.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1Key an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureDataLakeGen1.credentials.accountKey.secrets.key
+func indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1Key(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.AccountKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.AccountKey.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.AccountKey.Secrets.Key == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureDataLakeGen1.Credentials.AccountKey.Secrets.Key.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1SasToken an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureDataLakeGen1.credentials.sas.secrets.sasToken
+func indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen1SasToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.Sas == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.Sas.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen1.Credentials.Sas.Secrets.SasToken == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureDataLakeGen1.Credentials.Sas.Secrets.SasToken.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2Certificate an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureDataLakeGen2.credentials.certificate.secrets.certificate
+func indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2Certificate(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.Certificate == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.Certificate.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.Certificate.Secrets.Certificate == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureDataLakeGen2.Credentials.Certificate.Secrets.Certificate.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2ClientSecret an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureDataLakeGen2.credentials.servicePrincipal.secrets.clientSecret
+func indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2ClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.ServicePrincipal == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.ServicePrincipal.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.ServicePrincipal.Secrets.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureDataLakeGen2.Credentials.ServicePrincipal.Secrets.ClientSecret.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2Key an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureDataLakeGen2.credentials.accountKey.secrets.key
+func indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2Key(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.AccountKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.AccountKey.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.AccountKey.Secrets.Key == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureDataLakeGen2.Credentials.AccountKey.Secrets.Key.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2SasToken an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureDataLakeGen2.credentials.sas.secrets.sasToken
+func indexMachinelearningservicesWorkspacesDatastoreAzureDataLakeGen2SasToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2 == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.Sas == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.Sas.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureDataLakeGen2.Credentials.Sas.Secrets.SasToken == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureDataLakeGen2.Credentials.Sas.Secrets.SasToken.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureFileCertificate an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureFile.credentials.certificate.secrets.certificate
+func indexMachinelearningservicesWorkspacesDatastoreAzureFileCertificate(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.Certificate == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.Certificate.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.Certificate.Secrets.Certificate == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureFile.Credentials.Certificate.Secrets.Certificate.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureFileClientSecret an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureFile.credentials.servicePrincipal.secrets.clientSecret
+func indexMachinelearningservicesWorkspacesDatastoreAzureFileClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.ServicePrincipal == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.ServicePrincipal.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.ServicePrincipal.Secrets.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureFile.Credentials.ServicePrincipal.Secrets.ClientSecret.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureFileKey an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureFile.credentials.accountKey.secrets.key
+func indexMachinelearningservicesWorkspacesDatastoreAzureFileKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.AccountKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.AccountKey.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.AccountKey.Secrets.Key == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureFile.Credentials.AccountKey.Secrets.Key.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreAzureFileSasToken an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.azureFile.credentials.sas.secrets.sasToken
+func indexMachinelearningservicesWorkspacesDatastoreAzureFileSasToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.Sas == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.Sas.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AzureFile.Credentials.Sas.Secrets.SasToken == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AzureFile.Credentials.Sas.Secrets.SasToken.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreOneLakeCertificate an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.oneLake.credentials.certificate.secrets.certificate
+func indexMachinelearningservicesWorkspacesDatastoreOneLakeCertificate(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.Certificate == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.Certificate.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.Certificate.Secrets.Certificate == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OneLake.Credentials.Certificate.Secrets.Certificate.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreOneLakeClientSecret an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.oneLake.credentials.servicePrincipal.secrets.clientSecret
+func indexMachinelearningservicesWorkspacesDatastoreOneLakeClientSecret(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.ServicePrincipal == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.ServicePrincipal.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.ServicePrincipal.Secrets.ClientSecret == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OneLake.Credentials.ServicePrincipal.Secrets.ClientSecret.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreOneLakeKey an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.oneLake.credentials.accountKey.secrets.key
+func indexMachinelearningservicesWorkspacesDatastoreOneLakeKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.AccountKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.AccountKey.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.AccountKey.Secrets.Key == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OneLake.Credentials.AccountKey.Secrets.Key.Index()
+}
+
+// indexMachinelearningservicesWorkspacesDatastoreOneLakeSasToken an index function for machinelearningservices_v20260901.WorkspacesDatastore .spec.properties.oneLake.credentials.sas.secrets.sasToken
+func indexMachinelearningservicesWorkspacesDatastoreOneLakeSasToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*machinelearningservices_v20260901.WorkspacesDatastore)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.Sas == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.Sas.Secrets == nil {
+		return nil
+	}
+	if obj.Spec.Properties.OneLake.Credentials.Sas.Secrets.SasToken == nil {
+		return nil
+	}
+	return obj.Spec.Properties.OneLake.Credentials.Sas.Secrets.SasToken.Index()
 }
 
 // indexNetworkApplicationGatewayAuthenticationCertificatesData an index function for network_v20260301.ApplicationGateway .spec.authenticationCertificates.data

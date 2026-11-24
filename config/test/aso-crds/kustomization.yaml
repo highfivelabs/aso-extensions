@@ -68,3 +68,5 @@ resources:
 - notificationhubs.azure.com_namespaces.yaml
 - datafactory.azure.com_factories.yaml
 - synapse.azure.com_workspaces.yaml
+- machinelearningservices.azure.com_workspaces.yaml
+- machinelearningservices.azure.com_registries.yaml

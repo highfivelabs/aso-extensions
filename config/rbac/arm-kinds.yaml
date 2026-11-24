@@ -37,6 +37,7 @@ rules:
   - kubernetesconfiguration.azure.hfl.dev
   - kusto.azure.hfl.dev
   - logic.azure.hfl.dev
+  - machinelearningservices.azure.hfl.dev
   - maintenance.azure.hfl.dev
   - managedidentity.azure.hfl.dev
   - management.azure.hfl.dev
@@ -92,6 +93,7 @@ rules:
   - kubernetesconfiguration.azure.hfl.dev
   - kusto.azure.hfl.dev
   - logic.azure.hfl.dev
+  - machinelearningservices.azure.hfl.dev
   - maintenance.azure.hfl.dev
   - managedidentity.azure.hfl.dev
   - management.azure.hfl.dev

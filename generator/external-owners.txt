@@ -42,6 +42,8 @@ devices/IotHub
 notificationhubs/Namespace
 datafactory/Factory
 synapse/Workspace
+machinelearningservices/Workspace
+machinelearningservices/Registry
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase

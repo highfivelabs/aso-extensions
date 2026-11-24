@@ -625,6 +625,16 @@ upstream's); the catalog's chart tests do that.
   workspace's SQL endpoints (no audit, alert or scan runs, no masking or
   workload management at query time), pausing and scaling a pool, key
   activation, runtime nodes and states, and the error codes.
+- Machine Learning assets (`Microsoft.MachineLearningServices`, 2026-09-01;
+  `pkg/fakecloud/arm/machinelearning.go`): an asset version (code,
+  component, data, environment, model) is immutable once made, and a PUT
+  that changes its URI, image, build, component spec or type is refused
+  (409); an environment version names an image or a build (400); a
+  datastore's credentials carry what their type needs, and a blob datastore
+  names its account and container (400); an outbound rule names its
+  destination, and a private endpoint rule's target exists (404).
+  Connections follow `privateendpoints.go`. Not modelled: what an asset
+  points at, image builds, the managed network, and the error codes.
 - A MySQL flexible server's advanced threat protection setting
   (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
   2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404

@@ -1,0 +1,125 @@
+# Machine Learning kinds ASO does not export (Microsoft.MachineLearningServices,
+# 2026-09-01, the newest stable version; docs/plan.md f82, tier 3 row t12 of
+# docs/coverage/foundation.md): a workspace's and a registry's assets (code,
+# component, data, environment and model containers and their versions), a
+# workspace's datastores, outbound rules and private endpoint connections.
+# Owned by ASO's Workspace and Registry.
+#
+# A datastore's credentials carry their secrets in an object the spec marks
+# secret (an account key, a SAS token, a service principal's secret, a
+# certificate's private key): the object is not a secret here
+# ($importSecretMode: never), each secret string in it is (a Secret
+# reference), and the credentials' secrets are removed from the status.
+typeFilters:
+  - action: include
+    group: machinelearningservices
+    version: v20260901
+    because: the newest stable version
+  - action: prune
+    group: machinelearningservices
+    because: every other version is left alone (ASO has the workspace, registry, computes and connections)
+typeTransformers:
+  - group: machinelearningservices
+    version: v20260901
+    name: AccountKeyDatastoreCredentials_STATUS;CertificateDatastoreCredentials_STATUS;SasDatastoreCredentials_STATUS;ServicePrincipalDatastoreCredentials_STATUS
+    property: Secrets
+    remove: true
+    because: a datastore's secrets come from Secrets (below); Azure does not return them, and a status must not hold them
+groupModelConfiguration:
+  2026-09-01:
+    Workspaces_Code:
+      $exportAs: WorkspacesCode
+      $supportedFrom: v0.1.0
+    Workspaces_Codes_Version:
+      $exportAs: WorkspacesCodesVersion
+      $supportedFrom: v0.1.0
+    Workspaces_Component:
+      $exportAs: WorkspacesComponent
+      $supportedFrom: v0.1.0
+    Workspaces_Components_Version:
+      $exportAs: WorkspacesComponentsVersion
+      $supportedFrom: v0.1.0
+    Workspaces_Datum:
+      $exportAs: WorkspacesData
+      $supportedFrom: v0.1.0
+    Workspaces_Data_Version:
+      $exportAs: WorkspacesDataVersion
+      $supportedFrom: v0.1.0
+    Workspaces_Environment:
+      $exportAs: WorkspacesEnvironment
+      $supportedFrom: v0.1.0
+    Workspaces_Environments_Version:
+      $exportAs: WorkspacesEnvironmentsVersion
+      $supportedFrom: v0.1.0
+    Workspaces_Model:
+      $exportAs: WorkspacesModel
+      $supportedFrom: v0.1.0
+    Workspaces_Models_Version:
+      $exportAs: WorkspacesModelsVersion
+      $supportedFrom: v0.1.0
+    Workspaces_Datastore:
+      $exportAs: WorkspacesDatastore
+      $supportedFrom: v0.1.0
+    Workspaces_OutboundRule:
+      $exportAs: WorkspacesOutboundRule
+      $supportedFrom: v0.1.0
+    Workspaces_PrivateEndpointConnection:
+      $exportAs: WorkspacesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Registries_Code:
+      $exportAs: RegistriesCode
+      $supportedFrom: v0.1.0
+    Registries_Codes_Version:
+      $exportAs: RegistriesCodesVersion
+      $supportedFrom: v0.1.0
+    Registries_Component:
+      $exportAs: RegistriesComponent
+      $supportedFrom: v0.1.0
+    Registries_Components_Version:
+      $exportAs: RegistriesComponentsVersion
+      $supportedFrom: v0.1.0
+    Registries_Datum:
+      $exportAs: RegistriesData
+      $supportedFrom: v0.1.0
+    Registries_Data_Version:
+      $exportAs: RegistriesDataVersion
+      $supportedFrom: v0.1.0
+    Registries_Environment:
+      $exportAs: RegistriesEnvironment
+      $supportedFrom: v0.1.0
+    Registries_Environments_Version:
+      $exportAs: RegistriesEnvironmentsVersion
+      $supportedFrom: v0.1.0
+    Registries_Model:
+      $exportAs: RegistriesModel
+      $supportedFrom: v0.1.0
+    Registries_Models_Version:
+      $exportAs: RegistriesModelsVersion
+      $supportedFrom: v0.1.0
+    AccountKeyDatastoreCredentials:
+      Secrets:
+        $importSecretMode: never
+    CertificateDatastoreCredentials:
+      Secrets:
+        $importSecretMode: never
+    SasDatastoreCredentials:
+      Secrets:
+        $importSecretMode: never
+    ServicePrincipalDatastoreCredentials:
+      Secrets:
+        $importSecretMode: never
+    AccountKeyDatastoreSecrets:
+      Key:
+        $importSecretMode: required
+    CertificateDatastoreSecrets:
+      Certificate:
+        $importSecretMode: required
+    SasDatastoreSecrets:
+      SasToken:
+        $importSecretMode: required
+    ServicePrincipalDatastoreSecrets:
+      ClientSecret:
+        $importSecretMode: required
+    DatasetReference:
+      Id:
+        $referenceType: arm # a model version's dataset, "the fully qualified ARM id" (a data version: our WorkspacesDataVersion, or an ARM ID)
