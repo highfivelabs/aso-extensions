@@ -944,12 +944,12 @@ Microsoft.DeviceRegistry,Microsoft.DeviceRegistry/schemaRegistries,10,,0,,0,10,f
 Microsoft.DeviceRegistry,Microsoft.DeviceRegistry/schemaRegistries/schemas,5,,0,,0,5,false,spec_api=2026-11-01
 Microsoft.DeviceRegistry,Microsoft.DeviceRegistry/schemaRegistries/schemas/schemaVersions,2,,0,,0,2,false,spec_api=2026-11-01
 Microsoft.Devices,Microsoft.Devices/IotHubs,114,devices.azure.com/IotHub,95,,0,19,false,spec_api=2023-06-30; official_api=2021-07-02; official-api-differs-from-spec
-Microsoft.Devices,Microsoft.Devices/IotHubs/certificates,2,,0,,0,2,false,spec_api=2023-06-30
+Microsoft.Devices,Microsoft.Devices/IotHubs/certificates,2,,0,devices.azure.hfl.dev/IotHubsCertificate,2,0,false,spec_api=2023-06-30; ours_api=2023-06-30
 Microsoft.Devices,Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups,1,,0,,0,1,false,spec_api=2023-06-30
-Microsoft.Devices,Microsoft.Devices/iotHubs/privateEndpointConnections,4,,0,,0,4,false,spec_api=2023-06-30
-Microsoft.Devices,Microsoft.Devices/provisioningServices,35,,0,,0,35,false,spec_api=2026-11-01
-Microsoft.Devices,Microsoft.Devices/provisioningServices/certificates,2,,0,,0,2,false,spec_api=2026-11-01
-Microsoft.Devices,Microsoft.Devices/provisioningServices/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-11-01
+Microsoft.Devices,Microsoft.Devices/iotHubs/privateEndpointConnections,4,,0,devices.azure.hfl.dev/IotHubsPrivateEndpointConnection,3,1,false,spec_api=2023-06-30; ours_api=2023-06-30
+Microsoft.Devices,Microsoft.Devices/provisioningServices,35,,0,devices.azure.hfl.dev/ProvisioningService,26,9,false,spec_api=2026-11-01; ours_api=2026-11-01
+Microsoft.Devices,Microsoft.Devices/provisioningServices/certificates,2,,0,devices.azure.hfl.dev/ProvisioningServicesCertificate,2,0,false,spec_api=2026-11-01; ours_api=2026-11-01
+Microsoft.Devices,Microsoft.Devices/provisioningServices/privateEndpointConnections,4,,0,devices.azure.hfl.dev/ProvisioningServicesPrivateEndpointConnection,3,1,false,spec_api=2026-11-01; ours_api=2026-11-01
 Microsoft.DeviceUpdate,Microsoft.DeviceUpdate/accounts,13,,0,,0,13,false,spec_api=2023-07-01
 Microsoft.DeviceUpdate,Microsoft.DeviceUpdate/accounts/instances,7,,0,,0,7,false,spec_api=2023-07-01
 Microsoft.DeviceUpdate,Microsoft.DeviceUpdate/accounts/privateEndpointConnectionProxies,22,,0,,0,22,false,spec_api=2023-07-01

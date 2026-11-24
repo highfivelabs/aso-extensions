@@ -101,7 +101,7 @@ Microsoft.DesktopVirtualization,11,0,0,241,0,0,241,0.0,0.0,100.0
 Microsoft.DevCenter,14,0,0,114,0,0,114,0.0,0.0,100.0
 Microsoft.DevHub,2,0,0,54,0,0,54,0.0,0.0,100.0
 Microsoft.DeviceRegistry,13,0,0,327,0,0,327,0.0,0.0,100.0
-Microsoft.Devices,7,1,0,162,95,0,67,58.6,0.0,41.4
+Microsoft.Devices,7,1,5,162,95,36,31,58.6,22.2,19.1
 Microsoft.DeviceUpdate,5,0,0,52,0,0,52,0.0,0.0,100.0
 Microsoft.DevOps,1,0,0,19,0,0,19,0.0,0.0,100.0
 Microsoft.DevOpsInfrastructure,1,0,0,52,0,0,52,0.0,0.0,100.0

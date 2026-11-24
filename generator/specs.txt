@@ -58,3 +58,5 @@ specification/azure-kusto
 specification/dataprotection
 specification/batch
 specification/logic
+specification/iothub
+specification/deviceprovisioningservices

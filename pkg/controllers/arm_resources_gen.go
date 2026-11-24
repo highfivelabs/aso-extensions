@@ -101,6 +101,11 @@ import (
 	dbforpostgresql_v20221108s "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/v20221108/storage"
 	dbforpostgresql_v20250801 "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/v20250801"
 	dbforpostgresql_v20250801s "github.com/highfivelabs/aso-extensions/apis/arm/dbforpostgresql/v20250801/storage"
+	devices_customizations "github.com/highfivelabs/aso-extensions/apis/arm/devices/customizations"
+	devices_v20230630 "github.com/highfivelabs/aso-extensions/apis/arm/devices/v20230630"
+	devices_v20230630s "github.com/highfivelabs/aso-extensions/apis/arm/devices/v20230630/storage"
+	devices_v20261101 "github.com/highfivelabs/aso-extensions/apis/arm/devices/v20261101"
+	devices_v20261101s "github.com/highfivelabs/aso-extensions/apis/arm/devices/v20261101/storage"
 	devtestlab_customizations "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/customizations"
 	devtestlab_v20180915 "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915"
 	devtestlab_v20180915s "github.com/highfivelabs/aso-extensions/apis/arm/devtestlab/v20180915/storage"
@@ -1530,6 +1535,29 @@ func getKnownStorageTypes() []*registration.StorageType {
 		},
 	})
 	result = append(result, &registration.StorageType{Obj: new(dbforpostgresql_v20250801.FlexibleServersPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(devices_v20230630.IotHubsCertificate)})
+	result = append(result, &registration.StorageType{Obj: new(devices_v20230630.IotHubsPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{
+		Obj: new(devices_v20261101.ProvisioningService),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.iotHubs.connectionString",
+				Func: indexDevicesProvisioningServiceConnectionString,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.iotHubs.connectionString",
+					},
+					&devices_v20261101.ProvisioningServiceList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(devices_v20261101.ProvisioningServicesCertificate)})
+	result = append(result, &registration.StorageType{Obj: new(devices_v20261101.ProvisioningServicesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(devtestlab_v20180915.Lab)})
 	result = append(result, &registration.StorageType{
 		Obj: new(devtestlab_v20180915.LabsArtifactSource),
@@ -3763,6 +3791,18 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(dbforpostgresql_v20221108s.ServerGroupsv2Role)})
 	result = append(result, &registration.KnownType{Obj: new(dbforpostgresql_v20250801.FlexibleServersPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(dbforpostgresql_v20250801s.FlexibleServersPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(devices_v20230630.IotHubsCertificate)}, &registration.KnownType{Obj: new(devices_v20230630.IotHubsPrivateEndpointConnection)})
+	result = append(result, &registration.KnownType{Obj: new(devices_v20230630s.IotHubsCertificate)}, &registration.KnownType{Obj: new(devices_v20230630s.IotHubsPrivateEndpointConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(devices_v20261101.ProvisioningService)},
+		&registration.KnownType{Obj: new(devices_v20261101.ProvisioningServicesCertificate)},
+		&registration.KnownType{Obj: new(devices_v20261101.ProvisioningServicesPrivateEndpointConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(devices_v20261101s.ProvisioningService)},
+		&registration.KnownType{Obj: new(devices_v20261101s.ProvisioningServicesCertificate)},
+		&registration.KnownType{Obj: new(devices_v20261101s.ProvisioningServicesPrivateEndpointConnection)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(devtestlab_v20180915.Lab)},
@@ -4718,6 +4758,10 @@ func createScheme() *runtime.Scheme {
 	_ = dbforpostgresql_v20221108s.AddToScheme(scheme)
 	_ = dbforpostgresql_v20250801.AddToScheme(scheme)
 	_ = dbforpostgresql_v20250801s.AddToScheme(scheme)
+	_ = devices_v20230630.AddToScheme(scheme)
+	_ = devices_v20230630s.AddToScheme(scheme)
+	_ = devices_v20261101.AddToScheme(scheme)
+	_ = devices_v20261101s.AddToScheme(scheme)
 	_ = devtestlab_v20180915.AddToScheme(scheme)
 	_ = devtestlab_v20180915s.AddToScheme(scheme)
 	_ = documentdb_v20240701.AddToScheme(scheme)
@@ -5045,6 +5089,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2NodeConfigurationExtension{})
 	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2PrivateEndpointConnectionExtension{})
 	result = append(result, &dbforpostgresql_customizations.ServerGroupsv2RoleExtension{})
+	result = append(result, &devices_customizations.IotHubsCertificateExtension{})
+	result = append(result, &devices_customizations.IotHubsPrivateEndpointConnectionExtension{})
+	result = append(result, &devices_customizations.ProvisioningServiceExtension{})
+	result = append(result, &devices_customizations.ProvisioningServicesCertificateExtension{})
+	result = append(result, &devices_customizations.ProvisioningServicesPrivateEndpointConnectionExtension{})
 	result = append(result, &devtestlab_customizations.LabExtension{})
 	result = append(result, &devtestlab_customizations.LabsArtifactSourceExtension{})
 	result = append(result, &devtestlab_customizations.LabsCostExtension{})
@@ -7302,6 +7351,25 @@ func indexDbforpostgresqlServerGroupsv2RolePassword(rawObj client.Object) []stri
 		return nil
 	}
 	return obj.Spec.Password.Index()
+}
+
+// indexDevicesProvisioningServiceConnectionString an index function for devices_v20261101.ProvisioningService .spec.properties.iotHubs.connectionString
+func indexDevicesProvisioningServiceConnectionString(rawObj client.Object) []string {
+	obj, ok := rawObj.(*devices_v20261101.ProvisioningService)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	for _, iotHubItem := range obj.Spec.Properties.IotHubs {
+		if iotHubItem.ConnectionString == nil {
+			continue
+		}
+		result = append(result, iotHubItem.ConnectionString.Index()...)
+	}
+	return result
 }
 
 // indexDevtestlabLabsArtifactSourceSecurityToken an index function for devtestlab_v20180915.LabsArtifactSource .spec.securityToken

@@ -385,6 +385,19 @@ func init() {
 		return map[string]any{"publicCertificate": "MIIBconformance"}
 	}}
 	f["IntegrationAccountsAgreement"] = conformanceFixture{coveredBy: "TestLogicWorkflowAndIntegrationAccount"}
+	// IoT (devices.go): a certificate carries its certificate; a
+	// provisioning service is S1.
+	iotCert := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"certificate": "MIIBconformance"}}
+	}}
+	f["IotHubsCertificate"], f["ProvisioningServicesCertificate"] = iotCert, iotCert
+	f["ProvisioningService"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sku": map[string]any{"name": "S1", "capacity": int64(1)}}
+	}}
+	f["IotHubsPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
+	f["ProvisioningServicesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
 	// A MySQL flexible server's threat protection setting is Default and
 	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
 	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

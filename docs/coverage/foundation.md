@@ -153,7 +153,7 @@ on). "Live" says whether a live test can be cheap.
 | t13 | Data Protection: `ResourceGuard`, `BackupVaultsBackupResourceGuardProxy` (**built 2026-11-24**, `docs/plan.md` f70) | `resourceGuards` (4), `backupVaults/backupResourceGuardProxies` (5); 2026-07-01 | `BackupVault`, backup instances and policies | none | none | free (a guard and an empty vault) | S |
 | t14 | Batch: `BatchAccountsApplication` (+ versions), `BatchAccountsPool` (**built 2026-11-24**, `docs/plan.md` f73: applications and pools; not the versions) | `batchAccounts/applications` (4), `versions` (2), `pools` (154); 2025-06-01 | `BatchAccount` | `certificates` (Batch account certificates, retired 2024-02-29) | none | an account and a pool of zero nodes (free) | M |
 | t15 | Logic Apps: `Workflow`; `IntegrationAccount` and its partners, agreements, schemas, maps, certificates, assemblies, batch configurations, sessions (**built 2026-11-24**, `docs/plan.md` f74) | `workflows` (32), `integrationAccounts` and eight children (628); 2019-05-01 | none | `integrationServiceEnvironments` and their managed APIs (retired 2024-08-31); `automationProjects` (preview only) | none mapped | a Consumption workflow that never runs and a Free integration account (free) | M (agreements L) |
-| t16 | IoT: `IotHubsCertificate`, `IotHubsEventHubEndpointsConsumerGroup`, `IotHubsPrivateEndpointConnection`; Device Provisioning: `ProvisioningService` (+ certificates, endpoint connections) | (13) and `provisioningServices` (41); 2023-06-30 and 2026-11-01 | `IotHub` | none | none mapped | a Free F1 hub (one a subscription) and an S1 provisioning service (cents) | S |
+| t16 | IoT: `IotHubsCertificate`, `IotHubsEventHubEndpointsConsumerGroup`, `IotHubsPrivateEndpointConnection`; Device Provisioning: `ProvisioningService` (+ certificates, endpoint connections) (**built 2026-11-24**, `docs/plan.md` f75, but the consumer groups: their `eventHubEndpoints` segment is no resource) | (13) and `provisioningServices` (41); 2023-06-30 and 2026-11-01 | `IotHub` | none | none mapped | a Free F1 hub (one a subscription) and an S1 provisioning service (cents) | S |
 | t17 | Notification Hubs: `NamespacesPrivateEndpointConnection` | `namespaces/privateEndpointConnections` (3); 2023-09-01 | the namespace, hubs and authorization rules | none | none | a connection needs a Standard namespace (about $200 a month): not live | S |
 | t18 | Service Connector | `locations/connectors` (47), `dryruns` (48) | `Linker` | everything: connectors live under a location segment, which no generated kind can own (as f59's SQL trust groups), and dry runs are operations | | | |
 | t19 | Azure Red Hat OpenShift | | the four kinds | nothing uncovered but six status attributes | | | |
@@ -170,7 +170,7 @@ Generated: every resource of the two categories, by the order of the services in
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | platform-foundation | 18 | 246 | 4,675 | 43.2% | 39.3% | 17.5% |
 | security-adjacent | 7 | 93 | 1,049 | 8.6% | 60.3% | 31.1% |
-| application | 35 | 823 | 14,821 | 33.1% | 35.5% | 31.5% |
+| application | 35 | 823 | 14,821 | 33.1% | 35.7% | 31.2% |
 | other | 230 | 1,262 | 22,824 | 0.5% | 2.3% | 97.3% |
 
 ### platform-foundation: 246 resources (23 with no kind, 81 partly covered, 142 covered)

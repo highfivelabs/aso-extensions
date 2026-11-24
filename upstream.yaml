@@ -104,5 +104,7 @@ copied:
     from: {pin: azure-service-operator, paths: [v2/azure-arm/apimanagement.yaml]}
   - here: [generator/azure-arm/batch.yaml]
     from: {pin: azure-service-operator, paths: [v2/azure-arm/batch.yaml, v2/azure-arm/compute.yaml]}
+  - here: [generator/azure-arm/devices.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/devices.yaml]}
   - here: [pkg/util/azuresql/azuresql.go, pkg/util/azuresql/role.go]
     from: {pin: azure-service-operator, paths: [v2/internal/util/azuresql/]}

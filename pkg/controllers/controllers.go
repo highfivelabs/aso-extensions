@@ -53,6 +53,7 @@ import (
 	asodataprotection "github.com/Azure/azure-service-operator/v2/api/dataprotection/v20231101/storage"
 	asomysql "github.com/Azure/azure-service-operator/v2/api/dbformysql/v20241230/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
+	asodevices "github.com/Azure/azure-service-operator/v2/api/devices/v20210702/storage"
 	asomongo "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240701/storage"
 	asocosmos "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240815/storage"
 	asoeventgrid "github.com/Azure/azure-service-operator/v2/api/eventgrid/v20250215/storage"
@@ -140,6 +141,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asokusto.AddToScheme(scheme)
 	_ = asodataprotection.AddToScheme(scheme)
 	_ = asobatch.AddToScheme(scheme)
+	_ = asodevices.AddToScheme(scheme)
 	return scheme
 }
 
@@ -214,6 +216,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asokusto.Database{}, Name: "aso_kusto_database"},
 		{Obj: &asodataprotection.BackupVault{}, Name: "aso_dataprotection_backupvault"},
 		{Obj: &asobatch.BatchAccount{}, Name: "aso_batch_batchaccount"},
+		{Obj: &asodevices.IotHub{}, Name: "aso_devices_iothub"},
 	}
 }
 

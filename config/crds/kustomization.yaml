@@ -196,6 +196,11 @@ resources:
 - dbforpostgresql.azure.hfl.dev_servergroupsv2roles.yaml
 - dbforpostgresql.azure.hfl.dev_servergroupsv2s.yaml
 - dbforpostgresql.azure.hfl.dev_users.yaml
+- devices.azure.hfl.dev_iothubscertificates.yaml
+- devices.azure.hfl.dev_iothubsprivateendpointconnections.yaml
+- devices.azure.hfl.dev_provisioningservices.yaml
+- devices.azure.hfl.dev_provisioningservicescertificates.yaml
+- devices.azure.hfl.dev_provisioningservicesprivateendpointconnections.yaml
 - devtestlab.azure.hfl.dev_labs.yaml
 - devtestlab.azure.hfl.dev_labsartifactsources.yaml
 - devtestlab.azure.hfl.dev_labscosts.yaml

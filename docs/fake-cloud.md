@@ -581,6 +581,15 @@ upstream's); the catalog's chart tests do that.
   release criterion (400). Not modelled: workflows running, the definition
   language beyond its two fields, the SKUs' artifact limits, B2B messages,
   and the error codes.
+- IoT hub certificates and Device Provisioning Services
+  (`Microsoft.Devices`, 2023-06-30 and 2026-11-01;
+  `pkg/fakecloud/arm/devices.go`): a hub's or a provisioning service's
+  certificate carries its certificate (400); a provisioning service is S1
+  (400) and each IoT hub it links has a location and, unless reached with
+  a managed identity, a connection string (400). Connections follow
+  `privateendpoints.go`. Not modelled: devices, enrollments and their
+  attestation, proof of possession, allocation at work, and the error
+  codes.
 - A MySQL flexible server's advanced threat protection setting
   (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
   2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404

@@ -25,6 +25,7 @@ rules:
   - dataprotection.azure.hfl.dev
   - dbformysql.azure.hfl.dev
   - dbforpostgresql.azure.hfl.dev
+  - devices.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - documentdb.azure.hfl.dev
   - eventgrid.azure.hfl.dev
@@ -76,6 +77,7 @@ rules:
   - dataprotection.azure.hfl.dev
   - dbformysql.azure.hfl.dev
   - dbforpostgresql.azure.hfl.dev
+  - devices.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - documentdb.azure.hfl.dev
   - eventgrid.azure.hfl.dev
