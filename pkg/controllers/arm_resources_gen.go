@@ -42,6 +42,9 @@ import (
 	automation_customizations "github.com/highfivelabs/aso-extensions/apis/arm/automation/customizations"
 	automation_v20241023 "github.com/highfivelabs/aso-extensions/apis/arm/automation/v20241023"
 	automation_v20241023s "github.com/highfivelabs/aso-extensions/apis/arm/automation/v20241023/storage"
+	batch_customizations "github.com/highfivelabs/aso-extensions/apis/arm/batch/customizations"
+	batch_v20250601 "github.com/highfivelabs/aso-extensions/apis/arm/batch/v20250601"
+	batch_v20250601s "github.com/highfivelabs/aso-extensions/apis/arm/batch/v20250601/storage"
 	cache_customizations "github.com/highfivelabs/aso-extensions/apis/arm/cache/customizations"
 	cache_v20241101 "github.com/highfivelabs/aso-extensions/apis/arm/cache/v20241101"
 	cache_v20241101s "github.com/highfivelabs/aso-extensions/apis/arm/cache/v20241101/storage"
@@ -1004,6 +1007,66 @@ func getKnownStorageTypes() []*registration.StorageType {
 						".spec.uri",
 					},
 					&automation_v20241023.AutomationAccountsWebhookList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(batch_v20250601.BatchAccountsApplication)})
+	result = append(result, &registration.StorageType{
+		Obj: new(batch_v20250601.BatchAccountsPool),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.mountConfiguration.azureBlobFileSystemConfiguration.accountKey",
+				Func: indexBatchBatchAccountsPoolAzureBlobFileSystemConfigurationAccountKey,
+			},
+			{
+				Key:  ".spec.mountConfiguration.azureBlobFileSystemConfiguration.sasKey",
+				Func: indexBatchBatchAccountsPoolAzureBlobFileSystemConfigurationSasKey,
+			},
+			{
+				Key:  ".spec.mountConfiguration.azureFileShareConfiguration.accountKey",
+				Func: indexBatchBatchAccountsPoolAzureFileShareConfigurationAccountKey,
+			},
+			{
+				Key:  ".spec.mountConfiguration.cifsMountConfiguration.password",
+				Func: indexBatchBatchAccountsPoolCifsMountConfigurationPassword,
+			},
+			{
+				Key:  ".spec.deploymentConfiguration.virtualMachineConfiguration.containerConfiguration.containerRegistries.password",
+				Func: indexBatchBatchAccountsPoolContainerRegistriesPassword,
+			},
+			{
+				Key:  ".spec.deploymentConfiguration.virtualMachineConfiguration.extensions.protectedSettings",
+				Func: indexBatchBatchAccountsPoolProtectedSettings,
+			},
+			{
+				Key:  ".spec.startTask.containerSettings.registry.password",
+				Func: indexBatchBatchAccountsPoolRegistryPassword,
+			},
+			{
+				Key:  ".spec.userAccounts.password",
+				Func: indexBatchBatchAccountsPoolUserAccountsPassword,
+			},
+			{
+				Key:  ".spec.userAccounts.linuxUserConfiguration.sshPrivateKey",
+				Func: indexBatchBatchAccountsPoolUserAccountsSshPrivateKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.deploymentConfiguration.virtualMachineConfiguration.containerConfiguration.containerRegistries.password",
+						".spec.deploymentConfiguration.virtualMachineConfiguration.extensions.protectedSettings",
+						".spec.mountConfiguration.azureBlobFileSystemConfiguration.accountKey",
+						".spec.mountConfiguration.azureBlobFileSystemConfiguration.sasKey",
+						".spec.mountConfiguration.azureFileShareConfiguration.accountKey",
+						".spec.mountConfiguration.cifsMountConfiguration.password",
+						".spec.startTask.containerSettings.registry.password",
+						".spec.userAccounts.linuxUserConfiguration.sshPrivateKey",
+						".spec.userAccounts.password",
+					},
+					&batch_v20250601.BatchAccountsPoolList{}),
 			},
 		},
 	})
@@ -3452,6 +3515,8 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsVariable)},
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsWatcher)},
 		&registration.KnownType{Obj: new(automation_v20241023s.AutomationAccountsWebhook)})
+	result = append(result, &registration.KnownType{Obj: new(batch_v20250601.BatchAccountsApplication)}, &registration.KnownType{Obj: new(batch_v20250601.BatchAccountsPool)})
+	result = append(result, &registration.KnownType{Obj: new(batch_v20250601s.BatchAccountsApplication)}, &registration.KnownType{Obj: new(batch_v20250601s.BatchAccountsPool)})
 	result = append(result, &registration.KnownType{Obj: new(cache_v20241101.RedisPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(cache_v20241101s.RedisPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(cache_v20250401.RedisEnterprisePrivateEndpointConnection)})
@@ -4517,6 +4582,8 @@ func createScheme() *runtime.Scheme {
 	_ = authorization_v20260701s.AddToScheme(scheme)
 	_ = automation_v20241023.AddToScheme(scheme)
 	_ = automation_v20241023s.AddToScheme(scheme)
+	_ = batch_v20250601.AddToScheme(scheme)
+	_ = batch_v20250601s.AddToScheme(scheme)
 	_ = cache_v20241101.AddToScheme(scheme)
 	_ = cache_v20241101s.AddToScheme(scheme)
 	_ = cache_v20250401.AddToScheme(scheme)
@@ -4810,6 +4877,8 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &automation_customizations.AutomationAccountsVariableExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsWatcherExtension{})
 	result = append(result, &automation_customizations.AutomationAccountsWebhookExtension{})
+	result = append(result, &batch_customizations.BatchAccountsApplicationExtension{})
+	result = append(result, &batch_customizations.BatchAccountsPoolExtension{})
 	result = append(result, &cache_customizations.RedisEnterprisePrivateEndpointConnectionExtension{})
 	result = append(result, &cache_customizations.RedisPrivateEndpointConnectionExtension{})
 	result = append(result, &cdn_customizations.CdnWebApplicationFirewallPolicyExtension{})
@@ -5988,6 +6057,185 @@ func indexAutomationAutomationAccountsWebhookUri(rawObj client.Object) []string 
 		return nil
 	}
 	return obj.Spec.Uri.Index()
+}
+
+// indexBatchBatchAccountsPoolAzureBlobFileSystemConfigurationAccountKey an index function for batch_v20250601.BatchAccountsPool .spec.mountConfiguration.azureBlobFileSystemConfiguration.accountKey
+func indexBatchBatchAccountsPoolAzureBlobFileSystemConfigurationAccountKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*batch_v20250601.BatchAccountsPool)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, mountConfigurationItem := range obj.Spec.MountConfiguration {
+		if mountConfigurationItem.AzureBlobFileSystemConfiguration == nil {
+			continue
+		}
+		if mountConfigurationItem.AzureBlobFileSystemConfiguration.AccountKey == nil {
+			continue
+		}
+		result = append(result, mountConfigurationItem.AzureBlobFileSystemConfiguration.AccountKey.Index()...)
+	}
+	return result
+}
+
+// indexBatchBatchAccountsPoolAzureBlobFileSystemConfigurationSasKey an index function for batch_v20250601.BatchAccountsPool .spec.mountConfiguration.azureBlobFileSystemConfiguration.sasKey
+func indexBatchBatchAccountsPoolAzureBlobFileSystemConfigurationSasKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*batch_v20250601.BatchAccountsPool)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, mountConfigurationItem := range obj.Spec.MountConfiguration {
+		if mountConfigurationItem.AzureBlobFileSystemConfiguration == nil {
+			continue
+		}
+		if mountConfigurationItem.AzureBlobFileSystemConfiguration.SasKey == nil {
+			continue
+		}
+		result = append(result, mountConfigurationItem.AzureBlobFileSystemConfiguration.SasKey.Index()...)
+	}
+	return result
+}
+
+// indexBatchBatchAccountsPoolAzureFileShareConfigurationAccountKey an index function for batch_v20250601.BatchAccountsPool .spec.mountConfiguration.azureFileShareConfiguration.accountKey
+func indexBatchBatchAccountsPoolAzureFileShareConfigurationAccountKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*batch_v20250601.BatchAccountsPool)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, mountConfigurationItem := range obj.Spec.MountConfiguration {
+		if mountConfigurationItem.AzureFileShareConfiguration == nil {
+			continue
+		}
+		if mountConfigurationItem.AzureFileShareConfiguration.AccountKey == nil {
+			continue
+		}
+		result = append(result, mountConfigurationItem.AzureFileShareConfiguration.AccountKey.Index()...)
+	}
+	return result
+}
+
+// indexBatchBatchAccountsPoolCifsMountConfigurationPassword an index function for batch_v20250601.BatchAccountsPool .spec.mountConfiguration.cifsMountConfiguration.password
+func indexBatchBatchAccountsPoolCifsMountConfigurationPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*batch_v20250601.BatchAccountsPool)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, mountConfigurationItem := range obj.Spec.MountConfiguration {
+		if mountConfigurationItem.CifsMountConfiguration == nil {
+			continue
+		}
+		if mountConfigurationItem.CifsMountConfiguration.Password == nil {
+			continue
+		}
+		result = append(result, mountConfigurationItem.CifsMountConfiguration.Password.Index()...)
+	}
+	return result
+}
+
+// indexBatchBatchAccountsPoolContainerRegistriesPassword an index function for batch_v20250601.BatchAccountsPool .spec.deploymentConfiguration.virtualMachineConfiguration.containerConfiguration.containerRegistries.password
+func indexBatchBatchAccountsPoolContainerRegistriesPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*batch_v20250601.BatchAccountsPool)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.DeploymentConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.DeploymentConfiguration.VirtualMachineConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.DeploymentConfiguration.VirtualMachineConfiguration.ContainerConfiguration == nil {
+		return nil
+	}
+	for _, containerRegistryItem := range obj.Spec.DeploymentConfiguration.VirtualMachineConfiguration.ContainerConfiguration.ContainerRegistries {
+		if containerRegistryItem.Password == nil {
+			continue
+		}
+		result = append(result, containerRegistryItem.Password.Index()...)
+	}
+	return result
+}
+
+// indexBatchBatchAccountsPoolProtectedSettings an index function for batch_v20250601.BatchAccountsPool .spec.deploymentConfiguration.virtualMachineConfiguration.extensions.protectedSettings
+func indexBatchBatchAccountsPoolProtectedSettings(rawObj client.Object) []string {
+	obj, ok := rawObj.(*batch_v20250601.BatchAccountsPool)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.DeploymentConfiguration == nil {
+		return nil
+	}
+	if obj.Spec.DeploymentConfiguration.VirtualMachineConfiguration == nil {
+		return nil
+	}
+	for _, extensionItem := range obj.Spec.DeploymentConfiguration.VirtualMachineConfiguration.Extensions {
+		if extensionItem.ProtectedSettings == nil {
+			continue
+		}
+		result = append(result, extensionItem.ProtectedSettings.Index()...)
+	}
+	return result
+}
+
+// indexBatchBatchAccountsPoolRegistryPassword an index function for batch_v20250601.BatchAccountsPool .spec.startTask.containerSettings.registry.password
+func indexBatchBatchAccountsPoolRegistryPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*batch_v20250601.BatchAccountsPool)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StartTask == nil {
+		return nil
+	}
+	if obj.Spec.StartTask.ContainerSettings == nil {
+		return nil
+	}
+	if obj.Spec.StartTask.ContainerSettings.Registry == nil {
+		return nil
+	}
+	if obj.Spec.StartTask.ContainerSettings.Registry.Password == nil {
+		return nil
+	}
+	return obj.Spec.StartTask.ContainerSettings.Registry.Password.Index()
+}
+
+// indexBatchBatchAccountsPoolUserAccountsPassword an index function for batch_v20250601.BatchAccountsPool .spec.userAccounts.password
+func indexBatchBatchAccountsPoolUserAccountsPassword(rawObj client.Object) []string {
+	obj, ok := rawObj.(*batch_v20250601.BatchAccountsPool)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, userAccountItem := range obj.Spec.UserAccounts {
+		if userAccountItem.Password == nil {
+			continue
+		}
+		result = append(result, userAccountItem.Password.Index()...)
+	}
+	return result
+}
+
+// indexBatchBatchAccountsPoolUserAccountsSshPrivateKey an index function for batch_v20250601.BatchAccountsPool .spec.userAccounts.linuxUserConfiguration.sshPrivateKey
+func indexBatchBatchAccountsPoolUserAccountsSshPrivateKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*batch_v20250601.BatchAccountsPool)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, userAccountItem := range obj.Spec.UserAccounts {
+		if userAccountItem.LinuxUserConfiguration == nil {
+			continue
+		}
+		if userAccountItem.LinuxUserConfiguration.SshPrivateKey == nil {
+			continue
+		}
+		result = append(result, userAccountItem.LinuxUserConfiguration.SshPrivateKey.Index()...)
+	}
+	return result
 }
 
 // indexCognitiveservicesAccountsConnectionAccountKeyKey an index function for cognitiveservices_v20250601.AccountsConnection .spec.properties.accountKey.credentials.key

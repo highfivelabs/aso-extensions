@@ -119,6 +119,8 @@ resources:
 - automation.azure.hfl.dev_automationaccountsvariables.yaml
 - automation.azure.hfl.dev_automationaccountswatchers.yaml
 - automation.azure.hfl.dev_automationaccountswebhooks.yaml
+- batch.azure.hfl.dev_batchaccountsapplications.yaml
+- batch.azure.hfl.dev_batchaccountspools.yaml
 - cache.azure.hfl.dev_redisenterpriseprivateendpointconnections.yaml
 - cache.azure.hfl.dev_redisprivateendpointconnections.yaml
 - cdn.azure.hfl.dev_cdnwebapplicationfirewallpolicies.yaml

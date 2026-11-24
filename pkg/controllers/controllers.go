@@ -41,6 +41,7 @@ import (
 	asoapim "github.com/Azure/azure-service-operator/v2/api/apimanagement/v20240501/storage"
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
 	asoappconfig "github.com/Azure/azure-service-operator/v2/api/appconfiguration/v20240601/storage"
+	asobatch "github.com/Azure/azure-service-operator/v2/api/batch/v20240701/storage"
 	asocache "github.com/Azure/azure-service-operator/v2/api/cache/v20241101/storage"
 	asoredisenterprise "github.com/Azure/azure-service-operator/v2/api/cache/v20250401/storage"
 	asocognitive "github.com/Azure/azure-service-operator/v2/api/cognitiveservices/v20250601/storage"
@@ -138,6 +139,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asosignalr.AddToScheme(scheme)
 	_ = asokusto.AddToScheme(scheme)
 	_ = asodataprotection.AddToScheme(scheme)
+	_ = asobatch.AddToScheme(scheme)
 	return scheme
 }
 
@@ -211,6 +213,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asokusto.Cluster{}, Name: "aso_kusto_cluster"},
 		{Obj: &asokusto.Database{}, Name: "aso_kusto_database"},
 		{Obj: &asodataprotection.BackupVault{}, Name: "aso_dataprotection_backupvault"},
+		{Obj: &asobatch.BatchAccount{}, Name: "aso_batch_batchaccount"},
 	}
 }
 

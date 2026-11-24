@@ -51,6 +51,7 @@ imports:
   signalrservice: azure-arm/signalrservice.yaml
   kusto: azure-arm/kusto.yaml
   dataprotection: azure-arm/dataprotection.yaml
+  batch: azure-arm/batch.yaml
   network: azure-arm/network.yaml
   containerregistry: azure-arm/containerregistry.yaml
   compute: azure-arm/compute.yaml

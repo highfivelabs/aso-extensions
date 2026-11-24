@@ -355,6 +355,12 @@ func init() {
 	f[g+"WorkspaceTagOperationLink"] = link("operationReference", "/apis/conformance/operations/conformance")
 	f[g+"WorkspaceTagProductLink"] = link("productReference", "/products/conformance")
 	f[g+"WorkspaceProductGroupLink"] = link("groupReference", "/groups/conformance")
+	// A Batch pool has a VM size and a virtual machine configuration
+	// (batch.go).
+	f["BatchAccountsPool"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"vmSize": "STANDARD_D2S_V3", "deploymentConfiguration": map[string]any{"virtualMachineConfiguration": map[string]any{
+			"imageReference": map[string]any{"publisher": "canonical", "offer": "ubuntu-24_04-lts", "sku": "server"}, "nodeAgentSkuId": "batch.node.ubuntu 24.04"}}}
+	}}
 	// A MySQL flexible server's threat protection setting is Default and
 	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
 	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

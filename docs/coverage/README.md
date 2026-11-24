@@ -337,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 7,428 (17.1%) in 563 further resources; uncovered 28,821 (66.5%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 7,586 (17.5%) in 565 further resources; uncovered 28,663 (66.1%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.0% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 4.0% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.0% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 4.6% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 30.0% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 31.0% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
 
 **Ours.**
 
@@ -468,6 +468,8 @@ Generated; these cannot drift from the data.
 | `automation.azure.hfl.dev/AutomationAccountsVariable` | `Microsoft.Automation/automationAccounts/variables` | ARM wire type of the generated kind (`apis/arm`) |
 | `automation.azure.hfl.dev/AutomationAccountsWatcher` | `Microsoft.Automation/automationAccounts/watchers` | ARM wire type of the generated kind (`apis/arm`) |
 | `automation.azure.hfl.dev/AutomationAccountsWebhook` | `Microsoft.Automation/automationAccounts/webhooks` | ARM wire type of the generated kind (`apis/arm`) |
+| `batch.azure.hfl.dev/BatchAccountsApplication` | `Microsoft.Batch/batchAccounts/applications` | ARM wire type of the generated kind (`apis/arm`) |
+| `batch.azure.hfl.dev/BatchAccountsPool` | `Microsoft.Batch/batchAccounts/pools` | ARM wire type of the generated kind (`apis/arm`) |
 | `cache.azure.hfl.dev/RedisEnterprisePrivateEndpointConnection` | `Microsoft.Cache/redisEnterprise/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `cache.azure.hfl.dev/RedisPrivateEndpointConnection` | `Microsoft.Cache/redis/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `cdn.azure.hfl.dev/CdnWebApplicationFirewallPolicy` | `Microsoft.Cdn/cdnWebApplicationFirewallPolicies` | ARM wire type of the generated kind (`apis/arm`) |

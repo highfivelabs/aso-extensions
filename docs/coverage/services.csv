@@ -42,7 +42,7 @@ Microsoft.AzureStack,3,0,0,7,0,0,7,0.0,0.0,100.0
 Microsoft.AzureStackHCI,41,0,0,642,0,0,642,0.0,0.0,100.0
 Microsoft.Backup.Admin,1,0,0,9,0,0,9,0.0,0.0,100.0
 Microsoft.BareMetalInfrastructure,1,0,0,11,0,0,11,0.0,0.0,100.0
-Microsoft.Batch,5,1,0,185,20,0,165,10.8,0.0,89.2
+Microsoft.Batch,5,1,2,185,20,158,7,10.8,85.4,3.8
 Microsoft.Billing,17,0,0,181,0,0,181,0.0,0.0,100.0
 Microsoft.BillingBenefits,8,0,0,259,0,0,259,0.0,0.0,100.0
 Microsoft.BillingTrust,2,0,0,9,0,0,9,0.0,0.0,100.0

@@ -63,3 +63,4 @@ resources:
 - kusto.azure.com_clusters.yaml
 - kusto.azure.com_databases.yaml
 - dataprotection.azure.com_backupvaults.yaml
+- batch.azure.com_batchaccounts.yaml

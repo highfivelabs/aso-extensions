@@ -37,6 +37,7 @@ signalrservice/SignalR_Replica=Replica
 kusto/Cluster
 kusto/Clusters_Database=Database
 dataprotection/BackupVault
+batch/BatchAccount
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase

@@ -56,3 +56,4 @@ specification/signalr
 specification/webpubsub
 specification/azure-kusto
 specification/dataprotection
+specification/batch

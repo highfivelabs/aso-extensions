@@ -502,10 +502,10 @@ Microsoft.AzureStackHCI,Microsoft.AzureStackHCI/virtualNetworks/subnets,8,,0,,0,
 Microsoft.Backup.Admin,Microsoft.Backup.Admin/backupLocations,9,,0,,0,9,false,spec_api=2018-09-01
 Microsoft.BareMetalInfrastructure,Microsoft.BareMetalInfrastructure/bareMetalStorageInstances,11,,0,,0,11,false,spec_api=2023-04-06
 Microsoft.Batch,Microsoft.Batch/batchAccounts,20,batch.azure.com/BatchAccount,20,,0,0,false,spec_api=2025-06-01; official_api=2024-07-01; official-api-differs-from-spec
-Microsoft.Batch,Microsoft.Batch/batchAccounts/applications,4,,0,,0,4,false,spec_api=2025-06-01
+Microsoft.Batch,Microsoft.Batch/batchAccounts/applications,4,,0,batch.azure.hfl.dev/BatchAccountsApplication,4,0,false,spec_api=2025-06-01; ours_api=2025-06-01
 Microsoft.Batch,Microsoft.Batch/batchAccounts/applications/versions,2,,0,,0,2,false,spec_api=2025-06-01
 Microsoft.Batch,Microsoft.Batch/batchAccounts/certificates,5,,0,,0,5,false,spec_api=2024-02-01
-Microsoft.Batch,Microsoft.Batch/batchAccounts/pools,154,,0,,0,154,false,spec_api=2025-06-01
+Microsoft.Batch,Microsoft.Batch/batchAccounts/pools,154,,0,batch.azure.hfl.dev/BatchAccountsPool,154,0,false,spec_api=2025-06-01; ours_api=2025-06-01
 Microsoft.Billing,Microsoft.Billing/billingAccounts/associatedTenants,5,,0,,0,5,false,spec_api=2024-04-01
 Microsoft.Billing,Microsoft.Billing/billingAccounts/billingProfiles,60,,0,,0,60,false,spec_api=2024-04-01
 Microsoft.Billing,Microsoft.Billing/billingAccounts/billingProfiles/customers/policies,6,,0,,0,6,false,spec_api=2024-04-01

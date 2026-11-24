@@ -559,6 +559,15 @@ upstream's); the catalog's chart tests do that.
   policy semantics, resolvers being called, a workspace's APIs answering
   only through a workspace gateway, the developer portal, the providers'
   endpoints answering, which tiers take gateways, and the error codes.
+- Batch applications and pools (`Microsoft.Batch`, 2025-06-01;
+  `pkg/fakecloud/arm/batch.go`): a pool has a VM size and a virtual machine
+  configuration with an image reference and a node agent SKU (400), scales
+  fixed or automatically, not both, an automatic scale with a formula
+  (400), at least one task slot a node (400), a subnet that exists (404)
+  and application packages of its own account (400) that exist (404).
+  Applications are kept as sent. Not modelled: nodes allocated (a pool is
+  steady at once), quotas, images and node agents being real, start tasks
+  running, package versions, and the error codes.
 - A MySQL flexible server's advanced threat protection setting
   (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
   2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404
