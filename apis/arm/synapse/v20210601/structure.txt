@@ -546,6 +546,403 @@ WorkspacesSqlAdministrator: Resource
     ├── TenantId: *string
     └── Type: *string
 
+WorkspacesSqlPool: Resource
+├── Owner: Workspace
+├── Spec: Object (14 properties)
+│   ├── AzureName: string
+│   ├── Collation: *string
+│   ├── CreateMode: *Enum (4 values)
+│   │   ├── "Default"
+│   │   ├── "PointInTimeRestore"
+│   │   ├── "Recovery"
+│   │   └── "Restore"
+│   ├── Location: *string
+│   ├── MaxSizeBytes: *int
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── RecoverableDatabaseReference: *genruntime.ResourceReference
+│   ├── RestorePointInTime: *string
+│   ├── Sku: *Object (3 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Name: *string
+│   │   └── Tier: *string
+│   ├── SourceDatabaseDeletionDate: *string
+│   ├── SourceDatabaseReference: *genruntime.ResourceReference
+│   ├── StorageAccountType: *Enum (2 values)
+│   │   ├── "GRS"
+│   │   └── "LRS"
+│   └── Tags: map[string]string
+└── Status: Object (18 properties)
+    ├── Collation: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreateMode: *Enum (4 values)
+    │   ├── "Default"
+    │   ├── "PointInTimeRestore"
+    │   ├── "Recovery"
+    │   └── "Restore"
+    ├── CreationDate: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── MaxSizeBytes: *int
+    ├── Name: *string
+    ├── ProvisioningState: *string
+    ├── RecoverableDatabaseId: *string
+    ├── RestorePointInTime: *string
+    ├── Sku: *Object (3 properties)
+    │   ├── Capacity: *int
+    │   ├── Name: *string
+    │   └── Tier: *string
+    ├── SourceDatabaseDeletionDate: *string
+    ├── SourceDatabaseId: *string
+    ├── Status: *string
+    ├── StorageAccountType: *Enum (2 values)
+    │   ├── "GRS"
+    │   └── "LRS"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+WorkspacesSqlPoolsAuditingSetting: Resource
+├── Owner: WorkspacesSqlPool
+├── Spec: Object (10 properties)
+│   ├── AuditActionsAndGroups: string[]
+│   ├── IsAzureMonitorTargetEnabled: *bool
+│   ├── IsStorageSecondaryKeyInUse: *bool
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── RetentionDays: *int
+│   ├── State: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── StorageAccountAccessKey: *genruntime.SecretReference
+│   ├── StorageAccountSubscriptionId: Validated<*string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$"
+│   └── StorageEndpoint: *string
+└── Status: Object (12 properties)
+    ├── AuditActionsAndGroups: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IsAzureMonitorTargetEnabled: *bool
+    ├── IsStorageSecondaryKeyInUse: *bool
+    ├── Kind: *string
+    ├── Name: *string
+    ├── RetentionDays: *int
+    ├── State: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── StorageAccountSubscriptionId: *string
+    ├── StorageEndpoint: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsDataMaskingPolicy: Resource
+├── Owner: WorkspacesSqlPool
+├── Spec: Object (4 properties)
+│   ├── DataMaskingState: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── ExemptPrincipals: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (11 properties)
+    ├── ApplicationPrincipals: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DataMaskingState: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── ExemptPrincipals: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── ManagedBy: *string
+    ├── MaskingLevel: *string
+    ├── Name: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsDataMaskingPolicyRule: Resource
+├── Owner: WorkspacesSqlPoolsDataMaskingPolicy
+├── Spec: Object (14 properties)
+│   ├── AliasName: *string
+│   ├── AzureName: string
+│   ├── ColumnName: *string
+│   ├── MaskingFunction: *Enum (6 values)
+│   │   ├── "CCN"
+│   │   ├── "Default"
+│   │   ├── "Email"
+│   │   ├── "Number"
+│   │   ├── "SSN"
+│   │   └── "Text"
+│   ├── NumberFrom: *string
+│   ├── NumberTo: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PrefixSize: *string
+│   ├── ReplacementString: *string
+│   ├── RuleState: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── SchemaName: *string
+│   ├── SuffixSize: *string
+│   └── TableName: *string
+└── Status: Object (18 properties)
+    ├── AliasName: *string
+    ├── ColumnName: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── MaskingFunction: *Enum (6 values)
+    │   ├── "CCN"
+    │   ├── "Default"
+    │   ├── "Email"
+    │   ├── "Number"
+    │   ├── "SSN"
+    │   └── "Text"
+    ├── Name: *string
+    ├── NumberFrom: *string
+    ├── NumberTo: *string
+    ├── PrefixSize: *string
+    ├── PropertiesId: *string
+    ├── ReplacementString: *string
+    ├── RuleState: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── SchemaName: *string
+    ├── SuffixSize: *string
+    ├── TableName: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsExtendedAuditingSetting: Resource
+├── Owner: WorkspacesSqlPool
+├── Spec: Object (12 properties)
+│   ├── AuditActionsAndGroups: string[]
+│   ├── IsAzureMonitorTargetEnabled: *bool
+│   ├── IsStorageSecondaryKeyInUse: *bool
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PredicateExpression: *string
+│   ├── QueueDelayMs: *int
+│   ├── RetentionDays: *int
+│   ├── State: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── StorageAccountAccessKey: *genruntime.SecretReference
+│   ├── StorageAccountSubscriptionId: Validated<*string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$"
+│   └── StorageEndpoint: *string
+└── Status: Object (13 properties)
+    ├── AuditActionsAndGroups: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IsAzureMonitorTargetEnabled: *bool
+    ├── IsStorageSecondaryKeyInUse: *bool
+    ├── Name: *string
+    ├── PredicateExpression: *string
+    ├── QueueDelayMs: *int
+    ├── RetentionDays: *int
+    ├── State: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── StorageAccountSubscriptionId: *string
+    ├── StorageEndpoint: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsGeoBackupPolicy: Resource
+├── Owner: WorkspacesSqlPool
+├── Spec: Object (3 properties)
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── State: *Enum (2 values)
+│       ├── "Disabled"
+│       └── "Enabled"
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── State: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── StorageType: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsMaintenanceWindow: Resource
+├── Owner: WorkspacesSqlPool
+├── Spec: Object (3 properties)
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── TimeRanges: Object (3 properties)[]
+│       ├── DayOfWeek: *Enum (7 values)
+│       │   ├── "Friday"
+│       │   ├── "Monday"
+│       │   ├── "Saturday"
+│       │   ├── "Sunday"
+│       │   ├── "Thursday"
+│       │   ├── "Tuesday"
+│       │   └── "Wednesday"
+│       ├── Duration: *string
+│       └── StartTime: *string
+└── Status: Object (5 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── TimeRanges: Object (3 properties)[]
+    │   ├── DayOfWeek: *Enum (7 values)
+    │   │   ├── "Friday"
+    │   │   ├── "Monday"
+    │   │   ├── "Saturday"
+    │   │   ├── "Sunday"
+    │   │   ├── "Thursday"
+    │   │   ├── "Tuesday"
+    │   │   └── "Wednesday"
+    │   ├── Duration: *string
+    │   └── StartTime: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsSecurityAlertPolicy: Resource
+├── Owner: WorkspacesSqlPool
+├── Spec: Object (9 properties)
+│   ├── DisabledAlerts: string[]
+│   ├── EmailAccountAdmins: *bool
+│   ├── EmailAddresses: string[]
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── RetentionDays: *int
+│   ├── State: *Enum (3 values)
+│   │   ├── "Disabled"
+│   │   ├── "Enabled"
+│   │   └── "New"
+│   ├── StorageAccountAccessKey: *genruntime.SecretReference
+│   └── StorageEndpoint: *string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreationTime: *string
+    ├── DisabledAlerts: string[]
+    ├── EmailAccountAdmins: *bool
+    ├── EmailAddresses: string[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── RetentionDays: *int
+    ├── State: *Enum (3 values)
+    │   ├── "Disabled"
+    │   ├── "Enabled"
+    │   └── "New"
+    ├── StorageEndpoint: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsTransparentDataEncryption: Resource
+├── Owner: WorkspacesSqlPool
+├── Spec: Object (3 properties)
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Status: *Enum (2 values)
+│       ├── "Disabled"
+│       └── "Enabled"
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Status: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    └── Type: *string
+
+WorkspacesSqlPoolsVulnerabilityAssessment: Resource
+├── Owner: WorkspacesSqlPool
+├── Spec: Object (7 properties)
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── RecurringScans: *Object (3 properties)
+│   │   ├── EmailSubscriptionAdmins: *bool
+│   │   ├── Emails: string[]
+│   │   └── IsEnabled: *bool
+│   ├── StorageAccountAccessKey: *genruntime.SecretReference
+│   ├── StorageContainerPath: *string
+│   ├── StorageContainerPathFromConfig: *genruntime.ConfigMapReference
+│   └── StorageContainerSasKey: *genruntime.SecretReference
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── RecurringScans: *Object (3 properties)
+    │   ├── EmailSubscriptionAdmins: *bool
+    │   ├── Emails: string[]
+    │   └── IsEnabled: *bool
+    ├── StorageContainerPath: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsWorkloadGroup: Resource
+├── Owner: WorkspacesSqlPool
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Importance: *string
+│   ├── MaxResourcePercent: *int
+│   ├── MaxResourcePercentPerRequest: *float64
+│   ├── MinResourcePercent: *int
+│   ├── MinResourcePercentPerRequest: *float64
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── QueryExecutionTimeout: *int
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Importance: *string
+    ├── MaxResourcePercent: *int
+    ├── MaxResourcePercentPerRequest: *float64
+    ├── MinResourcePercent: *int
+    ├── MinResourcePercentPerRequest: *float64
+    ├── Name: *string
+    ├── QueryExecutionTimeout: *int
+    └── Type: *string
+
+WorkspacesSqlPoolsWorkloadGroupClassifier: Resource
+├── Owner: WorkspacesSqlPoolsWorkloadGroup
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Context: *string
+│   ├── EndTime: *string
+│   ├── Importance: *string
+│   ├── Label: *string
+│   ├── MemberName: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── StartTime: *string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Context: *string
+    ├── EndTime: *string
+    ├── Id: *string
+    ├── Importance: *string
+    ├── Label: *string
+    ├── MemberName: *string
+    ├── Name: *string
+    ├── StartTime: *string
+    └── Type: *string
+
 WorkspacesVulnerabilityAssessment: Resource
 ├── Owner: Workspace
 ├── Spec: Object (7 properties)

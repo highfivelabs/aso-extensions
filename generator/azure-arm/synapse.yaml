@@ -7,7 +7,10 @@
 # workspace's SQL auditing, extended auditing, security alert policy and
 # vulnerability assessment, and integration runtimes, managed or
 # self-hosted) and private link hubs (in a resource group). Owned by ASO's
-# Workspace.
+# Workspace. Then (f81) dedicated SQL pools and their children: geo-backup
+# policy, maintenance window, transparent data encryption, auditing,
+# extended auditing, security alert policy, vulnerability assessment, data
+# masking policy and rules, workload groups and classifiers.
 #
 # The Entra admin's config map imports and the storage keys' secret modes
 # are copied from ASO's sql.yaml (its ServerExternalAdministrator,
@@ -15,7 +18,10 @@
 # entries; UPSTREAM.md): Synapse's workspace SQL settings are Azure SQL's.
 #
 # Not exported: the Data Explorer pools (kustoPools, 2021-06-01-preview
-# only) and sqlDatabases (2020-04-01-preview only).
+# only), sqlDatabases (2020-04-01-preview only), and a pool's sensitivity
+# labels and vulnerability assessment rule baselines (their paths run
+# through schemas/tables/columns and rules, which are no resources, so no
+# kind can own them).
 typeFilters:
   - action: include
     group: synapse
@@ -49,6 +55,24 @@ typeTransformers:
   - group: synapse
     version: v20210601
     name: PrivateLinkHubProperties
+    property: ProvisioningState
+    remove: true
+    because: set by Azure; the spec does not mark it readOnly
+  - group: synapse
+    version: v20210601
+    name: SqlPoolBlobAuditingPolicyProperties_STATUS;ExtendedSqlPoolBlobAuditingPolicyProperties_STATUS;SecurityAlertPolicyProperties_STATUS
+    property: StorageAccountAccessKey
+    remove: true
+    because: as the workspace's auditing key
+  - group: synapse
+    version: v20210601
+    name: SqlPoolVulnerabilityAssessmentProperties_STATUS
+    property: StorageAccountAccessKey;StorageContainerSasKey
+    remove: true
+    because: as the workspace's auditing key
+  - group: synapse
+    version: v20210601
+    name: SqlPoolResourceProperties
     property: ProvisioningState
     remove: true
     because: set by Azure; the spec does not mark it readOnly
@@ -134,3 +158,60 @@ groupModelConfiguration:
     SecureString:
       Value:
         $importSecretMode: required
+    Workspaces_SqlPool:
+      $exportAs: WorkspacesSqlPool
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_GeoBackupPolicy:
+      $exportAs: WorkspacesSqlPoolsGeoBackupPolicy
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_Maintenancewindow:
+      $exportAs: WorkspacesSqlPoolsMaintenanceWindow
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_TransparentDataEncryption:
+      $exportAs: WorkspacesSqlPoolsTransparentDataEncryption
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_AuditingSetting:
+      $exportAs: WorkspacesSqlPoolsAuditingSetting
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_ExtendedAuditingSetting:
+      $exportAs: WorkspacesSqlPoolsExtendedAuditingSetting
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_SecurityAlertPolicy:
+      $exportAs: WorkspacesSqlPoolsSecurityAlertPolicy
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_VulnerabilityAssessment:
+      $exportAs: WorkspacesSqlPoolsVulnerabilityAssessment
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_DataMaskingPolicy:
+      $exportAs: WorkspacesSqlPoolsDataMaskingPolicy
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_DataMaskingPolicies_Rule:
+      $exportAs: WorkspacesSqlPoolsDataMaskingPolicyRule
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_WorkloadGroup:
+      $exportAs: WorkspacesSqlPoolsWorkloadGroup
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_WorkloadGroups_WorkloadClassifier:
+      $exportAs: WorkspacesSqlPoolsWorkloadGroupClassifier
+      $supportedFrom: v0.1.0
+    SqlPoolBlobAuditingPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    ExtendedSqlPoolBlobAuditingPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    SecurityAlertPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    SqlPoolVulnerabilityAssessmentProperties:
+      StorageContainerPath:
+        $importConfigMapMode: optional
+      StorageAccountAccessKey:
+        $importSecretMode: required
+      StorageContainerSasKey:
+        $importSecretMode: required
+    SqlPoolResourceProperties:
+      SourceDatabaseId:
+        $referenceType: arm # the pool restored or copied from (as ASO's sql.yaml labels a database's)
+      RecoverableDatabaseId:
+        $referenceType: arm # the geo-backup a pool is recovered from

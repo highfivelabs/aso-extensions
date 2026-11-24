@@ -1008,23 +1008,35 @@ title: Supported Resources
 
 ### Released
 
-| Resource                                   | ARM Version | CRD Version | Supported From | Sample |
-|--------------------------------------------|-------------|-------------|----------------|--------|
-| PrivateLinkHub                             | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesAdministrator                    | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesAuditingSetting                  | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesAzureADOnlyAuthentication        | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesDedicatedSQLMinimalTlsSetting    | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesEncryptionProtector              | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesExtendedAuditingSetting          | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesFirewallRule                     | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesIntegrationRuntime               | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesKey                              | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesManagedIdentitySqlControlSetting | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesPrivateEndpointConnection        | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesSecurityAlertPolicy              | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesSqlAdministrator                 | 2021-06-01  | v20210601   | v0.1.0         | -      |
-| WorkspacesVulnerabilityAssessment          | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| Resource                                    | ARM Version | CRD Version | Supported From | Sample |
+|---------------------------------------------|-------------|-------------|----------------|--------|
+| PrivateLinkHub                              | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesAdministrator                     | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesAuditingSetting                   | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesAzureADOnlyAuthentication         | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesDedicatedSQLMinimalTlsSetting     | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesEncryptionProtector               | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesExtendedAuditingSetting           | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesFirewallRule                      | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesIntegrationRuntime                | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesKey                               | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesManagedIdentitySqlControlSetting  | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesPrivateEndpointConnection         | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSecurityAlertPolicy               | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlAdministrator                  | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPool                           | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPoolsAuditingSetting           | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPoolsDataMaskingPolicy         | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPoolsDataMaskingPolicyRule     | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPoolsExtendedAuditingSetting   | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPoolsGeoBackupPolicy           | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPoolsMaintenanceWindow         | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPoolsSecurityAlertPolicy       | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPoolsTransparentDataEncryption | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPoolsVulnerabilityAssessment   | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPoolsWorkloadGroup             | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesSqlPoolsWorkloadGroupClassifier   | 2021-06-01  | v20210601   | v0.1.0         | -      |
+| WorkspacesVulnerabilityAssessment           | 2021-06-01  | v20210601   | v0.1.0         | -      |
 
 ## Web
 

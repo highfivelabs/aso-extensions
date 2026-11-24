@@ -464,6 +464,13 @@ func init() {
 		return map[string]any{"properties": map[string]any{"managed": map[string]any{"type": "Managed"}}}
 	}}
 	f[syn+"WorkspacesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// A dedicated SQL pool names a SKU; its auditing and assessment as the
+	// workspace's (synapse.go).
+	f[syn+"WorkspacesSqlPool"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sku": map[string]any{"name": "DW100c"}}
+	}}
+	f[syn+"WorkspacesSqlPoolsAuditingSetting"], f[syn+"WorkspacesSqlPoolsExtendedAuditingSetting"] = synAuditing, synAuditing
+	f[syn+"WorkspacesSqlPoolsVulnerabilityAssessment"] = f[syn+"WorkspacesVulnerabilityAssessment"]
 	// A MySQL flexible server's threat protection setting is Default and
 	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
 	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

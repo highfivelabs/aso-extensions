@@ -34,6 +34,20 @@ import (
 //     (400), and have no DELETE (405): Azure deletes them with the
 //     workspace.
 //
+// A dedicated SQL pool's (f81):
+//
+//   - a pool names a SKU (400); a restore names its source pool and point
+//     in time, a recovery its recoverable database, a restore of a
+//     dropped pool its source and deletion date (400), and what it names
+//     exists (404);
+//   - its settings are named as the spec's enums say (Default for the
+//     geo-backup and data masking policies, current for transparent data
+//     encryption, default for the rest) (400) and have no DELETE (405);
+//   - a data masking rule's Number function names numberFrom and numberTo,
+//     its Text function prefixSize, suffixSize and replacementString (400);
+//   - a workload group's percentages run 0 <= min <= max <= 100, and the
+//     per-request minimum is not over the maximum (400).
+//
 // Private endpoint connections follow the shared rule (privateendpoints.go).
 // Not modelled: the workspace's SQL endpoints (no audit, alert or scan
 // runs), the key's activation, the runtimes' nodes and states, and the
@@ -51,19 +65,31 @@ var (
 	synMinimalTLS = regexp.MustCompile(synWorkspace + `/dedicatedsqlminimaltlssettings/([^/]+)$`)
 	synSQLControl = regexp.MustCompile(synWorkspace + `/managedidentitysqlcontrolsettings/default$`)
 	synRuntime    = regexp.MustCompile(synWorkspace + `/integrationruntimes/[^/]+$`)
-	synKeyVault   = regexp.MustCompile(`(?i)^https://[^/]+\.vault\.azure\.net/keys/[^/]+(/[^/]*)?$`)
-	synBlobURL    = regexp.MustCompile(`(?i)^https://[^/]+\.blob\.core\.windows\.net/[^/]+`)
+	synPool       = synWorkspace + `/sqlpools/[^/]+`
+	synSQLPool    = regexp.MustCompile(synWorkspace + `/sqlpools/[^/]+$`)
+	synPoolNamed  = regexp.MustCompile(synPool + `/(geobackuppolicies|transparentdataencryption|auditingsettings|extendedauditingsettings|securityalertpolicies|vulnerabilityassessments|datamaskingpolicies)/([^/]+)$`)
+	synPoolWindow = regexp.MustCompile(synPool + `/maintenancewindows/current$`)
+	synMaskRule   = regexp.MustCompile(synPool + `/datamaskingpolicies/[^/]+/rules/[^/]+$`)
+	synWorkload   = regexp.MustCompile(synPool + `/workloadgroups/[^/]+$`)
+	synPoolNames  = map[string]string{
+		"geobackuppolicies": "Default", "transparentdataencryption": "current", "auditingsettings": "default",
+		"extendedauditingsettings": "default", "securityalertpolicies": "default", "vulnerabilityassessments": "default",
+		"datamaskingpolicies": "Default",
+	}
+	synKeyVault = regexp.MustCompile(`(?i)^https://[^/]+\.vault\.azure\.net/keys/[^/]+(/[^/]*)?$`)
+	synBlobURL  = regexp.MustCompile(`(?i)^https://[^/]+\.blob\.core\.windows\.net/[^/]+`)
 )
 
 // synapseUndeletable is whether id is a workspace setting Azure has no
 // DELETE for.
 func synapseUndeletable(id string) bool {
-	for _, re := range []*regexp.Regexp{synEntraOnly, synProtector, synAuditing, synAlerts, synMinimalTLS, synSQLControl} {
+	for _, re := range []*regexp.Regexp{synEntraOnly, synProtector, synAuditing, synAlerts, synMinimalTLS, synSQLControl, synPoolWindow, synMaskRule} {
 		if re.MatchString(id) {
 			return true
 		}
 	}
-	return false
+	m := synPoolNamed.FindStringSubmatch(id)
+	return m != nil && !strings.EqualFold(m[2], "vulnerabilityassessments")
 }
 
 // checkSynapse refuses what the rules above do not allow; code is "" when
@@ -141,6 +167,43 @@ func (a *ARM) checkSynapse(id string, body map[string]any) (status int, code, me
 		}
 	case synMinimalTLS.MatchString(id):
 		return named(synMinimalTLS.FindStringSubmatch(id)[2], "default", "dedicated SQL minimal TLS setting")
+	case synSQLPool.MatchString(id):
+		return a.checkSynapseSQLPool(body, props)
+	case synPoolNamed.MatchString(id):
+		m := synPoolNamed.FindStringSubmatch(id)
+		want := synPoolNames[strings.ToLower(m[2])]
+		if m[3] != want {
+			return bad("A SQL pool's " + m[2] + " is named " + want + ", not " + m[3] + ".")
+		}
+		if strings.EqualFold(m[2], "vulnerabilityassessments") && !synBlobURL.MatchString(stringOf(props["storageContainerPath"])) {
+			return bad("A vulnerability assessment names a blob container URL (storageContainerPath).")
+		}
+		if strings.HasSuffix(strings.ToLower(m[2]), "auditingsettings") {
+			monitor, _ := props["isAzureMonitorTargetEnabled"].(bool)
+			if stringOf(props["state"]) == "Enabled" && stringOf(props["storageEndpoint"]) == "" && !monitor {
+				return bad("Enabled auditing names a storageEndpoint or sets isAzureMonitorTargetEnabled.")
+			}
+		}
+	case synMaskRule.MatchString(id):
+		switch stringOf(props["maskingFunction"]) {
+		case "Number":
+			if stringOf(props["numberFrom"]) == "" || stringOf(props["numberTo"]) == "" {
+				return bad("A Number masking rule names numberFrom and numberTo.")
+			}
+		case "Text":
+			if stringOf(props["prefixSize"]) == "" || stringOf(props["suffixSize"]) == "" || props["replacementString"] == nil {
+				return bad("A Text masking rule names prefixSize, suffixSize and replacementString.")
+			}
+		}
+	case synWorkload.MatchString(id):
+		num := func(k string) float64 { f, _ := props[k].(float64); return f }
+		lo, hi := num("minResourcePercent"), num("maxResourcePercent")
+		if lo < 0 || lo > hi || hi > 100 || hi == 0 {
+			return bad("A workload group's minResourcePercent and maxResourcePercent run 0 <= min <= max <= 100.")
+		}
+		if num("minResourcePercentPerRequest") > hi {
+			return bad("A workload group's minResourcePercentPerRequest is not over its maxResourcePercent.")
+		}
 	case synRuntime.MatchString(id):
 		switch stringOf(props["type"]) {
 		case "Managed":
@@ -158,6 +221,38 @@ func (a *ARM) checkSynapse(id string, body map[string]any) (status int, code, me
 			}
 		default:
 			return bad("An integration runtime's type is Managed or SelfHosted.")
+		}
+	}
+	return 0, "", ""
+}
+
+// checkSynapseSQLPool checks a dedicated SQL pool's SKU and what its create
+// mode names.
+func (a *ARM) checkSynapseSQLPool(body, props map[string]any) (status int, code, message string) {
+	bad := func(msg string) (int, string, string) {
+		return http.StatusBadRequest, "BadRequest", msg
+	}
+	sku, _ := body["sku"].(map[string]any)
+	if stringOf(sku["name"]) == "" {
+		return bad("A SQL pool names its SKU (DW100c and up).")
+	}
+	var needs []string
+	switch stringOf(props["createMode"]) {
+	case "PointInTimeRestore":
+		needs = []string{"sourceDatabaseId", "restorePointInTime"}
+	case "Recovery":
+		needs = []string{"recoverableDatabaseId"}
+	case "Restore":
+		needs = []string{"sourceDatabaseId", "sourceDatabaseDeletionDate"}
+	}
+	for _, k := range needs {
+		if stringOf(props[k]) == "" {
+			return bad("A SQL pool made with createMode " + stringOf(props["createMode"]) + " names its " + k + ".")
+		}
+	}
+	for _, k := range []string{"sourceDatabaseId", "recoverableDatabaseId"} {
+		if id := stringOf(props[k]); id != "" && !a.exists(id) {
+			return http.StatusNotFound, "ResourceNotFound", "The " + k + " " + id + " was not found."
 		}
 	}
 	return 0, "", ""

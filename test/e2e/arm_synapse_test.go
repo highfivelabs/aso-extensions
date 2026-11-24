@@ -184,3 +184,132 @@ func TestSynapseKinds(t *testing.T) {
 		}
 	}
 }
+
+// The dedicated SQL pool kinds of docs/plan.md f81, on ASO's Workspace by
+// name: a pool, its transparent data encryption, geo-backup policy,
+// auditing and extended auditing, security alert policy, vulnerability
+// assessment, maintenance window, data masking policy and a Text masking
+// rule, a workload group and its classifier, and a second pool restored
+// from the first by reference. A Number masking rule with no range and a
+// workload group whose minimum is over its maximum are refused (the fake's
+// rules, synapse.go); the group is fixed by a change. Deleted, all go but
+// the pool's settings Azure has no DELETE for (left by the Deleter
+// extension).
+func TestSynapseSQLPool(t *testing.T) {
+	ctx := context.Background()
+	ns := namespace(t, "synpool")
+	strictCredential(t, ns, clientA)
+	trustNamespace(ns)
+	rgID := "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"
+	wsID := rgID + "/providers/Microsoft.Synapse/workspaces/analytics"
+	for _, id := range []string{rgID, wsID} {
+		armFake.AddResource(id)
+	}
+	resourceGroup(t, ns, "rg", ns+"-rg")
+	ws := &asosynapse.Workspace{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "analytics"}}
+	ws.Spec.AzureName, ws.Spec.Location = "analytics", ptr("westus")
+	ws.Spec.Owner = &genruntime.KnownResourceReference{Name: "rg"}
+	asoStandIn(t, ws, wsID)
+	meta := func(name string) metav1.ObjectMeta { return metav1.ObjectMeta{Namespace: ns, Name: name} }
+	poolID := wsID + "/sqlPools/dw"
+
+	pool := &synapse.WorkspacesSqlPool{ObjectMeta: meta("dw"), Spec: synapse.WorkspacesSqlPool_Spec{
+		Owner: &genruntime.KnownResourceReference{Name: "analytics"}, Location: ptr("westus"),
+		Sku: &synapse.Sku{Name: ptr("DW100c")}, Collation: ptr("SQL_Latin1_General_CP1_CI_AS"),
+		StorageAccountType: ptr(synapse.SqlPoolResourceProperties_StorageAccountType_LRS)}}
+	if err := k8s.Create(ctx, pool); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the pool Ready", ready(pool))
+	onPool := &genruntime.KnownResourceReference{Name: "dw"}
+
+	tde := &synapse.WorkspacesSqlPoolsTransparentDataEncryption{ObjectMeta: meta("dw-tde"), Spec: synapse.WorkspacesSqlPoolsTransparentDataEncryption_Spec{
+		Owner: onPool, Status: ptr(synapse.TransparentDataEncryptionProperties_Status_Enabled)}}
+	geo := &synapse.WorkspacesSqlPoolsGeoBackupPolicy{ObjectMeta: meta("dw-geo"), Spec: synapse.WorkspacesSqlPoolsGeoBackupPolicy_Spec{
+		Owner: onPool, State: ptr(synapse.GeoBackupPolicyProperties_State_Enabled)}}
+	auditing := &synapse.WorkspacesSqlPoolsAuditingSetting{ObjectMeta: meta("dw-auditing"), Spec: synapse.WorkspacesSqlPoolsAuditingSetting_Spec{
+		Owner: onPool, State: ptr(synapse.SqlPoolBlobAuditingPolicyProperties_State_Enabled), IsAzureMonitorTargetEnabled: ptr(true)}}
+	extended := &synapse.WorkspacesSqlPoolsExtendedAuditingSetting{ObjectMeta: meta("dw-extended"), Spec: synapse.WorkspacesSqlPoolsExtendedAuditingSetting_Spec{
+		Owner: onPool, State: ptr(synapse.ExtendedSqlPoolBlobAuditingPolicyProperties_State_Enabled), IsAzureMonitorTargetEnabled: ptr(true),
+		PredicateExpression: ptr("statement <> 'select 1'")}}
+	alerts := &synapse.WorkspacesSqlPoolsSecurityAlertPolicy{ObjectMeta: meta("dw-alerts"), Spec: synapse.WorkspacesSqlPoolsSecurityAlertPolicy_Spec{
+		Owner: onPool, State: ptr(synapse.SecurityAlertPolicyProperties_State_Enabled)}}
+	assessment := &synapse.WorkspacesSqlPoolsVulnerabilityAssessment{ObjectMeta: meta("dw-assessment"), Spec: synapse.WorkspacesSqlPoolsVulnerabilityAssessment_Spec{
+		Owner: onPool, StorageContainerPath: ptr("https://auditlogs.blob.core.windows.net/scans")}}
+	window := &synapse.WorkspacesSqlPoolsMaintenanceWindow{ObjectMeta: meta("dw-window"), Spec: synapse.WorkspacesSqlPoolsMaintenanceWindow_Spec{
+		Owner: onPool, TimeRanges: []synapse.MaintenanceWindowTimeRange{{DayOfWeek: ptr(synapse.MaintenanceWindowTimeRange_DayOfWeek_Saturday), StartTime: ptr("00:00"), Duration: ptr("PT60M")}}}}
+	masking := &synapse.WorkspacesSqlPoolsDataMaskingPolicy{ObjectMeta: meta("dw-masking"), Spec: synapse.WorkspacesSqlPoolsDataMaskingPolicy_Spec{
+		Owner: onPool, DataMaskingState: ptr(synapse.DataMaskingPolicyProperties_DataMaskingState_Enabled)}}
+	group := &synapse.WorkspacesSqlPoolsWorkloadGroup{ObjectMeta: meta("etl"), Spec: synapse.WorkspacesSqlPoolsWorkloadGroup_Spec{
+		Owner: onPool, MinResourcePercent: ptr(50), MaxResourcePercent: ptr(20), MinResourcePercentPerRequest: ptr(5.0), Importance: ptr("normal")}}
+	restored := &synapse.WorkspacesSqlPool{ObjectMeta: meta("dw-restored"), Spec: synapse.WorkspacesSqlPool_Spec{
+		Owner: &genruntime.KnownResourceReference{Name: "analytics"}, Location: ptr("westus"), Sku: &synapse.Sku{Name: ptr("DW100c")},
+		CreateMode: ptr(synapse.SqlPoolResourceProperties_CreateMode_PointInTimeRestore), RestorePointInTime: ptr("2026-11-24T00:00:00Z"),
+		SourceDatabaseReference: &genruntime.ResourceReference{Group: "synapse.azure.hfl.dev", Kind: "WorkspacesSqlPool", Name: "dw"}}}
+	second := []conditioned{tde, geo, auditing, extended, alerts, assessment, window, masking, group, restored}
+	for _, o := range second {
+		if err := k8s.Create(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, o := range []conditioned{tde, geo, auditing, extended, alerts, assessment, window, masking, restored} {
+		eventually(t, timeout, o.GetName()+" Ready", ready(o))
+	}
+	eventually(t, timeout, "a workload group upside down refused", notReadyWith(group, "min <= max"))
+	if err := change(t, group, func(g *synapse.WorkspacesSqlPoolsWorkloadGroup) {
+		g.Spec.MinResourcePercent, g.Spec.MaxResourcePercent = ptr(10), ptr(50)
+	}); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the workload group Ready", ready(group))
+
+	onMasking := &genruntime.KnownResourceReference{Name: "dw-masking"}
+	rule := &synapse.WorkspacesSqlPoolsDataMaskingPolicyRule{ObjectMeta: meta("ssn"), Spec: synapse.WorkspacesSqlPoolsDataMaskingPolicyRule_Spec{
+		Owner: onMasking, SchemaName: ptr("dbo"), TableName: ptr("people"), ColumnName: ptr("ssn"),
+		MaskingFunction: ptr(synapse.DataMaskingRuleProperties_MaskingFunction_Text), PrefixSize: ptr("0"), SuffixSize: ptr("4"), ReplacementString: ptr("xxx-xx-"),
+		RuleState: ptr(synapse.DataMaskingRuleProperties_RuleState_Enabled)}}
+	noRange := &synapse.WorkspacesSqlPoolsDataMaskingPolicyRule{ObjectMeta: meta("salary"), Spec: synapse.WorkspacesSqlPoolsDataMaskingPolicyRule_Spec{
+		Owner: onMasking, SchemaName: ptr("dbo"), TableName: ptr("people"), ColumnName: ptr("salary"),
+		MaskingFunction: ptr(synapse.DataMaskingRuleProperties_MaskingFunction_Number)}}
+	classifier := &synapse.WorkspacesSqlPoolsWorkloadGroupClassifier{ObjectMeta: meta("loader"), Spec: synapse.WorkspacesSqlPoolsWorkloadGroupClassifier_Spec{
+		Owner: &genruntime.KnownResourceReference{Name: "etl"}, MemberName: ptr("loader"), Importance: ptr("high")}}
+	third := []conditioned{rule, noRange, classifier}
+	for _, o := range third {
+		if err := k8s.Create(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	eventually(t, timeout, "the masking rule Ready", ready(rule))
+	eventually(t, timeout, "the classifier Ready", ready(classifier))
+	eventually(t, timeout, "a Number rule with no range refused", notReadyWith(noRange, "numberFrom"))
+
+	expectResource(t, wsID+"/sqlPools/dw-restored", func(r map[string]any) error {
+		if p := properties(r); p["sourceDatabaseId"] != poolID || p["createMode"] != "PointInTimeRestore" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	expectResource(t, poolID+"/dataMaskingPolicies/Default/rules/ssn", func(r map[string]any) error {
+		if p := properties(r); p["maskingFunction"] != "Text" || p["suffixSize"] != "4" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+
+	for _, objs := range [][]conditioned{third, second, {pool}} {
+		for _, o := range objs {
+			if err := k8s.Delete(ctx, o); err != nil {
+				t.Fatal(err)
+			}
+		}
+		for _, o := range objs {
+			eventually(t, timeout, o.GetName()+" gone", gone(o))
+		}
+	}
+	for _, id := range []string{poolID + "/workloadGroups/etl", poolID + "/workloadGroups/etl/workloadClassifiers/loader",
+		poolID + "/vulnerabilityAssessments/default", wsID + "/sqlPools/dw-restored", poolID} {
+		if armFake.HasResource(id) {
+			t.Errorf("%s is still in the fake", id)
+		}
+	}
+}

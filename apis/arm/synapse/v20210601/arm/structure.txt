@@ -487,6 +487,360 @@ WorkspacesSqlAdministrator_Spec: Object (2 properties)
     ├── Sid: *string
     └── TenantId: *string
 
+WorkspacesSqlPool_STATUS: Object (7 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (11 properties)
+│   ├── Collation: *string
+│   ├── CreateMode: *Enum (4 values)
+│   │   ├── "Default"
+│   │   ├── "PointInTimeRestore"
+│   │   ├── "Recovery"
+│   │   └── "Restore"
+│   ├── CreationDate: *string
+│   ├── MaxSizeBytes: *int
+│   ├── ProvisioningState: *string
+│   ├── RecoverableDatabaseId: *string
+│   ├── RestorePointInTime: *string
+│   ├── SourceDatabaseDeletionDate: *string
+│   ├── SourceDatabaseId: *string
+│   ├── Status: *string
+│   └── StorageAccountType: *Enum (2 values)
+│       ├── "GRS"
+│       └── "LRS"
+├── Sku: *Object (3 properties)
+│   ├── Capacity: *int
+│   ├── Name: *string
+│   └── Tier: *string
+├── Tags: map[string]string
+└── Type: *string
+
+WorkspacesSqlPool_Spec: Object (5 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (8 properties)
+│   ├── Collation: *string
+│   ├── CreateMode: *Enum (4 values)
+│   │   ├── "Default"
+│   │   ├── "PointInTimeRestore"
+│   │   ├── "Recovery"
+│   │   └── "Restore"
+│   ├── MaxSizeBytes: *int
+│   ├── RecoverableDatabaseId: *string
+│   ├── RestorePointInTime: *string
+│   ├── SourceDatabaseDeletionDate: *string
+│   ├── SourceDatabaseId: *string
+│   └── StorageAccountType: *Enum (2 values)
+│       ├── "GRS"
+│       └── "LRS"
+├── Sku: *Object (3 properties)
+│   ├── Capacity: *int
+│   ├── Name: *string
+│   └── Tier: *string
+└── Tags: map[string]string
+
+WorkspacesSqlPoolsAuditingSetting_STATUS: Object (5 properties)
+├── Id: *string
+├── Kind: *string
+├── Name: *string
+├── Properties: *Object (7 properties)
+│   ├── AuditActionsAndGroups: string[]
+│   ├── IsAzureMonitorTargetEnabled: *bool
+│   ├── IsStorageSecondaryKeyInUse: *bool
+│   ├── RetentionDays: *int
+│   ├── State: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── StorageAccountSubscriptionId: *string
+│   └── StorageEndpoint: *string
+└── Type: *string
+
+WorkspacesSqlPoolsAuditingSetting_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── AuditActionsAndGroups: string[]
+    ├── IsAzureMonitorTargetEnabled: *bool
+    ├── IsStorageSecondaryKeyInUse: *bool
+    ├── RetentionDays: *int
+    ├── State: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── StorageAccountAccessKey: *string
+    ├── StorageAccountSubscriptionId: *string
+    └── StorageEndpoint: *string
+
+WorkspacesSqlPoolsDataMaskingPolicyRule_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (12 properties)
+│   ├── AliasName: *string
+│   ├── ColumnName: *string
+│   ├── Id: *string
+│   ├── MaskingFunction: *Enum (6 values)
+│   │   ├── "CCN"
+│   │   ├── "Default"
+│   │   ├── "Email"
+│   │   ├── "Number"
+│   │   ├── "SSN"
+│   │   └── "Text"
+│   ├── NumberFrom: *string
+│   ├── NumberTo: *string
+│   ├── PrefixSize: *string
+│   ├── ReplacementString: *string
+│   ├── RuleState: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── SchemaName: *string
+│   ├── SuffixSize: *string
+│   └── TableName: *string
+└── Type: *string
+
+WorkspacesSqlPoolsDataMaskingPolicyRule_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (11 properties)
+    ├── AliasName: *string
+    ├── ColumnName: *string
+    ├── MaskingFunction: *Enum (6 values)
+    │   ├── "CCN"
+    │   ├── "Default"
+    │   ├── "Email"
+    │   ├── "Number"
+    │   ├── "SSN"
+    │   └── "Text"
+    ├── NumberFrom: *string
+    ├── NumberTo: *string
+    ├── PrefixSize: *string
+    ├── ReplacementString: *string
+    ├── RuleState: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── SchemaName: *string
+    ├── SuffixSize: *string
+    └── TableName: *string
+
+WorkspacesSqlPoolsDataMaskingPolicy_STATUS: Object (7 properties)
+├── Id: *string
+├── Kind: *string
+├── Location: *string
+├── ManagedBy: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── ApplicationPrincipals: *string
+│   ├── DataMaskingState: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── ExemptPrincipals: *string
+│   └── MaskingLevel: *string
+└── Type: *string
+
+WorkspacesSqlPoolsDataMaskingPolicy_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── DataMaskingState: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    └── ExemptPrincipals: *string
+
+WorkspacesSqlPoolsExtendedAuditingSetting_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (9 properties)
+│   ├── AuditActionsAndGroups: string[]
+│   ├── IsAzureMonitorTargetEnabled: *bool
+│   ├── IsStorageSecondaryKeyInUse: *bool
+│   ├── PredicateExpression: *string
+│   ├── QueueDelayMs: *int
+│   ├── RetentionDays: *int
+│   ├── State: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── StorageAccountSubscriptionId: *string
+│   └── StorageEndpoint: *string
+└── Type: *string
+
+WorkspacesSqlPoolsExtendedAuditingSetting_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (10 properties)
+    ├── AuditActionsAndGroups: string[]
+    ├── IsAzureMonitorTargetEnabled: *bool
+    ├── IsStorageSecondaryKeyInUse: *bool
+    ├── PredicateExpression: *string
+    ├── QueueDelayMs: *int
+    ├── RetentionDays: *int
+    ├── State: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── StorageAccountAccessKey: *string
+    ├── StorageAccountSubscriptionId: *string
+    └── StorageEndpoint: *string
+
+WorkspacesSqlPoolsGeoBackupPolicy_STATUS: Object (6 properties)
+├── Id: *string
+├── Kind: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── State: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   └── StorageType: *string
+└── Type: *string
+
+WorkspacesSqlPoolsGeoBackupPolicy_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── State: *Enum (2 values)
+        ├── "Disabled"
+        └── "Enabled"
+
+WorkspacesSqlPoolsMaintenanceWindow_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── TimeRanges: Object (3 properties)[]
+│       ├── DayOfWeek: *Enum (7 values)
+│       │   ├── "Friday"
+│       │   ├── "Monday"
+│       │   ├── "Saturday"
+│       │   ├── "Sunday"
+│       │   ├── "Thursday"
+│       │   ├── "Tuesday"
+│       │   └── "Wednesday"
+│       ├── Duration: *string
+│       └── StartTime: *string
+└── Type: *string
+
+WorkspacesSqlPoolsMaintenanceWindow_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── TimeRanges: Object (3 properties)[]
+        ├── DayOfWeek: *Enum (7 values)
+        │   ├── "Friday"
+        │   ├── "Monday"
+        │   ├── "Saturday"
+        │   ├── "Sunday"
+        │   ├── "Thursday"
+        │   ├── "Tuesday"
+        │   └── "Wednesday"
+        ├── Duration: *string
+        └── StartTime: *string
+
+WorkspacesSqlPoolsSecurityAlertPolicy_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (7 properties)
+│   ├── CreationTime: *string
+│   ├── DisabledAlerts: string[]
+│   ├── EmailAccountAdmins: *bool
+│   ├── EmailAddresses: string[]
+│   ├── RetentionDays: *int
+│   ├── State: *Enum (3 values)
+│   │   ├── "Disabled"
+│   │   ├── "Enabled"
+│   │   └── "New"
+│   └── StorageEndpoint: *string
+└── Type: *string
+
+WorkspacesSqlPoolsSecurityAlertPolicy_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (7 properties)
+    ├── DisabledAlerts: string[]
+    ├── EmailAccountAdmins: *bool
+    ├── EmailAddresses: string[]
+    ├── RetentionDays: *int
+    ├── State: *Enum (3 values)
+    │   ├── "Disabled"
+    │   ├── "Enabled"
+    │   └── "New"
+    ├── StorageAccountAccessKey: *string
+    └── StorageEndpoint: *string
+
+WorkspacesSqlPoolsTransparentDataEncryption_STATUS: Object (5 properties)
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── Status: *Enum (2 values)
+│       ├── "Disabled"
+│       └── "Enabled"
+└── Type: *string
+
+WorkspacesSqlPoolsTransparentDataEncryption_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── Status: *Enum (2 values)
+        ├── "Disabled"
+        └── "Enabled"
+
+WorkspacesSqlPoolsVulnerabilityAssessment_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── RecurringScans: *Object (3 properties)
+│   │   ├── EmailSubscriptionAdmins: *bool
+│   │   ├── Emails: string[]
+│   │   └── IsEnabled: *bool
+│   └── StorageContainerPath: *string
+└── Type: *string
+
+WorkspacesSqlPoolsVulnerabilityAssessment_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (4 properties)
+    ├── RecurringScans: *Object (3 properties)
+    │   ├── EmailSubscriptionAdmins: *bool
+    │   ├── Emails: string[]
+    │   └── IsEnabled: *bool
+    ├── StorageAccountAccessKey: *string
+    ├── StorageContainerPath: *string
+    └── StorageContainerSasKey: *string
+
+WorkspacesSqlPoolsWorkloadGroupClassifier_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (6 properties)
+│   ├── Context: *string
+│   ├── EndTime: *string
+│   ├── Importance: *string
+│   ├── Label: *string
+│   ├── MemberName: *string
+│   └── StartTime: *string
+└── Type: *string
+
+WorkspacesSqlPoolsWorkloadGroupClassifier_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (6 properties)
+    ├── Context: *string
+    ├── EndTime: *string
+    ├── Importance: *string
+    ├── Label: *string
+    ├── MemberName: *string
+    └── StartTime: *string
+
+WorkspacesSqlPoolsWorkloadGroup_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (6 properties)
+│   ├── Importance: *string
+│   ├── MaxResourcePercent: *int
+│   ├── MaxResourcePercentPerRequest: *float64
+│   ├── MinResourcePercent: *int
+│   ├── MinResourcePercentPerRequest: *float64
+│   └── QueryExecutionTimeout: *int
+└── Type: *string
+
+WorkspacesSqlPoolsWorkloadGroup_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (6 properties)
+    ├── Importance: *string
+    ├── MaxResourcePercent: *int
+    ├── MaxResourcePercentPerRequest: *float64
+    ├── MinResourcePercent: *int
+    ├── MinResourcePercentPerRequest: *float64
+    └── QueryExecutionTimeout: *int
+
 WorkspacesVulnerabilityAssessment_STATUS: Object (4 properties)
 ├── Id: *string
 ├── Name: *string

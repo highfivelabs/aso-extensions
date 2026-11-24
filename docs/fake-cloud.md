@@ -617,8 +617,14 @@ upstream's); the catalog's chart tests do that.
   `Managed` or `SelfHosted`, and a runtime linked by RBAC names a shared
   runtime that exists (404); the singletons keep the names the spec's enums
   give and refuse DELETE (405). Connections follow `privateendpoints.go`.
-  Not modelled: the workspace's SQL endpoints (no audit, alert or scan
-  runs), key activation, runtime nodes and states, and the error codes.
+  A dedicated SQL pool names a SKU, and a restore or recovery what it
+  restores (400), which exists (404); its settings keep their enum names
+  (400) and refuse DELETE (405); a `Number` masking rule names its range, a
+  `Text` one its prefix, suffix and replacement (400); a workload group's
+  percentages run 0 <= min <= max <= 100 (400). Not modelled: the
+  workspace's SQL endpoints (no audit, alert or scan runs, no masking or
+  workload management at query time), pausing and scaling a pool, key
+  activation, runtime nodes and states, and the error codes.
 - A MySQL flexible server's advanced threat protection setting
   (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
   2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404

@@ -69,3 +69,53 @@ func TestSynapse(t *testing.T) {
 		}
 	}
 }
+
+// A dedicated SQL pool names a SKU and, for a restore, what it restores;
+// its settings keep their names and cannot be deleted; masking rules carry
+// their function's parameters; workload groups' percentages are ordered.
+func TestSynapseSQLPool(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/syn"
+	ws := rg + "/providers/Microsoft.Synapse/workspaces/analytics"
+	for _, id := range []string{rg, ws} {
+		a.AddResource(id)
+	}
+	pool := ws + "/sqlPools/dw"
+	put := func(what, id, body string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, id, body)
+		expect(t, what, code, resp, want)
+	}
+	put("a pool with no SKU", pool, `{"location":"westus","properties":{}}`, http.StatusBadRequest)
+	put("a restore with no point in time", ws+"/sqlPools/copy", `{"location":"westus","sku":{"name":"DW100c"},"properties":{"createMode":"PointInTimeRestore","sourceDatabaseId":"`+pool+`"}}`, http.StatusBadRequest)
+	put("a restore of a missing pool", ws+"/sqlPools/copy", `{"location":"westus","sku":{"name":"DW100c"},"properties":{"createMode":"PointInTimeRestore","sourceDatabaseId":"`+pool+`","restorePointInTime":"2026-11-24T00:00:00Z"}}`, http.StatusNotFound)
+	put("a pool", pool, `{"location":"westus","sku":{"name":"DW100c"},"properties":{"collation":"SQL_Latin1_General_CP1_CI_AS"}}`, http.StatusCreated)
+	put("a restore", ws+"/sqlPools/copy", `{"location":"westus","sku":{"name":"DW100c"},"properties":{"createMode":"PointInTimeRestore","sourceDatabaseId":"`+pool+`","restorePointInTime":"2026-11-24T00:00:00Z"}}`, http.StatusCreated)
+
+	put("TDE misnamed", pool+"/transparentDataEncryption/default", `{"properties":{"status":"Enabled"}}`, http.StatusBadRequest)
+	put("TDE", pool+"/transparentDataEncryption/current", `{"properties":{"status":"Enabled"}}`, http.StatusCreated)
+	put("a geo-backup policy", pool+"/geoBackupPolicies/Default", `{"properties":{"state":"Enabled"}}`, http.StatusCreated)
+	put("pool auditing to nowhere", pool+"/auditingSettings/default", `{"properties":{"state":"Enabled"}}`, http.StatusBadRequest)
+	put("pool auditing", pool+"/auditingSettings/default", `{"properties":{"state":"Enabled","isAzureMonitorTargetEnabled":true}}`, http.StatusCreated)
+	put("a pool assessment with no container", pool+"/vulnerabilityAssessments/default", `{"properties":{}}`, http.StatusBadRequest)
+	put("a pool assessment", pool+"/vulnerabilityAssessments/default", `{"properties":{"storageContainerPath":"https://logs.blob.core.windows.net/scans"}}`, http.StatusCreated)
+	put("a maintenance window", pool+"/maintenancewindows/current", `{"properties":{"timeRanges":[{"dayOfWeek":"Saturday","startTime":"00:00","duration":"PT60M"}]}}`, http.StatusCreated)
+	put("a masking policy", pool+"/dataMaskingPolicies/Default", `{"properties":{"dataMaskingState":"Enabled"}}`, http.StatusCreated)
+	rule := pool + "/dataMaskingPolicies/Default/rules/ssn"
+	put("a Number rule with no range", rule, `{"properties":{"schemaName":"dbo","tableName":"people","columnName":"ssn","maskingFunction":"Number"}}`, http.StatusBadRequest)
+	put("a Text rule", rule, `{"properties":{"schemaName":"dbo","tableName":"people","columnName":"ssn","maskingFunction":"Text","prefixSize":"0","suffixSize":"4","replacementString":"xxx-xx-"}}`, http.StatusCreated)
+	put("a workload group upside down", pool+"/workloadGroups/etl", `{"properties":{"minResourcePercent":50,"maxResourcePercent":20,"minResourcePercentPerRequest":5}}`, http.StatusBadRequest)
+	put("a workload group", pool+"/workloadGroups/etl", `{"properties":{"minResourcePercent":10,"maxResourcePercent":50,"minResourcePercentPerRequest":5,"importance":"normal"}}`, http.StatusCreated)
+	put("a classifier", pool+"/workloadGroups/etl/workloadClassifiers/loader", `{"properties":{"memberName":"loader","importance":"high"}}`, http.StatusCreated)
+
+	for _, id := range []string{pool + "/transparentDataEncryption/current", pool + "/auditingSettings/default", rule, pool + "/maintenancewindows/current", pool + "/dataMaskingPolicies/Default"} {
+		code, resp := do(t, a, http.MethodDelete, id, "")
+		expect(t, "deleting "+id, code, resp, http.StatusMethodNotAllowed)
+	}
+	for _, id := range []string{pool + "/workloadGroups/etl/workloadClassifiers/loader", pool + "/workloadGroups/etl", pool + "/vulnerabilityAssessments/default", ws + "/sqlPools/copy"} {
+		code, resp := do(t, a, http.MethodDelete, id, "")
+		if code != http.StatusOK && code != http.StatusNoContent && code != http.StatusAccepted {
+			t.Errorf("deleting %s: %d %s", id, code, resp)
+		}
+	}
+}

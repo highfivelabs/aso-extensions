@@ -3145,6 +3145,107 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesSqlPool)})
+	result = append(result, &registration.StorageType{
+		Obj: new(synapse_v20210601.WorkspacesSqlPoolsAuditingSetting),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.storageAccountAccessKey",
+				Func: indexSynapseWorkspacesSqlPoolsAuditingSettingStorageAccountAccessKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.storageAccountAccessKey",
+					},
+					&synapse_v20210601.WorkspacesSqlPoolsAuditingSettingList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsDataMaskingPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsDataMaskingPolicyRule)})
+	result = append(result, &registration.StorageType{
+		Obj: new(synapse_v20210601.WorkspacesSqlPoolsExtendedAuditingSetting),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.storageAccountAccessKey",
+				Func: indexSynapseWorkspacesSqlPoolsExtendedAuditingSettingStorageAccountAccessKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.storageAccountAccessKey",
+					},
+					&synapse_v20210601.WorkspacesSqlPoolsExtendedAuditingSettingList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsGeoBackupPolicy)})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsMaintenanceWindow)})
+	result = append(result, &registration.StorageType{
+		Obj: new(synapse_v20210601.WorkspacesSqlPoolsSecurityAlertPolicy),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.storageAccountAccessKey",
+				Func: indexSynapseWorkspacesSqlPoolsSecurityAlertPolicyStorageAccountAccessKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.storageAccountAccessKey",
+					},
+					&synapse_v20210601.WorkspacesSqlPoolsSecurityAlertPolicyList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsTransparentDataEncryption)})
+	result = append(result, &registration.StorageType{
+		Obj: new(synapse_v20210601.WorkspacesSqlPoolsVulnerabilityAssessment),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.storageAccountAccessKey",
+				Func: indexSynapseWorkspacesSqlPoolsVulnerabilityAssessmentStorageAccountAccessKey,
+			},
+			{
+				Key:  ".spec.storageContainerPathFromConfig",
+				Func: indexSynapseWorkspacesSqlPoolsVulnerabilityAssessmentStorageContainerPathFromConfig,
+			},
+			{
+				Key:  ".spec.storageContainerSasKey",
+				Func: indexSynapseWorkspacesSqlPoolsVulnerabilityAssessmentStorageContainerSasKey,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.storageAccountAccessKey",
+						".spec.storageContainerSasKey",
+					},
+					&synapse_v20210601.WorkspacesSqlPoolsVulnerabilityAssessmentList{}),
+			},
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.storageContainerPathFromConfig",
+					},
+					&synapse_v20210601.WorkspacesSqlPoolsVulnerabilityAssessmentList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsWorkloadGroup)})
+	result = append(result, &registration.StorageType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsWorkloadGroupClassifier)})
 	result = append(result, &registration.StorageType{
 		Obj: new(synapse_v20210601.WorkspacesVulnerabilityAssessment),
 		Indexes: []registration.Index{
@@ -4866,6 +4967,18 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSecurityAlertPolicy)},
 		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlAdministrator)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPool)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsAuditingSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsDataMaskingPolicy)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsDataMaskingPolicyRule)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsExtendedAuditingSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsGeoBackupPolicy)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsMaintenanceWindow)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsSecurityAlertPolicy)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsTransparentDataEncryption)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsVulnerabilityAssessment)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsWorkloadGroup)},
+		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesSqlPoolsWorkloadGroupClassifier)},
 		&registration.KnownType{Obj: new(synapse_v20210601.WorkspacesVulnerabilityAssessment)})
 	result = append(
 		result,
@@ -4883,6 +4996,18 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSecurityAlertPolicy)},
 		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlAdministrator)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPool)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPoolsAuditingSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPoolsDataMaskingPolicy)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPoolsDataMaskingPolicyRule)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPoolsExtendedAuditingSetting)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPoolsGeoBackupPolicy)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPoolsMaintenanceWindow)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPoolsSecurityAlertPolicy)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPoolsTransparentDataEncryption)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPoolsVulnerabilityAssessment)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPoolsWorkloadGroup)},
+		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesSqlPoolsWorkloadGroupClassifier)},
 		&registration.KnownType{Obj: new(synapse_v20210601s.WorkspacesVulnerabilityAssessment)})
 	result = append(
 		result,
@@ -5787,6 +5912,18 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &synapse_customizations.WorkspacesPrivateEndpointConnectionExtension{})
 	result = append(result, &synapse_customizations.WorkspacesSecurityAlertPolicyExtension{})
 	result = append(result, &synapse_customizations.WorkspacesSqlAdministratorExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolsAuditingSettingExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolsDataMaskingPolicyExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolsDataMaskingPolicyRuleExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolsExtendedAuditingSettingExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolsGeoBackupPolicyExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolsMaintenanceWindowExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolsSecurityAlertPolicyExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolsTransparentDataEncryptionExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolsVulnerabilityAssessmentExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolsWorkloadGroupClassifierExtension{})
+	result = append(result, &synapse_customizations.WorkspacesSqlPoolsWorkloadGroupExtension{})
 	result = append(result, &synapse_customizations.WorkspacesVulnerabilityAssessmentExtension{})
 	result = append(result, &web_customizations.AiGatewayExtension{})
 	result = append(result, &web_customizations.ApiConnectionExtension{})
@@ -9613,6 +9750,78 @@ func indexSynapseWorkspacesSqlAdministratorTenantIdFromConfig(rawObj client.Obje
 		return nil
 	}
 	return obj.Spec.TenantIdFromConfig.Index()
+}
+
+// indexSynapseWorkspacesSqlPoolsAuditingSettingStorageAccountAccessKey an index function for synapse_v20210601.WorkspacesSqlPoolsAuditingSetting .spec.storageAccountAccessKey
+func indexSynapseWorkspacesSqlPoolsAuditingSettingStorageAccountAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesSqlPoolsAuditingSetting)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageAccountAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.StorageAccountAccessKey.Index()
+}
+
+// indexSynapseWorkspacesSqlPoolsExtendedAuditingSettingStorageAccountAccessKey an index function for synapse_v20210601.WorkspacesSqlPoolsExtendedAuditingSetting .spec.storageAccountAccessKey
+func indexSynapseWorkspacesSqlPoolsExtendedAuditingSettingStorageAccountAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesSqlPoolsExtendedAuditingSetting)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageAccountAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.StorageAccountAccessKey.Index()
+}
+
+// indexSynapseWorkspacesSqlPoolsSecurityAlertPolicyStorageAccountAccessKey an index function for synapse_v20210601.WorkspacesSqlPoolsSecurityAlertPolicy .spec.storageAccountAccessKey
+func indexSynapseWorkspacesSqlPoolsSecurityAlertPolicyStorageAccountAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesSqlPoolsSecurityAlertPolicy)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageAccountAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.StorageAccountAccessKey.Index()
+}
+
+// indexSynapseWorkspacesSqlPoolsVulnerabilityAssessmentStorageAccountAccessKey an index function for synapse_v20210601.WorkspacesSqlPoolsVulnerabilityAssessment .spec.storageAccountAccessKey
+func indexSynapseWorkspacesSqlPoolsVulnerabilityAssessmentStorageAccountAccessKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesSqlPoolsVulnerabilityAssessment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageAccountAccessKey == nil {
+		return nil
+	}
+	return obj.Spec.StorageAccountAccessKey.Index()
+}
+
+// indexSynapseWorkspacesSqlPoolsVulnerabilityAssessmentStorageContainerPathFromConfig an index function for synapse_v20210601.WorkspacesSqlPoolsVulnerabilityAssessment .spec.storageContainerPathFromConfig
+func indexSynapseWorkspacesSqlPoolsVulnerabilityAssessmentStorageContainerPathFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesSqlPoolsVulnerabilityAssessment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageContainerPathFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.StorageContainerPathFromConfig.Index()
+}
+
+// indexSynapseWorkspacesSqlPoolsVulnerabilityAssessmentStorageContainerSasKey an index function for synapse_v20210601.WorkspacesSqlPoolsVulnerabilityAssessment .spec.storageContainerSasKey
+func indexSynapseWorkspacesSqlPoolsVulnerabilityAssessmentStorageContainerSasKey(rawObj client.Object) []string {
+	obj, ok := rawObj.(*synapse_v20210601.WorkspacesSqlPoolsVulnerabilityAssessment)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.StorageContainerSasKey == nil {
+		return nil
+	}
+	return obj.Spec.StorageContainerSasKey.Index()
 }
 
 // indexSynapseWorkspacesVulnerabilityAssessmentStorageAccountAccessKey an index function for synapse_v20210601.WorkspacesVulnerabilityAssessment .spec.storageAccountAccessKey

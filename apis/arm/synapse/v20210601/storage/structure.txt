@@ -552,6 +552,387 @@ WorkspacesSqlAdministrator: Resource
     ├── TenantId: *string
     └── Type: *string
 
+WorkspacesSqlPool: Resource
+├── Owner: synapse/v20210601.Workspace
+├── Spec: Object (16 properties)
+│   ├── AzureName: string
+│   ├── Collation: *string
+│   ├── CreateMode: *string
+│   ├── Location: *string
+│   ├── MaxSizeBytes: *int
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RecoverableDatabaseReference: *genruntime.ResourceReference
+│   ├── RestorePointInTime: *string
+│   ├── Sku: *Object (4 properties)
+│   │   ├── Capacity: *int
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Tier: *string
+│   ├── SourceDatabaseDeletionDate: *string
+│   ├── SourceDatabaseReference: *genruntime.ResourceReference
+│   ├── StorageAccountType: *string
+│   └── Tags: map[string]string
+└── Status: Object (19 properties)
+    ├── Collation: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreateMode: *string
+    ├── CreationDate: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── MaxSizeBytes: *int
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RecoverableDatabaseId: *string
+    ├── RestorePointInTime: *string
+    ├── Sku: *Object (4 properties)
+    │   ├── Capacity: *int
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Tier: *string
+    ├── SourceDatabaseDeletionDate: *string
+    ├── SourceDatabaseId: *string
+    ├── Status: *string
+    ├── StorageAccountType: *string
+    ├── Tags: map[string]string
+    └── Type: *string
+
+WorkspacesSqlPoolsAuditingSetting: Resource
+├── Owner: synapse/v20210601.WorkspacesSqlPool
+├── Spec: Object (12 properties)
+│   ├── AuditActionsAndGroups: string[]
+│   ├── IsAzureMonitorTargetEnabled: *bool
+│   ├── IsStorageSecondaryKeyInUse: *bool
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RetentionDays: *int
+│   ├── State: *string
+│   ├── StorageAccountAccessKey: *genruntime.SecretReference
+│   ├── StorageAccountSubscriptionId: *string
+│   └── StorageEndpoint: *string
+└── Status: Object (13 properties)
+    ├── AuditActionsAndGroups: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IsAzureMonitorTargetEnabled: *bool
+    ├── IsStorageSecondaryKeyInUse: *bool
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── RetentionDays: *int
+    ├── State: *string
+    ├── StorageAccountSubscriptionId: *string
+    ├── StorageEndpoint: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsDataMaskingPolicy: Resource
+├── Owner: synapse/v20210601.WorkspacesSqlPool
+├── Spec: Object (6 properties)
+│   ├── DataMaskingState: *string
+│   ├── ExemptPrincipals: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (12 properties)
+    ├── ApplicationPrincipals: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DataMaskingState: *string
+    ├── ExemptPrincipals: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── ManagedBy: *string
+    ├── MaskingLevel: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+WorkspacesSqlPoolsDataMaskingPolicyRule: Resource
+├── Owner: synapse/v20210601.WorkspacesSqlPoolsDataMaskingPolicy
+├── Spec: Object (16 properties)
+│   ├── AliasName: *string
+│   ├── AzureName: string
+│   ├── ColumnName: *string
+│   ├── MaskingFunction: *string
+│   ├── NumberFrom: *string
+│   ├── NumberTo: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PrefixSize: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── ReplacementString: *string
+│   ├── RuleState: *string
+│   ├── SchemaName: *string
+│   ├── SuffixSize: *string
+│   └── TableName: *string
+└── Status: Object (19 properties)
+    ├── AliasName: *string
+    ├── ColumnName: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── MaskingFunction: *string
+    ├── Name: *string
+    ├── NumberFrom: *string
+    ├── NumberTo: *string
+    ├── PrefixSize: *string
+    ├── PropertiesId: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ReplacementString: *string
+    ├── RuleState: *string
+    ├── SchemaName: *string
+    ├── SuffixSize: *string
+    ├── TableName: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsExtendedAuditingSetting: Resource
+├── Owner: synapse/v20210601.WorkspacesSqlPool
+├── Spec: Object (14 properties)
+│   ├── AuditActionsAndGroups: string[]
+│   ├── IsAzureMonitorTargetEnabled: *bool
+│   ├── IsStorageSecondaryKeyInUse: *bool
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PredicateExpression: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── QueueDelayMs: *int
+│   ├── RetentionDays: *int
+│   ├── State: *string
+│   ├── StorageAccountAccessKey: *genruntime.SecretReference
+│   ├── StorageAccountSubscriptionId: *string
+│   └── StorageEndpoint: *string
+└── Status: Object (14 properties)
+    ├── AuditActionsAndGroups: string[]
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IsAzureMonitorTargetEnabled: *bool
+    ├── IsStorageSecondaryKeyInUse: *bool
+    ├── Name: *string
+    ├── PredicateExpression: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── QueueDelayMs: *int
+    ├── RetentionDays: *int
+    ├── State: *string
+    ├── StorageAccountSubscriptionId: *string
+    ├── StorageEndpoint: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsGeoBackupPolicy: Resource
+├── Owner: synapse/v20210601.WorkspacesSqlPool
+├── Spec: Object (5 properties)
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── State: *string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── State: *string
+    ├── StorageType: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsMaintenanceWindow: Resource
+├── Owner: synapse/v20210601.WorkspacesSqlPool
+├── Spec: Object (5 properties)
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── TimeRanges: Object (4 properties)[]
+│       ├── DayOfWeek: *string
+│       ├── Duration: *string
+│       ├── PropertyBag: genruntime.PropertyBag
+│       └── StartTime: *string
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── TimeRanges: Object (4 properties)[]
+    │   ├── DayOfWeek: *string
+    │   ├── Duration: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── StartTime: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsSecurityAlertPolicy: Resource
+├── Owner: synapse/v20210601.WorkspacesSqlPool
+├── Spec: Object (11 properties)
+│   ├── DisabledAlerts: string[]
+│   ├── EmailAccountAdmins: *bool
+│   ├── EmailAddresses: string[]
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RetentionDays: *int
+│   ├── State: *string
+│   ├── StorageAccountAccessKey: *genruntime.SecretReference
+│   └── StorageEndpoint: *string
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreationTime: *string
+    ├── DisabledAlerts: string[]
+    ├── EmailAccountAdmins: *bool
+    ├── EmailAddresses: string[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── RetentionDays: *int
+    ├── State: *string
+    ├── StorageEndpoint: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsTransparentDataEncryption: Resource
+├── Owner: synapse/v20210601.WorkspacesSqlPool
+├── Spec: Object (5 properties)
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Status: *string
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Status: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsVulnerabilityAssessment: Resource
+├── Owner: synapse/v20210601.WorkspacesSqlPool
+├── Spec: Object (9 properties)
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RecurringScans: *Object (4 properties)
+│   │   ├── EmailSubscriptionAdmins: *bool
+│   │   ├── Emails: string[]
+│   │   ├── IsEnabled: *bool
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── StorageAccountAccessKey: *genruntime.SecretReference
+│   ├── StorageContainerPath: *string
+│   ├── StorageContainerPathFromConfig: *genruntime.ConfigMapReference
+│   └── StorageContainerSasKey: *genruntime.SecretReference
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── RecurringScans: *Object (4 properties)
+    │   ├── EmailSubscriptionAdmins: *bool
+    │   ├── Emails: string[]
+    │   ├── IsEnabled: *bool
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── StorageContainerPath: *string
+    └── Type: *string
+
+WorkspacesSqlPoolsWorkloadGroup: Resource
+├── Owner: synapse/v20210601.WorkspacesSqlPool
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── Importance: *string
+│   ├── MaxResourcePercent: *int
+│   ├── MaxResourcePercentPerRequest: *float64
+│   ├── MinResourcePercent: *int
+│   ├── MinResourcePercentPerRequest: *float64
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── QueryExecutionTimeout: *int
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Importance: *string
+    ├── MaxResourcePercent: *int
+    ├── MaxResourcePercentPerRequest: *float64
+    ├── MinResourcePercent: *int
+    ├── MinResourcePercentPerRequest: *float64
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── QueryExecutionTimeout: *int
+    └── Type: *string
+
+WorkspacesSqlPoolsWorkloadGroupClassifier: Resource
+├── Owner: synapse/v20210601.WorkspacesSqlPoolsWorkloadGroup
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── Context: *string
+│   ├── EndTime: *string
+│   ├── Importance: *string
+│   ├── Label: *string
+│   ├── MemberName: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── StartTime: *string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Context: *string
+    ├── EndTime: *string
+    ├── Id: *string
+    ├── Importance: *string
+    ├── Label: *string
+    ├── MemberName: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── StartTime: *string
+    └── Type: *string
+
 WorkspacesVulnerabilityAssessment: Resource
 ├── Owner: synapse/v20210601.Workspace
 ├── Spec: Object (9 properties)

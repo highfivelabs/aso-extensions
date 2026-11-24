@@ -337,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 8,436 (19.5%) in 607 further resources; uncovered 27,813 (64.1%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 8,510 (19.6%) in 619 further resources; uncovered 27,739 (64.0%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.0% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 7.7% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.0% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 8.0% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 36.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 37.3% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
 
 **Ours.**
 
@@ -921,6 +921,18 @@ Generated; these cannot drift from the data.
 | `synapse.azure.hfl.dev/WorkspacesPrivateEndpointConnection` | `Microsoft.Synapse/workspaces/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `synapse.azure.hfl.dev/WorkspacesSecurityAlertPolicy` | `Microsoft.Synapse/workspaces/securityAlertPolicies` | ARM wire type of the generated kind (`apis/arm`) |
 | `synapse.azure.hfl.dev/WorkspacesSqlAdministrator` | `Microsoft.Synapse/workspaces/sqlAdministrators` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPool` | `Microsoft.Synapse/workspaces/sqlPools` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsAuditingSetting` | `Microsoft.Synapse/workspaces/sqlPools/auditingSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsDataMaskingPolicy` | `Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsDataMaskingPolicyRule` | `Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies/rules` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsExtendedAuditingSetting` | `Microsoft.Synapse/workspaces/sqlPools/extendedAuditingSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsGeoBackupPolicy` | `Microsoft.Synapse/workspaces/sqlPools/geoBackupPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsMaintenanceWindow` | `Microsoft.Synapse/workspaces/sqlPools/maintenancewindows` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsSecurityAlertPolicy` | `Microsoft.Synapse/workspaces/sqlPools/securityAlertPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsTransparentDataEncryption` | `Microsoft.Synapse/workspaces/sqlPools/transparentDataEncryption` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsVulnerabilityAssessment` | `Microsoft.Synapse/workspaces/sqlPools/vulnerabilityAssessments` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsWorkloadGroup` | `Microsoft.Synapse/workspaces/sqlPools/workloadGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsWorkloadGroupClassifier` | `Microsoft.Synapse/workspaces/sqlPools/workloadGroups/workloadClassifiers` | ARM wire type of the generated kind (`apis/arm`) |
 | `synapse.azure.hfl.dev/WorkspacesVulnerabilityAssessment` | `Microsoft.Synapse/workspaces/vulnerabilityAssessments` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/AiGateway` | `Microsoft.Web/aigateways` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/ApiConnection` | `Microsoft.Web/connections` | ARM wire type of the generated kind (`apis/arm`) |

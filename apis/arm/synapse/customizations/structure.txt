@@ -29,5 +29,29 @@ WorkspacesSecurityAlertPolicyExtension: Object (0 properties)
 
 WorkspacesSqlAdministratorExtension: Object (0 properties)
 
+WorkspacesSqlPoolExtension: Object (0 properties)
+
+WorkspacesSqlPoolsAuditingSettingExtension: Object (0 properties)
+
+WorkspacesSqlPoolsDataMaskingPolicyExtension: Object (0 properties)
+
+WorkspacesSqlPoolsDataMaskingPolicyRuleExtension: Object (0 properties)
+
+WorkspacesSqlPoolsExtendedAuditingSettingExtension: Object (0 properties)
+
+WorkspacesSqlPoolsGeoBackupPolicyExtension: Object (0 properties)
+
+WorkspacesSqlPoolsMaintenanceWindowExtension: Object (0 properties)
+
+WorkspacesSqlPoolsSecurityAlertPolicyExtension: Object (0 properties)
+
+WorkspacesSqlPoolsTransparentDataEncryptionExtension: Object (0 properties)
+
+WorkspacesSqlPoolsVulnerabilityAssessmentExtension: Object (0 properties)
+
+WorkspacesSqlPoolsWorkloadGroupClassifierExtension: Object (0 properties)
+
+WorkspacesSqlPoolsWorkloadGroupExtension: Object (0 properties)
+
 WorkspacesVulnerabilityAssessmentExtension: Object (0 properties)
 
