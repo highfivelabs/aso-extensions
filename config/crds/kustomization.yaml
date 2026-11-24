@@ -232,6 +232,11 @@ resources:
 - kubernetesconfiguration.azure.hfl.dev_privatelinkscopes.yaml
 - kubernetesconfiguration.azure.hfl.dev_privatelinkscopesprivateendpointconnections.yaml
 - kubernetesconfiguration.azure.hfl.dev_sourcecontrolconfigurations.yaml
+- kusto.azure.hfl.dev_clustersattacheddatabaseconfigurations.yaml
+- kusto.azure.hfl.dev_clustersdatabasesscripts.yaml
+- kusto.azure.hfl.dev_clustersmanagedprivateendpoints.yaml
+- kusto.azure.hfl.dev_clustersprivateendpointconnections.yaml
+- kusto.azure.hfl.dev_clusterssandboxcustomimages.yaml
 - maintenance.azure.hfl.dev_configurationassignments.yaml
 - maintenance.azure.hfl.dev_maintenanceconfigurations.yaml
 - managedidentity.azure.hfl.dev_userassignedidentities.yaml

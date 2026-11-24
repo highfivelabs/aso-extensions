@@ -97,7 +97,9 @@
 // group profiles and NGroups (containerinstance.go: containers with images
 // and requests, profiles that exist), Web PubSub and SignalR children
 // (signalr.go: SKUs, Premium replicas elsewhere, hub names, certificates and
-// domains, shared private links to what exists), Azure Monitor
+// domains, shared private links to what exists), Azure Data Explorer
+// cluster children (kusto.go: leader clusters, private link targets, images,
+// one script source), Azure Monitor
 // pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
 // processors and exporters, pipelines naming what is declared), a VM's
@@ -594,6 +596,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		if status, code, msg := a.checkWebExtras(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkKusto(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}

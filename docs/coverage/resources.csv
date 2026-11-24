@@ -1324,15 +1324,15 @@ Microsoft.KubernetesRuntime,Microsoft.KubernetesRuntime/loadBalancers,4,,0,,0,4,
 Microsoft.KubernetesRuntime,Microsoft.KubernetesRuntime/services,1,,0,,0,1,false,spec_api=2024-03-01
 Microsoft.KubernetesRuntime,Microsoft.KubernetesRuntime/storageClasses,23,,0,,0,23,false,spec_api=2024-03-01
 Microsoft.Kusto,Microsoft.Kusto/clusters,42,kusto.azure.com/Cluster,40,,0,2,false,spec_api=2025-02-14; official_api=2024-04-13; official-api-differs-from-spec
-Microsoft.Kusto,Microsoft.Kusto/clusters/attachedDatabaseConfigurations,14,,0,,0,14,false,spec_api=2025-02-14
+Microsoft.Kusto,Microsoft.Kusto/clusters/attachedDatabaseConfigurations,14,,0,kusto.azure.hfl.dev/ClustersAttachedDatabaseConfiguration,14,0,false,spec_api=2025-02-14; ours_api=2025-02-14
 Microsoft.Kusto,Microsoft.Kusto/clusters/databases,3,kusto.azure.com/Database,0,,0,3,false,spec_api=2025-02-14; official_api=2024-04-13; official-api-differs-from-spec
 Microsoft.Kusto,Microsoft.Kusto/clusters/databases/dataConnections,9,kusto.azure.com/DataConnection,0,,0,9,false,spec_api=2025-02-14; official_api=2024-04-13; official-api-differs-from-spec
 Microsoft.Kusto,Microsoft.Kusto/clusters/databases/principalAssignments,4,kusto.azure.com/PrincipalAssignment,4,,0,0,false,spec_api=2025-02-14; official_api=2024-04-13; official-api-differs-from-spec
-Microsoft.Kusto,Microsoft.Kusto/clusters/databases/scripts,8,,0,,0,8,false,spec_api=2025-02-14
-Microsoft.Kusto,Microsoft.Kusto/clusters/managedPrivateEndpoints,4,,0,,0,4,false,spec_api=2025-02-14
+Microsoft.Kusto,Microsoft.Kusto/clusters/databases/scripts,8,,0,kusto.azure.hfl.dev/ClustersDatabasesScript,8,0,false,spec_api=2025-02-14; ours_api=2025-02-14
+Microsoft.Kusto,Microsoft.Kusto/clusters/managedPrivateEndpoints,4,,0,kusto.azure.hfl.dev/ClustersManagedPrivateEndpoint,4,0,false,spec_api=2025-02-14; ours_api=2025-02-14
 Microsoft.Kusto,Microsoft.Kusto/clusters/principalAssignments,4,kusto.azure.com/ClusterPrincipalAssignment,4,,0,0,false,spec_api=2025-02-14; official_api=2024-04-13; official-api-differs-from-spec
-Microsoft.Kusto,Microsoft.Kusto/clusters/privateEndpointConnections,2,,0,,0,2,false,spec_api=2025-02-14
-Microsoft.Kusto,Microsoft.Kusto/clusters/sandboxCustomImages,4,,0,,0,4,false,spec_api=2025-02-14
+Microsoft.Kusto,Microsoft.Kusto/clusters/privateEndpointConnections,2,,0,kusto.azure.hfl.dev/ClustersPrivateEndpointConnection,2,0,false,spec_api=2025-02-14; ours_api=2025-02-14
+Microsoft.Kusto,Microsoft.Kusto/clusters/sandboxCustomImages,4,,0,kusto.azure.hfl.dev/ClustersSandboxCustomImage,4,0,false,spec_api=2025-02-14; ours_api=2025-02-14
 Microsoft.LabServices,Microsoft.LabServices/labaccounts,5,,0,,0,5,false,spec_api=2018-10-15
 Microsoft.LabServices,Microsoft.LabServices/labaccounts/galleryimages,7,,0,,0,7,false,spec_api=2018-10-15
 Microsoft.LabServices,Microsoft.LabServices/labaccounts/labs,7,,0,,0,7,false,spec_api=2018-10-15

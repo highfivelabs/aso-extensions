@@ -141,6 +141,9 @@ import (
 	kubernetesconfiguration_v20230501s "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/v20230501/storage"
 	kubernetesconfiguration_v20241101p "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/v20241101preview"
 	kubernetesconfiguration_v20241101ps "github.com/highfivelabs/aso-extensions/apis/arm/kubernetesconfiguration/v20241101preview/storage"
+	kusto_customizations "github.com/highfivelabs/aso-extensions/apis/arm/kusto/customizations"
+	kusto_v20250214 "github.com/highfivelabs/aso-extensions/apis/arm/kusto/v20250214"
+	kusto_v20250214s "github.com/highfivelabs/aso-extensions/apis/arm/kusto/v20250214/storage"
 	maintenance_customizations "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/customizations"
 	maintenance_v20230401 "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401"
 	maintenance_v20230401s "github.com/highfivelabs/aso-extensions/apis/arm/maintenance/v20230401/storage"
@@ -1671,6 +1674,34 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScope)})
 	result = append(result, &registration.StorageType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScopesPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(kusto_v20250214.ClustersAttachedDatabaseConfiguration)})
+	result = append(result, &registration.StorageType{
+		Obj: new(kusto_v20250214.ClustersDatabasesScript),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.scriptContent",
+				Func: indexKustoClustersDatabasesScriptScriptContent,
+			},
+			{
+				Key:  ".spec.scriptUrlSasToken",
+				Func: indexKustoClustersDatabasesScriptScriptUrlSasToken,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.scriptContent",
+						".spec.scriptUrlSasToken",
+					},
+					&kusto_v20250214.ClustersDatabasesScriptList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(kusto_v20250214.ClustersManagedPrivateEndpoint)})
+	result = append(result, &registration.StorageType{Obj: new(kusto_v20250214.ClustersPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(kusto_v20250214.ClustersSandboxCustomImage)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.ConfigurationAssignment)})
 	result = append(result, &registration.StorageType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(managedidentity_v20241130.UserAssignedIdentity)})
@@ -3541,6 +3572,20 @@ func getKnownTypes() []*registration.KnownType {
 	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20230501s.SourceControlConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScope)}, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101p.PrivateLinkScopesPrivateEndpointConnection)})
 	result = append(result, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101ps.PrivateLinkScope)}, &registration.KnownType{Obj: new(kubernetesconfiguration_v20241101ps.PrivateLinkScopesPrivateEndpointConnection)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(kusto_v20250214.ClustersAttachedDatabaseConfiguration)},
+		&registration.KnownType{Obj: new(kusto_v20250214.ClustersDatabasesScript)},
+		&registration.KnownType{Obj: new(kusto_v20250214.ClustersManagedPrivateEndpoint)},
+		&registration.KnownType{Obj: new(kusto_v20250214.ClustersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(kusto_v20250214.ClustersSandboxCustomImage)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(kusto_v20250214s.ClustersAttachedDatabaseConfiguration)},
+		&registration.KnownType{Obj: new(kusto_v20250214s.ClustersDatabasesScript)},
+		&registration.KnownType{Obj: new(kusto_v20250214s.ClustersManagedPrivateEndpoint)},
+		&registration.KnownType{Obj: new(kusto_v20250214s.ClustersPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(kusto_v20250214s.ClustersSandboxCustomImage)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(maintenance_v20230401s.ConfigurationAssignment)}, &registration.KnownType{Obj: new(maintenance_v20230401s.MaintenanceConfiguration)})
 	result = append(result, &registration.KnownType{Obj: new(managedidentity_v20241130.UserAssignedIdentity)})
@@ -4304,6 +4349,8 @@ func createScheme() *runtime.Scheme {
 	_ = kubernetesconfiguration_v20230501s.AddToScheme(scheme)
 	_ = kubernetesconfiguration_v20241101p.AddToScheme(scheme)
 	_ = kubernetesconfiguration_v20241101ps.AddToScheme(scheme)
+	_ = kusto_v20250214.AddToScheme(scheme)
+	_ = kusto_v20250214s.AddToScheme(scheme)
 	_ = maintenance_v20230401.AddToScheme(scheme)
 	_ = maintenance_v20230401s.AddToScheme(scheme)
 	_ = managedidentity_v20241130.AddToScheme(scheme)
@@ -4622,6 +4669,11 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &kubernetesconfiguration_customizations.PrivateLinkScopeExtension{})
 	result = append(result, &kubernetesconfiguration_customizations.PrivateLinkScopesPrivateEndpointConnectionExtension{})
 	result = append(result, &kubernetesconfiguration_customizations.SourceControlConfigurationExtension{})
+	result = append(result, &kusto_customizations.ClustersAttachedDatabaseConfigurationExtension{})
+	result = append(result, &kusto_customizations.ClustersDatabasesScriptExtension{})
+	result = append(result, &kusto_customizations.ClustersManagedPrivateEndpointExtension{})
+	result = append(result, &kusto_customizations.ClustersPrivateEndpointConnectionExtension{})
+	result = append(result, &kusto_customizations.ClustersSandboxCustomImageExtension{})
 	result = append(result, &maintenance_customizations.ConfigurationAssignmentExtension{})
 	result = append(result, &maintenance_customizations.MaintenanceConfigurationExtension{})
 	result = append(result, &managedidentity_customizations.UserAssignedIdentityExtension{})
@@ -6923,6 +6975,30 @@ func indexKubernetesconfigurationSourceControlConfigurationConfigurationProtecte
 		return nil
 	}
 	return obj.Spec.ConfigurationProtectedSettings.Index()
+}
+
+// indexKustoClustersDatabasesScriptScriptContent an index function for kusto_v20250214.ClustersDatabasesScript .spec.scriptContent
+func indexKustoClustersDatabasesScriptScriptContent(rawObj client.Object) []string {
+	obj, ok := rawObj.(*kusto_v20250214.ClustersDatabasesScript)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ScriptContent == nil {
+		return nil
+	}
+	return obj.Spec.ScriptContent.Index()
+}
+
+// indexKustoClustersDatabasesScriptScriptUrlSasToken an index function for kusto_v20250214.ClustersDatabasesScript .spec.scriptUrlSasToken
+func indexKustoClustersDatabasesScriptScriptUrlSasToken(rawObj client.Object) []string {
+	obj, ok := rawObj.(*kusto_v20250214.ClustersDatabasesScript)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.ScriptUrlSasToken == nil {
+		return nil
+	}
+	return obj.Spec.ScriptUrlSasToken.Index()
 }
 
 // indexNetworkApplicationGatewayAuthenticationCertificatesData an index function for network_v20260301.ApplicationGateway .spec.authenticationCertificates.data

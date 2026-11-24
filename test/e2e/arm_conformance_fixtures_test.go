@@ -371,6 +371,24 @@ func init() {
 	for _, k := range []string{"WebPubSubPrivateEndpointConnection", "SignalRPrivateEndpointConnection"} {
 		f[k] = conformanceFixture{setup: func(c *conformanceContext) { c.add(c.owner + "/privateEndpointConnections/conformance") }}
 	}
+	// Data Explorer (kusto.go): a follower names another cluster; a managed
+	// private endpoint its target and groupId; an image its language and
+	// version; a script one source; a private endpoint makes a connection.
+	f["ClustersAttachedDatabaseConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"databaseName": "*", "defaultPrincipalsModificationKind": "Union", "clusterResourceReference": armRef(c.add(c.in("Microsoft.Kusto/clusters/leader")))}
+	}}
+	f["ClustersManagedPrivateEndpoint"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"groupId": "blob", "privateLinkResourceReference": armRef(c.ref)}
+	}}
+	f["ClustersSandboxCustomImage"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"language": "Python", "languageVersion": "3.10.8"}
+	}}
+	f["ClustersDatabasesScript"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"scriptContent": map[string]any{"name": "conformance", "key": "value"}}
+	}}
+	f["kusto.azure.hfl.dev/ClustersPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
 	f["NetworkInterfacesTapConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"virtualNetworkTap": embedRef(c.add(c.in("Microsoft.Network/virtualNetworkTaps/conformance")))}
 	}}

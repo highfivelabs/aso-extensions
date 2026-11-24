@@ -49,6 +49,7 @@ imports:
   dbformysql: azure-arm/dbformysql.yaml
   containerinstance: azure-arm/containerinstance.yaml
   signalrservice: azure-arm/signalrservice.yaml
+  kusto: azure-arm/kusto.yaml
   network: azure-arm/network.yaml
   containerregistry: azure-arm/containerregistry.yaml
   compute: azure-arm/compute.yaml

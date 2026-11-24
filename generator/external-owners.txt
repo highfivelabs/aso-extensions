@@ -34,6 +34,8 @@ apimanagement/Service_Product=Product
 dbformysql/FlexibleServer
 signalrservice/SignalR
 signalrservice/SignalR_Replica=Replica
+kusto/Cluster
+kusto/Clusters_Database=Database
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase

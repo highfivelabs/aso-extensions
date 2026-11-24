@@ -570,6 +570,14 @@ upstream's); the catalog's chart tests do that.
   DELETE (405). Connections follow `privateendpoints.go`. Not modelled:
   clients, event handlers being called, the tiers that take domains and
   private links, and the error codes.
+- Azure Data Explorer cluster children (`Microsoft.Kusto`, 2025-02-14;
+  `pkg/fakecloud/arm/kusto.go`): a follower configuration names a database,
+  a principals modification kind and a leader cluster that exists and is
+  another (400, 404); a managed private endpoint a groupId and a target
+  that exists (400, 404); a sandbox image its language and a version or a
+  base image (400); a database script one source, URL or inline (400).
+  Connections follow `privateendpoints.go`. Not modelled: followers kept in
+  step, scripts running, images built, and the error codes.
 - Virtual network TAP (`virtualNetworkTaps` and
   `networkInterfaces/tapConfigurations`, 2026-03-01;
   `pkg/fakecloud/arm/vnettap.go`): a TAP has one destination, a NIC's IP

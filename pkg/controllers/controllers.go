@@ -57,6 +57,7 @@ import (
 	asoeventhub "github.com/Azure/azure-service-operator/v2/api/eventhub/v20240101/storage"
 	asoinsights "github.com/Azure/azure-service-operator/v2/api/insights/v1api20200202/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
+	asokusto "github.com/Azure/azure-service-operator/v2/api/kusto/v1api20240413/storage"
 	asodns "github.com/Azure/azure-service-operator/v2/api/network/v1api20180501/storage"
 	asodnsresolver "github.com/Azure/azure-service-operator/v2/api/network/v1api20220701/storage"
 	asoasg "github.com/Azure/azure-service-operator/v2/api/network/v1api20240101/storage"
@@ -134,6 +135,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asoapim.AddToScheme(scheme)
 	_ = asomysql.AddToScheme(scheme)
 	_ = asosignalr.AddToScheme(scheme)
+	_ = asokusto.AddToScheme(scheme)
 	return scheme
 }
 
@@ -204,6 +206,8 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asomysql.FlexibleServer{}, Name: "aso_dbformysql_flexibleserver"},
 		{Obj: &asosignalr.SignalR{}, Name: "aso_signalrservice_signalr"},
 		{Obj: &asosignalr.Replica{}, Name: "aso_signalrservice_replica"},
+		{Obj: &asokusto.Cluster{}, Name: "aso_kusto_cluster"},
+		{Obj: &asokusto.Database{}, Name: "aso_kusto_database"},
 	}
 }
 
