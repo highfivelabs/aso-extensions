@@ -28,6 +28,9 @@ itself lives in its own repository and is never changed from here.
   skip); one that an open ASO pull request or unreleased `main` adds is
   copied from there; otherwise generate it with ASO's generator from the
   pinned ARM specs where it can, and hand-write it only when it cannot.
+  Never wait on upstream (§4, 2026-11-24): the pin follows ASO's `main`
+  at least weekly, and our latest build is ASO `main` + our fixes + our
+  extensions; when ASO ships a kind or field we carry, ours retires.
 - **What is left and known gaps:** `docs/plan.md` §7 "Proven, and not".
 - **The fake cloud:** docs/fake-cloud.md (PostgreSQL, fake Entra and Key Vault).
 - **Identity:** the managers run as their own narrow service account by
