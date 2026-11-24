@@ -227,6 +227,9 @@ import (
 	servicebus_customizations "github.com/highfivelabs/aso-extensions/apis/arm/servicebus/customizations"
 	servicebus_v20260101 "github.com/highfivelabs/aso-extensions/apis/arm/servicebus/v20260101"
 	servicebus_v20260101s "github.com/highfivelabs/aso-extensions/apis/arm/servicebus/v20260101/storage"
+	signalrservice_customizations "github.com/highfivelabs/aso-extensions/apis/arm/signalrservice/customizations"
+	signalrservice_v20240301 "github.com/highfivelabs/aso-extensions/apis/arm/signalrservice/v20240301"
+	signalrservice_v20240301s "github.com/highfivelabs/aso-extensions/apis/arm/signalrservice/v20240301/storage"
 	sql_customizations "github.com/highfivelabs/aso-extensions/apis/arm/sql/customizations"
 	sql_v20250101 "github.com/highfivelabs/aso-extensions/apis/arm/sql/v20250101"
 	sql_v20250101s "github.com/highfivelabs/aso-extensions/apis/arm/sql/v20250101/storage"
@@ -2276,6 +2279,35 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(servicebus_v20260101.NamespacesDisasterRecoveryConfig)})
 	result = append(result, &registration.StorageType{Obj: new(servicebus_v20260101.NamespacesNetworkRuleSet)})
 	result = append(result, &registration.StorageType{Obj: new(servicebus_v20260101.NamespacesPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(signalrservice_v20240301.SignalRPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(signalrservice_v20240301.SignalRReplicasSharedPrivateLinkResource)})
+	result = append(result, &registration.StorageType{Obj: new(signalrservice_v20240301.SignalRSharedPrivateLinkResource)})
+	result = append(result, &registration.StorageType{Obj: new(signalrservice_v20240301.WebPubSub)})
+	result = append(result, &registration.StorageType{
+		Obj: new(signalrservice_v20240301.WebPubSubCustomCertificate),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.keyVaultBaseUriFromConfig",
+				Func: indexSignalrserviceWebPubSubCustomCertificateKeyVaultBaseUriFromConfig,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.ConfigMap{},
+				MakeEventHandler: watchConfigMapsFactory(
+					[]string{
+						".spec.keyVaultBaseUriFromConfig",
+					},
+					&signalrservice_v20240301.WebPubSubCustomCertificateList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(signalrservice_v20240301.WebPubSubCustomDomain)})
+	result = append(result, &registration.StorageType{Obj: new(signalrservice_v20240301.WebPubSubHub)})
+	result = append(result, &registration.StorageType{Obj: new(signalrservice_v20240301.WebPubSubPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(signalrservice_v20240301.WebPubSubReplica)})
+	result = append(result, &registration.StorageType{Obj: new(signalrservice_v20240301.WebPubSubReplicasSharedPrivateLinkResource)})
+	result = append(result, &registration.StorageType{Obj: new(signalrservice_v20240301.WebPubSubSharedPrivateLinkResource)})
 	result = append(result, &registration.StorageType{Obj: new(sql_v20250101.InstancePool)})
 	result = append(result, &registration.StorageType{
 		Obj: new(sql_v20250101.ManagedInstancesAdministrator),
@@ -3905,6 +3937,32 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(servicebus_v20260101s.NamespacesPrivateEndpointConnection)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(signalrservice_v20240301.SignalRPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301.SignalRReplicasSharedPrivateLinkResource)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301.SignalRSharedPrivateLinkResource)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301.WebPubSub)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301.WebPubSubCustomCertificate)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301.WebPubSubCustomDomain)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301.WebPubSubHub)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301.WebPubSubPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301.WebPubSubReplica)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301.WebPubSubReplicasSharedPrivateLinkResource)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301.WebPubSubSharedPrivateLinkResource)})
+	result = append(
+		result,
+		&registration.KnownType{Obj: new(signalrservice_v20240301s.SignalRPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301s.SignalRReplicasSharedPrivateLinkResource)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301s.SignalRSharedPrivateLinkResource)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301s.WebPubSub)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301s.WebPubSubCustomCertificate)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301s.WebPubSubCustomDomain)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301s.WebPubSubHub)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301s.WebPubSubPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301s.WebPubSubReplica)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301s.WebPubSubReplicasSharedPrivateLinkResource)},
+		&registration.KnownType{Obj: new(signalrservice_v20240301s.WebPubSubSharedPrivateLinkResource)})
+	result = append(
+		result,
 		&registration.KnownType{Obj: new(sql_v20250101.InstancePool)},
 		&registration.KnownType{Obj: new(sql_v20250101.ManagedInstancesAdministrator)},
 		&registration.KnownType{Obj: new(sql_v20250101.ManagedInstancesAdvancedThreatProtectionSetting)},
@@ -4318,6 +4376,8 @@ func createScheme() *runtime.Scheme {
 	_ = securityinsights_v20251001ps.AddToScheme(scheme)
 	_ = servicebus_v20260101.AddToScheme(scheme)
 	_ = servicebus_v20260101s.AddToScheme(scheme)
+	_ = signalrservice_v20240301.AddToScheme(scheme)
+	_ = signalrservice_v20240301s.AddToScheme(scheme)
 	_ = sql_v20250101.AddToScheme(scheme)
 	_ = sql_v20250101s.AddToScheme(scheme)
 	_ = storage_v20260601.AddToScheme(scheme)
@@ -4743,6 +4803,17 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &servicebus_customizations.NamespacesDisasterRecoveryConfigExtension{})
 	result = append(result, &servicebus_customizations.NamespacesNetworkRuleSetExtension{})
 	result = append(result, &servicebus_customizations.NamespacesPrivateEndpointConnectionExtension{})
+	result = append(result, &signalrservice_customizations.SignalRPrivateEndpointConnectionExtension{})
+	result = append(result, &signalrservice_customizations.SignalRReplicasSharedPrivateLinkResourceExtension{})
+	result = append(result, &signalrservice_customizations.SignalRSharedPrivateLinkResourceExtension{})
+	result = append(result, &signalrservice_customizations.WebPubSubCustomCertificateExtension{})
+	result = append(result, &signalrservice_customizations.WebPubSubCustomDomainExtension{})
+	result = append(result, &signalrservice_customizations.WebPubSubExtension{})
+	result = append(result, &signalrservice_customizations.WebPubSubHubExtension{})
+	result = append(result, &signalrservice_customizations.WebPubSubPrivateEndpointConnectionExtension{})
+	result = append(result, &signalrservice_customizations.WebPubSubReplicaExtension{})
+	result = append(result, &signalrservice_customizations.WebPubSubReplicasSharedPrivateLinkResourceExtension{})
+	result = append(result, &signalrservice_customizations.WebPubSubSharedPrivateLinkResourceExtension{})
 	result = append(result, &sql_customizations.InstancePoolExtension{})
 	result = append(result, &sql_customizations.ManagedInstancesAdministratorExtension{})
 	result = append(result, &sql_customizations.ManagedInstancesAdvancedThreatProtectionSettingExtension{})
@@ -7425,6 +7496,18 @@ func indexSecurityinsightsSourceControlToken(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.RepositoryAccess.Token.Index()
+}
+
+// indexSignalrserviceWebPubSubCustomCertificateKeyVaultBaseUriFromConfig an index function for signalrservice_v20240301.WebPubSubCustomCertificate .spec.keyVaultBaseUriFromConfig
+func indexSignalrserviceWebPubSubCustomCertificateKeyVaultBaseUriFromConfig(rawObj client.Object) []string {
+	obj, ok := rawObj.(*signalrservice_v20240301.WebPubSubCustomCertificate)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.KeyVaultBaseUriFromConfig == nil {
+		return nil
+	}
+	return obj.Spec.KeyVaultBaseUriFromConfig.Index()
 }
 
 // indexSqlManagedInstancesAdministratorSidFromConfig an index function for sql_v20250101.ManagedInstancesAdministrator .spec.sidFromConfig

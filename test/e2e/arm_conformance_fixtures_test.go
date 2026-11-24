@@ -348,6 +348,29 @@ func init() {
 	f["NGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"containerGroupProfiles": []any{map[string]any{"resource": embedRef(c.add(c.in("Microsoft.ContainerInstance/containerGroupProfiles/conformance")))}}}
 	}}
+	// Web PubSub and SignalR (signalr.go): a known SKU; certificates and
+	// domains naming what they need; shared private links to what exists; a
+	// private endpoint makes a connection. A replica needs a Premium service
+	// in another region, which the conformance owner is not.
+	f["WebPubSub"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sku": map[string]any{"name": "Free_F1", "capacity": int64(1)}}
+	}}
+	f["WebPubSubReplica"] = conformanceFixture{coveredBy: "TestWebPubSubAndSignalRKinds"}
+	f["WebPubSubCustomCertificate"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"keyVaultBaseUri": "https://conformance.vault.azure.net/", "keyVaultSecretName": "conformance"}
+	}}
+	f["WebPubSubCustomDomain"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"domainName": "conformance.example.com", "customCertificate": embedRef(c.add(c.owner + "/customCertificates/conformance"))}
+	}}
+	sharedLink := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"groupId": "sites", "privateLinkResourceReference": armRef(c.ref)}
+	}}
+	for _, k := range []string{"WebPubSubSharedPrivateLinkResource", "WebPubSubReplicasSharedPrivateLinkResource", "SignalRSharedPrivateLinkResource", "SignalRReplicasSharedPrivateLinkResource"} {
+		f[k] = sharedLink
+	}
+	for _, k := range []string{"WebPubSubPrivateEndpointConnection", "SignalRPrivateEndpointConnection"} {
+		f[k] = conformanceFixture{setup: func(c *conformanceContext) { c.add(c.owner + "/privateEndpointConnections/conformance") }}
+	}
 	f["NetworkInterfacesTapConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"virtualNetworkTap": embedRef(c.add(c.in("Microsoft.Network/virtualNetworkTaps/conformance")))}
 	}}

@@ -32,6 +32,8 @@ apimanagement/Service
 apimanagement/Service_Api=Api
 apimanagement/Service_Product=Product
 dbformysql/FlexibleServer
+signalrservice/SignalR
+signalrservice/SignalR_Replica=Replica
 network/PrivateDnsZone
 documentdb/DatabaseAccount
 documentdb/DatabaseAccounts_SqlDatabase=SqlDatabase

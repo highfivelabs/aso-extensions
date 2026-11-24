@@ -236,7 +236,7 @@ Microsoft.ServiceFabric,11,0,0,424,0,0,424,0.0,0.0,100.0
 Microsoft.ServiceFabricMesh,6,0,0,109,0,0,109,0.0,0.0,100.0
 Microsoft.ServiceLinker,4,1,0,190,47,0,143,24.7,0.0,75.3
 Microsoft.ServiceNetworking,5,0,0,24,0,0,24,0.0,0.0,100.0
-Microsoft.SignalRService,15,4,0,123,50,0,73,40.7,0.0,59.3
+Microsoft.SignalRService,15,4,11,123,50,73,0,40.7,59.3,0.0
 Microsoft.SoftwarePlan,1,0,0,2,0,0,2,0.0,0.0,100.0
 Microsoft.Solutions,3,0,0,64,0,0,64,0.0,0.0,100.0
 Microsoft.Sovereign,3,0,0,52,0,0,52,0.0,0.0,100.0

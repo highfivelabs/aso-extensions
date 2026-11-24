@@ -558,6 +558,18 @@ upstream's); the catalog's chart tests do that.
   exist (404), its desired count not negative (400). Sandbox groups are
   kept as sent. Not modelled: container groups being made, images, SKUs and
   quotas, a profile's revisions, and the error codes.
+- Web PubSub services and their children, and SignalR shared private
+  links (`Microsoft.SignalRService`, 2024-03-01;
+  `pkg/fakecloud/arm/signalr.go`): a Web PubSub SKU is Free_F1,
+  Standard_S1, Premium_P1 or Premium_P2 (400); a replica is a Premium
+  service's, Premium, in another region (400); a hub's name is a letter
+  then letters, digits and underscores (400); a custom certificate names
+  its vault and secret (400) and a custom domain its domain (400) and a
+  certificate of its service that exists (404); a shared private link has a
+  groupId (400) and a target that exists (404), and a replica's has no
+  DELETE (405). Connections follow `privateendpoints.go`. Not modelled:
+  clients, event handlers being called, the tiers that take domains and
+  private links, and the error codes.
 - Virtual network TAP (`virtualNetworkTaps` and
   `networkInterfaces/tapConfigurations`, 2026-03-01;
   `pkg/fakecloud/arm/vnettap.go`): a TAP has one destination, a NIC's IP

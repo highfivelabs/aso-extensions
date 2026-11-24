@@ -2039,18 +2039,18 @@ Microsoft.ServiceNetworking,Microsoft.ServiceNetworking/trafficControllers/secur
 Microsoft.SignalRService,Microsoft.SignalRService/signalR,38,signalrservice.azure.com/SignalR,38,,0,0,false,spec_api=2024-03-01; official_api=2024-03-01
 Microsoft.SignalRService,Microsoft.SignalRService/signalR/customCertificates,3,signalrservice.azure.com/CustomCertificate,3,,0,0,false,spec_api=2024-03-01; official_api=2024-03-01
 Microsoft.SignalRService,Microsoft.SignalRService/signalR/customDomains,2,signalrservice.azure.com/CustomDomain,2,,0,0,false,spec_api=2024-03-01; official_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/signalR/privateEndpointConnections,4,,0,,0,4,false,spec_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/signalR/privateEndpointConnections,4,,0,signalrservice.azure.hfl.dev/SignalRPrivateEndpointConnection,4,0,false,spec_api=2024-03-01; ours_api=2024-03-01
 Microsoft.SignalRService,Microsoft.SignalRService/signalR/replicas,7,signalrservice.azure.com/Replica,7,,0,0,false,spec_api=2024-03-01; official_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/signalR/replicas/sharedPrivateLinkResources,3,,0,,0,3,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/signalR/sharedPrivateLinkResources,3,,0,,0,3,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub,28,,0,,0,28,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/customCertificates,3,,0,,0,3,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/customDomains,2,,0,,0,2,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/hubs,13,,0,,0,13,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/privateEndpointConnections,4,,0,,0,4,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/replicas,7,,0,,0,7,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/replicas/sharedPrivateLinkResources,3,,0,,0,3,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources,3,,0,,0,3,false,spec_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/signalR/replicas/sharedPrivateLinkResources,3,,0,signalrservice.azure.hfl.dev/SignalRReplicasSharedPrivateLinkResource,3,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/signalR/sharedPrivateLinkResources,3,,0,signalrservice.azure.hfl.dev/SignalRSharedPrivateLinkResource,3,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub,28,,0,signalrservice.azure.hfl.dev/WebPubSub,28,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/customCertificates,3,,0,signalrservice.azure.hfl.dev/WebPubSubCustomCertificate,3,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/customDomains,2,,0,signalrservice.azure.hfl.dev/WebPubSubCustomDomain,2,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/hubs,13,,0,signalrservice.azure.hfl.dev/WebPubSubHub,13,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/privateEndpointConnections,4,,0,signalrservice.azure.hfl.dev/WebPubSubPrivateEndpointConnection,4,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/replicas,7,,0,signalrservice.azure.hfl.dev/WebPubSubReplica,7,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/replicas/sharedPrivateLinkResources,3,,0,signalrservice.azure.hfl.dev/WebPubSubReplicasSharedPrivateLinkResource,3,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources,3,,0,signalrservice.azure.hfl.dev/WebPubSubSharedPrivateLinkResource,3,0,false,spec_api=2024-03-01; ours_api=2024-03-01
 Microsoft.SoftwarePlan,Microsoft.SoftwarePlan/hybridUseBenefits,2,,0,,0,2,false,spec_api=2019-12-01
 Microsoft.Solutions,Microsoft.Solutions/applicationDefinitions,30,,0,,0,30,false,spec_api=2021-07-01
 Microsoft.Solutions,Microsoft.Solutions/applications,26,,0,,0,26,false,spec_api=2021-07-01

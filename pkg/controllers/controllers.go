@@ -66,6 +66,7 @@ import (
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
 	asoservicebus "github.com/Azure/azure-service-operator/v2/api/servicebus/v20240101/storage"
+	asosignalr "github.com/Azure/azure-service-operator/v2/api/signalrservice/v1api20240301/storage"
 	asosql "github.com/Azure/azure-service-operator/v2/api/sql/v20250101/storage"
 	asostorage "github.com/Azure/azure-service-operator/v2/api/storage/v20260601/storage"
 	asoweb "github.com/Azure/azure-service-operator/v2/api/web/v20260715/storage"
@@ -132,6 +133,7 @@ func CreateScheme() *runtime.Scheme {
 	_ = asoeventgrid.AddToScheme(scheme)
 	_ = asoapim.AddToScheme(scheme)
 	_ = asomysql.AddToScheme(scheme)
+	_ = asosignalr.AddToScheme(scheme)
 	return scheme
 }
 
@@ -200,6 +202,8 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asoapim.Api{}, Name: "aso_apimanagement_api"},
 		{Obj: &asoapim.Product{}, Name: "aso_apimanagement_product"},
 		{Obj: &asomysql.FlexibleServer{}, Name: "aso_dbformysql_flexibleserver"},
+		{Obj: &asosignalr.SignalR{}, Name: "aso_signalrservice_signalr"},
+		{Obj: &asosignalr.Replica{}, Name: "aso_signalrservice_replica"},
 	}
 }
 

@@ -95,7 +95,9 @@
 // identity provider types), a MySQL flexible server's threat protection
 // setting (mysql.go: Default, Enabled or Disabled, no DELETE), container
 // group profiles and NGroups (containerinstance.go: containers with images
-// and requests, profiles that exist), Azure Monitor
+// and requests, profiles that exist), Web PubSub and SignalR children
+// (signalr.go: SKUs, Premium replicas elsewhere, hub names, certificates and
+// domains, shared private links to what exists), Azure Monitor
 // pipeline groups
 // (monitorpipeline.go: a custom location, unique and complete receivers,
 // processors and exporters, pipelines naming what is declared), a VM's
@@ -595,6 +597,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := a.checkSignalR(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		if status, code, msg := a.checkContainerInstance(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
@@ -689,6 +695,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		}
 		if isManagedHSMKey(id) {
 			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A managed HSM key cannot be deleted through Resource Manager; delete it in the HSM's data plane.")
+			return
+		}
+		if wpsSharedPLR.MatchString(id) && strings.Contains(strings.ToLower(id), "/replicas/") {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A replica's shared private link resource cannot be deleted; it is deleted with its replica.")
 			return
 		}
 		if mysqlThreatProtection.MatchString(id) {

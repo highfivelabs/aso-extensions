@@ -52,3 +52,5 @@ specification/eventgrid
 specification/apimanagement
 specification/mysql
 specification/containerinstance
+specification/signalr
+specification/webpubsub

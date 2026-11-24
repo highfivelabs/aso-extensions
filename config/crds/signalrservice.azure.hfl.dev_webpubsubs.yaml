@@ -1,0 +1,880 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: webpubsubs.signalrservice.azure.hfl.dev
+spec:
+  group: signalrservice.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - signalrservice
+    kind: WebPubSub
+    listKind: WebPubSubList
+    plural: webpubsubs
+    singular: webpubsub
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20240301
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /webpubsub/resource-manager/Microsoft.SignalRService/SignalRService/stable/2024-03-01/webpubsub.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                maxLength: 63
+                minLength: 3
+                pattern: ^[a-zA-Z][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$
+                type: string
+              disableAadAuth:
+                description: |-
+                  DisableAadAuth: DisableLocalAuth
+                  Enable or disable aad auth
+                  When set as true, connection with AuthType=aad won't work.
+                type: boolean
+              disableLocalAuth:
+                description: |-
+                  DisableLocalAuth: DisableLocalAuth
+                  Enable or disable local auth with AccessKey
+                  When set as true, connection with AccessKey=xxx won't work.
+                type: boolean
+              identity:
+                description: 'Identity: A class represent managed identities used
+                  for request and response'
+                properties:
+                  type:
+                    description: 'Type: Represents the identity type: systemAssigned,
+                      userAssigned, None'
+                    enum:
+                    - None
+                    - SystemAssigned
+                    - UserAssigned
+                    type: string
+                  userAssignedIdentities:
+                    description: 'UserAssignedIdentities: Get or set the user assigned
+                      identities'
+                    items:
+                      description: Information about the user assigned identity for
+                        the resource
+                      properties:
+                        reference:
+                          description: ResourceReference represents a resource reference,
+                            either to a Kubernetes resource or directly to an Azure
+                            resource via ARMID
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                type: object
+              kind:
+                description: 'Kind: The kind of the service'
+                enum:
+                - SocketIO
+                - WebPubSub
+                type: string
+              liveTraceConfiguration:
+                description: 'LiveTraceConfiguration: Live trace configuration of
+                  a Microsoft.SignalRService resource.'
+                properties:
+                  categories:
+                    description: 'Categories: Gets or sets the list of category configurations.'
+                    items:
+                      description: Live trace category configuration of a Microsoft.SignalRService
+                        resource.
+                      properties:
+                        enabled:
+                          description: |-
+                            Enabled: Indicates whether or the live trace category is enabled.
+                            Available values: true, false.
+                            Case insensitive.
+                          type: string
+                        name:
+                          description: |-
+                            Name: Gets or sets the live trace category's name.
+                            Available values: ConnectivityLogs, MessagingLogs.
+                            Case insensitive.
+                          type: string
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      Enabled: Indicates whether or not enable live trace.
+                      When it's set to true, live trace client can connect to the service.
+                      Otherwise, live trace client can't connect to the service, so that you are unable to receive any log, no matter what you
+                      configure in "categories".
+                      Available values: true, false.
+                      Case insensitive.
+                    type: string
+                type: object
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              networkACLs:
+                description: 'NetworkACLs: Network ACLs for the resource'
+                properties:
+                  defaultAction:
+                    description: 'DefaultAction: Azure Networking ACL Action.'
+                    enum:
+                    - Allow
+                    - Deny
+                    type: string
+                  ipRules:
+                    description: 'IpRules: IP rules for filtering public traffic'
+                    items:
+                      description: An IP rule
+                      properties:
+                        action:
+                          description: 'Action: Azure Networking ACL Action.'
+                          enum:
+                          - Allow
+                          - Deny
+                          type: string
+                        value:
+                          description: 'Value: An IP or CIDR or ServiceTag'
+                          type: string
+                      type: object
+                    maxItems: 30
+                    type: array
+                  privateEndpoints:
+                    description: 'PrivateEndpoints: ACLs for requests from private
+                      endpoints'
+                    items:
+                      description: ACL for a private endpoint
+                      properties:
+                        allow:
+                          description: 'Allow: Allowed request types. The value can
+                            be one or more of: ClientConnection, ServerConnection,
+                            RESTAPI.'
+                          items:
+                            description: The incoming request type to the service
+                            enum:
+                            - ClientConnection
+                            - RESTAPI
+                            - ServerConnection
+                            - Trace
+                            type: string
+                          type: array
+                        deny:
+                          description: 'Deny: Denied request types. The value can
+                            be one or more of: ClientConnection, ServerConnection,
+                            RESTAPI.'
+                          items:
+                            description: The incoming request type to the service
+                            enum:
+                            - ClientConnection
+                            - RESTAPI
+                            - ServerConnection
+                            - Trace
+                            type: string
+                          type: array
+                        name:
+                          description: 'Name: Name of the private endpoint connection'
+                          type: string
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  publicNetwork:
+                    description: 'PublicNetwork: Network ACL'
+                    properties:
+                      allow:
+                        description: 'Allow: Allowed request types. The value can
+                          be one or more of: ClientConnection, ServerConnection, RESTAPI.'
+                        items:
+                          description: The incoming request type to the service
+                          enum:
+                          - ClientConnection
+                          - RESTAPI
+                          - ServerConnection
+                          - Trace
+                          type: string
+                        type: array
+                      deny:
+                        description: 'Deny: Denied request types. The value can be
+                          one or more of: ClientConnection, ServerConnection, RESTAPI.'
+                        items:
+                          description: The incoming request type to the service
+                          enum:
+                          - ClientConnection
+                          - RESTAPI
+                          - ServerConnection
+                          - Trace
+                          type: string
+                        type: array
+                    type: object
+                type: object
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a resources.azure.com/ResourceGroup resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+              publicNetworkAccess:
+                description: |-
+                  PublicNetworkAccess: Enable or disable public network access. Default to "Enabled".
+                  When it's Enabled, network ACLs still apply.
+                  When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
+                type: string
+              regionEndpointEnabled:
+                description: |-
+                  RegionEndpointEnabled: Enable or disable the regional endpoint. Default to "Enabled".
+                  When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be
+                  affected.
+                  This property is replica specific. Disable the regional endpoint without replica is not allowed.
+                type: string
+              resourceLogConfiguration:
+                description: 'ResourceLogConfiguration: Resource log configuration
+                  of a Microsoft.SignalRService resource.'
+                properties:
+                  categories:
+                    description: 'Categories: Gets or sets the list of category configurations.'
+                    items:
+                      description: Resource log category configuration of a Microsoft.SignalRService
+                        resource.
+                      properties:
+                        enabled:
+                          description: |-
+                            Enabled: Indicates whether or the resource log category is enabled.
+                            Available values: true, false.
+                            Case insensitive.
+                          type: string
+                        name:
+                          description: |-
+                            Name: Gets or sets the resource log category's name.
+                            Available values: ConnectivityLogs, MessagingLogs.
+                            Case insensitive.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              resourceStopped:
+                description: |-
+                  ResourceStopped: Stop or start the resource.  Default to "False".
+                  When it's true, the data plane of the resource is shutdown.
+                  When it's false, the data plane of the resource is started.
+                type: string
+              sku:
+                description: 'Sku: The billing information of the resource.'
+                properties:
+                  capacity:
+                    description: |-
+                      Capacity: Optional, integer. The unit count of the resource.
+                      1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
+                      If present, following values are allowed:
+                      Free_F1: 1;
+                      Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+                      Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+                      Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
+                    type: integer
+                  name:
+                    description: |-
+                      Name: The name of the SKU. Required.
+                      Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
+                    type: string
+                  tier:
+                    description: |-
+                      Tier: Optional tier of this particular SKU. 'Standard' or 'Free'.
+                      `Basic` is deprecated, use `Standard` instead.
+                    enum:
+                    - Basic
+                    - Free
+                    - Premium
+                    - Standard
+                    type: string
+                required:
+                - name
+                type: object
+              socketIO:
+                description: 'SocketIO: SocketIO settings for the resource'
+                properties:
+                  serviceMode:
+                    description: |-
+                      ServiceMode: The service mode of Web PubSub for Socket.IO. Values allowed:
+                      "Default": have your own backend Socket.IO server
+                      "Serverless": your application doesn't have a backend server
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              tls:
+                description: 'Tls: TLS settings for the resource'
+                properties:
+                  clientCertEnabled:
+                    description: |-
+                      ClientCertEnabled: Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input
+                      will be ignored for free tier.
+                    type: boolean
+                type: object
+            required:
+            - location
+            - owner
+            type: object
+          status:
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              disableAadAuth:
+                description: |-
+                  DisableAadAuth: DisableLocalAuth
+                  Enable or disable aad auth
+                  When set as true, connection with AuthType=aad won't work.
+                type: boolean
+              disableLocalAuth:
+                description: |-
+                  DisableLocalAuth: DisableLocalAuth
+                  Enable or disable local auth with AccessKey
+                  When set as true, connection with AccessKey=xxx won't work.
+                type: boolean
+              externalIP:
+                description: 'ExternalIP: The publicly accessible IP of the resource.'
+                type: string
+              hostName:
+                description: 'HostName: FQDN of the service instance.'
+                type: string
+              hostNamePrefix:
+                description: 'HostNamePrefix: Deprecated.'
+                type: string
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. E.g.
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                type: string
+              identity:
+                description: 'Identity: A class represent managed identities used
+                  for request and response'
+                properties:
+                  principalId:
+                    description: |-
+                      PrincipalId: Get the principal id for the system assigned identity.
+                      Only be used in response.
+                    type: string
+                  tenantId:
+                    description: |-
+                      TenantId: Get the tenant id for the system assigned identity.
+                      Only be used in response
+                    type: string
+                  type:
+                    description: 'Type: Represents the identity type: systemAssigned,
+                      userAssigned, None'
+                    type: string
+                  userAssignedIdentities:
+                    additionalProperties:
+                      description: Properties of user assigned identity.
+                      properties:
+                        clientId:
+                          description: 'ClientId: Get the client id for the user assigned
+                            identity'
+                          type: string
+                        principalId:
+                          description: 'PrincipalId: Get the principal id for the
+                            user assigned identity'
+                          type: string
+                      type: object
+                    description: 'UserAssignedIdentities: Get or set the user assigned
+                      identities'
+                    type: object
+                type: object
+              kind:
+                description: 'Kind: The kind of the service'
+                type: string
+              liveTraceConfiguration:
+                description: 'LiveTraceConfiguration: Live trace configuration of
+                  a Microsoft.SignalRService resource.'
+                properties:
+                  categories:
+                    description: 'Categories: Gets or sets the list of category configurations.'
+                    items:
+                      description: Live trace category configuration of a Microsoft.SignalRService
+                        resource.
+                      properties:
+                        enabled:
+                          description: |-
+                            Enabled: Indicates whether or the live trace category is enabled.
+                            Available values: true, false.
+                            Case insensitive.
+                          type: string
+                        name:
+                          description: |-
+                            Name: Gets or sets the live trace category's name.
+                            Available values: ConnectivityLogs, MessagingLogs.
+                            Case insensitive.
+                          type: string
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      Enabled: Indicates whether or not enable live trace.
+                      When it's set to true, live trace client can connect to the service.
+                      Otherwise, live trace client can't connect to the service, so that you are unable to receive any log, no matter what you
+                      configure in "categories".
+                      Available values: true, false.
+                      Case insensitive.
+                    type: string
+                type: object
+              location:
+                description: 'Location: The geo-location where the resource lives'
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              networkACLs:
+                description: 'NetworkACLs: Network ACLs for the resource'
+                properties:
+                  defaultAction:
+                    description: 'DefaultAction: Azure Networking ACL Action.'
+                    type: string
+                  ipRules:
+                    description: 'IpRules: IP rules for filtering public traffic'
+                    items:
+                      description: An IP rule
+                      properties:
+                        action:
+                          description: 'Action: Azure Networking ACL Action.'
+                          type: string
+                        value:
+                          description: 'Value: An IP or CIDR or ServiceTag'
+                          type: string
+                      type: object
+                    type: array
+                  privateEndpoints:
+                    description: 'PrivateEndpoints: ACLs for requests from private
+                      endpoints'
+                    items:
+                      description: ACL for a private endpoint
+                      properties:
+                        allow:
+                          description: 'Allow: Allowed request types. The value can
+                            be one or more of: ClientConnection, ServerConnection,
+                            RESTAPI.'
+                          items:
+                            description: The incoming request type to the service
+                            type: string
+                          type: array
+                        deny:
+                          description: 'Deny: Denied request types. The value can
+                            be one or more of: ClientConnection, ServerConnection,
+                            RESTAPI.'
+                          items:
+                            description: The incoming request type to the service
+                            type: string
+                          type: array
+                        name:
+                          description: 'Name: Name of the private endpoint connection'
+                          type: string
+                      type: object
+                    type: array
+                  publicNetwork:
+                    description: 'PublicNetwork: Network ACL'
+                    properties:
+                      allow:
+                        description: 'Allow: Allowed request types. The value can
+                          be one or more of: ClientConnection, ServerConnection, RESTAPI.'
+                        items:
+                          description: The incoming request type to the service
+                          type: string
+                        type: array
+                      deny:
+                        description: 'Deny: Denied request types. The value can be
+                          one or more of: ClientConnection, ServerConnection, RESTAPI.'
+                        items:
+                          description: The incoming request type to the service
+                          type: string
+                        type: array
+                    type: object
+                type: object
+              privateEndpointConnections:
+                description: 'PrivateEndpointConnections: Private endpoint connections
+                  to the resource.'
+                items:
+                  description: A private endpoint connection to an azure resource
+                  properties:
+                    id:
+                      description: |-
+                        Id: Fully qualified resource ID for the resource. E.g.
+                        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                      type: string
+                  type: object
+                type: array
+              provisioningState:
+                description: 'ProvisioningState: Provisioning state of the resource.'
+                type: string
+              publicNetworkAccess:
+                description: |-
+                  PublicNetworkAccess: Enable or disable public network access. Default to "Enabled".
+                  When it's Enabled, network ACLs still apply.
+                  When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
+                type: string
+              publicPort:
+                description: 'PublicPort: The publicly accessible port of the resource
+                  which is designed for browser/client side usage.'
+                type: integer
+              regionEndpointEnabled:
+                description: |-
+                  RegionEndpointEnabled: Enable or disable the regional endpoint. Default to "Enabled".
+                  When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be
+                  affected.
+                  This property is replica specific. Disable the regional endpoint without replica is not allowed.
+                type: string
+              resourceLogConfiguration:
+                description: 'ResourceLogConfiguration: Resource log configuration
+                  of a Microsoft.SignalRService resource.'
+                properties:
+                  categories:
+                    description: 'Categories: Gets or sets the list of category configurations.'
+                    items:
+                      description: Resource log category configuration of a Microsoft.SignalRService
+                        resource.
+                      properties:
+                        enabled:
+                          description: |-
+                            Enabled: Indicates whether or the resource log category is enabled.
+                            Available values: true, false.
+                            Case insensitive.
+                          type: string
+                        name:
+                          description: |-
+                            Name: Gets or sets the resource log category's name.
+                            Available values: ConnectivityLogs, MessagingLogs.
+                            Case insensitive.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              resourceStopped:
+                description: |-
+                  ResourceStopped: Stop or start the resource.  Default to "False".
+                  When it's true, the data plane of the resource is shutdown.
+                  When it's false, the data plane of the resource is started.
+                type: string
+              serverPort:
+                description: 'ServerPort: The publicly accessible port of the resource
+                  which is designed for customer server side usage.'
+                type: integer
+              sharedPrivateLinkResources:
+                description: 'SharedPrivateLinkResources: The list of shared private
+                  link resources.'
+                items:
+                  description: Describes a Shared Private Link Resource
+                  properties:
+                    id:
+                      description: |-
+                        Id: Fully qualified resource ID for the resource. E.g.
+                        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                      type: string
+                  type: object
+                type: array
+              sku:
+                description: 'Sku: The billing information of the resource.'
+                properties:
+                  capacity:
+                    description: |-
+                      Capacity: Optional, integer. The unit count of the resource.
+                      1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
+                      If present, following values are allowed:
+                      Free_F1: 1;
+                      Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+                      Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+                      Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
+                    type: integer
+                  family:
+                    description: 'Family: Not used. Retained for future use.'
+                    type: string
+                  name:
+                    description: |-
+                      Name: The name of the SKU. Required.
+                      Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
+                    type: string
+                  size:
+                    description: 'Size: Not used. Retained for future use.'
+                    type: string
+                  tier:
+                    description: |-
+                      Tier: Optional tier of this particular SKU. 'Standard' or 'Free'.
+                      `Basic` is deprecated, use `Standard` instead.
+                    type: string
+                type: object
+              socketIO:
+                description: 'SocketIO: SocketIO settings for the resource'
+                properties:
+                  serviceMode:
+                    description: |-
+                      ServiceMode: The service mode of Web PubSub for Socket.IO. Values allowed:
+                      "Default": have your own backend Socket.IO server
+                      "Serverless": your application doesn't have a backend server
+                    type: string
+                type: object
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              tls:
+                description: 'Tls: TLS settings for the resource'
+                properties:
+                  clientCertEnabled:
+                    description: |-
+                      ClientCertEnabled: Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input
+                      will be ignored for free tier.
+                    type: boolean
+                type: object
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+              version:
+                description: 'Version: Version of the resource. Probably you need
+                  the same or higher version of client SDKs.'
+                type: string
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

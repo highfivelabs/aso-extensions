@@ -414,6 +414,17 @@ resources:
 - servicebus.azure.hfl.dev_namespacesdisasterrecoveryconfigs.yaml
 - servicebus.azure.hfl.dev_namespacesnetworkrulesets.yaml
 - servicebus.azure.hfl.dev_namespacesprivateendpointconnections.yaml
+- signalrservice.azure.hfl.dev_signalrprivateendpointconnections.yaml
+- signalrservice.azure.hfl.dev_signalrreplicassharedprivatelinkresources.yaml
+- signalrservice.azure.hfl.dev_signalrsharedprivatelinkresources.yaml
+- signalrservice.azure.hfl.dev_webpubsubcustomcertificates.yaml
+- signalrservice.azure.hfl.dev_webpubsubcustomdomains.yaml
+- signalrservice.azure.hfl.dev_webpubsubhubs.yaml
+- signalrservice.azure.hfl.dev_webpubsubprivateendpointconnections.yaml
+- signalrservice.azure.hfl.dev_webpubsubreplicas.yaml
+- signalrservice.azure.hfl.dev_webpubsubreplicassharedprivatelinkresources.yaml
+- signalrservice.azure.hfl.dev_webpubsubs.yaml
+- signalrservice.azure.hfl.dev_webpubsubsharedprivatelinkresources.yaml
 - sql.azure.hfl.dev_instancepools.yaml
 - sql.azure.hfl.dev_managedinstancesadministrators.yaml
 - sql.azure.hfl.dev_managedinstancesadvancedthreatprotectionsettings.yaml
