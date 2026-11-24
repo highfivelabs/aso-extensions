@@ -1601,7 +1601,7 @@ Microsoft.Network,Microsoft.Network/natGateways,12,network.azure.com/NatGateway,
 Microsoft.Network,Microsoft.Network/NetworkExperimentProfiles,4,,0,,0,4,false,spec_api=2026-04-01
 Microsoft.Network,Microsoft.Network/NetworkExperimentProfiles/Experiments,8,,0,,0,8,false,spec_api=2026-04-01
 Microsoft.Network,Microsoft.Network/networkInterfaces,531,network.azure.com/NetworkInterface,529,,0,2,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/networkInterfaces/tapConfigurations,281,,0,,0,281,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkInterfaces/tapConfigurations,281,,0,network.azure.hfl.dev/NetworkInterfacesTapConfiguration,281,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagerConnections,2,,0,network.azure.hfl.dev/NetworkManagerConnection,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers,6,,0,network.azure.hfl.dev/NetworkManager,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/commits,5,,0,network.azure.hfl.dev/NetworkManagersCommit,5,0,false,spec_api=2026-03-01; ours_api=2026-03-01
@@ -1693,7 +1693,7 @@ Microsoft.Network,Microsoft.Network/virtualNetworkGateways/natRules,7,,0,,0,7,fa
 Microsoft.Network,Microsoft.Network/virtualNetworks,118,network.azure.com/VirtualNetwork,17,,0,101,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/virtualNetworks/subnets,69,network.azure.com/VirtualNetworksSubnet,66,,0,3,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/virtualNetworks/virtualNetworkPeerings,25,network.azure.com/VirtualNetworksVirtualNetworkPeering,25,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/virtualNetworkTaps,280,,0,,0,280,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualNetworkTaps,280,,0,network.azure.hfl.dev/VirtualNetworkTap,280,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualRouters,6,,0,network.azure.hfl.dev/VirtualRouter,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualRouters/peerings,2,,0,network.azure.hfl.dev/VirtualRoutersPeering,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualWans,6,,0,network.azure.hfl.dev/VirtualWan,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01

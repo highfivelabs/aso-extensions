@@ -232,6 +232,15 @@ func init() {
 	f["ApplicationSecurityGroupsAddressPrefixSet"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"properties": map[string]any{"addressPrefixes": []any{"10.0.0.0/16"}}}
 	}}
+	// A virtual network TAP has one destination that exists; a NIC's tap
+	// configuration names a TAP that exists (vnettap.go).
+	f["VirtualNetworkTap"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"destinationNetworkInterfaceIPConfiguration": embedRef(
+			c.add(c.in("Microsoft.Network/networkInterfaces/collector/ipConfigurations/ipconfig1")))}
+	}}
+	f["NetworkInterfacesTapConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"virtualNetworkTap": embedRef(c.add(c.in("Microsoft.Network/virtualNetworkTaps/conformance")))}
+	}}
 	// A governance rule gives a condition set (its key, a GUID, is the
 	// Claimer's); a summary rule a query and a bin size Azure allows (the
 	// fake's rules, governance.go and loganalytics.go).

@@ -1534,6 +1534,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.FirewallPoliciesSignatureOverride)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.IpGroup)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.LocalNetworkGateway)})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkInterfacesTapConfiguration)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManager)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagerConnection)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.NetworkManagersCommit)})
@@ -1617,6 +1618,7 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualNetworkTap)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualRouter)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualRoutersPeering)})
 	result = append(result, &registration.StorageType{Obj: new(network_v20260301.VirtualWan)})
@@ -3205,6 +3207,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.FirewallPoliciesSignatureOverride)},
 		&registration.KnownType{Obj: new(network_v20260301.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301.LocalNetworkGateway)},
+		&registration.KnownType{Obj: new(network_v20260301.NetworkInterfacesTapConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagerConnection)},
 		&registration.KnownType{Obj: new(network_v20260301.NetworkManagersCommit)},
@@ -3247,6 +3250,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsRouteTable)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualHubsRoutingIntent)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualNetworkGatewayConnection)},
+		&registration.KnownType{Obj: new(network_v20260301.VirtualNetworkTap)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualRouter)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualRoutersPeering)},
 		&registration.KnownType{Obj: new(network_v20260301.VirtualWan)},
@@ -3276,6 +3280,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.FirewallPoliciesSignatureOverride)},
 		&registration.KnownType{Obj: new(network_v20260301s.IpGroup)},
 		&registration.KnownType{Obj: new(network_v20260301s.LocalNetworkGateway)},
+		&registration.KnownType{Obj: new(network_v20260301s.NetworkInterfacesTapConfiguration)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManager)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagerConnection)},
 		&registration.KnownType{Obj: new(network_v20260301s.NetworkManagersCommit)},
@@ -3318,6 +3323,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsRouteTable)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualHubsRoutingIntent)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualNetworkGatewayConnection)},
+		&registration.KnownType{Obj: new(network_v20260301s.VirtualNetworkTap)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualRouter)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualRoutersPeering)},
 		&registration.KnownType{Obj: new(network_v20260301s.VirtualWan)},
@@ -4165,6 +4171,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.FirewallPoliciesSignatureOverrideExtension{})
 	result = append(result, &network_customizations.IpGroupExtension{})
 	result = append(result, &network_customizations.LocalNetworkGatewayExtension{})
+	result = append(result, &network_customizations.NetworkInterfacesTapConfigurationExtension{})
 	result = append(result, &network_customizations.NetworkManagerConnectionExtension{})
 	result = append(result, &network_customizations.NetworkManagerExtension{})
 	result = append(result, &network_customizations.NetworkManagersCommitExtension{})
@@ -4214,6 +4221,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &network_customizations.VirtualHubsRouteTableExtension{})
 	result = append(result, &network_customizations.VirtualHubsRoutingIntentExtension{})
 	result = append(result, &network_customizations.VirtualNetworkGatewayConnectionExtension{})
+	result = append(result, &network_customizations.VirtualNetworkTapExtension{})
 	result = append(result, &network_customizations.VirtualRouterExtension{})
 	result = append(result, &network_customizations.VirtualRoutersPeeringExtension{})
 	result = append(result, &network_customizations.VirtualWanExtension{})

@@ -612,6 +612,8 @@
 | FirewallPolicySQL_STATUS                                                                               |           |           |           | v20260301 |
 | FirewallPolicyThreatIntelWhitelist                                                                     |           |           |           | v20260301 |
 | FirewallPolicyThreatIntelWhitelist_STATUS                                                              |           |           |           | v20260301 |
+| FrontendIPConfiguration_STATUS_VirtualNetworkTap_SubResourceEmbedded                                   |           |           |           | v20260301 |
+| FrontendIPConfiguration_VirtualNetworkTap_SubResourceEmbedded                                          |           |           |           | v20260301 |
 | GatewayCustomBgpIpAddressIpConfiguration                                                               |           |           |           | v20260301 |
 | GatewayCustomBgpIpAddressIpConfiguration_STATUS                                                        |           |           |           | v20260301 |
 | GroupConnectivity                                                                                      |           |           |           | v20260301 |
@@ -712,6 +714,14 @@
 | NetworkIntentPolicyBasedService                                                                        |           |           |           | v20260301 |
 | NetworkIntentPolicyBasedService_STATUS                                                                 |           |           |           | v20260301 |
 | NetworkInterfaceIPConfiguration_STATUS_ApplicationGateway_SubResourceEmbedded                          |           |           |           | v20260301 |
+| NetworkInterfaceIPConfiguration_STATUS_VirtualNetworkTap_SubResourceEmbedded                           |           |           |           | v20260301 |
+| NetworkInterfaceIPConfiguration_VirtualNetworkTap_SubResourceEmbedded                                  |           |           |           | v20260301 |
+| NetworkInterfaceTapConfigurationPropertiesFormat                                                       |           |           |           | v20260301 |
+| NetworkInterfaceTapConfigurationPropertiesFormat_STATUS                                                |           |           |           | v20260301 |
+| NetworkInterfaceTapConfiguration_STATUS_VirtualNetworkTap_SubResourceEmbedded                          |           |           |           | v20260301 |
+| NetworkInterfacesTapConfiguration                                                                      |           |           |           | v20260301 |
+| NetworkInterfacesTapConfiguration_STATUS                                                               |           |           |           | v20260301 |
+| NetworkInterfacesTapConfiguration_Spec                                                                 |           |           |           | v20260301 |
 | NetworkManager                                                                                         |           |           |           | v20260301 |
 | NetworkManagerConnection                                                                               |           |           |           | v20260301 |
 | NetworkManagerConnectionProperties                                                                     |           |           |           | v20260301 |
@@ -1107,6 +1117,13 @@
 | VirtualNetworkGatewayConnection_Spec                                                                   |           |           |           | v20260301 |
 | VirtualNetworkGatewaySpec                                                                              |           |           |           | v20260301 |
 | VirtualNetworkGateway_STATUS_Connection_SubResourceEmbedded                                            |           |           |           | v20260301 |
+| VirtualNetworkTap                                                                                      |           |           |           | v20260301 |
+| VirtualNetworkTapPropertiesFormat                                                                      |           |           |           | v20260301 |
+| VirtualNetworkTapPropertiesFormat_STATUS                                                               |           |           |           | v20260301 |
+| VirtualNetworkTapSpec                                                                                  |           |           |           | v20260301 |
+| VirtualNetworkTap_STATUS                                                                               |           |           |           | v20260301 |
+| VirtualNetworkTap_STATUS_NetworkInterfaces_TapConfiguration_SubResourceEmbedded                        |           |           |           | v20260301 |
+| VirtualNetworkTap_Spec                                                                                 |           |           |           | v20260301 |
 | VirtualRouter                                                                                          |           |           |           | v20260301 |
 | VirtualRouterAutoScaleConfiguration                                                                    |           |           |           | v20260301 |
 | VirtualRouterAutoScaleConfiguration_STATUS                                                             |           |           |           | v20260301 |

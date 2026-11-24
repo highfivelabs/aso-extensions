@@ -49,6 +49,8 @@ IpGroupExtension: Object (0 properties)
 
 LocalNetworkGatewayExtension: Object (0 properties)
 
+NetworkInterfacesTapConfigurationExtension: Object (0 properties)
+
 NetworkManagerConnectionExtension: Object (0 properties)
 
 NetworkManagerExtension: Object (0 properties)
@@ -146,6 +148,8 @@ VirtualHubsRouteTableExtension: Object (0 properties)
 VirtualHubsRoutingIntentExtension: Object (0 properties)
 
 VirtualNetworkGatewayConnectionExtension: Object (0 properties)
+
+VirtualNetworkTapExtension: Object (0 properties)
 
 VirtualRouterExtension: Object (0 properties)
 

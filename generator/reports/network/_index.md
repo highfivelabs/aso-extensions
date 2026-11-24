@@ -34,6 +34,7 @@ no_list: true
 | FirewallPoliciesSignatureOverride                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | IpGroup                                                | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | LocalNetworkGateway                                    | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| NetworkInterfacesTapConfiguration                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManager                                         | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagerConnection                               | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | NetworkManagersCommit                                  | 2026-03-01  | v20260301   | v0.1.0         | -      |
@@ -83,6 +84,7 @@ no_list: true
 | VirtualHubsRouteTable                                  | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualHubsRoutingIntent                               | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualNetworkGatewayConnection                        | 2026-03-01  | v20260301   | v0.1.0         | -      |
+| VirtualNetworkTap                                      | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualRouter                                          | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualRoutersPeering                                  | 2026-03-01  | v20260301   | v0.1.0         | -      |
 | VirtualWan                                             | 2026-03-01  | v20260301   | v0.1.0         | -      |

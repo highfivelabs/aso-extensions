@@ -2597,6 +2597,32 @@ LocalNetworkGateway: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+NetworkInterfacesTapConfiguration: Resource
+├── Owner: network/v20260301.NetworkInterface
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── VirtualNetworkTap: *Object (2 properties)
+│       ├── PropertyBag: genruntime.PropertyBag
+│       └── Reference: *genruntime.ResourceReference
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Type: *string
+    └── VirtualNetworkTap: *Object (2 properties)
+        ├── Id: *string
+        └── PropertyBag: genruntime.PropertyBag
+
 NetworkManager: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (10 properties)
@@ -5154,6 +5180,48 @@ VirtualNetworkGatewayConnection: Resource
     └── VirtualNetworkGateway2: *Object (2 properties)
         ├── Id: *string
         └── PropertyBag: genruntime.PropertyBag
+
+VirtualNetworkTap: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── DestinationLoadBalancerFrontEndIPConfiguration: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── DestinationNetworkInterfaceIPConfiguration: *Object (2 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── DestinationPort: *int
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (14 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DestinationLoadBalancerFrontEndIPConfiguration: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── DestinationNetworkInterfaceIPConfiguration: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── DestinationPort: *int
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NetworkInterfaceTapConfigurations: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── ResourceGuid: *string
+    ├── Tags: map[string]string
+    └── Type: *string
 
 VirtualRouter: Resource
 ├── Owner: resources/vv20191001.ResourceGroup

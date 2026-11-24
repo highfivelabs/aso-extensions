@@ -506,6 +506,17 @@ upstream's); the catalog's chart tests do that.
   fake's own). A rule collection group's draft
   (`ruleCollectionGroups/{g}/ruleCollectionGroupDrafts/default`) is kept as
   sent: deploying a draft is a POST on the policy, not faked.
+- Virtual network TAP (`virtualNetworkTaps` and
+  `networkInterfaces/tapConfigurations`, 2026-03-01;
+  `pkg/fakecloud/arm/vnettap.go`): a TAP has one destination, a NIC's IP
+  configuration or a load balancer's frontend IP configuration, not both
+  (400), which exists (404), and a VXLAN `destinationPort` of 1 to 65535
+  (400); a tap configuration names a TAP (400) that exists (404); a TAP is
+  returned with `networkInterfaceTapConfigurations` listing the tap
+  configurations that name it. Not modelled: traffic being mirrored, the
+  destination's virtual network (Azure wants the TAP's or a peered one), the
+  VM sizes and NICs that can be tapped, whether Azure refuses deleting a TAP
+  still named by tap configurations, and the error codes (the fake's own).
 - Defender for Cloud governance rules (`Microsoft.Security/governanceRules`,
   2022-01-01-preview; `pkg/fakecloud/arm/governance.go`), from the spec: a
   rule's key (its name) is a GUID, its priority from 0 to 1000 and unique at

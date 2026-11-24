@@ -232,6 +232,7 @@ resources:
 - network.azure.hfl.dev_firewallpoliciessignatureoverrides.yaml
 - network.azure.hfl.dev_ipgroups.yaml
 - network.azure.hfl.dev_localnetworkgateways.yaml
+- network.azure.hfl.dev_networkinterfacestapconfigurations.yaml
 - network.azure.hfl.dev_networkmanagerconnections.yaml
 - network.azure.hfl.dev_networkmanagers.yaml
 - network.azure.hfl.dev_networkmanagerscommits.yaml
@@ -281,6 +282,7 @@ resources:
 - network.azure.hfl.dev_virtualhubsroutetables.yaml
 - network.azure.hfl.dev_virtualhubsroutingintents.yaml
 - network.azure.hfl.dev_virtualnetworkgatewayconnections.yaml
+- network.azure.hfl.dev_virtualnetworktaps.yaml
 - network.azure.hfl.dev_virtualrouters.yaml
 - network.azure.hfl.dev_virtualrouterspeerings.yaml
 - network.azure.hfl.dev_virtualwans.yaml

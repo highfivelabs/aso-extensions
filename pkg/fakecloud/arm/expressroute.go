@@ -306,8 +306,12 @@ func (a *ARM) setChildren(parent string, lists []string, wanted map[string]map[s
 
 // render is a stored resource as Azure returns it: a circuit, a peering, an
 // ExpressRoute gateway, a virtual hub or a VPN gateway with its children's lists rendered
-// from the children.
+// from the children, and a virtual network TAP with the tap configurations
+// that name it (vnettap.go).
 func (a *ARM) render(id string, r resource) resource {
+	if out, ok := a.renderVirtualNetworkTap(id, r); ok {
+		return out
+	}
 	for re, lists := range erChildLists {
 		if !re.MatchString(id) {
 			continue
