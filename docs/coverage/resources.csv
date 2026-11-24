@@ -63,8 +63,8 @@ Microsoft.ApiManagement,Microsoft.ApiManagement/aigateways/workspaces/modelProvi
 Microsoft.ApiManagement,Microsoft.ApiManagement/aigateways/workspaces/modelProviders/models,54,,0,,0,54,false,spec_api=2026-11-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/aigateways/workspaces/telemetryExporters,16,,0,,0,16,false,spec_api=2026-11-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/aigateways/workspaces/toolServers,83,,0,,0,83,false,spec_api=2026-11-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/gateways,8,,0,,0,8,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/gateways/configConnections,2,,0,,0,2,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/gateways,8,,0,apimanagement.azure.hfl.dev/Gateway,6,2,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/gateways/configConnections,2,,0,apimanagement.azure.hfl.dev/GatewayConfigConnection,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/gateways/hostnameBindings,4,,0,,0,4,false,spec_api=2025-09-01-preview; spec-preview-only
 Microsoft.ApiManagement,Microsoft.ApiManagement/service,58,apimanagement.azure.com/Service,49,,0,9,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/api-version-sets,5,,0,,0,5,false,spec_api=2018-01-01
@@ -77,14 +77,14 @@ Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/operations,94,,0,ap
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/operations/policies,2,,0,apimanagement.azure.hfl.dev/ApiOperationPolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/operations/tags,0,,0,apimanagement.azure.hfl.dev/ApiOperationTag,0,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/policies,2,apimanagement.azure.com/ApiPolicy,2,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/releases,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/resolvers,3,,0,,0,3,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/resolvers/policies,2,,0,,0,2,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/releases,2,,0,apimanagement.azure.hfl.dev/ApiRelease,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/resolvers,3,,0,apimanagement.azure.hfl.dev/ApiResolver,3,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/resolvers/policies,2,,0,apimanagement.azure.hfl.dev/ApiResolverPolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/schemas,4,,0,apimanagement.azure.hfl.dev/ApiSchema,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/tagDescriptions,3,,0,apimanagement.azure.hfl.dev/ApiTagDescription,3,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/tags,0,,0,apimanagement.azure.hfl.dev/ApiTag,0,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/tools,3,,0,,0,3,false,spec_api=2025-09-01-preview; spec-preview-only
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/wikis,1,,0,,0,1,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/wikis,1,,0,apimanagement.azure.hfl.dev/ApiWiki,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apiVersionSets,5,apimanagement.azure.com/ApiVersionSet,5,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/authorizationProviders,5,apimanagement.azure.com/AuthorizationProvider,3,,0,2,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/authorizationProviders/authorizations,6,apimanagement.azure.com/AuthorizationProvidersAuthorization,2,,0,4,false,spec_api=2024-05-01; official_api=2024-05-01
@@ -98,7 +98,7 @@ Microsoft.ApiManagement,Microsoft.ApiManagement/service/clientApplications/produ
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/contentTypes,5,,0,,0,5,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/contentTypes/contentItems,1,,0,,0,1,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/diagnostics,33,apimanagement.azure.com/Diagnostic,33,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/documentations,2,,0,,0,2,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/documentations,2,,0,apimanagement.azure.hfl.dev/Documentation,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/gateways,5,apimanagement.azure.com/ServiceGateway,5,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/gateways/apis,1,apimanagement.azure.com/ServiceGatewayApi,1,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/gateways/certificateAuthorities,1,apimanagement.azure.com/ServiceGatewayCertificateAuthority,1,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
@@ -114,26 +114,26 @@ Microsoft.ApiManagement,Microsoft.ApiManagement/service/notifications/recipientU
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/openidConnectProviders,7,,0,apimanagement.azure.hfl.dev/OpenIdConnectProvider,7,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/policies,2,apimanagement.azure.com/Policy,2,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/policyFragments,3,apimanagement.azure.com/PolicyFragment,3,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/policyRestrictions,2,,0,,0,2,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/policyRestrictions,2,,0,apimanagement.azure.hfl.dev/PolicyRestriction,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/portalconfigs,12,,0,,0,12,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/portalRevisions,2,,0,,0,2,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/portalsettings,8,,0,,0,8,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/privateEndpointConnections,3,,0,,0,3,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/privateEndpointConnections,3,,0,apimanagement.azure.hfl.dev/PrivateEndpointConnection,3,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/products,7,apimanagement.azure.com/Product,7,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/apiLinks,1,,0,,0,1,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/apiLinks,1,,0,apimanagement.azure.hfl.dev/ProductApiLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/apis,0,apimanagement.azure.com/ProductApi,0,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/groupLinks,1,,0,,0,1,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/groupLinks,1,,0,apimanagement.azure.hfl.dev/ProductGroupLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/groups,0,apimanagement.azure.com/ProductGroup,0,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/policies,2,apimanagement.azure.com/ProductPolicy,2,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/tags,0,,0,apimanagement.azure.hfl.dev/ProductTag,0,0,false,spec_api=2024-05-01; ours_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/wikis,1,,0,,0,1,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/wikis,1,,0,apimanagement.azure.hfl.dev/ProductWiki,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/properties,4,,0,,0,4,false,spec_api=2019-01-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/schemas,4,,0,apimanagement.azure.hfl.dev/GlobalSchema,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/subscriptions,7,apimanagement.azure.com/Subscription,7,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags,1,,0,apimanagement.azure.hfl.dev/Tag,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/apiLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/operationLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/productLinks,1,,0,,0,1,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/apiLinks,1,,0,apimanagement.azure.hfl.dev/TagApiLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/operationLinks,1,,0,apimanagement.azure.hfl.dev/TagOperationLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/productLinks,1,,0,apimanagement.azure.hfl.dev/TagProductLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/templates,7,,0,,0,7,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/tenant,4,,0,,0,4,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/users,10,apimanagement.azure.com/User,10,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01

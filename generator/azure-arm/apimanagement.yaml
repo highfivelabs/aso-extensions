@@ -8,11 +8,17 @@
 # (for the APIs' OAuth settings), and external caches. Owned by ASO's
 # Service, Api and Product and our ApiOperation.
 #
-# Not exported here: the tags' apiLinks, operationLinks and productLinks
-# (the same links as an API's, an operation's and a product's tags, made
-# from the tag's side), workspaces and their children (a Premium service;
-# the next part of t4), self-hosted gateways, the developer portal's
-# content, and API issues.
+# The second part (docs/plan.md f71): a GraphQL API's resolvers and their
+# policies; the links made from a tag's side (apiLinks, operationLinks,
+# productLinks) and from a product's (apiLinks, groupLinks; the same links
+# as ASO's ProductApi and ProductGroup, by ARM ID); API releases, wikis and
+# documentations, policy restrictions and private endpoint connections;
+# and the v2 gateways (Microsoft.ApiManagement/gateways, in a resource
+# group: a workspace gateway) with their configuration connections to a
+# workspace.
+#
+# Not exported here: workspaces and their children (the next part of t4),
+# the developer portal's content, API issues and the tenant's access keys.
 typeFilters:
   - action: include
     group: apimanagement
@@ -39,6 +45,14 @@ typeTransformers:
     property: ResourceOwnerPassword
     remove: true
     because: a password; Azure does not return it, and it is not shown in the status
+  - group: apimanagement
+    version: v20240501
+    name: Service_PrivateEndpointConnection_Spec
+    property: Id
+    remove: true
+    because: >-
+      The connection's own ARM ID, which the request may repeat; the kind's
+      owner and name already make it.
 groupModelConfiguration:
   2024-05-01:
     Service_Apis_Operation:
@@ -80,6 +94,72 @@ groupModelConfiguration:
     Service_Cache:
       $exportAs: Cache
       $supportedFrom: v0.1.0
+    Service_Apis_Resolver:
+      $exportAs: ApiResolver
+      $supportedFrom: v0.1.0
+    Service_Apis_Resolvers_Policy:
+      $exportAs: ApiResolverPolicy
+      $supportedFrom: v0.1.0
+    Service_Apis_Release:
+      $exportAs: ApiRelease
+      $supportedFrom: v0.1.0
+    Service_Apis_Wiki:
+      $exportAs: ApiWiki
+      $supportedFrom: v0.1.0
+    Service_Products_Wiki:
+      $exportAs: ProductWiki
+      $supportedFrom: v0.1.0
+    Service_Documentation:
+      $exportAs: Documentation
+      $supportedFrom: v0.1.0
+    Service_Tags_ApiLink:
+      $exportAs: TagApiLink
+      $supportedFrom: v0.1.0
+    Service_Tags_OperationLink:
+      $exportAs: TagOperationLink
+      $supportedFrom: v0.1.0
+    Service_Tags_ProductLink:
+      $exportAs: TagProductLink
+      $supportedFrom: v0.1.0
+    Service_Products_ApiLink:
+      $exportAs: ProductApiLink
+      $supportedFrom: v0.1.0
+    Service_Products_GroupLink:
+      $exportAs: ProductGroupLink
+      $supportedFrom: v0.1.0
+    Service_PolicyRestriction:
+      $exportAs: PolicyRestriction
+      $supportedFrom: v0.1.0
+    Service_PrivateEndpointConnection:
+      $exportAs: PrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Gateway:
+      $exportAs: Gateway
+      $supportedFrom: v0.1.0
+    Gateways_ConfigConnection:
+      $exportAs: GatewayConfigConnection
+      $supportedFrom: v0.1.0
+    ApiReleaseContractProperties:
+      ApiId:
+        $referenceType: arm # the API released (ASO's Api, or an ARM ID)
+    TagApiLinkContractProperties:
+      ApiId:
+        $referenceType: arm
+    TagOperationLinkContractProperties:
+      OperationId:
+        $referenceType: arm
+    TagProductLinkContractProperties:
+      ProductId:
+        $referenceType: arm
+    ProductApiLinkContractProperties:
+      ApiId:
+        $referenceType: arm
+    ProductGroupLinkContractProperties:
+      GroupId:
+        $referenceType: arm
+    BackendSubnetConfiguration:
+      Id:
+        $referenceType: arm # the subnet a workspace gateway is injected into
     CacheContractProperties:
       ResourceId:
         $referenceType: arm # the Azure Cache for Redis behind an external cache (ASO's Redis, or an ARM ID)

@@ -18,21 +18,36 @@ title: Supported Resources
 
 ### Released
 
-| Resource              | ARM Version | CRD Version | Supported From | Sample |
-|-----------------------|-------------|-------------|----------------|--------|
-| ApiOperation          | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| ApiOperationPolicy    | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| ApiOperationTag       | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| ApiSchema             | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| ApiTag                | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| ApiTagDescription     | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| AuthorizationServer   | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| Cache                 | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| GlobalSchema          | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| IdentityProvider      | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| OpenIdConnectProvider | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| ProductTag            | 2024-05-01  | v20240501   | v0.1.0         | -      |
-| Tag                   | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| Resource                  | ARM Version | CRD Version | Supported From | Sample |
+|---------------------------|-------------|-------------|----------------|--------|
+| ApiOperation              | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ApiOperationPolicy        | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ApiOperationTag           | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ApiRelease                | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ApiResolver               | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ApiResolverPolicy         | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ApiSchema                 | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ApiTag                    | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ApiTagDescription         | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ApiWiki                   | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| AuthorizationServer       | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| Cache                     | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| Documentation             | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| Gateway                   | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| GatewayConfigConnection   | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| GlobalSchema              | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| IdentityProvider          | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| OpenIdConnectProvider     | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| PolicyRestriction         | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| PrivateEndpointConnection | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ProductApiLink            | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ProductGroupLink          | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ProductTag                | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| ProductWiki               | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| Tag                       | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| TagApiLink                | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| TagOperationLink          | 2024-05-01  | v20240501   | v0.1.0         | -      |
+| TagProductLink            | 2024-05-01  | v20240501   | v0.1.0         | -      |
 
 ## App
 

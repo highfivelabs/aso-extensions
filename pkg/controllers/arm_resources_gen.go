@@ -265,9 +265,13 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiOperation)})
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiOperationPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiOperationTag)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiRelease)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiResolver)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiResolverPolicy)})
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiSchema)})
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiTag)})
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiTagDescription)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ApiWiki)})
 	result = append(result, &registration.StorageType{
 		Obj: new(apimanagement_v20240501.AuthorizationServer),
 		Indexes: []registration.Index{
@@ -311,6 +315,9 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.Documentation)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.Gateway)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.GatewayConfigConnection)})
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.GlobalSchema)})
 	result = append(result, &registration.StorageType{
 		Obj: new(apimanagement_v20240501.IdentityProvider),
@@ -350,8 +357,16 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.PolicyRestriction)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.PrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ProductApiLink)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ProductGroupLink)})
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ProductTag)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.ProductWiki)})
 	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.Tag)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.TagApiLink)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.TagOperationLink)})
+	result = append(result, &registration.StorageType{Obj: new(apimanagement_v20240501.TagProductLink)})
 	result = append(result, &registration.StorageType{
 		Obj: new(app_v20250101.ManagedEnvironmentsCertificate),
 		Indexes: []registration.Index{
@@ -3036,31 +3051,61 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiOperation)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiOperationPolicy)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiOperationTag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiRelease)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiResolver)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiResolverPolicy)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiSchema)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiTag)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiTagDescription)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ApiWiki)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.AuthorizationServer)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.Cache)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.Documentation)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.Gateway)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.GatewayConfigConnection)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.GlobalSchema)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.IdentityProvider)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.OpenIdConnectProvider)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.PolicyRestriction)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.PrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ProductApiLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ProductGroupLink)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501.ProductTag)},
-		&registration.KnownType{Obj: new(apimanagement_v20240501.Tag)})
+		&registration.KnownType{Obj: new(apimanagement_v20240501.ProductWiki)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.Tag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.TagApiLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.TagOperationLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501.TagProductLink)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiOperation)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiOperationPolicy)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiOperationTag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiRelease)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiResolver)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiResolverPolicy)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiSchema)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiTag)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiTagDescription)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ApiWiki)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.AuthorizationServer)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.Cache)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.Documentation)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.Gateway)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.GatewayConfigConnection)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.GlobalSchema)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.IdentityProvider)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.OpenIdConnectProvider)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.PolicyRestriction)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.PrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ProductApiLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ProductGroupLink)},
 		&registration.KnownType{Obj: new(apimanagement_v20240501s.ProductTag)},
-		&registration.KnownType{Obj: new(apimanagement_v20240501s.Tag)})
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.ProductWiki)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.Tag)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.TagApiLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.TagOperationLink)},
+		&registration.KnownType{Obj: new(apimanagement_v20240501s.TagProductLink)})
 	result = append(
 		result,
 		&registration.KnownType{Obj: new(app_v20250101.ManagedEnvironmentsCertificate)},
@@ -4456,16 +4501,31 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &apimanagement_customizations.ApiOperationExtension{})
 	result = append(result, &apimanagement_customizations.ApiOperationPolicyExtension{})
 	result = append(result, &apimanagement_customizations.ApiOperationTagExtension{})
+	result = append(result, &apimanagement_customizations.ApiReleaseExtension{})
+	result = append(result, &apimanagement_customizations.ApiResolverExtension{})
+	result = append(result, &apimanagement_customizations.ApiResolverPolicyExtension{})
 	result = append(result, &apimanagement_customizations.ApiSchemaExtension{})
 	result = append(result, &apimanagement_customizations.ApiTagDescriptionExtension{})
 	result = append(result, &apimanagement_customizations.ApiTagExtension{})
+	result = append(result, &apimanagement_customizations.ApiWikiExtension{})
 	result = append(result, &apimanagement_customizations.AuthorizationServerExtension{})
 	result = append(result, &apimanagement_customizations.CacheExtension{})
+	result = append(result, &apimanagement_customizations.DocumentationExtension{})
+	result = append(result, &apimanagement_customizations.GatewayConfigConnectionExtension{})
+	result = append(result, &apimanagement_customizations.GatewayExtension{})
 	result = append(result, &apimanagement_customizations.GlobalSchemaExtension{})
 	result = append(result, &apimanagement_customizations.IdentityProviderExtension{})
 	result = append(result, &apimanagement_customizations.OpenIdConnectProviderExtension{})
+	result = append(result, &apimanagement_customizations.PolicyRestrictionExtension{})
+	result = append(result, &apimanagement_customizations.PrivateEndpointConnectionExtension{})
+	result = append(result, &apimanagement_customizations.ProductApiLinkExtension{})
+	result = append(result, &apimanagement_customizations.ProductGroupLinkExtension{})
 	result = append(result, &apimanagement_customizations.ProductTagExtension{})
+	result = append(result, &apimanagement_customizations.ProductWikiExtension{})
+	result = append(result, &apimanagement_customizations.TagApiLinkExtension{})
 	result = append(result, &apimanagement_customizations.TagExtension{})
+	result = append(result, &apimanagement_customizations.TagOperationLinkExtension{})
+	result = append(result, &apimanagement_customizations.TagProductLinkExtension{})
 	result = append(result, &app_customizations.AgentExtension{})
 	result = append(result, &app_customizations.AgentsConnectorExtension{})
 	result = append(result, &app_customizations.ConnectedEnvironmentExtension{})

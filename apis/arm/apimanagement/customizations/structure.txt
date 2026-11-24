@@ -7,15 +7,29 @@ ApiOperationPolicyExtension: Object (0 properties)
 
 ApiOperationTagExtension: Object (0 properties)
 
+ApiReleaseExtension: Object (0 properties)
+
+ApiResolverExtension: Object (0 properties)
+
+ApiResolverPolicyExtension: Object (0 properties)
+
 ApiSchemaExtension: Object (0 properties)
 
 ApiTagDescriptionExtension: Object (0 properties)
 
 ApiTagExtension: Object (0 properties)
 
+ApiWikiExtension: Object (0 properties)
+
 AuthorizationServerExtension: Object (0 properties)
 
 CacheExtension: Object (0 properties)
+
+DocumentationExtension: Object (0 properties)
+
+GatewayConfigConnectionExtension: Object (0 properties)
+
+GatewayExtension: Object (0 properties)
 
 GlobalSchemaExtension: Object (0 properties)
 
@@ -23,7 +37,23 @@ IdentityProviderExtension: Object (0 properties)
 
 OpenIdConnectProviderExtension: Object (0 properties)
 
+PolicyRestrictionExtension: Object (0 properties)
+
+PrivateEndpointConnectionExtension: Object (0 properties)
+
+ProductApiLinkExtension: Object (0 properties)
+
+ProductGroupLinkExtension: Object (0 properties)
+
 ProductTagExtension: Object (0 properties)
 
+ProductWikiExtension: Object (0 properties)
+
+TagApiLinkExtension: Object (0 properties)
+
 TagExtension: Object (0 properties)
+
+TagOperationLinkExtension: Object (0 properties)
+
+TagProductLinkExtension: Object (0 properties)
 

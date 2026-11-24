@@ -329,6 +329,24 @@ func init() {
 	f[g+"Cache"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"connectionString": secretRef, "useFromLocation": "default"}
 	}}
+	// The second part (f71): a resolver's path is Type/field and its policy
+	// <policies> XML; a link names what it links, in its own service; a
+	// configuration connection is a workspace gateway's (a SKU the fake's
+	// stand-in owner has not), so its own test runs it.
+	f[g+"ApiResolver"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"displayName": "Conformance", "path": "Query/conformance"}
+	}}
+	f[g+"ApiResolverPolicy"] = f[g+"ApiOperationPolicy"]
+	link := func(prop, rest string) conformanceFixture {
+		return conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{prop: armRef(c.add(c.parent() + rest))}
+		}}
+	}
+	f[g+"TagApiLink"], f[g+"ProductApiLink"] = link("apiReference", "/apis/conformance"), link("apiReference", "/apis/conformance")
+	f[g+"TagOperationLink"] = link("operationReference", "/apis/conformance/operations/conformance")
+	f[g+"TagProductLink"] = link("productReference", "/products/conformance")
+	f[g+"ProductGroupLink"] = link("groupReference", "/groups/conformance")
+	f[g+"GatewayConfigConnection"] = conformanceFixture{coveredBy: "TestAPIManagementLinksAndGateways"}
 	// A MySQL flexible server's threat protection setting is Default and
 	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
 	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {

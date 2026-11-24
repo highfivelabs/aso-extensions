@@ -337,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 7,095 (16.4%) in 520 further resources; uncovered 29,154 (67.2%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 7,124 (16.4%) in 535 further resources; uncovered 29,125 (67.2%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.0% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 2.8% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.0% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 2.9% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 27.7% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 27.9% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
 
 **Ours.**
 
@@ -355,16 +355,31 @@ Generated; these cannot drift from the data.
 | `apimanagement.azure.hfl.dev/ApiOperation` | `Microsoft.ApiManagement/service/apis/operations` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/ApiOperationPolicy` | `Microsoft.ApiManagement/service/apis/operations/policies` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/ApiOperationTag` | `Microsoft.ApiManagement/service/apis/operations/tags` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiRelease` | `Microsoft.ApiManagement/service/apis/releases` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiResolver` | `Microsoft.ApiManagement/service/apis/resolvers` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiResolverPolicy` | `Microsoft.ApiManagement/service/apis/resolvers/policies` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/ApiSchema` | `Microsoft.ApiManagement/service/apis/schemas` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/ApiTag` | `Microsoft.ApiManagement/service/apis/tags` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/ApiTagDescription` | `Microsoft.ApiManagement/service/apis/tagDescriptions` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiWiki` | `Microsoft.ApiManagement/service/apis/wikis` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/AuthorizationServer` | `Microsoft.ApiManagement/service/authorizationServers` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/Cache` | `Microsoft.ApiManagement/service/caches` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/Documentation` | `Microsoft.ApiManagement/service/documentations` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/Gateway` | `Microsoft.ApiManagement/gateways` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/GatewayConfigConnection` | `Microsoft.ApiManagement/gateways/configConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/GlobalSchema` | `Microsoft.ApiManagement/service/schemas` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/IdentityProvider` | `Microsoft.ApiManagement/service/identityProviders` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/OpenIdConnectProvider` | `Microsoft.ApiManagement/service/openidConnectProviders` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/PolicyRestriction` | `Microsoft.ApiManagement/service/policyRestrictions` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/PrivateEndpointConnection` | `Microsoft.ApiManagement/service/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ProductApiLink` | `Microsoft.ApiManagement/service/products/apiLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ProductGroupLink` | `Microsoft.ApiManagement/service/products/groupLinks` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/ProductTag` | `Microsoft.ApiManagement/service/products/tags` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ProductWiki` | `Microsoft.ApiManagement/service/products/wikis` | ARM wire type of the generated kind (`apis/arm`) |
 | `apimanagement.azure.hfl.dev/Tag` | `Microsoft.ApiManagement/service/tags` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/TagApiLink` | `Microsoft.ApiManagement/service/tags/apiLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/TagOperationLink` | `Microsoft.ApiManagement/service/tags/operationLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/TagProductLink` | `Microsoft.ApiManagement/service/tags/productLinks` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/Agent` | `Microsoft.App/agents` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/AgentsConnector` | `Microsoft.App/agents/connectors` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ConnectedEnvironment` | `Microsoft.App/connectedEnvironments` | ARM wire type of the generated kind (`apis/arm`) |

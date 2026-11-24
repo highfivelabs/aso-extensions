@@ -543,8 +543,17 @@ upstream's); the catalog's chart tests do that.
   format is XML with a `<policies>` root (400); an API's, product's or
   operation's tag names a tag of the service that exists (404); an identity
   provider is named by its type (400); a cache's Redis, when named, exists
-  (404). Not modelled: the gateway serving the APIs, policy semantics, the
-  developer portal, the providers' endpoints answering, and the error codes.
+  (404). The second part (f71): a resolver has a display name and a
+  `Type/field` path (400) and its policy is `<policies>` XML (400); a link
+  from a tag's or a product's side names an API, operation, product or
+  group (400) of its own service (400) that exists (404); a release's
+  `apiId` is its own API (400); a wiki's documents exist (404); a v2
+  gateway has a SKU (400) and its backend subnet exists (404); a
+  configuration connection is a workspace gateway's (400) and names a
+  workspace that exists (404). Not modelled: the gateway serving the APIs,
+  policy semantics, resolvers being called, the developer portal, the
+  providers' endpoints answering, which tiers take workspaces and gateways,
+  and the error codes.
 - A MySQL flexible server's advanced threat protection setting
   (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
   2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404

@@ -33,9 +33,26 @@ import (
 //     google, microsoft or twitter (400);
 //   - a cache's resourceId, when given, exists (404).
 //
-// Not modelled: the gateway running the APIs, policy semantics, the
-// developer portal, an identity provider's or authorization server's
-// endpoints answering, and the error codes (the fake's own).
+// And of the second part, docs/plan.md f71:
+//
+//   - a GraphQL resolver sends its displayName and path, and its path is
+//     Type/field (400); its policy is <policies> XML as an operation's;
+//   - a link made from a tag's side (apiLinks, operationLinks,
+//     productLinks) or a product's (apiLinks, groupLinks) names its API,
+//     operation, product or group (400), of the same service (400), that
+//     exists (404);
+//   - a release's apiId, when given, is the API it belongs to (400);
+//   - a wiki's documents name documentations of the service that exist
+//     (404);
+//   - a v2 gateway (Microsoft.ApiManagement/gateways) has a SKU (400) and
+//     its backend subnet, when given, exists (404); a configuration
+//     connection is a workspace gateway's (400) and names a workspace that
+//     exists (404).
+//
+// Not modelled: the gateway running the APIs, policy semantics, resolvers
+// being called, the developer portal, an identity provider's or
+// authorization server's endpoints answering, and the error codes (the
+// fake's own).
 var (
 	apimChild     = regexp.MustCompile(`(?i)^(/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.apimanagement/service/[^/]+)/(.+)$`)
 	apimTemplate  = regexp.MustCompile(`\{([^}]+)\}`)
@@ -52,26 +69,81 @@ var (
 		{regexp.MustCompile(`(?i)^openidconnectproviders/[^/]+$`), []string{"displayName", "metadataEndpoint", "clientId"}},
 		{regexp.MustCompile(`(?i)^authorizationservers/[^/]+$`), []string{"displayName", "clientRegistrationEndpoint", "authorizationEndpoint", "grantTypes", "clientId"}},
 		{regexp.MustCompile(`(?i)^caches/[^/]+$`), []string{"connectionString", "useFromLocation"}},
+		{regexp.MustCompile(`(?i)^apis/[^/]+/resolvers/[^/]+$`), []string{"displayName", "path"}},
+		{regexp.MustCompile(`(?i)^tags/[^/]+/apilinks/[^/]+$`), []string{"apiId"}},
+		{regexp.MustCompile(`(?i)^tags/[^/]+/operationlinks/[^/]+$`), []string{"operationId"}},
+		{regexp.MustCompile(`(?i)^tags/[^/]+/productlinks/[^/]+$`), []string{"productId"}},
+		{regexp.MustCompile(`(?i)^products/[^/]+/apilinks/[^/]+$`), []string{"apiId"}},
+		{regexp.MustCompile(`(?i)^products/[^/]+/grouplinks/[^/]+$`), []string{"groupId"}},
 	}
-	apimTagLink  = regexp.MustCompile(`(?i)^(apis/[^/]+|products/[^/]+|apis/[^/]+/operations/[^/]+)/tags/([^/]+)$`)
-	apimOpPolicy = regexp.MustCompile(`(?i)^apis/[^/]+/operations/[^/]+/policies/[^/]+$`)
-	apimOp       = regexp.MustCompile(`(?i)^apis/[^/]+/operations/[^/]+$`)
-	apimIdP      = regexp.MustCompile(`(?i)^identityproviders/([^/]+)$`)
-	apimCache    = regexp.MustCompile(`(?i)^caches/[^/]+$`)
+	// The property of each link kind that names what it links, and the
+	// path, under the service, of what it may name.
+	apimLinks = []struct {
+		path   *regexp.Regexp
+		prop   string
+		target *regexp.Regexp
+	}{
+		{regexp.MustCompile(`(?i)^(tags|products)/[^/]+/apilinks/[^/]+$`), "apiId", regexp.MustCompile(`(?i)^apis/[^/]+$`)},
+		{regexp.MustCompile(`(?i)^tags/[^/]+/operationlinks/[^/]+$`), "operationId", regexp.MustCompile(`(?i)^apis/[^/]+/operations/[^/]+$`)},
+		{regexp.MustCompile(`(?i)^tags/[^/]+/productlinks/[^/]+$`), "productId", regexp.MustCompile(`(?i)^products/[^/]+$`)},
+		{regexp.MustCompile(`(?i)^products/[^/]+/grouplinks/[^/]+$`), "groupId", regexp.MustCompile(`(?i)^groups/[^/]+$`)},
+	}
+	apimResolver     = regexp.MustCompile(`(?i)^apis/[^/]+/resolvers/[^/]+$`)
+	apimResolverPath = regexp.MustCompile(`^[^/]+/[^/]+$`)
+	apimRelease      = regexp.MustCompile(`(?i)^(apis/[^/]+)/releases/[^/]+$`)
+	apimWiki         = regexp.MustCompile(`(?i)^(apis|products)/[^/]+/wikis/default$`)
+	apimGateway      = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.apimanagement/gateways/[^/]+$`)
+	apimConfigConn   = regexp.MustCompile(`(?i)^(/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.apimanagement/gateways/[^/]+)/configconnections/[^/]+$`)
+	apimWorkspace    = regexp.MustCompile(`(?i)^/subscriptions/[^/]+/resourcegroups/[^/]+/providers/microsoft\.apimanagement/service/[^/]+/workspaces/[^/]+$`)
+	apimWorkspaceGW  = []string{"WorkspaceGatewayStandard", "WorkspaceGatewayPremium"}
+	apimTagLink      = regexp.MustCompile(`(?i)^(apis/[^/]+|products/[^/]+|apis/[^/]+/operations/[^/]+)/tags/([^/]+)$`)
+	apimOpPolicy     = regexp.MustCompile(`(?i)^apis/[^/]+/(operations|resolvers)/[^/]+/policies/[^/]+$`)
+	apimOp           = regexp.MustCompile(`(?i)^apis/[^/]+/operations/[^/]+$`)
+	apimIdP          = regexp.MustCompile(`(?i)^identityproviders/([^/]+)$`)
+	apimCache        = regexp.MustCompile(`(?i)^caches/[^/]+$`)
 )
 
 // checkAPIManagement refuses what the rules above do not allow; code is ""
 // when it is allowed or id is none of these.
 func (a *ARM) checkAPIManagement(id string, body map[string]any) (status int, code, message string) {
+	props, _ := body["properties"].(map[string]any)
+	bad := func(msg string) (int, string, string) {
+		return http.StatusBadRequest, "ValidationError", msg
+	}
+	if apimGateway.MatchString(id) {
+		sku, _ := body["sku"].(map[string]any)
+		if stringOf(sku["name"]) == "" {
+			return bad("'sku' is required.")
+		}
+		backend, _ := props["backend"].(map[string]any)
+		subnet, _ := backend["subnet"].(map[string]any)
+		if s := stringOf(subnet["id"]); s != "" && !a.exists(s) {
+			return http.StatusNotFound, "ResourceNotFound", "The subnet " + s + " was not found."
+		}
+		return 0, "", ""
+	}
+	if c := apimConfigConn.FindStringSubmatch(id); c != nil {
+		gw, _ := a.resources[strings.ToLower(c[1])]
+		if gw != nil {
+			sku, _ := (*gw)["sku"].(map[string]any)
+			if name := stringOf(sku["name"]); !slices.Contains(apimWorkspaceGW, name) {
+				return bad("A configuration connection is a workspace gateway's (" + strings.Join(apimWorkspaceGW, " or ") + "), not a " + name + " gateway's.")
+			}
+		}
+		src := stringOf(props["sourceId"])
+		if !apimWorkspace.MatchString(src) {
+			return bad("'sourceId' is the ARM ID of an API Management workspace.")
+		}
+		if !a.exists(src) {
+			return http.StatusNotFound, "ResourceNotFound", "The workspace " + src + " was not found."
+		}
+		return 0, "", ""
+	}
 	m := apimChild.FindStringSubmatch(id)
 	if m == nil {
 		return 0, "", ""
 	}
 	service, rest := m[1], m[2]
-	props, _ := body["properties"].(map[string]any)
-	bad := func(msg string) (int, string, string) {
-		return http.StatusBadRequest, "ValidationError", msg
-	}
 	for _, r := range apimRequired {
 		if !r.path.MatchString(rest) {
 			continue
@@ -106,6 +178,23 @@ func (a *ARM) checkAPIManagement(id string, body map[string]any) (status int, co
 				return bad("A policy is XML whose root element is <policies>.")
 			}
 		}
+	case apimResolver.MatchString(rest):
+		if !apimResolverPath.MatchString(stringOf(props["path"])) {
+			return bad("A resolver's path is Type/field, not " + stringOf(props["path"]) + ".")
+		}
+	case apimRelease.MatchString(rest):
+		api := service + "/" + apimRelease.FindStringSubmatch(rest)[1]
+		if r := stringOf(props["apiId"]); r != "" && !strings.EqualFold(r, api) {
+			return bad("A release's apiId is the API it belongs to, " + api + "; not " + r + ".")
+		}
+	case apimWiki.MatchString(rest):
+		docs, _ := props["documents"].([]any)
+		for _, d := range docs {
+			dm, _ := d.(map[string]any)
+			if doc := service + "/documentations/" + stringOf(dm["documentationId"]); !a.exists(doc) {
+				return http.StatusNotFound, "ResourceNotFound", "The documentation " + doc + " was not found."
+			}
+		}
 	case apimIdP.MatchString(rest):
 		name := apimIdP.FindStringSubmatch(rest)[1]
 		if !slices.Contains(apimProviders, name) {
@@ -114,6 +203,18 @@ func (a *ARM) checkAPIManagement(id string, body map[string]any) (status int, co
 	case apimCache.MatchString(rest):
 		if r := stringOf(props["resourceId"]); r != "" && !a.exists(r) {
 			return http.StatusNotFound, "ResourceNotFound", "The cache " + r + " was not found."
+		}
+	}
+	for _, l := range apimLinks {
+		if !l.path.MatchString(rest) {
+			continue
+		}
+		target := stringOf(props[l.prop])
+		if !strings.HasPrefix(strings.ToLower(target), strings.ToLower(service)+"/") || !l.target.MatchString(target[len(service)+1:]) {
+			return bad("'" + l.prop + "' is the ARM ID of what the link names, in the same service; not " + target + ".")
+		}
+		if !a.exists(target) {
+			return http.StatusNotFound, "ResourceNotFound", "The resource " + target + " was not found."
 		}
 	}
 	if t := apimTagLink.FindStringSubmatch(rest); t != nil {

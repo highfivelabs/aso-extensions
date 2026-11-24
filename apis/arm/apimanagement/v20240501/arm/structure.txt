@@ -267,6 +267,60 @@ ApiOperation_Spec: Object (2 properties)
     │   └── Values: string[]
     └── UrlTemplate: *string
 
+ApiRelease_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── ApiId: *string
+│   ├── CreatedDateTime: *string
+│   ├── Notes: *string
+│   └── UpdatedDateTime: *string
+└── Type: *string
+
+ApiRelease_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── ApiId: *string
+    └── Notes: *string
+
+ApiResolverPolicy_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── Format: *Enum (4 values)
+│   │   ├── "rawxml"
+│   │   ├── "rawxml-link"
+│   │   ├── "xml"
+│   │   └── "xml-link"
+│   └── Value: *string
+└── Type: *string
+
+ApiResolverPolicy_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── Format: *Enum (4 values)
+    │   ├── "rawxml"
+    │   ├── "rawxml-link"
+    │   ├── "xml"
+    │   └── "xml-link"
+    └── Value: *string
+
+ApiResolver_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (3 properties)
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   └── Path: *string
+└── Type: *string
+
+ApiResolver_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (3 properties)
+    ├── Description: *string
+    ├── DisplayName: *string
+    └── Path: *string
+
 ApiSchema_STATUS: Object (4 properties)
 ├── Id: *string
 ├── Name: *string
@@ -315,6 +369,20 @@ ApiTag_STATUS: Object (4 properties)
 
 ApiTag_Spec: Object (1 property)
 └── Name: string
+
+ApiWiki_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── Documents: Object (1 property)[]
+│       └── DocumentationId: *string
+└── Type: *string
+
+ApiWiki_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── Documents: Object (1 property)[]
+        └── DocumentationId: *string
 
 AuthorizationServer_STATUS: Object (4 properties)
 ├── Id: *string
@@ -413,6 +481,100 @@ Cache_Spec: Object (2 properties)
     ├── ResourceId: *string
     └── UseFromLocation: *string
 
+Documentation_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── Content: *string
+│   └── Title: *string
+└── Type: *string
+
+Documentation_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── Content: *string
+    └── Title: *string
+
+GatewayConfigConnection_STATUS: Object (5 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (4 properties)
+│   ├── DefaultHostname: *string
+│   ├── Hostnames: string[]
+│   ├── ProvisioningState: *string
+│   └── SourceId: *string
+└── Type: *string
+
+GatewayConfigConnection_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── Hostnames: string[]
+    └── SourceId: *string
+
+Gateway_STATUS: Object (9 properties)
+├── Etag: *string
+├── Id: *string
+├── Location: *string
+├── Name: *string
+├── Properties: *Object (7 properties)
+│   ├── Backend: *Object (1 property)
+│   │   └── Subnet: *Object (1 property)
+│   │       └── Id: *string
+│   ├── ConfigurationApi: *Object (1 property)
+│   │   └── Hostname: *string
+│   ├── CreatedAtUtc: *string
+│   ├── Frontend: *Object (1 property)
+│   │   └── DefaultHostname: *string
+│   ├── ProvisioningState: *string
+│   ├── TargetProvisioningState: *string
+│   └── VirtualNetworkType: *Enum (3 values)
+│       ├── "External"
+│       ├── "Internal"
+│       └── "None"
+├── Sku: *Object (2 properties)
+│   ├── Capacity: *int
+│   └── Name: *Enum (3 values)
+│       ├── "Standard"
+│       ├── "WorkspaceGatewayPremium"
+│       └── "WorkspaceGatewayStandard"
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+├── Tags: map[string]string
+└── Type: *string
+
+Gateway_Spec: Object (5 properties)
+├── Location: *string
+├── Name: string
+├── Properties: *Object (2 properties)
+│   ├── Backend: *Object (1 property)
+│   │   └── Subnet: *Object (1 property)
+│   │       └── Id: *string
+│   └── VirtualNetworkType: *Enum (3 values)
+│       ├── "External"
+│       ├── "Internal"
+│       └── "None"
+├── Sku: *Object (2 properties)
+│   ├── Capacity: *int
+│   └── Name: *Enum (3 values)
+│       ├── "Standard"
+│       ├── "WorkspaceGatewayPremium"
+│       └── "WorkspaceGatewayStandard"
+└── Tags: map[string]string
+
 GlobalSchema_STATUS: Object (4 properties)
 ├── Id: *string
 ├── Name: *string
@@ -502,6 +664,79 @@ OpenIdConnectProvider_Spec: Object (2 properties)
     ├── UseInApiDocumentation: *bool
     └── UseInTestConsole: *bool
 
+PolicyRestriction_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (2 properties)
+│   ├── RequireBase: *Enum (2 values)
+│   │   ├── "false"
+│   │   └── "true"
+│   └── Scope: *string
+└── Type: *string
+
+PolicyRestriction_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (2 properties)
+    ├── RequireBase: *Enum (2 values)
+    │   ├── "false"
+    │   └── "true"
+    └── Scope: *string
+
+PrivateEndpointConnection_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (3 properties)
+│   ├── PrivateEndpoint: *Object (1 property)
+│   │   └── Id: *string
+│   ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+│   │   ├── ActionsRequired: *string
+│   │   ├── Description: *string
+│   │   └── Status: *Enum (3 values)
+│   │       ├── "Approved"
+│   │       ├── "Pending"
+│   │       └── "Rejected"
+│   └── ProvisioningState: *Enum (4 values)
+│       ├── "Creating"
+│       ├── "Deleting"
+│       ├── "Failed"
+│       └── "Succeeded"
+└── Type: *string
+
+PrivateEndpointConnection_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── PrivateLinkServiceConnectionState: *Object (3 properties)
+        ├── ActionsRequired: *string
+        ├── Description: *string
+        └── Status: *Enum (3 values)
+            ├── "Approved"
+            ├── "Pending"
+            └── "Rejected"
+
+ProductApiLink_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── ApiId: *string
+└── Type: *string
+
+ProductApiLink_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── ApiId: *string
+
+ProductGroupLink_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── GroupId: *string
+└── Type: *string
+
+ProductGroupLink_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── GroupId: *string
+
 ProductTag_STATUS: Object (4 properties)
 ├── Id: *string
 ├── Name: *string
@@ -511,6 +746,56 @@ ProductTag_STATUS: Object (4 properties)
 
 ProductTag_Spec: Object (1 property)
 └── Name: string
+
+ProductWiki_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── Documents: Object (1 property)[]
+│       └── DocumentationId: *string
+└── Type: *string
+
+ProductWiki_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── Documents: Object (1 property)[]
+        └── DocumentationId: *string
+
+TagApiLink_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── ApiId: *string
+└── Type: *string
+
+TagApiLink_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── ApiId: *string
+
+TagOperationLink_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── OperationId: *string
+└── Type: *string
+
+TagOperationLink_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── OperationId: *string
+
+TagProductLink_STATUS: Object (4 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (1 property)
+│   └── ProductId: *string
+└── Type: *string
+
+TagProductLink_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (1 property)
+    └── ProductId: *string
 
 Tag_STATUS: Object (4 properties)
 ├── Id: *string
