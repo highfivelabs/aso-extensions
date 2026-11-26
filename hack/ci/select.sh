@@ -29,9 +29,9 @@
 #   adjacent  what a kind's pull request also touches and check:static or
 #             the operator e2e covers: config/crds/, generator/reports/,
 #             pkg/controllers/arm_resources_gen.go, tests/operator/; and
-#             CI's own files, .github/ and hack/ci/ (the lint job checks
-#             the workflows; a change to how CI runs is exercised by the
-#             run itself)
+#             .github/ (the lint job checks the workflows; hack/ci/ stays
+#             full: its tool pins and test settings act only while the
+#             tests run)
 #   full      everything else: go.mod, patches/, the pin, upstream.yaml,
 #             cmd/, pkg/ (the rest), generator/ (the rest), hack/ (the
 #             rest), a test/e2e file without tests (the harness),
@@ -70,7 +70,7 @@ classify() {
     pkg/fakecloud/*) echo "group fakecloud" ;;
     hack/coverage/*) echo "group coverage" ;;
     config/crds/*|generator/reports/*|pkg/controllers/arm_resources_gen.go|tests/operator/*) echo adjacent ;;
-    .github/*|hack/ci/*) echo adjacent ;;
+    .github/*) echo adjacent ;;
     *) echo full ;;
   esac
 }
