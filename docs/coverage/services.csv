@@ -263,7 +263,7 @@ Microsoft.VerifiedId,1,0,0,3,0,0,3,0.0,0.0,100.0
 Microsoft.VideoIndexer,2,0,0,18,0,0,18,0.0,0.0,100.0
 Microsoft.VirtualMachineImages,2,0,0,76,0,0,76,0.0,0.0,100.0
 Microsoft.VMwareCloudSimple,3,0,0,51,0,0,51,0.0,0.0,100.0
-Microsoft.Web,81,3,46,1932,313,792,827,16.2,41.0,42.8
+Microsoft.Web,81,3,46,1932,313,827,792,16.2,42.8,41.0
 Microsoft.WeightsAndBiases,1,0,0,23,0,0,23,0.0,0.0,100.0
 Microsoft.Widget,1,0,0,5,0,0,5,0.0,0.0,100.0
 Microsoft.WindowsESU,1,0,0,7,0,0,7,0.0,0.0,100.0

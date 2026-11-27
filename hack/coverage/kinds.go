@@ -87,7 +87,10 @@ func oursKinds(root string) ([]*Kind, error) {
 			continue
 		}
 		vers, _ := os.ReadDir(filepath.Join(armDir, ge.Name()))
-		best := map[string]*Kind{}
+		// The kinds of each ARM type at its preferred version: one, or several
+		// when a union is split into one kind per member (Data Factory's
+		// linked services, docs/plan.md section 2), whose attributes add up.
+		best := map[string][]*Kind{}
 		for _, ve := range vers {
 			if !ve.IsDir() {
 				continue
@@ -110,13 +113,18 @@ func oursKinds(root string) ([]*Kind, error) {
 			for _, wk := range kindsOfPackage(armPI, apiPI, group, ve.Name()) {
 				kd := &Kind{Group: wk.Group, Kind: wk.Kind, Version: wk.Version, API: wk.API, ARMType: wk.ARMType, Wire: wk.Wire}
 				id := strings.ToLower(kd.ARMType)
-				if ex, ok := best[id]; !ok || wireVersionPreferred(kd.Version, ex.Version) {
-					best[id] = kd
+				switch ex, ok := best[id]; {
+				case !ok || wireVersionPreferred(kd.Version, ex[0].Version):
+					best[id] = []*Kind{kd}
+				case kd.Version == ex[0].Version:
+					best[id] = append(ex, kd)
 				}
 			}
 		}
 		for _, id := range sortedKeys(best) {
-			out = append(out, best[id])
+			ks := best[id]
+			sort.Slice(ks, func(i, j int) bool { return ks[i].Kind < ks[j].Kind })
+			out = append(out, ks...)
 		}
 	}
 	accounted := map[string]bool{}
