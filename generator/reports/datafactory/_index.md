@@ -41,6 +41,7 @@ no_list: true
 | FactoriesLinkedServiceRestService                     | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesManagedVirtualNetwork                        | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesManagedVirtualNetworksManagedPrivateEndpoint | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesPipeline                                     | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesPrivateEndpointConnection                    | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesTrigger                                      | 2018-06-01  | v20180601   | v0.1.0         | -      |
 

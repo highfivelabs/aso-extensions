@@ -296,7 +296,6 @@ type FactoriesLinkedServiceAzureBlobFSOperatorSpec struct {
 }
 
 // Storage version of v20180601.CredentialReference
-// Credential reference type.
 type CredentialReference struct {
 	AdditionalProperties map[string]v1.JSON     `json:"additionalProperties,omitempty"`
 	PropertyBag          genruntime.PropertyBag `json:"$propertyBag,omitempty"`
@@ -314,7 +313,6 @@ type CredentialReference_STATUS struct {
 }
 
 // Storage version of v20180601.IntegrationRuntimeReference
-// Integration runtime reference type.
 type IntegrationRuntimeReference struct {
 	Parameters    map[string]v1.JSON     `json:"parameters,omitempty"`
 	PropertyBag   genruntime.PropertyBag `json:"$propertyBag,omitempty"`

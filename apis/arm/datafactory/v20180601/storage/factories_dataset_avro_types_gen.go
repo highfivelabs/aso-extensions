@@ -336,7 +336,6 @@ type DatasetLocation_STATUS struct {
 }
 
 // Storage version of v20180601.LinkedServiceReference
-// Linked service reference type.
 type LinkedServiceReference struct {
 	Parameters    map[string]v1.JSON     `json:"parameters,omitempty"`
 	PropertyBag   genruntime.PropertyBag `json:"$propertyBag,omitempty"`
@@ -351,22 +350,6 @@ type LinkedServiceReference_STATUS struct {
 	PropertyBag   genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	ReferenceName *string                `json:"referenceName,omitempty"`
 	Type          *string                `json:"type,omitempty"`
-}
-
-// Storage version of v20180601.ParameterSpecification
-// Definition of a single parameter for an entity.
-type ParameterSpecification struct {
-	DefaultValue *v1.JSON               `json:"defaultValue,omitempty"`
-	PropertyBag  genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Type         *string                `json:"type,omitempty"`
-}
-
-// Storage version of v20180601.ParameterSpecification_STATUS
-// Definition of a single parameter for an entity.
-type ParameterSpecification_STATUS struct {
-	DefaultValue *v1.JSON               `json:"defaultValue,omitempty"`
-	PropertyBag  genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Type         *string                `json:"type,omitempty"`
 }
 
 // Storage version of v20180601.AmazonS3CompatibleLocation

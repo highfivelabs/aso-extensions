@@ -92,25 +92,15 @@ type DatasetFolder struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// Linked service reference type.
 type LinkedServiceReference struct {
-	// Parameters: Arguments for LinkedService.
-	Parameters map[string]v1.JSON `json:"parameters,omitempty"`
-
-	// ReferenceName: Reference LinkedService name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Linked service reference type.
-	Type *Type `json:"type,omitempty"`
+	Parameters    map[string]v1.JSON `json:"parameters,omitempty"`
+	ReferenceName *string            `json:"referenceName,omitempty"`
+	Type          *Type              `json:"type,omitempty"`
 }
 
-// Definition of a single parameter for an entity.
 type ParameterSpecification struct {
-	// DefaultValue: Default value of parameter.
-	DefaultValue *v1.JSON `json:"defaultValue,omitempty"`
-
-	// Type: Parameter type.
-	Type *ParameterType `json:"type,omitempty"`
+	DefaultValue *v1.JSON       `json:"defaultValue,omitempty"`
+	Type         *ParameterType `json:"type,omitempty"`
 }
 
 type DatasetLocation struct {
@@ -287,7 +277,6 @@ func (location *DatasetLocation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Parameter type.
 // +kubebuilder:validation:Enum={"Array","Bool","Float","Int","Object","SecureString","String"}
 type ParameterType string
 
@@ -312,7 +301,6 @@ var parameterType_Values = map[string]ParameterType{
 	"string":       ParameterType_String,
 }
 
-// Linked service reference type.
 // +kubebuilder:validation:Enum={"LinkedServiceReference"}
 type Type string
 

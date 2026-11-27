@@ -1037,64 +1037,6 @@ func MultiplePipelineTrigger_STATUSGenerator() *rapid.Generator[MultiplePipeline
 	return multiplePipelineTrigger_STATUSGenerator
 }
 
-func Test_PipelineReference_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForPipelineReference)
-}
-
-// RunJSONSerializationTestForPipelineReference runs a test to see if a specific instance of PipelineReference round trips to JSON and back losslessly
-func RunJSONSerializationTestForPipelineReference(t *rapid.T) {
-	subject := PipelineReferenceGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual PipelineReference
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of PipelineReference instances for property testing - lazily instantiated by PipelineReferenceGenerator()
-var pipelineReferenceGenerator *rapid.Generator[PipelineReference]
-
-// PipelineReferenceGenerator returns a generator of PipelineReference instances for property testing.
-func PipelineReferenceGenerator() *rapid.Generator[PipelineReference] {
-	if pipelineReferenceGenerator != nil {
-		return pipelineReferenceGenerator
-	}
-
-	ptrString := rapid.Ptr(rapid.String(), true)
-
-	pipelineReferenceGenerator = rapid.Custom(func(t *rapid.T) PipelineReference {
-		var result PipelineReference
-		result.Name = ptrString.Draw(t, "Name")
-		result.ReferenceName = ptrString.Draw(t, "ReferenceName")
-		result.Type = ptrString.Draw(t, "Type")
-		return result
-	})
-
-	return pipelineReferenceGenerator
-}
-
 func Test_PipelineReference_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 

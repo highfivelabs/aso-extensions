@@ -202,63 +202,6 @@ func DataFlowFolder_STATUSGenerator() *rapid.Generator[DataFlowFolder_STATUS] {
 	return dataFlowFolder_STATUSGenerator
 }
 
-func Test_DataFlowReference_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForDataFlowReference)
-}
-
-// RunJSONSerializationTestForDataFlowReference runs a test to see if a specific instance of DataFlowReference round trips to JSON and back losslessly
-func RunJSONSerializationTestForDataFlowReference(t *rapid.T) {
-	subject := DataFlowReferenceGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual DataFlowReference
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of DataFlowReference instances for property testing - lazily instantiated by DataFlowReferenceGenerator()
-var dataFlowReferenceGenerator *rapid.Generator[DataFlowReference]
-
-// DataFlowReferenceGenerator returns a generator of DataFlowReference instances for property testing.
-func DataFlowReferenceGenerator() *rapid.Generator[DataFlowReference] {
-	if dataFlowReferenceGenerator != nil {
-		return dataFlowReferenceGenerator
-	}
-
-	ptrString := rapid.Ptr(rapid.String(), true)
-
-	dataFlowReferenceGenerator = rapid.Custom(func(t *rapid.T) DataFlowReference {
-		var result DataFlowReference
-		result.ReferenceName = ptrString.Draw(t, "ReferenceName")
-		result.Type = ptrString.Draw(t, "Type")
-		return result
-	})
-
-	return dataFlowReferenceGenerator
-}
-
 func Test_DataFlowReference_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -651,63 +594,6 @@ func DataFlow_STATUSGenerator() *rapid.Generator[DataFlow_STATUS] {
 	dataFlow_STATUSGenerator = rapid.OneOf(gens...)
 
 	return dataFlow_STATUSGenerator
-}
-
-func Test_DatasetReference_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForDatasetReference)
-}
-
-// RunJSONSerializationTestForDatasetReference runs a test to see if a specific instance of DatasetReference round trips to JSON and back losslessly
-func RunJSONSerializationTestForDatasetReference(t *rapid.T) {
-	subject := DatasetReferenceGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual DatasetReference
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of DatasetReference instances for property testing - lazily instantiated by DatasetReferenceGenerator()
-var datasetReferenceGenerator *rapid.Generator[DatasetReference]
-
-// DatasetReferenceGenerator returns a generator of DatasetReference instances for property testing.
-func DatasetReferenceGenerator() *rapid.Generator[DatasetReference] {
-	if datasetReferenceGenerator != nil {
-		return datasetReferenceGenerator
-	}
-
-	ptrString := rapid.Ptr(rapid.String(), true)
-
-	datasetReferenceGenerator = rapid.Custom(func(t *rapid.T) DatasetReference {
-		var result DatasetReference
-		result.ReferenceName = ptrString.Draw(t, "ReferenceName")
-		result.Type = ptrString.Draw(t, "Type")
-		return result
-	})
-
-	return datasetReferenceGenerator
 }
 
 func Test_DatasetReference_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {

@@ -212,6 +212,7 @@ datafactory.azure.hfl.dev/FactoriesLinkedServiceHttpServer,Microsoft.DataFactory
 datafactory.azure.hfl.dev/FactoriesLinkedServiceRestService,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
 datafactory.azure.hfl.dev/FactoriesManagedVirtualNetwork,Microsoft.DataFactory/factories/managedVirtualNetworks,conformance,,no Upjet resource,,,,,,,,
 datafactory.azure.hfl.dev/FactoriesManagedVirtualNetworksManagedPrivateEndpoint,Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints,conformance,azurerm_data_factory_managed_private_endpoint,true,1,1,0,0,0,1,0,n/a (provider)
+datafactory.azure.hfl.dev/FactoriesPipeline,Microsoft.DataFactory/factories/pipelines,conformance,azurerm_data_factory_pipeline,true,0,1,0,0,0,1,0,n/a (no provider path)
 datafactory.azure.hfl.dev/FactoriesPrivateEndpointConnection,Microsoft.DataFactory/factories/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
 datafactory.azure.hfl.dev/FactoriesTrigger,Microsoft.DataFactory/factories/triggers,conformance,azurerm_data_factory_trigger_blob_event;azurerm_data_factory_trigger_custom_event;azurerm_data_factory_trigger_schedule,true,2,3,0,0,3,4,0,n/a (no provider path)
 dataprotection.azure.hfl.dev/BackupVaultsBackupResourceGuardProxy,Microsoft.DataProtection/backupVaults/backupResourceGuardProxies,conformance,,no Upjet resource,,,,,,,,

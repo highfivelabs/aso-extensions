@@ -337,15 +337,15 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 9,022 (20.8%) in 660 further resources; uncovered 27,227 (62.8%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 9,032 (20.8%) in 661 further resources; uncovered 27,217 (62.8%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.5% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 9.7% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.5% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 9.8% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 40.7% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 40.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
 
 **Ours.**
 
@@ -564,6 +564,7 @@ Generated; these cannot drift from the data.
 | `datafactory.azure.hfl.dev/FactoriesLinkedServiceRestService` | `Microsoft.DataFactory/factories/linkedservices` | ARM wire type of the generated kind (`apis/arm`) |
 | `datafactory.azure.hfl.dev/FactoriesManagedVirtualNetwork` | `Microsoft.DataFactory/factories/managedVirtualNetworks` | ARM wire type of the generated kind (`apis/arm`) |
 | `datafactory.azure.hfl.dev/FactoriesManagedVirtualNetworksManagedPrivateEndpoint` | `Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesPipeline` | `Microsoft.DataFactory/factories/pipelines` | ARM wire type of the generated kind (`apis/arm`) |
 | `datafactory.azure.hfl.dev/FactoriesPrivateEndpointConnection` | `Microsoft.DataFactory/factories/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `datafactory.azure.hfl.dev/FactoriesTrigger` | `Microsoft.DataFactory/factories/triggers` | ARM wire type of the generated kind (`apis/arm`) |
 | `dataprotection.azure.hfl.dev/BackupVaultsBackupResourceGuardProxy` | `Microsoft.DataProtection/backupVaults/backupResourceGuardProxies` | ARM wire type of the generated kind (`apis/arm`) |
@@ -1123,14 +1124,14 @@ checks found:
 <!-- upjet:start -->
 | What | Count |
 | --- | ---: |
-| Kinds of ours (in the denominator) | 695 |
-| ... with an Upjet resource | 197 |
+| Kinds of ours (in the denominator) | 696 |
+| ... with an Upjet resource | 198 |
 | ... of which Upjet's maintainers have not tested (`externalnamenottested.go`) | 36 |
 | ... with none (`noUpjet` and unmatched) | 498 |
-| Upjet references on our kinds | 465 |
+| Upjet references on our kinds | 466 |
 | ... a Kubernetes reference here | 53 |
 | ... of which labelled from Upjet (`hack/coverage/upjet.yaml`) | 0 |
-| ... the owner (a parent or resource group) | 228 |
+| ... the owner (a parent or resource group) | 229 |
 | ... a string field here, undecided (a gap) | 0 |
 | ... a string here on purpose (`hack/coverage/upjet.yaml`, with the reason) | 2 |
 | ... by name, where ARM takes a name | 27 |
@@ -1138,11 +1139,11 @@ checks found:
 | ... no field of ours matches | 47 |
 | ... on an Upjet resource of another ARM type (its ID template differs; not applied) | 84 |
 | Kinds with at least one Upjet reference that is a reference here | 36 |
-| ID templates checked against our ARM type | 226 (agree 97, differ 38; 91 name no provider path) |
+| ID templates checked against our ARM type | 227 (agree 97, differ 38; 92 name no provider path) |
 | Sensitive overrides checked | 1 (we take in plain text, undecided: 0) |
 | Late-init ignores checked (hold: ASO never late-initializes) | 10 |
 | List map keys checked | 2 (differ 2) |
-| Hand examples of our kinds | 326 |
+| Hand examples of our kinds | 327 |
 | ... run on the fake cloud (`TestUpjetExamplesOnFake`) | 69, of 57 kinds |
-| Resources Upjet has and neither ASO nor we serve (`upjet-gaps.csv`) | 165 |
+| Resources Upjet has and neither ASO nor we serve (`upjet-gaps.csv`) | 164 |
 <!-- upjet:end -->

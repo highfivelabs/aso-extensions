@@ -6062,6 +6062,2982 @@ FactoriesManagedVirtualNetworksManagedPrivateEndpoint: Resource
     │       └── "User"
     └── Type: *string
 
+FactoriesPipeline: Resource
+├── Owner: Factory
+├── Spec: Object (13 properties)
+│   ├── Activities: Object (25 properties)[]
+│   │   ├── AppendVariable: *Object (10 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "AppendVariable"
+│   │   │   ├── UserProperties: Object (2 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   ├── Value: *v1.JSON
+│   │   │   └── VariableName: *string
+│   │   ├── AzureFunctionActivity: *Object (14 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Body: *v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── FunctionName: *v1.JSON
+│   │   │   ├── Headers: map[string]v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── Method: *Enum (7 values)
+│   │   │   │   ├── "DELETE"
+│   │   │   │   ├── "GET"
+│   │   │   │   ├── "HEAD"
+│   │   │   │   ├── "OPTIONS"
+│   │   │   │   ├── "POST"
+│   │   │   │   ├── "PUT"
+│   │   │   │   └── "TRACE"
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "AzureFunctionActivity"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Copy: *Object (27 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DataIntegrationUnits: *v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── EnableSkipIncompatibleRow: *v1.JSON
+│   │   │   ├── EnableStaging: *v1.JSON
+│   │   │   ├── Inputs: Object (3 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "DatasetReference"
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── LogSettings: *Object (3 properties)
+│   │   │   │   ├── CopyActivityLogSettings: *Object (2 properties)
+│   │   │   │   │   ├── EnableReliableLogging: *v1.JSON
+│   │   │   │   │   └── LogLevel: *v1.JSON
+│   │   │   │   ├── EnableCopyActivityLog: *v1.JSON
+│   │   │   │   └── LogLocationSettings: *Object (2 properties)
+│   │   │   │       ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │       │   ├── Parameters: map[string]v1.JSON
+│   │   │   │       │   ├── ReferenceName: *string
+│   │   │   │       │   └── Type: *Enum (1 value)
+│   │   │   │       │       └── "LinkedServiceReference"
+│   │   │   │       └── Path: *v1.JSON
+│   │   │   ├── LogStorageSettings: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── EnableReliableLogging: *v1.JSON
+│   │   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   ├── LogLevel: *v1.JSON
+│   │   │   │   └── Path: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Outputs: Object (3 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "DatasetReference"
+│   │   │   ├── ParallelCopies: *v1.JSON
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── Preserve: v1.JSON[]
+│   │   │   ├── PreserveRules: v1.JSON[]
+│   │   │   ├── RedirectIncompatibleRowSettings: *Object (3 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── LinkedServiceName: *v1.JSON
+│   │   │   │   └── Path: *v1.JSON
+│   │   │   ├── Sink: *Object (11 properties)
+│   │   │   │   ├── Avro: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (6 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── FileNamePrefix: *v1.JSON
+│   │   │   │   │   │   ├── MaxRowsPerFile: *v1.JSON
+│   │   │   │   │   │   ├── RecordName: *string
+│   │   │   │   │   │   ├── RecordNamespace: *string
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "AvroWriteSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (2 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (7 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "AzureBlobFSWriteSettings"
+│   │   │   │   │   │   └── AzureBlobStorage: *Object (7 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │       ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │       │   ├── Name: *v1.JSON
+│   │   │   │   │   │       │   └── Value: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "AzureBlobStorageWriteSettings"
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "AvroSink"
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── AzureDatabricksDeltaLake: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── ImportSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── DateFormat: *v1.JSON
+│   │   │   │   │   │   ├── TimestampFormat: *v1.JSON
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "AzureDatabricksDeltaLakeImportCommand"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PreCopyScript: *v1.JSON
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "AzureDatabricksDeltaLakeSink"
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── AzureSql: *Object (17 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PreCopyScript: *v1.JSON
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── SqlWriterStoredProcedureName: *v1.JSON
+│   │   │   │   │   ├── SqlWriterTableType: *v1.JSON
+│   │   │   │   │   ├── SqlWriterUseTableLock: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureTableTypeParameterName: *v1.JSON
+│   │   │   │   │   ├── TableOption: *v1.JSON
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "AzureSqlSink"
+│   │   │   │   │   ├── UpsertSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── InterimSchemaName: *v1.JSON
+│   │   │   │   │   │   ├── Keys: *v1.JSON
+│   │   │   │   │   │   └── UseTempDB: *v1.JSON
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   ├── WriteBatchTimeout: *v1.JSON
+│   │   │   │   │   └── WriteBehavior: *v1.JSON
+│   │   │   │   ├── Binary: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (2 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (7 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "AzureBlobFSWriteSettings"
+│   │   │   │   │   │   └── AzureBlobStorage: *Object (7 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │       ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │       │   ├── Name: *v1.JSON
+│   │   │   │   │   │       │   └── Value: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "AzureBlobStorageWriteSettings"
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "BinarySink"
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── CosmosDbSqlApi: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "CosmosDbSqlApiSink"
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   ├── WriteBatchTimeout: *v1.JSON
+│   │   │   │   │   └── WriteBehavior: *v1.JSON
+│   │   │   │   ├── DelimitedText: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (6 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── FileExtension: *v1.JSON
+│   │   │   │   │   │   ├── FileNamePrefix: *v1.JSON
+│   │   │   │   │   │   ├── MaxRowsPerFile: *v1.JSON
+│   │   │   │   │   │   ├── QuoteAllText: *v1.JSON
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "DelimitedTextWriteSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (2 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (7 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "AzureBlobFSWriteSettings"
+│   │   │   │   │   │   └── AzureBlobStorage: *Object (7 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │       ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │       │   ├── Name: *v1.JSON
+│   │   │   │   │   │       │   └── Value: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "AzureBlobStorageWriteSettings"
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "DelimitedTextSink"
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── Json: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── FilePattern: *v1.JSON
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "JsonWriteSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (2 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (7 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "AzureBlobFSWriteSettings"
+│   │   │   │   │   │   └── AzureBlobStorage: *Object (7 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │       ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │       │   ├── Name: *v1.JSON
+│   │   │   │   │   │       │   └── Value: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "AzureBlobStorageWriteSettings"
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "JsonSink"
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── Orc: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── FileNamePrefix: *v1.JSON
+│   │   │   │   │   │   ├── MaxRowsPerFile: *v1.JSON
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "OrcWriteSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (2 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (7 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "AzureBlobFSWriteSettings"
+│   │   │   │   │   │   └── AzureBlobStorage: *Object (7 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │       ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │       │   ├── Name: *v1.JSON
+│   │   │   │   │   │       │   └── Value: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "AzureBlobStorageWriteSettings"
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "OrcSink"
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── Parquet: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── FileNamePrefix: *v1.JSON
+│   │   │   │   │   │   ├── MaxRowsPerFile: *v1.JSON
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "ParquetWriteSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (2 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (7 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "AzureBlobFSWriteSettings"
+│   │   │   │   │   │   └── AzureBlobStorage: *Object (7 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │       ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── Metadata: Object (2 properties)[]
+│   │   │   │   │   │       │   ├── Name: *v1.JSON
+│   │   │   │   │   │       │   └── Value: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "AzureBlobStorageWriteSettings"
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "ParquetSink"
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── Rest: *Object (13 properties)
+│   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── HttpCompressionType: *v1.JSON
+│   │   │   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── RequestInterval: *v1.JSON
+│   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "RestSink"
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   └── SqlDW: *Object (17 properties)
+│   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       ├── AllowCopyCommand: *v1.JSON
+│   │   │   │       ├── AllowPolyBase: *v1.JSON
+│   │   │   │       ├── CopyCommandSettings: *Object (2 properties)
+│   │   │   │       │   ├── AdditionalOptions: map[string]string
+│   │   │   │       │   └── DefaultValues: Object (2 properties)[]
+│   │   │   │       │       ├── ColumnName: *v1.JSON
+│   │   │   │       │       └── DefaultValue: *v1.JSON
+│   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       ├── PolyBaseSettings: *Object (5 properties)
+│   │   │   │       │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   ├── RejectSampleValue: *v1.JSON
+│   │   │   │       │   ├── RejectType: *Enum (2 values)
+│   │   │   │       │   │   ├── "percentage"
+│   │   │   │       │   │   └── "value"
+│   │   │   │       │   ├── RejectValue: *v1.JSON
+│   │   │   │       │   └── UseTypeDefault: *v1.JSON
+│   │   │   │       ├── PreCopyScript: *v1.JSON
+│   │   │   │       ├── SinkRetryCount: *v1.JSON
+│   │   │   │       ├── SinkRetryWait: *v1.JSON
+│   │   │   │       ├── SqlWriterUseTableLock: *v1.JSON
+│   │   │   │       ├── TableOption: *v1.JSON
+│   │   │   │       ├── Type: *Enum (1 value)
+│   │   │   │       │   └── "SqlDWSink"
+│   │   │   │       ├── UpsertSettings: *Object (2 properties)
+│   │   │   │       │   ├── InterimSchemaName: *v1.JSON
+│   │   │   │       │   └── Keys: *v1.JSON
+│   │   │   │       ├── WriteBatchSize: *v1.JSON
+│   │   │   │       ├── WriteBatchTimeout: *v1.JSON
+│   │   │   │       └── WriteBehavior: *v1.JSON
+│   │   │   ├── SkipErrorFile: *Object (2 properties)
+│   │   │   │   ├── DataInconsistency: *v1.JSON
+│   │   │   │   └── FileMissing: *v1.JSON
+│   │   │   ├── Source: *Object (14 properties)
+│   │   │   │   ├── Avro: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "AvroSource"
+│   │   │   │   ├── AzureDatabricksDeltaLake: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── ExportSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── DateFormat: *v1.JSON
+│   │   │   │   │   │   ├── TimestampFormat: *v1.JSON
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "AzureDatabricksDeltaLakeExportCommand"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── Query: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "AzureDatabricksDeltaLakeSource"
+│   │   │   │   ├── AzureSql: *Object (15 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── IsolationLevel: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PartitionOption: *v1.JSON
+│   │   │   │   │   ├── PartitionSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── PartitionColumnName: *v1.JSON
+│   │   │   │   │   │   ├── PartitionLowerBound: *v1.JSON
+│   │   │   │   │   │   └── PartitionUpperBound: *v1.JSON
+│   │   │   │   │   ├── ProduceAdditionalTypes: *v1.JSON
+│   │   │   │   │   ├── QueryTimeout: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── SqlReaderQuery: *v1.JSON
+│   │   │   │   │   ├── SqlReaderStoredProcedureName: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "AzureSqlSource"
+│   │   │   │   ├── Binary: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "BinaryReadSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "BinarySource"
+│   │   │   │   ├── CosmosDbSqlApi: *Object (11 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DetectDatetime: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PageSize: *v1.JSON
+│   │   │   │   │   ├── PreferredRegions: *v1.JSON
+│   │   │   │   │   ├── Query: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "CosmosDbSqlApiSource"
+│   │   │   │   ├── DelimitedText: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   │   ├── SkipLineCount: *v1.JSON
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "DelimitedTextReadSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "DelimitedTextSource"
+│   │   │   │   ├── Excel: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "ExcelSource"
+│   │   │   │   ├── Http: *Object (7 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "HttpSource"
+│   │   │   │   ├── Json: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "JsonReadSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "JsonSource"
+│   │   │   │   ├── Orc: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "OrcSource"
+│   │   │   │   ├── Parquet: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "ParquetReadSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "ParquetSource"
+│   │   │   │   ├── Rest: *Object (13 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PaginationRules: *v1.JSON
+│   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   ├── RequestInterval: *v1.JSON
+│   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "RestSource"
+│   │   │   │   ├── SqlDW: *Object (14 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── IsolationLevel: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PartitionOption: *v1.JSON
+│   │   │   │   │   ├── PartitionSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── PartitionColumnName: *v1.JSON
+│   │   │   │   │   │   ├── PartitionLowerBound: *v1.JSON
+│   │   │   │   │   │   └── PartitionUpperBound: *v1.JSON
+│   │   │   │   │   ├── QueryTimeout: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── SqlReaderQuery: *v1.JSON
+│   │   │   │   │   ├── SqlReaderStoredProcedureName: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "SqlDWSource"
+│   │   │   │   └── Xml: *Object (9 properties)
+│   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       ├── FormatSettings: *Object (7 properties)
+│   │   │   │       │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │       │   │   ├── Tar: *Object (3 properties)
+│   │   │   │       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       │   │   │       └── "TarReadSettings"
+│   │   │   │       │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       │   │   │       └── "TarGZipReadSettings"
+│   │   │   │       │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │       │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │       └── Type: *Enum (1 value)
+│   │   │   │       │   │           └── "ZipDeflateReadSettings"
+│   │   │   │       │   ├── DetectDataType: *v1.JSON
+│   │   │   │       │   ├── NamespacePrefixes: *v1.JSON
+│   │   │   │       │   ├── Namespaces: *v1.JSON
+│   │   │   │       │   ├── Type: *Enum (1 value)
+│   │   │   │       │   │   └── "XmlReadSettings"
+│   │   │   │       │   └── ValidationMode: *v1.JSON
+│   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       ├── SourceRetryCount: *v1.JSON
+│   │   │   │       ├── SourceRetryWait: *v1.JSON
+│   │   │   │       ├── StoreSettings: *Object (3 properties)
+│   │   │   │       │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │       │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │       │   │   ├── FileListPath: *v1.JSON
+│   │   │   │       │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │       │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │       │   │   ├── Recursive: *v1.JSON
+│   │   │   │       │   │   ├── Type: *Enum (1 value)
+│   │   │   │       │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │       │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │       │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │       │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │       │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │       │   │   ├── FileListPath: *v1.JSON
+│   │   │   │       │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │       │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │       │   │   ├── Prefix: *v1.JSON
+│   │   │   │       │   │   ├── Recursive: *v1.JSON
+│   │   │   │       │   │   ├── Type: *Enum (1 value)
+│   │   │   │       │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │       │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │       │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │       │   └── Http: *Object (9 properties)
+│   │   │   │       │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │       │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │       │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │       ├── RequestBody: *v1.JSON
+│   │   │   │       │       ├── RequestMethod: *v1.JSON
+│   │   │   │       │       ├── RequestTimeout: *v1.JSON
+│   │   │   │       │       └── Type: *Enum (1 value)
+│   │   │   │       │           └── "HttpReadSettings"
+│   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │           └── "XmlSource"
+│   │   │   ├── StagingSettings: *Object (4 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── EnableCompression: *v1.JSON
+│   │   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Path: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Translator: *v1.JSON
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "Copy"
+│   │   │   ├── UserProperties: Object (2 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   └── ValidateDataConsistency: *v1.JSON
+│   │   ├── DatabricksJob: *Object (12 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── JobId: *v1.JSON
+│   │   │   ├── JobParameters: map[string]v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "DatabricksJob"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── DatabricksNotebook: *Object (13 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── BaseParameters: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── Libraries: map[string]v1.JSON[]
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── Name: *string
+│   │   │   ├── NotebookPath: *v1.JSON
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "DatabricksNotebook"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── DatabricksSparkJar: *Object (13 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── Libraries: map[string]v1.JSON[]
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── MainClassName: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Parameters: v1.JSON[]
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "DatabricksSparkJar"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── DatabricksSparkPython: *Object (13 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── Libraries: map[string]v1.JSON[]
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Parameters: v1.JSON[]
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PythonFile: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "DatabricksSparkPython"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Delete: *Object (16 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Dataset: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "DatasetReference"
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── EnableLogging: *v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── LogStorageSettings: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── EnableReliableLogging: *v1.JSON
+│   │   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   ├── LogLevel: *v1.JSON
+│   │   │   │   └── Path: *v1.JSON
+│   │   │   ├── MaxConcurrentConnections: Validated<*int> (1 rule)
+│   │   │   │   └── Rule 0: Minimum: 1
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── Recursive: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │           └── "HttpReadSettings"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "Delete"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── ExecuteDataFlow: *Object (19 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Compute: *Object (2 properties)
+│   │   │   │   ├── ComputeType: *v1.JSON
+│   │   │   │   └── CoreCount: *v1.JSON
+│   │   │   ├── ContinuationSettings: *Object (3 properties)
+│   │   │   │   ├── ContinuationTtlInMinutes: *v1.JSON
+│   │   │   │   ├── CustomizedCheckpointKey: *v1.JSON
+│   │   │   │   └── IdleCondition: *v1.JSON
+│   │   │   ├── ContinueOnError: *v1.JSON
+│   │   │   ├── DataFlow: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DatasetParameters: *v1.JSON
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "DataFlowReference"
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── IntegrationRuntime: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "IntegrationRuntimeReference"
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── RunConcurrently: *v1.JSON
+│   │   │   ├── SourceStagingConcurrency: *v1.JSON
+│   │   │   ├── Staging: *Object (2 properties)
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   └── LinkedService: *Object (3 properties)
+│   │   │   │       ├── Parameters: map[string]v1.JSON
+│   │   │   │       ├── ReferenceName: *string
+│   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │           └── "LinkedServiceReference"
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── TraceLevel: *v1.JSON
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "ExecuteDataFlow"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── ExecutePipeline: *Object (12 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── Pipeline: *Object (3 properties)
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "PipelineReference"
+│   │   │   ├── Policy: *Object (2 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── SecureInput: *bool
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "ExecutePipeline"
+│   │   │   ├── UserProperties: Object (2 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   └── WaitOnCompletion: *bool
+│   │   ├── Fail: *Object (10 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── ErrorCode: *v1.JSON
+│   │   │   ├── Message: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "Fail"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Filter: *Object (10 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Condition: *Object (2 properties)
+│   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   └── "Expression"
+│   │   │   │   └── Value: *string
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── Items: *Object (2 properties)
+│   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   └── "Expression"
+│   │   │   │   └── Value: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "Filter"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── ForEach: *Object (12 properties)
+│   │   │   ├── Activities: *v1.JSON
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── BatchCount: Validated<*int> (1 rule)
+│   │   │   │   └── Rule 0: Maximum: 50
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── IsSequential: *bool
+│   │   │   ├── Items: *Object (2 properties)
+│   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   └── "Expression"
+│   │   │   │   └── Value: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "ForEach"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── GetMetadata: *Object (14 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Dataset: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "DatasetReference"
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── FieldList: v1.JSON[]
+│   │   │   ├── FormatSettings: *Object (5 properties)
+│   │   │   │   ├── Binary: *Object (3 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "BinaryReadSettings"
+│   │   │   │   ├── DelimitedText: *Object (4 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   ├── SkipLineCount: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "DelimitedTextReadSettings"
+│   │   │   │   ├── Json: *Object (3 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "JsonReadSettings"
+│   │   │   │   ├── Parquet: *Object (3 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "ParquetReadSettings"
+│   │   │   │   └── Xml: *Object (7 properties)
+│   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       ├── CompressionProperties: *Object (3 properties)
+│   │   │   │       │   ├── Tar: *Object (3 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   └── Type: *Enum (1 value)
+│   │   │   │       │   │       └── "TarReadSettings"
+│   │   │   │       │   ├── TarGZip: *Object (3 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   └── Type: *Enum (1 value)
+│   │   │   │       │   │       └── "TarGZipReadSettings"
+│   │   │   │       │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │       │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │       │       └── Type: *Enum (1 value)
+│   │   │   │       │           └── "ZipDeflateReadSettings"
+│   │   │   │       ├── DetectDataType: *v1.JSON
+│   │   │   │       ├── NamespacePrefixes: *v1.JSON
+│   │   │   │       ├── Namespaces: *v1.JSON
+│   │   │   │       ├── Type: *Enum (1 value)
+│   │   │   │       │   └── "XmlReadSettings"
+│   │   │   │       └── ValidationMode: *v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │           └── "HttpReadSettings"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "GetMetadata"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── IfCondition: *Object (11 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── Expression: *Object (2 properties)
+│   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   └── "Expression"
+│   │   │   │   └── Value: *string
+│   │   │   ├── IfFalseActivities: *v1.JSON
+│   │   │   ├── IfTrueActivities: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "IfCondition"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Lookup: *Object (14 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Dataset: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "DatasetReference"
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── FirstRowOnly: *v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── Source: *Object (14 properties)
+│   │   │   │   ├── Avro: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "AvroSource"
+│   │   │   │   ├── AzureDatabricksDeltaLake: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── ExportSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── DateFormat: *v1.JSON
+│   │   │   │   │   │   ├── TimestampFormat: *v1.JSON
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "AzureDatabricksDeltaLakeExportCommand"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── Query: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "AzureDatabricksDeltaLakeSource"
+│   │   │   │   ├── AzureSql: *Object (15 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── IsolationLevel: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PartitionOption: *v1.JSON
+│   │   │   │   │   ├── PartitionSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── PartitionColumnName: *v1.JSON
+│   │   │   │   │   │   ├── PartitionLowerBound: *v1.JSON
+│   │   │   │   │   │   └── PartitionUpperBound: *v1.JSON
+│   │   │   │   │   ├── ProduceAdditionalTypes: *v1.JSON
+│   │   │   │   │   ├── QueryTimeout: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── SqlReaderQuery: *v1.JSON
+│   │   │   │   │   ├── SqlReaderStoredProcedureName: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "AzureSqlSource"
+│   │   │   │   ├── Binary: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "BinaryReadSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "BinarySource"
+│   │   │   │   ├── CosmosDbSqlApi: *Object (11 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DetectDatetime: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PageSize: *v1.JSON
+│   │   │   │   │   ├── PreferredRegions: *v1.JSON
+│   │   │   │   │   ├── Query: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "CosmosDbSqlApiSource"
+│   │   │   │   ├── DelimitedText: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   │   ├── SkipLineCount: *v1.JSON
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "DelimitedTextReadSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "DelimitedTextSource"
+│   │   │   │   ├── Excel: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "ExcelSource"
+│   │   │   │   ├── Http: *Object (7 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "HttpSource"
+│   │   │   │   ├── Json: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "JsonReadSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "JsonSource"
+│   │   │   │   ├── Orc: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "OrcSource"
+│   │   │   │   ├── Parquet: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │   │   │   │   ├── Tar: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarReadSettings"
+│   │   │   │   │   │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │       └── "TarGZipReadSettings"
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │   │           └── "ZipDeflateReadSettings"
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "ParquetReadSettings"
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   └── Http: *Object (9 properties)
+│   │   │   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │       ├── RequestBody: *v1.JSON
+│   │   │   │   │   │       ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │       ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │   │   │           └── "HttpReadSettings"
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "ParquetSource"
+│   │   │   │   ├── Rest: *Object (13 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PaginationRules: *v1.JSON
+│   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   ├── RequestInterval: *v1.JSON
+│   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "RestSource"
+│   │   │   │   ├── SqlDW: *Object (14 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── IsolationLevel: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PartitionOption: *v1.JSON
+│   │   │   │   │   ├── PartitionSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── PartitionColumnName: *v1.JSON
+│   │   │   │   │   │   ├── PartitionLowerBound: *v1.JSON
+│   │   │   │   │   │   └── PartitionUpperBound: *v1.JSON
+│   │   │   │   │   ├── QueryTimeout: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── SqlReaderQuery: *v1.JSON
+│   │   │   │   │   ├── SqlReaderStoredProcedureName: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "SqlDWSource"
+│   │   │   │   └── Xml: *Object (9 properties)
+│   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       ├── FormatSettings: *Object (7 properties)
+│   │   │   │       │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   ├── CompressionProperties: *Object (3 properties)
+│   │   │   │       │   │   ├── Tar: *Object (3 properties)
+│   │   │   │       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       │   │   │       └── "TarReadSettings"
+│   │   │   │       │   │   ├── TarGZip: *Object (3 properties)
+│   │   │   │       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       │   │   │       └── "TarGZipReadSettings"
+│   │   │   │       │   │   └── ZipDeflate: *Object (3 properties)
+│   │   │   │       │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │       └── Type: *Enum (1 value)
+│   │   │   │       │   │           └── "ZipDeflateReadSettings"
+│   │   │   │       │   ├── DetectDataType: *v1.JSON
+│   │   │   │       │   ├── NamespacePrefixes: *v1.JSON
+│   │   │   │       │   ├── Namespaces: *v1.JSON
+│   │   │   │       │   ├── Type: *Enum (1 value)
+│   │   │   │       │   │   └── "XmlReadSettings"
+│   │   │   │       │   └── ValidationMode: *v1.JSON
+│   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       ├── SourceRetryCount: *v1.JSON
+│   │   │   │       ├── SourceRetryWait: *v1.JSON
+│   │   │   │       ├── StoreSettings: *Object (3 properties)
+│   │   │   │       │   ├── AzureBlobFS: *Object (13 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │       │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │       │   │   ├── FileListPath: *v1.JSON
+│   │   │   │       │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │       │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │       │   │   ├── Recursive: *v1.JSON
+│   │   │   │       │   │   ├── Type: *Enum (1 value)
+│   │   │   │       │   │   │   └── "AzureBlobFSReadSettings"
+│   │   │   │       │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │       │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │       │   ├── AzureBlobStorage: *Object (14 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │       │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │       │   │   ├── FileListPath: *v1.JSON
+│   │   │   │       │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │       │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │       │   │   ├── Prefix: *v1.JSON
+│   │   │   │       │   │   ├── Recursive: *v1.JSON
+│   │   │   │       │   │   ├── Type: *Enum (1 value)
+│   │   │   │       │   │   │   └── "AzureBlobStorageReadSettings"
+│   │   │   │       │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │       │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │       │   └── Http: *Object (9 properties)
+│   │   │   │       │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │       │       ├── AdditionalHeaders: *v1.JSON
+│   │   │   │       │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │       ├── RequestBody: *v1.JSON
+│   │   │   │       │       ├── RequestMethod: *v1.JSON
+│   │   │   │       │       ├── RequestTimeout: *v1.JSON
+│   │   │   │       │       └── Type: *Enum (1 value)
+│   │   │   │       │           └── "HttpReadSettings"
+│   │   │   │       └── Type: *Enum (1 value)
+│   │   │   │           └── "XmlSource"
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── TreatDecimalAsString: *v1.JSON
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "Lookup"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Script: *Object (15 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── LogSettings: *Object (2 properties)
+│   │   │   │   ├── LogDestination: *Enum (2 values)
+│   │   │   │   │   ├── "ActivityOutput"
+│   │   │   │   │   └── "ExternalStore"
+│   │   │   │   └── LogLocationSettings: *Object (2 properties)
+│   │   │   │       ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │       │   ├── Parameters: map[string]v1.JSON
+│   │   │   │       │   ├── ReferenceName: *string
+│   │   │   │       │   └── Type: *Enum (1 value)
+│   │   │   │       │       └── "LinkedServiceReference"
+│   │   │   │       └── Path: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── ReturnMultistatementResult: *v1.JSON
+│   │   │   ├── ScriptBlockExecutionTimeout: *v1.JSON
+│   │   │   ├── Scripts: Object (3 properties)[]
+│   │   │   │   ├── Parameters: Object (5 properties)[]
+│   │   │   │   │   ├── Direction: *Enum (3 values)
+│   │   │   │   │   │   ├── "Input"
+│   │   │   │   │   │   ├── "InputOutput"
+│   │   │   │   │   │   └── "Output"
+│   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   ├── Size: *int
+│   │   │   │   │   ├── Type: *Enum (12 values)
+│   │   │   │   │   │   ├── "Boolean"
+│   │   │   │   │   │   ├── "DateTime"
+│   │   │   │   │   │   ├── "DateTimeOffset"
+│   │   │   │   │   │   ├── "Decimal"
+│   │   │   │   │   │   ├── "Double"
+│   │   │   │   │   │   ├── "Guid"
+│   │   │   │   │   │   ├── "Int16"
+│   │   │   │   │   │   ├── "Int32"
+│   │   │   │   │   │   ├── "Int64"
+│   │   │   │   │   │   ├── "Single"
+│   │   │   │   │   │   ├── "String"
+│   │   │   │   │   │   └── "Timespan"
+│   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   ├── Text: *v1.JSON
+│   │   │   │   └── Type: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── TreatDecimalAsString: *v1.JSON
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "Script"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── SetVariable: *Object (12 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Policy: *Object (2 properties)
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   └── SecureOutput: *bool
+│   │   │   ├── SetSystemVariable: *bool
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "SetVariable"
+│   │   │   ├── UserProperties: Object (2 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   ├── Value: *v1.JSON
+│   │   │   └── VariableName: *string
+│   │   ├── SqlServerStoredProcedure: *Object (12 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── StoredProcedureName: *v1.JSON
+│   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "SqlServerStoredProcedure"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Switch: *Object (11 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Cases: Object (2 properties)[]
+│   │   │   │   ├── Activities: v1.JSON
+│   │   │   │   └── Value: *string
+│   │   │   ├── DefaultActivities: *v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── On: *Object (2 properties)
+│   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   └── "Expression"
+│   │   │   │   └── Value: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "Switch"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Until: *Object (11 properties)
+│   │   │   ├── Activities: *v1.JSON
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── Expression: *Object (2 properties)
+│   │   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   │   └── "Expression"
+│   │   │   │   └── Value: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Timeout: *v1.JSON
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "Until"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Validation: *Object (13 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── ChildItems: *v1.JSON
+│   │   │   ├── Dataset: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "DatasetReference"
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── MinimumSize: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Sleep: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Timeout: *v1.JSON
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "Validation"
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Wait: *Object (9 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "Wait"
+│   │   │   ├── UserProperties: Object (2 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   └── WaitTimeInSeconds: *v1.JSON
+│   │   ├── WebActivity: *Object (21 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Authentication: *Object (7 properties)
+│   │   │   │   ├── Credential: *Object (3 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "CredentialReference"
+│   │   │   │   ├── Password: *Object (2 properties)
+│   │   │   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   │   │   └── SecureString: *Object (2 properties)
+│   │   │   │   │       ├── Type: *Enum (1 value)
+│   │   │   │   │       │   └── "SecureString"
+│   │   │   │   │       └── Value: *genruntime.SecretReference
+│   │   │   │   ├── Pfx: *Object (2 properties)
+│   │   │   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   │   │   └── SecureString: *Object (2 properties)
+│   │   │   │   │       ├── Type: *Enum (1 value)
+│   │   │   │   │       │   └── "SecureString"
+│   │   │   │   │       └── Value: *genruntime.SecretReference
+│   │   │   │   ├── Resource: *v1.JSON
+│   │   │   │   ├── Type: *string
+│   │   │   │   ├── UserTenant: *v1.JSON
+│   │   │   │   └── Username: *v1.JSON
+│   │   │   ├── Body: *v1.JSON
+│   │   │   ├── ConnectVia: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "IntegrationRuntimeReference"
+│   │   │   ├── Datasets: Object (3 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "DatasetReference"
+│   │   │   ├── DependsOn: Object (3 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   └── DependencyConditions: Enum (4 values)[]
+│   │   │   │       ├── "Completed"
+│   │   │   │       ├── "Failed"
+│   │   │   │       ├── "Skipped"
+│   │   │   │       └── "Succeeded"
+│   │   │   ├── Description: *string
+│   │   │   ├── DisableCertValidation: *bool
+│   │   │   ├── Headers: map[string]v1.JSON
+│   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── LinkedServices: Object (3 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── Method: *Enum (4 values)
+│   │   │   │   ├── "DELETE"
+│   │   │   │   ├── "GET"
+│   │   │   │   ├── "POST"
+│   │   │   │   └── "PUT"
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *Enum (3 values)
+│   │   │   │   ├── "Failed"
+│   │   │   │   ├── "Skipped"
+│   │   │   │   └── "Succeeded"
+│   │   │   ├── Policy: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: Validated<*int> (2 rules)
+│   │   │   │   │   ├── Rule 0: Maximum: 86400
+│   │   │   │   │   └── Rule 1: Minimum: 30
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── State: *Enum (2 values)
+│   │   │   │   ├── "Active"
+│   │   │   │   └── "Inactive"
+│   │   │   ├── TurnOffAsync: *bool
+│   │   │   ├── Type: *Enum (1 value)
+│   │   │   │   └── "WebActivity"
+│   │   │   ├── Url: *v1.JSON
+│   │   │   └── UserProperties: Object (2 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       └── Value: *v1.JSON
+│   │   └── WebHook: *Object (16 properties)
+│   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │       ├── Authentication: *Object (7 properties)
+│   │       │   ├── Credential: *Object (3 properties)
+│   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │       │   │   ├── ReferenceName: *string
+│   │       │   │   └── Type: *Enum (1 value)
+│   │       │   │       └── "CredentialReference"
+│   │       │   ├── Password: *Object (2 properties)
+│   │       │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │       │   │   │   ├── SecretName: *v1.JSON
+│   │       │   │   │   ├── SecretVersion: *v1.JSON
+│   │       │   │   │   ├── Store: *Object (3 properties)
+│   │       │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │       │   │   │   │   ├── ReferenceName: *string
+│   │       │   │   │   │   └── Type: *Enum (1 value)
+│   │       │   │   │   │       └── "LinkedServiceReference"
+│   │       │   │   │   └── Type: *Enum (1 value)
+│   │       │   │   │       └── "AzureKeyVaultSecret"
+│   │       │   │   └── SecureString: *Object (2 properties)
+│   │       │   │       ├── Type: *Enum (1 value)
+│   │       │   │       │   └── "SecureString"
+│   │       │   │       └── Value: *genruntime.SecretReference
+│   │       │   ├── Pfx: *Object (2 properties)
+│   │       │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │       │   │   │   ├── SecretName: *v1.JSON
+│   │       │   │   │   ├── SecretVersion: *v1.JSON
+│   │       │   │   │   ├── Store: *Object (3 properties)
+│   │       │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │       │   │   │   │   ├── ReferenceName: *string
+│   │       │   │   │   │   └── Type: *Enum (1 value)
+│   │       │   │   │   │       └── "LinkedServiceReference"
+│   │       │   │   │   └── Type: *Enum (1 value)
+│   │       │   │   │       └── "AzureKeyVaultSecret"
+│   │       │   │   └── SecureString: *Object (2 properties)
+│   │       │   │       ├── Type: *Enum (1 value)
+│   │       │   │       │   └── "SecureString"
+│   │       │   │       └── Value: *genruntime.SecretReference
+│   │       │   ├── Resource: *v1.JSON
+│   │       │   ├── Type: *string
+│   │       │   ├── UserTenant: *v1.JSON
+│   │       │   └── Username: *v1.JSON
+│   │       ├── Body: *v1.JSON
+│   │       ├── DependsOn: Object (3 properties)[]
+│   │       │   ├── Activity: *string
+│   │       │   ├── AdditionalProperties: map[string]v1.JSON
+│   │       │   └── DependencyConditions: Enum (4 values)[]
+│   │       │       ├── "Completed"
+│   │       │       ├── "Failed"
+│   │       │       ├── "Skipped"
+│   │       │       └── "Succeeded"
+│   │       ├── Description: *string
+│   │       ├── Headers: map[string]v1.JSON
+│   │       ├── Method: *Enum (1 value)
+│   │       │   └── "POST"
+│   │       ├── Name: *string
+│   │       ├── OnInactiveMarkAs: *Enum (3 values)
+│   │       │   ├── "Failed"
+│   │       │   ├── "Skipped"
+│   │       │   └── "Succeeded"
+│   │       ├── Policy: *Object (2 properties)
+│   │       │   ├── SecureInput: *bool
+│   │       │   └── SecureOutput: *bool
+│   │       ├── ReportStatusOnCallBack: *v1.JSON
+│   │       ├── State: *Enum (2 values)
+│   │       │   ├── "Active"
+│   │       │   └── "Inactive"
+│   │       ├── Timeout: *string
+│   │       ├── Type: *Enum (1 value)
+│   │       │   └── "WebHook"
+│   │       ├── Url: *v1.JSON
+│   │       └── UserProperties: Object (2 properties)[]
+│   │           ├── Name: *string
+│   │           └── Value: *v1.JSON
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── Concurrency: Validated<*int> (1 rule)
+│   │   └── Rule 0: Minimum: 1
+│   ├── Description: *string
+│   ├── Folder: *Object (1 property)
+│   │   └── Name: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Parameters: map[string]Object (2 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   └── Type: *Enum (7 values)
+│   │       ├── "Array"
+│   │       ├── "Bool"
+│   │       ├── "Float"
+│   │       ├── "Int"
+│   │       ├── "Object"
+│   │       ├── "SecureString"
+│   │       └── "String"
+│   ├── Policy: *Object (1 property)
+│   │   └── ElapsedTimeMetric: *Object (1 property)
+│   │       └── Duration: *v1.JSON
+│   ├── RunDimensions: map[string]v1.JSON
+│   └── Variables: map[string]Object (2 properties)
+│       ├── DefaultValue: *v1.JSON
+│       └── Type: *Enum (3 values)
+│           ├── "Array"
+│           ├── "Bool"
+│           └── "String"
+└── Status: Object (15 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── Concurrency: *int
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Folder: *Object (1 property)
+    │   └── Name: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Parameters: map[string]Object (2 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   └── Type: *Enum (7 values)
+    │       ├── "Array"
+    │       ├── "Bool"
+    │       ├── "Float"
+    │       ├── "Int"
+    │       ├── "Object"
+    │       ├── "SecureString"
+    │       └── "String"
+    ├── Policy: *Object (1 property)
+    │   └── ElapsedTimeMetric: *Object (1 property)
+    │       └── Duration: *v1.JSON
+    ├── RunDimensions: map[string]v1.JSON
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    └── Variables: map[string]Object (2 properties)
+        ├── DefaultValue: *v1.JSON
+        └── Type: *Enum (3 values)
+            ├── "Array"
+            ├── "Bool"
+            └── "String"
+
 FactoriesPrivateEndpointConnection: Resource
 ├── Owner: Factory
 ├── Spec: Object (4 properties)

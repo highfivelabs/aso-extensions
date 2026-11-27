@@ -5656,6 +5656,2834 @@ FactoriesManagedVirtualNetworksManagedPrivateEndpoint: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+FactoriesPipeline: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (15 properties)
+│   ├── Activities: Object (26 properties)[]
+│   │   ├── AppendVariable: *Object (11 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   ├── UserProperties: Object (3 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   ├── Value: *v1.JSON
+│   │   │   └── VariableName: *string
+│   │   ├── AzureFunctionActivity: *Object (15 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Body: *v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── FunctionName: *v1.JSON
+│   │   │   ├── Headers: map[string]v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Method: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Copy: *Object (28 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DataIntegrationUnits: *v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── EnableSkipIncompatibleRow: *v1.JSON
+│   │   │   ├── EnableStaging: *v1.JSON
+│   │   │   ├── Inputs: Object (4 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── LogSettings: *Object (4 properties)
+│   │   │   │   ├── CopyActivityLogSettings: *Object (3 properties)
+│   │   │   │   │   ├── EnableReliableLogging: *v1.JSON
+│   │   │   │   │   ├── LogLevel: *v1.JSON
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── EnableCopyActivityLog: *v1.JSON
+│   │   │   │   ├── LogLocationSettings: *Object (3 properties)
+│   │   │   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── Path: *v1.JSON
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── LogStorageSettings: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── EnableReliableLogging: *v1.JSON
+│   │   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── LogLevel: *v1.JSON
+│   │   │   │   ├── Path: *v1.JSON
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Outputs: Object (4 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── ParallelCopies: *v1.JSON
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── Preserve: v1.JSON[]
+│   │   │   ├── PreserveRules: v1.JSON[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── RedirectIncompatibleRowSettings: *Object (4 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── LinkedServiceName: *v1.JSON
+│   │   │   │   ├── Path: *v1.JSON
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Sink: *Object (12 properties)
+│   │   │   │   ├── Avro: *Object (11 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (7 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── FileNamePrefix: *v1.JSON
+│   │   │   │   │   │   ├── MaxRowsPerFile: *v1.JSON
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── RecordName: *string
+│   │   │   │   │   │   ├── RecordNamespace: *string
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── AzureDatabricksDeltaLake: *Object (11 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── ImportSettings: *Object (5 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── DateFormat: *v1.JSON
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── TimestampFormat: *v1.JSON
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PreCopyScript: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── AzureSql: *Object (18 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PreCopyScript: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── SqlWriterStoredProcedureName: *v1.JSON
+│   │   │   │   │   ├── SqlWriterTableType: *v1.JSON
+│   │   │   │   │   ├── SqlWriterUseTableLock: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureTableTypeParameterName: *v1.JSON
+│   │   │   │   │   ├── TableOption: *v1.JSON
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── UpsertSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── InterimSchemaName: *v1.JSON
+│   │   │   │   │   │   ├── Keys: *v1.JSON
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── UseTempDB: *v1.JSON
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   ├── WriteBatchTimeout: *v1.JSON
+│   │   │   │   │   └── WriteBehavior: *v1.JSON
+│   │   │   │   ├── Binary: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── CosmosDbSqlApi: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   ├── WriteBatchTimeout: *v1.JSON
+│   │   │   │   │   └── WriteBehavior: *v1.JSON
+│   │   │   │   ├── DelimitedText: *Object (11 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (7 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── FileExtension: *v1.JSON
+│   │   │   │   │   │   ├── FileNamePrefix: *v1.JSON
+│   │   │   │   │   │   ├── MaxRowsPerFile: *v1.JSON
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── QuoteAllText: *v1.JSON
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── Json: *Object (11 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── FilePattern: *v1.JSON
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── Orc: *Object (11 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (5 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── FileNamePrefix: *v1.JSON
+│   │   │   │   │   │   ├── MaxRowsPerFile: *v1.JSON
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── Parquet: *Object (11 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (5 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── FileNamePrefix: *v1.JSON
+│   │   │   │   │   │   ├── MaxRowsPerFile: *v1.JSON
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (3 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (8 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── BlockSizeInMB: *v1.JSON
+│   │   │   │   │   │   │   ├── CopyBehavior: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── Metadata: Object (3 properties)[]
+│   │   │   │   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Rest: *Object (14 properties)
+│   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── HttpCompressionType: *v1.JSON
+│   │   │   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── RequestInterval: *v1.JSON
+│   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   ├── SinkRetryCount: *v1.JSON
+│   │   │   │   │   ├── SinkRetryWait: *v1.JSON
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WriteBatchSize: *v1.JSON
+│   │   │   │   │   └── WriteBatchTimeout: *v1.JSON
+│   │   │   │   └── SqlDW: *Object (18 properties)
+│   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       ├── AllowCopyCommand: *v1.JSON
+│   │   │   │       ├── AllowPolyBase: *v1.JSON
+│   │   │   │       ├── CopyCommandSettings: *Object (3 properties)
+│   │   │   │       │   ├── AdditionalOptions: map[string]string
+│   │   │   │       │   ├── DefaultValues: Object (3 properties)[]
+│   │   │   │       │   │   ├── ColumnName: *v1.JSON
+│   │   │   │       │   │   ├── DefaultValue: *v1.JSON
+│   │   │   │       │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       ├── PolyBaseSettings: *Object (6 properties)
+│   │   │   │       │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   ├── RejectSampleValue: *v1.JSON
+│   │   │   │       │   ├── RejectType: *string
+│   │   │   │       │   ├── RejectValue: *v1.JSON
+│   │   │   │       │   └── UseTypeDefault: *v1.JSON
+│   │   │   │       ├── PreCopyScript: *v1.JSON
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       ├── SinkRetryCount: *v1.JSON
+│   │   │   │       ├── SinkRetryWait: *v1.JSON
+│   │   │   │       ├── SqlWriterUseTableLock: *v1.JSON
+│   │   │   │       ├── TableOption: *v1.JSON
+│   │   │   │       ├── Type: *string
+│   │   │   │       ├── UpsertSettings: *Object (3 properties)
+│   │   │   │       │   ├── InterimSchemaName: *v1.JSON
+│   │   │   │       │   ├── Keys: *v1.JSON
+│   │   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │       ├── WriteBatchSize: *v1.JSON
+│   │   │   │       ├── WriteBatchTimeout: *v1.JSON
+│   │   │   │       └── WriteBehavior: *v1.JSON
+│   │   │   ├── SkipErrorFile: *Object (3 properties)
+│   │   │   │   ├── DataInconsistency: *v1.JSON
+│   │   │   │   ├── FileMissing: *v1.JSON
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Source: *Object (15 properties)
+│   │   │   │   ├── Avro: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── AzureDatabricksDeltaLake: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── ExportSettings: *Object (5 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── DateFormat: *v1.JSON
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── TimestampFormat: *v1.JSON
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Query: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── AzureSql: *Object (16 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── IsolationLevel: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PartitionOption: *v1.JSON
+│   │   │   │   │   ├── PartitionSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── PartitionColumnName: *v1.JSON
+│   │   │   │   │   │   ├── PartitionLowerBound: *v1.JSON
+│   │   │   │   │   │   ├── PartitionUpperBound: *v1.JSON
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ProduceAdditionalTypes: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── QueryTimeout: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── SqlReaderQuery: *v1.JSON
+│   │   │   │   │   ├── SqlReaderStoredProcedureName: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Binary: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── CosmosDbSqlApi: *Object (12 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DetectDatetime: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PageSize: *v1.JSON
+│   │   │   │   │   ├── PreferredRegions: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Query: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── DelimitedText: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (5 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── SkipLineCount: *v1.JSON
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Excel: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Http: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Json: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Orc: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Parquet: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Rest: *Object (14 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PaginationRules: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   ├── RequestInterval: *v1.JSON
+│   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── SqlDW: *Object (15 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── IsolationLevel: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PartitionOption: *v1.JSON
+│   │   │   │   │   ├── PartitionSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── PartitionColumnName: *v1.JSON
+│   │   │   │   │   │   ├── PartitionLowerBound: *v1.JSON
+│   │   │   │   │   │   ├── PartitionUpperBound: *v1.JSON
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── QueryTimeout: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── SqlReaderQuery: *v1.JSON
+│   │   │   │   │   ├── SqlReaderStoredProcedureName: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Xml: *Object (10 properties)
+│   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       ├── FormatSettings: *Object (8 properties)
+│   │   │   │       │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   ├── Tar: *Object (4 properties)
+│   │   │   │       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   │   └── Type: *string
+│   │   │   │       │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   │   └── Type: *string
+│   │   │   │       │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │       │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │       └── Type: *string
+│   │   │   │       │   ├── DetectDataType: *v1.JSON
+│   │   │   │       │   ├── NamespacePrefixes: *v1.JSON
+│   │   │   │       │   ├── Namespaces: *v1.JSON
+│   │   │   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   ├── Type: *string
+│   │   │   │       │   └── ValidationMode: *v1.JSON
+│   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       ├── SourceRetryCount: *v1.JSON
+│   │   │   │       ├── SourceRetryWait: *v1.JSON
+│   │   │   │       ├── StoreSettings: *Object (4 properties)
+│   │   │   │       │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │       │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │       │   │   ├── FileListPath: *v1.JSON
+│   │   │   │       │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │       │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   ├── Recursive: *v1.JSON
+│   │   │   │       │   │   ├── Type: *string
+│   │   │   │       │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │       │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │       │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │       │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │       │   │   ├── FileListPath: *v1.JSON
+│   │   │   │       │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │       │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │       │   │   ├── Prefix: *v1.JSON
+│   │   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   ├── Recursive: *v1.JSON
+│   │   │   │       │   │   ├── Type: *string
+│   │   │   │       │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │       │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │       │   ├── Http: *Object (10 properties)
+│   │   │   │       │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │       │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   ├── RequestBody: *v1.JSON
+│   │   │   │       │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │       │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │       │   │   └── Type: *string
+│   │   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │       └── Type: *string
+│   │   │   ├── StagingSettings: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── EnableCompression: *v1.JSON
+│   │   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Path: *v1.JSON
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Translator: *v1.JSON
+│   │   │   ├── Type: *string
+│   │   │   ├── UserProperties: Object (3 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   └── ValidateDataConsistency: *v1.JSON
+│   │   ├── DatabricksJob: *Object (13 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── JobId: *v1.JSON
+│   │   │   ├── JobParameters: map[string]v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── DatabricksNotebook: *Object (14 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── BaseParameters: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── Libraries: map[string]v1.JSON[]
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── NotebookPath: *v1.JSON
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── DatabricksSparkJar: *Object (14 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── Libraries: map[string]v1.JSON[]
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── MainClassName: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Parameters: v1.JSON[]
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── DatabricksSparkPython: *Object (14 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── Libraries: map[string]v1.JSON[]
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Parameters: v1.JSON[]
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PythonFile: *v1.JSON
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Delete: *Object (17 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Dataset: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── EnableLogging: *v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── LogStorageSettings: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── EnableReliableLogging: *v1.JSON
+│   │   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── LogLevel: *v1.JSON
+│   │   │   │   ├── Path: *v1.JSON
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── MaxConcurrentConnections: *int
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Recursive: *v1.JSON
+│   │   │   ├── State: *string
+│   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── ExecuteDataFlow: *Object (20 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Compute: *Object (3 properties)
+│   │   │   │   ├── ComputeType: *v1.JSON
+│   │   │   │   ├── CoreCount: *v1.JSON
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ContinuationSettings: *Object (4 properties)
+│   │   │   │   ├── ContinuationTtlInMinutes: *v1.JSON
+│   │   │   │   ├── CustomizedCheckpointKey: *v1.JSON
+│   │   │   │   ├── IdleCondition: *v1.JSON
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ContinueOnError: *v1.JSON
+│   │   │   ├── DataFlow: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DatasetParameters: *v1.JSON
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── IntegrationRuntime: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── RunConcurrently: *v1.JSON
+│   │   │   ├── SourceStagingConcurrency: *v1.JSON
+│   │   │   ├── Staging: *Object (3 properties)
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── LinkedService: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── TraceLevel: *v1.JSON
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── ExecutePipeline: *Object (13 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── Pipeline: *Object (4 properties)
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Policy: *Object (3 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── SecureInput: *bool
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   ├── UserProperties: Object (3 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   └── WaitOnCompletion: *bool
+│   │   ├── Fail: *Object (11 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── ErrorCode: *v1.JSON
+│   │   │   ├── Message: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Filter: *Object (11 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Condition: *Object (3 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── Items: *Object (3 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── ForEach: *Object (13 properties)
+│   │   │   ├── Activities: *v1.JSON
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── BatchCount: *int
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── IsSequential: *bool
+│   │   │   ├── Items: *Object (3 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── GetMetadata: *Object (15 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Dataset: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── FieldList: v1.JSON[]
+│   │   │   ├── FormatSettings: *Object (6 properties)
+│   │   │   │   ├── Binary: *Object (4 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── DelimitedText: *Object (5 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SkipLineCount: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Json: *Object (4 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Parquet: *Object (4 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Xml: *Object (8 properties)
+│   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       ├── CompressionProperties: *Object (4 properties)
+│   │   │   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   ├── Tar: *Object (4 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   └── Type: *string
+│   │   │   │       │   ├── TarGZip: *Object (4 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   └── Type: *string
+│   │   │   │       │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │       │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │       │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │       └── Type: *string
+│   │   │   │       ├── DetectDataType: *v1.JSON
+│   │   │   │       ├── NamespacePrefixes: *v1.JSON
+│   │   │   │       ├── Namespaces: *v1.JSON
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       ├── Type: *string
+│   │   │   │       └── ValidationMode: *v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── IfCondition: *Object (12 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── Expression: *Object (3 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── IfFalseActivities: *v1.JSON
+│   │   │   ├── IfTrueActivities: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Lookup: *Object (15 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Dataset: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── FirstRowOnly: *v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Source: *Object (15 properties)
+│   │   │   │   ├── Avro: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── AzureDatabricksDeltaLake: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── ExportSettings: *Object (5 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── DateFormat: *v1.JSON
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── TimestampFormat: *v1.JSON
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Query: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── AzureSql: *Object (16 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── IsolationLevel: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PartitionOption: *v1.JSON
+│   │   │   │   │   ├── PartitionSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── PartitionColumnName: *v1.JSON
+│   │   │   │   │   │   ├── PartitionLowerBound: *v1.JSON
+│   │   │   │   │   │   ├── PartitionUpperBound: *v1.JSON
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ProduceAdditionalTypes: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── QueryTimeout: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── SqlReaderQuery: *v1.JSON
+│   │   │   │   │   ├── SqlReaderStoredProcedureName: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Binary: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── CosmosDbSqlApi: *Object (12 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DetectDatetime: *v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PageSize: *v1.JSON
+│   │   │   │   │   ├── PreferredRegions: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Query: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── DelimitedText: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (5 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── SkipLineCount: *v1.JSON
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Excel: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Http: *Object (8 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Json: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Orc: *Object (9 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Parquet: *Object (10 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── FormatSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Tar: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │       └── Type: *string
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── StoreSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │   │   │   │   ├── FileListPath: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │   │   │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │   │   │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │   │   │   │   ├── Prefix: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── Recursive: *v1.JSON
+│   │   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │   │   │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │   │   │   ├── Http: *Object (10 properties)
+│   │   │   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Rest: *Object (14 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PaginationRules: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── RequestBody: *v1.JSON
+│   │   │   │   │   ├── RequestInterval: *v1.JSON
+│   │   │   │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── SqlDW: *Object (15 properties)
+│   │   │   │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │   │   ├── IsolationLevel: *v1.JSON
+│   │   │   │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │   │   ├── PartitionOption: *v1.JSON
+│   │   │   │   │   ├── PartitionSettings: *Object (4 properties)
+│   │   │   │   │   │   ├── PartitionColumnName: *v1.JSON
+│   │   │   │   │   │   ├── PartitionLowerBound: *v1.JSON
+│   │   │   │   │   │   ├── PartitionUpperBound: *v1.JSON
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── QueryTimeout: *v1.JSON
+│   │   │   │   │   ├── SourceRetryCount: *v1.JSON
+│   │   │   │   │   ├── SourceRetryWait: *v1.JSON
+│   │   │   │   │   ├── SqlReaderQuery: *v1.JSON
+│   │   │   │   │   ├── SqlReaderStoredProcedureName: *v1.JSON
+│   │   │   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Xml: *Object (10 properties)
+│   │   │   │       ├── AdditionalColumns: *v1.JSON
+│   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       ├── FormatSettings: *Object (8 properties)
+│   │   │   │       │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   ├── CompressionProperties: *Object (4 properties)
+│   │   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   ├── Tar: *Object (4 properties)
+│   │   │   │       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   │   └── Type: *string
+│   │   │   │       │   │   ├── TarGZip: *Object (4 properties)
+│   │   │   │       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   │   ├── PreserveCompressionFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   │   └── Type: *string
+│   │   │   │       │   │   └── ZipDeflate: *Object (4 properties)
+│   │   │   │       │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │       ├── PreserveZipFileNameAsFolder: *v1.JSON
+│   │   │   │       │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │       └── Type: *string
+│   │   │   │       │   ├── DetectDataType: *v1.JSON
+│   │   │   │       │   ├── NamespacePrefixes: *v1.JSON
+│   │   │   │       │   ├── Namespaces: *v1.JSON
+│   │   │   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   ├── Type: *string
+│   │   │   │       │   └── ValidationMode: *v1.JSON
+│   │   │   │       ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       ├── SourceRetryCount: *v1.JSON
+│   │   │   │       ├── SourceRetryWait: *v1.JSON
+│   │   │   │       ├── StoreSettings: *Object (4 properties)
+│   │   │   │       │   ├── AzureBlobFS: *Object (14 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │       │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │       │   │   ├── FileListPath: *v1.JSON
+│   │   │   │       │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │       │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   ├── Recursive: *v1.JSON
+│   │   │   │       │   │   ├── Type: *string
+│   │   │   │       │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │       │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │       │   ├── AzureBlobStorage: *Object (15 properties)
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── DeleteFilesAfterCompletion: *v1.JSON
+│   │   │   │       │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │   │   ├── EnablePartitionDiscovery: *v1.JSON
+│   │   │   │       │   │   ├── FileListPath: *v1.JSON
+│   │   │   │       │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeEnd: *v1.JSON
+│   │   │   │       │   │   ├── ModifiedDatetimeStart: *v1.JSON
+│   │   │   │       │   │   ├── PartitionRootPath: *v1.JSON
+│   │   │   │       │   │   ├── Prefix: *v1.JSON
+│   │   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   ├── Recursive: *v1.JSON
+│   │   │   │       │   │   ├── Type: *string
+│   │   │   │       │   │   ├── WildcardFileName: *v1.JSON
+│   │   │   │       │   │   └── WildcardFolderPath: *v1.JSON
+│   │   │   │       │   ├── Http: *Object (10 properties)
+│   │   │   │       │   │   ├── AdditionalColumns: *v1.JSON
+│   │   │   │       │   │   ├── AdditionalHeaders: *v1.JSON
+│   │   │   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       │   │   ├── DisableMetricsCollection: *v1.JSON
+│   │   │   │       │   │   ├── MaxConcurrentConnections: *v1.JSON
+│   │   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       │   │   ├── RequestBody: *v1.JSON
+│   │   │   │       │   │   ├── RequestMethod: *v1.JSON
+│   │   │   │       │   │   ├── RequestTimeout: *v1.JSON
+│   │   │   │       │   │   └── Type: *string
+│   │   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │       └── Type: *string
+│   │   │   ├── State: *string
+│   │   │   ├── TreatDecimalAsString: *v1.JSON
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Script: *Object (16 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── LogSettings: *Object (3 properties)
+│   │   │   │   ├── LogDestination: *string
+│   │   │   │   ├── LogLocationSettings: *Object (3 properties)
+│   │   │   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── Path: *v1.JSON
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReturnMultistatementResult: *v1.JSON
+│   │   │   ├── ScriptBlockExecutionTimeout: *v1.JSON
+│   │   │   ├── Scripts: Object (4 properties)[]
+│   │   │   │   ├── Parameters: Object (6 properties)[]
+│   │   │   │   │   ├── Direction: *string
+│   │   │   │   │   ├── Name: *v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── Size: *int
+│   │   │   │   │   ├── Type: *string
+│   │   │   │   │   └── Value: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Text: *v1.JSON
+│   │   │   │   └── Type: *v1.JSON
+│   │   │   ├── State: *string
+│   │   │   ├── TreatDecimalAsString: *v1.JSON
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── SetVariable: *Object (13 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Policy: *Object (3 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   └── SecureOutput: *bool
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── SetSystemVariable: *bool
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   ├── UserProperties: Object (3 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   ├── Value: *v1.JSON
+│   │   │   └── VariableName: *string
+│   │   ├── SqlServerStoredProcedure: *Object (13 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── StoredProcedureName: *v1.JSON
+│   │   │   ├── StoredProcedureParameters: *v1.JSON
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Switch: *Object (12 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Cases: Object (3 properties)[]
+│   │   │   │   ├── Activities: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Value: *string
+│   │   │   ├── DefaultActivities: *v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── On: *Object (3 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Until: *Object (12 properties)
+│   │   │   ├── Activities: *v1.JSON
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── Expression: *Object (3 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Value: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Timeout: *v1.JSON
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Validation: *Object (14 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── ChildItems: *v1.JSON
+│   │   │   ├── Dataset: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── MinimumSize: *v1.JSON
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Sleep: *v1.JSON
+│   │   │   ├── State: *string
+│   │   │   ├── Timeout: *v1.JSON
+│   │   │   ├── Type: *string
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   ├── Wait: *Object (10 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── Type: *string
+│   │   │   ├── UserProperties: Object (3 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   └── WaitTimeInSeconds: *v1.JSON
+│   │   ├── WebActivity: *Object (22 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Authentication: *Object (8 properties)
+│   │   │   │   ├── Credential: *Object (4 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Password: *Object (3 properties)
+│   │   │   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── SecureString: *Object (3 properties)
+│   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │       ├── Type: *string
+│   │   │   │   │       └── Value: *genruntime.SecretReference
+│   │   │   │   ├── Pfx: *Object (3 properties)
+│   │   │   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── SecureString: *Object (3 properties)
+│   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │       ├── Type: *string
+│   │   │   │   │       └── Value: *genruntime.SecretReference
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Resource: *v1.JSON
+│   │   │   │   ├── Type: *string
+│   │   │   │   ├── UserTenant: *v1.JSON
+│   │   │   │   └── Username: *v1.JSON
+│   │   │   ├── Body: *v1.JSON
+│   │   │   ├── ConnectVia: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Datasets: Object (4 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Activity: *string
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── DependencyConditions: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Description: *string
+│   │   │   ├── DisableCertValidation: *bool
+│   │   │   ├── Headers: map[string]v1.JSON
+│   │   │   ├── HttpRequestTimeout: *v1.JSON
+│   │   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── LinkedServices: Object (4 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Method: *string
+│   │   │   ├── Name: *string
+│   │   │   ├── OnInactiveMarkAs: *string
+│   │   │   ├── Policy: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Retry: *v1.JSON
+│   │   │   │   ├── RetryIntervalInSeconds: *int
+│   │   │   │   ├── SecureInput: *bool
+│   │   │   │   ├── SecureOutput: *bool
+│   │   │   │   └── Timeout: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── State: *string
+│   │   │   ├── TurnOffAsync: *bool
+│   │   │   ├── Type: *string
+│   │   │   ├── Url: *v1.JSON
+│   │   │   └── UserProperties: Object (3 properties)[]
+│   │   │       ├── Name: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Value: *v1.JSON
+│   │   └── WebHook: *Object (17 properties)
+│   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │       ├── Authentication: *Object (8 properties)
+│   │       │   ├── Credential: *Object (4 properties)
+│   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   ├── ReferenceName: *string
+│   │       │   │   └── Type: *string
+│   │       │   ├── Password: *Object (3 properties)
+│   │       │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   ├── SecretName: *v1.JSON
+│   │       │   │   │   ├── SecretVersion: *v1.JSON
+│   │       │   │   │   ├── Store: *Object (4 properties)
+│   │       │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │       │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   │   ├── ReferenceName: *string
+│   │       │   │   │   │   └── Type: *string
+│   │       │   │   │   └── Type: *string
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   └── SecureString: *Object (3 properties)
+│   │       │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │       ├── Type: *string
+│   │       │   │       └── Value: *genruntime.SecretReference
+│   │       │   ├── Pfx: *Object (3 properties)
+│   │       │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   ├── SecretName: *v1.JSON
+│   │       │   │   │   ├── SecretVersion: *v1.JSON
+│   │       │   │   │   ├── Store: *Object (4 properties)
+│   │       │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │       │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   │   ├── ReferenceName: *string
+│   │       │   │   │   │   └── Type: *string
+│   │       │   │   │   └── Type: *string
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   └── SecureString: *Object (3 properties)
+│   │       │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │       ├── Type: *string
+│   │       │   │       └── Value: *genruntime.SecretReference
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   ├── Resource: *v1.JSON
+│   │       │   ├── Type: *string
+│   │       │   ├── UserTenant: *v1.JSON
+│   │       │   └── Username: *v1.JSON
+│   │       ├── Body: *v1.JSON
+│   │       ├── DependsOn: Object (4 properties)[]
+│   │       │   ├── Activity: *string
+│   │       │   ├── AdditionalProperties: map[string]v1.JSON
+│   │       │   ├── DependencyConditions: string[]
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       ├── Description: *string
+│   │       ├── Headers: map[string]v1.JSON
+│   │       ├── Method: *string
+│   │       ├── Name: *string
+│   │       ├── OnInactiveMarkAs: *string
+│   │       ├── Policy: *Object (3 properties)
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   ├── SecureInput: *bool
+│   │       │   └── SecureOutput: *bool
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── ReportStatusOnCallBack: *v1.JSON
+│   │       ├── State: *string
+│   │       ├── Timeout: *string
+│   │       ├── Type: *string
+│   │       ├── Url: *v1.JSON
+│   │       └── UserProperties: Object (3 properties)[]
+│   │           ├── Name: *string
+│   │           ├── PropertyBag: genruntime.PropertyBag
+│   │           └── Value: *v1.JSON
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── AzureName: string
+│   ├── Concurrency: *int
+│   ├── Description: *string
+│   ├── Folder: *Object (2 properties)
+│   │   ├── Name: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Parameters: map[string]Object (3 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Type: *string
+│   ├── Policy: *Object (2 properties)
+│   │   ├── ElapsedTimeMetric: *Object (2 properties)
+│   │   │   ├── Duration: *v1.JSON
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RunDimensions: map[string]v1.JSON
+│   └── Variables: map[string]Object (3 properties)
+│       ├── DefaultValue: *v1.JSON
+│       ├── PropertyBag: genruntime.PropertyBag
+│       └── Type: *string
+└── Status: Object (16 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── Concurrency: *int
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Folder: *Object (2 properties)
+    │   ├── Name: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Name: *string
+    ├── Parameters: map[string]Object (3 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Type: *string
+    ├── Policy: *Object (2 properties)
+    │   ├── ElapsedTimeMetric: *Object (2 properties)
+    │   │   ├── Duration: *v1.JSON
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── RunDimensions: map[string]v1.JSON
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── Variables: map[string]Object (3 properties)
+        ├── DefaultValue: *v1.JSON
+        ├── PropertyBag: genruntime.PropertyBag
+        └── Type: *string
+
 FactoriesPrivateEndpointConnection: Resource
 ├── Owner: datafactory/v20180601.Factory
 ├── Spec: Object (6 properties)

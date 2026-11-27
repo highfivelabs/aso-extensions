@@ -2574,19 +2574,13 @@ var azureBlobStorageLinkedService_Type_STATUS_Values = map[string]AzureBlobStora
 
 type AzureKeyVaultSecretReference struct {
 	// +kubebuilder:validation:Required
-	// SecretName: The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
-	SecretName *v1.JSON `json:"secretName,omitempty"`
-
-	// SecretVersion: The version of the secret in Azure Key Vault. The default value is the latest version of the secret.
-	// Type: string (or Expression with resultType string).
+	SecretName    *v1.JSON `json:"secretName,omitempty"`
 	SecretVersion *v1.JSON `json:"secretVersion,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// Store: The Azure Key Vault linked service reference.
 	Store *LinkedServiceReference `json:"store,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// Type: Type of the secret.
 	Type *AzureKeyVaultSecretReference_Type `json:"type,omitempty"`
 }
 

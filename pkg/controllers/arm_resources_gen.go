@@ -1803,6 +1803,40 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetwork)})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)})
+	result = append(result, &registration.StorageType{
+		Obj: new(datafactory_v20180601.FactoriesPipeline),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.activities.webActivity.authentication.password.secureString.value",
+				Func: indexDatafactoryFactoriesPipelineWebActivityPasswordValue,
+			},
+			{
+				Key:  ".spec.activities.webActivity.authentication.pfx.secureString.value",
+				Func: indexDatafactoryFactoriesPipelineWebActivityPfxValue,
+			},
+			{
+				Key:  ".spec.activities.webHook.authentication.password.secureString.value",
+				Func: indexDatafactoryFactoriesPipelineWebHookPasswordValue,
+			},
+			{
+				Key:  ".spec.activities.webHook.authentication.pfx.secureString.value",
+				Func: indexDatafactoryFactoriesPipelineWebHookPfxValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.activities.webActivity.authentication.password.secureString.value",
+						".spec.activities.webActivity.authentication.pfx.secureString.value",
+						".spec.activities.webHook.authentication.password.secureString.value",
+						".spec.activities.webHook.authentication.pfx.secureString.value",
+					},
+					&datafactory_v20180601.FactoriesPipelineList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesPrivateEndpointConnection)})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesTrigger)})
 	result = append(result, &registration.StorageType{Obj: new(dataprotection_v20260701.BackupVaultsBackupResourceGuardProxy)})
@@ -4659,6 +4693,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceRestService)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetwork)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesPipeline)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesTrigger)})
 	result = append(
@@ -4694,6 +4729,7 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceRestService)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesManagedVirtualNetwork)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesPipeline)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesPrivateEndpointConnection)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesTrigger)})
 	result = append(result, &registration.KnownType{Obj: new(dataprotection_v20260701.BackupVaultsBackupResourceGuardProxy)}, &registration.KnownType{Obj: new(dataprotection_v20260701.ResourceGuard)})
@@ -6190,6 +6226,7 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &datafactory_customizations.FactoriesLinkedServiceRestServiceExtension{})
 	result = append(result, &datafactory_customizations.FactoriesManagedVirtualNetworkExtension{})
 	result = append(result, &datafactory_customizations.FactoriesManagedVirtualNetworksManagedPrivateEndpointExtension{})
+	result = append(result, &datafactory_customizations.FactoriesPipelineExtension{})
 	result = append(result, &datafactory_customizations.FactoriesPrivateEndpointConnectionExtension{})
 	result = append(result, &datafactory_customizations.FactoriesTriggerExtension{})
 	result = append(result, &dataprotection_customizations.BackupVaultsBackupResourceGuardProxyExtension{})
@@ -9208,6 +9245,118 @@ func indexDatafactoryFactoriesLinkedServiceRestServiceServicePrincipalKeyValue(r
 		return nil
 	}
 	return obj.Spec.Properties.ServicePrincipalKey.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesPipelineWebActivityPasswordValue an index function for datafactory_v20180601.FactoriesPipeline .spec.activities.webActivity.authentication.password.secureString.value
+func indexDatafactoryFactoriesPipelineWebActivityPasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesPipeline)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, activityItem := range obj.Spec.Activities {
+		if activityItem.WebActivity == nil {
+			continue
+		}
+		if activityItem.WebActivity.Authentication == nil {
+			continue
+		}
+		if activityItem.WebActivity.Authentication.Password == nil {
+			continue
+		}
+		if activityItem.WebActivity.Authentication.Password.SecureString == nil {
+			continue
+		}
+		if activityItem.WebActivity.Authentication.Password.SecureString.Value == nil {
+			continue
+		}
+		result = append(result, activityItem.WebActivity.Authentication.Password.SecureString.Value.Index()...)
+	}
+	return result
+}
+
+// indexDatafactoryFactoriesPipelineWebActivityPfxValue an index function for datafactory_v20180601.FactoriesPipeline .spec.activities.webActivity.authentication.pfx.secureString.value
+func indexDatafactoryFactoriesPipelineWebActivityPfxValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesPipeline)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, activityItem := range obj.Spec.Activities {
+		if activityItem.WebActivity == nil {
+			continue
+		}
+		if activityItem.WebActivity.Authentication == nil {
+			continue
+		}
+		if activityItem.WebActivity.Authentication.Pfx == nil {
+			continue
+		}
+		if activityItem.WebActivity.Authentication.Pfx.SecureString == nil {
+			continue
+		}
+		if activityItem.WebActivity.Authentication.Pfx.SecureString.Value == nil {
+			continue
+		}
+		result = append(result, activityItem.WebActivity.Authentication.Pfx.SecureString.Value.Index()...)
+	}
+	return result
+}
+
+// indexDatafactoryFactoriesPipelineWebHookPasswordValue an index function for datafactory_v20180601.FactoriesPipeline .spec.activities.webHook.authentication.password.secureString.value
+func indexDatafactoryFactoriesPipelineWebHookPasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesPipeline)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, activityItem := range obj.Spec.Activities {
+		if activityItem.WebHook == nil {
+			continue
+		}
+		if activityItem.WebHook.Authentication == nil {
+			continue
+		}
+		if activityItem.WebHook.Authentication.Password == nil {
+			continue
+		}
+		if activityItem.WebHook.Authentication.Password.SecureString == nil {
+			continue
+		}
+		if activityItem.WebHook.Authentication.Password.SecureString.Value == nil {
+			continue
+		}
+		result = append(result, activityItem.WebHook.Authentication.Password.SecureString.Value.Index()...)
+	}
+	return result
+}
+
+// indexDatafactoryFactoriesPipelineWebHookPfxValue an index function for datafactory_v20180601.FactoriesPipeline .spec.activities.webHook.authentication.pfx.secureString.value
+func indexDatafactoryFactoriesPipelineWebHookPfxValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesPipeline)
+	if !ok {
+		return nil
+	}
+	var result []string
+	for _, activityItem := range obj.Spec.Activities {
+		if activityItem.WebHook == nil {
+			continue
+		}
+		if activityItem.WebHook.Authentication == nil {
+			continue
+		}
+		if activityItem.WebHook.Authentication.Pfx == nil {
+			continue
+		}
+		if activityItem.WebHook.Authentication.Pfx.SecureString == nil {
+			continue
+		}
+		if activityItem.WebHook.Authentication.Pfx.SecureString.Value == nil {
+			continue
+		}
+		result = append(result, activityItem.WebHook.Authentication.Pfx.SecureString.Value.Index()...)
+	}
+	return result
 }
 
 // indexDbforpostgresqlServerGroupsv2AdministratorLoginPassword an index function for dbforpostgresql_v20221108.ServerGroupsv2 .spec.administratorLoginPassword

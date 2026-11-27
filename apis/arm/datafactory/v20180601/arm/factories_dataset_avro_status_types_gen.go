@@ -102,13 +102,9 @@ type LinkedServiceReference_STATUS struct {
 	Type *Type_STATUS `json:"type,omitempty"`
 }
 
-// Definition of a single parameter for an entity.
 type ParameterSpecification_STATUS struct {
-	// DefaultValue: Default value of parameter.
-	DefaultValue *v1.JSON `json:"defaultValue,omitempty"`
-
-	// Type: Parameter type.
-	Type *ParameterType_STATUS `json:"type,omitempty"`
+	DefaultValue *v1.JSON              `json:"defaultValue,omitempty"`
+	Type         *ParameterType_STATUS `json:"type,omitempty"`
 }
 
 type DatasetLocation_STATUS struct {
@@ -285,7 +281,6 @@ func (location *DatasetLocation_STATUS) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Parameter type.
 type ParameterType_STATUS string
 
 const (

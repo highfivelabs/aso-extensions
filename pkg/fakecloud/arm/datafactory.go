@@ -47,6 +47,11 @@ import (
 //     AzureSqlDatabase linked service), a file format dataset the store
 //     its location is in (an AzureBlobFSLocation an AzureBlobFS linked
 //     service) (400) (one kind per dataset type);
+//   - a pipeline names datasets, linked services, data flows and other
+//     pipelines by reference, in its activities and the activities they
+//     hold, and each exists ("invalid reference", 400); its activities'
+//     names are unique in it, and an activity depends only on activities
+//     of the pipeline (400) (f89);
 //   - an Azure Blob Storage linked service takes at most one of
 //     connectionString, sasUri and serviceEndpoint, which the spec says are
 //     mutually exclusive (400).
@@ -66,7 +71,7 @@ var (
 	adfCredential  = regexp.MustCompile(adfFactory + `/credentials/[^/]+$`)
 	adfGlobalParam = regexp.MustCompile(adfFactory + `/globalparameters/([^/]+)$`)
 	adfParamTypes  = []string{"Object", "String", "Int", "Float", "Bool", "Array"}
-	adfAuthoring   = regexp.MustCompile(`(?i)^(.*` + adfFactory + `)/(triggers|dataflows|adfcdcs|integrationruntimes|linkedservices|datasets)/[^/]+$`)
+	adfAuthoring   = regexp.MustCompile(`(?i)^(.*` + adfFactory + `)/(triggers|dataflows|adfcdcs|integrationruntimes|linkedservices|datasets|pipelines)/[^/]+$`)
 	adfChild       = regexp.MustCompile(adfFactory + `/[^/]+/[^/]+$`)
 	// adfMasked is what Data Factory returns in place of a secure string's value.
 	adfMasked = "**********"
@@ -151,6 +156,57 @@ func (a *ARM) checkDatasetStore(factory string, props map[string]any) (status in
 	return 0, "", ""
 }
 
+// adfActivityLists are the properties of an activity that hold
+// activities (a ForEach's, an If's, a Switch's and its cases', an Until's).
+var adfActivityLists = []string{"activities", "ifTrueActivities", "ifFalseActivities", "defaultActivities"}
+
+// adfActivities returns every activity of a pipeline, those that control
+// activities hold among them.
+func adfActivities(list any, out *[]map[string]any) {
+	items, _ := list.([]any)
+	for _, it := range items {
+		act, ok := it.(map[string]any)
+		if !ok {
+			continue
+		}
+		*out = append(*out, act)
+		tp, _ := act["typeProperties"].(map[string]any)
+		for _, k := range adfActivityLists {
+			adfActivities(tp[k], out)
+		}
+		cases, _ := tp["cases"].([]any)
+		for _, c := range cases {
+			cm, _ := c.(map[string]any)
+			adfActivities(cm["activities"], out)
+		}
+	}
+}
+
+// checkPipelineActivities refuses a pipeline whose activity names repeat or
+// whose activity depends on one the pipeline does not have.
+func checkPipelineActivities(props map[string]any) (status int, code, message string) {
+	var acts []map[string]any
+	adfActivities(props["activities"], &acts)
+	names := map[string]bool{}
+	for _, a := range acts {
+		n := stringOf(a["name"])
+		if names[n] {
+			return http.StatusBadRequest, "BadRequest", "The pipeline has two activities named " + n + "."
+		}
+		names[n] = true
+	}
+	for _, a := range acts {
+		deps, _ := a["dependsOn"].([]any)
+		for _, d := range deps {
+			dm, _ := d.(map[string]any)
+			if on := stringOf(dm["activity"]); !names[on] {
+				return http.StatusBadRequest, "BadRequest", "Activity '" + stringOf(a["name"]) + "' depends on activity '" + on + "', which the pipeline does not have."
+			}
+		}
+	}
+	return 0, "", ""
+}
+
 // adfSecureStrings returns the secure strings of a document (objects of
 // type SecureString), wherever they are in it.
 func adfSecureStrings(v any, out *[]map[string]any) {
@@ -220,6 +276,11 @@ func (a *ARM) checkDataFactory(id string, body map[string]any) (status int, code
 		for _, ref := range refs {
 			if !a.exists(m[1] + "/" + ref) {
 				return bad("The document creation or update failed because of invalid reference '" + ref[strings.Index(ref, "/")+1:] + "'.")
+			}
+		}
+		if strings.EqualFold(m[2], "pipelines") {
+			if status, code, msg := checkPipelineActivities(props); code != "" {
+				return status, code, msg
 			}
 		}
 		if strings.EqualFold(m[2], "datasets") {

@@ -517,15 +517,6 @@ type DependencyReference_STATUS struct {
 	TumblingWindowTriggerDependency     *TumblingWindowTriggerDependencyReference_STATUS     `json:"tumblingWindowTriggerDependencyReference,omitempty"`
 }
 
-// Storage version of v20180601.PipelineReference
-// Pipeline reference type.
-type PipelineReference struct {
-	Name          *string                `json:"name,omitempty"`
-	PropertyBag   genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	ReferenceName *string                `json:"referenceName,omitempty"`
-	Type          *string                `json:"type,omitempty"`
-}
-
 // Storage version of v20180601.PipelineReference_STATUS
 // Pipeline reference type.
 type PipelineReference_STATUS struct {

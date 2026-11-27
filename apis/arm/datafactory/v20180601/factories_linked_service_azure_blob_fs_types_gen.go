@@ -2430,16 +2430,13 @@ var azureBlobFSLinkedService_Type_STATUS_Values = map[string]AzureBlobFSLinkedSe
 	"azureblobfs": AzureBlobFSLinkedService_Type_STATUS_AzureBlobFS,
 }
 
-// Credential reference type.
 type CredentialReference struct {
 	AdditionalProperties map[string]v1.JSON `json:"additionalProperties,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// ReferenceName: Reference credential name.
 	ReferenceName *string `json:"referenceName,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// Type: Credential reference type.
 	Type *CredentialReferenceType `json:"type,omitempty"`
 }
 
@@ -2730,17 +2727,13 @@ func (reference *CredentialReference_STATUS) AssignProperties_To_CredentialRefer
 	return nil
 }
 
-// Integration runtime reference type.
 type IntegrationRuntimeReference struct {
-	// Parameters: Arguments for integration runtime.
 	Parameters map[string]v1.JSON `json:"parameters,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// ReferenceName: Reference integration runtime name.
 	ReferenceName *string `json:"referenceName,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// Type: Type of integration runtime.
 	Type *IntegrationRuntimeReferenceType `json:"type,omitempty"`
 }
 
@@ -3033,11 +3026,8 @@ func (reference *IntegrationRuntimeReference_STATUS) AssignProperties_To_Integra
 }
 
 type SecretBase struct {
-	// AzureKeyVaultSecret: Mutually exclusive with all other properties
 	AzureKeyVaultSecret *AzureKeyVaultSecretReference `json:"azureKeyVaultSecret,omitempty"`
-
-	// SecureString: Mutually exclusive with all other properties
-	SecureString *SecureString `json:"secureString,omitempty"`
+	SecureString        *SecureString                 `json:"secureString,omitempty"`
 }
 
 var _ genruntime.ARMTransformer = &SecretBase{}
@@ -3330,7 +3320,6 @@ func (base *SecretBase_STATUS) AssignProperties_To_SecretBase_STATUS(destination
 	return nil
 }
 
-// Credential reference type.
 // +kubebuilder:validation:Enum={"CredentialReference"}
 type CredentialReferenceType string
 
@@ -3351,7 +3340,6 @@ var credentialReferenceType_STATUS_Values = map[string]CredentialReferenceType_S
 	"credentialreference": CredentialReferenceType_STATUS_CredentialReference,
 }
 
-// Type of integration runtime.
 // +kubebuilder:validation:Enum={"IntegrationRuntimeReference"}
 type IntegrationRuntimeReferenceType string
 
@@ -3374,11 +3362,9 @@ var integrationRuntimeReferenceType_STATUS_Values = map[string]IntegrationRuntim
 
 type SecureString struct {
 	// +kubebuilder:validation:Required
-	// Type: Type of the secret.
 	Type *SecureString_Type `json:"type,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// Value: Value of secure string.
 	Value *genruntime.SecretReference `json:"value,omitempty"`
 }
 

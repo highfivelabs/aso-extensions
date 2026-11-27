@@ -308,36 +308,14 @@ type Transformation struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// Data flow reference type.
 type DataFlowReference struct {
-	AdditionalProperties map[string]v1.JSON `json:"additionalProperties,omitempty"`
-
-	// DatasetParameters: Reference data flow parameters from dataset.
-	DatasetParameters *v1.JSON `json:"datasetParameters,omitempty"`
-
-	// Parameters: Data flow parameters
-	Parameters map[string]v1.JSON `json:"parameters,omitempty"`
-
-	// ReferenceName: Reference data flow name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Data flow reference type.
-	Type *DataFlowReferenceType `json:"type,omitempty"`
+	AdditionalProperties map[string]v1.JSON     `json:"additionalProperties,omitempty"`
+	DatasetParameters    *v1.JSON               `json:"datasetParameters,omitempty"`
+	Parameters           map[string]v1.JSON     `json:"parameters,omitempty"`
+	ReferenceName        *string                `json:"referenceName,omitempty"`
+	Type                 *DataFlowReferenceType `json:"type,omitempty"`
 }
 
-// Dataset reference type.
-type DatasetReference struct {
-	// Parameters: Arguments for dataset.
-	Parameters map[string]v1.JSON `json:"parameters,omitempty"`
-
-	// ReferenceName: Reference dataset name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Dataset reference type.
-	Type *DatasetReferenceType `json:"type,omitempty"`
-}
-
-// Data flow reference type.
 // +kubebuilder:validation:Enum={"DataFlowReference"}
 type DataFlowReferenceType string
 
@@ -346,15 +324,4 @@ const DataFlowReferenceType_DataFlowReference = DataFlowReferenceType("DataFlowR
 // Mapping from string to DataFlowReferenceType
 var dataFlowReferenceType_Values = map[string]DataFlowReferenceType{
 	"dataflowreference": DataFlowReferenceType_DataFlowReference,
-}
-
-// Dataset reference type.
-// +kubebuilder:validation:Enum={"DatasetReference"}
-type DatasetReferenceType string
-
-const DatasetReferenceType_DatasetReference = DatasetReferenceType("DatasetReference")
-
-// Mapping from string to DatasetReferenceType
-var datasetReferenceType_Values = map[string]DatasetReferenceType{
-	"datasetreference": DatasetReferenceType_DatasetReference,
 }

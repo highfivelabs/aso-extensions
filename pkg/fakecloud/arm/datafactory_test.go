@@ -166,3 +166,39 @@ func TestDataFactoryDatasets(t *testing.T) {
 	put("a parameterized linked service", factory+"/datasets/any",
 		`{"type":"Json","linkedServiceName":{"type":"LinkedServiceReference","referenceName":"@{dataset().ls}"}}`, http.StatusCreated)
 }
+
+// A pipeline names what exists, in its activities and in those its
+// control activities hold; its activity names are unique and an activity
+// depends on activities of the pipeline.
+func TestDataFactoryPipelines(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/adf"
+	factory := rg + "/providers/Microsoft.DataFactory/factories/etl"
+	for _, id := range []string{rg, factory, factory + "/datasets/raw", factory + "/datasets/table", factory + "/pipelines/load"} {
+		a.AddResource(id)
+	}
+	put := func(what, props string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, factory+"/pipelines/copy", `{"properties":`+props+`}`)
+		expect(t, what, code, resp, want)
+	}
+	copyAct := func(name, in string) string {
+		return `{"name":"` + name + `","type":"Copy","inputs":[{"type":"DatasetReference","referenceName":"` + in + `"}],` +
+			`"outputs":[{"type":"DatasetReference","referenceName":"table"}],"typeProperties":{"source":{"type":"DelimitedTextSource"},"sink":{"type":"AzureSqlSink"}}}`
+	}
+	put("a copy of a missing dataset", `{"activities":[`+copyAct("copy", "cooked")+`]}`, http.StatusBadRequest)
+	put("a copy", `{"activities":[`+copyAct("copy", "raw")+`]}`, http.StatusCreated)
+	put("two activities of one name", `{"activities":[`+copyAct("copy", "raw")+`,`+copyAct("copy", "raw")+`]}`, http.StatusBadRequest)
+	run := func(pipeline, after string) string {
+		return `{"name":"next","type":"ExecutePipeline","dependsOn":[{"activity":"` + after + `","dependencyConditions":["Succeeded"]}],` +
+			`"typeProperties":{"pipeline":{"type":"PipelineReference","referenceName":"` + pipeline + `"}}}`
+	}
+	put("a dependency on no activity", `{"activities":[`+copyAct("copy", "raw")+`,`+run("load", "load")+`]}`, http.StatusBadRequest)
+	put("a dependency", `{"activities":[`+copyAct("copy", "raw")+`,`+run("load", "copy")+`]}`, http.StatusOK)
+	forEach := func(in string) string {
+		return `{"activities":[{"name":"each","type":"ForEach","typeProperties":{"items":{"type":"Expression","value":"@pipeline().parameters.files"},` +
+			`"activities":[` + copyAct("inner", in) + `]}}]}`
+	}
+	put("a nested copy of a missing dataset", forEach("cooked"), http.StatusBadRequest)
+	put("a nested copy", forEach("raw"), http.StatusOK)
+}

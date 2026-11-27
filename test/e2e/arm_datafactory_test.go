@@ -602,3 +602,86 @@ func TestDataFactoryDatasets(t *testing.T) {
 		}
 	}
 }
+
+// The pipeline kind (docs/plan.md §8 Q18, (a) as recommended, with (b):
+// f89), on ASO's factory by name: a copy from a delimited text dataset in
+// Data Lake Gen2 to a SQL table, a ForEach whose nested activities are
+// free-form JSON (a copy again), and an Execute Pipeline after the copy.
+// Execute Pipeline naming a missing pipeline is refused (the fake's
+// "invalid reference"), then fixed by a change; the activities, the copy's
+// store settings and the nested copy reach the fake as Data Factory's JSON
+// has them. Deleted, it goes.
+func TestDataFactoryPipelines(t *testing.T) {
+	ctx := context.Background()
+	ns := namespace(t, "adfpl")
+	strictCredential(t, ns, clientA)
+	trustNamespace(ns)
+	rgID := "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"
+	factoryID := rgID + "/providers/Microsoft.DataFactory/factories/etl"
+	for _, id := range []string{rgID, factoryID, factoryID + "/datasets/raw", factoryID + "/datasets/table", factoryID + "/pipelines/archive"} {
+		armFake.AddResource(id)
+	}
+	resourceGroup(t, ns, "rg", ns+"-rg")
+	factory := &asodatafactory.Factory{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "etl"}}
+	factory.Spec.AzureName, factory.Spec.Location = "etl", ptr("westus")
+	factory.Spec.Owner = &genruntime.KnownResourceReference{Name: "rg"}
+	asoStandIn(t, factory, factoryID)
+	js := func(s string) *v1.JSON { return &v1.JSON{Raw: []byte(s)} }
+	ds := func(name string) datafactory.DatasetReference {
+		return datafactory.DatasetReference{Type: ptr(datafactory.DatasetReferenceType_DatasetReference), ReferenceName: ptr(name)}
+	}
+	nested := `[{"name":"inner","type":"Copy","inputs":[{"type":"DatasetReference","referenceName":"raw"}],` +
+		`"outputs":[{"type":"DatasetReference","referenceName":"table"}],"typeProperties":{"source":{"type":"DelimitedTextSource"},"sink":{"type":"AzureSqlSink"}}}]`
+	pipeline := &datafactory.FactoriesPipeline{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "load"}, Spec: datafactory.FactoriesPipeline_Spec{
+		Owner: &genruntime.KnownResourceReference{Name: "etl"}, Description: ptr("raw files into the orders table"),
+		Parameters: map[string]datafactory.ParameterSpecification{"files": {Type: ptr(datafactory.ParameterType_Array)}},
+		Activities: []datafactory.Activity{
+			{Copy: &datafactory.CopyActivity{Name: ptr("copy"), Type: ptr(datafactory.CopyActivity_Type_Copy),
+				Inputs: []datafactory.DatasetReference{ds("raw")}, Outputs: []datafactory.DatasetReference{ds("table")},
+				Source: &datafactory.CopySource{DelimitedText: &datafactory.DelimitedTextSource{Type: ptr(datafactory.DelimitedTextSource_Type_DelimitedTextSource),
+					StoreSettings: &datafactory.StoreReadSettings{AzureBlobFS: &datafactory.AzureBlobFSReadSettings{
+						Type: ptr(datafactory.AzureBlobFSReadSettings_Type_AzureBlobFSReadSettings), Recursive: js(`true`)}}}},
+				Sink: &datafactory.CopySink{AzureSql: &datafactory.AzureSqlSink{Type: ptr(datafactory.AzureSqlSink_Type_AzureSqlSink), WriteBehavior: js(`"insert"`)}}}},
+			{ForEach: &datafactory.ForEachActivity{Name: ptr("each"), Type: ptr(datafactory.ForEachActivity_Type_ForEach),
+				Items:      &datafactory.Expression{Type: ptr(datafactory.ExpressionType_Expression), Value: ptr("@pipeline().parameters.files")},
+				Activities: js(nested)}},
+			{ExecutePipeline: &datafactory.ExecutePipelineActivity{Name: ptr("next"), Type: ptr(datafactory.ExecutePipelineActivity_Type_ExecutePipeline),
+				DependsOn: []datafactory.ActivityDependency{{Activity: ptr("copy"), DependencyConditions: []datafactory.DependencyCondition{datafactory.DependencyCondition_Succeeded}}},
+				Pipeline:  &datafactory.PipelineReference{Type: ptr(datafactory.PipelineReferenceType_PipelineReference), ReferenceName: ptr("cleanup")}}},
+		}}}
+	if err := k8s.Create(ctx, pipeline); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "a pipeline running a missing pipeline refused", notReadyWith(pipeline, "invalid reference"))
+	if err := change(t, pipeline, func(p *datafactory.FactoriesPipeline) {
+		p.Spec.Activities[2].ExecutePipeline.Pipeline.ReferenceName = ptr("archive")
+	}); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the pipeline Ready after the change", ready(pipeline))
+	expectResource(t, factoryID+"/pipelines/load", func(r map[string]any) error {
+		acts, _ := properties(r)["activities"].([]any)
+		if len(acts) != 3 {
+			return fmt.Errorf("resource: %v", r)
+		}
+		cp, _ := acts[0].(map[string]any)
+		tp, _ := cp["typeProperties"].(map[string]any)
+		src, _ := tp["source"].(map[string]any)
+		store, _ := src["storeSettings"].(map[string]any)
+		each, _ := acts[1].(map[string]any)
+		etp, _ := each["typeProperties"].(map[string]any)
+		inner, _ := etp["activities"].([]any)
+		if cp["type"] != "Copy" || store["type"] != "AzureBlobFSReadSettings" || store["recursive"] != true || len(inner) != 1 ||
+			!strings.Contains(fmt.Sprint(inner[0]), "inner") || !strings.Contains(fmt.Sprint(acts[2]), "archive") {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	if err := k8s.Delete(ctx, pipeline); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the pipeline gone", gone(pipeline))
+	if armFake.HasResource(factoryID + "/pipelines/load") {
+		t.Error("the pipeline is still in the fake")
+	}
+}

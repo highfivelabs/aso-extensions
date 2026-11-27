@@ -457,17 +457,6 @@ type Transformation_STATUS struct {
 	PropertyBag   genruntime.PropertyBag         `json:"$propertyBag,omitempty"`
 }
 
-// Storage version of v20180601.DataFlowReference
-// Data flow reference type.
-type DataFlowReference struct {
-	AdditionalProperties map[string]v1.JSON     `json:"additionalProperties,omitempty"`
-	DatasetParameters    *v1.JSON               `json:"datasetParameters,omitempty"`
-	Parameters           map[string]v1.JSON     `json:"parameters,omitempty"`
-	PropertyBag          genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	ReferenceName        *string                `json:"referenceName,omitempty"`
-	Type                 *string                `json:"type,omitempty"`
-}
-
 // Storage version of v20180601.DataFlowReference_STATUS
 // Data flow reference type.
 type DataFlowReference_STATUS struct {
@@ -477,15 +466,6 @@ type DataFlowReference_STATUS struct {
 	PropertyBag          genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	ReferenceName        *string                `json:"referenceName,omitempty"`
 	Type                 *string                `json:"type,omitempty"`
-}
-
-// Storage version of v20180601.DatasetReference
-// Dataset reference type.
-type DatasetReference struct {
-	Parameters    map[string]v1.JSON     `json:"parameters,omitempty"`
-	PropertyBag   genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	ReferenceName *string                `json:"referenceName,omitempty"`
-	Type          *string                `json:"type,omitempty"`
 }
 
 // Storage version of v20180601.DatasetReference_STATUS

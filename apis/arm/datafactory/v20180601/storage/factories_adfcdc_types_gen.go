@@ -337,7 +337,6 @@ type MapperTargetConnectionsInfo_STATUS struct {
 }
 
 // Storage version of v20180601.SystemData_STATUS
-// Metadata pertaining to creation and last modification of the resource.
 type SystemData_STATUS struct {
 	CreatedAt          *string                `json:"createdAt,omitempty"`
 	CreatedBy          *string                `json:"createdBy,omitempty"`

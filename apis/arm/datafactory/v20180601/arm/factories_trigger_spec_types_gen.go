@@ -557,16 +557,10 @@ func (reference *DependencyReference) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Pipeline reference type.
 type PipelineReference struct {
-	// Name: Reference name.
-	Name *string `json:"name,omitempty"`
-
-	// ReferenceName: Reference pipeline name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Pipeline reference type.
-	Type *PipelineReferenceType `json:"type,omitempty"`
+	Name          *string                `json:"name,omitempty"`
+	ReferenceName *string                `json:"referenceName,omitempty"`
+	Type          *PipelineReferenceType `json:"type,omitempty"`
 }
 
 // Execution policy for an activity.
@@ -618,7 +612,6 @@ var tumblingWindowFrequency_Values = map[string]TumblingWindowFrequency{
 	"month":  TumblingWindowFrequency_Month,
 }
 
-// Pipeline reference type.
 // +kubebuilder:validation:Enum={"PipelineReference"}
 type PipelineReferenceType string
 

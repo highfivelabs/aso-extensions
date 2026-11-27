@@ -215,6 +215,7 @@ resources:
 - datafactory.azure.hfl.dev_factorieslinkedservicerestservices.yaml
 - datafactory.azure.hfl.dev_factoriesmanagedvirtualnetworks.yaml
 - datafactory.azure.hfl.dev_factoriesmanagedvirtualnetworksmanagedprivateendpoints.yaml
+- datafactory.azure.hfl.dev_factoriespipelines.yaml
 - datafactory.azure.hfl.dev_factoriesprivateendpointconnections.yaml
 - datafactory.azure.hfl.dev_factoriestriggers.yaml
 - dataprotection.azure.hfl.dev_backupvaultsbackupresourceguardproxies.yaml

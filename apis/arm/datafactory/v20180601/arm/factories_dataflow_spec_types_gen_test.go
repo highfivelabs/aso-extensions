@@ -332,64 +332,6 @@ func DataFlowSourceGenerator() *rapid.Generator[DataFlowSource] {
 	return dataFlowSourceGenerator
 }
 
-func Test_DatasetReference_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForDatasetReference)
-}
-
-// RunJSONSerializationTestForDatasetReference runs a test to see if a specific instance of DatasetReference round trips to JSON and back losslessly
-func RunJSONSerializationTestForDatasetReference(t *rapid.T) {
-	subject := DatasetReferenceGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual DatasetReference
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of DatasetReference instances for property testing - lazily instantiated by DatasetReferenceGenerator()
-var datasetReferenceGenerator *rapid.Generator[DatasetReference]
-
-// DatasetReferenceGenerator returns a generator of DatasetReference instances for property testing.
-func DatasetReferenceGenerator() *rapid.Generator[DatasetReference] {
-	if datasetReferenceGenerator != nil {
-		return datasetReferenceGenerator
-	}
-
-	referenceName := rapid.Ptr(rapid.String(), true)
-	typeVar := rapid.Ptr(rapid.SampledFrom([]DatasetReferenceType{DatasetReferenceType_DatasetReference}), true)
-
-	datasetReferenceGenerator = rapid.Custom(func(t *rapid.T) DatasetReference {
-		var result DatasetReference
-		result.ReferenceName = referenceName.Draw(t, "ReferenceName")
-		result.Type = typeVar.Draw(t, "Type")
-		return result
-	})
-
-	return datasetReferenceGenerator
-}
-
 func Test_FactoriesDataflow_Spec_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 

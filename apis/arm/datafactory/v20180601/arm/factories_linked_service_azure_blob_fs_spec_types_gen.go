@@ -118,30 +118,18 @@ type AzureBlobFSLinkedServiceTypeProperties struct {
 	Url *v1.JSON `json:"url,omitempty"`
 }
 
-// Integration runtime reference type.
 type IntegrationRuntimeReference struct {
-	// Parameters: Arguments for integration runtime.
-	Parameters map[string]v1.JSON `json:"parameters,omitempty"`
-
-	// ReferenceName: Reference integration runtime name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Type of integration runtime.
-	Type *IntegrationRuntimeReferenceType `json:"type,omitempty"`
+	Parameters    map[string]v1.JSON               `json:"parameters,omitempty"`
+	ReferenceName *string                          `json:"referenceName,omitempty"`
+	Type          *IntegrationRuntimeReferenceType `json:"type,omitempty"`
 }
 
-// Credential reference type.
 type CredentialReference struct {
-	AdditionalProperties map[string]v1.JSON `json:"additionalProperties,omitempty"`
-
-	// ReferenceName: Reference credential name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Credential reference type.
-	Type *CredentialReferenceType `json:"type,omitempty"`
+	AdditionalProperties map[string]v1.JSON       `json:"additionalProperties,omitempty"`
+	ReferenceName        *string                  `json:"referenceName,omitempty"`
+	Type                 *CredentialReferenceType `json:"type,omitempty"`
 }
 
-// Type of integration runtime.
 // +kubebuilder:validation:Enum={"IntegrationRuntimeReference"}
 type IntegrationRuntimeReferenceType string
 
@@ -153,11 +141,8 @@ var integrationRuntimeReferenceType_Values = map[string]IntegrationRuntimeRefere
 }
 
 type SecretBase struct {
-	// AzureKeyVaultSecret: Mutually exclusive with all other properties
 	AzureKeyVaultSecret *AzureKeyVaultSecretReference `json:"azureKeyVaultSecret,omitempty"`
-
-	// SecureString: Mutually exclusive with all other properties
-	SecureString *SecureString `json:"secureString,omitempty"`
+	SecureString        *SecureString                 `json:"secureString,omitempty"`
 }
 
 // MarshalJSON defers JSON marshaling to the first non-nil property, because SecretBase represents a discriminated union (JSON OneOf)
@@ -194,7 +179,6 @@ func (base *SecretBase) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Credential reference type.
 // +kubebuilder:validation:Enum={"CredentialReference"}
 type CredentialReferenceType string
 
@@ -206,11 +190,8 @@ var credentialReferenceType_Values = map[string]CredentialReferenceType{
 }
 
 type SecureString struct {
-	// Type: Type of the secret.
-	Type SecureString_Type `json:"type,omitempty"`
-
-	// Value: Value of secure string.
-	Value *string `json:"value,omitempty"`
+	Type  SecureString_Type `json:"type,omitempty"`
+	Value *string           `json:"value,omitempty"`
 }
 
 // +kubebuilder:validation:Enum={"SecureString"}

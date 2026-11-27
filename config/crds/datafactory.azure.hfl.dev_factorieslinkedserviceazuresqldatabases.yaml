@@ -200,10 +200,8 @@ spec:
                               x-kubernetes-preserve-unknown-fields: true
                             type: object
                           referenceName:
-                            description: 'ReferenceName: Reference credential name.'
                             type: string
                           type:
-                            description: 'Type: Credential reference type.'
                             enum:
                             - CredentialReference
                             type: string
@@ -221,34 +219,20 @@ spec:
                           principal used to authenticate against Azure Key Vault.'
                         properties:
                           azureKeyVaultSecret:
-                            description: 'AzureKeyVaultSecret: Mutually exclusive
-                              with all other properties'
                             properties:
                               secretName:
-                                description: 'SecretName: The name of the secret in
-                                  Azure Key Vault. Type: string (or Expression with
-                                  resultType string).'
                                 x-kubernetes-preserve-unknown-fields: true
                               secretVersion:
-                                description: |-
-                                  SecretVersion: The version of the secret in Azure Key Vault. The default value is the latest version of the secret.
-                                  Type: string (or Expression with resultType string).
                                 x-kubernetes-preserve-unknown-fields: true
                               store:
-                                description: 'Store: The Azure Key Vault linked service
-                                  reference.'
                                 properties:
                                   parameters:
                                     additionalProperties:
                                       x-kubernetes-preserve-unknown-fields: true
-                                    description: 'Parameters: Arguments for LinkedService.'
                                     type: object
                                   referenceName:
-                                    description: 'ReferenceName: Reference LinkedService
-                                      name.'
                                     type: string
                                   type:
-                                    description: 'Type: Linked service reference type.'
                                     enum:
                                     - LinkedServiceReference
                                     type: string
@@ -257,7 +241,6 @@ spec:
                                 - type
                                 type: object
                               type:
-                                description: 'Type: Type of the secret.'
                                 enum:
                                 - AzureKeyVaultSecret
                                 type: string
@@ -267,16 +250,15 @@ spec:
                             - type
                             type: object
                           secureString:
-                            description: 'SecureString: Mutually exclusive with all
-                              other properties'
                             properties:
                               type:
-                                description: 'Type: Type of the secret.'
                                 enum:
                                 - SecureString
                                 type: string
                               value:
-                                description: 'Value: Value of secure string.'
+                                description: |-
+                                  SecretReference is a reference to a Kubernetes secret and key in the same namespace as
+                                  the resource it is on.
                                 properties:
                                   key:
                                     description: Key is the key in the Kubernetes
@@ -353,14 +335,10 @@ spec:
                       parameters:
                         additionalProperties:
                           x-kubernetes-preserve-unknown-fields: true
-                        description: 'Parameters: Arguments for integration runtime.'
                         type: object
                       referenceName:
-                        description: 'ReferenceName: Reference integration runtime
-                          name.'
                         type: string
                       type:
-                        description: 'Type: Type of integration runtime.'
                         enum:
                         - IntegrationRuntimeReference
                         type: string
@@ -373,34 +351,20 @@ spec:
                       SecureString or AzureKeyVaultSecretReference.'
                     properties:
                       azureKeyVaultSecret:
-                        description: 'AzureKeyVaultSecret: Mutually exclusive with
-                          all other properties'
                         properties:
                           secretName:
-                            description: 'SecretName: The name of the secret in Azure
-                              Key Vault. Type: string (or Expression with resultType
-                              string).'
                             x-kubernetes-preserve-unknown-fields: true
                           secretVersion:
-                            description: |-
-                              SecretVersion: The version of the secret in Azure Key Vault. The default value is the latest version of the secret.
-                              Type: string (or Expression with resultType string).
                             x-kubernetes-preserve-unknown-fields: true
                           store:
-                            description: 'Store: The Azure Key Vault linked service
-                              reference.'
                             properties:
                               parameters:
                                 additionalProperties:
                                   x-kubernetes-preserve-unknown-fields: true
-                                description: 'Parameters: Arguments for LinkedService.'
                                 type: object
                               referenceName:
-                                description: 'ReferenceName: Reference LinkedService
-                                  name.'
                                 type: string
                               type:
-                                description: 'Type: Linked service reference type.'
                                 enum:
                                 - LinkedServiceReference
                                 type: string
@@ -409,7 +373,6 @@ spec:
                             - type
                             type: object
                           type:
-                            description: 'Type: Type of the secret.'
                             enum:
                             - AzureKeyVaultSecret
                             type: string
@@ -419,16 +382,15 @@ spec:
                         - type
                         type: object
                       secureString:
-                        description: 'SecureString: Mutually exclusive with all other
-                          properties'
                         properties:
                           type:
-                            description: 'Type: Type of the secret.'
                             enum:
                             - SecureString
                             type: string
                           value:
-                            description: 'Value: Value of secure string.'
+                            description: |-
+                              SecretReference is a reference to a Kubernetes secret and key in the same namespace as
+                              the resource it is on.
                             properties:
                               key:
                                 description: Key is the key in the Kubernetes secret
@@ -457,10 +419,8 @@ spec:
                           x-kubernetes-preserve-unknown-fields: true
                         type: object
                       referenceName:
-                        description: 'ReferenceName: Reference credential name.'
                         type: string
                       type:
-                        description: 'Type: Credential reference type.'
                         enum:
                         - CredentialReference
                         type: string
@@ -537,13 +497,10 @@ spec:
                     x-kubernetes-preserve-unknown-fields: true
                   parameters:
                     additionalProperties:
-                      description: Definition of a single parameter for an entity.
                       properties:
                         defaultValue:
-                          description: 'DefaultValue: Default value of parameter.'
                           x-kubernetes-preserve-unknown-fields: true
                         type:
-                          description: 'Type: Parameter type.'
                           enum:
                           - Array
                           - Bool
@@ -563,27 +520,18 @@ spec:
                       password in connection string.'
                     properties:
                       secretName:
-                        description: 'SecretName: The name of the secret in Azure
-                          Key Vault. Type: string (or Expression with resultType string).'
                         x-kubernetes-preserve-unknown-fields: true
                       secretVersion:
-                        description: |-
-                          SecretVersion: The version of the secret in Azure Key Vault. The default value is the latest version of the secret.
-                          Type: string (or Expression with resultType string).
                         x-kubernetes-preserve-unknown-fields: true
                       store:
-                        description: 'Store: The Azure Key Vault linked service reference.'
                         properties:
                           parameters:
                             additionalProperties:
                               x-kubernetes-preserve-unknown-fields: true
-                            description: 'Parameters: Arguments for LinkedService.'
                             type: object
                           referenceName:
-                            description: 'ReferenceName: Reference LinkedService name.'
                             type: string
                           type:
-                            description: 'Type: Linked service reference type.'
                             enum:
                             - LinkedServiceReference
                             type: string
@@ -592,7 +540,6 @@ spec:
                         - type
                         type: object
                       type:
-                        description: 'Type: Type of the secret.'
                         enum:
                         - AzureKeyVaultSecret
                         type: string
@@ -619,34 +566,20 @@ spec:
                       can only be AzureKeyVaultSecretReference.
                     properties:
                       azureKeyVaultSecret:
-                        description: 'AzureKeyVaultSecret: Mutually exclusive with
-                          all other properties'
                         properties:
                           secretName:
-                            description: 'SecretName: The name of the secret in Azure
-                              Key Vault. Type: string (or Expression with resultType
-                              string).'
                             x-kubernetes-preserve-unknown-fields: true
                           secretVersion:
-                            description: |-
-                              SecretVersion: The version of the secret in Azure Key Vault. The default value is the latest version of the secret.
-                              Type: string (or Expression with resultType string).
                             x-kubernetes-preserve-unknown-fields: true
                           store:
-                            description: 'Store: The Azure Key Vault linked service
-                              reference.'
                             properties:
                               parameters:
                                 additionalProperties:
                                   x-kubernetes-preserve-unknown-fields: true
-                                description: 'Parameters: Arguments for LinkedService.'
                                 type: object
                               referenceName:
-                                description: 'ReferenceName: Reference LinkedService
-                                  name.'
                                 type: string
                               type:
-                                description: 'Type: Linked service reference type.'
                                 enum:
                                 - LinkedServiceReference
                                 type: string
@@ -655,7 +588,6 @@ spec:
                             - type
                             type: object
                           type:
-                            description: 'Type: Type of the secret.'
                             enum:
                             - AzureKeyVaultSecret
                             type: string
@@ -665,16 +597,15 @@ spec:
                         - type
                         type: object
                       secureString:
-                        description: 'SecureString: Mutually exclusive with all other
-                          properties'
                         properties:
                           type:
-                            description: 'Type: Type of the secret.'
                             enum:
                             - SecureString
                             type: string
                           value:
-                            description: 'Value: Value of secure string.'
+                            description: |-
+                              SecretReference is a reference to a Kubernetes secret and key in the same namespace as
+                              the resource it is on.
                             properties:
                               key:
                                 description: Key is the key in the Kubernetes secret
@@ -710,34 +641,20 @@ spec:
                       used to authenticate against Azure SQL Database.'
                     properties:
                       azureKeyVaultSecret:
-                        description: 'AzureKeyVaultSecret: Mutually exclusive with
-                          all other properties'
                         properties:
                           secretName:
-                            description: 'SecretName: The name of the secret in Azure
-                              Key Vault. Type: string (or Expression with resultType
-                              string).'
                             x-kubernetes-preserve-unknown-fields: true
                           secretVersion:
-                            description: |-
-                              SecretVersion: The version of the secret in Azure Key Vault. The default value is the latest version of the secret.
-                              Type: string (or Expression with resultType string).
                             x-kubernetes-preserve-unknown-fields: true
                           store:
-                            description: 'Store: The Azure Key Vault linked service
-                              reference.'
                             properties:
                               parameters:
                                 additionalProperties:
                                   x-kubernetes-preserve-unknown-fields: true
-                                description: 'Parameters: Arguments for LinkedService.'
                                 type: object
                               referenceName:
-                                description: 'ReferenceName: Reference LinkedService
-                                  name.'
                                 type: string
                               type:
-                                description: 'Type: Linked service reference type.'
                                 enum:
                                 - LinkedServiceReference
                                 type: string
@@ -746,7 +663,6 @@ spec:
                             - type
                             type: object
                           type:
-                            description: 'Type: Type of the secret.'
                             enum:
                             - AzureKeyVaultSecret
                             type: string
@@ -756,16 +672,15 @@ spec:
                         - type
                         type: object
                       secureString:
-                        description: 'SecureString: Mutually exclusive with all other
-                          properties'
                         properties:
                           type:
-                            description: 'Type: Type of the secret.'
                             enum:
                             - SecureString
                             type: string
                           value:
-                            description: 'Value: Value of secure string.'
+                            description: |-
+                              SecretReference is a reference to a Kubernetes secret and key in the same namespace as
+                              the resource it is on.
                             properties:
                               key:
                                 description: Key is the key in the Kubernetes secret
@@ -1105,13 +1020,10 @@ spec:
                     x-kubernetes-preserve-unknown-fields: true
                   parameters:
                     additionalProperties:
-                      description: Definition of a single parameter for an entity.
                       properties:
                         defaultValue:
-                          description: 'DefaultValue: Default value of parameter.'
                           x-kubernetes-preserve-unknown-fields: true
                         type:
-                          description: 'Type: Parameter type.'
                           type: string
                       type: object
                     description: 'Parameters: Parameters for linked service.'
@@ -1294,26 +1206,16 @@ spec:
                   createdBy and modifiedBy information.'
                 properties:
                   createdAt:
-                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
                     type: string
                   createdBy:
-                    description: 'CreatedBy: The identity that created the resource.'
                     type: string
                   createdByType:
-                    description: 'CreatedByType: The type of identity that created
-                      the resource.'
                     type: string
                   lastModifiedAt:
-                    description: 'LastModifiedAt: The timestamp of resource last modification
-                      (UTC)'
                     type: string
                   lastModifiedBy:
-                    description: 'LastModifiedBy: The identity that last modified
-                      the resource.'
                     type: string
                   lastModifiedByType:
-                    description: 'LastModifiedByType: The type of identity that last
-                      modified the resource.'
                     type: string
                 type: object
               type:

@@ -624,7 +624,11 @@ upstream's); the catalog's chart tests do that.
   (`AzureSqlTable` an `AzureSqlDatabase` linked service), a file format
   dataset the store of its location (`AzureBlobFSLocation` an `AzureBlobFS`
   one); a parameterized name (an expression) is not checked, nor a pair
-  the fake's two tables do not list. Not modelled: the managed network's isolation, a managed
+  the fake's two tables do not list. A pipeline (f89) names datasets,
+  linked services, data flows and pipelines by reference, in its
+  activities and in those its control activities hold, and each exists
+  (400); its activity names are unique and an activity depends only on
+  activities of the pipeline (400). Not modelled: the managed network's isolation, a managed
   endpoint's approval by its target, starting and stopping triggers, runs,
   runtime nodes and states, a linked service's test connection and the
   other per-type rules Data Factory applies (it checks a linked service's

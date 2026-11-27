@@ -216,13 +216,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for dataset.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference dataset name.'
                                   type: string
                                 type:
-                                  description: 'Type: Dataset reference type.'
                                   enum:
                                   - DatasetReference
                                   type: string
@@ -241,20 +238,14 @@ spec:
                                     x-kubernetes-preserve-unknown-fields: true
                                   type: object
                                 datasetParameters:
-                                  description: 'DatasetParameters: Reference data
-                                    flow parameters from dataset.'
                                   x-kubernetes-preserve-unknown-fields: true
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Data flow parameters'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference data flow
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Data flow reference type.'
                                   enum:
                                   - DataFlowReference
                                   type: string
@@ -268,14 +259,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -293,14 +280,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -315,14 +298,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -345,13 +324,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for dataset.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference dataset name.'
                                   type: string
                                 type:
-                                  description: 'Type: Dataset reference type.'
                                   enum:
                                   - DatasetReference
                                   type: string
@@ -370,20 +346,14 @@ spec:
                                     x-kubernetes-preserve-unknown-fields: true
                                   type: object
                                 datasetParameters:
-                                  description: 'DatasetParameters: Reference data
-                                    flow parameters from dataset.'
                                   x-kubernetes-preserve-unknown-fields: true
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Data flow parameters'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference data flow
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Data flow reference type.'
                                   enum:
                                   - DataFlowReference
                                   type: string
@@ -397,14 +367,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -422,14 +388,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -453,13 +415,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for dataset.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference dataset name.'
                                   type: string
                                 type:
-                                  description: 'Type: Dataset reference type.'
                                   enum:
                                   - DatasetReference
                                   type: string
@@ -478,20 +437,14 @@ spec:
                                     x-kubernetes-preserve-unknown-fields: true
                                   type: object
                                 datasetParameters:
-                                  description: 'DatasetParameters: Reference data
-                                    flow parameters from dataset.'
                                   x-kubernetes-preserve-unknown-fields: true
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Data flow parameters'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference data flow
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Data flow reference type.'
                                   enum:
                                   - DataFlowReference
                                   type: string
@@ -505,14 +458,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -576,13 +525,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for dataset.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference dataset name.'
                                   type: string
                                 type:
-                                  description: 'Type: Dataset reference type.'
                                   enum:
                                   - DatasetReference
                                   type: string
@@ -601,20 +547,14 @@ spec:
                                     x-kubernetes-preserve-unknown-fields: true
                                   type: object
                                 datasetParameters:
-                                  description: 'DatasetParameters: Reference data
-                                    flow parameters from dataset.'
                                   x-kubernetes-preserve-unknown-fields: true
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Data flow parameters'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference data flow
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Data flow reference type.'
                                   enum:
                                   - DataFlowReference
                                   type: string
@@ -628,14 +568,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -653,14 +589,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -675,14 +607,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -705,13 +633,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for dataset.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference dataset name.'
                                   type: string
                                 type:
-                                  description: 'Type: Dataset reference type.'
                                   enum:
                                   - DatasetReference
                                   type: string
@@ -730,20 +655,14 @@ spec:
                                     x-kubernetes-preserve-unknown-fields: true
                                   type: object
                                 datasetParameters:
-                                  description: 'DatasetParameters: Reference data
-                                    flow parameters from dataset.'
                                   x-kubernetes-preserve-unknown-fields: true
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Data flow parameters'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference data flow
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Data flow reference type.'
                                   enum:
                                   - DataFlowReference
                                   type: string
@@ -757,14 +676,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -782,14 +697,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -813,13 +724,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for dataset.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference dataset name.'
                                   type: string
                                 type:
-                                  description: 'Type: Dataset reference type.'
                                   enum:
                                   - DatasetReference
                                   type: string
@@ -838,20 +746,14 @@ spec:
                                     x-kubernetes-preserve-unknown-fields: true
                                   type: object
                                 datasetParameters:
-                                  description: 'DatasetParameters: Reference data
-                                    flow parameters from dataset.'
                                   x-kubernetes-preserve-unknown-fields: true
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Data flow parameters'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference data flow
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Data flow reference type.'
                                   enum:
                                   - DataFlowReference
                                   type: string
@@ -865,14 +767,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -935,13 +833,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for dataset.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference dataset name.'
                                   type: string
                                 type:
-                                  description: 'Type: Dataset reference type.'
                                   enum:
                                   - DatasetReference
                                   type: string
@@ -960,20 +855,14 @@ spec:
                                     x-kubernetes-preserve-unknown-fields: true
                                   type: object
                                 datasetParameters:
-                                  description: 'DatasetParameters: Reference data
-                                    flow parameters from dataset.'
                                   x-kubernetes-preserve-unknown-fields: true
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Data flow parameters'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference data flow
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Data flow reference type.'
                                   enum:
                                   - DataFlowReference
                                   type: string
@@ -987,14 +876,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -1012,14 +897,10 @@ spec:
                                 parameters:
                                   additionalProperties:
                                     x-kubernetes-preserve-unknown-fields: true
-                                  description: 'Parameters: Arguments for LinkedService.'
                                   type: object
                                 referenceName:
-                                  description: 'ReferenceName: Reference LinkedService
-                                    name.'
                                   type: string
                                 type:
-                                  description: 'Type: Linked service reference type.'
                                   enum:
                                   - LinkedServiceReference
                                   type: string
@@ -1821,26 +1702,16 @@ spec:
                   createdBy and modifiedBy information.'
                 properties:
                   createdAt:
-                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
                     type: string
                   createdBy:
-                    description: 'CreatedBy: The identity that created the resource.'
                     type: string
                   createdByType:
-                    description: 'CreatedByType: The type of identity that created
-                      the resource.'
                     type: string
                   lastModifiedAt:
-                    description: 'LastModifiedAt: The timestamp of resource last modification
-                      (UTC)'
                     type: string
                   lastModifiedBy:
-                    description: 'LastModifiedBy: The identity that last modified
-                      the resource.'
                     type: string
                   lastModifiedByType:
-                    description: 'LastModifiedByType: The type of identity that last
-                      modified the resource.'
                     type: string
                 type: object
               type:

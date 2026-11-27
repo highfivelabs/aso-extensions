@@ -123,18 +123,10 @@ type AzureBlobStorageLinkedServiceTypeProperties struct {
 }
 
 type AzureKeyVaultSecretReference struct {
-	// SecretName: The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
-	SecretName *v1.JSON `json:"secretName,omitempty"`
-
-	// SecretVersion: The version of the secret in Azure Key Vault. The default value is the latest version of the secret.
-	// Type: string (or Expression with resultType string).
-	SecretVersion *v1.JSON `json:"secretVersion,omitempty"`
-
-	// Store: The Azure Key Vault linked service reference.
-	Store *LinkedServiceReference `json:"store,omitempty"`
-
-	// Type: Type of the secret.
-	Type AzureKeyVaultSecretReference_Type `json:"type,omitempty"`
+	SecretName    *v1.JSON                          `json:"secretName,omitempty"`
+	SecretVersion *v1.JSON                          `json:"secretVersion,omitempty"`
+	Store         *LinkedServiceReference           `json:"store,omitempty"`
+	Type          AzureKeyVaultSecretReference_Type `json:"type,omitempty"`
 }
 
 // The type used for authentication. Type: string.

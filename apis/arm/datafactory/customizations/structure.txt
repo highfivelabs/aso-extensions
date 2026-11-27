@@ -63,6 +63,8 @@ FactoriesManagedVirtualNetworkExtension: Object (0 properties)
 
 FactoriesManagedVirtualNetworksManagedPrivateEndpointExtension: Object (0 properties)
 
+FactoriesPipelineExtension: Object (0 properties)
+
 FactoriesPrivateEndpointConnectionExtension: Object (0 properties)
 
 FactoriesTriggerExtension: Object (0 properties)

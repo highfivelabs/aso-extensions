@@ -212,13 +212,10 @@ spec:
                       parameters:
                         additionalProperties:
                           x-kubernetes-preserve-unknown-fields: true
-                        description: 'Parameters: Arguments for LinkedService.'
                         type: object
                       referenceName:
-                        description: 'ReferenceName: Reference LinkedService name.'
                         type: string
                       type:
-                        description: 'Type: Linked service reference type.'
                         enum:
                         - LinkedServiceReference
                         type: string
@@ -618,13 +615,10 @@ spec:
                     type: object
                   parameters:
                     additionalProperties:
-                      description: Definition of a single parameter for an entity.
                       properties:
                         defaultValue:
-                          description: 'DefaultValue: Default value of parameter.'
                           x-kubernetes-preserve-unknown-fields: true
                         type:
-                          description: 'Type: Parameter type.'
                           enum:
                           - Array
                           - Bool
@@ -1110,13 +1104,10 @@ spec:
                     type: object
                   parameters:
                     additionalProperties:
-                      description: Definition of a single parameter for an entity.
                       properties:
                         defaultValue:
-                          description: 'DefaultValue: Default value of parameter.'
                           x-kubernetes-preserve-unknown-fields: true
                         type:
-                          description: 'Type: Parameter type.'
                           type: string
                       type: object
                     description: 'Parameters: Parameters for dataset.'
@@ -1140,26 +1131,16 @@ spec:
                   createdBy and modifiedBy information.'
                 properties:
                   createdAt:
-                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
                     type: string
                   createdBy:
-                    description: 'CreatedBy: The identity that created the resource.'
                     type: string
                   createdByType:
-                    description: 'CreatedByType: The type of identity that created
-                      the resource.'
                     type: string
                   lastModifiedAt:
-                    description: 'LastModifiedAt: The timestamp of resource last modification
-                      (UTC)'
                     type: string
                   lastModifiedBy:
-                    description: 'LastModifiedBy: The identity that last modified
-                      the resource.'
                     type: string
                   lastModifiedByType:
-                    description: 'LastModifiedByType: The type of identity that last
-                      modified the resource.'
                     type: string
                 type: object
               type:

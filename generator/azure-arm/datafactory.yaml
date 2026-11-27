@@ -12,8 +12,10 @@
 # makes one resource per member of the union, Factories_LinkedService_<Type>
 # and Factories_Dataset_<Type>; the members exported below are the kinds
 # (docs/plan.md section 2, "One kind per member of a union"; §8 Q17, "One
-# kind per type"). The whole unions are not exported. Pipelines are not
-# exported: docs/plan.md §8 Q18.
+# kind per type"). The whole unions are not exported. A pipeline holds a
+# list of mixed activities, so it is not split: FactoriesPipeline keeps a
+# named list of activity types, copy sources and sinks (the transformers
+# below), nested activities are free-form JSON (docs/plan.md §8 Q18, f89).
 typeFilters:
   - action: include
     group: datafactory
@@ -116,6 +118,75 @@ typeTransformers:
     because: >-
       a REST or HTTP dataset's additional headers may carry a token, as a
       linked service's authorization headers may; a status must not hold them
+  - group: datafactory
+    version: v20180601
+    name: Activity;Activity_STATUS
+    property: AzureDataExplorerCommand;AzureMLBatchExecution;AzureMLExecutePipeline;AzureMLUpdateResource;Container;Custom;DataLakeAnalyticsUSQL;ExecuteSSISPackage;ExecuteWranglingDataflow;Execution;HDInsightHive;HDInsightMapReduce;HDInsightPig;HDInsightSpark;HDInsightStreaming;SparkJob;SynapseNotebook
+    remove: true
+    because: >-
+      the activity types a pipeline may hold (docs/plan.md §8 Q18, recommended (a)): the pipeline kind keeps
+      AppendVariable, AzureFunctionActivity, Copy, DatabricksJob, DatabricksNotebook, DatabricksSparkJar, DatabricksSparkPython, Delete, ExecuteDataFlow, ExecutePipeline, Fail, Filter, ForEach, GetMetadata, IfCondition, Lookup, Script, SetVariable, SqlServerStoredProcedure, Switch, Until, Validation, Wait, WebActivity, WebHook; the rest are left out so its CRD fits
+  - group: datafactory
+    version: v20180601
+    name: CopySource;CopySource_STATUS
+    property: AmazonMWS;AmazonRdsForOracle;AmazonRdsForSqlServer;AmazonRedshift;AzureBlobFS;AzureDataExplorer;AzureDataLakeStore;AzureMariaDB;AzureMySql;AzurePostgreSql;AzureTable;Blob;Cassandra;CommonDataServiceForApps;Concur;CosmosDbMongoDbApi;Couchbase;Db2;DocumentDbCollection;Drill;Dynamics;DynamicsAX;DynamicsCrm;Eloqua;FileSystem;GoogleAdWords;GoogleBigQuery;GoogleBigQueryV2;Greenplum;HBase;Hdfs;Hive;Hubspot;Impala;Informix;Jira;LakeHouseTable;Magento;MariaDB;Marketo;MicrosoftAccess;MongoDb;MongoDbAtlas;MongoDbV2;MySql;Netezza;OData;Odbc;Office365;Oracle;OracleServiceCloud;Paypal;Phoenix;PostgreSql;PostgreSqlV2;Presto;QuickBooks;Relational;Responsys;Salesforce;SalesforceMarketingCloud;SalesforceServiceCloud;SalesforceServiceCloudV2;SalesforceV2;SapBw;SapCloudForCustomer;SapEcc;SapHana;SapOdp;SapOpenHub;SapTable;ServiceNow;ServiceNowV2;SharePointOnlineList;Shopify;Snowflake;SnowflakeV2;Spark;Sql;SqlMI;SqlServer;Square;Sybase;Tabular;Teradata;Vertica;Warehouse;Web;Xero;Zoho
+    remove: true
+    because: >-
+      the sources a copy activity may read, the stores of the linked service and dataset kinds (docs/plan.md §8 Q18, recommended (a)): the pipeline kind keeps
+      Avro, AzureDatabricksDeltaLake, AzureSql, Binary, CosmosDbSqlApi, DelimitedText, Excel, Http, Json, Orc, Parquet, Rest, SqlDW, Xml; the rest are left out so its CRD fits
+  - group: datafactory
+    version: v20180601
+    name: CopySink;CopySink_STATUS
+    property: AzureBlobFS;AzureDataExplorer;AzureDataLakeStore;AzureMySql;AzurePostgreSql;AzureQueue;AzureSearchIndex;AzureTable;Blob;CommonDataServiceForApps;CosmosDbMongoDbApi;DocumentDbCollection;Dynamics;DynamicsCrm;FileSystem;Iceberg;Informix;LakeHouseTable;MicrosoftAccess;MongoDbAtlas;MongoDbV2;Odbc;Oracle;Salesforce;SalesforceServiceCloud;SalesforceServiceCloudV2;SalesforceV2;SapCloudForCustomer;Snowflake;SnowflakeV2;Sql;SqlMI;SqlServer;Teradata;Warehouse
+    remove: true
+    because: >-
+      the sinks a copy activity may write, as for its sources (docs/plan.md §8 Q18, recommended (a)): the pipeline kind keeps
+      Avro, AzureDatabricksDeltaLake, AzureSql, Binary, CosmosDbSqlApi, DelimitedText, Json, Orc, Parquet, Rest, SqlDW; the rest are left out so its CRD fits
+  - group: datafactory
+    version: v20180601
+    name: ForEachActivityTypeProperties;UntilActivityTypeProperties;SwitchCase
+    property: Activities
+    target:
+      name: any
+    because: >-
+      the activities a control activity holds are activities again; a CRD
+      cannot hold a recursive schema (controller-gen writes an empty one,
+      which is not structural), so nested activities are free-form JSON,
+      checked by Data Factory (docs/plan.md §8 Q18 (b))
+  - group: datafactory
+    version: v20180601
+    name: IfConditionActivityTypeProperties
+    property: IfTrueActivities;IfFalseActivities
+    target:
+      name: any
+    because: nested activities, free-form JSON as a ForEach's
+  - group: datafactory
+    version: v20180601
+    name: SwitchActivityTypeProperties
+    property: DefaultActivities
+    target:
+      name: any
+    because: nested activities, free-form JSON as a ForEach's
+  - group: datafactory
+    version: v20180601
+    name: Pipeline_STATUS
+    property: Activities
+    remove: true
+    because: >-
+      the activities are what the spec says; echoed in the status they are
+      a second copy of the activity schema (1 MB of the CRD)
+  - group: datafactory
+    version: v20180601
+    name: StoreReadSettings;StoreReadSettings_STATUS
+    property: AmazonS3;AmazonS3Compatible;AzureDataLakeStore;AzureFileStorage;FileServer;Ftp;GoogleCloudStorage;Hdfs;LakeHouse;OracleCloudStorage;Sftp
+    remove: true
+    because: a copy source reads from the stores the linked service kinds cover (Blob, Data Lake Gen2, HTTP); docs/plan.md §8 Q18
+  - group: datafactory
+    version: v20180601
+    name: StoreWriteSettings;StoreWriteSettings_STATUS
+    property: AzureDataLakeStore;AzureFileStorage;FileServer;LakeHouse;Sftp
+    remove: true
+    because: a copy sink writes to the stores the linked service kinds cover (Blob, Data Lake Gen2); docs/plan.md §8 Q18
 groupModelConfiguration:
   2018-06-01:
     Factories_ManagedVirtualNetwork:
@@ -184,6 +255,10 @@ groupModelConfiguration:
     Factories_LinkedService_AzureDatabricks:
       $exportAs: FactoriesLinkedServiceAzureDatabricks
       $supportedFrom: v0.1.0
+    Factories_Pipeline:
+      $exportAs: FactoriesPipeline
+      $supportedFrom: v0.1.0
+      $stripDocumentation: true
     Factories_Dataset_DelimitedText:
       $exportAs: FactoriesDatasetDelimitedText
       $supportedFrom: v0.1.0
