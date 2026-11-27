@@ -4,7 +4,9 @@
 package arm
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 	"testing"
 )
 
@@ -81,4 +83,54 @@ func TestDataFactoryReferences(t *testing.T) {
 		`{"type":"SelfHosted","typeProperties":{"linkedInfo":{"authorizationType":"RBAC","resourceId":"`+rg+`/providers/Microsoft.DataFactory/factories/hub/integrationRuntimes/shared"}}}`, http.StatusNotFound)
 	put("a change data capture", factory+"/adfcdcs/orders",
 		`{"sourceConnectionsInfo":[{"connection":{"linkedService":{"type":"LinkedServiceReference","referenceName":"lake"},"type":"linkedservicetype"}}],"targetConnectionsInfo":[],"policy":{"mode":"Microbatch"}}`, http.StatusCreated)
+}
+
+// A linked service names what exists (its runtime, a credential, the Key
+// Vault linked service of a secret); a secure string has a value, which a
+// GET masks; an Azure Blob Storage linked service takes one of its three
+// ways to name the account.
+func TestDataFactoryLinkedServices(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/adf"
+	factory := rg + "/providers/Microsoft.DataFactory/factories/etl"
+	for _, id := range []string{rg, factory, factory + "/integrationRuntimes/onprem"} {
+		a.AddResource(id)
+	}
+	put := func(what, id, props string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, id, `{"properties":`+props+`}`)
+		expect(t, what, code, resp, want)
+	}
+	vault := factory + "/linkedservices/vault"
+	put("a Key Vault linked service", vault, `{"type":"AzureKeyVault","typeProperties":{"baseUrl":"https://etl.vault.azure.net/"}}`, http.StatusCreated)
+	sql := factory + "/linkedservices/sql"
+	fromVault := func(store string) string {
+		return `{"type":"AzureSqlDatabase","typeProperties":{"connectionString":{"type":"AzureKeyVaultSecret",` +
+			`"store":{"type":"LinkedServiceReference","referenceName":"` + store + `"},"secretName":"sql"}}}`
+	}
+	put("a secret from a missing vault", sql, fromVault("keys"), http.StatusBadRequest)
+	put("a secret from the vault", sql, fromVault("vault"), http.StatusCreated)
+	put("a runtime that is not there", factory+"/linkedservices/files",
+		`{"type":"HttpServer","connectVia":{"type":"IntegrationRuntimeReference","referenceName":"dc"},"typeProperties":{"url":"https://files"}}`, http.StatusBadRequest)
+	put("a runtime that is there", factory+"/linkedservices/files",
+		`{"type":"HttpServer","connectVia":{"type":"IntegrationRuntimeReference","referenceName":"onprem"},"typeProperties":{"url":"https://files"}}`, http.StatusCreated)
+	put("a credential that is not there", factory+"/linkedservices/lake",
+		`{"type":"AzureBlobFS","typeProperties":{"url":"https://lake.dfs.core.windows.net","credential":{"type":"CredentialReference","referenceName":"etl"}}}`, http.StatusBadRequest)
+	blob := factory + "/linkedservices/blob"
+	put("a secure string of no value", blob, `{"type":"AzureBlobStorage","typeProperties":{"connectionString":{"type":"SecureString"}}}`, http.StatusBadRequest)
+	put("a connection string and an endpoint", blob,
+		`{"type":"AzureBlobStorage","typeProperties":{"connectionString":{"type":"SecureString","value":"k"},"serviceEndpoint":"https://blob"}}`, http.StatusBadRequest)
+	code, resp := do(t, a, http.MethodPut, blob, `{"properties":{"type":"AzureBlobStorage","typeProperties":{"connectionString":{"type":"SecureString","value":"AccountKey=k"}}}}`)
+	expect(t, "a connection string", code, resp, http.StatusCreated)
+	if strings.Contains(resp, "AccountKey=k") {
+		t.Errorf("the PUT returned the secure string: %s", resp)
+	}
+	code, resp = do(t, a, http.MethodGet, blob, "")
+	expect(t, "the GET", code, resp, http.StatusOK)
+	if strings.Contains(resp, "AccountKey=k") || !strings.Contains(resp, adfMasked) {
+		t.Errorf("the GET did not mask the secure string: %s", resp)
+	}
+	if r, _ := a.Resource(blob); !strings.Contains(fmt.Sprint(r), "AccountKey=k") {
+		t.Errorf("the fake did not keep the secure string: %v", r)
+	}
 }

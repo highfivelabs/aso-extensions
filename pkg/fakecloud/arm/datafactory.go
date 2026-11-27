@@ -4,6 +4,7 @@
 package arm
 
 import (
+	"encoding/json"
 	"net/http"
 	"regexp"
 	"slices"
@@ -31,7 +32,18 @@ import (
 //     refuses a document naming what is not there ("invalid reference",
 //     400) (f86);
 //   - a linked self-hosted integration runtime's shared runtime exists
-//     (404).
+//     (404);
+//   - a linked service names others of the factory by reference as the
+//     kinds above do (its integration runtime, connectVia; a credential;
+//     the Key Vault linked service of a secret's store), and each exists
+//     ("invalid reference", 400) (one kind per linked service type);
+//   - a secure string (a SecretBase of type SecureString) has a value
+//     (400), and Data Factory never returns it: what a GET or PUT returns
+//     of a factory's child holds each secure string's value masked
+//     (adfMasked);
+//   - an Azure Blob Storage linked service takes at most one of
+//     connectionString, sasUri and serviceEndpoint, which the spec says are
+//     mutually exclusive (400).
 //
 // A factory's global parameters are kept with no provisioningState in their
 // properties, which are a map of the parameters (propertiesAreAMap).
@@ -48,7 +60,10 @@ var (
 	adfCredential  = regexp.MustCompile(adfFactory + `/credentials/[^/]+$`)
 	adfGlobalParam = regexp.MustCompile(adfFactory + `/globalparameters/([^/]+)$`)
 	adfParamTypes  = []string{"Object", "String", "Int", "Float", "Bool", "Array"}
-	adfAuthoring   = regexp.MustCompile(`(?i)^(.*` + adfFactory + `)/(triggers|dataflows|adfcdcs|integrationruntimes)/[^/]+$`)
+	adfAuthoring   = regexp.MustCompile(`(?i)^(.*` + adfFactory + `)/(triggers|dataflows|adfcdcs|integrationruntimes|linkedservices)/[^/]+$`)
+	adfChild       = regexp.MustCompile(adfFactory + `/[^/]+/[^/]+$`)
+	// adfMasked is what Data Factory returns in place of a secure string's value.
+	adfMasked = "**********"
 	// The collection a reference's type names.
 	adfReferenceCollections = map[string]string{
 		"PipelineReference":              "pipelines",
@@ -81,6 +96,52 @@ func adfReferences(v any, out *[]string) {
 	}
 }
 
+// adfSecureStrings returns the secure strings of a document (objects of
+// type SecureString), wherever they are in it.
+func adfSecureStrings(v any, out *[]map[string]any) {
+	switch t := v.(type) {
+	case map[string]any:
+		if stringOf(t["type"]) == "SecureString" {
+			*out = append(*out, t)
+		}
+		for _, x := range t {
+			adfSecureStrings(x, out)
+		}
+	case []any:
+		for _, x := range t {
+			adfSecureStrings(x, out)
+		}
+	}
+}
+
+// renderDataFactory returns a factory child as Data Factory shows it: each
+// secure string's value masked. ok is false when id is no factory child or
+// it holds no secure string.
+func renderDataFactory(id string, r resource) (resource, bool) {
+	if !adfChild.MatchString(id) {
+		return nil, false
+	}
+	var secure []map[string]any
+	adfSecureStrings(map[string]any(r), &secure)
+	if len(secure) == 0 {
+		return nil, false
+	}
+	b, err := json.Marshal(r)
+	if err != nil {
+		return nil, false
+	}
+	var out resource
+	if err := json.Unmarshal(b, &out); err != nil {
+		return nil, false
+	}
+	secure = secure[:0]
+	adfSecureStrings(map[string]any(out), &secure)
+	for _, s := range secure {
+		s["value"] = adfMasked
+	}
+	return out, true
+}
+
 // propertiesAreAMap is whether a resource's properties are a map of named
 // entries rather than an object (a factory's global parameters), to which
 // the fake adds no provisioningState, as Azure adds none.
@@ -106,7 +167,25 @@ func (a *ARM) checkDataFactory(id string, body map[string]any) (status int, code
 				return bad("The document creation or update failed because of invalid reference '" + ref[strings.Index(ref, "/")+1:] + "'.")
 			}
 		}
+		var secure []map[string]any
+		adfSecureStrings(props, &secure)
+		for _, s := range secure {
+			if stringOf(s["value"]) == "" {
+				return bad("A secure string has a value.")
+			}
+		}
 		linked, _ := props["typeProperties"].(map[string]any)
+		if strings.EqualFold(m[2], "linkedservices") && stringOf(props["type"]) == "AzureBlobStorage" {
+			n := 0
+			for _, k := range []string{"connectionString", "sasUri", "serviceEndpoint"} {
+				if linked[k] != nil {
+					n++
+				}
+			}
+			if n > 1 {
+				return bad("An Azure Blob Storage linked service takes one of connectionString, sasUri and serviceEndpoint.")
+			}
+		}
 		info, _ := linked["linkedInfo"].(map[string]any)
 		if shared := stringOf(info["resourceId"]); shared != "" && !a.exists(shared) {
 			return notFound("integration runtime", shared)

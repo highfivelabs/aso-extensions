@@ -807,7 +807,7 @@ Microsoft.DataFactory,Microsoft.DataFactory/factories/dataflows,54,,0,datafactor
 Microsoft.DataFactory,Microsoft.DataFactory/factories/datasets,13,,0,,0,13,false,spec_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/globalParameters,2,,0,datafactory.azure.hfl.dev/FactoriesGlobalParameter,2,0,false,spec_api=2018-06-01; ours_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/integrationRuntimes,57,,0,datafactory.azure.hfl.dev/FactoriesIntegrationRuntime,4,53,false,spec_api=2018-06-01; ours_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/linkedservices,32,,0,,0,32,false,spec_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/linkedservices,32,,0,datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureBlobFS,9,23,false,spec_api=2018-06-01; ours_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/managedVirtualNetworks,1,,0,datafactory.azure.hfl.dev/FactoriesManagedVirtualNetwork,0,1,false,spec_api=2018-06-01; ours_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints,5,,0,datafactory.azure.hfl.dev/FactoriesManagedVirtualNetworksManagedPrivateEndpoint,3,2,false,spec_api=2018-06-01; ours_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/pipelines,39,,0,,0,39,false,spec_api=2018-06-01

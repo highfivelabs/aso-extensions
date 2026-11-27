@@ -189,6 +189,16 @@ resources:
 - datafactory.azure.hfl.dev_factoriesdataflows.yaml
 - datafactory.azure.hfl.dev_factoriesglobalparameters.yaml
 - datafactory.azure.hfl.dev_factoriesintegrationruntimes.yaml
+- datafactory.azure.hfl.dev_factorieslinkedserviceazureblobfses.yaml
+- datafactory.azure.hfl.dev_factorieslinkedserviceazureblobstorages.yaml
+- datafactory.azure.hfl.dev_factorieslinkedserviceazuredatabricks.yaml
+- datafactory.azure.hfl.dev_factorieslinkedserviceazurekeyvaults.yaml
+- datafactory.azure.hfl.dev_factorieslinkedserviceazuresqldatabases.yaml
+- datafactory.azure.hfl.dev_factorieslinkedserviceazuresqldws.yaml
+- datafactory.azure.hfl.dev_factorieslinkedserviceazuresynapseartifacts.yaml
+- datafactory.azure.hfl.dev_factorieslinkedservicecosmosdbs.yaml
+- datafactory.azure.hfl.dev_factorieslinkedservicehttpservers.yaml
+- datafactory.azure.hfl.dev_factorieslinkedservicerestservices.yaml
 - datafactory.azure.hfl.dev_factoriesmanagedvirtualnetworks.yaml
 - datafactory.azure.hfl.dev_factoriesmanagedvirtualnetworksmanagedprivateendpoints.yaml
 - datafactory.azure.hfl.dev_factoriesprivateendpointconnections.yaml

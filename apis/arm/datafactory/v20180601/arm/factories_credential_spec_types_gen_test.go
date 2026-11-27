@@ -13,65 +13,6 @@ import (
 	"testing"
 )
 
-func Test_AzureKeyVaultSecretReference_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForAzureKeyVaultSecretReference)
-}
-
-// RunJSONSerializationTestForAzureKeyVaultSecretReference runs a test to see if a specific instance of AzureKeyVaultSecretReference round trips to JSON and back losslessly
-func RunJSONSerializationTestForAzureKeyVaultSecretReference(t *rapid.T) {
-	subject := AzureKeyVaultSecretReferenceGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual AzureKeyVaultSecretReference
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of AzureKeyVaultSecretReference instances for property testing - lazily instantiated by
-// AzureKeyVaultSecretReferenceGenerator()
-var azureKeyVaultSecretReferenceGenerator *rapid.Generator[AzureKeyVaultSecretReference]
-
-// AzureKeyVaultSecretReferenceGenerator returns a generator of AzureKeyVaultSecretReference instances for property testing.
-func AzureKeyVaultSecretReferenceGenerator() *rapid.Generator[AzureKeyVaultSecretReference] {
-	if azureKeyVaultSecretReferenceGenerator != nil {
-		return azureKeyVaultSecretReferenceGenerator
-	}
-
-	store := rapid.Ptr(LinkedServiceReferenceGenerator(), true)
-	typeVar := rapid.SampledFrom([]AzureKeyVaultSecretReference_Type{AzureKeyVaultSecretReference_Type_AzureKeyVaultSecret})
-
-	azureKeyVaultSecretReferenceGenerator = rapid.Custom(func(t *rapid.T) AzureKeyVaultSecretReference {
-		var result AzureKeyVaultSecretReference
-		result.Store = store.Draw(t, "Store")
-		result.Type = typeVar.Draw(t, "Type")
-		return result
-	})
-
-	return azureKeyVaultSecretReferenceGenerator
-}
-
 func Test_Credential_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 

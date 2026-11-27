@@ -36,6 +36,76 @@ typeTransformers:
       password, a custom setup script's SAS token, a package store's or
       express custom setup's credentials) come from Secrets (below); a
       status must not hold them
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobStorageLinkedServiceTypeProperties;AzureSqlDatabaseLinkedServiceTypeProperties;AzureSqlDWLinkedServiceTypeProperties;CosmosDbLinkedServiceTypeProperties
+    property: ConnectionString
+    target:
+      name: SecretBase
+      optional: true
+    because: >-
+      a connection string may hold a key or password; the spec takes a
+      string, an expression, a SecureString or a Key Vault reference, and
+      here it is a SecretBase (a SecureString whose value comes from a
+      Secret, or a Key Vault reference), so it never sits in the object in
+      plain text (patch 0021)
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobStorageLinkedServiceTypeProperties;AzureBlobFSLinkedServiceTypeProperties
+    property: SasUri
+    target:
+      name: SecretBase
+      optional: true
+    because: a SAS URI carries its token; a SecretBase as the connection string (patch 0021)
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobFSLinkedServiceTypeProperties
+    property: AccountKey
+    target:
+      name: SecretBase
+      optional: true
+    because: a storage account key; a SecretBase as the connection string (patch 0021)
+  - group: datafactory
+    version: v20180601
+    name: HttpLinkedServiceTypeProperties
+    property: EmbeddedCertData
+    target:
+      name: SecretBase
+      optional: true
+    because: a client certificate with its private key; a SecretBase as the connection string (patch 0021)
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobStorageLinkedServiceTypeProperties_STATUS;AzureSqlDatabaseLinkedServiceTypeProperties_STATUS;AzureSqlDWLinkedServiceTypeProperties_STATUS;CosmosDbLinkedServiceTypeProperties_STATUS
+    property: ConnectionString
+    remove: true
+    because: a status must not hold a connection string (the spec's is a Secret or a Key Vault reference)
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobStorageLinkedServiceTypeProperties_STATUS;AzureBlobFSLinkedServiceTypeProperties_STATUS
+    property: SasUri
+    remove: true
+    because: a status must not hold a SAS URI
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobFSLinkedServiceTypeProperties_STATUS
+    property: AccountKey
+    remove: true
+    because: a status must not hold an account key
+  - group: datafactory
+    version: v20180601
+    name: HttpLinkedServiceTypeProperties_STATUS
+    property: EmbeddedCertData
+    remove: true
+    because: a status must not hold a certificate's private key
+  - group: datafactory
+    version: v20180601
+    name: HttpLinkedServiceTypeProperties_STATUS;RestServiceLinkedServiceTypeProperties_STATUS
+    property: AuthHeaders
+    remove: true
+    because: >-
+      authorization headers may carry a token; a status must not hold them
+      (in the spec they are free-form, as Data Factory takes them: give
+      credentials in the typed secret properties instead)
 groupModelConfiguration:
   2018-06-01:
     Factories_ManagedVirtualNetwork:
@@ -73,6 +143,36 @@ groupModelConfiguration:
       $supportedFrom: v0.1.0
     Factories_Adfcdc:
       $exportAs: FactoriesAdfcdc
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureBlobStorage:
+      $exportAs: FactoriesLinkedServiceAzureBlobStorage
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureBlobFS:
+      $exportAs: FactoriesLinkedServiceAzureBlobFS
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureSqlDatabase:
+      $exportAs: FactoriesLinkedServiceAzureSqlDatabase
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureKeyVault:
+      $exportAs: FactoriesLinkedServiceAzureKeyVault
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureSqlDW:
+      $exportAs: FactoriesLinkedServiceAzureSqlDW
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureSynapseArtifacts:
+      $exportAs: FactoriesLinkedServiceAzureSynapseArtifacts
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_CosmosDb:
+      $exportAs: FactoriesLinkedServiceCosmosDb
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_RestService:
+      $exportAs: FactoriesLinkedServiceRestService
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_HttpServer:
+      $exportAs: FactoriesLinkedServiceHttpServer
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureDatabricks:
+      $exportAs: FactoriesLinkedServiceAzureDatabricks
       $supportedFrom: v0.1.0
     BlobEventsTriggerTypeProperties:
       Scope:

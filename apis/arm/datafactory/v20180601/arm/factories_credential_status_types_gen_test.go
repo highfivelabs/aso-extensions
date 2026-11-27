@@ -13,65 +13,6 @@ import (
 	"testing"
 )
 
-func Test_AzureKeyVaultSecretReference_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForAzureKeyVaultSecretReference_STATUS)
-}
-
-// RunJSONSerializationTestForAzureKeyVaultSecretReference_STATUS runs a test to see if a specific instance of AzureKeyVaultSecretReference_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForAzureKeyVaultSecretReference_STATUS(t *rapid.T) {
-	subject := AzureKeyVaultSecretReference_STATUSGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual AzureKeyVaultSecretReference_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of AzureKeyVaultSecretReference_STATUS instances for property testing - lazily instantiated by
-// AzureKeyVaultSecretReference_STATUSGenerator()
-var azureKeyVaultSecretReference_STATUSGenerator *rapid.Generator[AzureKeyVaultSecretReference_STATUS]
-
-// AzureKeyVaultSecretReference_STATUSGenerator returns a generator of AzureKeyVaultSecretReference_STATUS instances for property testing.
-func AzureKeyVaultSecretReference_STATUSGenerator() *rapid.Generator[AzureKeyVaultSecretReference_STATUS] {
-	if azureKeyVaultSecretReference_STATUSGenerator != nil {
-		return azureKeyVaultSecretReference_STATUSGenerator
-	}
-
-	store := rapid.Ptr(LinkedServiceReference_STATUSGenerator(), true)
-	typeVar := rapid.SampledFrom([]AzureKeyVaultSecretReference_Type_STATUS{AzureKeyVaultSecretReference_Type_STATUS_AzureKeyVaultSecret})
-
-	azureKeyVaultSecretReference_STATUSGenerator = rapid.Custom(func(t *rapid.T) AzureKeyVaultSecretReference_STATUS {
-		var result AzureKeyVaultSecretReference_STATUS
-		result.Store = store.Draw(t, "Store")
-		result.Type = typeVar.Draw(t, "Type")
-		return result
-	})
-
-	return azureKeyVaultSecretReference_STATUSGenerator
-}
-
 func Test_Credential_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 

@@ -1158,6 +1158,1814 @@ FactoriesIntegrationRuntime_Spec: Object (2 properties)
             │       └── ResourceId: *string
             └── SelfContainedInteractiveAuthoringEnabled: *bool
 
+FactoriesLinkedServiceAzureBlobFS_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── ConnectVia: *Object (3 properties)
+│   │   ├── Parameters: map[string]v1.JSON
+│   │   ├── ReferenceName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "IntegrationRuntimeReference"
+│   ├── Description: *string
+│   ├── Parameters: map[string]Object (2 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   └── Type: *Enum (7 values)
+│   │       ├── "Array"
+│   │       ├── "Bool"
+│   │       ├── "Float"
+│   │       ├── "Int"
+│   │       ├── "Object"
+│   │       ├── "SecureString"
+│   │       └── "String"
+│   ├── Type: *Enum (1 value)
+│   │   └── "AzureBlobFS"
+│   ├── TypeProperties: *Object (10 properties)
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── Credential: *Object (3 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *Enum (1 value)
+│   │   │       └── "CredentialReference"
+│   │   ├── EncryptedCredential: *string
+│   │   ├── SasToken: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── ServicePrincipalCredential: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── ServicePrincipalCredentialType: *v1.JSON
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   ├── ServicePrincipalKey: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── Tenant: *v1.JSON
+│   │   └── Url: *v1.JSON
+│   └── Version: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+FactoriesLinkedServiceAzureBlobFS_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── ConnectVia: *Object (3 properties)
+    │   ├── Parameters: map[string]v1.JSON
+    │   ├── ReferenceName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "IntegrationRuntimeReference"
+    ├── Description: *string
+    ├── Parameters: map[string]Object (2 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   └── Type: *Enum (7 values)
+    │       ├── "Array"
+    │       ├── "Bool"
+    │       ├── "Float"
+    │       ├── "Int"
+    │       ├── "Object"
+    │       ├── "SecureString"
+    │       └── "String"
+    ├── Type: *Enum (1 value)
+    │   └── "AzureBlobFS"
+    ├── TypeProperties: *Object (12 properties)
+    │   ├── AccountKey: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── Credential: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "CredentialReference"
+    │   ├── EncryptedCredential: *string
+    │   ├── SasToken: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── SasUri: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── ServicePrincipalCredential: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── ServicePrincipalCredentialType: *v1.JSON
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   ├── ServicePrincipalKey: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── Tenant: *v1.JSON
+    │   └── Url: *v1.JSON
+    └── Version: *string
+
+FactoriesLinkedServiceAzureBlobStorage_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── ConnectVia: *Object (3 properties)
+│   │   ├── Parameters: map[string]v1.JSON
+│   │   ├── ReferenceName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "IntegrationRuntimeReference"
+│   ├── Description: *string
+│   ├── Parameters: map[string]Object (2 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   └── Type: *Enum (7 values)
+│   │       ├── "Array"
+│   │       ├── "Bool"
+│   │       ├── "Float"
+│   │       ├── "Int"
+│   │       ├── "Object"
+│   │       ├── "SecureString"
+│   │       └── "String"
+│   ├── Type: *Enum (1 value)
+│   │   └── "AzureBlobStorage"
+│   ├── TypeProperties: *Object (12 properties)
+│   │   ├── AccountKey: *Object (4 properties)
+│   │   │   ├── SecretName: *v1.JSON
+│   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   └── Type: Enum (1 value)
+│   │   │       └── "AzureKeyVaultSecret"
+│   │   ├── AccountKind: *v1.JSON
+│   │   ├── AuthenticationType: *Enum (5 values)
+│   │   │   ├── "AccountKey"
+│   │   │   ├── "Anonymous"
+│   │   │   ├── "Msi"
+│   │   │   ├── "SasUri"
+│   │   │   └── "ServicePrincipal"
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── ContainerUri: *v1.JSON
+│   │   ├── Credential: *Object (3 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *Enum (1 value)
+│   │   │       └── "CredentialReference"
+│   │   ├── EncryptedCredential: *string
+│   │   ├── SasToken: *Object (4 properties)
+│   │   │   ├── SecretName: *v1.JSON
+│   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   └── Type: Enum (1 value)
+│   │   │       └── "AzureKeyVaultSecret"
+│   │   ├── ServiceEndpoint: *v1.JSON
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   ├── ServicePrincipalKey: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   └── Tenant: *v1.JSON
+│   └── Version: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+FactoriesLinkedServiceAzureBlobStorage_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── ConnectVia: *Object (3 properties)
+    │   ├── Parameters: map[string]v1.JSON
+    │   ├── ReferenceName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "IntegrationRuntimeReference"
+    ├── Description: *string
+    ├── Parameters: map[string]Object (2 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   └── Type: *Enum (7 values)
+    │       ├── "Array"
+    │       ├── "Bool"
+    │       ├── "Float"
+    │       ├── "Int"
+    │       ├── "Object"
+    │       ├── "SecureString"
+    │       └── "String"
+    ├── Type: *Enum (1 value)
+    │   └── "AzureBlobStorage"
+    ├── TypeProperties: *Object (14 properties)
+    │   ├── AccountKey: *Object (4 properties)
+    │   │   ├── SecretName: *v1.JSON
+    │   │   ├── SecretVersion: *v1.JSON
+    │   │   ├── Store: *Object (3 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LinkedServiceReference"
+    │   │   └── Type: Enum (1 value)
+    │   │       └── "AzureKeyVaultSecret"
+    │   ├── AccountKind: *v1.JSON
+    │   ├── AuthenticationType: *Enum (5 values)
+    │   │   ├── "AccountKey"
+    │   │   ├── "Anonymous"
+    │   │   ├── "Msi"
+    │   │   ├── "SasUri"
+    │   │   └── "ServicePrincipal"
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── ConnectionString: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── ContainerUri: *v1.JSON
+    │   ├── Credential: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "CredentialReference"
+    │   ├── EncryptedCredential: *string
+    │   ├── SasToken: *Object (4 properties)
+    │   │   ├── SecretName: *v1.JSON
+    │   │   ├── SecretVersion: *v1.JSON
+    │   │   ├── Store: *Object (3 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LinkedServiceReference"
+    │   │   └── Type: Enum (1 value)
+    │   │       └── "AzureKeyVaultSecret"
+    │   ├── SasUri: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── ServiceEndpoint: *v1.JSON
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   ├── ServicePrincipalKey: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   └── Tenant: *v1.JSON
+    └── Version: *string
+
+FactoriesLinkedServiceAzureDatabricks_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── ConnectVia: *Object (3 properties)
+│   │   ├── Parameters: map[string]v1.JSON
+│   │   ├── ReferenceName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "IntegrationRuntimeReference"
+│   ├── Description: *string
+│   ├── Parameters: map[string]Object (2 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   └── Type: *Enum (7 values)
+│   │       ├── "Array"
+│   │       ├── "Bool"
+│   │       ├── "Float"
+│   │       ├── "Int"
+│   │       ├── "Object"
+│   │       ├── "SecureString"
+│   │       └── "String"
+│   ├── Type: *Enum (1 value)
+│   │   └── "AzureDatabricks"
+│   ├── TypeProperties: *Object (20 properties)
+│   │   ├── AccessToken: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── Authentication: *v1.JSON
+│   │   ├── Credential: *Object (3 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *Enum (1 value)
+│   │   │       └── "CredentialReference"
+│   │   ├── DataSecurityMode: *v1.JSON
+│   │   ├── Domain: *v1.JSON
+│   │   ├── EncryptedCredential: *string
+│   │   ├── ExistingClusterId: *v1.JSON
+│   │   ├── InstancePoolId: *v1.JSON
+│   │   ├── NewClusterCustomTags: map[string]v1.JSON
+│   │   ├── NewClusterDriverNodeType: *v1.JSON
+│   │   ├── NewClusterEnableElasticDisk: *v1.JSON
+│   │   ├── NewClusterInitScripts: *v1.JSON
+│   │   ├── NewClusterLogDestination: *v1.JSON
+│   │   ├── NewClusterNodeType: *v1.JSON
+│   │   ├── NewClusterNumOfWorker: *v1.JSON
+│   │   ├── NewClusterSparkConf: map[string]v1.JSON
+│   │   ├── NewClusterSparkEnvVars: map[string]v1.JSON
+│   │   ├── NewClusterVersion: *v1.JSON
+│   │   ├── PolicyId: *v1.JSON
+│   │   └── WorkspaceResourceId: *v1.JSON
+│   └── Version: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+FactoriesLinkedServiceAzureDatabricks_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── ConnectVia: *Object (3 properties)
+    │   ├── Parameters: map[string]v1.JSON
+    │   ├── ReferenceName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "IntegrationRuntimeReference"
+    ├── Description: *string
+    ├── Parameters: map[string]Object (2 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   └── Type: *Enum (7 values)
+    │       ├── "Array"
+    │       ├── "Bool"
+    │       ├── "Float"
+    │       ├── "Int"
+    │       ├── "Object"
+    │       ├── "SecureString"
+    │       └── "String"
+    ├── Type: *Enum (1 value)
+    │   └── "AzureDatabricks"
+    ├── TypeProperties: *Object (20 properties)
+    │   ├── AccessToken: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── Authentication: *v1.JSON
+    │   ├── Credential: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "CredentialReference"
+    │   ├── DataSecurityMode: *v1.JSON
+    │   ├── Domain: *v1.JSON
+    │   ├── EncryptedCredential: *string
+    │   ├── ExistingClusterId: *v1.JSON
+    │   ├── InstancePoolId: *v1.JSON
+    │   ├── NewClusterCustomTags: map[string]v1.JSON
+    │   ├── NewClusterDriverNodeType: *v1.JSON
+    │   ├── NewClusterEnableElasticDisk: *v1.JSON
+    │   ├── NewClusterInitScripts: *v1.JSON
+    │   ├── NewClusterLogDestination: *v1.JSON
+    │   ├── NewClusterNodeType: *v1.JSON
+    │   ├── NewClusterNumOfWorker: *v1.JSON
+    │   ├── NewClusterSparkConf: map[string]v1.JSON
+    │   ├── NewClusterSparkEnvVars: map[string]v1.JSON
+    │   ├── NewClusterVersion: *v1.JSON
+    │   ├── PolicyId: *v1.JSON
+    │   └── WorkspaceResourceId: *v1.JSON
+    └── Version: *string
+
+FactoriesLinkedServiceAzureKeyVault_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── ConnectVia: *Object (3 properties)
+│   │   ├── Parameters: map[string]v1.JSON
+│   │   ├── ReferenceName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "IntegrationRuntimeReference"
+│   ├── Description: *string
+│   ├── Parameters: map[string]Object (2 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   └── Type: *Enum (7 values)
+│   │       ├── "Array"
+│   │       ├── "Bool"
+│   │       ├── "Float"
+│   │       ├── "Int"
+│   │       ├── "Object"
+│   │       ├── "SecureString"
+│   │       └── "String"
+│   ├── Type: *Enum (1 value)
+│   │   └── "AzureKeyVault"
+│   ├── TypeProperties: *Object (2 properties)
+│   │   ├── BaseUrl: *v1.JSON
+│   │   └── Credential: *Object (3 properties)
+│   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │       ├── ReferenceName: *string
+│   │       └── Type: *Enum (1 value)
+│   │           └── "CredentialReference"
+│   └── Version: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+FactoriesLinkedServiceAzureKeyVault_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── ConnectVia: *Object (3 properties)
+    │   ├── Parameters: map[string]v1.JSON
+    │   ├── ReferenceName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "IntegrationRuntimeReference"
+    ├── Description: *string
+    ├── Parameters: map[string]Object (2 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   └── Type: *Enum (7 values)
+    │       ├── "Array"
+    │       ├── "Bool"
+    │       ├── "Float"
+    │       ├── "Int"
+    │       ├── "Object"
+    │       ├── "SecureString"
+    │       └── "String"
+    ├── Type: *Enum (1 value)
+    │   └── "AzureKeyVault"
+    ├── TypeProperties: *Object (2 properties)
+    │   ├── BaseUrl: *v1.JSON
+    │   └── Credential: *Object (3 properties)
+    │       ├── AdditionalProperties: map[string]v1.JSON
+    │       ├── ReferenceName: *string
+    │       └── Type: *Enum (1 value)
+    │           └── "CredentialReference"
+    └── Version: *string
+
+FactoriesLinkedServiceAzureSqlDW_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── ConnectVia: *Object (3 properties)
+│   │   ├── Parameters: map[string]v1.JSON
+│   │   ├── ReferenceName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "IntegrationRuntimeReference"
+│   ├── Description: *string
+│   ├── Parameters: map[string]Object (2 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   └── Type: *Enum (7 values)
+│   │       ├── "Array"
+│   │       ├── "Bool"
+│   │       ├── "Float"
+│   │       ├── "Int"
+│   │       ├── "Object"
+│   │       ├── "SecureString"
+│   │       └── "String"
+│   ├── Type: *Enum (1 value)
+│   │   └── "AzureSqlDW"
+│   ├── TypeProperties: *Object (30 properties)
+│   │   ├── ApplicationIntent: *v1.JSON
+│   │   ├── AuthenticationType: *Enum (4 values)
+│   │   │   ├── "SQL"
+│   │   │   ├── "ServicePrincipal"
+│   │   │   ├── "SystemAssignedManagedIdentity"
+│   │   │   └── "UserAssignedManagedIdentity"
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── CommandTimeout: *v1.JSON
+│   │   ├── ConnectRetryCount: *v1.JSON
+│   │   ├── ConnectRetryInterval: *v1.JSON
+│   │   ├── ConnectTimeout: *v1.JSON
+│   │   ├── Credential: *Object (3 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *Enum (1 value)
+│   │   │       └── "CredentialReference"
+│   │   ├── Database: *v1.JSON
+│   │   ├── Encrypt: *v1.JSON
+│   │   ├── EncryptedCredential: *string
+│   │   ├── FailoverPartner: *v1.JSON
+│   │   ├── HostNameInCertificate: *v1.JSON
+│   │   ├── IntegratedSecurity: *v1.JSON
+│   │   ├── LoadBalanceTimeout: *v1.JSON
+│   │   ├── MaxPoolSize: *v1.JSON
+│   │   ├── MinPoolSize: *v1.JSON
+│   │   ├── MultiSubnetFailover: *v1.JSON
+│   │   ├── MultipleActiveResultSets: *v1.JSON
+│   │   ├── PacketSize: *v1.JSON
+│   │   ├── Password: *Object (4 properties)
+│   │   │   ├── SecretName: *v1.JSON
+│   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   └── Type: Enum (1 value)
+│   │   │       └── "AzureKeyVaultSecret"
+│   │   ├── Pooling: *v1.JSON
+│   │   ├── Server: *v1.JSON
+│   │   ├── ServicePrincipalCredential: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── ServicePrincipalCredentialType: *v1.JSON
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   ├── ServicePrincipalKey: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── Tenant: *v1.JSON
+│   │   ├── TrustServerCertificate: *v1.JSON
+│   │   └── UserName: *v1.JSON
+│   └── Version: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+FactoriesLinkedServiceAzureSqlDW_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── ConnectVia: *Object (3 properties)
+    │   ├── Parameters: map[string]v1.JSON
+    │   ├── ReferenceName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "IntegrationRuntimeReference"
+    ├── Description: *string
+    ├── Parameters: map[string]Object (2 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   └── Type: *Enum (7 values)
+    │       ├── "Array"
+    │       ├── "Bool"
+    │       ├── "Float"
+    │       ├── "Int"
+    │       ├── "Object"
+    │       ├── "SecureString"
+    │       └── "String"
+    ├── Type: *Enum (1 value)
+    │   └── "AzureSqlDW"
+    ├── TypeProperties: *Object (31 properties)
+    │   ├── ApplicationIntent: *v1.JSON
+    │   ├── AuthenticationType: *Enum (4 values)
+    │   │   ├── "SQL"
+    │   │   ├── "ServicePrincipal"
+    │   │   ├── "SystemAssignedManagedIdentity"
+    │   │   └── "UserAssignedManagedIdentity"
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── CommandTimeout: *v1.JSON
+    │   ├── ConnectRetryCount: *v1.JSON
+    │   ├── ConnectRetryInterval: *v1.JSON
+    │   ├── ConnectTimeout: *v1.JSON
+    │   ├── ConnectionString: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── Credential: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "CredentialReference"
+    │   ├── Database: *v1.JSON
+    │   ├── Encrypt: *v1.JSON
+    │   ├── EncryptedCredential: *string
+    │   ├── FailoverPartner: *v1.JSON
+    │   ├── HostNameInCertificate: *v1.JSON
+    │   ├── IntegratedSecurity: *v1.JSON
+    │   ├── LoadBalanceTimeout: *v1.JSON
+    │   ├── MaxPoolSize: *v1.JSON
+    │   ├── MinPoolSize: *v1.JSON
+    │   ├── MultiSubnetFailover: *v1.JSON
+    │   ├── MultipleActiveResultSets: *v1.JSON
+    │   ├── PacketSize: *v1.JSON
+    │   ├── Password: *Object (4 properties)
+    │   │   ├── SecretName: *v1.JSON
+    │   │   ├── SecretVersion: *v1.JSON
+    │   │   ├── Store: *Object (3 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LinkedServiceReference"
+    │   │   └── Type: Enum (1 value)
+    │   │       └── "AzureKeyVaultSecret"
+    │   ├── Pooling: *v1.JSON
+    │   ├── Server: *v1.JSON
+    │   ├── ServicePrincipalCredential: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── ServicePrincipalCredentialType: *v1.JSON
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   ├── ServicePrincipalKey: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── Tenant: *v1.JSON
+    │   ├── TrustServerCertificate: *v1.JSON
+    │   └── UserName: *v1.JSON
+    └── Version: *string
+
+FactoriesLinkedServiceAzureSqlDatabase_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── ConnectVia: *Object (3 properties)
+│   │   ├── Parameters: map[string]v1.JSON
+│   │   ├── ReferenceName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "IntegrationRuntimeReference"
+│   ├── Description: *string
+│   ├── Parameters: map[string]Object (2 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   └── Type: *Enum (7 values)
+│   │       ├── "Array"
+│   │       ├── "Bool"
+│   │       ├── "Float"
+│   │       ├── "Int"
+│   │       ├── "Object"
+│   │       ├── "SecureString"
+│   │       └── "String"
+│   ├── Type: *Enum (1 value)
+│   │   └── "AzureSqlDatabase"
+│   ├── TypeProperties: *Object (31 properties)
+│   │   ├── AlwaysEncryptedSettings: *Object (4 properties)
+│   │   │   ├── AlwaysEncryptedAkvAuthType: *Enum (3 values)
+│   │   │   │   ├── "ManagedIdentity"
+│   │   │   │   ├── "ServicePrincipal"
+│   │   │   │   └── "UserAssignedManagedIdentity"
+│   │   │   ├── Credential: *Object (3 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "CredentialReference"
+│   │   │   ├── ServicePrincipalId: *v1.JSON
+│   │   │   └── ServicePrincipalKey: *Object (2 properties)
+│   │   │       ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │       │   ├── SecretName: *v1.JSON
+│   │   │       │   ├── SecretVersion: *v1.JSON
+│   │   │       │   ├── Store: *Object (3 properties)
+│   │   │       │   │   ├── Parameters: map[string]v1.JSON
+│   │   │       │   │   ├── ReferenceName: *string
+│   │   │       │   │   └── Type: *Enum (1 value)
+│   │   │       │   │       └── "LinkedServiceReference"
+│   │   │       │   └── Type: Enum (1 value)
+│   │   │       │       └── "AzureKeyVaultSecret"
+│   │   │       └── SecureString: *Object (1 property)
+│   │   │           └── Type: Enum (1 value)
+│   │   │               └── "SecureString"
+│   │   ├── ApplicationIntent: *v1.JSON
+│   │   ├── AuthenticationType: *Enum (4 values)
+│   │   │   ├── "SQL"
+│   │   │   ├── "ServicePrincipal"
+│   │   │   ├── "SystemAssignedManagedIdentity"
+│   │   │   └── "UserAssignedManagedIdentity"
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── CommandTimeout: *v1.JSON
+│   │   ├── ConnectRetryCount: *v1.JSON
+│   │   ├── ConnectRetryInterval: *v1.JSON
+│   │   ├── ConnectTimeout: *v1.JSON
+│   │   ├── Credential: *Object (3 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *Enum (1 value)
+│   │   │       └── "CredentialReference"
+│   │   ├── Database: *v1.JSON
+│   │   ├── Encrypt: *v1.JSON
+│   │   ├── EncryptedCredential: *string
+│   │   ├── FailoverPartner: *v1.JSON
+│   │   ├── HostNameInCertificate: *v1.JSON
+│   │   ├── IntegratedSecurity: *v1.JSON
+│   │   ├── LoadBalanceTimeout: *v1.JSON
+│   │   ├── MaxPoolSize: *v1.JSON
+│   │   ├── MinPoolSize: *v1.JSON
+│   │   ├── MultiSubnetFailover: *v1.JSON
+│   │   ├── MultipleActiveResultSets: *v1.JSON
+│   │   ├── PacketSize: *v1.JSON
+│   │   ├── Password: *Object (4 properties)
+│   │   │   ├── SecretName: *v1.JSON
+│   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   └── Type: Enum (1 value)
+│   │   │       └── "AzureKeyVaultSecret"
+│   │   ├── Pooling: *v1.JSON
+│   │   ├── Server: *v1.JSON
+│   │   ├── ServicePrincipalCredential: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── ServicePrincipalCredentialType: *v1.JSON
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   ├── ServicePrincipalKey: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── Tenant: *v1.JSON
+│   │   ├── TrustServerCertificate: *v1.JSON
+│   │   └── UserName: *v1.JSON
+│   └── Version: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+FactoriesLinkedServiceAzureSqlDatabase_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── ConnectVia: *Object (3 properties)
+    │   ├── Parameters: map[string]v1.JSON
+    │   ├── ReferenceName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "IntegrationRuntimeReference"
+    ├── Description: *string
+    ├── Parameters: map[string]Object (2 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   └── Type: *Enum (7 values)
+    │       ├── "Array"
+    │       ├── "Bool"
+    │       ├── "Float"
+    │       ├── "Int"
+    │       ├── "Object"
+    │       ├── "SecureString"
+    │       └── "String"
+    ├── Type: *Enum (1 value)
+    │   └── "AzureSqlDatabase"
+    ├── TypeProperties: *Object (32 properties)
+    │   ├── AlwaysEncryptedSettings: *Object (4 properties)
+    │   │   ├── AlwaysEncryptedAkvAuthType: *Enum (3 values)
+    │   │   │   ├── "ManagedIdentity"
+    │   │   │   ├── "ServicePrincipal"
+    │   │   │   └── "UserAssignedManagedIdentity"
+    │   │   ├── Credential: *Object (3 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "CredentialReference"
+    │   │   ├── ServicePrincipalId: *v1.JSON
+    │   │   └── ServicePrincipalKey: *Object (2 properties)
+    │   │       ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │       │   ├── SecretName: *v1.JSON
+    │   │       │   ├── SecretVersion: *v1.JSON
+    │   │       │   ├── Store: *Object (3 properties)
+    │   │       │   │   ├── Parameters: map[string]v1.JSON
+    │   │       │   │   ├── ReferenceName: *string
+    │   │       │   │   └── Type: *Enum (1 value)
+    │   │       │   │       └── "LinkedServiceReference"
+    │   │       │   └── Type: Enum (1 value)
+    │   │       │       └── "AzureKeyVaultSecret"
+    │   │       └── SecureString: *Object (2 properties)
+    │   │           ├── Type: Enum (1 value)
+    │   │           │   └── "SecureString"
+    │   │           └── Value: *string
+    │   ├── ApplicationIntent: *v1.JSON
+    │   ├── AuthenticationType: *Enum (4 values)
+    │   │   ├── "SQL"
+    │   │   ├── "ServicePrincipal"
+    │   │   ├── "SystemAssignedManagedIdentity"
+    │   │   └── "UserAssignedManagedIdentity"
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── CommandTimeout: *v1.JSON
+    │   ├── ConnectRetryCount: *v1.JSON
+    │   ├── ConnectRetryInterval: *v1.JSON
+    │   ├── ConnectTimeout: *v1.JSON
+    │   ├── ConnectionString: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── Credential: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "CredentialReference"
+    │   ├── Database: *v1.JSON
+    │   ├── Encrypt: *v1.JSON
+    │   ├── EncryptedCredential: *string
+    │   ├── FailoverPartner: *v1.JSON
+    │   ├── HostNameInCertificate: *v1.JSON
+    │   ├── IntegratedSecurity: *v1.JSON
+    │   ├── LoadBalanceTimeout: *v1.JSON
+    │   ├── MaxPoolSize: *v1.JSON
+    │   ├── MinPoolSize: *v1.JSON
+    │   ├── MultiSubnetFailover: *v1.JSON
+    │   ├── MultipleActiveResultSets: *v1.JSON
+    │   ├── PacketSize: *v1.JSON
+    │   ├── Password: *Object (4 properties)
+    │   │   ├── SecretName: *v1.JSON
+    │   │   ├── SecretVersion: *v1.JSON
+    │   │   ├── Store: *Object (3 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LinkedServiceReference"
+    │   │   └── Type: Enum (1 value)
+    │   │       └── "AzureKeyVaultSecret"
+    │   ├── Pooling: *v1.JSON
+    │   ├── Server: *v1.JSON
+    │   ├── ServicePrincipalCredential: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── ServicePrincipalCredentialType: *v1.JSON
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   ├── ServicePrincipalKey: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── Tenant: *v1.JSON
+    │   ├── TrustServerCertificate: *v1.JSON
+    │   └── UserName: *v1.JSON
+    └── Version: *string
+
+FactoriesLinkedServiceAzureSynapseArtifacts_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── ConnectVia: *Object (3 properties)
+│   │   ├── Parameters: map[string]v1.JSON
+│   │   ├── ReferenceName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "IntegrationRuntimeReference"
+│   ├── Description: *string
+│   ├── Parameters: map[string]Object (2 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   └── Type: *Enum (7 values)
+│   │       ├── "Array"
+│   │       ├── "Bool"
+│   │       ├── "Float"
+│   │       ├── "Int"
+│   │       ├── "Object"
+│   │       ├── "SecureString"
+│   │       └── "String"
+│   ├── Type: *Enum (1 value)
+│   │   └── "AzureSynapseArtifacts"
+│   ├── TypeProperties: *Object (3 properties)
+│   │   ├── Authentication: *v1.JSON
+│   │   ├── Endpoint: *v1.JSON
+│   │   └── WorkspaceResourceId: *v1.JSON
+│   └── Version: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+FactoriesLinkedServiceAzureSynapseArtifacts_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── ConnectVia: *Object (3 properties)
+    │   ├── Parameters: map[string]v1.JSON
+    │   ├── ReferenceName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "IntegrationRuntimeReference"
+    ├── Description: *string
+    ├── Parameters: map[string]Object (2 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   └── Type: *Enum (7 values)
+    │       ├── "Array"
+    │       ├── "Bool"
+    │       ├── "Float"
+    │       ├── "Int"
+    │       ├── "Object"
+    │       ├── "SecureString"
+    │       └── "String"
+    ├── Type: *Enum (1 value)
+    │   └── "AzureSynapseArtifacts"
+    ├── TypeProperties: *Object (3 properties)
+    │   ├── Authentication: *v1.JSON
+    │   ├── Endpoint: *v1.JSON
+    │   └── WorkspaceResourceId: *v1.JSON
+    └── Version: *string
+
+FactoriesLinkedServiceCosmosDb_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── ConnectVia: *Object (3 properties)
+│   │   ├── Parameters: map[string]v1.JSON
+│   │   ├── ReferenceName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "IntegrationRuntimeReference"
+│   ├── Description: *string
+│   ├── Parameters: map[string]Object (2 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   └── Type: *Enum (7 values)
+│   │       ├── "Array"
+│   │       ├── "Bool"
+│   │       ├── "Float"
+│   │       ├── "Int"
+│   │       ├── "Object"
+│   │       ├── "SecureString"
+│   │       └── "String"
+│   ├── Type: *Enum (1 value)
+│   │   └── "CosmosDb"
+│   ├── TypeProperties: *Object (11 properties)
+│   │   ├── AccountEndpoint: *v1.JSON
+│   │   ├── AccountKey: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── ConnectionMode: *Enum (2 values)
+│   │   │   ├── "Direct"
+│   │   │   └── "Gateway"
+│   │   ├── Credential: *Object (3 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *Enum (1 value)
+│   │   │       └── "CredentialReference"
+│   │   ├── Database: *v1.JSON
+│   │   ├── EncryptedCredential: *string
+│   │   ├── ServicePrincipalCredential: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── ServicePrincipalCredentialType: *v1.JSON
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   └── Tenant: *v1.JSON
+│   └── Version: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+FactoriesLinkedServiceCosmosDb_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── ConnectVia: *Object (3 properties)
+    │   ├── Parameters: map[string]v1.JSON
+    │   ├── ReferenceName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "IntegrationRuntimeReference"
+    ├── Description: *string
+    ├── Parameters: map[string]Object (2 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   └── Type: *Enum (7 values)
+    │       ├── "Array"
+    │       ├── "Bool"
+    │       ├── "Float"
+    │       ├── "Int"
+    │       ├── "Object"
+    │       ├── "SecureString"
+    │       └── "String"
+    ├── Type: *Enum (1 value)
+    │   └── "CosmosDb"
+    ├── TypeProperties: *Object (12 properties)
+    │   ├── AccountEndpoint: *v1.JSON
+    │   ├── AccountKey: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── ConnectionMode: *Enum (2 values)
+    │   │   ├── "Direct"
+    │   │   └── "Gateway"
+    │   ├── ConnectionString: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── Credential: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "CredentialReference"
+    │   ├── Database: *v1.JSON
+    │   ├── EncryptedCredential: *string
+    │   ├── ServicePrincipalCredential: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── ServicePrincipalCredentialType: *v1.JSON
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   └── Tenant: *v1.JSON
+    └── Version: *string
+
+FactoriesLinkedServiceHttpServer_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── ConnectVia: *Object (3 properties)
+│   │   ├── Parameters: map[string]v1.JSON
+│   │   ├── ReferenceName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "IntegrationRuntimeReference"
+│   ├── Description: *string
+│   ├── Parameters: map[string]Object (2 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   └── Type: *Enum (7 values)
+│   │       ├── "Array"
+│   │       ├── "Bool"
+│   │       ├── "Float"
+│   │       ├── "Int"
+│   │       ├── "Object"
+│   │       ├── "SecureString"
+│   │       └── "String"
+│   ├── Type: *Enum (1 value)
+│   │   └── "HttpServer"
+│   ├── TypeProperties: *Object (7 properties)
+│   │   ├── AuthenticationType: *Enum (5 values)
+│   │   │   ├── "Anonymous"
+│   │   │   ├── "Basic"
+│   │   │   ├── "ClientCertificate"
+│   │   │   ├── "Digest"
+│   │   │   └── "Windows"
+│   │   ├── CertThumbprint: *v1.JSON
+│   │   ├── EnableServerCertificateValidation: *v1.JSON
+│   │   ├── EncryptedCredential: *string
+│   │   ├── Password: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── Url: *v1.JSON
+│   │   └── UserName: *v1.JSON
+│   └── Version: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+FactoriesLinkedServiceHttpServer_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── ConnectVia: *Object (3 properties)
+    │   ├── Parameters: map[string]v1.JSON
+    │   ├── ReferenceName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "IntegrationRuntimeReference"
+    ├── Description: *string
+    ├── Parameters: map[string]Object (2 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   └── Type: *Enum (7 values)
+    │       ├── "Array"
+    │       ├── "Bool"
+    │       ├── "Float"
+    │       ├── "Int"
+    │       ├── "Object"
+    │       ├── "SecureString"
+    │       └── "String"
+    ├── Type: *Enum (1 value)
+    │   └── "HttpServer"
+    ├── TypeProperties: *Object (9 properties)
+    │   ├── AuthHeaders: *v1.JSON
+    │   ├── AuthenticationType: *Enum (5 values)
+    │   │   ├── "Anonymous"
+    │   │   ├── "Basic"
+    │   │   ├── "ClientCertificate"
+    │   │   ├── "Digest"
+    │   │   └── "Windows"
+    │   ├── CertThumbprint: *v1.JSON
+    │   ├── EmbeddedCertData: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── EnableServerCertificateValidation: *v1.JSON
+    │   ├── EncryptedCredential: *string
+    │   ├── Password: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── Url: *v1.JSON
+    │   └── UserName: *v1.JSON
+    └── Version: *string
+
+FactoriesLinkedServiceRestService_STATUS: Object (6 properties)
+├── Etag: *string
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (8 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── Annotations: v1.JSON[]
+│   ├── ConnectVia: *Object (3 properties)
+│   │   ├── Parameters: map[string]v1.JSON
+│   │   ├── ReferenceName: *string
+│   │   └── Type: *Enum (1 value)
+│   │       └── "IntegrationRuntimeReference"
+│   ├── Description: *string
+│   ├── Parameters: map[string]Object (2 properties)
+│   │   ├── DefaultValue: *v1.JSON
+│   │   └── Type: *Enum (7 values)
+│   │       ├── "Array"
+│   │       ├── "Bool"
+│   │       ├── "Float"
+│   │       ├── "Int"
+│   │       ├── "Object"
+│   │       ├── "SecureString"
+│   │       └── "String"
+│   ├── Type: *Enum (1 value)
+│   │   └── "RestService"
+│   ├── TypeProperties: *Object (20 properties)
+│   │   ├── AadResourceId: *v1.JSON
+│   │   ├── AuthenticationType: *Enum (5 values)
+│   │   │   ├── "AadServicePrincipal"
+│   │   │   ├── "Anonymous"
+│   │   │   ├── "Basic"
+│   │   │   ├── "ManagedServiceIdentity"
+│   │   │   └── "OAuth2ClientCredential"
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── ClientId: *v1.JSON
+│   │   ├── ClientSecret: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── Credential: *Object (3 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *Enum (1 value)
+│   │   │       └── "CredentialReference"
+│   │   ├── EnableServerCertificateValidation: *v1.JSON
+│   │   ├── EncryptedCredential: *string
+│   │   ├── Password: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── Resource: *v1.JSON
+│   │   ├── Scope: *v1.JSON
+│   │   ├── ServicePrincipalCredentialType: *v1.JSON
+│   │   ├── ServicePrincipalEmbeddedCert: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── ServicePrincipalEmbeddedCertPassword: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   ├── ServicePrincipalKey: *Object (2 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (3 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │   │       └── "LinkedServiceReference"
+│   │   │   │   └── Type: Enum (1 value)
+│   │   │   │       └── "AzureKeyVaultSecret"
+│   │   │   └── SecureString: *Object (1 property)
+│   │   │       └── Type: Enum (1 value)
+│   │   │           └── "SecureString"
+│   │   ├── Tenant: *v1.JSON
+│   │   ├── TokenEndpoint: *v1.JSON
+│   │   ├── Url: *v1.JSON
+│   │   └── UserName: *v1.JSON
+│   └── Version: *string
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+FactoriesLinkedServiceRestService_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (8 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── Annotations: v1.JSON[]
+    ├── ConnectVia: *Object (3 properties)
+    │   ├── Parameters: map[string]v1.JSON
+    │   ├── ReferenceName: *string
+    │   └── Type: *Enum (1 value)
+    │       └── "IntegrationRuntimeReference"
+    ├── Description: *string
+    ├── Parameters: map[string]Object (2 properties)
+    │   ├── DefaultValue: *v1.JSON
+    │   └── Type: *Enum (7 values)
+    │       ├── "Array"
+    │       ├── "Bool"
+    │       ├── "Float"
+    │       ├── "Int"
+    │       ├── "Object"
+    │       ├── "SecureString"
+    │       └── "String"
+    ├── Type: *Enum (1 value)
+    │   └── "RestService"
+    ├── TypeProperties: *Object (21 properties)
+    │   ├── AadResourceId: *v1.JSON
+    │   ├── AuthHeaders: *v1.JSON
+    │   ├── AuthenticationType: *Enum (5 values)
+    │   │   ├── "AadServicePrincipal"
+    │   │   ├── "Anonymous"
+    │   │   ├── "Basic"
+    │   │   ├── "ManagedServiceIdentity"
+    │   │   └── "OAuth2ClientCredential"
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── ClientId: *v1.JSON
+    │   ├── ClientSecret: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── Credential: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "CredentialReference"
+    │   ├── EnableServerCertificateValidation: *v1.JSON
+    │   ├── EncryptedCredential: *string
+    │   ├── Password: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── Resource: *v1.JSON
+    │   ├── Scope: *v1.JSON
+    │   ├── ServicePrincipalCredentialType: *v1.JSON
+    │   ├── ServicePrincipalEmbeddedCert: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── ServicePrincipalEmbeddedCertPassword: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   ├── ServicePrincipalKey: *Object (2 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Type: Enum (1 value)
+    │   │   │       └── "AzureKeyVaultSecret"
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── Type: Enum (1 value)
+    │   │       │   └── "SecureString"
+    │   │       └── Value: *string
+    │   ├── Tenant: *v1.JSON
+    │   ├── TokenEndpoint: *v1.JSON
+    │   ├── Url: *v1.JSON
+    │   └── UserName: *v1.JSON
+    └── Version: *string
+
 FactoriesManagedVirtualNetwork_STATUS: Object (6 properties)
 ├── Etag: *string
 ├── Id: *string

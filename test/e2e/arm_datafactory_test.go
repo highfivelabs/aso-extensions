@@ -5,6 +5,7 @@ package e2e
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"strings"
 	"testing"
@@ -274,6 +275,173 @@ func TestDataFactoryAuthoring(t *testing.T) {
 	for _, id := range []string{"/triggers/nightly", "/dataflows/clean", "/integrationRuntimes/ssis-runtime", "/integrationRuntimes/onprem", "/adfcdcs/orders"} {
 		if armFake.HasResource(factoryID + id) {
 			t.Errorf("%s is still in the fake", id)
+		}
+	}
+}
+
+// The linked service kinds, one kind per linked service type (docs/plan.md
+// section 2, "One kind per member of a union"), on ASO's factory by name:
+// Key Vault; Blob Storage with its connection string from a Secret; Data
+// Lake Gen2 with its account key from a Secret; SQL Database with its
+// connection string from the Key Vault linked service; Synapse (a dedicated
+// pool, AzureSqlDW, and the workspace's artifacts); Cosmos DB with its key
+// from a Secret; REST; HTTP with its password from a Secret; Databricks
+// with its token from a Secret. Each secret reaches the fake as a secure
+// string and is in no status (the fake masks what it returns, as Data
+// Factory does). An HTTP service whose runtime is missing is refused (the
+// fake's "invalid reference"), then fixed by a change. Deleted, all go.
+func TestDataFactoryLinkedServices(t *testing.T) {
+	ctx := context.Background()
+	ns := namespace(t, "adfls")
+	strictCredential(t, ns, clientA)
+	trustNamespace(ns)
+	rgID := "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"
+	factoryID := rgID + "/providers/Microsoft.DataFactory/factories/etl"
+	for _, id := range []string{rgID, factoryID, factoryID + "/integrationRuntimes/onprem"} {
+		armFake.AddResource(id)
+	}
+	resourceGroup(t, ns, "rg", ns+"-rg")
+	factory := &asodatafactory.Factory{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "etl"}}
+	factory.Spec.AzureName, factory.Spec.Location = "etl", ptr("westus")
+	factory.Spec.Owner = &genruntime.KnownResourceReference{Name: "rg"}
+	asoStandIn(t, factory, factoryID)
+	onFactory := &genruntime.KnownResourceReference{Name: "etl"}
+	meta := func(name string) metav1.ObjectMeta { return metav1.ObjectMeta{Namespace: ns, Name: name} }
+	secrets := map[string]string{
+		"blob": "DefaultEndpointsProtocol=https;AccountName=lake;AccountKey=YmxvYi1rZXk=", "adls": "YWRscy1rZXk=",
+		"dw": "Server=tcp:etl.sql.azuresynapse.net;Database=dw;Password=ZHctcGFzcw==", "cosmos": "Y29zbW9zLWtleQ==",
+		"http": "aHR0cC1wYXNz", "databricks": "ZGF0YWJyaWNrcy10b2tlbg==",
+	}
+	if err := k8s.Create(ctx, &corev1.Secret{ObjectMeta: meta("adf"), StringData: secrets}); err != nil {
+		t.Fatal(err)
+	}
+	js := func(s string) *v1.JSON { return &v1.JSON{Raw: []byte(s)} }
+	secure := func(key string) *datafactory.SecretBase {
+		return &datafactory.SecretBase{SecureString: &datafactory.SecureString{Type: ptr(datafactory.SecureString_Type_SecureString),
+			Value: &genruntime.SecretReference{Name: "adf", Key: key}}}
+	}
+
+	vault := &datafactory.FactoriesLinkedServiceAzureKeyVault{ObjectMeta: meta("vault"), Spec: datafactory.FactoriesLinkedServiceAzureKeyVault_Spec{
+		Owner: onFactory, Properties: &datafactory.AzureKeyVaultLinkedService{Type: ptr(datafactory.AzureKeyVaultLinkedService_Type_AzureKeyVault),
+			BaseUrl: js(`"https://etl.vault.azure.net/"`)}}}
+	blob := &datafactory.FactoriesLinkedServiceAzureBlobStorage{ObjectMeta: meta("blob"), Spec: datafactory.FactoriesLinkedServiceAzureBlobStorage_Spec{
+		Owner: onFactory, Properties: &datafactory.AzureBlobStorageLinkedService{Type: ptr(datafactory.AzureBlobStorageLinkedService_Type_AzureBlobStorage),
+			ConnectionString: secure("blob")}}}
+	adls := &datafactory.FactoriesLinkedServiceAzureBlobFS{ObjectMeta: meta("adls"), Spec: datafactory.FactoriesLinkedServiceAzureBlobFS_Spec{
+		Owner: onFactory, Properties: &datafactory.AzureBlobFSLinkedService{Type: ptr(datafactory.AzureBlobFSLinkedService_Type_AzureBlobFS),
+			Url: js(`"https://lake.dfs.core.windows.net"`), AccountKey: secure("adls")}}}
+	sql := &datafactory.FactoriesLinkedServiceAzureSqlDatabase{ObjectMeta: meta("sql"), Spec: datafactory.FactoriesLinkedServiceAzureSqlDatabase_Spec{
+		Owner: onFactory, Properties: &datafactory.AzureSqlDatabaseLinkedService{Type: ptr(datafactory.AzureSqlDatabaseLinkedService_Type_AzureSqlDatabase),
+			ConnectionString: &datafactory.SecretBase{AzureKeyVaultSecret: &datafactory.AzureKeyVaultSecretReference{
+				Type:       ptr(datafactory.AzureKeyVaultSecretReference_Type_AzureKeyVaultSecret),
+				Store:      &datafactory.LinkedServiceReference{Type: ptr(datafactory.Type_LinkedServiceReference), ReferenceName: ptr("vault")},
+				SecretName: js(`"sql-connection"`)}}}}}
+	dw := &datafactory.FactoriesLinkedServiceAzureSqlDW{ObjectMeta: meta("dw"), Spec: datafactory.FactoriesLinkedServiceAzureSqlDW_Spec{
+		Owner: onFactory, Properties: &datafactory.AzureSqlDWLinkedService{Type: ptr(datafactory.AzureSqlDWLinkedService_Type_AzureSqlDW),
+			ConnectionString: secure("dw")}}}
+	synapse := &datafactory.FactoriesLinkedServiceAzureSynapseArtifacts{ObjectMeta: meta("synapse"), Spec: datafactory.FactoriesLinkedServiceAzureSynapseArtifacts_Spec{
+		Owner: onFactory, Properties: &datafactory.AzureSynapseArtifactsLinkedService{Type: ptr(datafactory.AzureSynapseArtifactsLinkedService_Type_AzureSynapseArtifacts),
+			Endpoint: js(`"https://etl.dev.azuresynapse.net"`), Authentication: js(`"MSI"`)}}}
+	cosmos := &datafactory.FactoriesLinkedServiceCosmosDb{ObjectMeta: meta("cosmos"), Spec: datafactory.FactoriesLinkedServiceCosmosDb_Spec{
+		Owner: onFactory, Properties: &datafactory.CosmosDbLinkedService{Type: ptr(datafactory.CosmosDbLinkedService_Type_CosmosDb),
+			AccountEndpoint: js(`"https://etl.documents.azure.com:443/"`), Database: js(`"orders"`), AccountKey: secure("cosmos")}}}
+	rest := &datafactory.FactoriesLinkedServiceRestService{ObjectMeta: meta("rest"), Spec: datafactory.FactoriesLinkedServiceRestService_Spec{
+		Owner: onFactory, Properties: &datafactory.RestServiceLinkedService{Type: ptr(datafactory.RestServiceLinkedService_Type_RestService),
+			Url: js(`"https://api.example.com/v1"`), AuthenticationType: ptr(datafactory.RestServiceAuthenticationType_Anonymous)}}}
+	http := &datafactory.FactoriesLinkedServiceHttpServer{ObjectMeta: meta("files"), Spec: datafactory.FactoriesLinkedServiceHttpServer_Spec{
+		Owner: onFactory, Properties: &datafactory.HttpLinkedService{Type: ptr(datafactory.HttpLinkedService_Type_HttpServer),
+			Url: js(`"https://files.example.com"`), AuthenticationType: ptr(datafactory.HttpAuthenticationType_Basic),
+			UserName: js(`"etl"`), Password: secure("http"),
+			ConnectVia: &datafactory.IntegrationRuntimeReference{
+				Type: ptr(datafactory.IntegrationRuntimeReferenceType_IntegrationRuntimeReference), ReferenceName: ptr("datacentre")}}}}
+	databricks := &datafactory.FactoriesLinkedServiceAzureDatabricks{ObjectMeta: meta("databricks"), Spec: datafactory.FactoriesLinkedServiceAzureDatabricks_Spec{
+		Owner: onFactory, Properties: &datafactory.AzureDatabricksLinkedService{Type: ptr(datafactory.AzureDatabricksLinkedService_Type_AzureDatabricks),
+			Domain: js(`"https://adb-1.azuredatabricks.net"`), AccessToken: secure("databricks"), ExistingClusterId: js(`"0101-etl"`)}}}
+	objs := []conditioned{vault, blob, adls, sql, dw, synapse, cosmos, rest, http, databricks}
+	for _, o := range objs {
+		if err := k8s.Create(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, o := range objs {
+		if o != http {
+			eventually(t, timeout, o.GetName()+" Ready", ready(o))
+		}
+	}
+	eventually(t, timeout, "an HTTP service of a missing runtime refused", notReadyWith(http, "invalid reference"))
+	if err := change(t, http, func(l *datafactory.FactoriesLinkedServiceHttpServer) {
+		l.Spec.Properties.ConnectVia.ReferenceName = ptr("onprem")
+	}); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the HTTP service Ready after the change", ready(http))
+
+	// Each secret is a secure string in Azure, and in no status.
+	for name, field := range map[string][2]string{ // the linked service: its field and the Secret's key
+		"blob": {"connectionString", "blob"}, "adls": {"accountKey", "adls"}, "dw": {"connectionString", "dw"},
+		"cosmos": {"accountKey", "cosmos"}, "files": {"password", "http"}, "databricks": {"accessToken", "databricks"},
+	} {
+		expectResource(t, factoryID+"/linkedservices/"+name, func(r map[string]any) error {
+			tp, _ := properties(r)["typeProperties"].(map[string]any)
+			s, _ := tp[field[0]].(map[string]any)
+			if s["type"] != "SecureString" || s["value"] != secrets[field[1]] {
+				return fmt.Errorf("resource: %v", r)
+			}
+			return nil
+		})
+	}
+	expectResource(t, factoryID+"/linkedservices/sql", func(r map[string]any) error {
+		tp, _ := properties(r)["typeProperties"].(map[string]any)
+		cs := fmt.Sprint(tp["connectionString"])
+		if !strings.Contains(cs, "AzureKeyVaultSecret") || !strings.Contains(cs, "vault") || !strings.Contains(cs, "sql-connection") {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	expectResource(t, factoryID+"/linkedservices/files", func(r map[string]any) error {
+		if !strings.Contains(fmt.Sprint(properties(r)["connectVia"]), "onprem") {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	eventually(t, timeout, "the secrets out of every status", func() error {
+		for _, o := range objs {
+			if err := k8s.Get(ctx, client.ObjectKeyFromObject(o), o); err != nil {
+				return err
+			}
+			b, err := json.Marshal(o)
+			if err != nil {
+				return err
+			}
+			for _, v := range secrets {
+				if strings.Contains(string(b), v) {
+					return fmt.Errorf("%s holds a secret: %s", o.GetName(), b)
+				}
+			}
+		}
+		return nil
+	})
+	eventually(t, timeout, "the Key Vault URL in its status", func() error {
+		if err := k8s.Get(ctx, client.ObjectKeyFromObject(vault), vault); err != nil {
+			return err
+		}
+		if p := vault.Status.Properties; p == nil || p.BaseUrl == nil || !strings.Contains(string(p.BaseUrl.Raw), "etl.vault") {
+			return fmt.Errorf("status: %+v", vault.Status)
+		}
+		return nil
+	})
+
+	for _, o := range objs {
+		if err := k8s.Delete(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, o := range objs {
+		eventually(t, timeout, o.GetName()+" gone", gone(o))
+	}
+	for _, name := range []string{"vault", "blob", "adls", "sql", "dw", "synapse", "cosmos", "rest", "files", "databricks"} {
+		if armFake.HasResource(factoryID + "/linkedservices/" + name) {
+			t.Errorf("linked service %s is still in the fake", name)
 		}
 	}
 }

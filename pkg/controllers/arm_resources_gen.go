@@ -1543,6 +1543,250 @@ func getKnownStorageTypes() []*registration.StorageType {
 			},
 		},
 	})
+	result = append(result, &registration.StorageType{
+		Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.accountKey.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureBlobFSAccountKeyValue,
+			},
+			{
+				Key:  ".spec.properties.sasToken.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureBlobFSSasTokenValue,
+			},
+			{
+				Key:  ".spec.properties.sasUri.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureBlobFSSasUriValue,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipalCredential.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureBlobFSServicePrincipalCredentialValue,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipalKey.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureBlobFSServicePrincipalKeyValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.accountKey.secureString.value",
+						".spec.properties.sasToken.secureString.value",
+						".spec.properties.sasUri.secureString.value",
+						".spec.properties.servicePrincipalCredential.secureString.value",
+						".spec.properties.servicePrincipalKey.secureString.value",
+					},
+					&datafactory_v20180601.FactoriesLinkedServiceAzureBlobFSList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureBlobStorage),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.connectionString.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureBlobStorageConnectionStringValue,
+			},
+			{
+				Key:  ".spec.properties.sasUri.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureBlobStorageSasUriValue,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipalKey.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureBlobStorageServicePrincipalKeyValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.connectionString.secureString.value",
+						".spec.properties.sasUri.secureString.value",
+						".spec.properties.servicePrincipalKey.secureString.value",
+					},
+					&datafactory_v20180601.FactoriesLinkedServiceAzureBlobStorageList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureDatabricks),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.accessToken.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureDatabricksValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.accessToken.secureString.value",
+					},
+					&datafactory_v20180601.FactoriesLinkedServiceAzureDatabricksList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureKeyVault)})
+	result = append(result, &registration.StorageType{
+		Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureSqlDW),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.connectionString.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureSqlDWConnectionStringValue,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipalCredential.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureSqlDWServicePrincipalCredentialValue,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipalKey.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureSqlDWServicePrincipalKeyValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.connectionString.secureString.value",
+						".spec.properties.servicePrincipalCredential.secureString.value",
+						".spec.properties.servicePrincipalKey.secureString.value",
+					},
+					&datafactory_v20180601.FactoriesLinkedServiceAzureSqlDWList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureSqlDatabase),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.alwaysEncryptedSettings.servicePrincipalKey.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesAlwaysEncryptedSettingsServicePrincipalKeyValue,
+			},
+			{
+				Key:  ".spec.properties.connectionString.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesConnectionStringValue,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipalCredential.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesServicePrincipalCredentialValue,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipalKey.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesServicePrincipalKeyValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.alwaysEncryptedSettings.servicePrincipalKey.secureString.value",
+						".spec.properties.connectionString.secureString.value",
+						".spec.properties.servicePrincipalCredential.secureString.value",
+						".spec.properties.servicePrincipalKey.secureString.value",
+					},
+					&datafactory_v20180601.FactoriesLinkedServiceAzureSqlDatabaseList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureSynapseArtifacts)})
+	result = append(result, &registration.StorageType{
+		Obj: new(datafactory_v20180601.FactoriesLinkedServiceCosmosDb),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.accountKey.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceCosmosDbAccountKeyValue,
+			},
+			{
+				Key:  ".spec.properties.connectionString.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceCosmosDbConnectionStringValue,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipalCredential.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceCosmosDbServicePrincipalCredentialValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.accountKey.secureString.value",
+						".spec.properties.connectionString.secureString.value",
+						".spec.properties.servicePrincipalCredential.secureString.value",
+					},
+					&datafactory_v20180601.FactoriesLinkedServiceCosmosDbList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(datafactory_v20180601.FactoriesLinkedServiceHttpServer),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.embeddedCertData.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceHttpServerEmbeddedCertDataValue,
+			},
+			{
+				Key:  ".spec.properties.password.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceHttpServerPasswordValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.embeddedCertData.secureString.value",
+						".spec.properties.password.secureString.value",
+					},
+					&datafactory_v20180601.FactoriesLinkedServiceHttpServerList{}),
+			},
+		},
+	})
+	result = append(result, &registration.StorageType{
+		Obj: new(datafactory_v20180601.FactoriesLinkedServiceRestService),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.clientSecret.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceRestServiceClientSecretValue,
+			},
+			{
+				Key:  ".spec.properties.password.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceRestServicePasswordValue,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipalEmbeddedCertPassword.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceRestServiceServicePrincipalEmbeddedCertPasswordValue,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipalEmbeddedCert.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceRestServiceServicePrincipalEmbeddedCertValue,
+			},
+			{
+				Key:  ".spec.properties.servicePrincipalKey.secureString.value",
+				Func: indexDatafactoryFactoriesLinkedServiceRestServiceServicePrincipalKeyValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.clientSecret.secureString.value",
+						".spec.properties.password.secureString.value",
+						".spec.properties.servicePrincipalEmbeddedCert.secureString.value",
+						".spec.properties.servicePrincipalEmbeddedCertPassword.secureString.value",
+						".spec.properties.servicePrincipalKey.secureString.value",
+					},
+					&datafactory_v20180601.FactoriesLinkedServiceRestServiceList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetwork)})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesPrivateEndpointConnection)})
@@ -4375,6 +4619,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDataflow)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesGlobalParameter)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesIntegrationRuntime)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureBlobStorage)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureDatabricks)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureKeyVault)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureSqlDW)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureSqlDatabase)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureSynapseArtifacts)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceCosmosDb)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceHttpServer)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceRestService)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetwork)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesPrivateEndpointConnection)},
@@ -4386,6 +4640,16 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDataflow)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesGlobalParameter)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesIntegrationRuntime)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceAzureBlobFS)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceAzureBlobStorage)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceAzureDatabricks)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceAzureKeyVault)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceAzureSqlDW)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceAzureSqlDatabase)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceAzureSynapseArtifacts)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceCosmosDb)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceHttpServer)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceRestService)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesManagedVirtualNetwork)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesPrivateEndpointConnection)},
@@ -5858,6 +6122,16 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &datafactory_customizations.FactoriesDataflowExtension{})
 	result = append(result, &datafactory_customizations.FactoriesGlobalParameterExtension{})
 	result = append(result, &datafactory_customizations.FactoriesIntegrationRuntimeExtension{})
+	result = append(result, &datafactory_customizations.FactoriesLinkedServiceAzureBlobFSExtension{})
+	result = append(result, &datafactory_customizations.FactoriesLinkedServiceAzureBlobStorageExtension{})
+	result = append(result, &datafactory_customizations.FactoriesLinkedServiceAzureDatabricksExtension{})
+	result = append(result, &datafactory_customizations.FactoriesLinkedServiceAzureKeyVaultExtension{})
+	result = append(result, &datafactory_customizations.FactoriesLinkedServiceAzureSqlDWExtension{})
+	result = append(result, &datafactory_customizations.FactoriesLinkedServiceAzureSqlDatabaseExtension{})
+	result = append(result, &datafactory_customizations.FactoriesLinkedServiceAzureSynapseArtifactsExtension{})
+	result = append(result, &datafactory_customizations.FactoriesLinkedServiceCosmosDbExtension{})
+	result = append(result, &datafactory_customizations.FactoriesLinkedServiceHttpServerExtension{})
+	result = append(result, &datafactory_customizations.FactoriesLinkedServiceRestServiceExtension{})
 	result = append(result, &datafactory_customizations.FactoriesManagedVirtualNetworkExtension{})
 	result = append(result, &datafactory_customizations.FactoriesManagedVirtualNetworksManagedPrivateEndpointExtension{})
 	result = append(result, &datafactory_customizations.FactoriesPrivateEndpointConnectionExtension{})
@@ -8329,6 +8603,555 @@ func indexDatafactoryFactoriesIntegrationRuntimeSasTokenValue(rawObj client.Obje
 		return nil
 	}
 	return obj.Spec.Properties.Managed.SsisProperties.CustomSetupScriptProperties.SasToken.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureBlobFSAccountKeyValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS .spec.properties.accountKey.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureBlobFSAccountKeyValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AccountKey.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureBlobFSSasTokenValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS .spec.properties.sasToken.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureBlobFSSasTokenValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SasToken == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SasToken.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SasToken.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.SasToken.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureBlobFSSasUriValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS .spec.properties.sasUri.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureBlobFSSasUriValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SasUri == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SasUri.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SasUri.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.SasUri.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureBlobFSServicePrincipalCredentialValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS .spec.properties.servicePrincipalCredential.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureBlobFSServicePrincipalCredentialValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipalCredential.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureBlobFSServicePrincipalKeyValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS .spec.properties.servicePrincipalKey.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureBlobFSServicePrincipalKeyValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipalKey.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureBlobStorageConnectionStringValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureBlobStorage .spec.properties.connectionString.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureBlobStorageConnectionStringValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureBlobStorage)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ConnectionString.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureBlobStorageSasUriValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureBlobStorage .spec.properties.sasUri.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureBlobStorageSasUriValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureBlobStorage)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SasUri == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SasUri.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SasUri.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.SasUri.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureBlobStorageServicePrincipalKeyValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureBlobStorage .spec.properties.servicePrincipalKey.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureBlobStorageServicePrincipalKeyValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureBlobStorage)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipalKey.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureDatabricksValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureDatabricks .spec.properties.accessToken.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureDatabricksValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureDatabricks)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccessToken == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccessToken.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccessToken.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AccessToken.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureSqlDWConnectionStringValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureSqlDW .spec.properties.connectionString.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureSqlDWConnectionStringValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureSqlDW)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ConnectionString.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureSqlDWServicePrincipalCredentialValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureSqlDW .spec.properties.servicePrincipalCredential.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureSqlDWServicePrincipalCredentialValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureSqlDW)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipalCredential.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureSqlDWServicePrincipalKeyValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureSqlDW .spec.properties.servicePrincipalKey.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureSqlDWServicePrincipalKeyValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureSqlDW)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipalKey.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesAlwaysEncryptedSettingsServicePrincipalKeyValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureSqlDatabase .spec.properties.alwaysEncryptedSettings.servicePrincipalKey.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesAlwaysEncryptedSettingsServicePrincipalKeyValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureSqlDatabase)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AlwaysEncryptedSettings == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AlwaysEncryptedSettings.ServicePrincipalKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AlwaysEncryptedSettings.ServicePrincipalKey.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AlwaysEncryptedSettings.ServicePrincipalKey.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AlwaysEncryptedSettings.ServicePrincipalKey.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesConnectionStringValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureSqlDatabase .spec.properties.connectionString.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesConnectionStringValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureSqlDatabase)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ConnectionString.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesServicePrincipalCredentialValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureSqlDatabase .spec.properties.servicePrincipalCredential.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesServicePrincipalCredentialValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureSqlDatabase)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipalCredential.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesServicePrincipalKeyValue an index function for datafactory_v20180601.FactoriesLinkedServiceAzureSqlDatabase .spec.properties.servicePrincipalKey.secureString.value
+func indexDatafactoryFactoriesLinkedServiceAzureSqlDatabasePropertiesServicePrincipalKeyValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceAzureSqlDatabase)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipalKey.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceCosmosDbAccountKeyValue an index function for datafactory_v20180601.FactoriesLinkedServiceCosmosDb .spec.properties.accountKey.secureString.value
+func indexDatafactoryFactoriesLinkedServiceCosmosDbAccountKeyValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceCosmosDb)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.AccountKey.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.AccountKey.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceCosmosDbConnectionStringValue an index function for datafactory_v20180601.FactoriesLinkedServiceCosmosDb .spec.properties.connectionString.secureString.value
+func indexDatafactoryFactoriesLinkedServiceCosmosDbConnectionStringValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceCosmosDb)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ConnectionString.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ConnectionString.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceCosmosDbServicePrincipalCredentialValue an index function for datafactory_v20180601.FactoriesLinkedServiceCosmosDb .spec.properties.servicePrincipalCredential.secureString.value
+func indexDatafactoryFactoriesLinkedServiceCosmosDbServicePrincipalCredentialValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceCosmosDb)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalCredential.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipalCredential.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceHttpServerEmbeddedCertDataValue an index function for datafactory_v20180601.FactoriesLinkedServiceHttpServer .spec.properties.embeddedCertData.secureString.value
+func indexDatafactoryFactoriesLinkedServiceHttpServerEmbeddedCertDataValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceHttpServer)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.EmbeddedCertData == nil {
+		return nil
+	}
+	if obj.Spec.Properties.EmbeddedCertData.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.EmbeddedCertData.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.EmbeddedCertData.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceHttpServerPasswordValue an index function for datafactory_v20180601.FactoriesLinkedServiceHttpServer .spec.properties.password.secureString.value
+func indexDatafactoryFactoriesLinkedServiceHttpServerPasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceHttpServer)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Password == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Password.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Password.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Password.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceRestServiceClientSecretValue an index function for datafactory_v20180601.FactoriesLinkedServiceRestService .spec.properties.clientSecret.secureString.value
+func indexDatafactoryFactoriesLinkedServiceRestServiceClientSecretValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceRestService)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ClientSecret == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ClientSecret.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ClientSecret.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ClientSecret.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceRestServicePasswordValue an index function for datafactory_v20180601.FactoriesLinkedServiceRestService .spec.properties.password.secureString.value
+func indexDatafactoryFactoriesLinkedServiceRestServicePasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceRestService)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Password == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Password.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Password.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Password.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceRestServiceServicePrincipalEmbeddedCertPasswordValue an index function for datafactory_v20180601.FactoriesLinkedServiceRestService .spec.properties.servicePrincipalEmbeddedCertPassword.secureString.value
+func indexDatafactoryFactoriesLinkedServiceRestServiceServicePrincipalEmbeddedCertPasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceRestService)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalEmbeddedCertPassword == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalEmbeddedCertPassword.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalEmbeddedCertPassword.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipalEmbeddedCertPassword.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceRestServiceServicePrincipalEmbeddedCertValue an index function for datafactory_v20180601.FactoriesLinkedServiceRestService .spec.properties.servicePrincipalEmbeddedCert.secureString.value
+func indexDatafactoryFactoriesLinkedServiceRestServiceServicePrincipalEmbeddedCertValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceRestService)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalEmbeddedCert == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalEmbeddedCert.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalEmbeddedCert.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipalEmbeddedCert.SecureString.Value.Index()
+}
+
+// indexDatafactoryFactoriesLinkedServiceRestServiceServicePrincipalKeyValue an index function for datafactory_v20180601.FactoriesLinkedServiceRestService .spec.properties.servicePrincipalKey.secureString.value
+func indexDatafactoryFactoriesLinkedServiceRestServiceServicePrincipalKeyValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesLinkedServiceRestService)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey.SecureString == nil {
+		return nil
+	}
+	if obj.Spec.Properties.ServicePrincipalKey.SecureString.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.ServicePrincipalKey.SecureString.Value.Index()
 }
 
 // indexDbforpostgresqlServerGroupsv2AdministratorLoginPassword an index function for dbforpostgresql_v20221108.ServerGroupsv2 .spec.administratorLoginPassword

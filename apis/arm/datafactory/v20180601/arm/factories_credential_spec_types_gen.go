@@ -144,28 +144,3 @@ type ServicePrincipalCredentialTypeProperties struct {
 	// Tenant: The ID of the tenant to which the service principal belongs
 	Tenant *v1.JSON `json:"tenant,omitempty"`
 }
-
-type AzureKeyVaultSecretReference struct {
-	// SecretName: The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
-	SecretName *v1.JSON `json:"secretName,omitempty"`
-
-	// SecretVersion: The version of the secret in Azure Key Vault. The default value is the latest version of the secret.
-	// Type: string (or Expression with resultType string).
-	SecretVersion *v1.JSON `json:"secretVersion,omitempty"`
-
-	// Store: The Azure Key Vault linked service reference.
-	Store *LinkedServiceReference `json:"store,omitempty"`
-
-	// Type: Type of the secret.
-	Type AzureKeyVaultSecretReference_Type `json:"type,omitempty"`
-}
-
-// +kubebuilder:validation:Enum={"AzureKeyVaultSecret"}
-type AzureKeyVaultSecretReference_Type string
-
-const AzureKeyVaultSecretReference_Type_AzureKeyVaultSecret = AzureKeyVaultSecretReference_Type("AzureKeyVaultSecret")
-
-// Mapping from string to AzureKeyVaultSecretReference_Type
-var azureKeyVaultSecretReference_Type_Values = map[string]AzureKeyVaultSecretReference_Type{
-	"azurekeyvaultsecret": AzureKeyVaultSecretReference_Type_AzureKeyVaultSecret,
-}

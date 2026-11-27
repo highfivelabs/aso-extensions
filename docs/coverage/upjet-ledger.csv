@@ -186,6 +186,7 @@ datafactory.azure.hfl.dev/FactoriesCredential,Microsoft.DataFactory/factories/cr
 datafactory.azure.hfl.dev/FactoriesDataflow,Microsoft.DataFactory/factories/dataflows,conformance,,no Upjet resource,,,,,,,,
 datafactory.azure.hfl.dev/FactoriesGlobalParameter,Microsoft.DataFactory/factories/globalParameters,conformance,,no Upjet resource,,,,,,,,
 datafactory.azure.hfl.dev/FactoriesIntegrationRuntime,Microsoft.DataFactory/factories/integrationRuntimes,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureBlobFS,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
 datafactory.azure.hfl.dev/FactoriesManagedVirtualNetwork,Microsoft.DataFactory/factories/managedVirtualNetworks,conformance,,no Upjet resource,,,,,,,,
 datafactory.azure.hfl.dev/FactoriesManagedVirtualNetworksManagedPrivateEndpoint,Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints,conformance,azurerm_data_factory_managed_private_endpoint,true,1,1,0,0,0,1,0,n/a (provider)
 datafactory.azure.hfl.dev/FactoriesPrivateEndpointConnection,Microsoft.DataFactory/factories/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,

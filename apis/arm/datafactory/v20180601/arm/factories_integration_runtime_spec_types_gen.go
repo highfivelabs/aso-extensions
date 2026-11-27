@@ -286,17 +286,6 @@ type CopyComputeScaleProperties struct {
 	TimeToLive *int `json:"timeToLive,omitempty"`
 }
 
-// Credential reference type.
-type CredentialReference struct {
-	AdditionalProperties map[string]v1.JSON `json:"additionalProperties,omitempty"`
-
-	// ReferenceName: Reference credential name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Credential reference type.
-	Type *CredentialReferenceType `json:"type,omitempty"`
-}
-
 type CustomSetupBase struct {
 	// AzPowerShell: Mutually exclusive with all other properties
 	AzPowerShell *AzPowerShellSetup `json:"azPowerShellSetup,omitempty"`
@@ -538,17 +527,6 @@ type ComponentSetup struct {
 	TypeProperties *LicensedComponentSetupTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// Credential reference type.
-// +kubebuilder:validation:Enum={"CredentialReference"}
-type CredentialReferenceType string
-
-const CredentialReferenceType_CredentialReference = CredentialReferenceType("CredentialReference")
-
-// Mapping from string to CredentialReferenceType
-var credentialReferenceType_Values = map[string]CredentialReferenceType{
-	"credentialreference": CredentialReferenceType_CredentialReference,
-}
-
 // Compute type of the cluster which will execute data flow job.
 // +kubebuilder:validation:Enum={"ComputeOptimized","General","MemoryOptimized"}
 type DataFlowComputeType string
@@ -629,14 +607,6 @@ const LinkedIntegrationRuntimeRbacAuthorization_AuthorizationType_RBAC = LinkedI
 // Mapping from string to LinkedIntegrationRuntimeRbacAuthorization_AuthorizationType
 var linkedIntegrationRuntimeRbacAuthorization_AuthorizationType_Values = map[string]LinkedIntegrationRuntimeRbacAuthorization_AuthorizationType{
 	"rbac": LinkedIntegrationRuntimeRbacAuthorization_AuthorizationType_RBAC,
-}
-
-type SecureString struct {
-	// Type: Type of the secret.
-	Type SecureString_Type `json:"type,omitempty"`
-
-	// Value: Value of secure string.
-	Value *string `json:"value,omitempty"`
 }
 
 // +kubebuilder:validation:Enum={"AzPowerShellSetup"}
@@ -728,56 +698,4 @@ type LicensedComponentSetupTypeProperties struct {
 
 	// LicenseKey: The license key to activate the component.
 	LicenseKey *SecretBase `json:"licenseKey,omitempty"`
-}
-
-// +kubebuilder:validation:Enum={"SecureString"}
-type SecureString_Type string
-
-const SecureString_Type_SecureString = SecureString_Type("SecureString")
-
-// Mapping from string to SecureString_Type
-var secureString_Type_Values = map[string]SecureString_Type{
-	"securestring": SecureString_Type_SecureString,
-}
-
-type SecretBase struct {
-	// AzureKeyVaultSecret: Mutually exclusive with all other properties
-	AzureKeyVaultSecret *AzureKeyVaultSecretReference `json:"azureKeyVaultSecret,omitempty"`
-
-	// SecureString: Mutually exclusive with all other properties
-	SecureString *SecureString `json:"secureString,omitempty"`
-}
-
-// MarshalJSON defers JSON marshaling to the first non-nil property, because SecretBase represents a discriminated union (JSON OneOf)
-func (base SecretBase) MarshalJSON() ([]byte, error) {
-	if base.AzureKeyVaultSecret != nil {
-		return json.Marshal(base.AzureKeyVaultSecret)
-	}
-
-	if base.SecureString != nil {
-		return json.Marshal(base.SecureString)
-	}
-
-	return nil, nil
-}
-
-// UnmarshalJSON unmarshals the SecretBase
-func (base *SecretBase) UnmarshalJSON(data []byte) error {
-	var rawJson map[string]interface{}
-	err := json.Unmarshal(data, &rawJson)
-	if err != nil {
-		return err
-	}
-	discriminator := rawJson["type"]
-	if discriminator == "AzureKeyVaultSecret" {
-		base.AzureKeyVaultSecret = &AzureKeyVaultSecretReference{}
-		return json.Unmarshal(data, base.AzureKeyVaultSecret)
-	}
-	if discriminator == "SecureString" {
-		base.SecureString = &SecureString{}
-		return json.Unmarshal(data, base.SecureString)
-	}
-
-	// No error
-	return nil
 }

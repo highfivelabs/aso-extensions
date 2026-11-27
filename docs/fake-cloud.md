@@ -608,9 +608,21 @@ upstream's); the catalog's chart tests do that.
   integration runtime names others of the factory by reference (pipelines,
   datasets, linked services, data flows, runtimes, credentials, the managed
   network), and each exists (400, Data Factory's "invalid reference"); a
-  linked self-hosted runtime's shared runtime exists (404). Not modelled:
-  the managed network's isolation, a managed endpoint's approval by its
-  target, starting and stopping triggers, runs, runtime nodes and states,
+  linked self-hosted runtime's shared runtime exists (404). A linked
+  service (one kind per type, docs/plan.md f87) names its runtime
+  (`connectVia`), a credential and the Key Vault linked service of a
+  secret's store by reference, and each exists (400, "invalid reference");
+  a secure string (`{"type": "SecureString", "value": ...}`) has a value
+  (400), and what a GET or PUT returns of a factory's child holds every
+  secure string's value as `**********`, as Data Factory never returns one
+  (the fake keeps the value, which a test reads with `Resource`); an Azure
+  Blob Storage linked service takes at most one of `connectionString`,
+  `sasUri` and `serviceEndpoint` (400; the spec calls them mutually
+  exclusive). Not modelled: the managed network's isolation, a managed
+  endpoint's approval by its target, starting and stopping triggers, runs,
+  runtime nodes and states, a linked service's test connection and the
+  other per-type rules Data Factory applies (it checks a linked service's
+  properties when it is used, not all on PUT), Azure's exact mask text,
   references written as expressions, and the error codes.
 - Synapse workspace children (`Microsoft.Synapse`, 2021-06-01;
   `pkg/fakecloud/arm/synapse.go`): an IP firewall rule is an ordered IPv4

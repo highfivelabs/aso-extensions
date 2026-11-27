@@ -439,24 +439,6 @@ type CopyComputeScaleProperties_STATUS struct {
 	TimeToLive           *int                   `json:"timeToLive,omitempty"`
 }
 
-// Storage version of v20180601.CredentialReference
-// Credential reference type.
-type CredentialReference struct {
-	AdditionalProperties map[string]v1.JSON     `json:"additionalProperties,omitempty"`
-	PropertyBag          genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	ReferenceName        *string                `json:"referenceName,omitempty"`
-	Type                 *string                `json:"type,omitempty"`
-}
-
-// Storage version of v20180601.CredentialReference_STATUS
-// Credential reference type.
-type CredentialReference_STATUS struct {
-	AdditionalProperties map[string]v1.JSON     `json:"additionalProperties,omitempty"`
-	PropertyBag          genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	ReferenceName        *string                `json:"referenceName,omitempty"`
-	Type                 *string                `json:"type,omitempty"`
-}
-
 // Storage version of v20180601.CustomSetupBase
 type CustomSetupBase struct {
 	AzPowerShell        *AzPowerShellSetup        `json:"azPowerShellSetup,omitempty"`
@@ -740,33 +722,6 @@ type IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem_STATUS struct {
 	Name        *string                `json:"name,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	Value       *string                `json:"value,omitempty"`
-}
-
-// Storage version of v20180601.SecureString
-type SecureString struct {
-	PropertyBag genruntime.PropertyBag      `json:"$propertyBag,omitempty"`
-	Type        *string                     `json:"type,omitempty"`
-	Value       *genruntime.SecretReference `json:"value,omitempty"`
-}
-
-// Storage version of v20180601.SecureString_STATUS
-type SecureString_STATUS struct {
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Type        *string                `json:"type,omitempty"`
-}
-
-// Storage version of v20180601.SecretBase
-type SecretBase struct {
-	AzureKeyVaultSecret *AzureKeyVaultSecretReference `json:"azureKeyVaultSecret,omitempty"`
-	PropertyBag         genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
-	SecureString        *SecureString                 `json:"secureString,omitempty"`
-}
-
-// Storage version of v20180601.SecretBase_STATUS
-type SecretBase_STATUS struct {
-	AzureKeyVaultSecret *AzureKeyVaultSecretReference_STATUS `json:"azureKeyVaultSecret,omitempty"`
-	PropertyBag         genruntime.PropertyBag               `json:"$propertyBag,omitempty"`
-	SecureString        *SecureString_STATUS                 `json:"secureString,omitempty"`
 }
 
 func init() {

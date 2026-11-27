@@ -309,24 +309,6 @@ type ServicePrincipalCredential_STATUS struct {
 	Type                 *string                              `json:"type,omitempty"`
 }
 
-// Storage version of v20180601.AzureKeyVaultSecretReference
-type AzureKeyVaultSecretReference struct {
-	PropertyBag   genruntime.PropertyBag  `json:"$propertyBag,omitempty"`
-	SecretName    *v1.JSON                `json:"secretName,omitempty"`
-	SecretVersion *v1.JSON                `json:"secretVersion,omitempty"`
-	Store         *LinkedServiceReference `json:"store,omitempty"`
-	Type          *string                 `json:"type,omitempty"`
-}
-
-// Storage version of v20180601.AzureKeyVaultSecretReference_STATUS
-type AzureKeyVaultSecretReference_STATUS struct {
-	PropertyBag   genruntime.PropertyBag         `json:"$propertyBag,omitempty"`
-	SecretName    *v1.JSON                       `json:"secretName,omitempty"`
-	SecretVersion *v1.JSON                       `json:"secretVersion,omitempty"`
-	Store         *LinkedServiceReference_STATUS `json:"store,omitempty"`
-	Type          *string                        `json:"type,omitempty"`
-}
-
 func init() {
 	SchemeBuilder.Register(&FactoriesCredential{}, &FactoriesCredentialList{})
 }

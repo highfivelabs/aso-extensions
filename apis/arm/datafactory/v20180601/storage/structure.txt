@@ -1179,6 +1179,1694 @@ FactoriesIntegrationRuntime: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+FactoriesLinkedServiceAzureBlobFS: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (20 properties)
+│   │   ├── AccountKey: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── ConnectVia: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Credential: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Description: *string
+│   │   ├── EncryptedCredential: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── SasToken: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── SasUri: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── ServicePrincipalCredential: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── ServicePrincipalCredentialType: *v1.JSON
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   ├── ServicePrincipalKey: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── Tenant: *v1.JSON
+│   │   ├── Type: *string
+│   │   ├── Url: *v1.JSON
+│   │   └── Version: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (18 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── ConnectVia: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Credential: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Description: *string
+    │   ├── EncryptedCredential: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── SasToken: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── ServicePrincipalCredential: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── ServicePrincipalCredentialType: *v1.JSON
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   ├── ServicePrincipalKey: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── Tenant: *v1.JSON
+    │   ├── Type: *string
+    │   ├── Url: *v1.JSON
+    │   └── Version: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesLinkedServiceAzureBlobStorage: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (22 properties)
+│   │   ├── AccountKey: *Object (5 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── SecretName: *v1.JSON
+│   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   └── Type: *string
+│   │   ├── AccountKind: *v1.JSON
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── AuthenticationType: *string
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── ConnectVia: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── ConnectionString: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── ContainerUri: *v1.JSON
+│   │   ├── Credential: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Description: *string
+│   │   ├── EncryptedCredential: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── SasToken: *Object (5 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── SecretName: *v1.JSON
+│   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   └── Type: *string
+│   │   ├── SasUri: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── ServiceEndpoint: *v1.JSON
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   ├── ServicePrincipalKey: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── Tenant: *v1.JSON
+│   │   ├── Type: *string
+│   │   └── Version: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (20 properties)
+    │   ├── AccountKey: *Object (5 properties)
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── SecretName: *v1.JSON
+    │   │   ├── SecretVersion: *v1.JSON
+    │   │   ├── Store: *Object (4 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *string
+    │   │   └── Type: *string
+    │   ├── AccountKind: *v1.JSON
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── AuthenticationType: *string
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── ConnectVia: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── ContainerUri: *v1.JSON
+    │   ├── Credential: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Description: *string
+    │   ├── EncryptedCredential: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── SasToken: *Object (5 properties)
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── SecretName: *v1.JSON
+    │   │   ├── SecretVersion: *v1.JSON
+    │   │   ├── Store: *Object (4 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *string
+    │   │   └── Type: *string
+    │   ├── ServiceEndpoint: *v1.JSON
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   ├── ServicePrincipalKey: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── Tenant: *v1.JSON
+    │   ├── Type: *string
+    │   └── Version: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesLinkedServiceAzureDatabricks: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (28 properties)
+│   │   ├── AccessToken: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Authentication: *v1.JSON
+│   │   ├── ConnectVia: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Credential: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── DataSecurityMode: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── Domain: *v1.JSON
+│   │   ├── EncryptedCredential: *string
+│   │   ├── ExistingClusterId: *v1.JSON
+│   │   ├── InstancePoolId: *v1.JSON
+│   │   ├── NewClusterCustomTags: map[string]v1.JSON
+│   │   ├── NewClusterDriverNodeType: *v1.JSON
+│   │   ├── NewClusterEnableElasticDisk: *v1.JSON
+│   │   ├── NewClusterInitScripts: *v1.JSON
+│   │   ├── NewClusterLogDestination: *v1.JSON
+│   │   ├── NewClusterNodeType: *v1.JSON
+│   │   ├── NewClusterNumOfWorker: *v1.JSON
+│   │   ├── NewClusterSparkConf: map[string]v1.JSON
+│   │   ├── NewClusterSparkEnvVars: map[string]v1.JSON
+│   │   ├── NewClusterVersion: *v1.JSON
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PolicyId: *v1.JSON
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Type: *string
+│   │   ├── Version: *string
+│   │   └── WorkspaceResourceId: *v1.JSON
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (28 properties)
+    │   ├── AccessToken: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Authentication: *v1.JSON
+    │   ├── ConnectVia: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Credential: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── DataSecurityMode: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Domain: *v1.JSON
+    │   ├── EncryptedCredential: *string
+    │   ├── ExistingClusterId: *v1.JSON
+    │   ├── InstancePoolId: *v1.JSON
+    │   ├── NewClusterCustomTags: map[string]v1.JSON
+    │   ├── NewClusterDriverNodeType: *v1.JSON
+    │   ├── NewClusterEnableElasticDisk: *v1.JSON
+    │   ├── NewClusterInitScripts: *v1.JSON
+    │   ├── NewClusterLogDestination: *v1.JSON
+    │   ├── NewClusterNodeType: *v1.JSON
+    │   ├── NewClusterNumOfWorker: *v1.JSON
+    │   ├── NewClusterSparkConf: map[string]v1.JSON
+    │   ├── NewClusterSparkEnvVars: map[string]v1.JSON
+    │   ├── NewClusterVersion: *v1.JSON
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PolicyId: *v1.JSON
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Type: *string
+    │   ├── Version: *string
+    │   └── WorkspaceResourceId: *v1.JSON
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesLinkedServiceAzureKeyVault: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (10 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── BaseUrl: *v1.JSON
+│   │   ├── ConnectVia: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Credential: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Description: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Type: *string
+│   │   └── Version: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (10 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── BaseUrl: *v1.JSON
+    │   ├── ConnectVia: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Credential: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Description: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Type: *string
+    │   └── Version: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesLinkedServiceAzureSqlDW: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (39 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── ApplicationIntent: *v1.JSON
+│   │   ├── AuthenticationType: *string
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── CommandTimeout: *v1.JSON
+│   │   ├── ConnectRetryCount: *v1.JSON
+│   │   ├── ConnectRetryInterval: *v1.JSON
+│   │   ├── ConnectTimeout: *v1.JSON
+│   │   ├── ConnectVia: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── ConnectionString: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── Credential: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Database: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── Encrypt: *v1.JSON
+│   │   ├── EncryptedCredential: *string
+│   │   ├── FailoverPartner: *v1.JSON
+│   │   ├── HostNameInCertificate: *v1.JSON
+│   │   ├── IntegratedSecurity: *v1.JSON
+│   │   ├── LoadBalanceTimeout: *v1.JSON
+│   │   ├── MaxPoolSize: *v1.JSON
+│   │   ├── MinPoolSize: *v1.JSON
+│   │   ├── MultiSubnetFailover: *v1.JSON
+│   │   ├── MultipleActiveResultSets: *v1.JSON
+│   │   ├── PacketSize: *v1.JSON
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── Password: *Object (5 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── SecretName: *v1.JSON
+│   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   └── Type: *string
+│   │   ├── Pooling: *v1.JSON
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Server: *v1.JSON
+│   │   ├── ServicePrincipalCredential: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── ServicePrincipalCredentialType: *v1.JSON
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   ├── ServicePrincipalKey: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── Tenant: *v1.JSON
+│   │   ├── TrustServerCertificate: *v1.JSON
+│   │   ├── Type: *string
+│   │   ├── UserName: *v1.JSON
+│   │   └── Version: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (38 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── ApplicationIntent: *v1.JSON
+    │   ├── AuthenticationType: *string
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── CommandTimeout: *v1.JSON
+    │   ├── ConnectRetryCount: *v1.JSON
+    │   ├── ConnectRetryInterval: *v1.JSON
+    │   ├── ConnectTimeout: *v1.JSON
+    │   ├── ConnectVia: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Credential: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Database: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Encrypt: *v1.JSON
+    │   ├── EncryptedCredential: *string
+    │   ├── FailoverPartner: *v1.JSON
+    │   ├── HostNameInCertificate: *v1.JSON
+    │   ├── IntegratedSecurity: *v1.JSON
+    │   ├── LoadBalanceTimeout: *v1.JSON
+    │   ├── MaxPoolSize: *v1.JSON
+    │   ├── MinPoolSize: *v1.JSON
+    │   ├── MultiSubnetFailover: *v1.JSON
+    │   ├── MultipleActiveResultSets: *v1.JSON
+    │   ├── PacketSize: *v1.JSON
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── Password: *Object (5 properties)
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── SecretName: *v1.JSON
+    │   │   ├── SecretVersion: *v1.JSON
+    │   │   ├── Store: *Object (4 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *string
+    │   │   └── Type: *string
+    │   ├── Pooling: *v1.JSON
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Server: *v1.JSON
+    │   ├── ServicePrincipalCredential: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── ServicePrincipalCredentialType: *v1.JSON
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   ├── ServicePrincipalKey: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── Tenant: *v1.JSON
+    │   ├── TrustServerCertificate: *v1.JSON
+    │   ├── Type: *string
+    │   ├── UserName: *v1.JSON
+    │   └── Version: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesLinkedServiceAzureSqlDatabase: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (40 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── AlwaysEncryptedSettings: *Object (5 properties)
+│   │   │   ├── AlwaysEncryptedAkvAuthType: *string
+│   │   │   ├── Credential: *Object (4 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ServicePrincipalId: *v1.JSON
+│   │   │   └── ServicePrincipalKey: *Object (3 properties)
+│   │   │       ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │       │   ├── SecretName: *v1.JSON
+│   │   │       │   ├── SecretVersion: *v1.JSON
+│   │   │       │   ├── Store: *Object (4 properties)
+│   │   │       │   │   ├── Parameters: map[string]v1.JSON
+│   │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │       │   │   ├── ReferenceName: *string
+│   │   │       │   │   └── Type: *string
+│   │   │       │   └── Type: *string
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── SecureString: *Object (3 properties)
+│   │   │           ├── PropertyBag: genruntime.PropertyBag
+│   │   │           ├── Type: *string
+│   │   │           └── Value: *genruntime.SecretReference
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── ApplicationIntent: *v1.JSON
+│   │   ├── AuthenticationType: *string
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── CommandTimeout: *v1.JSON
+│   │   ├── ConnectRetryCount: *v1.JSON
+│   │   ├── ConnectRetryInterval: *v1.JSON
+│   │   ├── ConnectTimeout: *v1.JSON
+│   │   ├── ConnectVia: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── ConnectionString: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── Credential: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Database: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── Encrypt: *v1.JSON
+│   │   ├── EncryptedCredential: *string
+│   │   ├── FailoverPartner: *v1.JSON
+│   │   ├── HostNameInCertificate: *v1.JSON
+│   │   ├── IntegratedSecurity: *v1.JSON
+│   │   ├── LoadBalanceTimeout: *v1.JSON
+│   │   ├── MaxPoolSize: *v1.JSON
+│   │   ├── MinPoolSize: *v1.JSON
+│   │   ├── MultiSubnetFailover: *v1.JSON
+│   │   ├── MultipleActiveResultSets: *v1.JSON
+│   │   ├── PacketSize: *v1.JSON
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── Password: *Object (5 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── SecretName: *v1.JSON
+│   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   └── Type: *string
+│   │   ├── Pooling: *v1.JSON
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Server: *v1.JSON
+│   │   ├── ServicePrincipalCredential: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── ServicePrincipalCredentialType: *v1.JSON
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   ├── ServicePrincipalKey: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── Tenant: *v1.JSON
+│   │   ├── TrustServerCertificate: *v1.JSON
+│   │   ├── Type: *string
+│   │   ├── UserName: *v1.JSON
+│   │   └── Version: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (39 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── AlwaysEncryptedSettings: *Object (5 properties)
+    │   │   ├── AlwaysEncryptedAkvAuthType: *string
+    │   │   ├── Credential: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ServicePrincipalId: *v1.JSON
+    │   │   └── ServicePrincipalKey: *Object (3 properties)
+    │   │       ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │       │   ├── PropertyBag: genruntime.PropertyBag
+    │   │       │   ├── SecretName: *v1.JSON
+    │   │       │   ├── SecretVersion: *v1.JSON
+    │   │       │   ├── Store: *Object (4 properties)
+    │   │       │   │   ├── Parameters: map[string]v1.JSON
+    │   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │       │   │   ├── ReferenceName: *string
+    │   │       │   │   └── Type: *string
+    │   │       │   └── Type: *string
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── SecureString: *Object (2 properties)
+    │   │           ├── PropertyBag: genruntime.PropertyBag
+    │   │           └── Type: *string
+    │   ├── Annotations: v1.JSON[]
+    │   ├── ApplicationIntent: *v1.JSON
+    │   ├── AuthenticationType: *string
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── CommandTimeout: *v1.JSON
+    │   ├── ConnectRetryCount: *v1.JSON
+    │   ├── ConnectRetryInterval: *v1.JSON
+    │   ├── ConnectTimeout: *v1.JSON
+    │   ├── ConnectVia: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Credential: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Database: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Encrypt: *v1.JSON
+    │   ├── EncryptedCredential: *string
+    │   ├── FailoverPartner: *v1.JSON
+    │   ├── HostNameInCertificate: *v1.JSON
+    │   ├── IntegratedSecurity: *v1.JSON
+    │   ├── LoadBalanceTimeout: *v1.JSON
+    │   ├── MaxPoolSize: *v1.JSON
+    │   ├── MinPoolSize: *v1.JSON
+    │   ├── MultiSubnetFailover: *v1.JSON
+    │   ├── MultipleActiveResultSets: *v1.JSON
+    │   ├── PacketSize: *v1.JSON
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── Password: *Object (5 properties)
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── SecretName: *v1.JSON
+    │   │   ├── SecretVersion: *v1.JSON
+    │   │   ├── Store: *Object (4 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *string
+    │   │   └── Type: *string
+    │   ├── Pooling: *v1.JSON
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Server: *v1.JSON
+    │   ├── ServicePrincipalCredential: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── ServicePrincipalCredentialType: *v1.JSON
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   ├── ServicePrincipalKey: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── Tenant: *v1.JSON
+    │   ├── TrustServerCertificate: *v1.JSON
+    │   ├── Type: *string
+    │   ├── UserName: *v1.JSON
+    │   └── Version: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesLinkedServiceAzureSynapseArtifacts: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (11 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Authentication: *v1.JSON
+│   │   ├── ConnectVia: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Description: *string
+│   │   ├── Endpoint: *v1.JSON
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Type: *string
+│   │   ├── Version: *string
+│   │   └── WorkspaceResourceId: *v1.JSON
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (11 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Authentication: *v1.JSON
+    │   ├── ConnectVia: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Description: *string
+    │   ├── Endpoint: *v1.JSON
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Type: *string
+    │   ├── Version: *string
+    │   └── WorkspaceResourceId: *v1.JSON
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesLinkedServiceCosmosDb: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (20 properties)
+│   │   ├── AccountEndpoint: *v1.JSON
+│   │   ├── AccountKey: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── ConnectVia: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── ConnectionMode: *string
+│   │   ├── ConnectionString: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── Credential: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Database: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── EncryptedCredential: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── ServicePrincipalCredential: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── ServicePrincipalCredentialType: *v1.JSON
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   ├── Tenant: *v1.JSON
+│   │   ├── Type: *string
+│   │   └── Version: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (19 properties)
+    │   ├── AccountEndpoint: *v1.JSON
+    │   ├── AccountKey: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── ConnectVia: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── ConnectionMode: *string
+    │   ├── Credential: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Database: *v1.JSON
+    │   ├── Description: *string
+    │   ├── EncryptedCredential: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ServicePrincipalCredential: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── ServicePrincipalCredentialType: *v1.JSON
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   ├── Tenant: *v1.JSON
+    │   ├── Type: *string
+    │   └── Version: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesLinkedServiceHttpServer: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (17 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── AuthHeaders: *v1.JSON
+│   │   ├── AuthenticationType: *string
+│   │   ├── CertThumbprint: *v1.JSON
+│   │   ├── ConnectVia: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Description: *string
+│   │   ├── EmbeddedCertData: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── EnableServerCertificateValidation: *v1.JSON
+│   │   ├── EncryptedCredential: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── Password: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Type: *string
+│   │   ├── Url: *v1.JSON
+│   │   ├── UserName: *v1.JSON
+│   │   └── Version: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (15 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── AuthenticationType: *string
+    │   ├── CertThumbprint: *v1.JSON
+    │   ├── ConnectVia: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Description: *string
+    │   ├── EnableServerCertificateValidation: *v1.JSON
+    │   ├── EncryptedCredential: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── Password: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Type: *string
+    │   ├── Url: *v1.JSON
+    │   ├── UserName: *v1.JSON
+    │   └── Version: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesLinkedServiceRestService: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (29 properties)
+│   │   ├── AadResourceId: *v1.JSON
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── AuthHeaders: *v1.JSON
+│   │   ├── AuthenticationType: *string
+│   │   ├── AzureCloudType: *v1.JSON
+│   │   ├── ClientId: *v1.JSON
+│   │   ├── ClientSecret: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── ConnectVia: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Credential: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Description: *string
+│   │   ├── EnableServerCertificateValidation: *v1.JSON
+│   │   ├── EncryptedCredential: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── Password: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Resource: *v1.JSON
+│   │   ├── Scope: *v1.JSON
+│   │   ├── ServicePrincipalCredentialType: *v1.JSON
+│   │   ├── ServicePrincipalEmbeddedCert: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── ServicePrincipalEmbeddedCertPassword: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── ServicePrincipalId: *v1.JSON
+│   │   ├── ServicePrincipalKey: *Object (3 properties)
+│   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SecureString: *Object (3 properties)
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── Type: *string
+│   │   │       └── Value: *genruntime.SecretReference
+│   │   ├── Tenant: *v1.JSON
+│   │   ├── TokenEndpoint: *v1.JSON
+│   │   ├── Type: *string
+│   │   ├── Url: *v1.JSON
+│   │   ├── UserName: *v1.JSON
+│   │   └── Version: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (28 properties)
+    │   ├── AadResourceId: *v1.JSON
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── AuthenticationType: *string
+    │   ├── AzureCloudType: *v1.JSON
+    │   ├── ClientId: *v1.JSON
+    │   ├── ClientSecret: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── ConnectVia: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Credential: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Description: *string
+    │   ├── EnableServerCertificateValidation: *v1.JSON
+    │   ├── EncryptedCredential: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── Password: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Resource: *v1.JSON
+    │   ├── Scope: *v1.JSON
+    │   ├── ServicePrincipalCredentialType: *v1.JSON
+    │   ├── ServicePrincipalEmbeddedCert: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── ServicePrincipalEmbeddedCertPassword: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── ServicePrincipalId: *v1.JSON
+    │   ├── ServicePrincipalKey: *Object (3 properties)
+    │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── SecureString: *Object (2 properties)
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── Tenant: *v1.JSON
+    │   ├── TokenEndpoint: *v1.JSON
+    │   ├── Type: *string
+    │   ├── Url: *v1.JSON
+    │   ├── UserName: *v1.JSON
+    │   └── Version: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 FactoriesManagedVirtualNetwork: Resource
 ├── Owner: datafactory/v20180601.Factory
 ├── Spec: Object (6 properties)

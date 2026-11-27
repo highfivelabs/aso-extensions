@@ -341,6 +341,16 @@ title: Supported Resources
 | FactoriesDataflow                                     | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesGlobalParameter                              | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesIntegrationRuntime                           | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesLinkedServiceAzureBlobFS                     | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesLinkedServiceAzureBlobStorage                | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesLinkedServiceAzureDatabricks                 | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesLinkedServiceAzureKeyVault                   | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesLinkedServiceAzureSqlDW                      | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesLinkedServiceAzureSqlDatabase                | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesLinkedServiceAzureSynapseArtifacts           | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesLinkedServiceCosmosDb                        | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesLinkedServiceHttpServer                      | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesLinkedServiceRestService                     | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesManagedVirtualNetwork                        | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesManagedVirtualNetworksManagedPrivateEndpoint | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesPrivateEndpointConnection                    | 2018-06-01  | v20180601   | v0.1.0         | -      |

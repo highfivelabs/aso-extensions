@@ -312,6 +312,9 @@ func (a *ARM) render(id string, r resource) resource {
 	if out, ok := a.renderVirtualNetworkTap(id, r); ok {
 		return out
 	}
+	if out, ok := renderDataFactory(id, r); ok {
+		return out
+	}
 	for re, lists := range erChildLists {
 		if !re.MatchString(id) {
 			continue

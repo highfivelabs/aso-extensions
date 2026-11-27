@@ -141,27 +141,3 @@ type ServicePrincipalCredentialTypeProperties_STATUS struct {
 	// Tenant: The ID of the tenant to which the service principal belongs
 	Tenant *v1.JSON `json:"tenant,omitempty"`
 }
-
-type AzureKeyVaultSecretReference_STATUS struct {
-	// SecretName: The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
-	SecretName *v1.JSON `json:"secretName,omitempty"`
-
-	// SecretVersion: The version of the secret in Azure Key Vault. The default value is the latest version of the secret.
-	// Type: string (or Expression with resultType string).
-	SecretVersion *v1.JSON `json:"secretVersion,omitempty"`
-
-	// Store: The Azure Key Vault linked service reference.
-	Store *LinkedServiceReference_STATUS `json:"store,omitempty"`
-
-	// Type: Type of the secret.
-	Type AzureKeyVaultSecretReference_Type_STATUS `json:"type,omitempty"`
-}
-
-type AzureKeyVaultSecretReference_Type_STATUS string
-
-const AzureKeyVaultSecretReference_Type_STATUS_AzureKeyVaultSecret = AzureKeyVaultSecretReference_Type_STATUS("AzureKeyVaultSecret")
-
-// Mapping from string to AzureKeyVaultSecretReference_Type_STATUS
-var azureKeyVaultSecretReference_Type_STATUS_Values = map[string]AzureKeyVaultSecretReference_Type_STATUS{
-	"azurekeyvaultsecret": AzureKeyVaultSecretReference_Type_STATUS_AzureKeyVaultSecret,
-}

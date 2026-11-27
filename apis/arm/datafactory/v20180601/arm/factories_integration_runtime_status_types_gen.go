@@ -328,17 +328,6 @@ type CopyComputeScaleProperties_STATUS struct {
 	TimeToLive *int `json:"timeToLive,omitempty"`
 }
 
-// Credential reference type.
-type CredentialReference_STATUS struct {
-	AdditionalProperties map[string]v1.JSON `json:"additionalProperties,omitempty"`
-
-	// ReferenceName: Reference credential name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Credential reference type.
-	Type *CredentialReferenceType_STATUS `json:"type,omitempty"`
-}
-
 type CustomSetupBase_STATUS struct {
 	// AzPowerShell: Mutually exclusive with all other properties
 	AzPowerShell *AzPowerShellSetup_STATUS `json:"azPowerShellSetup,omitempty"`
@@ -596,16 +585,6 @@ type ComponentSetup_STATUS struct {
 	TypeProperties *LicensedComponentSetupTypeProperties_STATUS `json:"typeProperties,omitempty"`
 }
 
-// Credential reference type.
-type CredentialReferenceType_STATUS string
-
-const CredentialReferenceType_STATUS_CredentialReference = CredentialReferenceType_STATUS("CredentialReference")
-
-// Mapping from string to CredentialReferenceType_STATUS
-var credentialReferenceType_STATUS_Values = map[string]CredentialReferenceType_STATUS{
-	"credentialreference": CredentialReferenceType_STATUS_CredentialReference,
-}
-
 // Compute type of the cluster which will execute data flow job.
 type DataFlowComputeType_STATUS string
 
@@ -682,11 +661,6 @@ const LinkedIntegrationRuntimeRbacAuthorization_AuthorizationType_STATUS_RBAC = 
 // Mapping from string to LinkedIntegrationRuntimeRbacAuthorization_AuthorizationType_STATUS
 var linkedIntegrationRuntimeRbacAuthorization_AuthorizationType_STATUS_Values = map[string]LinkedIntegrationRuntimeRbacAuthorization_AuthorizationType_STATUS{
 	"rbac": LinkedIntegrationRuntimeRbacAuthorization_AuthorizationType_STATUS_RBAC,
-}
-
-type SecureString_STATUS struct {
-	// Type: Type of the secret.
-	Type SecureString_Type_STATUS `json:"type,omitempty"`
 }
 
 type AzPowerShellSetup_Type_STATUS string
@@ -773,55 +747,4 @@ type LicensedComponentSetupTypeProperties_STATUS struct {
 
 	// LicenseKey: The license key to activate the component.
 	LicenseKey *SecretBase_STATUS `json:"licenseKey,omitempty"`
-}
-
-type SecureString_Type_STATUS string
-
-const SecureString_Type_STATUS_SecureString = SecureString_Type_STATUS("SecureString")
-
-// Mapping from string to SecureString_Type_STATUS
-var secureString_Type_STATUS_Values = map[string]SecureString_Type_STATUS{
-	"securestring": SecureString_Type_STATUS_SecureString,
-}
-
-type SecretBase_STATUS struct {
-	// AzureKeyVaultSecret: Mutually exclusive with all other properties
-	AzureKeyVaultSecret *AzureKeyVaultSecretReference_STATUS `json:"azureKeyVaultSecret,omitempty"`
-
-	// SecureString: Mutually exclusive with all other properties
-	SecureString *SecureString_STATUS `json:"secureString,omitempty"`
-}
-
-// MarshalJSON defers JSON marshaling to the first non-nil property, because SecretBase_STATUS represents a discriminated union (JSON OneOf)
-func (base SecretBase_STATUS) MarshalJSON() ([]byte, error) {
-	if base.AzureKeyVaultSecret != nil {
-		return json.Marshal(base.AzureKeyVaultSecret)
-	}
-
-	if base.SecureString != nil {
-		return json.Marshal(base.SecureString)
-	}
-
-	return nil, nil
-}
-
-// UnmarshalJSON unmarshals the SecretBase_STATUS
-func (base *SecretBase_STATUS) UnmarshalJSON(data []byte) error {
-	var rawJson map[string]interface{}
-	err := json.Unmarshal(data, &rawJson)
-	if err != nil {
-		return err
-	}
-	discriminator := rawJson["type"]
-	if discriminator == "AzureKeyVaultSecret" {
-		base.AzureKeyVaultSecret = &AzureKeyVaultSecretReference_STATUS{}
-		return json.Unmarshal(data, base.AzureKeyVaultSecret)
-	}
-	if discriminator == "SecureString" {
-		base.SecureString = &SecureString_STATUS{}
-		return json.Unmarshal(data, base.SecureString)
-	}
-
-	// No error
-	return nil
 }

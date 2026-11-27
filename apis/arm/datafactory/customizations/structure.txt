@@ -11,6 +11,26 @@ FactoriesGlobalParameterExtension: Object (0 properties)
 
 FactoriesIntegrationRuntimeExtension: Object (0 properties)
 
+FactoriesLinkedServiceAzureBlobFSExtension: Object (0 properties)
+
+FactoriesLinkedServiceAzureBlobStorageExtension: Object (0 properties)
+
+FactoriesLinkedServiceAzureDatabricksExtension: Object (0 properties)
+
+FactoriesLinkedServiceAzureKeyVaultExtension: Object (0 properties)
+
+FactoriesLinkedServiceAzureSqlDWExtension: Object (0 properties)
+
+FactoriesLinkedServiceAzureSqlDatabaseExtension: Object (0 properties)
+
+FactoriesLinkedServiceAzureSynapseArtifactsExtension: Object (0 properties)
+
+FactoriesLinkedServiceCosmosDbExtension: Object (0 properties)
+
+FactoriesLinkedServiceHttpServerExtension: Object (0 properties)
+
+FactoriesLinkedServiceRestServiceExtension: Object (0 properties)
+
 FactoriesManagedVirtualNetworkExtension: Object (0 properties)
 
 FactoriesManagedVirtualNetworksManagedPrivateEndpointExtension: Object (0 properties)
