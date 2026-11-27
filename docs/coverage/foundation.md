@@ -538,31 +538,31 @@ through "Choosing" (ASO first). The facts for each row are in
 <!-- upjet-gaps:start -->
 | # | Resource | Tier | Upjet resource | Referenced by what we serve | Tested by Upjet | Hand examples |
 | ---: | --- | ---: | --- | ---: | --- | ---: |
-| 1 | `Microsoft.KeyVault/vaults/secrets` | 1 | `azurerm_key_vault_secret` | 3 | true | 2 |
-| 2 | `Microsoft.Network/networkProfiles` | 1 | `azurerm_network_profile` | 0 | true | 2 |
-| 3 | `Microsoft.Resources/deployments` | 1 | `azurerm_resource_group_template_deployment` | 0 | true | 1 |
-| 4 | `Microsoft.Resources/deployments` | 1 | `azurerm_subscription_template_deployment` | 0 | true | 1 |
-| 5 | `Microsoft.Insights/components/analyticsItems` | 1 | `azurerm_application_insights_analytics_item` | 0 | true | 1 |
-| 6 | `Microsoft.Insights/components/myanalyticsItems` | 1 | `azurerm_application_insights_analytics_item` | 0 | true | 1 |
-| 7 | `Microsoft.Network/networkWatchers/packetCaptures` | 1 | `azurerm_virtual_machine_packet_capture` | 0 | false | 0 |
-| 8 | `Microsoft.Network/networkWatchers/packetCaptures` | 1 | `azurerm_virtual_machine_scale_set_packet_capture` | 0 | false | 0 |
-| 9 | `Microsoft.DBforPostgreSQL/servers/securityAlertPolicies` | 2 | `azurerm_mssql_server_security_alert_policy` | 4 | true | 1 |
-| 10 | `Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers` | 2 | `azurerm_backup_container_storage_account` | 1 | true | 1 |
-| 11 | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/diagnosticRunCommands` | 2 | `azurerm_virtual_machine_run_command` | 0 | true | 2 |
-| 12 | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands` | 2 | `azurerm_virtual_machine_run_command` | 0 | true | 2 |
-| 13 | `Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies` | 2 | `azurerm_storage_container_immutability_policy` | 0 | true | 1 |
-| 14 | `Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers` | 2 | `azurerm_backup_protected_file_share` | 0 | true | 1 |
-| 15 | `Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings` | 2 | `azurerm_site_recovery_network_mapping` | 0 | true | 1 |
-| 16 | `Microsoft.DevTestLab/labs/policysets/policies` | 2 | `azurerm_dev_test_policy` | 0 | true | 1 |
-| 17 | `Microsoft.ManagedNetworkFabric/networkDevices/networkInterfaces` | 3 | `azurerm_network_interface` | 8 | true | 2 |
-| 18 | `Microsoft.DBforMySQL/servers` | 3 | `azurerm_mysql_flexible_server` | 5 | true | 2 |
-| 19 | `Microsoft.DBforMySQL/servers` | 3 | `azurerm_private_endpoint` | 5 | true | 2 |
-| 20 | `Microsoft.DBforMariaDB/servers` | 3 | `azurerm_private_endpoint` | 5 | true | 2 |
-| 21 | `Microsoft.DBforMySQL/servers/databases` | 3 | `azurerm_mssql_database` | 4 | true | 1 |
-| 22 | `Microsoft.DBforMySQL/servers/securityAlertPolicies` | 3 | `azurerm_mssql_server_security_alert_policy` | 4 | true | 1 |
-| 23 | `Microsoft.DBforMariaDB/servers/securityAlertPolicies` | 3 | `azurerm_mssql_server_security_alert_policy` | 4 | true | 1 |
-| 24 | `Microsoft.DataFactory/factories/pipelines` | 3 | `azurerm_data_factory_pipeline` | 3 | true | 1 |
-| 25 | `Microsoft.MachineLearning/workspaces` | 3 | `azurerm_machine_learning_workspace` | 2 | true | 2 |
+| 1 | `Microsoft.Network/networkProfiles` | 1 | `azurerm_network_profile` | 0 | true | 2 |
+| 2 | `Microsoft.Resources/deployments` | 1 | `azurerm_resource_group_template_deployment` | 0 | true | 1 |
+| 3 | `Microsoft.Resources/deployments` | 1 | `azurerm_subscription_template_deployment` | 0 | true | 1 |
+| 4 | `Microsoft.Insights/components/analyticsItems` | 1 | `azurerm_application_insights_analytics_item` | 0 | true | 1 |
+| 5 | `Microsoft.Insights/components/myanalyticsItems` | 1 | `azurerm_application_insights_analytics_item` | 0 | true | 1 |
+| 6 | `Microsoft.Network/networkWatchers/packetCaptures` | 1 | `azurerm_virtual_machine_packet_capture` | 0 | false | 0 |
+| 7 | `Microsoft.Network/networkWatchers/packetCaptures` | 1 | `azurerm_virtual_machine_scale_set_packet_capture` | 0 | false | 0 |
+| 8 | `Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers` | 2 | `azurerm_backup_container_storage_account` | 1 | true | 1 |
+| 9 | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/diagnosticRunCommands` | 2 | `azurerm_virtual_machine_run_command` | 0 | true | 2 |
+| 10 | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands` | 2 | `azurerm_virtual_machine_run_command` | 0 | true | 2 |
+| 11 | `Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies` | 2 | `azurerm_storage_container_immutability_policy` | 0 | true | 1 |
+| 12 | `Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers` | 2 | `azurerm_backup_protected_file_share` | 0 | true | 1 |
+| 13 | `Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings` | 2 | `azurerm_site_recovery_network_mapping` | 0 | true | 1 |
+| 14 | `Microsoft.DevTestLab/labs/policysets/policies` | 2 | `azurerm_dev_test_policy` | 0 | true | 1 |
+| 15 | `Microsoft.DBforMySQL/servers/databases` | 3 | `azurerm_mssql_database` | 4 | true | 1 |
+| 16 | `Microsoft.DataFactory/factories/pipelines` | 3 | `azurerm_data_factory_pipeline` | 3 | true | 1 |
+| 17 | `Microsoft.AppPlatform/Spring/apps` | 3 | `azurerm_spring_cloud_app` | 1 | true | 2 |
+| 18 | `Microsoft.EventGrid/domains/eventSubscriptions` | 3 | `azurerm_eventgrid_event_subscription` | 0 | true | 2 |
+| 19 | `Microsoft.EventGrid/domains/topics/eventSubscriptions` | 3 | `azurerm_eventgrid_event_subscription` | 0 | true | 2 |
+| 20 | `Microsoft.EventGrid/topics/eventSubscriptions` | 3 | `azurerm_eventgrid_event_subscription` | 0 | true | 2 |
+| 21 | `Microsoft.Cdn/profiles/endpoints/customDomains` | 3 | `azurerm_cdn_frontdoor_custom_domain` | 0 | true | 2 |
+| 22 | `Microsoft.DataFactory/factories/datasets` | 3 | `azurerm_data_factory_custom_dataset` | 0 | true | 2 |
+| 23 | `Microsoft.AppPlatform/Spring/applicationAccelerators/customizedAccelerators` | 3 | `azurerm_spring_cloud_customized_accelerator` | 0 | true | 2 |
+| 24 | `Microsoft.AppPlatform/spring` | 3 | `azurerm_spring_cloud_service` | 0 | true | 2 |
+| 25 | `Microsoft.AzureStackHCI/virtualMachines/extensions` | 3 | `azurerm_virtual_machine_extension` | 0 | true | 2 |
 
-189 in all: [`upjet-gaps.csv`](upjet-gaps.csv).
+166 in all: [`upjet-gaps.csv`](upjet-gaps.csv).
 <!-- upjet-gaps:end -->

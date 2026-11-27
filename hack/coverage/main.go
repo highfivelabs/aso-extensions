@@ -141,6 +141,7 @@ func run(root string, check, verbose bool) error {
 	}
 	return finish(root, check, files, []block{
 		{coverageDir + "/README.md", "<!-- upjet:start -->", "<!-- upjet:end -->", upjetNumbers(up)},
+		{"README.md", "<!-- upjet-summary:start -->", "<!-- upjet-summary:end -->", upjetSummary(up)},
 		{coverageDir + "/foundation.md", "<!-- upjet-gaps:start -->", "<!-- upjet-gaps:end -->", upjetGapTable(up, 25)},
 		{"README.md", startMarker, endMarker, readmeSection(svcs, tiers, cats, prio, tf)},
 		{coverageDir + "/foundation.md", "<!-- foundation:start -->", "<!-- foundation:end -->", foundationTable(rows, res, prio, avm, cats)},

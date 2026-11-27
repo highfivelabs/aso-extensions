@@ -60,7 +60,15 @@ references:
     field: log_analytics_workspace_id
     match: owner
     why: an alert rule is an extension resource of the workspace, its owner
-secrets: []
+secrets:
+  - kind: app.azure.hfl.dev/ContainerApp
+    field: secret.name
+    keep: >-
+      a secret's name is the key a container reads it by (secretRef), and
+      Azure returns it in plain text on a GET; its value
+      (configuration.secrets[].value) is a Secret reference here. Terraform
+      marks the whole secret block sensitive, which is why Upjet hides the
+      name
 examples:
   - kind: devtestlab.azure.hfl.dev/LabsSchedule
     example: examples/devtestlab/cluster/v1beta1/schedule.yaml

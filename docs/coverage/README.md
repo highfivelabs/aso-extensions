@@ -1056,11 +1056,46 @@ never overridden silently.
 | `upjet-ledger.csv` | kind of ours, the per-kind ledger (HFL-701): where it is tested here (`conformance`: every generated kind on the fake; `kind test` for a hand-written one), beside Upjet's resource, its `tested` flag, its references by class, its examples and how many run on the fake |
 | `upjet-gaps.csv` | resource Upjet serves and neither ASO nor we do, ranked (the top is in `foundation.md`) |
 
+**Before and after (2026-11-27, HFL-699, HFL-700, HFL-701).** Before,
+nothing here read the slice: no Upjet fact was checked against a kind, no
+Upjet example ran, and no kind's "tested where" stood beside Upjet's flag.
+After, every fact in the table below is checked on each
+`hack/coverage/run.sh --check`, 69 hand examples run on the fake cloud in
+`task check`, and the per-kind ledger is `upjet-ledger.csv`. What the
+checks found:
+
+- **References.** Every Upjet reference that lands on an ARM-ID field of
+  ours is already a Kubernetes reference here (ASO's generator refuses to
+  generate a kind until each field that looks like an ARM ID is labelled,
+  and those labels were reviewed), so no `$referenceType` label had to
+  change; Upjet corroborates them. Two fields Upjet calls references stay
+  strings on purpose (an API Management subscription's `scope`, which
+  takes `/apis` and `/products/{id}` too). Ten references needed a match
+  by hand (`upjet.yaml`).
+- **Identifiers.** 38 ID templates name another ARM type than the
+  resource the catalog's Terraform mapping joins them to (API Management
+  workspace kinds joined to service-level Terraform resources, the
+  virtual WAN joined to hubs and gateways, partner topics to system
+  topics): those entries' references and examples are not applied to our
+  kinds (the stricter rule) and the mapping is the catalog's to fix.
+- **Secrets.** Upjet hides a container app secret's `name`; we keep it in
+  plain text, as Azure returns it (the value is a Secret reference here).
+- **Late-init and list map keys.** ASO never fills a spec from Azure, so
+  each late-init ignore holds; the application gateway's two IP
+  configuration lists are atomic here where Upjet merges them by name (a
+  server-side apply replaces the list whole), which only ASO's generator
+  could change.
+- **Examples.** Running them found Terraform interpolations in example
+  values (now dropped), a dev test lab schedule example the fake refuses
+  as Azure documents (`taskType: Unknown`, for a live run to settle), and
+  that a tenant resource's examples need names of their own.
+
 <!-- upjet:start -->
 | What | Count |
 | --- | ---: |
 | Kinds of ours (in the denominator) | 665 |
 | ... with an Upjet resource | 183 |
+| ... of which Upjet's maintainers have not tested (`externalnamenottested.go`) | 36 |
 | ... with none (`noUpjet` and unmatched) | 482 |
 | Upjet references on our kinds | 437 |
 | ... a Kubernetes reference here | 53 |
@@ -1079,5 +1114,5 @@ never overridden silently.
 | List map keys checked | 2 (differ 2) |
 | Hand examples of our kinds | 298 |
 | ... run on the fake cloud (`TestUpjetExamplesOnFake`) | 69, of 57 kinds |
-| Resources Upjet has and neither ASO nor we serve (`upjet-gaps.csv`) | 189 |
+| Resources Upjet has and neither ASO nor we serve (`upjet-gaps.csv`) | 166 |
 <!-- upjet:end -->

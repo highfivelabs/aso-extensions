@@ -212,6 +212,16 @@ By service, tier first and then attributes covered (every tier 1 and 2 service, 
 220 other services in the specs have no coverage from either and are in tier 3.
 <!-- coverage:end -->
 
+**Where each kind is tested, beside Crossplane's Upjet** (HFL-701): the
+per-kind ledger is [`docs/coverage/upjet-ledger.csv`](docs/coverage/upjet-ledger.csv)
+(the fake cloud's conformance test or a kind's own test, Upjet's
+resource and whether its maintainers tested it); the Upjet facts and what
+they found are in [docs/coverage/README.md, "Upjet"](docs/coverage/README.md#upjet).
+
+<!-- upjet-summary:start -->
+183 of our 665 kinds have an Upjet resource (36 of them untested by Upjet's maintainers); 69 Upjet hand examples run on the fake cloud for 57 kinds; 53 of Upjet's references on our kinds are references here and 214 are the owner, 2 are strings here (2 kept on purpose); 166 resources Upjet has are served neither by ASO nor here ([`upjet-gaps.csv`](docs/coverage/upjet-gaps.csv)).
+<!-- upjet-summary:end -->
+
 ## Where it sits
 
 | | ASO | here |

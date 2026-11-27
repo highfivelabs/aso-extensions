@@ -566,6 +566,12 @@ func upjet(root string, rows []*ResRow, ours []*Kind, prio Priority) (*upjetResu
 				itoa(p.refs[refReference]), itoa(p.refs[refOwner]), itoa(p.refs[refString]), itoa(p.refs[refKept]),
 				itoa(p.refs[refName] + p.refs[refMissing] + p.refs[refValue] + p.refs[refOther]), itoa(p.hand), itoa(p.onFake), p.idCheck}
 			res.stats["kindsWithUpjet"]++
+			for _, t := range p.tested {
+				if t == "false" {
+					res.stats["kindsUntested"]++
+					break
+				}
+			}
 			if p.onFake > 0 {
 				res.stats["kindsOnFake"]++
 			}
@@ -580,25 +586,40 @@ func upjet(root string, rows []*ResRow, ours []*Kind, prio Priority) (*upjetResu
 	}
 
 	// Gaps: resources Upjet has that neither ASO nor we serve.
+	// Upjet's ID template says which ARM type its resource is, where the
+	// catalog's mapping may join it to another; and a resource one of our
+	// data-plane kinds serves (outside the denominator) is served.
+	outside := map[string]bool{}
+	for _, k := range ours {
+		if k.Outside != "" {
+			outside[strings.ToLower(strings.Fields(k.Outside)[0])] = true
+		}
+	}
 	type gap struct {
 		e                *upjetEntry
+		resource, note   string
 		tier, order, deg int
 		hand             int
 	}
 	var gs []gap
 	seenRes := map[string]bool{}
 	for _, e := range s.Entries {
-		if served(e.Ours.Resource) || seenRes[e.Ours.Resource+"|"+e.Facts.Terraform] {
+		resource, note := e.Ours.Resource, ""
+		if typ := templateType(e.Facts.ExternalName.Template); typ != "" && !strings.EqualFold(typ, resource) {
+			resource, note = typ, "the catalog maps it to "+e.Ours.Resource+"; Upjet's ID template is "+typ
+		}
+		if served(resource) || served(e.Ours.Resource) || outside[strings.ToLower(resource)] || seenRes[strings.ToLower(resource)+"|"+e.Facts.Terraform] {
 			continue
 		}
-		seenRes[e.Ours.Resource+"|"+e.Facts.Terraform] = true
+		seenRes[strings.ToLower(resource)+"|"+e.Facts.Terraform] = true
 		h := 0
 		for _, x := range e.Facts.Examples {
 			if x.Origin == "hand" {
 				h++
 			}
 		}
-		gs = append(gs, gap{e: e, tier: prio.tier(e.Ours.Service), order: prio.order(e.Ours.Service), deg: inDegree[e.Facts.Terraform], hand: h})
+		svc := strings.SplitN(resource, "/", 2)[0]
+		gs = append(gs, gap{e: e, resource: resource, note: note, tier: prio.tier(svc), order: prio.order(svc), deg: inDegree[e.Facts.Terraform], hand: h})
 	}
 	sort.SliceStable(gs, func(i, j int) bool {
 		a, b := gs[i], gs[j]
@@ -617,7 +638,7 @@ func upjet(root string, rows []*ResRow, ours []*Kind, prio Priority) (*upjetResu
 		if a.order != b.order {
 			return a.order < b.order
 		}
-		return a.e.Ours.Resource+a.e.Facts.Terraform < b.e.Ours.Resource+b.e.Facts.Terraform
+		return a.resource+a.e.Facts.Terraform < b.resource+b.e.Facts.Terraform
 	})
 	for i, g := range gs {
 		e := g.e
@@ -625,9 +646,9 @@ func upjet(root string, rows []*ResRow, ours []*Kind, prio Priority) (*upjetResu
 		for _, r := range e.Facts.References {
 			targets = append(targets, r.Target)
 		}
-		res.gaps = append(res.gaps, []string{itoa(i + 1), e.Ours.Service, e.Ours.Resource, itoa(g.tier), e.Facts.Terraform,
+		res.gaps = append(res.gaps, []string{itoa(i + 1), strings.SplitN(g.resource, "/", 2)[0], g.resource, itoa(g.tier), e.Facts.Terraform,
 			strconv.FormatBool(e.Facts.Tested), itoa(g.deg), itoa(len(e.Facts.References)), strings.Join(uniq(targets), ";"),
-			itoa(g.hand), e.Facts.ExternalName.Style, sliceAt(e.line)})
+			itoa(g.hand), e.Facts.ExternalName.Style, g.note, sliceAt(e.line)})
 	}
 	res.stats["gaps"] = len(gs)
 	res.stats["noUpjet"] = len(s.NoUpjet)
@@ -913,6 +934,11 @@ func findSchemaPath(s map[string]any, field string) (string, map[string]any) {
 			cur = items
 		}
 		name, p := findProp(cur, seg)
+		if p == nil && len(path) == 0 {
+			// ASO keeps some of a resource's properties one object down
+			// (a container app's secrets are configuration.secrets).
+			name, p = findNested(cur, seg, 2)
+		}
 		if p == nil {
 			return "", nil
 		}
@@ -920,6 +946,28 @@ func findSchemaPath(s map[string]any, field string) (string, map[string]any) {
 		cur = p
 	}
 	return strings.Join(path, "."), cur
+}
+
+// findNested finds a Terraform name below an object schema, depth objects
+// down at most; the path it returns is dotted.
+func findNested(s map[string]any, tf string, depth int) (string, map[string]any) {
+	if depth == 0 {
+		return "", nil
+	}
+	ps, _ := s["properties"].(map[string]any)
+	for _, n := range sortedKeys(ps) {
+		c, _ := ps[n].(map[string]any)
+		if c == nil || skipProps[strings.ToLower(n)] {
+			continue
+		}
+		if name, p := findProp(c, tf); p != nil {
+			return n + "." + name, p
+		}
+		if name, p := findNested(c, tf, depth-1); p != nil {
+			return n + "." + name, p
+		}
+	}
+	return "", nil
 }
 
 // mapExample maps a hand example's Terraform values onto a spec schema:
@@ -1150,7 +1198,7 @@ func upjetOutputs(u *upjetResult) map[string][]byte {
 	files["upjet-examples.csv"] = writeCSV(append(ex, u.exRows...))
 	ledger := [][]string{{"kind", "arm_type", "tested_here", "upjet_terraform", "upjet_tested", "refs_reference", "refs_owner", "refs_string", "refs_kept", "refs_other", "upjet_hand_examples", "upjet_examples_on_fake", "upjet_id_check"}}
 	files["upjet-ledger.csv"] = writeCSV(append(ledger, u.ledger...))
-	gaps := [][]string{{"rank", "service", "resource", "tier", "terraform", "upjet_tested", "referenced_by_served", "upjet_references", "upjet_targets", "hand_examples", "id_style", "slice"}}
+	gaps := [][]string{{"rank", "service", "resource", "tier", "terraform", "upjet_tested", "referenced_by_served", "upjet_references", "upjet_targets", "hand_examples", "id_style", "note", "slice"}}
 	files["upjet-gaps.csv"] = writeCSV(append(gaps, u.gaps...))
 	j, _ := json.MarshalIndent(u.examples, "", " ")
 	files["upjet-examples.json"] = append(j, '\n')
@@ -1165,6 +1213,7 @@ func upjetNumbers(u *upjetResult) string {
 	w("| What | Count |\n| --- | ---: |\n")
 	w("| Kinds of ours (in the denominator) | %d |\n", s["kinds"])
 	w("| ... with an Upjet resource | %d |\n", s["kindsWithUpjet"])
+	w("| ... of which Upjet's maintainers have not tested (`externalnamenottested.go`) | %d |\n", s["kindsUntested"])
 	w("| ... with none (`noUpjet` and unmatched) | %d |\n", s["kindsNoUpjet"])
 	w("| Upjet references on our kinds | %d |\n", s["ref:reference"]+s["ref:owner"]+s["ref:string"]+s["ref:kept"]+s["ref:name"]+s["ref:missing"]+s["ref:value"]+s["ref:other"])
 	w("| ... a Kubernetes reference here | %d |\n", s["ref:reference"])
@@ -1264,4 +1313,15 @@ func conformanceCoveredBy(root string) (map[string]string, error) {
 		return nil, fmt.Errorf("test/e2e/arm_conformance_fixtures_test.go: found no coveredBy fixtures; has the file changed shape?")
 	}
 	return out, nil
+}
+
+// upjetSummary is the Upjet line of the root README.
+func upjetSummary(u *upjetResult) string {
+	s := u.stats
+	return fmt.Sprintf("%d of our %d kinds have an Upjet resource (%d of them untested by Upjet's maintainers); "+
+		"%d Upjet hand examples run on the fake cloud for %d kinds; %d of Upjet's references on our kinds are references here "+
+		"and %d are the owner, %d are strings here (%d kept on purpose); %d resources Upjet has are served neither by ASO nor here "+
+		"([`upjet-gaps.csv`](docs/coverage/upjet-gaps.csv)).\n",
+		s["kindsWithUpjet"], s["kinds"], s["kindsUntested"], s["exOnFake"], s["kindsOnFake"], s["ref:reference"], s["ref:owner"],
+		s["ref:string"]+s["ref:kept"], s["ref:kept"], s["gaps"])
 }
