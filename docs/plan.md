@@ -1986,6 +1986,11 @@ drop until the users they grant to are deleted).
 
 ## 8. Open questions
 
+**The answers of 2026-11-27** (the builder), recorded at each question
+below:
+- Q16 (Web PubSub access keys): "Entra auth now".
+- Q17 (Data Factory CRD size): "One kind per type".
+
 **The answers of 2026-11-16** (the builder, on the Open decisions page,
 ASOOPEN: Q1 to Q4 and the webhook-less validation of
 `docs/handoff.md`), recorded at each question below, verbatim:
@@ -2316,6 +2321,11 @@ summarised here:
    PubSub documentation recommends. Recommended: (c) now, (b) if a chart
    needs a connection string.
 
+   **Answered, 2026-11-27** (the builder: "Entra auth now"): (c). Apps
+   reach Web PubSub with Entra ID (workload identity); no keys are
+   exported, and no new SDK is added. A small listKeys extension with no
+   new SDK, (b), may come later, only if a chart needs a connection string.
+
 17. **Data Factory's linked services, datasets and pipelines: one kind per
    type?** (asked 2026-11-24, f84, f86.) Each is one union of every type
    the spec defines (121 linked service types, 105 dataset types,
@@ -2345,3 +2355,8 @@ summarised here:
    Studio and published from Git); (b) if a chart needs typed checks of a
    few types. Each of (a) to (c) is a generator change and new kind names,
    so it waits for the builder.
+
+   **Answered, 2026-11-27** (the builder: "One kind per type"): (a). Linked
+   services, datasets, pipelines and the other polymorphic Data Factory
+   resources get one kind per connector or dataset type. That gives new
+   kind names, and every kind is fully schema-validated.
