@@ -1,0 +1,10 @@
+# Resources whose spec holds a polymorphic union too large for one CRD, each
+# split into one resource per member of the union (patches/azure-service-operator/0020,
+# ASO_GENERATOR_SPLIT_ONEOF; docs/plan.md section 2, "One kind per member of
+# a union"). One "group/Resource.Property" per line: the resource's name and
+# the property of its spec and status that holds the union. A member
+# AzureBlobStorage of Factories_LinkedService is generated as the resource
+# Factories_LinkedService_AzureBlobStorage, of the same ARM type and path,
+# whose spec holds that member only; generator/azure-arm/<group>.yaml exports
+# each member wanted by that name ($exportAs).
+datafactory/Factories_LinkedService.Properties
