@@ -65645,7 +65645,10 @@
        ],
        "type": "AzureBlobStorage",
        "type_properties_json": "{\n  \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=linkedserviceaccounta;AccountKey=REDACTED;EndpointSuffix=core.windows.net\"\n}\n"
-      }
+      },
+      "redacted": [
+       "type_properties_json"
+      ]
      },
      {
       "id": "synapse/v1beta2/linkedservice",
@@ -65673,7 +65676,10 @@
        "integration_runtime": {},
        "type": "AzureBlobStorage",
        "type_properties_json": "{\n  \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=linkedserviceaccounta;AccountKey=REDACTED;EndpointSuffix=core.windows.net\"\n}\n"
-      }
+      },
+      "redacted": [
+       "type_properties_json"
+      ]
      }
     ]
    },
