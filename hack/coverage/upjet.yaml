@@ -1,0 +1,64 @@
+# What was done with each disagreement between the Upjet slice
+# (hack/upjet/provider-upjet-azure.json) and our kinds, read by
+# hack/coverage/upjet.go (docs/coverage/README.md, "Upjet"). Written by
+# hand, after reading the field in the ARM spec and in our CRD; the coverage
+# check fails when an entry matches nothing any more.
+#
+# references: an Upjet reference (kind, Upjet's Terraform field):
+#   match:   our CRD spec path it is (or "owner"), where the name rules in
+#            upjet.go do not find it, with why;
+#   applied: the generator file whose `$referenceType: arm` label now makes
+#            it a Kubernetes reference (the label cites the slice line);
+#   keep:    why a string field of ours that Upjet calls a reference stays
+#            a string.
+# secrets: a Sensitive override we do not follow, and why.
+# examples: a hand example that does not run on the fake, and why.
+references:
+  - kind: apimanagement.azure.hfl.dev/WorkspaceSubscription
+    field: user_id
+    match: ownerReference
+    why: the subscription's owner, ARM ownerId (a user of the service)
+  - kind: apimanagement.azure.hfl.dev/WorkspaceSubscription
+    field: product_id
+    match: scope
+    why: ARM's scope, which Terraform splits into product_id and api_id
+    keep: >-
+      scope takes /products/{id}, /apis/{id} or /apis as well as an ARM ID
+      (Microsoft.ApiManagement's SubscriptionCreateParameterProperties),
+      which no ARM reference can hold; ASO's own Subscription keeps it a
+      string
+  - kind: apimanagement.azure.hfl.dev/WorkspaceSubscription
+    field: api_id
+    match: scope
+    why: ARM's scope, as for product_id
+    keep: as for product_id
+  - kind: datafactory.azure.hfl.dev/FactoriesManagedVirtualNetworksManagedPrivateEndpoint
+    field: target_resource_id
+    match: properties.privateLinkResourceReference
+    why: ARM's privateLinkResourceId, which Terraform calls target_resource_id
+  - kind: datafactory.azure.hfl.dev/FactoriesTrigger
+    field: eventgrid_topic_id
+    match: properties.customEventsTrigger.scopeReference
+    why: a custom events trigger's scope, the topic
+  - kind: datafactory.azure.hfl.dev/FactoriesTrigger
+    field: storage_account_id
+    match: properties.blobEventsTrigger.scopeReference
+    why: a blob events trigger's scope, the storage account
+  - kind: eventgrid.azure.hfl.dev/SystemTopicsEventSubscription
+    field: storage_queue_endpoint.storage_account_id
+    match: destination.storageQueue.resourceReference
+    why: a storage queue destination's resourceId
+  - kind: network.azure.hfl.dev/NetworkManagersNetworkGroupsStaticMember
+    field: target_virtual_network_id
+    match: resourceReference
+    why: ARM's resourceId, the member network
+  - kind: operationalinsights.azure.hfl.dev/WorkspacesLinkedService
+    field: read_access_id
+    match: resourceReference
+    why: ARM's resourceId (read access); writeAccessResourceId is write_access_id
+  - kind: securityinsights.azure.hfl.dev/AlertRule
+    field: log_analytics_workspace_id
+    match: owner
+    why: an alert rule is an extension resource of the workspace, its owner
+secrets: []
+examples: []

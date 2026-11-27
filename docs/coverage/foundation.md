@@ -522,3 +522,47 @@ Generated: every resource of the two categories, by the order of the services in
 | 92 | `Microsoft.Cdn/profiles/securityPolicies` | partial, 2 of 6 missing | `cdn/SecurityPolicy` |  | 4 / 0 / 2 | resourceGroup | extend: ASO's API version is older than the spec's | S (2) | 0 |
 | 93 | `Microsoft.Cdn/cdnWebApplicationFirewallPolicies` | covered |  | `cdn/CdnWebApplicationFirewallPolicy` | 0 / 39 / 0 | resourceGroup | - | - | 0 |
 <!-- foundation:end -->
+
+## Upjet has it, we do not
+
+Generated from the Upjet slice (`hack/upjet/provider-upjet-azure.json`,
+HFL-697): the resources Crossplane's provider-upjet-azure serves that
+neither ASO nor this repository has a kind for, ranked by the tier of
+their service (`priority.csv`), then by how many references to them the
+resources we already serve carry in Upjet (what users of our kinds reach
+for next), then tested by Upjet's maintainers before not, then by hand
+examples. A list for the queue above, not a plan: each still goes
+through "Choosing" (ASO first). The facts for each row are in
+`upjet-gaps.csv` with the slice line.
+
+<!-- upjet-gaps:start -->
+| # | Resource | Tier | Upjet resource | Referenced by what we serve | Tested by Upjet | Hand examples |
+| ---: | --- | ---: | --- | ---: | --- | ---: |
+| 1 | `Microsoft.KeyVault/vaults/secrets` | 1 | `azurerm_key_vault_secret` | 3 | true | 2 |
+| 2 | `Microsoft.Network/networkProfiles` | 1 | `azurerm_network_profile` | 0 | true | 2 |
+| 3 | `Microsoft.Resources/deployments` | 1 | `azurerm_resource_group_template_deployment` | 0 | true | 1 |
+| 4 | `Microsoft.Resources/deployments` | 1 | `azurerm_subscription_template_deployment` | 0 | true | 1 |
+| 5 | `Microsoft.Insights/components/analyticsItems` | 1 | `azurerm_application_insights_analytics_item` | 0 | true | 1 |
+| 6 | `Microsoft.Insights/components/myanalyticsItems` | 1 | `azurerm_application_insights_analytics_item` | 0 | true | 1 |
+| 7 | `Microsoft.Network/networkWatchers/packetCaptures` | 1 | `azurerm_virtual_machine_packet_capture` | 0 | false | 0 |
+| 8 | `Microsoft.Network/networkWatchers/packetCaptures` | 1 | `azurerm_virtual_machine_scale_set_packet_capture` | 0 | false | 0 |
+| 9 | `Microsoft.DBforPostgreSQL/servers/securityAlertPolicies` | 2 | `azurerm_mssql_server_security_alert_policy` | 4 | true | 1 |
+| 10 | `Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers` | 2 | `azurerm_backup_container_storage_account` | 1 | true | 1 |
+| 11 | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/diagnosticRunCommands` | 2 | `azurerm_virtual_machine_run_command` | 0 | true | 2 |
+| 12 | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands` | 2 | `azurerm_virtual_machine_run_command` | 0 | true | 2 |
+| 13 | `Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies` | 2 | `azurerm_storage_container_immutability_policy` | 0 | true | 1 |
+| 14 | `Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers` | 2 | `azurerm_backup_protected_file_share` | 0 | true | 1 |
+| 15 | `Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings` | 2 | `azurerm_site_recovery_network_mapping` | 0 | true | 1 |
+| 16 | `Microsoft.DevTestLab/labs/policysets/policies` | 2 | `azurerm_dev_test_policy` | 0 | true | 1 |
+| 17 | `Microsoft.ManagedNetworkFabric/networkDevices/networkInterfaces` | 3 | `azurerm_network_interface` | 8 | true | 2 |
+| 18 | `Microsoft.DBforMySQL/servers` | 3 | `azurerm_mysql_flexible_server` | 5 | true | 2 |
+| 19 | `Microsoft.DBforMySQL/servers` | 3 | `azurerm_private_endpoint` | 5 | true | 2 |
+| 20 | `Microsoft.DBforMariaDB/servers` | 3 | `azurerm_private_endpoint` | 5 | true | 2 |
+| 21 | `Microsoft.DBforMySQL/servers/databases` | 3 | `azurerm_mssql_database` | 4 | true | 1 |
+| 22 | `Microsoft.DBforMySQL/servers/securityAlertPolicies` | 3 | `azurerm_mssql_server_security_alert_policy` | 4 | true | 1 |
+| 23 | `Microsoft.DBforMariaDB/servers/securityAlertPolicies` | 3 | `azurerm_mssql_server_security_alert_policy` | 4 | true | 1 |
+| 24 | `Microsoft.DataFactory/factories/pipelines` | 3 | `azurerm_data_factory_pipeline` | 3 | true | 1 |
+| 25 | `Microsoft.MachineLearning/workspaces` | 3 | `azurerm_machine_learning_workspace` | 2 | true | 2 |
+
+189 in all: [`upjet-gaps.csv`](upjet-gaps.csv).
+<!-- upjet-gaps:end -->

@@ -1,0 +1,1296 @@
+[
+ {
+  "group": "apimanagement.azure.hfl.dev",
+  "version": "v20240501",
+  "kind": "ApiOperation",
+  "example": "apimanagement/v1beta1/apioperation",
+  "at": "examples/apimanagement/cluster/v1beta1/apioperation.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:1473",
+  "spec": {
+   "description": "This can only be done by the logged in user.",
+   "displayName": "Delete User Operation",
+   "method": "DELETE",
+   "responses": [
+    {
+     "statusCode": 200
+    }
+   ],
+   "urlTemplate": "/users/delete"
+  }
+ },
+ {
+  "group": "apimanagement.azure.hfl.dev",
+  "version": "v20240501",
+  "kind": "ApiSchema",
+  "example": "apimanagement/v1beta1/apischema",
+  "at": "examples/apimanagement/cluster/v1beta1/apischema.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:1743",
+  "spec": {
+   "contentType": "application/vnd.ms-azure-apim.xsd+xml"
+  },
+  "dropped": [
+   "value"
+  ]
+ },
+ {
+  "group": "apimanagement.azure.hfl.dev",
+  "version": "v20240501",
+  "kind": "AuthorizationServer",
+  "example": "apimanagement/v1beta1/authorizationserver",
+  "at": "examples/apimanagement/cluster/v1beta1/authorizationserver.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:1845",
+  "spec": {
+   "authorizationEndpoint": "https://azacctest.hashicorptest.com/client/authorize",
+   "authorizationMethods": [
+    "GET"
+   ],
+   "clientId": "42424242-4242-4242-4242-424242424242",
+   "clientRegistrationEndpoint": "https://azacctest.hashicorptest.com/client/register",
+   "displayName": "Test Server",
+   "grantTypes": [
+    "implicit"
+   ]
+  }
+ },
+ {
+  "group": "apimanagement.azure.hfl.dev",
+  "version": "v20240501",
+  "kind": "Cache",
+  "example": "apimanagement/v1beta1/rediscache",
+  "at": "examples/apimanagement/cluster/v1beta1/rediscache.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:2046",
+  "spec": {
+   "description": "Redis cache instances"
+  },
+  "dropped": [
+   "cache_location"
+  ]
+ },
+ {
+  "group": "apimanagement.azure.hfl.dev",
+  "version": "v20240501",
+  "kind": "IdentityProvider",
+  "example": "apimanagement/v1beta1/identityprovideraad",
+  "at": "examples/apimanagement/cluster/v1beta1/identityprovideraad.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:2844",
+  "spec": {
+   "allowedTenants": [
+    "${data.azurerm_client_config.current.tenant_id}"
+   ],
+   "clientId": "00000000-0000-0000-0000-000000000000"
+  }
+ },
+ {
+  "group": "apimanagement.azure.hfl.dev",
+  "version": "v20240501",
+  "kind": "OpenIdConnectProvider",
+  "example": "apimanagement/v1beta1/openidconnectprovider",
+  "at": "examples/apimanagement/cluster/v1beta1/openidconnectprovider.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:3159",
+  "spec": {
+   "displayName": "Example Provider",
+   "metadataEndpoint": "https://example.com/example"
+  }
+ },
+ {
+  "group": "apimanagement.azure.hfl.dev",
+  "version": "v20240501",
+  "kind": "Tag",
+  "example": "apimanagement/v1beta1/apioperationtag",
+  "at": "examples/apimanagement/cluster/v1beta1/apioperationtag.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:3665",
+  "spec": {
+   "displayName": "example-Tag"
+  }
+ },
+ {
+  "group": "apimanagement.azure.hfl.dev",
+  "version": "v20240501",
+  "kind": "WorkspacePolicyFragment",
+  "example": "apimanagement/v1beta1/policyfragment",
+  "at": "examples/apimanagement/cluster/v1beta1/policyfragment.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:5750",
+  "spec": {
+   "format": "xml",
+   "value": "\u003cfragment\u003e\n    \u003cset-header name=\"x-request-context-data\" exists-action=\"override\"\u003e\n      \u003cvalue\u003e@(context.User.Id)\u003c/value\u003e\n      \u003cvalue\u003e@(context.Deployment.Region)\u003c/value\u003e\n    \u003c/set-header\u003e\n\u003c/fragment\u003e\n"
+  },
+  "dropped": [
+   "name"
+  ]
+ },
+ {
+  "group": "apimanagement.azure.hfl.dev",
+  "version": "v20240501",
+  "kind": "WorkspaceSubscription",
+  "example": "apimanagement/v1beta1/subscription",
+  "at": "examples/apimanagement/cluster/v1beta1/subscription.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:6089",
+  "spec": {
+   "displayName": "Example apim Subscription"
+  }
+ },
+ {
+  "group": "apimanagement.azure.hfl.dev",
+  "version": "v20240501",
+  "kind": "WorkspaceTag",
+  "example": "apimanagement/v1beta1/apioperationtag",
+  "at": "examples/apimanagement/cluster/v1beta1/apioperationtag.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:6172",
+  "spec": {
+   "displayName": "example-Tag"
+  }
+ },
+ {
+  "group": "app.azure.hfl.dev",
+  "version": "v20260101",
+  "kind": "ConnectedEnvironmentsDaprComponent",
+  "example": "containerapp/v1beta1/environmentdaprcomponent",
+  "at": "examples/containerapp/cluster/v1beta1/environmentdaprcomponent.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:7265",
+  "spec": {
+   "componentType": "state.azure.blobstorage",
+   "version": "v1"
+  }
+ },
+ {
+  "group": "app.azure.hfl.dev",
+  "version": "v20260701",
+  "kind": "ContainerApp",
+  "example": "containerapp/v1beta1/containerapp",
+  "at": "examples/containerapp/cluster/v1beta1/containerapp-with-secret.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:7372",
+  "spec": {
+   "template": {
+    "containers": [
+     {
+      "image": "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest",
+      "name": "examplecontainerapp"
+     }
+    ]
+   }
+  },
+  "dropped": [
+   "revision_mode",
+   "template.container.cpu",
+   "template.container.memory"
+  ]
+ },
+ {
+  "group": "app.azure.hfl.dev",
+  "version": "v20250101",
+  "kind": "ManagedEnvironmentsDaprComponent",
+  "example": "containerapp/v1beta1/environmentdaprcomponent",
+  "at": "examples/containerapp/cluster/v1beta1/environmentdaprcomponent.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:7681",
+  "spec": {
+   "componentType": "state.azure.blobstorage",
+   "version": "v1"
+  }
+ },
+ {
+  "group": "authorization.azure.hfl.dev",
+  "version": "v20260101preview",
+  "kind": "PolicyExemption",
+  "example": "authorization/v1beta1/resourcepolicyexemption",
+  "at": "examples/authorization/cluster/v1beta1/resourcepolicyexemption.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:7930",
+  "spec": {
+   "exemptionCategory": "Mitigated"
+  },
+  "dropped": [
+   "name",
+   "resource_id"
+  ]
+ },
+ {
+  "group": "authorization.azure.hfl.dev",
+  "version": "v20260101preview",
+  "kind": "PolicyExemption",
+  "example": "authorization/v1beta1/subscriptionpolicyexemption",
+  "at": "examples/authorization/cluster/v1beta1/subscriptionpolicyexemption.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:8010",
+  "spec": {
+   "exemptionCategory": "Mitigated"
+  },
+  "dropped": [
+   "subscription_id"
+  ]
+ },
+ {
+  "group": "authorization.azure.hfl.dev",
+  "version": "v20260701",
+  "kind": "PolicySetDefinition",
+  "example": "authorization/v1beta1/policysetdefinition-subscription",
+  "at": "examples/authorization/cluster/v1beta1/policysetdefinition.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:8103",
+  "spec": {
+   "displayName": "Test Policy Set",
+   "policyType": "Custom"
+  },
+  "dropped": [
+   "parameters",
+   "policy_definition_reference"
+  ]
+ },
+ {
+  "group": "authorization.azure.hfl.dev",
+  "version": "v20260701",
+  "kind": "PolicySetDefinitionsVersion",
+  "example": "authorization/v1beta1/policysetdefinition-subscription",
+  "at": "examples/authorization/cluster/v1beta1/policysetdefinition.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:8184",
+  "spec": {
+   "displayName": "Test Policy Set",
+   "policyType": "Custom"
+  },
+  "dropped": [
+   "parameters",
+   "policy_definition_reference"
+  ]
+ },
+ {
+  "group": "authorization.azure.hfl.dev",
+  "version": "v20260701",
+  "kind": "PolicyDefinition",
+  "example": "authorization/v1beta1/policydefinition",
+  "at": "examples/authorization/cluster/v1beta1/policydefinition.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:8629",
+  "spec": {
+   "displayName": "acceptance test policy definition",
+   "mode": "Indexed",
+   "policyType": "Custom"
+  },
+  "dropped": [
+   "metadata",
+   "parameters",
+   "policy_rule"
+  ]
+ },
+ {
+  "group": "automation.azure.hfl.dev",
+  "version": "v20241023",
+  "kind": "AutomationAccount",
+  "example": "automation/v1beta1/account",
+  "at": "examples/automation/cluster/v1beta1/account.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:9033",
+  "spec": {
+   "sku": {
+    "name": "Basic"
+   }
+  },
+  "dropped": [
+   "location",
+   "tags"
+  ]
+ },
+ {
+  "group": "automation.azure.hfl.dev",
+  "version": "v20241023",
+  "kind": "AutomationAccountsCredential",
+  "example": "automation/v1beta1/credential",
+  "at": "examples/automation/cluster/v1beta1/credential.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:9349",
+  "spec": {
+   "description": "This is an example credential",
+   "userName": "example_user"
+  }
+ },
+ {
+  "group": "automation.azure.hfl.dev",
+  "version": "v20241023",
+  "kind": "AutomationAccountsRunbook",
+  "example": "automation/v1beta1/runbook",
+  "at": "examples/automation/cluster/v1beta1/runbook.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:9544",
+  "spec": {
+   "description": "This is an example runbook",
+   "logProgress": true,
+   "logVerbose": true,
+   "runbookType": "PowerShell"
+  },
+  "dropped": [
+   "content",
+   "location",
+   "name"
+  ]
+ },
+ {
+  "group": "automation.azure.hfl.dev",
+  "version": "v20241023",
+  "kind": "AutomationAccountsSchedule",
+  "example": "automation/v1beta1/schedule",
+  "at": "examples/automation/cluster/v1beta1/schedule.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:9676",
+  "spec": {
+   "description": "This is an example schedule",
+   "frequency": "Week",
+   "timeZone": "Australia/Perth"
+  },
+  "dropped": [
+   "interval"
+  ]
+ },
+ {
+  "group": "automation.azure.hfl.dev",
+  "version": "v20241023",
+  "kind": "AutomationAccountsVariable",
+  "example": "automation/v1beta1/variabledatetime",
+  "at": "examples/automation/cluster/v1beta1/variabledatetime.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:9895",
+  "spec": {
+   "value": "2019-04-24T21:40:54.074Z"
+  }
+ },
+ {
+  "group": "automation.azure.hfl.dev",
+  "version": "v20241023",
+  "kind": "AutomationAccountsVariable",
+  "example": "automation/v1beta1/variablestring",
+  "at": "examples/automation/cluster/v1beta1/variablestring.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:10063",
+  "spec": {
+   "value": "Hello, Terraform Basic Test."
+  }
+ },
+ {
+  "group": "automation.azure.hfl.dev",
+  "version": "v20241023",
+  "kind": "AutomationAccountsWebhook",
+  "example": "automation/v1beta1/webhook",
+  "at": "examples/automation/cluster/v1beta1/webhook.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:10179",
+  "spec": {
+   "expiryTime": "2023-12-31T00:00:00Z",
+   "parameters": {
+    "input": "parameter"
+   }
+  },
+  "dropped": [
+   "enabled",
+   "name"
+  ]
+ },
+ {
+  "group": "compute.azure.hfl.dev",
+  "version": "v20260303",
+  "kind": "GalleriesApplication",
+  "example": "compute/v1beta1/galleryapplication",
+  "at": "examples/compute/cluster/v1beta1/galleryapplication.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:14255",
+  "spec": {
+   "supportedOSType": "Linux"
+  },
+  "dropped": [
+   "location"
+  ]
+ },
+ {
+  "group": "compute.azure.hfl.dev",
+  "version": "v20250401",
+  "kind": "SshPublicKey",
+  "example": "compute/v1beta1/sshpublickey",
+  "at": "examples/compute/cluster/v1beta1/sshpublickey.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:14490",
+  "spec": {
+   "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com"
+  },
+  "dropped": [
+   "location"
+  ]
+ },
+ {
+  "group": "compute.azure.hfl.dev",
+  "version": "v20220301",
+  "kind": "VirtualMachinesRunCommand",
+  "example": "compute/v1beta1/virtualmachineruncommand",
+  "at": "examples/compute/cluster/v1beta1/virtualmachineruncommand.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:15018",
+  "spec": {
+   "source": {
+    "script": "echo 'hello world'"
+   }
+  },
+  "dropped": [
+   "location"
+  ]
+ },
+ {
+  "group": "consumption.azure.hfl.dev",
+  "version": "v20260601",
+  "kind": "Budget",
+  "example": "consumption/v1beta1/budgetmanagementgroup",
+  "at": "examples/consumption/cluster/v1beta1/budgetmanagementgroup.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:15290",
+  "spec": {
+   "amount": 1000,
+   "timeGrain": "Monthly",
+   "timePeriod": {
+    "endDate": "2026-07-01T00:00:00Z",
+    "startDate": "2025-07-01T00:00:00Z"
+   }
+  },
+  "dropped": [
+   "name",
+   "notification"
+  ]
+ },
+ {
+  "group": "consumption.azure.hfl.dev",
+  "version": "v20260601",
+  "kind": "Budget",
+  "example": "consumption/v1beta2/budgetmanagementgroup",
+  "at": "examples/consumption/cluster/v1beta2/budgetmanagementgroup.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:15347",
+  "spec": {
+   "amount": 1000,
+   "timeGrain": "Monthly",
+   "timePeriod": {
+    "endDate": "2023-07-01T00:00:00Z",
+    "startDate": "2023-06-01T00:00:00Z"
+   }
+  },
+  "dropped": [
+   "name",
+   "notification"
+  ]
+ },
+ {
+  "group": "consumption.azure.hfl.dev",
+  "version": "v20260601",
+  "kind": "Budget",
+  "example": "consumption/v1beta1/budgetresourcegroup",
+  "at": "examples/consumption/cluster/v1beta1/budgetresourcegroup.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:15495",
+  "spec": {
+   "amount": 1000,
+   "timeGrain": "Monthly",
+   "timePeriod": {
+    "endDate": "2026-07-01T00:00:00Z",
+    "startDate": "2025-07-01T00:00:00Z"
+   }
+  },
+  "dropped": [
+   "name",
+   "notification"
+  ]
+ },
+ {
+  "group": "consumption.azure.hfl.dev",
+  "version": "v20260601",
+  "kind": "Budget",
+  "example": "consumption/v1beta2/budgetresourcegroup",
+  "at": "examples/consumption/cluster/v1beta2/budgetresourcegroup.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:15547",
+  "spec": {
+   "amount": 1000,
+   "timeGrain": "Monthly",
+   "timePeriod": {
+    "endDate": "2023-07-01T00:00:00Z",
+    "startDate": "2023-06-01T00:00:00Z"
+   }
+  },
+  "dropped": [
+   "name",
+   "notification"
+  ]
+ },
+ {
+  "group": "consumption.azure.hfl.dev",
+  "version": "v20260601",
+  "kind": "Budget",
+  "example": "consumption/v1beta1/budgetsubscription",
+  "at": "examples/consumption/cluster/v1beta1/budgetsubscription.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:15681",
+  "spec": {
+   "amount": 1000,
+   "timeGrain": "Monthly",
+   "timePeriod": {
+    "endDate": "2026-07-01T00:00:00Z",
+    "startDate": "2025-07-01T00:00:00Z"
+   }
+  },
+  "dropped": [
+   "notification",
+   "subscription_id"
+  ]
+ },
+ {
+  "group": "consumption.azure.hfl.dev",
+  "version": "v20260601",
+  "kind": "Budget",
+  "example": "consumption/v1beta2/budgetsubscription",
+  "at": "examples/consumption/cluster/v1beta2/budgetsubscription.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:15743",
+  "spec": {
+   "amount": 1000,
+   "timeGrain": "Monthly",
+   "timePeriod": {
+    "endDate": "2023-07-01T00:00:00Z",
+    "startDate": "2023-06-01T00:00:00Z"
+   }
+  },
+  "dropped": [
+   "notification",
+   "subscription_id"
+  ]
+ },
+ {
+  "group": "containerregistry.azure.hfl.dev",
+  "version": "v20251101",
+  "kind": "RegistriesCredentialSet",
+  "example": "containerregistry/v1beta1/credentialset",
+  "at": "examples/containerregistry/cluster/v1beta1/credentialset.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:16195",
+  "spec": {
+   "identity": {
+    "type": "SystemAssigned"
+   },
+   "loginServer": "docker.io"
+  },
+  "dropped": [
+   "authentication_credentials"
+  ]
+ },
+ {
+  "group": "containerregistry.azure.hfl.dev",
+  "version": "v20251101",
+  "kind": "RegistriesScopeMap",
+  "example": "",
+  "at": "examples/containerregistry/cluster/v1beta1/scopemap.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:16286",
+  "spec": {
+   "actions": [
+    "repositories/repo1/content/read",
+    "repositories/repo1/content/delete",
+    "repositories/repo1/content/write",
+    "repositories/repo1/metadata/read",
+    "repositories/repo1/metadata/write",
+    "gateway/examplecr/config/read",
+    "gateway/examplecr/config/write",
+    "gateway/examplecr/message/read",
+    "gateway/examplecr/message/write"
+   ]
+  },
+  "dropped": [
+   "container_registry_name"
+  ]
+ },
+ {
+  "group": "containerregistry.azure.hfl.dev",
+  "version": "v20251101",
+  "kind": "RegistriesWebhook",
+  "example": "",
+  "at": "examples/containerregistry/cluster/v1beta1/webhook.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:16470",
+  "spec": {
+   "actions": [
+    "push"
+   ],
+   "scope": "mytag:*",
+   "status": "enabled"
+  },
+  "dropped": [
+   "custom_headers",
+   "custom_headers.Content-Type",
+   "location",
+   "registry_name",
+   "service_uri"
+  ]
+ },
+ {
+  "group": "costmanagement.azure.hfl.dev",
+  "version": "v20260601",
+  "kind": "Budget",
+  "example": "consumption/v1beta1/budgetmanagementgroup",
+  "at": "examples/consumption/cluster/v1beta1/budgetmanagementgroup.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:17281",
+  "spec": {
+   "amount": 1000,
+   "timeGrain": "Monthly",
+   "timePeriod": {
+    "endDate": "2026-07-01T00:00:00Z",
+    "startDate": "2025-07-01T00:00:00Z"
+   }
+  },
+  "dropped": [
+   "name",
+   "notification"
+  ]
+ },
+ {
+  "group": "costmanagement.azure.hfl.dev",
+  "version": "v20260601",
+  "kind": "Budget",
+  "example": "consumption/v1beta2/budgetmanagementgroup",
+  "at": "examples/consumption/cluster/v1beta2/budgetmanagementgroup.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:17338",
+  "spec": {
+   "amount": 1000,
+   "timeGrain": "Monthly",
+   "timePeriod": {
+    "endDate": "2023-07-01T00:00:00Z",
+    "startDate": "2023-06-01T00:00:00Z"
+   }
+  },
+  "dropped": [
+   "name",
+   "notification"
+  ]
+ },
+ {
+  "group": "dbforpostgresql.azure.hfl.dev",
+  "version": "v20221108",
+  "kind": "ServerGroupsv2FirewallRule",
+  "example": "sql/v1beta1/mssqlfirewallrule",
+  "at": "examples/sql/cluster/v1beta1/mssqlfirewallrule.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:19657",
+  "spec": {
+   "endIpAddress": "10.0.17.62",
+   "startIpAddress": "10.0.17.62"
+  }
+ },
+ {
+  "group": "devtestlab.azure.hfl.dev",
+  "version": "v20180915",
+  "kind": "LabsSchedule",
+  "example": "devtestlab/v1beta1/schedule",
+  "at": "examples/devtestlab/cluster/v1beta1/schedule.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:22469",
+  "spec": {
+   "taskType": "Unknown",
+   "timeZoneId": "Pacific Standard Time",
+   "weeklyRecurrence": {
+    "time": "1100",
+    "weekdays": [
+     "Monday",
+     "Tuesday"
+    ]
+   }
+  },
+  "dropped": [
+   "location",
+   "tags"
+  ]
+ },
+ {
+  "group": "eventgrid.azure.hfl.dev",
+  "version": "v20250215",
+  "kind": "SystemTopic",
+  "example": "eventgrid/v1beta1/systemtopic",
+  "at": "examples/eventgrid/cluster/v1beta1/systemtopic.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:25001",
+  "spec": {
+   "topicType": "Microsoft.Storage.StorageAccounts"
+  },
+  "dropped": [
+   "location"
+  ]
+ },
+ {
+  "group": "keyvault.azure.hfl.dev",
+  "version": "v20260515",
+  "kind": "ManagedHSM",
+  "example": "keyvault/v1beta2/managedhardwaresecuritymodule",
+  "at": "examples/keyvault/cluster/v1beta2/managedhardwaresecuritymodule.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:31759",
+  "spec": {
+   "sku": {
+    "name": "Standard_B1"
+   }
+  },
+  "dropped": [
+   "admin_object_ids",
+   "location",
+   "purge_protection_enabled",
+   "soft_delete_retention_days",
+   "tags",
+   "tenant_id"
+  ]
+ },
+ {
+  "group": "kusto.azure.hfl.dev",
+  "version": "v20250214",
+  "kind": "ClustersManagedPrivateEndpoint",
+  "example": "kusto/v1beta1/clustermanagedprivateendpoint",
+  "at": "examples/kusto/cluster/v1beta1/clustermanagedprivateendpoint.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:33655",
+  "spec": {
+   "groupId": "blob",
+   "requestMessage": "Please Approve"
+  }
+ },
+ {
+  "group": "logic.azure.hfl.dev",
+  "version": "v20190501",
+  "kind": "IntegrationAccount",
+  "example": "logic/v1beta1/appintegrationaccount",
+  "at": "examples/logic/cluster/v1beta1/appintegrationaccount.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:34027",
+  "spec": {
+   "sku": {
+    "name": "Standard"
+   }
+  },
+  "dropped": [
+   "location",
+   "name",
+   "tags"
+  ]
+ },
+ {
+  "group": "logic.azure.hfl.dev",
+  "version": "v20190501",
+  "kind": "IntegrationAccountsSchema",
+  "example": "logic/v1beta1/appintegrationaccountschema",
+  "at": "examples/logic/cluster/v1beta1/appintegrationaccountschema.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:34350",
+  "spec": {
+   "content": "\u003cxs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\u003e\n  \u003cxs:element name=\"person\"\u003e\n    \u003cxs:complexType\u003e\n      \u003cxs:sequence\u003e\n        \u003cxs:element name=\"name\" type=\"xs:string\"/\u003e\n        \u003cxs:element name=\"age\" type=\"xs:integer\"/\u003e\n      \u003c/xs:sequence\u003e\n    \u003c/xs:complexType\u003e\n  \u003c/xs:element\u003e\n\u003c/xs:schema\u003e   \n"
+  }
+ },
+ {
+  "group": "management.azure.hfl.dev",
+  "version": "v20230401",
+  "kind": "ManagementGroup",
+  "example": "authorization/v1beta1/policydefinition-management-group",
+  "at": "examples/authorization/cluster/v1beta1/policydefinition-with-mg.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:36961",
+  "spec": {
+   "displayName": "PolicyDefinitionManagementGroup"
+  }
+ },
+ {
+  "group": "management.azure.hfl.dev",
+  "version": "v20230401",
+  "kind": "ManagementGroup",
+  "example": "authorization/v1beta1/policysetdefinition-management-group",
+  "at": "examples/authorization/cluster/v1beta1/policysetdefinition-with-mg.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:36975",
+  "spec": {
+   "displayName": "PolicySetDefinitionManagementGroup"
+  }
+ },
+ {
+  "group": "management.azure.hfl.dev",
+  "version": "v20230401",
+  "kind": "ManagementGroup",
+  "example": "management/v1beta1/managementgroup",
+  "at": "examples/management/cluster/v1beta1/managementgroup.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:36989",
+  "spec": {
+   "displayName": "ParentGroup"
+  }
+ },
+ {
+  "group": "network.azure.hfl.dev",
+  "version": "v20260301",
+  "kind": "ExpressRoutePort",
+  "example": "",
+  "at": "examples/network/cluster/v1beta1/expressrouteport.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:38556",
+  "spec": {
+   "bandwidthInGbps": 10,
+   "encapsulation": "Dot1Q",
+   "peeringLocation": "VantageDC-Newport-NGD"
+  },
+  "dropped": [
+   "location"
+  ]
+ },
+ {
+  "group": "network.azure.hfl.dev",
+  "version": "v20260301",
+  "kind": "ApplicationGateway",
+  "example": "network/v1beta1/applicationgateway",
+  "at": "examples/network/cluster/v1beta1/applicationgateway.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:38733",
+  "spec": {
+   "backendAddressPools": [
+    {
+     "name": "example"
+    }
+   ],
+   "frontendIPConfigurations": [
+    {
+     "name": "example"
+    }
+   ],
+   "frontendPorts": [
+    {
+     "name": "example",
+     "port": 80
+    }
+   ],
+   "gatewayIPConfigurations": [
+    {
+     "name": "my-gateway-ip-configuration"
+    }
+   ],
+   "httpListeners": [
+    {
+     "name": "example",
+     "protocol": "Http"
+    }
+   ],
+   "requestRoutingRules": [
+    {
+     "name": "example",
+     "priority": 9,
+     "ruleType": "Basic"
+    }
+   ],
+   "sku": {
+    "capacity": 2,
+    "name": "Standard_v2",
+    "tier": "Standard_v2"
+   }
+  },
+  "dropped": [
+   "backend_http_settings",
+   "http_listener.frontend_ip_configuration_name",
+   "http_listener.frontend_port_name",
+   "location",
+   "request_routing_rule.backend_address_pool_name",
+   "request_routing_rule.backend_http_settings_name",
+   "request_routing_rule.http_listener_name"
+  ]
+ },
+ {
+  "group": "network.azure.hfl.dev",
+  "version": "v20260301",
+  "kind": "ExpressRouteCircuitsPeering",
+  "example": "network/v1beta1/expressroutecircuitpeering",
+  "at": "examples/network/cluster/v1beta1/expressroutecircuitpeering.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:41335",
+  "spec": {
+   "microsoftPeeringConfig": {
+    "advertisedPublicPrefixes": [
+     "123.1.0.0/24"
+    ]
+   },
+   "peerASN": 100,
+   "primaryPeerAddressPrefix": "123.0.0.0/30",
+   "secondaryPeerAddressPrefix": "123.0.0.4/30",
+   "vlanId": 300
+  },
+  "dropped": [
+   "ipv6"
+  ]
+ },
+ {
+  "group": "network.azure.hfl.dev",
+  "version": "v20260301",
+  "kind": "FirewallPoliciesRuleCollectionGroupDraft",
+  "example": "",
+  "at": "examples/network/cluster/v1beta1/firewallpolicyrulecollectiongroup.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:42127",
+  "spec": {
+   "priority": 500
+  },
+  "dropped": [
+   "application_rule_collection",
+   "nat_rule_collection",
+   "network_rule_collection"
+  ]
+ },
+ {
+  "group": "network.azure.hfl.dev",
+  "version": "v20260301",
+  "kind": "NetworkManagerConnection",
+  "example": "network/v1beta1/managermanagementgroupconnection",
+  "at": "examples/network/cluster/v1beta1/managermanagementgroupconnection.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:43929",
+  "spec": {
+   "description": "example"
+  }
+ },
+ {
+  "group": "network.azure.hfl.dev",
+  "version": "v20260301",
+  "kind": "NetworkManagerConnection",
+  "example": "network/v1beta1/managersubscriptionconnection",
+  "at": "examples/network/cluster/v1beta1/managersubscriptionconnection.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:44009",
+  "spec": {
+   "description": "example"
+  },
+  "dropped": [
+   "subscription_id"
+  ]
+ },
+ {
+  "group": "network.azure.hfl.dev",
+  "version": "v20260301",
+  "kind": "NetworkManager",
+  "example": "network/v1beta1/manager",
+  "at": "examples/network/cluster/v1beta1/manager.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:44087",
+  "spec": {
+   "description": "example network manager"
+  },
+  "dropped": [
+   "location",
+   "scope",
+   "scope_accesses",
+   "tags"
+  ]
+ },
+ {
+  "group": "network.azure.hfl.dev",
+  "version": "v20260301",
+  "kind": "NetworkManagersRoutingConfiguration",
+  "example": "network/v1beta1/managerroutingconfiguration",
+  "at": "examples/network/cluster/v1beta1/managerroutingconfiguration.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:44618",
+  "spec": {
+   "description": "example routing configuration"
+  }
+ },
+ {
+  "group": "network.azure.hfl.dev",
+  "version": "v20260301",
+  "kind": "SecurityPartnerProvider",
+  "example": "network/v1beta1/virtualhubsecuritypartnerprovider",
+  "at": "examples/network/cluster/v1beta1/virtualhubsecuritypartnerprovider.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:47915",
+  "spec": {
+   "securityProviderName": "IBoss"
+  },
+  "dropped": [
+   "location",
+   "tags"
+  ]
+ },
+ {
+  "group": "operationalinsights.azure.hfl.dev",
+  "version": "v20250701",
+  "kind": "QueryPacksQuery",
+  "example": "operationalinsights/v1beta1/loganalyticsquerypackquery",
+  "at": "examples/operationalinsights/cluster/v1beta1/loganalyticsquerypackquery.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:50836",
+  "spec": {
+   "body": "let newExceptionsTimeRange = 1d;\nlet timeRangeToCheckBefore = 7d;\nexceptions\n| where timestamp \u003c ago(timeRangeToCheckBefore)\n| summarize count() by problemId\n| join kind= rightanti (\nexceptions\n| where timestamp \u003e= ago(newExceptionsTimeRange)\n| extend stack = tostring(details[0].rawStack)\n| summarize count(), dcount(user_AuthenticatedId), min(timestamp), max(timestamp), any(stack) by problemId  \n) on problemId \n| order by  count_ desc\n",
+   "displayName": "Exceptions - New in the last 24 hours"
+  }
+ },
+ {
+  "group": "operationalinsights.azure.hfl.dev",
+  "version": "v20250701",
+  "kind": "WorkspacesDataExport",
+  "example": "operationalinsights/v1beta1/loganalyticsdataexportrule",
+  "at": "examples/operationalinsights/cluster/v1beta1/loganalyticsdataexportrule.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:51486",
+  "spec": {
+   "tableNames": [
+    "Heartbeat"
+   ]
+  },
+  "dropped": [
+   "enabled"
+  ]
+ },
+ {
+  "group": "operationalinsights.azure.hfl.dev",
+  "version": "v20250701",
+  "kind": "WorkspacesSavedSearch",
+  "example": "operationalinsights/v1beta1/loganalyticssavedsearch",
+  "at": "examples/operationalinsights/cluster/v1beta1/loganalyticssavedsearch.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:51946",
+  "spec": {
+   "category": "exampleCategory",
+   "displayName": "exampleDisplayName",
+   "query": "exampleQuery"
+  }
+ },
+ {
+  "group": "operationsmanagement.azure.hfl.dev",
+  "version": "v20151101preview",
+  "kind": "Solution",
+  "example": "operationsmanagement/v1beta1/loganalyticssolution",
+  "at": "examples/operationsmanagement/cluster/v1beta1/loganalyticssolution.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:52042",
+  "spec": {
+   "plan": {
+    "product": "OMSGallery/ContainerInsights",
+    "publisher": "Microsoft"
+   }
+  },
+  "dropped": [
+   "location",
+   "solution_name"
+  ]
+ },
+ {
+  "group": "purview.azure.hfl.dev",
+  "version": "v20211201",
+  "kind": "Account",
+  "example": "purview/v1beta1/account",
+  "at": "examples/purview/cluster/v1beta1/account.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:52542",
+  "spec": {
+   "identity": {
+    "type": "SystemAssigned"
+   }
+  },
+  "dropped": [
+   "location"
+  ]
+ },
+ {
+  "group": "securityinsights.azure.hfl.dev",
+  "version": "v20250901",
+  "kind": "AutomationRule",
+  "example": "securityinsights/v1beta1/sentinelautomationrule",
+  "at": "examples/securityinsights/cluster/v1beta1/sentinelautomationrule.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:55721",
+  "spec": {
+   "displayName": "automation_rule1",
+   "order": 1
+  },
+  "dropped": [
+   "action_incident",
+   "name"
+  ]
+ },
+ {
+  "group": "securityinsights.azure.hfl.dev",
+  "version": "v20250901",
+  "kind": "Watchlist",
+  "example": "securityinsights/v1beta1/sentinelwatchlist",
+  "at": "examples/securityinsights/cluster/v1beta1/sentinelwatchlist.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:56176",
+  "spec": {
+   "displayName": "example-wl"
+  },
+  "dropped": [
+   "item_search_key"
+  ]
+ },
+ {
+  "group": "security.azure.hfl.dev",
+  "version": "v20231201preview",
+  "kind": "SecurityContact",
+  "example": "security/v1beta1/securitycentercontact",
+  "at": "examples/security/cluster/v1beta1/securitycentercontact.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:56305",
+  "spec": {
+   "emails": "contact@example.com",
+   "phone": "+1-555-555-5555"
+  },
+  "dropped": [
+   "alert_notifications",
+   "alerts_to_admins",
+   "name"
+  ]
+ },
+ {
+  "group": "sql.azure.hfl.dev",
+  "version": "v20250101",
+  "kind": "ManagedInstancesDatabasesVulnerabilityAssessment",
+  "example": "",
+  "at": "examples/sql/cluster/v1beta1/mssqlmanagedinstancevulnerabilityassessment.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:58818",
+  "spec": {
+   "recurringScans": {
+    "emailSubscriptionAdmins": true,
+    "emails": [
+     "email@example1.com",
+     "email@example2.com"
+    ]
+   },
+   "storageContainerPath": "https://crossplestoraccsql13722.blob.core.windows.net/example-storage-account"
+  },
+  "dropped": [
+   "recurring_scans.enabled"
+  ]
+ },
+ {
+  "group": "sql.azure.hfl.dev",
+  "version": "v20250101",
+  "kind": "ManagedInstancesDatabasesVulnerabilityAssessment",
+  "example": "sql/v1beta1/mssqlservervulnerabilityassessment",
+  "at": "examples/sql/cluster/v1beta1/mssqlservervulnerabilityassessment.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:58938",
+  "spec": {
+   "recurringScans": {
+    "emailSubscriptionAdmins": true,
+    "emails": [
+     "email@example1.com",
+     "email@example2.com"
+    ]
+   },
+   "storageContainerPath": "${azurerm_storage_account.example.primary_blob_endpoint}${azurerm_storage_container.example.name}/"
+  },
+  "dropped": [
+   "recurring_scans.enabled"
+  ]
+ },
+ {
+  "group": "sql.azure.hfl.dev",
+  "version": "v20250101",
+  "kind": "ManagedInstancesVulnerabilityAssessment",
+  "example": "",
+  "at": "examples/sql/cluster/v1beta1/mssqlmanagedinstancevulnerabilityassessment.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:59084",
+  "spec": {
+   "recurringScans": {
+    "emailSubscriptionAdmins": true,
+    "emails": [
+     "email@example1.com",
+     "email@example2.com"
+    ]
+   },
+   "storageContainerPath": "https://crossplestoraccsql13722.blob.core.windows.net/example-storage-account"
+  },
+  "dropped": [
+   "recurring_scans.enabled"
+  ]
+ },
+ {
+  "group": "sql.azure.hfl.dev",
+  "version": "v20250101",
+  "kind": "ManagedInstancesVulnerabilityAssessment",
+  "example": "sql/v1beta1/mssqlservervulnerabilityassessment",
+  "at": "examples/sql/cluster/v1beta1/mssqlservervulnerabilityassessment.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:59204",
+  "spec": {
+   "recurringScans": {
+    "emailSubscriptionAdmins": true,
+    "emails": [
+     "email@example1.com",
+     "email@example2.com"
+    ]
+   },
+   "storageContainerPath": "${azurerm_storage_account.example.primary_blob_endpoint}${azurerm_storage_container.example.name}/"
+  },
+  "dropped": [
+   "recurring_scans.enabled"
+  ]
+ },
+ {
+  "group": "storage.azure.hfl.dev",
+  "version": "v20260601",
+  "kind": "StorageAccountsEncryptionScope",
+  "example": "",
+  "at": "examples/storage/cluster/v1beta1/encryptionscope.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:61841",
+  "spec": {
+   "source": "Microsoft.Storage"
+  },
+  "dropped": [
+   "storage_account_id"
+  ]
+ },
+ {
+  "group": "synapse.azure.hfl.dev",
+  "version": "v20210601",
+  "kind": "WorkspacesSecurityAlertPolicy",
+  "example": "synapse/v1beta1/sqlpoolsecurityalertpolicy",
+  "at": "examples/synapse/cluster/v1beta1/sqlpoolsecurityalertpolicy.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:66873",
+  "spec": {
+   "disabledAlerts": [
+    "Sql_Injection",
+    "Data_Exfiltration"
+   ],
+   "retentionDays": 0
+  },
+  "dropped": [
+   "policy_state"
+  ]
+ },
+ {
+  "group": "synapse.azure.hfl.dev",
+  "version": "v20210601",
+  "kind": "WorkspacesSqlPoolsSecurityAlertPolicy",
+  "example": "synapse/v1beta1/sqlpoolsecurityalertpolicy",
+  "at": "examples/synapse/cluster/v1beta1/sqlpoolsecurityalertpolicy.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:67059",
+  "spec": {
+   "disabledAlerts": [
+    "Sql_Injection",
+    "Data_Exfiltration"
+   ],
+   "retentionDays": 0
+  },
+  "dropped": [
+   "policy_state"
+  ]
+ },
+ {
+  "group": "synapse.azure.hfl.dev",
+  "version": "v20210601",
+  "kind": "WorkspacesSqlPoolsVulnerabilityAssessment",
+  "example": "synapse/v1beta1/workspacevulnerabilityassessment",
+  "at": "examples/synapse/cluster/v1beta1/workspacevulnerabilityassessment.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:67165",
+  "spec": {
+   "recurringScans": {
+    "emails": [
+     "email@example1.com",
+     "email@example2.com"
+    ]
+   },
+   "storageContainerPath": "${azurerm_storage_account.example.primary_blob_endpoint}${azurerm_storage_container.example.name}/"
+  },
+  "dropped": [
+   "recurring_scans.email_subscription_admins_enabled",
+   "recurring_scans.enabled"
+  ]
+ },
+ {
+  "group": "synapse.azure.hfl.dev",
+  "version": "v20210601",
+  "kind": "WorkspacesSqlPoolsWorkloadGroup",
+  "example": "synapse/v1beta1/sqlpoolworkloadgroup",
+  "at": "examples/synapse/cluster/v1beta1/sqlpoolworkloadgroup.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:67297",
+  "spec": {
+   "importance": "normal",
+   "maxResourcePercent": 100,
+   "maxResourcePercentPerRequest": 3,
+   "minResourcePercent": 0,
+   "minResourcePercentPerRequest": 3
+  },
+  "dropped": [
+   "query_execution_timeout_in_seconds"
+  ]
+ },
+ {
+  "group": "synapse.azure.hfl.dev",
+  "version": "v20210601",
+  "kind": "WorkspacesSqlPoolsWorkloadGroupClassifier",
+  "example": "synapse/v1beta1/sqlpoolworkloadclassifier",
+  "at": "examples/synapse/cluster/v1beta1/sqlpoolworkloadclassifier.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:67389",
+  "spec": {
+   "context": "example_context",
+   "endTime": "14:00",
+   "importance": "high",
+   "label": "example_label",
+   "memberName": "dbo",
+   "startTime": "12:00"
+  }
+ },
+ {
+  "group": "synapse.azure.hfl.dev",
+  "version": "v20210601",
+  "kind": "WorkspacesVulnerabilityAssessment",
+  "example": "synapse/v1beta1/workspacevulnerabilityassessment",
+  "at": "examples/synapse/cluster/v1beta1/workspacevulnerabilityassessment.yaml",
+  "slice": "hack/upjet/provider-upjet-azure.json:67491",
+  "spec": {
+   "recurringScans": {
+    "emails": [
+     "email@example1.com",
+     "email@example2.com"
+    ]
+   },
+   "storageContainerPath": "${azurerm_storage_account.example.primary_blob_endpoint}${azurerm_storage_container.example.name}/"
+  },
+  "dropped": [
+   "recurring_scans.email_subscription_admins_enabled",
+   "recurring_scans.enabled"
+  ]
+ }
+]

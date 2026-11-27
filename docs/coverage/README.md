@@ -1030,3 +1030,54 @@ Version differences: redhatopenshift/hcpopenshiftcluster docs v20260901preview w
 
 **Terraform** (`azurerm`, catalog `13064af34996`, 2026-11-09, vendored 2026-11-10; an estimate): 3,566 of the catalog's 43,408 attributes (8.2%) by the lenient rule (L2), 3,136 (7.2%) by the strict rule (L1). The catalog counted the denominator at an earlier commit of this repository, so its totals can differ slightly from the ones above. Services here without a Terraform row: 0; Terraform rows for services not here: 0.
 <!-- numbers:end -->
+
+## Upjet
+
+Crossplane's provider-upjet-azure carries facts the ARM specs do not:
+which fields name other resources, which values Terraform keeps secret, how
+each ID is formed, which lists merge as maps, which resources its
+maintainers never tested, and hand-written examples. The factory reads them
+from a release as data (never running the provider, never copying its
+files, never taking values from Terraform's documentation; factory's
+`upjet/README.md`) and folds them onto our resources: the slice
+[`hack/upjet/provider-upjet-azure.json`](../../hack/upjet/), which nothing
+here edits. `hack/coverage/upjet.go` reads it against our kinds as they are
+now, by the stricter rule with provenance (factory `docs/design.md` 5.4):
+every fact cites its line in the slice and its file and line upstream, and
+where Upjet and we disagree it is listed, then fixed or kept with the
+reason in [`hack/coverage/upjet.yaml`](../../hack/coverage/upjet.yaml),
+never overridden silently.
+
+| File | One row per |
+| --- | --- |
+| `upjet-references.csv` | Upjet reference on a kind of ours: `class` is `reference` (a Kubernetes reference here), `owner` (the resource group or a parent, which ASO's `owner` names), `string` (a field of ours that holds an ARM ID as a string: a gap until labelled `$referenceType: arm` in `generator/azure-arm/` or kept in `upjet.yaml`), `kept`, `name` (Upjet names the target by name; ARM takes a name, no ID, there) or `missing` (no field of ours matches) |
+| `upjet-checks.csv` | check of an ID template (against our ARM type), a `Sensitive` override (against a Secret reference here), a late-init ignore (ASO never fills a spec from Azure, so each holds) and a list map key (our lists are atomic) |
+| `upjet-examples.csv`, `upjet-examples.json` | hand example of a kind of ours; each whose values map onto our CRD (field names and types, enums, patterns and bounds checked) is in the JSON, which `TestUpjetExamplesOnFake` (`test/e2e/arm_upjet_examples_test.go`) runs on the fake cloud in `task check`; what did not map is listed as dropped |
+| `upjet-ledger.csv` | kind of ours, the per-kind ledger (HFL-701): where it is tested here (`conformance`: every generated kind on the fake; `kind test` for a hand-written one), beside Upjet's resource, its `tested` flag, its references by class, its examples and how many run on the fake |
+| `upjet-gaps.csv` | resource Upjet serves and neither ASO nor we do, ranked (the top is in `foundation.md`) |
+
+<!-- upjet:start -->
+| What | Count |
+| --- | ---: |
+| Kinds of ours (in the denominator) | 665 |
+| ... with an Upjet resource | 183 |
+| ... with none (`noUpjet` and unmatched) | 482 |
+| Upjet references on our kinds | 437 |
+| ... a Kubernetes reference here | 53 |
+| ... of which labelled from Upjet (`hack/coverage/upjet.yaml`) | 0 |
+| ... the owner (a parent or resource group) | 214 |
+| ... a string field here, undecided (a gap) | 0 |
+| ... a string here on purpose (`hack/coverage/upjet.yaml`, with the reason) | 2 |
+| ... by name, where ARM takes a name | 13 |
+| ... another value of the target (a URI, an endpoint), which no ARM reference holds | 24 |
+| ... no field of ours matches | 47 |
+| ... on an Upjet resource of another ARM type (its ID template differs; not applied) | 84 |
+| Kinds with at least one Upjet reference that is a reference here | 36 |
+| ID templates checked against our ARM type | 225 (agree 97, differ 38; 90 name no provider path) |
+| Sensitive overrides checked | 1 (we take in plain text, undecided: 0) |
+| Late-init ignores checked (hold: ASO never late-initializes) | 10 |
+| List map keys checked | 2 (differ 2) |
+| Hand examples of our kinds | 298 |
+| ... run on the fake cloud (`TestUpjetExamplesOnFake`) | 77, of 64 kinds |
+| Resources Upjet has and neither ASO nor we serve (`upjet-gaps.csv`) | 189 |
+<!-- upjet:end -->
