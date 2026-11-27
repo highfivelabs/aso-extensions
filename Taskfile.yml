@@ -131,6 +131,7 @@ tasks:
       - go vet -tags fakecloud ./cmd/manager
       - go vet -tags live ./test/live/
       - hack/check-no-fake-cloud.sh
+      - hack/check-generated-attrs.sh
       - hack/check-spdx.sh
       - hack/test-operator-e2e-guard.sh
       - hack/test-upstream-check.sh
