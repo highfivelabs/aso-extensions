@@ -14,7 +14,7 @@ import (
 )
 
 // avmFile is docs/coverage/avm-need.csv: how many of the Azure Verified
-// Modules read for the catalog (highfivelabs/catalog docs/azure.md) need a
+// Modules read for the catalog (highfivelabs/krm-packages docs/azure.md) need a
 // resource type. Written by hand; a resource type missing from it is 0.
 const avmFile = "docs/coverage/avm-need.csv"
 

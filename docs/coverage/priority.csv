@@ -1,39 +1,39 @@
 service,tier,rationale,source,category
-Microsoft.Management,1,management groups and their subscriptions: the top of every landing zone; avm-ptn-alz (rank 35) and avm-ptn-alz-sub-vending (rank 24) need them,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 4, 19, 5 gap 8",platform-foundation
-Microsoft.Subscription,1,subscription creation through aliases; avm-ptn-alz-sub-vending (rank 24),"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 4, module 19",platform-foundation
-Microsoft.Authorization,1,"Azure Policy (definitions, initiatives, assignments, exemptions), RBAC (role definitions and assignments, PIM requests) and locks; role assignments are an input of 33 of 33 modules and locks of 31 of 33","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 1, the AVM interfaces",platform-foundation
+Microsoft.Management,1,management groups and their subscriptions: the top of every landing zone; avm-ptn-alz (rank 35) and avm-ptn-alz-sub-vending (rank 24) need them,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 4, 19, 5 gap 8",platform-foundation
+Microsoft.Subscription,1,subscription creation through aliases; avm-ptn-alz-sub-vending (rank 24),"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 4, module 19",platform-foundation
+Microsoft.Authorization,1,"Azure Policy (definitions, initiatives, assignments, exemptions), RBAC (role definitions and assignments, PIM requests) and locks; role assignments are an input of 33 of 33 modules and locks of 31 of 33","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 1, the AVM interfaces",platform-foundation
 Microsoft.PolicyInsights,1,policy remediation,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster)",platform-foundation
-Microsoft.Resources,1,resource groups (module rank 9) and tags,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 2, rank 9",platform-foundation
-Microsoft.Consumption,1,budgets; avm-ptn-alz-sub-vending (rank 24),"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 4, module 19",platform-foundation
+Microsoft.Resources,1,resource groups (module rank 9) and tags,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 2, rank 9",platform-foundation
+Microsoft.Consumption,1,budgets; avm-ptn-alz-sub-vending (rank 24),"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 4, module 19",platform-foundation
 Microsoft.CostManagement,1,cost management exports and views,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster)",platform-foundation
-Microsoft.Insights,1,"diagnostic settings (an input of 23 of 33 modules), data collection rules, action groups and alerts; also Application Insights (module rank 25, application)","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 1 and section 2, rank 25",platform-foundation
-Microsoft.Network,1,"virtual networks, subnets, peerings, route tables, NSGs, hubs and Virtual WAN, firewalls, VPN and ExpressRoute gateways, NAT, DNS and private DNS, private endpoints; four of the top 13 modules by downloads (virtual network 2, NSG 4, route table 12, NAT gateway 13)","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 2, rank 2, 4, 12, 13, 14, 16, 19, 28, 30, 32, 37",platform-foundation
-Microsoft.KeyVault,1,Key Vault is rank 6 by yearly downloads,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 2, rank 6",platform-foundation
-Microsoft.ManagedIdentity,1,user-assigned identity is rank 10 by yearly downloads,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 2, rank 10",platform-foundation
-Microsoft.OperationalInsights,1,Log Analytics workspace is rank 11 by yearly downloads,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 2, rank 11",platform-foundation
-Microsoft.OperationsManagement,1,"Log Analytics solutions, a workspace submodule","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 5, gap 5",platform-foundation
+Microsoft.Insights,1,"diagnostic settings (an input of 23 of 33 modules), data collection rules, action groups and alerts; also Application Insights (module rank 25, application)","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 1 and section 2, rank 25",platform-foundation
+Microsoft.Network,1,"virtual networks, subnets, peerings, route tables, NSGs, hubs and Virtual WAN, firewalls, VPN and ExpressRoute gateways, NAT, DNS and private DNS, private endpoints; four of the top 13 modules by downloads (virtual network 2, NSG 4, route table 12, NAT gateway 13)","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 2, rank 2, 4, 12, 13, 14, 16, 19, 28, 30, 32, 37",platform-foundation
+Microsoft.KeyVault,1,Key Vault is rank 6 by yearly downloads,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 2, rank 6",platform-foundation
+Microsoft.ManagedIdentity,1,user-assigned identity is rank 10 by yearly downloads,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 2, rank 10",platform-foundation
+Microsoft.OperationalInsights,1,Log Analytics workspace is rank 11 by yearly downloads,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 2, rank 11",platform-foundation
+Microsoft.OperationsManagement,1,"Log Analytics solutions, a workspace submodule","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 5, gap 5",platform-foundation
 Microsoft.Monitor,1,Azure Monitor workspaces (managed Prometheus for AKS),"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster)",platform-foundation
-Microsoft.ContainerService,1,"managed AKS cluster, node pools, maintenance, fleets; module rank 20","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 2, rank 20",platform-foundation
+Microsoft.ContainerService,1,"managed AKS cluster, node pools, maintenance, fleets; module rank 20","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 2, rank 20",platform-foundation
 Microsoft.KubernetesConfiguration,1,cluster extensions and Flux GitOps configurations,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster)",platform-foundation
-Microsoft.ContainerRegistry,1,"ACR; container registry module, rank 18","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/catalog docs/azure.md section 2, rank 18",platform-foundation
+Microsoft.ContainerRegistry,1,"ACR; container registry module, rank 18","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster); highfivelabs/krm-packages docs/azure.md section 2, rank 18",platform-foundation
 Microsoft.Security,2,"Defender for Cloud: pricings, settings, security contacts, auto-provisioning, automations, standards","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster) (security teams)",security-adjacent
 Microsoft.SecurityInsights,2,Microsoft Sentinel,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster) (security teams)",security-adjacent
 Microsoft.Purview,2,Microsoft Purview accounts,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster) (security teams)",security-adjacent
 Microsoft.HardwareSecurityModules,2,"managed and dedicated HSMs, next to Key Vault","builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster) (security teams)",security-adjacent
-Microsoft.Storage,2,storage account is rank 5 by yearly downloads,"highfivelabs/catalog docs/azure.md section 2, rank 5",application
-Microsoft.Compute,2,virtual machine is rank 7 by yearly downloads,"highfivelabs/catalog docs/azure.md section 2, rank 7",application
-Microsoft.Web,2,App Service site (rank 27) and server farm (rank 33) modules,"highfivelabs/catalog docs/azure.md section 2, rank 27 and 33",application
-Microsoft.App,2,Container Apps module (rank 26) and managed environment module (rank 40),"highfivelabs/catalog docs/azure.md section 2, rank 26 and 40",application
-Microsoft.Sql,2,"SQL server module, rank 31","highfivelabs/catalog docs/azure.md section 2, rank 31",application
-Microsoft.DocumentDB,2,"Cosmos DB account module, rank 36","highfivelabs/catalog docs/azure.md section 2, rank 36",application
-Microsoft.DBforPostgreSQL,2,"PostgreSQL flexible server module, rank 22","highfivelabs/catalog docs/azure.md section 2, rank 22",application
-Microsoft.CognitiveServices,2,"Cognitive Services account module, rank 23","highfivelabs/catalog docs/azure.md section 2, rank 23",application
-Microsoft.Cache,2,"Redis module, rank 38","highfivelabs/catalog docs/azure.md section 2, rank 38",application
-Microsoft.AppConfiguration,2,App Configuration store module,highfivelabs/catalog docs/azure.md section 1,application
-Microsoft.RecoveryServices,2,"Recovery Services vault module, rank 56; VM backup","highfivelabs/catalog docs/azure.md section 5, gap 10",application
-Microsoft.Maintenance,2,"maintenance assignment, a virtual machine extra","highfivelabs/catalog docs/azure.md section 5, gap 10",application
-Microsoft.DevTestLab,2,"VM auto-shutdown schedule, a virtual machine extra","highfivelabs/catalog docs/azure.md section 5, gap 10",application
-Microsoft.AlertsManagement,2,"Prometheus rule groups and alert processing, named in the ASO coverage of the Monitor modules",highfivelabs/catalog docs/azure.md section 4,other
+Microsoft.Storage,2,storage account is rank 5 by yearly downloads,"highfivelabs/krm-packages docs/azure.md section 2, rank 5",application
+Microsoft.Compute,2,virtual machine is rank 7 by yearly downloads,"highfivelabs/krm-packages docs/azure.md section 2, rank 7",application
+Microsoft.Web,2,App Service site (rank 27) and server farm (rank 33) modules,"highfivelabs/krm-packages docs/azure.md section 2, rank 27 and 33",application
+Microsoft.App,2,Container Apps module (rank 26) and managed environment module (rank 40),"highfivelabs/krm-packages docs/azure.md section 2, rank 26 and 40",application
+Microsoft.Sql,2,"SQL server module, rank 31","highfivelabs/krm-packages docs/azure.md section 2, rank 31",application
+Microsoft.DocumentDB,2,"Cosmos DB account module, rank 36","highfivelabs/krm-packages docs/azure.md section 2, rank 36",application
+Microsoft.DBforPostgreSQL,2,"PostgreSQL flexible server module, rank 22","highfivelabs/krm-packages docs/azure.md section 2, rank 22",application
+Microsoft.CognitiveServices,2,"Cognitive Services account module, rank 23","highfivelabs/krm-packages docs/azure.md section 2, rank 23",application
+Microsoft.Cache,2,"Redis module, rank 38","highfivelabs/krm-packages docs/azure.md section 2, rank 38",application
+Microsoft.AppConfiguration,2,App Configuration store module,highfivelabs/krm-packages docs/azure.md section 1,application
+Microsoft.RecoveryServices,2,"Recovery Services vault module, rank 56; VM backup","highfivelabs/krm-packages docs/azure.md section 5, gap 10",application
+Microsoft.Maintenance,2,"maintenance assignment, a virtual machine extra","highfivelabs/krm-packages docs/azure.md section 5, gap 10",application
+Microsoft.DevTestLab,2,"VM auto-shutdown schedule, a virtual machine extra","highfivelabs/krm-packages docs/azure.md section 5, gap 10",application
+Microsoft.AlertsManagement,2,"Prometheus rule groups and alert processing, named in the ASO coverage of the Monitor modules",highfivelabs/krm-packages docs/azure.md section 4,other
 Microsoft.ServiceBus,3,application primitive (builder's list),"builder, 2026-11-09",application
 Microsoft.EventHub,3,application primitive (builder's list),"builder, 2026-11-09",application
 Microsoft.EventGrid,3,application primitive,"builder, 2026-11-09",application
@@ -92,7 +92,7 @@ Microsoft.Resources/deploymentStacks,,ARM deployment mechanism,"builder, 2026-11
 Microsoft.Resources/deploymentStacksWhatIfResults,,ARM deployment mechanism,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster)",other
 Microsoft.Resources/templateSpecs,,ARM deployment mechanism,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster)",other
 Microsoft.Resources/dataBoundaries,,minor,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster)",other
-Microsoft.Insights/components,,Application Insights (module rank 25),"highfivelabs/catalog docs/azure.md section 2, rank 25",application
+Microsoft.Insights/components,,Application Insights (module rank 25),"highfivelabs/krm-packages docs/azure.md section 2, rank 25",application
 Microsoft.Insights/webtests,,availability tests,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster)",application
 Microsoft.ContainerService/aiManagers,,AI workloads on AKS,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster)",application
 Microsoft.ContainerService/openShiftManagedClusters,,retired product,"builder, 2026-11-09 (platform foundation: everything up to a managed Kubernetes cluster)",other

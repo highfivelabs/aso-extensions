@@ -115,7 +115,15 @@ else
   kind get kubeconfig --name "${CLUSTER}" > "${KUBECONFIG}"
 fi
 docker image inspect postgres:17 >/dev/null 2>&1 || docker pull -q postgres:17 >/dev/null
-kind load docker-image postgres:17 --name "${CLUSTER}" >/dev/null
+# GitHub's runners keep images in Docker's containerd store, where a
+# multi-platform image holds one platform's layers and kind load fails
+# ("content digest ... not found"): then the node pulls it itself.
+if ! kind load docker-image postgres:17 --name "${CLUSTER}" >/dev/null; then
+  echo "kind load failed for postgres:17; the node pulls it"
+  for node in $(kind get nodes --name "${CLUSTER}"); do
+    docker exec "${node}" crictl pull docker.io/library/postgres:17 >/dev/null
+  done
+fi
 
 step "ASO's footprint, made by hand"
 kubectl create namespace "${ASO_NS}" --dry-run=client -o yaml | kubectl apply -f -

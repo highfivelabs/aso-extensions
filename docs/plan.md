@@ -95,7 +95,7 @@ hand-written:
 
 - they are the biggest Azure gap by count: 31 of the 33 Azure Verified
   Modules read for the seed catalog accept a `lock`
-  (`catalog/docs/azure.md`, gap 1);
+  (`krm-packages/docs/azure.md`, gap 1);
 - upstream cannot take them as configuration: a lock is one type at four
   scopes (subscription, resource group, resource, any `{scope}`), and
   ASO's generator needs a design decision on which to model before it can
@@ -937,7 +937,7 @@ rechecked 2026-11-08, see below):
 | b7 | ARM resources in the specs but not exported | varies | built here, from the catalog's ranking (table (c) below), by the rule in section 1 |
 | b8 | Management locks (`Microsoft.Authorization/locks`) | 31 of 33 Azure Verified Modules take a `lock`; protects what an app cannot lose | **built** as `ManagementLock`, hand-written (section 1); ASO issue #3756 is open |
 
-(c) ARM gaps from the seed catalog (`catalog/docs/azure.md`, section 5),
+(c) ARM gaps from the seed catalog (`krm-packages/docs/azure.md`, section 5),
 in its rank order. State at the pin and upstream, read-only, 2026-11-09:
 none of these is exported at the pin (the `app` group exports
 `AuthConfig`, `ContainerApp`, `Job`, `ManagedEnvironment`; `web` exports
@@ -954,7 +954,7 @@ rechecks upstream again when it is built.
 | c3 | Container Apps environment children (Dapr components, storages, certificates, managed certificates, ...) | not at the pin, no pull request | **built**, generated: `ManagedEnvironmentsDaprComponent`, `Storage`, `Certificate`, `ManagedCertificate`, `JavaComponent` (`app.azure.hfl.dev`, API 2025-01-01). Not built: Dapr subscriptions, HTTP route configs, .NET components and maintenance configurations exist only in preview API versions, which the filters prune |
 | c4 | App Service site children (slots, hostname bindings, certificates, config sections, publishing policies) | not at the pin, no pull request | **built**, generated (`web.azure.hfl.dev`, API 2026-07-15, ASO's own `Site` version): `SitesSlot`, `SitesHostNameBinding`, `SitesSlotsHostNameBinding` (a custom domain on the app and on a slot), `Certificate` (a PFX and its password from Secrets, owned by the resource group). Not built: the generator does not produce the fixed-name config sections (`appsettings`, `connectionstrings`, `authsettingsV2`, `logs`, `backup`, `metadata`) or the `ftp`/`scm` publishing policies as resources (it produced only `config/web`, which duplicates the inline `siteConfig` of ASO's `Site`, so two controllers would fight over it); ASO's `Site` and our `SitesSlot` carry app settings and connection strings inline. Slot children other than host name bindings (config, certificates, containers) are left out |
 | c4b | App Service config sections and publishing policies (c4's "not built"; the catalog's `avm-res-web-site`: `auth_settings_v2`, `logs`, `sticky_settings`, `ftp_publish_basic_authentication_enabled`, `scm_publish_basic_authentication_enabled`, and `auth_settings`, `backup`) | rechecked 2026-11-13, read-only: ASO's `web` group at the pin, on `main` and in v2.22.0 exports `Site`, `ServerFarm` and `SitesSourcecontrol`; no open pull request or issue adds a config section or publishing policy | **built**, generated: `web.azure.hfl.dev/v20260715` `SitesConfigAuthSettingsV2`, `SitesConfigLogs`, `SitesConfigSlotConfigNames`, `SitesBasicPublishingCredentialsPolicyFtp`, `SitesBasicPublishingCredentialsPolicyScm`, owned by ASO's `Site`. **Generator patch 0014** (`ASO_GENERATOR_FIXED_NAMES`, `generator/fixed-names.txt`): the generator took a path's literal last segment for a resource only when it was `default`, `current` or `web` (so only `config/web` came out, c4); a listed literal now makes its own resource of the parent's ARM type, its name fixed to the literal. A log destination's SAS URL is a Secret reference (`$importSecretMode: required`) and removed from the status. Azure has no DELETE for any of them (they live as long as the site): a hand-written `Deleter` (`generator/_extensions/web/customizations/site_config_extensions.go`, as the SOA record's) completes the delete without a call and leaves the last values in Azure. **Not built: `authsettings` (v1) and `backup`**: each has a PUT and no GET (they are read with `POST .../list`), and ASO's reconciler reads a resource back with a GET after its PUT; a hand-written extension that reads them with the POST would do it (open question 13). `appsettings`, `connectionstrings`, `metadata`, `azurestorageaccounts` and `pushsettings` are left out too (PUT-only; ASO's `Site` carries the first three inline in `siteConfig`), as are a slot's sections. Proven: `TestSiteConfigSections` and the conformance test |
-| c4c | App Service app settings and connection strings with Secret references (c4b's "left out"; the catalog's `avm-res-web-site`: `application_insights_connection_string`, `application_insights_key`, `storage_account_access_key`, `slot_sensitive_app_settings`, `connection_strings`, the Logic App settings that carry the storage key; catalog PR #213) | rechecked 2026-11-15, read-only: ASO v2.22.0 is the latest release; `main` (`60fdf3e9`, 11 commits past the pin) changes only `property-changes.md` files under `api/web`; no open pull request or issue adds app settings, connection strings or Secret references for them; ASO's `Site` takes both in plain text in `siteConfig` | **built**, by hand (RECWEB (builder, 2026-11-15)): `web.azure.hfl.dev/v20260715` `SitesConfigAppSettings`, `SitesConfigConnectionStrings`, owned by ASO's `Site` or our `SitesSlot`, each value plain or from a Secret or ConfigMap, the whole set PUT and read back with `POST .../list` (no GET: a generated kind would never be Ready, §8 Q13); deleting leaves the values (no DELETE). §2 "App settings and connection strings". Proven: `TestSiteAppSettingsAndConnectionStrings`, `TestWebConfigSections` (the fake), the operator e2e. Not built: `backup` (§8 Q13, built when a chart needs it: `avm-res-web-site`'s `backup` is such a chart, next), static sites' app settings |
+| c4c | App Service app settings and connection strings with Secret references (c4b's "left out"; the catalog's `avm-res-web-site`: `application_insights_connection_string`, `application_insights_key`, `storage_account_access_key`, `slot_sensitive_app_settings`, `connection_strings`, the Logic App settings that carry the storage key; krm-packages PR #213) | rechecked 2026-11-15, read-only: ASO v2.22.0 is the latest release; `main` (`60fdf3e9`, 11 commits past the pin) changes only `property-changes.md` files under `api/web`; no open pull request or issue adds app settings, connection strings or Secret references for them; ASO's `Site` takes both in plain text in `siteConfig` | **built**, by hand (RECWEB (builder, 2026-11-15)): `web.azure.hfl.dev/v20260715` `SitesConfigAppSettings`, `SitesConfigConnectionStrings`, owned by ASO's `Site` or our `SitesSlot`, each value plain or from a Secret or ConfigMap, the whole set PUT and read back with `POST .../list` (no GET: a generated kind would never be Ready, §8 Q13); deleting leaves the values (no DELETE). §2 "App settings and connection strings". Proven: `TestSiteAppSettingsAndConnectionStrings`, `TestWebConfigSections` (the fake), the operator e2e. Not built: `backup` (§8 Q13, built when a chart needs it: `avm-res-web-site`'s `backup` is such a chart, next), static sites' app settings |
 | c5 | Log Analytics children (tables, data exports, linked services, linked storage, query packs, solutions) | not at the pin, no pull request (rechecked 2026-11-09: v2.22.0 still the latest release, `main` three documentation commits past the pin, no open pull request or issue for any of them; ASO exports only `Workspace`, whose newest version is 2025-07-01) | **built**, generated (`operationalinsights.azure.hfl.dev`, API 2025-07-01, ASO's own `Workspace` version): `WorkspacesTable` (plan, retention, schema, restored logs and search results), `WorkspacesSavedSearch`, `WorkspacesLinkedService` (an Automation account or a cluster), `WorkspacesLinkedStorageAccount`, `WorkspacesDataExport` (added with c10), `QueryPack` (owned by the resource group) and `QueryPacksQuery` (owned by our pack). Data exports (`WorkspacesDataExport`) were first left out because ASO's generator flattens one level only (the spec nests `destination` and `metaData` inside `properties`) and were added with patch 0004 (see the c10 row). Not built: **solutions** (`Microsoft.OperationsManagement`, a 2015 preview API), because its `SolutionProperties` lacks `type: object` and the generator drops it as an empty type, leaving no `workspaceResourceId`; **data sources** (the generator names the receiver `source` and the storage conversions do not compile; they configure the retired Log Analytics agent), **storage insight configs** (legacy), **summary logs**, **clusters** (dedicated clusters, a capacity commitment, not an application need) and **network security perimeter configurations** (read-only). A linked storage account's name is one of five values; the generator keeps such an enum in the storage version, which then imports the API version (a cycle), so `azureName` is a plain string there and Azure refuses a wrong one |
 | c6 | Azure Monitor private link scope and scoped resources; network security perimeter associations | not at the pin, no pull request (rechecked 2026-11-09: v2.22.0 still the latest release, `main` three documentation commits past the pin, no open pull request; ASO's `insights` and `network` groups export neither) | **built**, generated: `insights.azure.hfl.dev/v20210901` `PrivateLinkScope`, `PrivateLinkScopesScopedResource` (a workspace, component or endpoint scoped into it, an ARM reference) and `PrivateLinkScopesPrivateEndpointConnection` (approving or rejecting a connection); `network.azure.hfl.dev/v20250501` `NetworkSecurityPerimeter`, `NetworkSecurityPerimetersProfile`, `...ProfilesAccessRule`, `...ResourceAssociation` (a PaaS resource and a profile, both ARM references, in `Learning`, `Enforced` or `Audit`), `...Link` and `...LoggingConfiguration`. An association needs a perimeter and a profile, which ASO does not have either, so the whole family is built (owners: the resource group, then our kinds). Version choices: 2021-09-01 is the newest stable private link scope API; the perimeter is at 2025-05-01 and not 2025-03-01 (ASO's network version), because at 2025-03-01 the generator drops every writable property of these kinds from the spec side (a perimeter without `location`, an association without `profile`) and nothing says why. Not built: the Log Analytics workspace's own perimeter configurations (`workspaces/networkSecurityPerimeterConfigurations`, read-only, in c5's skip list) |
 | c7 | Key Vault keys | `VaultKey` merged in ASO (#5564), next release | skip: wait for ASO's release |
@@ -1144,6 +1144,63 @@ keep applying at every pin move.
 open ASO pull request adds is copied and shipped here, and kept in step with
 upstream mechanically (`upstream.yaml`, the coverage check) until a release
 carries it.
+
+**Track ASO's `main`; never wait on an upstream pull request or release**
+(the builder, 2026-11-24, for all of the KRM extensions repositories; it
+confirms the 2026-11-10 rule above and adds the pin's cadence and what a
+build contains). The builder, verbatim: "I think we shoudl not wait and
+make the extensions repo take these or build them and pull ahead. we can
+afford right now to have some churn in having folks transition and
+actually want to see what that experience looks like" and "let's reverse
+the earlier decision. I think if it's in PR we have no idea how long it'll
+take to land. for all krm extnsions repos let's take changes that land on
+main and of course those on official releases but our latest build should
+have the contents of their main + any fixes + what we extend". So:
+
+- **A gap with an upstream pull request is built now**, from the pull
+  request's code where it works, otherwise generated or written here, as
+  the rule above already says. A field ASO's own kind lacks is filled now
+  too (section 3, "Field gaps in ASO's own kinds"), not left for a release.
+- **The pin follows `main`.** Move the "Commit" row of `UPSTREAM.md` to
+  the head of ASO's `main` at least weekly and before every release of
+  ours (the procedure in `UPSTREAM.md`, "Moving the pin"), not only when
+  a gap closes. The pin was 2026-11-06's `main` until this decision.
+- **Our latest build is ASO `main` + our fixes + our extensions.** What
+  `main` has and no release has yet ships in our build; our fixes ship as
+  `patches/`; our kinds ship as ours. A kind ASO has only on `main` is
+  served by our controller until ASO releases it.
+  The builder, 2026-11-24, on what the build carries, verbatim: "our build
+  has the contents of their main - if there are merged but unreleased
+  contents in their repo that we coudl use to fill in gaps on attributes
+  or resources, we shoudl take them and publish them on our extensions
+  controller". So upstream stays installed beside us at its release, and
+  our extensions controller serves what upstream has merged on its main
+  branch but not released, wherever it fills a gap in resources or
+  attributes: as our own kinds in our API group (copied by the copy-
+  upstream rule), or as field kinds on upstream's kinds. When upstream
+  releases it, ours retires.
+- **Versions follow upstream's.** The builder, 2026-11-24, verbatim: "this
+  raises the crtiicality of tracking main through automation across all of
+  our extensions providers. we shuld probably match the versions of the
+  upstream if we're going to do this - e.g. perhaps we would ship
+  1.162.0-1, 1.162.0-2, and 1.162.0-3 as we ship our extensions from their
+  main"; asked how, given that semver sorts 1.162.0-1 below 1.162.0, the
+  builder chose "1.162.1-hfl.N". So a build of ours is versioned
+  `X.Y.(Z+1)-hfl.N`: X.Y.Z is ASO's nearest release at or before the
+  pinned main commit (`UPSTREAM.md`'s "Nearest release" row), and N counts
+  our builds since that release, from 1. Config Connector 1.162.0 plus
+  main gives 1.162.1-hfl.1, 1.162.1-hfl.2 and so on; when upstream
+  releases 1.163.0 and the pin passes it, the next build is 1.163.1-hfl.1.
+  It sorts after upstream's X.Y.Z and before its next release in every
+  semver tool (Helm, Go, image tags), as Go's pseudo-versions do. The git
+  tag is `v` plus the version; images and the install manifest carry the
+  same. Tracking main is automated (factory), not left to an agent
+  remembering to.
+- **Transition is expected.** When ASO ships a kind or field we carry,
+  ours is deprecated (above). Users moving across is accepted churn, and
+  the experience is worth observing and writing down.
+- Unchanged: the copy-upstream rule, `patches/`, never editing
+  `third_party/`, the merge gate, and the live-run rules.
 
 ## 5. Testing: the fake cloud
 

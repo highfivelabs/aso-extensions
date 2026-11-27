@@ -23,7 +23,7 @@ checked by `hack/coverage/run.sh --check`.
 | `avm-need.csv` | resource type | `resource,modules,named`: how many Azure Verified Modules need it (hand-edited) |
 | `foundation.md` | | the ranked foundation gap report, the work queue for the kind agents |
 | `bars/<service>.svg`, `bars/_total.svg`, `bars/_tiers.svg`, `bars/_categories.svg` | service, the whole, the tiers, the categories | stacked bars: blue official, green ours beyond official, light grey uncovered; under each, a separate purple bar for Terraform (`azurerm`, an estimate, with a dark tick at its strict figure; see "Terraform") |
-| `inputs/terraform/terraform.csv`, `inputs/terraform/terraform-resources.csv` | (service, category, provider); (resource, provider) | the catalog's Terraform estimate, vendored at a pinned catalog commit; columns in the catalog's `docs/terraform/README.md` |
+| `inputs/terraform/terraform.csv`, `inputs/terraform/terraform-resources.csv` | (service, category, provider); (resource, provider) | the catalog's Terraform estimate, vendored at a pinned krm-packages commit; columns in the catalog's `docs/terraform/README.md` |
 | `sources.yaml` | | the pinned inputs |
 
 The first three files have the same columns in the Google Cloud and AWS
@@ -175,7 +175,7 @@ The **tier** is the service's, for the per-service table: tier 1 is the
 `platform-foundation` services, tier 2 the `security-adjacent` ones and the
 services some tracked Azure Verified Module uses, tier 3 the rest and the
 default. The AVM usage ranking, which the first version of the tiers was made
-from (`highfivelabs/catalog docs/azure.md`, read 2026-11-09), is kept as the
+from (`highfivelabs/krm-packages docs/azure.md`, read 2026-11-09), is kept as the
 `rationale` and breaks ties in `foundation.md`: usage by modules is a proxy for
 what teams need, taken from one registry at one date and counting a module once
 however many resources it creates. The order of the rows in `priority.csv` is
@@ -235,7 +235,7 @@ a mapped Terraform resource matches by the lenient rule (L2), drawn with a dark
 tick at the strict rule's figure (`pct_terraform_l1`, the floor). It is an
 **estimate**: the mapping of Terraform resources to ARM types and the name match
 of attributes have the error described in the catalog's
-[`docs/terraform-leverage.md`, "Method and error"](https://github.com/highfivelabs/catalog/blob/13064af34996c47f1a5498bb17aca16194c4574e/docs/terraform-leverage.md#method-and-error).
+[`docs/terraform-leverage.md`, "Method and error"](https://github.com/highfivelabs/krm-packages/blob/13064af34996c47f1a5498bb17aca16194c4574e/docs/terraform-leverage.md#method-and-error).
 It is a separate bar, not a segment, because Terraform overlaps both official
 and ours.
 
@@ -258,17 +258,17 @@ attribute as a typed schema. `terraform-resources.csv` is vendored with it so a
 reader can see which Terraform resources each figure relied on; the generator
 verifies its digest but does not draw it.
 
-**The input.** The catalog (`highfivelabs/catalog`, private) makes the pair in
+**The input.** krm-packages (`highfivelabs/krm-packages`, private) makes the pair in
 `docs/terraform/aso-extensions/`. A check must not need credentials, so the two
 files are copied byte-identical into `inputs/terraform/` and pinned in
-`sources.yaml` (`terraform`: the catalog commit, its date, the date copied and a
+`sources.yaml` (`terraform`: the krm-packages commit, its date, the date copied and a
 sha256 per file); the generator fails if a copy differs from its digest. To move
 the pin, from a catalog checkout beside this repository:
 
 ```sh
-C=<catalog commit>
+C=<krm-packages commit>
 for f in terraform.csv terraform-resources.csv; do
-  git -C ../catalog show "$C:docs/terraform/aso-extensions/$f" > docs/coverage/inputs/terraform/$f
+  git -C ../krm-packages show "$C:docs/terraform/aso-extensions/$f" > docs/coverage/inputs/terraform/$f
   shasum -a 256 docs/coverage/inputs/terraform/$f
 done
 # then set commit, commitDate, fetched and the two sha256 in sources.yaml,

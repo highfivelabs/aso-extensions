@@ -1,0 +1,41 @@
+# Copyright 2026 High Five Labs
+# SPDX-License-Identifier: Apache-2.0
+#
+# Rendered by highfivelabs/krm-ci ci/krm/sync.py from ci/krm/callers/; do
+# not edit here (change krm-ci's ci/krm/repos.toml or the template, then
+# sync). The checks themselves are krm-ci's krm-ci.yml (docs/krm-ci.md).
+# Branch protection requires the `ci` status.
+name: hfl-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  merge_group:
+
+permissions: {}
+
+concurrency:
+  group: hfl-ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  krm:
+    uses: highfivelabs/krm-ci/.github/workflows/krm-ci.yml@a19229e684a2d19add5a2ed907e82b56e5073c2d # v1.2.4
+    permissions:
+      contents: read
+      statuses: read
+    with:
+      ci-ref: a19229e684a2d19add5a2ed907e82b56e5073c2d
+      setup-command: ""
+      lint-setup-command: "task upstream"
+      check-command: "hack/ci/pr.sh check"
+      e2e-command: "hack/ci/pr.sh e2e"
+      free-disk: true
+      timeout-minutes: 90
+      sibling-repo: ""
+      sibling-ref: ""
+      licenses-packages: "./cmd/manager"
+      govulncheck-packages: "./cmd/manager"
+      test-shards: 1
+      trust-offload-status: true

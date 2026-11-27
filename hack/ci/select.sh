@@ -28,11 +28,14 @@
 #             hack/coverage/ (group coverage)
 #   adjacent  what a kind's pull request also touches and check:static or
 #             the operator e2e covers: config/crds/, generator/reports/,
-#             pkg/controllers/arm_resources_gen.go, tests/operator/
+#             pkg/controllers/arm_resources_gen.go, tests/operator/; and
+#             .github/ (the lint job checks the workflows; hack/ci/ stays
+#             full: its tool pins and test settings act only while the
+#             tests run)
 #   full      everything else: go.mod, patches/, the pin, upstream.yaml,
-#             cmd/, pkg/ (the rest), generator/ (the rest), hack/, a test/e2e
-#             file without tests (the harness), Taskfile.yml, taskfiles/,
-#             config/ (the rest), .github/
+#             cmd/, pkg/ (the rest), generator/ (the rest), hack/ (the
+#             rest), a test/e2e file without tests (the harness),
+#             Taskfile.yml, taskfiles/, config/ (the rest)
 # A pull request is full if any path is; else groups if any path is a
 # group or adjacent; else none. The nightly run (nightly.yml) runs
 # everything on main, which catches what a group's tests miss.
@@ -67,6 +70,7 @@ classify() {
     pkg/fakecloud/*) echo "group fakecloud" ;;
     hack/coverage/*) echo "group coverage" ;;
     config/crds/*|generator/reports/*|pkg/controllers/arm_resources_gen.go|tests/operator/*) echo adjacent ;;
+    .github/*) echo adjacent ;;
     *) echo full ;;
   esac
 }

@@ -111,7 +111,7 @@ Not affiliated with or endorsed by Microsoft.
 
 Of the 43,369 writable attributes of the 2,424 ARM resources in the Azure REST API specs, ASO v2 covers 16.4% and our kinds cover a further 20.7%; 62.9% are in neither. Blue is ASO, green is what only we cover, grey is what neither does. The total hides what matters, so the resources are in four categories, by how much a platform team needs them (foundation: management groups, subscriptions, policy, RBAC, networking, Key Vault, identities, Log Analytics, up to a managed AKS cluster; security-adjacent: Defender, Sentinel, WAF, DDoS; application; other), and the services in three tiers ([`priority.csv`](docs/coverage/priority.csv)). The gaps in the first two, ranked, are the work queue: [`foundation.md`](docs/coverage/foundation.md).
 
-The purple bar is Terraform's `azurerm` provider beside them, an estimate: the share of the same attributes that a writable attribute of a mapped Terraform resource matches by the lenient rule (L2, 8.2% overall), with the strict rule (L1, 7.2%) as its tick; the method and its error are in the catalog's ["Method and error"](https://github.com/highfivelabs/catalog/blob/13064af34996c47f1a5498bb17aca16194c4574e/docs/terraform-leverage.md#method-and-error), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at catalog `13064af34996`. `azapi` is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema.
+The purple bar is Terraform's `azurerm` provider beside them, an estimate: the share of the same attributes that a writable attribute of a mapped Terraform resource matches by the lenient rule (L2, 8.2% overall), with the strict rule (L1, 7.2%) as its tick; the method and its error are in the catalog's ["Method and error"](https://github.com/highfivelabs/krm-packages/blob/13064af34996c47f1a5498bb17aca16194c4574e/docs/terraform-leverage.md#method-and-error), the data in [`inputs/terraform/`](docs/coverage/inputs/terraform/), pinned at krm-packages `13064af34996`. `azapi` is not a bar: it takes any ARM type with a free-form body, so it covers everything by construction and no attribute as a typed schema.
 
 ![Coverage by category](docs/coverage/bars/_categories.svg)
 
@@ -452,21 +452,19 @@ CI runs the same way on a laptop, an offload VM or GitHub's runner:
 | Workflow job | Locally |
 | --- | --- |
 | tools (every job) | `task tools` (its `ci:tools`: task, kind, ko, crane, kubectl, helm at `hack/ci/tools.sh`'s pins into `bin/ci`, first on every task's `PATH`) |
-| ci.yml plan | `hack/ci/select.sh plan origin/main HEAD` |
-| ci.yml check | `task ci:check MODE=full` (or `MODE=groups GROUPS="..."`) |
-| ci.yml e2e | `task operator-e2e`; `task operator-e2e:debug` after a failure |
+| hfl-ci.yml plan (inside `hack/ci/pr.sh`) | `hack/ci/select.sh plan origin/main HEAD` |
+| hfl-ci.yml check | `hack/ci/pr.sh check`: `task ci:check MODE=full` (or `MODE=groups GROUPS="..."`) |
+| hfl-ci.yml e2e | `hack/ci/pr.sh e2e`: `task operator-e2e`; `task operator-e2e:debug` after a failure |
 | nightly.yml full | `task tools`, `task check`, `task operator-e2e` |
 | release.yml images | `task upstream`, then `task release TAG=v0.1.0` (needs registry write access) |
-| all of ci.yml, as one | `task ci` (below) |
+| hfl-ci.yml's check and e2e, as one | `task ci` (below) |
 
 Go is go.mod's version, as `setup-go` picks it; `task ci` sets
-`GOTOOLCHAIN` to it. The GitHub-only steps (freeing the runner's disk,
-`hack/ci/free-disk.sh`; choosing Spot runners, `hack/ci/runners.sh`; the
-required `ci` status, `hack/ci/results.sh`; the nightly issue,
-`hack/ci/nightly-report.sh`) have no local counterpart: `task ci`'s exit
+`GOTOOLCHAIN` to it. The GitHub-only step (the nightly issue,
+`hack/ci/nightly-report.sh`) has no local counterpart: `task ci`'s exit
 status is the result.
 
-Task fetches the factory include (`Taskfile.yml`) into each checkout's
+Task fetches the krm-ci include (`Taskfile.yml`) into each checkout's
 `.task/remote` the first time it reads the Taskfile there, through one
 clone directory per user, so two `task` runs started at once in checkouts
 with no cache can fail. In a new worktree, run `task ci:remote` once
@@ -475,9 +473,9 @@ worktree. `task ci:remote-test` checks it.
 
 ### The merge gate
 
-GitHub Actions is off in the organization (the builder, 2026-11-11); the
-workflows in `.github/workflows/` stay, disabled. Their pull-request jobs
-run before the push instead, on an offload Spot VM:
+CI runs on GitHub for every pull request (`.github/workflows/hfl-ci.yml`,
+from highfivelabs/krm-ci); its `ci` status is the one to require. The
+same jobs can also run before the push, on an offload Spot VM:
 
 ```sh
 task hooks          # once per clone: core.hooksPath=hack/hooks
@@ -485,7 +483,7 @@ task ci             # by hand: HEAD (or SHA=..., CI_BASE=<base branch>)
 ```
 
 `task ci` (`hack/ci/gate.sh`) checks the commit out into a temporary
-worktree, makes `ci.yml`'s plan (`hack/ci/select.sh plan`, against the
+worktree, makes `hfl-ci.yml`'s plan (`hack/ci/select.sh plan`, against the
 merge base with `origin/main`), and runs on one VM what the plan
 selects: `task tools`, then `task check` (mode full) or
 `hack/ci/select.sh run GROUPS` (mode groups), then `task operator-e2e`
