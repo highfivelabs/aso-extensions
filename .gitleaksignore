@@ -19,3 +19,9 @@ f66d0ac08369dbe85a3d749ab93b24c24df9a72e:test/e2e/arm_logic_connections_test.go:
 # test/e2e/arm_synapse_test.go:51: a made-up storage key (base64 of a plain
 # word pair), put in a test Secret on envtest and checked on the fake.
 935803a30402c180ad94866f0056ca3f5133006c:test/e2e/arm_synapse_test.go:generic-api-key:51
+# apis/arm/datafactory/v20180601/factories_pipeline_types_gen.go:18856 and
+# :19448: generated Go identifiers (the local variables of a copy
+# activity's Cosmos DB SQL API source and sink, assigned from another),
+# not secrets; the rule reads an identifier ending in Api as a key.
+561e5910d6bdf8d31697de4071ff65e8fa196428:apis/arm/datafactory/v20180601/factories_pipeline_types_gen.go:generic-api-key:18856
+561e5910d6bdf8d31697de4071ff65e8fa196428:apis/arm/datafactory/v20180601/factories_pipeline_types_gen.go:generic-api-key:19448
