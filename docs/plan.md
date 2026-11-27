@@ -2452,7 +2452,11 @@ summarised here:
    kind names, and every kind is fully schema-validated.
    **In progress**: the design is section 2, "One kind per member of a
    union" (generator patches 0020 and 0021); linked services first (f87),
-   then datasets (f88); pipelines are not split (§8 Q18, f89).
+   then datasets (f88); pipelines are not split (§8 Q18, f89). Triggers,
+   data flows and integration runtimes are unions too (f86), but each
+   kind's CRD is about 50 KB of JSON, inside the limit with every member
+   schema-validated, so they stay one kind each: splitting them would add
+   kind names and no validation.
 
 18. **Data Factory pipelines: which typed form?** (asked 2026-11-27, f88;
    the request was to split activities per type if that is sound.) It is
