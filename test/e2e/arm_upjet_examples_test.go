@@ -60,7 +60,6 @@ func TestUpjetExamplesOnFake(t *testing.T) {
 	scheme := controllers.CreateScheme()
 	n := map[string]int{}
 	for _, ex := range examples {
-		ex := ex
 		n[ex.Kind]++
 		name := fmt.Sprintf("%s/%d", ex.Kind, n[ex.Kind])
 		t.Run(name, func(t *testing.T) {
