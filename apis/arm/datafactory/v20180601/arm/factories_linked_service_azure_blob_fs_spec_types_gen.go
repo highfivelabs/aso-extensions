@@ -130,15 +130,6 @@ type IntegrationRuntimeReference struct {
 	Type *IntegrationRuntimeReferenceType `json:"type,omitempty"`
 }
 
-// Definition of a single parameter for an entity.
-type ParameterSpecification struct {
-	// DefaultValue: Default value of parameter.
-	DefaultValue *v1.JSON `json:"defaultValue,omitempty"`
-
-	// Type: Parameter type.
-	Type *ParameterType `json:"type,omitempty"`
-}
-
 // Credential reference type.
 type CredentialReference struct {
 	AdditionalProperties map[string]v1.JSON `json:"additionalProperties,omitempty"`
@@ -159,31 +150,6 @@ const IntegrationRuntimeReferenceType_IntegrationRuntimeReference = IntegrationR
 // Mapping from string to IntegrationRuntimeReferenceType
 var integrationRuntimeReferenceType_Values = map[string]IntegrationRuntimeReferenceType{
 	"integrationruntimereference": IntegrationRuntimeReferenceType_IntegrationRuntimeReference,
-}
-
-// Parameter type.
-// +kubebuilder:validation:Enum={"Array","Bool","Float","Int","Object","SecureString","String"}
-type ParameterType string
-
-const (
-	ParameterType_Array        = ParameterType("Array")
-	ParameterType_Bool         = ParameterType("Bool")
-	ParameterType_Float        = ParameterType("Float")
-	ParameterType_Int          = ParameterType("Int")
-	ParameterType_Object       = ParameterType("Object")
-	ParameterType_SecureString = ParameterType("SecureString")
-	ParameterType_String       = ParameterType("String")
-)
-
-// Mapping from string to ParameterType
-var parameterType_Values = map[string]ParameterType{
-	"array":        ParameterType_Array,
-	"bool":         ParameterType_Bool,
-	"float":        ParameterType_Float,
-	"int":          ParameterType_Int,
-	"object":       ParameterType_Object,
-	"securestring": ParameterType_SecureString,
-	"string":       ParameterType_String,
 }
 
 type SecretBase struct {

@@ -326,63 +326,6 @@ func IntegrationRuntimeReference_STATUSGenerator() *rapid.Generator[IntegrationR
 	return integrationRuntimeReference_STATUSGenerator
 }
 
-func Test_ParameterSpecification_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForParameterSpecification_STATUS)
-}
-
-// RunJSONSerializationTestForParameterSpecification_STATUS runs a test to see if a specific instance of ParameterSpecification_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForParameterSpecification_STATUS(t *rapid.T) {
-	subject := ParameterSpecification_STATUSGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual ParameterSpecification_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of ParameterSpecification_STATUS instances for property testing - lazily instantiated by
-// ParameterSpecification_STATUSGenerator()
-var parameterSpecification_STATUSGenerator *rapid.Generator[ParameterSpecification_STATUS]
-
-// ParameterSpecification_STATUSGenerator returns a generator of ParameterSpecification_STATUS instances for property testing.
-func ParameterSpecification_STATUSGenerator() *rapid.Generator[ParameterSpecification_STATUS] {
-	if parameterSpecification_STATUSGenerator != nil {
-		return parameterSpecification_STATUSGenerator
-	}
-
-	typeVar := rapid.Ptr(rapid.SampledFrom([]ParameterType_STATUS{ParameterType_STATUS_Array, ParameterType_STATUS_Bool, ParameterType_STATUS_Float, ParameterType_STATUS_Int, ParameterType_STATUS_Object, ParameterType_STATUS_SecureString, ParameterType_STATUS_String}), true)
-
-	parameterSpecification_STATUSGenerator = rapid.Custom(func(t *rapid.T) ParameterSpecification_STATUS {
-		var result ParameterSpecification_STATUS
-		result.Type = typeVar.Draw(t, "Type")
-		return result
-	})
-
-	return parameterSpecification_STATUSGenerator
-}
-
 func Test_SecretBase_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 

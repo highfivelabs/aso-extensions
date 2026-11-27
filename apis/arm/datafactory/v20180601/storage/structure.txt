@@ -773,6 +773,2714 @@ FactoriesDataflow: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+FactoriesDatasetAvro: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (13 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── AvroCompressionCodec: *v1.JSON
+│   │   ├── AvroCompressionLevel: *int
+│   │   ├── Description: *string
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Location: *Object (15 properties)
+│   │   │   ├── AmazonS3: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AmazonS3Compatible: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AzureBlobFS: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FileSystem: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureBlobStorage: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Container: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureDataLakeStore: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureFileStorage: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FileServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FtpServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── GoogleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── Hdfs: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── HttpServer: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── RelativeUrl: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── LakeHouse: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── OracleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Sftp: *Object (5 properties)
+│   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │       ├── FileName: *v1.JSON
+│   │   │       ├── FolderPath: *v1.JSON
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Type: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (13 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── AvroCompressionCodec: *v1.JSON
+    │   ├── AvroCompressionLevel: *int
+    │   ├── Description: *string
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Location: *Object (15 properties)
+    │   │   ├── AmazonS3: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureBlobStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureDataLakeStore: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureFileStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FileServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FtpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── GoogleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── HttpServer: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── LakeHouse: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── OracleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Sftp: *Object (5 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetAzureDatabricksDeltaLakeDataset: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (12 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Database: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   ├── Table: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (12 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Database: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   ├── Table: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetAzureSqlDWTable: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (13 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Description: *string
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   ├── Table: *v1.JSON
+│   │   ├── TableName: *v1.JSON
+│   │   ├── Type: *string
+│   │   └── TypePropertiesSchema: *v1.JSON
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (13 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Description: *string
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   ├── Table: *v1.JSON
+    │   ├── TableName: *v1.JSON
+    │   ├── Type: *string
+    │   └── TypePropertiesSchema: *v1.JSON
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetAzureSqlTable: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (13 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Description: *string
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   ├── Table: *v1.JSON
+│   │   ├── TableName: *v1.JSON
+│   │   ├── Type: *string
+│   │   └── TypePropertiesSchema: *v1.JSON
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (13 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Description: *string
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   ├── Table: *v1.JSON
+    │   ├── TableName: *v1.JSON
+    │   ├── Type: *string
+    │   └── TypePropertiesSchema: *v1.JSON
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetBinary: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (12 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Compression: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Level: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Location: *Object (15 properties)
+│   │   │   ├── AmazonS3: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AmazonS3Compatible: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AzureBlobFS: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FileSystem: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureBlobStorage: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Container: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureDataLakeStore: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureFileStorage: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FileServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FtpServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── GoogleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── Hdfs: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── HttpServer: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── RelativeUrl: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── LakeHouse: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── OracleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Sftp: *Object (5 properties)
+│   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │       ├── FileName: *v1.JSON
+│   │   │       ├── FolderPath: *v1.JSON
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Type: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (12 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Compression: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Level: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Location: *Object (15 properties)
+    │   │   ├── AmazonS3: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureBlobStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureDataLakeStore: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureFileStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FileServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FtpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── GoogleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── HttpServer: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── LakeHouse: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── OracleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Sftp: *Object (5 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetCosmosDbSqlApiCollection: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (11 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── CollectionName: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (11 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── CollectionName: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetDelimitedText: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (20 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── ColumnDelimiter: *v1.JSON
+│   │   ├── CompressionCodec: *v1.JSON
+│   │   ├── CompressionLevel: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── EncodingName: *v1.JSON
+│   │   ├── EscapeChar: *v1.JSON
+│   │   ├── FirstRowAsHeader: *v1.JSON
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Location: *Object (15 properties)
+│   │   │   ├── AmazonS3: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AmazonS3Compatible: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AzureBlobFS: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FileSystem: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureBlobStorage: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Container: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureDataLakeStore: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureFileStorage: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FileServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FtpServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── GoogleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── Hdfs: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── HttpServer: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── RelativeUrl: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── LakeHouse: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── OracleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Sftp: *Object (5 properties)
+│   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │       ├── FileName: *v1.JSON
+│   │   │       ├── FolderPath: *v1.JSON
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Type: *string
+│   │   ├── NullValue: *v1.JSON
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── QuoteChar: *v1.JSON
+│   │   ├── RowDelimiter: *v1.JSON
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (20 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── ColumnDelimiter: *v1.JSON
+    │   ├── CompressionCodec: *v1.JSON
+    │   ├── CompressionLevel: *v1.JSON
+    │   ├── Description: *string
+    │   ├── EncodingName: *v1.JSON
+    │   ├── EscapeChar: *v1.JSON
+    │   ├── FirstRowAsHeader: *v1.JSON
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Location: *Object (15 properties)
+    │   │   ├── AmazonS3: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureBlobStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureDataLakeStore: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureFileStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FileServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FtpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── GoogleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── HttpServer: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── LakeHouse: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── OracleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Sftp: *Object (5 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── NullValue: *v1.JSON
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── QuoteChar: *v1.JSON
+    │   ├── RowDelimiter: *v1.JSON
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetExcel: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (17 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Compression: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Level: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── FirstRowAsHeader: *v1.JSON
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Location: *Object (15 properties)
+│   │   │   ├── AmazonS3: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AmazonS3Compatible: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AzureBlobFS: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FileSystem: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureBlobStorage: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Container: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureDataLakeStore: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureFileStorage: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FileServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FtpServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── GoogleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── Hdfs: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── HttpServer: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── RelativeUrl: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── LakeHouse: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── OracleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Sftp: *Object (5 properties)
+│   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │       ├── FileName: *v1.JSON
+│   │   │       ├── FolderPath: *v1.JSON
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Type: *string
+│   │   ├── NullValue: *v1.JSON
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Range: *v1.JSON
+│   │   ├── Schema: *v1.JSON
+│   │   ├── SheetIndex: *v1.JSON
+│   │   ├── SheetName: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (17 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Compression: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Level: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *v1.JSON
+    │   ├── Description: *string
+    │   ├── FirstRowAsHeader: *v1.JSON
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Location: *Object (15 properties)
+    │   │   ├── AmazonS3: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureBlobStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureDataLakeStore: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureFileStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FileServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FtpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── GoogleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── HttpServer: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── LakeHouse: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── OracleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Sftp: *Object (5 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── NullValue: *v1.JSON
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Range: *v1.JSON
+    │   ├── Schema: *v1.JSON
+    │   ├── SheetIndex: *v1.JSON
+    │   ├── SheetName: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetHttpFile: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (16 properties)
+│   │   ├── AdditionalHeaders: *v1.JSON
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Compression: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Level: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── Format: *Object (6 properties)
+│   │   │   ├── Avro: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Deserializer: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Serializer: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── Json: *Object (10 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Deserializer: *v1.JSON
+│   │   │   │   ├── EncodingName: *v1.JSON
+│   │   │   │   ├── FilePattern: *v1.JSON
+│   │   │   │   ├── JsonNodeReference: *v1.JSON
+│   │   │   │   ├── JsonPathDefinition: *v1.JSON
+│   │   │   │   ├── NestingSeparator: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Serializer: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── Orc: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Deserializer: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Serializer: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── Parquet: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Deserializer: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Serializer: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Text: *Object (14 properties)
+│   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │       ├── ColumnDelimiter: *v1.JSON
+│   │   │       ├── Deserializer: *v1.JSON
+│   │   │       ├── EncodingName: *v1.JSON
+│   │   │       ├── EscapeChar: *v1.JSON
+│   │   │       ├── FirstRowAsHeader: *v1.JSON
+│   │   │       ├── NullValue: *v1.JSON
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── QuoteChar: *v1.JSON
+│   │   │       ├── RowDelimiter: *v1.JSON
+│   │   │       ├── Serializer: *v1.JSON
+│   │   │       ├── SkipLineCount: *v1.JSON
+│   │   │       ├── TreatEmptyAsNull: *v1.JSON
+│   │   │       └── Type: *string
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RelativeUrl: *v1.JSON
+│   │   ├── RequestBody: *v1.JSON
+│   │   ├── RequestMethod: *v1.JSON
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (15 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Compression: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Level: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── Format: *Object (6 properties)
+    │   │   ├── Avro: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Deserializer: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Serializer: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── Json: *Object (10 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Deserializer: *v1.JSON
+    │   │   │   ├── EncodingName: *v1.JSON
+    │   │   │   ├── FilePattern: *v1.JSON
+    │   │   │   ├── JsonNodeReference: *v1.JSON
+    │   │   │   ├── JsonPathDefinition: *v1.JSON
+    │   │   │   ├── NestingSeparator: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Serializer: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── Orc: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Deserializer: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Serializer: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── Parquet: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Deserializer: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Serializer: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Text: *Object (14 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── ColumnDelimiter: *v1.JSON
+    │   │       ├── Deserializer: *v1.JSON
+    │   │       ├── EncodingName: *v1.JSON
+    │   │       ├── EscapeChar: *v1.JSON
+    │   │       ├── FirstRowAsHeader: *v1.JSON
+    │   │       ├── NullValue: *v1.JSON
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       ├── QuoteChar: *v1.JSON
+    │   │       ├── RowDelimiter: *v1.JSON
+    │   │       ├── Serializer: *v1.JSON
+    │   │       ├── SkipLineCount: *v1.JSON
+    │   │       ├── TreatEmptyAsNull: *v1.JSON
+    │   │       └── Type: *string
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RelativeUrl: *v1.JSON
+    │   ├── RequestBody: *v1.JSON
+    │   ├── RequestMethod: *v1.JSON
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetJson: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (13 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Compression: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Level: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── EncodingName: *v1.JSON
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Location: *Object (15 properties)
+│   │   │   ├── AmazonS3: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AmazonS3Compatible: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AzureBlobFS: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FileSystem: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureBlobStorage: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Container: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureDataLakeStore: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureFileStorage: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FileServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FtpServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── GoogleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── Hdfs: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── HttpServer: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── RelativeUrl: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── LakeHouse: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── OracleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Sftp: *Object (5 properties)
+│   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │       ├── FileName: *v1.JSON
+│   │   │       ├── FolderPath: *v1.JSON
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Type: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (13 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Compression: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Level: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *v1.JSON
+    │   ├── Description: *string
+    │   ├── EncodingName: *v1.JSON
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Location: *Object (15 properties)
+    │   │   ├── AmazonS3: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureBlobStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureDataLakeStore: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureFileStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FileServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FtpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── GoogleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── HttpServer: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── LakeHouse: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── OracleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Sftp: *Object (5 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetOrc: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (12 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Description: *string
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Location: *Object (15 properties)
+│   │   │   ├── AmazonS3: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AmazonS3Compatible: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AzureBlobFS: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FileSystem: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureBlobStorage: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Container: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureDataLakeStore: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureFileStorage: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FileServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FtpServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── GoogleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── Hdfs: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── HttpServer: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── RelativeUrl: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── LakeHouse: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── OracleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Sftp: *Object (5 properties)
+│   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │       ├── FileName: *v1.JSON
+│   │   │       ├── FolderPath: *v1.JSON
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Type: *string
+│   │   ├── OrcCompressionCodec: *v1.JSON
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (12 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Description: *string
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Location: *Object (15 properties)
+    │   │   ├── AmazonS3: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureBlobStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureDataLakeStore: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureFileStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FileServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FtpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── GoogleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── HttpServer: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── LakeHouse: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── OracleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Sftp: *Object (5 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── OrcCompressionCodec: *v1.JSON
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetParquet: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (12 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── CompressionCodec: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Location: *Object (15 properties)
+│   │   │   ├── AmazonS3: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AmazonS3Compatible: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AzureBlobFS: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FileSystem: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureBlobStorage: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Container: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureDataLakeStore: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureFileStorage: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FileServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FtpServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── GoogleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── Hdfs: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── HttpServer: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── RelativeUrl: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── LakeHouse: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── OracleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Sftp: *Object (5 properties)
+│   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │       ├── FileName: *v1.JSON
+│   │   │       ├── FolderPath: *v1.JSON
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Type: *string
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (12 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── CompressionCodec: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Location: *Object (15 properties)
+    │   │   ├── AmazonS3: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureBlobStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureDataLakeStore: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureFileStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FileServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FtpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── GoogleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── HttpServer: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── LakeHouse: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── OracleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Sftp: *Object (5 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetRestResource: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (15 properties)
+│   │   ├── AdditionalHeaders: map[string]v1.JSON
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Description: *string
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── PaginationRules: map[string]v1.JSON
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RelativeUrl: *v1.JSON
+│   │   ├── RequestBody: *v1.JSON
+│   │   ├── RequestMethod: *v1.JSON
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (14 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Description: *string
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── PaginationRules: map[string]v1.JSON
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RelativeUrl: *v1.JSON
+    │   ├── RequestBody: *v1.JSON
+    │   ├── RequestMethod: *v1.JSON
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesDatasetXml: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (14 properties)
+│   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   ├── Annotations: v1.JSON[]
+│   │   ├── Compression: *Object (4 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Level: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *v1.JSON
+│   │   ├── Description: *string
+│   │   ├── EncodingName: *v1.JSON
+│   │   ├── Folder: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LinkedServiceName: *Object (4 properties)
+│   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ReferenceName: *string
+│   │   │   └── Type: *string
+│   │   ├── Location: *Object (15 properties)
+│   │   │   ├── AmazonS3: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AmazonS3Compatible: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── AzureBlobFS: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FileSystem: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureBlobStorage: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── Container: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureDataLakeStore: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── AzureFileStorage: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FileServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── FtpServer: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── GoogleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── Hdfs: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── HttpServer: *Object (6 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── RelativeUrl: *v1.JSON
+│   │   │   │   └── Type: *string
+│   │   │   ├── LakeHouse: *Object (5 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Type: *string
+│   │   │   ├── OracleCloudStorage: *Object (7 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── BucketName: *v1.JSON
+│   │   │   │   ├── FileName: *v1.JSON
+│   │   │   │   ├── FolderPath: *v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Type: *string
+│   │   │   │   └── Version: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Sftp: *Object (5 properties)
+│   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │       ├── FileName: *v1.JSON
+│   │   │       ├── FolderPath: *v1.JSON
+│   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │       └── Type: *string
+│   │   ├── NullValue: *v1.JSON
+│   │   ├── Parameters: map[string]Object (3 properties)
+│   │   │   ├── DefaultValue: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Schema: *v1.JSON
+│   │   ├── Structure: *v1.JSON
+│   │   └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (14 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Compression: *Object (4 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Level: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *v1.JSON
+    │   ├── Description: *string
+    │   ├── EncodingName: *v1.JSON
+    │   ├── Folder: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── LinkedServiceName: *Object (4 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *string
+    │   ├── Location: *Object (15 properties)
+    │   │   ├── AmazonS3: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureBlobStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureDataLakeStore: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── AzureFileStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FileServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── FtpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── GoogleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── HttpServer: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *string
+    │   │   ├── LakeHouse: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── OracleCloudStorage: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Type: *string
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Sftp: *Object (5 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │       └── Type: *string
+    │   ├── NullValue: *v1.JSON
+    │   ├── Parameters: map[string]Object (3 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 FactoriesGlobalParameter: Resource
 ├── Owner: datafactory/v20180601.Factory
 ├── Spec: Object (6 properties)

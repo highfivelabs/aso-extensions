@@ -6,12 +6,14 @@
 # private endpoint connections; and (f86) triggers, data flows, integration
 # runtimes and change data capture. Owned by ASO's Factory.
 #
-# Not exported: linked services, datasets and pipelines. With patches 0018,
-# 0019 and 0008's digit rule (f84, f86) they generate, but each is one union
-# of every type, and their CRDs are far over what an install can apply
-# (datasets 854 KB and pipelines 3.36 MB of JSON; linked services 2.67 MB of
-# YAML): splitting them into one kind per type is open question 17 in
-# docs/plan.md section 8.
+# Linked services and datasets (f87, f88) are one union each of every type,
+# whose one CRD is far over what an install can apply (linked services 2.67
+# MB of YAML, datasets 854 KB of JSON). Patch 0020 (generator/split-oneof.txt)
+# makes one resource per member of the union, Factories_LinkedService_<Type>
+# and Factories_Dataset_<Type>; the members exported below are the kinds
+# (docs/plan.md section 2, "One kind per member of a union"; §8 Q17, "One
+# kind per type"). The whole unions are not exported. Pipelines are not
+# exported: docs/plan.md §8 Q18.
 typeFilters:
   - action: include
     group: datafactory
@@ -106,6 +108,14 @@ typeTransformers:
       authorization headers may carry a token; a status must not hold them
       (in the spec they are free-form, as Data Factory takes them: give
       credentials in the typed secret properties instead)
+  - group: datafactory
+    version: v20180601
+    name: RestResourceDatasetTypeProperties_STATUS;HttpDatasetTypeProperties_STATUS
+    property: AdditionalHeaders
+    remove: true
+    because: >-
+      a REST or HTTP dataset's additional headers may carry a token, as a
+      linked service's authorization headers may; a status must not hold them
 groupModelConfiguration:
   2018-06-01:
     Factories_ManagedVirtualNetwork:
@@ -173,6 +183,48 @@ groupModelConfiguration:
       $supportedFrom: v0.1.0
     Factories_LinkedService_AzureDatabricks:
       $exportAs: FactoriesLinkedServiceAzureDatabricks
+      $supportedFrom: v0.1.0
+    Factories_Dataset_DelimitedText:
+      $exportAs: FactoriesDatasetDelimitedText
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Parquet:
+      $exportAs: FactoriesDatasetParquet
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Json:
+      $exportAs: FactoriesDatasetJson
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Binary:
+      $exportAs: FactoriesDatasetBinary
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Avro:
+      $exportAs: FactoriesDatasetAvro
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Orc:
+      $exportAs: FactoriesDatasetOrc
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Excel:
+      $exportAs: FactoriesDatasetExcel
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Xml:
+      $exportAs: FactoriesDatasetXml
+      $supportedFrom: v0.1.0
+    Factories_Dataset_AzureSqlTable:
+      $exportAs: FactoriesDatasetAzureSqlTable
+      $supportedFrom: v0.1.0
+    Factories_Dataset_AzureSqlDWTable:
+      $exportAs: FactoriesDatasetAzureSqlDWTable
+      $supportedFrom: v0.1.0
+    Factories_Dataset_CosmosDbSqlApiCollection:
+      $exportAs: FactoriesDatasetCosmosDbSqlApiCollection
+      $supportedFrom: v0.1.0
+    Factories_Dataset_RestResource:
+      $exportAs: FactoriesDatasetRestResource
+      $supportedFrom: v0.1.0
+    Factories_Dataset_HttpFile:
+      $exportAs: FactoriesDatasetHttpFile
+      $supportedFrom: v0.1.0
+    Factories_Dataset_AzureDatabricksDeltaLakeDataset:
+      $exportAs: FactoriesDatasetAzureDatabricksDeltaLakeDataset
       $supportedFrom: v0.1.0
     BlobEventsTriggerTypeProperties:
       Scope:

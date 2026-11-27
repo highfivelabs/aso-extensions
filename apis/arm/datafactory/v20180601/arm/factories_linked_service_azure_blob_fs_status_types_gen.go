@@ -121,15 +121,6 @@ type IntegrationRuntimeReference_STATUS struct {
 	Type *IntegrationRuntimeReferenceType_STATUS `json:"type,omitempty"`
 }
 
-// Definition of a single parameter for an entity.
-type ParameterSpecification_STATUS struct {
-	// DefaultValue: Default value of parameter.
-	DefaultValue *v1.JSON `json:"defaultValue,omitempty"`
-
-	// Type: Parameter type.
-	Type *ParameterType_STATUS `json:"type,omitempty"`
-}
-
 // Credential reference type.
 type CredentialReference_STATUS struct {
 	AdditionalProperties map[string]v1.JSON `json:"additionalProperties,omitempty"`
@@ -149,30 +140,6 @@ const IntegrationRuntimeReferenceType_STATUS_IntegrationRuntimeReference = Integ
 // Mapping from string to IntegrationRuntimeReferenceType_STATUS
 var integrationRuntimeReferenceType_STATUS_Values = map[string]IntegrationRuntimeReferenceType_STATUS{
 	"integrationruntimereference": IntegrationRuntimeReferenceType_STATUS_IntegrationRuntimeReference,
-}
-
-// Parameter type.
-type ParameterType_STATUS string
-
-const (
-	ParameterType_STATUS_Array        = ParameterType_STATUS("Array")
-	ParameterType_STATUS_Bool         = ParameterType_STATUS("Bool")
-	ParameterType_STATUS_Float        = ParameterType_STATUS("Float")
-	ParameterType_STATUS_Int          = ParameterType_STATUS("Int")
-	ParameterType_STATUS_Object       = ParameterType_STATUS("Object")
-	ParameterType_STATUS_SecureString = ParameterType_STATUS("SecureString")
-	ParameterType_STATUS_String       = ParameterType_STATUS("String")
-)
-
-// Mapping from string to ParameterType_STATUS
-var parameterType_STATUS_Values = map[string]ParameterType_STATUS{
-	"array":        ParameterType_STATUS_Array,
-	"bool":         ParameterType_STATUS_Bool,
-	"float":        ParameterType_STATUS_Float,
-	"int":          ParameterType_STATUS_Int,
-	"object":       ParameterType_STATUS_Object,
-	"securestring": ParameterType_STATUS_SecureString,
-	"string":       ParameterType_STATUS_String,
 }
 
 type SecretBase_STATUS struct {

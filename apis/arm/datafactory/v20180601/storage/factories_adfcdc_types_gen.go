@@ -426,24 +426,6 @@ type MapperTable_STATUS struct {
 	Schema                 []MapperTableSchema_STATUS            `json:"schema,omitempty"`
 }
 
-// Storage version of v20180601.LinkedServiceReference
-// Linked service reference type.
-type LinkedServiceReference struct {
-	Parameters    map[string]v1.JSON     `json:"parameters,omitempty"`
-	PropertyBag   genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	ReferenceName *string                `json:"referenceName,omitempty"`
-	Type          *string                `json:"type,omitempty"`
-}
-
-// Storage version of v20180601.LinkedServiceReference_STATUS
-// Linked service reference type.
-type LinkedServiceReference_STATUS struct {
-	Parameters    map[string]v1.JSON     `json:"parameters,omitempty"`
-	PropertyBag   genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	ReferenceName *string                `json:"referenceName,omitempty"`
-	Type          *string                `json:"type,omitempty"`
-}
-
 // Storage version of v20180601.MapperAttributeMappings
 // Attribute mapping details.
 type MapperAttributeMappings struct {

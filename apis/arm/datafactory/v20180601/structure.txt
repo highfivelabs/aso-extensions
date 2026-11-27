@@ -743,6 +743,2912 @@ FactoriesDataflow: Resource
     │       └── "User"
     └── Type: *string
 
+FactoriesDatasetAvro: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (12 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── AvroCompressionCodec: *v1.JSON
+│       ├── AvroCompressionLevel: Validated<*int> (2 rules)
+│       │   ├── Rule 0: Maximum: 9
+│       │   └── Rule 1: Minimum: 1
+│       ├── Description: *string
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Location: *Object (14 properties)
+│       │   ├── AmazonS3: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3Location"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AmazonS3Compatible: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3CompatibleLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AzureBlobFS: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FileSystem: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobFSLocation"
+│       │   ├── AzureBlobStorage: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Container: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobStorageLocation"
+│       │   ├── AzureDataLakeStore: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureDataLakeStoreLocation"
+│       │   ├── AzureFileStorage: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureFileStorageLocation"
+│       │   ├── FileServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FileServerLocation"
+│       │   ├── FtpServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FtpServerLocation"
+│       │   ├── GoogleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "GoogleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── Hdfs: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HdfsLocation"
+│       │   ├── HttpServer: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── RelativeUrl: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HttpServerLocation"
+│       │   ├── LakeHouse: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "LakeHouseLocation"
+│       │   ├── OracleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "OracleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   └── Sftp: *Object (4 properties)
+│       │       ├── AdditionalProperties: map[string]v1.JSON
+│       │       ├── FileName: *v1.JSON
+│       │       ├── FolderPath: *v1.JSON
+│       │       └── Type: *Enum (1 value)
+│       │           └── "SftpLocation"
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "Avro"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (12 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── AvroCompressionCodec: *v1.JSON
+    │   ├── AvroCompressionLevel: *int
+    │   ├── Description: *string
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Location: *Object (14 properties)
+    │   │   ├── AmazonS3: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3Location"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3CompatibleLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobFSLocation"
+    │   │   ├── AzureBlobStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobStorageLocation"
+    │   │   ├── AzureDataLakeStore: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureDataLakeStoreLocation"
+    │   │   ├── AzureFileStorage: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureFileStorageLocation"
+    │   │   ├── FileServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FileServerLocation"
+    │   │   ├── FtpServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FtpServerLocation"
+    │   │   ├── GoogleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "GoogleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HdfsLocation"
+    │   │   ├── HttpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HttpServerLocation"
+    │   │   ├── LakeHouse: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LakeHouseLocation"
+    │   │   ├── OracleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "OracleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   └── Sftp: *Object (4 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       └── Type: *Enum (1 value)
+    │   │           └── "SftpLocation"
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "Avro"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetAzureDatabricksDeltaLakeDataset: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (11 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── Database: *v1.JSON
+│       ├── Description: *string
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       ├── Table: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "AzureDatabricksDeltaLakeDataset"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (11 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Database: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   ├── Table: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "AzureDatabricksDeltaLakeDataset"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetAzureSqlDWTable: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (12 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── Description: *string
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       ├── Table: *v1.JSON
+│       ├── TableName: *v1.JSON
+│       ├── Type: *Enum (1 value)
+│       │   └── "AzureSqlDWTable"
+│       └── TypePropertiesSchema: *v1.JSON
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (12 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Description: *string
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   ├── Table: *v1.JSON
+    │   ├── TableName: *v1.JSON
+    │   ├── Type: *Enum (1 value)
+    │   │   └── "AzureSqlDWTable"
+    │   └── TypePropertiesSchema: *v1.JSON
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetAzureSqlTable: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (12 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── Description: *string
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       ├── Table: *v1.JSON
+│       ├── TableName: *v1.JSON
+│       ├── Type: *Enum (1 value)
+│       │   └── "AzureSqlTable"
+│       └── TypePropertiesSchema: *v1.JSON
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (12 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Description: *string
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   ├── Table: *v1.JSON
+    │   ├── TableName: *v1.JSON
+    │   ├── Type: *Enum (1 value)
+    │   │   └── "AzureSqlTable"
+    │   └── TypePropertiesSchema: *v1.JSON
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetBinary: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (11 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── Compression: *Object (3 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Level: *v1.JSON
+│       │   └── Type: *v1.JSON
+│       ├── Description: *string
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Location: *Object (14 properties)
+│       │   ├── AmazonS3: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3Location"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AmazonS3Compatible: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3CompatibleLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AzureBlobFS: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FileSystem: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobFSLocation"
+│       │   ├── AzureBlobStorage: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Container: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobStorageLocation"
+│       │   ├── AzureDataLakeStore: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureDataLakeStoreLocation"
+│       │   ├── AzureFileStorage: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureFileStorageLocation"
+│       │   ├── FileServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FileServerLocation"
+│       │   ├── FtpServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FtpServerLocation"
+│       │   ├── GoogleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "GoogleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── Hdfs: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HdfsLocation"
+│       │   ├── HttpServer: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── RelativeUrl: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HttpServerLocation"
+│       │   ├── LakeHouse: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "LakeHouseLocation"
+│       │   ├── OracleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "OracleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   └── Sftp: *Object (4 properties)
+│       │       ├── AdditionalProperties: map[string]v1.JSON
+│       │       ├── FileName: *v1.JSON
+│       │       ├── FolderPath: *v1.JSON
+│       │       └── Type: *Enum (1 value)
+│       │           └── "SftpLocation"
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "Binary"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (11 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Compression: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Level: *v1.JSON
+    │   │   └── Type: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Location: *Object (14 properties)
+    │   │   ├── AmazonS3: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3Location"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3CompatibleLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobFSLocation"
+    │   │   ├── AzureBlobStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobStorageLocation"
+    │   │   ├── AzureDataLakeStore: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureDataLakeStoreLocation"
+    │   │   ├── AzureFileStorage: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureFileStorageLocation"
+    │   │   ├── FileServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FileServerLocation"
+    │   │   ├── FtpServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FtpServerLocation"
+    │   │   ├── GoogleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "GoogleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HdfsLocation"
+    │   │   ├── HttpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HttpServerLocation"
+    │   │   ├── LakeHouse: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LakeHouseLocation"
+    │   │   ├── OracleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "OracleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   └── Sftp: *Object (4 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       └── Type: *Enum (1 value)
+    │   │           └── "SftpLocation"
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "Binary"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetCosmosDbSqlApiCollection: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (10 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── CollectionName: *v1.JSON
+│       ├── Description: *string
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "CosmosDbSqlApiCollection"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (10 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── CollectionName: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "CosmosDbSqlApiCollection"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetDelimitedText: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (19 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── ColumnDelimiter: *v1.JSON
+│       ├── CompressionCodec: *v1.JSON
+│       ├── CompressionLevel: *v1.JSON
+│       ├── Description: *string
+│       ├── EncodingName: *v1.JSON
+│       ├── EscapeChar: *v1.JSON
+│       ├── FirstRowAsHeader: *v1.JSON
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Location: *Object (14 properties)
+│       │   ├── AmazonS3: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3Location"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AmazonS3Compatible: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3CompatibleLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AzureBlobFS: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FileSystem: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobFSLocation"
+│       │   ├── AzureBlobStorage: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Container: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobStorageLocation"
+│       │   ├── AzureDataLakeStore: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureDataLakeStoreLocation"
+│       │   ├── AzureFileStorage: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureFileStorageLocation"
+│       │   ├── FileServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FileServerLocation"
+│       │   ├── FtpServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FtpServerLocation"
+│       │   ├── GoogleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "GoogleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── Hdfs: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HdfsLocation"
+│       │   ├── HttpServer: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── RelativeUrl: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HttpServerLocation"
+│       │   ├── LakeHouse: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "LakeHouseLocation"
+│       │   ├── OracleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "OracleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   └── Sftp: *Object (4 properties)
+│       │       ├── AdditionalProperties: map[string]v1.JSON
+│       │       ├── FileName: *v1.JSON
+│       │       ├── FolderPath: *v1.JSON
+│       │       └── Type: *Enum (1 value)
+│       │           └── "SftpLocation"
+│       ├── NullValue: *v1.JSON
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── QuoteChar: *v1.JSON
+│       ├── RowDelimiter: *v1.JSON
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "DelimitedText"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (19 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── ColumnDelimiter: *v1.JSON
+    │   ├── CompressionCodec: *v1.JSON
+    │   ├── CompressionLevel: *v1.JSON
+    │   ├── Description: *string
+    │   ├── EncodingName: *v1.JSON
+    │   ├── EscapeChar: *v1.JSON
+    │   ├── FirstRowAsHeader: *v1.JSON
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Location: *Object (14 properties)
+    │   │   ├── AmazonS3: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3Location"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3CompatibleLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobFSLocation"
+    │   │   ├── AzureBlobStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobStorageLocation"
+    │   │   ├── AzureDataLakeStore: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureDataLakeStoreLocation"
+    │   │   ├── AzureFileStorage: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureFileStorageLocation"
+    │   │   ├── FileServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FileServerLocation"
+    │   │   ├── FtpServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FtpServerLocation"
+    │   │   ├── GoogleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "GoogleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HdfsLocation"
+    │   │   ├── HttpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HttpServerLocation"
+    │   │   ├── LakeHouse: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LakeHouseLocation"
+    │   │   ├── OracleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "OracleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   └── Sftp: *Object (4 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       └── Type: *Enum (1 value)
+    │   │           └── "SftpLocation"
+    │   ├── NullValue: *v1.JSON
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── QuoteChar: *v1.JSON
+    │   ├── RowDelimiter: *v1.JSON
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "DelimitedText"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetExcel: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (16 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── Compression: *Object (3 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Level: *v1.JSON
+│       │   └── Type: *v1.JSON
+│       ├── Description: *string
+│       ├── FirstRowAsHeader: *v1.JSON
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Location: *Object (14 properties)
+│       │   ├── AmazonS3: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3Location"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AmazonS3Compatible: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3CompatibleLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AzureBlobFS: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FileSystem: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobFSLocation"
+│       │   ├── AzureBlobStorage: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Container: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobStorageLocation"
+│       │   ├── AzureDataLakeStore: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureDataLakeStoreLocation"
+│       │   ├── AzureFileStorage: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureFileStorageLocation"
+│       │   ├── FileServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FileServerLocation"
+│       │   ├── FtpServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FtpServerLocation"
+│       │   ├── GoogleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "GoogleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── Hdfs: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HdfsLocation"
+│       │   ├── HttpServer: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── RelativeUrl: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HttpServerLocation"
+│       │   ├── LakeHouse: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "LakeHouseLocation"
+│       │   ├── OracleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "OracleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   └── Sftp: *Object (4 properties)
+│       │       ├── AdditionalProperties: map[string]v1.JSON
+│       │       ├── FileName: *v1.JSON
+│       │       ├── FolderPath: *v1.JSON
+│       │       └── Type: *Enum (1 value)
+│       │           └── "SftpLocation"
+│       ├── NullValue: *v1.JSON
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── Range: *v1.JSON
+│       ├── Schema: *v1.JSON
+│       ├── SheetIndex: *v1.JSON
+│       ├── SheetName: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "Excel"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (16 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Compression: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Level: *v1.JSON
+    │   │   └── Type: *v1.JSON
+    │   ├── Description: *string
+    │   ├── FirstRowAsHeader: *v1.JSON
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Location: *Object (14 properties)
+    │   │   ├── AmazonS3: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3Location"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3CompatibleLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobFSLocation"
+    │   │   ├── AzureBlobStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobStorageLocation"
+    │   │   ├── AzureDataLakeStore: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureDataLakeStoreLocation"
+    │   │   ├── AzureFileStorage: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureFileStorageLocation"
+    │   │   ├── FileServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FileServerLocation"
+    │   │   ├── FtpServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FtpServerLocation"
+    │   │   ├── GoogleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "GoogleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HdfsLocation"
+    │   │   ├── HttpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HttpServerLocation"
+    │   │   ├── LakeHouse: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LakeHouseLocation"
+    │   │   ├── OracleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "OracleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   └── Sftp: *Object (4 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       └── Type: *Enum (1 value)
+    │   │           └── "SftpLocation"
+    │   ├── NullValue: *v1.JSON
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── Range: *v1.JSON
+    │   ├── Schema: *v1.JSON
+    │   ├── SheetIndex: *v1.JSON
+    │   ├── SheetName: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "Excel"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetHttpFile: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (15 properties)
+│       ├── AdditionalHeaders: *v1.JSON
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── Compression: *Object (3 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Level: *v1.JSON
+│       │   └── Type: *v1.JSON
+│       ├── Description: *string
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── Format: *Object (5 properties)
+│       │   ├── Avro: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Deserializer: *v1.JSON
+│       │   │   ├── Serializer: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AvroFormat"
+│       │   ├── Json: *Object (9 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Deserializer: *v1.JSON
+│       │   │   ├── EncodingName: *v1.JSON
+│       │   │   ├── FilePattern: *v1.JSON
+│       │   │   ├── JsonNodeReference: *v1.JSON
+│       │   │   ├── JsonPathDefinition: *v1.JSON
+│       │   │   ├── NestingSeparator: *v1.JSON
+│       │   │   ├── Serializer: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "JsonFormat"
+│       │   ├── Orc: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Deserializer: *v1.JSON
+│       │   │   ├── Serializer: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "OrcFormat"
+│       │   ├── Parquet: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Deserializer: *v1.JSON
+│       │   │   ├── Serializer: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "ParquetFormat"
+│       │   └── Text: *Object (13 properties)
+│       │       ├── AdditionalProperties: map[string]v1.JSON
+│       │       ├── ColumnDelimiter: *v1.JSON
+│       │       ├── Deserializer: *v1.JSON
+│       │       ├── EncodingName: *v1.JSON
+│       │       ├── EscapeChar: *v1.JSON
+│       │       ├── FirstRowAsHeader: *v1.JSON
+│       │       ├── NullValue: *v1.JSON
+│       │       ├── QuoteChar: *v1.JSON
+│       │       ├── RowDelimiter: *v1.JSON
+│       │       ├── Serializer: *v1.JSON
+│       │       ├── SkipLineCount: *v1.JSON
+│       │       ├── TreatEmptyAsNull: *v1.JSON
+│       │       └── Type: *Enum (1 value)
+│       │           └── "TextFormat"
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── RelativeUrl: *v1.JSON
+│       ├── RequestBody: *v1.JSON
+│       ├── RequestMethod: *v1.JSON
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "HttpFile"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (14 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Compression: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Level: *v1.JSON
+    │   │   └── Type: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── Format: *Object (5 properties)
+    │   │   ├── Avro: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Deserializer: *v1.JSON
+    │   │   │   ├── Serializer: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AvroFormat"
+    │   │   ├── Json: *Object (9 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Deserializer: *v1.JSON
+    │   │   │   ├── EncodingName: *v1.JSON
+    │   │   │   ├── FilePattern: *v1.JSON
+    │   │   │   ├── JsonNodeReference: *v1.JSON
+    │   │   │   ├── JsonPathDefinition: *v1.JSON
+    │   │   │   ├── NestingSeparator: *v1.JSON
+    │   │   │   ├── Serializer: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "JsonFormat"
+    │   │   ├── Orc: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Deserializer: *v1.JSON
+    │   │   │   ├── Serializer: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "OrcFormat"
+    │   │   ├── Parquet: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Deserializer: *v1.JSON
+    │   │   │   ├── Serializer: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "ParquetFormat"
+    │   │   └── Text: *Object (13 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── ColumnDelimiter: *v1.JSON
+    │   │       ├── Deserializer: *v1.JSON
+    │   │       ├── EncodingName: *v1.JSON
+    │   │       ├── EscapeChar: *v1.JSON
+    │   │       ├── FirstRowAsHeader: *v1.JSON
+    │   │       ├── NullValue: *v1.JSON
+    │   │       ├── QuoteChar: *v1.JSON
+    │   │       ├── RowDelimiter: *v1.JSON
+    │   │       ├── Serializer: *v1.JSON
+    │   │       ├── SkipLineCount: *v1.JSON
+    │   │       ├── TreatEmptyAsNull: *v1.JSON
+    │   │       └── Type: *Enum (1 value)
+    │   │           └── "TextFormat"
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── RelativeUrl: *v1.JSON
+    │   ├── RequestBody: *v1.JSON
+    │   ├── RequestMethod: *v1.JSON
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "HttpFile"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetJson: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (12 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── Compression: *Object (3 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Level: *v1.JSON
+│       │   └── Type: *v1.JSON
+│       ├── Description: *string
+│       ├── EncodingName: *v1.JSON
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Location: *Object (14 properties)
+│       │   ├── AmazonS3: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3Location"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AmazonS3Compatible: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3CompatibleLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AzureBlobFS: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FileSystem: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobFSLocation"
+│       │   ├── AzureBlobStorage: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Container: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobStorageLocation"
+│       │   ├── AzureDataLakeStore: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureDataLakeStoreLocation"
+│       │   ├── AzureFileStorage: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureFileStorageLocation"
+│       │   ├── FileServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FileServerLocation"
+│       │   ├── FtpServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FtpServerLocation"
+│       │   ├── GoogleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "GoogleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── Hdfs: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HdfsLocation"
+│       │   ├── HttpServer: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── RelativeUrl: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HttpServerLocation"
+│       │   ├── LakeHouse: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "LakeHouseLocation"
+│       │   ├── OracleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "OracleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   └── Sftp: *Object (4 properties)
+│       │       ├── AdditionalProperties: map[string]v1.JSON
+│       │       ├── FileName: *v1.JSON
+│       │       ├── FolderPath: *v1.JSON
+│       │       └── Type: *Enum (1 value)
+│       │           └── "SftpLocation"
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "Json"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (12 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Compression: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Level: *v1.JSON
+    │   │   └── Type: *v1.JSON
+    │   ├── Description: *string
+    │   ├── EncodingName: *v1.JSON
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Location: *Object (14 properties)
+    │   │   ├── AmazonS3: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3Location"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3CompatibleLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobFSLocation"
+    │   │   ├── AzureBlobStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobStorageLocation"
+    │   │   ├── AzureDataLakeStore: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureDataLakeStoreLocation"
+    │   │   ├── AzureFileStorage: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureFileStorageLocation"
+    │   │   ├── FileServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FileServerLocation"
+    │   │   ├── FtpServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FtpServerLocation"
+    │   │   ├── GoogleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "GoogleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HdfsLocation"
+    │   │   ├── HttpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HttpServerLocation"
+    │   │   ├── LakeHouse: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LakeHouseLocation"
+    │   │   ├── OracleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "OracleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   └── Sftp: *Object (4 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       └── Type: *Enum (1 value)
+    │   │           └── "SftpLocation"
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "Json"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetOrc: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (11 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── Description: *string
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Location: *Object (14 properties)
+│       │   ├── AmazonS3: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3Location"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AmazonS3Compatible: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3CompatibleLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AzureBlobFS: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FileSystem: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobFSLocation"
+│       │   ├── AzureBlobStorage: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Container: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobStorageLocation"
+│       │   ├── AzureDataLakeStore: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureDataLakeStoreLocation"
+│       │   ├── AzureFileStorage: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureFileStorageLocation"
+│       │   ├── FileServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FileServerLocation"
+│       │   ├── FtpServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FtpServerLocation"
+│       │   ├── GoogleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "GoogleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── Hdfs: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HdfsLocation"
+│       │   ├── HttpServer: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── RelativeUrl: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HttpServerLocation"
+│       │   ├── LakeHouse: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "LakeHouseLocation"
+│       │   ├── OracleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "OracleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   └── Sftp: *Object (4 properties)
+│       │       ├── AdditionalProperties: map[string]v1.JSON
+│       │       ├── FileName: *v1.JSON
+│       │       ├── FolderPath: *v1.JSON
+│       │       └── Type: *Enum (1 value)
+│       │           └── "SftpLocation"
+│       ├── OrcCompressionCodec: *v1.JSON
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "Orc"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (11 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Description: *string
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Location: *Object (14 properties)
+    │   │   ├── AmazonS3: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3Location"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3CompatibleLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobFSLocation"
+    │   │   ├── AzureBlobStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobStorageLocation"
+    │   │   ├── AzureDataLakeStore: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureDataLakeStoreLocation"
+    │   │   ├── AzureFileStorage: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureFileStorageLocation"
+    │   │   ├── FileServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FileServerLocation"
+    │   │   ├── FtpServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FtpServerLocation"
+    │   │   ├── GoogleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "GoogleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HdfsLocation"
+    │   │   ├── HttpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HttpServerLocation"
+    │   │   ├── LakeHouse: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LakeHouseLocation"
+    │   │   ├── OracleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "OracleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   └── Sftp: *Object (4 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       └── Type: *Enum (1 value)
+    │   │           └── "SftpLocation"
+    │   ├── OrcCompressionCodec: *v1.JSON
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "Orc"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetParquet: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (11 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── CompressionCodec: *v1.JSON
+│       ├── Description: *string
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Location: *Object (14 properties)
+│       │   ├── AmazonS3: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3Location"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AmazonS3Compatible: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3CompatibleLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AzureBlobFS: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FileSystem: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobFSLocation"
+│       │   ├── AzureBlobStorage: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Container: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobStorageLocation"
+│       │   ├── AzureDataLakeStore: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureDataLakeStoreLocation"
+│       │   ├── AzureFileStorage: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureFileStorageLocation"
+│       │   ├── FileServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FileServerLocation"
+│       │   ├── FtpServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FtpServerLocation"
+│       │   ├── GoogleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "GoogleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── Hdfs: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HdfsLocation"
+│       │   ├── HttpServer: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── RelativeUrl: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HttpServerLocation"
+│       │   ├── LakeHouse: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "LakeHouseLocation"
+│       │   ├── OracleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "OracleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   └── Sftp: *Object (4 properties)
+│       │       ├── AdditionalProperties: map[string]v1.JSON
+│       │       ├── FileName: *v1.JSON
+│       │       ├── FolderPath: *v1.JSON
+│       │       └── Type: *Enum (1 value)
+│       │           └── "SftpLocation"
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "Parquet"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (11 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── CompressionCodec: *v1.JSON
+    │   ├── Description: *string
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Location: *Object (14 properties)
+    │   │   ├── AmazonS3: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3Location"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3CompatibleLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobFSLocation"
+    │   │   ├── AzureBlobStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobStorageLocation"
+    │   │   ├── AzureDataLakeStore: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureDataLakeStoreLocation"
+    │   │   ├── AzureFileStorage: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureFileStorageLocation"
+    │   │   ├── FileServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FileServerLocation"
+    │   │   ├── FtpServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FtpServerLocation"
+    │   │   ├── GoogleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "GoogleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HdfsLocation"
+    │   │   ├── HttpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HttpServerLocation"
+    │   │   ├── LakeHouse: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LakeHouseLocation"
+    │   │   ├── OracleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "OracleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   └── Sftp: *Object (4 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       └── Type: *Enum (1 value)
+    │   │           └── "SftpLocation"
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "Parquet"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetRestResource: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (14 properties)
+│       ├── AdditionalHeaders: map[string]v1.JSON
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── Description: *string
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── PaginationRules: map[string]v1.JSON
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── RelativeUrl: *v1.JSON
+│       ├── RequestBody: *v1.JSON
+│       ├── RequestMethod: *v1.JSON
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "RestResource"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (13 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Description: *string
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── PaginationRules: map[string]v1.JSON
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── RelativeUrl: *v1.JSON
+    │   ├── RequestBody: *v1.JSON
+    │   ├── RequestMethod: *v1.JSON
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "RestResource"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesDatasetXml: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (13 properties)
+│       ├── AdditionalProperties: map[string]v1.JSON
+│       ├── Annotations: v1.JSON[]
+│       ├── Compression: *Object (3 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Level: *v1.JSON
+│       │   └── Type: *v1.JSON
+│       ├── Description: *string
+│       ├── EncodingName: *v1.JSON
+│       ├── Folder: *Object (1 property)
+│       │   └── Name: *string
+│       ├── LinkedServiceName: *Object (3 properties)
+│       │   ├── Parameters: map[string]v1.JSON
+│       │   ├── ReferenceName: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "LinkedServiceReference"
+│       ├── Location: *Object (14 properties)
+│       │   ├── AmazonS3: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3Location"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AmazonS3Compatible: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "AmazonS3CompatibleLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── AzureBlobFS: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FileSystem: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobFSLocation"
+│       │   ├── AzureBlobStorage: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── Container: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureBlobStorageLocation"
+│       │   ├── AzureDataLakeStore: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureDataLakeStoreLocation"
+│       │   ├── AzureFileStorage: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "AzureFileStorageLocation"
+│       │   ├── FileServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FileServerLocation"
+│       │   ├── FtpServer: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "FtpServerLocation"
+│       │   ├── GoogleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "GoogleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   ├── Hdfs: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HdfsLocation"
+│       │   ├── HttpServer: *Object (5 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── RelativeUrl: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "HttpServerLocation"
+│       │   ├── LakeHouse: *Object (4 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "LakeHouseLocation"
+│       │   ├── OracleCloudStorage: *Object (6 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── BucketName: *v1.JSON
+│       │   │   ├── FileName: *v1.JSON
+│       │   │   ├── FolderPath: *v1.JSON
+│       │   │   ├── Type: *Enum (1 value)
+│       │   │   │   └── "OracleCloudStorageLocation"
+│       │   │   └── Version: *v1.JSON
+│       │   └── Sftp: *Object (4 properties)
+│       │       ├── AdditionalProperties: map[string]v1.JSON
+│       │       ├── FileName: *v1.JSON
+│       │       ├── FolderPath: *v1.JSON
+│       │       └── Type: *Enum (1 value)
+│       │           └── "SftpLocation"
+│       ├── NullValue: *v1.JSON
+│       ├── Parameters: map[string]Object (2 properties)
+│       │   ├── DefaultValue: *v1.JSON
+│       │   └── Type: *Enum (7 values)
+│       │       ├── "Array"
+│       │       ├── "Bool"
+│       │       ├── "Float"
+│       │       ├── "Int"
+│       │       ├── "Object"
+│       │       ├── "SecureString"
+│       │       └── "String"
+│       ├── Schema: *v1.JSON
+│       ├── Structure: *v1.JSON
+│       └── Type: *Enum (1 value)
+│           └── "Xml"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (13 properties)
+    │   ├── AdditionalProperties: map[string]v1.JSON
+    │   ├── Annotations: v1.JSON[]
+    │   ├── Compression: *Object (3 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Level: *v1.JSON
+    │   │   └── Type: *v1.JSON
+    │   ├── Description: *string
+    │   ├── EncodingName: *v1.JSON
+    │   ├── Folder: *Object (1 property)
+    │   │   └── Name: *string
+    │   ├── LinkedServiceName: *Object (3 properties)
+    │   │   ├── Parameters: map[string]v1.JSON
+    │   │   ├── ReferenceName: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "LinkedServiceReference"
+    │   ├── Location: *Object (14 properties)
+    │   │   ├── AmazonS3: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3Location"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AmazonS3Compatible: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "AmazonS3CompatibleLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── AzureBlobFS: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FileSystem: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobFSLocation"
+    │   │   ├── AzureBlobStorage: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── Container: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureBlobStorageLocation"
+    │   │   ├── AzureDataLakeStore: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureDataLakeStoreLocation"
+    │   │   ├── AzureFileStorage: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AzureFileStorageLocation"
+    │   │   ├── FileServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FileServerLocation"
+    │   │   ├── FtpServer: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "FtpServerLocation"
+    │   │   ├── GoogleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "GoogleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   ├── Hdfs: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HdfsLocation"
+    │   │   ├── HttpServer: *Object (5 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── RelativeUrl: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "HttpServerLocation"
+    │   │   ├── LakeHouse: *Object (4 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LakeHouseLocation"
+    │   │   ├── OracleCloudStorage: *Object (6 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── BucketName: *v1.JSON
+    │   │   │   ├── FileName: *v1.JSON
+    │   │   │   ├── FolderPath: *v1.JSON
+    │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   └── "OracleCloudStorageLocation"
+    │   │   │   └── Version: *v1.JSON
+    │   │   └── Sftp: *Object (4 properties)
+    │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │       ├── FileName: *v1.JSON
+    │   │       ├── FolderPath: *v1.JSON
+    │   │       └── Type: *Enum (1 value)
+    │   │           └── "SftpLocation"
+    │   ├── NullValue: *v1.JSON
+    │   ├── Parameters: map[string]Object (2 properties)
+    │   │   ├── DefaultValue: *v1.JSON
+    │   │   └── Type: *Enum (7 values)
+    │   │       ├── "Array"
+    │   │       ├── "Bool"
+    │   │       ├── "Float"
+    │   │       ├── "Int"
+    │   │       ├── "Object"
+    │   │       ├── "SecureString"
+    │   │       └── "String"
+    │   ├── Schema: *v1.JSON
+    │   ├── Structure: *v1.JSON
+    │   └── Type: *Enum (1 value)
+    │       └── "Xml"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 FactoriesGlobalParameter: Resource
 ├── Owner: Factory
 ├── Spec: Object (4 properties)

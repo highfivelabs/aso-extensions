@@ -8,3 +8,4 @@
 # whose spec holds that member only; generator/azure-arm/<group>.yaml exports
 # each member wanted by that name ($exportAs).
 datafactory/Factories_LinkedService.Properties
+datafactory/Factories_Dataset.Properties

@@ -257,65 +257,6 @@ func FactoriesAdfcdc_SpecGenerator() *rapid.Generator[FactoriesAdfcdc_Spec] {
 	return factoriesAdfcdc_SpecGenerator
 }
 
-func Test_LinkedServiceReference_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForLinkedServiceReference)
-}
-
-// RunJSONSerializationTestForLinkedServiceReference runs a test to see if a specific instance of LinkedServiceReference round trips to JSON and back losslessly
-func RunJSONSerializationTestForLinkedServiceReference(t *rapid.T) {
-	subject := LinkedServiceReferenceGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual LinkedServiceReference
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of LinkedServiceReference instances for property testing - lazily instantiated by
-// LinkedServiceReferenceGenerator()
-var linkedServiceReferenceGenerator *rapid.Generator[LinkedServiceReference]
-
-// LinkedServiceReferenceGenerator returns a generator of LinkedServiceReference instances for property testing.
-func LinkedServiceReferenceGenerator() *rapid.Generator[LinkedServiceReference] {
-	if linkedServiceReferenceGenerator != nil {
-		return linkedServiceReferenceGenerator
-	}
-
-	referenceName := rapid.Ptr(rapid.String(), true)
-	typeVar := rapid.Ptr(rapid.SampledFrom([]Type{Type_LinkedServiceReference}), true)
-
-	linkedServiceReferenceGenerator = rapid.Custom(func(t *rapid.T) LinkedServiceReference {
-		var result LinkedServiceReference
-		result.ReferenceName = referenceName.Draw(t, "ReferenceName")
-		result.Type = typeVar.Draw(t, "Type")
-		return result
-	})
-
-	return linkedServiceReferenceGenerator
-}
-
 func Test_MapperAttributeMapping_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 

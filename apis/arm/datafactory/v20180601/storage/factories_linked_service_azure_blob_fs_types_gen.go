@@ -331,22 +331,6 @@ type IntegrationRuntimeReference_STATUS struct {
 	Type          *string                `json:"type,omitempty"`
 }
 
-// Storage version of v20180601.ParameterSpecification
-// Definition of a single parameter for an entity.
-type ParameterSpecification struct {
-	DefaultValue *v1.JSON               `json:"defaultValue,omitempty"`
-	PropertyBag  genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Type         *string                `json:"type,omitempty"`
-}
-
-// Storage version of v20180601.ParameterSpecification_STATUS
-// Definition of a single parameter for an entity.
-type ParameterSpecification_STATUS struct {
-	DefaultValue *v1.JSON               `json:"defaultValue,omitempty"`
-	PropertyBag  genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Type         *string                `json:"type,omitempty"`
-}
-
 // Storage version of v20180601.SecretBase
 type SecretBase struct {
 	AzureKeyVaultSecret *AzureKeyVaultSecretReference `json:"azureKeyVaultSecret,omitempty"`

@@ -134,3 +134,35 @@ func TestDataFactoryLinkedServices(t *testing.T) {
 		t.Errorf("the fake did not keep the secure string: %v", r)
 	}
 }
+
+// A dataset names a linked service that exists and is of a type it reads:
+// a table dataset its store, a file format dataset its location's store.
+func TestDataFactoryDatasets(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/adf"
+	factory := rg + "/providers/Microsoft.DataFactory/factories/etl"
+	for _, id := range []string{rg, factory} {
+		a.AddResource(id)
+	}
+	put := func(what, id, props string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, id, `{"properties":`+props+`}`)
+		expect(t, what, code, resp, want)
+	}
+	put("a SQL linked service", factory+"/linkedservices/sql", `{"type":"AzureSqlDatabase","typeProperties":{}}`, http.StatusCreated)
+	put("a lake linked service", factory+"/linkedservices/lake", `{"type":"AzureBlobFS","typeProperties":{"url":"https://lake.dfs.core.windows.net"}}`, http.StatusCreated)
+	table := func(ls string) string {
+		return `{"type":"AzureSqlTable","linkedServiceName":{"type":"LinkedServiceReference","referenceName":"` + ls + `"},"typeProperties":{"table":"orders"}}`
+	}
+	put("a table of a missing linked service", factory+"/datasets/orders", table("warehouse"), http.StatusBadRequest)
+	put("a table of a lake", factory+"/datasets/orders", table("lake"), http.StatusBadRequest)
+	put("a table of SQL", factory+"/datasets/orders", table("sql"), http.StatusCreated)
+	csv := func(location string) string {
+		return `{"type":"DelimitedText","linkedServiceName":{"type":"LinkedServiceReference","referenceName":"lake"},` +
+			`"typeProperties":{"location":{"type":"` + location + `","fileSystem":"raw"},"columnDelimiter":","}}`
+	}
+	put("a lake file in a blob location", factory+"/datasets/raw", csv("AzureBlobStorageLocation"), http.StatusBadRequest)
+	put("a lake file", factory+"/datasets/raw", csv("AzureBlobFSLocation"), http.StatusCreated)
+	put("a parameterized linked service", factory+"/datasets/any",
+		`{"type":"Json","linkedServiceName":{"type":"LinkedServiceReference","referenceName":"@{dataset().ls}"}}`, http.StatusCreated)
+}

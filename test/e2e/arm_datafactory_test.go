@@ -445,3 +445,160 @@ func TestDataFactoryLinkedServices(t *testing.T) {
 		}
 	}
 }
+
+// The dataset kinds, one kind per dataset type (docs/plan.md f88), on ASO's
+// factory by name, over the linked service kinds of f87: delimited text,
+// Parquet, JSON, Avro, ORC, binary, Excel and XML files in a Data Lake Gen2
+// file system; a SQL Database table, a Synapse dedicated pool table, a
+// Cosmos DB collection, a REST resource and an HTTP file. A table dataset
+// naming a linked service of another type is refused (the fake's rule),
+// then fixed by a change; the location, the table and the delimiter reach
+// the fake as Data Factory's JSON has them. Deleted, all go.
+func TestDataFactoryDatasets(t *testing.T) {
+	ctx := context.Background()
+	ns := namespace(t, "adfds")
+	strictCredential(t, ns, clientA)
+	trustNamespace(ns)
+	rgID := "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"
+	factoryID := rgID + "/providers/Microsoft.DataFactory/factories/etl"
+	for _, id := range []string{rgID, factoryID} {
+		armFake.AddResource(id)
+	}
+	resourceGroup(t, ns, "rg", ns+"-rg")
+	factory := &asodatafactory.Factory{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "etl"}}
+	factory.Spec.AzureName, factory.Spec.Location = "etl", ptr("westus")
+	factory.Spec.Owner = &genruntime.KnownResourceReference{Name: "rg"}
+	asoStandIn(t, factory, factoryID)
+	onFactory := &genruntime.KnownResourceReference{Name: "etl"}
+	meta := func(name string) metav1.ObjectMeta { return metav1.ObjectMeta{Namespace: ns, Name: name} }
+	js := func(s string) *v1.JSON { return &v1.JSON{Raw: []byte(s)} }
+	ls := func(name string) *datafactory.LinkedServiceReference {
+		return &datafactory.LinkedServiceReference{Type: ptr(datafactory.Type_LinkedServiceReference), ReferenceName: ptr(name)}
+	}
+
+	// The linked services the datasets read (f87's kinds; no secrets needed here).
+	stores := []conditioned{
+		&datafactory.FactoriesLinkedServiceAzureBlobFS{ObjectMeta: meta("lake"), Spec: datafactory.FactoriesLinkedServiceAzureBlobFS_Spec{
+			Owner: onFactory, Properties: &datafactory.AzureBlobFSLinkedService{Type: ptr(datafactory.AzureBlobFSLinkedService_Type_AzureBlobFS),
+				Url: js(`"https://lake.dfs.core.windows.net"`)}}},
+		&datafactory.FactoriesLinkedServiceAzureSqlDatabase{ObjectMeta: meta("sql"), Spec: datafactory.FactoriesLinkedServiceAzureSqlDatabase_Spec{
+			Owner: onFactory, Properties: &datafactory.AzureSqlDatabaseLinkedService{Type: ptr(datafactory.AzureSqlDatabaseLinkedService_Type_AzureSqlDatabase),
+				Server: js(`"etl.database.windows.net"`), Database: js(`"orders"`)}}},
+		&datafactory.FactoriesLinkedServiceAzureSqlDW{ObjectMeta: meta("dw"), Spec: datafactory.FactoriesLinkedServiceAzureSqlDW_Spec{
+			Owner: onFactory, Properties: &datafactory.AzureSqlDWLinkedService{Type: ptr(datafactory.AzureSqlDWLinkedService_Type_AzureSqlDW),
+				Server: js(`"etl.sql.azuresynapse.net"`), Database: js(`"dw"`)}}},
+		&datafactory.FactoriesLinkedServiceCosmosDb{ObjectMeta: meta("cosmos"), Spec: datafactory.FactoriesLinkedServiceCosmosDb_Spec{
+			Owner: onFactory, Properties: &datafactory.CosmosDbLinkedService{Type: ptr(datafactory.CosmosDbLinkedService_Type_CosmosDb),
+				AccountEndpoint: js(`"https://etl.documents.azure.com:443/"`), Database: js(`"orders"`)}}},
+		&datafactory.FactoriesLinkedServiceRestService{ObjectMeta: meta("rest"), Spec: datafactory.FactoriesLinkedServiceRestService_Spec{
+			Owner: onFactory, Properties: &datafactory.RestServiceLinkedService{Type: ptr(datafactory.RestServiceLinkedService_Type_RestService),
+				Url: js(`"https://api.example.com/v1"`), AuthenticationType: ptr(datafactory.RestServiceAuthenticationType_Anonymous)}}},
+		&datafactory.FactoriesLinkedServiceHttpServer{ObjectMeta: meta("files"), Spec: datafactory.FactoriesLinkedServiceHttpServer_Spec{
+			Owner: onFactory, Properties: &datafactory.HttpLinkedService{Type: ptr(datafactory.HttpLinkedService_Type_HttpServer),
+				Url: js(`"https://files.example.com"`)}}},
+	}
+	for _, o := range stores {
+		if err := k8s.Create(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, o := range stores {
+		eventually(t, timeout, o.GetName()+" Ready", ready(o))
+	}
+
+	inLake := func(file string) *datafactory.DatasetLocation {
+		return &datafactory.DatasetLocation{AzureBlobFS: &datafactory.AzureBlobFSLocation{
+			Type:       ptr(datafactory.AzureBlobFSLocation_Type_AzureBlobFSLocation),
+			FileSystem: js(`"raw"`), FolderPath: js(`"orders"`), FileName: js(`"` + file + `"`)}}
+	}
+	csv := &datafactory.FactoriesDatasetDelimitedText{ObjectMeta: meta("csv"), Spec: datafactory.FactoriesDatasetDelimitedText_Spec{
+		Owner: onFactory, Properties: &datafactory.DelimitedTextDataset{Type: ptr(datafactory.DelimitedTextDataset_Type_DelimitedText),
+			LinkedServiceName: ls("lake"), Location: inLake("orders.csv"), ColumnDelimiter: js(`","`), FirstRowAsHeader: js(`true`)}}}
+	parquet := &datafactory.FactoriesDatasetParquet{ObjectMeta: meta("parquet"), Spec: datafactory.FactoriesDatasetParquet_Spec{
+		Owner: onFactory, Properties: &datafactory.ParquetDataset{Type: ptr(datafactory.ParquetDataset_Type_Parquet),
+			LinkedServiceName: ls("lake"), Location: inLake("orders.parquet"), CompressionCodec: js(`"snappy"`)}}}
+	jsonFile := &datafactory.FactoriesDatasetJson{ObjectMeta: meta("json"), Spec: datafactory.FactoriesDatasetJson_Spec{
+		Owner: onFactory, Properties: &datafactory.JsonDataset{Type: ptr(datafactory.JsonDataset_Type_Json),
+			LinkedServiceName: ls("lake"), Location: inLake("orders.json")}}}
+	avro := &datafactory.FactoriesDatasetAvro{ObjectMeta: meta("avro"), Spec: datafactory.FactoriesDatasetAvro_Spec{
+		Owner: onFactory, Properties: &datafactory.AvroDataset{Type: ptr(datafactory.AvroDataset_Type_Avro),
+			LinkedServiceName: ls("lake"), Location: inLake("orders.avro")}}}
+	orc := &datafactory.FactoriesDatasetOrc{ObjectMeta: meta("orc"), Spec: datafactory.FactoriesDatasetOrc_Spec{
+		Owner: onFactory, Properties: &datafactory.OrcDataset{Type: ptr(datafactory.OrcDataset_Type_Orc),
+			LinkedServiceName: ls("lake"), Location: inLake("orders.orc")}}}
+	binary := &datafactory.FactoriesDatasetBinary{ObjectMeta: meta("binary"), Spec: datafactory.FactoriesDatasetBinary_Spec{
+		Owner: onFactory, Properties: &datafactory.BinaryDataset{Type: ptr(datafactory.BinaryDataset_Type_Binary),
+			LinkedServiceName: ls("lake"), Location: inLake("orders.bin")}}}
+	excel := &datafactory.FactoriesDatasetExcel{ObjectMeta: meta("excel"), Spec: datafactory.FactoriesDatasetExcel_Spec{
+		Owner: onFactory, Properties: &datafactory.ExcelDataset{Type: ptr(datafactory.ExcelDataset_Type_Excel),
+			LinkedServiceName: ls("lake"), Location: inLake("orders.xlsx"), SheetName: js(`"Sheet1"`)}}}
+	xml := &datafactory.FactoriesDatasetXml{ObjectMeta: meta("xml"), Spec: datafactory.FactoriesDatasetXml_Spec{
+		Owner: onFactory, Properties: &datafactory.XmlDataset{Type: ptr(datafactory.XmlDataset_Type_Xml),
+			LinkedServiceName: ls("lake"), Location: inLake("orders.xml")}}}
+	table := &datafactory.FactoriesDatasetAzureSqlTable{ObjectMeta: meta("table"), Spec: datafactory.FactoriesDatasetAzureSqlTable_Spec{
+		Owner: onFactory, Properties: &datafactory.AzureSqlTableDataset{Type: ptr(datafactory.AzureSqlTableDataset_Type_AzureSqlTable),
+			LinkedServiceName: ls("lake"), TypePropertiesSchema: js(`"dbo"`), Table: js(`"orders"`)}}}
+	dwTable := &datafactory.FactoriesDatasetAzureSqlDWTable{ObjectMeta: meta("dwtable"), Spec: datafactory.FactoriesDatasetAzureSqlDWTable_Spec{
+		Owner: onFactory, Properties: &datafactory.AzureSqlDWTableDataset{Type: ptr(datafactory.AzureSqlDWTableDataset_Type_AzureSqlDWTable),
+			LinkedServiceName: ls("dw"), Table: js(`"facts"`)}}}
+	collection := &datafactory.FactoriesDatasetCosmosDbSqlApiCollection{ObjectMeta: meta("collection"), Spec: datafactory.FactoriesDatasetCosmosDbSqlApiCollection_Spec{
+		Owner: onFactory, Properties: &datafactory.CosmosDbSqlApiCollectionDataset{Type: ptr(datafactory.CosmosDbSqlApiCollectionDataset_Type_CosmosDbSqlApiCollection),
+			LinkedServiceName: ls("cosmos"), CollectionName: js(`"orders"`)}}}
+	resource := &datafactory.FactoriesDatasetRestResource{ObjectMeta: meta("resource"), Spec: datafactory.FactoriesDatasetRestResource_Spec{
+		Owner: onFactory, Properties: &datafactory.RestResourceDataset{Type: ptr(datafactory.RestResourceDataset_Type_RestResource),
+			LinkedServiceName: ls("rest"), RelativeUrl: js(`"orders"`), RequestMethod: js(`"GET"`)}}}
+	httpFile := &datafactory.FactoriesDatasetHttpFile{ObjectMeta: meta("download"), Spec: datafactory.FactoriesDatasetHttpFile_Spec{
+		Owner: onFactory, Properties: &datafactory.HttpDataset{Type: ptr(datafactory.HttpDataset_Type_HttpFile),
+			LinkedServiceName: ls("files"), RelativeUrl: js(`"orders.csv"`)}}}
+	objs := []conditioned{csv, parquet, jsonFile, avro, orc, binary, excel, xml, table, dwTable, collection, resource, httpFile}
+	for _, o := range objs {
+		if err := k8s.Create(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, o := range objs {
+		if o != table {
+			eventually(t, timeout, o.GetName()+" Ready", ready(o))
+		}
+	}
+	eventually(t, timeout, "a SQL table of a lake refused", notReadyWith(table, "needs a AzureSqlDatabase linked service"))
+	if err := change(t, table, func(d *datafactory.FactoriesDatasetAzureSqlTable) {
+		d.Spec.Properties.LinkedServiceName.ReferenceName = ptr("sql")
+	}); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the SQL table Ready after the change", ready(table))
+
+	expectResource(t, factoryID+"/datasets/csv", func(r map[string]any) error {
+		p := properties(r)
+		tp, _ := p["typeProperties"].(map[string]any)
+		loc, _ := tp["location"].(map[string]any)
+		if p["type"] != "DelimitedText" || tp["columnDelimiter"] != "," || loc["type"] != "AzureBlobFSLocation" || loc["fileSystem"] != "raw" ||
+			!strings.Contains(fmt.Sprint(p["linkedServiceName"]), "lake") {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	expectResource(t, factoryID+"/datasets/table", func(r map[string]any) error {
+		p := properties(r)
+		tp, _ := p["typeProperties"].(map[string]any)
+		if p["type"] != "AzureSqlTable" || tp["table"] != "orders" || tp["schema"] != "dbo" || !strings.Contains(fmt.Sprint(p["linkedServiceName"]), "sql") {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+
+	for _, o := range append(objs, stores...) {
+		if err := k8s.Delete(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, o := range append(objs, stores...) {
+		eventually(t, timeout, o.GetName()+" gone", gone(o))
+	}
+	for _, o := range objs {
+		if armFake.HasResource(factoryID + "/datasets/" + o.GetName()) {
+			t.Errorf("dataset %s is still in the fake", o.GetName())
+		}
+	}
+}

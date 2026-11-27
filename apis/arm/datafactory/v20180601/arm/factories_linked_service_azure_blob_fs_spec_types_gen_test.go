@@ -323,63 +323,6 @@ func IntegrationRuntimeReferenceGenerator() *rapid.Generator[IntegrationRuntimeR
 	return integrationRuntimeReferenceGenerator
 }
 
-func Test_ParameterSpecification_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForParameterSpecification)
-}
-
-// RunJSONSerializationTestForParameterSpecification runs a test to see if a specific instance of ParameterSpecification round trips to JSON and back losslessly
-func RunJSONSerializationTestForParameterSpecification(t *rapid.T) {
-	subject := ParameterSpecificationGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual ParameterSpecification
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of ParameterSpecification instances for property testing - lazily instantiated by
-// ParameterSpecificationGenerator()
-var parameterSpecificationGenerator *rapid.Generator[ParameterSpecification]
-
-// ParameterSpecificationGenerator returns a generator of ParameterSpecification instances for property testing.
-func ParameterSpecificationGenerator() *rapid.Generator[ParameterSpecification] {
-	if parameterSpecificationGenerator != nil {
-		return parameterSpecificationGenerator
-	}
-
-	typeVar := rapid.Ptr(rapid.SampledFrom([]ParameterType{ParameterType_Array, ParameterType_Bool, ParameterType_Float, ParameterType_Int, ParameterType_Object, ParameterType_SecureString, ParameterType_String}), true)
-
-	parameterSpecificationGenerator = rapid.Custom(func(t *rapid.T) ParameterSpecification {
-		var result ParameterSpecification
-		result.Type = typeVar.Draw(t, "Type")
-		return result
-	})
-
-	return parameterSpecificationGenerator
-}
-
 func Test_SecretBase_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 

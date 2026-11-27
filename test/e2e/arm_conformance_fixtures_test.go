@@ -447,6 +447,23 @@ func init() {
 	f["FactoriesIntegrationRuntime"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"properties": map[string]any{"selfHosted": map[string]any{"type": "SelfHosted"}}}
 	}}
+	// Datasets, one kind per type (f88): a dataset names a linked service,
+	// which the fake requires to exist and be of a type the dataset reads; a
+	// parameterized name (an expression) is not checked, as Data Factory
+	// resolves it at run time. A file format dataset's location is a union
+	// (required, so the smallest object would have none of its members): a
+	// Data Lake Gen2 one.
+	for _, kind := range []string{"Avro", "AzureDatabricksDeltaLakeDataset", "AzureSqlDWTable", "AzureSqlTable", "Binary",
+		"CosmosDbSqlApiCollection", "DelimitedText", "Excel", "HttpFile", "Json", "Orc", "Parquet", "RestResource", "Xml"} {
+		fileFormat := map[string]bool{"Avro": true, "Binary": true, "DelimitedText": true, "Excel": true, "Json": true, "Orc": true, "Parquet": true, "Xml": true}[kind]
+		f["FactoriesDataset"+kind] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+			props := map[string]any{"linkedServiceName": map[string]any{"type": "LinkedServiceReference", "referenceName": "@{dataset().store}"}}
+			if fileFormat {
+				props["location"] = map[string]any{"azureBlobFSLocation": map[string]any{"type": "AzureBlobFSLocation"}}
+			}
+			return map[string]any{"properties": props}
+		}}
+	}
 	// Synapse (synapse.go): a firewall rule is an IPv4 range; an Entra admin
 	// names a login and sid; a key is a Key Vault key URL; enabled auditing
 	// has a destination; an assessment writes to a blob container; a

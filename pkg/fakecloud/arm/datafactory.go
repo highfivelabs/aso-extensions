@@ -41,6 +41,12 @@ import (
 //     (400), and Data Factory never returns it: what a GET or PUT returns
 //     of a factory's child holds each secure string's value masked
 //     (adfMasked);
+//   - a dataset names its linked service, which exists ("invalid
+//     reference", 400), and is of a type the dataset can read: a table or
+//     collection dataset the store it is a table of (an AzureSqlTable an
+//     AzureSqlDatabase linked service), a file format dataset the store
+//     its location is in (an AzureBlobFSLocation an AzureBlobFS linked
+//     service) (400) (one kind per dataset type);
 //   - an Azure Blob Storage linked service takes at most one of
 //     connectionString, sasUri and serviceEndpoint, which the spec says are
 //     mutually exclusive (400).
@@ -60,7 +66,7 @@ var (
 	adfCredential  = regexp.MustCompile(adfFactory + `/credentials/[^/]+$`)
 	adfGlobalParam = regexp.MustCompile(adfFactory + `/globalparameters/([^/]+)$`)
 	adfParamTypes  = []string{"Object", "String", "Int", "Float", "Bool", "Array"}
-	adfAuthoring   = regexp.MustCompile(`(?i)^(.*` + adfFactory + `)/(triggers|dataflows|adfcdcs|integrationruntimes|linkedservices)/[^/]+$`)
+	adfAuthoring   = regexp.MustCompile(`(?i)^(.*` + adfFactory + `)/(triggers|dataflows|adfcdcs|integrationruntimes|linkedservices|datasets)/[^/]+$`)
 	adfChild       = regexp.MustCompile(adfFactory + `/[^/]+/[^/]+$`)
 	// adfMasked is what Data Factory returns in place of a secure string's value.
 	adfMasked = "**********"
@@ -94,6 +100,55 @@ func adfReferences(v any, out *[]string) {
 			adfReferences(x, out)
 		}
 	}
+}
+
+// adfDatasetStores is the linked service type a dataset of a table or
+// collection type reads; adfLocationStores the one a file format dataset's
+// location is in. A dataset type in neither is not checked.
+var (
+	adfDatasetStores = map[string]string{
+		"AzureSqlTable":                   "AzureSqlDatabase",
+		"AzureSqlDWTable":                 "AzureSqlDW",
+		"CosmosDbSqlApiCollection":        "CosmosDb",
+		"RestResource":                    "RestService",
+		"HttpFile":                        "HttpServer",
+		"AzureDatabricksDeltaLakeDataset": "AzureDatabricksDeltaLake",
+	}
+	adfLocationStores = map[string]string{
+		"AzureBlobStorageLocation": "AzureBlobStorage",
+		"AzureBlobFSLocation":      "AzureBlobFS",
+		"HttpServerLocation":       "HttpServer",
+	}
+)
+
+// checkDatasetStore refuses a dataset whose linked service (which exists:
+// the reference rule runs first) is of a type it cannot read.
+func (a *ARM) checkDatasetStore(factory string, props map[string]any) (status int, code, message string) {
+	ls, _ := props["linkedServiceName"].(map[string]any)
+	name := stringOf(ls["referenceName"])
+	if name == "" || strings.HasPrefix(name, "@") {
+		return 0, "", ""
+	}
+	want := adfDatasetStores[stringOf(props["type"])]
+	if want == "" {
+		tp, _ := props["typeProperties"].(map[string]any)
+		loc, _ := tp["location"].(map[string]any)
+		want = adfLocationStores[stringOf(loc["type"])]
+	}
+	if want == "" {
+		return 0, "", ""
+	}
+	key := strings.ToLower(factory + "/linkedservices/" + name)
+	r, ok := a.resources[key]
+	if !ok {
+		return 0, "", ""
+	}
+	lp, _ := (*r)["properties"].(map[string]any)
+	if got := stringOf(lp["type"]); got != want {
+		return http.StatusBadRequest, "BadRequest", "The linked service " + name + " is of type " + got + "; a " +
+			stringOf(props["type"]) + " dataset here needs a " + want + " linked service."
+	}
+	return 0, "", ""
 }
 
 // adfSecureStrings returns the secure strings of a document (objects of
@@ -165,6 +220,11 @@ func (a *ARM) checkDataFactory(id string, body map[string]any) (status int, code
 		for _, ref := range refs {
 			if !a.exists(m[1] + "/" + ref) {
 				return bad("The document creation or update failed because of invalid reference '" + ref[strings.Index(ref, "/")+1:] + "'.")
+			}
+		}
+		if strings.EqualFold(m[2], "datasets") {
+			if status, code, msg := a.checkDatasetStore(m[1], props); code != "" {
+				return status, code, msg
 			}
 		}
 		var secure []map[string]any

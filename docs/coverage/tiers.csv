@@ -1,4 +1,4 @@
 tier,services,attributes_total,attributes_official,attributes_ours_beyond,attributes_uncovered,pct_official,pct_ours_beyond,pct_uncovered,resources_total,resources_official,resources_ours_beyond
 1,17,7793,3349,2586,1858,43.0,33.2,23.8,319,95,160
 2,18,8108,2152,3767,2189,26.5,46.5,27.0,514,102,286
-3,245,27468,1619,2658,23191,5.9,9.7,84.4,1591,102,213
+3,245,27468,1619,2669,23180,5.9,9.7,84.4,1591,102,214

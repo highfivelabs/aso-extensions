@@ -264,65 +264,6 @@ func FactoriesAdfcdc_STATUSGenerator() *rapid.Generator[FactoriesAdfcdc_STATUS] 
 	return factoriesAdfcdc_STATUSGenerator
 }
 
-func Test_LinkedServiceReference_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForLinkedServiceReference_STATUS)
-}
-
-// RunJSONSerializationTestForLinkedServiceReference_STATUS runs a test to see if a specific instance of LinkedServiceReference_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForLinkedServiceReference_STATUS(t *rapid.T) {
-	subject := LinkedServiceReference_STATUSGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual LinkedServiceReference_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of LinkedServiceReference_STATUS instances for property testing - lazily instantiated by
-// LinkedServiceReference_STATUSGenerator()
-var linkedServiceReference_STATUSGenerator *rapid.Generator[LinkedServiceReference_STATUS]
-
-// LinkedServiceReference_STATUSGenerator returns a generator of LinkedServiceReference_STATUS instances for property testing.
-func LinkedServiceReference_STATUSGenerator() *rapid.Generator[LinkedServiceReference_STATUS] {
-	if linkedServiceReference_STATUSGenerator != nil {
-		return linkedServiceReference_STATUSGenerator
-	}
-
-	referenceName := rapid.Ptr(rapid.String(), true)
-	typeVar := rapid.Ptr(rapid.SampledFrom([]Type_STATUS{Type_STATUS_LinkedServiceReference}), true)
-
-	linkedServiceReference_STATUSGenerator = rapid.Custom(func(t *rapid.T) LinkedServiceReference_STATUS {
-		var result LinkedServiceReference_STATUS
-		result.ReferenceName = referenceName.Draw(t, "ReferenceName")
-		result.Type = typeVar.Draw(t, "Type")
-		return result
-	})
-
-	return linkedServiceReference_STATUSGenerator
-}
-
 func Test_MapperAttributeMapping_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 

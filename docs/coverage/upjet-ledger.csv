@@ -184,6 +184,20 @@ costmanagement.azure.hfl.dev/Setting,Microsoft.CostManagement/settings,conforman
 datafactory.azure.hfl.dev/FactoriesAdfcdc,Microsoft.DataFactory/factories/adfcdcs,conformance,,no Upjet resource,,,,,,,,
 datafactory.azure.hfl.dev/FactoriesCredential,Microsoft.DataFactory/factories/credentials,conformance,,no Upjet resource,,,,,,,,
 datafactory.azure.hfl.dev/FactoriesDataflow,Microsoft.DataFactory/factories/dataflows,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesDatasetAvro,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetAzureDatabricksDeltaLakeDataset,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetAzureSqlDWTable,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetAzureSqlTable,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetBinary,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetCosmosDbSqlApiCollection,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetDelimitedText,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetExcel,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetHttpFile,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetJson,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetOrc,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetParquet,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetRestResource,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetXml,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
 datafactory.azure.hfl.dev/FactoriesGlobalParameter,Microsoft.DataFactory/factories/globalParameters,conformance,,no Upjet resource,,,,,,,,
 datafactory.azure.hfl.dev/FactoriesIntegrationRuntime,Microsoft.DataFactory/factories/integrationRuntimes,conformance,,no Upjet resource,,,,,,,,
 datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureBlobFS,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,

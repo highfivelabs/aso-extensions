@@ -1503,6 +1503,20 @@ func getKnownStorageTypes() []*registration.StorageType {
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesAdfcdc)})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesCredential)})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDataflow)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetAvro)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetAzureDatabricksDeltaLakeDataset)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetAzureSqlDWTable)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetAzureSqlTable)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetBinary)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetCosmosDbSqlApiCollection)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetDelimitedText)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetExcel)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetHttpFile)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetJson)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetOrc)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetParquet)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetRestResource)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDatasetXml)})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesGlobalParameter)})
 	result = append(result, &registration.StorageType{
 		Obj: new(datafactory_v20180601.FactoriesIntegrationRuntime),
@@ -4617,6 +4631,20 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesAdfcdc)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesCredential)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDataflow)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetAvro)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetAzureDatabricksDeltaLakeDataset)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetAzureSqlDWTable)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetAzureSqlTable)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetBinary)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetCosmosDbSqlApiCollection)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetDelimitedText)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetExcel)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetHttpFile)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetJson)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetOrc)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetParquet)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetRestResource)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDatasetXml)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesGlobalParameter)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesIntegrationRuntime)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesLinkedServiceAzureBlobFS)},
@@ -4638,6 +4666,20 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesAdfcdc)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesCredential)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDataflow)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetAvro)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetAzureDatabricksDeltaLakeDataset)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetAzureSqlDWTable)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetAzureSqlTable)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetBinary)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetCosmosDbSqlApiCollection)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetDelimitedText)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetExcel)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetHttpFile)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetJson)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetOrc)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetParquet)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetRestResource)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDatasetXml)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesGlobalParameter)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesIntegrationRuntime)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesLinkedServiceAzureBlobFS)},
@@ -6120,6 +6162,20 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &datafactory_customizations.FactoriesAdfcdcExtension{})
 	result = append(result, &datafactory_customizations.FactoriesCredentialExtension{})
 	result = append(result, &datafactory_customizations.FactoriesDataflowExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetAvroExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetAzureDatabricksDeltaLakeDatasetExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetAzureSqlDWTableExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetAzureSqlTableExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetBinaryExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetCosmosDbSqlApiCollectionExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetDelimitedTextExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetExcelExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetHttpFileExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetJsonExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetOrcExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetParquetExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetRestResourceExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDatasetXmlExtension{})
 	result = append(result, &datafactory_customizations.FactoriesGlobalParameterExtension{})
 	result = append(result, &datafactory_customizations.FactoriesIntegrationRuntimeExtension{})
 	result = append(result, &datafactory_customizations.FactoriesLinkedServiceAzureBlobFSExtension{})

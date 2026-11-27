@@ -7,6 +7,34 @@ FactoriesCredentialExtension: Object (0 properties)
 
 FactoriesDataflowExtension: Object (0 properties)
 
+FactoriesDatasetAvroExtension: Object (0 properties)
+
+FactoriesDatasetAzureDatabricksDeltaLakeDatasetExtension: Object (0 properties)
+
+FactoriesDatasetAzureSqlDWTableExtension: Object (0 properties)
+
+FactoriesDatasetAzureSqlTableExtension: Object (0 properties)
+
+FactoriesDatasetBinaryExtension: Object (0 properties)
+
+FactoriesDatasetCosmosDbSqlApiCollectionExtension: Object (0 properties)
+
+FactoriesDatasetDelimitedTextExtension: Object (0 properties)
+
+FactoriesDatasetExcelExtension: Object (0 properties)
+
+FactoriesDatasetHttpFileExtension: Object (0 properties)
+
+FactoriesDatasetJsonExtension: Object (0 properties)
+
+FactoriesDatasetOrcExtension: Object (0 properties)
+
+FactoriesDatasetParquetExtension: Object (0 properties)
+
+FactoriesDatasetRestResourceExtension: Object (0 properties)
+
+FactoriesDatasetXmlExtension: Object (0 properties)
+
 FactoriesGlobalParameterExtension: Object (0 properties)
 
 FactoriesIntegrationRuntimeExtension: Object (0 properties)

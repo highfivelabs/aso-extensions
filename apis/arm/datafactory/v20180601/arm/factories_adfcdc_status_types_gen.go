@@ -231,18 +231,6 @@ var frequencyType_STATUS_Values = map[string]FrequencyType_STATUS{
 	"second": FrequencyType_STATUS_Second,
 }
 
-// Linked service reference type.
-type LinkedServiceReference_STATUS struct {
-	// Parameters: Arguments for LinkedService.
-	Parameters map[string]v1.JSON `json:"parameters,omitempty"`
-
-	// ReferenceName: Reference LinkedService name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Linked service reference type.
-	Type *Type_STATUS `json:"type,omitempty"`
-}
-
 // Attribute mapping details.
 type MapperAttributeMappings_STATUS struct {
 	// AttributeMappings: List of attribute mappings.
@@ -304,16 +292,6 @@ type MapperTableSchema_STATUS struct {
 
 	// Name: Name of the column.
 	Name *string `json:"name,omitempty"`
-}
-
-// Linked service reference type.
-type Type_STATUS string
-
-const Type_STATUS_LinkedServiceReference = Type_STATUS("LinkedServiceReference")
-
-// Mapping from string to Type_STATUS
-var type_STATUS_Values = map[string]Type_STATUS{
-	"linkedservicereference": Type_STATUS_LinkedServiceReference,
 }
 
 // Attribute reference details for the referred column.

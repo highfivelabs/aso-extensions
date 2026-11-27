@@ -180,18 +180,6 @@ var frequencyType_Values = map[string]FrequencyType{
 	"second": FrequencyType_Second,
 }
 
-// Linked service reference type.
-type LinkedServiceReference struct {
-	// Parameters: Arguments for LinkedService.
-	Parameters map[string]v1.JSON `json:"parameters,omitempty"`
-
-	// ReferenceName: Reference LinkedService name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Linked service reference type.
-	Type *Type `json:"type,omitempty"`
-}
-
 // Attribute mapping details.
 type MapperAttributeMappings struct {
 	// AttributeMappings: List of attribute mappings.
@@ -253,17 +241,6 @@ type MapperTableSchema struct {
 
 	// Name: Name of the column.
 	Name *string `json:"name,omitempty"`
-}
-
-// Linked service reference type.
-// +kubebuilder:validation:Enum={"LinkedServiceReference"}
-type Type string
-
-const Type_LinkedServiceReference = Type("LinkedServiceReference")
-
-// Mapping from string to Type
-var type_Values = map[string]Type{
-	"linkedservicereference": Type_LinkedServiceReference,
 }
 
 // Attribute reference details for the referred column.

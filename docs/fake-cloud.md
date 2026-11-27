@@ -618,7 +618,13 @@ upstream's); the catalog's chart tests do that.
   (the fake keeps the value, which a test reads with `Resource`); an Azure
   Blob Storage linked service takes at most one of `connectionString`,
   `sasUri` and `serviceEndpoint` (400; the spec calls them mutually
-  exclusive). Not modelled: the managed network's isolation, a managed
+  exclusive). A dataset (one kind per type, f88) names its linked
+  service, which exists (400, "invalid reference") and is of a type the
+  dataset reads (400): a table or collection dataset the store it is in
+  (`AzureSqlTable` an `AzureSqlDatabase` linked service), a file format
+  dataset the store of its location (`AzureBlobFSLocation` an `AzureBlobFS`
+  one); a parameterized name (an expression) is not checked, nor a pair
+  the fake's two tables do not list. Not modelled: the managed network's isolation, a managed
   endpoint's approval by its target, starting and stopping triggers, runs,
   runtime nodes and states, a linked service's test connection and the
   other per-type rules Data Factory applies (it checks a linked service's
