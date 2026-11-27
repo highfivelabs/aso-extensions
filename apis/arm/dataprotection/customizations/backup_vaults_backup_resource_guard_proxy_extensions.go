@@ -88,6 +88,7 @@ func unlockDelete(ctx context.Context, armClient *outoftree.GenericClient, proxy
 	if err != nil {
 		return err
 	}
+	defer resp.Body.Close()
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return runtime.NewResponseError(resp)
 	}
