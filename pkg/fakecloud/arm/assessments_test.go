@@ -21,7 +21,7 @@ func TestCustomAssessments(t *testing.T) {
 		code, resp := do(t, a, http.MethodPut, path, body)
 		expect(t, what, code, resp, want)
 	}
-	const key = "3b5c7a1e-0d2f-4c3b-9a8e-6f1e2d3c4b5a"
+	const key = "00000000-0000-0000-0000-0000000000a1"
 	metadata := sub + "/providers/Microsoft.Security/assessmentMetadata/"
 	assessments := vm + "/providers/Microsoft.Security/assessments/"
 	body := `{"properties":{"displayName":"Patched","assessmentType":"CustomerManaged","severity":"Medium"}}`

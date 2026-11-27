@@ -40,7 +40,7 @@ func TestLogicAppsConnections(t *testing.T) {
 	managedAPI := func(loc string) string {
 		return "/subscriptions/" + subID + "/providers/Microsoft.Web/locations/" + loc + "/managedApis/azureblob"
 	}
-	secret(t, ns, "blob-conn", map[string]string{"accountName": "contosodata", "accessKey": "Blob-Acc3ss-Key"})
+	secret(t, ns, "blob-conn", map[string]string{"accountName": "contosodata", "accessKey": "fake-blob-key"})
 	secret(t, ns, "orders-oauth", map[string]string{"client-secret": "OAuth-Cl1ent-Secret"})
 	onRG := &genruntime.KnownResourceReference{Name: "rg"}
 
@@ -159,7 +159,7 @@ func TestLogicAppsConnections(t *testing.T) {
 		}
 		return nil
 	})
-	for name, want := range map[string]string{"accountName": "contosodata", "accessKey": "Blob-Acc3ss-Key"} {
+	for name, want := range map[string]string{"accountName": "contosodata", "accessKey": "fake-blob-key"} {
 		if k, ok := armFake.SharedKey(blobID + "/parameterValues/" + name); !ok || k != want {
 			t.Fatalf("%s Resource Manager was given: %q %v", name, k, ok)
 		}
@@ -187,7 +187,7 @@ func TestLogicAppsConnections(t *testing.T) {
 			if err != nil {
 				return err
 			}
-			if strings.Contains(string(b), "Blob-Acc3ss-Key") || strings.Contains(string(b), "OAuth-Cl1ent-Secret") {
+			if strings.Contains(string(b), "fake-blob-key") || strings.Contains(string(b), "OAuth-Cl1ent-Secret") {
 				t.Fatalf("a secret is in %s: %s", o.GetName(), b)
 			}
 			return nil

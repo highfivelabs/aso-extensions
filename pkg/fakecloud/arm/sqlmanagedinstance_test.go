@@ -23,7 +23,7 @@ func TestSQLManagedInstance(t *testing.T) {
 		code, resp := do(t, a, http.MethodPut, path, body)
 		expect(t, what, code, resp, want)
 	}
-	key := "vault_tde_0123456789abcdef"
+	key := "vault_tde_1"
 	put("a Key Vault key with no URI", mi+"/keys/"+key, `{"properties":{"serverKeyType":"AzureKeyVault"}}`, http.StatusBadRequest)
 	put("a protector naming a key that is not there", mi+"/encryptionProtector/current",
 		`{"properties":{"serverKeyType":"AzureKeyVault","serverKeyName":"`+key+`"}}`, http.StatusNotFound)

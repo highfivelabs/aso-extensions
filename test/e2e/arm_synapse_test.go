@@ -48,7 +48,7 @@ func TestSynapseKinds(t *testing.T) {
 	onWS := &genruntime.KnownResourceReference{Name: "analytics"}
 	if err := k8s.Create(ctx, &corev1.Secret{
 		ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "audit-storage"},
-		StringData: map[string]string{"key": "c3RvcmFnZS1rZXk="},
+		StringData: map[string]string{"key": "fake-storage-key"},
 	}); err != nil {
 		t.Fatal(err)
 	}
@@ -129,7 +129,7 @@ func TestSynapseKinds(t *testing.T) {
 	eventually(t, timeout, "the protector Ready", ready(protector))
 
 	expectResource(t, wsID+"/auditingSettings/default", func(r map[string]any) error {
-		if p := properties(r); p["state"] != "Enabled" || p["storageAccountAccessKey"] != "c3RvcmFnZS1rZXk=" || p["storageEndpoint"] != "https://auditlogs.blob.core.windows.net" {
+		if p := properties(r); p["state"] != "Enabled" || p["storageAccountAccessKey"] != "fake-storage-key" || p["storageEndpoint"] != "https://auditlogs.blob.core.windows.net" {
 			return fmt.Errorf("resource: %v", r)
 		}
 		return nil

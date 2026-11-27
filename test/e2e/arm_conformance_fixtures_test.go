@@ -938,7 +938,7 @@ func init() {
 
 // conformanceAssessmentKey is the assessment metadata a conformance
 // Assessment reports on.
-const conformanceAssessmentKey = "3b5c7a1e-0d2f-4c3b-9a8e-6f1e2d3c4b5a"
+const conformanceAssessmentKey = "00000000-0000-0000-0000-0000000000a1"
 
 // conformanceRoleDefinition is the Cosmos DB role definition a conformance
 // role assignment names.
