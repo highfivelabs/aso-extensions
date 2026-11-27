@@ -74,27 +74,6 @@ func (credential *Credential_STATUS) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Metadata pertaining to creation and last modification of the resource.
-type SystemData_STATUS struct {
-	// CreatedAt: The timestamp of resource creation (UTC).
-	CreatedAt *string `json:"createdAt,omitempty"`
-
-	// CreatedBy: The identity that created the resource.
-	CreatedBy *string `json:"createdBy,omitempty"`
-
-	// CreatedByType: The type of identity that created the resource.
-	CreatedByType *SystemData_CreatedByType_STATUS `json:"createdByType,omitempty"`
-
-	// LastModifiedAt: The timestamp of resource last modification (UTC)
-	LastModifiedAt *string `json:"lastModifiedAt,omitempty"`
-
-	// LastModifiedBy: The identity that last modified the resource.
-	LastModifiedBy *string `json:"lastModifiedBy,omitempty"`
-
-	// LastModifiedByType: The type of identity that last modified the resource.
-	LastModifiedByType *SystemData_LastModifiedByType_STATUS `json:"lastModifiedByType,omitempty"`
-}
-
 type ManagedIdentityCredential_STATUS struct {
 	AdditionalProperties map[string]v1.JSON `json:"additionalProperties,omitempty"`
 
@@ -125,40 +104,6 @@ type ServicePrincipalCredential_STATUS struct {
 
 	// TypeProperties: Service Principal credential properties.
 	TypeProperties *ServicePrincipalCredentialTypeProperties_STATUS `json:"typeProperties,omitempty"`
-}
-
-type SystemData_CreatedByType_STATUS string
-
-const (
-	SystemData_CreatedByType_STATUS_Application     = SystemData_CreatedByType_STATUS("Application")
-	SystemData_CreatedByType_STATUS_Key             = SystemData_CreatedByType_STATUS("Key")
-	SystemData_CreatedByType_STATUS_ManagedIdentity = SystemData_CreatedByType_STATUS("ManagedIdentity")
-	SystemData_CreatedByType_STATUS_User            = SystemData_CreatedByType_STATUS("User")
-)
-
-// Mapping from string to SystemData_CreatedByType_STATUS
-var systemData_CreatedByType_STATUS_Values = map[string]SystemData_CreatedByType_STATUS{
-	"application":     SystemData_CreatedByType_STATUS_Application,
-	"key":             SystemData_CreatedByType_STATUS_Key,
-	"managedidentity": SystemData_CreatedByType_STATUS_ManagedIdentity,
-	"user":            SystemData_CreatedByType_STATUS_User,
-}
-
-type SystemData_LastModifiedByType_STATUS string
-
-const (
-	SystemData_LastModifiedByType_STATUS_Application     = SystemData_LastModifiedByType_STATUS("Application")
-	SystemData_LastModifiedByType_STATUS_Key             = SystemData_LastModifiedByType_STATUS("Key")
-	SystemData_LastModifiedByType_STATUS_ManagedIdentity = SystemData_LastModifiedByType_STATUS("ManagedIdentity")
-	SystemData_LastModifiedByType_STATUS_User            = SystemData_LastModifiedByType_STATUS("User")
-)
-
-// Mapping from string to SystemData_LastModifiedByType_STATUS
-var systemData_LastModifiedByType_STATUS_Values = map[string]SystemData_LastModifiedByType_STATUS{
-	"application":     SystemData_LastModifiedByType_STATUS_Application,
-	"key":             SystemData_LastModifiedByType_STATUS_Key,
-	"managedidentity": SystemData_LastModifiedByType_STATUS_ManagedIdentity,
-	"user":            SystemData_LastModifiedByType_STATUS_User,
 }
 
 type ManagedIdentityCredential_Type_STATUS string
@@ -209,7 +154,7 @@ type AzureKeyVaultSecretReference_STATUS struct {
 	Store *LinkedServiceReference_STATUS `json:"store,omitempty"`
 
 	// Type: Type of the secret.
-	Type *AzureKeyVaultSecretReference_Type_STATUS `json:"type,omitempty"`
+	Type AzureKeyVaultSecretReference_Type_STATUS `json:"type,omitempty"`
 }
 
 type AzureKeyVaultSecretReference_Type_STATUS string
@@ -219,26 +164,4 @@ const AzureKeyVaultSecretReference_Type_STATUS_AzureKeyVaultSecret = AzureKeyVau
 // Mapping from string to AzureKeyVaultSecretReference_Type_STATUS
 var azureKeyVaultSecretReference_Type_STATUS_Values = map[string]AzureKeyVaultSecretReference_Type_STATUS{
 	"azurekeyvaultsecret": AzureKeyVaultSecretReference_Type_STATUS_AzureKeyVaultSecret,
-}
-
-// Linked service reference type.
-type LinkedServiceReference_STATUS struct {
-	// Parameters: Arguments for LinkedService.
-	Parameters map[string]v1.JSON `json:"parameters,omitempty"`
-
-	// ReferenceName: Reference LinkedService name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Linked service reference type.
-	Type *Type_STATUS `json:"type,omitempty"`
-}
-
-// Linked service reference type.
-type Type_STATUS string
-
-const Type_STATUS_LinkedServiceReference = Type_STATUS("LinkedServiceReference")
-
-// Mapping from string to Type_STATUS
-var type_STATUS_Values = map[string]Type_STATUS{
-	"linkedservicereference": Type_STATUS_LinkedServiceReference,
 }

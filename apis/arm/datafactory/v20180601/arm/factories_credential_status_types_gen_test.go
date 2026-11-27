@@ -60,7 +60,7 @@ func AzureKeyVaultSecretReference_STATUSGenerator() *rapid.Generator[AzureKeyVau
 	}
 
 	store := rapid.Ptr(LinkedServiceReference_STATUSGenerator(), true)
-	typeVar := rapid.Ptr(rapid.SampledFrom([]AzureKeyVaultSecretReference_Type_STATUS{AzureKeyVaultSecretReference_Type_STATUS_AzureKeyVaultSecret}), true)
+	typeVar := rapid.SampledFrom([]AzureKeyVaultSecretReference_Type_STATUS{AzureKeyVaultSecretReference_Type_STATUS_AzureKeyVaultSecret})
 
 	azureKeyVaultSecretReference_STATUSGenerator = rapid.Custom(func(t *rapid.T) AzureKeyVaultSecretReference_STATUS {
 		var result AzureKeyVaultSecretReference_STATUS
@@ -202,65 +202,6 @@ func FactoriesCredential_STATUSGenerator() *rapid.Generator[FactoriesCredential_
 	})
 
 	return factoriesCredential_STATUSGenerator
-}
-
-func Test_LinkedServiceReference_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForLinkedServiceReference_STATUS)
-}
-
-// RunJSONSerializationTestForLinkedServiceReference_STATUS runs a test to see if a specific instance of LinkedServiceReference_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForLinkedServiceReference_STATUS(t *rapid.T) {
-	subject := LinkedServiceReference_STATUSGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual LinkedServiceReference_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of LinkedServiceReference_STATUS instances for property testing - lazily instantiated by
-// LinkedServiceReference_STATUSGenerator()
-var linkedServiceReference_STATUSGenerator *rapid.Generator[LinkedServiceReference_STATUS]
-
-// LinkedServiceReference_STATUSGenerator returns a generator of LinkedServiceReference_STATUS instances for property testing.
-func LinkedServiceReference_STATUSGenerator() *rapid.Generator[LinkedServiceReference_STATUS] {
-	if linkedServiceReference_STATUSGenerator != nil {
-		return linkedServiceReference_STATUSGenerator
-	}
-
-	referenceName := rapid.Ptr(rapid.String(), true)
-	typeVar := rapid.Ptr(rapid.SampledFrom([]Type_STATUS{Type_STATUS_LinkedServiceReference}), true)
-
-	linkedServiceReference_STATUSGenerator = rapid.Custom(func(t *rapid.T) LinkedServiceReference_STATUS {
-		var result LinkedServiceReference_STATUS
-		result.ReferenceName = referenceName.Draw(t, "ReferenceName")
-		result.Type = typeVar.Draw(t, "Type")
-		return result
-	})
-
-	return linkedServiceReference_STATUSGenerator
 }
 
 func Test_ManagedIdentityCredential_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -497,67 +438,4 @@ func ServicePrincipalCredential_STATUSGenerator() *rapid.Generator[ServicePrinci
 	})
 
 	return servicePrincipalCredential_STATUSGenerator
-}
-
-func Test_SystemData_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
-	t.Parallel()
-
-	if testing.Short() {
-		return
-	}
-
-	rapid.Check(t, RunJSONSerializationTestForSystemData_STATUS)
-}
-
-// RunJSONSerializationTestForSystemData_STATUS runs a test to see if a specific instance of SystemData_STATUS round trips to JSON and back losslessly
-func RunJSONSerializationTestForSystemData_STATUS(t *rapid.T) {
-	subject := SystemData_STATUSGenerator().Draw(t, "subject")
-	// Serialize to JSON
-	bin, err := json.Marshal(subject)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Deserialize back into memory
-	var actual SystemData_STATUS
-	err = json.Unmarshal(bin, &actual)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Check for outcome
-	match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
-	if !match {
-		actualFmt := pretty.Sprint(actual)
-		subjectFmt := pretty.Sprint(subject)
-		result := diff.Diff(subjectFmt, actualFmt)
-		t.Error(result)
-	}
-}
-
-// Generator of SystemData_STATUS instances for property testing - lazily instantiated by SystemData_STATUSGenerator()
-var systemData_STATUSGenerator *rapid.Generator[SystemData_STATUS]
-
-// SystemData_STATUSGenerator returns a generator of SystemData_STATUS instances for property testing.
-func SystemData_STATUSGenerator() *rapid.Generator[SystemData_STATUS] {
-	if systemData_STATUSGenerator != nil {
-		return systemData_STATUSGenerator
-	}
-
-	ptrString := rapid.Ptr(rapid.String(), true)
-	createdByType := rapid.Ptr(rapid.SampledFrom([]SystemData_CreatedByType_STATUS{SystemData_CreatedByType_STATUS_Application, SystemData_CreatedByType_STATUS_Key, SystemData_CreatedByType_STATUS_ManagedIdentity, SystemData_CreatedByType_STATUS_User}), true)
-	lastModifiedByType := rapid.Ptr(rapid.SampledFrom([]SystemData_LastModifiedByType_STATUS{SystemData_LastModifiedByType_STATUS_Application, SystemData_LastModifiedByType_STATUS_Key, SystemData_LastModifiedByType_STATUS_ManagedIdentity, SystemData_LastModifiedByType_STATUS_User}), true)
-
-	systemData_STATUSGenerator = rapid.Custom(func(t *rapid.T) SystemData_STATUS {
-		var result SystemData_STATUS
-		result.CreatedAt = ptrString.Draw(t, "CreatedAt")
-		result.CreatedBy = ptrString.Draw(t, "CreatedBy")
-		result.CreatedByType = createdByType.Draw(t, "CreatedByType")
-		result.LastModifiedAt = ptrString.Draw(t, "LastModifiedAt")
-		result.LastModifiedBy = ptrString.Draw(t, "LastModifiedBy")
-		result.LastModifiedByType = lastModifiedByType.Draw(t, "LastModifiedByType")
-		return result
-	})
-
-	return systemData_STATUSGenerator
 }

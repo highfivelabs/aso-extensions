@@ -157,7 +157,7 @@ type AzureKeyVaultSecretReference struct {
 	Store *LinkedServiceReference `json:"store,omitempty"`
 
 	// Type: Type of the secret.
-	Type *AzureKeyVaultSecretReference_Type `json:"type,omitempty"`
+	Type AzureKeyVaultSecretReference_Type `json:"type,omitempty"`
 }
 
 // +kubebuilder:validation:Enum={"AzureKeyVaultSecret"}
@@ -168,27 +168,4 @@ const AzureKeyVaultSecretReference_Type_AzureKeyVaultSecret = AzureKeyVaultSecre
 // Mapping from string to AzureKeyVaultSecretReference_Type
 var azureKeyVaultSecretReference_Type_Values = map[string]AzureKeyVaultSecretReference_Type{
 	"azurekeyvaultsecret": AzureKeyVaultSecretReference_Type_AzureKeyVaultSecret,
-}
-
-// Linked service reference type.
-type LinkedServiceReference struct {
-	// Parameters: Arguments for LinkedService.
-	Parameters map[string]v1.JSON `json:"parameters,omitempty"`
-
-	// ReferenceName: Reference LinkedService name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Linked service reference type.
-	Type *Type `json:"type,omitempty"`
-}
-
-// Linked service reference type.
-// +kubebuilder:validation:Enum={"LinkedServiceReference"}
-type Type string
-
-const Type_LinkedServiceReference = Type("LinkedServiceReference")
-
-// Mapping from string to Type
-var type_Values = map[string]Type{
-	"linkedservicereference": Type_LinkedServiceReference,
 }

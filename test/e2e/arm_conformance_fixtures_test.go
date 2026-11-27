@@ -434,6 +434,19 @@ func init() {
 		return map[string]any{"azureName": "default", "properties": map[string]any{"conformance": map[string]any{"type": "String", "value": "conformance"}}}
 	}}
 	f["FactoriesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// Triggers, data flows and integration runtimes are unions (f86): a
+	// schedule trigger of no pipeline, a mapping data flow of nothing, a
+	// self-hosted runtime.
+	f["FactoriesTrigger"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"scheduleTrigger": map[string]any{"type": "ScheduleTrigger",
+			"recurrence": map[string]any{"frequency": "Day", "interval": int64(1)}}}}
+	}}
+	f["FactoriesDataflow"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"mappingDataFlow": map[string]any{"type": "MappingDataFlow"}}}
+	}}
+	f["FactoriesIntegrationRuntime"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"selfHosted": map[string]any{"type": "SelfHosted"}}}
+	}}
 	// Synapse (synapse.go): a firewall rule is an IPv4 range; an Entra admin
 	// names a login and sid; a key is a Key Vault key URL; enabled auditing
 	// has a destination; an assessment writes to a blob container; a

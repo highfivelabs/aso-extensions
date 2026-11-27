@@ -252,11 +252,6 @@ type FactoriesCredentialList struct {
 	Items           []FactoriesCredential `json:"items"`
 }
 
-// +kubebuilder:validation:Enum={"2018-06-01"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2018-06-01")
-
 type FactoriesCredential_Spec struct {
 	// +kubebuilder:validation:MaxLength=127
 	// +kubebuilder:validation:MinLength=1
@@ -1142,166 +1137,6 @@ func (operator *FactoriesCredentialOperatorSpec) AssignProperties_To_FactoriesCr
 		destination.SecretExpressions = secretExpressionList
 	} else {
 		destination.SecretExpressions = nil
-	}
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// No error
-	return nil
-}
-
-// Metadata pertaining to creation and last modification of the resource.
-type SystemData_STATUS struct {
-	// CreatedAt: The timestamp of resource creation (UTC).
-	CreatedAt *string `json:"createdAt,omitempty"`
-
-	// CreatedBy: The identity that created the resource.
-	CreatedBy *string `json:"createdBy,omitempty"`
-
-	// CreatedByType: The type of identity that created the resource.
-	CreatedByType *SystemData_CreatedByType_STATUS `json:"createdByType,omitempty"`
-
-	// LastModifiedAt: The timestamp of resource last modification (UTC)
-	LastModifiedAt *string `json:"lastModifiedAt,omitempty"`
-
-	// LastModifiedBy: The identity that last modified the resource.
-	LastModifiedBy *string `json:"lastModifiedBy,omitempty"`
-
-	// LastModifiedByType: The type of identity that last modified the resource.
-	LastModifiedByType *SystemData_LastModifiedByType_STATUS `json:"lastModifiedByType,omitempty"`
-}
-
-var _ genruntime.FromARMConverter = &SystemData_STATUS{}
-
-// NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (data *SystemData_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
-	return &arm.SystemData_STATUS{}
-}
-
-// PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (data *SystemData_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
-	typedInput, ok := armInput.(arm.SystemData_STATUS)
-	if !ok {
-		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.SystemData_STATUS, got %T", armInput)
-	}
-
-	// Set property "CreatedAt":
-	if typedInput.CreatedAt != nil {
-		createdAt := *typedInput.CreatedAt
-		data.CreatedAt = &createdAt
-	}
-
-	// Set property "CreatedBy":
-	if typedInput.CreatedBy != nil {
-		createdBy := *typedInput.CreatedBy
-		data.CreatedBy = &createdBy
-	}
-
-	// Set property "CreatedByType":
-	if typedInput.CreatedByType != nil {
-		var temp string
-		temp = string(*typedInput.CreatedByType)
-		createdByType := SystemData_CreatedByType_STATUS(temp)
-		data.CreatedByType = &createdByType
-	}
-
-	// Set property "LastModifiedAt":
-	if typedInput.LastModifiedAt != nil {
-		lastModifiedAt := *typedInput.LastModifiedAt
-		data.LastModifiedAt = &lastModifiedAt
-	}
-
-	// Set property "LastModifiedBy":
-	if typedInput.LastModifiedBy != nil {
-		lastModifiedBy := *typedInput.LastModifiedBy
-		data.LastModifiedBy = &lastModifiedBy
-	}
-
-	// Set property "LastModifiedByType":
-	if typedInput.LastModifiedByType != nil {
-		var temp string
-		temp = string(*typedInput.LastModifiedByType)
-		lastModifiedByType := SystemData_LastModifiedByType_STATUS(temp)
-		data.LastModifiedByType = &lastModifiedByType
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_From_SystemData_STATUS populates our SystemData_STATUS from the provided source SystemData_STATUS
-func (data *SystemData_STATUS) AssignProperties_From_SystemData_STATUS(source *storage.SystemData_STATUS) error {
-
-	// CreatedAt
-	data.CreatedAt = genruntime.ClonePointerToString(source.CreatedAt)
-
-	// CreatedBy
-	data.CreatedBy = genruntime.ClonePointerToString(source.CreatedBy)
-
-	// CreatedByType
-	if source.CreatedByType != nil {
-		createdByType := *source.CreatedByType
-		createdByTypeTemp := genruntime.ToEnum(createdByType, systemData_CreatedByType_STATUS_Values)
-		data.CreatedByType = &createdByTypeTemp
-	} else {
-		data.CreatedByType = nil
-	}
-
-	// LastModifiedAt
-	data.LastModifiedAt = genruntime.ClonePointerToString(source.LastModifiedAt)
-
-	// LastModifiedBy
-	data.LastModifiedBy = genruntime.ClonePointerToString(source.LastModifiedBy)
-
-	// LastModifiedByType
-	if source.LastModifiedByType != nil {
-		lastModifiedByType := *source.LastModifiedByType
-		lastModifiedByTypeTemp := genruntime.ToEnum(lastModifiedByType, systemData_LastModifiedByType_STATUS_Values)
-		data.LastModifiedByType = &lastModifiedByTypeTemp
-	} else {
-		data.LastModifiedByType = nil
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_To_SystemData_STATUS populates the provided destination SystemData_STATUS from our SystemData_STATUS
-func (data *SystemData_STATUS) AssignProperties_To_SystemData_STATUS(destination *storage.SystemData_STATUS) error {
-	// Create a new property bag
-	propertyBag := genruntime.NewPropertyBag()
-
-	// CreatedAt
-	destination.CreatedAt = genruntime.ClonePointerToString(data.CreatedAt)
-
-	// CreatedBy
-	destination.CreatedBy = genruntime.ClonePointerToString(data.CreatedBy)
-
-	// CreatedByType
-	if data.CreatedByType != nil {
-		createdByType := string(*data.CreatedByType)
-		destination.CreatedByType = &createdByType
-	} else {
-		destination.CreatedByType = nil
-	}
-
-	// LastModifiedAt
-	destination.LastModifiedAt = genruntime.ClonePointerToString(data.LastModifiedAt)
-
-	// LastModifiedBy
-	destination.LastModifiedBy = genruntime.ClonePointerToString(data.LastModifiedBy)
-
-	// LastModifiedByType
-	if data.LastModifiedByType != nil {
-		lastModifiedByType := string(*data.LastModifiedByType)
-		destination.LastModifiedByType = &lastModifiedByType
-	} else {
-		destination.LastModifiedByType = nil
 	}
 
 	// Update the property bag
@@ -2364,40 +2199,6 @@ func (credential *ServicePrincipalCredential_STATUS) AssignProperties_To_Service
 	return nil
 }
 
-type SystemData_CreatedByType_STATUS string
-
-const (
-	SystemData_CreatedByType_STATUS_Application     = SystemData_CreatedByType_STATUS("Application")
-	SystemData_CreatedByType_STATUS_Key             = SystemData_CreatedByType_STATUS("Key")
-	SystemData_CreatedByType_STATUS_ManagedIdentity = SystemData_CreatedByType_STATUS("ManagedIdentity")
-	SystemData_CreatedByType_STATUS_User            = SystemData_CreatedByType_STATUS("User")
-)
-
-// Mapping from string to SystemData_CreatedByType_STATUS
-var systemData_CreatedByType_STATUS_Values = map[string]SystemData_CreatedByType_STATUS{
-	"application":     SystemData_CreatedByType_STATUS_Application,
-	"key":             SystemData_CreatedByType_STATUS_Key,
-	"managedidentity": SystemData_CreatedByType_STATUS_ManagedIdentity,
-	"user":            SystemData_CreatedByType_STATUS_User,
-}
-
-type SystemData_LastModifiedByType_STATUS string
-
-const (
-	SystemData_LastModifiedByType_STATUS_Application     = SystemData_LastModifiedByType_STATUS("Application")
-	SystemData_LastModifiedByType_STATUS_Key             = SystemData_LastModifiedByType_STATUS("Key")
-	SystemData_LastModifiedByType_STATUS_ManagedIdentity = SystemData_LastModifiedByType_STATUS("ManagedIdentity")
-	SystemData_LastModifiedByType_STATUS_User            = SystemData_LastModifiedByType_STATUS("User")
-)
-
-// Mapping from string to SystemData_LastModifiedByType_STATUS
-var systemData_LastModifiedByType_STATUS_Values = map[string]SystemData_LastModifiedByType_STATUS{
-	"application":     SystemData_LastModifiedByType_STATUS_Application,
-	"key":             SystemData_LastModifiedByType_STATUS_Key,
-	"managedidentity": SystemData_LastModifiedByType_STATUS_ManagedIdentity,
-	"user":            SystemData_LastModifiedByType_STATUS_User,
-}
-
 type AzureKeyVaultSecretReference struct {
 	// +kubebuilder:validation:Required
 	// SecretName: The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
@@ -2449,10 +2250,11 @@ func (reference *AzureKeyVaultSecretReference) ConvertToARM(resolved genruntime.
 
 	// Set property "Type":
 	if reference.Type != nil {
-		var temp string
-		temp = string(*reference.Type)
-		typeVar := arm.AzureKeyVaultSecretReference_Type(temp)
-		result.Type = &typeVar
+		var temp arm.AzureKeyVaultSecretReference_Type
+		var temp1 string
+		temp1 = string(*reference.Type)
+		temp = arm.AzureKeyVaultSecretReference_Type(temp1)
+		result.Type = temp
 	}
 	return result, nil
 }
@@ -2493,12 +2295,11 @@ func (reference *AzureKeyVaultSecretReference) PopulateFromARM(owner genruntime.
 	}
 
 	// Set property "Type":
-	if typedInput.Type != nil {
-		var temp string
-		temp = string(*typedInput.Type)
-		typeVar := AzureKeyVaultSecretReference_Type(temp)
-		reference.Type = &typeVar
-	}
+	var temp AzureKeyVaultSecretReference_Type
+	var temp1 string
+	temp1 = string(typedInput.Type)
+	temp = AzureKeyVaultSecretReference_Type(temp1)
+	reference.Type = &temp
 
 	// No error
 	return nil
@@ -2696,12 +2497,11 @@ func (reference *AzureKeyVaultSecretReference_STATUS) PopulateFromARM(owner genr
 	}
 
 	// Set property "Type":
-	if typedInput.Type != nil {
-		var temp string
-		temp = string(*typedInput.Type)
-		typeVar := AzureKeyVaultSecretReference_Type_STATUS(temp)
-		reference.Type = &typeVar
-	}
+	var temp AzureKeyVaultSecretReference_Type_STATUS
+	var temp1 string
+	temp1 = string(typedInput.Type)
+	temp = AzureKeyVaultSecretReference_Type_STATUS(temp1)
+	reference.Type = &temp
 
 	// No error
 	return nil
@@ -2858,329 +2658,6 @@ const AzureKeyVaultSecretReference_Type_STATUS_AzureKeyVaultSecret = AzureKeyVau
 // Mapping from string to AzureKeyVaultSecretReference_Type_STATUS
 var azureKeyVaultSecretReference_Type_STATUS_Values = map[string]AzureKeyVaultSecretReference_Type_STATUS{
 	"azurekeyvaultsecret": AzureKeyVaultSecretReference_Type_STATUS_AzureKeyVaultSecret,
-}
-
-// Linked service reference type.
-type LinkedServiceReference struct {
-	// Parameters: Arguments for LinkedService.
-	Parameters map[string]v1.JSON `json:"parameters,omitempty"`
-
-	// +kubebuilder:validation:Required
-	// ReferenceName: Reference LinkedService name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// +kubebuilder:validation:Required
-	// Type: Linked service reference type.
-	Type *Type `json:"type,omitempty"`
-}
-
-var _ genruntime.ARMTransformer = &LinkedServiceReference{}
-
-// ConvertToARM converts from a Kubernetes CRD object to an ARM object
-func (reference *LinkedServiceReference) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
-	if reference == nil {
-		return nil, nil
-	}
-	result := &arm.LinkedServiceReference{}
-
-	// Set property "Parameters":
-	if reference.Parameters != nil {
-		result.Parameters = make(map[string]v1.JSON, len(reference.Parameters))
-		for key, value := range reference.Parameters {
-			result.Parameters[key] = *value.DeepCopy()
-		}
-	}
-
-	// Set property "ReferenceName":
-	if reference.ReferenceName != nil {
-		referenceName := *reference.ReferenceName
-		result.ReferenceName = &referenceName
-	}
-
-	// Set property "Type":
-	if reference.Type != nil {
-		var temp string
-		temp = string(*reference.Type)
-		typeVar := arm.Type(temp)
-		result.Type = &typeVar
-	}
-	return result, nil
-}
-
-// NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (reference *LinkedServiceReference) NewEmptyARMValue() genruntime.ARMResourceStatus {
-	return &arm.LinkedServiceReference{}
-}
-
-// PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (reference *LinkedServiceReference) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
-	typedInput, ok := armInput.(arm.LinkedServiceReference)
-	if !ok {
-		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.LinkedServiceReference, got %T", armInput)
-	}
-
-	// Set property "Parameters":
-	if typedInput.Parameters != nil {
-		reference.Parameters = make(map[string]v1.JSON, len(typedInput.Parameters))
-		for key, value := range typedInput.Parameters {
-			reference.Parameters[key] = *value.DeepCopy()
-		}
-	}
-
-	// Set property "ReferenceName":
-	if typedInput.ReferenceName != nil {
-		referenceName := *typedInput.ReferenceName
-		reference.ReferenceName = &referenceName
-	}
-
-	// Set property "Type":
-	if typedInput.Type != nil {
-		var temp string
-		temp = string(*typedInput.Type)
-		typeVar := Type(temp)
-		reference.Type = &typeVar
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_From_LinkedServiceReference populates our LinkedServiceReference from the provided source LinkedServiceReference
-func (reference *LinkedServiceReference) AssignProperties_From_LinkedServiceReference(source *storage.LinkedServiceReference) error {
-
-	// Parameters
-	if source.Parameters != nil {
-		parameterMap := make(map[string]v1.JSON, len(source.Parameters))
-		for parameterKey, parameterValue := range source.Parameters {
-			parameterMap[parameterKey] = *parameterValue.DeepCopy()
-		}
-		reference.Parameters = parameterMap
-	} else {
-		reference.Parameters = nil
-	}
-
-	// ReferenceName
-	reference.ReferenceName = genruntime.ClonePointerToString(source.ReferenceName)
-
-	// Type
-	if source.Type != nil {
-		typeVar := *source.Type
-		typeTemp := genruntime.ToEnum(typeVar, type_Values)
-		reference.Type = &typeTemp
-	} else {
-		reference.Type = nil
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_To_LinkedServiceReference populates the provided destination LinkedServiceReference from our LinkedServiceReference
-func (reference *LinkedServiceReference) AssignProperties_To_LinkedServiceReference(destination *storage.LinkedServiceReference) error {
-	// Create a new property bag
-	propertyBag := genruntime.NewPropertyBag()
-
-	// Parameters
-	if reference.Parameters != nil {
-		parameterMap := make(map[string]v1.JSON, len(reference.Parameters))
-		for parameterKey, parameterValue := range reference.Parameters {
-			parameterMap[parameterKey] = *parameterValue.DeepCopy()
-		}
-		destination.Parameters = parameterMap
-	} else {
-		destination.Parameters = nil
-	}
-
-	// ReferenceName
-	destination.ReferenceName = genruntime.ClonePointerToString(reference.ReferenceName)
-
-	// Type
-	if reference.Type != nil {
-		typeVar := string(*reference.Type)
-		destination.Type = &typeVar
-	} else {
-		destination.Type = nil
-	}
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// No error
-	return nil
-}
-
-// Initialize_From_LinkedServiceReference_STATUS populates our LinkedServiceReference from the provided source LinkedServiceReference_STATUS
-func (reference *LinkedServiceReference) Initialize_From_LinkedServiceReference_STATUS(source *LinkedServiceReference_STATUS) error {
-
-	// Parameters
-	if source.Parameters != nil {
-		parameterMap := make(map[string]v1.JSON, len(source.Parameters))
-		for parameterKey, parameterValue := range source.Parameters {
-			parameterMap[parameterKey] = *parameterValue.DeepCopy()
-		}
-		reference.Parameters = parameterMap
-	} else {
-		reference.Parameters = nil
-	}
-
-	// ReferenceName
-	reference.ReferenceName = genruntime.ClonePointerToString(source.ReferenceName)
-
-	// Type
-	if source.Type != nil {
-		typeVar := genruntime.ToEnum(string(*source.Type), type_Values)
-		reference.Type = &typeVar
-	} else {
-		reference.Type = nil
-	}
-
-	// No error
-	return nil
-}
-
-// Linked service reference type.
-type LinkedServiceReference_STATUS struct {
-	// Parameters: Arguments for LinkedService.
-	Parameters map[string]v1.JSON `json:"parameters,omitempty"`
-
-	// ReferenceName: Reference LinkedService name.
-	ReferenceName *string `json:"referenceName,omitempty"`
-
-	// Type: Linked service reference type.
-	Type *Type_STATUS `json:"type,omitempty"`
-}
-
-var _ genruntime.FromARMConverter = &LinkedServiceReference_STATUS{}
-
-// NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (reference *LinkedServiceReference_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
-	return &arm.LinkedServiceReference_STATUS{}
-}
-
-// PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (reference *LinkedServiceReference_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
-	typedInput, ok := armInput.(arm.LinkedServiceReference_STATUS)
-	if !ok {
-		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.LinkedServiceReference_STATUS, got %T", armInput)
-	}
-
-	// Set property "Parameters":
-	if typedInput.Parameters != nil {
-		reference.Parameters = make(map[string]v1.JSON, len(typedInput.Parameters))
-		for key, value := range typedInput.Parameters {
-			reference.Parameters[key] = *value.DeepCopy()
-		}
-	}
-
-	// Set property "ReferenceName":
-	if typedInput.ReferenceName != nil {
-		referenceName := *typedInput.ReferenceName
-		reference.ReferenceName = &referenceName
-	}
-
-	// Set property "Type":
-	if typedInput.Type != nil {
-		var temp string
-		temp = string(*typedInput.Type)
-		typeVar := Type_STATUS(temp)
-		reference.Type = &typeVar
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_From_LinkedServiceReference_STATUS populates our LinkedServiceReference_STATUS from the provided source LinkedServiceReference_STATUS
-func (reference *LinkedServiceReference_STATUS) AssignProperties_From_LinkedServiceReference_STATUS(source *storage.LinkedServiceReference_STATUS) error {
-
-	// Parameters
-	if source.Parameters != nil {
-		parameterMap := make(map[string]v1.JSON, len(source.Parameters))
-		for parameterKey, parameterValue := range source.Parameters {
-			parameterMap[parameterKey] = *parameterValue.DeepCopy()
-		}
-		reference.Parameters = parameterMap
-	} else {
-		reference.Parameters = nil
-	}
-
-	// ReferenceName
-	reference.ReferenceName = genruntime.ClonePointerToString(source.ReferenceName)
-
-	// Type
-	if source.Type != nil {
-		typeVar := *source.Type
-		typeTemp := genruntime.ToEnum(typeVar, type_STATUS_Values)
-		reference.Type = &typeTemp
-	} else {
-		reference.Type = nil
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_To_LinkedServiceReference_STATUS populates the provided destination LinkedServiceReference_STATUS from our LinkedServiceReference_STATUS
-func (reference *LinkedServiceReference_STATUS) AssignProperties_To_LinkedServiceReference_STATUS(destination *storage.LinkedServiceReference_STATUS) error {
-	// Create a new property bag
-	propertyBag := genruntime.NewPropertyBag()
-
-	// Parameters
-	if reference.Parameters != nil {
-		parameterMap := make(map[string]v1.JSON, len(reference.Parameters))
-		for parameterKey, parameterValue := range reference.Parameters {
-			parameterMap[parameterKey] = *parameterValue.DeepCopy()
-		}
-		destination.Parameters = parameterMap
-	} else {
-		destination.Parameters = nil
-	}
-
-	// ReferenceName
-	destination.ReferenceName = genruntime.ClonePointerToString(reference.ReferenceName)
-
-	// Type
-	if reference.Type != nil {
-		typeVar := string(*reference.Type)
-		destination.Type = &typeVar
-	} else {
-		destination.Type = nil
-	}
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// No error
-	return nil
-}
-
-// Linked service reference type.
-// +kubebuilder:validation:Enum={"LinkedServiceReference"}
-type Type string
-
-const Type_LinkedServiceReference = Type("LinkedServiceReference")
-
-// Mapping from string to Type
-var type_Values = map[string]Type{
-	"linkedservicereference": Type_LinkedServiceReference,
-}
-
-// Linked service reference type.
-type Type_STATUS string
-
-const Type_STATUS_LinkedServiceReference = Type_STATUS("LinkedServiceReference")
-
-// Mapping from string to Type_STATUS
-var type_STATUS_Values = map[string]Type_STATUS{
-	"linkedservicereference": Type_STATUS_LinkedServiceReference,
 }
 
 func init() {

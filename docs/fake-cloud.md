@@ -604,8 +604,14 @@ upstream's); the catalog's chart tests do that.
   principal one its principal, key and tenant (400); a global parameter has
   a type (400). Global parameters' properties are a map of the parameters:
   the fake adds no `provisioningState` to them. Connections follow
-  `privateendpoints.go`. Not modelled: the managed network's isolation, a
-  managed endpoint's approval by its target, and the error codes.
+  `privateendpoints.go`. A trigger, data flow, change data capture or
+  integration runtime names others of the factory by reference (pipelines,
+  datasets, linked services, data flows, runtimes, credentials, the managed
+  network), and each exists (400, Data Factory's "invalid reference"); a
+  linked self-hosted runtime's shared runtime exists (404). Not modelled:
+  the managed network's isolation, a managed endpoint's approval by its
+  target, starting and stopping triggers, runs, runtime nodes and states,
+  references written as expressions, and the error codes.
 - Synapse workspace children (`Microsoft.Synapse`, 2021-06-01;
   `pkg/fakecloud/arm/synapse.go`): an IP firewall rule is an ordered IPv4
   range (400); an Entra admin names its login and sid (400); Entra-only

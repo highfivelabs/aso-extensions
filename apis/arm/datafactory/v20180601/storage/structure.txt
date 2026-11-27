@@ -4,6 +4,237 @@ github.com/highfivelabs/aso-extensions/apis/arm/datafactory/v20180601/storage
 APIVersion: Enum (1 value)
 └── "2018-06-01"
 
+FactoriesAdfcdc: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (13 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── AllowVNetOverride: *bool
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── Folder: *Object (2 properties)
+│   │   ├── Name: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Policy: *Object (3 properties)
+│   │   ├── Mode: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Recurrence: *Object (3 properties)
+│   │       ├── Frequency: *string
+│   │       ├── Interval: *int
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── SourceConnectionsInfo: Object (3 properties)[]
+│   │   ├── Connection: *Object (6 properties)
+│   │   │   ├── CommonDslConnectorProperties: Object (3 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   ├── IsInlineDataset: *bool
+│   │   │   ├── LinkedService: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── LinkedServiceType: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SourceEntities: Object (4 properties)[]
+│   │       ├── DslConnectorProperties: Object (3 properties)[]
+│   │       │   ├── Name: *string
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   └── Value: *v1.JSON
+│   │       ├── Name: *string
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── Schema: Object (3 properties)[]
+│   │           ├── DataType: *string
+│   │           ├── Name: *string
+│   │           └── PropertyBag: genruntime.PropertyBag
+│   ├── Status: *string
+│   └── TargetConnectionsInfo: Object (5 properties)[]
+│       ├── Connection: *Object (6 properties)
+│       │   ├── CommonDslConnectorProperties: Object (3 properties)[]
+│       │   │   ├── Name: *string
+│       │   │   ├── PropertyBag: genruntime.PropertyBag
+│       │   │   └── Value: *v1.JSON
+│       │   ├── IsInlineDataset: *bool
+│       │   ├── LinkedService: *Object (4 properties)
+│       │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   ├── PropertyBag: genruntime.PropertyBag
+│       │   │   ├── ReferenceName: *string
+│       │   │   └── Type: *string
+│       │   ├── LinkedServiceType: *string
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   └── Type: *string
+│       ├── DataMapperMappings: Object (6 properties)[]
+│       │   ├── AttributeMappingInfo: *Object (2 properties)
+│       │   │   ├── AttributeMappings: Object (7 properties)[]
+│       │   │   │   ├── AttributeReference: *Object (4 properties)
+│       │   │   │   │   ├── Entity: *string
+│       │   │   │   │   ├── EntityConnectionReference: *Object (3 properties)
+│       │   │   │   │   │   ├── ConnectionName: *string
+│       │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│       │   │   │   │   │   └── Type: *string
+│       │   │   │   │   ├── Name: *string
+│       │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│       │   │   │   ├── AttributeReferences: Object (4 properties)[]
+│       │   │   │   │   ├── Entity: *string
+│       │   │   │   │   ├── EntityConnectionReference: *Object (3 properties)
+│       │   │   │   │   │   ├── ConnectionName: *string
+│       │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│       │   │   │   │   │   └── Type: *string
+│       │   │   │   │   ├── Name: *string
+│       │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│       │   │   │   ├── Expression: *string
+│       │   │   │   ├── FunctionName: *string
+│       │   │   │   ├── Name: *string
+│       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│       │   │   │   └── Type: *string
+│       │   │   └── PropertyBag: genruntime.PropertyBag
+│       │   ├── PropertyBag: genruntime.PropertyBag
+│       │   ├── SourceConnectionReference: *Object (3 properties)
+│       │   │   ├── ConnectionName: *string
+│       │   │   ├── PropertyBag: genruntime.PropertyBag
+│       │   │   └── Type: *string
+│       │   ├── SourceDenormalizeInfo: *v1.JSON
+│       │   ├── SourceEntityName: *string
+│       │   └── TargetEntityName: *string
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── Relationships: v1.JSON[]
+│       └── TargetEntities: Object (4 properties)[]
+│           ├── DslConnectorProperties: Object (3 properties)[]
+│           │   ├── Name: *string
+│           │   ├── PropertyBag: genruntime.PropertyBag
+│           │   └── Value: *v1.JSON
+│           ├── Name: *string
+│           ├── PropertyBag: genruntime.PropertyBag
+│           └── Schema: Object (3 properties)[]
+│               ├── DataType: *string
+│               ├── Name: *string
+│               └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (15 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── AllowVNetOverride: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Folder: *Object (2 properties)
+    │   ├── Name: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Name: *string
+    ├── Policy: *Object (3 properties)
+    │   ├── Mode: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Recurrence: *Object (3 properties)
+    │       ├── Frequency: *string
+    │       ├── Interval: *int
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SourceConnectionsInfo: Object (3 properties)[]
+    │   ├── Connection: *Object (6 properties)
+    │   │   ├── CommonDslConnectorProperties: Object (3 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Value: *v1.JSON
+    │   │   ├── IsInlineDataset: *bool
+    │   │   ├── LinkedService: *Object (4 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *string
+    │   │   ├── LinkedServiceType: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── SourceEntities: Object (4 properties)[]
+    │       ├── DslConnectorProperties: Object (3 properties)[]
+    │       │   ├── Name: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── Value: *v1.JSON
+    │       ├── Name: *string
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── Schema: Object (3 properties)[]
+    │           ├── DataType: *string
+    │           ├── Name: *string
+    │           └── PropertyBag: genruntime.PropertyBag
+    ├── Status: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── TargetConnectionsInfo: Object (5 properties)[]
+    │   ├── Connection: *Object (6 properties)
+    │   │   ├── CommonDslConnectorProperties: Object (3 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Value: *v1.JSON
+    │   │   ├── IsInlineDataset: *bool
+    │   │   ├── LinkedService: *Object (4 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *string
+    │   │   ├── LinkedServiceType: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── DataMapperMappings: Object (6 properties)[]
+    │   │   ├── AttributeMappingInfo: *Object (2 properties)
+    │   │   │   ├── AttributeMappings: Object (7 properties)[]
+    │   │   │   │   ├── AttributeReference: *Object (4 properties)
+    │   │   │   │   │   ├── Entity: *string
+    │   │   │   │   │   ├── EntityConnectionReference: *Object (3 properties)
+    │   │   │   │   │   │   ├── ConnectionName: *string
+    │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   │   └── Type: *string
+    │   │   │   │   │   ├── Name: *string
+    │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── AttributeReferences: Object (4 properties)[]
+    │   │   │   │   │   ├── Entity: *string
+    │   │   │   │   │   ├── EntityConnectionReference: *Object (3 properties)
+    │   │   │   │   │   │   ├── ConnectionName: *string
+    │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   │   └── Type: *string
+    │   │   │   │   │   ├── Name: *string
+    │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── Expression: *string
+    │   │   │   │   ├── FunctionName: *string
+    │   │   │   │   ├── Name: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── Type: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── SourceConnectionReference: *Object (3 properties)
+    │   │   │   ├── ConnectionName: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Type: *string
+    │   │   ├── SourceDenormalizeInfo: *v1.JSON
+    │   │   ├── SourceEntityName: *string
+    │   │   └── TargetEntityName: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Relationships: v1.JSON[]
+    │   └── TargetEntities: Object (4 properties)[]
+    │       ├── DslConnectorProperties: Object (3 properties)[]
+    │       │   ├── Name: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── Value: *v1.JSON
+    │       ├── Name: *string
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── Schema: Object (3 properties)[]
+    │           ├── DataType: *string
+    │           ├── Name: *string
+    │           └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 FactoriesCredential: Resource
 ├── Owner: datafactory/v20180601.Factory
 ├── Spec: Object (6 properties)
@@ -85,6 +316,463 @@ FactoriesCredential: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+FactoriesDataflow: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (4 properties)
+│   │   ├── Flowlet: *Object (10 properties)
+│   │   │   ├── Annotations: v1.JSON[]
+│   │   │   ├── Description: *string
+│   │   │   ├── Folder: *Object (2 properties)
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Script: *string
+│   │   │   ├── ScriptLines: string[]
+│   │   │   ├── Sinks: Object (8 properties)[]
+│   │   │   │   ├── Dataset: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── Flowlet: *Object (6 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DatasetParameters: *v1.JSON
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── LinkedService: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── RejectedDataLinkedService: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── SchemaLinkedService: *Object (4 properties)
+│   │   │   │       ├── Parameters: map[string]v1.JSON
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       ├── ReferenceName: *string
+│   │   │   │       └── Type: *string
+│   │   │   ├── Sources: Object (7 properties)[]
+│   │   │   │   ├── Dataset: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── Flowlet: *Object (6 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DatasetParameters: *v1.JSON
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── LinkedService: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── SchemaLinkedService: *Object (4 properties)
+│   │   │   │       ├── Parameters: map[string]v1.JSON
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       ├── ReferenceName: *string
+│   │   │   │       └── Type: *string
+│   │   │   ├── Transformations: Object (6 properties)[]
+│   │   │   │   ├── Dataset: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── Flowlet: *Object (6 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DatasetParameters: *v1.JSON
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── LinkedService: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── MappingDataFlow: *Object (10 properties)
+│   │   │   ├── Annotations: v1.JSON[]
+│   │   │   ├── Description: *string
+│   │   │   ├── Folder: *Object (2 properties)
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Script: *string
+│   │   │   ├── ScriptLines: string[]
+│   │   │   ├── Sinks: Object (8 properties)[]
+│   │   │   │   ├── Dataset: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── Flowlet: *Object (6 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DatasetParameters: *v1.JSON
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── LinkedService: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── RejectedDataLinkedService: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── SchemaLinkedService: *Object (4 properties)
+│   │   │   │       ├── Parameters: map[string]v1.JSON
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       ├── ReferenceName: *string
+│   │   │   │       └── Type: *string
+│   │   │   ├── Sources: Object (7 properties)[]
+│   │   │   │   ├── Dataset: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── Flowlet: *Object (6 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DatasetParameters: *v1.JSON
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── LinkedService: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── SchemaLinkedService: *Object (4 properties)
+│   │   │   │       ├── Parameters: map[string]v1.JSON
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       ├── ReferenceName: *string
+│   │   │   │       └── Type: *string
+│   │   │   ├── Transformations: Object (6 properties)[]
+│   │   │   │   ├── Dataset: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Description: *string
+│   │   │   │   ├── Flowlet: *Object (6 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DatasetParameters: *v1.JSON
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── LinkedService: *Object (4 properties)
+│   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── WranglingDataFlow: *Object (8 properties)
+│   │       ├── Annotations: v1.JSON[]
+│   │       ├── Description: *string
+│   │       ├── DocumentLocale: *string
+│   │       ├── Folder: *Object (2 properties)
+│   │       │   ├── Name: *string
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── Script: *string
+│   │       ├── Sources: Object (8 properties)[]
+│   │       │   ├── Dataset: *Object (4 properties)
+│   │       │   │   ├── Parameters: map[string]v1.JSON
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   ├── ReferenceName: *string
+│   │       │   │   └── Type: *string
+│   │       │   ├── Description: *string
+│   │       │   ├── Flowlet: *Object (6 properties)
+│   │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │       │   │   ├── DatasetParameters: *v1.JSON
+│   │       │   │   ├── Parameters: map[string]v1.JSON
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   ├── ReferenceName: *string
+│   │       │   │   └── Type: *string
+│   │       │   ├── LinkedService: *Object (4 properties)
+│   │       │   │   ├── Parameters: map[string]v1.JSON
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   ├── ReferenceName: *string
+│   │       │   │   └── Type: *string
+│   │       │   ├── Name: *string
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   ├── SchemaLinkedService: *Object (4 properties)
+│   │       │   │   ├── Parameters: map[string]v1.JSON
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   ├── ReferenceName: *string
+│   │       │   │   └── Type: *string
+│   │       │   └── Script: *string
+│   │       └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (4 properties)
+    │   ├── Flowlet: *Object (10 properties)
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── Folder: *Object (2 properties)
+    │   │   │   ├── Name: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Script: *string
+    │   │   ├── ScriptLines: string[]
+    │   │   ├── Sinks: Object (8 properties)[]
+    │   │   │   ├── Dataset: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (6 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── LinkedService: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── RejectedDataLinkedService: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── SchemaLinkedService: *Object (4 properties)
+    │   │   │       ├── Parameters: map[string]v1.JSON
+    │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *string
+    │   │   ├── Sources: Object (7 properties)[]
+    │   │   │   ├── Dataset: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (6 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── LinkedService: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── SchemaLinkedService: *Object (4 properties)
+    │   │   │       ├── Parameters: map[string]v1.JSON
+    │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *string
+    │   │   ├── Transformations: Object (6 properties)[]
+    │   │   │   ├── Dataset: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (6 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── LinkedService: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Name: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── MappingDataFlow: *Object (10 properties)
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── Folder: *Object (2 properties)
+    │   │   │   ├── Name: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Script: *string
+    │   │   ├── ScriptLines: string[]
+    │   │   ├── Sinks: Object (8 properties)[]
+    │   │   │   ├── Dataset: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (6 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── LinkedService: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── RejectedDataLinkedService: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── SchemaLinkedService: *Object (4 properties)
+    │   │   │       ├── Parameters: map[string]v1.JSON
+    │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *string
+    │   │   ├── Sources: Object (7 properties)[]
+    │   │   │   ├── Dataset: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (6 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── LinkedService: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── SchemaLinkedService: *Object (4 properties)
+    │   │   │       ├── Parameters: map[string]v1.JSON
+    │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *string
+    │   │   ├── Transformations: Object (6 properties)[]
+    │   │   │   ├── Dataset: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (6 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── LinkedService: *Object (4 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── Name: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── WranglingDataFlow: *Object (8 properties)
+    │       ├── Annotations: v1.JSON[]
+    │       ├── Description: *string
+    │       ├── DocumentLocale: *string
+    │       ├── Folder: *Object (2 properties)
+    │       │   ├── Name: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── Script: *string
+    │       ├── Sources: Object (8 properties)[]
+    │       │   ├── Dataset: *Object (4 properties)
+    │       │   │   ├── Parameters: map[string]v1.JSON
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   ├── ReferenceName: *string
+    │       │   │   └── Type: *string
+    │       │   ├── Description: *string
+    │       │   ├── Flowlet: *Object (6 properties)
+    │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │       │   │   ├── DatasetParameters: *v1.JSON
+    │       │   │   ├── Parameters: map[string]v1.JSON
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   ├── ReferenceName: *string
+    │       │   │   └── Type: *string
+    │       │   ├── LinkedService: *Object (4 properties)
+    │       │   │   ├── Parameters: map[string]v1.JSON
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   ├── ReferenceName: *string
+    │       │   │   └── Type: *string
+    │       │   ├── Name: *string
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   ├── SchemaLinkedService: *Object (4 properties)
+    │       │   │   ├── Parameters: map[string]v1.JSON
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   ├── ReferenceName: *string
+    │       │   │   └── Type: *string
+    │       │   └── Script: *string
+    │       └── Type: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 FactoriesGlobalParameter: Resource
 ├── Owner: datafactory/v20180601.Factory
 ├── Spec: Object (6 properties)
@@ -109,6 +797,377 @@ FactoriesGlobalParameter: Resource
     │   ├── PropertyBag: genruntime.PropertyBag
     │   ├── Type: *string
     │   └── Value: *v1.JSON
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesIntegrationRuntime: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (3 properties)
+│   │   ├── Managed: *Object (8 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── ComputeProperties: *Object (10 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── CopyComputeScaleProperties: *Object (4 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── DataIntegrationUnit: *int
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── TimeToLive: *int
+│   │   │   │   ├── DataFlowProperties: *Object (7 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── Cleanup: *bool
+│   │   │   │   │   ├── ComputeType: *string
+│   │   │   │   │   ├── CoreCount: *int
+│   │   │   │   │   ├── CustomProperties: Object (3 properties)[]
+│   │   │   │   │   │   ├── Name: *string
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Value: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── TimeToLive: *int
+│   │   │   │   ├── Location: *string
+│   │   │   │   ├── MaxParallelExecutionsPerNode: *int
+│   │   │   │   ├── NodeSize: *string
+│   │   │   │   ├── NumberOfNodes: *int
+│   │   │   │   ├── PipelineExternalComputeScaleProperties: *Object (5 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── NumberOfExternalNodes: *int
+│   │   │   │   │   ├── NumberOfPipelineNodes: *int
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── TimeToLive: *int
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── VNetProperties: *Object (6 properties)
+│   │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │       ├── PublicIPsReferences: genruntime.ResourceReference[]
+│   │   │   │       ├── Subnet: *string
+│   │   │   │       ├── SubnetId: *string
+│   │   │   │       └── VNetId: *string
+│   │   │   ├── CustomerVirtualNetwork: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── SubnetId: *string
+│   │   │   ├── Description: *string
+│   │   │   ├── ManagedVirtualNetwork: *Object (3 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── SsisProperties: *Object (10 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── CatalogInfo: *Object (7 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── CatalogAdminPassword: *Object (3 properties)
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   └── Value: *genruntime.SecretReference
+│   │   │   │   │   ├── CatalogAdminUserName: *string
+│   │   │   │   │   ├── CatalogPricingTier: *string
+│   │   │   │   │   ├── CatalogServerEndpoint: *string
+│   │   │   │   │   ├── DualStandbyPairName: *string
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Credential: *Object (4 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   ├── CustomSetupScriptProperties: *Object (3 properties)
+│   │   │   │   │   ├── BlobContainerUri: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── SasToken: *Object (3 properties)
+│   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │       ├── Type: *string
+│   │   │   │   │       └── Value: *genruntime.SecretReference
+│   │   │   │   ├── DataProxyProperties: *Object (4 properties)
+│   │   │   │   │   ├── ConnectVia: *Object (3 properties)
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── Path: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── StagingLinkedService: *Object (3 properties)
+│   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │       ├── ReferenceName: *string
+│   │   │   │   │       └── Type: *string
+│   │   │   │   ├── Edition: *string
+│   │   │   │   ├── ExpressCustomSetupProperties: Object (5 properties)[]
+│   │   │   │   │   ├── AzPowerShell: *Object (3 properties)
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   └── Version: *string
+│   │   │   │   │   ├── Cmdkey: *Object (5 properties)
+│   │   │   │   │   │   ├── Password: *Object (3 properties)
+│   │   │   │   │   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   │   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── SecureString: *Object (3 properties)
+│   │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │       ├── Type: *string
+│   │   │   │   │   │   │       └── Value: *genruntime.SecretReference
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── TargetName: *v1.JSON
+│   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   └── UserName: *v1.JSON
+│   │   │   │   │   ├── Component: *Object (4 properties)
+│   │   │   │   │   │   ├── ComponentName: *string
+│   │   │   │   │   │   ├── LicenseKey: *Object (3 properties)
+│   │   │   │   │   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+│   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   ├── SecretName: *v1.JSON
+│   │   │   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+│   │   │   │   │   │   │   │   ├── Store: *Object (4 properties)
+│   │   │   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │   └── SecureString: *Object (3 properties)
+│   │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   │       ├── Type: *string
+│   │   │   │   │   │   │       └── Value: *genruntime.SecretReference
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   ├── EnvironmentVariable: *Object (4 properties)
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── Type: *string
+│   │   │   │   │   │   ├── VariableName: *string
+│   │   │   │   │   │   └── VariableValue: *string
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── LicenseType: *string
+│   │   │   │   ├── PackageStores: Object (3 properties)[]
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── PackageStoreLinkedService: *Object (3 properties)
+│   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   │   └── Type: *string
+│   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SelfHosted: *Object (6 properties)
+│   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │       ├── Description: *string
+│   │       ├── LinkedInfo: *Object (3 properties)
+│   │       │   ├── Key: *Object (3 properties)
+│   │       │   │   ├── AuthorizationType: *string
+│   │       │   │   ├── Key: *Object (3 properties)
+│   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   ├── Type: *string
+│   │       │   │   │   └── Value: *genruntime.SecretReference
+│   │       │   │   └── PropertyBag: genruntime.PropertyBag
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   └── RBAC: *Object (4 properties)
+│   │       │       ├── AuthorizationType: *string
+│   │       │       ├── Credential: *Object (4 properties)
+│   │       │       │   ├── AdditionalProperties: map[string]v1.JSON
+│   │       │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │       │   ├── ReferenceName: *string
+│   │       │       │   └── Type: *string
+│   │       │       ├── PropertyBag: genruntime.PropertyBag
+│   │       │       └── ResourceReference: *genruntime.ResourceReference
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── SelfContainedInteractiveAuthoringEnabled: *bool
+│   │       └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (3 properties)
+    │   ├── Managed: *Object (10 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── ComputeProperties: *Object (10 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── CopyComputeScaleProperties: *Object (4 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DataIntegrationUnit: *int
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── TimeToLive: *int
+    │   │   │   ├── DataFlowProperties: *Object (7 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── Cleanup: *bool
+    │   │   │   │   ├── ComputeType: *string
+    │   │   │   │   ├── CoreCount: *int
+    │   │   │   │   ├── CustomProperties: Object (3 properties)[]
+    │   │   │   │   │   ├── Name: *string
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   └── Value: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── TimeToLive: *int
+    │   │   │   ├── Location: *string
+    │   │   │   ├── MaxParallelExecutionsPerNode: *int
+    │   │   │   ├── NodeSize: *string
+    │   │   │   ├── NumberOfNodes: *int
+    │   │   │   ├── PipelineExternalComputeScaleProperties: *Object (5 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── NumberOfExternalNodes: *int
+    │   │   │   │   ├── NumberOfPipelineNodes: *int
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── TimeToLive: *int
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── VNetProperties: *Object (6 properties)
+    │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │       ├── PublicIPs: string[]
+    │   │   │       ├── Subnet: *string
+    │   │   │       ├── SubnetId: *string
+    │   │   │       └── VNetId: *string
+    │   │   ├── CustomerVirtualNetwork: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── SubnetId: *string
+    │   │   ├── Description: *string
+    │   │   ├── InteractiveQuery: *Object (3 properties)
+    │   │   │   ├── AutoTerminationMinutes: *int
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Status: *string
+    │   │   ├── ManagedVirtualNetwork: *Object (3 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── SsisProperties: *Object (10 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── CatalogInfo: *Object (7 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── CatalogAdminPassword: *Object (2 properties)
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   └── Type: *string
+    │   │   │   │   ├── CatalogAdminUserName: *string
+    │   │   │   │   ├── CatalogPricingTier: *string
+    │   │   │   │   ├── CatalogServerEndpoint: *string
+    │   │   │   │   ├── DualStandbyPairName: *string
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Credential: *Object (4 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   ├── CustomSetupScriptProperties: *Object (3 properties)
+    │   │   │   │   ├── BlobContainerUri: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── SasToken: *Object (2 properties)
+    │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │       └── Type: *string
+    │   │   │   ├── DataProxyProperties: *Object (4 properties)
+    │   │   │   │   ├── ConnectVia: *Object (3 properties)
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   │   └── Type: *string
+    │   │   │   │   ├── Path: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── StagingLinkedService: *Object (3 properties)
+    │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │       ├── ReferenceName: *string
+    │   │   │   │       └── Type: *string
+    │   │   │   ├── Edition: *string
+    │   │   │   ├── ExpressCustomSetupProperties: Object (5 properties)[]
+    │   │   │   │   ├── AzPowerShell: *Object (3 properties)
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   ├── Type: *string
+    │   │   │   │   │   └── Version: *string
+    │   │   │   │   ├── Cmdkey: *Object (5 properties)
+    │   │   │   │   │   ├── Password: *Object (3 properties)
+    │   │   │   │   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   │   │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   │   │   │   │   └── Type: *string
+    │   │   │   │   │   │   │   └── Type: *string
+    │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   │   └── SecureString: *Object (2 properties)
+    │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   │       └── Type: *string
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   ├── TargetName: *v1.JSON
+    │   │   │   │   │   ├── Type: *string
+    │   │   │   │   │   └── UserName: *v1.JSON
+    │   │   │   │   ├── Component: *Object (4 properties)
+    │   │   │   │   │   ├── ComponentName: *string
+    │   │   │   │   │   ├── LicenseKey: *Object (3 properties)
+    │   │   │   │   │   │   ├── AzureKeyVaultSecret: *Object (5 properties)
+    │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   │   │   │   │   ├── Store: *Object (4 properties)
+    │   │   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   │   │   │   │   └── Type: *string
+    │   │   │   │   │   │   │   └── Type: *string
+    │   │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   │   └── SecureString: *Object (2 properties)
+    │   │   │   │   │   │       ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   │       └── Type: *string
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   └── Type: *string
+    │   │   │   │   ├── EnvironmentVariable: *Object (4 properties)
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   ├── Type: *string
+    │   │   │   │   │   ├── VariableName: *string
+    │   │   │   │   │   └── VariableValue: *string
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── LicenseType: *string
+    │   │   │   ├── PackageStores: Object (3 properties)[]
+    │   │   │   │   ├── Name: *string
+    │   │   │   │   ├── PackageStoreLinkedService: *Object (3 properties)
+    │   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   │   └── Type: *string
+    │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── State: *string
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── SelfHosted: *Object (6 properties)
+    │       ├── AdditionalProperties: map[string]v1.JSON
+    │       ├── Description: *string
+    │       ├── LinkedInfo: *Object (3 properties)
+    │       │   ├── Key: *Object (3 properties)
+    │       │   │   ├── AuthorizationType: *string
+    │       │   │   ├── Key: *Object (2 properties)
+    │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   │   └── Type: *string
+    │       │   │   └── PropertyBag: genruntime.PropertyBag
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── RBAC: *Object (4 properties)
+    │       │       ├── AuthorizationType: *string
+    │       │       ├── Credential: *Object (4 properties)
+    │       │       │   ├── AdditionalProperties: map[string]v1.JSON
+    │       │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │       │   ├── ReferenceName: *string
+    │       │       │   └── Type: *string
+    │       │       ├── PropertyBag: genruntime.PropertyBag
+    │       │       └── ResourceId: *string
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── SelfContainedInteractiveAuthoringEnabled: *bool
+    │       └── Type: *string
     ├── PropertyBag: genruntime.PropertyBag
     ├── SystemData: *Object (7 properties)
     │   ├── CreatedAt: *string
@@ -238,6 +1297,411 @@ FactoriesPrivateEndpointConnection: Resource
     │   │   └── Status: *string
     │   ├── PropertyBag: genruntime.PropertyBag
     │   └── ProvisioningState: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+FactoriesTrigger: Resource
+├── Owner: datafactory/v20180601.Factory
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (9 properties)
+│   │   ├── Blob: *Object (9 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Annotations: v1.JSON[]
+│   │   │   ├── Description: *string
+│   │   │   ├── FolderPath: *string
+│   │   │   ├── LinkedService: *Object (4 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── MaxConcurrency: *int
+│   │   │   ├── Pipelines: Object (3 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PipelineReference: *Object (4 properties)
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── BlobEvents: *Object (11 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Annotations: v1.JSON[]
+│   │   │   ├── BlobPathBeginsWith: *string
+│   │   │   ├── BlobPathEndsWith: *string
+│   │   │   ├── Description: *string
+│   │   │   ├── Events: string[]
+│   │   │   ├── IgnoreEmptyBlobs: *bool
+│   │   │   ├── Pipelines: Object (3 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PipelineReference: *Object (4 properties)
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ScopeReference: *genruntime.ResourceReference
+│   │   │   └── Type: *string
+│   │   ├── Chaining: *Object (8 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Annotations: v1.JSON[]
+│   │   │   ├── DependsOn: Object (4 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *string
+│   │   │   ├── Description: *string
+│   │   │   ├── Pipeline: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PipelineReference: *Object (4 properties)
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── RunDimension: *string
+│   │   │   └── Type: *string
+│   │   ├── CustomEvents: *Object (10 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Annotations: v1.JSON[]
+│   │   │   ├── Description: *string
+│   │   │   ├── Events: v1.JSON[]
+│   │   │   ├── Pipelines: Object (3 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PipelineReference: *Object (4 properties)
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ScopeReference: *genruntime.ResourceReference
+│   │   │   ├── SubjectBeginsWith: *string
+│   │   │   ├── SubjectEndsWith: *string
+│   │   │   └── Type: *string
+│   │   ├── MultiplePipeline: *Object (6 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Annotations: v1.JSON[]
+│   │   │   ├── Description: *string
+│   │   │   ├── Pipelines: Object (3 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PipelineReference: *Object (4 properties)
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Type: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RerunTumblingWindow: *Object (9 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Annotations: v1.JSON[]
+│   │   │   ├── Description: *string
+│   │   │   ├── ParentTrigger: *v1.JSON
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── RequestedEndTime: *string
+│   │   │   ├── RequestedStartTime: *string
+│   │   │   ├── RerunConcurrency: *int
+│   │   │   └── Type: *string
+│   │   ├── Schedule: *Object (7 properties)
+│   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   ├── Annotations: v1.JSON[]
+│   │   │   ├── Description: *string
+│   │   │   ├── Pipelines: Object (3 properties)[]
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── PipelineReference: *Object (4 properties)
+│   │   │   │   │   ├── Name: *string
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── ReferenceName: *string
+│   │   │   │   │   └── Type: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Recurrence: *Object (8 properties)
+│   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   ├── EndTime: *string
+│   │   │   │   ├── Frequency: *string
+│   │   │   │   ├── Interval: *int
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   ├── Schedule: *Object (7 properties)
+│   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   ├── Hours: int[]
+│   │   │   │   │   ├── Minutes: int[]
+│   │   │   │   │   ├── MonthDays: int[]
+│   │   │   │   │   ├── MonthlyOccurrences: Object (4 properties)[]
+│   │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│   │   │   │   │   │   ├── Day: *string
+│   │   │   │   │   │   ├── Occurrence: *int
+│   │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   │   └── WeekDays: string[]
+│   │   │   │   ├── StartTime: *string
+│   │   │   │   └── TimeZone: *string
+│   │   │   └── Type: *string
+│   │   └── TumblingWindow: *Object (14 properties)
+│   │       ├── AdditionalProperties: map[string]v1.JSON
+│   │       ├── Annotations: v1.JSON[]
+│   │       ├── Delay: *v1.JSON
+│   │       ├── DependsOn: Object (4 properties)[]
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   ├── SelfDependencyTumblingWindowTrigger: *Object (4 properties)
+│   │       │   │   ├── Offset: *string
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   ├── Size: *string
+│   │       │   │   └── Type: *string
+│   │       │   ├── TriggerDependency: *Object (3 properties)
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   ├── ReferenceTrigger: *Object (3 properties)
+│   │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   │   ├── ReferenceName: *string
+│   │       │   │   │   └── Type: *string
+│   │       │   │   └── Type: *string
+│   │       │   └── TumblingWindowTriggerDependency: *Object (5 properties)
+│   │       │       ├── Offset: *string
+│   │       │       ├── PropertyBag: genruntime.PropertyBag
+│   │       │       ├── ReferenceTrigger: *Object (3 properties)
+│   │       │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │       │   ├── ReferenceName: *string
+│   │       │       │   └── Type: *string
+│   │       │       ├── Size: *string
+│   │       │       └── Type: *string
+│   │       ├── Description: *string
+│   │       ├── EndTime: *string
+│   │       ├── Frequency: *string
+│   │       ├── Interval: *int
+│   │       ├── MaxConcurrency: *int
+│   │       ├── Pipeline: *Object (3 properties)
+│   │       │   ├── Parameters: map[string]v1.JSON
+│   │       │   ├── PipelineReference: *Object (4 properties)
+│   │       │   │   ├── Name: *string
+│   │       │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   │   ├── ReferenceName: *string
+│   │       │   │   └── Type: *string
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       ├── RetryPolicy: *Object (3 properties)
+│   │       │   ├── Count: *v1.JSON
+│   │       │   ├── IntervalInSeconds: *int
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       ├── StartTime: *string
+│   │       └── Type: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (9 properties)
+    │   ├── Blob: *Object (10 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── FolderPath: *string
+    │   │   ├── LinkedService: *Object (4 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *string
+    │   │   ├── MaxConcurrency: *int
+    │   │   ├── Pipelines: Object (3 properties)[]
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PipelineReference: *Object (4 properties)
+    │   │   │   │   ├── Name: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── RuntimeState: *string
+    │   │   └── Type: *string
+    │   ├── BlobEvents: *Object (12 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── BlobPathBeginsWith: *string
+    │   │   ├── BlobPathEndsWith: *string
+    │   │   ├── Description: *string
+    │   │   ├── Events: string[]
+    │   │   ├── IgnoreEmptyBlobs: *bool
+    │   │   ├── Pipelines: Object (3 properties)[]
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PipelineReference: *Object (4 properties)
+    │   │   │   │   ├── Name: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── RuntimeState: *string
+    │   │   ├── Scope: *string
+    │   │   └── Type: *string
+    │   ├── Chaining: *Object (9 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── DependsOn: Object (4 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *string
+    │   │   ├── Description: *string
+    │   │   ├── Pipeline: *Object (3 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PipelineReference: *Object (4 properties)
+    │   │   │   │   ├── Name: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── RunDimension: *string
+    │   │   ├── RuntimeState: *string
+    │   │   └── Type: *string
+    │   ├── CustomEvents: *Object (11 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── Events: v1.JSON[]
+    │   │   ├── Pipelines: Object (3 properties)[]
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PipelineReference: *Object (4 properties)
+    │   │   │   │   ├── Name: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── RuntimeState: *string
+    │   │   ├── Scope: *string
+    │   │   ├── SubjectBeginsWith: *string
+    │   │   ├── SubjectEndsWith: *string
+    │   │   └── Type: *string
+    │   ├── MultiplePipeline: *Object (7 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── Pipelines: Object (3 properties)[]
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PipelineReference: *Object (4 properties)
+    │   │   │   │   ├── Name: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── RuntimeState: *string
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RerunTumblingWindow: *Object (10 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── ParentTrigger: *v1.JSON
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── RequestedEndTime: *string
+    │   │   ├── RequestedStartTime: *string
+    │   │   ├── RerunConcurrency: *int
+    │   │   ├── RuntimeState: *string
+    │   │   └── Type: *string
+    │   ├── Schedule: *Object (8 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── Pipelines: Object (3 properties)[]
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── PipelineReference: *Object (4 properties)
+    │   │   │   │   ├── Name: *string
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Recurrence: *Object (8 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── EndTime: *string
+    │   │   │   ├── Frequency: *string
+    │   │   │   ├── Interval: *int
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Schedule: *Object (7 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── Hours: int[]
+    │   │   │   │   ├── Minutes: int[]
+    │   │   │   │   ├── MonthDays: int[]
+    │   │   │   │   ├── MonthlyOccurrences: Object (4 properties)[]
+    │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   │   ├── Day: *string
+    │   │   │   │   │   ├── Occurrence: *int
+    │   │   │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   │   └── WeekDays: string[]
+    │   │   │   ├── StartTime: *string
+    │   │   │   └── TimeZone: *string
+    │   │   ├── RuntimeState: *string
+    │   │   └── Type: *string
+    │   └── TumblingWindow: *Object (15 properties)
+    │       ├── AdditionalProperties: map[string]v1.JSON
+    │       ├── Annotations: v1.JSON[]
+    │       ├── Delay: *v1.JSON
+    │       ├── DependsOn: Object (4 properties)[]
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   ├── SelfDependencyTumblingWindowTrigger: *Object (4 properties)
+    │       │   │   ├── Offset: *string
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   ├── Size: *string
+    │       │   │   └── Type: *string
+    │       │   ├── TriggerDependency: *Object (3 properties)
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   ├── ReferenceTrigger: *Object (3 properties)
+    │       │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   │   ├── ReferenceName: *string
+    │       │   │   │   └── Type: *string
+    │       │   │   └── Type: *string
+    │       │   └── TumblingWindowTriggerDependency: *Object (5 properties)
+    │       │       ├── Offset: *string
+    │       │       ├── PropertyBag: genruntime.PropertyBag
+    │       │       ├── ReferenceTrigger: *Object (3 properties)
+    │       │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │       │   ├── ReferenceName: *string
+    │       │       │   └── Type: *string
+    │       │       ├── Size: *string
+    │       │       └── Type: *string
+    │       ├── Description: *string
+    │       ├── EndTime: *string
+    │       ├── Frequency: *string
+    │       ├── Interval: *int
+    │       ├── MaxConcurrency: *int
+    │       ├── Pipeline: *Object (3 properties)
+    │       │   ├── Parameters: map[string]v1.JSON
+    │       │   ├── PipelineReference: *Object (4 properties)
+    │       │   │   ├── Name: *string
+    │       │   │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   │   ├── ReferenceName: *string
+    │       │   │   └── Type: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       ├── RetryPolicy: *Object (3 properties)
+    │       │   ├── Count: *v1.JSON
+    │       │   ├── IntervalInSeconds: *int
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── RuntimeState: *string
+    │       ├── StartTime: *string
+    │       └── Type: *string
     ├── PropertyBag: genruntime.PropertyBag
     ├── SystemData: *Object (7 properties)
     │   ├── CreatedAt: *string

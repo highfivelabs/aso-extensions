@@ -1500,11 +1500,53 @@ func getKnownStorageTypes() []*registration.StorageType {
 	})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.ScheduledAction)})
 	result = append(result, &registration.StorageType{Obj: new(costmanagement_v20260601.Setting)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesAdfcdc)})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesCredential)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesDataflow)})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesGlobalParameter)})
+	result = append(result, &registration.StorageType{
+		Obj: new(datafactory_v20180601.FactoriesIntegrationRuntime),
+		Indexes: []registration.Index{
+			{
+				Key:  ".spec.properties.managed.ssisProperties.catalogInfo.catalogAdminPassword.value",
+				Func: indexDatafactoryFactoriesIntegrationRuntimeCatalogAdminPasswordValue,
+			},
+			{
+				Key:  ".spec.properties.selfHosted.linkedInfo.key.key.value",
+				Func: indexDatafactoryFactoriesIntegrationRuntimeKeyValue,
+			},
+			{
+				Key:  ".spec.properties.managed.ssisProperties.expressCustomSetupProperties.componentSetup.licenseKey.secureString.value",
+				Func: indexDatafactoryFactoriesIntegrationRuntimeLicenseKeySecureStringValue,
+			},
+			{
+				Key:  ".spec.properties.managed.ssisProperties.expressCustomSetupProperties.cmdkeySetup.password.secureString.value",
+				Func: indexDatafactoryFactoriesIntegrationRuntimePasswordSecureStringValue,
+			},
+			{
+				Key:  ".spec.properties.managed.ssisProperties.customSetupScriptProperties.sasToken.value",
+				Func: indexDatafactoryFactoriesIntegrationRuntimeSasTokenValue,
+			},
+		},
+		Watches: []registration.Watch{
+			{
+				Type: &v1.Secret{},
+				MakeEventHandler: watchSecretsFactory(
+					[]string{
+						".spec.properties.managed.ssisProperties.catalogInfo.catalogAdminPassword.value",
+						".spec.properties.managed.ssisProperties.customSetupScriptProperties.sasToken.value",
+						".spec.properties.managed.ssisProperties.expressCustomSetupProperties.cmdkeySetup.password.secureString.value",
+						".spec.properties.managed.ssisProperties.expressCustomSetupProperties.componentSetup.licenseKey.secureString.value",
+						".spec.properties.selfHosted.linkedInfo.key.key.value",
+					},
+					&datafactory_v20180601.FactoriesIntegrationRuntimeList{}),
+			},
+		},
+	})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetwork)})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)})
 	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesPrivateEndpointConnection)})
+	result = append(result, &registration.StorageType{Obj: new(datafactory_v20180601.FactoriesTrigger)})
 	result = append(result, &registration.StorageType{Obj: new(dataprotection_v20260701.BackupVaultsBackupResourceGuardProxy)})
 	result = append(result, &registration.StorageType{Obj: new(dataprotection_v20260701.ResourceGuard)})
 	result = append(result, &registration.StorageType{Obj: new(dbformysql_v20241230.FlexibleServersAdvancedThreatProtectionSetting)})
@@ -4328,18 +4370,26 @@ func getKnownTypes() []*registration.KnownType {
 		&registration.KnownType{Obj: new(costmanagement_v20260601s.Setting)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesAdfcdc)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesCredential)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesDataflow)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesGlobalParameter)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesIntegrationRuntime)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetwork)},
 		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)},
-		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesPrivateEndpointConnection)})
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(datafactory_v20180601.FactoriesTrigger)})
 	result = append(
 		result,
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesAdfcdc)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesCredential)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesDataflow)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesGlobalParameter)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesIntegrationRuntime)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesManagedVirtualNetwork)},
 		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesManagedVirtualNetworksManagedPrivateEndpoint)},
-		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesPrivateEndpointConnection)})
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesPrivateEndpointConnection)},
+		&registration.KnownType{Obj: new(datafactory_v20180601s.FactoriesTrigger)})
 	result = append(result, &registration.KnownType{Obj: new(dataprotection_v20260701.BackupVaultsBackupResourceGuardProxy)}, &registration.KnownType{Obj: new(dataprotection_v20260701.ResourceGuard)})
 	result = append(result, &registration.KnownType{Obj: new(dataprotection_v20260701s.BackupVaultsBackupResourceGuardProxy)}, &registration.KnownType{Obj: new(dataprotection_v20260701s.ResourceGuard)})
 	result = append(result, &registration.KnownType{Obj: new(dbformysql_v20241230.FlexibleServersAdvancedThreatProtectionSetting)}, &registration.KnownType{Obj: new(dbformysql_v20241230.FlexibleServersPrivateEndpointConnection)})
@@ -5803,11 +5853,15 @@ func getResourceExtensions() []genruntime.ResourceExtension {
 	result = append(result, &costmanagement_customizations.ExportExtension{})
 	result = append(result, &costmanagement_customizations.ScheduledActionExtension{})
 	result = append(result, &costmanagement_customizations.SettingExtension{})
+	result = append(result, &datafactory_customizations.FactoriesAdfcdcExtension{})
 	result = append(result, &datafactory_customizations.FactoriesCredentialExtension{})
+	result = append(result, &datafactory_customizations.FactoriesDataflowExtension{})
 	result = append(result, &datafactory_customizations.FactoriesGlobalParameterExtension{})
+	result = append(result, &datafactory_customizations.FactoriesIntegrationRuntimeExtension{})
 	result = append(result, &datafactory_customizations.FactoriesManagedVirtualNetworkExtension{})
 	result = append(result, &datafactory_customizations.FactoriesManagedVirtualNetworksManagedPrivateEndpointExtension{})
 	result = append(result, &datafactory_customizations.FactoriesPrivateEndpointConnectionExtension{})
+	result = append(result, &datafactory_customizations.FactoriesTriggerExtension{})
 	result = append(result, &dataprotection_customizations.BackupVaultsBackupResourceGuardProxyExtension{})
 	result = append(result, &dataprotection_customizations.ResourceGuardExtension{})
 	result = append(result, &dbformysql_customizations.FlexibleServersAdvancedThreatProtectionSettingExtension{})
@@ -8126,6 +8180,155 @@ func indexCostmanagementExportSasToken(rawObj client.Object) []string {
 		return nil
 	}
 	return obj.Spec.DeliveryInfo.Destination.SasToken.Index()
+}
+
+// indexDatafactoryFactoriesIntegrationRuntimeCatalogAdminPasswordValue an index function for datafactory_v20180601.FactoriesIntegrationRuntime .spec.properties.managed.ssisProperties.catalogInfo.catalogAdminPassword.value
+func indexDatafactoryFactoriesIntegrationRuntimeCatalogAdminPasswordValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesIntegrationRuntime)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CatalogInfo == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CatalogInfo.CatalogAdminPassword == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CatalogInfo.CatalogAdminPassword.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Managed.SsisProperties.CatalogInfo.CatalogAdminPassword.Value.Index()
+}
+
+// indexDatafactoryFactoriesIntegrationRuntimeKeyValue an index function for datafactory_v20180601.FactoriesIntegrationRuntime .spec.properties.selfHosted.linkedInfo.key.key.value
+func indexDatafactoryFactoriesIntegrationRuntimeKeyValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesIntegrationRuntime)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SelfHosted == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SelfHosted.LinkedInfo == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SelfHosted.LinkedInfo.Key == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SelfHosted.LinkedInfo.Key.Key == nil {
+		return nil
+	}
+	if obj.Spec.Properties.SelfHosted.LinkedInfo.Key.Key.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.SelfHosted.LinkedInfo.Key.Key.Value.Index()
+}
+
+// indexDatafactoryFactoriesIntegrationRuntimeLicenseKeySecureStringValue an index function for datafactory_v20180601.FactoriesIntegrationRuntime .spec.properties.managed.ssisProperties.expressCustomSetupProperties.componentSetup.licenseKey.secureString.value
+func indexDatafactoryFactoriesIntegrationRuntimeLicenseKeySecureStringValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesIntegrationRuntime)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties == nil {
+		return nil
+	}
+	for _, expressCustomSetupPropertyItem := range obj.Spec.Properties.Managed.SsisProperties.ExpressCustomSetupProperties {
+		if expressCustomSetupPropertyItem.Component == nil {
+			continue
+		}
+		if expressCustomSetupPropertyItem.Component.LicenseKey == nil {
+			continue
+		}
+		if expressCustomSetupPropertyItem.Component.LicenseKey.SecureString == nil {
+			continue
+		}
+		if expressCustomSetupPropertyItem.Component.LicenseKey.SecureString.Value == nil {
+			continue
+		}
+		result = append(result, expressCustomSetupPropertyItem.Component.LicenseKey.SecureString.Value.Index()...)
+	}
+	return result
+}
+
+// indexDatafactoryFactoriesIntegrationRuntimePasswordSecureStringValue an index function for datafactory_v20180601.FactoriesIntegrationRuntime .spec.properties.managed.ssisProperties.expressCustomSetupProperties.cmdkeySetup.password.secureString.value
+func indexDatafactoryFactoriesIntegrationRuntimePasswordSecureStringValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesIntegrationRuntime)
+	if !ok {
+		return nil
+	}
+	var result []string
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties == nil {
+		return nil
+	}
+	for _, expressCustomSetupPropertyItem := range obj.Spec.Properties.Managed.SsisProperties.ExpressCustomSetupProperties {
+		if expressCustomSetupPropertyItem.Cmdkey == nil {
+			continue
+		}
+		if expressCustomSetupPropertyItem.Cmdkey.Password == nil {
+			continue
+		}
+		if expressCustomSetupPropertyItem.Cmdkey.Password.SecureString == nil {
+			continue
+		}
+		if expressCustomSetupPropertyItem.Cmdkey.Password.SecureString.Value == nil {
+			continue
+		}
+		result = append(result, expressCustomSetupPropertyItem.Cmdkey.Password.SecureString.Value.Index()...)
+	}
+	return result
+}
+
+// indexDatafactoryFactoriesIntegrationRuntimeSasTokenValue an index function for datafactory_v20180601.FactoriesIntegrationRuntime .spec.properties.managed.ssisProperties.customSetupScriptProperties.sasToken.value
+func indexDatafactoryFactoriesIntegrationRuntimeSasTokenValue(rawObj client.Object) []string {
+	obj, ok := rawObj.(*datafactory_v20180601.FactoriesIntegrationRuntime)
+	if !ok {
+		return nil
+	}
+	if obj.Spec.Properties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CustomSetupScriptProperties == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CustomSetupScriptProperties.SasToken == nil {
+		return nil
+	}
+	if obj.Spec.Properties.Managed.SsisProperties.CustomSetupScriptProperties.SasToken.Value == nil {
+		return nil
+	}
+	return obj.Spec.Properties.Managed.SsisProperties.CustomSetupScriptProperties.SasToken.Value.Index()
 }
 
 // indexDbforpostgresqlServerGroupsv2AdministratorLoginPassword an index function for dbforpostgresql_v20221108.ServerGroupsv2 .spec.administratorLoginPassword

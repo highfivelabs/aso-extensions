@@ -801,18 +801,18 @@ Microsoft.Datadog,Microsoft.Datadog/monitors/monitoredSubscriptions,19,,0,,0,19,
 Microsoft.Datadog,Microsoft.Datadog/monitors/singleSignOnConfigurations,2,,0,,0,2,false,spec_api=2025-06-11
 Microsoft.Datadog,Microsoft.Datadog/monitors/tagRules,15,,0,,0,15,false,spec_api=2025-06-11
 Microsoft.DataFactory,Microsoft.DataFactory/factories,26,datafactory.azure.com/Factory,25,,0,1,false,spec_api=2018-06-01; official_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/adfcdcs,52,,0,,0,52,false,spec_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/adfcdcs,52,,0,datafactory.azure.hfl.dev/FactoriesAdfcdc,51,1,false,spec_api=2018-06-01; ours_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/credentials,5,,0,datafactory.azure.hfl.dev/FactoriesCredential,3,2,false,spec_api=2018-06-01; ours_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/dataflows,54,,0,,0,54,false,spec_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/dataflows,54,,0,datafactory.azure.hfl.dev/FactoriesDataflow,4,50,false,spec_api=2018-06-01; ours_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/datasets,13,,0,,0,13,false,spec_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/globalParameters,2,,0,datafactory.azure.hfl.dev/FactoriesGlobalParameter,2,0,false,spec_api=2018-06-01; ours_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/integrationRuntimes,57,,0,,0,57,false,spec_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/integrationRuntimes,57,,0,datafactory.azure.hfl.dev/FactoriesIntegrationRuntime,4,53,false,spec_api=2018-06-01; ours_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/linkedservices,32,,0,,0,32,false,spec_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/managedVirtualNetworks,1,,0,datafactory.azure.hfl.dev/FactoriesManagedVirtualNetwork,0,1,false,spec_api=2018-06-01; ours_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints,5,,0,datafactory.azure.hfl.dev/FactoriesManagedVirtualNetworksManagedPrivateEndpoint,3,2,false,spec_api=2018-06-01; ours_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/pipelines,39,,0,,0,39,false,spec_api=2018-06-01
 Microsoft.DataFactory,Microsoft.DataFactory/factories/privateEndpointConnections,4,,0,datafactory.azure.hfl.dev/FactoriesPrivateEndpointConnection,4,0,false,spec_api=2018-06-01; ours_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/triggers,17,,0,,0,17,false,spec_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/triggers,17,,0,datafactory.azure.hfl.dev/FactoriesTrigger,11,6,false,spec_api=2018-06-01; ours_api=2018-06-01
 Microsoft.DataLakeAnalytics,Microsoft.DataLakeAnalytics/accounts,24,,0,,0,24,false,spec_api=2016-11-01
 Microsoft.DataLakeAnalytics,Microsoft.DataLakeAnalytics/accounts/computePolicies,4,,0,,0,4,false,spec_api=2016-11-01
 Microsoft.DataLakeAnalytics,Microsoft.DataLakeAnalytics/accounts/dataLakeStoreAccounts,1,,0,,0,1,false,spec_api=2016-11-01

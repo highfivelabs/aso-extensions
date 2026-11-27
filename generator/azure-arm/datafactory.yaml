@@ -3,15 +3,15 @@
 # tier 3 row t10 of docs/coverage/foundation.md): a factory's managed
 # virtual network and its managed private endpoints, credentials (a
 # user-assigned identity or a service principal), global parameters and
-# private endpoint connections. Owned by ASO's Factory.
+# private endpoint connections; and (f86) triggers, data flows, integration
+# runtimes and change data capture. Owned by ASO's Factory.
 #
-# Not exported: linked services, datasets, pipelines, triggers, data flows,
-# integration runtimes and change data capture. With any of linked
-# services and datasets (or all of them), ASO's generator at the pin
-# overflows its stack in its flattening stage (the stage after it finds the
-# resources), on the specs' polymorphic, mutually referring types, before
-# any CRD is written; so whether their CRDs would fit the size limit is not
-# known. Recorded in docs/plan.md f78.
+# Not exported: linked services, datasets and pipelines. With patches 0018,
+# 0019 and 0008's digit rule (f84, f86) they generate, but each is one union
+# of every type, and their CRDs are far over what an install can apply
+# (datasets 854 KB and pipelines 3.36 MB of JSON; linked services 2.67 MB of
+# YAML): splitting them into one kind per type is open question 17 in
+# docs/plan.md section 8.
 typeFilters:
   - action: include
     group: datafactory
@@ -26,6 +26,16 @@ typeTransformers:
     property: Operands
     remove: true
     because: We don't currently support directly recursive types (ASO's datafactory.yaml).
+  - group: datafactory
+    version: v20180601
+    name: SecureString_STATUS
+    property: Value
+    remove: true
+    because: >-
+      an integration runtime's secure strings (the SSIS catalog's admin
+      password, a custom setup script's SAS token, a package store's or
+      express custom setup's credentials) come from Secrets (below); a
+      status must not hold them
 groupModelConfiguration:
   2018-06-01:
     Factories_ManagedVirtualNetwork:
@@ -52,3 +62,30 @@ groupModelConfiguration:
     PrivateEndpoint:
       Id:
         $referenceType: arm # the private endpoint of a connection
+    Factories_Trigger:
+      $exportAs: FactoriesTrigger
+      $supportedFrom: v0.1.0
+    Factories_Dataflow:
+      $exportAs: FactoriesDataflow
+      $supportedFrom: v0.1.0
+    Factories_IntegrationRuntime:
+      $exportAs: FactoriesIntegrationRuntime
+      $supportedFrom: v0.1.0
+    Factories_Adfcdc:
+      $exportAs: FactoriesAdfcdc
+      $supportedFrom: v0.1.0
+    BlobEventsTriggerTypeProperties:
+      Scope:
+        $referenceType: arm # the storage account whose events fire the trigger
+    CustomEventsTriggerTypeProperties:
+      Scope:
+        $referenceType: arm # the Event Grid topic whose events fire the trigger
+    IntegrationRuntimeVNetProperties:
+      PublicIPs:
+        $referenceType: arm # the public IP addresses an SSIS runtime uses
+    LinkedIntegrationRuntimeRbacAuthorization:
+      ResourceId:
+        $referenceType: arm # the shared self-hosted runtime a linked runtime uses
+    SecureString:
+      Value:
+        $importSecretMode: required # an integration runtime's secure strings, Secrets (as synapse.yaml, from ASO's sql.yaml)

@@ -1,0 +1,1043 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: factoriesadfcdcs.datafactory.azure.hfl.dev
+spec:
+  group: datafactory.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - datafactory
+    kind: FactoriesAdfcdc
+    listKind: FactoriesAdfcdcList
+    plural: factoriesadfcdcs
+    singular: factoriesadfcdc
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20180601
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/adfcdcs/{changeDataCaptureName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              additionalProperties:
+                additionalProperties:
+                  x-kubernetes-preserve-unknown-fields: true
+                type: object
+              allowVNetOverride:
+                description: 'AllowVNetOverride: A boolean to determine if the vnet
+                  configuration needs to be overwritten.'
+                type: boolean
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                maxLength: 260
+                minLength: 1
+                pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+                type: string
+              description:
+                description: 'Description: The description of the change data capture.'
+                type: string
+              folder:
+                description: 'Folder: The folder that this CDC is in. If not specified,
+                  CDC will appear at the root level.'
+                properties:
+                  name:
+                    description: 'Name: The name of the folder that this CDC is in.'
+                    type: string
+                type: object
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a datafactory.azure.com/Factory resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+              policy:
+                description: 'Policy: CDC policy'
+                properties:
+                  mode:
+                    description: 'Mode: Mode of running the CDC: batch vs continuous.'
+                    type: string
+                  recurrence:
+                    description: 'Recurrence: Defines the frequency and interval for
+                      running the CDC for batch mode.'
+                    properties:
+                      frequency:
+                        description: 'Frequency: Frequency of period in terms of ''Hour'',
+                          ''Minute'' or ''Second''.'
+                        enum:
+                        - Hour
+                        - Minute
+                        - Second
+                        type: string
+                      interval:
+                        description: 'Interval: Actual interval value as per chosen
+                          frequency.'
+                        type: integer
+                    type: object
+                type: object
+              sourceConnectionsInfo:
+                description: 'SourceConnectionsInfo: List of sources connections that
+                  can be used as sources in the CDC.'
+                items:
+                  description: A object which contains list of tables and connection
+                    details for a source connection.
+                  properties:
+                    connection:
+                      description: 'Connection: Source connection details.'
+                      properties:
+                        commonDslConnectorProperties:
+                          description: 'CommonDslConnectorProperties: List of name/value
+                            pairs for connection properties.'
+                          items:
+                            description: Connector properties of a CDC table in terms
+                              of name / value pairs.
+                            properties:
+                              name:
+                                description: 'Name: Name of the property.'
+                                type: string
+                              value:
+                                description: 'Value: Value of the property.'
+                                x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          type: array
+                        isInlineDataset:
+                          description: |-
+                            IsInlineDataset: A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets
+                            are supported.
+                          type: boolean
+                        linkedService:
+                          description: 'LinkedService: Linked service reference.'
+                          properties:
+                            parameters:
+                              additionalProperties:
+                                x-kubernetes-preserve-unknown-fields: true
+                              description: 'Parameters: Arguments for LinkedService.'
+                              type: object
+                            referenceName:
+                              description: 'ReferenceName: Reference LinkedService
+                                name.'
+                              type: string
+                            type:
+                              description: 'Type: Linked service reference type.'
+                              enum:
+                              - LinkedServiceReference
+                              type: string
+                          required:
+                          - referenceName
+                          - type
+                          type: object
+                        linkedServiceType:
+                          description: 'LinkedServiceType: Type of the linked service
+                            e.g.: AzureBlobFS.'
+                          type: string
+                        type:
+                          description: 'Type: Type of connection via linked service
+                            or dataset.'
+                          enum:
+                          - linkedservicetype
+                          type: string
+                      required:
+                      - type
+                      type: object
+                    sourceEntities:
+                      description: 'SourceEntities: List of source tables for a source
+                        connection.'
+                      items:
+                        description: CDC table details.
+                        properties:
+                          dslConnectorProperties:
+                            description: 'DslConnectorProperties: List of name/value
+                              pairs for connection properties.'
+                            items:
+                              description: Connector properties of a CDC table in
+                                terms of name / value pairs.
+                              properties:
+                                name:
+                                  description: 'Name: Name of the property.'
+                                  type: string
+                                value:
+                                  description: 'Value: Value of the property.'
+                                  x-kubernetes-preserve-unknown-fields: true
+                              type: object
+                            type: array
+                          name:
+                            description: 'Name: Name of the table.'
+                            type: string
+                          schema:
+                            description: 'Schema: List of columns for the source table.'
+                            items:
+                              description: Schema of a CDC table in terms of column
+                                names and their corresponding data types.
+                              properties:
+                                dataType:
+                                  description: 'DataType: Data type of the column.'
+                                  type: string
+                                name:
+                                  description: 'Name: Name of the column.'
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      type: array
+                  type: object
+                type: array
+              status:
+                description: 'Status: Status of the CDC as to if it is running or
+                  stopped.'
+                type: string
+              targetConnectionsInfo:
+                description: 'TargetConnectionsInfo: List of target connections that
+                  can be used as sources in the CDC.'
+                items:
+                  description: A object which contains list of tables and connection
+                    details for a target connection.
+                  properties:
+                    connection:
+                      description: 'Connection: Source connection details.'
+                      properties:
+                        commonDslConnectorProperties:
+                          description: 'CommonDslConnectorProperties: List of name/value
+                            pairs for connection properties.'
+                          items:
+                            description: Connector properties of a CDC table in terms
+                              of name / value pairs.
+                            properties:
+                              name:
+                                description: 'Name: Name of the property.'
+                                type: string
+                              value:
+                                description: 'Value: Value of the property.'
+                                x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          type: array
+                        isInlineDataset:
+                          description: |-
+                            IsInlineDataset: A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets
+                            are supported.
+                          type: boolean
+                        linkedService:
+                          description: 'LinkedService: Linked service reference.'
+                          properties:
+                            parameters:
+                              additionalProperties:
+                                x-kubernetes-preserve-unknown-fields: true
+                              description: 'Parameters: Arguments for LinkedService.'
+                              type: object
+                            referenceName:
+                              description: 'ReferenceName: Reference LinkedService
+                                name.'
+                              type: string
+                            type:
+                              description: 'Type: Linked service reference type.'
+                              enum:
+                              - LinkedServiceReference
+                              type: string
+                          required:
+                          - referenceName
+                          - type
+                          type: object
+                        linkedServiceType:
+                          description: 'LinkedServiceType: Type of the linked service
+                            e.g.: AzureBlobFS.'
+                          type: string
+                        type:
+                          description: 'Type: Type of connection via linked service
+                            or dataset.'
+                          enum:
+                          - linkedservicetype
+                          type: string
+                      required:
+                      - type
+                      type: object
+                    dataMapperMappings:
+                      description: 'DataMapperMappings: List of table mappings.'
+                      items:
+                        description: Source and target table mapping details.
+                        properties:
+                          attributeMappingInfo:
+                            description: 'AttributeMappingInfo: This holds the user
+                              provided attribute mapping information.'
+                            properties:
+                              attributeMappings:
+                                description: 'AttributeMappings: List of attribute
+                                  mappings.'
+                                items:
+                                  description: Source and target column mapping details.
+                                  properties:
+                                    attributeReference:
+                                      description: 'AttributeReference: Reference
+                                        of the source column used in the mapping.
+                                        It is used for ''Direct'' mapping type only.'
+                                      properties:
+                                        entity:
+                                          description: 'Entity: Name of the table.'
+                                          type: string
+                                        entityConnectionReference:
+                                          description: 'EntityConnectionReference:
+                                            The connection reference for the connection.'
+                                          properties:
+                                            connectionName:
+                                              description: 'ConnectionName: Name of
+                                                the connection'
+                                              type: string
+                                            type:
+                                              description: 'Type: Type of connection
+                                                via linked service or dataset.'
+                                              enum:
+                                              - linkedservicetype
+                                              type: string
+                                          type: object
+                                        name:
+                                          description: 'Name: Name of the column.'
+                                          type: string
+                                      type: object
+                                    attributeReferences:
+                                      description: 'AttributeReferences: List of references
+                                        for source columns. It is used for ''Derived''
+                                        and ''Aggregate'' type mappings only.'
+                                      items:
+                                        description: Attribute reference details for
+                                          the referred column.
+                                        properties:
+                                          entity:
+                                            description: 'Entity: Name of the table.'
+                                            type: string
+                                          entityConnectionReference:
+                                            description: 'EntityConnectionReference:
+                                              The connection reference for the connection.'
+                                            properties:
+                                              connectionName:
+                                                description: 'ConnectionName: Name
+                                                  of the connection'
+                                                type: string
+                                              type:
+                                                description: 'Type: Type of connection
+                                                  via linked service or dataset.'
+                                                enum:
+                                                - linkedservicetype
+                                                type: string
+                                            type: object
+                                          name:
+                                            description: 'Name: Name of the column.'
+                                            type: string
+                                        type: object
+                                      type: array
+                                    expression:
+                                      description: 'Expression: Expression used for
+                                        ''Aggregate'' and ''Derived'' type mapping.'
+                                      type: string
+                                    functionName:
+                                      description: 'FunctionName: Name of the function
+                                        used for ''Aggregate'' and ''Derived'' (except
+                                        ''Advanced'') type mapping.'
+                                      type: string
+                                    name:
+                                      description: 'Name: Name of the target column.'
+                                      type: string
+                                    type:
+                                      description: 'Type: Type of the CDC attribute
+                                        mapping. Note: ''Advanced'' mapping type is
+                                        also saved as ''Derived''.'
+                                      enum:
+                                      - Aggregate
+                                      - Derived
+                                      - Direct
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          sourceConnectionReference:
+                            description: 'SourceConnectionReference: The connection
+                              reference for the source connection.'
+                            properties:
+                              connectionName:
+                                description: 'ConnectionName: Name of the connection'
+                                type: string
+                              type:
+                                description: 'Type: Type of connection via linked
+                                  service or dataset.'
+                                enum:
+                                - linkedservicetype
+                                type: string
+                            type: object
+                          sourceDenormalizeInfo:
+                            description: 'SourceDenormalizeInfo: This holds the source
+                              denormalization information used while joining multiple
+                              sources.'
+                            x-kubernetes-preserve-unknown-fields: true
+                          sourceEntityName:
+                            description: 'SourceEntityName: Name of the source table'
+                            type: string
+                          targetEntityName:
+                            description: 'TargetEntityName: Name of the target table'
+                            type: string
+                        type: object
+                      type: array
+                    relationships:
+                      description: 'Relationships: List of relationship info among
+                        the tables.'
+                      items:
+                        x-kubernetes-preserve-unknown-fields: true
+                      type: array
+                    targetEntities:
+                      description: 'TargetEntities: List of source tables for a target
+                        connection.'
+                      items:
+                        description: CDC table details.
+                        properties:
+                          dslConnectorProperties:
+                            description: 'DslConnectorProperties: List of name/value
+                              pairs for connection properties.'
+                            items:
+                              description: Connector properties of a CDC table in
+                                terms of name / value pairs.
+                              properties:
+                                name:
+                                  description: 'Name: Name of the property.'
+                                  type: string
+                                value:
+                                  description: 'Value: Value of the property.'
+                                  x-kubernetes-preserve-unknown-fields: true
+                              type: object
+                            type: array
+                          name:
+                            description: 'Name: Name of the table.'
+                            type: string
+                          schema:
+                            description: 'Schema: List of columns for the source table.'
+                            items:
+                              description: Schema of a CDC table in terms of column
+                                names and their corresponding data types.
+                              properties:
+                                dataType:
+                                  description: 'DataType: Data type of the column.'
+                                  type: string
+                                name:
+                                  description: 'Name: Name of the column.'
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      type: array
+                  type: object
+                type: array
+            required:
+            - owner
+            - policy
+            - sourceConnectionsInfo
+            - targetConnectionsInfo
+            type: object
+          status:
+            properties:
+              additionalProperties:
+                additionalProperties:
+                  x-kubernetes-preserve-unknown-fields: true
+                type: object
+              allowVNetOverride:
+                description: 'AllowVNetOverride: A boolean to determine if the vnet
+                  configuration needs to be overwritten.'
+                type: boolean
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              description:
+                description: 'Description: The description of the change data capture.'
+                type: string
+              etag:
+                description: |-
+                  Etag: "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.
+                  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in
+                  the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header
+                  fields.")
+                type: string
+              folder:
+                description: 'Folder: The folder that this CDC is in. If not specified,
+                  CDC will appear at the root level.'
+                properties:
+                  name:
+                    description: 'Name: The name of the folder that this CDC is in.'
+                    type: string
+                type: object
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. E.g.
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              policy:
+                description: 'Policy: CDC policy'
+                properties:
+                  mode:
+                    description: 'Mode: Mode of running the CDC: batch vs continuous.'
+                    type: string
+                  recurrence:
+                    description: 'Recurrence: Defines the frequency and interval for
+                      running the CDC for batch mode.'
+                    properties:
+                      frequency:
+                        description: 'Frequency: Frequency of period in terms of ''Hour'',
+                          ''Minute'' or ''Second''.'
+                        type: string
+                      interval:
+                        description: 'Interval: Actual interval value as per chosen
+                          frequency.'
+                        type: integer
+                    type: object
+                type: object
+              sourceConnectionsInfo:
+                description: 'SourceConnectionsInfo: List of sources connections that
+                  can be used as sources in the CDC.'
+                items:
+                  description: A object which contains list of tables and connection
+                    details for a source connection.
+                  properties:
+                    connection:
+                      description: 'Connection: Source connection details.'
+                      properties:
+                        commonDslConnectorProperties:
+                          description: 'CommonDslConnectorProperties: List of name/value
+                            pairs for connection properties.'
+                          items:
+                            description: Connector properties of a CDC table in terms
+                              of name / value pairs.
+                            properties:
+                              name:
+                                description: 'Name: Name of the property.'
+                                type: string
+                              value:
+                                description: 'Value: Value of the property.'
+                                x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          type: array
+                        isInlineDataset:
+                          description: |-
+                            IsInlineDataset: A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets
+                            are supported.
+                          type: boolean
+                        linkedService:
+                          description: 'LinkedService: Linked service reference.'
+                          properties:
+                            parameters:
+                              additionalProperties:
+                                x-kubernetes-preserve-unknown-fields: true
+                              description: 'Parameters: Arguments for LinkedService.'
+                              type: object
+                            referenceName:
+                              description: 'ReferenceName: Reference LinkedService
+                                name.'
+                              type: string
+                            type:
+                              description: 'Type: Linked service reference type.'
+                              type: string
+                          type: object
+                        linkedServiceType:
+                          description: 'LinkedServiceType: Type of the linked service
+                            e.g.: AzureBlobFS.'
+                          type: string
+                        type:
+                          description: 'Type: Type of connection via linked service
+                            or dataset.'
+                          type: string
+                      type: object
+                    sourceEntities:
+                      description: 'SourceEntities: List of source tables for a source
+                        connection.'
+                      items:
+                        description: CDC table details.
+                        properties:
+                          dslConnectorProperties:
+                            description: 'DslConnectorProperties: List of name/value
+                              pairs for connection properties.'
+                            items:
+                              description: Connector properties of a CDC table in
+                                terms of name / value pairs.
+                              properties:
+                                name:
+                                  description: 'Name: Name of the property.'
+                                  type: string
+                                value:
+                                  description: 'Value: Value of the property.'
+                                  x-kubernetes-preserve-unknown-fields: true
+                              type: object
+                            type: array
+                          name:
+                            description: 'Name: Name of the table.'
+                            type: string
+                          schema:
+                            description: 'Schema: List of columns for the source table.'
+                            items:
+                              description: Schema of a CDC table in terms of column
+                                names and their corresponding data types.
+                              properties:
+                                dataType:
+                                  description: 'DataType: Data type of the column.'
+                                  type: string
+                                name:
+                                  description: 'Name: Name of the column.'
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      type: array
+                  type: object
+                type: array
+              status:
+                description: 'Status: Status of the CDC as to if it is running or
+                  stopped.'
+                type: string
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              targetConnectionsInfo:
+                description: 'TargetConnectionsInfo: List of target connections that
+                  can be used as sources in the CDC.'
+                items:
+                  description: A object which contains list of tables and connection
+                    details for a target connection.
+                  properties:
+                    connection:
+                      description: 'Connection: Source connection details.'
+                      properties:
+                        commonDslConnectorProperties:
+                          description: 'CommonDslConnectorProperties: List of name/value
+                            pairs for connection properties.'
+                          items:
+                            description: Connector properties of a CDC table in terms
+                              of name / value pairs.
+                            properties:
+                              name:
+                                description: 'Name: Name of the property.'
+                                type: string
+                              value:
+                                description: 'Value: Value of the property.'
+                                x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          type: array
+                        isInlineDataset:
+                          description: |-
+                            IsInlineDataset: A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets
+                            are supported.
+                          type: boolean
+                        linkedService:
+                          description: 'LinkedService: Linked service reference.'
+                          properties:
+                            parameters:
+                              additionalProperties:
+                                x-kubernetes-preserve-unknown-fields: true
+                              description: 'Parameters: Arguments for LinkedService.'
+                              type: object
+                            referenceName:
+                              description: 'ReferenceName: Reference LinkedService
+                                name.'
+                              type: string
+                            type:
+                              description: 'Type: Linked service reference type.'
+                              type: string
+                          type: object
+                        linkedServiceType:
+                          description: 'LinkedServiceType: Type of the linked service
+                            e.g.: AzureBlobFS.'
+                          type: string
+                        type:
+                          description: 'Type: Type of connection via linked service
+                            or dataset.'
+                          type: string
+                      type: object
+                    dataMapperMappings:
+                      description: 'DataMapperMappings: List of table mappings.'
+                      items:
+                        description: Source and target table mapping details.
+                        properties:
+                          attributeMappingInfo:
+                            description: 'AttributeMappingInfo: This holds the user
+                              provided attribute mapping information.'
+                            properties:
+                              attributeMappings:
+                                description: 'AttributeMappings: List of attribute
+                                  mappings.'
+                                items:
+                                  description: Source and target column mapping details.
+                                  properties:
+                                    attributeReference:
+                                      description: 'AttributeReference: Reference
+                                        of the source column used in the mapping.
+                                        It is used for ''Direct'' mapping type only.'
+                                      properties:
+                                        entity:
+                                          description: 'Entity: Name of the table.'
+                                          type: string
+                                        entityConnectionReference:
+                                          description: 'EntityConnectionReference:
+                                            The connection reference for the connection.'
+                                          properties:
+                                            connectionName:
+                                              description: 'ConnectionName: Name of
+                                                the connection'
+                                              type: string
+                                            type:
+                                              description: 'Type: Type of connection
+                                                via linked service or dataset.'
+                                              type: string
+                                          type: object
+                                        name:
+                                          description: 'Name: Name of the column.'
+                                          type: string
+                                      type: object
+                                    attributeReferences:
+                                      description: 'AttributeReferences: List of references
+                                        for source columns. It is used for ''Derived''
+                                        and ''Aggregate'' type mappings only.'
+                                      items:
+                                        description: Attribute reference details for
+                                          the referred column.
+                                        properties:
+                                          entity:
+                                            description: 'Entity: Name of the table.'
+                                            type: string
+                                          entityConnectionReference:
+                                            description: 'EntityConnectionReference:
+                                              The connection reference for the connection.'
+                                            properties:
+                                              connectionName:
+                                                description: 'ConnectionName: Name
+                                                  of the connection'
+                                                type: string
+                                              type:
+                                                description: 'Type: Type of connection
+                                                  via linked service or dataset.'
+                                                type: string
+                                            type: object
+                                          name:
+                                            description: 'Name: Name of the column.'
+                                            type: string
+                                        type: object
+                                      type: array
+                                    expression:
+                                      description: 'Expression: Expression used for
+                                        ''Aggregate'' and ''Derived'' type mapping.'
+                                      type: string
+                                    functionName:
+                                      description: 'FunctionName: Name of the function
+                                        used for ''Aggregate'' and ''Derived'' (except
+                                        ''Advanced'') type mapping.'
+                                      type: string
+                                    name:
+                                      description: 'Name: Name of the target column.'
+                                      type: string
+                                    type:
+                                      description: 'Type: Type of the CDC attribute
+                                        mapping. Note: ''Advanced'' mapping type is
+                                        also saved as ''Derived''.'
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          sourceConnectionReference:
+                            description: 'SourceConnectionReference: The connection
+                              reference for the source connection.'
+                            properties:
+                              connectionName:
+                                description: 'ConnectionName: Name of the connection'
+                                type: string
+                              type:
+                                description: 'Type: Type of connection via linked
+                                  service or dataset.'
+                                type: string
+                            type: object
+                          sourceDenormalizeInfo:
+                            description: 'SourceDenormalizeInfo: This holds the source
+                              denormalization information used while joining multiple
+                              sources.'
+                            x-kubernetes-preserve-unknown-fields: true
+                          sourceEntityName:
+                            description: 'SourceEntityName: Name of the source table'
+                            type: string
+                          targetEntityName:
+                            description: 'TargetEntityName: Name of the target table'
+                            type: string
+                        type: object
+                      type: array
+                    relationships:
+                      description: 'Relationships: List of relationship info among
+                        the tables.'
+                      items:
+                        x-kubernetes-preserve-unknown-fields: true
+                      type: array
+                    targetEntities:
+                      description: 'TargetEntities: List of source tables for a target
+                        connection.'
+                      items:
+                        description: CDC table details.
+                        properties:
+                          dslConnectorProperties:
+                            description: 'DslConnectorProperties: List of name/value
+                              pairs for connection properties.'
+                            items:
+                              description: Connector properties of a CDC table in
+                                terms of name / value pairs.
+                              properties:
+                                name:
+                                  description: 'Name: Name of the property.'
+                                  type: string
+                                value:
+                                  description: 'Value: Value of the property.'
+                                  x-kubernetes-preserve-unknown-fields: true
+                              type: object
+                            type: array
+                          name:
+                            description: 'Name: Name of the table.'
+                            type: string
+                          schema:
+                            description: 'Schema: List of columns for the source table.'
+                            items:
+                              description: Schema of a CDC table in terms of column
+                                names and their corresponding data types.
+                              properties:
+                                dataType:
+                                  description: 'DataType: Data type of the column.'
+                                  type: string
+                                name:
+                                  description: 'Name: Name of the column.'
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      type: array
+                  type: object
+                type: array
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -10,9 +10,13 @@ no_list: true
 
 | Resource                                              | ARM Version | CRD Version | Supported From | Sample |
 |-------------------------------------------------------|-------------|-------------|----------------|--------|
+| FactoriesAdfcdc                                       | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesCredential                                   | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesDataflow                                     | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesGlobalParameter                              | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesIntegrationRuntime                           | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesManagedVirtualNetwork                        | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesManagedVirtualNetworksManagedPrivateEndpoint | 2018-06-01  | v20180601   | v0.1.0         | -      |
 | FactoriesPrivateEndpointConnection                    | 2018-06-01  | v20180601   | v0.1.0         | -      |
+| FactoriesTrigger                                      | 2018-06-01  | v20180601   | v0.1.0         | -      |
 

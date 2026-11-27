@@ -4,6 +4,219 @@ github.com/highfivelabs/aso-extensions/apis/arm/datafactory/v20180601
 APIVersion: Enum (1 value)
 └── "2018-06-01"
 
+FactoriesAdfcdc: Resource
+├── Owner: Factory
+├── Spec: Object (11 properties)
+│   ├── AdditionalProperties: map[string]v1.JSON
+│   ├── AllowVNetOverride: *bool
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── Description: *string
+│   ├── Folder: *Object (1 property)
+│   │   └── Name: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Policy: *Object (2 properties)
+│   │   ├── Mode: *string
+│   │   └── Recurrence: *Object (2 properties)
+│   │       ├── Frequency: *Enum (3 values)
+│   │       │   ├── "Hour"
+│   │       │   ├── "Minute"
+│   │       │   └── "Second"
+│   │       └── Interval: *int
+│   ├── SourceConnectionsInfo: Object (2 properties)[]
+│   │   ├── Connection: *Object (5 properties)
+│   │   │   ├── CommonDslConnectorProperties: Object (2 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Value: *v1.JSON
+│   │   │   ├── IsInlineDataset: *bool
+│   │   │   ├── LinkedService: *Object (3 properties)
+│   │   │   │   ├── Parameters: map[string]v1.JSON
+│   │   │   │   ├── ReferenceName: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "LinkedServiceReference"
+│   │   │   ├── LinkedServiceType: *string
+│   │   │   └── Type: *Enum (1 value)
+│   │   │       └── "linkedservicetype"
+│   │   └── SourceEntities: Object (3 properties)[]
+│   │       ├── DslConnectorProperties: Object (2 properties)[]
+│   │       │   ├── Name: *string
+│   │       │   └── Value: *v1.JSON
+│   │       ├── Name: *string
+│   │       └── Schema: Object (2 properties)[]
+│   │           ├── DataType: *string
+│   │           └── Name: *string
+│   ├── Status: *string
+│   └── TargetConnectionsInfo: Object (4 properties)[]
+│       ├── Connection: *Object (5 properties)
+│       │   ├── CommonDslConnectorProperties: Object (2 properties)[]
+│       │   │   ├── Name: *string
+│       │   │   └── Value: *v1.JSON
+│       │   ├── IsInlineDataset: *bool
+│       │   ├── LinkedService: *Object (3 properties)
+│       │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   ├── ReferenceName: *string
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "LinkedServiceReference"
+│       │   ├── LinkedServiceType: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "linkedservicetype"
+│       ├── DataMapperMappings: Object (5 properties)[]
+│       │   ├── AttributeMappingInfo: *Object (1 property)
+│       │   │   └── AttributeMappings: Object (6 properties)[]
+│       │   │       ├── AttributeReference: *Object (3 properties)
+│       │   │       │   ├── Entity: *string
+│       │   │       │   ├── EntityConnectionReference: *Object (2 properties)
+│       │   │       │   │   ├── ConnectionName: *string
+│       │   │       │   │   └── Type: *Enum (1 value)
+│       │   │       │   │       └── "linkedservicetype"
+│       │   │       │   └── Name: *string
+│       │   │       ├── AttributeReferences: Object (3 properties)[]
+│       │   │       │   ├── Entity: *string
+│       │   │       │   ├── EntityConnectionReference: *Object (2 properties)
+│       │   │       │   │   ├── ConnectionName: *string
+│       │   │       │   │   └── Type: *Enum (1 value)
+│       │   │       │   │       └── "linkedservicetype"
+│       │   │       │   └── Name: *string
+│       │   │       ├── Expression: *string
+│       │   │       ├── FunctionName: *string
+│       │   │       ├── Name: *string
+│       │   │       └── Type: *Enum (3 values)
+│       │   │           ├── "Aggregate"
+│       │   │           ├── "Derived"
+│       │   │           └── "Direct"
+│       │   ├── SourceConnectionReference: *Object (2 properties)
+│       │   │   ├── ConnectionName: *string
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "linkedservicetype"
+│       │   ├── SourceDenormalizeInfo: *v1.JSON
+│       │   ├── SourceEntityName: *string
+│       │   └── TargetEntityName: *string
+│       ├── Relationships: v1.JSON[]
+│       └── TargetEntities: Object (3 properties)[]
+│           ├── DslConnectorProperties: Object (2 properties)[]
+│           │   ├── Name: *string
+│           │   └── Value: *v1.JSON
+│           ├── Name: *string
+│           └── Schema: Object (2 properties)[]
+│               ├── DataType: *string
+│               └── Name: *string
+└── Status: Object (14 properties)
+    ├── AdditionalProperties: map[string]v1.JSON
+    ├── AllowVNetOverride: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── Etag: *string
+    ├── Folder: *Object (1 property)
+    │   └── Name: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Policy: *Object (2 properties)
+    │   ├── Mode: *string
+    │   └── Recurrence: *Object (2 properties)
+    │       ├── Frequency: *Enum (3 values)
+    │       │   ├── "Hour"
+    │       │   ├── "Minute"
+    │       │   └── "Second"
+    │       └── Interval: *int
+    ├── SourceConnectionsInfo: Object (2 properties)[]
+    │   ├── Connection: *Object (5 properties)
+    │   │   ├── CommonDslConnectorProperties: Object (2 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   └── Value: *v1.JSON
+    │   │   ├── IsInlineDataset: *bool
+    │   │   ├── LinkedService: *Object (3 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LinkedServiceReference"
+    │   │   ├── LinkedServiceType: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "linkedservicetype"
+    │   └── SourceEntities: Object (3 properties)[]
+    │       ├── DslConnectorProperties: Object (2 properties)[]
+    │       │   ├── Name: *string
+    │       │   └── Value: *v1.JSON
+    │       ├── Name: *string
+    │       └── Schema: Object (2 properties)[]
+    │           ├── DataType: *string
+    │           └── Name: *string
+    ├── Status: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── TargetConnectionsInfo: Object (4 properties)[]
+    │   ├── Connection: *Object (5 properties)
+    │   │   ├── CommonDslConnectorProperties: Object (2 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   └── Value: *v1.JSON
+    │   │   ├── IsInlineDataset: *bool
+    │   │   ├── LinkedService: *Object (3 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LinkedServiceReference"
+    │   │   ├── LinkedServiceType: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "linkedservicetype"
+    │   ├── DataMapperMappings: Object (5 properties)[]
+    │   │   ├── AttributeMappingInfo: *Object (1 property)
+    │   │   │   └── AttributeMappings: Object (6 properties)[]
+    │   │   │       ├── AttributeReference: *Object (3 properties)
+    │   │   │       │   ├── Entity: *string
+    │   │   │       │   ├── EntityConnectionReference: *Object (2 properties)
+    │   │   │       │   │   ├── ConnectionName: *string
+    │   │   │       │   │   └── Type: *Enum (1 value)
+    │   │   │       │   │       └── "linkedservicetype"
+    │   │   │       │   └── Name: *string
+    │   │   │       ├── AttributeReferences: Object (3 properties)[]
+    │   │   │       │   ├── Entity: *string
+    │   │   │       │   ├── EntityConnectionReference: *Object (2 properties)
+    │   │   │       │   │   ├── ConnectionName: *string
+    │   │   │       │   │   └── Type: *Enum (1 value)
+    │   │   │       │   │       └── "linkedservicetype"
+    │   │   │       │   └── Name: *string
+    │   │   │       ├── Expression: *string
+    │   │   │       ├── FunctionName: *string
+    │   │   │       ├── Name: *string
+    │   │   │       └── Type: *Enum (3 values)
+    │   │   │           ├── "Aggregate"
+    │   │   │           ├── "Derived"
+    │   │   │           └── "Direct"
+    │   │   ├── SourceConnectionReference: *Object (2 properties)
+    │   │   │   ├── ConnectionName: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "linkedservicetype"
+    │   │   ├── SourceDenormalizeInfo: *v1.JSON
+    │   │   ├── SourceEntityName: *string
+    │   │   └── TargetEntityName: *string
+    │   ├── Relationships: v1.JSON[]
+    │   └── TargetEntities: Object (3 properties)[]
+    │       ├── DslConnectorProperties: Object (2 properties)[]
+    │       │   ├── Name: *string
+    │       │   └── Value: *v1.JSON
+    │       ├── Name: *string
+    │       └── Schema: Object (2 properties)[]
+    │           ├── DataType: *string
+    │           └── Name: *string
+    └── Type: *string
+
 FactoriesCredential: Resource
 ├── Owner: Factory
 ├── Spec: Object (4 properties)
@@ -89,6 +302,447 @@ FactoriesCredential: Resource
     │       └── "User"
     └── Type: *string
 
+FactoriesDataflow: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (3 properties)
+│       ├── Flowlet: *Object (9 properties)
+│       │   ├── Annotations: v1.JSON[]
+│       │   ├── Description: *string
+│       │   ├── Folder: *Object (1 property)
+│       │   │   └── Name: *string
+│       │   ├── Script: *string
+│       │   ├── ScriptLines: string[]
+│       │   ├── Sinks: Object (7 properties)[]
+│       │   │   ├── Dataset: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DatasetReference"
+│       │   │   ├── Description: *string
+│       │   │   ├── Flowlet: *Object (5 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── DatasetParameters: *v1.JSON
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DataFlowReference"
+│       │   │   ├── LinkedService: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "LinkedServiceReference"
+│       │   │   ├── Name: *string
+│       │   │   ├── RejectedDataLinkedService: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "LinkedServiceReference"
+│       │   │   └── SchemaLinkedService: *Object (3 properties)
+│       │   │       ├── Parameters: map[string]v1.JSON
+│       │   │       ├── ReferenceName: *string
+│       │   │       └── Type: *Enum (1 value)
+│       │   │           └── "LinkedServiceReference"
+│       │   ├── Sources: Object (6 properties)[]
+│       │   │   ├── Dataset: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DatasetReference"
+│       │   │   ├── Description: *string
+│       │   │   ├── Flowlet: *Object (5 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── DatasetParameters: *v1.JSON
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DataFlowReference"
+│       │   │   ├── LinkedService: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "LinkedServiceReference"
+│       │   │   ├── Name: *string
+│       │   │   └── SchemaLinkedService: *Object (3 properties)
+│       │   │       ├── Parameters: map[string]v1.JSON
+│       │   │       ├── ReferenceName: *string
+│       │   │       └── Type: *Enum (1 value)
+│       │   │           └── "LinkedServiceReference"
+│       │   ├── Transformations: Object (5 properties)[]
+│       │   │   ├── Dataset: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DatasetReference"
+│       │   │   ├── Description: *string
+│       │   │   ├── Flowlet: *Object (5 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── DatasetParameters: *v1.JSON
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DataFlowReference"
+│       │   │   ├── LinkedService: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "LinkedServiceReference"
+│       │   │   └── Name: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "Flowlet"
+│       ├── MappingDataFlow: *Object (9 properties)
+│       │   ├── Annotations: v1.JSON[]
+│       │   ├── Description: *string
+│       │   ├── Folder: *Object (1 property)
+│       │   │   └── Name: *string
+│       │   ├── Script: *string
+│       │   ├── ScriptLines: string[]
+│       │   ├── Sinks: Object (7 properties)[]
+│       │   │   ├── Dataset: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DatasetReference"
+│       │   │   ├── Description: *string
+│       │   │   ├── Flowlet: *Object (5 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── DatasetParameters: *v1.JSON
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DataFlowReference"
+│       │   │   ├── LinkedService: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "LinkedServiceReference"
+│       │   │   ├── Name: *string
+│       │   │   ├── RejectedDataLinkedService: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "LinkedServiceReference"
+│       │   │   └── SchemaLinkedService: *Object (3 properties)
+│       │   │       ├── Parameters: map[string]v1.JSON
+│       │   │       ├── ReferenceName: *string
+│       │   │       └── Type: *Enum (1 value)
+│       │   │           └── "LinkedServiceReference"
+│       │   ├── Sources: Object (6 properties)[]
+│       │   │   ├── Dataset: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DatasetReference"
+│       │   │   ├── Description: *string
+│       │   │   ├── Flowlet: *Object (5 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── DatasetParameters: *v1.JSON
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DataFlowReference"
+│       │   │   ├── LinkedService: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "LinkedServiceReference"
+│       │   │   ├── Name: *string
+│       │   │   └── SchemaLinkedService: *Object (3 properties)
+│       │   │       ├── Parameters: map[string]v1.JSON
+│       │   │       ├── ReferenceName: *string
+│       │   │       └── Type: *Enum (1 value)
+│       │   │           └── "LinkedServiceReference"
+│       │   ├── Transformations: Object (5 properties)[]
+│       │   │   ├── Dataset: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DatasetReference"
+│       │   │   ├── Description: *string
+│       │   │   ├── Flowlet: *Object (5 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── DatasetParameters: *v1.JSON
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "DataFlowReference"
+│       │   │   ├── LinkedService: *Object (3 properties)
+│       │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "LinkedServiceReference"
+│       │   │   └── Name: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "MappingDataFlow"
+│       └── WranglingDataFlow: *Object (7 properties)
+│           ├── Annotations: v1.JSON[]
+│           ├── Description: *string
+│           ├── DocumentLocale: *string
+│           ├── Folder: *Object (1 property)
+│           │   └── Name: *string
+│           ├── Script: *string
+│           ├── Sources: Object (7 properties)[]
+│           │   ├── Dataset: *Object (3 properties)
+│           │   │   ├── Parameters: map[string]v1.JSON
+│           │   │   ├── ReferenceName: *string
+│           │   │   └── Type: *Enum (1 value)
+│           │   │       └── "DatasetReference"
+│           │   ├── Description: *string
+│           │   ├── Flowlet: *Object (5 properties)
+│           │   │   ├── AdditionalProperties: map[string]v1.JSON
+│           │   │   ├── DatasetParameters: *v1.JSON
+│           │   │   ├── Parameters: map[string]v1.JSON
+│           │   │   ├── ReferenceName: *string
+│           │   │   └── Type: *Enum (1 value)
+│           │   │       └── "DataFlowReference"
+│           │   ├── LinkedService: *Object (3 properties)
+│           │   │   ├── Parameters: map[string]v1.JSON
+│           │   │   ├── ReferenceName: *string
+│           │   │   └── Type: *Enum (1 value)
+│           │   │       └── "LinkedServiceReference"
+│           │   ├── Name: *string
+│           │   ├── SchemaLinkedService: *Object (3 properties)
+│           │   │   ├── Parameters: map[string]v1.JSON
+│           │   │   ├── ReferenceName: *string
+│           │   │   └── Type: *Enum (1 value)
+│           │   │       └── "LinkedServiceReference"
+│           │   └── Script: *string
+│           └── Type: *Enum (1 value)
+│               └── "WranglingDataFlow"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (3 properties)
+    │   ├── Flowlet: *Object (9 properties)
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── Folder: *Object (1 property)
+    │   │   │   └── Name: *string
+    │   │   ├── Script: *string
+    │   │   ├── ScriptLines: string[]
+    │   │   ├── Sinks: Object (7 properties)[]
+    │   │   │   ├── Dataset: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DatasetReference"
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (5 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DataFlowReference"
+    │   │   │   ├── LinkedService: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   ├── Name: *string
+    │   │   │   ├── RejectedDataLinkedService: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── SchemaLinkedService: *Object (3 properties)
+    │   │   │       ├── Parameters: map[string]v1.JSON
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *Enum (1 value)
+    │   │   │           └── "LinkedServiceReference"
+    │   │   ├── Sources: Object (6 properties)[]
+    │   │   │   ├── Dataset: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DatasetReference"
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (5 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DataFlowReference"
+    │   │   │   ├── LinkedService: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   ├── Name: *string
+    │   │   │   └── SchemaLinkedService: *Object (3 properties)
+    │   │   │       ├── Parameters: map[string]v1.JSON
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *Enum (1 value)
+    │   │   │           └── "LinkedServiceReference"
+    │   │   ├── Transformations: Object (5 properties)[]
+    │   │   │   ├── Dataset: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DatasetReference"
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (5 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DataFlowReference"
+    │   │   │   ├── LinkedService: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Name: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "Flowlet"
+    │   ├── MappingDataFlow: *Object (9 properties)
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── Folder: *Object (1 property)
+    │   │   │   └── Name: *string
+    │   │   ├── Script: *string
+    │   │   ├── ScriptLines: string[]
+    │   │   ├── Sinks: Object (7 properties)[]
+    │   │   │   ├── Dataset: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DatasetReference"
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (5 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DataFlowReference"
+    │   │   │   ├── LinkedService: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   ├── Name: *string
+    │   │   │   ├── RejectedDataLinkedService: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── SchemaLinkedService: *Object (3 properties)
+    │   │   │       ├── Parameters: map[string]v1.JSON
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *Enum (1 value)
+    │   │   │           └── "LinkedServiceReference"
+    │   │   ├── Sources: Object (6 properties)[]
+    │   │   │   ├── Dataset: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DatasetReference"
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (5 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DataFlowReference"
+    │   │   │   ├── LinkedService: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   ├── Name: *string
+    │   │   │   └── SchemaLinkedService: *Object (3 properties)
+    │   │   │       ├── Parameters: map[string]v1.JSON
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *Enum (1 value)
+    │   │   │           └── "LinkedServiceReference"
+    │   │   ├── Transformations: Object (5 properties)[]
+    │   │   │   ├── Dataset: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DatasetReference"
+    │   │   │   ├── Description: *string
+    │   │   │   ├── Flowlet: *Object (5 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DatasetParameters: *v1.JSON
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "DataFlowReference"
+    │   │   │   ├── LinkedService: *Object (3 properties)
+    │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   └── Name: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "MappingDataFlow"
+    │   └── WranglingDataFlow: *Object (7 properties)
+    │       ├── Annotations: v1.JSON[]
+    │       ├── Description: *string
+    │       ├── DocumentLocale: *string
+    │       ├── Folder: *Object (1 property)
+    │       │   └── Name: *string
+    │       ├── Script: *string
+    │       ├── Sources: Object (7 properties)[]
+    │       │   ├── Dataset: *Object (3 properties)
+    │       │   │   ├── Parameters: map[string]v1.JSON
+    │       │   │   ├── ReferenceName: *string
+    │       │   │   └── Type: *Enum (1 value)
+    │       │   │       └── "DatasetReference"
+    │       │   ├── Description: *string
+    │       │   ├── Flowlet: *Object (5 properties)
+    │       │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │       │   │   ├── DatasetParameters: *v1.JSON
+    │       │   │   ├── Parameters: map[string]v1.JSON
+    │       │   │   ├── ReferenceName: *string
+    │       │   │   └── Type: *Enum (1 value)
+    │       │   │       └── "DataFlowReference"
+    │       │   ├── LinkedService: *Object (3 properties)
+    │       │   │   ├── Parameters: map[string]v1.JSON
+    │       │   │   ├── ReferenceName: *string
+    │       │   │   └── Type: *Enum (1 value)
+    │       │   │       └── "LinkedServiceReference"
+    │       │   ├── Name: *string
+    │       │   ├── SchemaLinkedService: *Object (3 properties)
+    │       │   │   ├── Parameters: map[string]v1.JSON
+    │       │   │   ├── ReferenceName: *string
+    │       │   │   └── Type: *Enum (1 value)
+    │       │   │       └── "LinkedServiceReference"
+    │       │   └── Script: *string
+    │       └── Type: *Enum (1 value)
+    │           └── "WranglingDataFlow"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 FactoriesGlobalParameter: Resource
 ├── Owner: Factory
 ├── Spec: Object (4 properties)
@@ -123,6 +777,402 @@ FactoriesGlobalParameter: Resource
     │   │   ├── "Object"
     │   │   └── "String"
     │   └── Value: *v1.JSON
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesIntegrationRuntime: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 63
+│   │   ├── Rule 1: MinLength: 3
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (2 properties)
+│       ├── Managed: *Object (7 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── ComputeProperties: *Object (9 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── CopyComputeScaleProperties: *Object (3 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── DataIntegrationUnit: Validated<*int> (1 rule)
+│       │   │   │   │   └── Rule 0: Minimum: 4
+│       │   │   │   └── TimeToLive: Validated<*int> (1 rule)
+│       │   │   │       └── Rule 0: Minimum: 5
+│       │   │   ├── DataFlowProperties: *Object (6 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── Cleanup: *bool
+│       │   │   │   ├── ComputeType: *Enum (3 values)
+│       │   │   │   │   ├── "ComputeOptimized"
+│       │   │   │   │   ├── "General"
+│       │   │   │   │   └── "MemoryOptimized"
+│       │   │   │   ├── CoreCount: *int
+│       │   │   │   ├── CustomProperties: Object (2 properties)[]
+│       │   │   │   │   ├── Name: *string
+│       │   │   │   │   └── Value: *string
+│       │   │   │   └── TimeToLive: Validated<*int> (1 rule)
+│       │   │   │       └── Rule 0: Minimum: 0
+│       │   │   ├── Location: *string
+│       │   │   ├── MaxParallelExecutionsPerNode: Validated<*int> (1 rule)
+│       │   │   │   └── Rule 0: Minimum: 1
+│       │   │   ├── NodeSize: *string
+│       │   │   ├── NumberOfNodes: Validated<*int> (1 rule)
+│       │   │   │   └── Rule 0: Minimum: 1
+│       │   │   ├── PipelineExternalComputeScaleProperties: *Object (4 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── NumberOfExternalNodes: Validated<*int> (2 rules)
+│       │   │   │   │   ├── Rule 0: Maximum: 10
+│       │   │   │   │   └── Rule 1: Minimum: 1
+│       │   │   │   ├── NumberOfPipelineNodes: Validated<*int> (2 rules)
+│       │   │   │   │   ├── Rule 0: Maximum: 10
+│       │   │   │   │   └── Rule 1: Minimum: 1
+│       │   │   │   └── TimeToLive: Validated<*int> (1 rule)
+│       │   │   │       └── Rule 0: Minimum: 5
+│       │   │   └── VNetProperties: *Object (5 properties)
+│       │   │       ├── AdditionalProperties: map[string]v1.JSON
+│       │   │       ├── PublicIPsReferences: genruntime.ResourceReference[]
+│       │   │       ├── Subnet: *string
+│       │   │       ├── SubnetId: *string
+│       │   │       └── VNetId: *string
+│       │   ├── CustomerVirtualNetwork: *Object (1 property)
+│       │   │   └── SubnetId: *string
+│       │   ├── Description: *string
+│       │   ├── ManagedVirtualNetwork: *Object (2 properties)
+│       │   │   ├── ReferenceName: *string
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "ManagedVirtualNetworkReference"
+│       │   ├── SsisProperties: *Object (9 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── CatalogInfo: *Object (6 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── CatalogAdminPassword: *Object (2 properties)
+│       │   │   │   │   ├── Type: *Enum (1 value)
+│       │   │   │   │   │   └── "SecureString"
+│       │   │   │   │   └── Value: *genruntime.SecretReference
+│       │   │   │   ├── CatalogAdminUserName: Validated<*string> (2 rules)
+│       │   │   │   │   ├── Rule 0: MaxLength: 128
+│       │   │   │   │   └── Rule 1: MinLength: 1
+│       │   │   │   ├── CatalogPricingTier: *Enum (4 values)
+│       │   │   │   │   ├── "Basic"
+│       │   │   │   │   ├── "Premium"
+│       │   │   │   │   ├── "PremiumRS"
+│       │   │   │   │   └── "Standard"
+│       │   │   │   ├── CatalogServerEndpoint: *string
+│       │   │   │   └── DualStandbyPairName: *string
+│       │   │   ├── Credential: *Object (3 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── ReferenceName: *string
+│       │   │   │   └── Type: *Enum (1 value)
+│       │   │   │       └── "CredentialReference"
+│       │   │   ├── CustomSetupScriptProperties: *Object (2 properties)
+│       │   │   │   ├── BlobContainerUri: *string
+│       │   │   │   └── SasToken: *Object (2 properties)
+│       │   │   │       ├── Type: *Enum (1 value)
+│       │   │   │       │   └── "SecureString"
+│       │   │   │       └── Value: *genruntime.SecretReference
+│       │   │   ├── DataProxyProperties: *Object (3 properties)
+│       │   │   │   ├── ConnectVia: *Object (2 properties)
+│       │   │   │   │   ├── ReferenceName: *string
+│       │   │   │   │   └── Type: *Enum (2 values)
+│       │   │   │   │       ├── "IntegrationRuntimeReference"
+│       │   │   │   │       └── "LinkedServiceReference"
+│       │   │   │   ├── Path: *string
+│       │   │   │   └── StagingLinkedService: *Object (2 properties)
+│       │   │   │       ├── ReferenceName: *string
+│       │   │   │       └── Type: *Enum (2 values)
+│       │   │   │           ├── "IntegrationRuntimeReference"
+│       │   │   │           └── "LinkedServiceReference"
+│       │   │   ├── Edition: *Enum (2 values)
+│       │   │   │   ├── "Enterprise"
+│       │   │   │   └── "Standard"
+│       │   │   ├── ExpressCustomSetupProperties: Object (4 properties)[]
+│       │   │   │   ├── AzPowerShell: *Object (2 properties)
+│       │   │   │   │   ├── Type: *Enum (1 value)
+│       │   │   │   │   │   └── "AzPowerShellSetup"
+│       │   │   │   │   └── Version: *string
+│       │   │   │   ├── Cmdkey: *Object (4 properties)
+│       │   │   │   │   ├── Password: *Object (2 properties)
+│       │   │   │   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│       │   │   │   │   │   │   ├── SecretName: *v1.JSON
+│       │   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+│       │   │   │   │   │   │   ├── Store: *Object (3 properties)
+│       │   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   │   │   │   │   ├── ReferenceName: *string
+│       │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│       │   │   │   │   │   │   │       └── "LinkedServiceReference"
+│       │   │   │   │   │   │   └── Type: *Enum (1 value)
+│       │   │   │   │   │   │       └── "AzureKeyVaultSecret"
+│       │   │   │   │   │   └── SecureString: *Object (2 properties)
+│       │   │   │   │   │       ├── Type: *Enum (1 value)
+│       │   │   │   │   │       │   └── "SecureString"
+│       │   │   │   │   │       └── Value: *genruntime.SecretReference
+│       │   │   │   │   ├── TargetName: *v1.JSON
+│       │   │   │   │   ├── Type: *Enum (1 value)
+│       │   │   │   │   │   └── "CmdkeySetup"
+│       │   │   │   │   └── UserName: *v1.JSON
+│       │   │   │   ├── Component: *Object (3 properties)
+│       │   │   │   │   ├── ComponentName: *string
+│       │   │   │   │   ├── LicenseKey: *Object (2 properties)
+│       │   │   │   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+│       │   │   │   │   │   │   ├── SecretName: *v1.JSON
+│       │   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+│       │   │   │   │   │   │   ├── Store: *Object (3 properties)
+│       │   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   │   │   │   │   │   ├── ReferenceName: *string
+│       │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+│       │   │   │   │   │   │   │       └── "LinkedServiceReference"
+│       │   │   │   │   │   │   └── Type: *Enum (1 value)
+│       │   │   │   │   │   │       └── "AzureKeyVaultSecret"
+│       │   │   │   │   │   └── SecureString: *Object (2 properties)
+│       │   │   │   │   │       ├── Type: *Enum (1 value)
+│       │   │   │   │   │       │   └── "SecureString"
+│       │   │   │   │   │       └── Value: *genruntime.SecretReference
+│       │   │   │   │   └── Type: *Enum (1 value)
+│       │   │   │   │       └── "ComponentSetup"
+│       │   │   │   └── EnvironmentVariable: *Object (3 properties)
+│       │   │   │       ├── Type: *Enum (1 value)
+│       │   │   │       │   └── "EnvironmentVariableSetup"
+│       │   │   │       ├── VariableName: *string
+│       │   │   │       └── VariableValue: *string
+│       │   │   ├── LicenseType: *Enum (2 values)
+│       │   │   │   ├── "BasePrice"
+│       │   │   │   └── "LicenseIncluded"
+│       │   │   └── PackageStores: Object (2 properties)[]
+│       │   │       ├── Name: *string
+│       │   │       └── PackageStoreLinkedService: *Object (2 properties)
+│       │   │           ├── ReferenceName: *string
+│       │   │           └── Type: *Enum (2 values)
+│       │   │               ├── "IntegrationRuntimeReference"
+│       │   │               └── "LinkedServiceReference"
+│       │   └── Type: *Enum (1 value)
+│       │       └── "Managed"
+│       └── SelfHosted: *Object (5 properties)
+│           ├── AdditionalProperties: map[string]v1.JSON
+│           ├── Description: *string
+│           ├── LinkedInfo: *Object (2 properties)
+│           │   ├── Key: *Object (2 properties)
+│           │   │   ├── AuthorizationType: *Enum (1 value)
+│           │   │   │   └── "Key"
+│           │   │   └── Key: *Object (2 properties)
+│           │   │       ├── Type: *Enum (1 value)
+│           │   │       │   └── "SecureString"
+│           │   │       └── Value: *genruntime.SecretReference
+│           │   └── RBAC: *Object (3 properties)
+│           │       ├── AuthorizationType: *Enum (1 value)
+│           │       │   └── "RBAC"
+│           │       ├── Credential: *Object (3 properties)
+│           │       │   ├── AdditionalProperties: map[string]v1.JSON
+│           │       │   ├── ReferenceName: *string
+│           │       │   └── Type: *Enum (1 value)
+│           │       │       └── "CredentialReference"
+│           │       └── ResourceReference: *genruntime.ResourceReference
+│           ├── SelfContainedInteractiveAuthoringEnabled: *bool
+│           └── Type: *Enum (1 value)
+│               └── "SelfHosted"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (2 properties)
+    │   ├── Managed: *Object (9 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── ComputeProperties: *Object (9 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── CopyComputeScaleProperties: *Object (3 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── DataIntegrationUnit: *int
+    │   │   │   │   └── TimeToLive: *int
+    │   │   │   ├── DataFlowProperties: *Object (6 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── Cleanup: *bool
+    │   │   │   │   ├── ComputeType: *Enum (3 values)
+    │   │   │   │   │   ├── "ComputeOptimized"
+    │   │   │   │   │   ├── "General"
+    │   │   │   │   │   └── "MemoryOptimized"
+    │   │   │   │   ├── CoreCount: *int
+    │   │   │   │   ├── CustomProperties: Object (2 properties)[]
+    │   │   │   │   │   ├── Name: *string
+    │   │   │   │   │   └── Value: *string
+    │   │   │   │   └── TimeToLive: *int
+    │   │   │   ├── Location: *string
+    │   │   │   ├── MaxParallelExecutionsPerNode: *int
+    │   │   │   ├── NodeSize: *string
+    │   │   │   ├── NumberOfNodes: *int
+    │   │   │   ├── PipelineExternalComputeScaleProperties: *Object (4 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── NumberOfExternalNodes: *int
+    │   │   │   │   ├── NumberOfPipelineNodes: *int
+    │   │   │   │   └── TimeToLive: *int
+    │   │   │   └── VNetProperties: *Object (5 properties)
+    │   │   │       ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │       ├── PublicIPs: string[]
+    │   │   │       ├── Subnet: *string
+    │   │   │       ├── SubnetId: *string
+    │   │   │       └── VNetId: *string
+    │   │   ├── CustomerVirtualNetwork: *Object (1 property)
+    │   │   │   └── SubnetId: *string
+    │   │   ├── Description: *string
+    │   │   ├── InteractiveQuery: *Object (2 properties)
+    │   │   │   ├── AutoTerminationMinutes: *int
+    │   │   │   └── Status: *Enum (4 values)
+    │   │   │       ├── "Disabled"
+    │   │   │       ├── "Disabling"
+    │   │   │       ├── "Enabled"
+    │   │   │       └── "Enabling"
+    │   │   ├── ManagedVirtualNetwork: *Object (2 properties)
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "ManagedVirtualNetworkReference"
+    │   │   ├── SsisProperties: *Object (9 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── CatalogInfo: *Object (6 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── CatalogAdminPassword: *Object (1 property)
+    │   │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │   │       └── "SecureString"
+    │   │   │   │   ├── CatalogAdminUserName: *string
+    │   │   │   │   ├── CatalogPricingTier: *Enum (4 values)
+    │   │   │   │   │   ├── "Basic"
+    │   │   │   │   │   ├── "Premium"
+    │   │   │   │   │   ├── "PremiumRS"
+    │   │   │   │   │   └── "Standard"
+    │   │   │   │   ├── CatalogServerEndpoint: *string
+    │   │   │   │   └── DualStandbyPairName: *string
+    │   │   │   ├── Credential: *Object (3 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │       └── "CredentialReference"
+    │   │   │   ├── CustomSetupScriptProperties: *Object (2 properties)
+    │   │   │   │   ├── BlobContainerUri: *string
+    │   │   │   │   └── SasToken: *Object (1 property)
+    │   │   │   │       └── Type: *Enum (1 value)
+    │   │   │   │           └── "SecureString"
+    │   │   │   ├── DataProxyProperties: *Object (3 properties)
+    │   │   │   │   ├── ConnectVia: *Object (2 properties)
+    │   │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   │   └── Type: *Enum (2 values)
+    │   │   │   │   │       ├── "IntegrationRuntimeReference"
+    │   │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   │   ├── Path: *string
+    │   │   │   │   └── StagingLinkedService: *Object (2 properties)
+    │   │   │   │       ├── ReferenceName: *string
+    │   │   │   │       └── Type: *Enum (2 values)
+    │   │   │   │           ├── "IntegrationRuntimeReference"
+    │   │   │   │           └── "LinkedServiceReference"
+    │   │   │   ├── Edition: *Enum (2 values)
+    │   │   │   │   ├── "Enterprise"
+    │   │   │   │   └── "Standard"
+    │   │   │   ├── ExpressCustomSetupProperties: Object (4 properties)[]
+    │   │   │   │   ├── AzPowerShell: *Object (2 properties)
+    │   │   │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   │   │   └── "AzPowerShellSetup"
+    │   │   │   │   │   └── Version: *string
+    │   │   │   │   ├── Cmdkey: *Object (4 properties)
+    │   │   │   │   │   ├── Password: *Object (2 properties)
+    │   │   │   │   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   │   │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   │   │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │   │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │   │   │   │       └── "AzureKeyVaultSecret"
+    │   │   │   │   │   │   └── SecureString: *Object (1 property)
+    │   │   │   │   │   │       └── Type: *Enum (1 value)
+    │   │   │   │   │   │           └── "SecureString"
+    │   │   │   │   │   ├── TargetName: *v1.JSON
+    │   │   │   │   │   ├── Type: *Enum (1 value)
+    │   │   │   │   │   │   └── "CmdkeySetup"
+    │   │   │   │   │   └── UserName: *v1.JSON
+    │   │   │   │   ├── Component: *Object (3 properties)
+    │   │   │   │   │   ├── ComponentName: *string
+    │   │   │   │   │   ├── LicenseKey: *Object (2 properties)
+    │   │   │   │   │   │   ├── AzureKeyVaultSecret: *Object (4 properties)
+    │   │   │   │   │   │   │   ├── SecretName: *v1.JSON
+    │   │   │   │   │   │   │   ├── SecretVersion: *v1.JSON
+    │   │   │   │   │   │   │   ├── Store: *Object (3 properties)
+    │   │   │   │   │   │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   │   │   │   │   │   ├── ReferenceName: *string
+    │   │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │   │   │   │   │       └── "LinkedServiceReference"
+    │   │   │   │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │   │   │   │       └── "AzureKeyVaultSecret"
+    │   │   │   │   │   │   └── SecureString: *Object (1 property)
+    │   │   │   │   │   │       └── Type: *Enum (1 value)
+    │   │   │   │   │   │           └── "SecureString"
+    │   │   │   │   │   └── Type: *Enum (1 value)
+    │   │   │   │   │       └── "ComponentSetup"
+    │   │   │   │   └── EnvironmentVariable: *Object (3 properties)
+    │   │   │   │       ├── Type: *Enum (1 value)
+    │   │   │   │       │   └── "EnvironmentVariableSetup"
+    │   │   │   │       ├── VariableName: *string
+    │   │   │   │       └── VariableValue: *string
+    │   │   │   ├── LicenseType: *Enum (2 values)
+    │   │   │   │   ├── "BasePrice"
+    │   │   │   │   └── "LicenseIncluded"
+    │   │   │   └── PackageStores: Object (2 properties)[]
+    │   │   │       ├── Name: *string
+    │   │   │       └── PackageStoreLinkedService: *Object (2 properties)
+    │   │   │           ├── ReferenceName: *string
+    │   │   │           └── Type: *Enum (2 values)
+    │   │   │               ├── "IntegrationRuntimeReference"
+    │   │   │               └── "LinkedServiceReference"
+    │   │   ├── State: *Enum (10 values)
+    │   │   │   ├── "AccessDenied"
+    │   │   │   ├── "Initial"
+    │   │   │   ├── "Limited"
+    │   │   │   ├── "NeedRegistration"
+    │   │   │   ├── "Offline"
+    │   │   │   ├── "Online"
+    │   │   │   ├── "Started"
+    │   │   │   ├── "Starting"
+    │   │   │   ├── "Stopped"
+    │   │   │   └── "Stopping"
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "Managed"
+    │   └── SelfHosted: *Object (5 properties)
+    │       ├── AdditionalProperties: map[string]v1.JSON
+    │       ├── Description: *string
+    │       ├── LinkedInfo: *Object (2 properties)
+    │       │   ├── Key: *Object (2 properties)
+    │       │   │   ├── AuthorizationType: *Enum (1 value)
+    │       │   │   │   └── "Key"
+    │       │   │   └── Key: *Object (1 property)
+    │       │   │       └── Type: *Enum (1 value)
+    │       │   │           └── "SecureString"
+    │       │   └── RBAC: *Object (3 properties)
+    │       │       ├── AuthorizationType: *Enum (1 value)
+    │       │       │   └── "RBAC"
+    │       │       ├── Credential: *Object (3 properties)
+    │       │       │   ├── AdditionalProperties: map[string]v1.JSON
+    │       │       │   ├── ReferenceName: *string
+    │       │       │   └── Type: *Enum (1 value)
+    │       │       │       └── "CredentialReference"
+    │       │       └── ResourceId: *string
+    │       ├── SelfContainedInteractiveAuthoringEnabled: *bool
+    │       └── Type: *Enum (1 value)
+    │           └── "SelfHosted"
     ├── SystemData: *Object (6 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string
@@ -256,6 +1306,485 @@ FactoriesPrivateEndpointConnection: Resource
     │   │   ├── Description: *string
     │   │   └── Status: *string
     │   └── ProvisioningState: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+FactoriesTrigger: Resource
+├── Owner: Factory
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (3 rules)
+│   │   ├── Rule 0: MaxLength: 260
+│   │   ├── Rule 1: MinLength: 1
+│   │   └── Rule 2: Pattern: "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (8 properties)
+│       ├── Blob: *Object (8 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Annotations: v1.JSON[]
+│       │   ├── Description: *string
+│       │   ├── FolderPath: *string
+│       │   ├── LinkedService: *Object (3 properties)
+│       │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   ├── ReferenceName: *string
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "LinkedServiceReference"
+│       │   ├── MaxConcurrency: *int
+│       │   ├── Pipelines: Object (2 properties)[]
+│       │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   └── PipelineReference: *Object (3 properties)
+│       │   │       ├── Name: *string
+│       │   │       ├── ReferenceName: *string
+│       │   │       └── Type: *Enum (1 value)
+│       │   │           └── "PipelineReference"
+│       │   └── Type: *Enum (1 value)
+│       │       └── "BlobTrigger"
+│       ├── BlobEvents: *Object (10 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Annotations: v1.JSON[]
+│       │   ├── BlobPathBeginsWith: *string
+│       │   ├── BlobPathEndsWith: *string
+│       │   ├── Description: *string
+│       │   ├── Events: Enum (2 values)[]
+│       │   │   ├── "Microsoft.Storage.BlobCreated"
+│       │   │   └── "Microsoft.Storage.BlobDeleted"
+│       │   ├── IgnoreEmptyBlobs: *bool
+│       │   ├── Pipelines: Object (2 properties)[]
+│       │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   └── PipelineReference: *Object (3 properties)
+│       │   │       ├── Name: *string
+│       │   │       ├── ReferenceName: *string
+│       │   │       └── Type: *Enum (1 value)
+│       │   │           └── "PipelineReference"
+│       │   ├── ScopeReference: *genruntime.ResourceReference
+│       │   └── Type: *Enum (1 value)
+│       │       └── "BlobEventsTrigger"
+│       ├── Chaining: *Object (7 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Annotations: v1.JSON[]
+│       │   ├── DependsOn: Object (3 properties)[]
+│       │   │   ├── Name: *string
+│       │   │   ├── ReferenceName: *string
+│       │   │   └── Type: *Enum (1 value)
+│       │   │       └── "PipelineReference"
+│       │   ├── Description: *string
+│       │   ├── Pipeline: *Object (2 properties)
+│       │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   └── PipelineReference: *Object (3 properties)
+│       │   │       ├── Name: *string
+│       │   │       ├── ReferenceName: *string
+│       │   │       └── Type: *Enum (1 value)
+│       │   │           └── "PipelineReference"
+│       │   ├── RunDimension: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "ChainingTrigger"
+│       ├── CustomEvents: *Object (9 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Annotations: v1.JSON[]
+│       │   ├── Description: *string
+│       │   ├── Events: v1.JSON[]
+│       │   ├── Pipelines: Object (2 properties)[]
+│       │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   └── PipelineReference: *Object (3 properties)
+│       │   │       ├── Name: *string
+│       │   │       ├── ReferenceName: *string
+│       │   │       └── Type: *Enum (1 value)
+│       │   │           └── "PipelineReference"
+│       │   ├── ScopeReference: *genruntime.ResourceReference
+│       │   ├── SubjectBeginsWith: *string
+│       │   ├── SubjectEndsWith: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "CustomEventsTrigger"
+│       ├── MultiplePipeline: *Object (5 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Annotations: v1.JSON[]
+│       │   ├── Description: *string
+│       │   ├── Pipelines: Object (2 properties)[]
+│       │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   └── PipelineReference: *Object (3 properties)
+│       │   │       ├── Name: *string
+│       │   │       ├── ReferenceName: *string
+│       │   │       └── Type: *Enum (1 value)
+│       │   │           └── "PipelineReference"
+│       │   └── Type: *Enum (1 value)
+│       │       └── "MultiplePipelineTrigger"
+│       ├── RerunTumblingWindow: *Object (8 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Annotations: v1.JSON[]
+│       │   ├── Description: *string
+│       │   ├── ParentTrigger: *v1.JSON
+│       │   ├── RequestedEndTime: *string
+│       │   ├── RequestedStartTime: *string
+│       │   ├── RerunConcurrency: Validated<*int> (2 rules)
+│       │   │   ├── Rule 0: Maximum: 50
+│       │   │   └── Rule 1: Minimum: 1
+│       │   └── Type: *Enum (1 value)
+│       │       └── "RerunTumblingWindowTrigger"
+│       ├── Schedule: *Object (6 properties)
+│       │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   ├── Annotations: v1.JSON[]
+│       │   ├── Description: *string
+│       │   ├── Pipelines: Object (2 properties)[]
+│       │   │   ├── Parameters: map[string]v1.JSON
+│       │   │   └── PipelineReference: *Object (3 properties)
+│       │   │       ├── Name: *string
+│       │   │       ├── ReferenceName: *string
+│       │   │       └── Type: *Enum (1 value)
+│       │   │           └── "PipelineReference"
+│       │   ├── Recurrence: *Object (7 properties)
+│       │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   ├── EndTime: *string
+│       │   │   ├── Frequency: *Enum (7 values)
+│       │   │   │   ├── "Day"
+│       │   │   │   ├── "Hour"
+│       │   │   │   ├── "Minute"
+│       │   │   │   ├── "Month"
+│       │   │   │   ├── "NotSpecified"
+│       │   │   │   ├── "Week"
+│       │   │   │   └── "Year"
+│       │   │   ├── Interval: *int
+│       │   │   ├── Schedule: *Object (6 properties)
+│       │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   ├── Hours: int[]
+│       │   │   │   ├── Minutes: int[]
+│       │   │   │   ├── MonthDays: int[]
+│       │   │   │   ├── MonthlyOccurrences: Object (3 properties)[]
+│       │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+│       │   │   │   │   ├── Day: *Enum (7 values)
+│       │   │   │   │   │   ├── "Friday"
+│       │   │   │   │   │   ├── "Monday"
+│       │   │   │   │   │   ├── "Saturday"
+│       │   │   │   │   │   ├── "Sunday"
+│       │   │   │   │   │   ├── "Thursday"
+│       │   │   │   │   │   ├── "Tuesday"
+│       │   │   │   │   │   └── "Wednesday"
+│       │   │   │   │   └── Occurrence: *int
+│       │   │   │   └── WeekDays: Enum (7 values)[]
+│       │   │   │       ├── "Friday"
+│       │   │   │       ├── "Monday"
+│       │   │   │       ├── "Saturday"
+│       │   │   │       ├── "Sunday"
+│       │   │   │       ├── "Thursday"
+│       │   │   │       ├── "Tuesday"
+│       │   │   │       └── "Wednesday"
+│       │   │   ├── StartTime: *string
+│       │   │   └── TimeZone: *string
+│       │   └── Type: *Enum (1 value)
+│       │       └── "ScheduleTrigger"
+│       └── TumblingWindow: *Object (13 properties)
+│           ├── AdditionalProperties: map[string]v1.JSON
+│           ├── Annotations: v1.JSON[]
+│           ├── Delay: *v1.JSON
+│           ├── DependsOn: Object (3 properties)[]
+│           │   ├── SelfDependencyTumblingWindowTrigger: *Object (3 properties)
+│           │   │   ├── Offset: Validated<*string> (3 rules)
+│           │   │   │   ├── Rule 0: MaxLength: 15
+│           │   │   │   ├── Rule 1: MinLength: 8
+│           │   │   │   └── Rule 2: Pattern: "-((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))"
+│           │   │   ├── Size: Validated<*string> (3 rules)
+│           │   │   │   ├── Rule 0: MaxLength: 15
+│           │   │   │   ├── Rule 1: MinLength: 8
+│           │   │   │   └── Rule 2: Pattern: "((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))"
+│           │   │   └── Type: *Enum (1 value)
+│           │   │       └── "SelfDependencyTumblingWindowTriggerReference"
+│           │   ├── TriggerDependency: *Object (2 properties)
+│           │   │   ├── ReferenceTrigger: *Object (2 properties)
+│           │   │   │   ├── ReferenceName: *string
+│           │   │   │   └── Type: *Enum (1 value)
+│           │   │   │       └── "TriggerReference"
+│           │   │   └── Type: *Enum (1 value)
+│           │   │       └── "TriggerDependencyReference"
+│           │   └── TumblingWindowTriggerDependency: *Object (4 properties)
+│           │       ├── Offset: Validated<*string> (3 rules)
+│           │       │   ├── Rule 0: MaxLength: 15
+│           │       │   ├── Rule 1: MinLength: 8
+│           │       │   └── Rule 2: Pattern: "-?((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))"
+│           │       ├── ReferenceTrigger: *Object (2 properties)
+│           │       │   ├── ReferenceName: *string
+│           │       │   └── Type: *Enum (1 value)
+│           │       │       └── "TriggerReference"
+│           │       ├── Size: Validated<*string> (3 rules)
+│           │       │   ├── Rule 0: MaxLength: 15
+│           │       │   ├── Rule 1: MinLength: 8
+│           │       │   └── Rule 2: Pattern: "((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))"
+│           │       └── Type: *Enum (1 value)
+│           │           └── "TumblingWindowTriggerDependencyReference"
+│           ├── Description: *string
+│           ├── EndTime: *string
+│           ├── Frequency: *Enum (3 values)
+│           │   ├── "Hour"
+│           │   ├── "Minute"
+│           │   └── "Month"
+│           ├── Interval: *int
+│           ├── MaxConcurrency: Validated<*int> (2 rules)
+│           │   ├── Rule 0: Maximum: 50
+│           │   └── Rule 1: Minimum: 1
+│           ├── Pipeline: *Object (2 properties)
+│           │   ├── Parameters: map[string]v1.JSON
+│           │   └── PipelineReference: *Object (3 properties)
+│           │       ├── Name: *string
+│           │       ├── ReferenceName: *string
+│           │       └── Type: *Enum (1 value)
+│           │           └── "PipelineReference"
+│           ├── RetryPolicy: *Object (2 properties)
+│           │   ├── Count: *v1.JSON
+│           │   └── IntervalInSeconds: Validated<*int> (2 rules)
+│           │       ├── Rule 0: Maximum: 86400
+│           │       └── Rule 1: Minimum: 30
+│           ├── StartTime: *string
+│           └── Type: *Enum (1 value)
+│               └── "TumblingWindowTrigger"
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (8 properties)
+    │   ├── Blob: *Object (9 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── FolderPath: *string
+    │   │   ├── LinkedService: *Object (3 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "LinkedServiceReference"
+    │   │   ├── MaxConcurrency: *int
+    │   │   ├── Pipelines: Object (2 properties)[]
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   └── PipelineReference: *Object (3 properties)
+    │   │   │       ├── Name: *string
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *Enum (1 value)
+    │   │   │           └── "PipelineReference"
+    │   │   ├── RuntimeState: *Enum (3 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   ├── "Started"
+    │   │   │   └── "Stopped"
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "BlobTrigger"
+    │   ├── BlobEvents: *Object (11 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── BlobPathBeginsWith: *string
+    │   │   ├── BlobPathEndsWith: *string
+    │   │   ├── Description: *string
+    │   │   ├── Events: Enum (2 values)[]
+    │   │   │   ├── "Microsoft.Storage.BlobCreated"
+    │   │   │   └── "Microsoft.Storage.BlobDeleted"
+    │   │   ├── IgnoreEmptyBlobs: *bool
+    │   │   ├── Pipelines: Object (2 properties)[]
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   └── PipelineReference: *Object (3 properties)
+    │   │   │       ├── Name: *string
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *Enum (1 value)
+    │   │   │           └── "PipelineReference"
+    │   │   ├── RuntimeState: *Enum (3 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   ├── "Started"
+    │   │   │   └── "Stopped"
+    │   │   ├── Scope: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "BlobEventsTrigger"
+    │   ├── Chaining: *Object (8 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── DependsOn: Object (3 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   ├── ReferenceName: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "PipelineReference"
+    │   │   ├── Description: *string
+    │   │   ├── Pipeline: *Object (2 properties)
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   └── PipelineReference: *Object (3 properties)
+    │   │   │       ├── Name: *string
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *Enum (1 value)
+    │   │   │           └── "PipelineReference"
+    │   │   ├── RunDimension: *string
+    │   │   ├── RuntimeState: *Enum (3 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   ├── "Started"
+    │   │   │   └── "Stopped"
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "ChainingTrigger"
+    │   ├── CustomEvents: *Object (10 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── Events: v1.JSON[]
+    │   │   ├── Pipelines: Object (2 properties)[]
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   └── PipelineReference: *Object (3 properties)
+    │   │   │       ├── Name: *string
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *Enum (1 value)
+    │   │   │           └── "PipelineReference"
+    │   │   ├── RuntimeState: *Enum (3 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   ├── "Started"
+    │   │   │   └── "Stopped"
+    │   │   ├── Scope: *string
+    │   │   ├── SubjectBeginsWith: *string
+    │   │   ├── SubjectEndsWith: *string
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "CustomEventsTrigger"
+    │   ├── MultiplePipeline: *Object (6 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── Pipelines: Object (2 properties)[]
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   └── PipelineReference: *Object (3 properties)
+    │   │   │       ├── Name: *string
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *Enum (1 value)
+    │   │   │           └── "PipelineReference"
+    │   │   ├── RuntimeState: *Enum (3 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   ├── "Started"
+    │   │   │   └── "Stopped"
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "MultiplePipelineTrigger"
+    │   ├── RerunTumblingWindow: *Object (9 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── ParentTrigger: *v1.JSON
+    │   │   ├── RequestedEndTime: *string
+    │   │   ├── RequestedStartTime: *string
+    │   │   ├── RerunConcurrency: *int
+    │   │   ├── RuntimeState: *Enum (3 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   ├── "Started"
+    │   │   │   └── "Stopped"
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "RerunTumblingWindowTrigger"
+    │   ├── Schedule: *Object (7 properties)
+    │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   ├── Annotations: v1.JSON[]
+    │   │   ├── Description: *string
+    │   │   ├── Pipelines: Object (2 properties)[]
+    │   │   │   ├── Parameters: map[string]v1.JSON
+    │   │   │   └── PipelineReference: *Object (3 properties)
+    │   │   │       ├── Name: *string
+    │   │   │       ├── ReferenceName: *string
+    │   │   │       └── Type: *Enum (1 value)
+    │   │   │           └── "PipelineReference"
+    │   │   ├── Recurrence: *Object (7 properties)
+    │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   ├── EndTime: *string
+    │   │   │   ├── Frequency: *Enum (7 values)
+    │   │   │   │   ├── "Day"
+    │   │   │   │   ├── "Hour"
+    │   │   │   │   ├── "Minute"
+    │   │   │   │   ├── "Month"
+    │   │   │   │   ├── "NotSpecified"
+    │   │   │   │   ├── "Week"
+    │   │   │   │   └── "Year"
+    │   │   │   ├── Interval: *int
+    │   │   │   ├── Schedule: *Object (6 properties)
+    │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   ├── Hours: int[]
+    │   │   │   │   ├── Minutes: int[]
+    │   │   │   │   ├── MonthDays: int[]
+    │   │   │   │   ├── MonthlyOccurrences: Object (3 properties)[]
+    │   │   │   │   │   ├── AdditionalProperties: map[string]v1.JSON
+    │   │   │   │   │   ├── Day: *Enum (7 values)
+    │   │   │   │   │   │   ├── "Friday"
+    │   │   │   │   │   │   ├── "Monday"
+    │   │   │   │   │   │   ├── "Saturday"
+    │   │   │   │   │   │   ├── "Sunday"
+    │   │   │   │   │   │   ├── "Thursday"
+    │   │   │   │   │   │   ├── "Tuesday"
+    │   │   │   │   │   │   └── "Wednesday"
+    │   │   │   │   │   └── Occurrence: *int
+    │   │   │   │   └── WeekDays: Enum (7 values)[]
+    │   │   │   │       ├── "Friday"
+    │   │   │   │       ├── "Monday"
+    │   │   │   │       ├── "Saturday"
+    │   │   │   │       ├── "Sunday"
+    │   │   │   │       ├── "Thursday"
+    │   │   │   │       ├── "Tuesday"
+    │   │   │   │       └── "Wednesday"
+    │   │   │   ├── StartTime: *string
+    │   │   │   └── TimeZone: *string
+    │   │   ├── RuntimeState: *Enum (3 values)
+    │   │   │   ├── "Disabled"
+    │   │   │   ├── "Started"
+    │   │   │   └── "Stopped"
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "ScheduleTrigger"
+    │   └── TumblingWindow: *Object (14 properties)
+    │       ├── AdditionalProperties: map[string]v1.JSON
+    │       ├── Annotations: v1.JSON[]
+    │       ├── Delay: *v1.JSON
+    │       ├── DependsOn: Object (3 properties)[]
+    │       │   ├── SelfDependencyTumblingWindowTrigger: *Object (3 properties)
+    │       │   │   ├── Offset: *string
+    │       │   │   ├── Size: *string
+    │       │   │   └── Type: *Enum (1 value)
+    │       │   │       └── "SelfDependencyTumblingWindowTriggerReference"
+    │       │   ├── TriggerDependency: *Object (2 properties)
+    │       │   │   ├── ReferenceTrigger: *Object (2 properties)
+    │       │   │   │   ├── ReferenceName: *string
+    │       │   │   │   └── Type: *Enum (1 value)
+    │       │   │   │       └── "TriggerReference"
+    │       │   │   └── Type: *Enum (1 value)
+    │       │   │       └── "TriggerDependencyReference"
+    │       │   └── TumblingWindowTriggerDependency: *Object (4 properties)
+    │       │       ├── Offset: *string
+    │       │       ├── ReferenceTrigger: *Object (2 properties)
+    │       │       │   ├── ReferenceName: *string
+    │       │       │   └── Type: *Enum (1 value)
+    │       │       │       └── "TriggerReference"
+    │       │       ├── Size: *string
+    │       │       └── Type: *Enum (1 value)
+    │       │           └── "TumblingWindowTriggerDependencyReference"
+    │       ├── Description: *string
+    │       ├── EndTime: *string
+    │       ├── Frequency: *Enum (3 values)
+    │       │   ├── "Hour"
+    │       │   ├── "Minute"
+    │       │   └── "Month"
+    │       ├── Interval: *int
+    │       ├── MaxConcurrency: *int
+    │       ├── Pipeline: *Object (2 properties)
+    │       │   ├── Parameters: map[string]v1.JSON
+    │       │   └── PipelineReference: *Object (3 properties)
+    │       │       ├── Name: *string
+    │       │       ├── ReferenceName: *string
+    │       │       └── Type: *Enum (1 value)
+    │       │           └── "PipelineReference"
+    │       ├── RetryPolicy: *Object (2 properties)
+    │       │   ├── Count: *v1.JSON
+    │       │   └── IntervalInSeconds: *int
+    │       ├── RuntimeState: *Enum (3 values)
+    │       │   ├── "Disabled"
+    │       │   ├── "Started"
+    │       │   └── "Stopped"
+    │       ├── StartTime: *string
+    │       └── Type: *Enum (1 value)
+    │           └── "TumblingWindowTrigger"
     ├── SystemData: *Object (6 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string

@@ -6,10 +6,13 @@ package e2e
 import (
 	"context"
 	"fmt"
+	"strings"
 	"testing"
 
+	corev1 "k8s.io/api/core/v1"
 	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	asodatafactory "github.com/Azure/azure-service-operator/v2/api/datafactory/v20180601/storage"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
@@ -143,5 +146,134 @@ func TestDataFactoryChildren(t *testing.T) {
 	}
 	if !armFake.HasResource(factoryID + "/managedVirtualNetworks/default") {
 		t.Error("the managed network, which Azure cannot delete, is gone from the fake")
+	}
+}
+
+// The Data Factory authoring kinds of docs/plan.md f86, on ASO's Factory by
+// name: a schedule trigger running a pipeline; a mapping data flow from a
+// dataset to a linked service; a managed integration runtime in the
+// factory's managed network, with an SSIS catalog whose admin password
+// comes from a Secret and stays out of the status; a self-hosted runtime;
+// a change data capture from a linked service. The pipeline, dataset,
+// linked service and managed network are in the fake (no kind makes the
+// first three). A trigger naming a missing pipeline is refused (Data
+// Factory's "invalid reference", the fake's rule, datafactory.go), then
+// fixed by a change. Deleted, all go.
+func TestDataFactoryAuthoring(t *testing.T) {
+	ctx := context.Background()
+	ns := namespace(t, "adfa")
+	strictCredential(t, ns, clientA)
+	trustNamespace(ns)
+	rgID := "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"
+	factoryID := rgID + "/providers/Microsoft.DataFactory/factories/etl"
+	for _, id := range []string{rgID, factoryID, factoryID + "/pipelines/copy", factoryID + "/datasets/raw",
+		factoryID + "/linkedservices/lake", factoryID + "/managedVirtualNetworks/default"} {
+		armFake.AddResource(id)
+	}
+	resourceGroup(t, ns, "rg", ns+"-rg")
+	factory := &asodatafactory.Factory{ObjectMeta: metav1.ObjectMeta{Namespace: ns, Name: "etl"}}
+	factory.Spec.AzureName, factory.Spec.Location = "etl", ptr("westus")
+	factory.Spec.Owner = &genruntime.KnownResourceReference{Name: "rg"}
+	asoStandIn(t, factory, factoryID)
+	onFactory := &genruntime.KnownResourceReference{Name: "etl"}
+	meta := func(name string) metav1.ObjectMeta { return metav1.ObjectMeta{Namespace: ns, Name: name} }
+	if err := k8s.Create(ctx, &corev1.Secret{ObjectMeta: meta("ssis"), StringData: map[string]string{"password": "c3Npcy1wYXNz"}}); err != nil {
+		t.Fatal(err)
+	}
+
+	trigger := &datafactory.FactoriesTrigger{ObjectMeta: meta("nightly"), Spec: datafactory.FactoriesTrigger_Spec{Owner: onFactory,
+		Properties: &datafactory.Trigger{Schedule: &datafactory.ScheduleTrigger{Type: ptr(datafactory.ScheduleTrigger_Type_ScheduleTrigger),
+			Recurrence: &datafactory.ScheduleTriggerRecurrence{Frequency: ptr(datafactory.RecurrenceFrequency_Day), Interval: ptr(1)},
+			Pipelines: []datafactory.TriggerPipelineReference{{PipelineReference: &datafactory.PipelineReference{
+				Type: ptr(datafactory.PipelineReferenceType_PipelineReference), ReferenceName: ptr("train")}}}}}}}
+	flow := &datafactory.FactoriesDataflow{ObjectMeta: meta("clean"), Spec: datafactory.FactoriesDataflow_Spec{Owner: onFactory,
+		Properties: &datafactory.DataFlow{MappingDataFlow: &datafactory.MappingDataFlow{Type: ptr(datafactory.MappingDataFlow_Type_MappingDataFlow),
+			Sources: []datafactory.DataFlowSource{{Name: ptr("src"), Dataset: &datafactory.DatasetReference{
+				Type: ptr(datafactory.DatasetReferenceType_DatasetReference), ReferenceName: ptr("raw")}}},
+			Sinks: []datafactory.DataFlowSink{{Name: ptr("out"), LinkedService: &datafactory.LinkedServiceReference{
+				Type: ptr(datafactory.Type_LinkedServiceReference), ReferenceName: ptr("lake")}}},
+			Script: ptr("source(output(id as integer)) ~> src\nsrc sink() ~> out")}}}}
+	managed := &datafactory.FactoriesIntegrationRuntime{ObjectMeta: meta("ssis-runtime"), Spec: datafactory.FactoriesIntegrationRuntime_Spec{Owner: onFactory,
+		Properties: &datafactory.IntegrationRuntime{Managed: &datafactory.ManagedIntegrationRuntime{Type: ptr(datafactory.ManagedIntegrationRuntime_Type_Managed),
+			ManagedVirtualNetwork: &datafactory.ManagedVirtualNetworkReference{
+				Type: ptr(datafactory.ManagedVirtualNetworkReferenceType_ManagedVirtualNetworkReference), ReferenceName: ptr("default")},
+			ComputeProperties: &datafactory.IntegrationRuntimeComputeProperties{Location: ptr("AutoResolve")},
+			SsisProperties: &datafactory.IntegrationRuntimeSsisProperties{CatalogInfo: &datafactory.IntegrationRuntimeSsisCatalogInfo{
+				CatalogServerEndpoint: ptr("etl.database.windows.net"), CatalogAdminUserName: ptr("ssisadmin"),
+				CatalogAdminPassword: &datafactory.SecureString{Type: ptr(datafactory.SecureString_Type_SecureString),
+					Value: &genruntime.SecretReference{Name: "ssis", Key: "password"}}}}}}}}
+	selfHosted := &datafactory.FactoriesIntegrationRuntime{ObjectMeta: meta("onprem"), Spec: datafactory.FactoriesIntegrationRuntime_Spec{Owner: onFactory,
+		Properties: &datafactory.IntegrationRuntime{SelfHosted: &datafactory.SelfHostedIntegrationRuntime{
+			Type: ptr(datafactory.SelfHostedIntegrationRuntime_Type_SelfHosted), Description: ptr("the datacentre")}}}}
+	cdc := &datafactory.FactoriesAdfcdc{ObjectMeta: meta("orders"), Spec: datafactory.FactoriesAdfcdc_Spec{Owner: onFactory,
+		Policy: &datafactory.MapperPolicy{Mode: ptr("Microbatch")},
+		SourceConnectionsInfo: []datafactory.MapperSourceConnectionsInfo{{Connection: &datafactory.MapperConnection{
+			Type:          ptr(datafactory.ConnectionType_Linkedservicetype),
+			LinkedService: &datafactory.LinkedServiceReference{Type: ptr(datafactory.Type_LinkedServiceReference), ReferenceName: ptr("lake")}}}},
+		TargetConnectionsInfo: []datafactory.MapperTargetConnectionsInfo{{Connection: &datafactory.MapperConnection{
+			Type:          ptr(datafactory.ConnectionType_Linkedservicetype),
+			LinkedService: &datafactory.LinkedServiceReference{Type: ptr(datafactory.Type_LinkedServiceReference), ReferenceName: ptr("lake")}}}}}}
+	objs := []conditioned{trigger, flow, managed, selfHosted, cdc}
+	for _, o := range objs {
+		if err := k8s.Create(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, o := range objs[1:] {
+		eventually(t, timeout, o.GetName()+" Ready", ready(o))
+	}
+	eventually(t, timeout, "a trigger of a missing pipeline refused", notReadyWith(trigger, "invalid reference"))
+	if err := change(t, trigger, func(tr *datafactory.FactoriesTrigger) {
+		tr.Spec.Properties.Schedule.Pipelines[0].PipelineReference.ReferenceName = ptr("copy")
+	}); err != nil {
+		t.Fatal(err)
+	}
+	eventually(t, timeout, "the trigger Ready after the change", ready(trigger))
+
+	expectResource(t, factoryID+"/integrationRuntimes/ssis-runtime", func(r map[string]any) error {
+		tp, _ := properties(r)["typeProperties"].(map[string]any)
+		ssis, _ := tp["ssisProperties"].(map[string]any)
+		catalog, _ := ssis["catalogInfo"].(map[string]any)
+		password, _ := catalog["catalogAdminPassword"].(map[string]any)
+		if password["value"] != "c3Npcy1wYXNz" || password["type"] != "SecureString" {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	eventually(t, timeout, "the password out of the status", func() error {
+		if err := k8s.Get(ctx, client.ObjectKeyFromObject(managed), managed); err != nil {
+			return err
+		}
+		if strings.Contains(fmt.Sprintf("%+v", managed.Status), "c3Npcy1wYXNz") {
+			return fmt.Errorf("the status holds the password: %+v", managed.Status)
+		}
+		return nil
+	})
+	expectResource(t, factoryID+"/triggers/nightly", func(r map[string]any) error {
+		tp, _ := properties(r)["pipelines"].([]any)
+		if len(tp) != 1 || !strings.Contains(fmt.Sprint(tp[0]), "copy") {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+	expectResource(t, factoryID+"/adfcdcs/orders", func(r map[string]any) error {
+		if !strings.Contains(fmt.Sprint(properties(r)["sourceConnectionsInfo"]), "lake") {
+			return fmt.Errorf("resource: %v", r)
+		}
+		return nil
+	})
+
+	for _, o := range objs {
+		if err := k8s.Delete(ctx, o); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, o := range objs {
+		eventually(t, timeout, o.GetName()+" gone", gone(o))
+	}
+	for _, id := range []string{"/triggers/nightly", "/dataflows/clean", "/integrationRuntimes/ssis-runtime", "/integrationRuntimes/onprem", "/adfcdcs/orders"} {
+		if armFake.HasResource(factoryID + id) {
+			t.Errorf("%s is still in the fake", id)
+		}
 	}
 }

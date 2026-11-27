@@ -184,11 +184,15 @@ resources:
 - costmanagement.azure.hfl.dev_exports.yaml
 - costmanagement.azure.hfl.dev_scheduledactions.yaml
 - costmanagement.azure.hfl.dev_settings.yaml
+- datafactory.azure.hfl.dev_factoriesadfcdcs.yaml
 - datafactory.azure.hfl.dev_factoriescredentials.yaml
+- datafactory.azure.hfl.dev_factoriesdataflows.yaml
 - datafactory.azure.hfl.dev_factoriesglobalparameters.yaml
+- datafactory.azure.hfl.dev_factoriesintegrationruntimes.yaml
 - datafactory.azure.hfl.dev_factoriesmanagedvirtualnetworks.yaml
 - datafactory.azure.hfl.dev_factoriesmanagedvirtualnetworksmanagedprivateendpoints.yaml
 - datafactory.azure.hfl.dev_factoriesprivateendpointconnections.yaml
+- datafactory.azure.hfl.dev_factoriestriggers.yaml
 - dataprotection.azure.hfl.dev_backupvaultsbackupresourceguardproxies.yaml
 - dataprotection.azure.hfl.dev_resourceguards.yaml
 - dbformysql.azure.hfl.dev_flexibleserversadvancedthreatprotectionsettings.yaml
