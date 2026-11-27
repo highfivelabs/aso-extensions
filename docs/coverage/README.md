@@ -1078,6 +1078,6 @@ never overridden silently.
 | Late-init ignores checked (hold: ASO never late-initializes) | 10 |
 | List map keys checked | 2 (differ 2) |
 | Hand examples of our kinds | 298 |
-| ... run on the fake cloud (`TestUpjetExamplesOnFake`) | 77, of 64 kinds |
+| ... run on the fake cloud (`TestUpjetExamplesOnFake`) | 69, of 57 kinds |
 | Resources Upjet has and neither ASO nor we serve (`upjet-gaps.csv`) | 189 |
 <!-- upjet:end -->

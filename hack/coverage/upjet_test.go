@@ -11,7 +11,7 @@ import (
 func TestTemplateType(t *testing.T) {
 	for in, want := range map[string]string{
 		"/subscriptions/{{ .s }}/resourceGroups/{{ .rg }}/providers/Microsoft.App/containerApps/{{ .external_name }}": "Microsoft.App/containerApps",
-		"{{ .parameters.api_management_id }}/providers/Microsoft.ApiManagement/service/{{ .a }}/apis/{{ .b }}":       "Microsoft.ApiManagement/service/apis",
+		"{{ .parameters.api_management_id }}/providers/Microsoft.ApiManagement/service/{{ .a }}/apis/{{ .b }}":        "Microsoft.ApiManagement/service/apis",
 		"{{ .external_name }}": "",
 	} {
 		if got := templateType(in); got != want {

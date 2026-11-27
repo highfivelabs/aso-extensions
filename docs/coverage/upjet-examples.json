@@ -74,11 +74,11 @@
   "at": "examples/apimanagement/cluster/v1beta1/identityprovideraad.yaml",
   "slice": "hack/upjet/provider-upjet-azure.json:2844",
   "spec": {
-   "allowedTenants": [
-    "${data.azurerm_client_config.current.tenant_id}"
-   ],
    "clientId": "00000000-0000-0000-0000-000000000000"
-  }
+  },
+  "dropped": [
+   "allowed_tenants"
+  ]
  },
  {
   "group": "apimanagement.azure.hfl.dev",
@@ -189,51 +189,6 @@
  },
  {
   "group": "authorization.azure.hfl.dev",
-  "version": "v20260101preview",
-  "kind": "PolicyExemption",
-  "example": "authorization/v1beta1/resourcepolicyexemption",
-  "at": "examples/authorization/cluster/v1beta1/resourcepolicyexemption.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:7930",
-  "spec": {
-   "exemptionCategory": "Mitigated"
-  },
-  "dropped": [
-   "name",
-   "resource_id"
-  ]
- },
- {
-  "group": "authorization.azure.hfl.dev",
-  "version": "v20260101preview",
-  "kind": "PolicyExemption",
-  "example": "authorization/v1beta1/subscriptionpolicyexemption",
-  "at": "examples/authorization/cluster/v1beta1/subscriptionpolicyexemption.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:8010",
-  "spec": {
-   "exemptionCategory": "Mitigated"
-  },
-  "dropped": [
-   "subscription_id"
-  ]
- },
- {
-  "group": "authorization.azure.hfl.dev",
-  "version": "v20260701",
-  "kind": "PolicySetDefinition",
-  "example": "authorization/v1beta1/policysetdefinition-subscription",
-  "at": "examples/authorization/cluster/v1beta1/policysetdefinition.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:8103",
-  "spec": {
-   "displayName": "Test Policy Set",
-   "policyType": "Custom"
-  },
-  "dropped": [
-   "parameters",
-   "policy_definition_reference"
-  ]
- },
- {
-  "group": "authorization.azure.hfl.dev",
   "version": "v20260701",
   "kind": "PolicySetDefinitionsVersion",
   "example": "authorization/v1beta1/policysetdefinition-subscription",
@@ -246,24 +201,6 @@
   "dropped": [
    "parameters",
    "policy_definition_reference"
-  ]
- },
- {
-  "group": "authorization.azure.hfl.dev",
-  "version": "v20260701",
-  "kind": "PolicyDefinition",
-  "example": "authorization/v1beta1/policydefinition",
-  "at": "examples/authorization/cluster/v1beta1/policydefinition.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:8629",
-  "spec": {
-   "displayName": "acceptance test policy definition",
-   "mode": "Indexed",
-   "policyType": "Custom"
-  },
-  "dropped": [
-   "metadata",
-   "parameters",
-   "policy_rule"
   ]
  },
  {
@@ -650,29 +587,6 @@
   }
  },
  {
-  "group": "devtestlab.azure.hfl.dev",
-  "version": "v20180915",
-  "kind": "LabsSchedule",
-  "example": "devtestlab/v1beta1/schedule",
-  "at": "examples/devtestlab/cluster/v1beta1/schedule.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:22469",
-  "spec": {
-   "taskType": "Unknown",
-   "timeZoneId": "Pacific Standard Time",
-   "weeklyRecurrence": {
-    "time": "1100",
-    "weekdays": [
-     "Monday",
-     "Tuesday"
-    ]
-   }
-  },
-  "dropped": [
-   "location",
-   "tags"
-  ]
- },
- {
   "group": "eventgrid.azure.hfl.dev",
   "version": "v20250215",
   "kind": "SystemTopic",
@@ -784,22 +698,6 @@
  {
   "group": "network.azure.hfl.dev",
   "version": "v20260301",
-  "kind": "ExpressRoutePort",
-  "example": "",
-  "at": "examples/network/cluster/v1beta1/expressrouteport.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:38556",
-  "spec": {
-   "bandwidthInGbps": 10,
-   "encapsulation": "Dot1Q",
-   "peeringLocation": "VantageDC-Newport-NGD"
-  },
-  "dropped": [
-   "location"
-  ]
- },
- {
-  "group": "network.azure.hfl.dev",
-  "version": "v20260301",
   "kind": "ApplicationGateway",
   "example": "network/v1beta1/applicationgateway",
   "at": "examples/network/cluster/v1beta1/applicationgateway.yaml",
@@ -853,28 +751,6 @@
    "request_routing_rule.backend_address_pool_name",
    "request_routing_rule.backend_http_settings_name",
    "request_routing_rule.http_listener_name"
-  ]
- },
- {
-  "group": "network.azure.hfl.dev",
-  "version": "v20260301",
-  "kind": "ExpressRouteCircuitsPeering",
-  "example": "network/v1beta1/expressroutecircuitpeering",
-  "at": "examples/network/cluster/v1beta1/expressroutecircuitpeering.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:41335",
-  "spec": {
-   "microsoftPeeringConfig": {
-    "advertisedPublicPrefixes": [
-     "123.1.0.0/24"
-    ]
-   },
-   "peerASN": 100,
-   "primaryPeerAddressPrefix": "123.0.0.0/30",
-   "secondaryPeerAddressPrefix": "123.0.0.4/30",
-   "vlanId": 300
-  },
-  "dropped": [
-   "ipv6"
   ]
  },
  {
@@ -1003,24 +879,6 @@
   }
  },
  {
-  "group": "operationsmanagement.azure.hfl.dev",
-  "version": "v20151101preview",
-  "kind": "Solution",
-  "example": "operationsmanagement/v1beta1/loganalyticssolution",
-  "at": "examples/operationsmanagement/cluster/v1beta1/loganalyticssolution.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:52042",
-  "spec": {
-   "plan": {
-    "product": "OMSGallery/ContainerInsights",
-    "publisher": "Microsoft"
-   }
-  },
-  "dropped": [
-   "location",
-   "solution_name"
-  ]
- },
- {
   "group": "purview.azure.hfl.dev",
   "version": "v20211201",
   "kind": "Account",
@@ -1118,11 +976,11 @@
      "email@example1.com",
      "email@example2.com"
     ]
-   },
-   "storageContainerPath": "${azurerm_storage_account.example.primary_blob_endpoint}${azurerm_storage_container.example.name}/"
+   }
   },
   "dropped": [
-   "recurring_scans.enabled"
+   "recurring_scans.enabled",
+   "storage_container_path"
   ]
  },
  {
@@ -1160,11 +1018,11 @@
      "email@example1.com",
      "email@example2.com"
     ]
-   },
-   "storageContainerPath": "${azurerm_storage_account.example.primary_blob_endpoint}${azurerm_storage_container.example.name}/"
+   }
   },
   "dropped": [
-   "recurring_scans.enabled"
+   "recurring_scans.enabled",
+   "storage_container_path"
   ]
  },
  {
@@ -1230,12 +1088,12 @@
      "email@example1.com",
      "email@example2.com"
     ]
-   },
-   "storageContainerPath": "${azurerm_storage_account.example.primary_blob_endpoint}${azurerm_storage_container.example.name}/"
+   }
   },
   "dropped": [
    "recurring_scans.email_subscription_admins_enabled",
-   "recurring_scans.enabled"
+   "recurring_scans.enabled",
+   "storage_container_path"
   ]
  },
  {
@@ -1285,12 +1143,12 @@
      "email@example1.com",
      "email@example2.com"
     ]
-   },
-   "storageContainerPath": "${azurerm_storage_account.example.primary_blob_endpoint}${azurerm_storage_container.example.name}/"
+   }
   },
   "dropped": [
    "recurring_scans.email_subscription_admins_enabled",
-   "recurring_scans.enabled"
+   "recurring_scans.enabled",
+   "storage_container_path"
   ]
  }
 ]

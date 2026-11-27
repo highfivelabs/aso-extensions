@@ -273,6 +273,10 @@ func upjet(root string, rows []*ResRow, ours []*Kind, prio Priority) (*upjetResu
 	if err != nil {
 		return nil, err
 	}
+	coveredBy, err := conformanceCoveredBy(root)
+	if err != nil {
+		return nil, err
+	}
 
 	res := &upjetResult{stats: map[string]int{}}
 	used := map[string]bool{} // decisions that matched something
@@ -495,6 +499,8 @@ func upjet(root string, rows []*ResRow, ours []*Kind, prio Priority) (*upjetResu
 				spec, dropped := mapExample(x.Values, spec)
 				key := keyEx(k.name(), x.At)
 				switch {
+				case coveredBy[k.Kind] != "":
+					status = "not run: the kind's smallest object needs other kinds, so " + coveredBy[k.Kind] + " runs it, not the conformance test"
 				case other != "":
 					status = "not run: Upjet's resource is " + other + ", not ours (the catalog's mapping joins it here)"
 				case exDec[key] != "":
@@ -551,6 +557,8 @@ func upjet(root string, rows []*ResRow, ours []*Kind, prio Priority) (*upjetResu
 		fake := "conformance"
 		if k.Hand {
 			fake = "kind test"
+		} else if t := coveredBy[k.Kind]; t != "" {
+			fake = "kind test (" + t + ")"
 		}
 		up := []string{"", "no Upjet resource", "", "", "", "", "", "", "", ""}
 		if p != nil {
@@ -1049,7 +1057,9 @@ func mapValue(v any, s map[string]any, at string, dropped *[]string) (any, bool)
 		return out, len(out) > 0
 	case "string":
 		str, ok := v.(string)
-		if !ok || str == "" {
+		if !ok || str == "" || strings.Contains(str, "${") {
+			// ${azurerm_storage_account.example.primary_blob_endpoint}:
+			// another resource's attribute, which Terraform fills in.
 			return nil, false
 		}
 		if en, ok := s["enum"].([]any); ok {
@@ -1229,4 +1239,29 @@ func parentNamed(resource, tfBase string) bool {
 		}
 	}
 	return false
+}
+
+// conformanceFixture lines of test/e2e/arm_conformance_fixtures_test.go
+// that hand a kind to its own test.
+var coveredByRE = regexp.MustCompile(`(?m)(?:^\s*"(\w+)":\s*\{|f\[(?:\w+\+)?"(\w+)"\]\s*=\s*conformanceFixture\{).*?coveredBy:\s*"(\w+)"`)
+
+// conformanceCoveredBy is the kinds the conformance test does not run,
+// with the test that does (docs/testing.md, layer 1).
+func conformanceCoveredBy(root string) (map[string]string, error) {
+	b, err := os.ReadFile(filepath.Join(root, "test", "e2e", "arm_conformance_fixtures_test.go"))
+	if err != nil {
+		return nil, err
+	}
+	out := map[string]string{}
+	for _, m := range coveredByRE.FindAllStringSubmatch(string(b), -1) {
+		k := m[1]
+		if k == "" {
+			k = m[2]
+		}
+		out[k] = m[3]
+	}
+	if len(out) == 0 {
+		return nil, fmt.Errorf("test/e2e/arm_conformance_fixtures_test.go: found no coveredBy fixtures; has the file changed shape?")
+	}
+	return out, nil
 }

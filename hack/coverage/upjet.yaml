@@ -61,4 +61,14 @@ references:
     match: owner
     why: an alert rule is an extension resource of the workspace, its owner
 secrets: []
-examples: []
+examples:
+  - kind: devtestlab.azure.hfl.dev/LabsSchedule
+    example: examples/devtestlab/cluster/v1beta1/schedule.yaml
+    skip: >-
+      it sets taskType Unknown, which the fake refuses for a lab's schedule
+      (pkg/fakecloud/arm: a lab's schedules are LabVmsShutdown with
+      LabVmsShutdownTask and LabVmAutoStart with LabVmsStartupTask, as
+      Azure documents them); whether Azure takes Unknown needs a live run
+  - kind: devtestlab.azure.hfl.dev/LabsSchedule
+    example: examples/devtestlab/cluster/v1beta2/schedule.yaml
+    skip: the same example as v1beta1's, taskType Unknown

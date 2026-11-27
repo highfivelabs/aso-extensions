@@ -5,6 +5,7 @@ package e2e
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"hash/fnv"
 	"os"
@@ -148,6 +149,12 @@ type conformanceFixture struct {
 	coveredBy string
 	// skip is why the kind is not run here.
 	skip string
+	// namespace, when set, is the namespace to run in instead of the
+	// kind's (a second run of the kind, as TestUpjetExamplesOnFake makes).
+	namespace string
+	// sent are strings the fake's resource must hold after the PUT (the
+	// values of an example).
+	sent []string
 }
 
 // conformanceContext is one kind's run: its namespace and the resource
@@ -194,7 +201,11 @@ var conformanceFixtures = map[string]conformanceFixture{}
 
 func conformance(t *testing.T, gvk schema.GroupVersionKind, meta genruntime.ARMMetaObject, specSchema apiextensionsv1.JSONSchemaProps, fix conformanceFixture) {
 	ctx := context.Background()
-	ns := namespace(t, conformanceNamespace(gvk))
+	nsName := conformanceNamespace(gvk)
+	if fix.namespace != "" {
+		nsName = fix.namespace
+	}
+	ns := namespace(t, nsName)
 	strictCredential(t, ns, clientA)
 	trustNamespace(ns)
 	c := &conformanceContext{ns: ns, resourceGroup: "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"}
@@ -269,6 +280,18 @@ func conformance(t *testing.T, gvk schema.GroupVersionKind, meta genruntime.ARMM
 	}
 	if typ, _ := got["type"].(string); !strings.EqualFold(typ, meta.GetType()) {
 		t.Fatalf("%s: the fake holds %s of type %q; the kind's ARM type is %q", gvk.Kind, id, typ, meta.GetType())
+	}
+	if len(fix.sent) > 0 {
+		body, err := json.Marshal(got)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, v := range fix.sent {
+			q, _ := json.Marshal(v)
+			if !strings.Contains(string(body), string(q)) {
+				t.Errorf("%s: the fake's resource does not hold %s, which the spec set: %s", gvk.Kind, q, body)
+			}
+		}
 	}
 
 	if hasTagMap(specSchema) && !fix.keeps {
