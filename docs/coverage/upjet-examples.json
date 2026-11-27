@@ -1045,7 +1045,7 @@
   "kind": "WorkspacesSecurityAlertPolicy",
   "example": "synapse/v1beta1/sqlpoolsecurityalertpolicy",
   "at": "examples/synapse/cluster/v1beta1/sqlpoolsecurityalertpolicy.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:66873",
+  "slice": "hack/upjet/provider-upjet-azure.json:66879",
   "spec": {
    "disabledAlerts": [
     "Sql_Injection",
@@ -1063,7 +1063,7 @@
   "kind": "WorkspacesSqlPoolsSecurityAlertPolicy",
   "example": "synapse/v1beta1/sqlpoolsecurityalertpolicy",
   "at": "examples/synapse/cluster/v1beta1/sqlpoolsecurityalertpolicy.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:67059",
+  "slice": "hack/upjet/provider-upjet-azure.json:67065",
   "spec": {
    "disabledAlerts": [
     "Sql_Injection",
@@ -1081,7 +1081,7 @@
   "kind": "WorkspacesSqlPoolsVulnerabilityAssessment",
   "example": "synapse/v1beta1/workspacevulnerabilityassessment",
   "at": "examples/synapse/cluster/v1beta1/workspacevulnerabilityassessment.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:67165",
+  "slice": "hack/upjet/provider-upjet-azure.json:67171",
   "spec": {
    "recurringScans": {
     "emails": [
@@ -1102,7 +1102,7 @@
   "kind": "WorkspacesSqlPoolsWorkloadGroup",
   "example": "synapse/v1beta1/sqlpoolworkloadgroup",
   "at": "examples/synapse/cluster/v1beta1/sqlpoolworkloadgroup.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:67297",
+  "slice": "hack/upjet/provider-upjet-azure.json:67303",
   "spec": {
    "importance": "normal",
    "maxResourcePercent": 100,
@@ -1120,7 +1120,7 @@
   "kind": "WorkspacesSqlPoolsWorkloadGroupClassifier",
   "example": "synapse/v1beta1/sqlpoolworkloadclassifier",
   "at": "examples/synapse/cluster/v1beta1/sqlpoolworkloadclassifier.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:67389",
+  "slice": "hack/upjet/provider-upjet-azure.json:67395",
   "spec": {
    "context": "example_context",
    "endTime": "14:00",
@@ -1136,7 +1136,7 @@
   "kind": "WorkspacesVulnerabilityAssessment",
   "example": "synapse/v1beta1/workspacevulnerabilityassessment",
   "at": "examples/synapse/cluster/v1beta1/workspacevulnerabilityassessment.yaml",
-  "slice": "hack/upjet/provider-upjet-azure.json:67491",
+  "slice": "hack/upjet/provider-upjet-azure.json:67497",
   "spec": {
    "recurringScans": {
     "emails": [

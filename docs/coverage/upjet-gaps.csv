@@ -22,7 +22,7 @@ rank,service,resource,tier,terraform,upjet_tested,referenced_by_served,upjet_ref
 21,Microsoft.Cdn,Microsoft.Cdn/profiles/endpoints/customDomains,3,azurerm_cdn_frontdoor_custom_domain,true,0,3,azurerm_cdn_frontdoor_profile;azurerm_dns_zone;azurerm_cdn_frontdoor_origin,2,template,,hack/upjet/provider-upjet-azure.json:11930
 22,Microsoft.DataFactory,Microsoft.DataFactory/factories/datasets,3,azurerm_data_factory_custom_dataset,true,0,2,azurerm_data_factory;azurerm_data_factory_linked_custom_service,2,template,,hack/upjet/provider-upjet-azure.json:20140
 23,Microsoft.AppPlatform,Microsoft.AppPlatform/Spring/applicationAccelerators/customizedAccelerators,3,azurerm_spring_cloud_customized_accelerator,true,0,1,azurerm_spring_cloud_accelerator,2,template,,hack/upjet/provider-upjet-azure.json:6669
-24,Microsoft.AppPlatform,Microsoft.AppPlatform/spring,3,azurerm_spring_cloud_service,true,0,4,azurerm_subnet;azurerm_resource_group;azurerm_application_insights,2,template,the catalog maps it to Microsoft.VMwareCloudSimple/dedicatedCloudServices; Upjet's ID template is Microsoft.AppPlatform/spring,hack/upjet/provider-upjet-azure.json:67569
+24,Microsoft.AppPlatform,Microsoft.AppPlatform/spring,3,azurerm_spring_cloud_service,true,0,4,azurerm_subnet;azurerm_resource_group;azurerm_application_insights,2,template,the catalog maps it to Microsoft.VMwareCloudSimple/dedicatedCloudServices; Upjet's ID template is Microsoft.AppPlatform/spring,hack/upjet/provider-upjet-azure.json:67575
 25,Microsoft.AzureStackHCI,Microsoft.AzureStackHCI/virtualMachines/extensions,3,azurerm_virtual_machine_extension,true,0,1,azurerm_linux_virtual_machine,2,template,,hack/upjet/provider-upjet-azure.json:10398
 26,Microsoft.DataShare,Microsoft.DataShare/accounts,3,azurerm_data_share_account,true,0,1,azurerm_resource_group,2,template,,hack/upjet/provider-upjet-azure.json:21182
 27,Microsoft.Databricks,Microsoft.Databricks/accessConnectors,3,azurerm_databricks_access_connector,true,0,1,azurerm_resource_group,2,template,,hack/upjet/provider-upjet-azure.json:21380
@@ -121,10 +121,10 @@ rank,service,resource,tier,terraform,upjet_tested,referenced_by_served,upjet_ref
 120,Microsoft.StreamAnalytics,Microsoft.StreamAnalytics/streamingjobs/outputs,3,azurerm_stream_analytics_output_mssql,true,0,6,azurerm_mssql_database;azurerm_resource_group;azurerm_mssql_server;azurerm_stream_analytics_job;azurerm_storage_table;azurerm_mssql_server,1,provider,,hack/upjet/provider-upjet-azure.json:64470
 121,Microsoft.StreamAnalytics,Microsoft.StreamAnalytics/streamingjobs/outputs,3,azurerm_stream_analytics_output_synapse,true,0,3,azurerm_resource_group;azurerm_stream_analytics_job;azurerm_synapse_workspace,1,template,,hack/upjet/provider-upjet-azure.json:64996
 122,Microsoft.StreamAnalytics,Microsoft.StreamAnalytics/streamingjobs/outputs,3,azurerm_stream_analytics_output_table,true,0,3,azurerm_resource_group;azurerm_storage_account;azurerm_storage_table,1,template,,hack/upjet/provider-upjet-azure.json:65099
-123,Oracle.Database,Oracle.Database/autonomousDatabases/autonomousDatabaseBackups,3,azurerm_oracle_autonomous_database_backup,true,0,1,azurerm_oracle_autonomous_database,1,template,,hack/upjet/provider-upjet-azure.json:68686
-124,Oracle.Database,Oracle.Database/autonomousDatabases,3,azurerm_oracle_autonomous_database,true,0,2,azurerm_resource_group;azurerm_subnet,1,template,,hack/upjet/provider-upjet-azure.json:68287
-125,Oracle.Database,Oracle.Database/autonomousDatabases,3,azurerm_oracle_autonomous_database_clone_from_backup,true,0,3,azurerm_resource_group;azurerm_oracle_autonomous_database;azurerm_subnet,1,template,,hack/upjet/provider-upjet-azure.json:68407
-126,Oracle.Database,Oracle.Database/autonomousDatabases,3,azurerm_oracle_autonomous_database_clone_from_database,true,0,3,azurerm_resource_group;azurerm_oracle_autonomous_database;azurerm_subnet,1,template,,hack/upjet/provider-upjet-azure.json:68547
+123,Oracle.Database,Oracle.Database/autonomousDatabases/autonomousDatabaseBackups,3,azurerm_oracle_autonomous_database_backup,true,0,1,azurerm_oracle_autonomous_database,1,template,,hack/upjet/provider-upjet-azure.json:68692
+124,Oracle.Database,Oracle.Database/autonomousDatabases,3,azurerm_oracle_autonomous_database,true,0,2,azurerm_resource_group;azurerm_subnet,1,template,,hack/upjet/provider-upjet-azure.json:68293
+125,Oracle.Database,Oracle.Database/autonomousDatabases,3,azurerm_oracle_autonomous_database_clone_from_backup,true,0,3,azurerm_resource_group;azurerm_oracle_autonomous_database;azurerm_subnet,1,template,,hack/upjet/provider-upjet-azure.json:68413
+126,Oracle.Database,Oracle.Database/autonomousDatabases,3,azurerm_oracle_autonomous_database_clone_from_database,true,0,3,azurerm_resource_group;azurerm_oracle_autonomous_database;azurerm_subnet,1,template,,hack/upjet/provider-upjet-azure.json:68553
 127,Microsoft.Cdn,Microsoft.Cdn/profiles/endpoints/customDomains,3,azurerm_cdn_endpoint_custom_domain,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:11913
 128,Dynatrace.Observability,Dynatrace.Observability/monitors/tagRules,3,azurerm_dynatrace_tag_rules,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:38
 129,Dynatrace.Observability,Dynatrace.Observability/monitors,3,azurerm_dynatrace_monitor,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:21
@@ -157,11 +157,11 @@ rank,service,resource,tier,terraform,upjet_tested,referenced_by_served,upjet_ref
 156,Microsoft.StreamAnalytics,Microsoft.StreamAnalytics/streamingjobs/inputs,3,azurerm_stream_analytics_stream_input_eventhub_v2,false,0,1,azurerm_stream_analytics_job,0,template,,hack/upjet/provider-upjet-azure.json:63902
 157,Microsoft.StreamAnalytics,Microsoft.StreamAnalytics/streamingjobs,3,azurerm_stream_analytics_job_schedule,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:63098
 158,Microsoft.StreamAnalytics,Microsoft.StreamAnalytics/streamingjobs,3,azurerm_stream_analytics_job_storage_account,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:63115
-159,Microsoft.VideoIndexer,Microsoft.VideoIndexer/accounts,3,azurerm_video_indexer_account,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:67692
-160,Nginx.NginxPlus,Nginx.NginxPlus/nginxDeployments/apiKeys,3,azurerm_nginx_api_key,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68236
-161,Nginx.NginxPlus,Nginx.NginxPlus/nginxDeployments/certificates,3,azurerm_nginx_certificate,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68253
-162,Nginx.NginxPlus,Nginx.NginxPlus/nginxDeployments/configurations,3,azurerm_nginx_configuration,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68270
-163,Nginx.NginxPlus,Nginx.NginxPlus/nginxDeployments,3,azurerm_nginx_deployment,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68219
-164,Oracle.Database,Oracle.Database/cloudExadataInfrastructures,3,azurerm_oracle_exadata_infrastructure,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68757
-165,Oracle.Database,Oracle.Database/cloudVmClusters,3,azurerm_oracle_cloud_vm_cluster,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68774
-166,Qumulo.Storage,Qumulo.Storage/fileSystems,3,azurerm_qumulo_file_system,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68791
+159,Microsoft.VideoIndexer,Microsoft.VideoIndexer/accounts,3,azurerm_video_indexer_account,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:67698
+160,Nginx.NginxPlus,Nginx.NginxPlus/nginxDeployments/apiKeys,3,azurerm_nginx_api_key,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68242
+161,Nginx.NginxPlus,Nginx.NginxPlus/nginxDeployments/certificates,3,azurerm_nginx_certificate,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68259
+162,Nginx.NginxPlus,Nginx.NginxPlus/nginxDeployments/configurations,3,azurerm_nginx_configuration,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68276
+163,Nginx.NginxPlus,Nginx.NginxPlus/nginxDeployments,3,azurerm_nginx_deployment,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68225
+164,Oracle.Database,Oracle.Database/cloudExadataInfrastructures,3,azurerm_oracle_exadata_infrastructure,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68763
+165,Oracle.Database,Oracle.Database/cloudVmClusters,3,azurerm_oracle_cloud_vm_cluster,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68780
+166,Qumulo.Storage,Qumulo.Storage/fileSystems,3,azurerm_qumulo_file_system,false,0,0,,0,template,,hack/upjet/provider-upjet-azure.json:68797
