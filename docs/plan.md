@@ -2066,6 +2066,9 @@ drop until the users they grant to are deleted).
 below:
 - Q16 (Web PubSub access keys): "Entra auth now".
 - Q17 (Data Factory CRD size): "One kind per type".
+- PIM live tests (Q15's open part): PIM stays fake-only, "they present
+  too much exposure otherwise" (the builder, in conversation, recorded on
+  pull request #134, comment 7226819039).
 
 **The answers of 2026-11-16** (the builder, on the Open decisions page,
 ASOOPEN: Q1 to Q4 and the webhook-less validation of
@@ -2383,6 +2386,15 @@ summarised here:
    pending a run. PIM is left out: an identity that may write its requests
    may grant itself any role, so it stays fake-only with the tenant policy
    and the management groups (README.md).
+
+   **Answered, 2026-11-27** (the builder, in conversation; recorded on pull
+   request #134, comment 7226819039): PIM stays fake-only, "they present
+   too much exposure otherwise". Testing it live needs Entra ID P2, and a
+   role that may write PIM requests may grant itself any role. So
+   `RoleEligibilityScheduleRequest`, `RoleAssignmentScheduleRequest` and
+   `RoleManagementPolicyAssignment` keep no live tests, and the roles in
+   `hack/live/roles/` gain no PIM rights. This is what the repository
+   already does; nothing changed.
 
 16. **A Web PubSub service's access keys as a Secret?** (asked 2026-11-24,
    f68.) ASO's `SignalR` exports its keys and connection strings
