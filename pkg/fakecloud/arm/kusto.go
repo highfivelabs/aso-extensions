@@ -40,8 +40,8 @@ func (a *ARM) checkKusto(id string, body map[string]any) (status int, code, mess
 	bad := func(msg string) (int, string, string) {
 		return http.StatusBadRequest, "BadRequest", msg
 	}
-	switch {
-	case kind == "attacheddatabaseconfigurations":
+	switch kind {
+	case "attacheddatabaseconfigurations":
 		if stringOf(props["databaseName"]) == "" || stringOf(props["defaultPrincipalsModificationKind"]) == "" {
 			return bad("An attached database configuration names its databaseName and defaultPrincipalsModificationKind.")
 		}
@@ -55,7 +55,7 @@ func (a *ARM) checkKusto(id string, body map[string]any) (status int, code, mess
 		if strings.EqualFold(leader, cluster) {
 			return bad("A cluster cannot follow its own databases.")
 		}
-	case kind == "managedprivateendpoints":
+	case "managedprivateendpoints":
 		if stringOf(props["groupId"]) == "" {
 			return bad("A managed private endpoint names its groupId.")
 		}
@@ -66,7 +66,7 @@ func (a *ARM) checkKusto(id string, body map[string]any) (status int, code, mess
 		if !a.exists(target) {
 			return http.StatusNotFound, "ResourceNotFound", "The private link resource " + target + " was not found."
 		}
-	case kind == "sandboxcustomimages":
+	case "sandboxcustomimages":
 		if stringOf(props["language"]) == "" {
 			return bad("A sandbox custom image names its language.")
 		}
